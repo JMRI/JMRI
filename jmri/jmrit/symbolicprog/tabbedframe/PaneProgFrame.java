@@ -41,7 +41,7 @@ import jmri.ProgDeferredServiceModePane;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.52 $
+ * @version   $Revision: 1.53 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -616,6 +616,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     VariableValue addMode = null;
 
     void updateDccAddress() {
+        boolean longMode = false;
         if (log.isDebugEnabled())
             log.debug("updateDccAddress: short "+(primaryAddr==null?"<null>":primaryAddr.getValueString())+
                       " long "+(extendAddr==null?"<null>":extendAddr.getValueString())+
@@ -623,16 +624,22 @@ abstract public class PaneProgFrame extends JmriJFrame
         String newAddr = null;
         if (addMode == null || extendAddr == null || !addMode.getValueString().equals("1")) {
             // short address mode
+            longMode = false;
             if (primaryAddr != null && !primaryAddr.getValueString().equals(""))
                 newAddr = primaryAddr.getValueString();
         }
         else {
             // long address
             if (extendAddr != null && !extendAddr.getValueString().equals(""))
+                longMode = true;
                 newAddr = extendAddr.getValueString();
         }
         // update if needed
-        if (newAddr!=null) _rPane.setDccAddress(newAddr);
+        if (newAddr!=null) {
+            // store DCC address, type
+            _rPane.setDccAddress(newAddr);
+            _rPane.setDccAddressLong(longMode);
+        }
     }
 
     public void newPane(String name, Element pane, Element modelElem, boolean enableEmpty) {

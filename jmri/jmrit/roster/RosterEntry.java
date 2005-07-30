@@ -2,6 +2,7 @@
 
 package jmri.jmrit.roster;
 
+import jmri.DccLocoAddress;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.IndexedCvTableModel;
@@ -33,9 +34,9 @@ import org.jdom.Element;
  * When the filePath attribute is non-null, the user has decided to
  * organize the roster into directories.
  *
- * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004
+ * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.20 $
+ * @version   $Revision: 1.21 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -68,6 +69,7 @@ public class RosterEntry {
         _mfg =          pEntry._mfg;
         _model =        pEntry._model;
         _dccAddress =   pEntry._dccAddress;
+        _isLongAddress = pEntry._isLongAddress;
         _comment =      pEntry._comment;
         _decoderModel = pEntry._decoderModel;
         _decoderFamily = pEntry._decoderFamily;
@@ -137,6 +139,9 @@ public class RosterEntry {
     public void   setDccAddress(String s) { _dccAddress = s; }
     public String getDccAddress() { return _dccAddress; }
 
+    public void   setLongAddress(boolean b) { _isLongAddress = b; }
+    public boolean isLongAddress() { return _isLongAddress; }
+
     public void   setComment(String s) { _comment = s; }
     public String getComment() { return _comment; }
 
@@ -149,6 +154,10 @@ public class RosterEntry {
     public void   setDecoderComment(String s) { _decoderComment = s; }
     public String getDecoderComment() { return _decoderComment; }
 
+    public DccLocoAddress getDccLocoAddress() {
+        int n = Integer.parseInt(getDccAddress());
+        return new DccLocoAddress(n,isLongAddress());
+    }
 
     /**
      * Construct this Entry from XML. This member has to remain synchronized with the
@@ -168,6 +177,40 @@ public class RosterEntry {
         if ((a = e.getAttribute("mfg")) != null )  _mfg = a.getValue();
         if ((a = e.getAttribute("model")) != null )  _model = a.getValue();
         if ((a = e.getAttribute("dccAddress")) != null )  _dccAddress = a.getValue();
+        org.jdom.Element e3;
+        if ((e3 = e.getChild("locoaddress")) != null )  {
+            DccLocoAddress la = (DccLocoAddress)((new jmri.configurexml.LocoAddressXml()).getAddress(e3));
+            if (la!=null) {
+                _dccAddress = ""+la.getNumber();
+                _isLongAddress = la.isLongAddress();
+            } else {
+                _dccAddress = "";
+                _isLongAddress = false;
+            }
+        } else {// Did not find "locoaddress" element carrying the short/long, probably
+                // because this is an older-format file, so try to use system default.
+                // This is generally the best we can do without parsing the decoder file now
+                // but may give the wrong answer in some cases (low value long addresses on NCE)
+
+            jmri.ThrottleManager tf = jmri.InstanceManager.throttleManagerInstance();
+            int address =0;
+            try {
+                address = Integer.parseInt(_dccAddress);
+            } catch (IllegalArgumentException e2) { address = 3;}  // ignore, accepting the default value
+            if (tf!=null && tf.canBeLongAddress(address) && !tf.canBeShortAddress(address)) {
+                // if it has to be long, handle that
+                _isLongAddress = true;
+            } else if (tf!=null && !tf.canBeLongAddress(address) && tf.canBeShortAddress(address)) {
+                // if it has to be short, handle that
+                _isLongAddress = false;
+            } else {
+                // else guess short address
+                // These people should resave their roster, so we'll warn them
+                log.warn("Roster entry \""+_id+"\" should be saved again to store the short/long address value");
+                _isLongAddress = false;
+
+            }
+        }        
         if ((a = e.getAttribute("comment")) != null )  _comment = a.getValue();
         org.jdom.Element d = e.getChild("decoder");
         if (d != null) {
@@ -201,6 +244,11 @@ public class RosterEntry {
 
         e.addContent(d);
 
+        if (_dccAddress.equals("")) {
+            e.addContent( (new jmri.configurexml.LocoAddressXml()).store(null));  // store a null address
+        } else {
+            e.addContent( (new jmri.configurexml.LocoAddressXml()).store(new DccLocoAddress(Integer.parseInt(_dccAddress), _isLongAddress)));
+        }
         return e;
     }
 
@@ -495,6 +543,7 @@ public class RosterEntry {
     protected String _owner = _defaultOwner;
     protected String _model = "";
     protected String _dccAddress = "";
+    protected boolean _isLongAddress = false;
     protected String _comment = "";
     protected String _decoderModel = "";
     protected String _decoderFamily = "";

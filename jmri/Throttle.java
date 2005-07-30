@@ -22,7 +22,7 @@ package jmri;
  * and deassign locos from this throttle, but that doesn't seem right.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public interface Throttle {
 
@@ -80,23 +80,13 @@ public interface Throttle {
     public void setF12(boolean f12);
 
     /**
-     * Locomotive identification.  The exact format is defined by the
-     * specific implementation, but its intended that this is a user-specified
-     * name like "UP 777", or whatever convention the user wants to employ.
-     *
-     * This is an unbound parameter.
-     */
-    public String getLocoIdentification();
-
-    /**
      * Locomotive address.  The exact format is defined by the
-     * specific implementation, but for DCC systems it is intended that this
-     * will be the DCC address in the form "nnnn" (extended) vs "nnn" or "nn" (short).
-     * Non-DCC systems may use a different form.
+     * specific implementation, as subclasses of LocoAddress will contain
+     * different information.
      *
      * This is an unbound parameter.
      */
-    public String getLocoAddress();
+    public LocoAddress getLocoAddress();
 
     // register for notification if any of the properties change
     public void removePropertyChangeListener(java.beans.PropertyChangeListener p);

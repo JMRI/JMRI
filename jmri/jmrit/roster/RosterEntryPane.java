@@ -2,6 +2,9 @@
 
 package jmri.jmrit.roster;
 
+import jmri.jmrit.DccLocoAddressSelector;
+import jmri.DccLocoAddress;
+
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -12,10 +15,12 @@ import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.BoxLayout;
 
 import com.sun.java.util.collections.List;
 
@@ -23,7 +28,7 @@ import com.sun.java.util.collections.List;
  * Display and edit a RosterEntry.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001; Dennis Miller Copyright 2004, 2005
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class RosterEntryPane extends javax.swing.JPanel  {
 
@@ -35,7 +40,8 @@ public class RosterEntryPane extends javax.swing.JPanel  {
     JTextField mfg 		= new JTextField(30);
     JTextField model		= new JTextField(30);
     JTextField owner		= new JTextField(30);
-    JLabel dccAddress		= new JLabel();
+    DccLocoAddressSelector addrSel = new DccLocoAddressSelector();
+    
     JTextArea comment		= new JTextArea(3,30);
     //JScrollPanes are defined with scroll bars on always to avoid undesireable resizing behavior
     //Without this the field will shrink to minimum size any time the scroll bars become needed and
@@ -59,7 +65,17 @@ public class RosterEntryPane extends javax.swing.JPanel  {
 
         id.setText(r.getId());
         filename.setText(r.getFileName());
-        dccAddress.setText(r.getDccAddress());
+
+        if (r.getDccAddress().equals("")) {
+            // null address, so clear selector
+            addrSel.reset();
+        } else {
+            // non-null address, so load
+            DccLocoAddress tempAddr = new DccLocoAddress(
+                Integer.parseInt(r.getDccAddress()), r.isLongAddress());
+            addrSel.setAddress(tempAddr);
+        }
+        
         roadName.setText(r.getRoadName());
         roadNumber.setText(r.getRoadNumber());
         mfg.setText(r.getMfg());
@@ -76,7 +92,10 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         // add options
         id.setToolTipText(rb.getString("ToolTipID"));
 
-        dccAddress.setToolTipText(rb.getString("ToolTipDccAddress"));
+        addrSel.setEnabled(false);
+        addrSel.setLocked(false);
+        JPanel selPanel = addrSel.getCombinedJPanel();
+        selPanel.setToolTipText(rb.getString("ToolTipDccAddress"));
         decoderModel.setToolTipText(rb.getString("ToolTipDecoderModel"));
         decoderFamily.setToolTipText(rb.getString("ToolTipDecoderFamily"));
         filename.setToolTipText(rb.getString("ToolTipFilename"));
@@ -170,9 +189,8 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         add(row6Label);
 
         cR.gridy = 6;
-        dccAddress.setMinimumSize(minFieldDim);
-        gbLayout.setConstraints(dccAddress,cR);
-        add(dccAddress);
+        gbLayout.setConstraints(selPanel,cR);
+        add(selPanel);
 
         cL.gridy = 7;
         JLabel row7Label = new JLabel(rb.getString("FieldComment"));
@@ -234,12 +252,23 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         if (!r.getMfg().equals(mfg.getText()) ) return true;
         if (!r.getOwner().equals(owner.getText()) ) return true;
         if (!r.getModel().equals(model.getText()) ) return true;
-        if (!r.getDccAddress().equals(dccAddress.getText()) ) return true;
         if (!r.getComment().equals(comment.getText()) ) return true;
         if (!r.getDecoderFamily().equals(decoderFamily.getText()) ) return true;
         if (!r.getDecoderModel().equals(decoderModel.getText()) ) return true;
         if (!r.getDecoderComment().equals(decoderComment.getText()) ) return true;
         if (!r.getId().equals(id.getText()) ) return true;
+
+        DccLocoAddress a = addrSel.getAddress();
+        if (a==null) {
+            if (!r.getDccAddress().equals("")) return true;
+        } else {
+            System.out.println("check for "+a.getNumber());
+            System.out.println(r.getDccAddress());
+            System.out.println(r.isLongAddress());
+            System.out.println(a.isLongAddress());
+            if (! r.getDccAddress().equals(""+a.getNumber()) ) return true;
+            if (!r.isLongAddress()==(a.isLongAddress()) ) return true;
+        }
         return false;
     }
 
@@ -258,7 +287,9 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         return oops;
     }
 
-    /** Update GUI contents to be consistent with the contents of a RosterEntry object **/
+    /** 
+     * Fill a RosterEntry object from GUI contents
+     **/
     public void update(RosterEntry r) {
         r.setId(id.getText());
         r.setRoadName(roadName.getText());
@@ -266,14 +297,27 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         r.setMfg(mfg.getText());
         r.setOwner(owner.getText());
         r.setModel(model.getText());
-        r.setDccAddress(dccAddress.getText());
+        DccLocoAddress a = addrSel.getAddress();
+        r.setDccAddress(""+a.getNumber());
+        r.setLongAddress(a.isLongAddress());
         r.setComment(comment.getText());
         r.setDecoderFamily(decoderFamily.getText());
         r.setDecoderModel(decoderModel.getText());
         r.setDecoderComment(decoderComment.getText());
     }
 
-    public void setDccAddress(String a) { dccAddress.setText(a); }
+    public void setDccAddress(String a) {
+        DccLocoAddress addr = addrSel.getAddress();
+        boolean m = true;
+        if (addr!=null) m = addr.isLongAddress();
+        addrSel.setAddress(new DccLocoAddress(Integer.parseInt(a), m));
+    }
+    public void setDccAddressLong(boolean m) { 
+        DccLocoAddress addr = addrSel.getAddress();
+        int n = 0;
+        if (addr!=null) n = addr.getNumber();
+        addrSel.setAddress(new DccLocoAddress(n, m));
+    }
 
     public void dispose() {
         if (log.isDebugEnabled()) log.debug("dispose");

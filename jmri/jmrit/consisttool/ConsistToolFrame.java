@@ -1,12 +1,4 @@
-/**
- * ConsistToolFrame.java
- *
- * Description:          Frame object for manipulating consists.
- *
- * @author               Paul Bender Copyright (C) 2003
- * @version              $Revision: 1.12 $
- */
-
+// ConsistToolFrame.java
 
 package jmri.jmrit.consisttool;
 
@@ -14,6 +6,7 @@ import jmri.InstanceManager;
 import jmri.Consist;
 import jmri.ConsistManager;
 import jmri.jmrit.roster.*;
+import jmri.DccLocoAddress;
 
 import jmri.jmrit.throttle.ThrottleFrameManager;
 
@@ -23,6 +16,12 @@ import javax.swing.*;
 
 import com.sun.java.util.collections.ArrayList;
 
+/**
+ * Frame object for manipulating consists.
+ *
+ * @author               Paul Bender Copyright (C) 2003
+ * @version              $Revision: 1.13 $
+ */
 public class ConsistToolFrame extends javax.swing.JFrame implements jmri.ConsistListener{
 
     // GUI member declarations
@@ -37,8 +36,7 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
     javax.swing.JButton throttleButton = new javax.swing.JButton();
 
     javax.swing.JLabel textLocoLabel = new javax.swing.JLabel();
-    javax.swing.JTextField locoTextField = new javax.swing.JTextField(4);
-    jmri.jmrit.throttle.ShortLongSelector shortLong = new jmri.jmrit.throttle.ShortLongSelector();
+    jmri.jmrit.DccLocoAddressSelector addrSel = new jmri.jmrit.DccLocoAddressSelector();
     javax.swing.JComboBox locoRosterBox;
 
     javax.swing.JButton addLocoButton = new javax.swing.JButton();
@@ -135,11 +133,7 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
         textLocoLabel.setText("New Locomotive");
         textLocoLabel.setVisible(true);
 
-        locoTextField.setText("");
-        locoTextField.setVisible(true);
-        locoTextField.setToolTipText("Address of A New Locomotive to add to the consist");
-
-        shortLong.setToolTipText("select short or long address for new loco");
+        addrSel.setToolTipText("Address of A New Locomotive to add to the consist");
         
         locoRosterBox = Roster.instance().fullRosterComboBox();
         locoRosterBox.insertItemAt("",0);
@@ -206,9 +200,9 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
         locoPanel.setLayout(new FlowLayout());
 
         locoPanel.add(textLocoLabel);
-        locoPanel.add(locoTextField);
-        if (!InstanceManager.throttleManagerInstance().addressTypeUnique()) 
-            locoPanel.add(shortLong);
+
+        locoPanel.add(addrSel);
+        
         locoPanel.add(locoRosterBox);
         locoPanel.add(locoDirectionNormal);
 
@@ -386,7 +380,7 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
     private void recallConsist() {
 	if(adrTextField.getText().equals("")) {
 	   // Clear any consist information that was present
-	   locoTextField.setText("");
+	   addrSel.reset();
 	   locoRosterBox.setSelectedIndex(0);
 	   if(consistModel.getConsist()!=null){
 		consistModel.getConsist().removeConsistListener(this);
@@ -408,7 +402,7 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
 	selectedConsist.addConsistListener(this);
 
 	// reset the editable locomotive information.
-	locoTextField.setText("");
+	addrSel.reset();
 	locoRosterBox.setSelectedIndex(0);
         locoDirectionNormal.setSelected(true);
 
@@ -439,7 +433,7 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
     }
 
     public void resetLocoButtonActionPerformed(java.awt.event.ActionEvent e) {
-	   locoTextField.setText("");
+	   addrSel.reset();
 	   locoRosterBox.setSelectedIndex(0);
            locoDirectionNormal.setSelected(true);
 	   // if there aren't any locomotives in the consist, don't let
@@ -459,13 +453,13 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
 		int address=Integer.parseInt(adrTextField.getText());
 		if(consistModel.getRowCount()==	ConsistMan.getConsist(address)
 							   .sizeLimit()){
-			locoTextField.setEnabled(false);
+			addrSel.setEnabled(false);
     			locoRosterBox.setEnabled(false);
 			addLocoButton.setEnabled(false);
 			resetLocoButton.setEnabled(false);
 			locoDirectionNormal.setEnabled(false);
 		} else {
-			locoTextField.setEnabled(true);
+			addrSel.setEnabled(true);
     			locoRosterBox.setEnabled(true);
 			addLocoButton.setEnabled(true);
 			resetLocoButton.setEnabled(true);
@@ -478,7 +472,7 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
 			     locoDirectionNormal.setEnabled(true);
 		 }
 	   } else {
-		locoTextField.setEnabled(true);
+		addrSel.setEnabled(true);
     		locoRosterBox.setEnabled(true);
 		addLocoButton.setEnabled(true);
 		resetLocoButton.setEnabled(true);
@@ -493,7 +487,7 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
 	}
 
     public void addLocoButtonActionPerformed(java.awt.event.ActionEvent e) {
-	if(locoTextField.getText().equals("")) { return; }
+	if(addrSel.getAddress()==null) { return; }
 	if(_Consist_Type==Consist.ADVANCED_CONSIST && adrTextField.getText().equals("")) {
            	javax.swing.JOptionPane.showMessageDialog(this,
 						"No Consist Address Selected");
@@ -507,9 +501,9 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
 	     }
 	     else {
 		// We need to set an identifier so we can recall the
-	        // consist.  We're going to use the value of locoTextField
-		// for this
-		adrTextField.setText(locoTextField.getText());
+	    // consist.  We're going to use the locomotive number 
+		// for this, ignoring short/long for now
+		adrTextField.setText(""+addrSel.getAddress().getNumber());
 	     }
 	}
 	int address=Integer.parseInt(adrTextField.getText());
@@ -524,7 +518,9 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
 		}
 		ConsistMan.getConsist(address).setConsistType(_Consist_Type);
 	}
-	int locoaddress=Integer.parseInt(locoTextField.getText());
+	
+	int locoaddress=addrSel.getAddress().getNumber();  // note that this ignores short/long difference!
+	
 	// Make sure the Address in question is allowed for this type of
 	// consist, and add it to the consist if it is
 	if(!ConsistMan.getConsist(address).isAddressAllowed(locoaddress)){
@@ -545,7 +541,8 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
 	if (!(locoRosterBox.getSelectedItem().equals(""))){
            String rosterEntryTitle = locoRosterBox.getSelectedItem().toString();
            RosterEntry entry = Roster.instance().entryFromTitle(rosterEntryTitle);
-		locoTextField.setText(entry.getDccAddress());
+		addrSel.setAddress(new DccLocoAddress(
+		            Integer.parseInt(entry.getDccAddress()), true));  // don't really know long/short, but this will guess right most of the time
         }
     }
 

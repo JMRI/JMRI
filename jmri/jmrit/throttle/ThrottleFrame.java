@@ -1,8 +1,10 @@
 package jmri.jmrit.throttle;
 
 import jmri.DccThrottle;
+import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.ThrottleListener;
+
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,6 +26,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
+
 import jmri.util.JmriJFrame;
 
 import org.jdom.Element;
@@ -36,7 +39,7 @@ import org.jdom.Element;
  *  directed by the interface.
  *
  * @author     Glen Oberhauser
- * @version    $Revision: 1.25 $
+ * @version    $Revision: 1.26 $
  */
 public class ThrottleFrame extends JmriJFrame implements AddressListener, ThrottleListener
 {
@@ -300,8 +303,9 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
 		// Handle disposing of the throttle
 		if (throttle != null)
 		{
+		    DccLocoAddress l = (DccLocoAddress) throttle.getLocoAddress();
 			InstanceManager.throttleManagerInstance().
-				cancelThrottleRequest(throttle.getDccAddress(), this);
+				cancelThrottleRequest(l.getNumber(), this);
 		}
 
 		super.dispose();
