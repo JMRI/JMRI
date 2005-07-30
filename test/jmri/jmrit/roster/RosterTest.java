@@ -17,7 +17,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.roster package & jmrit.roster.Roster class.
  * @author	Bob Jacobsen     Copyright (C) 2001, 2002
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 public class RosterTest extends TestCase {
 
@@ -130,12 +130,14 @@ public class RosterTest extends TestCase {
         RosterEntry e;
         e = new RosterEntry("file name Bob");
         e.setId("Bob");
+        e.setDccAddress("123");
         e.setRoadNumber("123");
         e.setRoadName("SP");
         e.ensureFilenameExists();
         r.addEntry(e);
         e = new RosterEntry("file name Bill");
         e.setId("Bill");
+        e.setDccAddress("456");
         e.setRoadNumber("123");
         e.setRoadName("ATSF");
         e.setDecoderModel("81");

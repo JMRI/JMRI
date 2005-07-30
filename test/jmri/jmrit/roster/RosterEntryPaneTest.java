@@ -5,17 +5,19 @@ import junit.framework.*;
 /**
  * Tests for the jmrit.roster.RosterEntryPane class.
  * @author	Bob Jacobsen     Copyright (C) 2001, 2002
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class RosterEntryPaneTest extends TestCase {
 
     // statics for test objects
-    org.jdom.Element e = null;
-    RosterEntry r = null;
+    org.jdom.Element eOld = null;
+    org.jdom.Element eNew = null;
+    RosterEntry rOld = null;
+    RosterEntry rNew = null;
 
     public void setUp() {
         // create Element
-        e = new org.jdom.Element("locomotive")
+        eOld = new org.jdom.Element("locomotive")
             .addAttribute("id","id info")
             .addAttribute("fileName","file here")
             .addAttribute("roadNumber","431")
@@ -28,19 +30,117 @@ public class RosterEntryPaneTest extends TestCase {
                         )
             ; // end create element
 
-        r = new RosterEntry(e);
+        rOld = new RosterEntry(eOld);
+        
+        eNew = new org.jdom.Element("locomotive")
+            .addAttribute("id","id info")
+            .addAttribute("fileName","file here")
+            .addAttribute("roadNumber","431")
+            .addAttribute("roadName","SP")
+            .addAttribute("mfg","Athearn")
+            .addContent(new org.jdom.Element("decoder")
+                        .addAttribute("family","91")
+                        .addAttribute("model","33")
+                        )
+            .addContent(new org.jdom.Element("locoaddress")
+                .addContent(new org.jdom.Element("dcclocoaddress")
+                        .addAttribute("number","12")
+                        .addAttribute("longaddress","yes")
+                        )
+                )
+            ; // end create element
+
+        rNew = new RosterEntry(eNew);
     }
 
     public void testCreate() {
-        RosterEntryPane p = new RosterEntryPane(r);
+        RosterEntryPane p = new RosterEntryPane(rOld);
+        
+        // copy to a new entry
+        
+        RosterEntry n = new RosterEntry();
+        p.update(n);
+        
         // check for field text contents
-        Assert.assertEquals("file name ", "file here", p.filename.getText());
-        Assert.assertEquals("DCC Address ", "1234", p.dccAddress.getText());
-        Assert.assertEquals("road name ", "SP", p.roadName.getText());
-        Assert.assertEquals("road number ", "431", p.roadNumber.getText());
-        Assert.assertEquals("manufacturer ", "Athearn", p.mfg.getText());
-        Assert.assertEquals("model ", "33",p.decoderModel.getText());
-        Assert.assertEquals("family ", "91", p.decoderFamily.getText());
+        Assert.assertEquals("file name in pane", "file here", p.filename.getText());
+        Assert.assertEquals("file name returned", null, n.getFileName());
+        Assert.assertEquals("DCC Address ", "1234", n.getDccAddress());
+        Assert.assertEquals("road name ", "SP", n.getRoadName());
+        Assert.assertEquals("road number ", "431", n.getRoadNumber());
+        Assert.assertEquals("manufacturer ", "Athearn", n.getMfg());
+        Assert.assertEquals("model ", "33",n.getDecoderModel());
+        Assert.assertEquals("family ", "91", n.getDecoderFamily());
+
+    }
+
+    public void testGuiChanged1() {
+        RosterEntryPane p = new RosterEntryPane(rOld);
+        
+        // copy to a new entry
+                
+        // check for unchanged
+        Assert.assertTrue("initially unchanged", !p.guiChanged(rOld));
+        
+        // change the roster road name entry and check
+        rOld.setRoadName("changed value");
+        Assert.assertTrue("detects change", p.guiChanged(rOld));
+
+    }
+
+    public void testGuiChanged2() {
+        RosterEntryPane p = new RosterEntryPane(rOld);
+        
+        // copy to a new entry
+                
+        // check for unchanged
+        Assert.assertTrue("initially unchanged", !p.guiChanged(rOld));
+        
+        // change the roster road name entry and check
+        rOld.setDccAddress("4321");
+        Assert.assertTrue("detects change", p.guiChanged(rOld));
+
+    }
+
+    public void testGuiChanged3() {
+        RosterEntryPane p = new RosterEntryPane(rNew);
+        
+        // copy to a new entry
+                
+        // check for unchanged
+        Assert.assertTrue("initially unchanged", !p.guiChanged(rNew));
+        
+        // change the roster address type entry and check
+        rNew.setDccAddress("1234");
+        Assert.assertTrue("detects no change", !p.guiChanged(rNew));
+
+    }
+
+    public void testGuiChanged4() {
+        RosterEntryPane p = new RosterEntryPane(rNew);
+        
+        // copy to a new entry
+                
+        // check for unchanged
+        Assert.assertTrue("initially unchanged", !p.guiChanged(rNew));
+        
+        // change the roster address type entry and check
+        rNew.setDccAddress("4321");
+        Assert.assertTrue("detects change", p.guiChanged(rNew));
+
+    }
+
+    public void testGuiChanged5() {
+        RosterEntryPane p = new RosterEntryPane(rNew);
+        
+        // copy to a new entry
+                
+        // check for unchanged
+        Assert.assertTrue("initially unchanged", !p.guiChanged(rNew));
+        
+        // change the roster address type entry and check
+        rNew.setDccAddress("12");
+        p.setDccAddressLong(false);
+        Assert.assertTrue("detects change", p.guiChanged(rNew));
 
     }
 
