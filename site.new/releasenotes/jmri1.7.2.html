@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.7.2.html,v 1.4 2005-07-24 06:09:44 jacobsen Exp $ -->
+<!-- $Id: jmri1.7.2.html,v 1.5 2005-07-31 20:00:02 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -74,7 +74,7 @@
 
 <h3>New warnings for this test version:</h3>
 
-<P>(None)
+<P>We have added additional information to the roster files in this version to help properly handle short/long addressing in systems that allow low addresses (e.g. 65) to be either short or long addresses. The only current system we support that has this capability is NCE.  If you have an NCE system, and you have locomotives with addresses of 127 or less, you should open their roster entries in DecoderPro, check that the proper short or long address is selected,  and save them again.
 
 <h3>Older warnings from this series of test versions:</h3>
 
@@ -169,6 +169,18 @@
 <P>Dave Duchamp updated the LocoNet code so that it reads the status of sensors from the LocoNet when a panel (XML file) is read in.  This will automatically get the current state from the layout once the sensor definitions are read in.
 
 <P>Dave Duchamp updated Routes so that, in addition to "set closed" and "set thrown", they can toggle a Turnout when fired. This is useful for example if you want to use a route to toggle a turnout when a front panel button (Sensor) is pressed.
+
+<P>Lengthened the long LocoNet timeout during programming operations.  This was needed for Fleischmann Twin Centre command stations, which seem to take significantly longer to do read operations than others. Unfortunately, we've not received the test data to know if this timeout is right even now.
+
+<P>Fix a bug in the PM4 programmer where certain versions of the PM42 would not be read properly.  This happened mostly with recent versions of the cards.
+
+<P>By default, XML files are no longer being validated when read.  This greatly improves the startup time for large rosters and decoder definitions.  There's a new "Validate xml file" tool in the debug menu for doing validation if desired.  This change will also make it easier to have backward-compatible DTD changes in the future (although it can't help with previous versions of the library, of course)
+
+<P>Following a suggestion by Dick Bronson, the "store config" menu choices have been made more explicit about what they're doing, to help avoid problems with people storing configuration data over panels files.
+
+<P>When adding signals to the signal table, you can now create a "virtual signal head".  This has no connection to the layout, but can appear (or not appear) on a panel.  For an example of how this might be useful, please see the next item.
+
+<P>Add "repeater signal" capability to the simple signal logic.  Normally, a signal is tell the engineer about the need to slow down:  A yellow preceeds a red signal, and green preceeds yellow.  When "repeater" is selected on the Simple Signal Logic definition panel, however, the signal being defined will show the same state as the one it's protecting:  red will be preceeded by red, yellow by yellow, etc.  This is useful for example in interlockings, where there is not very much space between signals. When combined with virtual signal heads, this can also be used to create more complicated logic. The "CrossoverDemo.xml" file in the xml/samples directory is an example of this.
 
       <hr class="hide">
 <!-- Footer -->
