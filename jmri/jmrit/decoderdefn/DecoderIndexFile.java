@@ -12,7 +12,6 @@ import org.jdom.Attribute;
 import org.jdom.DocType;
 import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.output.XMLOutputter;
 import com.sun.java.util.collections.ArrayList;
 import com.sun.java.util.collections.Hashtable;
 import com.sun.java.util.collections.List;
@@ -33,7 +32,7 @@ import com.sun.java.util.collections.List;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.23 $
+ * @version			$Revision: 1.24 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -278,6 +277,8 @@ public class DecoderIndexFile extends XmlFile {
             index.writeFile("decoderIndex.xml", _instance, sbox);
         } catch (java.io.IOException ex) {
             log.error("Error writing new decoder index file: "+ex.getMessage());
+        } catch (org.jdom.JDOMException ex) {
+            log.error("Error writing new decoder index file: "+ex.getMessage());
         }
     }
 
@@ -396,7 +397,7 @@ public class DecoderIndexFile extends XmlFile {
         }
     }
 
-    public void writeFile(String name, DecoderIndexFile oldIndex, String files[]) throws java.io.IOException {
+    public void writeFile(String name, DecoderIndexFile oldIndex, String files[]) throws org.jdom.JDOMException, java.io.IOException {
         if (log.isInfoEnabled()) log.info("writeFile "+name);
         // This is taken in large part from "Java and XML" page 368
         File file = new File(prefsDir()+name);
@@ -454,13 +455,7 @@ public class DecoderIndexFile extends XmlFile {
         index.addContent(mfgList);
         index.addContent(familyList);
 
-        // write the result to selected file
-        java.io.FileOutputStream o = new java.io.FileOutputStream(file);
-        XMLOutputter fmt = new XMLOutputter();
-        fmt.setNewlines(true);   // pretty printing
-        fmt.setIndent(true);
-        fmt.output(doc, o);
-        o.close();
+        writeXML(file, doc);
 
         // force a read of the new file next time
         _instance = null;

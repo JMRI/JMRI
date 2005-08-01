@@ -12,7 +12,6 @@ import com.sun.java.util.collections.List;
 import org.jdom.DocType;
 import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.output.XMLOutputter;
 
 /**
  * Roster manages and manipulates a roster of locomotives.
@@ -40,7 +39,7 @@ import org.jdom.output.XMLOutputter;
  * sort is done manually each time an entry is added.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001;  Dennis Miller Copyright 2004
- * @version	$Revision: 1.27 $
+ * @version	$Revision: 1.28 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -205,7 +204,7 @@ public class Roster extends XmlFile {
      * @param name Filename for new file, including path info as needed.
      * @throws IOException
      */
-    void writeFile(String name) throws java.io.IOException {
+    void writeFile(String name) throws org.jdom.JDOMException, java.io.FileNotFoundException, java.io.IOException {
         if (log.isDebugEnabled()) log.debug("writeFile "+name);
         // This is taken in large part from "Java and XML" page 368
         File file = findFile(name);
@@ -271,13 +270,7 @@ public class Roster extends XmlFile {
         for (int i=0; i<numEntries(); i++) {
             values.addContent(((RosterEntry)_list.get(i)).store());
         }
-        // write the result to selected file
-        java.io.FileOutputStream o = new java.io.FileOutputStream(file);
-        XMLOutputter fmt = new XMLOutputter();
-        fmt.setNewlines(true);   // pretty printing
-        fmt.setIndent(true);
-        fmt.output(doc, o);
-        o.close();
+        writeXML(file, doc);
 
         //Now that the roster has been rewritten in file form we need to
         //restore the RosterEntry object to its normal \n state for the

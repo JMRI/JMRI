@@ -8,7 +8,6 @@ import com.sun.java.util.collections.List;
 import org.jdom.DocType;
 import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.output.XMLOutputter;
 
 /**
  * Provides the mechanisms for storing an entire layout configuration
@@ -16,7 +15,7 @@ import org.jdom.output.XMLOutputter;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class LayoutConfigXML extends jmri.jmrit.XmlFile {
 
@@ -55,13 +54,7 @@ public class LayoutConfigXML extends jmri.jmrit.XmlFile {
 
                 }
             }
-            // write the result to selected file
-            java.io.FileOutputStream o = new java.io.FileOutputStream(file);
-            XMLOutputter fmt = new XMLOutputter();
-            fmt.setNewlines(true);   // pretty printing
-            fmt.setIndent(true);
-            fmt.output(doc, o);
-            o.close();
+            writeXML(file, doc);
         }
         catch (Exception e) {
             log.error(e);

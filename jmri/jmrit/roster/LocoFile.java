@@ -12,7 +12,6 @@ import java.io.File;
 import com.sun.java.util.collections.List;
 import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.output.XMLOutputter;
 
 /**
  * Represents and manipulates a locomotive definition, both as a file and
@@ -24,7 +23,7 @@ import org.jdom.output.XMLOutputter;
  * @author    Bob Jacobsen     Copyright (C) 2001, 2002
  * @author    Dennis Miller    Copyright (C) 2004
  * @author    Howard G. Penny  Copyright (C) 2005
- * @version   $Revision: 1.17 $
+ * @version   $Revision: 1.18 $
  * @see       jmri.jmrit.roster.RosterEntry
  * @see       jmri.jmrit.roster.Roster
  */
@@ -223,13 +222,7 @@ class LocoFile extends XmlFile {
                     );
             }
 
-            // write the result to selected file
-            java.io.FileOutputStream o = new java.io.FileOutputStream(file);
-            XMLOutputter fmt = new XMLOutputter();
-            fmt.setNewlines(true);   // pretty printing
-            fmt.setIndent(true);
-            fmt.output(doc, o);
-            o.close();
+            writeXML(file, doc);
 
             // mark file as OK
             variableModel.setFileDirty(false);
@@ -266,13 +259,7 @@ class LocoFile extends XmlFile {
             // Update the locomotive.id element
             pRootElement.getChild("locomotive").getAttribute("id").setValue(pEntry.getId());
 
-            // write the result to selected file
-            java.io.FileOutputStream o = new java.io.FileOutputStream(pFile);
-            XMLOutputter fmt = new XMLOutputter();
-            fmt.setNewlines(true);   // pretty printing
-            fmt.setIndent(true);
-            fmt.output(doc, o);
-            o.close();
+            writeXML(pFile, doc);
         }
         catch (Exception ex) {
             log.error(ex);
