@@ -17,7 +17,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.roster package & jmrit.roster.Roster class.
  * @author	Bob Jacobsen     Copyright (C) 2001, 2002
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 public class RosterTest extends TestCase {
 
@@ -111,7 +111,7 @@ public class RosterTest extends TestCase {
         Assert.assertEquals("search for 3 ", 3, t.matchingList(null, "123", null, null, null, null, null).size());
     }
 
-    public static Roster createTestRoster() throws java.io.IOException {
+    public static Roster createTestRoster() throws org.jdom.JDOMException, java.io.IOException, java.io.FileNotFoundException {
         // this uses explicit filenames intentionally, to ensure that
         // the resulting files go into the test tree area.
 
