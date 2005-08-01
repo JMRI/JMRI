@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.JSeparator;
 
 /**
  * An icon to display a status of a Memory.<P>
@@ -16,7 +17,7 @@ import javax.swing.JPopupMenu;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -174,6 +175,10 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     }
 
 
+    public void setSelectable(boolean b) {selectable = b;}
+    public boolean isSelectable() { return selectable;}
+    boolean selectable = false;
+    
     /**
      * Pop-up displays the Memory name, allows you to rotate the icons
      */
@@ -201,7 +206,21 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     dispose();
                 }
             });
-
+            if (selectable) {
+                popup.add(new JSeparator());
+		
+		        com.sun.java.util.collections.Iterator iterator = map.keySet().iterator();
+    	        while (iterator.hasNext()) {
+    		        String key = iterator.next().toString();
+    		        String value = ((NamedIcon)map.get(key)).getName();
+                    popup.add(new AbstractAction(key) {
+                        public void actionPerformed(ActionEvent e) {
+                            String key = e.getActionCommand();
+                            memory.setValue(key);
+                        }
+                    });
+    	        }
+            }  // end of selectable
         } // end creation of pop-up menu
 
         popup.show(e.getComponent(), e.getX(), e.getY());

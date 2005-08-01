@@ -13,7 +13,7 @@ import com.sun.java.util.collections.List;
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class MemoryIconXml implements XmlAdapter {
 
@@ -36,6 +36,7 @@ public class MemoryIconXml implements XmlAdapter {
         element.addAttribute("memory", p.getMemory().getSystemName());
         element.addAttribute("x", ""+p.getX());
         element.addAttribute("y", ""+p.getY());
+        element.addAttribute("selectable", (p.isSelectable()?"yes":"no"));
 
         element.addAttribute("class", "jmri.jmrit.display.configurexml.MemoryIconXml");
         if (p.getDefaultIcon()!=null)
@@ -43,16 +44,17 @@ public class MemoryIconXml implements XmlAdapter {
 
 		// include contents
 		com.sun.java.util.collections.HashMap map = p.getMap();
-		com.sun.java.util.collections.Iterator iterator = map.keySet().iterator();
-    	while (iterator.hasNext()) {
-    		String key = iterator.next().toString();
-    		String value = ((NamedIcon)map.get(key)).getName();
-    		Element e2 = new Element("memorystate");
-    		e2.addAttribute("value", key);
-    		e2.addAttribute("icon", value);
-    		element.addContent(e2);
-    	}
-
+		if (map!=null) {
+		    com.sun.java.util.collections.Iterator iterator = map.keySet().iterator();
+    	    while (iterator.hasNext()) {
+    		    String key = iterator.next().toString();
+    		    String value = ((NamedIcon)map.get(key)).getName();
+    		    Element e2 = new Element("memorystate");
+    		    e2.addAttribute("value", key);
+    		    e2.addAttribute("icon", value);
+    		    element.addContent(e2);
+    	    }
+        }
         return element;
     }
 
@@ -77,6 +79,10 @@ public class MemoryIconXml implements XmlAdapter {
 
         Attribute a = element.getAttribute("defaulticon");
         if (a!=null) l.setDefaultIcon(CatalogPane.getIconByName(a.getValue()));
+        
+        a = element.getAttribute("selectable");
+        if (a!=null && a.getValue().equals("yes")) l.setSelectable(true);
+        else l.setSelectable(false);
         
         // get the icon pairs
         List items = element.getChildren();
