@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.45 2005-06-08 02:44:09 innkeeper Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.46 2005-08-01 12:46:38 jacobsen Exp $ -->
 
 <!-- This DTD is Copyright 2001, 2003 JMRI.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -197,7 +197,8 @@
 
 <!ELEMENT paneleditor (positionablelabel|sensoricon|turnouticon|
 						securityelementicon | signalheadicon |
-						reportericon | memoryicon | fastclock)* >
+						reportericon | memoryicon |
+					    fastclock)* >
   <!ATTLIST paneleditor class		CDATA #REQUIRED>
   <!ATTLIST paneleditor name		CDATA #IMPLIED>
   <!ATTLIST paneleditor x			CDATA #REQUIRED>
@@ -257,7 +258,8 @@
     <!ATTLIST memoryicon rotate  	CDATA #IMPLIED>
     <!ATTLIST memoryicon memory	CDATA #IMPLIED>
     <!ATTLIST memoryicon defaulticon CDATA #IMPLIED>
-    
+    <!ATTLIST memoryicon selectable ( yes | no ) "no" >
+        
   <!ELEMENT memorystate EMPTY>
     <!ATTLIST memorystate value	CDATA #REQUIRED>
     <!ATTLIST memorystate icon	CDATA #REQUIRED>
@@ -318,5 +320,6 @@
   <!ATTLIST block watchedsignal1      CDATA #IMPLIED>
   <!ATTLIST block watchedsignal2      CDATA #IMPLIED>
   <!ATTLIST block useflashyellow      CDATA #IMPLIED>
+  <!ATTLIST block distantsignal    (no|yes) "no" >
 
 <!ELEMENT signals EMPTY >
