@@ -24,7 +24,7 @@ import javax.swing.JTextField;
  * SignalHeadTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -137,16 +137,17 @@ public class SignalHeadTableAction extends AbstractTableAction {
     JLabel v2Label = new JLabel("");
     JLabel v3Label = new JLabel("");
 
-    String SE8c4Aspect = rb.getString("StringSE8c4aspect");
-    String TripleTurnout = rb.getString("StringTripleTurnout");
-    String DoubleTurnout = rb.getString("StringDoubleTurnout");
+    String se8c4Aspect = rb.getString("StringSE8c4aspect");
+    String tripleTurnout = rb.getString("StringTripleTurnout");
+    String doubleTurnout = rb.getString("StringDoubleTurnout");
+    String virtualHead = rb.getString("StringVirtual");
     
     void addPressed(ActionEvent e) {
         if (addFrame==null) {
             addFrame = new JFrame(rb.getString("TitleAddSignal"));
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             addFrame.getContentPane().add(typeBox = new JComboBox(new String[]{
-                SE8c4Aspect, TripleTurnout, DoubleTurnout
+                se8c4Aspect, tripleTurnout, doubleTurnout, virtualHead
             }));
             typeBox.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e) {
@@ -187,25 +188,36 @@ public class SignalHeadTableAction extends AbstractTableAction {
     }
 
     void typeChanged() {
-        if (SE8c4Aspect.equals(typeBox.getSelectedItem())) {
+        if (se8c4Aspect.equals(typeBox.getSelectedItem())) {
             nameLabel.setText(rb.getString("LabelUserName"));
             v1Label.setText(rb.getString("LabelTurnoutNumber"));
+            to1.setVisible(true);
             v2Label.setText("");to2.setVisible(false);
             v3Label.setText("");to3.setVisible(false);
 
-        } else if (TripleTurnout.equals(typeBox.getSelectedItem())) {
+        } else if (tripleTurnout.equals(typeBox.getSelectedItem())) {
             nameLabel.setText(rb.getString("LabelSystemName"));
             v1Label.setText(rb.getString("LabelGreenTurnoutNumber"));
+            to1.setVisible(true);
             v2Label.setText(rb.getString("LabelYellowTurnoutNumber"));
             to2.setVisible(true);
             v3Label.setText(rb.getString("LabelRedTurnoutNumber"));
             to3.setVisible(true);
             
-        } else if (DoubleTurnout.equals(typeBox.getSelectedItem())) {
+        } else if (doubleTurnout.equals(typeBox.getSelectedItem())) {
             nameLabel.setText(rb.getString("LabelSystemName"));
             v1Label.setText(rb.getString("LabelGreenTurnoutNumber"));
+            to1.setVisible(true);
             v2Label.setText(rb.getString("LabelRedTurnoutNumber"));
             to2.setVisible(true);
+            v3Label.setVisible(false);
+            to3.setVisible(false);
+        } else if (virtualHead.equals(typeBox.getSelectedItem())) {
+            nameLabel.setText(rb.getString("LabelSystemName"));
+            v1Label.setVisible(false);
+            to1.setVisible(false);
+            v2Label.setVisible(false);
+            to2.setVisible(false);
             v3Label.setVisible(false);
             to3.setVisible(false);
         } else log.error("Unexpected type in typeChanged: "+typeBox.getSelectedItem());
@@ -213,10 +225,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
     void okPressed(ActionEvent e) {
         SignalHead s;
-        if (SE8c4Aspect.equals(typeBox.getSelectedItem())) {
+        if (se8c4Aspect.equals(typeBox.getSelectedItem())) {
             s = new jmri.jmrix.loconet.SE8cSignalHead(Integer.parseInt(to1.getText()),name.getText());
             InstanceManager.signalHeadManagerInstance().register(s);
-        } else if (TripleTurnout.equals(typeBox.getSelectedItem())) {
+        } else if (tripleTurnout.equals(typeBox.getSelectedItem())) {
             Turnout t1 = InstanceManager.turnoutManagerInstance().provideTurnout(to1.getText());
             Turnout t2 = InstanceManager.turnoutManagerInstance().provideTurnout(to2.getText());
             Turnout t3 = InstanceManager.turnoutManagerInstance().provideTurnout(to3.getText());
@@ -229,7 +241,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             }
             s = new jmri.TripleTurnoutSignalHead(name.getText(),t1, t2, t3);
             InstanceManager.signalHeadManagerInstance().register(s);
-        } else if (DoubleTurnout.equals(typeBox.getSelectedItem())) {
+        } else if (doubleTurnout.equals(typeBox.getSelectedItem())) {
             Turnout t1 = InstanceManager.turnoutManagerInstance().provideTurnout(to1.getText());
             Turnout t2 = InstanceManager.turnoutManagerInstance().provideTurnout(to2.getText());
             if (t1==null) log.warn("Could not provide turnout "+to1.getText());
@@ -239,6 +251,9 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 return;
             }
             s = new jmri.DoubleTurnoutSignalHead(name.getText(),t1, t2);
+            InstanceManager.signalHeadManagerInstance().register(s);
+        } else if (virtualHead.equals(typeBox.getSelectedItem())) {
+            s = new jmri.VirtualSignalHead(name.getText());
             InstanceManager.signalHeadManagerInstance().register(s);
         } else log.error("Unexpected type: "+typeBox.getSelectedItem());
     }
