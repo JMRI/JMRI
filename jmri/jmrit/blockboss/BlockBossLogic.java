@@ -39,7 +39,7 @@ import java.util.Hashtable;
  * use with CTC logic, etc.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 
 public class BlockBossLogic extends Siglet {
@@ -230,6 +230,9 @@ public class BlockBossLogic extends Siglet {
         return protectWithFlashing;
     }
 
+    public void setDistantSignal(boolean d) { distantSignal = d; }
+    public boolean getDistantSignal() { return distantSignal; }
+    
     boolean mHold = false;
     public boolean getHold() {return mHold;}
     public void setHold(boolean m) { 
@@ -249,6 +252,7 @@ public class BlockBossLogic extends Siglet {
     SignalHead watchedSignal2 = null;
     SignalHead watchedSignal2Alt = null;
     boolean protectWithFlashing = false;
+    boolean distantSignal = false;
 
     /**
      * Define the siglet's input and output.
@@ -379,6 +383,10 @@ public class BlockBossLogic extends Siglet {
         if (fastestColor1()==SignalHead.RED)
             appearance = SignalHead.YELLOW;
 
+        // if distant signal, show exactly what the home signal does
+        if (distantSignal)
+            appearance = fastestColor1();
+            
         // check for red overriding yellow or green
         if (watchSensor1!=null && watchSensor1.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
         if (watchSensor2!=null && watchSensor2.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
@@ -398,6 +406,10 @@ public class BlockBossLogic extends Siglet {
             appearance = SignalHead.FLASHYELLOW;
         if (fastestColor1()==SignalHead.RED)
             appearance = SignalHead.YELLOW;
+
+        // if distant signal, show exactly what the home signal does
+        if (distantSignal)
+            appearance = fastestColor1();
 
         // check for red overriding yellow or green
         if (watchSensor1!=null && watchSensor1.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
@@ -420,6 +432,10 @@ public class BlockBossLogic extends Siglet {
             appearance = SignalHead.FLASHYELLOW;
         if (fastestColor1()==SignalHead.RED)
             appearance = SignalHead.YELLOW;
+
+        // if distant signal, show exactly what the home signal does
+        if (distantSignal)
+            appearance = fastestColor1();
 
         // check for red overriding yellow or green
         if (watchSensor1!=null && watchSensor1.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
@@ -448,6 +464,10 @@ public class BlockBossLogic extends Siglet {
             appearance = SignalHead.FLASHYELLOW;
         if (s!=null && s.getAppearance()==SignalHead.RED)
             appearance = SignalHead.YELLOW;
+        // if distant signal, show exactly what the home signal does
+        if (s!=null && distantSignal)
+            appearance = s.getAppearance();
+          
 
         // check for red overriding yellow or green
         if (watchSensor1!=null && watchSensor1.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;

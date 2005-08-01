@@ -11,7 +11,7 @@ import org.jdom.Element;
  * Handle XML persistance of Simple Signal Logic objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2005
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class BlockBossLogicXml implements XmlAdapter {
 
@@ -63,6 +63,7 @@ public class BlockBossLogicXml implements XmlAdapter {
                 block.addAttribute("watchedsignal2alt", p.getWatchedSignal2Alt());
             }
             block.addAttribute("useflashyellow", ""+p.getUseFlash());
+            block.addAttribute("distantsignal", ""+p.getDistantSignal());
             blocks.addContent(block);
 
         }
@@ -96,8 +97,12 @@ public class BlockBossLogicXml implements XmlAdapter {
 
             try {
                 bb.setMode(block.getAttribute("mode").getIntValue());
+                if (block.getAttribute("distantsignal")!=null)
+                    bb.setDistantSignal(block.getAttributeValue("distantsignal").equals("yes"));
+                    
                 if (block.getAttribute("watchedturnout")!=null)
                     bb.setTurnout(block.getAttributeValue("watchedturnout"));
+                    
                 if (block.getAttribute("watchedsignal1")!=null)
                     bb.setWatchedSignal1(block.getAttributeValue("watchedsignal1"),
                                         block.getAttribute("useflashyellow").getBooleanValue());

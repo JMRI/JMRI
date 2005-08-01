@@ -31,7 +31,7 @@ import javax.swing.*;
  * The individual items all share data models to simplify the logic.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 
 public class BlockBossFrame extends JFrame {
@@ -45,6 +45,7 @@ public class BlockBossFrame extends JFrame {
     JTextField sNextSignalField1    = new JTextField(6);
     JTextField sNextSignalField1Alt = new JTextField(6);
     JCheckBox sFlashBox;
+    JCheckBox sDistantBox;
 
     JPanel modeTrailMain                = new JPanel();
     JRadioButton buttonTrailMain;
@@ -56,6 +57,7 @@ public class BlockBossFrame extends JFrame {
     JTextField tmNextSignalField1       = new JTextField(6);
     JTextField tmNextSignalField1Alt    = new JTextField(6);
     JCheckBox tmFlashBox;
+    JCheckBox tmDistantBox;
 
     JPanel modeTrailDiv                 = new JPanel();
     JRadioButton buttonTrailDiv;
@@ -67,6 +69,7 @@ public class BlockBossFrame extends JFrame {
     JTextField tdNextSignalField1       = new JTextField(6);
     JTextField tdNextSignalField1Alt    = new JTextField(6);
     JCheckBox tdFlashBox;
+    JCheckBox tdDistantBox;
 
     JPanel modeFacing               = new JPanel();
     JRadioButton buttonFacing;
@@ -80,6 +83,7 @@ public class BlockBossFrame extends JFrame {
     JTextField fNextSignalField2    = new JTextField(6);
     JTextField fNextSignalField2Alt = new JTextField(6);
     JCheckBox fFlashBox;
+    JCheckBox fDistantBox;
 
     JTextField outSignalField;
 
@@ -96,7 +100,7 @@ public class BlockBossFrame extends JFrame {
         ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
         JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
         menuBar.add(fileMenu);
-        fileMenu.add(new jmri.configurexml.StoreXmlConfigAction());
+        fileMenu.add(new jmri.configurexml.SaveMenu());
         setJMenuBar(menuBar);
 
         // create GUI items
@@ -107,6 +111,14 @@ public class BlockBossFrame extends JFrame {
         tdFlashBox.setModel(sFlashBox.getModel());
         fFlashBox  = new JCheckBox("With Flashing Yellow");
         fFlashBox.setModel(sFlashBox.getModel());
+
+        sDistantBox  = new JCheckBox("Is Distant Signal");
+        tmDistantBox = new JCheckBox("Is Distant Signal");
+        tmDistantBox.setModel(sDistantBox.getModel());
+        tdDistantBox = new JCheckBox("Is Distant Signal");
+        tdDistantBox.setModel(sDistantBox.getModel());
+        fDistantBox  = new JCheckBox("Is Distant Signal");
+        fDistantBox.setModel(sDistantBox.getModel());
 
         buttonSingle = new JRadioButton("On Single Block");
         buttonTrailMain = new JRadioButton("Main Leg of Trailing-Point Turnout");
@@ -219,6 +231,8 @@ public class BlockBossFrame extends JFrame {
         line.add(sFlashBox);
         modeSingle.add(line);
 
+        modeSingle.add(sDistantBox);
+        
         return modeSingle;
     }
 
@@ -246,6 +260,8 @@ public class BlockBossFrame extends JFrame {
         line.add(tmFlashBox);
         modeTrailMain.add(line);
 
+        modeTrailMain.add(tmDistantBox);
+        
         return modeTrailMain;
     }
 
@@ -273,6 +289,8 @@ public class BlockBossFrame extends JFrame {
         line.add(tdFlashBox);
         modeTrailDiv.add(line);
 
+        modeTrailDiv.add(tdDistantBox);
+        
         return modeTrailDiv;
     }
 
@@ -310,6 +328,8 @@ public class BlockBossFrame extends JFrame {
         line.add(fFlashBox);
         modeFacing.add(line);
 
+        modeFacing.add(fDistantBox);
+        
         return modeFacing;
     }
 
@@ -338,6 +358,7 @@ public class BlockBossFrame extends JFrame {
 
         b.setWatchedSignal1(sNextSignalField1.getText(), sFlashBox.isSelected());
         b.setWatchedSignal1Alt(sNextSignalField1Alt.getText());
+        b.setDistantSignal(sDistantBox.isSelected());
         b.retain();
         b.start();
     }
@@ -353,6 +374,7 @@ public class BlockBossFrame extends JFrame {
 
         b.setWatchedSignal1(tmNextSignalField1.getText(), tmFlashBox.isSelected());
         b.setWatchedSignal1Alt(tmNextSignalField1Alt.getText());
+        b.setDistantSignal(tmDistantBox.isSelected());
         b.retain();
         b.start();
     }
@@ -367,6 +389,7 @@ public class BlockBossFrame extends JFrame {
 
         b.setWatchedSignal1(tdNextSignalField1.getText(), tdFlashBox.isSelected());
         b.setWatchedSignal1Alt(tdNextSignalField1Alt.getText());
+        b.setDistantSignal(tdDistantBox.isSelected());
         b.retain();
         b.start();
     }
@@ -383,6 +406,7 @@ public class BlockBossFrame extends JFrame {
         b.setWatchedSignal1Alt(fNextSignalField1Alt.getText());
         b.setWatchedSignal2(fNextSignalField2.getText());
         b.setWatchedSignal2Alt(fNextSignalField2Alt.getText());
+        b.setDistantSignal(fDistantBox.isSelected());
         b.retain();
         b.start();
     }
@@ -405,6 +429,7 @@ public class BlockBossFrame extends JFrame {
         fNextSignalField2Alt.setText(b.getWatchedSignal2Alt());
 
         sFlashBox.setSelected(b.getUseFlash());
+        sDistantBox.setSelected(b.getDistantSignal());
 
         int mode = b.getMode();
         if (mode == BlockBossLogic.SINGLEBLOCK)
