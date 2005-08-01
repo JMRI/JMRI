@@ -23,7 +23,7 @@ import jmri.util.com.sun.Comparator;
  * Frame providing a table of NamedBeans.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class BeanTableFrame extends javax.swing.JFrame {
 
@@ -57,7 +57,7 @@ public class BeanTableFrame extends javax.swing.JFrame {
         ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
         JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
         menuBar.add(fileMenu);
-        fileMenu.add(new jmri.configurexml.StoreXmlConfigAction());
+        fileMenu.add(new jmri.configurexml.SaveMenu());
         setJMenuBar(menuBar);
 
         // install items in GUI
