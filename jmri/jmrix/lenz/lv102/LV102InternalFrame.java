@@ -17,13 +17,26 @@ import jmri.ProgrammerException;
  * It allows the user to set the Track Voltage  and E-line status.
  *
  * @author			Paul Bender  Copyright (C) 2005
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
-public class LV102InternalFrame extends javax.swing.JInternalFrame implements jmri.ProgListener {
+public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
     private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.lv102.LV102Bundle");
 
+    private progReplyListener progListener = null;
+    private Thread progListenerThread = null;
+
+    final static int waitValue = 1000; // number of ms to wait after a 
+				       // programming operation.  This 
+				       // should not be more than 15.
+
    public LV102InternalFrame() {
+
+        // Set up the programmer listener
+	
+	progListener = new progReplyListener(this);
+	progListenerThread = new Thread(progListener);
+	progListenerThread.start();
 
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
@@ -45,9 +58,10 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame implements jm
         JPanel pane2 = new JPanel();
         pane2.add(new JLabel(rb.getString("LV102RailCom")));
         pane2.add(railComBox);
+        pane2.add(new JLabel(rb.getString("LV102RailComMode")));
+        pane2.add(railComModeBox);
         pane2.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
         getContentPane().add(pane2);
-
 
         JPanel pane3 = new JPanel();
 	
@@ -70,6 +84,8 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame implements jm
         getContentPane().add(pane3);
 
         // Initilize the Combo Boxes
+
+	/* configure the voltage selection box */
         voltBox.setVisible(true);
         voltBox.setToolTipText(rb.getString("LV102TrackTip"));
         for (int i=0; i<validVoltage.length;i++)
@@ -78,6 +94,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame implements jm
         }
 	voltBox.setSelectedIndex(23);
 
+ 	/* Configure the E-Line Active/Inactive box */
         eLineBox.setVisible(true);
         eLineBox.setToolTipText(rb.getString("LV102ELineTip"));
         for (int i=0; i<validELineStatus.length;i++)
@@ -86,6 +103,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame implements jm
         }
 	eLineBox.setSelectedIndex(3);
 
+	/* Configure the RailCom Active/Inactive box */
         railComBox.setVisible(true);
         railComBox.setToolTipText(rb.getString("LV102RailComTip"));
         for (int i=0; i<validRailComStatus.length;i++)
@@ -94,10 +112,23 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame implements jm
         }
 	railComBox.setSelectedIndex(2);
 
-        CurrentStatus.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
-        CurrentStatus.setVisible(true);
-	//CurrentStatus.setText(rb.getString("LV102StatusInitial"));
-        getContentPane().add(CurrentStatus);
+	/* Configure the RailCom Mode selection box */
+        railComModeBox.setVisible(true);
+        railComModeBox.setToolTipText(rb.getString("LV102RailComModeTip"));
+        for (int i=0; i<validRailComMode.length;i++)
+        {
+           railComModeBox.addItem(validRailComMode[i]);
+        }
+	railComModeBox.setSelectedIndex(2);
+
+	synchronized(CurrentStatus) {
+          CurrentStatus.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
+          CurrentStatus.setVisible(true);
+	  CurrentStatus.setText(" ");
+	  if(log.isDebugEnabled()) 
+	     log.debug("Current Status: ");
+          getContentPane().add(CurrentStatus);
+ 	}
 
         // and prep for display
         pack();
@@ -132,7 +163,11 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame implements jm
 	// changes in the e-Line box
 	eLineBox.addActionListener( new ActionListener() {
 		public void actionPerformed(ActionEvent a) {
-			CurrentStatus.setText(rb.getString("LV102StatusChanged"));
+			synchronized(CurrentStatus) {
+			   CurrentStatus.setText(rb.getString("LV102StatusChanged"));
+	     		   if(log.isDebugEnabled()) 
+			      log.debug("Current Status: " + rb.getString("LV102StatusChanged"));
+			}
 		}
 	   }
 	);
@@ -141,7 +176,24 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame implements jm
 	// changes in the RailCom box
 	railComBox.addActionListener( new ActionListener() {
 		public void actionPerformed(ActionEvent a) {
-			CurrentStatus.setText(rb.getString("LV102StatusChanged"));
+			synchronized(CurrentStatus) {
+			   CurrentStatus.setText(rb.getString("LV102StatusChanged"));
+	     		   if(log.isDebugEnabled()) 
+			      log.debug("Current Status: " + rb.getString("LV102StatusChanged"));
+			}
+		}
+	   }
+	);
+
+	// install a handler to set the status line when the selected item 
+	// changes in the RailComMode box
+	railComModeBox.addActionListener( new ActionListener() {
+		public void actionPerformed(ActionEvent a) {
+			synchronized(CurrentStatus) {
+			   CurrentStatus.setText(rb.getString("LV102StatusChanged"));
+	     		   if(log.isDebugEnabled()) 
+			      log.debug("Current Status: " + rb.getString("LV102StatusChanged"));
+			}
 		}
 	   }
 	);
@@ -150,7 +202,11 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame implements jm
 	// changes in the volt box
 	voltBox.addActionListener( new ActionListener() {
 		public void actionPerformed(ActionEvent a) {
-			CurrentStatus.setText(rb.getString("LV102StatusChanged"));
+			synchronized(CurrentStatus) {
+			   CurrentStatus.setText(rb.getString("LV102StatusChanged"));
+	     		   if(log.isDebugEnabled()) 
+			      log.debug("Current Status: " + rb.getString("LV102StatusChanged"));
+			}
 		}
 	   }
 	);
@@ -171,6 +227,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame implements jm
     JComboBox voltBox = new javax.swing.JComboBox();
     JComboBox eLineBox = new javax.swing.JComboBox();
     JComboBox railComBox = new javax.swing.JComboBox();
+    JComboBox railComModeBox = new javax.swing.JComboBox();
 
     JLabel CurrentStatus = new JLabel(" ");
 
@@ -187,119 +244,317 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame implements jm
     protected String [] validRailComStatus = new String[]{rb.getString("LV102RailComActive"),rb.getString("LV102RailComInactive"),""};
     protected int [] validRailComStatusValues = new int[]{93,92,0};
 
+    protected String [] validRailComMode = new String[]{rb.getString("LV102RailCom3BitMode"),rb.getString("LV102RailCom4BitMode"),""};
+    protected int [] validRailComModeValues = new int[]{94,95,0};
+
     //Send Power Station settings
     void writeLV102Settings() {
 
+	// Obtain an ops mode programmer instance
         Programmer opsProg = jmri.InstanceManager.programmerManagerInstance()
                                     .getOpsModeProgrammer(false,00);
 
+	// write the values to the power station.
+	writeVoltSetting(opsProg);
+	writeELineSetting(opsProg);
+	writeRailComSetting(opsProg);
+	writeRailComModeSetting(opsProg);
+
+        // we're done now, so we can release the programmer.
+        jmri.InstanceManager.programmerManagerInstance()
+                    .releaseOpsModeProgrammer(opsProg);
+    }
+
+    // Write the voltage setting
+    void writeVoltSetting(Programmer opsProg) {
         if((String)voltBox.getSelectedItem()!="" &&
            (String)voltBox.getSelectedItem()!=null) {
         
           if(log.isDebugEnabled()) log.debug("Selected Voltage: " +voltBox.getSelectedItem()); 
-
-          /* First, send the ops mode programing command to enter
-          programing mode */
- 	  try {
-              opsProg.writeCV(7,50,this);
-            } catch(ProgrammerException e) {
-              // Don't do anything with this yet
-            }
-	  
-	  /* Pause briefly to give the booster a chance to change 
-	     into It's programming mode */
-          synchronized(this) {
+	  synchronized(CurrentStatus) {
+	     CurrentStatus.setText(rb.getString("LV102StatusProgMode"));
+	     CurrentStatus.doLayout();
+	     if(log.isDebugEnabled()) 
+		log.debug("Current Status: " + rb.getString("LV102StatusProgMode"));
+	     /* Pause briefly to give the user a chance to see what is 
+                happening */
 		try {
-			wait(250);
+			CurrentStatus.wait(waitValue);
 		} catch(java.lang.InterruptedException ie1) {
 			// Don't do anything with this yet
 		}
-	  }
 
-          /* Next, send the ops mode programing command for the voltage 
-          we want */
- 	  try {
-              opsProg.writeCV(7,validVoltageValues[voltBox.getSelectedIndex()],this);
-            } catch(ProgrammerException e) {
-              // Don't do anything with this yet
-            }
+             /* First, send the ops mode programing command to enter
+             programing mode */
+ 	     try {
+                 opsProg.writeCV(7,50,progListener);
+             } catch(ProgrammerException e) {
+                 // Don't do anything with this yet
+             }
+	  
+	     /* Pause briefly to give the booster a chance to change 
+	        into It's programming mode */
+		try {
+			CurrentStatus.wait(waitValue);
+		} catch(java.lang.InterruptedException ie1) {
+			// Don't do anything with this yet
+		}
+
+	     CurrentStatus.setText(rb.getString("LV102StatusWriteVolt"));
+	     CurrentStatus.doLayout();
+	     if(log.isDebugEnabled()) 
+	        log.debug("Current Status: " + rb.getString("LV102StatusWriteVolt"));
+
+             /* Next, send the ops mode programing command for the voltage 
+                we want */
+ 	     try {
+                opsProg.writeCV(7,validVoltageValues[voltBox.getSelectedIndex()],progListener);
+             } catch(ProgrammerException e) {
+                // Don't do anything with this yet
+             }
+
+	     /* Pause briefly to wait for the programmer to send back a 
+		reply */ 
+	     try {
+		CurrentStatus.wait(waitValue);
+	     } catch(java.lang.InterruptedException ie1) {
+		// Don't do anything with this yet
+	     }
+          }  // End of synchronized(CurrentStatus) block for voltage setting
         } else { 
 		if(log.isDebugEnabled()) log.debug("No Voltage Selected");
 	}
+    }
 
-	CurrentStatus.setText(rb.getString("LV102StatusWriteVolt"));
-
+    // Write the E-Line setting
+    void writeELineSetting(Programmer opsProg) {
         if((String)eLineBox.getSelectedItem()!="" &&
            (String)eLineBox.getSelectedItem()!=null) {
+
           if(log.isDebugEnabled()) log.debug("E-Line Setting: " +eLineBox.getSelectedItem());
-          /* First, send the ops mode programing command to enter
-          programing mode */
-   	  try {
-              opsProg.writeCV(7,50,this);
-            } catch(ProgrammerException e) {
-              // Don't do anything with this yet
-            }
-
-	  /* Pause briefly to give the booster a chance to change 
-	     into It's programming mode */
-          synchronized(this) {
-		try {
-			wait(250);
-		} catch(java.lang.InterruptedException ie2) {
+	  synchronized(CurrentStatus) {
+             CurrentStatus.setText(rb.getString("LV102StatusProgMode"));
+	     CurrentStatus.doLayout();
+	     if(log.isDebugEnabled()) 
+		log.debug("Current Status: " + rb.getString("LV102StatusProgMode"));
+        
+	     /* Pause briefly to give the user a chance to see what is 
+                happening */
+	     try {
+		CurrentStatus.wait(waitValue);
+	     } catch(java.lang.InterruptedException ie1) {
 			// Don't do anything with this yet
-		}
-	  }
+	     }
 
-          /* Next, send the ops mode programing command for the E line 
-             Status we want */
-    	  try {
-              opsProg.writeCV(7,validELineStatusValues[eLineBox.getSelectedIndex()],this);
-            } catch(ProgrammerException e) {
-              // Don't do anything with this yet
-            }
+             /* First, send the ops mode programing command to enter
+             programing mode */
+   	     try {
+                opsProg.writeCV(7,50,progListener);
+             } catch(ProgrammerException e) {
+                // Don't do anything with this yet
+             }
+
+	     /* Pause briefly to give the booster a chance to change 
+	     into It's programming mode */
+	     try {
+		CurrentStatus.wait(waitValue);
+	     } catch(java.lang.InterruptedException ie2) {
+			// Don't do anything with this yet
+	     }
+
+ 	     CurrentStatus.setText(rb.getString("LV102StatusWriteELine"));
+	     CurrentStatus.doLayout();
+	     if(log.isDebugEnabled()) 
+		log.debug("Current Status: " + rb.getString("LV102StatusWriteELine"));
+
+
+             /* Next, send the ops mode programing command for the E line 
+                Status we want */
+    	     try {
+                opsProg.writeCV(7,validELineStatusValues[eLineBox.getSelectedIndex()],progListener);
+             } catch(ProgrammerException e) {
+                // Don't do anything with this yet
+             }
+
+	     /* Pause briefly to wait for the programmer to send back a 
+		reply */ 
+	     try {
+		CurrentStatus.wait(waitValue);
+	     } catch(java.lang.InterruptedException ie1) {
+		// Don't do anything with this yet
+	     }
+	  } // End of synchronized(CurrentStatus) block for E-line setting
         } else { 
     	        if(log.isDebugEnabled()) log.debug("No E-Line value Selected");
         }
 
-        CurrentStatus.setText(rb.getString("LV102StatusWriteELine"));
+    }
 
-
+    // Write the RailCom setting
+    void writeRailComSetting(Programmer opsProg) {
         if((String)railComBox.getSelectedItem()!="" &&
            (String)railComBox.getSelectedItem()!=null) {
-          if(log.isDebugEnabled()) log.debug("RailCom Setting: " +eLineBox.getSelectedItem());
-          /* First, send the ops mode programing command to enter
-          programing mode */
-   	  try {
-              opsProg.writeCV(7,50,this);
-            } catch(ProgrammerException e) {
-              // Don't do anything with this yet
-            }
 
-	  /* Pause briefly to give the booster a chance to change 
-	     into It's programming mode */
-          synchronized(this) {
-		try {
-			wait(250);
-		} catch(java.lang.InterruptedException ie3) {
-			// Don't do anything with this yet
-		}
-	  }
+          if(log.isDebugEnabled()) log.debug("RailCom Setting: " + railComBox.getSelectedItem());
+	  synchronized(CurrentStatus) {
+	     CurrentStatus.setText(rb.getString("LV102StatusProgMode"));
+	     CurrentStatus.doLayout();
+	     if(log.isDebugEnabled()) 
+			 log.debug("Current Status: " + rb.getString("LV102StatusProgMode"));
+	  
+ 	     /* Pause briefly to give the user a chance to see what is 
+                happening */
+	     try {
+		CurrentStatus.wait(waitValue);
+	     } catch(java.lang.InterruptedException ie1) {
+		// Don't do anything with this yet
+	     }
 
-          /* Next, send the ops mode programing command for the RailComm
-             Status we want */
-    	  try {
-              opsProg.writeCV(7,validRailComStatusValues[railComBox.getSelectedIndex()],this);
-            } catch(ProgrammerException e) {
-              // Don't do anything with this yet
-            }
+             /* First, send the ops mode programing command to enter
+                programing mode */
+   	     try {
+                opsProg.writeCV(7,50,progListener);
+             } catch(ProgrammerException e) {
+                // Don't do anything with this yet
+             }
+
+	     /* Pause briefly to give the booster a chance to change 
+	        into It's programming mode */
+	     try {
+		CurrentStatus.wait(waitValue);
+	     } catch(java.lang.InterruptedException ie3) {
+		// Don't do anything with this yet
+	     }
+
+	     CurrentStatus.setText(rb.getString("LV102StatusWriteRailCom"));
+	     CurrentStatus.doLayout();
+	     if(log.isDebugEnabled()) 
+		log.debug("Current Status: " + rb.getString("LV102StatusWriteRailCom"));
+
+             /* Next, send the ops mode programing command for the RailComm
+                Status we want */
+    	     try {
+                 opsProg.writeCV(7,validRailComStatusValues[railComBox.getSelectedIndex()],progListener);
+             } catch(ProgrammerException e) {
+                 // Don't do anything with this yet
+             }
+
+	     /* Pause briefly to wait for the programmer to send back a 
+		reply */ 
+	     try {
+		CurrentStatus.wait(waitValue);
+	     } catch(java.lang.InterruptedException ie1) {
+		// Don't do anything with this yet
+             }
+	   } // End of synchronized(CurrentStatus) block for RailCom Setting
         } else { 
     	        if(log.isDebugEnabled()) log.debug("No RailCom value Selected");
         }
+    }
 
-	CurrentStatus.setText(rb.getString("LV102StatusWriteRailCom"));
+    // Write the RailCom Mode setting
+    void writeRailComModeSetting(Programmer opsProg) {
+        if((String)railComModeBox.getSelectedItem()!="" &&
+           (String)railComModeBox.getSelectedItem()!=null) {
 
-        jmri.InstanceManager.programmerManagerInstance()
-                    .releaseOpsModeProgrammer(opsProg);
+          if(log.isDebugEnabled()) log.debug("RailCom Setting: " +railComModeBox.getSelectedItem());
+	  synchronized(CurrentStatus) {
+	     CurrentStatus.setText(rb.getString("LV102StatusProgMode"));
+	     CurrentStatus.doLayout();
+	     if(log.isDebugEnabled()) 
+		log.debug("Current Status: " + rb.getString("LV102StatusProgMode"));
+	  
+	     /* Pause briefly to give the user a chance to see what is 
+                happening */
+	     try {
+		CurrentStatus.wait(waitValue);
+	     } catch(java.lang.InterruptedException ie1) {
+		// Don't do anything with this yet
+	     }
+
+             /* First, send the ops mode programing command to enter
+                programing mode */
+   	     try {
+                opsProg.writeCV(7,50,progListener);
+             } catch(ProgrammerException e) {
+                // Don't do anything with this yet
+             }
+
+	     /* Pause briefly to give the booster a chance to change 
+	        into It's programming mode */
+	     try {
+		CurrentStatus.wait(waitValue);
+	     } catch(java.lang.InterruptedException ie3) {
+		// Don't do anything with this yet
+	     }
+
+	     CurrentStatus.setText(rb.getString("LV102StatusWriteRailComMode"));
+	     CurrentStatus.doLayout();
+	     if(log.isDebugEnabled()) 
+		log.debug("Current Status: " + rb.getString("LV102StatusWriteRailComMode"));
+
+             /* Next, send the ops mode programing command for the RailCom Mode
+                Status we want */
+    	     try {
+                opsProg.writeCV(7,validRailComModeValues[railComModeBox.getSelectedIndex()],progListener);
+             } catch(ProgrammerException e) {
+                // Don't do anything with this yet
+             }
+
+	     /* Pause briefly to wait for the programmer to send back a 
+		reply */ 
+	     try {
+		CurrentStatus.wait(waitValue);
+	     } catch(java.lang.InterruptedException ie1) {
+		// Don't do anything with this yet
+             }
+	  } // End of synchronized(CurrentStatus) block for RailCom Mode
+        } else { 
+    	        if(log.isDebugEnabled()) log.debug("No RailCom Mode Selected");
+        }
+    }
+
+    // Set to LV102 default values.  Voltage is 16, E Line is Active, 
+    // Railcom is innactive, Railcom Mode is 3 bit cutout.
+    void defaultLV102Settings() {
+	voltBox.setSelectedIndex(10);
+	eLineBox.setSelectedIndex(0);
+	railComBox.setSelectedIndex(1);
+	railComModeBox.setSelectedIndex(0);
+	synchronized(CurrentStatus) {
+	   CurrentStatus.setText(rb.getString("LV102StatusInitial"));
+	     if(log.isDebugEnabled()) 
+			 log.debug("Current Status: " + rb.getString("LV102StatusInitial"));
+	}
+    }
+
+    // Set to initial values.
+    void resetLV102Settings() {
+	voltBox.setSelectedIndex(23);
+	eLineBox.setSelectedIndex(3);
+	railComBox.setSelectedIndex(2);
+	railComModeBox.setSelectedIndex(2);
+	synchronized(CurrentStatus) {
+	   CurrentStatus.setText(rb.getString("LV102StatusOK"));
+	   if(log.isDebugEnabled()) 
+		log.debug("Current Status: " + rb.getString("LV102StatusOK"));
+	}
+    }
+
+    public void dispose() {
+        // take apart the JInternalFrame
+        super.dispose();
+    }
+
+    private class progReplyListener implements Runnable, jmri.ProgListener {
+
+    private Object parent = null;
+
+    progReplyListener(Object Parent) {
+	parent = Parent;	
+    }
+
+    public void run(){
     }
 
     /**
@@ -309,34 +564,38 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame implements jm
     public void programmingOpReply(int value, int status) {
                 if(log.isDebugEnabled()) log.debug("Programming Operation reply recieved, value is " + value + " ,status is " +status);
 		if(status==ProgListener.ProgrammerBusy) {
-			CurrentStatus.setText(rb.getString("LV102StatusBUSY"));
+			synchronized(CurrentStatus) {
+			   CurrentStatus.setText(rb.getString("LV102StatusBUSY"));
+	     		   if(log.isDebugEnabled()) 
+			     log.debug("Current Status: " + rb.getString("LV102StatusBUSY"));
+ 			   CurrentStatus.notify();
+			}
 	        } else if(status==ProgListener.OK) {
-			CurrentStatus.setText(rb.getString("LV102StatusOK"));
+			if(CurrentStatus.getText().equals(rb.getString("LV102StatusProgMode"))) {
+			   synchronized(CurrentStatus) {
+			      CurrentStatus.setText(rb.getString("LV102StatusReadyProg"));
+	     		      if(log.isDebugEnabled()) 
+			       log.debug("Current Status: " + rb.getString("LV102StatusReadyProg"));
+ 			      CurrentStatus.notify();
+			   }
+			}
+			else {
+			   synchronized(CurrentStatus) {
+			     CurrentStatus.setText(rb.getString("LV102StatusWritten"));
+	     		     if(log.isDebugEnabled()) 
+				log.debug("Current Status: " + rb.getString("LV102StatusWritten"));
+			     CurrentStatus.notify();
+			   }
+			}
 		} else {
-			CurrentStatus.setText(rb.getString("LV102StatusUnknown"));
+			synchronized(CurrentStatus) {
+			   CurrentStatus.setText(rb.getString("LV102StatusUnknown"));
+	     		   if(log.isDebugEnabled()) 
+			      log.debug("Current Status: " + rb.getString("LV102StatusUnknown"));
+ 			   CurrentStatus.notify();
+			}
 	        }
         }      
-
-    // Set to LV102 default values.  Voltage is 16, E Line is Active, 
-    // Railcom is innactive.
-    void defaultLV102Settings() {
-	voltBox.setSelectedIndex(10);
-	eLineBox.setSelectedIndex(0);
-	railComBox.setSelectedIndex(1);
-	CurrentStatus.setText(rb.getString("LV102StatusInitial"));
-    }
-
-    // Set to initial values.
-    void resetLV102Settings() {
-	voltBox.setSelectedIndex(23);
-	eLineBox.setSelectedIndex(3);
-	railComBox.setSelectedIndex(2);
-	CurrentStatus.setText("");
-    }
-
-    public void dispose() {
-        // take apart the JInternalFrame
-        super.dispose();
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LV102InternalFrame.class.getName());
