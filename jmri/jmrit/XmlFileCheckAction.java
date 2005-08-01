@@ -8,11 +8,12 @@ import java.io.*;
 import javax.swing.*;
 
 /**
- * Make sure an XML file is readable, and validates OK
+ * Make sure an XML file is readable, without doing a DTD validation.
  *
- * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.2 $
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2005
+ * @version	$Revision: 1.3 $
  * @see         jmri.jmrit.XmlFile
+ * @see         jmri.jmrit.XmlFileValidateAction
  */
 public class XmlFileCheckAction extends AbstractAction {
 
@@ -35,11 +36,15 @@ public class XmlFileCheckAction extends AbstractAction {
             File file = fci.getSelectedFile();
             if (log.isInfoEnabled()) log.info("located file "+file+" for XML processing");
             // handle the file (later should be outside this thread?)
+            boolean original = XmlFile.verify;
             try {
+                XmlFile.verify = false;
                 readFile(file);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(_who,"Error: "+ex);
                 return;
+            } finally {
+                XmlFile.verify = original;
             }
             JOptionPane.showMessageDialog(_who,"OK");
             if (log.isInfoEnabled()) log.info("parsing complete");
