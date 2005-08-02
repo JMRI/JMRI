@@ -26,7 +26,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.21 $
+ * @version			$Revision: 1.22 $
  */
 abstract public class AbstractMRTrafficController {
 
@@ -440,25 +440,28 @@ abstract public class AbstractMRTrafficController {
      * Make connection to existing PortController object.
      */
     public void connectPort(AbstractPortController p) {
-        istream = p.getInputStream();
-        ostream = p.getOutputStream();
-        if (controller != null)
-            log.warn("connectPort: connect called while connected");
-        else
-            log.debug("connectPort invoked");
-        controller = p;
-        // and start threads
-        xmtThread = new Thread(xmtRunnable = new Runnable() {
-            public void run() { transmitLoop(); }
-        });
-        xmtThread.setName("Transmit");
-        xmtThread.start();
-        rcvThread = new Thread(new Runnable() {
-            public void run() { receiveLoop(); }
-        });
-        rcvThread.setName("Receive");
-        rcvThread.start();
-
+        try {
+            istream = p.getInputStream();
+            ostream = p.getOutputStream();
+            if (controller != null)
+                log.warn("connectPort: connect called while connected");
+            else
+                log.debug("connectPort invoked");
+            controller = p;
+            // and start threads
+            xmtThread = new Thread(xmtRunnable = new Runnable() {
+                public void run() { transmitLoop(); }
+            });
+            xmtThread.setName("Transmit");
+            xmtThread.start();
+            rcvThread = new Thread(new Runnable() {
+                public void run() { receiveLoop(); }
+            });
+            rcvThread.setName("Receive");
+            rcvThread.start();
+        } catch (Exception e) {
+            log.error("Failed to start up communications. Error eas "+e);
+        }
     }
 
     /**
