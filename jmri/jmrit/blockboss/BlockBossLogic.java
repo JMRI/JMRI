@@ -39,7 +39,7 @@ import java.util.Hashtable;
  * use with CTC logic, etc.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 
 public class BlockBossLogic extends Siglet {
@@ -350,6 +350,10 @@ public class BlockBossLogic extends Siglet {
             result = SignalHead.YELLOW;
         if (watchedSignal1Alt!=null && watchedSignal1Alt.getAppearance()==SignalHead.YELLOW)
             result = SignalHead.YELLOW;
+        if (watchedSignal1!=null && watchedSignal1.getAppearance()==SignalHead.FLASHYELLOW)
+            result = SignalHead.FLASHYELLOW;
+        if (watchedSignal1Alt!=null && watchedSignal1Alt.getAppearance()==SignalHead.FLASHYELLOW)
+            result = SignalHead.FLASHYELLOW;
         if (watchedSignal1!=null && watchedSignal1.getAppearance()==SignalHead.GREEN)
             result = SignalHead.GREEN;
         if (watchedSignal1Alt!=null && watchedSignal1Alt.getAppearance()==SignalHead.GREEN)
@@ -367,6 +371,10 @@ public class BlockBossLogic extends Siglet {
             result = SignalHead.YELLOW;
         if (watchedSignal2Alt!=null && watchedSignal2Alt.getAppearance()==SignalHead.YELLOW)
             result = SignalHead.YELLOW;
+        if (watchedSignal2!=null && watchedSignal2.getAppearance()==SignalHead.FLASHYELLOW)
+            result = SignalHead.FLASHYELLOW;
+        if (watchedSignal2Alt!=null && watchedSignal2Alt.getAppearance()==SignalHead.FLASHYELLOW)
+            result = SignalHead.FLASHYELLOW;
         if (watchedSignal2!=null && watchedSignal2.getAppearance()==SignalHead.GREEN)
             result = SignalHead.GREEN;
         if (watchedSignal2Alt!=null && watchedSignal2Alt.getAppearance()==SignalHead.GREEN)
@@ -454,19 +462,19 @@ public class BlockBossLogic extends Siglet {
         int appearance = SignalHead.GREEN;
         int oldAppearance = ((SignalHead)outputs[0]).getAppearance();
 
-        // find signal to watch
-        SignalHead s = watchedSignal1;
+        // find downstream appearance
+        int s = fastestColor1();
         if (watchTurnout!=null && watchTurnout.getKnownState() == Turnout.THROWN )
-            s = watchedSignal2;
+            s = fastestColor2();
 
         // check for yellow, flashing yellow overriding green
-        if (s!=null && protectWithFlashing && s.getAppearance()==SignalHead.YELLOW)
+        if (protectWithFlashing && s==SignalHead.YELLOW)
             appearance = SignalHead.FLASHYELLOW;
-        if (s!=null && s.getAppearance()==SignalHead.RED)
+        if (s==SignalHead.RED)
             appearance = SignalHead.YELLOW;
         // if distant signal, show exactly what the home signal does
-        if (s!=null && distantSignal)
-            appearance = s.getAppearance();
+        if (distantSignal)
+            appearance = s;
           
 
         // check for red overriding yellow or green
