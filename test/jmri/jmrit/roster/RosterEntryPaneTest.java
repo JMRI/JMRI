@@ -5,7 +5,7 @@ import junit.framework.*;
 /**
  * Tests for the jmrit.roster.RosterEntryPane class.
  * @author	Bob Jacobsen     Copyright (C) 2001, 2002
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class RosterEntryPaneTest extends TestCase {
 
@@ -102,6 +102,7 @@ public class RosterEntryPaneTest extends TestCase {
     }
 
     public void testGuiChanged3() {
+
         RosterEntryPane p = new RosterEntryPane(rNew);
         
         // copy to a new entry
@@ -111,7 +112,7 @@ public class RosterEntryPaneTest extends TestCase {
         
         // change the roster address type entry and check
         rNew.setDccAddress("1234");
-        Assert.assertTrue("detects no change", !p.guiChanged(rNew));
+        Assert.assertTrue("detects change", p.guiChanged(rNew));
 
     }
 
@@ -152,7 +153,7 @@ public class RosterEntryPaneTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {RosterEntryPane.class.getName()};
+        String[] testCaseName = {RosterEntryPaneTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
