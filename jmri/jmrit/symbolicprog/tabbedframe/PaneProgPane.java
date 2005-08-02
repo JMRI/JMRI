@@ -63,7 +63,7 @@ import com.sun.java.util.collections.List;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.51 $
+ * @version   $Revision: 1.52 $
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -85,117 +85,6 @@ public class PaneProgPane extends javax.swing.JPanel
      * Create a null object.  Normally only used for tests and to pre-load classes.
      */
     public PaneProgPane() {}
-
-    /**
-     * Construct the Pane from the XML definition element.
-     *
-     * @param name  Name to appear on tab of pane
-     * @param pane  The JDOM Element for the pane definition
-     * @param cvModel Already existing TableModel containing the CV definitions
-     * @param varModel Already existing TableModel containing the variable definitions
-     * @param modelElem "model" element from the Decoder Index, used to check what decoder options are present.
-     */
-
-    public PaneProgPane(String name, Element pane, CvTableModel cvModel, VariableTableModel varModel, Element modelElem) {
-
-        mName = name;
-        _cvModel = cvModel;
-        _varModel = varModel;
-
-        // This is a JPanel containing a JScrollPane, containing a
-        // laid-out JPanel
-        setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
-
-        // find out whether to display "label" (false) or "item" (true)
-        boolean showItem = false;
-        Attribute nameFmt = pane.getAttribute("nameFmt");
-        if (nameFmt!= null && nameFmt.getValue().equals("item")) {
-            log.debug("Pane "+name+" will show items, not labels, from decoder file");
-            showItem = true;
-        }
-        // put the columns left to right in a panel
-        JPanel p = new JPanel();
-        panelList.add(p);
-        p.setLayout(new BoxLayout(p,BoxLayout.X_AXIS));
-
-        // handle the xml definition
-        // for all "column" elements ...
-        List colList = pane.getChildren("column");
-        for (int i=0; i<colList.size(); i++) {
-            // load each column
-            p.add(newColumn( ((Element)(colList.get(i))), showItem, modelElem));
-        }
-        // for all "row" elements ...
-        List rowList = pane.getChildren("row");
-        for (int i=0; i<rowList.size(); i++) {
-            // load each row
-            p.add(newRow( ((Element)(rowList.get(i))), showItem, modelElem));
-        }
-
-        // add glue to the right to allow resize - but this isn't working as expected? Alignment?
-        add(Box.createHorizontalGlue());
-
-        add(new JScrollPane(p));
-
-        // add buttons in a new panel
-        JPanel bottom = new JPanel();
-        panelList.add(p);
-        bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));
-
-        readChangesButton.setToolTipText("Read highlighted values on this sheet from decoder. Warning: may take a long time!");
-        if (cvModel.getProgrammer()!= null
-            && !cvModel.getProgrammer().getCanRead()) {
-            // can't read, disable the button
-            readChangesButton.setEnabled(false);
-            readChangesButton.setToolTipText("Button disabled because configured command station can't read CVs");
-        }
-        readChangesButton.addItemListener( l1 = new ItemListener() {
-            public void itemStateChanged (ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    readPaneChanges();
-                }
-            }
-        });
-
-        readAllButton.setToolTipText("Read all values on this sheet from decoder. Warning: may take a long time!");
-        if (cvModel.getProgrammer()!= null
-            && !cvModel.getProgrammer().getCanRead()) {
-            // can't read, disable the button
-            readAllButton.setEnabled(false);
-            readAllButton.setToolTipText("Button disabled because configured command station can't read CVs");
-        }
-        readAllButton.addItemListener( l2 = new ItemListener() {
-            public void itemStateChanged (ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    readPaneAll();
-                }
-            }
-        });
-
-        writeChangesButton.setToolTipText("Write highlighted values on this sheet to decoder");
-        writeChangesButton.addItemListener( l3 = new ItemListener() {
-            public void itemStateChanged (ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    writePaneChanges();
-                }
-            }
-        });
-        writeAllButton.setToolTipText("Write all values on this sheet to decoder");
-        writeAllButton.addItemListener( l4 = new ItemListener() {
-            public void itemStateChanged (ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    writePaneAll();
-                }
-            }
-        });
-
-        bottom.add(readChangesButton);
-        bottom.add(writeChangesButton);
-        bottom.add(readAllButton);
-        bottom.add(writeAllButton);
-
-        add(bottom);
-    }
 
     /**
      * Construct the Pane from the XML definition element.
