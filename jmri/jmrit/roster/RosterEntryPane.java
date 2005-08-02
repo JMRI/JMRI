@@ -28,7 +28,7 @@ import com.sun.java.util.collections.List;
  * Display and edit a RosterEntry.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001; Dennis Miller Copyright 2004, 2005
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class RosterEntryPane extends javax.swing.JPanel  {
 
@@ -262,10 +262,6 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         if (a==null) {
             if (!r.getDccAddress().equals("")) return true;
         } else {
-            System.out.println("check for "+a.getNumber());
-            System.out.println(r.getDccAddress());
-            System.out.println(r.isLongAddress());
-            System.out.println(a.isLongAddress());
             if (! r.getDccAddress().equals(""+a.getNumber()) ) return true;
             if (!r.isLongAddress()==(a.isLongAddress()) ) return true;
         }
