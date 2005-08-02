@@ -27,7 +27,7 @@ import com.sun.java.util.collections.ArrayList;
 import com.sun.java.util.collections.List;
 import org.jdom.Attribute;
 import org.jdom.Element;
-import jmri.util.GlassPane;
+import jmri.util.BusyGlassPane;
 import java.awt.event.ItemListener;
 import java.awt.Cursor;
 
@@ -41,7 +41,7 @@ import jmri.ProgDeferredServiceModePane;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.53 $
+ * @version   $Revision: 1.54 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -65,7 +65,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     List                paneList        = new ArrayList();
     int                 paneListIndex;
 
-    GlassPane           glassPane;
+    BusyGlassPane       glassPane;
     List                activeComponents = new ArrayList();
 
     String              filename        = null;
@@ -699,7 +699,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                 rectangles.add(tabPane.getUI().getTabBounds(tabPane,i));
             }
         }
-        glassPane = new GlassPane(activeComponents, rectangles, this.getContentPane(), this);
+        glassPane = new BusyGlassPane(activeComponents, rectangles, this.getContentPane(), this);
         this.setGlassPane(glassPane);
     }
 
