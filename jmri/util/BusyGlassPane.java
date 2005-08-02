@@ -1,4 +1,4 @@
-// GlassPane.java
+// BusyGlassPane.java
 
 package jmri.util;
 
@@ -9,20 +9,21 @@ import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
 
 import com.sun.java.util.collections.List;
-import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 
 /**
  * Used to intercept inputs and to display a busy
  * cursor during reads and writes.
  *
+ * Based in part on code from the Java Tutorial for glass panes (java.sun.com).
+ *
  * @author  Howard G. Penny   Copyright (C) 2005
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.1 $
  */
-public class GlassPane extends JComponent {
+public class BusyGlassPane extends JComponent {
 
     CBListener listener;
 
-    public GlassPane(List components, List rectangles, Container contentPane, PaneProgFrame parent) {
+    public BusyGlassPane(List components, List rectangles, Container contentPane, JFrame parent) {
         listener = new CBListener(components, rectangles, this, contentPane, parent);
         addMouseListener(listener);
         addMouseMotionListener(listener);
@@ -39,15 +40,15 @@ public class GlassPane extends JComponent {
  * interested in.  Redispatch them to the appropriate component.
  */
 class CBListener extends MouseInputAdapter {
-    PaneProgFrame parentFrame;
+    JFrame parentFrame;
     List liveComponents;
     List liveRectangles;
-    GlassPane glassPane;
+    BusyGlassPane glassPane;
     Container contentPane;
     boolean inDrag = false;
 
     public CBListener(List objects, List rectangles,
-                      GlassPane glassPane, Container contentPane, PaneProgFrame parent) {
+                      BusyGlassPane glassPane, Container contentPane, JFrame parent) {
         this.parentFrame = parent;
         this.liveComponents = objects;
         this.liveRectangles = rectangles;
