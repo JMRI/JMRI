@@ -14,21 +14,20 @@ package jmri;
  * JMRI utilities. In particular, it returns null instead of throwing JmriException
  * for invalid requests. Callers need to check upstream.
  *<P>
- * Note that this is structured by packet type, not by what want to do.  E.g.
- * there are functions to specific packet formats instead of a general "loco speed
+ * The function is provided by static member functions; objects of this
+ * class should not be created.
+ *<P>
+ * Note that these functions are structured by packet type, not by what want to do.  E.g.
+ * there are functions to create specific packet formats instead of a general "loco speed
  * packet" routine which figures out which type of packet to use.  Those decisions
  * are to be made somewhere else.
  * <P>
  * Range and value checking is intended to be aggressive; if we can check, we
  * should.  Problems are reported as warnings.
  *<P>
- * Conventions:
- *<P>
- * "S" vs "L" in the last character of the loco function name selects
- *            short vs long address type
  *
  * @author      Bob Jacobsen Copyright (C) 2001, 2003
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 public class NmraPacket {
 
@@ -299,7 +298,7 @@ public class NmraPacket {
     }
     
     /**
-     * Provide an NMRA control instruction
+     * Provide an NMRA analog control instruction
      *<P>Note that the NMRA draft of Fall 2004 only defines the value
      * of "1" for the "function parameter", calling that the value for
      * "volume control".  However, DCC systems in the wild have been
@@ -394,6 +393,11 @@ public class NmraPacket {
         return 0;
     }
 
+    /**
+     * Objects of this class should not be created. 
+     */ 
+     
+    private NmraPacket() {}
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NmraPacket.class.getName());
 }
 

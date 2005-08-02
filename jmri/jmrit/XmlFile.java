@@ -19,7 +19,7 @@ import org.jdom.output.XMLOutputter;
  * Handle common aspects of XML files.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  */
 public abstract class XmlFile {
 
@@ -88,9 +88,8 @@ public abstract class XmlFile {
      * Write a File as XML.
      * @throws org.jdom.JDOMException
      * @throws java.io.FileNotFoundException
-     * @param file File to be created.  A FileNotFoundException is thrown if a problem.
-     * @param root document. This should never be null, as an
-     *          exception should be thrown if anything goes wrong.
+     * @param file File to be created.
+     * @param doc Document to be written out. This should never be null.
      */
     public void writeXML(File file, Document doc) throws org.jdom.JDOMException, java.io.IOException, java.io.FileNotFoundException {
         // write the result to selected file
@@ -239,7 +238,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.19 2005-08-01 12:52:34 jacobsen Exp $";
+                        +" $Id: XmlFile.java,v 1.20 2005-08-02 14:37:22 jacobsen Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }

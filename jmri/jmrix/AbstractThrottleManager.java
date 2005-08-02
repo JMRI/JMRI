@@ -14,7 +14,7 @@ import com.sun.java.util.collections.ArrayList;
  * Based on Glen Oberhauser's original LnThrottleManager implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 abstract public class AbstractThrottleManager implements ThrottleManager {
 	
@@ -37,7 +37,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * is located, the ThrottleListener gets a callback via the ThrottleListener.notifyThrottleFound
      * method.
      * @param address The decoder address desired.
-     * @param isLong True if this is a request for a DCC long (extended) address.
+     * @param isLongAddress True if this is a request for a DCC long (extended) address.
      * @param l The ThrottleListener awaiting notification of a found throttle.
      * @return True if the request will continue, false if the request will not
      * be made. False may be returned if a the throttle is already in use.
