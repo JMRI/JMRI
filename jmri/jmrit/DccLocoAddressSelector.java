@@ -31,7 +31,7 @@ import java.awt.event.ComponentEvent;
  * where you might be configuring a loco to run somewhere else.
  *
  * @author     Bob Jacobsen   Copyright (C) 2005
- * @version    $Revision: 1.1 $
+ * @version    $Revision: 1.2 $
  */
 public class DccLocoAddressSelector extends JPanel
 {
@@ -124,7 +124,11 @@ public class DccLocoAddressSelector extends JPanel
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
         p.add(text);
-        if (!locked || !InstanceManager.throttleManagerInstance().addressTypeUnique()) 
+        if (!locked || 
+              ( (InstanceManager.throttleManagerInstance() !=null) 
+                    && !InstanceManager.throttleManagerInstance().addressTypeUnique()
+              )
+           )
             p.add(box);
         
          p.addComponentListener(
@@ -227,20 +231,27 @@ public class DccLocoAddressSelector extends JPanel
     
     
     protected void setMode(int address) {
+    
+        // IAre we locked, and is there a throttle manager?
         ThrottleManager tf = InstanceManager.throttleManagerInstance();
-
-        // if it has to be long, handle that
-        if (tf.canBeLongAddress(address) && !tf.canBeShortAddress(address)) {
-            box.setSelectedIndex(2);
-            return;
+        if (locked && tf != null) {
+            // yes, lets make some checks of required modes
+            
+            // if it has to be long, handle that
+            if (tf.canBeLongAddress(address) && !tf.canBeShortAddress(address)) {
+                box.setSelectedIndex(2);
+                return;
+            }
+        
+            // if it has to be short, handle that
+            if (!tf.canBeLongAddress(address) && tf.canBeShortAddress(address)) {
+                box.setSelectedIndex(1);
+                return;
+            }
         }
         
-        // if it has to be short, handle that
-        if (!tf.canBeLongAddress(address) && tf.canBeShortAddress(address)) {
-            box.setSelectedIndex(1);
-            return;
-        }
-        
+        // done checking for required modes
+                
         // now we're in the "could be either" place; leave selection if possible
         switch (box.getSelectedIndex()) {
             case 0:
