@@ -22,26 +22,28 @@ import java.io.InputStream;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class MonitorFrame extends jmri.jmrix.AbstractMonFrame {
 
     Vector portNameVector = null;
     SerialPort activeSerialPort = null;
+    static java.util.ResourceBundle rb 
+            = java.util.ResourceBundle.getBundle("jmri.jmrix.pricom.pockettester.TesterBundle");
 
     // populate the GUI, invoked as part of startup
     protected void init() {
         // load the port selection part
-        portBox.setToolTipText("Select the port to use");
+        portBox.setToolTipText(rb.getString("TooltipSelectPort"));
         portBox.setAlignmentX(JLabel.LEFT_ALIGNMENT);
         Vector v = getPortNames();
         for (int i=0; i<v.size(); i++)
             portBox.addItem(v.elementAt(i));
-        speedBox.setToolTipText("Select baud rate configured into the Pocket Tester");
+        speedBox.setToolTipText(rb.getString("TooltipSelectBaud"));
         speedBox.setAlignmentX(JLabel.LEFT_ALIGNMENT);
         speedBox.setSelectedItem("115200");
-        openPortButton.setText("Open");
-        openPortButton.setToolTipText("Configure program to use selected port");
+        openPortButton.setText(rb.getString("ButtonOpen"));
+        openPortButton.setToolTipText(rb.getString("TooltipOpen"));
         openPortButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
@@ -57,9 +59,9 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame {
         getContentPane().add(new JSeparator());
         JPanel p1 = new JPanel();
         p1.setLayout(new FlowLayout());
-        p1.add(new JLabel("Serial port: "));
+        p1.add(new JLabel(rb.getString("LabelSerialPort")));
         p1.add(portBox);
-        p1.add(new JLabel("Speed: "));
+        p1.add(new JLabel(rb.getString("LabelSpeed")));
         p1.add(speedBox);
         p1.add(openPortButton);
         getContentPane().add(p1);
@@ -80,7 +82,7 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame {
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
             JRadioButton b;
-            b= new JRadioButton("Show all");
+            b= new JRadioButton(rb.getString("ButtonShowAll"));
             g.add(b);
             p.add(b);
             b.setSelected(true);
@@ -89,7 +91,7 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame {
                     sendBytes(new byte[]{(byte)'F'});
                 }
             });
-            b= new JRadioButton("Only show accessory decoder packets");
+            b= new JRadioButton(rb.getString("ButtonShowAcc"));
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
@@ -98,7 +100,7 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame {
                 }
             });
             p2.add(p);
-            b= new JRadioButton("Only show mobile decoder packets");
+            b= new JRadioButton(rb.getString("ButtonShowMobile"));
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
@@ -110,7 +112,7 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame {
         }  // end group controlling filtering
 
         {
-            JButton b = new JButton("Get version");
+            JButton b = new JButton(rb.getString("ButtonGetVersion"));
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     sendBytes(new byte[]{(byte)'V'});
@@ -122,7 +124,7 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame {
         getContentPane().add(p2);
     }
 
-    JButton checkButton = new JButton("Init");
+    JButton checkButton = new JButton(rb.getString("ButtonInit"));
 
     protected String title() {
         return "PRICOM Pocket Tester";

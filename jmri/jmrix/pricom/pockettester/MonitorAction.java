@@ -12,14 +12,17 @@ import java.awt.event.ActionEvent;
  * @see jmri.jmrix.pricom.pockettester.MonitorFrame
  *
  * @author			Bob Jacobsen    Copyright (C) 2002,2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class MonitorAction extends AbstractAction  {
 
     public MonitorAction(String s) { super(s);}
     public MonitorAction() {
-        this("PRICOM Pocket Tester");
+        java.util.ResourceBundle rb 
+            = java.util.ResourceBundle.getBundle("jmri.jmrix.pricom.pockettester.TesterBundle");
+        putValue(javax.swing.Action.NAME, rb.getString("MonitorTitle"));
     }
+        
 
     public void actionPerformed(ActionEvent e) {
 		// create a SerialDriverFrame
