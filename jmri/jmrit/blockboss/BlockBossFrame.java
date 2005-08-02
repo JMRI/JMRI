@@ -31,7 +31,7 @@ import javax.swing.*;
  * The individual items all share data models to simplify the logic.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 
 public class BlockBossFrame extends JFrame {
@@ -334,6 +334,14 @@ public class BlockBossFrame extends JFrame {
     }
 
     void okPressed() {
+        // check signal head exists
+        if (InstanceManager.signalHeadManagerInstance().getSignalHead(outSignalField.getText())==null) {
+            setTitle("Simple Signal Logic");
+            JOptionPane.showMessageDialog(this,"Signal head \""+outSignalField.getText()+"\" is not defined yet");
+            return;
+        }
+
+        // it does
         BlockBossLogic b = BlockBossLogic.getStoppedObject(outSignalField.getText());
         if (buttonSingle.isSelected())
             loadSingle(b);
@@ -412,8 +420,21 @@ public class BlockBossFrame extends JFrame {
     }
 
     void activate() {
+        
+        // check signal head exists
+        if (InstanceManager.signalHeadManagerInstance().getSignalHead(outSignalField.getText())==null) {
+            setTitle("Simple Signal Logic");
+            return;
+        }
+        
+        // find existing logic  
         BlockBossLogic b = BlockBossLogic.getExisting(outSignalField.getText());
-        if (b==null) return;
+        if (b==null) {
+            setTitle("Simple Signal Logic");
+            return;
+        }
+        
+        setTitle("Signal logic for "+outSignalField.getText());
 
         sSensorField1.setText(b.getSensor1());
         sSensorField2.setText(b.getSensor2());
@@ -474,6 +495,14 @@ public class BlockBossFrame extends JFrame {
 
     private boolean mShown = false;
 
+    /**
+     * Programmatically open the frame to edit a specific signal
+     */
+    public void setSignal(String name) {
+        outSignalField.setText(name);
+        activate();
+    }
+    
     public void addNotify() {
         super.addNotify();
 
