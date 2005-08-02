@@ -19,7 +19,7 @@ import javax.swing.JPopupMenu;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -165,6 +165,19 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
                 }
             });
 
+            popup.add(new AbstractAction("Edit Logic...") {
+                public void actionPerformed(ActionEvent e) {
+                    jmri.jmrit.blockboss.BlockBossFrame f = new jmri.jmrit.blockboss.BlockBossFrame();
+                    String name;
+                    if (mHead.getUserName()==null || mHead.getUserName().equals(""))
+                        name = mHead.getSystemName();
+                    else
+                        name = mHead.getUserName();
+                    f.setTitle("Signal logic for"+name);
+                    f.setSignal(name);
+                    f.show();
+                }
+            });
         } // end creation of pop-up menu
 
         popup.show(e.getComponent(), e.getX(), e.getY());
