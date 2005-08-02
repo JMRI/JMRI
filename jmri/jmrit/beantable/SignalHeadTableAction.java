@@ -24,7 +24,7 @@ import javax.swing.JTextField;
  * SignalHeadTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -191,24 +191,32 @@ public class SignalHeadTableAction extends AbstractTableAction {
         if (se8c4Aspect.equals(typeBox.getSelectedItem())) {
             nameLabel.setText(rb.getString("LabelUserName"));
             v1Label.setText(rb.getString("LabelTurnoutNumber"));
+            v1Label.setVisible(true);
             to1.setVisible(true);
-            v2Label.setText("");to2.setVisible(false);
-            v3Label.setText("");to3.setVisible(false);
+            v2Label.setVisible(false);
+            to2.setVisible(false);
+            v3Label.setVisible(false);
+            to3.setVisible(false);
 
         } else if (tripleTurnout.equals(typeBox.getSelectedItem())) {
             nameLabel.setText(rb.getString("LabelSystemName"));
             v1Label.setText(rb.getString("LabelGreenTurnoutNumber"));
+            v1Label.setVisible(true);
             to1.setVisible(true);
             v2Label.setText(rb.getString("LabelYellowTurnoutNumber"));
+            v2Label.setVisible(true);
             to2.setVisible(true);
             v3Label.setText(rb.getString("LabelRedTurnoutNumber"));
+            v3Label.setVisible(true);
             to3.setVisible(true);
             
         } else if (doubleTurnout.equals(typeBox.getSelectedItem())) {
             nameLabel.setText(rb.getString("LabelSystemName"));
             v1Label.setText(rb.getString("LabelGreenTurnoutNumber"));
+            v1Label.setVisible(true);
             to1.setVisible(true);
             v2Label.setText(rb.getString("LabelRedTurnoutNumber"));
+            v2Label.setVisible(true);
             to2.setVisible(true);
             v3Label.setVisible(false);
             to3.setVisible(false);
