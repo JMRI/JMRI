@@ -13,7 +13,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.roster.RosterEntry class.
  * @author	Bob Jacobsen     Copyright (C) 2001, 2002
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class RosterEntryTest extends TestCase {
 
@@ -164,7 +164,7 @@ public class RosterEntryTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {RosterEntry.class.getName()};
+        String[] testCaseName = {RosterEntryTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
