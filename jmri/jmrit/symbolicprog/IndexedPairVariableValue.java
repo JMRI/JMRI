@@ -24,7 +24,7 @@ import javax.swing.text.Document;
  * Value to put in text field = ((value in High CV) * Factor) + Low CV
  *
  * @author   Howard G. Penny  Copyright (C) 2005
- * @version  $Revision: 1.1 $
+ * @version  $Revision: 1.2 $
  *
  */
 public class IndexedPairVariableValue extends VariableValue
@@ -56,6 +56,7 @@ public class IndexedPairVariableValue extends VariableValue
         cv.setState(CvValue.FROMFILE);
         CvValue cv1 = ((CvValue)_cvVector.elementAt(_secondCVrow));
         cv1.addPropertyChangeListener(this);
+        cv1.setState(CvValue.FROMFILE);
     }
 
     public CvValue[] usesCVs() {
@@ -94,11 +95,13 @@ public class IndexedPairVariableValue extends VariableValue
     }
 
     void exitField() {
-        if (!oldContents.equals(_value.getText())) {
+        // there may be a lost focus event left in the queue when disposed so protect
+        if (_value != null && !oldContents.equals(_value.getText())) {
             int newVal = Integer.valueOf(_value.getText()).intValue();
             int oldVal = Integer.valueOf(oldContents).intValue();
             updatedTextField();
-            prop.firePropertyChange("Value", new Integer(oldVal), new Integer(newVal));
+            prop.firePropertyChange("Value", new Integer(oldVal),
+                                    new Integer(newVal));
         }
     }
 
@@ -120,10 +123,8 @@ public class IndexedPairVariableValue extends VariableValue
 
         // cv updates here trigger updated property changes, which means
         // we're going to get notified sooner or later.
-        if (cvLow.getValue() != newLow) {
+        if (cvLow.getValue() != newLow || cvHigh.getValue() != newHigh) {
             cvLow.setValue(newLow);
-        }
-        if (cvHigh.getValue() != newHigh) {
             cvHigh.setValue(newHigh);
         }
 
@@ -215,6 +216,7 @@ public class IndexedPairVariableValue extends VariableValue
      */
     public void setCvState(int state) {
         ((CvValue)_cvVector.elementAt(_row)).setState(state);
+        ((CvValue)_cvVector.elementAt(_secondCVrow)).setState(state);
     }
 
     public void setToRead(boolean state) {
@@ -379,7 +381,7 @@ public class IndexedPairVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.1 $
+     * @version     $Revision: 1.2 $
      */
     public class VarTextField extends JTextField {
 
@@ -436,11 +438,10 @@ public class IndexedPairVariableValue extends VariableValue
             _value.removeActionListener(this);
             _value.removeFocusListener(this);
             _value.removePropertyChangeListener(this);
+            _value = null;
         }
         ((CvValue)_cvVector.elementAt(_row)).removePropertyChangeListener(this);
         ((CvValue)_cvVector.elementAt(_secondCVrow)).removePropertyChangeListener(this);
-
-        _value = null;
     }
 
     // initialize logging
