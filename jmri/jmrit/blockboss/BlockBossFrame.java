@@ -31,7 +31,7 @@ import javax.swing.*;
  * The individual items all share data models to simplify the logic.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 
 public class BlockBossFrame extends JFrame {
@@ -500,7 +500,6 @@ public class BlockBossFrame extends JFrame {
      */
     public void setSignal(String name) {
         outSignalField.setText(name);
-        activate();
     }
     
     public void addNotify() {
