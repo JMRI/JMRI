@@ -26,7 +26,7 @@ import javax.swing.text.Document;
  *</PRE>
  * decoders.
  * @author			Bob Jacobsen   Copyright (C) 2002, 2003, 2004
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  *
  */
 public class SplitVariableValue extends VariableValue
@@ -114,7 +114,8 @@ public class SplitVariableValue extends VariableValue
     }
 
     void exitField() {
-        if (!oldContents.equals(_value.getText())) {
+        // there may be a lost focus event left in the queue when disposed so protect
+        if (_value != null && !oldContents.equals(_value.getText())) {
             int newVal = ((Integer.valueOf(_value.getText()).intValue())-mOffset)/mFactor;
             int oldVal = ((Integer.valueOf(oldContents).intValue())-mOffset)/mFactor;
             updatedTextField();
@@ -352,7 +353,7 @@ public class SplitVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.14 $
+     * @version     $Revision: 1.15 $
      */
     public class VarTextField extends JTextField {
 

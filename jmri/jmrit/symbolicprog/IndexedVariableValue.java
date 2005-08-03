@@ -23,7 +23,7 @@ import com.sun.java.util.collections.ArrayList;
  * Extends VariableValue to represent an indexed variable
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.5 $
+ * @version   $Revision: 1.6 $
  */
 public class IndexedVariableValue extends VariableValue
     implements ActionListener, PropertyChangeListener, FocusListener {
@@ -38,10 +38,6 @@ public class IndexedVariableValue extends VariableValue
         _minVal = minVal;
         _value = new JTextField("0", 3);
         _defaultColor = _value.getBackground();
-        _value.setBackground(COLOR_UNKNOWN);
-        // connect to the JTextField value, cv
-        _value.addActionListener(this);
-        _value.addFocusListener(this);
         CvValue cv = ((CvValue)_cvVector.elementAt(_row));
         cv.addPropertyChangeListener(this);
         if (cv.getInfoOnly()) {
@@ -79,11 +75,13 @@ public class IndexedVariableValue extends VariableValue
         oldContents = _value.getText();
     }
     void exitField() {
-        if (!oldContents.equals(_value.getText())) {
+        // there may be a lost focus event left in the queue when disposed so protect
+        if (_value != null && !oldContents.equals(_value.getText())) {
             int newVal = (Integer.valueOf(_value.getText()).intValue());
             int oldVal = (Integer.valueOf(oldContents).intValue());
             updatedTextField();
-            prop.firePropertyChange("Value", new Integer(oldVal), new Integer(newVal));
+            prop.firePropertyChange("Value", new Integer(oldVal),
+                                    new Integer(newVal));
         }
     }
 
@@ -356,7 +354,7 @@ public class IndexedVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.5 $
+     * @version     $Revision: 1.6 $
      */
     public class VarTextField extends JTextField {
 
@@ -412,11 +410,9 @@ public class IndexedVariableValue extends VariableValue
            _value.removeActionListener(this);
            _value.removeFocusListener(this);
            _value.removePropertyChangeListener(this);
+           _value = null;
        }
        ((CvValue)_cvVector.elementAt(_row)).removePropertyChangeListener(this);
-
-       _value = null;
-       // do something about the VarTextField
    }
 
    // initialize logging
