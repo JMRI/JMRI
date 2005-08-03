@@ -24,7 +24,7 @@ import com.sun.java.util.collections.Vector;
 
 /**
  * @author	Bob Jacobsen Copyright 2001, 2002, 2003, 2004
- * @version         $Revision: 1.11 $
+ * @version         $Revision: 1.12 $
  */
 public class PaneProgPaneTest extends TestCase {
 
@@ -146,14 +146,14 @@ public class PaneProgPaneTest extends TestCase {
             .addAttribute("mask","VVVVVVVV")
             .addAttribute("label","Start voltage")
             .addContent( new Element("decVal"));
-        varModel.setRow(0, el0);
         Element el1 = new Element("variable")
             .addAttribute("CV","1")
             .addAttribute("readOnly","no")
             .addAttribute("mask","VVVVVVVV")
             .addAttribute("label","Primary Address")
             .addContent( new Element("decVal"));
-        varModel.setRow(1, el1);
+        varModel.setRow(0, el1);
+        varModel.setRow(1, el0);
 
         PaneProgPane progPane = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null);
 
@@ -172,7 +172,7 @@ public class PaneProgPaneTest extends TestCase {
         if (log.isDebugEnabled()) log.debug("past loop, i="+i);
         assertTrue("busy period ends before timeout ", i<=100);
 
-        Assert.assertEquals("last cv read ", 2, p.lastReadCv());
+        Assert.assertEquals("last cv read ", 1, p.lastReadCv());
 
         if (log.isDebugEnabled()) log.debug("testPaneRead ends ok");
     }
@@ -200,14 +200,14 @@ public class PaneProgPaneTest extends TestCase {
             .addAttribute("mask","VVVVVVVV")
             .addAttribute("label","Start voltage")
             .addContent( new Element("decVal"));
-        varModel.setRow(0, el0);
         Element el1 = new Element("variable")
             .addAttribute("CV","1")
             .addAttribute("readOnly","no")
             .addAttribute("mask","VVVVVVVV")
             .addAttribute("label","Primary Address")
             .addContent( new Element("decVal"));
-        varModel.setRow(1, el1);
+        varModel.setRow(0, el1);
+        varModel.setRow(1, el0);
         if (log.isDebugEnabled()) log.debug("Two elements loaded");
 
 //        PaneProgPane progPane = new PaneProgPane("name", pane1, cvModel, varModel, null);
@@ -228,7 +228,7 @@ public class PaneProgPaneTest extends TestCase {
         if (log.isDebugEnabled()) log.debug("past loop, i="+i);
         assertTrue("busy period ends before timeout ", i<=100);
 
-        Assert.assertEquals("last cv written ", 2, p.lastWriteCv());
+        Assert.assertEquals("last cv written ", 1, p.lastWriteCv());
 
         if (log.isDebugEnabled()) log.debug("testPaneWrite ends ok");
     }
