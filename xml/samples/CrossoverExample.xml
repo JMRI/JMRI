@@ -21,13 +21,6 @@
     <turnout systemName="LT34" feedback="MONITORING" />
     <turnout systemName="LT35" feedback="MONITORING" />
   </turnouts>
-  <sensors class="jmri.jmrix.loconet.configurexml.LnSensorManagerXml">
-    <sensor systemName="LS10" />
-    <sensor systemName="LS11" />
-    <sensor systemName="LS12" />
-    <sensor systemName="LS13" />
-  </sensors>
-  <reporters class="jmri.jmrix.loconet.configurexml.LnReporterManagerXml" />
   <signalheads class="jmri.configurexml.AbstractSignalHeadManagerXml">
     <signalhead class="jmri.configurexml.DoubleTurnoutSignalHeadXml" systemName="IH20H">
       <turnout systemName="LT20" />
@@ -74,8 +67,6 @@
     <signalhead class="jmri.configurexml.VirtualSignalHeadXml" systemName="VH60" />
     <signalhead class="jmri.configurexml.VirtualSignalHeadXml" systemName="VH61" />
   </signalheads>
-  <memories class="jmri.configurexml.DefaultMemoryManagerXml" />
-  <routes class="jmri.configurexml.DefaultRouteManagerXml" />
   <blocks class="jmri.jmrit.blockboss.configurexml.BlockBossLogicXml">
     <block signal="IH20L" mode="3" watchedturnout="LT17" watchedsignal1="VH55" useflashyellow="false" distantsignal="true" />
     <block signal="IH20H" mode="2" watchedturnout="LT17" watchedsignal1="VH50" useflashyellow="false" distantsignal="true" />
@@ -135,6 +126,6 @@
     <signalheadicon signalhead="VH58" x="208" y="241" red="resource:resources/icons/smallschematics/bordersearchlights/left-red-high.gif" yellow="resource:resources/icons/smallschematics/bordersearchlights/left-yellow-high.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" green="resource:resources/icons/smallschematics/bordersearchlights/left-green-high.gif" rotate="0" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
     <signalheadicon signalhead="VH59" x="210" y="265" red="resource:resources/icons/smallschematics/bordersearchlights/left-red-high.gif" yellow="resource:resources/icons/smallschematics/bordersearchlights/left-yellow-high.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" green="resource:resources/icons/smallschematics/bordersearchlights/left-green-high.gif" rotate="2" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
   </paneleditor>
-  <!--Written by JMRI version 1.7.2 on Tue Aug 02 15:07:28 PDT 2005 $Id: CrossoverExample.xml,v 1.1 2005-08-02 22:10:40 jacobsen Exp $-->
+  <!--Written by JMRI version 1.7.2 on Tue Aug 02 15:07:28 PDT 2005 $Id: CrossoverExample.xml,v 1.2 2005-08-03 00:55:33 jacobsen Exp $-->
 </layout-config>
 
