@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.7.2.html,v 1.5 2005-07-31 20:00:02 jacobsen Exp $ -->
+<!-- $Id: jmri1.7.2.html,v 1.6 2005-08-03 01:12:40 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -72,6 +72,8 @@
 
 <P>This is the next in a series of test versions that contain long-awaited new features, particularly improved support for QSI decoders, wait cursors in the programmer, and significant internal updates.  Some of the changes involved are quite extensive, and may require a certain amount of experience before they are working well.  Therefore, this test version should be considered experimental.
 
+<P>This test version contains important fixes for users programming QSI decoders and Digitrax boards in the PM, BDL and SE series.
+
 <h3>New warnings for this test version:</h3>
 
 <P>We have added additional information to the roster files in this version to help properly handle short/long addressing in systems that allow low addresses (e.g. 65) to be either short or long addresses. The only current system we support that has this capability is NCE.  If you have an NCE system, and you have locomotives with addresses of 127 or less, you should open their roster entries in DecoderPro, check that the proper short or long address is selected,  and save them again.
@@ -132,19 +134,19 @@
 
 <P>Bob Scheffler fixed a problem addressing high-address (address greater than 512) accessory decoders on NCE, EasyDCC and SPROG systems.
 
-<P>Added shortcuts to the PowerManager and ProgrammerManager in scripts (see jmri_defaults.py)
+<P>Bob Jacobsen dded shortcuts to the PowerManager and ProgrammerManager in scripts (see jmri_defaults.py)
 
 <P>Dennis Miller figured out why the JButtonExample wasn't showing at the right size, so that's now fixed.
 
-<P>Added OpsProgExample.py, a script showing how to automate changing a CV in a decoder when certain things happen.  This can be used to change sound volume, or adjust momentum to whether you're in a yard or not, etc.
+<P>Bob Jacobsen dded OpsProgExample.py, a script showing how to automate changing a CV in a decoder when certain things happen.  This can be used to change sound volume, or adjust momentum to whether you're in a yard or not, etc.
 
 <P>Howard Penny added a tooltip to the DecoderPro comprehensive programmer about the decoder id variables
 
 <P>Paul Bender updated the XPressNet initialization so that it will generally be faster at startup
 
-<P>The usual JavaDoc improvements and updates.
+<P>Bob Jacobsen made the usual JavaDoc improvements and updates.
 
-<P>New scripting example showing how to do ops mode programming.
+<P>Bob Jacobsen provided a new scripting example showing how to do ops mode programming.
 
 <P>DecoderPro should now successfully identify the Bachman "four function" decoder (though it would be good if they actually used something that looks like a model name for their products)
 
@@ -152,7 +154,7 @@
 
 <P>Howard Penny updated the DecoderPro pane programmers so that they'd show a "busy" cursor when doing programming operations, and so they'd have explicit "Stop" buttons to click to stop the programming operation. (RFE 1047078)
 
-<P>New support for the PRICOM Pocket Tester's trace mode.  The tool is currently in the Debug menu.  For more info on the product, please see <a href="http://www.pricom.com">http://www.pricom.com</a>.
+<P>Bob Jacobsen added new support for the PRICOM Pocket Tester's trace mode.  The tool is currently in the Debug menu.  For more info on the product, please see <a href="http://www.pricom.com">http://www.pricom.com</a>.
 
 <P>Paul Bender added a new stack monitor tool for XPressNet systems.
 
@@ -164,15 +166,17 @@
 
 <P>Dave Duchamp made it possible to use either upper or lower case letters when defining system names for Sensors, Turnouts, etc.  For example, ct12 and CT12 are now treated the same.
 
-<P>Updated the computer throttles so that you can specify long or short address for systems where addresses like 125 can be either (right now only NCE has this capability)
+<P>Bob Jacobsen updated the computer throttles so that you can specify long or short address for systems where addresses like 125 can be either (right now only NCE has this capability)
 
 <P>Dave Duchamp updated the LocoNet code so that it reads the status of sensors from the LocoNet when a panel (XML file) is read in.  This will automatically get the current state from the layout once the sensor definitions are read in.
 
 <P>Dave Duchamp updated Routes so that, in addition to "set closed" and "set thrown", they can toggle a Turnout when fired. This is useful for example if you want to use a route to toggle a turnout when a front panel button (Sensor) is pressed.
 
+<P>Peter Brandenburg contributed a new version of the Zimo MX66 decoder definition (Patch 1223037)
+
 <P>Lengthened the long LocoNet timeout during programming operations.  This was needed for Fleischmann Twin Centre command stations, which seem to take significantly longer to do read operations than others. Unfortunately, we've not received the test data to know if this timeout is right even now.
 
-<P>Fix a bug in the PM4 programmer where certain versions of the PM42 would not be read properly.  This happened mostly with recent versions of the cards.
+<P>Bob Jacobsen, with help from Peter Ely, fixed a bug in the PM4 programmer where certain versions of the PM42 would not be read properly.  This happened mostly with recent versions of the cards.
 
 <P>By default, XML files are no longer being validated when read.  This greatly improves the startup time for large rosters and decoder definitions.  There's a new "Validate xml file" tool in the debug menu for doing validation if desired.  This change will also make it easier to have backward-compatible DTD changes in the future (although it can't help with previous versions of the library, of course)
 
@@ -182,6 +186,17 @@
 
 <P>Add "repeater signal" capability to the simple signal logic.  Normally, a signal is tell the engineer about the need to slow down:  A yellow preceeds a red signal, and green preceeds yellow.  When "repeater" is selected on the Simple Signal Logic definition panel, however, the signal being defined will show the same state as the one it's protecting:  red will be preceeded by red, yellow by yellow, etc.  This is useful for example in interlockings, where there is not very much space between signals. When combined with virtual signal heads, this can also be used to create more complicated logic. The "CrossoverDemo.xml" file in the xml/samples directory is an example of this.
 
+<P>Add a "selectable" attribute to the XML definition of a memory icon.  If present, and if there is a map of icons in the same element, the pop-up menu on the icon willl let you select the current memory contents.
+
+<P>Allen Byrne cleaned up the XML handling code, and improved some Roster unit tests.
+
+<P>Walter Thompson updated the ESU decoder definitions so that they would work with the Comprehensive programmer, etc, so the corresponding ESU-specific programmer formats are no longer needed.
+
+<P>Bob Jacobsen improved the error handling at startup so that "Port in Use" and similar errors are more likely to still provide a running program (without a connection, but at least running well enough to redo the preferences)
+
+<P>John Harper fixed the problem with the script output window dying when a script thread ends early (patch 1249631, bug 
+
+<P>You can now edit the "Simple Signal Logic" for a signal head on a panel from the signal's popup menu.
       <hr class="hide">
 <!-- Footer -->
     <hr class="hide">
