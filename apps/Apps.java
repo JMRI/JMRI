@@ -27,7 +27,7 @@ import net.roydesign.mac.MRJAdapter;
  * Base class for Jmri applications.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.25 $
+ * @version     $Revision: 1.26 $
  */
 public class Apps extends JPanel {
 
@@ -190,7 +190,7 @@ public class Apps extends JPanel {
         
         // also add some tentative items from jmrix
         d.add(new JSeparator());
-        d.add(new jmri.jmrix.pricom.pockettester.MonitorAction());
+        d.add(new jmri.jmrix.pricom.pockettester.PocketTesterMenu());
     }
 
     protected void scriptMenu(JMenuBar menuBar, JFrame frame) {
