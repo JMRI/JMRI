@@ -12,20 +12,19 @@ import java.awt.event.ActionEvent;
  * @see jmri.jmrix.pricom.pockettester.MonitorFrame
  *
  * @author			Bob Jacobsen    Copyright (C) 2002,2004
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
-public class MonitorAction extends AbstractAction  {
+public abstract class MonitorAction extends AbstractAction  {
 
     public MonitorAction(String s) { super(s);}
     public MonitorAction() {
         java.util.ResourceBundle rb 
             = java.util.ResourceBundle.getBundle("jmri.jmrix.pricom.pockettester.TesterBundle");
-        putValue(javax.swing.Action.NAME, rb.getString("MonitorTitle"));
+        putValue(javax.swing.Action.NAME, rb.getString("ActionMonitor"));
     }
         
 
     public void actionPerformed(ActionEvent e) {
-		// create a SerialDriverFrame
 		MonitorFrame f = new MonitorFrame();
 		try {
 			f.initComponents();
@@ -33,10 +32,13 @@ public class MonitorAction extends AbstractAction  {
 		catch (Exception ex) {
 			log.error("starting MonitorFrame caught exception: "+ex.toString());
 			}
+	    connect(f);
 		f.show();
 	};
 
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MonitorAction.class.getName());
+    abstract void connect(DataListener l);
+    
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MonitorAction.class.getName());
 
 }
 

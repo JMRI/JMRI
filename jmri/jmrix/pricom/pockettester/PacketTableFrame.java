@@ -22,15 +22,15 @@ import jmri.util.JTableUtil;
  * Frame providing survey of DCC contents
  *
  * @author	Bob Jacobsen   Copyright (C) 2005
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
-public class PacketTableFrame extends javax.swing.JFrame {
+public class PacketTableFrame extends javax.swing.JFrame implements DataListener {
 
-    PacketDataModel	model 	= new PacketDataModel(128,16);
+    PacketDataModel	model 	= new PacketDataModel();
     JTable				table;
     JScrollPane 		scroll;
 
-    public PacketTableFrame() {
+    public void initComponents() {
 
     	table	= JTableUtil.sortableDataModel(model);
     	scroll	= new JScrollPane(table);
@@ -80,4 +80,9 @@ public class PacketTableFrame extends javax.swing.JFrame {
         scroll = null;
         super.dispose();
     }
+    
+    public void asciiFormattedMessage(String m) {
+        model.asciiFormattedMessage(m);
+    }
+        
 }

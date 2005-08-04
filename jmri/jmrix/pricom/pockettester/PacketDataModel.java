@@ -4,12 +4,6 @@ package jmri.jmrix.pricom.pockettester;
 
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import jmri.jmrix.loconet.LnConstants;
-import jmri.jmrix.loconet.LnTrafficController;
-import jmri.jmrix.loconet.LocoNetMessage;
-import jmri.jmrix.loconet.LocoNetSlot;
-import jmri.jmrix.loconet.SlotListener;
-import jmri.jmrix.loconet.SlotManager;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -18,29 +12,30 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 
+import java.util.Vector;
+
 /**
  * Table data model for display of DCC packet contents
  * @author		Bob Jacobsen   Copyright (C) 2005
- * @version		$Revision: 1.1 $
+ * @version		$Revision: 1.2 $
  */
 public class PacketDataModel extends javax.swing.table.AbstractTableModel  {
 
+    static java.util.ResourceBundle rb 
+            = java.util.ResourceBundle.getBundle("jmri.jmrix.pricom.pockettester.TesterBundle");
     static public final int ADDRESSCOLUMN = 0;
     static public final int TYPECOLUMN = 1;
-    static public final int DETAILBUTTONCOLUMN = 2;
+    static public final int DETAILCOLUMN = 2;
+    static public final int MONITORBUTTONCOLUMN = 3;
 
-    static public final int NUMCOLUMN = 3;
-    PacketDataModel(int row, int column) {
-
-        // connect to source for updates
-    }
+    static public final int NUMCOLUMN = 4;
 
     /**
      * Returns the number of rows to be displayed.  This
      * can vary depending on what has been seen
      */
     public int getRowCount() {
-        return 3;
+        return keys.size();
     }
 
 
@@ -48,9 +43,10 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel  {
 
     public String getColumnName(int col) {
         switch (col) {
-        case ADDRESSCOLUMN: return "Address";
-        case TYPECOLUMN: return "Type";   
-        case DETAILBUTTONCOLUMN: return "";   // no heading, as button is clear
+        case ADDRESSCOLUMN: return rb.getString("ColumnAddress");
+        case TYPECOLUMN: return rb.getString("ColumnType");   
+        case DETAILCOLUMN: return rb.getString("ColumnDetails");   
+        case MONITORBUTTONCOLUMN: return "";   // no heading, as button is clear
         default: return "unknown";
         }
     }
@@ -58,10 +54,10 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel  {
     public Class getColumnClass(int col) {
         switch (col) {
         case ADDRESSCOLUMN:
-            return Integer.class;
         case TYPECOLUMN:
+        case DETAILCOLUMN:
             return String.class;
-        case DETAILBUTTONCOLUMN:
+        case MONITORBUTTONCOLUMN:
             return JButton.class;
         default:
             return null;
@@ -70,7 +66,7 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel  {
 
     public boolean isCellEditable(int row, int col) {
         switch (col) {
-        case DETAILBUTTONCOLUMN:
+        case MONITORBUTTONCOLUMN:
             return true;
         default:
             return false;
@@ -84,13 +80,15 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel  {
 
         switch (col) {
         case ADDRESSCOLUMN:  // slot number
-            return new Integer(row);
-        case DETAILBUTTONCOLUMN:  //
-            return "Details";          // will be name of button in default GUI
+            return addresses.elementAt(row);
         case TYPECOLUMN:  //
-            return "Dummy";
+            return types.elementAt(row);
+        case DETAILCOLUMN:  //
+            return details.elementAt(row);
+        case MONITORBUTTONCOLUMN:  //
+            return rb.getString("ButtonTrace");
         default:
-            log.error("internal state inconsistent with table requst for "+row+" "+col);
+            log.error("internal state inconsistent with table request for "+row+" "+col);
             return null;
         }
     };
@@ -98,10 +96,12 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel  {
     public int getPreferredWidth(int col) {
         switch (col) {
         case ADDRESSCOLUMN:
-            return new JTextField(5).getPreferredSize().width;
+            return new JTextField(8).getPreferredSize().width;
         case TYPECOLUMN:
-            return new JTextField(2).getPreferredSize().width;
-        case DETAILBUTTONCOLUMN:
+            return new JTextField(12).getPreferredSize().width;
+        case DETAILCOLUMN:
+            return new JTextField(12).getPreferredSize().width;
+        case MONITORBUTTONCOLUMN:
             return new JButton("Details").getPreferredSize().width;
         default:
             return new JLabel(" <unknown> ").getPreferredSize().width;
@@ -109,6 +109,22 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel  {
     }
 
     public void setValueAt(Object value, int row, int col) {
+        switch (col) {
+        case MONITORBUTTONCOLUMN: 
+		    MonitorFrame f = new MonitorFrame();
+		    try {
+			    f.initComponents();
+                f.setFilter((String)getValueAt(row, ADDRESSCOLUMN));
+			    }
+		    catch (Exception ex) {
+			    log.error("starting MonitorFrame caught exception: "+ex.toString());
+			    }
+		    f.show();
+            
+            return;
+        default:
+            return;
+        }
     }
 
     /**
@@ -132,7 +148,7 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel  {
         slotTable.sizeColumnsToFit(-1);
 
         // install a button renderer & editor in the "DISP" column for freeing a slot
-        setColumnToHoldButton(slotTable, PacketDataModel.DETAILBUTTONCOLUMN);
+        setColumnToHoldButton(slotTable, PacketDataModel.MONITORBUTTONCOLUMN);
 
     }
 
@@ -170,6 +186,70 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel  {
     public void dispose() {
     }
 
+    public void asciiFormattedMessage(String m) {
+        String address = getPrefix(m);
+        if (address == null) return;    // no address, ignore
+        
+        String type = getType(m);
+        String detail = getDetails(m);
+        String key = address+type;
+        
+        // see if exists
+        int index = keys.indexOf(key);
+        
+        if (index == -1) {
+            // not present, add
+            keys.addElement(key);
+            addresses.addElement(address);
+            types.addElement(type);
+            details.addElement(detail);
+            
+            index = keys.indexOf(key);
+            fireTableRowsInserted(index, index);
+        } else {
+            // index has been set, update  
+            keys.setElementAt(key, index);
+            addresses.setElementAt(address, index);
+            types.setElementAt(type, index);
+            details.setElementAt(detail, index);
+            fireTableRowsUpdated(index, index);
+        }
+    }
+
+    Vector keys = new Vector();
+    Vector addresses = new Vector();
+    Vector types = new Vector();
+    Vector details = new Vector();
+    
+    /**
+     * Find the identifying prefix from the current line
+     * @return null if not to be displayed, e.g. no address
+     */
+    String getPrefix(String s) {
+        if (!s.startsWith("ADR=")) 
+            return null;
+        else 
+            return s.substring(0,8);
+    }
+    
+    /**
+     * Find the message type from the current line.
+     * Should not be called if getPrefix has returned null.
+     * @return null if not to be displayed, e.g. too short
+     */
+    String getType(String s) {
+        return s.substring(9, 22);
+    }
+    
+    /**
+     * Find the message arguments from the current line.
+     * Should not be called if getPrefix has returned null.
+     * @return null if not to be displayed, e.g. too short
+     */
+    String getDetails(String s) {
+        return s.substring(22);
+    }
+    
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PacketDataModel.class.getName());
 
 }
