@@ -22,13 +22,16 @@ import jmri.util.JTableUtil;
  * Frame providing survey of DCC contents
  *
  * @author	Bob Jacobsen   Copyright (C) 2005
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class PacketTableFrame extends javax.swing.JFrame implements DataListener {
 
     PacketDataModel	model 	= new PacketDataModel();
     JTable				table;
     JScrollPane 		scroll;
+
+    static java.util.ResourceBundle rb 
+            = java.util.ResourceBundle.getBundle("jmri.jmrix.pricom.pockettester.TesterBundle");
 
     public void initComponents() {
 
@@ -42,6 +45,17 @@ public class PacketTableFrame extends javax.swing.JFrame implements DataListener
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         getContentPane().add(scroll);
+        
+        JPanel p1 = new JPanel();
+        JButton b = new JButton(rb.getString("ButtonClear"));
+        b.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                model.reset();
+            }
+        });
+        p1.add(b);
+        getContentPane().add(p1);
+        
         pack();
 
     }
@@ -74,11 +88,18 @@ public class PacketTableFrame extends javax.swing.JFrame implements DataListener
     }
 
     public void dispose() {
+        source.removeListener(this);
         model.dispose();
         model = null;
         table = null;
         scroll = null;
         super.dispose();
+    }
+    
+    DataSource source;
+    public void setSource(DataSource d) {
+        source = d;
+        model.setSource(d);
     }
     
     public void asciiFormattedMessage(String m) {

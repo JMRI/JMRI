@@ -17,7 +17,7 @@ import java.util.Vector;
 /**
  * Table data model for display of DCC packet contents
  * @author		Bob Jacobsen   Copyright (C) 2005
- * @version		$Revision: 1.2 $
+ * @version		$Revision: 1.3 $
  */
 public class PacketDataModel extends javax.swing.table.AbstractTableModel  {
 
@@ -115,10 +115,10 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel  {
 		    try {
 			    f.initComponents();
                 f.setFilter((String)getValueAt(row, ADDRESSCOLUMN));
-			    }
-		    catch (Exception ex) {
+                source.addListener(f);
+			} catch (Exception ex) {
 			    log.error("starting MonitorFrame caught exception: "+ex.toString());
-			    }
+			}
 		    f.show();
             
             return;
@@ -165,34 +165,18 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel  {
 			.setPreferredWidth(new JButton("  "+getValueAt(1, column)).getPreferredSize().width);
     }
 
-    void setColumnToHoldEStopButton(JTable slotTable, int column) {
-        TableColumnModel tcm = slotTable.getColumnModel();
-        // install the button renderers & editors in this column
-        ButtonRenderer buttonRenderer = new ButtonRenderer();
-        tcm.getColumn(column).setCellRenderer(buttonRenderer);
-        TableCellEditor buttonEditor = new ButtonEditor(new JButton()){
-            public void mousePressed(MouseEvent e) {
-                stopCellEditing();
-            }
-        };
-        tcm.getColumn(column).setCellEditor(buttonEditor);
-        // ensure the table rows, columns have enough room for buttons
-        slotTable.setRowHeight(new JButton("  "+getValueAt(1, column)).getPreferredSize().height);
-        slotTable.getColumnModel().getColumn(column)
-			.setPreferredWidth(new JButton("  "+getValueAt(1, column)).getPreferredSize().width);
-    }
 
 
     public void dispose() {
     }
 
     public void asciiFormattedMessage(String m) {
-        String address = getPrefix(m);
-        if (address == null) return;    // no address, ignore
+        String key = getKey(m)
+        is (key == null) return;  // ignore this input
         
+        String address = getPrefix(m);
         String type = getType(m);
         String detail = getDetails(m);
-        String key = address+type;
         
         // see if exists
         int index = keys.indexOf(key);
@@ -216,24 +200,51 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel  {
         }
     }
 
+    DataSource source;
+    public void setSource(DataSource d) {
+        source = d;
+    }
+    
+    public void reset() {
+        int count = keys.size();
+        keys = new Vector();
+        addresses = new Vector();
+        types = new Vector();
+        details = new Vector();
+        fireTableRowsDeleted(0, count-1);
+    }
+    
     Vector keys = new Vector();
     Vector addresses = new Vector();
     Vector types = new Vector();
     Vector details = new Vector();
     
     /**
-     * Find the identifying prefix from the current line
+     * Find the display key from the current input line.
+     * A later input line that maps to the same key will overwrite the
+     * earlier line.
+     *<P>
+     * The current implementation is address+type, so that separate
+     * lines will be used for each type sent to the same address.
+     *
      * @return null if not to be displayed, e.g. no address
      */
-    String getPrefix(String s) {
+    String getKey(String s) {
         if (!s.startsWith("ADR=")) 
             return null;
         else 
-            return s.substring(0,8);
+            return s.substring(0,22);
     }
     
     /**
-     * Find the message type from the current line.
+     * Find the address (1st column) from the current input line
+     */
+    String getPrefix(String s) {
+        return s.substring(0,8);
+    }
+    
+    /**
+     * Find the message type (2nd column) from the current input line.
      * Should not be called if getPrefix has returned null.
      * @return null if not to be displayed, e.g. too short
      */
@@ -242,12 +253,12 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel  {
     }
     
     /**
-     * Find the message arguments from the current line.
+     * Find the message arguments (3rd column) from the current input line.
      * Should not be called if getPrefix has returned null.
      * @return null if not to be displayed, e.g. too short
      */
     String getDetails(String s) {
-        return s.substring(22);
+        return s.substring(23, s.length()-1);
     }
     
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PacketDataModel.class.getName());

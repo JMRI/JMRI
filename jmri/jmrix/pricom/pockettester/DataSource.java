@@ -22,7 +22,7 @@ import java.io.InputStream;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class DataSource extends JFrame {
 
@@ -158,6 +158,7 @@ public class DataSource extends JFrame {
         p4.add(new JButton(new PacketTableAction() {
             public void connect(DataListener l) {
                 self.addListener(l);
+                ((PacketTableFrame)l).setSource(self);
             }
         }));
         getContentPane().add(p4);
@@ -376,6 +377,7 @@ public class DataSource extends JFrame {
             }
 
             // create the String to display (as String has .equals)
+            msg.append("\n");
             msgString = new String(msg);
 
             // return a notification via the queue to ensure end
