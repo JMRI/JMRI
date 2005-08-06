@@ -17,7 +17,7 @@ import java.util.Vector;
 /**
  * Table data model for display of DCC packet contents
  * @author		Bob Jacobsen   Copyright (C) 2005
- * @version		$Revision: 1.3 $
+ * @version		$Revision: 1.4 $
  */
 public class PacketDataModel extends javax.swing.table.AbstractTableModel  {
 
@@ -171,8 +171,8 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel  {
     }
 
     public void asciiFormattedMessage(String m) {
-        String key = getKey(m)
-        is (key == null) return;  // ignore this input
+        String key = getKey(m);
+        if (key == null) return;  // ignore this input
         
         String address = getPrefix(m);
         String type = getType(m);
