@@ -12,9 +12,12 @@ import jmri.TurnoutManager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class ProxyTurnoutManager extends AbstractProxyManager implements TurnoutManager {
+
+    final java.util.ResourceBundle rbt = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
+
     /**
      * Locate via user name, then system name if needed.
      *
@@ -41,7 +44,6 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
         return ((TurnoutManager)mgrs.get(0)).newTurnout(
                     ((TurnoutManager)mgrs.get(0)).makeSystemName(sName), null);
     }
-
 
     /**
      * Locate an instance based on a system name.  Returns null if no
@@ -125,7 +127,12 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
 	 * used.  Note: the primary manager need not override the method in AbstractTurnoutManager if
 	 * "CLOSED" is the desired terminology.
 	 */
-	public String getClosedText() { return ( (TurnoutManager)mgrs.get(0)).getClosedText(); };
+	public String getClosedText() { 
+		if (mgrs.size()>0)
+			return ( (TurnoutManager)mgrs.get(0)).getClosedText(); 
+		else 
+			return rbt.getString("TurnoutStateClosed");
+	}
 	
 	/**
 	 * Get text to be used for the Turnout.THROWN state in user communication.
@@ -135,7 +142,12 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
 	 * used.  Note: the primary manager need not override the method in AbstractTurnoutManager if
 	 * "THROWN" is the desired terminology.
 	 */
-	public String getThrownText() { return ( (TurnoutManager)mgrs.get(0)).getThrownText(); };
+	public String getThrownText() { 
+		if (mgrs.size()>0)
+			return ( (TurnoutManager)mgrs.get(0)).getThrownText(); 
+		else 
+			return rbt.getString("TurnoutStateThrown");
+	}
 
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ProxyTurnoutManager.class.getName());
