@@ -13,7 +13,7 @@ import jmri.LightManager;
  * Based on ProxySensorManager
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class ProxyLightManager extends AbstractProxyManager
                             implements LightManager {
@@ -121,11 +121,21 @@ public class ProxyLightManager extends AbstractProxyManager
                 if ( ( (LightManager)mgrs.get(i)).systemLetter() == systemName.charAt(0) )
                     return ( (LightManager)mgrs.get(i)).newLight(systemName, userName);
             }
-            // did not find a manager, allow it to default to the primary
-            log.debug("Did not find manager for system name "+systemName+", assume it's a number");
-            return ( (LightManager)mgrs.get(0)).newLight(systemName, userName);
-        } else {  // no systemName specified, use primary
-            return ( (LightManager)mgrs.get(0)).newLight(systemName, userName);
+            // did not find a manager, allow it to default to the primary if there is one
+			if (mgrs.size()>0) {
+				log.debug("Did not find manager for system name "+systemName+", assume it's a number");
+				return ( (LightManager)mgrs.get(0)).newLight(systemName, userName);
+			} else {
+				log.debug("Did not find manager for system name "+systemName+", and there is no primary");
+				return (null);
+			}
+        } else {  // no systemName specified, use primary if there is one
+			if (mgrs.size()>0) {
+				return ( (LightManager)mgrs.get(0)).newLight(systemName, userName);
+			} else {
+				log.debug("Did not find a Light manager for user name "+userName);
+				return (null);
+			}
         }
     }
 
