@@ -2,6 +2,8 @@ package jmri.jmrit.throttle;
 
 import jmri.DccThrottle;
 import jmri.util.SwingUtil;
+import jmri.util.MouseInputAdapterInstaller;
+
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -14,7 +16,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseAdapter;
+
+import javax.swing.event.MouseInputAdapter;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -41,7 +44,7 @@ import org.jdom.Element;
  *  TODO: fix speed increments (14, 28)
  *
  * @author     glen   Copyright (C) 2002
- * @version    $Revision: 1.40 $
+ * @version    $Revision: 1.41 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener,ActionListener
 {
@@ -321,7 +324,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 		constraints.gridy = 0;
 
 		sliderPanel.add(speedSlider, constraints);
-		this.getLayeredPane().add(sliderPanel,BorderLayout.CENTER);
+		this.getContentPane().add(sliderPanel,BorderLayout.CENTER);
 		speedSlider.setOrientation(JSlider.VERTICAL);
 		speedSlider.setMajorTickSpacing(MAX_SPEED/2);
 		com.sun.java.util.collections.Hashtable labelTable = new com.sun.java.util.collections.Hashtable();
@@ -357,8 +360,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 
 		if(speedSpinner!=null)
 			spinnerPanel.add(speedSpinner, constraints);
-		this.getLayeredPane().add(spinnerPanel,BorderLayout.CENTER);
-
+		this.getContentPane().add(spinnerPanel,BorderLayout.CENTER);
 
 		// remove old actions
 		if(speedSpinner!=null)
@@ -521,10 +523,13 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 		propertiesItem.addActionListener(this);
 		propertiesPopup.add(propertiesItem);
 
-                //Add listener to components that can bring up popup menus.
-                MouseListener popupListener = new PopupListener(propertiesPopup);
-                this.addMouseListener(popupListener);
+                // Add a mouse listener all components to trigger the popup menu.
+                MouseInputAdapter popupListener = new PopupListener(propertiesPopup,this);
 
+		MouseInputAdapterInstaller.installMouseInputAdapterOnAllComponents(
+					popupListener,this);
+
+		// Install the Key bindings on all Components
 		KeyListenerInstaller.installKeyListenerOnAllComponents(
 				new ControlPadKeyListener(), this);
 
@@ -532,7 +537,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 		this.getLayeredPane().moveToFront(spinnerPanel);
 		this.getLayeredPane().moveToFront(sliderPanel);
 		setSpeedController(_displaySlider);
-
 	}
 
 	/**
@@ -540,6 +544,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	 */
 	private void stop()
 	{
+                if(this.throttle==null) return;
 		speedSlider.setValue(0);
 		if(speedSpinner!=null)
 		   speedSpinner.setValue(new Integer(0));
@@ -571,7 +576,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	 *  A KeyAdapter that listens for the keys that work the control pad buttons
 	 *
 	 * @author     glen
-         * @version    $Revision: 1.40 $
+         * @version    $Revision: 1.41 $
 	 */
 	class ControlPadKeyListener extends KeyAdapter
 	{
@@ -720,12 +725,14 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * A PopupListener to handle mouse clicks and releases. Handles
      * the popup menu.
      */
-    class PopupListener extends MouseAdapter
+    class PopupListener extends MouseInputAdapter
     {
 
 	JPopupMenu _menu;
+	JInternalFrame parentFrame;
 
-	PopupListener(JPopupMenu menu){
+	PopupListener(JPopupMenu menu,JInternalFrame parent){
+		parentFrame = parent;
 		_menu=menu;
 	}
 
@@ -741,11 +748,15 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             if (log.isDebugEnabled()) log.debug("pressed "+(e.getModifiers() & e.BUTTON1_MASK)+" "+e.isPopupTrigger()
                     +" "+(e.getModifiers() & (e.ALT_MASK+ e.META_MASK+e.CTRL_MASK))
                     +(" "+e.ALT_MASK+"/"+e.META_MASK+"/"+e.CTRL_MASK));
-	    JInternalFrame panel= (JInternalFrame)e.getSource();
-            if (e.isPopupTrigger())
+            if (e.isPopupTrigger() && parentFrame.isSelected())
             {
-                _menu.show(e.getComponent(),  
+		try {
+                   _menu.show(e.getComponent(),  
                            e.getX(), e.getY());
+		} catch ( java.awt.IllegalComponentStateException cs ) {
+			// Message sent to a hidden component, so we need 
+		}
+		e.consume();
             }
         }
 
@@ -760,11 +771,16 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         {
             if (log.isDebugEnabled()) log.debug("released "+(e.getModifiers()   & e.BUTTON1_MASK)+" "+e.isPopupTrigger()
                     +" "+(e.getModifiers() & (e.ALT_MASK+e.META_MASK+e.CTRL_MASK)));
-	    JInternalFrame panel= (JInternalFrame)e.getSource();
             if (e.isPopupTrigger())
             {
-                _menu.show(e.getComponent(),   
+		try {
+                   _menu.show(e.getComponent(),   
                            e.getX(), e.getY());
+		} catch ( java.awt.IllegalComponentStateException cs ) {
+			// Message sent to a hidden component, so we need 
+		}
+
+		e.consume();
             }
         }
     }
