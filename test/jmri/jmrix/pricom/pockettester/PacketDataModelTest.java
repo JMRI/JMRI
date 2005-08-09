@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the PacketDataModel class
  * @author		Bob Jacobsen  Copyright 2005
- * @version		$Revision: 1.1 $
+ * @version		$Revision: 1.2 $
  */
 public class PacketDataModelTest extends TestCase {
 
@@ -20,8 +20,14 @@ public class PacketDataModelTest extends TestCase {
 
     public void testGetPrefix() {
         PacketDataModel f = new PacketDataModel();
-        Assert.assertEquals("version", null, f.getPrefix(PocketTesterTest.version));
+        Assert.assertEquals("version",   "PRICOM D", f.getPrefix(PocketTesterTest.version));
         Assert.assertEquals("speed012A", "ADR= 012", f.getPrefix(PocketTesterTest.speed012A));
+    }
+
+    public void testGetKey() {
+        PacketDataModel f = new PacketDataModel();
+        Assert.assertEquals("version",   null, f.getKey(PocketTesterTest.version));
+        Assert.assertEquals("speed012A", "ADR= 012 CMD=Speed    ", f.getKey(PocketTesterTest.speed012A));
     }
 
     public void testGetType() {
