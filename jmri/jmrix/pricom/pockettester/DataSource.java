@@ -22,7 +22,7 @@ import java.io.InputStream;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class DataSource extends JFrame {
 
@@ -150,17 +150,25 @@ public class DataSource extends JFrame {
         
         self = this;
         
-        p4.add(new JButton(new MonitorAction() {
+        MonitorAction a = new MonitorAction() {
             public void connect(DataListener l) {
                 self.addListener(l);
             }
-        }));
-        p4.add(new JButton(new PacketTableAction() {
+        };
+        JButton b = new JButton((String)a.getValue(a.NAME));
+        b.addActionListener(a);
+        p4.add(b);
+        
+        PacketTableAction p = new PacketTableAction() {
             public void connect(DataListener l) {
                 self.addListener(l);
                 ((PacketTableFrame)l).setSource(self);
             }
-        }));
+        };
+        b = new JButton((String)p.getValue(p.NAME));
+        b.addActionListener(p);
+        p4.add(b);
+        
         getContentPane().add(p4);
         
         // Done, get ready to display
