@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.pricom.pockettester package.
  * @author      Bob Jacobsen  Copyright 2005
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class PocketTesterTest extends TestCase {
 
@@ -21,7 +21,7 @@ public class PocketTesterTest extends TestCase {
     }
 
     // convenient strings
-    static String version = "PRICOM Design DCC Pocket Tester - Version 1.4\n";
+    static String version    = "PRICOM Design DCC Pocket Tester - Version 1.4\n";
     
     static String idlePacket = "Decoder Idle Packet\n";
     
