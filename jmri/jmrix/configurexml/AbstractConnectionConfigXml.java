@@ -10,7 +10,7 @@ import org.jdom.Element;
  * classes persisting the status of serial port adapters.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 abstract public class AbstractConnectionConfigXml implements XmlAdapter {
 
@@ -67,7 +67,7 @@ abstract public class AbstractConnectionConfigXml implements XmlAdapter {
      * Update static data from XML file
      * @param e Top level Element to unpack.
       */
-    public void load(Element e) {
+    public void load(Element e) throws Exception {
 
         getInstance();
         // configure port name
@@ -83,16 +83,24 @@ abstract public class AbstractConnectionConfigXml implements XmlAdapter {
             String option2Setting = e.getAttribute("option2").getValue();
             adapter.configureOption2(option2Setting);
         }
-        // open the port
-        adapter.openPort(portName, "JMRI app");
+
+        // register, so can be picked up next time
+        register();
+
+        // try to open the port
+        String result = adapter.openPort(portName, "JMRI app");
+        if (result != null ) {
+            // indicates an error, return it
+            throw new Exception(result);
+        }
+        
+        // if successful so far, go ahead and configure
         adapter.configure();
 
         // once all the configure processing has happened, do any
         // extra config
         unpackElement(e);
 
-        // register, so can be picked up next time
-        register();
     }
 
     /**
