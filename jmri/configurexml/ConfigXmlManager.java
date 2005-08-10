@@ -14,7 +14,7 @@ import org.jdom.Element;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -270,6 +270,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
 
     public boolean load(File fi) {
+        boolean result = true;
         try {
             Element root = super.rootFromFile(fi);
             // get the objects to load
@@ -286,9 +287,11 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 } catch (Exception e) {
                     log.error("Exception while loading "+item.getName()+":"+e);
                     e.printStackTrace();
+                    result = false;  // keep going, but return false to signal problem
                 } catch (Throwable et) {
                     log.error("Thrown while loading "+item.getName()+":"+et);
                     et.printStackTrace();
+                    result = false;  // keep going, but return false to signal problem
                 }
             }
 
@@ -301,16 +304,12 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             log.error("Exception reading: "+e);
             e.printStackTrace();
             return false;
-//        } catch (java.io.IOException e) {
-//            log.error("Exception reading: "+e);
-//            e.printStackTrace();
-//            return false;
         } catch (java.lang.Exception e) {
             log.error("Exception reading: "+e);
             e.printStackTrace();
             return false;
         }
-        return true;
+        return result;
     }
 
     static public String fileLocation = "layout"+File.separator;
