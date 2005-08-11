@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.7 $ -->
+<!-- Revision $Revision: 1.10 $ -->
 
 <project name="JMRI" basedir="." default="none">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -242,7 +242,7 @@
     <!-- using MacOSX tools -->
     <echo message="create MacOS X archive"/>
     <exec executable="open">
-    	<arg line="-a DropStuff MacOSX/JMRI" />
+    	<arg line="-a DropStuff.app MacOSX/JMRI" />
     </exec>
 </target>
 
@@ -269,7 +269,7 @@
  <target name="release2" depends=""
  					description="part 2 of build a release; useage is ant -Drelease=R1.2.3 -Dnumber=1.2.3 release2">
     <exec executable="open">
-    	<arg line="-a DropStuff MacClassic/JMRI"/>
+    	<arg line="-a DropStuff.app MacClassic/JMRI"/>
     </exec>
     <move file="MacOSX/JMRI.hqx" tofile="JMRI.${number}.hqx" />
     <move file="Linux/JMRI.tgz" tofile="JMRI.${number}.tgz" />
@@ -283,11 +283,20 @@
 
     <move file="MacClassic/JMRI.hqx" tofile="JMRI.${number}.Classic.hqx" />
 	<echo message="upload Mac (2), OS2, Linux files"/>
+	<echo message="JMRI.${number}.hqx, JMRI.${number}.tgz, JMRI.${number}.Classic.hqx, JMRI.${number}.zip"/>
+    <echo message="if you get an error here, upload manually and move to step 4"/>
+    <!-- Do the OS/2 one first, in case it fails and leaves a ghost -->
     <ftp server="upload.sourceforge.net"
          userid="ftp" password="jake@physics.berkeley.edu"
          action="put"
          verbose="yes" remotedir="incoming" >
-      <fileset dir="." includes="JMRI.${number}.hqx, JMRI.${number}.tgz, JMRI.${number}.Classic.hqx, JMRI.${number}.zip" />
+      <fileset dir="." includes="JMRI.${number}.zip" />
+    </ftp>
+    <ftp server="upload.sourceforge.net"
+         userid="ftp" password="jake@physics.berkeley.edu"
+         action="put"
+         verbose="yes" remotedir="incoming" >
+      <fileset dir="." includes="JMRI.${number}.hqx, JMRI.${number}.tgz, JMRI.${number}.Classic.hqx" />
     </ftp>
 
 	<echo message="end of part 3; part 4 will do the windows upload when ready"/>
@@ -297,7 +306,8 @@
  
  <target name="release4" depends=""
  					description="part 4 of build a release; useage is ant -Drelease=R1.2.3 -Dnumber=1.2.3 release4">
-	<echo message="upload files"/>
+	<echo message="upload file Windows .exe file"/>
+	<echo message="if you get an error, upload manually, then ant uploadjavadoc"/>
     <ftp server="upload.sourceforge.net"
          userid="ftp" password="jake@physics.berkeley.edu"
          action="put"

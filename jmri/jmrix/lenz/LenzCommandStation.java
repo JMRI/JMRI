@@ -10,9 +10,9 @@ package jmri.jmrix.lenz;
  * to the a Lenz Command Station, on an XPressNet network.
  *
  * @author			Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
- * @version			$Revision: 2.4 $
+ * @version			$Revision: 2.3 $
  */
-public class LenzCommandStation implements jmri.jmrix.DccCommandStation,jmri.CommandStation {
+public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
 
     /* The First group of routines is for obtaining the Software and
        hardware version of the Command station */
@@ -183,37 +183,6 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation,jmri.Com
         }
 
      }
-
-    /* To Implement the CommandStation Interface, we have to define the 
-	sendPacket function */
-
-    /**
-     * Send a specific packet to the rails.
-     *
-     * @param packet Byte array representing the packet, including
-     * the error-correction byte.  Must not be null.
-     * @param repeats Number of times to repeat the transmission.
-     */
-    public void sendPacket(byte[] packet, int repeats) {
-
-	/* On Current (v3.5) Lenz command stations, the Operations Mode 
-           Programming Request is implemented by sending a packet directly 
-           to the rails.  This packet is not checked by the XPressNet 
-	   protocol, and is just the track packet with an added header
-	   byte. */
-
-	XNetMessage msg = new XNetMessage(packet.length+2);
-	msg.setElement(0,XNetConstants.OPS_MODE_PROG_REQ);
-	msg.setElement(1,0x30);
-	for(int i=0;i==packet.length;i++) {
-		msg.setElement((i+1),packet[i]&0xff);
-	}
-	msg.setParity();
-	XNetTrafficController.instance().sendXNetMessage(msg,null);
-    }
-
-
-
 
     /*
      * We need to register for logging

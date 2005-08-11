@@ -1,14 +1,13 @@
 package jmri.jmrix.lenz;
 
 import jmri.jmrix.AbstractThrottle;
-import jmri.DccThrottle;
 import javax.swing.JOptionPane;
 
 /**
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
  * @author     Paul Bender (C) 2002,2003,2004
- * @version    $Revision: 2.5 $
+ * @version    $Revision: 2.4 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -45,7 +44,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
        super();
        this.setDccAddress(address);
        this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;
-       this.speedStepMode=DccThrottle.SpeedStepMode128;
 //       this.isForward=true;
        setIsAvailable(false);
        XNetTrafficController.instance().addXNetListener(~0, this);
@@ -560,30 +558,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         return speedIncrement;
     }
 
-    /*
-     * setSpeedStepMode - set the speed step value.
-     * <P>
-     * @parm Mode - the current speed step mode - default should be 128
-     *              speed step mode in most cases
-     */
-     public void setSpeedStepMode(int Mode) {
-	if(log.isDebugEnabled()) log.debug("Speed Step Mode Change to Mode: " + Mode);
-        this.speedStepMode = Mode;
-	if(Mode == DccThrottle.SpeedStepMode128) {
-       		this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;
-	} else if(Mode == DccThrottle.SpeedStepMode28) {
-       		this.speedIncrement=XNetConstants.SPEED_STEP_28_INCREMENT;
-	} else if(Mode == DccThrottle.SpeedStepMode27) {
-       		this.speedIncrement=XNetConstants.SPEED_STEP_27_INCREMENT;
-	} else if(Mode == DccThrottle.SpeedStepMode14) {
-       		this.speedIncrement=XNetConstants.SPEED_STEP_14_INCREMENT;
-	} else {
-		this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;
-        	this.speedStepMode = DccThrottle.SpeedStepMode128;
-	}
-     }
-
-
     // Handle incoming messages for This throttle.
     public void message(XNetReply l) {
 	// First, we want to see if this throttle is waiting for a message 
@@ -757,27 +731,15 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	{
            if(log.isDebugEnabled()) { log.debug ("Speed Step setting 27"); }
 	   this.speedIncrement=XNetConstants.SPEED_STEP_27_INCREMENT;
-	   notifyPropertyChangeListener("SpeedSteps",
-			 		new Integer(this.speedStepMode),
-					new Integer(this.speedStepMode=DccThrottle.SpeedStepMode27));
 	} else if((b1 & 0x02)==0x02) {
            if(log.isDebugEnabled()) { log.debug("Speed Step setting 28"); }
            this.speedIncrement=XNetConstants.SPEED_STEP_28_INCREMENT;
-	   notifyPropertyChangeListener("SpeedSteps",
-			 		new Integer(this.speedStepMode),
-					new Integer(this.speedStepMode=DccThrottle.SpeedStepMode28));
 	} else if((b1 & 0x04)==0x04) {
            if(log.isDebugEnabled()) { log.debug("Speed Step setting 128"); }
 	   this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;;
-	   notifyPropertyChangeListener("SpeedSteps",
-			 		new Integer(this.speedStepMode),
-					new Integer(this.speedStepMode=DccThrottle.SpeedStepMode128));
 	} else {
            if(log.isDebugEnabled()) { log.debug("Speed Step setting 14"); }
     	   this.speedIncrement=XNetConstants.SPEED_STEP_14_INCREMENT;
-	   notifyPropertyChangeListener("SpeedSteps",
-			 		new Integer(this.speedStepMode),
-					new Integer(this.speedStepMode=DccThrottle.SpeedStepMode14));
 	}
     }
 

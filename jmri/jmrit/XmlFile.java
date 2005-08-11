@@ -13,12 +13,13 @@ import org.jdom.Document;
 import org.jdom.DocType;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
+import org.jdom.output.XMLOutputter;
 
 /**
  * Handle common aspects of XML files.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.17 $
+ * @version	$Revision: 1.20 $
  */
 public abstract class XmlFile {
 
@@ -83,6 +84,22 @@ public abstract class XmlFile {
         return doc.getRootElement();
     }
 
+    /**
+     * Write a File as XML.
+     * @throws org.jdom.JDOMException
+     * @throws java.io.FileNotFoundException
+     * @param file File to be created.
+     * @param doc Document to be written out. This should never be null.
+     */
+    public void writeXML(File file, Document doc) throws org.jdom.JDOMException, java.io.IOException, java.io.FileNotFoundException {
+        // write the result to selected file
+        java.io.FileOutputStream o = new java.io.FileOutputStream(file);
+        XMLOutputter fmt = new XMLOutputter();
+        fmt.setNewlines(true); // pretty printing
+        fmt.setIndent(true);
+        fmt.output(doc, o);
+        o.close();
+    }
 
     /**
      * Check if a file of the given name exists. This uses the 
@@ -221,7 +238,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.17 2004-12-06 05:52:36 jacobsen Exp $";
+                        +" $Id: XmlFile.java,v 1.20 2005-08-02 14:37:22 jacobsen Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }
@@ -293,7 +310,7 @@ public abstract class XmlFile {
         return result;
     }
 
-    static boolean verify = true;
+    static boolean verify = false;
 
     // initialize SAXbuilder
     static private SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation, on for now

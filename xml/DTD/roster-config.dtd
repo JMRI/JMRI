@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a locomotive roster -->
-<!-- $Id: roster-config.dtd,v 1.7 2003-08-08 15:48:09 jacobsen Exp $ -->
+<!-- $Id: roster-config.dtd,v 1.8 2005-07-30 16:00:51 jacobsen Exp $ -->
 
 <!-- This DTD is Copyright 2001, 2003 JMRI.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -15,7 +15,7 @@
 
 <!-- The locomotive entries each define a specific locomotive -->
 
-<!ELEMENT locomotive (decoder) >
+<!ELEMENT locomotive (decoder, locoaddress*) >
 
 <!-- Key used in lists, etc - User identification for this loco -->
 <!ATTLIST locomotive id	CDATA #REQUIRED>          
@@ -34,7 +34,7 @@
 <!ATTLIST locomotive mfg			CDATA #IMPLIED>
 <!ATTLIST locomotive owner			CDATA #IMPLIED>
 <!ATTLIST locomotive model		CDATA #IMPLIED>
-<!ATTLIST locomotive dccAddress	CDATA #IMPLIED>	<!-- DCC address -->
+<!ATTLIST locomotive dccAddress	CDATA #IMPLIED>	<!-- DCC address, obsolete form -->
 <!ATTLIST locomotive comment		CDATA #IMPLIED>
 
 <!-- The decoder optional section identifies the installed decoder -->
@@ -42,3 +42,11 @@
 <!ATTLIST decoder family			CDATA #REQUIRED>
 <!ATTLIST decoder model			CDATA #REQUIRED>
 <!ATTLIST decoder comment   		CDATA #IMPLIED>
+
+<!-- define general locomotive address -->
+<!ELEMENT locoaddress (dcclocoaddress) >
+
+<!-- define DCC locomotive address -->
+<!ELEMENT dcclocoaddress EMPTY >
+<!ATTLIST dcclocoaddress number      CDATA #IMPLIED>
+<!ATTLIST dcclocoaddress longaddress ( yes | no) "no">

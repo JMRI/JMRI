@@ -18,7 +18,7 @@ import jmri.*;
  * Programmer used to access it is a data member.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.13 $
  */
 public class CvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -141,9 +141,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
     public void setValueAt(Object value, int row, int col) {
         switch (col) {
         case VALCOLUMN: // Object is actually an Integer
-          if (((CvValue)_cvDisplayVector.elementAt(row)).getValue() != ((Integer)value).intValue()) {
-              ((CvValue) _cvDisplayVector.elementAt(row)).setValue(((Integer)value).intValue());
-          }
+            ((CvValue)_cvDisplayVector.elementAt(row)).setValue(((Integer)value).intValue() );
             break;
         default:
             break;

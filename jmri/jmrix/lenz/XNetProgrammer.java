@@ -25,8 +25,8 @@ import java.beans.PropertyChangeEvent;
  * <LI>Wait for Normal Operations Resumed broadcast
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @author Paul Bender  Copyright (c) 2003,2004
- * @version $Revision: 2.9 $
+ * @author Paul Bender  Copyright (c) 2003,2004,2005
+ * @version $Revision: 2.12 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -36,6 +36,13 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         // mode.  Used for determining if "OK" message is an aproriate 
 	// response to a request to a programming request. 
 	static private boolean _service_mode = false;
+
+	// As a temporary fix for version 1.6, we're going to use one 
+	// operation per service mode entry if we can't determine the 
+	// interface we're using (since the LI100 does not respond to 
+	// version inquiries - and we're having trouble with the LI100)
+
+	static private boolean _OneServiceOpPerEntry = true;
 
 	public XNetProgrammer() {
 		// error if more than one constructed?
@@ -47,6 +54,13 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
         // connect to listen
         controller().addXNetListener(~0, this);
+
+	// Build the LI version request message
+	XNetMessage msg = new XNetMessage(2);
+	msg.setElement(0,XNetConstants.LI_VERSION_REQUEST);
+        msg.setParity(); // Set the parity bit
+	//Then send to the controller
+        XNetTrafficController.instance().sendXNetMessage(msg,this);
 
     }
 
@@ -130,7 +144,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 	int _cv;	// remember the cv being read/written
 
 	// programming interface
-	public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+	synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
 		if (log.isDebugEnabled()) log.debug("writeCV "+CV+" listens "+p);
 		useProgrammer(p);
 		_progRead = false;
@@ -144,23 +158,42 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		   restartTimer(XNetProgrammerTimeout);
 
 		   // format and send message to go to program mode
-        	   if (_mode == Programmer.PAGEMODE)
-		       controller().sendXNetMessage(XNetMessage.getWritePagedCVMsg(CV, val), this);
-        	   else if (_mode == Programmer.DIRECTBITMODE || _mode == Programmer.DIRECTBYTEMODE)
-		       controller().sendXNetMessage(XNetMessage.getWriteDirectCVMsg(CV, val), this);
-        	   else // register mode by elimination 
-                       controller().sendXNetMessage(XNetMessage.getWriteRegisterMsg(registerFromCV(CV), val),this);
+        	   if (_mode == Programmer.PAGEMODE) {
+		       XNetMessage msg = XNetMessage.getWritePagedCVMsg(CV,val);
+		       if(_OneServiceOpPerEntry) {
+			  msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
+			  /* We don't want an "OK" message to trigger a request for results */
+		     	  _service_mode = false;
+		       }
+		       controller().sendXNetMessage(msg, this);
+        	   } else if (_mode == Programmer.DIRECTBITMODE || _mode == Programmer.DIRECTBYTEMODE) {
+		       XNetMessage msg = XNetMessage.getWriteDirectCVMsg(CV,val);
+		       if(_OneServiceOpPerEntry) {
+			  msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
+			  /* We don't want an "OK" message to trigger a request for results */
+		     	  _service_mode = false;
+		       }
+		       controller().sendXNetMessage(msg, this);
+        	   } else  { // register mode by elimination 
+		       XNetMessage msg = XNetMessage.getWriteRegisterMsg(registerFromCV(CV),val);
+		       if(_OneServiceOpPerEntry) {
+			  msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
+			  /* We don't want an "OK" message to trigger a request for results */
+		     	  _service_mode = false;
+		       }
+                       controller().sendXNetMessage(msg,this);
+		   }
 		} catch (jmri.ProgrammerException e) {
 		  progState = NOTPROGRAMMING;
 		  throw e;
 	        }
 	}
 
-	public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+	synchronized public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
 		readCV(CV, p);
 	}
 
-	public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+	synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
 		if (log.isDebugEnabled()) log.debug("readCV "+CV+" listens "+p);
 		useProgrammer(p);
 		_progRead = true;
@@ -172,12 +205,31 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		   restartTimer(XNetProgrammerTimeout);
 
 		   // format and send message to go to program mode
-        	   if (_mode == Programmer.PAGEMODE)
-		       controller().sendXNetMessage(XNetMessage.getReadPagedCVMsg(CV), this);
-                   else if (_mode == Programmer.DIRECTBITMODE || _mode == Programmer.DIRECTBYTEMODE)
-		       controller().sendXNetMessage(XNetMessage.getReadDirectCVMsg(CV), this);
-        	   else // register mode by elimination		     
-		       controller().sendXNetMessage(XNetMessage.getReadRegisterMsg(registerFromCV(CV)), this);
+        	   if (_mode == Programmer.PAGEMODE) {
+		       XNetMessage msg=XNetMessage.getReadPagedCVMsg(CV);
+		       if(_OneServiceOpPerEntry) {
+			  msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
+			  /* We don't want an "OK" message to trigger a request for results */
+		     	  _service_mode = false;
+		       }
+		       controller().sendXNetMessage(msg, this);
+		   } else if (_mode == Programmer.DIRECTBITMODE || _mode == Programmer.DIRECTBYTEMODE) {
+		       XNetMessage msg=XNetMessage.getReadDirectCVMsg(CV);
+		       if(_OneServiceOpPerEntry) {
+			  msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
+			  /* We don't want an "OK" message to trigger a request for results */
+		     	  _service_mode = false;
+		       }
+		       controller().sendXNetMessage(msg, this);
+		   } else { // register mode by elimination    
+		       XNetMessage msg=XNetMessage.getReadRegisterMsg(registerFromCV(CV));
+		       if(_OneServiceOpPerEntry) {
+			  msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
+			  /* We don't want an "OK" message to trigger a request for results */
+		     	  _service_mode = false;
+		       }
+		       controller().sendXNetMessage(msg, this);
+		   }
 		} catch (jmri.ProgrammerException e) {
 		  progState = NOTPROGRAMMING;
 		  throw e;
@@ -214,6 +266,9 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		     // mode results if progrstate is REQUESTSENT.
 		     _service_mode = false;
 		}
+		if(m.getElement(0)==XNetConstants.LI_VERSION_RESPONSE) {
+			_OneServiceOpPerEntry=false;
+		}
 
 		if (progState == NOTPROGRAMMING) {
 			// we get the complete set of replies now, so ignore these
@@ -243,7 +298,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 			   notifyProgListenerEnd(_val, jmri.ProgListener.NotImplemented);
                            return;
             		} else if (m.getElement(0)==XNetConstants.CS_INFO && 
-			   m.getElement(1)==XNetConstants.BC_NORMAL_OPERATIONS) {
+				   m.getElement(1)==XNetConstants.BC_NORMAL_OPERATIONS && !_OneServiceOpPerEntry) {
 			   // We Exited Programming Mode early
 			   log.error("Service mode exited before sequence complete.");
 			   progState = NOTPROGRAMMING;
@@ -298,7 +353,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		     	   notifyProgListenerEnd(_val, jmri.ProgListener.NoLocoDetected);
                	    	   return;
             		} else if (m.getElement(0)==XNetConstants.CS_INFO && 
-				   m.getElement(1)==XNetConstants.BC_NORMAL_OPERATIONS) {
+				   m.getElement(1)==XNetConstants.BC_NORMAL_OPERATIONS && !_OneServiceOpPerEntry) {
 		  	   // We Exited Programming Mode early
 		   	   log.error("Service Mode exited before sequence complete.");
 		   	   progState = NOTPROGRAMMING;
@@ -309,7 +364,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 			   m.getElement(1)==XNetConstants.PROG_SHORT_CIRCUIT) {
 			   // We experienced a short Circuit on the Programming Track
 			   log.error("Short Circuit While Programming Decoder");
-			   progState = NOTPROGRAMMING;
+			   	progState = NOTPROGRAMMING;
 			   stopTimer();
 			   notifyProgListenerEnd(_val, jmri.ProgListener.ProgrammingShort);
 			} else {
