@@ -33,7 +33,7 @@ import java.util.Vector;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.29 $
+ * @version     $Revision: 1.30 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
@@ -754,7 +754,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // and send the reply
         ProgListener p = _usingProgrammer;
         _usingProgrammer = null;
-        if (p!=null) p.programmingOpReply(value, status);
+        if (p!=null) sendProgrammingReply(p, value, status);
     }
 
     /**
@@ -766,10 +766,61 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // (re)start power timer
         restartPowerTimer();
         // and send the reply
-        _usingProgrammer.programmingOpReply(-1, status);
+        sendProgrammingReply(_usingProgrammer, -1, status);
         _usingProgrammer = null;
     }
 
+    /**
+     * Internal routine to forward a programing reply.
+     * This is delayed to prevent overruns of the 
+     * command station.
+     * @param value the value to return
+     * @param status The error code, if any
+     */
+    protected void sendProgrammingReply(ProgListener p, int value, int status) {
+        int delay = 20;  // value in service mode
+        if (!mServiceMode) delay=100;  // value in ops mode
+        
+        NotifyDelay r = new NotifyDelay(delay, p, value, status);
+        r.start();
+    }
+    
+    class NotifyDelay extends Thread {
+        int delay;
+        ProgListener p;
+        int value;
+        int status;
+        NotifyDelay(int delay, ProgListener p, int value, int status) {
+            this.delay = delay;
+            this.p = p;
+            this.value = value;
+            this.status = status;
+        }
+        public void run() {
+            synchronized (this) {
+                try {
+                    wait(delay);
+                } catch (InterruptedException e) {}
+            }
+            // to avoid problems, we defer this to Swing thread
+            NotifyExec r = new NotifyExec(p, value, status);
+            javax.swing.SwingUtilities.invokeLater(r);
+        }
+    }
+    
+    class NotifyExec implements Runnable {
+        ProgListener p;
+        int value;
+        int status;
+        NotifyExec(ProgListener p, int value, int status) {
+            this.p = p;
+            this.value = value;
+            this.status = status;
+        }
+        public void run() {
+            p.programmingOpReply(value, status);
+        }
+    }
     /**
      * Internal routine to stop power timer, as another programming
      * operation has happened

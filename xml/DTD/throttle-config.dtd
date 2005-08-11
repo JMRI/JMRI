@@ -1,5 +1,5 @@
 <!-- Defines XML for configuring the ThrottleFrames -->
-<!-- $Id: throttle-config.dtd,v 1.5 2005-05-09 18:28:06 pbender Exp $ -->
+<!-- $Id: throttle-config.dtd,v 1.7 2005-07-30 16:00:51 jacobsen Exp $ -->
 
 <!-- This DTD is Copyright 2003 JMRI.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -17,10 +17,11 @@
 
 <!ELEMENT ControlPanel (window) >
 <!ATTLIST ControlPanel displaySpeedSlider CDATA #IMPLIED>
+<!ATTLIST ControlPanel speedMode CDATA #IMPLIED>
 
 <!ELEMENT FunctionPanel (window, FunctionButton*) >
 
-<!ELEMENT AddressPanel (window, address) >
+<!ELEMENT AddressPanel (window, address*, locoaddress*) >
 
 <!ELEMENT window EMPTY >
 <!ATTLIST window x CDATA #REQUIRED>
@@ -28,7 +29,7 @@
 <!ATTLIST window width CDATA #REQUIRED>
 <!ATTLIST window height CDATA #REQUIRED>
 
-<!ELEMENT address EMPTY >
+<!ELEMENT address EMPTY >   <!-- obsolete -->
 <!ATTLIST address value CDATA #REQUIRED>
 
 <!ELEMENT FunctionButton EMPTY >
@@ -38,3 +39,10 @@
 <!ATTLIST FunctionButton isVisible CDATA #REQUIRED>
 <!ATTLIST FunctionButton fontSize CDATA #REQUIRED>
 
+<!-- define general locomotive address -->
+<!ELEMENT locoaddress (dcclocoaddress) >
+
+<!-- define DCC locomotive address -->
+<!ELEMENT dcclocoaddress EMPTY >
+<!ATTLIST dcclocoaddress number      CDATA #IMPLIED>
+<!ATTLIST dcclocoaddress longaddress ( yes | no) "no">

@@ -6,9 +6,9 @@ REM command line.
 
 REM There must be a local jython interpreter and JMRI libraries available
 
-REM $Revision: 1.5 $ (CVS maintains this line, do not edit please)
+REM $Revision: 1.7 $ (CVS maintains this line, do not edit please)
 
 SET CLASSPATH=.;classes;jmriplugins.jar;jmri.jar;comm.jar;Serialio.jar;log4j.jar;collections.jar;jh.jar;crimson.jar;jdom-jdk11.jar;jython.jar;MRJAdapter.jar
      
-jython jython/PacketPro.py
+jython jython/PacketPro.py %1 %2 %3 %4 %5 %6 %7 %8 %9
 

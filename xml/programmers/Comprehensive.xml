@@ -2,13 +2,16 @@
 <!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
 
 <programmer-config>
-<!-- $Id: Comprehensive.xml,v 1.7 2003-12-20 16:33:15 jacobsen Exp $ -->
-		<version author="Mark Gurries, Bob Jacobsen" 
-					version="5" lastUpdated="20031205"/>
+<!-- $Id: Comprehensive.xml,v 1.10 2005-06-14 05:57:47 jacobsen Exp $ -->
+		<version author="Howard G. Penny"
+					version="8" lastUpdated="20050613"/>
 
       <!-- Version 4 - add consist control for functions (Simon Ginsburg) -->
       <!-- Version 4.1 - changed spelling of "behavior" (Jack Shall) -->
       <!-- Version 5 - modify format, add tooltips (Jack Shall) -->
+      <!-- Version 6 - added CV25 to Speed Control pane - wsthompson@earthlink.net -->
+      <!-- Version 8 - added CV25 to Speed Control pane -->
+      <!-- Version 8 - added manufacturer speed table selection to Speed Control pane -->
 
 <programmer decoderFilePanes="yes">
 
@@ -44,9 +47,11 @@
 				tooltip="The manufacturer's ID number (read only)" />
 			<display item="Decoder Version"
 				tooltip="The decoder version number (if used) (read only)" />
+			<display item="Product number"
+				tooltip="The decoder product number (if used) (read only)" />
 		</column>
 	</pane>
-	
+
 	<pane name="Motor">
 		<column>
 			<display item="Kick Start"
@@ -75,13 +80,13 @@
 				tooltip="Sets the speed step above which the back EMF motor control cuts off" />
 		</column>
 	</pane>
-	
+
 	<pane name="Speed Control">
 		<column>
 			<row>
 				<column>
 					<label label=" "/>
-					<display item="Speed Table Definition" 
+					<display item="Speed Table Definition"
 						format="offradiobutton" label=""/>
 					<label label=" "/>
 				</column>
@@ -91,16 +96,18 @@
 					<display item="Vstart"
 						tooltip="Sets the starting voltage at throttle speed step 1" />
 					<display item="Vmid"
-						tooltip="Sets the voltage at mid throttle" />
-					<display item="Vhigh"
+						tooltip="Sets the voltage at mid throttle" /><display item="Vhigh"
 						tooltip="Sets the maximum voltage at full throttle" />
+
+					<display item="Speed Table/Mid Range Cab Speed Step"
+						tooltip="Sets voltage curve for mid throttle, set Vstart and Vhigh first" />
+
 				</column>
 				<column>
 					<display item="Vstart" format="hslider" label=""
 						tooltip="Sets the starting voltage at throttle speed step 1" />
 					<display item="Vmid" format="hslider" label=""
-						tooltip="Sets the voltage at mid throttle" />
-					<display item="Vhigh" format="hslider" label=""
+						tooltip="Sets the voltage at mid throttle" /><display item="Vhigh" format="hslider" label=""
 						tooltip="Sets the maximum voltage at full throttle" />
 				</column>
 			</row>
@@ -124,8 +131,19 @@
 			<separator/>
 			<row>
 				<column>
-					<display item="Speed Table Definition" 
+					<display item="Speed Table Definition"
 						format="onradiobutton" layout="above" label=""/>
+				</column>
+			</row>
+			<row>
+			  <column>
+					<label label=" "/>
+				  <display item="Speed Table Selection"
+				    tooltip="Select manufacturer's speed table or user table" />
+				</column>
+			</row>
+			<row>
+			  <column>
 					<display item="Speed Table" layout="above"/>
 					<label label=" "/>
 				</column>
@@ -153,52 +171,52 @@
 			<display item="Global lighting option 3"/>
 			<display item="Global lighting option 4"/>
 			<label label=" "/>
-			
+
 			<display item="Function F0F effect generated"/>
 			<display item="Function F0F behavior"/>
 			<display item="Function F0F options"/>
 			<label label=" "/>
-			
+
 			<display item="Function F0R effect generated"/>
 			<display item="Function F0R behavior"/>
 			<display item="Function F0R options"/>
 			<label label=" "/>
-			
+
 			<display item="Function 1 effect generated"/>
 			<display item="Function 1 behavior"/>
 			<display item="Function 1 options"/>
 			<label label=" "/>
-			
+
 			<display item="Function 2 effect generated"/>
 			<display item="Function 2 behavior"/>
 			<display item="Function 2 options"/>
 			<label label=" "/>
-			
+
 			<display item="Function 3 effect generated"/>
 			<display item="Function 3 behavior"/>
 			<display item="Function 3 options"/>
 			<label label=" "/>
-			
+
 			<display item="Function 4 effect generated"/>
 			<display item="Function 4 behavior"/>
 			<display item="Function 4 options"/>
 			<label label=" "/>
-			
+
 			<display item="Function 5 effect generated"/>
 			<display item="Function 5 behavior"/>
 			<display item="Function 5 options"/>
 			<label label=" "/>
-			
+
 			<display item="Function 6 effect generated"/>
 			<display item="Function 6 behavior"/>
 			<display item="Function 6 options"/>
 			<label label=" "/>
-			
+
 			<display item="Function 7 effect generated"/>
 			<display item="Function 7 behavior"/>
 			<display item="Function 7 options"/>
 			<label label=" "/>
-			
+
 			<display item="Function 8 effect generated"/>
 			<display item="Function 8 behavior"/>
 			<display item="Function 8 options"/>
@@ -208,37 +226,37 @@
 			<display item="Output 1 behavior"/>
 			<display item="Output 1 options"/>
 			<label label=" "/>
-			
+
 			<display item="Output 2 effect generated"/>
 			<display item="Output 2 behavior"/>
 			<display item="Output 2 options"/>
 			<label label=" "/>
-			
+
 			<display item="Output 3 effect generated"/>
 			<display item="Output 3 behavior"/>
 			<display item="Output 3 options"/>
 			<label label=" "/>
-			
+
 			<display item="Output 4 effect generated"/>
 			<display item="Output 4 behavior"/>
 			<display item="Output 4 options"/>
 			<label label=" "/>
-			
+
 			<display item="Output 5 effect generated"/>
 			<display item="Output 5 behavior"/>
 			<display item="Output 5 options"/>
 			<label label=" "/>
-			
+
 			<display item="Output 6 effect generated"/>
 			<display item="Output 6 behavior"/>
 			<display item="Output 6 options"/>
 			<label label=" "/>
-			
+
 			<display item="Output 7 effect generated"/>
 			<display item="Output 7 behavior"/>
 			<display item="Output 7 options"/>
 			<label label=" "/>
-			
+
 			<display item="Output 8 effect generated"/>
 			<display item="Output 8 behavior"/>
 			<display item="Output 8 options"/>
@@ -296,7 +314,7 @@
 
 			<separator/>
 
-			<label label=" "/>			
+			<label label=" "/>
 			<label label="Will decoder respond to function requests at consist address?"/>
 			<label label=" "/>
 			<display item="Consist Address Active For FL in Forward"
@@ -331,7 +349,7 @@
 				tooltip="Determines whether the function will respond to the consist address" />
 		</column>
 	</pane>
-	
+
 	<pane name="Advanced">
 		<column>
 			<display item="Advanced Ack"
@@ -348,7 +366,7 @@
 				tooltip="Sets the alternate power source to use when the short address is zero" />
 			<display item="CTC/Railcommand Power Conversion"
 				tooltip="Sets the alternate power source to use when the short address is zero" />
-		</column>		
+		</column>
 	</pane>
 
 	<pane name="Sound">
@@ -434,6 +452,12 @@
 				<display item="Sound Setting 8" layout="above" label=""/>
 				<label label=" "/>
 				<display item="Sound Setting 8" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Sound Setting 9" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Sound Setting 9" layout="above" format="hslider"/>
 			</row>
 		</column>
 	</pane>

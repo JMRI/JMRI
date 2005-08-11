@@ -7,7 +7,6 @@ import com.sun.java.util.collections.List;
 import org.jdom.DocType;
 import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.output.XMLOutputter;
 
 /**
  * Provides the mechanisms for storing an entire layout configuration
@@ -15,7 +14,7 @@ import org.jdom.output.XMLOutputter;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.21 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -193,16 +192,12 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     protected void finalStore(Element root, File file) {
         try {
             Document doc = newDocument(root, "layout-config.dtd");
-            // write the result to selected file
-            java.io.FileOutputStream o = new java.io.FileOutputStream(file);
-            XMLOutputter fmt = new XMLOutputter();
-            fmt.setNewlines(true);   // pretty printing
-            fmt.setIndent(true);
-            fmt.output(doc, o);
-            o.close();
-        } catch (java.io.FileNotFoundException ex2) {
-            log.error("FileNotFound error writing file: "+ex2.getLocalizedMessage());
-        } catch (java.io.IOException ex1) {
+            writeXML(file, doc);
+        } catch (java.io.FileNotFoundException ex3) {
+            log.error("FileNotFound error writing file: "+ex3.getLocalizedMessage());
+        } catch (java.io.IOException ex2) {
+            log.error("IO error writing file: "+ex2.getLocalizedMessage());
+        } catch (org.jdom.JDOMException ex1) {
             log.error("IO exception writing file: "+ex1.getLocalizedMessage());
         }
     }
@@ -275,6 +270,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
 
     public boolean load(File fi) {
+        boolean result = true;
         try {
             Element root = super.rootFromFile(fi);
             // get the objects to load
@@ -291,9 +287,11 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 } catch (Exception e) {
                     log.error("Exception while loading "+item.getName()+":"+e);
                     e.printStackTrace();
+                    result = false;  // keep going, but return false to signal problem
                 } catch (Throwable et) {
                     log.error("Thrown while loading "+item.getName()+":"+et);
                     et.printStackTrace();
+                    result = false;  // keep going, but return false to signal problem
                 }
             }
 
@@ -306,16 +304,12 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             log.error("Exception reading: "+e);
             e.printStackTrace();
             return false;
-        } catch (java.io.IOException e) {
-            log.error("Exception reading: "+e);
-            e.printStackTrace();
-            return false;
         } catch (java.lang.Exception e) {
             log.error("Exception reading: "+e);
             e.printStackTrace();
             return false;
         }
-        return true;
+        return result;
     }
 
     static public String fileLocation = "layout"+File.separator;

@@ -24,7 +24,7 @@ import javax.swing.JRadioButtonMenuItem;
  * PositionableLabel is a JLabel that can be dragged around the
  * inside of the enclosing Container using a right-drag.
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.23 $
  */
 
 public class PositionableLabel extends JLabel
@@ -155,7 +155,6 @@ public class PositionableLabel extends JLabel
             popup.add(new AbstractAction("Rotate") {
                 public void actionPerformed(ActionEvent e) {
                     namedIcon.setRotation(namedIcon.getRotation()+1, ours);
-                    updateSize();
                     setIcon(namedIcon);
                 }
             });

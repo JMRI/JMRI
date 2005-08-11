@@ -18,10 +18,11 @@ import com.sun.java.util.collections.List;
 import com.sun.java.util.collections.ArrayList;
 
 /**
- * Extends VariableValue to represent a constant enum-like-thing
+ * Extends VariableValue to represent a constant enum-like-thing.
+ * Note that there's no CV associated with this.
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
- * @version   $Revision: 1.9 $
+ * @version   $Revision: 1.9.2.1 $
  *
  */
 public class ConstantValue extends VariableValue {
@@ -44,7 +45,7 @@ public class ConstantValue extends VariableValue {
     public ConstantValue() {}
 
     public CvValue[] usesCVs() { 
-        return new CvValue[]{(CvValue)_cvVector.elementAt(getCvNum())};
+        return new CvValue[]{};
     }
 
     // stored value
@@ -130,10 +131,21 @@ public class ConstantValue extends VariableValue {
     }
 
     public boolean isChanged() {
-        CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()));
-        return considerChanged(cv);
+        return false;
     }
 
+    public void setToRead(boolean state) {}
+
+    public boolean isToRead() { 
+        return false;
+    }
+
+    public void setToWrite(boolean state) {}
+
+    public boolean isToWrite() { 
+        return false;
+    }
+    
     public void readChanges() {
          if (isChanged()) readAll();
     }
@@ -147,9 +159,6 @@ public class ConstantValue extends VariableValue {
      * @param state
      */
     public void setCvState(int state) {
-        CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()));
-        if (cv!=null) cv.setState(state);
-        else log.error("try to set state on CV "+getCvNum()+" with null entry");
     }
 
     /**
