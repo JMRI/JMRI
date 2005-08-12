@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.6.1.html,v 1.1 2005-08-10 14:54:31 jacobsen Exp $ -->
+<!-- $Id: jmri1.6.1.html,v 1.2 2005-08-12 20:02:34 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -107,10 +107,12 @@
      <A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.1.6.1.zip?download">http://prdownloads.sourceforge.net/jmri/JMRI.1.6.1.zip?download</a>
 
 
-<h3><a ID="#updates">Changes since test version 1.6:</a></h3>
+<h3><A id="updates"/>Changes since test version 1.6:</h3>
 
-<P>Fixed ...
 
+<P>Fixed problem where the program wouldn't start up if there was no configuration file, or would start up in an inconsistent state if the configured port could not be found (Dave Duchamp, Bob Jacobsen)
+
+<P>Allow XML files to be read even if they don't validate against the enclosed (shipped with the code) version of the DTDs.  This allows more robust forward-compatibility.  Also, update to 1.7.2 DTDs to help with this.
 
 
 <h3>Changes since test version 1.5.8:</h3>
