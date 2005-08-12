@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CMRI.html,v 1.9 2005-01-27 20:31:14 jacobsen Exp $ -->
+<!-- $Id: CMRI.html,v 1.10 2005-08-12 20:01:17 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -183,6 +183,55 @@
 	<p>Each SMINI, USIC or SUSIC is called a "node". Sensors and turnouts
 	on the first node are numbered from 1 to 999; sensors and turnouts on
 	the second node are numbered 1001 to 1999; etc. </p>
+	
+	<P>For example:
+	<UL>
+	<LI>Say you have a SMINI with it's address switches set to "2". All of the
+	inputs and outputs on that node will be numbered starting with 2001.  
+	    <UL>
+	    <LI>CT2001 is the first output pin
+	    <LI>CT2048 is the last output pin
+	    <LI>CS2001 is the first input pin
+	    <LI>CS2024 is the last output pin.
+	    </UL>
+	<LI>If you have a USIC with it's address switches set to "1", it will
+	have all it's inputs and outputs numbered starting with 1001.  If it has
+	three 24-bit input cards, and two 24-bit output cards, their addresses will be:
+	    <UL>
+	    <LI>CT1001 is the first pin on the 1st output card
+	    <LI>CT1024 is the last pin on the 1st output card
+	    <LI>CT1025 is the first pin on the 2nd output card
+	    <LI>CT1048 is the last pin on the 2nd output card
+	    <LI>CS1001 is the first pin on the 1st input card
+	    <LI>CS1024 is the last pin on the 1st input card
+	    <LI>CS1025 is the first pin on the 2nd input card
+	    <LI>CS1049 is the first pin on the 3rd input card
+	    <LI>CS1072 is the last pin on the 3rd input card
+	    </UL>
+	Note that it doesn't matter what order the cards are installed, etc. That's
+	all configured when you put together the hardware, and when you define
+	the C/MRI preferences to the program (see above). 
+	<LI>Is you have a SUSIC with it's address switches set to "4", the inputs
+	and outputs will be numbered starting with 4001.  If it has two 32-bit input
+	and two 32-bit output
+	cards, their addresses will be:
+	    <UL>
+	    <LI>CT1001 is the first pin on the 1st output card
+	    <LI>CT1032 is the last pin on the 1st output card
+	    <LI>CT1033 is the first pin on the 2nd output card
+	    <LI>CT1064 is the last pin on the 2nd output card
+	    <LI>CS1001 is the first pin on the 1st input card
+	    <LI>CS1032 is the last pin on the 1st input card
+	    <LI>CS1033 is the first pin on the 2nd input card
+	    <LI>CS1064 is the last pin on the 3rd input card
+	    </UL>
+	
+	</UL>
+
+    <P>To summarize, input and output pins are labelled sequentially
+    within each C/MRI node.  The numbers go up by 1000 from node to 
+    node.  Node numbers can go as high as the C/MRI hardware allows.
+    	
     </dd>
 
 
