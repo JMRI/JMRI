@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.7.3.html,v 1.2 2005-08-12 20:02:34 jacobsen Exp $ -->
+<!-- $Id: jmri1.7.3.html,v 1.3 2005-08-14 06:20:09 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -115,6 +115,11 @@
 <P>Bob Jacobsen has updated the PRICOM Pocket Tester support. There are now both "monitor" windows to see the time history of the data as it comes from the unit, plus a "table" that allows you to see the most recent packets of a particular type or for a particular address.  You can also see the monitor for just the packets to a particular address. It's also been internationalized, so it would be easy for somebody to translate it to another language. 
 
 <P>Paul Bender has fixed a problem that would sometimes make the speed slider not appear in the throttle tool.  He has also improved the way that a control-click (right click, etc) in the speed section of the throttle gets you access to the alternate method of setting speeds.
+
+<P>Bob Jacobsen updated the startup error handling so that the preferences window is again showing if the pre-configured connection fails.  (Also in 1.6.1)
+
+<P>At the suggestion of John Harper, AbstractAutomaton is now using notifyAll() instead of notify().  For more information, see recent discussion in jmri-developers mailing list.
+
 
       <hr class="hide">
 <!-- Footer -->
