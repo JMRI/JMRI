@@ -64,7 +64,7 @@ import javax.swing.JTextArea;
  * so that Jython code can easily use some of the methods.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.21 $
+ * @version     $Revision: 1.22 $
  */
 public class AbstractAutomaton implements Runnable {
 
@@ -255,7 +255,7 @@ public class AbstractAutomaton implements Runnable {
         mSensor.addPropertyChangeListener(l = new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 synchronized (self) {
-                    self.notify();
+                    self.notifyAll(); // should be only one thread waiting, but just in case
                 }
             }
         });
@@ -289,7 +289,7 @@ public class AbstractAutomaton implements Runnable {
         mSensor.addPropertyChangeListener(l = new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 synchronized (self) {
-                    self.notify();
+                    self.notifyAll(); // should be only one thread waiting, but just in case
                 }
             }
         });
@@ -322,7 +322,7 @@ public class AbstractAutomaton implements Runnable {
         mSensor.addPropertyChangeListener(l = new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 synchronized (self) {
-                    self.notify();
+                    self.notifyAll(); // should be only one thread waiting, but just in case
                 }
             }
         });
@@ -365,7 +365,7 @@ public class AbstractAutomaton implements Runnable {
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     synchronized (self) {
                         log.debug("notify waitSensorActive[] of property change");
-                        self.notify();
+                        self.notifyAll(); // should be only one thread waiting, but just in case
                     }
                 }
             });
@@ -407,7 +407,7 @@ public class AbstractAutomaton implements Runnable {
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     synchronized (self) {
                         log.debug("notify waitChange[] of property change");
-                        self.notify();
+                        self.notifyAll(); // should be only one thread waiting, but just in case
                     }
                 }
             });
@@ -466,7 +466,7 @@ public class AbstractAutomaton implements Runnable {
                     public void notifyThrottleFound(DccThrottle t) {
                         throttle = t;
                         synchronized (self) {
-                            self.notify();
+                            self.notifyAll(); // should be only one thread waiting, but just in case
                         }
                     }
                 });
@@ -501,7 +501,9 @@ public class AbstractAutomaton implements Runnable {
         try {
             programmer.writeCV(CV, value, new ProgListener() {
                 public void programmingOpReply(int value, int status) {
-                    synchronized (self) { self.notify(); }
+                    synchronized (self) { 
+                        self.notifyAll(); // should be only one thread waiting, but just in case
+                    }
                 }
             });
         } catch (ProgrammerException e) {
@@ -534,7 +536,9 @@ public class AbstractAutomaton implements Runnable {
                 public void programmingOpReply(int value, int status) {
                     cvReturnValue = value;
                     cvReturnStatus = status;
-                    synchronized (self) { self.notify(); }
+                    synchronized (self) { 
+                        self.notifyAll(); // should be only one thread waiting, but just in case
+                    }
                 }
             });
         } catch (ProgrammerException e) {
@@ -563,7 +567,9 @@ public class AbstractAutomaton implements Runnable {
         try {
             programmer.writeCV(CV, value, new ProgListener() {
                 public void programmingOpReply(int value, int status) {
-                    synchronized (self) { self.notify(); }
+                    synchronized (self) { 
+                        self.notifyAll(); // should be only one thread waiting, but just in case
+                    }
                 }
             });
         } catch (ProgrammerException e) {
@@ -634,7 +640,7 @@ public class AbstractAutomaton implements Runnable {
                 mButton.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         synchronized (self) {
-                            self.notify();
+                            self.notifyAll(); // should be only one thread waiting, but just in case
                         }
                         mFrame.hide();
                     }
@@ -687,7 +693,7 @@ public class AbstractAutomaton implements Runnable {
                     b.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent e) {
                             synchronized (self) {
-                                self.notify();
+                                self.notifyAll(); // should be only one thread waiting, but just in case
                             }
                             debugWaitFrame.hide();
                         }
