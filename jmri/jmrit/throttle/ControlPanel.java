@@ -19,12 +19,12 @@ import java.awt.event.MouseListener;
 
 import javax.swing.event.MouseInputAdapter;
 
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JLayeredPane;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
@@ -44,7 +44,7 @@ import org.jdom.Element;
  *  TODO: fix speed increments (14, 28)
  *
  * @author     glen   Copyright (C) 2002
- * @version    $Revision: 1.41 $
+ * @version    $Revision: 1.42 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener,ActionListener
 {
@@ -65,6 +65,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         private boolean internalAdjust = false;
 
 	private JPopupMenu propertiesPopup;
+	private JPanel speedControlPanel;
 	private	JPanel spinnerPanel;
 	private	JPanel sliderPanel;
 
@@ -257,13 +258,11 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	public void setSpeedController(int displaySlider) {
 		switch(displaySlider) {
 		   case STEPDISPLAY: {
-			this.getLayeredPane().moveToFront(spinnerPanel);
 			sliderPanel.setVisible(false);
 			spinnerPanel.setVisible(true);
 			break;
 			}
 		   default: {
-			this.getLayeredPane().moveToFront(sliderPanel);
 			sliderPanel.setVisible(true);
 			spinnerPanel.setVisible(false);
 		   }
@@ -299,13 +298,14 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	 */
 	private void initGUI()
 	{
-		//JPanel mainPanel = new JPanel();
-		JLayeredPane mainPanel = new JLayeredPane();
+		JPanel mainPanel = new JPanel();
 		this.setContentPane(mainPanel);
-		this.setLayeredPane(mainPanel);
 		mainPanel.setLayout(new BorderLayout());
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
+		speedControlPanel = new JPanel();
+		speedControlPanel.setLayout(new BoxLayout(speedControlPanel,BoxLayout.X_AXIS));
+		this.getContentPane().add(speedControlPanel,BorderLayout.CENTER);
 		sliderPanel = new JPanel();
 		sliderPanel.setLayout(new GridBagLayout());
 
@@ -324,7 +324,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 		constraints.gridy = 0;
 
 		sliderPanel.add(speedSlider, constraints);
-		this.getContentPane().add(sliderPanel,BorderLayout.CENTER);
+		//this.getContentPane().add(sliderPanel,BorderLayout.CENTER);
+		speedControlPanel.add(sliderPanel);
 		speedSlider.setOrientation(JSlider.VERTICAL);
 		speedSlider.setMajorTickSpacing(MAX_SPEED/2);
 		com.sun.java.util.collections.Hashtable labelTable = new com.sun.java.util.collections.Hashtable();
@@ -360,8 +361,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 
 		if(speedSpinner!=null)
 			spinnerPanel.add(speedSpinner, constraints);
-		this.getContentPane().add(spinnerPanel,BorderLayout.CENTER);
-
+		//this.getContentPane().add(spinnerPanel,BorderLayout.CENTER);
+		speedControlPanel.add(spinnerPanel);
 		// remove old actions
 		if(speedSpinner!=null)
 		   speedSpinner.addChangeListener(
@@ -534,8 +535,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 				new ControlPadKeyListener(), this);
 
 		// set by default which speed selection method is on top
-		this.getLayeredPane().moveToFront(spinnerPanel);
-		this.getLayeredPane().moveToFront(sliderPanel);
 		setSpeedController(_displaySlider);
 	}
 
@@ -576,7 +575,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	 *  A KeyAdapter that listens for the keys that work the control pad buttons
 	 *
 	 * @author     glen
-         * @version    $Revision: 1.41 $
+         * @version    $Revision: 1.42 $
 	 */
 	class ControlPadKeyListener extends KeyAdapter
 	{
