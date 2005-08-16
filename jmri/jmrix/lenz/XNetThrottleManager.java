@@ -11,7 +11,7 @@ import jmri.jmrix.AbstractThrottleManager;
 /**
  * XNet implementation of a ThrottleManager based on the AbstractThrottleManager.
  * @author     Paul Bender Copyright (C) 2002-2004
- * @version    $Revision: 2.4 $
+ * @version    $Revision: 2.5 $
  */
 
 public class XNetThrottleManager extends AbstractThrottleManager implements ThrottleManager
@@ -69,6 +69,19 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
      */
     static boolean isLongAddress(int num) {
         return (num>=100);
+    }
+
+   /**
+     * What speed modes are supported by this system?
+     * value should be xor of possible modes specifed by the
+     * DccThrottle interface
+     * XPressNet supports 14,27,28 and 128 speed step modes
+     */
+    public int supportedSpeedModes() {
+        return( jmri.DccThrottle.SpeedStepMode128 | 
+		jmri.DccThrottle.SpeedStepMode28 |
+		jmri.DccThrottle.SpeedStepMode27 | 
+		jmri.DccThrottle.SpeedStepMode14 );
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetThrottleManager.class.getName());
