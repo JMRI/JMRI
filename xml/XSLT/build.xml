@@ -1,6 +1,6 @@
-<!-- ugly first attempt at an ANT build.xml file for JMRI development -->
-<!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.9 $ -->
+<!-- an ANT build.xml file for JMRI XSLT -->
+<!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2005 -->
+<!-- Revision $Revision: 1.10 $ -->
 
 <project name="JMRI" default="xslt" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -16,6 +16,7 @@
   <property name="dtd" value="../DTD"/>
   <property name="decoders" value="../decoders"/>
   <property name="target" value="pages"/>
+  <property name="propertiesdir" value="properties"/>
   <property name="jartarget" value=".."/>
 
   <path id="project.class.path">
@@ -35,12 +36,7 @@
     <tstamp/>
     <!-- Create the build directory structure used by compile -->
     <mkdir dir="${target}"/>
-  </target>
-
-  <target name="clean" description="remove compilation results to force rebuild">
-    <delete includeEmptyDirs="true">
-      <fileset dir="classes"/>
-    </delete>
+    <mkdir dir="${propertiesdir}"/>
   </target>
 
   <target name="copyDTD" description="ensure local DTD file copies present where needed for processing">
@@ -157,6 +153,18 @@
 	</style>
   </target>
   
+  <target name="properties" depends="init, copyDTD, copyXML" 
+  			description="tranform definitions into properties files">
+    <style  basedir="${target}"
+    		destdir="${propertiesdir}"
+    		extension=".properties"
+    		style="PropertiesFiles.xsl"
+    		includes="*.xml"
+    		excludes="decoderIndex.xml, names.html, interestingCVs.xml"
+    	>
+	</style>
+  </target>
+  
   <target name="xslt" depends="init, models, index, selection, csv, id, cvsummary"
   		description="run the whole sequence of processing" />
   		
@@ -164,6 +172,11 @@
     <exec executable="scp">
       <arg value="-r"/>
       <arg value="pages"/>
+      <arg value="jacobsen@jmri.sf.net:htdocs/xml/XSLT/"/>
+    </exec>
+    <exec executable="scp">
+      <arg value="-r"/>
+      <arg value="properties"/>
       <arg value="jacobsen@jmri.sf.net:htdocs/xml/XSLT/"/>
     </exec>
   </target>

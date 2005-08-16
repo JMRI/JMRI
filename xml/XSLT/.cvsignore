@@ -1,4 +1,5 @@
 .DS_Store
 
-# pages is an output directory
+# pages, properties are output directories
 pages
+properties
