@@ -44,7 +44,7 @@ import org.jdom.Element;
  *  TODO: fix speed increments (14, 28)
  *
  * @author     glen   Copyright (C) 2002
- * @version    $Revision: 1.42 $
+ * @version    $Revision: 1.43 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener,ActionListener
 {
@@ -171,6 +171,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 		SpeedStep28Button.setEnabled(isEnabled);
 		SpeedStep27Button.setEnabled(isEnabled);
 		SpeedStep14Button.setEnabled(isEnabled);
+		if(isEnabled) configureAvailableSpeedStepModes();
 		stopButton.setEnabled(isEnabled);
 		idleButton.setEnabled(isEnabled);
 		speedSlider.setEnabled(isEnabled);
@@ -438,7 +439,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 					throttle.setSpeedStepMode(DccThrottle.SpeedStepMode128);
 				}
 			});
-		
+
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridBagLayout());
 		this.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
@@ -575,7 +576,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	 *  A KeyAdapter that listens for the keys that work the control pad buttons
 	 *
 	 * @author     glen
-         * @version    $Revision: 1.42 $
+         * @version    $Revision: 1.43 $
 	 */
 	class ControlPadKeyListener extends KeyAdapter
 	{
@@ -719,6 +720,35 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 			new ControlPanelPropertyEditor(this);
 		editor.setVisible(true);
        }
+
+    /**
+     * Configure the active Speed Step modes based on what is supported by 
+     * the DCC system
+     */
+    private void configureAvailableSpeedStepModes() {
+	int modes = jmri.InstanceManager.throttleManagerInstance()
+                               .supportedSpeedModes();
+	if((modes & DccThrottle.SpeedStepMode128) != 0) {
+		SpeedStep128Button.setEnabled(true);
+	}else { 
+		SpeedStep128Button.setEnabled(false);
+	}
+	if((modes & DccThrottle.SpeedStepMode28) != 0) {
+		SpeedStep28Button.setEnabled(true);
+	}else { 
+		SpeedStep28Button.setEnabled(false);
+	}
+	if((modes & DccThrottle.SpeedStepMode27) != 0) {
+		SpeedStep27Button.setEnabled(true);
+	}else { 
+		SpeedStep27Button.setEnabled(false);
+	}
+	if((modes & DccThrottle.SpeedStepMode14) != 0) {
+		SpeedStep14Button.setEnabled(true);
+	}else { 
+		SpeedStep14Button.setEnabled(false);
+	}
+    }
 
     /**
      * A PopupListener to handle mouse clicks and releases. Handles

@@ -14,7 +14,7 @@ import com.sun.java.util.collections.ArrayList;
  * Based on Glen Oberhauser's original LnThrottleManager implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 abstract public class AbstractThrottleManager implements ThrottleManager {
 	
@@ -147,6 +147,16 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * Default to true, override if necessary
      **/
     public boolean hasDispatchFunction() { return true; }
+
+    /**
+     * What speed modes are supported by this system?                       
+     * value should be xor of possible modes specifed by the 
+     * DccThrottle interface
+     */
+    public int supportedSpeedModes() {
+	return(DccThrottle.SpeedStepMode128);
+    }
+
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractThrottleManager.class.getName());
 }

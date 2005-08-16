@@ -13,7 +13,7 @@ package jmri;
  * that operation, it is handled internally.
  *
  * @author			Glen Oberhauser
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public interface ThrottleManager {
 
@@ -81,5 +81,12 @@ public interface ThrottleManager {
      * Are there not any ambiguous addresses (short vs long) on this system?
      */
     public boolean addressTypeUnique();
+
+    /**
+     * What speed modes are supported by this system?                       
+     * value should be xor of possible modes specifed in the throttle
+     * interface
+     */
+    public int supportedSpeedModes();
             
 }
