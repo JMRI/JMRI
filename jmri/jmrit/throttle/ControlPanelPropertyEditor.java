@@ -9,7 +9,7 @@ import java.awt.event.*;
  * object.
  *
  * @author Paul Bender Copyright (C) 2005
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class ControlPanelPropertyEditor extends JDialog
 {
@@ -17,6 +17,7 @@ public class ControlPanelPropertyEditor extends JDialog
 
     private JRadioButton displaySlider;
     private JRadioButton displaySteps;
+    private JCheckBox trackBox;
 
     private int _displaySlider;
 
@@ -75,6 +76,10 @@ public class ControlPanelPropertyEditor extends JDialog
         constraints.gridy = 2;
         propertyPanel.add(displaySteps, constraints);
 
+        
+        trackBox = new JCheckBox("Track slider in real time", control.getTrackSlider());
+        constraints.gridy = 3;
+        propertyPanel.add(trackBox, constraints);
 	displaySlider.setSelected(_displaySlider==ControlPanel.SLIDERDISPLAY);
 	displaySteps.setSelected(_displaySlider==ControlPanel.STEPDISPLAY);
 
@@ -141,11 +146,12 @@ public class ControlPanelPropertyEditor extends JDialog
      */
     private void saveProperties()
     {
-        if (isDataValid())
-        {
-	    control.setSpeedController(_displaySlider);
-            finishEdit();
-        }
+    	if (isDataValid())
+    	{
+    		control.setSpeedController(_displaySlider);
+    		control.setTrackSlider(trackBox.isSelected());
+    		finishEdit();
+    	}
     }
 
     /**

@@ -36,6 +36,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.jdom.Element;
+import org.jdom.Attribute;
 
 /**
  *  A JInternalFrame that contains a JSlider to control loco speed, and buttons
@@ -44,7 +45,7 @@ import org.jdom.Element;
  *  TODO: fix speed increments (14, 28)
  *
  * @author     glen   Copyright (C) 2002
- * @version    $Revision: 1.43 $
+ * @version    $Revision: 1.44 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener,ActionListener
 {
@@ -74,6 +75,19 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	final public static int STEPDISPLAY = 1;
 
 	private int _displaySlider = SLIDERDISPLAY;
+	
+	/* real time tracking of speed slider - on iff trackSlider==true
+	 * Min interval for sending commands to the actual throttle can be configured
+	 * as part of the throttle config but is bounded
+	 */
+	
+    private boolean trackSlider = false;
+    private boolean trackSliderDefault = false;
+    private long trackSliderMinInterval = 200;                    // milliseconds
+    private long trackSliderMinIntervalDefault = 200;       // milliseconds
+    private long trackSliderMinIntervalMin = 50;       // milliseconds
+    private long trackSliderMinIntervalMax = 1000;       // milliseconds
+    private long lastTrackedSliderMovementTime = 0;
 
 	public int accelerateKey = 107; // numpad +;
 	public int decelerateKey = 109; // numpad -;
@@ -278,6 +292,24 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	public int getDisplaySlider() {
 		return _displaySlider;
 	}
+    
+    /**
+     * Set real-time tracking of speed slider, or not
+     * 
+     * @param tracking  boolean value, true to track, false to set speed on unclick
+     */
+    
+    public void setTrackSlider(boolean track) {
+        trackSlider = track;
+    }
+    
+    /**
+     * Get status of real-time speed slider tracking
+     */
+    
+    public boolean getTrackSlider() {
+        return trackSlider;
+    }
 
 	/**
 	 *  Set the GUI to match that the loco speed.
@@ -340,19 +372,26 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 		speedSlider.addChangeListener(
 			new ChangeListener()
 			{
-				public void stateChanged(ChangeEvent e)
-				{
-                                    if ( !internalAdjust) {
-					if (!speedSlider.getValueIsAdjusting())
-					{
-                                                float newSpeed = (speedSlider.getValue() / ( MAX_SPEED * 1.0f ) ) ;
-                                                log.debug( "stateChanged: slider pos: " + speedSlider.getValue() + " speed: " + newSpeed );
-						throttle.setSpeedSetting( newSpeed );
-						if(speedSpinner!=null)
-						   speedSpinner.setValue(new Integer(speedSlider.getValue()));
-					}
+				public void stateChanged(ChangeEvent e) {
+					if ( !internalAdjust) {
+						boolean doIt = false;
+						if (!speedSlider.getValueIsAdjusting()) {
+							doIt = true;
+							lastTrackedSliderMovementTime = System.currentTimeMillis() - trackSliderMinInterval;
+						} else if (trackSlider &&
+								System.currentTimeMillis() - lastTrackedSliderMovementTime >= trackSliderMinInterval) {
+							doIt = true;
+							lastTrackedSliderMovementTime = System.currentTimeMillis();
+						}
+						if (doIt) {
+							float newSpeed = (speedSlider.getValue() / ( MAX_SPEED * 1.0f ) ) ;
+							log.debug( "stateChanged: slider pos: " + speedSlider.getValue() + " speed: " + newSpeed );
+							throttle.setSpeedSetting( newSpeed );
+							if(speedSpinner!=null)
+								speedSpinner.setValue(new Integer(speedSlider.getValue()));
+						}
 				   } else {
-					internalAdjust=false;
+					   internalAdjust=false;
 				   }
 				}
 			});
@@ -576,7 +615,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	 *  A KeyAdapter that listens for the keys that work the control pad buttons
 	 *
 	 * @author     glen
-         * @version    $Revision: 1.43 $
+         * @version    $Revision: 1.44 $
 	 */
 	class ControlPadKeyListener extends KeyAdapter
 	{
@@ -828,6 +867,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 		Element me = new Element("ControlPanel");
 		me.addAttribute("displaySpeedSlider",String.valueOf(this._displaySlider));		
 		me.addAttribute("speedMode",String.valueOf(this._speedStepMode));
+        me.addAttribute("trackSlider", String.valueOf(this.trackSlider));
+        me.addAttribute("trackSliderMinInterval", String.valueOf(this.trackSliderMinInterval));
 		Element window = new Element("window");
 		WindowPreferences wp = new WindowPreferences();
 		com.sun.java.util.collections.ArrayList children =
@@ -873,7 +914,32 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 			if(throttle!=null)
 			   throttle.setSpeedStepMode(DccThrottle.SpeedStepMode128);
         	}
-		Element window = e.getChild("window");
+        Attribute tsAtt = e.getAttribute("trackSlider");
+        if (tsAtt!=null) {
+            try {
+                trackSlider = tsAtt.getBooleanValue();
+            } catch (org.jdom.DataConversionException ex) {
+                trackSlider = trackSliderDefault;
+            }
+        } else {
+            trackSlider = trackSliderDefault;
+        }
+        Attribute tsmiAtt = e.getAttribute("trackSliderMinInterval");
+        if (tsmiAtt!=null) {
+            try {
+                trackSliderMinInterval = tsmiAtt.getLongValue();
+            } catch (org.jdom.DataConversionException ex) {
+                trackSliderMinInterval = trackSliderMinIntervalDefault;
+            }
+            if (trackSliderMinInterval < trackSliderMinIntervalMin) {
+                trackSliderMinInterval = trackSliderMinIntervalMin;
+            } else if (trackSliderMinInterval > trackSliderMinIntervalMax) {
+                trackSliderMinInterval = trackSliderMinIntervalMax;
+            }
+        } else {
+            trackSliderMinInterval = trackSliderMinIntervalDefault;
+        }
+        Element window = e.getChild("window");
 		WindowPreferences wp = new WindowPreferences();
 		wp.setPreferences(this, window);
 	}
