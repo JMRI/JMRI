@@ -8,7 +8,7 @@ package jmri;
  * This allows a {@link Consist} object to return delayed status.
  *
  * @author			Paul Bender  Copyright (C) 2004
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public interface ConsistListener extends java.util.EventListener{
 
@@ -20,7 +20,7 @@ public interface ConsistListener extends java.util.EventListener{
 	 *                    bitwise combination of the various status coded defined
 	 *                    in this interface.
 	 */
-	public void consistReply(int locoaddress, int status);
+	public void consistReply(DccLocoAddress locoaddress, int status);
 
 	/** Constant denoting that the request completed correctly. Note this
 	 *  is a specific value; all others are bitwise combinations

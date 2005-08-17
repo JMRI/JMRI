@@ -20,13 +20,13 @@ import com.sun.java.util.collections.ArrayList;
  * Frame object for manipulating consists.
  *
  * @author               Paul Bender Copyright (C) 2003
- * @version              $Revision: 1.13 $
+ * @version              $Revision: 1.14 $
  */
 public class ConsistToolFrame extends javax.swing.JFrame implements jmri.ConsistListener{
 
     // GUI member declarations
     javax.swing.JLabel textAdrLabel = new javax.swing.JLabel();
-    javax.swing.JTextField adrTextField = new javax.swing.JTextField(2);
+    jmri.jmrit.DccLocoAddressSelector adrSelector = new jmri.jmrit.DccLocoAddressSelector();
     javax.swing.JComboBox consistAdrBox = new javax.swing.JComboBox();
 
     javax.swing.JRadioButton isAdvancedConsist = new javax.swing.JRadioButton("Advanced Consist");
@@ -36,7 +36,7 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
     javax.swing.JButton throttleButton = new javax.swing.JButton();
 
     javax.swing.JLabel textLocoLabel = new javax.swing.JLabel();
-    jmri.jmrit.DccLocoAddressSelector addrSel = new jmri.jmrit.DccLocoAddressSelector();
+    jmri.jmrit.DccLocoAddressSelector locoSelector = new jmri.jmrit.DccLocoAddressSelector();
     javax.swing.JComboBox locoRosterBox;
 
     javax.swing.JButton addLocoButton = new javax.swing.JButton();
@@ -63,9 +63,8 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
         textAdrLabel.setText("Consist:");
         textAdrLabel.setVisible(true);
 
-        adrTextField.setText("");
-        adrTextField.setVisible(true);
-        adrTextField.setToolTipText("consist being created or deleted");
+	adrSelector.setVisible(true);
+        adrSelector.setToolTipText("consist being created or deleted");
 
 	initializeConsistBox();
 
@@ -86,7 +85,7 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
                     isAdvancedConsist.setSelected(true);
 		    isCSConsist.setSelected(false);
 		    _Consist_Type = Consist.ADVANCED_CONSIST;
-		    adrTextField.setEnabled(true);
+		    adrSelector.setEnabled(true);
                 }
             });
         isCSConsist.setSelected(false);
@@ -98,9 +97,9 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
 		    isCSConsist.setSelected(true);
 		    _Consist_Type = Consist.CS_CONSIST;
 	     	    if(ConsistMan.csConsistNeedsSeperateAddress()) {
-		    adrTextField.setEnabled(false);
+		    adrSelector.setEnabled(false);
 		    }
-		    else adrTextField.setEnabled(true);
+		    else adrSelector.setEnabled(true);
                 }
             });
 
@@ -133,7 +132,8 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
         textLocoLabel.setText("New Locomotive");
         textLocoLabel.setVisible(true);
 
-        addrSel.setToolTipText("Address of A New Locomotive to add to the consist");
+        locoSelector.setToolTipText("Address of A New Locomotive to add to the consist");
+	locoSelector.setVisible(true);
         
         locoRosterBox = Roster.instance().fullRosterComboBox();
         locoRosterBox.insertItemAt("",0);
@@ -185,7 +185,7 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
         addressPanel.setLayout(new FlowLayout());
 
         addressPanel.add(textAdrLabel);
-        addressPanel.add(adrTextField);
+        addressPanel.add(adrSelector.getCombinedJPanel());
         addressPanel.add(consistAdrBox);
         addressPanel.add(isAdvancedConsist);
         addressPanel.add(isCSConsist);
@@ -201,7 +201,7 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
 
         locoPanel.add(textLocoLabel);
 
-        locoPanel.add(addrSel);
+        locoPanel.add(locoSelector.getCombinedJPanel());
         
         locoPanel.add(locoRosterBox);
         locoPanel.add(locoDirectionNormal);
@@ -270,22 +270,24 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
            }
            consistAdrBox.setEnabled(true);
            consistAdrBox.insertItemAt("",0);
-           consistAdrBox.setSelectedItem(adrTextField.getText());
-           if(!adrTextField.getText().equals("")) {
+           consistAdrBox.setSelectedItem(adrSelector.getAddress());
+           if(adrSelector.getAddress()!=null) {
 		if(consistModel.getConsist()!=null){
 			consistModel.getConsist().removeConsistListener(this);
 			_status.setText("Ready");
 		}
- 		consistModel.setConsist(Integer.parseInt(adrTextField.getText()));
+                // For now, assume short address for consist address if 
+		// required
+ 		consistModel.setConsist(adrSelector.getAddress());
 		consistModel.getConsist().addConsistListener(this);
-		adrTextField.setEnabled(false);
+		adrSelector.setEnabled(false);
 	   } else {
 		if(consistModel.getConsist()!=null){
 			consistModel.getConsist().removeConsistListener(this);
 			_status.setText("Ready");
 		}
-		consistModel.setConsist(null);
-		adrTextField.setEnabled(true);
+		consistModel.setConsist((Consist)null);
+		adrSelector.setEnabled(true);
 	   }
         } else {
 	   consistAdrBox.setEnabled(false);
@@ -296,33 +298,33 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
 		consistModel.getConsist().removeConsistListener(this);
 		_status.setText("Ready");
 	   }
-	   consistModel.setConsist(null);
-	   adrTextField.setEnabled(true);
+	   consistModel.setConsist((Consist)null);
+	   adrSelector.setEnabled(true);
         }
      }
 
 
     public void deleteButtonActionPerformed(java.awt.event.ActionEvent e) {
-	if(adrTextField.getText().equals("")) {
+	if(adrSelector.getAddress()==null) {
            	javax.swing.JOptionPane.showMessageDialog(this,
 						"No Consist Address Selected");
 		return;
 	}
-	int address=Integer.parseInt(adrTextField.getText());
+	DccLocoAddress address=adrSelector.getAddress();
 	Consist tempConsist = ConsistMan.getConsist(address);
 	/* get the list of locomotives to delete */
 	ArrayList addressList = tempConsist.getConsistList();
 
 	for(int i=(addressList.size()-1);i>=0;i--) {
 		if(log.isDebugEnabled()) log.debug("Deleting Locomotive: " + (String)addressList.get(i));
-		int locoaddress=Integer.parseInt((String)(addressList.get(i)));
+		DccLocoAddress locoaddress=(DccLocoAddress)addressList.get(i);
 		try {
 			tempConsist.remove(locoaddress);
 	    	}  catch (Exception ex) {
 					log.error("Error removing address "
-						    + locoaddress
+						    + locoaddress.toString()
 						    + " from consist "
-						    + address);
+						    + address.toString());
 		}
 		//addressList = tempConsist.getConsistList();
 	}
@@ -332,15 +334,15 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
 					log.error("Error delting consist "
 						    + address);
 	    }
-	adrTextField.setText("");
-	adrTextField.setEnabled(true);
+	adrSelector.reset();
+	adrSelector.setEnabled(true);
         initializeConsistBox();
         resetLocoButtonActionPerformed(e);
 	canAdd();
     	}
 
     public void throttleButtonActionPerformed(java.awt.event.ActionEvent e) {
-	if(adrTextField.getText().equals("")) {
+	if(adrSelector.getAddress()==null) {
            	javax.swing.JOptionPane.showMessageDialog(this,
 						"No Consist Address Selected");
 		return;
@@ -350,49 +352,50 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
 	  // Create a throttle object with the selected consist address
 	  jmri.jmrit.throttle.ThrottleFrame tf=
 		jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();
-		int address=Integer.parseInt(adrTextField.getText());
-		tf.notifyAddressChosen(address, false);  // consist is always a short address
+		DccLocoAddress address=adrSelector.getAddress();
+		tf.notifyAddressChosen(address.getNumber(), address.isLongAddress());
 		tf.setVisible(true);
     	}
 
     public void consistSelected() {
 	if(log.isDebugEnabled()) log.debug("Consist Selected");
-	if(consistAdrBox.getSelectedIndex()==-1 && !adrTextField.getText().equals("")) {
+	if(consistAdrBox.getSelectedIndex()==-1 && !(adrSelector.getAddress()==null)) {
 	   if(log.isDebugEnabled()) log.debug("No Consist Selected");
-	   adrTextField.setEnabled(false);
+	   adrSelector.setEnabled(false);
 	   recallConsist();
 	}
 	else if(consistAdrBox.getSelectedIndex()==-1 || 
 		consistAdrBox.getSelectedItem().equals("")) {
 	   if(log.isDebugEnabled()) log.debug("Null Consist Selected");
-	   adrTextField.setText("");
-	   adrTextField.setEnabled(true);
+	   adrSelector.reset();
+	   adrSelector.setEnabled(true);
 	   recallConsist();
-	} else if(!consistAdrBox.getSelectedItem().equals(adrTextField.getText())) {
+	} else 
+if(((DccLocoAddress)consistAdrBox.getSelectedItem())!=adrSelector.getAddress()) {
     	   if(log.isDebugEnabled()) log.debug("Consist " + consistAdrBox.getSelectedItem().toString() +" Selected");
-	   adrTextField.setEnabled(false);
-	   adrTextField.setText("" + consistAdrBox.getSelectedItem().toString());
+	   adrSelector.setEnabled(false);
+	   adrSelector.setAddress((DccLocoAddress)consistAdrBox.getSelectedItem());
 	   recallConsist();
 	}
     }
 
     // Recall the consist
     private void recallConsist() {
-	if(adrTextField.getText().equals("")) {
+	if(adrSelector.getAddress()==null) {
 	   // Clear any consist information that was present
-	   addrSel.reset();
+	   locoSelector.reset();
 	   locoRosterBox.setSelectedIndex(0);
 	   if(consistModel.getConsist()!=null){
 		consistModel.getConsist().removeConsistListener(this);
 		_status.setText("Ready");
 	   }
-	   consistModel.setConsist(null);
+	   consistModel.setConsist((Consist)null);
 	
            canAdd();
 
 	   return;
 	}
-	int address=Integer.parseInt(adrTextField.getText());
+	DccLocoAddress address = adrSelector.getAddress();
 	if(consistModel.getConsist()!=null){
 		consistModel.getConsist().removeConsistListener(this);
 		_status.setText("Ready");
@@ -402,7 +405,7 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
 	selectedConsist.addConsistListener(this);
 
 	// reset the editable locomotive information.
-	addrSel.reset();
+	locoSelector.reset();
 	locoRosterBox.setSelectedIndex(0);
         locoDirectionNormal.setSelected(true);
 
@@ -433,7 +436,7 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
     }
 
     public void resetLocoButtonActionPerformed(java.awt.event.ActionEvent e) {
-	   addrSel.reset();
+	   locoSelector.reset();
 	   locoRosterBox.setSelectedIndex(0);
            locoDirectionNormal.setSelected(true);
 	   // if there aren't any locomotives in the consist, don't let
@@ -449,17 +452,17 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
      public void canAdd(){
 	   // If a consist address is selected, dissable the "add button"
 	   // if the maximum size is reached
-	   if(!adrTextField.getText().equals("")){
-		int address=Integer.parseInt(adrTextField.getText());
+	   if(adrSelector.getAddress()!=null) {
+		DccLocoAddress address = adrSelector.getAddress();
 		if(consistModel.getRowCount()==	ConsistMan.getConsist(address)
 							   .sizeLimit()){
-			addrSel.setEnabled(false);
+			locoSelector.setEnabled(false);
     			locoRosterBox.setEnabled(false);
 			addLocoButton.setEnabled(false);
 			resetLocoButton.setEnabled(false);
 			locoDirectionNormal.setEnabled(false);
 		} else {
-			addrSel.setEnabled(true);
+			locoSelector.setEnabled(true);
     			locoRosterBox.setEnabled(true);
 			addLocoButton.setEnabled(true);
 			resetLocoButton.setEnabled(true);
@@ -472,7 +475,7 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
 			     locoDirectionNormal.setEnabled(true);
 		 }
 	   } else {
-		addrSel.setEnabled(true);
+		locoSelector.setEnabled(true);
     		locoRosterBox.setEnabled(true);
 		addLocoButton.setEnabled(true);
 		resetLocoButton.setEnabled(true);
@@ -487,13 +490,13 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
 	}
 
     public void addLocoButtonActionPerformed(java.awt.event.ActionEvent e) {
-	if(addrSel.getAddress()==null) { return; }
-	if(_Consist_Type==Consist.ADVANCED_CONSIST && adrTextField.getText().equals("")) {
+	if(locoSelector.getAddress()==null) { return; }
+	if(_Consist_Type==Consist.ADVANCED_CONSIST && adrSelector.getAddress()==null) {
            	javax.swing.JOptionPane.showMessageDialog(this,
 						"No Consist Address Selected");
 		return;
 	}
-	else if(_Consist_Type==Consist.CS_CONSIST && adrTextField.getText().equals("")) {
+	else if(_Consist_Type==Consist.CS_CONSIST && adrSelector.getAddress()==null) {
 	     if(ConsistMan.csConsistNeedsSeperateAddress()) {
            	javax.swing.JOptionPane.showMessageDialog(this,
 						"No Consist Address Selected");
@@ -501,12 +504,12 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
 	     }
 	     else {
 		// We need to set an identifier so we can recall the
-	    // consist.  We're going to use the locomotive number 
-		// for this, ignoring short/long for now
-		adrTextField.setText(""+addrSel.getAddress().getNumber());
+	        // consist.  We're going to use the lead locomotive number 
+		// for this ignoring short/long for now
+		adrSelector.setAddress(locoSelector.getAddress());
 	     }
 	}
-	int address=Integer.parseInt(adrTextField.getText());
+	DccLocoAddress address = adrSelector.getAddress();
 	/* Make sure the marked consist type matches the consist type
 	   stored for this consist */
 	if(_Consist_Type != ConsistMan.getConsist(address).getConsistType()){
@@ -519,7 +522,7 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
 		ConsistMan.getConsist(address).setConsistType(_Consist_Type);
 	}
 	
-	int locoaddress=addrSel.getAddress().getNumber();  // note that this ignores short/long difference!
+	DccLocoAddress locoaddress=locoSelector.getAddress();
 	
 	// Make sure the Address in question is allowed for this type of
 	// consist, and add it to the consist if it is
@@ -529,8 +532,8 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
 		return;
 	} else {
 	    ConsistMan.getConsist(address).add(locoaddress,
-					   locoDirectionNormal.isSelected());
-	    if(!consistAdrBox.getSelectedItem().equals(adrTextField.getText()))
+					       locoDirectionNormal.isSelected());	    
+   	    if(consistAdrBox.getSelectedItem()!=adrSelector.getAddress())
 		initializeConsistBox();
 	    consistModel.fireTableDataChanged();
             resetLocoButtonActionPerformed(e);
@@ -541,7 +544,7 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
 	if (!(locoRosterBox.getSelectedItem().equals(""))){
            String rosterEntryTitle = locoRosterBox.getSelectedItem().toString();
            RosterEntry entry = Roster.instance().entryFromTitle(rosterEntryTitle);
-		addrSel.setAddress(new DccLocoAddress(
+		locoSelector.setAddress(new DccLocoAddress(
 		            Integer.parseInt(entry.getDccAddress()), true));  // don't really know long/short, but this will guess right most of the time
         }
     }
@@ -550,8 +553,8 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
      * we're registering as a listener for Consist events, so we need to
      * implement the interface
      */
-    public void consistReply(int locoaddress,int status){
-	if(log.isDebugEnabled()) log.debug("Consist Reply recieved for Locomotive "  +locoaddress + " with status " + status);
+    public void consistReply(DccLocoAddress locoaddress,int status){
+	if(log.isDebugEnabled()) log.debug("Consist Reply recieved for Locomotive "  +locoaddress.toString() + " with status " + status);
 	_status.setText(ConsistMan.decodeErrorCode(status));
 	// For some status codes, we want to trigger specific actions
 	if((status & jmri.ConsistListener.CONSIST_FULL)!=0) {

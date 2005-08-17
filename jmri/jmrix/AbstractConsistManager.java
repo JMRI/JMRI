@@ -5,7 +5,7 @@
  *                        system specific consist managers can be built.
  *
  * @author                Paul Bender Copyright (C) 2004
- * @version               $Revision: 1.3 $
+ * @version               $Revision: 1.4 $
  */
 
 
@@ -18,6 +18,7 @@ import com.sun.java.util.collections.ArrayList;
 
 import jmri.Consist;
 import jmri.ConsistListener;
+import jmri.DccLocoAddress;
 
 abstract public class AbstractConsistManager implements jmri.ConsistManager{
 
@@ -37,10 +38,9 @@ abstract public class AbstractConsistManager implements jmri.ConsistManager{
 	/**
 	 *    Find a Consist with this consist address, and return it.
 	 **/
-	public Consist getConsist(int address){
-		String Address=Integer.toString(address);
-		if(ConsistTable.containsKey(Address)) {
-			return((Consist)ConsistTable.get(Address));
+	public Consist getConsist(DccLocoAddress address){
+		if(ConsistTable.containsKey(address)) {
+			return((Consist)ConsistTable.get(address));
 		} else {
 			return(addConsist(address));
 		}
@@ -49,14 +49,13 @@ abstract public class AbstractConsistManager implements jmri.ConsistManager{
 	/**
 	 *     Add a new Consist with the given address to the ConsistTable/ConsistList
 	 **/
-	abstract public Consist addConsist(int address);
+	abstract public Consist addConsist(DccLocoAddress address);
 	
 	// remove the old Consist
-	public void delConsist(int address){
-		String Address=Integer.toString(address);
-		((Consist)ConsistTable.get(Address)).dispose();
-		ConsistTable.remove(Address);
-		ConsistList.remove(Address);
+	public void delConsist(DccLocoAddress address){
+		((Consist)ConsistTable.get(address)).dispose();
+		ConsistTable.remove(address);
+		ConsistList.remove(address);
 	}
 
 	/**

@@ -4,7 +4,7 @@
  * Description:         Interface for a Consist Object
  *
  * @author              Paul Bender Copyright (C) 2003
- * @version             $ version 1.00 $
+ * @version             $Revision: 1.6 $
  */
 
 package jmri;
@@ -35,11 +35,11 @@ public interface Consist {
 	public int getConsistType();
 
 	// get the Consist Address
-	public int getConsistAddress();
+	public DccLocoAddress getConsistAddress();
 
 	// is the specific address allowed? (needed for system specific 
  	// restrictions)
-	public boolean isAddressAllowed(int address);
+	public boolean isAddressAllowed(DccLocoAddress address);
 
 	/**
 	 * is there a size limit for this type of consist?
@@ -54,11 +54,11 @@ public interface Consist {
 	public ArrayList getConsistList();
 	
 	// does the consist contain the specified locomotive address?
-	public boolean contains(int address);
+	public boolean contains(DccLocoAddress address);
 
 	// get the relative direction setting for a specific 
 	// locomotive in the consist
-	public boolean getLocoDirection(int address);
+	public boolean getLocoDirection(DccLocoAddress address);
 	
         /*
 	 * Add a Locomotive to an Advanced Consist
@@ -66,13 +66,13 @@ public interface Consist {
 	 *  @parm directionNormal is True if the locomotive is traveling 
          *        the same direction as the consist, or false otherwise.
          */
-	public void add(int LocoAddress,boolean directionNormal);
+	public void add(DccLocoAddress LocoAddress, boolean directionNormal);
 
         /*
 	 *  Remove a Locomotive from this Consist
 	 *  @parm address is the Locomotive address to add to the locomotive
          */
-	public void remove(int LocoAddress);
+	public void remove(DccLocoAddress LocoAddress);
 
 	/* 
 	 * Add a Listener for consist events

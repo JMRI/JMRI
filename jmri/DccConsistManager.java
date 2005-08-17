@@ -5,7 +5,7 @@
  *                        DccConsist class for the consists it builds
  *
  * @author                Paul Bender Copyright (C) 2003
- * @version               $ version 1.00 $
+ * @version               $Revision: 1.5 $
  */
 
 
@@ -37,25 +37,23 @@ public class DccConsistManager implements ConsistManager{
 	/**
 	 *    Find a Consist with this consist address, and return it.
 	 **/
-	public Consist getConsist(int address){
-		String Address=Integer.toString(address);
-		if(ConsistTable.containsKey(Address)) {
-			return((Consist)ConsistTable.get(Address));
+	public Consist getConsist(DccLocoAddress address){
+		if(ConsistTable.containsKey(address)) {
+			return((Consist)ConsistTable.get(address));
 		} else {
 			DccConsist consist;
 			consist = new DccConsist(address);
-			ConsistTable.put(Address,consist);
-		 	ConsistList.add(Address);
+			ConsistTable.put(address,consist);
+		 	ConsistList.add(address);
 			return(consist);
 		}
 	   }
 	
 	// remove the old Consist
-	public void delConsist(int address){
-		String Address=Integer.toString(address);
-		((DccConsist)ConsistTable.get(Address)).dispose();
-		ConsistTable.remove(Address);
-		ConsistList.remove(Address);
+	public void delConsist(DccLocoAddress address){
+		((DccConsist)ConsistTable.get(address)).dispose();
+		ConsistTable.remove(address);
+		ConsistList.remove(address);
 	}
 
 	/**

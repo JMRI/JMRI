@@ -5,7 +5,7 @@
  *                        XNetConsist class for the consists it builds
  *
  * @author                Paul Bender Copyright (C) 2004
- * @version               $Revision: 2.3 $
+ * @version               $Revision: 2.4 $
  */
 
 
@@ -13,6 +13,7 @@ package jmri.jmrix.lenz;
 
 import jmri.Consist;
 import jmri.ConsistManager;
+import jmri.DccLocoAddress;
 
 import java.util.Enumeration;
 
@@ -37,12 +38,11 @@ public class XNetConsistManager extends jmri.jmrix.AbstractConsistManager implem
 	/**
 	 *    Add a new XNetConsist with the given address to ConsistTable/ConsistList
 	 */
-	public Consist addConsist(int address){ 
-			String Address=Integer.toString(address);
+	public Consist addConsist(DccLocoAddress address){ 
 		        XNetConsist consist;
                         consist = new XNetConsist(address);
-                        ConsistTable.put(Address,consist);
-                        ConsistList.add(Address);
+                        ConsistTable.put(address,consist);
+                        ConsistList.add(address);
                         return((Consist)consist);
 	}
 

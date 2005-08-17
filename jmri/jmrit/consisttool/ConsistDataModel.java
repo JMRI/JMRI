@@ -9,6 +9,7 @@ import com.sun.java.util.collections.ArrayList;
 
 import jmri.InstanceManager;
 import jmri.Consist;
+import jmri.DccLocoAddress;
 import jmri.ConsistManager;
 import jmri.jmrit.roster.*;
 
@@ -20,8 +21,8 @@ import javax.swing.table.TableColumnModel;
 
 /**
  * Table data model for display of consist information
- * @author		Paul Bender Copyright (c) 2004
- * @version		$Revision: 1.2 $
+ * @author		Paul Bender Copyright (c) 2004-2005
+ * @version		$Revision: 1.3 $
  */
 
 public class ConsistDataModel extends javax.swing.table.AbstractTableModel {
@@ -35,7 +36,7 @@ public class ConsistDataModel extends javax.swing.table.AbstractTableModel {
 	// a place holder for a consist and Consist Manager objects.
 	private Consist _consist = null;
 	private ConsistManager ConsistMan = null;
-	private int ConsistAddress;
+	private DccLocoAddress ConsistAddress;
 
 	// Construct a new instance
 	ConsistDataModel(int row, int column) {
@@ -58,8 +59,8 @@ public class ConsistDataModel extends javax.swing.table.AbstractTableModel {
 		fireTableDataChanged();
 	}
 
-	public void setConsist(int Address) {
-		log.debug("Setting Consist using address: "+Address);
+	public void setConsist(DccLocoAddress Address) {
+		log.debug("Setting Consist using address: "+Address.toString());
 		ConsistAddress = Address;
 		_consist = ConsistMan.getConsist(Address);
 		fireTableDataChanged();
@@ -111,12 +112,12 @@ public class ConsistDataModel extends javax.swing.table.AbstractTableModel {
 					return(null);
 				}
 	   switch(col) {
-	      case ADDRCOLUMN: return(_consist.getConsistList().get(row));
+	      case ADDRCOLUMN: return(((DccLocoAddress)_consist.getConsistList().get(row)).toString());
 	      /*case ROSTERCOLUMN: javax.swing.JComboBox RosterBox = Roster.instance().matchingComboBox(null,null,null,null,null,null,null);
         		      RosterBox.insertItemAt("",0);
         		      RosterBox.setSelectedItem(getValueAt(ADDRCOLUMN,row));
 	  		      return RosterBox;*/
-	      case DIRECTIONCOLUMN: return( new Boolean(_consist.getLocoDirection(Integer.parseInt((String)getValueAt(row,ADDRCOLUMN)))));
+	      case DIRECTIONCOLUMN: return(new Boolean(_consist.getLocoDirection((DccLocoAddress)_consist.getConsistList().get(row))));
 	      case DELCOLUMN: return "DEL";
 	      default: return("");
            }
@@ -126,12 +127,12 @@ public class ConsistDataModel extends javax.swing.table.AbstractTableModel {
 	   log.debug("setValueAt called for row: " +row +" column: " +col);
 	      if(_consist == null) return;
 	      switch(col) {
-	      case DIRECTIONCOLUMN: _consist.add(Integer.parseInt((String)getValueAt(row,ADDRCOLUMN)),((Boolean)value).booleanValue());
+	      case DIRECTIONCOLUMN: _consist.add((DccLocoAddress)_consist.getConsistList().get(row),((Boolean)value).booleanValue());
               			    fireTableDataChanged();
 				    break;
 	      case DELCOLUMN:   log.debug("Delete Called for row " +row);
               			fireTableRowsDeleted(row,row);
-				_consist.remove(Integer.parseInt((String)getValueAt(row,ADDRCOLUMN)));
+				_consist.remove((DccLocoAddress)_consist.getConsistList().get(row));
               			fireTableDataChanged();
 				break;
 	      default: log.error("Unknown Consist Operation");

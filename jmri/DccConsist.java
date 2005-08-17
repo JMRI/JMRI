@@ -33,11 +33,22 @@ public class DccConsist implements Consist, ProgListener{
 
         protected int ConsistType = ADVANCED_CONSIST;
 
-	protected int ConsistAddress = -1;
+	protected DccLocoAddress ConsistAddress = null;
 
-	// Initialize a consist for the specific address
-        // the Default consist type is an advanced consist 
+	// Initialize a consist for the specific address.
+        // In this implementation, we can safely assume the address is a 
+	// short address, since Advanced Consisting is only possible with 
+	// a short address.
+        // The Default consist type is an advanced consist 
 	public DccConsist(int address) {
+		ConsistAddress = new DccLocoAddress(address,false);
+		ConsistDir = new Hashtable();
+		ConsistList = new ArrayList();
+	}
+
+	// Initialize a consist for a specific DccLocoAddress.
+        // The Default consist type is an advanced consist
+	public DccConsist(DccLocoAddress address) {
 		ConsistAddress = address;
 		ConsistDir = new Hashtable();
 		ConsistList = new ArrayList();
@@ -55,7 +66,7 @@ public class DccConsist implements Consist, ProgListener{
 	      }
 	      else {
 		log.error("Consist Type Not Supported");
-		notifyConsistListeners(0,ConsistListener.NotImplemented);
+		notifyConsistListeners(new DccLocoAddress(0,false),ConsistListener.NotImplemented);
 	      }
 	}
 
@@ -65,7 +76,7 @@ public class DccConsist implements Consist, ProgListener{
 	}
 
 	// get the Consist Address
-	public int getConsistAddress(){ 
+	public DccLocoAddress getConsistAddress(){ 
 		return ConsistAddress;
 	}
 
@@ -73,8 +84,8 @@ public class DccConsist implements Consist, ProgListener{
          * Since address 00 is an analog locomotive, we can't program CV19 
 	 * to include it in a consist, but all other addresses are ok. 
          */
-        public boolean isAddressAllowed(int address) {
-                if(address!=0) return(true);
+        public boolean isAddressAllowed(DccLocoAddress address) {
+                if(address.getNumber()!=0) return(true);
                 else return(false);
         }
 
@@ -93,23 +104,23 @@ public class DccConsist implements Consist, ProgListener{
         public ArrayList getConsistList() { return ConsistList; }
 
 	// does the consist contain the specified address?
-	public boolean contains(int address) {
+	public boolean contains(DccLocoAddress address) {
 	   if(ConsistType==ADVANCED_CONSIST) {
-		String Address= Integer.toString(address);
-		return( (boolean) ConsistList.contains(Address));
+		//String Address= Integer.toString(address);
+		return( (boolean) ConsistList.contains(address));
 	   } else {
 		log.error("Consist Type Not Supported");
-		notifyConsistListeners(0,ConsistListener.NotImplemented);
+		notifyConsistListeners(new DccLocoAddress(0,false),ConsistListener.NotImplemented);
 	      }
 	   return false;
 	}
 
 	// get the relative direction setting for a specific
 	// locomotive in the consist
-	public boolean getLocoDirection(int address) {
+	public boolean getLocoDirection(DccLocoAddress address) {
 	   if(ConsistType==ADVANCED_CONSIST) {
-		String Address= Integer.toString(address);
-		Boolean Direction=(Boolean) ConsistDir.get(Address);
+		//String Address= Integer.toString(address);
+		Boolean Direction=(Boolean) ConsistDir.get(address);
 		return( Direction.booleanValue());
 	   } else {
 		log.error("Consist Type Not Supported");
@@ -124,12 +135,12 @@ public class DccConsist implements Consist, ProgListener{
 	 *  @parm directionNormal is True if the locomotive is traveling 
          *        the same direction as the consist, or false otherwise.
          */
-	public void add(int LocoAddress,boolean directionNormal) {
+	public void add(DccLocoAddress LocoAddress,boolean directionNormal) {
 	      if(ConsistType==ADVANCED_CONSIST) {
-		 String Address= Integer.toString(LocoAddress);
+		 //String Address= Integer.toString(LocoAddress);
 	         Boolean Direction = new Boolean(directionNormal);
-		 if(!(ConsistList.contains(Address))) ConsistList.add(Address);
-		 ConsistDir.put(Address,Direction);
+		 if(!(ConsistList.contains(LocoAddress))) ConsistList.add(LocoAddress);
+		 ConsistDir.put(LocoAddress,Direction);
 	         addToAdvancedConsist(LocoAddress, directionNormal);		
 	      }
 	      else {
@@ -142,11 +153,11 @@ public class DccConsist implements Consist, ProgListener{
 	 *  Remove a Locomotive from this Consist
 	 *  @parm address is the Locomotive address to add to the locomotive
          */
-	public void remove(int LocoAddress) {
+	public void remove(DccLocoAddress LocoAddress) {
 	      if(ConsistType==ADVANCED_CONSIST) {
-		 String Address= Integer.toString(LocoAddress);
-		 ConsistDir.remove(Address);
-		 ConsistList.remove(Address);
+		 //String Address= Integer.toString(LocoAddress);
+		 ConsistDir.remove(LocoAddress);
+		 ConsistList.remove(LocoAddress);
 	         removeFromAdvancedConsist(LocoAddress);		
 	      }
 	      else {
@@ -162,23 +173,19 @@ public class DccConsist implements Consist, ProgListener{
 	 *  @parm directionNormal is True if the locomotive is traveling 
          *        the same direction as the consist, or false otherwise.
          */
-	private void addToAdvancedConsist(int LocoAddress, boolean directionNormal) {
-		// Assume 2 digit address is a short address, and
-		// 4 digits is a long address
-		boolean isLongAddress=Integer.toString(LocoAddress).length()>2;
-
+	private void addToAdvancedConsist(DccLocoAddress LocoAddress, boolean directionNormal) {
 		Programmer opsProg = InstanceManager.programmerManagerInstance()
-				    .getOpsModeProgrammer(isLongAddress,
-							LocoAddress);
+				    .getOpsModeProgrammer(LocoAddress.isLongAddress(),
+							LocoAddress.getNumber());
 		if(directionNormal) {
 			try {
-				opsProg.writeCV(19,ConsistAddress,this);
+				opsProg.writeCV(19,ConsistAddress.getNumber(),this);
 			} catch(ProgrammerException e) {
 			// Don't do anything with this yet
 			}
 		} else {
 			try {
-				opsProg.writeCV(19,ConsistAddress + 128 ,this);
+				opsProg.writeCV(19,ConsistAddress.getNumber() + 128 ,this);
 			} catch(ProgrammerException e) {
 			// Don't do anything with this yet
 			}
@@ -192,14 +199,10 @@ public class DccConsist implements Consist, ProgListener{
 	 *  Remove a Locomotive from an Advanced Consist
 	 *  @parm address is the Locomotive address to add to the locomotive
          */
-	public void removeFromAdvancedConsist(int LocoAddress) {
-		// Assume 2 digit address is a short address, and
-		// 4 digits is a long address
-		boolean isLongAddress=Integer.toString(LocoAddress).length()>2;
-
+	public void removeFromAdvancedConsist(DccLocoAddress LocoAddress) {
 		Programmer opsProg = InstanceManager.programmerManagerInstance()
-				    .getOpsModeProgrammer(isLongAddress,
-							LocoAddress);
+				    .getOpsModeProgrammer(LocoAddress.isLongAddress(),
+							LocoAddress.getNumber());
 		try {
 			opsProg.writeCV(19,0,this);
 		} catch(ProgrammerException e) {
@@ -237,7 +240,7 @@ public class DccConsist implements Consist, ProgListener{
          * @parm ErrorCode is the status code to send to the 
          *       consistListener objects
          */
-        protected void notifyConsistListeners(int  LocoAddress, int ErrorCode){
+        protected void notifyConsistListeners(DccLocoAddress  LocoAddress, int ErrorCode){
  		// make a copy of the listener vector to  notify.
         	Vector v;
         	synchronized(this)
@@ -248,7 +251,7 @@ public class DccConsist implements Consist, ProgListener{
 						ErrorCode + " to "  + 
 						v.size() + 
                                             	" listeners for Address "  
-                                            	+ LocoAddress);
+                                            	+ LocoAddress.toString());
         	// forward to all listeners
         	int cnt = v.size();
         	for (int i=0; i < cnt; i++) {
@@ -261,7 +264,7 @@ public class DccConsist implements Consist, ProgListener{
         // include the programmingOpReply() function
 	public void programmingOpReply(int value, int status) {
 		if(log.isDebugEnabled()) log.debug("Programming Operation reply recieved, value is " + value + " ,status is " +status);
-		notifyConsistListeners(0,ConsistListener.OPERATION_SUCCESS);
+		notifyConsistListeners(new DccLocoAddress(0,false),ConsistListener.OPERATION_SUCCESS);
 	}
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DccConsist.class.getName());
