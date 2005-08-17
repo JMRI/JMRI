@@ -26,7 +26,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.22 $
+ * @version			$Revision: 1.23 $
  */
 abstract public class AbstractMRTrafficController {
 
@@ -525,18 +525,26 @@ abstract public class AbstractMRTrafficController {
      * Returns only when the message is complete.
      * <P>
      * Only used in the Receive thread.
+     * <P>
+     * Handles timeouts on read by ignoring zero-length reads.
      *
      * @param msg message to fill
      * @param istream character source.
      * @throws IOException when presented by the input source.
      */
     protected void loadChars(AbstractMRReply msg, DataInputStream istream) throws java.io.IOException {
-        int i;
-        for (i = 0; i < msg.maxSize; i++) {
-            byte char1 = istream.readByte();
-            msg.setElement(i, char1);
-            if (endOfMessage(msg)) {
+        int i = 0;
+        byte[] buffer = new byte[1];
+        while (i < AbstractMRReply.maxSize) {
+            int nchars;
+            nchars = istream.read(buffer, 0, 1);
+            if (nchars<0) {
                 break;
+            } else if (nchars>0) {
+                msg.setElement(i++, buffer[0]);
+                if (endOfMessage(msg)) {
+                    break;
+                }
             }
         }
     }
