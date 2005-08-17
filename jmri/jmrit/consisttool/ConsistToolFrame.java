@@ -20,7 +20,7 @@ import com.sun.java.util.collections.ArrayList;
  * Frame object for manipulating consists.
  *
  * @author               Paul Bender Copyright (C) 2003
- * @version              $Revision: 1.14 $
+ * @version              $Revision: 1.15 $
  */
 public class ConsistToolFrame extends javax.swing.JFrame implements jmri.ConsistListener{
 
@@ -276,8 +276,6 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
 			consistModel.getConsist().removeConsistListener(this);
 			_status.setText("Ready");
 		}
-                // For now, assume short address for consist address if 
-		// required
  		consistModel.setConsist(adrSelector.getAddress());
 		consistModel.getConsist().addConsistListener(this);
 		adrSelector.setEnabled(false);
@@ -496,6 +494,12 @@ if(((DccLocoAddress)consistAdrBox.getSelectedItem())!=adrSelector.getAddress()) 
 						"No Consist Address Selected");
 		return;
 	}
+	else if(_Consist_Type==Consist.ADVANCED_CONSIST && 
+	   adrSelector.getAddress().isLongAddress()) {
+           	javax.swing.JOptionPane.showMessageDialog(this,
+						"Advanced Consist Requires Short Consist Address");
+		return;
+	}
 	else if(_Consist_Type==Consist.CS_CONSIST && adrSelector.getAddress()==null) {
 	     if(ConsistMan.csConsistNeedsSeperateAddress()) {
            	javax.swing.JOptionPane.showMessageDialog(this,
@@ -505,7 +509,7 @@ if(((DccLocoAddress)consistAdrBox.getSelectedItem())!=adrSelector.getAddress()) 
 	     else {
 		// We need to set an identifier so we can recall the
 	        // consist.  We're going to use the lead locomotive number 
-		// for this ignoring short/long for now
+		// for this.
 		adrSelector.setAddress(locoSelector.getAddress());
 	     }
 	}
@@ -544,8 +548,7 @@ if(((DccLocoAddress)consistAdrBox.getSelectedItem())!=adrSelector.getAddress()) 
 	if (!(locoRosterBox.getSelectedItem().equals(""))){
            String rosterEntryTitle = locoRosterBox.getSelectedItem().toString();
            RosterEntry entry = Roster.instance().entryFromTitle(rosterEntryTitle);
-		locoSelector.setAddress(new DccLocoAddress(
-		            Integer.parseInt(entry.getDccAddress()), true));  // don't really know long/short, but this will guess right most of the time
+		locoSelector.setAddress(entry.getDccLocoAddress());
         }
     }
 
