@@ -54,7 +54,11 @@ public class NceMonFrame extends jmri.jmrix.AbstractMonFrame implements NceListe
             raw = jmri.util.StringUtil.appendTwoHexFromInt(l.getElement(i)&0xFF, raw);
         }
 	        
-        nextLine("rep: \""+l.toString()+"\"\n", raw);
+	    if (l.isUnsolicited()) {    
+            nextLine("msg: \""+l.toString()+"\"\n", raw);
+        } else {
+            nextLine("rep: \""+l.toString()+"\"\n", raw);
+        }
 	}
 	
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceMonFrame.class.getName());

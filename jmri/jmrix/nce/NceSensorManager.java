@@ -4,6 +4,7 @@ package jmri.jmrix.nce;
 
 import jmri.JmriException;
 import jmri.Sensor;
+import jmri.jmrix.AbstractMRReply;
 
 /**
  * Manage the NCE-specific Sensor implementation.
@@ -15,7 +16,7 @@ import jmri.Sensor;
  * see nextAiuPoll()
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class NceSensorManager extends jmri.AbstractSensorManager
                             implements NceListener {
@@ -91,10 +92,57 @@ public class NceSensorManager extends jmri.AbstractSensorManager
         log.warn("unexpected message");
     }
     public void reply(NceReply r) {
-        int bits = r.pollValue();  // bits is the value in hex from the message
-        aiuArray[mNextIndex].markChanges(bits);
+    	if (!r.isUnsolicited()) {
+    		int bits = r.pollValue();  // bits is the value in hex from the message
+    		aiuArray[mNextIndex].markChanges(bits);
+    	}
     }
-
+    
+    /**
+     * Handle an unsolicited sensor (AIU) state message
+     * @param r
+     */
+    
+    public void handleSensorMessage(AbstractMRReply r) {
+        int index = r.getElement(1) - 0x30;
+        int indicator = r.getElement(2);
+        if (r.getElement(0)==0x61 && r.getElement(1)>=0x30 && r.getElement(1)<=0x6f &&
+                ((indicator>=0x41 && indicator<=0x5e ) || (indicator>=0x61 && indicator<=0x7e ))) {
+            if (aiuArray[index]==null) {
+                log.debug("unsolicited message \"" + r.toString()+ "for unused sensor array");
+            } else {
+                int sensorNo;
+                int newState;
+                if (indicator >= 0x60) { 
+                    sensorNo = indicator - 0x61;
+                    newState = Sensor.ACTIVE;
+                } else {
+                    sensorNo = indicator - 0x41;
+                    newState = Sensor.INACTIVE;
+                }
+                Sensor s = aiuArray[index].getSensor(sensorNo);
+                if (log.isDebugEnabled()) {
+                    String msg = "Handling sensor message \""+r.toString()+ "\" for ";
+                    if (s != null) {
+                        msg += s.getSystemName();
+                    } else {
+                        msg += "unmonitored sensor";
+                    }
+                    if (newState == Sensor.ACTIVE) {
+                        msg += ": ACTIVE";
+                    } else {
+                        msg += ": INACTIVE";
+                    }
+                    log.debug(msg);
+                }
+                if (s!=null) {
+                    aiuArray[index].sensorChange(sensorNo, newState);
+                }
+            }
+        } else {
+            log.warn("incorrect sensor message: "+r.toString());
+        }
+    }
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceSensorManager.class.getName());
 }
 

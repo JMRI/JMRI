@@ -20,12 +20,33 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface {
 
-    public NceTrafficController() {
+    /**
+     * Reply listener to send a sensor message (if it is one) to the sensor
+     * manager (if there is one). Can't be an anonymous class because it needs
+     * to remember the traffic controller object it refers to.
+     *
+     */
+	private class SensorMessageListener implements NceListener {
+    	NceTrafficController myController;
+    	SensorMessageListener(NceTrafficController c) {
+    		myController = c;
+    	}
+	    public void message(NceMessage m) { };
+	    public void reply(NceReply r) {
+	    	NceSensorManager sm = myController.getSensorManager();
+	    	if (sm!=null && r.isSensorMessage()) {
+	    		sm.handleSensorMessage(r);
+	    	}
+	    }
+    }
+	
+	public NceTrafficController() {
         super();
+        addNceListener(new SensorMessageListener(this));
     }
 
     // The methods to implement the NceInterface
@@ -55,6 +76,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 
     NceSensorManager mSensorManager = null;
     public void setSensorManager(NceSensorManager m) { mSensorManager = m; }
+    public NceSensorManager getSensorManager() { return mSensorManager; }
     protected AbstractMRMessage pollMessage() {
         if (mSensorManager == null) return null;
         else return mSensorManager.nextAiuPoll();
@@ -111,7 +133,9 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     protected boolean endOfMessage(AbstractMRReply msg) {
         // first try boolean
         if (replyBinary) {
-            if (msg.getNumDataElements() >= replyLen ) {
+            if (msg.getElement(0) == 0x61) {
+                return msg.getNumDataElements() >= 3;
+            } else if (msg.getNumDataElements() >= replyLen ) {
                 return true;
             } else 
                 return false;

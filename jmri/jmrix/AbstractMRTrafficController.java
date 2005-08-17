@@ -26,7 +26,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.23 $
+ * @version			$Revision: 1.24 $
  */
 abstract public class AbstractMRTrafficController {
 
@@ -582,48 +582,50 @@ abstract public class AbstractMRTrafficController {
         } catch (Exception e) {
             log.error("Unexpected exception in invokeAndWait:" +e);
         }
-
-        // effect on transmit:
-        switch (mCurrentState) {
-        case WAITMSGREPLYSTATE: {
-            // update state, and notify to continue
-            synchronized (xmtRunnable) {
-                mCurrentState = NOTIFIEDSTATE;
-                xmtRunnable.notify();
-            }
-            break;
-        }
-        case WAITREPLYINPROGMODESTATE: {
-            // entering programming mode
-            mCurrentMode = PROGRAMINGMODE;
-            // update state, and notify to continue
-            synchronized (xmtRunnable) {
-                mCurrentState = OKSENDMSGSTATE;
-                xmtRunnable.notify();
-            }
-            break;
-        }
-        case WAITREPLYINNORMMODESTATE: {
-            // entering normal mode
-            mCurrentMode = NORMALMODE;
-            // update state, and notify to continue
-            synchronized (xmtRunnable) {
-                mCurrentState = OKSENDMSGSTATE;
-                xmtRunnable.notify();
-            }
-            break;
-        }
-        default: {
-	    if(allowUnexpectedReply==true) {
-            if(log.isDebugEnabled()) log.debug("Error suppressed: reply complete in unexpected state: "
-                        +mCurrentState
-                        +" was "+msg.toString());
-            } else {
-            log.error("reply complete in unexpected state: "
-                        +mCurrentState
-                        +" was "+msg.toString());
-	    }
-	  }
+        
+        if (!msg.isUnsolicited()) {
+        	// effect on transmit:
+        	switch (mCurrentState) {
+        	case WAITMSGREPLYSTATE: {
+        		// update state, and notify to continue
+        		synchronized (xmtRunnable) {
+        			mCurrentState = NOTIFIEDSTATE;
+        			xmtRunnable.notify();
+        		}
+        		break;
+        	}
+        	case WAITREPLYINPROGMODESTATE: {
+        		// entering programming mode
+        		mCurrentMode = PROGRAMINGMODE;
+        		// update state, and notify to continue
+        		synchronized (xmtRunnable) {
+        			mCurrentState = OKSENDMSGSTATE;
+        			xmtRunnable.notify();
+        		}
+        		break;
+        	}
+        	case WAITREPLYINNORMMODESTATE: {
+        		// entering normal mode
+        		mCurrentMode = NORMALMODE;
+        		// update state, and notify to continue
+        		synchronized (xmtRunnable) {
+        			mCurrentState = OKSENDMSGSTATE;
+        			xmtRunnable.notify();
+        		}
+        		break;
+        	}
+        	default: {
+        		if(allowUnexpectedReply==true) {
+        			if(log.isDebugEnabled()) log.debug("Error suppressed: reply complete in unexpected state: "
+        					+mCurrentState
+        					+" was "+msg.toString());
+        		} else {
+        			log.error("reply complete in unexpected state: "
+        					+mCurrentState
+        					+" was "+msg.toString());
+        		}
+        	}
+        	}
         }
     }
 
