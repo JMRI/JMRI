@@ -8,7 +8,7 @@ package jmri.jmrix;
  * Handles the character manipulation.
  *
  * @author		Bob Jacobsen  Copyright (C) 2003
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 abstract public class AbstractMRReply {
     // is this logically an abstract class?
@@ -57,8 +57,7 @@ abstract public class AbstractMRReply {
         for (int i=0; i<_nDataChars; i++) {
             if (_isBinary) {
                 if (i!=0) s+=" ";
-                if (_dataChars[i] < 16) s+="0";
-                s+=Integer.toHexString(_dataChars[i]);
+                s = jmri.util.StringUtil.appendTwoHexFromInt(_dataChars[i]&0xFF, s);
             } else {
                 s+=(char)_dataChars[i];
             }
