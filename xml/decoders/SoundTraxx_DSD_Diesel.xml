@@ -2,9 +2,9 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2003 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: SoundTraxx_DSD_Diesel.xml,v 1.18 2005-05-01 23:25:42 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_DSD_Diesel.xml,v 1.19 2005-08-18 05:07:48 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Michael Mosher" version="8.1" lastUpdated="20031008"/>
+		<version author="Michael Mosher" version="9" lastUpdated="20050817"/>
 
 		<!-- version 4: updates to minOut usage, function mapping -->
 		<!-- version 5: correct to CV 56 for some options -->
@@ -12,11 +12,12 @@
 		<!--            corrected versionCVs -->
 		<!-- version 7: renamed to get best tree layout -->
 		<!-- version 8: added CV105&106 & fix Fn mapping bug -->
-      <!-- Version 8.1: changed spelling of "behavior" (Jack Shall) -->
-		
+        <!-- Version 8.1: changed spelling of "behavior" (Jack Shall) -->
+        <!-- version 9: (20050817 BobJ): numFns corrected from 8 to 10 -->
+
 <decoder>
 	<family name="DSD diesel" mfg="Throttle-Up (SoundTraxx)">
-		<model model="DSD diesel" numOuts="4" numFns="8">
+		<model model="DSD diesel" numOuts="4" numFns="10">
 			<versionCV lowVersionID="9" highVersionID="14"/>
 			<versionCV lowVersionID="21"/>
 			<output name="Bell"/> 

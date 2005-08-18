@@ -2,11 +2,12 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: SoundTraxx_SHS_F3.xml,v 1.3 2005-05-01 23:25:42 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_SHS_F3.xml,v 1.4 2005-08-18 05:07:48 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Michael Greene (mgreene@cedarlane.com)" 
-                          version="2" lastUpdated="20041016"/>
+                          version="3" lastUpdated="20050817"/>
 
+        <!-- version 3 (20050817 BobJ): numFns corrected from 8 to 10 -->
 		<!-- version 2 (20041016): add default values for CV7 & 8 -->
 		<!-- version 1 (20040311): initial creation from SoundTraxx_SHS_F7.xml -->
 
@@ -16,7 +17,7 @@
 		   maxInputVolts="16V" maxMotorCurrent="5A"
 		   maxTotalCurrent="6A" formFactor="SHS F3"
 		   nmraWarrant="no"  connector="other"
-		   numOuts="4" numFns="8">
+		   numOuts="4" numFns="10">
 			<versionCV lowVersionID="38"/>
 			<output name="Bell"/> 
 			<output name="Horn"/> 

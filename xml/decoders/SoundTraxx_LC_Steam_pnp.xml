@@ -2,9 +2,9 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2003 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: SoundTraxx_LC_Steam_pnp.xml,v 1.7 2005-05-01 23:25:42 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_LC_Steam_pnp.xml,v 1.8 2005-08-18 05:07:48 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Michael Mosher" version="9.1" lastUpdated="20031008"/>
+		<version author="Michael Mosher" version="10" lastUpdated="20050817"/>
 
 		<!-- version 4: updates to minOut usage, function mapping -->
 		<!-- version 5: removed erroneous CV19 definition, corrected VersionID -->
@@ -13,10 +13,11 @@
 		<!-- Version 8: Removed non-pnp 090LC model, corrected CV7 -->
 		<!-- version 9: added FX1 & FX2 to fun map & CV105&106 set CV9 default to 180   -->
       <!-- Version 9.1: changed spelling of "behavior" (Jack Shall) -->
+        <!-- version 10 (20050817 BobJ): numFns corrected from 8 to 10 -->
 
 <decoder>
 	<family name="LC Steam PNP decoders" mfg="Throttle-Up (SoundTraxx)">
-		<model model="B280LC Steam" numOuts="4" numFns="8">
+		<model model="B280LC Steam" numOuts="4" numFns="10">
 			<versionCV lowVersionID="33"/>
 			<output name="Whistle"/>
 			<output name="Bell"/> 
@@ -27,7 +28,7 @@
 			<!-- The two electical outputs are front headlight, back -->
 			<!-- headlight-->
 			</model>
-		<model model="B3TSLC Steam" numOuts="4" numFns="8">
+		<model model="B3TSLC Steam" numOuts="4" numFns="10">
 			<versionCV lowVersionID="33"/>
 			<output name="Whistle"/>
 			<output name="Bell"/> 
@@ -38,7 +39,7 @@
 			<!-- The two electical outputs are front headlight, back -->
 			<!-- headlight-->
 			</model>
-		<model model="B210LC Steam" numOuts="4" numFns="8">
+		<model model="B210LC Steam" numOuts="4" numFns="10">
 			<versionCV lowVersionID="33"/>
 			<output name="Whistle"/>
 			<output name="Bell"/> 
@@ -49,7 +50,7 @@
 			<!-- The two electical outputs are front headlight, back -->
 			<!-- headlight-->
 			</model>
-		<model model="LL080LC Steam" numOuts="4" numFns="8">
+		<model model="LL080LC Steam" numOuts="4" numFns="10">
 			<versionCV lowVersionID="33"/>
 			<output name="Whistle"/>
 			<output name="Bell"/> 

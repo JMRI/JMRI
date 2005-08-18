@@ -2,9 +2,9 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2003 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: SoundTraxx_LC_Steam_hylt.xml,v 1.5 2005-05-01 23:25:42 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_LC_Steam_hylt.xml,v 1.6 2005-08-18 05:07:48 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Michael Mosher" version="9.1" lastUpdated="20031008"/>
+		<version author="Michael Mosher" version="10" lastUpdated="20050817"/>
 
 		<!-- version 4: updates to minOut usage, function mapping -->
 		<!-- version 5: removed erroneous CV19 definition, corrected VersionID -->
@@ -13,11 +13,12 @@
 		<!-- Version 8: Corrected CV7 values -->
 		<!-- version 9: added FX1 & FX2 to fun map & CV105&106 set CV9 default to 180   -->
       <!-- Version 9.1: changed spelling of "behavior" (Jack Shall) -->
+        <!-- version 10: (20050817 BobJ): numFns corrected from 8 to 10 -->
 
 
 <decoder>
 	<family name="LC Steam hyperlight decoders" mfg="Throttle-Up (SoundTraxx)">
-		<model model="090LC Steam" numOuts="4" numFns="8">
+		<model model="090LC Steam" numOuts="4" numFns="10">
 			<versionCV lowVersionID="39"/>
 			<output name="Whistle"/>
 			<output name="Bell"/> 

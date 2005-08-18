@@ -2,9 +2,9 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: SoundTraxx_LC_Diesel_pnpFX.xml,v 1.6 2005-05-01 23:25:42 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_LC_Diesel_pnpFX.xml,v 1.7 2005-08-18 05:07:48 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Michael Mosher" version="10.2" lastUpdated="20040301"/>
+		<version author="Michael Mosher" version="11" lastUpdated="20050817"/>
 
 		<!-- version 4: updates to minOut usage, function mapping -->
 		<!-- version 5: added LL100LC -->
@@ -16,11 +16,12 @@
 		<!-- version 10: added CV105&106, set CV9 default to 180 -->
      		<!-- Version 10.1: changed spelling of "behavior" (Jack Shall) -->
 		<!-- Version 10.2: corrected label on CV52 - FX2 effect generated (Michael Greene) -->
+        <!-- version 11: (20050817 BobJ): numFns corrected from 8 to 10 -->
 
 <decoder>
 	<family name="LC Diesel PNP + FX decoders" mfg="Throttle-Up (SoundTraxx)">
 
-		<model model="C628LC Diesel" numOuts="4" numFns="8">
+		<model model="C628LC Diesel" numOuts="4" numFns="10">
 			<versionCV lowVersionID="37"/>
 			<output name="Horn"/> 
 			<output name="Bell"/> 

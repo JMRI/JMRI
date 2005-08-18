@@ -2,19 +2,20 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2003 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: SoundTraxx_DSD_Steam.xml,v 1.16 2005-05-01 23:25:42 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_DSD_Steam.xml,v 1.17 2005-08-18 05:07:48 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Michael Mosher" version="7" lastUpdated="20030703"/>
+		<version author="Michael Mosher" version="8" lastUpdated="20050817"/>
 
 		<!-- version 4: updates to minOut usage, function mapping -->
 		<!-- version 5: removed erroneous CV19 definition -->
 		<!--            corrected versionCVs -->
 		<!-- version 6: rename to make nicer tree -->
 		<!-- version 7: added CV105&106  -->
-		
+        <!-- version 8: (20050817 BobJ): numFns corrected from 8 to 10 -->
+
 <decoder>
 	<family name="DSD Steam" mfg="Throttle-Up (SoundTraxx)">
-		<model model="DSD Steam" numOuts="4" numFns="8">
+		<model model="DSD Steam" numOuts="4" numFns="10">
 			<versionCV lowVersionID="6" highVersionID="7"/>
 			<versionCV lowVersionID="15" highVersionID="16"/>
 			<versionCV lowVersionID="20"/>
