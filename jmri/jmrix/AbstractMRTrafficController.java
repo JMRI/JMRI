@@ -26,10 +26,10 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.24 $
+ * @version			$Revision: 1.25 $
  */
 abstract public class AbstractMRTrafficController {
-
+    
     public AbstractMRTrafficController() {
         if (log.isDebugEnabled()) log.debug("setting instance: "+this);
         mCurrentMode = NORMALMODE;
@@ -429,7 +429,8 @@ abstract public class AbstractMRTrafficController {
     // methods to connect/disconnect to a source of data in a AbstractPortController
     private AbstractPortController controller = null;
 
-    public boolean status() { return (ostream != null & istream != null);
+    public boolean status() { 
+        return (ostream != null & istream != null);
     }
 
     Thread xmtThread = null;
@@ -495,7 +496,7 @@ abstract public class AbstractMRTrafficController {
      * Handle incoming characters.  This is a permanent loop,
      * looking for input messages in character form on the
      * stream connected to the PortController via <code>connectPort</code>.
-     * Terminates with the input stream breaking out of the try block.
+     * Each turn of the loop is the receipt of a single message.
      */
     public void receiveLoop() {
         log.debug("receiveLoop starts");
@@ -520,6 +521,26 @@ abstract public class AbstractMRTrafficController {
     protected void waitForStartOfReply(DataInputStream istream) throws java.io.IOException {}
 
     /**
+     * Read a single byte, protecting against various timeouts, etc.
+     * <P>
+     * When a javax.comm port is set to have a 
+     * receive timeout (via the enableReceiveTimeout() method),
+     * it will return zero bytes or an EOFException at the end of the timeout.
+     * In that case, the read should be repeated to get the next real character.
+     * 
+     */
+    protected byte readByteProtected(DataInputStream istream) throws java.io.IOException {
+        while (true) { // loop will repeat until character found
+            int nchars;
+            nchars = istream.read(rcvBuffer, 0, 1);
+            if (nchars>0) return rcvBuffer[0];
+        }
+    }
+        
+    // Defined this way to reduce new object creation
+    private byte[] rcvBuffer = new byte[1];
+    
+    /**
      * Get characters from the input source, and file a message.
      * <P>
      * Returns only when the message is complete.
@@ -533,19 +554,13 @@ abstract public class AbstractMRTrafficController {
      * @throws IOException when presented by the input source.
      */
     protected void loadChars(AbstractMRReply msg, DataInputStream istream) throws java.io.IOException {
-        int i = 0;
-        byte[] buffer = new byte[1];
-        while (i < AbstractMRReply.maxSize) {
-            int nchars;
-            nchars = istream.read(buffer, 0, 1);
-            if (nchars<0) {
+        int i;
+        for (i = 0; i < msg.maxSize; i++) {
+            byte char1 = readByteProtected(istream);
+            msg.setElement(i, char1);
+            if (endOfMessage(msg)) {
                 break;
-            } else if (nchars>0) {
-                msg.setElement(i++, buffer[0]);
-                if (endOfMessage(msg)) {
-                    break;
-                }
-            }
+            } 
         }
     }
 
