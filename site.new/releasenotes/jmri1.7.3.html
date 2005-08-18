@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.7.3.html,v 1.3 2005-08-14 06:20:09 jacobsen Exp $ -->
+<!-- $Id: jmri1.7.3.html,v 1.4 2005-08-18 05:21:59 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -120,6 +120,21 @@
 
 <P>At the suggestion of John Harper, AbstractAutomaton is now using notifyAll() instead of notify().  For more information, see recent discussion in jmri-developers mailing list.
 
+<P>On Linux, the startup scripts are now called "DecoderPro", "PanelPro", etc, with no file extension.  (The old ones were left in place)  Also, they now us the Bourne shell, which is more generally available than C shell. (david zuhn)
+
+<P>Soundtraxx DSD definitions now properly show function mapping for functions 7 and 8 (Don Mitchell, Robin Becker)
+
+<P>John Harper updated the Throttle tool so that (optionally) the locomotive speed will continually change as you move the slider. Previously, it only updated when you released the slider.
+
+<P>Alfredo Sola updated the Spanish translation
+
+<P>Paul Bender updated the consisting tools to allow specification of basic (short) or extended (long) format addressing for systems where those overlap, e.g. NCE
+
+<P>John Harper fixed bug 1257961: Serial replies containing negative byte values display them with an extra leading FF
+
+<P>John Harper and Bob Jacobsen updated the serial infrastructure to improve response time for NCE, C/MRI, and perhaps others on (some) Windows systems
+
+<P>John Harper added support for asynchronous AIU messages from NCE command stations, to improve sensor response time
 
       <hr class="hide">
 <!-- Footer -->
