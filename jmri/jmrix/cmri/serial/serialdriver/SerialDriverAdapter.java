@@ -23,7 +23,7 @@ import javax.comm.SerialPortEventListener;
  * Provide access to C/MRI via a serial comm port.
  * Normally controlled by the cmri.serial.serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -61,11 +61,25 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
                 return "Cannot set serial parameters on port "+portName+": "+e.getMessage();
             }
 
-            // set timeout
-            // activeSerialPort.enableReceiveTimeout(1000);
-            log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
-                      +" "+activeSerialPort.isReceiveTimeoutEnabled());
 
+            // set framing (end) character
+            try {
+                activeSerialPort.enableReceiveFraming(0x03);
+                log.debug("Serial framing was observed as: "+activeSerialPort.isReceiveFramingEnabled()
+                      +" "+activeSerialPort.getReceiveFramingByte());
+            } catch (Exception ef) {
+                log.info("failed to set serial framing: "+ef);
+            }
+
+            // set timeout; framing should work before this anyway
+            try {
+                activeSerialPort.enableReceiveTimeout(50);
+                log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
+                      +" "+activeSerialPort.isReceiveTimeoutEnabled());
+            } catch (Exception et) {
+                log.info("failed to set serial timeout: "+et);
+            }
+            
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
 
