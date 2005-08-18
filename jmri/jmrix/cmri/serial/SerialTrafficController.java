@@ -27,7 +27,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.21 $
+ * @version	$Revision: 1.22 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -287,6 +287,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     protected AbstractMRReply newReply() { return new SerialReply(); }
 
     protected boolean endOfMessage(AbstractMRReply msg) {
+        // our version of loadChars doesn't invoke this, so it shouldn't be called
         log.error("Not using endOfMessage, should not be called");
         return false;
     }
@@ -294,16 +295,16 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     protected void loadChars(AbstractMRReply msg, DataInputStream istream) throws java.io.IOException {
         int i;
         for (i = 0; i < msg.maxSize; i++) {
-            byte char1 = istream.readByte();
+            byte char1 = readByteProtected(istream);
             if (char1 == 0x03) break;           // check before DLE handling
-            if (char1 == 0x10) char1 = istream.readByte();
+            if (char1 == 0x10) char1 = readByteProtected(istream);
             msg.setElement(i, char1&0xFF);
         }
     }
 
     protected void waitForStartOfReply(DataInputStream istream) throws java.io.IOException {
         // loop looking for the start character
-        while (istream.readByte()!=0x02) {}
+        while (readByteProtected(istream)!=0x02) {}
     }
 
     /**
