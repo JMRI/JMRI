@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: FAQ.html,v 1.3 2004-11-12 02:56:38 jacobsen Exp $ -->
+<!-- $Id: FAQ.html,v 1.4 2005-08-18 05:36:35 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -151,6 +151,18 @@ that was somewhat problematic.  The problem was that we'd occasionally
 add new features to the _code_ that the new decoder files needed so 
 they could provide some new feature.  In those cases, it was just much 
 simpler to distribute the whole thing together.
+
+<dt class=left><a id="#update"/>Why does my LocoBuffer-II not work in Windows XP?</dt>
+<dd class=first>
+<p>
+With Windows XP, your serial port parameters might not be properly set for 
+hardware flow control. To fix this, right-click on 
+My Computer and select Properties. Go to the Hardware tab and click on 
+Device Manager. Open up the section that says Ports (COM &amp; LPT). 
+Right-click on the serial port you have the LocoBuffer hooked to and 
+select Properties. Go to the Port Settings tab and set the options 
+to 19200, 8, None, 1, Hardware. Click OK. Close everything. 
+Restart JMRI and verify your connection settings.
 
 </dd>
 

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Windows.html,v 1.7 2004-11-17 22:39:57 jacobsen Exp $ -->
+<!-- $Id: Windows.html,v 1.8 2005-08-18 05:36:18 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -180,6 +180,15 @@
 	used for a serial mouse.  Please make sure that the serial port
 	connected to your layout does not share an interrupt with
 	another serial port.</P>
+
+    <P>With Windows XP, your serial port parameters might not be properly set for 
+    hardware flow control. To fix this, right-click on 
+    My Computer and select Properties. Go to the Hardware tab and click on 
+    Device Manager. Open up the section that says Ports (COM &amp; LPT). 
+    Right-click on the serial port you have the LocoBuffer hooked to and 
+    select Properties. Go to the Port Settings tab and set the options 
+    to 19200, 8, None, 1, Hardware. Click OK. Close everything. 
+    Restart JMRI and verify your connection settings.</P>
 
 	</OL>
 
