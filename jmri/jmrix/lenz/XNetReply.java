@@ -7,7 +7,7 @@ package jmri.jmrix.lenz;
  *<P>
  *
  * @author			Paul Bender Copyright (C) 2004
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  *
  */
 public class XNetReply extends jmri.jmrix.AbstractMRReply {
@@ -66,7 +66,11 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                 setElement(len-1, chksum&0xFF);
     }
  
-    /** Get an integer representation of a BCD value */
+    /** 
+     * Get an integer representation of a BCD value 
+     * @parm n byte in message to convert
+     * @return Integer value of BCD byte.
+     */
         public Integer getElementBCD(int n) { return Integer.decode(Integer.toHexString(getElement(n))); }
 
     /* 
@@ -85,10 +89,11 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      */
 
     /**
+     * <p>
      * If this is a feedback response message for a turnout, 
      * return the address.  Otherwise return -1.
-     * Note we only identify the command here; the reponse to a
-     * request for status is not interpreted here.
+     * </p>
+     * @return the integer address or -1 if not a turnout message
      */
     public int getTurnoutMsgAddr() {
         if (this.isFeedbackMessage()) {
@@ -117,12 +122,53 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
+     * <p>
+     * If this is a feedback broadcast message and the specified 
+     * startbyte is the address byte of an addres byte data byte 
+     * pair for a turnout, return the address.  Otherwise return -1.
+     * </p>
+     *
+     * @parm startByte address byte of the address byte/data byte pair.
+     * @return the integer address or -1 if not a turnout message
+     */
+    public int getTurnoutMsgAddr(int startByte) {
+        if (this.isFeedbackBroadcastMessage()) {
+            int a1 = this.getElement(startByte);
+            int a2 = this.getElement(startByte+1);
+            int messagetype=this.getFeedbackMessageType();
+	    if ( messagetype == 0 || messagetype == 1)
+            {
+               // This is a turnout message
+               int address=(a1 & 0xff) * 4;
+               if(((a2 & 0x13)==0x01) || ((a2 &0x13)==0x02)) {
+                  // This is the first address in the group*/
+                  return(address + 1);
+               } else if(((a2 & 0x1c)==0x04) || ((a2 &0x1c)==0x08)) {
+                  // This is the second address in the group
+                  return(address + 2);
+               } else if(((a2 & 0x13)==0x11) || ((a2 &0x13)==0x12)) {
+                  // This is the third address in the group
+                  return(address + 3);
+               } else if(((a2 & 0x1c)==0x14) || ((a2 &0x1c)==0x18)) { 
+                  // This is the fourth address in the group
+                  return(address + 4);
+     	       } else return -1;
+            } else return -1;
+        } else return -1;
+    }
+
+    /**
+     * <p>
      * Parse the feedback message for a turnout, and return the status 
      * for the even or odd half of the nibble (upper or lower part)
-     *
-     * the turnout is identified by sending a 0 for even turnouts (the 
-     * upper part of the nibble) or 1 for odd turnouts (the lower part of 
-     * the nibble
+     * </p>
+     * @parm turnout <ul> 
+     *	<li>0 for the even turnout associated with the pair.  
+     *  This is the upper half of the data nibble asociated with the pair </li>
+     *	<li>1 for the odd turnout associated with the pair.  
+     *  This is the lower half of the data nibble asociated with the pair </li>
+     * </ul>
+     * @return THROWN/CLOSED as defined in {@link jmri.Turnout}
      **/
      public int getTurnoutStatus(int turnout) {
         if (this.isFeedbackMessage()) {
@@ -159,15 +205,86 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      }
 
     /**
+     * <p>
+     * Parse the specified address byte/data byte pair in a feedback 
+     * broadcast message and see if it is for a turnout.  If it is,
+     * return the status  for the even or odd half of the nibble (upper or 
+     * lower part)
+     * </p>
+     * @parm startByte address byte of the address byte/data byte pair.
+     * @parm turnout <ul> 
+     *	<li>0 for the even turnout associated with the pair.  
+     *  This is the upper half of the data nibble asociated with the pair </li>
+     *	<li>1 for the odd turnout associated with the pair.  
+     *  This is the lower half of the data nibble asociated with the pair </li>
+     * </ul>
+     * @return THROWN/CLOSED as defined in {@link jmri.Turnout}
+     **/
+     public int getTurnoutStatus(int startByte,int turnout) {
+        if (this.isFeedbackBroadcastMessage()) {
+            int a1 = this.getElement(startByte);
+            int a2 = this.getElement(startByte+1);
+            int messagetype=this.getFeedbackMessageType();
+	    if ( messagetype == 0 || messagetype == 1) {
+ 	       if (turnout==1) {
+                  // we want the lower half of the nibble
+                  if((a2 & 0x03)!=0) {
+                     /* this is for the First turnout in the nibble */
+                     int state=this.getElement(2) & 0x03;
+                     if(state==0x01) { 
+                         return(jmri.Turnout.CLOSED);
+                     } else if(state==0x02) { 
+                         return(jmri.Turnout.THROWN);
+                     } else return -1; /* the state is invalid */
+                  }
+               } else if (turnout==0) {
+                  /* we want the upper half of the nibble */
+                  if((a2 & 0x0C)!=0) {
+                     /* this is for the upper half of the nibble */
+                     int state=this.getElement(2) & 0x0C;
+                     if(state==0x04) { 
+                         return(jmri.Turnout.CLOSED);  
+                     } else if(state==0x08) { 
+                         return (jmri.Turnout.THROWN);
+                     } else return -1; /* the state is invalid */
+                  }
+               }
+            }
+         } 
+         return(-1);
+     }
+
+    /**
      * If this is a feedback response message for a feedback encoder, 
      * return the address.  Otherwise return -1.
-     * Note we only identify the command here; the reponse to a
-     * request for status is not interpreted here.
+     * @return the integer address or -1 if not a feedback message
      */
     public int getFeedbackEncoderMsgAddr() {
         if (this.isFeedbackMessage()) {
             int a1 = this.getElement(1);
             int messagetype=this.getFeedbackMessageType();
+	    if ( messagetype == 2 )
+            {
+               // This is a feedback encoder message
+               int address=(a1 & 0xff);
+               return(address);
+            } else return -1;
+        } else return -1;
+    }
+
+    /**
+     * <p>
+     * If this is a feedback broadcast message and the specified 
+     * startByte is the address byte of an address byte/data byte 
+     * pair for a feedback encoder, return the address.  Otherwise return -1.
+     * </p>
+     * @parm startByte address byte of the address byte data byte pair.
+     * @return the integer address or -1 if not a feedback message
+     */
+    public int getFeedbackEncoderMsgAddr(int startByte) {
+        if (this.isFeedbackBroadcastMessage()) {
+            int a1 = this.getElement(startByte);
+            int messagetype=this.getFeedbackMessageType(startByte);
 	    if ( messagetype == 2 )
             {
                // This is a feedback encoder message
@@ -185,17 +302,56 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
+     * Is this a feedback broadcast message?
+     */
+    public boolean isFeedbackBroadcastMessage() {
+	return((this.getElement(0)&0xF0)==XNetConstants.BC_FEEDBACK);
+    }
+
+    /**
+     * <p>
      * Extract the feedback message type from a feedback message
      * this is the middle two bits of the upper byte of the second data 
-     * byte.  returned values are 0-3.
-     * 0 for a turnout with no feedback
-     * 1 for a turnout with feedback
-     * 2 for a feedback encoder
-     * 3 is reserved by Lenz for future use.
+     * byte.
+     * </p>  
+     * @return message type, values are:
+     * <ul>
+     * 	<li>0 for a turnout with no feedback</li>
+     * 	<li>1 for a turnout with feedback</li>
+     * 	<li>2 for a feedback encoder</li>
+     * 	<li>3 is reserved by Lenz for future use.</li>
+     * </ul>
      */ 
     public int getFeedbackMessageType() {
         if (this.isFeedbackMessage()) {
             int a2 = this.getElement(2);
+            return((a2 & 0x60) / 32);            
+	}
+        else return -1;
+    }
+
+    /**
+     * <p>
+     * Extract the feedback message type from the data byte of associated 
+     * with the specified address byte specified by startByte.
+     * </p>
+     * <p>
+     * The return value is the middle two bits of the upper byte of the 
+     * data byte of an address byte/data byte pair.
+     * </p>  
+     * @parm startByte The address byte for this addres byte data byte 
+     * pair.
+     * @return message type, values are:
+     * <ul>
+     * 	<li>0 for a turnout with no feedback</li>
+     * 	<li>1 for a turnout with feedback</li>
+     * 	<li>2 for a feedback encoder</li>
+     * 	<li>3 is reserved by Lenz for future use.</li>
+     * </ul>
+     */ 
+    public int getFeedbackMessageType(int startByte) {
+        if (this.isFeedbackBroadcastMessage()) {
+            int a2 = this.getElement(startByte + 1);
             return((a2 & 0x60) / 32);            
 	}
         else return -1;
@@ -212,7 +368,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * request for status is not yet seen here.
      */
     public int getThrottleMsgAddr() {
-        if (this.isThrottleCommand()) {
+        if (this.isThrottleMessage()) {
             int a1 = this.getElement(2);
             int a2 = this.getElement(3);
 	    if(a1==0) 
@@ -226,11 +382,30 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     /**
      * Is this a throttle message?
      */
-    public boolean isThrottleCommand() {
+    public boolean isThrottleMessage() {
         int message=this.getElement(0);
-        if( message==0x83 || message==0x84 || message==0xA3 || 
-            message == 0xA4 ||message == 0xE2 || message == 0xE3 || 
-           message == 0xE4) return true;
+        if( message==XNetConstants.LOCO_INFO_NORMAL_UNIT ||
+	    message==XNetConstants.LOCO_INFO_RESPONSE || 
+	    message==XNetConstants.LOCO_INFO_MUED_UNIT   ||
+            message==XNetConstants.LOCO_INFO_MU_ADDRESS  ||
+	    message==XNetConstants.LOCO_INFO_DH_UNIT  ||
+	    message==XNetConstants.LOCO_AVAILABLE_V1 || 
+	    message==XNetConstants.LOCO_AVAILABLE_V2 || 
+	    message==XNetConstants.LOCO_NOT_AVAILABLE_V1 || 
+            message==XNetConstants.LOCO_NOT_AVAILABLE_V2) 
+		return true;
+        return false;
+    }
+
+    /**
+     * Is this a consist message?
+     */
+    public boolean isConsistMessage() {
+        int message=this.getElement(0);
+        if( message==XNetConstants.LOCO_MU_DH_ERROR ||
+	    message==XNetConstants.LOCO_DH_INFO_V1 || 
+	    message==XNetConstants.LOCO_DH_INFO_V2 )
+		return true;
         return false;
     }
     

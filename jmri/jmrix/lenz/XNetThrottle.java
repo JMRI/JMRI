@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
  * @author     Paul Bender (C) 2002,2003,2004
- * @version    $Revision: 2.6 $
+ * @version    $Revision: 2.7 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -38,7 +38,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     public XNetThrottle()
     {
        super();
-       XNetTrafficController.instance().addXNetListener(~0, this);
+       XNetTrafficController.instance().addXNetListener(XNetInterface.COMMINFO |
+						XNetInterface.CS_INFO |
+						XNetInterface.THROTTLE, this);
        if (log.isDebugEnabled()) { log.debug("XnetThrottle constructor"); }
     }
 
@@ -53,7 +55,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
        this.speedStepMode=DccThrottle.SpeedStepMode128;
 //       this.isForward=true;
        setIsAvailable(false);
-       XNetTrafficController.instance().addXNetListener(~0, this);
+       XNetTrafficController.instance().addXNetListener(XNetInterface.COMMINFO |
+						XNetInterface.CS_INFO |
+						XNetInterface.THROTTLE, this);
        sendStatusInformationRequest();
        if (log.isDebugEnabled()) { log.debug("XnetThrottle constructor called for address " + address ); }
     }
@@ -191,6 +195,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     {
 	if(requestState!=THROTTLEIDLE) return;
         this.speedSetting = speed;
+	}
 	if (speed<0)
 	{
 	/* we're sending an emergency stop to this locomotive only */
@@ -462,7 +467,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      */
     public void dispose()
     {
-       XNetTrafficController.instance().removeXNetListener(~0, this);
+       XNetTrafficController.instance().removeXNetListener(XNetInterface.COMMINFO |
+						XNetInterface.CS_INFO |
+						XNetInterface.THROTTLE, this);
 	stopStatusTimer();
         super.dispose();
     }
@@ -595,9 +602,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	       }
            }
 	} else if (requestState==THROTTLECMDSENT) {
-	    	 if(log.isDebugEnabled()) { log.debug("Current throttle status is THROTTLECMDSENT"); }
-	    // For a Throttle Command, we're just looking for a return 
-            // acknowledgment, Either a Success or Failure message.
+	     if(log.isDebugEnabled()) { log.debug("Current throttle status is THROTTLECMDSENT"); }
+	     // For a Throttle Command, we're just looking for a return 
+             // acknowledgment, Either a Success or Failure message.
 	     if(l.isOkMessage()) 
 		{
 	    	 if(log.isDebugEnabled()) { log.debug("Last Command processed successfully."); }

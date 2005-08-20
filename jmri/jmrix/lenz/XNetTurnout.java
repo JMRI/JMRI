@@ -35,7 +35,7 @@
  * defaults to the basic "DIRECT" mode.
  * <P> 
  * @author			Bob Jacobsen Copyright (C) 2001, Portions by Paul Bender Copyright (C) 2003 
- * @version			$Revision: 2.4 $
+ * @version			$Revision: 2.5 $
  */
 
 package jmri.jmrix.lenz;
@@ -52,7 +52,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         super("XT"+pNumber);
         mNumber = pNumber;
         // At construction, register for messages
-        XNetTrafficController.instance().addXNetListener(~0, this);
+        XNetTrafficController.instance().addXNetListener(XNetInterface.FEEDBACK|XNetInterface.COMMINFO, this);
 	// And to get property change information from the superclass
 	_stateListener=new XNetTurnoutStateListener(this);
 	this.addPropertyChangeListener(_stateListener);
@@ -85,6 +85,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
      *  Handle an incoming message from the XPressNet
      */
     public void message(XNetReply l) {
+	if(log.isDebugEnabled()) log.debug("recieved message: " +l);
         if(InternalState==OFFSENT) {
 	  // If an OFF was sent, we want to check for Communications 
           // errors before we try to do anything else. 
@@ -243,7 +244,8 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     }
 
     public void dispose() {
-        XNetTrafficController.instance().removeXNetListener(~0, this);
+        XNetTrafficController.instance().removeXNetListener(
+			XNetInterface.FEEDBACK|XNetInterface.COMMINFO, this);
 	this.removePropertyChangeListener(_stateListener);
     }
 

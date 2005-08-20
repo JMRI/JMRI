@@ -7,6 +7,8 @@ import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRListener;
 
+import com.sun.java.util.collections.Hashtable;
+
 /**
  * Abstract base class for implementations of XNetInterface.
  *<P>
@@ -14,11 +16,13 @@ import jmri.jmrix.AbstractMRListener;
  * method for locating the local implementation.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @author			Paul Bender  Copyright (C) 2004
- * @version 		$Revision: 2.6 $
+ * @author			Paul Bender  Copyright (C) 2004,2005
+ * @version 		$Revision: 2.7 $
  *
  */
 public abstract class XNetTrafficController extends AbstractMRTrafficController implements XNetInterface {
+
+    protected Hashtable mListenerMasks;
 
     /**
 	 * static function returning the TrafficController instance to use.
@@ -47,6 +51,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     XNetTrafficController(LenzCommandStation pCommandStation) {
         mCommandStation = pCommandStation;
 	setAllowUnexpectedReply(true);
+	mListenerMasks = new Hashtable();
     }
 
     // Abstract methods for the XNetInterface
@@ -78,8 +83,48 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
 	 	// check parity
                 if (!((XNetReply)m).checkParity()) {
                     log.warn("Ignore packet with bad checksum: "+((XNetReply)m).toString());
-		} else 
-		   ((XNetListener)client).message((XNetReply)m);
+		} else {
+		   int mask = ((Integer)mListenerMasks.get((XNetListener)client)).intValue();
+		   if(mask==XNetInterface.ALL) {
+		   	((XNetListener)client).message((XNetReply)m);		   
+		   } else if ((mask&XNetInterface.COMMINFO)==
+					XNetInterface.COMMINFO &&
+			(((XNetReply)m).getElement(0)== 
+				XNetConstants.LI_MESSAGE_RESPONSE_HEADER)) {
+  		   	   ((XNetListener)client).message((XNetReply)m);
+		   } else if ((mask&XNetInterface.CS_INFO)==
+					XNetInterface.CS_INFO &&
+			      (((XNetReply)m).getElement(0)== 
+						XNetConstants.CS_INFO ||
+			       ((XNetReply)m).getElement(0)== 
+						XNetConstants.CS_SERVICE_MODE_RESPONSE ||
+			       ((XNetReply)m).getElement(0)== 
+					XNetConstants.CS_REQUEST_RESPONSE ||
+                               ((XNetReply)m).getElement(0)== 
+					XNetConstants.BC_EMERGENCY_STOP )) {
+  		   	   ((XNetListener)client).message((XNetReply)m);
+		   } else if ((mask&XNetInterface.FEEDBACK)==
+					XNetInterface.FEEDBACK &&
+			      (((XNetReply)m).isFeedbackMessage() || 
+		   	       ((XNetReply)m).isFeedbackBroadcastMessage())) {
+  		   	   ((XNetListener)client).message((XNetReply)m);
+		   }else if ((mask&XNetInterface.THROTTLE)==
+					XNetInterface.THROTTLE &&
+			     ((XNetReply)m).isThrottleMessage()) {
+  		   	   ((XNetListener)client).message((XNetReply)m);
+		   }else if ((mask&XNetInterface.CONSIST)==
+					XNetInterface.CONSIST &&
+			     ((XNetReply)m).isConsistMessage()) {
+  		   	   ((XNetListener)client).message((XNetReply)m);
+		   }else if ((mask&XNetInterface.INTERFACE)==
+					XNetInterface.INTERFACE &&
+			     (((XNetReply)m).getElement(0)==
+					XNetConstants.LI_VERSION_RESPONSE ||
+			      ((XNetReply)m).getElement(0)==
+					XNetConstants.LI101_REQUEST)) {
+  		   	   ((XNetListener)client).message((XNetReply)m);
+		   } 
+		}
         }
 
  	protected AbstractMRMessage pollMessage() { return null; }
@@ -87,10 +132,16 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
 
    public synchronized void addXNetListener(int mask, XNetListener l) {
 	addListener(l);
+        // This is adds all the mask information.  A better way to do
+        // this would be to allow updating individual bits
+	mListenerMasks.put(l,new Integer(mask));
     }
 
     public synchronized void removeXNetListener(int mask, XNetListener l) {
 	removeListener(l);
+	// This is removes all the mask information.  A better way to do 
+	// this would be to allow updating of individual bits
+	mListenerMasks.remove(l);
     }
 
     /**

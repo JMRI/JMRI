@@ -9,7 +9,7 @@ package jmri.jmrix.lenz;
  * based on the Command Station Type.
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 2.3 $
+ * @version			$Revision: 2.4 $
  */
 public class XNetInitilizationManager {
 
@@ -138,7 +138,7 @@ public class XNetInitilizationManager {
           initTimer.start();
 
          // Register as an XPressNet Listener
-	    XNetTrafficController.instance().addXNetListener(~0,this);
+	    XNetTrafficController.instance().addXNetListener(XNetInterface.CS_INFO,this);
 
          //Send Information request to LI100/LI100
          /* First, we need to send a request for the Command Station
@@ -196,7 +196,7 @@ public class XNetInitilizationManager {
        }
    
        public void dispose() {
-          XNetTrafficController.instance().removeXNetListener(~0,this);
+          XNetTrafficController.instance().removeXNetListener(XNetInterface.CS_INFO,this);
        }
     }
 

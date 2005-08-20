@@ -26,7 +26,7 @@ import java.beans.PropertyChangeEvent;
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Paul Bender  Copyright (c) 2003,2004,2005
- * @version $Revision: 2.12 $
+ * @version $Revision: 2.13 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -53,7 +53,10 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		self = this;
 
         // connect to listen
-        controller().addXNetListener(~0, this);
+        controller().addXNetListener(XNetInterface.CS_INFO |
+			     XNetInterface.COMMINFO |
+			     XNetInterface.INTERFACE,
+			     this);
 
 	// Build the LI version request message
 	XNetMessage msg = new XNetMessage(2);

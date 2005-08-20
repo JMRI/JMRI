@@ -13,7 +13,7 @@ import jmri.*;
  *
  * @see            jmri.Programmer
  * @author         Paul Bender Copyright (C) 2003
- * @version        $Revision: 2.5 $
+ * @version        $Revision: 2.6 $
  */
 
 public class XNetOpsModeProgrammer implements Programmer,XNetListener 
@@ -32,7 +32,8 @@ public class XNetOpsModeProgrammer implements Programmer,XNetListener
 	mAddressHigh=LenzCommandStation.getDCCAddressHigh(pAddress);
 	if(log.isDebugEnabled()) log.debug("High Address: " + mAddressHigh +" Low Address: " +mAddressLow);
         // register as a listener
-        XNetTrafficController.instance().addXNetListener(~0,this);
+        XNetTrafficController.instance().addXNetListener(
+			XNetInterface.COMMINFO|XNetInterface.CS_INFO,this);
     }
 
     /**

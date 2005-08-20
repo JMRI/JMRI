@@ -9,7 +9,7 @@ import jmri.Sensor;
  * Extend jmri.AbstractSensor for XPressNet layouts.
  * <P>
  * @author			Paul Bender Copyright (C) 2003
- * @version         $Revision: 2.4 $
+ * @version         $Revision: 2.5 $
  */
 public class XNetSensor extends AbstractSensor implements XNetListener {
 
@@ -65,7 +65,8 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
                                   " possition " + (((address-1) % 8) + 1) +
 				  ")");
         // At construction, register for messages
-        XNetTrafficController.instance().addXNetListener(~0, this);
+        XNetTrafficController.instance().addXNetListener(
+					XNetInterface.FEEDBACK, this);
 	// Request initial status from the layout
         this.requestUpdateFromLayout();
     }
@@ -96,20 +97,25 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
      * @param l
      */
     public void message(XNetReply l) {
-	   if(l.isFeedbackMessage() &&
-             (l.getFeedbackMessageType()==2) &&
-              baseaddress==l.getFeedbackEncoderMsgAddr() &&
-	      nibble == (l.getElement(2) & 0x10)) {
-              if(log.isDebugEnabled())
+	   if(log.isDebugEnabled()) log.debug("recieved message: " +l);
+	   if(l.isFeedbackBroadcastMessage()) {
+	     int numDataBytes = l.getElement(0)&0x0f;
+	     for(int i=1;i<numDataBytes; i+=2) {
+	        if((l.getFeedbackMessageType(i)==2) &&
+                baseaddress==l.getFeedbackEncoderMsgAddr(i) &&
+	        nibble == (l.getElement(i+1) & 0x10)) {
+                   if(log.isDebugEnabled())
                         log.debug("Message for sensor " + systemName  + 
  				  " (Address " + baseaddress + 
                                   " position " + (address-(baseaddress*8)) +
 				  ")");
-		if((l.getElement(2) & nibblebit)!=0) {
+		    if((l.getElement(i+1) & nibblebit)!=0) {
 			setOwnState(Sensor.ACTIVE);
-		}
-		else setOwnState(Sensor.INACTIVE);
-	   }
+		    }
+		    else setOwnState(Sensor.INACTIVE);
+	        }
+	     }
+	}
         return;
     }
 
@@ -119,7 +125,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
 
 
     public void dispose() {
-        XNetTrafficController.instance().removeXNetListener(~0, this);
+        XNetTrafficController.instance().removeXNetListener(XNetInterface.FEEDBACK, this);
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetSensor.class.getName());

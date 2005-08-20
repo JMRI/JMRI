@@ -10,7 +10,7 @@ import jmri.Sensor;
  * System names are "XSnnn", where nnn is the sensor number without padding.
  *
  * @author			Paul Bender Copyright (C) 2003
- * @version			$Revision: 2.3 $
+ * @version			$Revision: 2.4 $
  */
 public class XNetSensorManager extends jmri.AbstractSensorManager implements XNetListener {
 
@@ -24,7 +24,7 @@ public class XNetSensorManager extends jmri.AbstractSensorManager implements XNe
 
     // to free resources when no longer used
     public void dispose() {
-        XNetTrafficController.instance().removeXNetListener(~0, this);
+        XNetTrafficController.instance().removeXNetListener(XNetInterface.FEEDBACK, this);
     }
 
     // XPressNet specific methods
@@ -35,28 +35,34 @@ public class XNetSensorManager extends jmri.AbstractSensorManager implements XNe
 
     // ctor has to register for XNetNet events
     public XNetSensorManager() {
-        XNetTrafficController.instance().addXNetListener(~0, this);
+        XNetTrafficController.instance().addXNetListener(XNetInterface.FEEDBACK,this);
         mInstance = this;
     }
 
     // listen for sensors, creating them as needed
     public void message(XNetReply l) {
-	   if(l.isFeedbackMessage() && (l.getFeedbackMessageType()==2)) {
-              // This is a feedback encoder message. The address of the 
-	      // Feedback sensor is byte two of the message.
-              int address=l.getFeedbackEncoderMsgAddr(); 
-	      if(log.isDebugEnabled()) 
+	if(log.isDebugEnabled()) log.debug("recieved message: " +l);
+	if(l.isFeedbackBroadcastMessage()) {
+	   int numDataBytes = l.getElement(0) & 0x0f;
+	   for(int i=1; i<numDataBytes; i+=2) {
+	      if(l.getFeedbackMessageType(i)==2) {
+                 // This is a feedback encoder message. The address of the 
+	         // Feedback sensor is byte two of the message.
+                 int address=l.getFeedbackEncoderMsgAddr(i); 
+	         if(log.isDebugEnabled()) 
 			log.debug("Message for feedback encoder " + address); 
 
-	      int firstaddress=((address)*8)+1;
-	      // Each Feedback encoder includes 8 addresses, so register 
-	      // a sensor for each address.
-	      for(int i=0;i<8;i++) {
-	   	  String s = "XS" + (firstaddress+i);
-	   	  if(null == getBySystemName(s)) {
-	   	     provideSensor(s);
-	          }
+	         int firstaddress=((address)*8)+1;
+	         // Each Feedback encoder includes 8 addresses, so register 
+	         // a sensor for each address.
+	         for(int j=0;j<8;j++) {
+	   	     String s = "XS" + (firstaddress+j);
+	   	     if(null == getBySystemName(s)) {
+	   	        provideSensor(s);
+	             }
+                 }
               }
+           }
 	}
     }
 

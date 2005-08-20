@@ -96,7 +96,10 @@ public final static int BC_EVERYTHING_STOP = 0x00;   /* broadcast of
 how many address byte/data byte pairs follow the command */
 public final static int BC_FEEDBACK        =0x40;
 
-/* Accessory information response */
+/* Accessory information response 
+ * NOTE:  This is identical to the feedback {@link BC_FEEDBACK} when
+ *  there is only one address byte/data byte pair
+ */
 public final static int ACC_INFO_RESPONSE = 0x42;
 
 /* Locomotive Information for V1 & V2 */
@@ -131,8 +134,8 @@ public final static int LOCO_DH_INFO_V2         = 0xC6; /* Byte 1 for XNET V2 */
 public final static int LOCO_DH_AVAILABLE       = 0x04;
 public final static int LOCO_DH_NOT_AVAILABLE   = 0x05;
 
-/* Expressnet Error Message */
-public final static int CS_XpressNet_Error      = 0xE1;
+/* XPressNet MU or DH Error Message */
+public final static int LOCO_MU_DH_ERROR      = 0xE1;
 
 /* Commands send from the computer to the command station */
 

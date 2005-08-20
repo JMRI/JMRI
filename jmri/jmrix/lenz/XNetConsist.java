@@ -5,7 +5,7 @@
  * it uses the XPressNet specific commands to build a consist.
  *
  * @author                      Paul Bender Copyright (C) 2004
- * @version                     $Revision: 2.7 $
+ * @version                     $Revision: 2.8 $
  */
 
 package jmri.jmrix.lenz;
@@ -37,7 +37,10 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 	public XNetConsist(int address) {
 		super(address);
 	 	// At construction, register for messages
-        	XNetTrafficController.instance().addXNetListener(~0, this); 
+        	XNetTrafficController.instance().addXNetListener(
+						XNetInterface.COMMINFO|
+						XNetInterface.CONSIST, 
+						this); 
 	}
 
 	// Initialize a consist for the specific address
@@ -45,13 +48,19 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 	public XNetConsist(DccLocoAddress address) {
 		super(address);
 	 	// At construction, register for messages
-        	XNetTrafficController.instance().addXNetListener(~0, this); 
+        	XNetTrafficController.instance().addXNetListener(
+						XNetInterface.COMMINFO|
+						XNetInterface.CONSIST, 
+						this); 
 	}
 
 	// Clean Up local storage, and remove the XNetListener
 	public void dispose() {
 		super.dispose();
-		XNetTrafficController.instance().removeXNetListener(~0,this);
+		XNetTrafficController.instance().removeXNetListener(
+						XNetInterface.COMMINFO|
+						XNetInterface.CONSIST, 
+						this);
 	}
 
 	// Set the Consist Type
@@ -331,7 +340,7 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 		   removeFromConsistList(_locoAddress);
 		}
 		_state=IDLESTATE;
-	   } else if (l.getElement(0) == XNetConstants.CS_XpressNet_Error) {
+	   } else if (l.getElement(0) == XNetConstants.LOCO_MU_DH_ERROR) {
                 text = new String("XpressNet MU+DH error: ") ;
                 switch(l.getElement(1)) {
                    case 0x81: text = text+ "Selected Locomotive has not been operated by this XPressNet device or address 0 selected";
