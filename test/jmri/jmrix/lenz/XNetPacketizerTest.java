@@ -10,7 +10,7 @@ import junit.framework.TestCase;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 2.2 $
+ * @version $Revision: 2.3 $
  */
 public class XNetPacketizerTest extends TestCase {
 
@@ -51,7 +51,7 @@ public class XNetPacketizerTest extends TestCase {
 
         // object to receive reply
         XNetListenerScaffold l = new XNetListenerScaffold();
-        c.addXNetListener(0xff, l);
+        c.addXNetListener(~0, l);
 
         // send a message
         XNetMessage m = XNetMessage.getTurnoutCommandMsg(22, true, false, true);
