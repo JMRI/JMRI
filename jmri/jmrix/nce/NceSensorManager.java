@@ -16,7 +16,7 @@ import jmri.jmrix.AbstractMRReply;
  * see nextAiuPoll()
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class NceSensorManager extends jmri.AbstractSensorManager
                             implements NceListener {
@@ -214,17 +214,18 @@ public class NceSensorManager extends jmri.AbstractSensorManager
      */
     public void reply(NceReply r) {
     	if (!r.isUnsolicited()) {
+    		int bits;
     		synchronized (this) {
-    			int bits = r.pollValue();  // bits is the value in hex from the message
-    			currentAIU.markChanges(bits);
+    			bits = r.pollValue();  // bits is the value in hex from the message
     			awaitingReply = false;
-    			if (log.isDebugEnabled()) {
-    				String str = jmri.util.StringUtil.twoHexFromInt((bits>>4)&0xf);
-    				str += " ";
-    				str = jmri.util.StringUtil.appendTwoHexFromInt(bits&0xf, str);
-    				log.debug("sensor poll reply received: \""+str+"\"");
-    			}
     			this.notify();
+    		}
+    		currentAIU.markChanges(bits);
+    		if (log.isDebugEnabled()) {
+    			String str = jmri.util.StringUtil.twoHexFromInt((bits>>4)&0xf);
+    			str += " ";
+    			str = jmri.util.StringUtil.appendTwoHexFromInt(bits&0xf, str);
+    			log.debug("sensor poll reply received: \""+str+"\"");
     		}
     	}
     }
