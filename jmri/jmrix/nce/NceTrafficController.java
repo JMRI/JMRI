@@ -6,6 +6,7 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
+import jmri.jmrix.nce.serialdriver.SerialDriverAdapter;
 
 /**
  * Converts Stream-based I/O to/from NCE messages.  The "NceInterface"
@@ -20,33 +21,12 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface {
 
-    /**
-     * Reply listener to send a sensor message (if it is one) to the sensor
-     * manager (if there is one). Can't be an anonymous class because it needs
-     * to remember the traffic controller object it refers to.
-     *
-     */
-	private class SensorMessageListener implements NceListener {
-    	NceTrafficController myController;
-    	SensorMessageListener(NceTrafficController c) {
-    		myController = c;
-    	}
-	    public void message(NceMessage m) { };
-	    public void reply(NceReply r) {
-	    	NceSensorManager sm = myController.getSensorManager();
-	    	if (sm!=null && r.isSensorMessage()) {
-	    		sm.handleSensorMessage(r);
-	    	}
-	    }
-    }
-	
 	public NceTrafficController() {
         super();
-        addNceListener(new SensorMessageListener(this));
     }
 
     // The methods to implement the NceInterface
@@ -70,16 +50,15 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     /**
      * Forward a NceReply to all registered NceInterface listeners.
      */
-    protected void forwardReply(AbstractMRListener client, AbstractMRReply m) {
-        ((NceListener)client).reply((NceReply)m);
+    protected void forwardReply(AbstractMRListener client, AbstractMRReply r) {
+        ((NceListener)client).reply((NceReply)r);
     }
 
     NceSensorManager mSensorManager = null;
     public void setSensorManager(NceSensorManager m) { mSensorManager = m; }
     public NceSensorManager getSensorManager() { return mSensorManager; }
     protected AbstractMRMessage pollMessage() {
-        if (mSensorManager == null) return null;
-        else return mSensorManager.nextAiuPoll();
+        return null;
     }
     protected AbstractMRListener pollReplyHandler() {
         return mSensorManager;
@@ -100,6 +79,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     
     protected int replyLen;
     protected boolean replyBinary;
+    protected boolean unsolicitedSensorMessageSeen = false;
     
     protected AbstractMRMessage enterProgMode() {
         return NceMessage.getProgMode();
@@ -172,7 +152,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
             return false;
         }
     }
-
+    
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceTrafficController.class.getName());
 }
 

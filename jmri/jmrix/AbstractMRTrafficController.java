@@ -26,7 +26,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.25 $
+ * @version			$Revision: 1.26 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -427,7 +427,7 @@ abstract public class AbstractMRTrafficController {
     }
 
     // methods to connect/disconnect to a source of data in a AbstractPortController
-    private AbstractPortController controller = null;
+    public AbstractPortController controller = null;
 
     public boolean status() { 
         return (ostream != null & istream != null);
