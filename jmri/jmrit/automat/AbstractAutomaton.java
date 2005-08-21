@@ -64,7 +64,7 @@ import javax.swing.JTextArea;
  * so that Jython code can easily use some of the methods.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.22 $
+ * @version     $Revision: 1.23 $
  */
 public class AbstractAutomaton implements Runnable {
 
@@ -194,7 +194,16 @@ public class AbstractAutomaton implements Runnable {
      * return control.
      */
     public void waitMsec( int milliseconds ) {
-    	this.wait(milliseconds);
+        long target = System.currentTimeMillis() + milliseconds;
+        while (true) {
+            long stillToGo = target - System.currentTimeMillis();
+            if (stillToGo <= 0) {
+                break;
+            }
+            try {
+                Thread.sleep(milliseconds);
+            } catch (InterruptedException e) {}
+        }
     }
 
     /**
