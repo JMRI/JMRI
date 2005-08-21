@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
  * @author     Paul Bender (C) 2002,2003,2004
- * @version    $Revision: 2.7 $
+ * @version    $Revision: 2.8 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -195,7 +195,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     {
 	if(requestState!=THROTTLEIDLE) return;
         this.speedSetting = speed;
-	}
 	if (speed<0)
 	{
 	/* we're sending an emergency stop to this locomotive only */

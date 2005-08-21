@@ -20,7 +20,7 @@ import jmri.jmrix.lenz.XNetConstants;
 /**
  * Frame displaying (and logging) XpressNet messages
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version         $Revision: 2.12 $
+ * @version         $Revision: 2.13 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
@@ -224,7 +224,7 @@ import jmri.jmrix.lenz.XNetConstants;
 		   } else text = l.toString();
 
 		// MU and Double Header Related Responses
-		} else if (l.getElement(0) == XNetConstants.CS_XpressNet_Error) {
+		} else if (l.getElement(0) == XNetConstants.LOCO_MU_DH_ERROR) {
 			text = new String("XpressNet MU+DH error: ") ;
 			switch(l.getElement(1)) {
 			case 0x81: text = text+ "Selected Locomotive has not been operated by this XPressNet device or address 0 selected";
