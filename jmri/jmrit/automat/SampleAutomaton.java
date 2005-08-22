@@ -21,7 +21,7 @@ import jmri.Turnout;
  * created and invoked by a SampleAutomatonAction.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  * @see         jmri.jmrit.automat.SampleAutomatonAction
  */
 public class SampleAutomaton extends AbstractAutomaton {
@@ -58,13 +58,20 @@ public class SampleAutomaton extends AbstractAutomaton {
         // get references to sample layout objects
         turnout = InstanceManager.turnoutManagerInstance().
                     provideTurnout(turnoutName);
+		if (turnout==null) {
+			log.error("Failure to provide turnout "+turnoutName+" when initialized");
+		}
 
         sensor = InstanceManager.sensorManagerInstance().
                     provideSensor(sensorName);
-
-        // set up the initial correlation
-        now = sensor.getKnownState();
-        setTurnout(now);
+					
+		if (sensor!=null) {
+			// set up the initial correlation
+			now = sensor.getKnownState();
+			setTurnout(now);
+		} else {
+			log.error("Failure to provide sensor "+sensorName+" when initialized");
+		}
     }
 
     int now;

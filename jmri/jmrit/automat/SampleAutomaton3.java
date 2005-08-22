@@ -21,7 +21,7 @@ import jmri.Sensor;
  * created and invoked by a SampleAutomaton3Action.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  * @see         jmri.jmrit.automat.SampleAutomaton3Action
  */
 public class SampleAutomaton3 extends AbstractAutomaton {
@@ -64,9 +64,15 @@ public class SampleAutomaton3 extends AbstractAutomaton {
 
         fwdSensor = InstanceManager.sensorManagerInstance().
                     provideSensor(fwdSensorName);
+		if (fwdSensor==null) {
+			log.error("Failure to provide forward sensor "+fwdSensorName+" on initialization");
+		}
 
         revSensor = InstanceManager.sensorManagerInstance().
                     provideSensor(revSensorName);
+		if (revSensor==null) {
+			log.error("Failure to provide reverse sensor "+revSensorName+" on initialization");
+		}
 
         throttle = getThrottle(locoNumber, locoLong);
     }

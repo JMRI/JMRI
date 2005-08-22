@@ -12,7 +12,7 @@ import javax.swing.JMenuBar;
 /**
  * Frame controlling a single turnout
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame implements java.beans.PropertyChangeListener {
 
@@ -112,10 +112,14 @@ public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame implements java.b
             if (turnout != null) turnout.removePropertyChangeListener(this);
             turnout = InstanceManager.turnoutManagerInstance().
                 provideTurnout(adrTextField.getText());
-            turnout.addPropertyChangeListener(this);
-            if (log.isDebugEnabled()) log.debug("about to command CLOSED");
-            // and set commanded state to CLOSED
-            turnout.setCommandedState(Turnout.CLOSED);
+			if (turnout==null) {
+				log.error("Turnout "+adrTextField.getText()+" is not available");
+			} else {
+				turnout.addPropertyChangeListener(this);
+				if (log.isDebugEnabled()) log.debug("about to command CLOSED");
+				// and set commanded state to CLOSED
+				turnout.setCommandedState(Turnout.CLOSED);
+			}
         }
         catch (Exception ex) {
             log.error("closeButtonActionPerformed, exception: "+ex.toString());
@@ -130,10 +134,14 @@ public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame implements java.b
             if (turnout != null) turnout.removePropertyChangeListener(this);
             turnout = InstanceManager.turnoutManagerInstance().
                 provideTurnout(adrTextField.getText());
-            turnout.addPropertyChangeListener(this);
-            if (log.isDebugEnabled()) log.debug("about to command THROWN");
-            // and set commanded state to THROWN
-            turnout.setCommandedState(Turnout.THROWN);
+			if (turnout==null) {
+				log.error("Turnout "+adrTextField.getText()+" is not available");
+			} else {
+				turnout.addPropertyChangeListener(this);
+				if (log.isDebugEnabled()) log.debug("about to command THROWN");
+				// and set commanded state to THROWN
+				turnout.setCommandedState(Turnout.THROWN);
+			}
         }
         catch (Exception ex) {
             log.error("throwButtonActionPerformed, exception: "+ex.toString());
