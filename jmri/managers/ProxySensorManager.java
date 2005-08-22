@@ -11,7 +11,7 @@ import jmri.SensorManager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class ProxySensorManager extends AbstractProxyManager
                             implements SensorManager {
@@ -37,10 +37,16 @@ public class ProxySensorManager extends AbstractProxyManager
             if ( ( (SensorManager)mgrs.get(i)).systemLetter() == sName.charAt(0) )
                 return ((SensorManager)mgrs.get(i)).newSensor(sName, null);
         }
-        // did not find a manager, allow it to default to the primary
+        // did not find a manager, allow it to default to the primary, if there is one
         log.debug("Did not find manager for name "+sName+", assume it's a number");
-        return ((SensorManager)mgrs.get(0)).newSensor(
+		if (mgrs.size()>0) {
+			return ((SensorManager)mgrs.get(0)).newSensor(
                     ((SensorManager)mgrs.get(0)).makeSystemName(sName), null);
+		}
+		else {
+			log.debug("Did not find a primary sensor manager for name "+sName);
+			return (null);
+		}		
     }
 
 
@@ -110,11 +116,21 @@ public class ProxySensorManager extends AbstractProxyManager
                 if ( ( (SensorManager)mgrs.get(i)).systemLetter() == systemName.charAt(0) )
                     return ( (SensorManager)mgrs.get(i)).newSensor(systemName, userName);
             }
-            // did not find a manager, allow it to default to the primary
+            // did not find a manager, allow it to default to the primary, if there is one
             log.debug("Did not find manager for system name "+systemName+", assume it's a number");
-            return ( (SensorManager)mgrs.get(0)).newSensor(systemName, userName);
-        } else {  // no systemName specified, use primary
-            return ( (SensorManager)mgrs.get(0)).newSensor(systemName, userName);
+			if (mgrs.size()>0) {
+				return ( (SensorManager)mgrs.get(0)).newSensor(systemName, userName);
+			} else {
+				log.debug("Did not find a primary sensor manager for system name "+systemName);
+				return (null);
+			}	
+        } else {  // no systemName specified, use primary, if there is one
+			if (mgrs.size()>0) {
+				return ( (SensorManager)mgrs.get(0)).newSensor(systemName, userName);
+			} else {
+				log.debug("Did not find a primary sensor manager");
+				return (null);
+			}	
         }
     }
 

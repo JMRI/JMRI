@@ -12,7 +12,7 @@ import jmri.ReporterManager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class ProxyReporterManager extends AbstractProxyManager implements ReporterManager {
     /**
@@ -36,10 +36,15 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
             if ( ( (ReporterManager)mgrs.get(i)).systemLetter() == sName.charAt(0) )
                 return ((ReporterManager)mgrs.get(i)).newReporter(sName, null);
         }
-        // did not find a manager, allow it to default to the primary
-        log.debug("Did not find manager for name "+name+", assume it's a number");
-        return ((ReporterManager)mgrs.get(0)).newReporter(
+        // did not find a manager, allow it to default to the primary, if there is one
+        log.debug("Did not find manager for name "+sName+", assume it's a number");
+		if (mgrs.size()>0) {
+			return ((ReporterManager)mgrs.get(0)).newReporter(
                     ((ReporterManager)mgrs.get(0)).makeSystemName(sName), null);
+		} else {
+			log.debug("Did not find a primary reporter manager for name "+sName);
+			return (null);
+		}		
     }
 
 
@@ -109,11 +114,21 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
                 if ( ( (ReporterManager)mgrs.get(i)).systemLetter() == systemName.charAt(0) )
                     return ( (ReporterManager)mgrs.get(i)).newReporter(systemName, userName);
             }
-            // did not find a manager, allow it to default to the primary
+            // did not find a manager, allow it to default to the primary, if there is one
             log.debug("Did not find manager for system name "+systemName+", assume it's a number");
-            return ( (ReporterManager)mgrs.get(0)).newReporter(systemName, userName);
-        } else {  // no systemName specified, use primary
-            return ( (ReporterManager)mgrs.get(0)).newReporter(systemName, userName);
+			if (mgrs.size()>0) {
+				return ( (ReporterManager)mgrs.get(0)).newReporter(systemName, userName);
+			} else {
+				log.debug("Did not find a primary reporter manager for system name "+systemName);
+				return (null);
+			}
+        } else {  // no systemName specified, use primary manager, if there is one
+			if (mgrs.size()>0) {
+				return ( (ReporterManager)mgrs.get(0)).newReporter(systemName, userName);
+			} else {
+				log.debug("Did not find a primary reporter manager");
+				return (null);
+			}			
         }
     }
 

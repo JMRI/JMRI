@@ -12,7 +12,7 @@ import jmri.TurnoutManager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class ProxyTurnoutManager extends AbstractProxyManager implements TurnoutManager {
 
@@ -39,10 +39,15 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
             if ( ( (TurnoutManager)mgrs.get(i)).systemLetter() == sName.charAt(0) )
                 return ((TurnoutManager)mgrs.get(i)).newTurnout(sName, null);
         }
-        // did not find a manager, allow it to default to the primary
-        log.debug("Did not find manager for name "+sName+", assume it's a number");		
-        return ((TurnoutManager)mgrs.get(0)).newTurnout(
+        // did not find a manager, allow it to default to the primary, if there is one
+        log.debug("Did not find manager for name "+sName+", assume it's a number");
+		if (mgrs.size()>0) {		
+			return ((TurnoutManager)mgrs.get(0)).newTurnout(
                     ((TurnoutManager)mgrs.get(0)).makeSystemName(sName), null);
+		} else {
+			log.debug("Did not find a primary turnout manager for name "+sName);
+			return (null);
+		}
     }
 
     /**
@@ -111,11 +116,21 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
                 if ( ( (TurnoutManager)mgrs.get(i)).systemLetter() == systemName.charAt(0) )
                     return ( (TurnoutManager)mgrs.get(i)).newTurnout(systemName, userName);
             }
-            // did not find a manager, allow it to default to the primary
+            // did not find a manager, allow it to default to the primary, if there is one
             log.debug("Did not find manager for system name "+systemName+", assume it's a number");
-            return ( (TurnoutManager)mgrs.get(0)).newTurnout(systemName, userName);
-        } else {  // no systemName specified, use primary
-            return ( (TurnoutManager)mgrs.get(0)).newTurnout(systemName, userName);
+			if (mgrs.size()>0) {
+				return ( (TurnoutManager)mgrs.get(0)).newTurnout(systemName, userName);
+			} else {
+				log.debug("Did not find a primary turnout manager for system name "+systemName);
+				return (null);
+			}
+        } else {  // no systemName specified, use primary, if there is one
+      		if (mgrs.size()>0) {
+				return ( (TurnoutManager)mgrs.get(0)).newTurnout(systemName, userName);
+			} else {
+				log.debug("Did not find a primary turnout manager");
+				return (null);
+			}
         }
     }
     	
