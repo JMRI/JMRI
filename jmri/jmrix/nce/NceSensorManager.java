@@ -16,7 +16,7 @@ import jmri.jmrix.AbstractMRReply;
  * see nextAiuPoll()
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class NceSensorManager extends jmri.AbstractSensorManager
                             implements NceListener {
@@ -107,7 +107,7 @@ public class NceSensorManager extends jmri.AbstractSensorManager
      * We use the long poll only if the following conditions are satisified:
      * 
      * -- there have been at least two poll cycle completions since the last change
-     * to the list of active sensor - this means at least one comple poll cycle,
+     * to the list of active sensor - this means at least one complete poll cycle,
      * so we are sure we know the states of all the sensors to begin with
      * 
      * -- we have received an async message in the last maxSilentInterval, so that
@@ -123,25 +123,25 @@ public class NceSensorManager extends jmri.AbstractSensorManager
      * 
      */
     private void buildActiveAIUs() {
-    	synchronized (this) {
-    		activeAIUMax = 0;
-    		for (int a=MINAIU; a<=MAXAIU; ++a) {
-    			if (aiuArray[a] != null) {
-    				activeAIUs[activeAIUMax++] = a;
-    			}
+    	activeAIUMax = 0;
+    	for (int a=MINAIU; a<=MAXAIU; ++a) {
+    		if (aiuArray[a] != null) {
+    			activeAIUs[activeAIUMax++] = a;
     		}
-    		aiuCycleCount = 0;				// force another polling cycle
-    		lastMessageReceived = Long.MIN_VALUE;
     	}
-    	if (activeAIUMax>0 && pollThread==null) {
-    		pollThread = new Thread(new Runnable()
-    				{ public void run() { pollManager(); }});
-    		pollThread.setName("NCE Sensor Poll");
-    		pollThread.start();
-    	} else {
-    		synchronized (this) {
-    			if (awaitingDelay) {		// interrupt long between-poll wait
-    				notify();
+    	aiuCycleCount = 0;				// force another polling cycle
+    	lastMessageReceived = Long.MIN_VALUE;
+    	if (activeAIUMax>0) {
+    		if (pollThread==null) {
+    			pollThread = new Thread(new Runnable()
+    					{ public void run() { pollManager(); }});
+    			pollThread.setName("NCE Sensor Poll");
+    			pollThread.start();
+    		} else {
+    			synchronized (this) {
+    				if (awaitingDelay) {		// interrupt long between-poll wait
+    					notify();
+    				}
     			}
     		}
     	}
