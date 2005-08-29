@@ -30,7 +30,7 @@ import javax.swing.table.TableCellEditor;
  * </UL>
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.9 $
+ * @version             $Revision: 1.10 $
  */
 public class ValueEditor extends JComboBox implements TableCellEditor, FocusListener {
     
@@ -138,7 +138,7 @@ public class ValueEditor extends JComboBox implements TableCellEditor, FocusList
     protected void fireEditingCanceled() {
         if (log.isDebugEnabled()) log.debug("fireEditingCancelled, but we are not setting back the old value");
         ChangeEvent ce = new ChangeEvent(this);
-        for (int i = listeners.size(); i >= 0; i--) {
+        for (int i = listeners.size()-1; i >= 0; i--) {
             ((CellEditorListener)listeners.elementAt(i)).editingCanceled(ce);
         }
     }
