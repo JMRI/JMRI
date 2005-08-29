@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <!--Written by JMRI version 1.7.2 on Tue Aug 02 17:56:18 PDT 2005 $Id: decoderIndex.xml,v 1.79 2005-08-03 00:58:22 jacobsen Exp $-->
-  <decoderIndex version="98">
+  <!--Written by JMRI version 1.7.3 on Sun Aug 28 21:34:47 PDT 2005 $Id: decoderIndex.xml,v 1.80 2005-08-29 04:38:38 jacobsen Exp $-->
+  <decoderIndex version="100">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="" mfgID="" />
@@ -544,12 +544,12 @@
         </model>
         <model model="LE1014" numOuts="4" numFns="8" connector="unspecified" nmraWarrant="no" />
       </family>
-      <family name="Lenz Gold with 6th gen BEMF" mfg="Lenz" lowVersionID="61" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" type="locomotive" file="Lenz_Gold.xml">
-        <model model="Gold Mini" numOuts="2" numFns="8" maxMotorCurrent="0.5A (peak=0.8A)" formFactor="N" connector="unspecified" nmraWarrant="no">
+      <family name="Lenz Gold with 6th gen BEMF" mfg="Lenz" highVersionID="61" lowVersionID="60" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" type="locomotive" file="Lenz_Gold.xml">
+        <model model="Gold Mini" numOuts="2" numFns="8" lowVersionID="60" maxMotorCurrent="0.5A (peak=0.8A)" formFactor="N" connector="unspecified" nmraWarrant="no">
           <output name="1" label="A - White" connection="unspecified" />
           <output name="2" label="B - Yellow" connection="unspecified" />
         </model>
-        <model model="Gold" numOuts="4" numFns="12" maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO" connector="unspecified" nmraWarrant="no">
+        <model model="Gold" numOuts="4" numFns="12" lowVersionID="61" maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO" connector="unspecified" nmraWarrant="no">
           <output name="1" label="A - White" connection="unspecified" />
           <output name="2" label="B - Yellow" connection="unspecified" />
           <output name="3" label="C - Green" connection="unspecified" />
@@ -1023,7 +1023,7 @@
         <model model="P2K USRA 0-8-0" lowVersionID="6" numFns="14" numOuts="14" productID="315" connector="unspecified" nmraWarrant="no" />
       </family>
       <family name="DSD diesel" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_DSD_Diesel.xml">
-        <model model="DSD diesel" numOuts="4" numFns="8" connector="unspecified" nmraWarrant="no">
+        <model model="DSD diesel" numOuts="4" numFns="10" connector="unspecified" nmraWarrant="no">
           <versionCV lowVersionID="9" highVersionID="14" />
           <versionCV lowVersionID="21" />
           <output name="Bell" connection="unspecified" />
@@ -1041,7 +1041,7 @@
         </model>
       </family>
       <family name="DSD Steam" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_DSD_Steam.xml">
-        <model model="DSD Steam" numOuts="4" numFns="8" connector="unspecified" nmraWarrant="no">
+        <model model="DSD Steam" numOuts="4" numFns="10" connector="unspecified" nmraWarrant="no">
           <versionCV lowVersionID="6" highVersionID="7" />
           <versionCV lowVersionID="15" highVersionID="16" />
           <versionCV lowVersionID="20" />
@@ -1058,7 +1058,7 @@
         </model>
       </family>
       <family name="DSX Diesel" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_DSX_Diesel.xml">
-        <model model="DSX Diesel" numOuts="0" numFns="8" connector="unspecified" nmraWarrant="no">
+        <model model="DSX Diesel" numOuts="0" numFns="10" connector="unspecified" nmraWarrant="no">
           <versionCV lowVersionID="18" highVersionID="19" />
           <output name="Bell" connection="unspecified" />
           <output name="Horn" connection="unspecified" />
@@ -1075,7 +1075,7 @@
         </model>
       </family>
       <family name="DSX Steam" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_DSX_Steam.xml">
-        <model model="DSX Steam" numOuts="0" numFns="8" connector="unspecified" nmraWarrant="no">
+        <model model="DSX Steam" numOuts="0" numFns="10" connector="unspecified" nmraWarrant="no">
           <versionCV lowVersionID="17" />
           <!--output name="3" label="F1/grn" /-->
           <output name="Whistle" connection="unspecified" />
@@ -1090,7 +1090,7 @@
         </model>
       </family>
       <family name="LC Diesel decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_LC_Diesel.xml">
-        <model model="100LC Diesel" numOuts="4" numFns="8" connector="unspecified" nmraWarrant="no">
+        <model model="100LC Diesel" numOuts="4" numFns="10" connector="unspecified" nmraWarrant="no">
           <versionCV lowVersionID="34" />
           <output name="Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
@@ -1107,7 +1107,7 @@
       </family>
       <family name="LC Diesel PNP Cab Unit decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_LC_Diesel_pFXCb.xml">
         <!--note: this file does not support the FX2 output for the LL100LC-->
-        <model model="LL100LC Diesel" numOuts="4" numFns="8" connector="unspecified" nmraWarrant="no">
+        <model model="LL100LC Diesel" numOuts="4" numFns="10" connector="unspecified" nmraWarrant="no">
           <!-- note: The LL100LC has a headlight but no backup light -->
           <!-- note: The LL100LC has an FX2 output but no FX1 output -->
           <!-- but the headlight can be set to respond to FX1 mapping -->
@@ -1124,7 +1124,7 @@
         </model>
       </family>
       <family name="LC Diesel PNP decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_LC_Diesel_pnp.xml">
-        <model model="AT100LC/KT100LC Diesel" numOuts="4" numFns="8" connector="unspecified" nmraWarrant="no">
+        <model model="AT100LC/KT100LC Diesel" numOuts="4" numFns="10" connector="unspecified" nmraWarrant="no">
           <versionCV lowVersionID="35" />
           <output name="Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
@@ -1136,7 +1136,7 @@
           <output name="Dim" connection="unspecified" />
           <output name="Mute" connection="unspecified" />
         </model>
-        <model model="LL110LC Diesel" numOuts="4" numFns="8" connector="unspecified" nmraWarrant="no">
+        <model model="LL110LC Diesel" numOuts="4" numFns="10" connector="unspecified" nmraWarrant="no">
           <versionCV lowVersionID="35" />
           <output name="Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
@@ -1148,7 +1148,7 @@
           <output name="Dim" connection="unspecified" />
           <output name="Mute" connection="unspecified" />
         </model>
-        <model model="LL090LC Diesel" numOuts="4" numFns="8" connector="unspecified" nmraWarrant="no">
+        <model model="LL090LC Diesel" numOuts="4" numFns="10" connector="unspecified" nmraWarrant="no">
           <versionCV lowVersionID="35" />
           <output name="Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
@@ -1162,7 +1162,7 @@
         </model>
       </family>
       <family name="LC Diesel PNP + FX decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_LC_Diesel_pnpFX.xml">
-        <model model="C628LC Diesel" numOuts="4" numFns="8" connector="unspecified" nmraWarrant="no">
+        <model model="C628LC Diesel" numOuts="4" numFns="10" connector="unspecified" nmraWarrant="no">
           <versionCV lowVersionID="37" />
           <output name="Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
@@ -1176,7 +1176,7 @@
         </model>
       </family>
       <family name="LC steam decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_LC_Steam.xml">
-        <model model="100LC Steam" numOuts="4" numFns="8" connector="unspecified" nmraWarrant="no">
+        <model model="100LC Steam" numOuts="4" numFns="10" connector="unspecified" nmraWarrant="no">
           <versionCV lowVersionID="32" />
           <output name="Whistle" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
@@ -1189,7 +1189,7 @@
         </model>
       </family>
       <family name="LC Steam hyperlight decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_LC_Steam_hylt.xml">
-        <model model="090LC Steam" numOuts="4" numFns="8" connector="unspecified" nmraWarrant="no">
+        <model model="090LC Steam" numOuts="4" numFns="10" connector="unspecified" nmraWarrant="no">
           <versionCV lowVersionID="39" />
           <output name="Whistle" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
@@ -1202,7 +1202,7 @@
         </model>
       </family>
       <family name="LC Steam PNP decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_LC_Steam_pnp.xml">
-        <model model="B280LC Steam" numOuts="4" numFns="8" connector="unspecified" nmraWarrant="no">
+        <model model="B280LC Steam" numOuts="4" numFns="10" connector="unspecified" nmraWarrant="no">
           <versionCV lowVersionID="33" />
           <output name="Whistle" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
@@ -1213,7 +1213,7 @@
           <!-- The two electical outputs are front headlight, back -->
           <!-- headlight-->
         </model>
-        <model model="B3TSLC Steam" numOuts="4" numFns="8" connector="unspecified" nmraWarrant="no">
+        <model model="B3TSLC Steam" numOuts="4" numFns="10" connector="unspecified" nmraWarrant="no">
           <versionCV lowVersionID="33" />
           <output name="Whistle" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
@@ -1224,7 +1224,7 @@
           <!-- The two electical outputs are front headlight, back -->
           <!-- headlight-->
         </model>
-        <model model="B210LC Steam" numOuts="4" numFns="8" connector="unspecified" nmraWarrant="no">
+        <model model="B210LC Steam" numOuts="4" numFns="10" connector="unspecified" nmraWarrant="no">
           <versionCV lowVersionID="33" />
           <output name="Whistle" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
@@ -1235,7 +1235,7 @@
           <!-- The two electical outputs are front headlight, back -->
           <!-- headlight-->
         </model>
-        <model model="LL080LC Steam" numOuts="4" numFns="8" connector="unspecified" nmraWarrant="no">
+        <model model="LL080LC Steam" numOuts="4" numFns="10" connector="unspecified" nmraWarrant="no">
           <versionCV lowVersionID="33" />
           <output name="Whistle" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
@@ -1248,7 +1248,7 @@
         </model>
       </family>
       <family name="SHS Diesel decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_SHS_F3.xml">
-        <model model="F3 Diesel" maxInputVolts="16V" maxMotorCurrent="5A" maxTotalCurrent="6A" formFactor="SHS F3" nmraWarrant="no" connector="other" numOuts="4" numFns="8">
+        <model model="F3 Diesel" maxInputVolts="16V" maxMotorCurrent="5A" maxTotalCurrent="6A" formFactor="SHS F3" nmraWarrant="no" connector="other" numOuts="4" numFns="10">
           <versionCV lowVersionID="38" />
           <output name="Bell" connection="unspecified" />
           <output name="Horn" connection="unspecified" />
@@ -1262,7 +1262,7 @@
         </model>
       </family>
       <family name="SHS Diesel decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_SHS_F7.xml">
-        <model model="F7 Diesel" maxInputVolts="16V" maxMotorCurrent="6A" maxTotalCurrent="6A" formFactor="SHS F7" nmraWarrant="yes" connector="other" numOuts="6" numFns="8">
+        <model model="F7 Diesel" maxInputVolts="16V" maxMotorCurrent="6A" maxTotalCurrent="6A" formFactor="SHS F7" nmraWarrant="yes" connector="other" numOuts="6" numFns="10">
           <versionCV lowVersionID="40" />
           <output name="Bell" connection="unspecified" />
           <output name="Horn" connection="unspecified" />
@@ -1316,6 +1316,134 @@
       <family name="TCS Tx series decoders" mfg="Train Control Systems" type="locomotive" file="TCS_Tx_v27.xml">
         <model model="T1x" numOuts="2" numFns="2" lowVersionID="27" connector="unspecified" nmraWarrant="no">
           <output name="4" label="Purple" connection="unspecified" />
+        </model>
+      </family>
+      <family name="TCS X Series Decoders" mfg="Train Control Systems" type="locomotive" file="TCS_X.xml">
+        <model model="A4X" numOuts="4" numFns="14" lowVersionID="33" highVersionID="33" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" connector="unspecified" nmraWarrant="no">
+          <size length="2.860" width="0.680" height="0.145" units="inches" />
+          <output name="1" label="White" connection="solder" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+        </model>
+        <model model="A6X" numOuts="6" numFns="14" lowVersionID="33" highVersionID="33" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" connector="unspecified" nmraWarrant="no">
+          <size length="2.860" width="0.680" height="0.145" units="inches" />
+          <output name="1" label="White" connection="solder" maxcurrent="200 mA" />
+          <output name="2" label="Yellow" connection="solder" maxcurrent="200 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="200 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="200 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="200 mA" />
+          <output name="6" label="Pink" connection="solder" maxcurrent="200 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+        </model>
+        <model model="DP5X" numOuts="5" numFns="14" lowVersionID="33" highVersionID="33" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="NMRAmedium" nmraWarrant="no">
+          <size length="0845" width="0.680" height="0.165" units="inches" />
+          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+        </model>
+        <model model="M3" numOuts="3" numFns="14" lowVersionID="33" highVersionID="33" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="unspecified" nmraWarrant="no">
+          <size length="0.570" width="0.355" height="0.132" units="inches" />
+          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+        </model>
+        <model model="M4" numOuts="4" numFns="14" lowVersionID="33" highVersionID="33" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="unspecified" nmraWarrant="no">
+          <size length="0.570" width="0.355" height="0.132" units="inches" />
+          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+        </model>
+        <model model="MC2" numOuts="2" numFns="6" lowVersionID="33" highVersionID="33" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="unspecified" nmraWarrant="no">
+          <size length="0.71" width="0.41" height="0.19" units="inches" />
+          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+        </model>
+        <model model="MC4" numOuts="4" numFns="14" lowVersionID="33" highVersionID="33" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="unspecified" nmraWarrant="no">
+          <size length="0.71" width="0.41" height="0.19" units="inches" />
+          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+        </model>
+        <model model="MC6" numOuts="6" numFns="14" lowVersionID="33" highVersionID="33" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="unspecified" nmraWarrant="no">
+          <size length="0.71" width="0.41" height="0.19" units="inches" />
+          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="wire" maxcurrent="100 mA" />
+          <output name="6" label="Pink" connection="wire" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+        </model>
+        <model model="T4X" numOuts="4" numFns="14" lowVersionID="33" highVersionID="33" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="9pin" nmraWarrant="no">
+          <size length="1.010" width="0.665" height="0.250" units="inches" />
+          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+        </model>
+        <model model="T5X" numOuts="5" numFns="14" lowVersionID="33" highVersionID="33" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="9pin" nmraWarrant="no">
+          <size length="1.000" width="0.680" height="0.250" units="inches" />
+          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="wire" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+        </model>
+        <model model="T6X" numOuts="6" numFns="14" lowVersionID="33" highVersionID="33" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="9pin" nmraWarrant="no">
+          <size length="1.00" width="0.680" height="0.250" units="inches" />
+          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="wire" maxcurrent="100 mA" />
+          <output name="6" label="Pink" connection="wire" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+        </model>
+        <model model="W5X" numOuts="5" numFns="14" lowVersionID="33" highVersionID="33" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="unspecified" nmraWarrant="no">
+          <size length="0.850" width="0.690" height="0.190" units="inches" />
+          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="wire" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
         </model>
       </family>
       <family name="TCS Mx series decoders" mfg="Train Control Systems" type="locomotive" file="TCS_zMx.xml">
