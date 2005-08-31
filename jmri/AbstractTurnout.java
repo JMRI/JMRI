@@ -2,6 +2,7 @@
 
 package jmri;
 
+
 /**
  * Abstract base for the Turnout interface.
  * <P>
@@ -17,7 +18,7 @@ package jmri;
  *
  * Description:		Abstract class providing the basic logic of the Turnout interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean 
         implements Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
@@ -32,10 +33,15 @@ public abstract class AbstractTurnout extends AbstractNamedBean
 
     /**
      * Handle a request to change state, typically by
-     * sending a message to the layout in some child class.
+     * sending a message to the layout in some child class. Public
+     * version (used by TurnoutOperator) sends the current commanded
+     * state without changing it.
      * @param s new state value
      */
     abstract protected void forwardCommandChangeToLayout(int s);
+    public void forwardCommandChangeToLayout() {
+    	forwardCommandChangeToLayout(_commandedState);
+    }
 
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call
@@ -60,11 +66,22 @@ public abstract class AbstractTurnout extends AbstractNamedBean
 
     public int getKnownState() {return _knownState;}
 
+    /**
+     * public access to changing turnout state. Sets the commanded state and,
+     * if appropriate starts a TurnoutOperator to do its thing. If there is no
+     * TurnoutOperator (not required or nothing suitable) then just tell the layout
+     * and hope for the best.
+     */
     public void setCommandedState(int s) {
-        forwardCommandChangeToLayout(s);
         newCommandedState(s);
-        // optionally handle feedback
-        if (_activeFeedbackType == DIRECT) newKnownState(s); 
+        myOperator = getTurnoutOperator();		// MUST set myOperator before starting the thread
+        if (myOperator==null) {
+	        forwardCommandChangeToLayout(s);
+	        // optionally handle feedback
+	        if (_activeFeedbackType == DIRECT) newKnownState(s); 
+        } else
+        {	myOperator.start();
+        }
     }
 
     public int getCommandedState() {return _commandedState;}
@@ -80,6 +97,21 @@ public abstract class AbstractTurnout extends AbstractNamedBean
             _knownState = s;
             firePropertyChange("KnownState", new Integer(oldState), new Integer(_knownState));
         }
+    }
+    /**
+     * Show whether state is one you can safely run trains over
+     * @return	true iff state is a valid one and the known state is the same as commanded
+     */
+    public boolean isConsistentState() {
+    	return _commandedState==_knownState && (_commandedState==CLOSED || _commandedState==THROWN);
+    }
+    
+    /**
+     * The name pretty much says it. Fur use by the TurnoutOperator classes.
+     *
+     */
+    public void setKnownStateToCommanded() {
+    	newKnownState(_commandedState);
     }
 
     /**
@@ -143,7 +175,53 @@ public abstract class AbstractTurnout extends AbstractNamedBean
         }
         throw new IllegalArgumentException("Unexpected internal mode: "+_activeFeedbackType);
     }
+    
+    /*
+     * Support for turnout automation (see TurnoutOperation and related classes)
+     */
 
+    TurnoutOperator myOperator;
+    TurnoutOperation myTurnoutOperation;
+    boolean inhibitOperation = false;			// do not automate this turnout, even if globally operations are on
+    public TurnoutOperator getCurrentOperator() { return myOperator; }
+    public TurnoutOperation getTurnoutOperation() { return myTurnoutOperation; }
+    public void setTurnoutOperation(TurnoutOperation toper) { myTurnoutOperation = toper; };
+    public boolean getInhibitOperation() { return inhibitOperation; }
+    public void setInhibitOperation(boolean io) { inhibitOperation = io; }
+    	
+    /**
+     * find the TurnoutOperation class for this turnout, and get an instance
+     * of the corresponding operator
+     * Override this function if you want another way to choose the operation
+     * @return	newly-instantiated TurnoutOPerator, or null if nothing suitable
+     */
+    protected TurnoutOperator getTurnoutOperator() {
+    	TurnoutOperator to = null;
+    	if (!inhibitOperation) {
+    		if (myTurnoutOperation != null) {
+    			to = myTurnoutOperation.getOperator(this);
+    		} else {
+    			TurnoutOperation toper =
+    				TurnoutOperationManager.getInstance().getMatchingOperation(this, getFeedbackModeForOperation());
+    			if (toper != null) {
+    				to = toper.getOperator(this);
+    			}
+    		}
+    	}
+    	return to;
+    }
+
+    /**
+     * overridable function to allow an actual turnout class to transform private
+     * feedback types into ones that the generic turnout operations know about
+     * @return	apparent feedback mode for operation lookup
+     */
+    protected int getFeedbackModeForOperation() {
+    	return getFeedbackMode();
+    }
+    /*
+     * support for associated sensor or sensors
+     */
     Sensor _firstSensor = null;
     Sensor _secondSensor = null;
     public void provideFirstFeedbackSensor(Sensor s) {

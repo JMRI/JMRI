@@ -2,6 +2,7 @@
 
 package jmri;
 
+
 /**
  * Represent a Turnout on the layout.
  * <P>
@@ -23,7 +24,7 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  * @see         jmri.AbstractTurnout
  * @see         jmri.TurnoutManager
  * @see         jmri.InstanceManager
@@ -151,6 +152,25 @@ public interface Turnout extends NamedBean {
      * in a {@link #getValidFeedbackTypes} call.
      */
     public int getFeedbackMode();
+    /**
+     * Get the indicator for whether automatic operation (retry) has been
+     * inhibited for this turnout
+     */
+    public boolean getInhibitOperation();
+    /**
+     * Change the value of the inhibit operation indicator
+     * @param io
+     */
+    public void setInhibitOperation(boolean io);
+    /**
+     * @return current operation automation class
+     */
+    public TurnoutOperation getTurnoutOperation();
+    /**
+     * set current automation class
+     * @param toper TurnoutOperation subclass instance
+     */
+    public void setTurnoutOperation(TurnoutOperation toper);
 
     /**
      * Provide Sensor objects needed for some feedback types.

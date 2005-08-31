@@ -27,7 +27,7 @@ import com.sun.java.util.collections.List;
  * class, which provides a simple GUI for controlling a single turnout.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  * @see             jmri.Turnout
  * @see             jmri.AbstractTurnoutManager
  * @see             jmri.InstanceManager
@@ -113,6 +113,12 @@ public interface TurnoutManager extends Manager {
 	 * to represent the Turnout.THROWN state.
 	 */
 	 public String getThrownText();
+	 
+	 /**
+	  * Get a list of the valid TurnoutOPeration subtypes for use with turnouts
+	  * of this system
+	  */
+	 public String[] getValidOperationTypes();
 
 }
 

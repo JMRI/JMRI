@@ -6,16 +6,23 @@ import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.Turnout;
+import jmri.TurnoutManager;
+import jmri.TurnoutOperationManager;
 import jmri.Sensor;
+import jmri.jmrit.turnoutoperations.TurnoutOperationFrame;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JTable;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -27,7 +34,7 @@ import javax.swing.JComboBox;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -67,9 +74,10 @@ public class TurnoutTableAction extends AbstractTableAction {
 		    static public final int MODECOL = 4;
 		    static public final int SENSOR1COL = 5;
 		    static public final int SENSOR2COL = 6;
+		    static public final int OPSONOFFCOL = 7;
     		public int getColumnCount( ){ 
     		    if (showFeedback)
-    		        return NUMCOLUMN+4;
+    		        return NUMCOLUMN+5;
     		    else
     		        return NUMCOLUMN;
      		}
@@ -79,6 +87,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     			else if (col==MODECOL) return "Mode";
     			else if (col==SENSOR1COL) return "Sensor 1";
     			else if (col==SENSOR2COL) return "Sensor 2";
+    			else if (col==OPSONOFFCOL) return "Automate";
     			
     			else if (col==VALUECOL) return "Cmd";  // override default title
     			
@@ -89,6 +98,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     			else if (col==MODECOL) return JComboBox.class;
     			else if (col==SENSOR1COL) return String.class;
     			else if (col==SENSOR2COL) return String.class;
+    			else if (col==OPSONOFFCOL) return JComboBox.class;
     			else return super.getColumnClass(col);
 		    }
     		public int getPreferredWidth(int col) {
@@ -96,6 +106,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     			else if (col==MODECOL) return new JTextField(10).getPreferredSize().width;
     			else if (col==SENSOR1COL) return new JTextField(5).getPreferredSize().width;
     			else if (col==SENSOR2COL) return new JTextField(5).getPreferredSize().width;
+    			else if (col==OPSONOFFCOL) return new JTextField(4).getPreferredSize().width;
     			else return super.getPreferredWidth(col);
 		    }
     		public boolean isCellEditable(int row, int col) {
@@ -103,59 +114,64 @@ public class TurnoutTableAction extends AbstractTableAction {
     			else if (col==MODECOL) return true;
     			else if (col==SENSOR1COL) return true;
     			else if (col==SENSOR2COL) return true;
+    			else if (col==OPSONOFFCOL) return true;
     			else return super.isCellEditable(row,col);
 			}    		
 
     		public Object getValueAt(int row, int col) {
+				String name = (String)sysNameList.get(row);
+				TurnoutManager manager = InstanceManager.turnoutManagerInstance();
+				Turnout t = manager.getBySystemName(name);
     			if (col==KNOWNCOL) {
-    				String name = (String)sysNameList.get(row);
-    				Turnout t = InstanceManager.turnoutManagerInstance().getBySystemName(name);
                     if (t.getKnownState()==Turnout.CLOSED) return closedText;
                     if (t.getKnownState()==Turnout.THROWN) return thrownText;
                     if (t.getKnownState()==Turnout.INCONSISTENT) return "Inconsistent";
                     else return "Unknown";
     			} else if (col==MODECOL) {
-    				String name = (String)sysNameList.get(row);
-    				Turnout t = InstanceManager.turnoutManagerInstance().getBySystemName(name);
 					JComboBox c = new JComboBox(t.getValidFeedbackNames());
+					int mode = t.getFeedbackMode();
 					c.setSelectedItem(t.getFeedbackModeName());
 					return c;
     			} else if (col==SENSOR1COL) {
-    				String name = (String)sysNameList.get(row);
-    				Turnout t = InstanceManager.turnoutManagerInstance().getBySystemName(name);
                     Sensor s = t.getFirstSensor();
                     if (s!=null) return s.getSystemName();
                     else return "";
     			} else if (col==SENSOR2COL) {
-    				String name = (String)sysNameList.get(row);
-    				Turnout t = InstanceManager.turnoutManagerInstance().getBySystemName(name);
                     Sensor s = t.getSecondSensor();
                     if (s!=null) return s.getSystemName();
                     else return "";
+    			} else if (col==OPSONOFFCOL) {
+    				String[] strs = {"Default", "Off"};
+    				JComboBox cb = new JComboBox(strs);
+    				String selected = "Default";
+    				if (t.getInhibitOperation()) { selected="Off"; };
+    				cb.setSelectedItem(selected);
+    				return cb;
     			} else return super.getValueAt(row, col);
 			}    		
 			
     		public void setValueAt(Object value, int row, int col) {
+				String name = (String)sysNameList.get(row);
+				TurnoutManager manager = InstanceManager.turnoutManagerInstance();
+				Turnout t = manager.getBySystemName(name);
     			if (col==MODECOL) {
-    				String name = (String)sysNameList.get(row);
-    				Turnout t = InstanceManager.turnoutManagerInstance().getBySystemName(name);
-                    t.setFeedbackMode((String)((JComboBox)value).getSelectedItem());
+                    String modeName = (String)((JComboBox)value).getSelectedItem();
+    				t.setFeedbackMode(modeName);
     			} else if (col==SENSOR1COL) {
-    				String name = (String)sysNameList.get(row);
-    				Turnout t = InstanceManager.turnoutManagerInstance().getBySystemName(name);
                     String sname = (String)value;
                     Sensor s;
                     if (!sname.equals("")) s = InstanceManager.sensorManagerInstance().provideSensor((String)value);
                     else s = null;
                     t.provideFirstFeedbackSensor(s);
     			} else if (col==SENSOR2COL) {
-    				String name = (String)sysNameList.get(row);
-    				Turnout t = InstanceManager.turnoutManagerInstance().getBySystemName(name);
                     String sname = (String)value;
                     Sensor s;
                     if (!sname.equals("")) s = InstanceManager.sensorManagerInstance().provideSensor((String)value);
                     else s = null;
                     t.provideSecondFeedbackSensor(s);
+    			} else if (col==OPSONOFFCOL) {
+    				String onOff = (String)((JComboBox)value).getSelectedItem();
+                    t.setInhibitOperation(onOff=="Off");
     			} else super.setValueAt(value, row, col);
     		}
 
@@ -232,18 +248,39 @@ public class TurnoutTableAction extends AbstractTableAction {
     }
     
     JCheckBox showFeedbackBox = new JCheckBox("Show feedback information");
+    JCheckBox doAutomationBox = new JCheckBox("Automatic retry");
     
     /**
-     * Add the check box
+     * Add the check box and Operations menu item
      */
     public void addToFrame(BeanTableFrame f) {
-        f.getContentPane().add(showFeedbackBox);
+    	final BeanTableFrame finalF = f;			// needed for anonymous ActionListener class
+        f.addToBottomBox(showFeedbackBox);
+        showFeedbackBox.setToolTipText("Show extra columns for configuring turnout feedback?");
         showFeedbackBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 showFeedbackChanged();
             }
         });
-        showFeedbackBox.setToolTipText("Show extra columns for configuring turnout feedback?");
+        f.addToBottomBox(doAutomationBox);
+        doAutomationBox.setSelected(TurnoutOperationManager.getInstance().getDoOperations());
+        doAutomationBox.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		TurnoutOperationManager.getInstance().setDoOperations(doAutomationBox.isSelected());
+        	}
+        });
+        // add save menu item
+        JMenuBar menuBar = f.getJMenuBar();
+        JMenu opsMenu = new JMenu("Automation");
+        menuBar.add(opsMenu);
+        JMenuItem item = new JMenuItem("Edit...");
+        opsMenu.add(item);
+        item.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		TurnoutOperationFrame tof = new TurnoutOperationFrame(finalF);
+        		tof.show();
+        	}
+        });
     }
 
 

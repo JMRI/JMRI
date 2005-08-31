@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.47 2005-08-02 22:20:40 jacobsen Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.48 2005-08-31 05:15:07 john_harper Exp $ -->
 
 <!-- This DTD is Copyright 2001, 2003 JMRI.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -69,15 +69,35 @@
     <!ATTLIST sensor systemName	CDATA #REQUIRED>  <!-- defines system type -->
     <!ATTLIST sensor userName		CDATA #IMPLIED>
 
-<!ELEMENT turnouts (turnout*)>
+<!ELEMENT turnouts (operations?, turnout*)>
   <!ATTLIST turnouts class		CDATA #REQUIRED>
 
+  <!ELEMENT operations (operation*) >
+    <!ATTLIST turnout automate	CDATA #REQUIRED> 
+
+	  <!ELEMENT operation EMPTY >
+	    <!ATTLIST turnout name	CDATA #REQUIRED>  
+	    <!ATTLIST turnout class		CDATA #REQUIRED>
+	    <!ATTLIST turnout interval		CDATA #IMPLIED>
+	    <!ATTLIST turnout maxtries		CDATA #IMPLIED>
+	    <!ATTLIST turnout parameter1		CDATA #IMPLIED>
+	    <!ATTLIST turnout parameter2		CDATA #IMPLIED>
+	    <!ATTLIST turnout parameter3		CDATA #IMPLIED>
+	    <!ATTLIST turnout parameter4		CDATA #IMPLIED>
+	    <!ATTLIST turnout parameter5		CDATA #IMPLIED>
+	    <!ATTLIST turnout parameter6		CDATA #IMPLIED>
+	    <!ATTLIST turnout parameter7		CDATA #IMPLIED>
+	    <!ATTLIST turnout parameter8		CDATA #IMPLIED>
+	    <!ATTLIST turnout parameter9		CDATA #IMPLIED>
+	    <!ATTLIST turnout parameter10		CDATA #IMPLIED>
+	
   <!ELEMENT turnout EMPTY >
     <!ATTLIST turnout systemName	CDATA #REQUIRED>  <!-- defines system type -->
     <!ATTLIST turnout userName		CDATA #IMPLIED>
     <!ATTLIST turnout feedback		CDATA #IMPLIED>
     <!ATTLIST turnout sensor1		CDATA #IMPLIED>
     <!ATTLIST turnout sensor2		CDATA #IMPLIED>
+    <!ATTLIST turnout automate		CDATA #IMPLIED>
 
 <!ELEMENT lights (light*)>
   <!ATTLIST lights class		CDATA #REQUIRED>

@@ -1,0 +1,78 @@
+/**
+ * 
+ */
+package jmri.configurexml.turnoutoperations;
+
+import java.lang.reflect.Constructor;
+import java.util.Arrays;
+
+import org.jdom.Element;
+
+import jmri.NoFeedbackTurnoutOperation;
+import jmri.TurnoutOperation;
+import jmri.configurexml.XmlAdapter;
+import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
+import jmri.jmrix.nce.configurexml.NceTurnoutManagerXml;
+import jmri.util.StringUtil;
+
+/**
+ * Superclass for save/restore of TurnoutOperation subclasses in XML.
+ * @author John Harper	Copyright 2005
+ *
+ */
+public abstract class TurnoutOperationXml implements XmlAdapter {
+
+	/**
+	 * inherited methods
+	 * @see jmri.configurexml.XmlAdapter#load(org.jdom.Element)
+	 */
+	public abstract void load(Element e) throws Exception;
+
+	/**
+	 * @see jmri.configurexml.XmlAdapter#load(org.jdom.Element, java.lang.Object)
+	 */
+    public void load(Element element, Object o) {
+        log.error("Invalid method called");
+    }
+    
+    /**
+     * common part of store - create the element and store the name and the class
+     * @param	o	TurnoutOperation object
+     * @returns	partially filled element
+     */
+    public Element store(Object o) {
+    	TurnoutOperation myOp = (TurnoutOperation)o;
+    	Element elem = new Element("operation");
+    	elem.addAttribute("name", myOp.getName());
+    	elem.addAttribute("class", this.getClass().getName());
+    	return elem;
+    }
+
+	/**
+	 * Given an instance of a concrete subclass of
+	 * the TurnoutOperation class, looks for a corresponding ...Xml
+	 * class and creates an instance of it. If anything goes wrong (no such
+	 * class, wrong constructors, instantiation error, ....) just return null
+	 * @param op	operation for which configurator is required
+	 * @return	the configurator
+	 */
+    static public TurnoutOperationXml getAdapter(TurnoutOperation op) {
+    	TurnoutOperationXml adapter = null;
+    	String[] fullOpNameComponents = op.getClass().getName().split("\\.");
+    	String[] myNameComponents =
+    		new String("jmri.configurexml.turnoutoperations.TurnoutOperationXml").split("\\.");
+    	myNameComponents[myNameComponents.length-1] = 
+    		fullOpNameComponents[fullOpNameComponents.length-1];
+    	String fullConfigName = StringUtil.join(Arrays.asList(myNameComponents), ".") + "Xml";
+    	try {
+    		Class configClass = Class.forName(fullConfigName);
+    		adapter = (TurnoutOperationXml)configClass.newInstance();
+    	} catch (Throwable e) {
+    	};		// too many to list!
+    	if (adapter==null) {
+    		log.warn("could not create adapter class "+fullConfigName);
+    	}
+    	return adapter;
+    }
+static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TurnoutOperationXml.class.getName());
+}

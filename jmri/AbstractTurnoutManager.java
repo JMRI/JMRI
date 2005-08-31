@@ -2,14 +2,19 @@
 
 package jmri;
 
+
 /**
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 public abstract class AbstractTurnoutManager extends AbstractManager
     implements TurnoutManager {
+	
+	public AbstractTurnoutManager() {
+		TurnoutOperationManager.getInstance();		// force creation of an instance
+	}
 
     final java.util.ResourceBundle rbt = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
@@ -99,6 +104,15 @@ public abstract class AbstractTurnoutManager extends AbstractManager
      * @return never null
      */
     abstract protected Turnout createNewTurnout(String systemName, String userName);
+    
+    /*
+     * Turnout operation support. Overrideable function to return the acceptable
+     * turnout operation types for this system's turnouts. Order is important because
+     * they will be tried in the order specified.
+     */
+    String[] validOperationTypes = {"Sensor", "NoFeedback"};
+    
+    public String[] getValidOperationTypes() { return validOperationTypes; }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractTurnoutManager.class.getName());
 }
