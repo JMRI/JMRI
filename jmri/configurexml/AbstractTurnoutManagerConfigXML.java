@@ -24,7 +24,7 @@ import org.jdom.Attribute;
  * specific Turnout or AbstractTurnout subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
 
@@ -111,12 +111,13 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
     	List operationList = turnouts.getChildren("operations");
     	if (operationList.size()>1) {
     		log.debug("unexpected extra elements found in turnout operations list");
+    	} else if (operationList.size()==1) {
+    		TurnoutOperationManagerXml tomx = new TurnoutOperationManagerXml();
+    		tomx.load((Element)operationList.get(0));
     	}
-    	TurnoutOperationManagerXml tomx = new TurnoutOperationManagerXml();
-    	tomx.load((Element)operationList.get(0));
-        List turnoutList = turnouts.getChildren("turnout");
-        if (log.isDebugEnabled()) log.debug("Found "+turnoutList.size()+" turnouts");
-        TurnoutManager tm = InstanceManager.turnoutManagerInstance();
+    	List turnoutList = turnouts.getChildren("turnout");
+    	if (log.isDebugEnabled()) log.debug("Found "+turnoutList.size()+" turnouts");
+    	TurnoutManager tm = InstanceManager.turnoutManagerInstance();
 
         for (int i=0; i<turnoutList.size(); i++) {
             if ( ((Element)(turnoutList.get(i))).getAttribute("systemName") == null) {
@@ -160,6 +161,7 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
 			//  set initial state from sensor feedback if appropriate
 			t.setInitialKnownStateFromFeedback();
         }
+       
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractTurnoutManagerConfigXML.class.getName());
