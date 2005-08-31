@@ -2,6 +2,9 @@
 
 package jmri.util;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 /**
  * Common utility methods for working with Strings.
  * <P>
@@ -14,7 +17,7 @@ package jmri.util;
  * back to an explicit implementation when running on Java 1.1
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class StringUtil {
@@ -177,6 +180,24 @@ static char[] hexChars = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A'
     static public void sortUpperCase(Object[] values) {
         // no Java sort, so ugly bubble sort
         bubblesortUpper(values);
+    }
+    
+    /**
+     * join a series of strings, separated by a delimiter
+     * @param s	collection of strings
+     * @param delimiter
+     * @return e.g. join({"abc","def,"ghi"}, ".") ==> "abc.def.ghi"
+     */
+    public static String join(Collection s, String delimiter) {
+        StringBuffer buffer = new StringBuffer();
+        Iterator iter = s.iterator();
+        while (iter.hasNext()) {
+            buffer.append(iter.next());
+            if (iter.hasNext()) {
+                buffer.append(delimiter);
+            }
+        }
+        return buffer.toString();
     }
 
     /**
