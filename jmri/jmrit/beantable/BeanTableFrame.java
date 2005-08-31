@@ -10,6 +10,7 @@ import javax.swing.JMenuBar;
 import java.util.*;
 import javax.swing.JScrollPane;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -23,13 +24,16 @@ import jmri.util.com.sun.Comparator;
  * Frame providing a table of NamedBeans.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class BeanTableFrame extends javax.swing.JFrame {
 
     BeanTableDataModel		dataModel;
     JTable			dataTable;
     JScrollPane 		dataScroll;
+    Box bottomBox;		// panel at bottom for extra buttons etc
+    int bottomBoxIndex;	// index to insert extra stuff
+    static final int bottomStrutWidth = 20;
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
 
@@ -63,6 +67,11 @@ public class BeanTableFrame extends javax.swing.JFrame {
         // install items in GUI
         JPanel pane1 = new JPanel();
         getContentPane().add(dataScroll);
+        bottomBox = Box.createHorizontalBox();
+        bottomBox.add(Box.createHorizontalGlue());	// stays at end of box
+        bottomBoxIndex = 0;
+        
+        getContentPane().add(bottomBox);
         pack();
         pane1.setMaximumSize(pane1.getSize());
 
@@ -99,6 +108,18 @@ public class BeanTableFrame extends javax.swing.JFrame {
         dispose();
     }
 
+    protected Box getBottomBox() { return bottomBox; };
+    /**
+     * Add a component to the bottom box. Takes care of organising glue, struts etc
+     * @param comp
+     */
+    protected void addToBottomBox(Component comp) {
+    	bottomBox.add(Box.createHorizontalStrut(bottomStrutWidth), bottomBoxIndex);
+    	++bottomBoxIndex;
+    	bottomBox.add(comp, bottomBoxIndex);
+    	++bottomBoxIndex;
+    }
+    
     public void dispose() {
         dataModel.dispose();
         dataModel = null;

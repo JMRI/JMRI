@@ -15,7 +15,7 @@ import javax.swing.JButton;
  * SignalHeadTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 abstract public class AbstractTableAction extends AbstractAction {
@@ -53,7 +53,7 @@ abstract public class AbstractTableAction extends AbstractAction {
              */
             void extras() {
                 JButton addButton = new JButton(this.rb.getString("ButtonAdd"));
-                this.getContentPane().add(addButton);
+                addToBottomBox(addButton);
                 addButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         addPressed(e);
