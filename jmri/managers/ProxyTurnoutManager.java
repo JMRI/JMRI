@@ -2,9 +2,15 @@
 
 package jmri.managers;
 
+import java.util.List;
+import java.util.Arrays;
+import java.util.LinkedList;
+
+import jmri.Manager;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.TurnoutManager;
+import jmri.TurnoutOperationManager;
 
 /**
  * Implementation of a TurnoutManager that can serves as a proxy
@@ -12,11 +18,23 @@ import jmri.TurnoutManager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class ProxyTurnoutManager extends AbstractProxyManager implements TurnoutManager {
 
     final java.util.ResourceBundle rbt = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
+
+    public ProxyTurnoutManager() {
+    	super();
+    }
+    
+    /**
+     * override of generic class, hook to support TurnoutOPerations
+     */
+    public void addManager(Manager m) {
+    	super.addManager(m);
+    	TurnoutOperationManager.getInstance().loadOperationTypes();
+    }
 
     /**
      * Locate via user name, then system name if needed.
@@ -164,6 +182,19 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
 			return rbt.getString("TurnoutStateThrown");
 	}
 
+	/**
+	 * TurnoutOperation support. Return a list which is just the concatenation of
+	 * all the valid operation types
+	 */
+	public String[] getValidOperationTypes() {
+		List typeList = new LinkedList();
+		for (int i=0; i<mgrs.size(); ++i) {
+			String[] thisTypes = ((TurnoutManager)mgrs.get(i)).getValidOperationTypes();
+			typeList.addAll(Arrays.asList(thisTypes));
+		}
+		return TurnoutOperationManager.concatenateTypeLists((String[])typeList.toArray(new String[0]));
+	}
+	
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ProxyTurnoutManager.class.getName());
 }
