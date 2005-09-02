@@ -3,13 +3,13 @@
  */
 package jmri;
 
-import java.util.TreeMap;
+import com.sun.java.util.collections.TreeMap;
 
 
-import java.util.Collection;
-import java.util.List;
-import java.util.LinkedList;
-import java.util.Iterator;
+import com.sun.java.util.collections.Collection;
+import com.sun.java.util.collections.List;
+import com.sun.java.util.collections.LinkedList;
+import com.sun.java.util.collections.Iterator;
 
 /**
  * class to look after the collection of TurnoutOperation subclasses
