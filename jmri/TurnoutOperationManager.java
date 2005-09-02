@@ -46,20 +46,28 @@ public class TurnoutOperationManager {
 	 */
 	protected void addOperation(TurnoutOperation op) {
 		TurnoutOperation previous;
-		synchronized (this) {
-			previous = (TurnoutOperation)turnoutOperations.put(op.getName(), op);
-			if (op.isDefinitive()) {
-				updateTypes(op);
+		if (op==null || op.getName()==null) {
+			log.warn("null operation or name in addOperation");
+		} else {
+			synchronized (this) {
+				previous = (TurnoutOperation)turnoutOperations.put(op.getName(), op);
+				if (op.isDefinitive()) {
+					updateTypes(op);
+				}
 			}
-		}
-		if (previous != null) {
-			log.debug("replaced existing operation called "+previous.getName());
+			if (previous != null) {
+				log.debug("replaced existing operation called "+previous.getName());
+			}
 		}
 	}
 	
 	protected void removeOperation(TurnoutOperation op) {
-		synchronized (this) {
-			turnoutOperations.remove(op.getName());
+		if (op==null || op.getName()==null) {
+			log.warn("null operation or name in removeOperation");
+		} else {
+			synchronized (this) {
+				turnoutOperations.remove(op.getName());
+			}
 		}
 	}
 	
@@ -127,7 +135,9 @@ public class TurnoutOperationManager {
 		String[] validTypes = InstanceManager.turnoutManagerInstance().getValidOperationTypes();
 		for (int i=0; i<validTypes.length; ++i) {
 			String thisClassName = "jmri."+validTypes[i]+"TurnoutOperation";
-			if (getOperation(validTypes[i]) == null) {
+			if (validTypes[i] == null) {
+				log.warn("null operation name in loadOperationTypes");
+			} else if (getOperation(validTypes[i]) == null) {
 				try {
 					Class thisClass = Class.forName(thisClassName);
 					TurnoutOperation to = (TurnoutOperation)thisClass.newInstance();
@@ -182,6 +192,8 @@ public class TurnoutOperationManager {
 		for (int i=0; i<types.length; ++i) {
 			if (types[i] == "NoFeedback") {
 				noFeedbackWanted = true;
+			} else if (types[i]==null || types[i].equals("")) {
+				log.warn("null or empty operation name returned from turnout manager");
 			} else if (!outTypes.contains(types[i])) {
 				outTypes.add(types[i]);
 			}
