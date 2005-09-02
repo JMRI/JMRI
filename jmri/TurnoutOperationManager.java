@@ -4,6 +4,7 @@
 package jmri;
 
 import com.sun.java.util.collections.TreeMap;
+import com.sun.java.util.collections.HashMap;
 
 
 import com.sun.java.util.collections.Collection;
@@ -21,7 +22,7 @@ import com.sun.java.util.collections.Iterator;
  */
 public class TurnoutOperationManager {
 
-	private TreeMap turnoutOperations = new TreeMap();
+	private HashMap turnoutOperations = new HashMap();
 	private List operationTypes = new LinkedList(); // array of the defining instances of each class, held in order of appearance
 	boolean doOperations = false;			// global on/off switch
 	static TurnoutOperationManager theInstance;
