@@ -141,7 +141,7 @@ public abstract class TurnoutOperation {
 	}
 	
 	/**
-	 * @param feedback mode for a turnout
+	 * @param mode feedback mode for a turnout
 	 * @return	true iff this operation's feedback mode is one we know how to deal with
 	 */
 	public boolean matchFeedbackMode(int mode) {
