@@ -126,8 +126,10 @@ public class TurnoutOperationManager {
 	}
 	
 	/**
-	 * load the operation types given by the current TurnoutManager instance, in
-	 * the order given (important because the acceptable feedback modes may overlap).
+	 * Load the operation types given by the current TurnoutManager instance, in
+	 * the order given. 
+	 * <p>
+	 * The order is important because the acceptable feedback modes may overlap.
 	 * All we do is instantiate the classes. The constructors take care of putting
 	 * everything in the right places. We allow multiple occurrences of the same
 	 * name without complaining so the Proxy stuff works.
@@ -149,11 +151,10 @@ public class TurnoutOperationManager {
 	}
 	
 	/**
-	 * find a suitable operation for this turnout, based on its feedback type
+	 * Find a suitable operation for this turnout, based on its feedback type.
 	 * The mode is passed separately so the caller can transform it
 	 * @param t	turnout
 	 * @param apparentMode	mode(s) to be used when finding a matching operation
-	 * @return
 	 */
 	public TurnoutOperation getMatchingOperation(AbstractTurnout t, int apparentMode) {
 		if (doOperations) {
