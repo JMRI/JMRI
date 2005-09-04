@@ -24,8 +24,9 @@ public class SensorTurnoutOperator extends TurnoutOperator {
 	}
 	
 	/**
-	 * Do the autmation for a turnout with no feedback. This means try
-	 * maxTries times at an interval of interval. Note the call to
+	 * Do the autmation for a turnout with sensor feedback.
+	 * Keep trying up to maxTries until the sensor tells
+	 * us the change has actually happened. Note the call to
 	 * operatorCheck each time we're about to actually do something -
 	 * if we're no longer the current operator this throws
 	 * TurnoutOperatorException which just terminates the thread.
