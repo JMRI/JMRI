@@ -20,7 +20,7 @@ import jmri.jmrix.lenz.XNetConstants;
 /**
  * Frame displaying (and logging) XpressNet messages
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version         $Revision: 2.13 $
+ * @version         $Revision: 2.14 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
@@ -247,76 +247,79 @@ import jmri.jmrix.lenz.XNetConstants;
 				text = text + l.getElement(1);
 			}
 		// Feedback Response Messages
-		} else if (l.isFeedbackMessage() ) {
-			text = new String("Feedback Response:");
-			switch(l.getFeedbackMessageType()) {
+		} else if (l.isFeedbackBroadcastMessage() ) {
+		    text = new String("Feedback Response:");
+		    int numDataBytes = l.getElement(0)&0x0f;
+		    for( int i=1;i<numDataBytes;i+=2) {
+			switch(l.getFeedbackMessageType(i)) {
 				case 0:
 					text = text + "Turnout with out Feedback "+
-					" Turnout: " +l.getTurnoutMsgAddr() +
+					" Turnout: " +l.getTurnoutMsgAddr(i) +
 					" State: ";
-					if((l.getElement(2)&0x03)==0x00) {
+					if((l.getElement(i+1)&0x03)==0x00) {
 						text = text + "Not Operated";
-					} else if((l.getElement(2)&0x03)==0x01) {
+					} else if((l.getElement(i+1)&0x03)==0x01) {
 						text = text + "Thrown Left";
-					} else if((l.getElement(2)&0x03)==0x02){
+					} else if((l.getElement(i+1)&0x03)==0x02){
 						text = text + "Thrown Right";
-					} else if((l.getElement(2)&0x03)==0x03){
+					} else if((l.getElement(i+1)&0x03)==0x03){
 						text = text + "<Invalid>";
 					} else text = text + "<Unknown>";
-					text = text + "; Turnout: " +(l.getTurnoutMsgAddr() +1) +
+					text = text + "; Turnout: " +(l.getTurnoutMsgAddr(i) +1) +
 					" State: ";
-					if((l.getElement(2)&0x0C)==0x00) {
+					if((l.getElement(i+1)&0x0C)==0x00) {
 						text = text + "Not Operated";
-					} else if((l.getElement(2)&0x0C)==0x04) {
+					} else if((l.getElement(i+1)&0x0C)==0x04) {
 						text = text + "Thrown Left";
-					} else if((l.getElement(2)&0x0C)==0x08){
+					} else if((l.getElement(i+1)&0x0C)==0x08){
 						text = text + "Thrown Right";
-					} else if((l.getElement(2)&0x0C)==0x0C){
+					} else if((l.getElement(i+1)&0x0C)==0x0C){
 						text = text + "<Invalid>";
 					} else text = text + "<Unknown>";
 					break;
 				case 1:
 					text = text + "Turnout with Feedback "+
-					" Turnout: " +l.getTurnoutMsgAddr() +
+					" Turnout: " +l.getTurnoutMsgAddr(i) +
 					" State: ";
-					if((l.getElement(2)&0x03)==0x00) {
+					if((l.getElement(i+1)&0x03)==0x00) {
 						text = text + "Not Operated";
-					} else if((l.getElement(2)&0x03)==0x01) {
+					} else if((l.getElement(i+1)&0x03)==0x01) {
 						text = text + "Thrown Left";
-					} else if((l.getElement(2)&0x03)==0x02){
+					} else if((l.getElement(i+1)&0x03)==0x02){
 						text = text + "Thrown Right";
-					} else if((l.getElement(2)&0x03)==0x03){
+					} else if((l.getElement(i+1)&0x03)==0x03){
 						text = text + "<Invalid>";
 					} else text = text + "<Unknown>";
 					text = text + "; Turnout: " +(l.getTurnoutMsgAddr() +1) +
 					" State: ";
-					if((l.getElement(2)&0x0C)==0x00) {
+					if((l.getElement(i+1)&0x0C)==0x00) {
 						text = text + "Not Operated";
-					} else if((l.getElement(2)&0x0C)==0x04) {
+					} else if((l.getElement(i+1)&0x0C)==0x04) {
 						text = text + "Thrown Left";
-					} else if((l.getElement(2)&0x0C)==0x08){
+					} else if((l.getElement(i+1)&0x0C)==0x08){
 						text = text + "Thrown Right";
-					} else if((l.getElement(2)&0x0C)==0x0C){
+					} else if((l.getElement(i+1)&0x0C)==0x0C){
 						text = text + "<Invalid>";
 					} else text = text + "<Unknown>";
 					break;
 				case 2:
 					text = text + "Feedback Encoder " +
 					"Base Address: " + 
-					l.getFeedbackEncoderMsgAddr();
-					boolean highnibble = ((l.getElement(2) &0x10)==0x10);
+					l.getFeedbackEncoderMsgAddr(i);
+					boolean highnibble = ((l.getElement(i+1) &0x10)==0x10);
 					text = text + " Contact: " + (highnibble?1:5);
-					text = text + " State: " + (((l.getElement(2) &0x01)==0x01)?"On;":"Off;");
+					text = text + " State: " + (((l.getElement(i+1) &0x01)==0x01)?"On;":"Off;");
 					text = text + " Contact: " + (highnibble?2:6);
-					text = text + " State: " + (((l.getElement(2) &0x02)==0x02)?"On;":"Off;");
+					text = text + " State: " + (((l.getElement(i+1) &0x02)==0x02)?"On;":"Off;");
 					text = text + " Contact: " + (highnibble?3:7);
-					text = text + " State: " + (((l.getElement(2) &0x04)==0x04)?"On;":"Off;");
+					text = text + " State: " + (((l.getElement(i+1) &0x04)==0x04)?"On;":"Off;");
 					text = text + " Contact: " + (highnibble?4:8);
-					text = text + " State: " + (((l.getElement(2) &0x08)==0x08)?"On;":"Off;");
+					text = text + " State: " + (((l.getElement(i+1) &0x08)==0x08)?"On;":"Off;");
 					break;
 				default:
-					text = text + l.getElement(1);
+					text = text + l.getElement(i) + " " + l.getElement(i+1);
 			}
+		   }
 		} else {
 		     text = l.toString();
 		}
