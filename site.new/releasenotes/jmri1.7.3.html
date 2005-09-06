@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.7.3.html,v 1.5 2005-08-23 05:23:16 jacobsen Exp $ -->
+<!-- $Id: jmri1.7.3.html,v 1.6 2005-09-06 10:24:26 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -138,6 +138,17 @@
 
 <P>Mark Schutzer updated the Lenz Gold definition to include the "mini" version.
 
+<P>John Harper made the waitMsec() function more reliable
+
+<P>David Duchamp added code to deal with null pointers resulting from various startup errors.
+
+<P>Michael Mosher provided new TCS decoder definitions
+
+<P>John Harper fixed a bug that would crash the symbolic programmer while changing values (you'd get an "index out of range" error)
+
+<P>JavaDoc fixes, as usual
+
+<P>John Harper added a new feature:  Automatic retry on turnout operations.  If activated (see the Turnout Table), it will retry a turnout either until the feedback shows it's moved to the proper place, or (for turnouts without feedback) some fixed number of times.  There's also a new menu item in the TUrnout Table for configuring this.
 
       <hr class="hide">
 <!-- Footer -->
