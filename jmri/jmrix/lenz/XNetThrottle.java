@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
  * @author     Paul Bender (C) 2002,2003,2004
- * @version    $Revision: 2.8 $
+ * @version    $Revision: 2.9 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -566,6 +566,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 		this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;
         	this.speedStepMode = DccThrottle.SpeedStepMode128;
 	}
+	setSpeedSetting(this.speedSetting);
      }
 
 
@@ -623,7 +624,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
             } else {
                         /* this is an unknown error */
 		     requestState=THROTTLEIDLE;                        
-                     log.warn("Recieved unhandled response: " + l);
+                     log.warn("Received unhandled response: " + l);
               }
 
 	} else if(requestState==THROTTLESTATSENT) {
