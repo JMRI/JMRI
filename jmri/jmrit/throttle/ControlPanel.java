@@ -45,7 +45,7 @@ import org.jdom.Attribute;
  *  TODO: fix speed increments (14, 28)
  *
  * @author     glen   Copyright (C) 2002
- * @version    $Revision: 1.44 $
+ * @version    $Revision: 1.45 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener,ActionListener
 {
@@ -212,6 +212,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	 */
 	public void setSpeedSteps(int steps)
 	{
+		// Save the old speed as a float
+		float oldSpeed = (speedSlider.getValue() / ( MAX_SPEED * 1.0f ) ) ;
+
 		if(steps == DccThrottle.SpeedStepMode14) {
 			SpeedStep14Button.setSelected(true);
 			SpeedStep27Button.setSelected(false);
@@ -238,10 +241,28 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 			MAX_SPEED=126;
 		}
 		_speedStepMode=steps;
+
+		// rescale the speed slider to match the new speed step mode
+		internalAdjust=true;
+		speedSlider.setMaximum(MAX_SPEED);
+		speedSlider.setValue((int)(oldSpeed * MAX_SPEED));
+		speedSlider.setMajorTickSpacing(MAX_SPEED/2);
+		com.sun.java.util.collections.Hashtable labelTable = new com.sun.java.util.collections.Hashtable();
+		labelTable.put(new Integer(MAX_SPEED/2), new JLabel("50%"));
+		labelTable.put(new Integer(MAX_SPEED), new JLabel("100%"));
+                labelTable.put(new Integer(0), new JLabel("Stop"));
+		speedSlider.setLabelTable(labelTable);
+		speedSlider.setPaintTicks(true);
+		speedSlider.setPaintLabels(true);
+
+
 		if(speedSpinner!=null) {
              	   SpinnerNumberModel speedSpinnerModel=(SpinnerNumberModel)speedSpinner.getModel();
                    speedSpinnerModel.setMaximum(new Integer(MAX_SPEED));
                    speedSpinner.setModel(speedSpinnerModel);
+		   // rescale the speed value to match the new speed step mode
+		   internalAdjust=true;
+		   speedSpinner.setValue(new Integer(speedSlider.getValue()));
 		}
 	}
 
@@ -615,7 +636,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	 *  A KeyAdapter that listens for the keys that work the control pad buttons
 	 *
 	 * @author     glen
-         * @version    $Revision: 1.44 $
+         * @version    $Revision: 1.45 $
 	 */
 	class ControlPadKeyListener extends KeyAdapter
 	{
