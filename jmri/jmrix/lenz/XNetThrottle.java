@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
  * @author     Paul Bender (C) 2002,2003,2004
- * @version    $Revision: 2.9 $
+ * @version    $Revision: 2.10 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -191,8 +191,11 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         return speedSetting;
     }
 
-    public void setSpeedSetting(float speed)
+    synchronized public void setSpeedSetting(float speed)
     {
+	if(log.isDebugEnabled()) log.debug("set Speed to: " + speed +
+					  " Current step mode is: " + this.speedStepMode );
+
 	if(requestState!=THROTTLEIDLE) return;
         this.speedSetting = speed;
 	if (speed<0)
@@ -209,7 +212,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
          msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
          int element4value=0;   /* this is for holding the speed and 
                                  direction setting */
-	 if(getSpeedIncrement()==XNetConstants.SPEED_STEP_128_INCREMENT) {
+	 if(this.speedStepMode == DccThrottle.SpeedStepMode128) {
 		 // We're in 128 speed step mode
 		 msg.setElement(1,XNetConstants.LOCO_SPEED_128);
                  // Now, we need to figure out what to send in element 4
@@ -219,7 +222,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                  // speed step 1 is reserved to indicate emergency stop, 
                  // so we need to step over speed step 1
                  if(speedVal>=1) { element4value=speedVal+1; }
-	 } else if(getSpeedIncrement()==XNetConstants.SPEED_STEP_28_INCREMENT) {
+	 } else if(this.speedStepMode == DccThrottle.SpeedStepMode28) {
 		 // We're in 28 speed step mode
 		 msg.setElement(1,XNetConstants.LOCO_SPEED_28);
                  // Now, we need to figure out what to send in element 4
@@ -231,7 +234,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                  // but other bits are in order from 0-3
                  element4value=((speedVal&0x1e)>>1) + 
                                    ((speedVal & 0x01) <<4);
-	 } else if(getSpeedIncrement()==XNetConstants.SPEED_STEP_27_INCREMENT) {
+	 } else if(this.speedStepMode == DccThrottle.SpeedStepMode27) {
 		 // We're in 27 speed step mode
 		 msg.setElement(1,XNetConstants.LOCO_SPEED_27);
                  // Now, we need to figure out what to send in element 4
@@ -551,8 +554,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      * @parm Mode - the current speed step mode - default should be 128
      *              speed step mode in most cases
      */
-     public void setSpeedStepMode(int Mode) {
-	if(log.isDebugEnabled()) log.debug("Speed Step Mode Change to Mode: " + Mode);
+     synchronized public void setSpeedStepMode(int Mode) {
+	if(log.isDebugEnabled()) log.debug("Speed Step Mode Change to Mode: " + Mode +
+					  " Current mode is: " + this.speedStepMode);
         this.speedStepMode = Mode;
 	if(Mode == DccThrottle.SpeedStepMode128) {
        		this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;
@@ -790,7 +794,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	   }
 	}
 
-	if(getSpeedIncrement()==XNetConstants.SPEED_STEP_128_INCREMENT) {
+	if(this.speedStepMode == DccThrottle.SpeedStepMode128) {
 		 // We're in 128 speed step mode
 		 int speedVal=b2 & 0x7f;
                  // The first speed step used is actually at 2 for 128 
@@ -803,7 +807,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 					    new Float(this.speedSetting = 
 						(float)speedVal/(float)126));
 	   }
-	 } else if(getSpeedIncrement()==XNetConstants.SPEED_STEP_28_INCREMENT) {
+	 } else if(this.speedStepMode == DccThrottle.SpeedStepMode28) {
 		 // We're in 28 speed step mode
                  // We have to re-arange the bits, since bit 4 is the LSB,
                  // but other bits are in order from 0-3
@@ -819,7 +823,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 					    new Float(this.speedSetting = 
 						(float)speedVal/(float)28));
            }
-	 } else if(getSpeedIncrement()==XNetConstants.SPEED_STEP_27_INCREMENT) {
+	 } else if(this.speedStepMode == DccThrottle.SpeedStepMode27) {
 		 // We're in 27 speed step mode
                  // We have to re-arange the bits, since bit 4 is the LSB,
                  // but other bits are in order from 0-3
