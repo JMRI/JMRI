@@ -8,6 +8,10 @@ import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
 
+import java.util.Vector;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+
 import jmri.TurnoutOperation;
 import jmri.TurnoutOperationManager;
 
@@ -64,6 +68,13 @@ public class TurnoutOperationFrame extends JDialog {
 		bottomBox.add(deleteButton);
 		outerBox.add(bottomBox);
 		populateTabs();
+		TurnoutOperationManager.getInstance().addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent e) {
+				if (e.getPropertyName().equals("Content")) {
+					populateTabs();
+				}
+			}
+		});
 		show();
 	}
 	
@@ -75,8 +86,13 @@ public class TurnoutOperationFrame extends JDialog {
 	}
 	
 	private void doDelete() {
+		String query = "";;
 		if (currentOperation != null && !currentOperation.isDefinitive()) {
-			if (JOptionPane.showConfirmDialog(this, "Delete operation "+currentOperation.getName()+"?",
+			if (currentOperation.isInUse()) {
+				query = "Operation "+currentOperation.getName()+" is in use\n"+
+						"Turnouts using it will revert to the global default\n";
+			}
+			if (JOptionPane.showConfirmDialog(this, query+"Delete operation "+currentOperation.getName()+"?",
 					"Confirm delete", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				currentOperation.dispose();
 				populateTabs();
@@ -88,13 +104,36 @@ public class TurnoutOperationFrame extends JDialog {
 		TurnoutOperation[] operations = TurnoutOperationManager.getInstance().getTurnoutOperations();
 		Component firstPane = null;
 		tabPane.removeAll();
+		Vector definitiveOperations = new Vector(10);
+		Vector namedOperations = new Vector(50);
 		for (int i=0; i<operations.length; ++i) {
-			TurnoutOperation op = operations[i];
-			TurnoutOperationConfig pane = TurnoutOperationConfig.getConfigPanel(op);
+			if (operations[i].isDefinitive()) {
+				definitiveOperations.add(operations[i]);
+			} else if (!operations[i].isNonce()) {
+				namedOperations.add(operations[i]);
+			}
+		}
+    	java.util.Collections.sort(definitiveOperations);
+    	java.util.Collections.sort(namedOperations);
+    	TurnoutOperationConfig pane;
+    	TurnoutOperation op;
+		for (int j=0; j<definitiveOperations.size(); ++j) {
+			op = (TurnoutOperation)definitiveOperations.get(j);
+			pane = TurnoutOperationConfig.getConfigPanel(op);
 			if (pane != null) {
 				if (firstPane == null) {
 					firstPane = pane;
 				}
+				tabPane.add(op.getName(), pane);
+				if (op.getName()==previousSelectionName) {
+					tabPane.setSelectedComponent(pane);
+				}
+			}
+		}
+		for (int k=0; k<namedOperations.size(); ++k) {
+			op = (TurnoutOperation)namedOperations.get(k);
+			pane = TurnoutOperationConfig.getConfigPanel(op);
+			if (pane != null) {
 				tabPane.add(op.getName(), pane);
 				if (op.getName()==previousSelectionName) {
 					tabPane.setSelectedComponent(pane);

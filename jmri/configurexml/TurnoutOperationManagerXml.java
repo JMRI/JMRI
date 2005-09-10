@@ -41,21 +41,7 @@ public class TurnoutOperationManagerXml implements XmlAdapter {
     	List operationsList = operationsElement.getChildren("operation");
     	if (log.isDebugEnabled()) log.debug("Found "+operationsList.size()+" operations");
     	for (int i=0; i<operationsList.size(); i++) {
-    		Element thisOpElement = (Element)operationsList.get(i);
-    		String className = thisOpElement.getAttributeValue("class");
-    		if (className==null) {
-    			log.error("class name missing in turnout operation \""+thisOpElement+"\"");
-    		} else {
-    			try {
-    				Class adapterClass = Class.forName(className);
-    				if (adapterClass != null) {
-    					TurnoutOperationXml adapter = (TurnoutOperationXml)adapterClass.newInstance();
-    					adapter.load(thisOpElement);
-    				}
-    			} catch (Exception e) {
-    				log.error("failed to find or run adapter class for "+className);
-    			}
-    		}
+    		TurnoutOperationXml.loadOperation((Element)operationsList.get(i));
     	}
     }
 
@@ -67,11 +53,13 @@ public class TurnoutOperationManagerXml implements XmlAdapter {
     		TurnoutOperation[] operations = manager.getTurnoutOperations();
     		for (int i=0; i<operations.length; ++i) {
     			TurnoutOperation op = operations[i];
-    			TurnoutOperationXml adapter = TurnoutOperationXml.getAdapter(op);
-    			if (adapter != null) {
-    				Element opElem = adapter.store(op);
-    				if (opElem != null) {
-    					elem.addContent(opElem);
+    			if (!op.isNonce()) {		// nonces are stored with their respective turnouts
+    				TurnoutOperationXml adapter = TurnoutOperationXml.getAdapter(op);
+    				if (adapter != null) {
+    					Element opElem = adapter.store(op);
+    					if (opElem != null) {
+    						elem.addContent(opElem);
+    					}
     				}
     			}
     		}

@@ -3,11 +3,10 @@
  */
 package jmri;
 
-import javax.swing.JPanel;
-import org.jdom.Element;
-import java.util.Set;
+import com.sun.java.util.collections.List;
+import com.sun.java.util.collections.Iterator;
 
-import jmri.configurexml.TurnoutOperationManagerXml;
+
 
 /**
  * Framework for automating reliable turnout operation. This interface allows
@@ -85,15 +84,24 @@ import jmri.configurexml.TurnoutOperationManagerXml;
  * @author John Harper	Copyright 2005
  *
  */
-public abstract class TurnoutOperation {
+public abstract class TurnoutOperation implements Comparable {
 	
 	String name;
 	int feedbackModes = 0;
+	boolean nonce = false;		// created just for one turnout and not reusable 
 	
 	TurnoutOperation(String n) {
 		name = n;
 		TurnoutOperationManager.getInstance().addOperation(this);
 	}
+	
+	/**
+	 * factory to make a copy of an operation identical in all respects except
+	 * the name
+	 * @param n	name for new copy
+	 * @return TurnoutOperation of same concrete class as this
+	 */
+	public abstract TurnoutOperation makeCopy(String n);
 
 	/**
 	 * set feedback modes - part of construction but done separately for
@@ -110,6 +118,50 @@ public abstract class TurnoutOperation {
 	 */
 	public String getName() { return name; };
 
+	/**
+	 * ordering so operations can be sorted, using their name
+	 * @param other	other TurnoutOperation object
+	 * @return usual compareTo return values
+	 */
+	public int compareTo(Object other) {
+		return name.compareTo(((TurnoutOperation)other).name);
+	}
+	
+	/**
+	 * 
+	 * @param other another TurnoutOperation
+	 * @return true iff the two operations are equivalent, i.e. same subclass and same parameters
+	 */
+	public abstract boolean equivalentTo(TurnoutOperation other);
+	
+	/**
+	 * rename an operation
+	 * @param newName
+	 * @return true iff the name was changed to the new value - otherwise name is unchanged
+	 */
+	public boolean rename(String newName) {
+		boolean result = false;
+		TurnoutOperationManager mgr = TurnoutOperationManager.getInstance();
+		if (!isDefinitive() && mgr.getOperation(newName)==null) {
+			mgr.removeOperation(this);
+			name = newName;
+			setNonce(false);
+			mgr.addOperation(this);
+			result = true;
+		}
+		return result;
+	}
+	
+	/**
+	 * get the definitive operation for this parameter variation
+	 * @return definitive operation
+	 */
+	public TurnoutOperation getDefinitive() {
+		String[] myClass = getClass().getName().split("\\.");
+		String finalClass = myClass[myClass.length-1];
+		String mySubclass = finalClass.substring(0, finalClass.indexOf("TurnoutOperation"));
+		return TurnoutOperationManager.getInstance().getOperation(mySubclass);
+	}
 	/**
 	 *	 
 	 * @return	true iff this is the "defining instance" of the class,
@@ -131,14 +183,68 @@ public abstract class TurnoutOperation {
 	public abstract TurnoutOperator getOperator(AbstractTurnout t);
 	
 	/**
-	 * delete all knowledge of this operation
+	 * delete all knowledge of this operation. Reset any turnouts using
+	 * it to the default
 	 *
 	 */
 	public void dispose() {
 		if (!isDefinitive()) {
 			TurnoutOperationManager.getInstance().removeOperation(this);
+			name = "*deleted";
+			pcs.firePropertyChange("Deleted", null, null);		// this will remove all dangling references
 		}
 	}
+	
+	public boolean isDeleted() {
+		return (name.equals("*deleted"));
+	}
+	
+	/**
+	 * see if operation is in use (needed by the UI)
+	 * @return true iff any turnouts are using it
+	 */
+	public boolean isInUse() {
+		boolean result = false;
+		TurnoutManager tm = InstanceManager.turnoutManagerInstance();
+		List turnouts = tm.getSystemNameList();
+		Iterator iter = turnouts.iterator();
+		while (iter.hasNext()) {
+			Turnout t = tm.getBySystemName((String)iter.next());
+			if (t!=null && t.getTurnoutOperation() == this) {
+				result = true;
+				break;
+			}
+		}
+		return result;
+	}
+	
+	/**
+	 * Nonce support. A nonce is a TurnoutOperation created specifically for
+	 * one turnout, which can't be directly referred to by name. It does
+	 * have a name, which is the turnout it was created for, prefixed by "*"
+	 * @return
+	 */
+	public boolean isNonce() { return nonce; };
+	public void setNonce(boolean n) {
+		nonce = n;
+		TurnoutOperationManager.getInstance().firePropertyChange("Content", null, null);
+	};
+	public TurnoutOperation makeNonce(Turnout t) {
+		TurnoutOperation op = makeCopy("*"+t.getSystemName());
+		op.setNonce(true);
+		return op;
+	}
+	
+	/*
+	 * property change support
+	 */
+    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
+    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
+        pcs.addPropertyChangeListener(l);
+    }
+    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
+        pcs.removePropertyChangeListener(l);
+    }
 	
 	/**
 	 * @param mode feedback mode for a turnout

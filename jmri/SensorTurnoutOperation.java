@@ -7,7 +7,7 @@ package jmri;
  * SensorTurnoutOperation class - specialization of TurnoutOperation to provide
  * automatic retry for a turnout with explicit feedback from sensor(s)
  * @author John Harper	Copyright 2005
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class SensorTurnoutOperation extends CommonTurnoutOperation {
 
@@ -34,6 +34,13 @@ public class SensorTurnoutOperation extends CommonTurnoutOperation {
 		this("Sensor", defaultInterval, defaultMaxTries);
 	}
 	
+	/**
+	 * return clone with different name
+	 */
+	public TurnoutOperation makeCopy(String n) {
+		return new SensorTurnoutOperation(n, interval, maxTries);
+	}
+
 	public int getDefaultInterval() {
 		return defaultInterval;
 	}

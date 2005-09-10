@@ -18,7 +18,7 @@ package jmri;
  *
  * Description:		Abstract class providing the basic logic of the Turnout interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean 
         implements Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
@@ -73,6 +73,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean
      * and hope for the best.
      */
     public void setCommandedState(int s) {
+    	log.debug("set commanded state for turnout "+getSystemName()+" to "+s);
         newCommandedState(s);
         myOperator = getTurnoutOperator();		// MUST set myOperator before starting the thread
         if (myOperator==null) {
@@ -185,7 +186,26 @@ public abstract class AbstractTurnout extends AbstractNamedBean
     boolean inhibitOperation = false;			// do not automate this turnout, even if globally operations are on
     public TurnoutOperator getCurrentOperator() { return myOperator; }
     public TurnoutOperation getTurnoutOperation() { return myTurnoutOperation; }
-    public void setTurnoutOperation(TurnoutOperation toper) { myTurnoutOperation = toper; };
+    public void setTurnoutOperation(TurnoutOperation toper) {
+    	TurnoutOperation oldOp = myTurnoutOperation;
+    	if (myTurnoutOperation != null) {
+    		myTurnoutOperation.removePropertyChangeListener(this);
+    	}
+    	myTurnoutOperation = toper;
+    	if (myTurnoutOperation != null) {
+    		myTurnoutOperation.addPropertyChangeListener(this);
+    	}
+    	firePropertyChange("TurnoutOperationState", oldOp, myTurnoutOperation);
+    };
+    protected void operationPropertyChange(java.beans.PropertyChangeEvent evt) {
+    	if (evt.getSource()==myTurnoutOperation) {
+    		if (((TurnoutOperation)evt.getSource()).isDeleted()) {
+    			setTurnoutOperation(null);
+    		}
+    	}
+    }
+
+    
     public boolean getInhibitOperation() { return inhibitOperation; }
     public void setInhibitOperation(boolean io) { inhibitOperation = io; }
     	
@@ -305,7 +325,16 @@ public abstract class AbstractTurnout extends AbstractNamedBean
      * React to sensor changes by changing the KnownState
      * if using an appropriate sensor mode
      */
+    
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
+    	if (evt.getSource() == myTurnoutOperation) {
+    		operationPropertyChange(evt);
+    	} else if (evt.getSource() == _firstSensor || evt.getSource() == _secondSensor) {
+    		sensorPropertyChange(evt);
+    	}
+    }
+    
+    protected void sensorPropertyChange(java.beans.PropertyChangeEvent evt) {
         // top level, find the mode
         if (_activeFeedbackType == ONESENSOR) {
             // check for match
@@ -350,6 +379,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean
         }
         _secondSensor = null;
     }
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractTurnout.class.getName());
  }
 
 /* @(#)AbstractTurnout.java */

@@ -24,7 +24,7 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  * @see         jmri.AbstractTurnout
  * @see         jmri.TurnoutManager
  * @see         jmri.InstanceManager
@@ -69,6 +69,12 @@ public interface Turnout extends NamedBean {
      */
     public int getCommandedState();
 
+    /**
+     * Show whether state is one you can safely run trains over
+     * @return	true iff state is a valid one and the known state is the same as commanded
+     */
+    public boolean isConsistentState();
+    
     /**
      * Constant representing "direct feedback method".  In this case,
      * the commanded state is provided when the known state is requested.

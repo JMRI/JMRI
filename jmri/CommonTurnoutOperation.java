@@ -7,14 +7,14 @@ package jmri;
  * CommonTurnoutOperation class - specialization of TurnoutOperation to contain
  * common properties and methods for concrete subclasses
  * @author John Harper
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public abstract class CommonTurnoutOperation extends TurnoutOperation {
 
 	/*
 	 * Parameters of this object
 	 */
-	long interval;					// time between attempts
+	int interval;					// time between attempts
 	int maxTries;					// no of times to try
 
 	/*
@@ -27,7 +27,7 @@ public abstract class CommonTurnoutOperation extends TurnoutOperation {
 	static public final int minMaxTries = 1;
 	static public final int maxMaxTries = 10;
 	
-	public CommonTurnoutOperation(String n, long i, int mt) {
+	public CommonTurnoutOperation(String n, int i, int mt) {
 		super(n);
 		interval = getDefaultInterval();
 		maxTries = getDefaultMaxTries();
@@ -48,11 +48,18 @@ public abstract class CommonTurnoutOperation extends TurnoutOperation {
 	public abstract int getDefaultInterval();
 	public abstract int getDefaultMaxTries();
 	
+	public boolean equivalentTo(TurnoutOperation other) {
+		if (this.getClass()==other.getClass()) {
+			return interval==((CommonTurnoutOperation)other).interval &&
+				maxTries==((CommonTurnoutOperation)other).maxTries;
+		} else return false;
+	}
+
 	/**
 	 * set new value for interval. do nothing if not in range.
 	 * @param newInterval
 	 */
-	public void setInterval(long newInterval) {
+	public void setInterval(int newInterval) {
 		if (newInterval>=minInterval && newInterval<=maxInterval) {
 			interval = newInterval;
 		}

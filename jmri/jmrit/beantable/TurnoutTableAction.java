@@ -8,14 +8,19 @@ import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.TurnoutOperationManager;
+import jmri.TurnoutOperation;
 import jmri.Sensor;
 import jmri.jmrit.turnoutoperations.TurnoutOperationFrame;
+import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
+
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
+import java.util.Vector;
 
 import javax.swing.BoxLayout;
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -28,13 +33,16 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  * Swing action to create and register a
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004
- * @version     $Revision: 1.21 $
+ * @version     $Revision: 1.22 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -106,7 +114,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     			else if (col==MODECOL) return new JTextField(10).getPreferredSize().width;
     			else if (col==SENSOR1COL) return new JTextField(5).getPreferredSize().width;
     			else if (col==SENSOR2COL) return new JTextField(5).getPreferredSize().width;
-    			else if (col==OPSONOFFCOL) return new JTextField(4).getPreferredSize().width;
+    			else if (col==OPSONOFFCOL) return new JTextField(14).getPreferredSize().width;
     			else return super.getPreferredWidth(col);
 		    }
     		public boolean isCellEditable(int row, int col) {
@@ -129,7 +137,6 @@ public class TurnoutTableAction extends AbstractTableAction {
                     else return "Unknown";
     			} else if (col==MODECOL) {
 					JComboBox c = new JComboBox(t.getValidFeedbackNames());
-					int mode = t.getFeedbackMode();
 					c.setSelectedItem(t.getFeedbackModeName());
 					return c;
     			} else if (col==SENSOR1COL) {
@@ -141,12 +148,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     if (s!=null) return s.getSystemName();
                     else return "";
     			} else if (col==OPSONOFFCOL) {
-    				String[] strs = {"Default", "Off"};
-    				JComboBox cb = new JComboBox(strs);
-    				String selected = "Default";
-    				if (t.getInhibitOperation()) { selected="Off"; };
-    				cb.setSelectedItem(selected);
-    				return cb;
+    				return makeAutomationBox(t);
     			} else return super.getValueAt(row, col);
 			}    		
 			
@@ -170,8 +172,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     else s = null;
                     t.provideSecondFeedbackSensor(s);
     			} else if (col==OPSONOFFCOL) {
-    				String onOff = (String)((JComboBox)value).getSelectedItem();
-                    t.setInhibitOperation(onOff=="Off");
+    									// do nothing as this is handled by the combo box listener
     			} else super.setValueAt(value, row, col);
     		}
 
@@ -245,6 +246,185 @@ public class TurnoutTableAction extends AbstractTableAction {
     void showFeedbackChanged() {
         showFeedback = showFeedbackBox.isSelected();
         m.fireTableStructureChanged(); // update view
+    }
+    
+    /**
+     * Create a JComboBox containing all the options for turnout automation parameters for
+     * this turnout
+     * @param t	the turnout
+     * @return	the JComboBox
+     */
+    protected JComboBox makeAutomationBox(Turnout t) {
+    	final Turnout myTurnout = t;
+    	// TODO update self when operation changes, pick up non-default definitive operations
+    	TurnoutOperation[] ops = TurnoutOperationManager.getInstance().getTurnoutOperations();
+    	Vector strings = new Vector(20);
+    	Vector defStrings = new Vector(20);
+    	for (int i=0; i<ops.length; ++i) {
+    		if (!ops[i].isDefinitive()
+    				&& ops[i].matchFeedbackMode(t.getFeedbackMode())
+    				&& !ops[i].isNonce()) {
+    			strings.add(ops[i].getName());
+    		}
+    	}
+    	for (int i=0; i<ops.length; ++i) {
+    		if (ops[i].isDefinitive()
+    				&& ops[i].matchFeedbackMode(t.getFeedbackMode())) {
+    			defStrings.add(ops[i].getName());
+    		}
+    	}
+    	java.util.Collections.sort(strings);
+    	java.util.Collections.sort(defStrings);
+    	strings.add(0, new String("Off"));
+    	strings.add(1, new String("Use Global Default"));
+    	strings.add(2, new String("Edit..."));
+    	for (int i=0; i<defStrings.size(); ++i) {
+    		strings.add(i+3, defStrings.get(i));
+    	}
+    	final JComboBox cb = new JComboBox(strings);
+    	if (t.getInhibitOperation()) {
+    		cb.setSelectedIndex(0);
+    	} else if (t.getTurnoutOperation() == null) {
+    		cb.setSelectedIndex(1);
+    	} else if (t.getTurnoutOperation().isNonce()) {
+    		cb.setSelectedIndex(2);
+    	} else {
+    		cb.setSelectedItem(t.getTurnoutOperation().getName());
+    	}
+    	cb.addActionListener(new ActionListener() {
+    		public void actionPerformed(ActionEvent e) {
+    			setTurnoutOperation(myTurnout, cb);
+    		}
+    	});
+    	return cb;    	
+    }
+    
+    /**
+     * set the turnout's operation info based on the contents of the combo box
+     * @param t	turnout
+     * @param cb JComboBox
+     */
+    private void setTurnoutOperation(Turnout t, JComboBox cb) {
+		switch (cb.getSelectedIndex())
+		{
+		case 0:			// Off
+			t.setInhibitOperation(true);
+			t.setTurnoutOperation(null);
+			break;
+		case 1:			// Default
+			t.setInhibitOperation(false);
+			t.setTurnoutOperation(null);
+			break;
+		case 2:			// Edit... (use nonce)
+			t.setInhibitOperation(false);
+			editTurnoutOperation(t, cb);
+			break;
+		default:		// named operation
+			t.setInhibitOperation(false);
+			t.setTurnoutOperation(TurnoutOperationManager.getInstance().
+							getOperation(((String)cb.getSelectedItem())));	
+			break;
+		}
+	}
+    
+    /**
+     * pop up a TurnoutOperationConfig for the turnout 
+     * @param t turnout
+     * @param box JComboBox that triggered the edit
+     */
+    protected void editTurnoutOperation(Turnout t, JComboBox box) {
+    	TurnoutOperation op = t.getTurnoutOperation();
+    	if (op==null) {
+    		TurnoutOperation proto = TurnoutOperationManager.getInstance().getMatchingOperationAlways(t);
+    		if (proto != null) {
+    			op = proto.makeNonce(t);
+    			t.setTurnoutOperation(op);
+    		}
+    	}
+    	if (op != null) {
+    		TurnoutOperationEditor dialog = new TurnoutOperationEditor(this, f, op, t, box);
+    		dialog.show();
+    	} else {
+			JOptionPane.showMessageDialog(f, new String("There is no operation type suitable for this turnout"),
+					"No operation type", JOptionPane.ERROR_MESSAGE);
+    	}
+    }
+    
+    protected class TurnoutOperationEditor extends JDialog {
+    	TurnoutOperationConfig config;
+    	TurnoutOperation myOp;
+    	Turnout myTurnout;
+    	
+    	TurnoutOperationEditor(TurnoutTableAction tta, JFrame parent, TurnoutOperation op, Turnout t, JComboBox box) {
+    		super(parent);
+    		final TurnoutOperationEditor self = this;
+    		myOp = op;
+    		myOp.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+    			public void propertyChange(java.beans.PropertyChangeEvent evt) {
+    				if (evt.getPropertyName().equals("Deleted")) {
+    					hide();
+    				}
+    			}
+    		});
+    		myTurnout = t;
+        	config = TurnoutOperationConfig.getConfigPanel(op);
+        	setSize(300,150);
+        	setTitle();
+        	if (config != null) {
+        		Box outerBox = Box.createVerticalBox();
+        		outerBox.add(config);
+        		Box buttonBox = Box.createHorizontalBox();
+        		JButton nameButton = new JButton("Give name to this setting");
+        		nameButton.addActionListener(new ActionListener() {
+        			public void actionPerformed(ActionEvent e) {
+        				String newName = JOptionPane.showInputDialog("New name for this parameter setting:");
+        				if (newName != null && !newName.equals("")) {
+        					if (!myOp.rename(newName)) {
+        						JOptionPane.showMessageDialog(self, new String("This name is already in use"),
+        								"Name already in use", JOptionPane.ERROR_MESSAGE);
+        					}
+        					setTitle();
+        					myTurnout.setTurnoutOperation(null);
+        					myTurnout.setTurnoutOperation(myOp);	// no-op but updates display - have to <i>change</i> value
+        				}
+        			}
+        		});
+        		JButton okButton = new JButton("OK");
+        		okButton.addActionListener(new ActionListener() {
+        			public void actionPerformed(ActionEvent e) {
+        				config.endConfigure();
+        				if (myOp.isNonce() && myOp.equivalentTo(myOp.getDefinitive())) {
+        					myTurnout.setTurnoutOperation(null);
+        					myOp.dispose();
+        					myOp = null;
+        				}
+        				self.hide();
+        			}
+        		});
+        		JButton cancelButton = new JButton("Cancel");
+        		cancelButton.addActionListener(new ActionListener() {
+        			public void actionPerformed(ActionEvent e) {
+        				self.hide();
+        			}
+        		});
+        		buttonBox.add(Box.createHorizontalGlue());
+        		if (!op.isDefinitive()) {
+        			buttonBox.add(nameButton);
+        		}
+        		buttonBox.add(okButton);
+        		buttonBox.add(cancelButton);
+        		outerBox.add(buttonBox);
+        		getContentPane().add(outerBox);
+        		show();
+        	}
+    	}    
+    	private void setTitle() {
+    		String title = "Turnout Operation \"" + myOp.getName() + "\"";
+    		if (myOp.isNonce()) {
+    			title = "Turnout operation for turnout " + myTurnout.getSystemName();
+    		}
+    		setTitle(title);    		
+    	}
     }
     
     JCheckBox showFeedbackBox = new JCheckBox("Show feedback information");

@@ -60,6 +60,7 @@ public class TurnoutOperationManager {
 				log.debug("replaced existing operation called "+previous.getName());
 			}
 		}
+		firePropertyChange("Content", null, null);
 	}
 	
 	protected void removeOperation(TurnoutOperation op) {
@@ -70,6 +71,7 @@ public class TurnoutOperationManager {
 				turnoutOperations.remove(op.getName());
 			}
 		}
+		firePropertyChange("Content", null, null);
 	}
 	
 	/**
@@ -156,18 +158,35 @@ public class TurnoutOperationManager {
 	 * @param t	turnout
 	 * @param apparentMode	mode(s) to be used when finding a matching operation
 	 */
-	public TurnoutOperation getMatchingOperation(AbstractTurnout t, int apparentMode) {
-		if (doOperations) {
-			Iterator iter = operationTypes.iterator();
-			while (iter.hasNext()) {
-				TurnoutOperation oper = (TurnoutOperation)iter.next();
-				if (oper.matchFeedbackMode(apparentMode)) {
-					return oper;
-				}	
-			}
+	public TurnoutOperation getMatchingOperationAlways(Turnout t, int apparentMode) {
+		Iterator iter = operationTypes.iterator();
+		while (iter.hasNext()) {
+			TurnoutOperation oper = (TurnoutOperation)iter.next();
+			if (oper.matchFeedbackMode(apparentMode)) {
+				return oper;
+			}	
 		}
 		return null;
 	}
+	
+	/**
+	 * find the correct operation for this turnout. If operations are globally disabled, 
+	 * return nothing
+	 * @param t	turnout
+	 * @param apparentMode	mode(s) to be used when finding a matching operation
+	 * @return operation
+	 */
+	public TurnoutOperation getMatchingOperation(Turnout t, int apparentMode) {
+		if (doOperations) {
+			return getMatchingOperationAlways(t, apparentMode);
+		}
+		return null;
+	}
+	
+	public TurnoutOperation getMatchingOperationAlways(Turnout t) {
+		return getMatchingOperationAlways(t, t.getFeedbackMode());
+	}
+	
 	/*
 	 * get/change status of whether operations are in use
 	 */

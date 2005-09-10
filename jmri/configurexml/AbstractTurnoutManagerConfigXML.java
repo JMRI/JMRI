@@ -6,6 +6,7 @@ import jmri.Turnout;
 import jmri.Sensor;
 import jmri.TurnoutOperation;
 import jmri.TurnoutOperationManager;
+import jmri.configurexml.turnoutoperations.TurnoutOperationXml;
 
 import com.sun.java.util.collections.List;
 import java.util.Iterator;
@@ -24,7 +25,7 @@ import org.jdom.Attribute;
  * specific Turnout or AbstractTurnout subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
 
@@ -68,16 +69,26 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
                 if (s!=null) elem.addAttribute("sensor2", s.getSystemName());
                 
                 // add operation stuff
-                String opstr;
+                String opstr = null;
+                TurnoutOperation op = t.getTurnoutOperation();
                 if (t.getInhibitOperation()) {
                 	opstr = "Off";
-                } else if (t.getTurnoutOperation()==null) {
+                } else if (op==null) {
                 	opstr = "Default";
+                } else if (op.isNonce()) {	// nonce operation appears as subelement
+        			TurnoutOperationXml adapter = TurnoutOperationXml.getAdapter(op);
+        			if (adapter != null) {
+        				Element nonceOpElem = adapter.store(op);
+        				if (opElem != null) {
+        					elem.addContent(nonceOpElem);
+        				}
+        			}
                 } else {
-                	opstr = t.getTurnoutOperation().getName();
+                	opstr = op.getName();
                 }
-                elem.addAttribute("automate", opstr);
-                
+                if (opstr != null) {
+                	elem.addAttribute("automate", opstr);
+                }                
                 // add element
                 turnouts.addContent(elem);
 
@@ -110,8 +121,9 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
     public void loadTurnouts(Element turnouts) {
     	List operationList = turnouts.getChildren("operations");
     	if (operationList.size()>1) {
-    		log.debug("unexpected extra elements found in turnout operations list");
-    	} else if (operationList.size()==1) {
+    		log.warn("unexpected extra elements found in turnout operations list");
+    	}
+    	if (operationList.size()>0) {
     		TurnoutOperationManagerXml tomx = new TurnoutOperationManagerXml();
     		tomx.load((Element)operationList.get(0));
     	}
@@ -134,7 +146,9 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
             // now add feedback if needed
             Attribute a;
             a = ((Element)(turnoutList.get(i))).getAttribute("feedback");
-            if (a!=null) t.setFeedbackMode(a.getValue());
+            if (a!=null) {
+            	t.setFeedbackMode(a.getValue());
+            }
             a = ((Element)(turnoutList.get(i))).getAttribute("sensor1");
             if (a!=null) { 
                 Sensor s = InstanceManager.sensorManagerInstance().provideSensor(a.getValue());
@@ -146,15 +160,24 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
                 t.provideSecondFeedbackSensor(s);
             }
             // operation stuff
-            a = ((Element)(turnoutList.get(i))).getAttribute("automate");
-            if (a!=null) {
-            	String str = a.getValue();
-            	if (str.equals("Off")) {
-            		t.setInhibitOperation(true);
-            	} else if (!str.equals("Default")) {
-            		TurnoutOperation toper =
-            			TurnoutOperationManager.getInstance().getOperation(str);
-            		t.setTurnoutOperation(toper);
+            List myOpList = ((Element)turnoutList.get(i)).getChildren();
+            if (myOpList.size()>0) {
+            	if (myOpList.size()>1) {
+            		log.warn("unexpected extra elements found in turnout-specific operations");
+            	}
+            	TurnoutOperation toper = TurnoutOperationXml.loadOperation((Element)myOpList.get(0));
+        		t.setTurnoutOperation(toper);
+            } else {
+            	a = ((Element)(turnoutList.get(i))).getAttribute("automate");
+            	if (a!=null) {
+            		String str = a.getValue();
+            		if (str.equals("Off")) {
+            			t.setInhibitOperation(true);
+            		} else if (!str.equals("Default")) {
+            			TurnoutOperation toper =
+            				TurnoutOperationManager.getInstance().getOperation(str);
+            			t.setTurnoutOperation(toper);
+            		}
             	}
             }
 			

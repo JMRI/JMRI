@@ -7,7 +7,7 @@ package jmri;
  * NoFeedBackTurnoutOperation class - specialization of TurnoutOperation to provide
  * automatic retry for a turnout with no feedback
  * @author John Harper
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class NoFeedbackTurnoutOperation extends CommonTurnoutOperation {
 
@@ -35,6 +35,13 @@ public class NoFeedbackTurnoutOperation extends CommonTurnoutOperation {
 		this("NoFeedback", defaultInterval, defaultMaxTries);
 	}
 	
+	/**
+	 * return clone with different name
+	 */
+	public TurnoutOperation makeCopy(String n) {
+		return new NoFeedbackTurnoutOperation(n, interval, maxTries);
+	}
+
 	public int getDefaultInterval() {
 		return defaultInterval;
 	}

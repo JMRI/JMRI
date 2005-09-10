@@ -9,6 +9,7 @@ import java.lang.Integer;
 import java.lang.reflect.Constructor;
 
 import jmri.CommonTurnoutOperation;
+import jmri.TurnoutOperation;
 import jmri.configurexml.turnoutoperations.TurnoutOperationXml;
 
 /**
@@ -27,19 +28,18 @@ public abstract class CommonTurnoutOperationXml extends TurnoutOperationXml {
 		return elem;
 	}
 	
-	public abstract void load(Element e);
-	
 	/**
 	 * called for a newly-constructed object to load it from an XML element
 	 * @param the XML element of type "turnoutOperation"
 	 */
-	public void load(Element e, Constructor constr, int di, int dmt) {
+	public TurnoutOperation loadOne(Element e, Constructor constr, int di, int dmt) {
 		int interval = di;
 		int maxTries = dmt;
 		boolean noDelete = false;
+		TurnoutOperation result = null;
         if (e.getAttribute("name") == null) {
             log.warn("unexpected null in name "+e+" "+e.getAttributes());
-            return;
+            return null;
         }
         String name = e.getAttribute("name").getValue();
         if (e.getAttribute("interval") != null) {
@@ -54,12 +54,13 @@ public abstract class CommonTurnoutOperationXml extends TurnoutOperationXml {
         }
         // constructor takes care of enrolling the new operation
         try {
-        	CommonTurnoutOperation op =
+        	result =
         		(CommonTurnoutOperation)constr.newInstance(new Object[]{name, new Integer(interval), new Integer(maxTries)});
         } catch (Exception except) {			// too many to list!
         	log.warn("failed to create instance of "+constr.getDeclaringClass().getName()+" for \""+name+"\"");
         }
         if (log.isDebugEnabled()) log.debug("create turnout operation: ("+name+")");	
+        return result;
 	}
 	
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CommonTurnoutOperationXml.class.getName());
