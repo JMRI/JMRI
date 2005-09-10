@@ -3,21 +3,11 @@
  */
 package jmri;
 
-import java.awt.GridLayout;
-
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-
-
-import org.jdom.Element;
-
 /**
  * NoFeedBackTurnoutOperation class - specialization of TurnoutOperation to provide
  * automatic retry for a turnout with no feedback
  * @author John Harper
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class NoFeedbackTurnoutOperation extends CommonTurnoutOperation {
 

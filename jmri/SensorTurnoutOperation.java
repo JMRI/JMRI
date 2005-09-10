@@ -3,21 +3,11 @@
  */
 package jmri;
 
-import java.awt.GridLayout;
-
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-
-
-import org.jdom.Element;
-
 /**
  * SensorTurnoutOperation class - specialization of TurnoutOperation to provide
  * automatic retry for a turnout with explicit feedback from sensor(s)
  * @author John Harper	Copyright 2005
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SensorTurnoutOperation extends CommonTurnoutOperation {
 
