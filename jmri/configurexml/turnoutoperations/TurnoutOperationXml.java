@@ -26,7 +26,38 @@ public abstract class TurnoutOperationXml implements XmlAdapter {
 	 * inherited methods
 	 * @see jmri.configurexml.XmlAdapter#load(org.jdom.Element)
 	 */
-	public abstract void load(Element e) throws Exception;
+	public void load(Element e) throws Exception {
+		loadOne(e);
+	}
+	
+	public abstract TurnoutOperation loadOne(Element e);
+	
+	/**
+	 * Load one operation, using the appropriate adapter
+	 * @param e	element for operation
+	 * @throws Exception
+	 */
+	public static TurnoutOperation loadOperation(Element e) {
+		TurnoutOperation result = null;
+		String className = e.getAttributeValue("class");
+		if (className==null) {
+			log.error("class name missing in turnout operation \""+e+"\"");
+		} else {
+			try {
+				Class adapterClass = Class.forName(className);
+				if (adapterClass != null) {
+					TurnoutOperationXml adapter = (TurnoutOperationXml)adapterClass.newInstance();
+					result = adapter.loadOne(e);
+					if (result.getName().charAt(0)=='*') {
+						result.setNonce(true);
+					}
+				}
+			} catch (Exception ex) {
+				log.error("failed to find or run adapter class for "+className);
+			}
+		}
+		return result;
+	}
 
 	/**
 	 * @see jmri.configurexml.XmlAdapter#load(org.jdom.Element, java.lang.Object)
