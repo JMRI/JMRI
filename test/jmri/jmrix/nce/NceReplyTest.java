@@ -14,7 +14,7 @@ import jmri.jmrix.nce.NceReply;
 /**
  * JUnit tests for the NceReplyclass
  * @author			Bob Jacobsen
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class NceReplyTest extends TestCase {
 
@@ -41,7 +41,7 @@ public class NceReplyTest extends TestCase {
         m.setElement(1, 0x02);
         m.setElement(2, 0xA2);
         m.setElement(3, 0x00);
-        Assert.assertEquals("string compare ", "81 02 a2 00", m.toString());
+        Assert.assertEquals("string compare ", "81 02 A2 00", m.toString());
     }
 
     public void testAsciiToString() {
