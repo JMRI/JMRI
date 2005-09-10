@@ -2,9 +2,9 @@
 
 package jmri.managers;
 
-import java.util.List;
-import java.util.Arrays;
-import java.util.LinkedList;
+import com.sun.java.util.collections.List;
+import com.sun.java.util.collections.Arrays;
+import com.sun.java.util.collections.LinkedList;
 
 import jmri.Manager;
 import jmri.Sensor;
@@ -18,7 +18,7 @@ import jmri.TurnoutOperationManager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class ProxyTurnoutManager extends AbstractProxyManager implements TurnoutManager {
 
