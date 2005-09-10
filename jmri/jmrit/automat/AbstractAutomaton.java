@@ -9,6 +9,7 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.Sensor;
+import jmri.Turnout;
 import jmri.ThrottleListener;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -64,7 +65,7 @@ import javax.swing.JTextArea;
  * so that Jython code can easily use some of the methods.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.24 $
+ * @version     $Revision: 1.25 $
  */
 public class AbstractAutomaton implements Runnable {
 
@@ -394,6 +395,73 @@ public class AbstractAutomaton implements Runnable {
     }
 
     /**
+     * Wait for a list of turnouts to all be in a consistent state
+     * <P>
+     * This works by registering a listener, which is likely to
+     * run in another thread.  That listener then interrupts the automaton's
+     * thread, who confirms the change.
+     *
+     * @param mTurnouts list of turnouts to watch
+     */
+    public synchronized void waitTurnoutConsistent(Turnout[] mTurnouts){
+        if (!inThread) log.warn("waitTurnoutConsistent invoked from invalid context");
+        if (log.isDebugEnabled()) log.debug("waitTurnoutConsistent[] starts");
+
+        // do a quick check first, just in case
+        if (checkForConsistent(mTurnouts)) {
+            log.debug("returns immediately");
+            return;
+        }
+        // register listeners
+        int i;
+        java.beans.PropertyChangeListener[] listeners =
+                new java.beans.PropertyChangeListener[mTurnouts.length];
+        for (i=0; i<mTurnouts.length; i++) {
+
+        	mTurnouts[i].addPropertyChangeListener(listeners[i] = new java.beans.PropertyChangeListener() {
+                public void propertyChange(java.beans.PropertyChangeEvent e) {
+                    synchronized (self) {
+                        log.debug("notify waitTurnoutConsistent[] of property change");
+                        self.notifyAll(); // should be only one thread waiting, but just in case
+                    }
+                }
+            });
+
+        }
+
+        while (!checkForConsistent(mTurnouts)) {
+            wait(-1);
+        }
+
+        // remove the listeners
+        for (i=0; i<mTurnouts.length; i++) {
+        	mTurnouts[i].removePropertyChangeListener(listeners[i]);
+        }
+
+        return;
+    }
+
+    /**
+     * Convenience function to set a bunch of turnouts and wait until they are all
+     * in a consistent state
+     * @param normal	turnouts to set to closed state
+     * @param reverse	turnouts to set to thrown state
+     */
+    public void setTurnouts(Turnout[] closed, Turnout[] thrown) {
+    	Turnout[] turnouts = new Turnout[closed.length + thrown.length];
+    	int ti = 0;
+    	for (int i=0; i<closed.length; ++i) {
+    		turnouts[ti++] = closed[i];
+    		closed[i].setCommandedState(Turnout.CLOSED);
+    	}
+    	for (int i=0; i<thrown.length; ++i) {
+    		turnouts[ti++] = thrown[i];
+    		thrown[i].setCommandedState(Turnout.THROWN);
+    	}
+    	waitTurnoutConsistent(turnouts);
+    }
+    
+    /**
      * Wait for one of a list of NamedBeans (sensors, signal heads and/or turnouts) to change.
      * <P>
      * This works by registering a listener, which is likely to
@@ -459,6 +527,15 @@ public class AbstractAutomaton implements Runnable {
         return false;
     }
 
+    private boolean checkForConsistent(Turnout[] mTurnouts) {
+    	for (int i=0; i<mTurnouts.length; ++i) {
+    		if (!mTurnouts[i].isConsistentState()) {
+    			return false;
+    		}
+    	}
+    	return true;
+    }
+    
     private DccThrottle throttle;
     /**
      * Obtains a DCC throttle, including waiting for the command station response.
