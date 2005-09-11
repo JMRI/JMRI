@@ -42,7 +42,7 @@ import javax.swing.event.ChangeListener;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004
- * @version     $Revision: 1.22 $
+ * @version     $Revision: 1.23 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -255,9 +255,30 @@ public class TurnoutTableAction extends AbstractTableAction {
      * @return	the JComboBox
      */
     protected JComboBox makeAutomationBox(Turnout t) {
+    	String[] str = new String[]{"empty"};
+    	final JComboBox cb = new JComboBox(str);
     	final Turnout myTurnout = t;
-    	// TODO update self when operation changes, pick up non-default definitive operations
+    	updateAutomationBox(t, cb);
+    	cb.addActionListener(new ActionListener() {
+    		public void actionPerformed(ActionEvent e) {
+    			setTurnoutOperation(myTurnout, cb);
+    			cb.removeActionListener(this);		// avoid recursion
+    			updateAutomationBox(myTurnout, cb);
+    			cb.addActionListener(this);
+    		}
+    	});
+    	return cb;    	
+    }
+    
+    /**
+     * Add the content and make the appropriate selection to a combox box for a turnout's
+     * automation choices
+     * @param t	turnout
+     * @param cb	the JComboBox
+     */
+    public static void updateAutomationBox(Turnout t, JComboBox cb) {
     	TurnoutOperation[] ops = TurnoutOperationManager.getInstance().getTurnoutOperations();
+    	cb.removeAllItems();
     	Vector strings = new Vector(20);
     	Vector defStrings = new Vector(20);
     	for (int i=0; i<ops.length; ++i) {
@@ -281,7 +302,9 @@ public class TurnoutTableAction extends AbstractTableAction {
     	for (int i=0; i<defStrings.size(); ++i) {
     		strings.add(i+3, defStrings.get(i));
     	}
-    	final JComboBox cb = new JComboBox(strings);
+    	for (int i=0; i<strings.size(); ++i) {
+    		cb.addItem(strings.get(i));
+    	}
     	if (t.getInhibitOperation()) {
     		cb.setSelectedIndex(0);
     	} else if (t.getTurnoutOperation() == null) {
@@ -291,12 +314,6 @@ public class TurnoutTableAction extends AbstractTableAction {
     	} else {
     		cb.setSelectedItem(t.getTurnoutOperation().getName());
     	}
-    	cb.addActionListener(new ActionListener() {
-    		public void actionPerformed(ActionEvent e) {
-    			setTurnoutOperation(myTurnout, cb);
-    		}
-    	});
-    	return cb;    	
     }
     
     /**
