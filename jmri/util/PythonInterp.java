@@ -15,8 +15,13 @@ import java.io.*;
  * without the jython.jar file in the classpath. To make it easier to
  * read the code, the "non-reflection" statements are in the comments.
  *
+ * Note that there is Windows-specific handling of filenames in the 
+ * execFile routine. Since Java will occasionally treat the backslash
+ * character as a character escape, we have to double it (to quote it)
+ * on Windows machines where it might normally appear in a filename.
+ *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class PythonInterp {
 
@@ -35,7 +40,12 @@ public class PythonInterp {
         execFile(filename);
     }
 
-     static void execFile(String filename) {
+     static public void execFile(String filename) {
+        // if windows, need to process backslashes in filename
+        String os = System.getProperty("os.name");
+        if ( os != null && os.startsWith("Window"))
+            filename = filename.replaceAll("\\\\", "\\\\\\\\");
+        
         execCommand("execfile(\""+filename+"\")");
     }
 
