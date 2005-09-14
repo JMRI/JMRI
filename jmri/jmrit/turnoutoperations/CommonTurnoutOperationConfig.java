@@ -33,6 +33,16 @@ public class CommonTurnoutOperationConfig extends TurnoutOperationConfig {
 	public CommonTurnoutOperationConfig(TurnoutOperation op) {
 		super(op);
 		myOp = (CommonTurnoutOperation)op;
+		try {
+			maxTriesSpinner = new JSpinner();
+			intervalSpinner = new JSpinner();
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(null,
+					"Turnout automation parameters cannot be modified with the Java Virtual Machine you are using",
+					"Cannot modify parameters", JOptionPane.ERROR_MESSAGE);
+			valid = false;
+			return;
+		}
 		Box vbox = Box.createVerticalBox();
 		Box hbox1 = Box.createHorizontalBox();
 		Box hbox2 = Box.createHorizontalBox();
@@ -41,7 +51,6 @@ public class CommonTurnoutOperationConfig extends TurnoutOperationConfig {
 		vbox.add(Box.createVerticalGlue());
 		hbox1.add(new JLabel("Interval:     "));
 		hbox1.add(Box.createHorizontalGlue());
-		intervalSpinner = new JSpinner();
 		intervalSpinner.setMinimumSize(new Dimension(100,20));
 		SpinnerNumberModel intervalSpinnerModel=(SpinnerNumberModel)intervalSpinner.getModel();
 		intervalSpinnerModel.setMaximum(new Integer(myOp.maxInterval));
@@ -51,7 +60,6 @@ public class CommonTurnoutOperationConfig extends TurnoutOperationConfig {
 		hbox1.add(intervalSpinner);
 		hbox2.add(new JLabel("Times to try:   "));
 		hbox2.add(Box.createHorizontalGlue());
-		maxTriesSpinner = new JSpinner();
 		maxTriesSpinner.setMinimumSize(new Dimension(100,20));
 		SpinnerNumberModel maxTriesSpinnerModel=(SpinnerNumberModel)maxTriesSpinner.getModel();
 		maxTriesSpinnerModel.setMaximum(new Integer(myOp.maxMaxTries));

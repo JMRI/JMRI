@@ -42,7 +42,7 @@ import javax.swing.event.ChangeListener;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004
- * @version     $Revision: 1.23 $
+ * @version     $Revision: 1.24 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -360,7 +360,6 @@ public class TurnoutTableAction extends AbstractTableAction {
     	}
     	if (op != null) {
     		TurnoutOperationEditor dialog = new TurnoutOperationEditor(this, f, op, t, box);
-    		dialog.show();
     	} else {
 			JOptionPane.showMessageDialog(f, new String("There is no operation type suitable for this turnout"),
 					"No operation type", JOptionPane.ERROR_MESSAGE);
@@ -475,7 +474,6 @@ public class TurnoutTableAction extends AbstractTableAction {
         item.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		TurnoutOperationFrame tof = new TurnoutOperationFrame(finalF);
-        		tof.show();
         	}
         });
     }

@@ -16,17 +16,20 @@ import java.lang.reflect.Constructor;
  * Must be overridden to define specific panel details for class
  * Must have exactly one constructor like the one shown below
  * @author John Harper	Copyright 2005
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public abstract class TurnoutOperationConfig extends JPanel {
 
 	TurnoutOperation myOperation;
+	boolean valid = true;
 	
 	TurnoutOperationConfig(TurnoutOperation op) {
 		myOperation = op;
 	}
 	
 	TurnoutOperation getOperation() { return myOperation; };
+	
+	public boolean isValid() { return valid; };
 	
 	public abstract void endConfigure();
 	
@@ -51,7 +54,8 @@ public abstract class TurnoutOperationConfig extends JPanel {
 				} catch (Throwable e) { };		// too many to list!
 			}
 		} catch (ClassNotFoundException e) { };
-		if (config==null) {
+		if (config==null || !config.isValid()) {
+			config = null;
 			log.debug("could not create configurator for "+op.getClass().getName()+" \""+op.getName()+"\"");
 		}
 		return config;

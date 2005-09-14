@@ -75,7 +75,9 @@ public class TurnoutOperationFrame extends JDialog {
 				}
 			}
 		});
-		show();
+		if (tabPane.getTabCount()>0) {
+			show();
+		}
 	}
 	
 	private void doOK() {
@@ -140,7 +142,7 @@ public class TurnoutOperationFrame extends JDialog {
 				}
 			}
 		}
-		if (tabPane.getSelectedComponent()==null) {
+		if (tabPane.getSelectedComponent()==null && firstPane!=null) {
 			tabPane.setSelectedComponent(firstPane);
 		}
 		changeTab();
