@@ -32,7 +32,7 @@ import jmri.util.com.sun.Comparator;
  * Based in part on SignalHeadTableAction.java by Bob Jacobson
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -218,9 +218,11 @@ public class RouteTableAction extends AbstractTableAction {
             p2x.add(p21);
             routeTurnoutModel = new RouteTurnoutModel();
             JTable routeTurnoutTable = jmri.util.JTableUtil.sortableDataModel(routeTurnoutModel);
-            jmri.util.com.sun.TableSorter tmodel = ((jmri.util.com.sun.TableSorter)routeTurnoutTable.getModel());
-            tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-            tmodel.setSortingStatus(RouteTurnoutModel.SNAME_COLUMN, jmri.util.com.sun.TableSorter.ASCENDING);
+            try {
+                jmri.util.com.sun.TableSorter tmodel = ((jmri.util.com.sun.TableSorter)routeTurnoutTable.getModel());
+                tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
+                tmodel.setSortingStatus(RouteTurnoutModel.SNAME_COLUMN, jmri.util.com.sun.TableSorter.ASCENDING);
+            } catch (ClassCastException e3) {}  // if not a sortable table model
             routeTurnoutTable.setRowSelectionAllowed(false);
             routeTurnoutTable.setPreferredScrollableViewportSize(new 
                                                             java.awt.Dimension(480,100));

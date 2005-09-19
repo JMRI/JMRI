@@ -24,7 +24,7 @@ import jmri.util.com.sun.Comparator;
  * Frame providing a table of NamedBeans.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class BeanTableFrame extends javax.swing.JFrame {
 
@@ -46,10 +46,12 @@ public class BeanTableFrame extends javax.swing.JFrame {
         dataScroll	= new JScrollPane(dataTable);
 
         // give system name column a smarter sorter and use it initially
-        TableSorter tmodel = ((TableSorter)dataTable.getModel());
-        tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-        tmodel.setSortingStatus(BeanTableDataModel.SYSNAMECOL, TableSorter.ASCENDING);
-
+        try {
+            TableSorter tmodel = ((TableSorter)dataTable.getModel());
+            tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
+            tmodel.setSortingStatus(BeanTableDataModel.SYSNAMECOL, TableSorter.ASCENDING);
+        } catch (java.lang.ClassCastException e) {}  // happens if not sortable table
+        
         // configure items for GUI
         dataModel.configureTable(dataTable);
 
