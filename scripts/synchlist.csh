@@ -64,7 +64,7 @@ echo '  </path>												' >>ClassicCompile.xml
 echo '  <target name="ClassicCompile" description="compile files requiring Java 1.1.8"> ' >>ClassicCompile.xml
 echo '    <\!-- Compile specific classes with regular path --> 	' >>ClassicCompile.xml
 echo '    <javac srcdir="${source}" target="1.1" 				' >>ClassicCompile.xml
-echo '      destdir="${target}" debug="yes"  					' >>ClassicCompile.xml
+echo '      destdir="${target}" debug="yes" verbose="no"		' >>ClassicCompile.xml
 echo '      fork="yes" executable="${Env.JDK1}"  				' >>ClassicCompile.xml
 echo '      includes =" ' >>ClassicCompile.xml
 
