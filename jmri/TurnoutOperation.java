@@ -5,8 +5,7 @@ package jmri;
 
 import com.sun.java.util.collections.List;
 import com.sun.java.util.collections.Iterator;
-
-
+import com.sun.java.util.collections.Comparable;
 
 /**
  * Framework for automating reliable turnout operation. This interface allows
@@ -157,7 +156,7 @@ public abstract class TurnoutOperation implements Comparable {
 	 * @return definitive operation
 	 */
 	public TurnoutOperation getDefinitive() {
-		String[] myClass = getClass().getName().split("\\.");
+		String[] myClass = jmri.util.StringUtil.split(this.getClass().getName(), ".");
 		String finalClass = myClass[myClass.length-1];
 		String mySubclass = finalClass.substring(0, finalClass.indexOf("TurnoutOperation"));
 		return TurnoutOperationManager.getInstance().getOperation(mySubclass);
@@ -169,7 +168,7 @@ public abstract class TurnoutOperation implements Comparable {
 	 * as the prefix of the class
 	 */
 	public boolean isDefinitive() {
-		String[] classNames = this.getClass().getName().split("\\.");
+		String[] classNames = jmri.util.StringUtil.split(this.getClass().getName(), ".");
 		String className = classNames[classNames.length-1];
 		String opName = getName()+"TurnoutOperation";
 		return (className.equalsIgnoreCase(opName));
