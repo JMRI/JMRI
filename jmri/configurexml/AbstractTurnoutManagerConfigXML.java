@@ -9,7 +9,6 @@ import jmri.TurnoutOperationManager;
 import jmri.configurexml.turnoutoperations.TurnoutOperationXml;
 
 import com.sun.java.util.collections.List;
-import java.util.Iterator;
 import org.jdom.Element;
 import org.jdom.Attribute;
 
@@ -25,7 +24,7 @@ import org.jdom.Attribute;
  * specific Turnout or AbstractTurnout subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
 
