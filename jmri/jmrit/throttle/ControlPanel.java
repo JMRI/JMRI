@@ -45,7 +45,7 @@ import org.jdom.Attribute;
  *  TODO: fix speed increments (14, 28)
  *
  * @author     glen   Copyright (C) 2002
- * @version    $Revision: 1.46 $
+ * @version    $Revision: 1.47 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener,ActionListener
 {
@@ -313,7 +313,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     /**
      * Set real-time tracking of speed slider, or not
      * 
-     * @param tracking  boolean value, true to track, false to set speed on unclick
+     * @param track  boolean value, true to track, false to set speed on unclick
      */
     
     public void setTrackSlider(boolean track) {
@@ -632,7 +632,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	 *  A KeyAdapter that listens for the keys that work the control pad buttons
 	 *
 	 * @author     glen
-         * @version    $Revision: 1.46 $
+         * @version    $Revision: 1.47 $
 	 */
 	class ControlPadKeyListener extends KeyAdapter
 	{

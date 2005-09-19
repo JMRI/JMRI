@@ -9,10 +9,10 @@ import java.awt.event.ActionEvent;
  * Action to create and register a
  * pricom.pockettester.DataSource object
  *
- * @see jmri.jmrix.pricom.pockettester.DataSourceFrame
+ * @see jmri.jmrix.pricom.pockettester.DataSource
  *
  * @author			Bob Jacobsen    Copyright (C) 2002,2005
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class DataSourceAction extends AbstractAction  {
 

@@ -7,7 +7,7 @@ package jmri.jmrix.lenz;
  *<P>
  *
  * @author			Paul Bender Copyright (C) 2004
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  *
  */
 public class XNetReply extends jmri.jmrix.AbstractMRReply {
@@ -68,7 +68,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
  
     /** 
      * Get an integer representation of a BCD value 
-     * @parm n byte in message to convert
+     * @param n byte in message to convert
      * @return Integer value of BCD byte.
      */
         public Integer getElementBCD(int n) { return Integer.decode(Integer.toHexString(getElement(n))); }
@@ -128,7 +128,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * pair for a turnout, return the address.  Otherwise return -1.
      * </p>
      *
-     * @parm startByte address byte of the address byte/data byte pair.
+     * @param startByte address byte of the address byte/data byte pair.
      * @return the integer address or -1 if not a turnout message
      */
     public int getTurnoutMsgAddr(int startByte) {
@@ -162,7 +162,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * Parse the feedback message for a turnout, and return the status 
      * for the even or odd half of the nibble (upper or lower part)
      * </p>
-     * @parm turnout <ul> 
+     * @param turnout <ul> 
      *	<li>0 for the even turnout associated with the pair.  
      *  This is the upper half of the data nibble asociated with the pair </li>
      *	<li>1 for the odd turnout associated with the pair.  
@@ -211,8 +211,8 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * return the status  for the even or odd half of the nibble (upper or 
      * lower part)
      * </p>
-     * @parm startByte address byte of the address byte/data byte pair.
-     * @parm turnout <ul> 
+     * @param startByte address byte of the address byte/data byte pair.
+     * @param turnout <ul> 
      *	<li>0 for the even turnout associated with the pair.  
      *  This is the upper half of the data nibble asociated with the pair </li>
      *	<li>1 for the odd turnout associated with the pair.  
@@ -278,7 +278,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * startByte is the address byte of an address byte/data byte 
      * pair for a feedback encoder, return the address.  Otherwise return -1.
      * </p>
-     * @parm startByte address byte of the address byte data byte pair.
+     * @param startByte address byte of the address byte data byte pair.
      * @return the integer address or -1 if not a feedback message
      */
     public int getFeedbackEncoderMsgAddr(int startByte) {
@@ -339,7 +339,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * The return value is the middle two bits of the upper byte of the 
      * data byte of an address byte/data byte pair.
      * </p>  
-     * @parm startByte The address byte for this addres byte data byte 
+     * @param startByte The address byte for this addres byte data byte 
      * pair.
      * @return message type, values are:
      * <ul>
