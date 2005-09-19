@@ -17,8 +17,8 @@ import com.sun.java.util.collections.Comparable;
  * back to an explicit implementation when running on Java 1.1; this also
  * includes some stand-in methods for java.util.Collections, etc.
  *
- * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.1 $
+ * @author Bob Jacobsen  Copyright 2005
+ * @version $Revision: 1.2 $
  */
 
 public class VectorUtil {
