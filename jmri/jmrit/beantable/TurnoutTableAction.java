@@ -42,7 +42,7 @@ import javax.swing.event.ChangeListener;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004
- * @version     $Revision: 1.24 $
+ * @version     $Revision: 1.25 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -285,25 +285,25 @@ public class TurnoutTableAction extends AbstractTableAction {
     		if (!ops[i].isDefinitive()
     				&& ops[i].matchFeedbackMode(t.getFeedbackMode())
     				&& !ops[i].isNonce()) {
-    			strings.add(ops[i].getName());
+    			strings.addElement(ops[i].getName());
     		}
     	}
     	for (int i=0; i<ops.length; ++i) {
     		if (ops[i].isDefinitive()
     				&& ops[i].matchFeedbackMode(t.getFeedbackMode())) {
-    			defStrings.add(ops[i].getName());
+    			defStrings.addElement(ops[i].getName());
     		}
     	}
-    	java.util.Collections.sort(strings);
-    	java.util.Collections.sort(defStrings);
-    	strings.add(0, new String("Off"));
-    	strings.add(1, new String("Use Global Default"));
-    	strings.add(2, new String("Edit..."));
+    	jmri.util.VectorUtil.sort(strings);
+    	jmri.util.VectorUtil.sort(defStrings);
+    	strings.setElementAt(new String("Off"),0);
+    	strings.setElementAt(new String("Use Global Default"),1);
+    	strings.setElementAt(new String("Edit..."),2);
     	for (int i=0; i<defStrings.size(); ++i) {
-    		strings.add(i+3, defStrings.get(i));
+    		strings.setElementAt(defStrings.elementAt(i),i+3);
     	}
     	for (int i=0; i<strings.size(); ++i) {
-    		cb.addItem(strings.get(i));
+    		cb.addItem(strings.elementAt(i));
     	}
     	if (t.getInhibitOperation()) {
     		cb.setSelectedIndex(0);
@@ -470,6 +470,10 @@ public class TurnoutTableAction extends AbstractTableAction {
         JMenu opsMenu = new JMenu("Automation");
         menuBar.add(opsMenu);
         JMenuItem item = new JMenuItem("Edit...");
+        if (!jmri.util.JSpinnerUtil.isJSpinnerAvailable()) {
+            item.setEnabled(false);
+            item.setToolTipText("Disabled, because this version of Java cannot support it");
+        }
         opsMenu.add(item);
         item.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
