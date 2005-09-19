@@ -8,7 +8,7 @@ import junit.framework.*;
  * Invokes complete set of tests in the jmri.util tree
  *
  * @author	    Bob Jacobsen  Copyright 2003
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class UtilTest extends TestCase {
 
@@ -26,6 +26,8 @@ public class UtilTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.util.UtilTest");   // no tests in this class itself
+        suite.addTest(jmri.util.JSpinnerUtilTest.suite());
+        suite.addTest(jmri.util.VectorUtilTest.suite());
         suite.addTest(jmri.util.StringUtilTest.suite());
 
         return suite;
