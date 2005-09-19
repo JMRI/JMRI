@@ -4,7 +4,6 @@
 package jmri.configurexml.turnoutoperations;
 
 import java.lang.reflect.Constructor;
-import java.util.Arrays;
 
 import org.jdom.Element;
 
@@ -89,12 +88,12 @@ public abstract class TurnoutOperationXml implements XmlAdapter {
 	 */
     static public TurnoutOperationXml getAdapter(TurnoutOperation op) {
     	TurnoutOperationXml adapter = null;
-    	String[] fullOpNameComponents = op.getClass().getName().split("\\.");
+    	String[] fullOpNameComponents = jmri.util.StringUtil.split(op.getClass().getName(),".");
     	String[] myNameComponents =
-    		new String("jmri.configurexml.turnoutoperations.TurnoutOperationXml").split("\\.");
+    		new String[]{"jmri","configurexml","turnoutoperations","TurnoutOperationXml"};
     	myNameComponents[myNameComponents.length-1] = 
     		fullOpNameComponents[fullOpNameComponents.length-1];
-    	String fullConfigName = StringUtil.join(Arrays.asList(myNameComponents), ".") + "Xml";
+    	String fullConfigName = StringUtil.join(myNameComponents, ".") + "Xml";
     	try {
     		Class configClass = Class.forName(fullConfigName);
     		adapter = (TurnoutOperationXml)configClass.newInstance();
