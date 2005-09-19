@@ -17,7 +17,7 @@ import java.util.Iterator;
  * back to an explicit implementation when running on Java 1.1
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class StringUtil {
@@ -183,7 +183,7 @@ static char[] hexChars = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A'
     }
     
     /**
-     * join a series of strings, separated by a delimiter
+     * Join a collection of strings, separated by a delimiter
      * @param s	collection of strings
      * @param delimiter
      * @return e.g. join({"abc","def,"ghi"}, ".") ==> "abc.def.ghi"
@@ -200,6 +200,22 @@ static char[] hexChars = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A'
         return buffer.toString();
     }
 
+    /**
+     * Join an array of strings, separated by a delimiter
+     * @param s	collection of strings
+     * @param delimiter
+     * @return e.g. join({"abc","def,"ghi"}, ".") ==> "abc.def.ghi"
+     */
+    public static String join(String[] s, String delimiter) {
+        StringBuffer buffer = new StringBuffer();
+        for (int i=0; i<s.length; i++) {
+            buffer.append(s[i]);
+            if (i<s.length-1) {
+                buffer.append(delimiter);
+            }
+        }
+        return buffer.toString();
+    }
     /**
      * Provide a version of String replaceAll() that also works on Java 1.1.8
      */
@@ -224,4 +240,45 @@ static char[] hexChars = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A'
         return output+local;
      }
 
+    /**
+     * Split a string into an array of Strings, at a particular
+     * divider.  This is similar to the new String.split method,
+     * except that this does not provide regular expression
+     * handling; the divider string is just a string.
+     * @param input String to split
+     * @param divider Where to divide the input; this does not appear in output
+     */
+    static public String[] split(String input, String divider) {
+        int size = 0;
+        String temp = input;
+        
+        // count entries
+        while (temp.length() > 0) {
+            size++;
+            int index = temp.indexOf(divider);
+            if (index < 0) break;    // break not found
+            temp = temp.substring(index+divider.length());
+            if (temp.length() == 0) {  // found at end
+                size++;
+                break;
+            }
+        }
+        
+        String[] result = new String[size];
+        
+        // find entries
+        temp = input;
+        size = 0;
+        while (temp.length() > 0) {
+            int index = temp.indexOf(divider);
+            if (index < 0) break;    // done with all but last
+            result[size] = temp.substring(0,index);
+            temp = temp.substring(index+divider.length());
+            size++;
+        }
+        result[size] = temp;
+        
+        return result;
+    }
+    
 }
