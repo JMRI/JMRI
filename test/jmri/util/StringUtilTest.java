@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.util.StringUtil class.
  * @author	Bob Jacobsen  Copyright 2003
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class StringUtilTest extends TestCase {
 
@@ -108,6 +108,12 @@ public class StringUtilTest extends TestCase {
             return true;
         }
 
+        public void testJoinA1() {
+            String input[] = new String[]{ "A", "B", "C" };
+            String results = StringUtil.join(input,".");
+            Assert.assertEquals("output", "A.B.C", results);
+        }
+
         public void testSort1() {
             String input[] = new String[]{ "A", "B", "C" };
             String output[] = new String[]{ "A", "B", "C" };
@@ -186,6 +192,56 @@ public class StringUtilTest extends TestCase {
             Assert.assertTrue(output.equals("\n...>123\n...>456\n...>"));
         }
 
+        public void testSplit1() {
+            String input = "abc.cdf";
+            String [] result = jmri.util.StringUtil.split(input, ".");
+            Assert.assertEquals("length", 2, result.length);
+            Assert.assertEquals("item 0", "abc", result[0]);            
+            Assert.assertEquals("item 1", "cdf", result[1]);            
+        }
+        
+        public void testSplit2() {
+            String input = "abcxcdf";
+            String [] result = jmri.util.StringUtil.split(input, ".");
+            Assert.assertEquals("length", 1, result.length);
+            Assert.assertEquals("item 0", "abcxcdf", result[0]);            
+        }
+        
+        public void testSplit3() {
+            String input = "abc.cdf.";
+            String [] result = jmri.util.StringUtil.split(input, ".");
+            Assert.assertEquals("length", 3, result.length);
+            Assert.assertEquals("item 0", "abc", result[0]);            
+            Assert.assertEquals("item 1", "cdf", result[1]);            
+            Assert.assertEquals("item 2", "", result[2]);            
+        }
+        
+        public void testSplit4() {
+            String input = "abc.cdf.ert";
+            String [] result = jmri.util.StringUtil.split(input, ".");
+            Assert.assertEquals("length", 3, result.length);
+            Assert.assertEquals("item 0", "abc", result[0]);            
+            Assert.assertEquals("item 1", "cdf", result[1]);            
+            Assert.assertEquals("item 2", "ert", result[2]);            
+        }
+        
+        public void testSplit5() {
+            String input = "abc..cdf";
+            String [] result = jmri.util.StringUtil.split(input, ".");
+            Assert.assertEquals("length", 3, result.length);
+            Assert.assertEquals("item 0", "abc", result[0]);            
+            Assert.assertEquals("item 1", "", result[1]);            
+            Assert.assertEquals("item 2", "cdf", result[2]);            
+        }
+        
+        public void testSplit6() {
+            String input = "abcxcdf.";
+            String [] result = jmri.util.StringUtil.split(input, ".");
+            Assert.assertEquals("length", 2, result.length);
+            Assert.assertEquals("item 0", "abcxcdf", result[0]);            
+            Assert.assertEquals("item 1", "", result[1]);            
+        }
+        
 	// from here down is testing infrastructure
 
 	public StringUtilTest(String s) {
