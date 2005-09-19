@@ -6,7 +6,7 @@ package jmri;
  * Provide DCC-specific extensions to Throttle interface.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  * @see Throttle
  */
 public interface DccThrottle extends Throttle {
@@ -26,7 +26,7 @@ public interface DccThrottle extends Throttle {
     /*
      * setSpeedStepMode - set the speed step value.
      * <P>
-     * @parm Mode - the current speed step mode - default should be 128 
+     * @param Mode - the current speed step mode - default should be 128 
      *              speed step mode in most cases
      */
      public void setSpeedStepMode(int Mode);

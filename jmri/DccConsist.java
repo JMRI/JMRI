@@ -131,8 +131,8 @@ public class DccConsist implements Consist, ProgListener{
 
         /*
 	 * Add a Locomotive to an Advanced Consist
-	 *  @parm address is the Locomotive address to add to the locomotive
-	 *  @parm directionNormal is True if the locomotive is traveling 
+	 *  @param address is the Locomotive address to add to the locomotive
+	 *  @param directionNormal is True if the locomotive is traveling 
          *        the same direction as the consist, or false otherwise.
          */
 	public void add(DccLocoAddress LocoAddress,boolean directionNormal) {
@@ -151,7 +151,7 @@ public class DccConsist implements Consist, ProgListener{
 
         /*
 	 *  Remove a Locomotive from this Consist
-	 *  @parm address is the Locomotive address to add to the locomotive
+	 *  @param address is the Locomotive address to add to the locomotive
          */
 	public void remove(DccLocoAddress LocoAddress) {
 	      if(ConsistType==ADVANCED_CONSIST) {
@@ -169,8 +169,8 @@ public class DccConsist implements Consist, ProgListener{
 
         /*
 	 *  Add a Locomotive to an Advanced Consist
-	 *  @parm address is the Locomotive address to add to the locomotive
-	 *  @parm directionNormal is True if the locomotive is traveling 
+	 *  @param address is the Locomotive address to add to the locomotive
+	 *  @param directionNormal is True if the locomotive is traveling 
          *        the same direction as the consist, or false otherwise.
          */
 	private void addToAdvancedConsist(DccLocoAddress LocoAddress, boolean directionNormal) {
@@ -197,7 +197,7 @@ public class DccConsist implements Consist, ProgListener{
 
         /*
 	 *  Remove a Locomotive from an Advanced Consist
-	 *  @parm address is the Locomotive address to add to the locomotive
+	 *  @param address is the Locomotive address to add to the locomotive
          */
 	public void removeFromAdvancedConsist(DccLocoAddress LocoAddress) {
 		Programmer opsProg = InstanceManager.programmerManagerInstance()
@@ -217,7 +217,7 @@ public class DccConsist implements Consist, ProgListener{
 	
 	/*
          * Add a Listener for consist events
-         * @parm Listener is a consistListener object
+         * @param Listener is a consistListener object
          */
         public void addConsistListener(ConsistListener Listener){
 		if(!listeners.contains(Listener))
@@ -226,7 +226,7 @@ public class DccConsist implements Consist, ProgListener{
           
         /*
          * Remove a Listener for consist events
-         * @parm Listener is a consistListener object
+         * @param Listener is a consistListener object
          */
         public void removeConsistListener(ConsistListener Listener){
 		if(listeners.contains(Listener))
@@ -235,9 +235,9 @@ public class DccConsist implements Consist, ProgListener{
 
 	/*
          * Notify all listener objects of a status change.
-         * @parm LocoAddress is the address of any specific locomotive the
+         * @param LocoAddress is the address of any specific locomotive the
          *       status refers to.
-         * @parm ErrorCode is the status code to send to the 
+         * @param ErrorCode is the status code to send to the 
          *       consistListener objects
          */
         protected void notifyConsistListeners(DccLocoAddress  LocoAddress, int ErrorCode){

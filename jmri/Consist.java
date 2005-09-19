@@ -4,7 +4,7 @@
  * Description:         Interface for a Consist Object
  *
  * @author              Paul Bender Copyright (C) 2003
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 
 package jmri;
@@ -62,27 +62,27 @@ public interface Consist {
 	
         /*
 	 * Add a Locomotive to an Advanced Consist
-	 *  @parm address is the Locomotive address to add to the locomotive
-	 *  @parm directionNormal is True if the locomotive is traveling 
+	 *  @param address is the Locomotive address to add to the locomotive
+	 *  @param directionNormal is True if the locomotive is traveling 
          *        the same direction as the consist, or false otherwise.
          */
 	public void add(DccLocoAddress LocoAddress, boolean directionNormal);
 
         /*
 	 *  Remove a Locomotive from this Consist
-	 *  @parm address is the Locomotive address to add to the locomotive
+	 *  @param address is the Locomotive address to add to the locomotive
          */
 	public void remove(DccLocoAddress LocoAddress);
 
 	/* 
 	 * Add a Listener for consist events
-	 * @parm Listener is a consistListener object
+	 * @param Listener is a consistListener object
          */
 	public void addConsistListener(jmri.ConsistListener Listener);
 
 	/* 
 	 * Remove a Listener for consist events
-	 * @parm Listener is a consistListener object
+	 * @param Listener is a consistListener object
          */
 	public void removeConsistListener(jmri.ConsistListener Listener);
 

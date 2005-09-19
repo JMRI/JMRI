@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
  * @author     Paul Bender (C) 2002,2003,2004
- * @version    $Revision: 2.10 $
+ * @version    $Revision: 2.11 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -551,7 +551,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     /*
      * setSpeedStepMode - set the speed step value.
      * <P>
-     * @parm Mode - the current speed step mode - default should be 128
+     * @param Mode - the current speed step mode - default should be 128
      *              speed step mode in most cases
      */
      synchronized public void setSpeedStepMode(int Mode) {

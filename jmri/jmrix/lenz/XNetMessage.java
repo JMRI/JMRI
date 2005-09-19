@@ -13,7 +13,7 @@ import java.io.Serializable;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2003,2004
- * @version			$Revision: 2.8 $
+ * @version			$Revision: 2.9 $
  *
  */
 public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Serializable {
@@ -355,8 +355,8 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     /*
      * Build a Double Header
      *
-     * @parm address1 is the first address in the consist
-     * @parm address2 is the second address in the consist.
+     * @param address1 is the first address in the consist
+     * @param address2 is the second address in the consist.
      */
     public static XNetMessage getBuildDoubleHeaderMsg(int address1,int address2){
 	XNetMessage msg=new XNetMessage(7);
@@ -373,7 +373,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     /*
      * Dissolve a Double Header
      *
-     * @parm address is one of the two addresses in the Double Header 
+     * @param address is one of the two addresses in the Double Header 
      */
     public static XNetMessage getDisolveDoubleHeaderMsg(int address){
         // All we have to do is call getBuildDoubleHeaderMsg with the 
@@ -384,9 +384,9 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     /*
      * Add a Single address to a specified Advanced consist
      *
-     * @parm consist is the consist address (1-99)
-     * @parm address is the locomotive address to add.
-     * @parm isNormalDir tells us if the locomotive is going forward when 
+     * @param consist is the consist address (1-99)
+     * @param address is the locomotive address to add.
+     * @param isNormalDir tells us if the locomotive is going forward when 
      * the consist is going forward.
      */
     public static XNetMessage getAddLocoToConsistMsg(int consist,int address,
@@ -408,8 +408,8 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     /*
      * Remove a Single address to a specified Advanced consist
      *
-     * @parm consist is the consist address (1-99)
-     * @parm address is the locomotive address to remove
+     * @param consist is the consist address (1-99)
+     * @param address is the locomotive address to remove
      */
     public static XNetMessage getRemoveLocoFromConsistMsg(int consist,int address){
 	XNetMessage msg=new XNetMessage(6);
@@ -432,8 +432,8 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
      * Given a locomotive address, search the database for the next 
      * member. (if the Address is zero start at the begining of the 
      * database)
-     * @parm address is the locomotive address
-     * @parm searchForward indicates to search the database Forward if 
+     * @param address is the locomotive address
+     * @param searchForward indicates to search the database Forward if 
      * true, or backwards if False 
      */
     public static XNetMessage getNextAddressOnStackMsg(int address,boolean searchForward){
@@ -453,9 +453,9 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     /*
      * Given a consist address, search the database for the next Consist 
      * address.
-     * @parm address is the consist address (in the range 1-99)
+     * @param address is the consist address (in the range 1-99)
      * If the Address is zero start at the begining of the database
-     * @parm searchForward indicates to search the database Forward if 
+     * @param searchForward indicates to search the database Forward if 
      * true, or backwards if False 
      */
     public static XNetMessage getDBSearchMsgConsistAddress(int address,boolean searchForward){
@@ -474,11 +474,11 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     /*
      * Given a consist and a locomotive address, search the database for 
      * the next Locomotive in the consist.
-     * @parm consist is the consist address (1-99)
+     * @param consist is the consist address (1-99)
      * If the Consist Address is zero start at the begining of the database
-     * @parm address is the locomotive address
+     * @param address is the locomotive address
      * If the Address is zero start at the begining of the consist
-     * @parm searchForward indicates to search the database Forward if 
+     * @param searchForward indicates to search the database Forward if 
      * true, or backwards if False 
      */
     public static XNetMessage getDBSearchMsgNextMULoco(int consist,int address,boolean searchForward){
@@ -498,7 +498,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
 
     /*
      * Given a locomotive address, delete it from the database 
-     * @parm address is the locomotive address
+     * @param address is the locomotive address
      */
     public static XNetMessage getDeleteAddressOnStackMsg(int address){
 	XNetMessage msg=new XNetMessage(5);

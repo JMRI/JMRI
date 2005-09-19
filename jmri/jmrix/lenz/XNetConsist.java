@@ -5,7 +5,7 @@
  * it uses the XPressNet specific commands to build a consist.
  *
  * @author                      Paul Bender Copyright (C) 2004
- * @version                     $Revision: 2.8 $
+ * @version                     $Revision: 2.9 $
  */
 
 package jmri.jmrix.lenz;
@@ -151,8 +151,8 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 
         /*
 	 * Add a Locomotive to a Consist
-	 *  @parm address is the Locomotive address to add to the locomotive
-	 *  @parm directionNormal is True if the locomotive is traveling 
+	 *  @param address is the Locomotive address to add to the locomotive
+	 *  @param directionNormal is True if the locomotive is traveling 
          *        the same direction as the consist, or false otherwise.
          */
 	public synchronized void add(DccLocoAddress LocoAddress, boolean directionNormal) {
@@ -203,7 +203,7 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 
         /*
 	 *  Remove a Locomotive from this Consist
-	 *  @parm address is the Locomotive address to add to the locomotive
+	 *  @param address is the Locomotive address to add to the locomotive
          */
 	public synchronized void remove(DccLocoAddress LocoAddress) {
 	      if(ConsistType==ADVANCED_CONSIST) {
@@ -234,8 +234,8 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 
         /*
 	 *  Add a Locomotive to an Advanced Consist
-	 *  @parm address is the Locomotive address to add to the locomotive
-	 *  @parm directionNormal is True if the locomotive is traveling 
+	 *  @param address is the Locomotive address to add to the locomotive
+	 *  @param directionNormal is True if the locomotive is traveling 
          *        the same direction as the consist, or false otherwise.
          */
 	private synchronized void addToAdvancedConsist(DccLocoAddress LocoAddress, boolean directionNormal) {
@@ -262,7 +262,7 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 
         /*
 	 *  Remove a Locomotive from an Advanced Consist
-	 *  @parm address is the Locomotive address to add to the locomotive
+	 *  @param address is the Locomotive address to add to the locomotive
          */
 	public synchronized void removeFromAdvancedConsist(DccLocoAddress LocoAddress) {
 		// All we have to do here is create an apropriate XNetMessage, 
@@ -274,8 +274,8 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 
         /*
 	 *  Add a Locomotive to a Lenz Double Header
-	 *  @parm address is the Locomotive address to add to the locomotive
-	 *  @parm directionNormal is True if the locomotive is traveling 
+	 *  @param address is the Locomotive address to add to the locomotive
+	 *  @param directionNormal is True if the locomotive is traveling 
          *        the same direction as the consist, or false otherwise.
          */
 	private synchronized void addToCSConsist(DccLocoAddress LocoAddress, boolean directionNormal) {
@@ -318,7 +318,7 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 
         /*
 	 *  Remove a Locomotive from a Lenz Double Header
-	 *  @parm address is the Locomotive address to add to the locomotive
+	 *  @param address is the Locomotive address to add to the locomotive
          */
 	public synchronized void removeFromCSConsist(DccLocoAddress LocoAddress) {
 		// All we have to do here is create an apropriate XNetMessage, 

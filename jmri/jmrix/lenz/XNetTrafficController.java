@@ -17,7 +17,7 @@ import com.sun.java.util.collections.Hashtable;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2004,2005
- * @version 		$Revision: 2.7 $
+ * @version 		$Revision: 2.8 $
  *
  */
 public abstract class XNetTrafficController extends AbstractMRTrafficController implements XNetInterface {
@@ -77,7 +77,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
          * NOTE: this drops the packet if the checksum is bad.
          * 
          * @param m Message to send
-         # @parm client is the client getting the message
+         # @param client is the client getting the message
          */
         public void forwardReply(AbstractMRListener client,AbstractMRReply m) {
 	 	// check parity
