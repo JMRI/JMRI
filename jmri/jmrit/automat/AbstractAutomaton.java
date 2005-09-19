@@ -65,7 +65,7 @@ import javax.swing.JTextArea;
  * so that Jython code can easily use some of the methods.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.25 $
+ * @version     $Revision: 1.26 $
  */
 public class AbstractAutomaton implements Runnable {
 
@@ -444,8 +444,8 @@ public class AbstractAutomaton implements Runnable {
     /**
      * Convenience function to set a bunch of turnouts and wait until they are all
      * in a consistent state
-     * @param normal	turnouts to set to closed state
-     * @param reverse	turnouts to set to thrown state
+     * @param closed	turnouts to set to closed state
+     * @param thrown	turnouts to set to thrown state
      */
     public void setTurnouts(Turnout[] closed, Turnout[] thrown) {
     	Turnout[] turnouts = new Turnout[closed.length + thrown.length];

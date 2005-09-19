@@ -18,8 +18,8 @@ import jmri.Sensor;
  * change a state via an icon, and not have it change back the next time
  * that AIU is polled.
  *
- * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.3 $
+ * @author			Bob Jacobsen Copyright (C) 2003, 2005
+ * @version			$Revision: 1.4 $
  */
 public class NceAIU {
 
@@ -89,11 +89,11 @@ public class NceAIU {
     
     /**
      * Return the sensor object for the specified AIU
-     * @param AIU index (0..15)
+     * @param index AIU index (0..15)
      * @return sensor object
      */
-    public Sensor getSensor(int i) {
-        return sensorArray[i];
+    public Sensor getSensor(int index) {
+        return sensorArray[index];
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceAIU.class.getName());

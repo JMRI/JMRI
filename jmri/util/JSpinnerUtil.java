@@ -16,7 +16,7 @@ import javax.swing.JComponent;
  * information.
  * <P>
  * @author Bob Jacobsen  Copyright 2005
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class JSpinnerUtil {
@@ -30,7 +30,7 @@ public class JSpinnerUtil {
      * <P>
      * The JSpinner is returned as a JComponent, it's Swing parent class
      *
-     * @returns null if JSpinner support not available, otherwise a JSpinner object
+     * @return null if JSpinner support not available, otherwise a JSpinner object
      */
     static public JComponent getJSpinner() {
         try {

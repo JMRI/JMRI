@@ -221,7 +221,7 @@ public abstract class TurnoutOperation implements Comparable {
 	 * Nonce support. A nonce is a TurnoutOperation created specifically for
 	 * one turnout, which can't be directly referred to by name. It does
 	 * have a name, which is the turnout it was created for, prefixed by "*"
-	 * @return
+	 * @return true if this object is a nonce
 	 */
 	public boolean isNonce() { return nonce; };
 	public void setNonce(boolean n) {

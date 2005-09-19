@@ -22,7 +22,7 @@ public class SensorTurnoutOperationXml extends CommonTurnoutOperationXml {
 
 	/**
 	 * called for a newly-constructed object to load it from an XML element
-	 * @param the XML element of type "turnoutOperation"
+	 * @param e the XML element of type "turnoutOperation"
 	 */
 	public TurnoutOperation loadOne(Element e) {
 		try {

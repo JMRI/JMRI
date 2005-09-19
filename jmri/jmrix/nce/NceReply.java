@@ -8,7 +8,7 @@ package jmri.jmrix.nce;
  * Some rudimentary support is provided for the "binary" option.
  *
  * @author		Bob Jacobsen  Copyright (C) 2001
- * @version             $Revision: 1.9 $
+ * @version             $Revision: 1.10 $
  */
 public class NceReply extends jmri.jmrix.AbstractMRReply {
 
@@ -54,7 +54,7 @@ public class NceReply extends jmri.jmrix.AbstractMRReply {
     
     /**
      * Examine message to see if it is an asynchronous sensor (AIU) state report
-     * @return
+     * @return true if message asynch sensor message
      */
     
     public boolean isSensorMessage() {

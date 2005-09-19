@@ -34,7 +34,6 @@ public abstract class TurnoutOperationXml implements XmlAdapter {
 	/**
 	 * Load one operation, using the appropriate adapter
 	 * @param e	element for operation
-	 * @throws Exception
 	 */
 	public static TurnoutOperation loadOperation(Element e) {
 		TurnoutOperation result = null;
@@ -68,7 +67,7 @@ public abstract class TurnoutOperationXml implements XmlAdapter {
     /**
      * common part of store - create the element and store the name and the class
      * @param	o	TurnoutOperation object
-     * @returns	partially filled element
+     * @return	partially filled element
      */
     public Element store(Object o) {
     	TurnoutOperation myOp = (TurnoutOperation)o;

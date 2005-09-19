@@ -28,8 +28,7 @@ public class CommonTurnoutOperationConfig extends TurnoutOperationConfig {
 	CommonTurnoutOperation myOp;
 	
 	/**
-	 * create the config panel, if there is one, and in any case return it
-	 * @return	the JPanel to configure this operation type
+	 * Create the config JPanel, if there is one, to configure this operation type
 	 */
 	public CommonTurnoutOperationConfig(TurnoutOperation op) {
 		super(op);
