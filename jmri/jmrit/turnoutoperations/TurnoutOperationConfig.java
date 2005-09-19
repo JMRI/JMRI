@@ -16,9 +16,9 @@ import java.lang.reflect.Constructor;
  * Must be overridden to define specific panel details for class
  * Must have exactly one constructor like the one shown below
  * @author John Harper	Copyright 2005
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
-public abstract class TurnoutOperationConfig extends JPanel {
+public class TurnoutOperationConfig extends JPanel {
 
 	TurnoutOperation myOperation;
 	boolean valid = true;
@@ -31,7 +31,7 @@ public abstract class TurnoutOperationConfig extends JPanel {
 	
 	public boolean isValid() { return valid; };
 	
-	public abstract void endConfigure();
+	public void endConfigure() {log.error("Should have been overridden!");};
 	
 	/**
 	 * Given an instance of a concrete subclass of
@@ -43,7 +43,7 @@ public abstract class TurnoutOperationConfig extends JPanel {
 	 */
 	static public TurnoutOperationConfig getConfigPanel(TurnoutOperation op) {
 		TurnoutOperationConfig config = null;
-		String[] path = op.getClass().getName().split("\\.");
+		String[] path = jmri.util.StringUtil.split(op.getClass().getName(), ".");
 		String configName = "jmri.jmrit.turnoutoperations." + path[path.length-1] + "Config";
 		try {
 			Class configClass = Class.forName(configName);
