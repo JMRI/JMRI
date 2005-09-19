@@ -27,7 +27,7 @@ import net.roydesign.mac.MRJAdapter;
  * Base class for Jmri applications.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.26 $
+ * @version     $Revision: 1.27 $
  */
 public class Apps extends JPanel {
 
@@ -155,6 +155,20 @@ public class Apps extends JPanel {
 
         JMenu editMenu = new JMenu(rb.getString("MenuEdit"));
         menuBar.add(editMenu);
+        
+        // cut, copy, paste
+        AbstractAction a;
+        a = new javax.swing.text.DefaultEditorKit.CutAction();
+        a.putValue(javax.swing.Action.NAME, rb.getString("MenuItemCut"));
+        editMenu.add(a);
+        a = new javax.swing.text.DefaultEditorKit.CopyAction();
+        a.putValue(javax.swing.Action.NAME, rb.getString("MenuItemCopy"));
+        editMenu.add(a);
+        a = new javax.swing.text.DefaultEditorKit.PasteAction();
+        a.putValue(javax.swing.Action.NAME, rb.getString("MenuItemPaste"));
+        editMenu.add(a);
+
+        // prefs
         editMenu.add(prefsAction); // argument is filename, not action name
     }
 
