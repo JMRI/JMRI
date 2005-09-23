@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a type or types of DCC decoder as  -->
 <!-- a component, esp. information on how to program it. -->
-<!-- $Revision: 1.41 $ -->
+<!-- $Revision: 1.42 $ -->
 
 <!-- This DTD is Copyright 1999, 2000, 2001, 2003, 2004 Bob Jacobsen & JMRI. -->
 <!-- You may freely use it subject to the Open Source Artistic               -->
@@ -247,6 +247,20 @@
 <!ATTLIST ienumChoice include  CDATA #IMPLIED >
 <!ATTLIST ienumChoice exclude  CDATA #IMPLIED >
 <!ATTLIST ienumChoice comment  CDATA #IMPLIED >
+
+<!ELEMENT compositeVal (compositeChoice*) >
+<!ATTLIST compositeVal comment CDATA #IMPLIED>
+
+<!-- an compositeChoiceVal variable can take on any of a number of specific choices, with -->
+<!-- each choice defined by a user-readble name, and a set of values for other vars -->
+<!ELEMENT compositeChoice (compositeSetting*)>
+<!ATTLIST compositeChoice choice   CDATA #REQUIRED > <!-- name of this choice -->
+<!ATTLIST compositeChoice comment  CDATA #IMPLIED >
+
+<!ELEMENT compositeSetting EMPTY>
+<!ATTLIST compositeSetting label   CDATA #REQUIRED > <!-- label of the variable to set -->
+<!ATTLIST compositeSetting value   CDATA #REQUIRED > <!-- numerical value to set -->
+
 
 <!ELEMENT speedTableVal (speedTableEntry*) >
 <!ATTLIST speedTableVal entries CDATA "28">     <!-- number of entries/CVs in table -->
