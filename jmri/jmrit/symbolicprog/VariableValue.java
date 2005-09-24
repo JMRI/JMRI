@@ -15,7 +15,7 @@ import javax.swing.*;
  *
  * @author   Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2004, 2005
  * @author   Howard G. Penny Copyright (C) 2005
- * @version  $Revision: 1.23 $
+ * @version  $Revision: 1.24 $
  */
 public abstract class VariableValue extends AbstractValue implements java.beans.PropertyChangeListener {
 
@@ -27,7 +27,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
                                                 // and thus can be called without limit
     abstract public Component getRep(String format); // this one is returning a new object
     // and thus should be called a limited number of times
-
+    
     /**
      * @return String that can be interpreted as an integer
      */
@@ -37,7 +37,23 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      */
     public String getTextValue() { return getValueString(); }
 
+    /**
+     * Set the value from a single number.
+     *
+     * In some cases, e.g. speed tables, this will result in 
+     * complex behavior, where setIntValue(getIntValue()) results 
+     * in something unexpected.
+     */
     abstract public void setIntValue(int i);
+
+    /**
+     * Get the value as a single number.
+     *
+     * In some cases, e.g. speed tables, this will result in 
+     * complex behavior, where setIntValue(getIntValue()) results 
+     * in something unexpected.
+     */
+    abstract public int getIntValue();
 
     /**
      * Always read the contents of this Variable

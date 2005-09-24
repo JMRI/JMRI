@@ -23,7 +23,7 @@ import com.sun.java.util.collections.ArrayList;
  * Extends VariableValue to represent an indexed variable
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.6 $
+ * @version   $Revision: 1.7 $
  */
 public class IndexedVariableValue extends VariableValue
     implements ActionListener, PropertyChangeListener, FocusListener {
@@ -128,6 +128,10 @@ public class IndexedVariableValue extends VariableValue
 
     public void setIntValue(int i) {
         setValue(i);
+    }
+
+    public int getIntValue() {
+        return (Integer.valueOf(_value.getText()).intValue());
     }
 
     public Component getValue()  {
@@ -354,7 +358,7 @@ public class IndexedVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.6 $
+     * @version     $Revision: 1.7 $
      */
     public class VarTextField extends JTextField {
 

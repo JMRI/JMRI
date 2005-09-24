@@ -22,7 +22,7 @@ import com.sun.java.util.collections.ArrayList;
  * Decimal representation of a value.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.18 $
+ * @version             $Revision: 1.19 $
  *
  */
 public class DecVariableValue extends VariableValue
@@ -129,6 +129,10 @@ public class DecVariableValue extends VariableValue
         setValue(i);
     }
 
+    public int getIntValue() {
+        return Integer.valueOf(_value.getText()).intValue();
+    }
+    
     public Component getValue()  {
         if (getReadOnly())  {
             JLabel r = new JLabel(_value.getText());

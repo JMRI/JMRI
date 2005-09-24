@@ -58,7 +58,7 @@ import javax.swing.event.ChangeListener;
  * be removed.
  *<P>
  * @author	Bob Jacobsen, Alex Shepherd   Copyright (C) 2001, 2004
- * @version	$Revision: 1.25 $
+ * @version	$Revision: 1.26 $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
@@ -208,6 +208,11 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         log.warn("setIntValue doesn't make sense for a speed table: "+i);
     }
 
+    public int getIntValue() {
+        log.warn("getValue doesn't make sense for a speed table");
+        return 0;
+    }
+
     public Component getValue()  {
         log.warn("getValue not implemented yet");
         return new JLabel("speed table");
@@ -216,7 +221,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
     public void setValue(int value) {
         log.warn("setValue doesn't make sense for a speed table: "+value);
     }
-
+    
     Color _defaultColor;
     // implement an abstract member to set colors
     void setColor(Color c) {

@@ -26,7 +26,7 @@ import javax.swing.text.Document;
  *</PRE>
  * decoders.
  * @author			Bob Jacobsen   Copyright (C) 2002, 2003, 2004
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  *
  */
 public class SplitVariableValue extends VariableValue
@@ -185,6 +185,10 @@ public class SplitVariableValue extends VariableValue
         setValue((i-mOffset)/mFactor);
     }
 
+    public int getIntValue() {
+        return ((Integer.valueOf(_value.getText()).intValue())-mOffset)/mFactor;
+    }
+    
     public Component getValue()  {
         if (getReadOnly())  {
             JLabel r = new JLabel(_value.getText());
@@ -353,7 +357,7 @@ public class SplitVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.15 $
+     * @version     $Revision: 1.16 $
      */
     public class VarTextField extends JTextField {
 
