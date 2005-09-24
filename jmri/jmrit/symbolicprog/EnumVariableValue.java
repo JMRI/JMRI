@@ -16,7 +16,7 @@ import com.sun.java.util.collections.List;
  * Extends VariableValue to represent a enumerated variable.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
@@ -91,12 +91,12 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     JComboBox _value = null;
 
     // place to keep the items & associated numbers
-    String[] _itemArray = null;
-    int[] _valueArray = null;
-    int _nstored;
+    private String[] _itemArray = null;
+    private int[] _valueArray = null;
+    private int _nstored;
 
-    private int _maxVal;
-    private int _minVal;
+    int _maxVal;
+    int _minVal;
     Color _defaultColor;
 
     public Object rangeVal() {
@@ -222,9 +222,9 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         }
     }
 
-    List comboCBs = new ArrayList();
-    List comboVars = new ArrayList();
-    List comboRBs = new ArrayList();
+    private List comboCBs = new ArrayList();
+    private List comboVars = new ArrayList();
+    private List comboRBs = new ArrayList();
 
     // implement an abstract member to set colors
     void setColor(Color c) {
@@ -297,7 +297,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * model between this object and the real JComboBox value.
      *
      * @author			Bob Jacobsen   Copyright (C) 2001
-     * @version         $Revision: 1.16 $
+     * @version         $Revision: 1.17 $
      */
     public class VarComboBox extends JComboBox {
 
@@ -336,8 +336,17 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     // clean up connections when done
     public void dispose() {
         if (log.isDebugEnabled()) log.debug("dispose");
-        if (_value != null) _value.removeActionListener(this);
+        
+        // remove connection to CV
         ((CvValue)_cvVector.elementAt(getCvNum())).removePropertyChangeListener(this);
+
+        // remove connection to graphical representation
+        disposeReps();
+
+    }
+
+    void disposeReps() {
+        if (_value != null) _value.removeActionListener(this);
         for (int i = 0; i<comboCBs.size(); i++) {
             ((ComboCheckBox)comboCBs.get(i)).dispose();
         }
@@ -347,12 +356,8 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         for (int i = 0; i<comboRBs.size(); i++) {
             ((ComboRadioButtons)comboRBs.get(i)).dispose();
         }
-
-        _value = null;
-        // do something about the VarComboBox
-
     }
-
+    
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EnumVariableValue.class.getName());
 
