@@ -47,7 +47,7 @@ import com.sun.java.util.collections.Iterator;
  *</ol>
  * <P>
  * @author	Bob Jacobsen   Copyright (C) 2001, 2005
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  *
  */
 public class CompositeVariableValue extends EnumVariableValue implements ActionListener, PropertyChangeListener {
@@ -208,7 +208,7 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
      * This variable doesn't change state, hence doesn't change color.
      */
     public void setState(int state) {
-        System.out.println("Ignore setState("+state+")");
+        if (log.isDebugEnabled()) log.debug("Ignore setState("+state+")");
     }
 
     /**
