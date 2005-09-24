@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.57 $ -->
+<!-- Revision $Revision: 1.58 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -108,8 +108,8 @@
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
-       <jvmarg value="-Xms7m"/>
-       <jvmarg value="-Xmx20m"/>
+       <jvmarg value="-Xms10m"/>
+       <!-- <jvmarg value="-Xmx60m"/> -->
        <!-- <jvmarg value="-verbose"/> -->
        <!-- <jvmarg value="-verbosegc"/> -->
     </java>
