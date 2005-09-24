@@ -21,7 +21,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.25 $
+ * @version   $Revision: 1.26 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -175,7 +175,9 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         String comment = null;
         if (e.getAttribute("comment") != null)
             comment = e.getAttribute("comment").getValue();
-        int CV = Integer.valueOf(e.getAttribute("CV").getValue()).intValue();
+        int CV = -1;
+        if (e.getAttribute("CV") != null)
+            CV = Integer.valueOf(e.getAttribute("CV").getValue()).intValue();
         String mask = null;
         if (e.getAttribute("mask") != null)
             mask = e.getAttribute("mask").getValue();
@@ -253,7 +255,8 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             log.error("CvModel reference is null; cannot add variables");
             return;
         }
-        _cvModel.addCV(""+CV, readOnly, infoOnly, writeOnly);
+        if (CV>0)   // some variables have no CV per se
+            _cvModel.addCV(""+CV, readOnly, infoOnly, writeOnly);
 
         // have to handle various value types, see "snippet"
         Attribute a;
@@ -279,7 +282,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             List l = child.getChildren("enumChoice");
             EnumVariableValue v1 = new EnumVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly,
                                                          CV, mask, 0, l.size()-1, _cvModel.allCvVector(), _status, item);
-            v = v1;
+            v = v1; // v1 is of EnunVariableValue type, so doesn't need casts
             v1.nItems(l.size());
             for (int k=0; k< l.size(); k++) {
                 // is a value specified?
@@ -291,6 +294,29 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
                     v1.addItem(enumChElement.getAttribute("choice").getValue(),
                                 Integer.parseInt(valAttr.getValue()));
                 }
+            }
+            v1.lastItem();
+
+        } else if ( (child = e.getChild("compositeVal")) != null) {
+            List lChoice = child.getChildren("compositeChoice");
+            CompositeVariableValue v1 = new CompositeVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly,
+                                                         CV, mask, 0, lChoice.size()-1, _cvModel.allCvVector(), _status, item);
+            v = v1;  // v1 is of CompositeVariableType, so doesn't need casts
+            // loop over the choices
+            for (int k=0; k< lChoice.size(); k++) {
+                // Create the choice
+                Element choiceElement = (Element)lChoice.get(k);
+                String choice = choiceElement.getAttribute("choice").getValue();
+                v1.addChoice(choice);
+                // for each choice, capture the settings
+                List lSetting = choiceElement.getChildren("compositeSetting");
+                for (int n=0; n< lSetting.size(); n++) {
+                    Element settingElement = (Element)lSetting.get(n);
+                    String varName = settingElement.getAttribute("label").getValue();
+                    String value = settingElement.getAttribute("value").getValue();
+                    v1.addSetting(choice, varName, findVar(varName), value);
+                }
+                
             }
             v1.lastItem();
 
