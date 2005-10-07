@@ -22,7 +22,7 @@ import com.sun.java.util.collections.ArrayList;
  * Basic configuration GUI infrastructure.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class AppConfigPanel extends JPanel {
 
@@ -69,7 +69,7 @@ public class AppConfigPanel extends JPanel {
         log.debug("start adv");
         advScroll = new JPanel();
         advScroll.setLayout(new BoxLayout(advScroll, BoxLayout.Y_AXIS));
-	advancedPane = new JPanel();
+        advancedPane = new JPanel();
         JScrollPane js = new JScrollPane(advancedPane);
         advancedPane.setLayout(new BoxLayout(advancedPane, BoxLayout.Y_AXIS));
         advScroll.setVisible(false);  // have to click first
