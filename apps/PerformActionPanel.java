@@ -2,9 +2,6 @@
 
 package apps;
 
-import java.util.ResourceBundle;
-
-import javax.swing.JPanel;
 import com.sun.java.util.collections.List;
 
 /**
@@ -16,7 +13,7 @@ import com.sun.java.util.collections.List;
  *
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  * @see apps.PerformActionModel
  */
 public class PerformActionPanel extends AbstractActionPanel {

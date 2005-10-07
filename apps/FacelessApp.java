@@ -3,15 +3,12 @@
 package apps;
 
 import jmri.InstanceManager;
-import jmri.jmrit.XmlFile;
-
-import java.io.File;
 
 /**
  * A simple example of a "Faceless" (no gui) application
  * <P>
  * @author	Bob Jacobsen   Copyright 2003, 2005
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class FacelessApp {
 	static String name = "Faceless App";

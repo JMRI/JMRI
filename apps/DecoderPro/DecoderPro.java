@@ -14,7 +14,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
 import jmri.util.JmriJFrame;
@@ -27,7 +26,7 @@ import jmri.util.JmriJFrame;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.46 $
+ * @version     $Revision: 1.47 $
  */
 public class DecoderPro extends Apps {
 

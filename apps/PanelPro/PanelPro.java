@@ -3,13 +3,11 @@
 package apps.PanelPro;
 
 import apps.Apps;
-import apps.SplashWindow;
 import jmri.util.JmriJFrame;
 
 import java.text.MessageFormat;
 
 import javax.swing.JFrame;
-import javax.swing.JMenuBar;
 
 /**
  * The JMRI program for creating control panels.
@@ -19,7 +17,7 @@ import javax.swing.JMenuBar;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 public class PanelPro extends Apps {
 
