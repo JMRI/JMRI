@@ -63,7 +63,7 @@ import com.sun.java.util.collections.List;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.52 $
+ * @version   $Revision: 1.53 $
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -1521,7 +1521,7 @@ public class PaneProgPane extends javax.swing.JPanel
                    printerBar.setBounds(52+j*15, 19, 10, 127);
                    printerBar.setValue(speedVals[j]/2);
                    printerBar.setBackground(Color.white);
-                   printerBar.setForeground(Color.lightGray);
+                   printerBar.setForeground(Color.darkGray);
                    printerBar.setBorder(BorderFactory.createLineBorder(Color.black));
                    speedWindow.getContentPane().add(printerBar);
                    // create a set of value labels at the top containing the speed table values
