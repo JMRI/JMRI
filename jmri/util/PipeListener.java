@@ -2,9 +2,6 @@
 
 package jmri.util;
 
-import javax.swing.AbstractAction;
-import java.awt.event.ActionEvent;
-import javax.swing.JFileChooser;
 import java.io.*;
 
 /**
@@ -12,7 +9,7 @@ import java.io.*;
  * and post them to a JTextArea for display
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
  class PipeListener extends Thread {
     private PipedReader pr;

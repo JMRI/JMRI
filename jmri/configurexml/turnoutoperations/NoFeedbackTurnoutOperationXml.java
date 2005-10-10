@@ -5,12 +5,12 @@ package jmri.configurexml.turnoutoperations;
 
 import org.jdom.Element;
 
-import java.lang.reflect.Constructor;
+//import java.lang.reflect.Constructor;
 import java.lang.Class;
 
 import jmri.NoFeedbackTurnoutOperation;
 import jmri.TurnoutOperation;
-import jmri.configurexml.turnoutoperations.TurnoutOperationXml;
+//import jmri.configurexml.turnoutoperations.TurnoutOperationXml;
 
 /**
  * Concrete subclass to save/restore NoFeedbackTurnoutOperation object

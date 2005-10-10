@@ -7,8 +7,8 @@ import org.jdom.Element;
 
 import com.sun.java.util.collections.List;
 
-import jmri.InstanceManager;
-import jmri.TurnoutManager;
+//import jmri.InstanceManager;
+//import jmri.TurnoutManager;
 import jmri.TurnoutOperation;
 import jmri.TurnoutOperationManager;
 import jmri.configurexml.XmlAdapter;

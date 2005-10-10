@@ -1,7 +1,5 @@
 package jmri.util;
 
-import java.util.*;
-
 import jmri.util.com.sun.Comparator;
 
 /**
@@ -12,7 +10,7 @@ import jmri.util.com.sun.Comparator;
  *
  * @author	Bob Jacobsen   Copyright (C) 2004
  * @author  Howard Penny
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 
 public class SystemNameComparator implements Comparator {

@@ -5,9 +5,6 @@ package jmri.configurexml;
 import jmri.InstanceManager;
 import java.awt.event.ActionEvent;
 
-import javax.swing.AbstractAction;
-import javax.swing.JFileChooser;
-
 /**
  * Store the entire JMRI status in an XML file.
  * <P>
@@ -15,7 +12,7 @@ import javax.swing.JFileChooser;
  * types of information stored in configuration files.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  * @see         jmri.jmrit.XmlFile
  */
 public class StoreXmlAllAction extends StoreXmlConfigAction {

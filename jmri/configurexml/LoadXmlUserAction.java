@@ -2,11 +2,7 @@
 
 package jmri.configurexml;
 
-import jmri.InstanceManager;
 import java.awt.event.ActionEvent;
-
-import javax.swing.AbstractAction;
-import javax.swing.JFileChooser;
 
 /**
  * Load configuration information from an XML file.
@@ -18,7 +14,7 @@ import javax.swing.JFileChooser;
  * types of information stored in configuration files.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2002
- * @version	    $Revision: 1.1 $
+ * @version	    $Revision: 1.2 $
  * @see             jmri.jmrit.XmlFile
  */
 public class LoadXmlUserAction extends LoadXmlConfigAction {

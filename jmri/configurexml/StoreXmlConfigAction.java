@@ -5,7 +5,6 @@ package jmri.configurexml;
 import jmri.InstanceManager;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -18,7 +17,7 @@ import javax.swing.JOptionPane;
  * types of information stored in configuration files.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  * @see         jmri.jmrit.XmlFile
  */
 public class StoreXmlConfigAction extends LoadStoreBaseAction {

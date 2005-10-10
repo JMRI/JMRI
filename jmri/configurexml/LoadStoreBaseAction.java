@@ -3,7 +3,6 @@
 package jmri.configurexml;
 
 import jmri.InstanceManager;
-import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
@@ -20,7 +19,7 @@ import javax.swing.JFileChooser;
  * place in the file system each time an action is invoked.
  *
  * @author	Bob Jacobsen   Copyright (C) 2004
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  * @see         jmri.jmrit.XmlFile
  */
 abstract public class LoadStoreBaseAction extends AbstractAction {

@@ -35,7 +35,7 @@ public abstract class CommonTurnoutOperationXml extends TurnoutOperationXml {
 	public TurnoutOperation loadOne(Element e, Constructor constr, int di, int dmt) {
 		int interval = di;
 		int maxTries = dmt;
-		boolean noDelete = false;
+//		boolean noDelete = false;
 		TurnoutOperation result = null;
         if (e.getAttribute("name") == null) {
             log.warn("unexpected null in name "+e+" "+e.getAttributes());

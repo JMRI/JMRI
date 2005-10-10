@@ -3,15 +3,15 @@
  */
 package jmri.configurexml.turnoutoperations;
 
-import java.lang.reflect.Constructor;
+//import java.lang.reflect.Constructor;
 
 import org.jdom.Element;
 
-import jmri.NoFeedbackTurnoutOperation;
+//import jmri.NoFeedbackTurnoutOperation;
 import jmri.TurnoutOperation;
 import jmri.configurexml.XmlAdapter;
-import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
-import jmri.jmrix.nce.configurexml.NceTurnoutManagerXml;
+//import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
+//import jmri.jmrix.nce.configurexml.NceTurnoutManagerXml;
 import jmri.util.StringUtil;
 
 /**
