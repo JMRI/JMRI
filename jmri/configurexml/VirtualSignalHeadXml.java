@@ -3,7 +3,6 @@ package jmri.configurexml;
 import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.VirtualSignalHead;
-import com.sun.java.util.collections.List;
 import org.jdom.Attribute;
 import org.jdom.Element;
 
@@ -11,7 +10,7 @@ import org.jdom.Element;
  * Handle XML configuration for VirtualSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2005
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class VirtualSignalHeadXml implements XmlAdapter {
 
@@ -41,7 +40,6 @@ public class VirtualSignalHeadXml implements XmlAdapter {
      * @param element Top level Element to unpack.
      */
     public void load(Element element) {
-        List l = element.getChildren();
         // put it together
         String sys = element.getAttribute("systemName").getValue();
         Attribute a = element.getAttribute("userName");
