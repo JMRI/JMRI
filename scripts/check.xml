@@ -1,6 +1,6 @@
 <!-- Special build file for doing Java 1.1.8 compatibility tests -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.17 $ -->
+<!-- Revision $Revision: 1.18 $ -->
 
 <project name="JMRI" default="check" basedir=".">
 
@@ -98,6 +98,7 @@
                  jmri/util/FileUtil.java,
                  jmri/util/FontUtil.java,
                  jmri/util/JmriJFrame.java,
+                 jmri/util/JmriSpinner.java,
                  jmri/util/JSpinnerUtil.java,
                  jmri/util/JTabbedPaneUtil.java,
                  jmri/util/JTableUtil.java,
