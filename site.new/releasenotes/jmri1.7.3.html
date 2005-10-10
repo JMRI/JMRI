@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.7.3.html,v 1.8 2005-09-28 22:06:14 jacobsen Exp $ -->
+<!-- $Id: jmri1.7.3.html,v 1.9 2005-10-10 18:28:29 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -156,6 +156,15 @@
 
 <P>Add cut, copy, paste items to main Edit menu
 
+<P>Add "composite" variable type to DecoderPro, allowing one selection to set multiple variables to specific values
+
+<P>Added showEmptyPanes attribute to DecoderPro programmer and decoder definition files. If "yes", the panes will be shown even if they contain no variables.  If "no", panes will only be shown if they include one or more variables. "default" leaves the option as it was.  The application's setting is overridden by the decoder file setting, which in turn is overridden by the programmer file setting.
+
+<P>Allen Byrne did a massive clean up of the code, including removing extra import statements, updating deprecated method calls, and correcting some references to static methods.
+
+<P>Dennis Miller adjusted the coloring/shading on the speed table printouts to make them more visible.
+
+<P>Bob Jacobsen fixed a build bug that prevented the Cornwall application from running under the debugger
       <hr class="hide">
 <!-- Footer -->
     <hr class="hide">
