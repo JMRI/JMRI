@@ -17,7 +17,7 @@ import javax.swing.JFrame;
  * get two JFrame objects.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 abstract public class AbstractFrameAction extends AbstractAction {
@@ -32,7 +32,7 @@ abstract public class AbstractFrameAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         try {
             JFrame f = (JFrame) Class.forName(className).newInstance();
-            f.show();
+            f.setVisible(true);
         } catch (Exception ex) {
             log.error("Error starting JFrame "+className+": "+ex);
         }
