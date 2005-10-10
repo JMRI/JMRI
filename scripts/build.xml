@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.59 $ -->
+<!-- Revision $Revision: 1.60 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -223,8 +223,8 @@
 	  
       <classpath refid="project.class.path"    />
       <doctitle><![CDATA[<h1>JMRI Library API</h1>]]></doctitle>
-      <bottom><![CDATA[<i>Copyright &copy; 1997 - 2004 JMRI Community. 
-                    <br>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.</i>
+      <bottom><![CDATA[<i>Copyright &copy; 1997 - 2005 JMRI Community. 
+                    <br>JMRI, DecoderPro, PanelPro, SoundPro, DispatcherPro and associated logos are our trademarks.</i>
                        <br>Site hosted by: 
                        <A href="http://sourceforge.net"> 
                        <IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge_Logo"> </A>
