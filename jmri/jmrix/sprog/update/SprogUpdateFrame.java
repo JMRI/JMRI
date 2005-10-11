@@ -13,7 +13,7 @@ import javax.swing.*;
 /**
  * Frame for SPROG firmware update utility
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SprogUpdateFrame
     extends JFrame
@@ -240,7 +240,7 @@ public class SprogUpdateFrame
   public void openFileChooserButtonActionPerformed(java.awt.event.
       ActionEvent e) {
     // start at current file, show dialog
-    int retVal = hexFileChooser.showSaveDialog(this);
+    int retVal = hexFileChooser.showOpenDialog(this);
 
     // handle selection or cancel
     if (retVal == JFileChooser.APPROVE_OPTION) {
