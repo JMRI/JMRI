@@ -12,7 +12,7 @@ import javax.swing.AbstractAction;
  * BoosterProgFrame object.
  *
  * @author	    Bob Jacobsen    Copyright (C) 2004
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class BoosterProgAction extends AbstractAction {
     static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.nce.boosterprog.BoosterProgBundle");
@@ -33,7 +33,7 @@ public class BoosterProgAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         // create a BoosterProgFrame
         BoosterProgFrame f = new BoosterProgFrame();
-        f.show();
+        f.setVisible(true);
     }
 }
 

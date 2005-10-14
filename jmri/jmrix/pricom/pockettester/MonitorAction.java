@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
  * @see jmri.jmrix.pricom.pockettester.MonitorFrame
  *
  * @author			Bob Jacobsen    Copyright (C) 2002,2004
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public abstract class MonitorAction extends AbstractAction  {
 
@@ -33,7 +33,7 @@ public abstract class MonitorAction extends AbstractAction  {
 			log.error("starting MonitorFrame caught exception: "+ex.toString());
 			}
 	    connect(f);
-		f.show();
+		f.setVisible(true);
 	};
 
     abstract void connect(DataListener l);

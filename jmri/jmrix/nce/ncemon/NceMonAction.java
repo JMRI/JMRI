@@ -28,7 +28,7 @@ public class NceMonAction 			extends AbstractAction {
 		catch (Exception ex) {
 			log.warn("NceMonAction starting NceMonFrame: Exception: "+ex.toString());
 			}
-		f.show();
+		f.setVisible(true);
 	}
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceMonAction.class.getName());

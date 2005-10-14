@@ -9,7 +9,7 @@ import javax.swing.AbstractAction;
  * 
  *
  * @author	Bob Jacobsen    Copyright (C) 2005
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public abstract class PacketTableAction extends AbstractAction {
@@ -28,7 +28,7 @@ public abstract class PacketTableAction extends AbstractAction {
         PacketTableFrame f = new PacketTableFrame();
         f.initComponents();
         connect(f);
-        f.show();
+        f.setVisible(true);
 
     }
     

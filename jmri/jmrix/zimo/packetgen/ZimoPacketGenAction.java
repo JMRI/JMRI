@@ -5,7 +5,7 @@
  *       		MX-1 PacketGenFrame object
  *
  * @author		Bob Jacobsen    Copyright (C) 2001, 2002
- * @version		$Revision: 1.1 $
+ * @version		$Revision: 1.2 $
  *
  * Adapted for use with Zimo MX-1 by Sip Bosch
  *
@@ -31,7 +31,7 @@ public class ZimoPacketGenAction 			extends AbstractAction {
 		catch (Exception ex) {
 			log.error("Exception: "+ex.toString());
 			}
-		f.show();
+		f.setVisible(true);
 
 		// connect to the TrafficController
 		f.connect(Mx1TrafficController.instance());

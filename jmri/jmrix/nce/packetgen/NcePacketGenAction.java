@@ -25,7 +25,7 @@ public class NcePacketGenAction 			extends AbstractAction {
 		catch (Exception ex) {
 			log.error("Exception: "+ex.toString());
 			}
-		f.show();	
+		f.setVisible(true);	
 	}
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NcePacketGenAction.class.getName());
 }

@@ -26,7 +26,7 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author  Bob Jacobsen   Copyright (C) 2003, 2004
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class SE8Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
 
@@ -74,7 +74,7 @@ public class SE8Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
         
         // and prep for display
         pack();
-        show();
+        setVisible(true);
     }
 
     

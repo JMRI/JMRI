@@ -6,7 +6,6 @@ import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
 import javax.swing.*;
-import java.awt.event.*;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
@@ -17,7 +16,7 @@ import java.util.Vector;
 /**
  * Table data model for display of DCC packet contents
  * @author		Bob Jacobsen   Copyright (C) 2005
- * @version		$Revision: 1.4 $
+ * @version		$Revision: 1.5 $
  */
 public class PacketDataModel extends javax.swing.table.AbstractTableModel  {
 
@@ -119,7 +118,7 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel  {
 			} catch (Exception ex) {
 			    log.error("starting MonitorFrame caught exception: "+ex.toString());
 			}
-		    f.show();
+		    f.setVisible(true);
             
             return;
         default:

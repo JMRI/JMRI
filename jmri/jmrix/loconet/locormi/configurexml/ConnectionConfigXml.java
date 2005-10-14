@@ -20,7 +20,7 @@ import org.jdom.Element;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -55,7 +55,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         JFrame f = new JFrame("LocoNet server connection");
         f.getContentPane().add(new JLabel("Connecting to "+hostName));
         f.pack();
-        f.show();
+        f.setVisible(true);
 
         // slightly different, as not based on a serial port...
         // create the LnMessageClient
@@ -78,7 +78,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         client.configureLocalServices();
 
         if (connected) {
-            f.hide();
+            f.setVisible(false);
             f.dispose();
         }
 

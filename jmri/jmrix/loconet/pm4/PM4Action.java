@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
  * Create and register a PM4Frame object.
  *
  * @author			Bob Jacobsen    Copyright (C) 2002
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class PM4Action 	extends AbstractAction {
 
@@ -22,7 +22,7 @@ public class PM4Action 	extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         // create a PM4Frame
         PM4Frame f = new PM4Frame();
-        f.show();
+        f.setVisible(true);
     }
 }
 
