@@ -7,14 +7,13 @@ package jmri.jmrix.loconet.locormi;
  * Copyright:    Copyright (c) 2002
  * Company:
  * @author  Bob Jacobsen
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 import javax.swing.*;
 import jmri.jmrix.loconet.*;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
-import java.rmi.RemoteException;
 
 public class LnMessageClientAction extends AbstractAction
 {

@@ -2,7 +2,6 @@
 
  package jmri.jmrix.nce.boosterprog;
 
-import java.awt.Dimension;
 import java.util.ResourceBundle;
 
 import javax.swing.*;
@@ -13,7 +12,7 @@ import jmri.*;
  * Frame for configuring a NCE booster
  *
  * @author		Bob Jacobsen   Copyright (C) 2004
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class BoosterProgFrame extends javax.swing.JFrame {
     JTextField start = new JTextField(6);

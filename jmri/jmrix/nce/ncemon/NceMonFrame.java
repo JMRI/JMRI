@@ -8,15 +8,6 @@
 
 package jmri.jmrix.nce.ncemon;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import java.util.Date;
-import java.text.DateFormat;
-import java.io.File;
-import java.io.PrintStream;
-import java.io.FileOutputStream;
-
 import jmri.jmrix.nce.NceListener;
 import jmri.jmrix.nce.NceTrafficController;
 import jmri.jmrix.nce.NceMessage;

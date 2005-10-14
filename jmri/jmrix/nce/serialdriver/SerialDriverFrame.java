@@ -8,11 +8,7 @@
 
 package jmri.jmrix.nce.serialdriver;
 
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
-
-import jmri.jmrix.nce.NceTrafficController;
 
 public class SerialDriverFrame extends jmri.jmrix.SerialPortFrame {
 
@@ -29,7 +25,7 @@ public class SerialDriverFrame extends jmri.jmrix.SerialPortFrame {
 			adapter.configure();
 						
 			// hide this frame, since we're done
-			hide();
+			setVisible(false);
 		} else {
 			// not selected
 			JOptionPane.showMessageDialog(this, "Please select a port name first");

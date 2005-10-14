@@ -3,11 +3,11 @@
 package jmri.jmrix.pricom.pockettester;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+//import java.awt.FlowLayout;
+//import java.awt.event.ActionEvent;
+//import java.awt.event.ActionListener;
+//import java.awt.event.MouseEvent;
+//import java.awt.event.MouseListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -22,7 +22,7 @@ import jmri.util.JTableUtil;
  * Frame providing survey of DCC contents
  *
  * @author	Bob Jacobsen   Copyright (C) 2005
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class PacketTableFrame extends javax.swing.JFrame implements DataListener {
 

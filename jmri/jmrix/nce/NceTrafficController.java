@@ -6,7 +6,7 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
-import jmri.jmrix.nce.serialdriver.SerialDriverAdapter;
+//import jmri.jmrix.nce.serialdriver.SerialDriverAdapter;
 
 /**
  * Converts Stream-based I/O to/from NCE messages.  The "NceInterface"
@@ -21,7 +21,7 @@ import jmri.jmrix.nce.serialdriver.SerialDriverAdapter;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface {
 

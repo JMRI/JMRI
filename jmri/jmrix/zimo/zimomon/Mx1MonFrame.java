@@ -4,33 +4,9 @@
 
 package jmri.jmrix.zimo.zimomon;
 
-
-
-import java.awt.*;
-
-import java.awt.event.*;
-
-import javax.swing.*;
-
-import java.util.Date;
-
-import java.text.DateFormat;
-
-import java.io.File;
-
-import java.io.PrintStream;
-
-import java.io.FileOutputStream;
-
-
-
 import jmri.jmrix.zimo.Mx1Listener;
-
 import jmri.jmrix.zimo.Mx1TrafficController;
-
 import jmri.jmrix.zimo.Mx1Message;
-
-
 
 /**
 
@@ -38,7 +14,7 @@ import jmri.jmrix.zimo.Mx1Message;
 
  * @author			Bob Jacobsen   Copyright (C) 2002
 
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
 
  *
 

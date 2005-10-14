@@ -3,7 +3,7 @@
  *
  * Description:		Frame for user input of MX-1 messages
  * @author		Bob Jacobsen   Copyright (C) 2001,2002
- * @version		$Revision: 1.1 $
+ * @version		$Revision: 1.2 $
  *
  * Adapted by Sip Bosch for use with Zimo MX-1
  *
@@ -13,7 +13,6 @@
 package jmri.jmrix.zimo.packetgen;
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
 import jmri.jmrix.zimo.Mx1Message;

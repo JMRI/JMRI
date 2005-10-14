@@ -2,24 +2,13 @@
 
 package jmri.jmrix.pricom.pockettester;
 
-import javax.comm.CommPortIdentifier;
-import javax.comm.PortInUseException;
-import javax.comm.SerialPort;
-import javax.swing.*;
-import java.awt.*;
-import java.util.Enumeration;
-import java.util.Vector;
-import java.io.OutputStream;
-import java.io.DataInputStream;
-import java.io.InputStream;
-
 /**
  * Simple GUI for access to PRICOM Pocket Monitor
  * <P>
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2005
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class MonitorFrame extends jmri.jmrix.AbstractMonFrame implements DataListener {
 

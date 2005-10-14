@@ -2,7 +2,6 @@
 
 package jmri.jmrix.nce;
 
-import jmri.JmriException;
 import jmri.Sensor;
 import jmri.jmrix.AbstractMRReply;
 
@@ -16,7 +15,7 @@ import jmri.jmrix.AbstractMRReply;
  * see nextAiuPoll()
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class NceSensorManager extends jmri.AbstractSensorManager
                             implements NceListener {
