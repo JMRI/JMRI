@@ -1,6 +1,6 @@
 <!-- an ANT build.xml file for JMRI XSLT -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2005 -->
-<!-- Revision $Revision: 1.10 $ -->
+<!-- Revision $Revision: 1.11 $ -->
 
 <project name="JMRI" default="xslt" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -65,6 +65,22 @@
       		<include name="interestingCVs.xml"/>
     	</fileset>
   	</copy> 
+  </target>
+  
+  <target name="reserved" depends="init, copyDTD, copyXML" 
+  			description="create CSV file listing reserved CVs used by decoders">
+	<copy todir="${target}" >
+    	<fileset dir="." >
+      		<include name="CSVindex.html"/>
+    	</fileset>
+  	</copy> 
+    <style  basedir="${target}"
+    		destdir="${target}"
+    		style="reservedCSV.xsl"
+    		in="pages/decoderIndex.xml"
+    		out="pages/reservedCVs.csv"
+    	>
+	</style>
   </target>
   
   <target name="csv" depends="init, copyDTD, copyXML" 
