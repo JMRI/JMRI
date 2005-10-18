@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <!--Written by JMRI version 1.7.3 on Sun Aug 28 21:34:47 PDT 2005 $Id: decoderIndex.xml,v 1.80 2005-08-29 04:38:38 jacobsen Exp $-->
+  <!--Written by JMRI version 1.7.3 on Sun Aug 28 21:34:47 PDT 2005 $Id: decoderIndex.xml,v 1.81 2005-10-18 04:47:32 jacobsen Exp $-->
   <decoderIndex version="100">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
-      <manufacturer mfg="" mfgID="" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
       <manufacturer mfg="AMW" mfgID="19" />
       <manufacturer mfg="Advanced IC Engineering, Inc." mfgID="17" />
