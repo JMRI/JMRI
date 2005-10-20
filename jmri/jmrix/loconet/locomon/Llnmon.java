@@ -4,6 +4,7 @@ package jmri.jmrix.loconet.locomon;
 
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
+import jmri.util.StringUtil;
 
  /**
  * A utility class for formatting LocoNet packets
@@ -34,7 +35,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * used with permission.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2003
- * @version			$Revision: 1.32 $
+ * @version			$Revision: 1.33 $
  */
 public class Llnmon {
 
@@ -1301,48 +1302,7 @@ public class Llnmon {
             // the length apparently the distinquishing item.
             switch (l.getElement(1)) {
             case 0x10: {
-                /***********************************************************************************
-                 * OPC_PEER_XFER    0xE5   ; move 8 bytes PEER to PEER, SRC->DST                    *
-                 *                         ; Message has response                                   *
-                 *                         ; <0xE5>,<10>,<SRC>,<DSTL><DSTH>,<PXCT1>,<D1>,           *
-                 *                         ;        <D2>,<D3>,<D4>,<PXCT2>,<D5>,<D6>,<D7>,          *
-                 *                         ;        <D8>,<CHK>                                      *
-                 *                         ;   SRC/DST are 7 bit args. DSTL/H=0 is BROADCAST msg    *
-                 *                         ;   SRC=0 is MASTER                                      *
-                 *                         ;   SRC=0x70-0x7E are reserved                           *
-                 *                         ;   SRC=7F is THROTTLE msg xfer,                         *
-                 *                         ;        <DSTL><DSTH> encode ID#,                        *
-                 *                         ;        <0><0> is THROT B'CAST                          *
-                 *                         ;   <PXCT1>=<0,XC2,XC1,XC0 - D4.7,D3.7,D2.7,D1.7>        *
-                 *                         ;        XC0-XC2=ADR type CODE-0=7 bit Peer TO Peer adrs *
-                 *                         ;           1=<D1>is SRC HI,<D2>is DST HI                *
-                 *                         ;   <PXCT2>=<0,XC5,XC4,XC3 - D8.7,D7.7,D6.7,D5.7>        *
-                 *                         ;        XC3-XC5=data type CODE- 0=ANSI TEXT string,     *
-                 *                         ;           balance RESERVED                             *
-                 ***********************************************************************************/
-
-                int src 	= l.getElement(2);            	// source of transfer
-                int dst_l 	= l.getElement(3);          	// ls 7 bits of destination
-                int dst_h 	= l.getElement(4);          	// ms 7 bits of destination
-                int pxct1 	= l.getElement(5);
-                int pxct2	= l.getElement(10);
-
-                int d[] = l.getPeerXfrData();
-
-                return "Peer to Peer transfer: SRC=0x"+Integer.toHexString(src)
-                    +", DSTL=0x"+Integer.toHexString(dst_l)
-                    +", DSTH=0x"+Integer.toHexString(dst_h)
-                    +", PXCT1=0x"+Integer.toHexString(pxct1)
-                    +", PXCT2=0x"+Integer.toHexString(pxct2)+"\n"
-                    +"\tD1=0x"+Integer.toHexString(d[0])
-                    +", D2=0x"+Integer.toHexString(d[1])
-                    +", D3=0x"+Integer.toHexString(d[2])
-                    +", D4=0x"+Integer.toHexString(d[3])
-                    +", D5=0x"+Integer.toHexString(d[4])
-                    +", D6=0x"+Integer.toHexString(d[5])
-                    +", D7=0x"+Integer.toHexString(d[6])
-                    +", D8=0x"+Integer.toHexString(d[7])
-                    +"\n";
+                return peerToPeerMessage(l);
             }
             case 0x0A: {
                 // throttle status
@@ -1361,7 +1321,8 @@ public class Llnmon {
                     +Integer.toHexString(l.getElement(4))
                     +" SLA="+Integer.toHexString(l.getElement(7))
                     +" SLB="+Integer.toHexString(l.getElement(8))
-                    +"\n";            }
+                    +"\n";            
+            }
             default: {
                 // 0xE5 message of unknown format
                 forceHex = true;
@@ -1525,6 +1486,77 @@ public class Llnmon {
             +" ("+((id2/4&0)&0x3f)+")";
     }
 
+    String peerToPeerMessage(LocoNetMessage l) {
+        /***********************************************************************************
+         * OPC_PEER_XFER    0xE5   ; move 8 bytes PEER to PEER, SRC->DST                    *
+         *                         ; Message has response                                   *
+         *                         ; <0xE5>,<10>,<SRC>,<DSTL><DSTH>,<PXCT1>,<D1>,           *
+         *                         ;        <D2>,<D3>,<D4>,<PXCT2>,<D5>,<D6>,<D7>,          *
+         *                         ;        <D8>,<CHK>                                      *
+         *                         ;   SRC/DST are 7 bit args. DSTL/H=0 is BROADCAST msg    *
+         *                         ;   SRC=0 is MASTER                                      *
+         *                         ;   SRC=0x70-0x7E are reserved                           *
+         *                         ;   SRC=7F is THROTTLE msg xfer,                         *
+         *                         ;        <DSTL><DSTH> encode ID#,                        *
+         *                         ;        <0><0> is THROT B'CAST                          *
+         *                         ;   <PXCT1>=<0,XC2,XC1,XC0 - D4.7,D3.7,D2.7,D1.7>        *
+         *                         ;        XC0-XC2=ADR type CODE-0=7 bit Peer TO Peer adrs *
+         *                         ;           1=<D1>is SRC HI,<D2>is DST HI                *
+         *                         ;   <PXCT2>=<0,XC5,XC4,XC3 - D8.7,D7.7,D6.7,D5.7>        *
+         *                         ;        XC3-XC5=data type CODE- 0=ANSI TEXT string,     *
+         *                         ;           balance RESERVED                             *
+         ***********************************************************************************/
+
+        int src 	= l.getElement(2);            	// source of transfer
+        int dst_l 	= l.getElement(3);          	// ls 7 bits of destination
+        int dst_h 	= l.getElement(4);          	// ms 7 bits of destination
+        int pxct1 	= l.getElement(5);
+        int pxct2	= l.getElement(10);
+
+        int d[] = l.getPeerXfrData();
+
+        // check for a specific type - download message
+        if ( (src == 0x7F) && (dst_l == 0x7F) && (dst_h == 0x7F)
+             && ((pxct1&0x70) == 0x40) ) {
+             
+            // yes - format as such
+            // decode subtype
+            int sub = pxct2&0x70;
+            switch (sub) {
+                case 0x00:  // setup
+                    return "Download message, setup\n";
+                case 0x10:  // set address
+                    return "Download message, set address "+StringUtil.twoHexFromInt(d[0])+StringUtil.twoHexFromInt(d[1])+StringUtil.twoHexFromInt(d[2])+"\n";
+                case 0x20:  // send data
+                    return "Download message, send data "+StringUtil.twoHexFromInt(d[0])+" "+StringUtil.twoHexFromInt(d[1])+" "+StringUtil.twoHexFromInt(d[2])+" "+StringUtil.twoHexFromInt(d[3])+" "+StringUtil.twoHexFromInt(d[4])+" "+StringUtil.twoHexFromInt(d[5])+" "+StringUtil.twoHexFromInt(d[6])+" "+StringUtil.twoHexFromInt(d[7])+"\n";
+                case 0x30:  // verify
+                    return "Download message, verify\n";
+                case 0x40:  // end op
+                    return "Download message, end operation\n";
+                default:    // everything else isn't understood, go to default
+            }
+        }
+        
+        
+        // no specific type, return generic format
+        String generic =  "Peer to Peer transfer: SRC=0x"+Integer.toHexString(src)
+                    +", DSTL=0x"+Integer.toHexString(dst_l)
+                    +", DSTH=0x"+Integer.toHexString(dst_h)
+                    +", PXCT1=0x"+Integer.toHexString(pxct1)
+                    +", PXCT2=0x"+Integer.toHexString(pxct2)+"\n"
+                    +"\tD1=0x"+Integer.toHexString(d[0])
+                    +", D2=0x"+Integer.toHexString(d[1])
+                    +", D3=0x"+Integer.toHexString(d[2])
+                    +", D4=0x"+Integer.toHexString(d[3])
+                    +", D5=0x"+Integer.toHexString(d[4])
+                    +", D6=0x"+Integer.toHexString(d[5])
+                    +", D7=0x"+Integer.toHexString(d[6])
+                    +", D8=0x"+Integer.toHexString(d[7])
+                    +"\n";
+                    
+        return generic;
+    }
+    
 }  // end of class
 
 
