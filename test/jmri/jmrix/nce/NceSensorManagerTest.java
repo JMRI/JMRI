@@ -10,55 +10,14 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the NceAIU class.
  * @author	Bob Jacobsen Copyright 2002
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class NceSensorManagerTest extends TestCase {
-/*@@@ needs to be reworked for new NCE sensor handling
-    public void testScan1() {
+
+    public void testCtor() {
         NceSensorManager s = new NceSensorManager();
-        Assert.assertEquals("none expected", null, s.nextAiuPoll());
-        s.provideSensor("3");
     }
 
-    public void testScan2() {
-        NceSensorManager s = new NceSensorManager();
-        s.provideSensor("3");
-        NceMessage m = s.nextAiuPoll();
-        Assert.assertEquals("opcode ", 0x8A, m.getElement(0));
-        Assert.assertEquals("AIU ", 1, m.getElement(1));
-    }
-
-    public void testScan3() {
-        NceSensorManager s = new NceSensorManager();
-        s.provideSensor("17");
-        NceMessage m = s.nextAiuPoll();
-        Assert.assertEquals("opcode ", 0x8A, m.getElement(0));
-        Assert.assertEquals("AIU ", 2, m.getElement(1));
-    }
-
-    public void testScan4() {
-        NceSensorManager s = new NceSensorManager();
-        s.provideSensor("172");
-        NceMessage m = s.nextAiuPoll();
-        Assert.assertEquals("opcode ", 0x8A, m.getElement(0));
-        Assert.assertEquals("AIU ", 11, m.getElement(1));
-    }
-
-    public void testScan5() {
-        NceSensorManager s = new NceSensorManager();
-        s.provideSensor("17");
-        s.provideSensor("172");
-        NceMessage m = s.nextAiuPoll();
-        Assert.assertEquals("opcode ", 0x8A, m.getElement(0));
-        Assert.assertEquals("AIU ", 2, m.getElement(1));
-        m = s.nextAiuPoll();
-        Assert.assertEquals("opcode ", 0x8A, m.getElement(0));
-        Assert.assertEquals("AIU ", 11, m.getElement(1));
-        m = s.nextAiuPoll();
-        Assert.assertEquals("opcode ", 0x8A, m.getElement(0));
-        Assert.assertEquals("AIU ", 2, m.getElement(1));
-    }
-*/
     // from here down is testing infrastructure
     public NceSensorManagerTest(String s) {
         super(s);
