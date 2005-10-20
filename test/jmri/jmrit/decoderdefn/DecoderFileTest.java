@@ -2,15 +2,12 @@
 
 package jmri.jmrit.decoderdefn;
 
-import java.io.*;
-import java.util.*;
 import javax.swing.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.framework.Assert;
 import org.jdom.*;
-import org.jdom.output.*;
 import jmri.jmrit.symbolicprog.*;
 import jmri.progdebugger.*;
 
@@ -18,7 +15,7 @@ import jmri.progdebugger.*;
  * DecoderFileTest.java
  *
  * @author			Bob Jacobsen, Copyright (C) 2001, 2002
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 public class DecoderFileTest extends TestCase {
 

@@ -5,12 +5,11 @@ package jmri.jmrit.simpleclock;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import java.util.ResourceBundle;
 
 /**
  * Tests for the jmrit.simpleclock package
  * @author			Bob Jacobsen
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SimpleClockTest extends TestCase {
 

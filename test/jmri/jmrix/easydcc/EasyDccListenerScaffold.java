@@ -2,8 +2,6 @@
 
 package jmri.jmrix.easydcc;
 
-import jmri.*;
-
 /** 
  * Stands in for the EasyDccTrafficController class
  * @author			Bob Jacobsen

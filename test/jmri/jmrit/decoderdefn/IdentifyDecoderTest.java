@@ -5,14 +5,12 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import java.io.*;
-
 /**
  * IdentifyDecoderTest.java
  *
  * Description:	    tests for the jmrit.roster.IdentifyDecoder class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class IdentifyDecoderTest extends TestCase {
 

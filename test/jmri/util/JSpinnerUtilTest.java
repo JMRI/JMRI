@@ -2,7 +2,7 @@
 
 package jmri.util;
 
-import junit.framework.Assert;
+//import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -11,7 +11,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.util.JSpinnerUtil class.
  * @author	Bob Jacobsen  Copyright 2005
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class JSpinnerUtilTest extends TestCase {
 

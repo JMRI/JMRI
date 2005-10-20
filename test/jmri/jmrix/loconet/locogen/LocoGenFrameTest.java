@@ -2,20 +2,17 @@
 
 package jmri.jmrix.loconet.locogen;
 
-import java.io.*;
 import junit.framework.Test;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import jmri.jmrix.loconet.*;
-import jmri.jmrix.loconet.locogen.*;
-import jmri.jmrix.loconet.*;
 
 /**
  * Tests for the jmri.jmrix.loconet.locogen.LocoGenFrame class
  * @author   Bob Jacobsen Copyright 2001, 2003
- * @version  $Revision: 1.3 $
+ * @version  $Revision: 1.4 $
  */
 public class LocoGenFrameTest extends TestCase {
 

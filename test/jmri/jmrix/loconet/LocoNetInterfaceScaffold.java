@@ -11,7 +11,6 @@
 package jmri.jmrix.loconet;
 
 import jmri.jmrix.loconet.LnTrafficController;
-import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 
 import java.util.Vector;

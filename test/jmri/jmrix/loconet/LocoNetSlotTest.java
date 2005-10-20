@@ -2,8 +2,6 @@
 package jmri.jmrix.loconet;
 
 import junit.framework.*;
-import jmri.*;
-
 
 public class LocoNetSlotTest extends TestCase {
 

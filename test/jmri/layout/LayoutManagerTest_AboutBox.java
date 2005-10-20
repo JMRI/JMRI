@@ -3,7 +3,6 @@ package jmri.layout;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.border.*;
 
 public class LayoutManagerTest_AboutBox extends JDialog implements ActionListener
 {
@@ -24,7 +23,7 @@ public class LayoutManagerTest_AboutBox extends JDialog implements ActionListene
     FlowLayout flowLayout1 = new FlowLayout();
     GridLayout gridLayout1 = new GridLayout();
     String product = "";
-    String version = "$Revision: 1.1 $";
+    String version = "$Revision: 1.2 $";
     String copyright = "Copyright (c) 2002";
     String comments = "";
     public LayoutManagerTest_AboutBox(Frame parent)

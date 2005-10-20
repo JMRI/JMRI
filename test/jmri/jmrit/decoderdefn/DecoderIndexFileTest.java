@@ -2,22 +2,19 @@
 
 package jmri.jmrit.decoderdefn;
 
-import java.io.*;
-import java.util.*;
 import javax.swing.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.framework.Assert;
 import org.jdom.*;
-import org.jdom.output.*;
 import com.sun.java.util.collections.List;
 
 /**
  * Tests for DecoderIndexFile class
  *
  * @author			Bob Jacobsen, Copyright (c) 2001, 2002
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class DecoderIndexFileTest extends TestCase {
 

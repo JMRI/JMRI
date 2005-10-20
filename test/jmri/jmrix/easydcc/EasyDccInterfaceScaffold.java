@@ -8,8 +8,6 @@
 
 package jmri.jmrix.easydcc;
 
-import jmri.*;
-
 class EasyDccInterfaceScaffold implements EasyDccListener {
 	public EasyDccInterfaceScaffold() {
 		rcvdReply = null;

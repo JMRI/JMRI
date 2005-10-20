@@ -8,9 +8,7 @@
 
 package jmri.jmrix.easydcc;
 
-import java.io.*;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import jmri.*;

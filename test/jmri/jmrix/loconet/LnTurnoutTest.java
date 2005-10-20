@@ -2,15 +2,12 @@
 
 package jmri.jmrix.loconet;
 
-import java.io.*;
 import junit.framework.*;
-
-import jmri.jmrix.loconet.*;
 
 /**
  * Tests for the jmri.jmrix.loconet.LnTurnout class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class LnTurnoutTest extends jmri.AbstractTurnoutTest {
 
