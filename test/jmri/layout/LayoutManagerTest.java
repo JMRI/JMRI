@@ -126,7 +126,7 @@ public class LayoutManagerTest extends JFrame implements LayoutEventListener
         Point loc = getLocation();
         dlg.setLocation((frmSize.width - dlgSize.width) / 2 + loc.x, (frmSize.height - dlgSize.height) / 2 + loc.y);
         dlg.setModal(true);
-        dlg.show();
+        dlg.setVisible(true);
     }
     /**Overridden so we can exit when window is closed*/
     protected void processWindowEvent(WindowEvent e)
