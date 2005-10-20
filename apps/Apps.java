@@ -27,7 +27,7 @@ import net.roydesign.mac.MRJAdapter;
  * Base class for Jmri applications.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.27 $
+ * @version     $Revision: 1.28 $
  */
 public class Apps extends JPanel {
 
@@ -49,9 +49,12 @@ public class Apps extends JPanel {
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
         File file = new File(XmlFile.prefsDir()+configFilename);
         InstanceManager.setConfigureManager(new jmri.configurexml.ConfigXmlManager());
+        log.debug("start load config file");
         configOK = InstanceManager.configureManagerInstance().load(file);
+        log.debug("end load config file, OK="+configOK);
 
 	// populate GUI
+	    log.debug("Start UI");
         setResourceBundle();
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         // Create a menu bar
@@ -63,10 +66,13 @@ public class Apps extends JPanel {
         // if the configuration didn't complete OK, pop the prefs frame
         log.debug("Config go OK? "+configOK);
         if (!configOK) doPreferences();
+        log.debug("Done with doPreferences, start statusPanel");
 
         add(statusPanel());
+        log.debug("Done with statusPanel, start buttonSpace");
         add(buttonSpace());
 
+        log.debug("End constructor");
     }
     
     /**
@@ -316,8 +322,10 @@ public class Apps extends JPanel {
     protected JPanel statusPanel() {
         JPanel pane1 = new JPanel();
         pane1.setLayout(new FlowLayout());
+        log.debug("Fetch main logo: "+logo()+" "+ClassLoader.getSystemResource(logo()));
         pane1.add(new JLabel(new ImageIcon(ClassLoader.getSystemResource(logo()),"JMRI logo"), JLabel.LEFT));
 
+        log.debug("start labels");
         JPanel pane2 = new JPanel();
         pane2.setLayout(new BoxLayout(pane2, BoxLayout.Y_AXIS));
         pane2.add(new JLabel(line1()));

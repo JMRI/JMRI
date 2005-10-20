@@ -17,7 +17,7 @@ import javax.swing.JMenuBar;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.21 $
+ * @version     $Revision: 1.22 $
  */
 public class CornwallRR extends Apps {
 
@@ -50,6 +50,7 @@ public class CornwallRR extends Apps {
 
     CornwallRR(JFrame p) {
         super(p);
+        log.debug("CTOR done");
     }
 
 
