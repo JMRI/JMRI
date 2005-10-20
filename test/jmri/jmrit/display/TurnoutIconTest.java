@@ -1,12 +1,9 @@
 package jmri.jmrit.display;
 
-import java.io.*;
-import java.util.*;
 import javax.swing.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import junit.framework.Assert;
 import java.beans.PropertyChangeEvent;
 
 /**
@@ -14,7 +11,7 @@ import java.beans.PropertyChangeEvent;
  *
  * Description:
  * @author			Bob Jacobsen
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class TurnoutIconTest extends TestCase {
 
@@ -63,7 +60,7 @@ public class TurnoutIconTest extends TestCase {
         jf.getContentPane().add(inconsistentButton);
 
         jf.pack();
-        jf.show();
+        jf.setVisible(true);
 
 	}
 

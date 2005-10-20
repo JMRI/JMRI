@@ -1,24 +1,17 @@
 package jmri.jmrit.display;
 
-import java.io.*;
-import java.util.*;
 import java.awt.*;
 import javax.swing.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import junit.framework.Assert;
-import org.jdom.*;
-import org.jdom.output.*;
-import com.sun.java.util.collections.List;
-import java.beans.PropertyChangeEvent;
 
 /**
  * PositionableLabelTest.java
  *
  * Description:
  * @author			Bob Jacobsen
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class PositionableLabelTest extends TestCase {
 
@@ -51,7 +44,7 @@ public class PositionableLabelTest extends TestCase {
         p.add(to);
 
         jf.pack();
-        jf.show();
+        jf.setVisible(true);
 
 	}
 

@@ -3,17 +3,14 @@
  *
  * Description:	    tests for the jmrit.display package
  * @author			Bob Jacobsen
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 
 package jmri.jmrit.display;
 
-import java.io.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.jdom.*;
-import org.jdom.output.*;
 
 public class DisplayTest extends TestCase {
 
