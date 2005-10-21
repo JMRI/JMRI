@@ -11,7 +11,6 @@ import java.util.Enumeration;
 import java.util.Vector;
 import java.io.OutputStream;
 import java.io.DataInputStream;
-import java.io.InputStream;
 
 /**
  * Simple GUI for controlling the PRICOM Pocket Tester
@@ -22,7 +21,7 @@ import java.io.InputStream;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class DataSource extends JFrame {
 
@@ -155,7 +154,7 @@ public class DataSource extends JFrame {
                 self.addListener(l);
             }
         };
-        JButton b = new JButton((String)a.getValue(a.NAME));
+        JButton b = new JButton((String)a.getValue(Action.NAME));
         b.addActionListener(a);
         p4.add(b);
         
@@ -165,7 +164,7 @@ public class DataSource extends JFrame {
                 ((PacketTableFrame)l).setSource(self);
             }
         };
-        b = new JButton((String)p.getValue(p.NAME));
+        b = new JButton((String)p.getValue(Action.NAME));
         b.addActionListener(p);
         p4.add(b);
         
@@ -233,7 +232,6 @@ public class DataSource extends JFrame {
         ostream = null;
         activeSerialPort = null;
         portNameVector = null;
-        opened = false;
 
         // and clean up parent
         super.dispose();
@@ -315,8 +313,6 @@ public class DataSource extends JFrame {
                          );
             }
 
-            opened = true;
-
         }
         catch (Exception ex) {
             log.error("Unexpected exception while opening port "+portName+" trace follows: "+ex);
@@ -330,7 +326,6 @@ public class DataSource extends JFrame {
         log.error("Port "+p+" in use, cannot open");
     }
 
-    private boolean opened = false;
     DataInputStream serialStream = null;
     OutputStream ostream = null;
 
