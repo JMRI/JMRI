@@ -11,7 +11,6 @@ import java.util.Enumeration;
 import java.util.Vector;
 import java.io.OutputStream;
 import java.io.DataInputStream;
-import java.io.InputStream;
 
 /**
  * Simple GUI for access to an NCE monitor card
@@ -20,7 +19,7 @@ import java.io.InputStream;
  * The rest of the GUI then appears.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
 
@@ -292,7 +291,6 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
         ostream = null;
         activeSerialPort = null;
         portNameVector = null;
-        opened = false;
 
         // and clean up parent
         super.dispose();
@@ -370,7 +368,6 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
                          );
             }
 
-            opened = true;
 
         }
         catch (Exception ex) {
@@ -385,7 +382,6 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
         log.error("Port "+p+" in use, cannot open");
     }
 
-    private boolean opened = false;
     DataInputStream serialStream = null;
     OutputStream ostream = null;
 
