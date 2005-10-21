@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
  * @see jmri.jmrix.pricom.pockettester.DataSource
  *
  * @author			Bob Jacobsen    Copyright (C) 2002,2005
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class DataSourceAction extends AbstractAction  {
 
@@ -33,7 +33,7 @@ public class DataSourceAction extends AbstractAction  {
 		catch (Exception ex) {
 			log.error("starting DataSource caught exception: "+ex.toString());
 			}
-		f.show();
+		f.setVisible(true);
 	};
 
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DataSourceAction.class.getName());
