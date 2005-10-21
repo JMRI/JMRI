@@ -2,7 +2,7 @@
 
 package jmri.managers;
 
-import jmri.Sensor;
+//import jmri.Sensor;
 import jmri.Reporter;
 import jmri.ReporterManager;
 
@@ -12,7 +12,7 @@ import jmri.ReporterManager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class ProxyReporterManager extends AbstractProxyManager implements ReporterManager {
     /**
@@ -109,7 +109,6 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
 		String systemName = sysName.toUpperCase();
         // if the systemName is specified, find that system
         if (systemName != null) {
-            Sensor t = null;
             for (int i=0; i<mgrs.size(); i++) {
                 if ( ( (ReporterManager)mgrs.get(i)).systemLetter() == systemName.charAt(0) )
                     return ( (ReporterManager)mgrs.get(i)).newReporter(systemName, userName);

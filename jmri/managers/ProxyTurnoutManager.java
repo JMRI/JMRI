@@ -7,7 +7,6 @@ import com.sun.java.util.collections.Arrays;
 import com.sun.java.util.collections.LinkedList;
 
 import jmri.Manager;
-import jmri.Sensor;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.TurnoutOperationManager;
@@ -18,7 +17,7 @@ import jmri.TurnoutOperationManager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class ProxyTurnoutManager extends AbstractProxyManager implements TurnoutManager {
 
@@ -129,7 +128,6 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
         // if the systemName is specified, find that system
 		String systemName = sysName.toUpperCase();
         if (systemName != null) {
-            Sensor t = null;
             for (int i=0; i<mgrs.size(); i++) {
                 if ( ( (TurnoutManager)mgrs.get(i)).systemLetter() == systemName.charAt(0) )
                     return ( (TurnoutManager)mgrs.get(i)).newTurnout(systemName, userName);

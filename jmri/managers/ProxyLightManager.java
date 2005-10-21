@@ -13,7 +13,7 @@ import jmri.LightManager;
  * Based on ProxySensorManager
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class ProxyLightManager extends AbstractProxyManager
                             implements LightManager {
@@ -122,7 +122,6 @@ public class ProxyLightManager extends AbstractProxyManager
 		String systemName = sysName.toUpperCase();
         // if the systemName is specified, find that system
         if (systemName != null) {
-            Light t = null;
             for (int i=0; i<mgrs.size(); i++) {
                 if ( ( (LightManager)mgrs.get(i)).systemLetter() == systemName.charAt(0) )
                     return ( (LightManager)mgrs.get(i)).newLight(systemName, userName);
