@@ -17,7 +17,7 @@ import java.util.Iterator;
  * back to an explicit implementation when running on Java 1.1
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class StringUtil {
@@ -45,10 +45,27 @@ static char[] hexChars = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A'
     static public String appendTwoHexFromInt(int val, String inString) {
         StringBuffer sb = new StringBuffer(inString) ;
 	    sb.append( hexChars[ (val&0xF0) >> 4 ] );
-		sb.append( hexChars[ val & 0x0F ] ) ;
+		sb.append( hexChars[ val & 0x0F ] );
 		return sb.toString() ;
     }
 
+    /**
+     * Create a String containing hexadecimal values from a byte[]. 
+     *
+     * @param bytes byte array.  Can be zero length,
+     *  but must not be null.
+     * @return String of hex values, ala "01 02 0A B1 21 ".
+     */
+    static public String hexStringFromBytes(byte[] bytes) {
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i<bytes.length; i++) {
+	        sb.append( hexChars[ (bytes[i]&0xF0) >> 4 ] );
+		    sb.append( hexChars[ bytes[i] & 0x0F ] );
+		    sb.append(' ');
+        }
+        return new String(sb);
+    }
+    
     /**
      * Create a byte[] from a String containing hexadecimal values.
      *
