@@ -3,6 +3,10 @@ package jmri.jmrix.loconet.locormi;
 import java.lang.Thread;
 import jmri.jmrix.loconet.LocoNetMessage;
 
+/**
+ * @author Alex Shepherd Copyright (c) 2002
+ * @version $Revision: 1.2 $
+ */
 class LnMessageClientPollThread extends Thread{
     LnMessageClient parent = null ;
    	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnMessageClientPollThread.class.getName());
