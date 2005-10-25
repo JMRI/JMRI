@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.7.3.html,v 1.9 2005-10-10 18:28:29 jacobsen Exp $ -->
+<!-- $Id: jmri1.7.3.html,v 1.10 2005-10-25 18:32:17 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -165,6 +165,14 @@
 <P>Dennis Miller adjusted the coloring/shading on the speed table printouts to make them more visible.
 
 <P>Bob Jacobsen fixed a build bug that prevented the Cornwall application from running under the debugger
+ 
+<P>Paul Bender updated feedback support for Lenz turnouts.  Now includes support for 3 feedback modes: 1) Direct Mode, which ignores feedback from the layout.  2) Monitoring mode, which interpretes feedback from the layout, but, ignores the motion complete bit of turnouts with feedback.  3) Exact Mode, which will leave the feedback mode in the inconsistent state until the motion complete bit is set.  In this third case, the motion complete bit is only monitored when the computer sends a request to operate the turnout. For reference: Exact Mode behaves in the same manner as the mode previously selectable as Direct mode. Monitoring Mode is the new default mode. 
+
+<P>Bob Jacobsen added a new method to the StringUtils class to make it easier to dump byte arrays to log messages
+
+<P>Bob Jacobsen fixed a bug in the SPROG firmware upload tools so that the file open dialog works properly on Mac Classic
+
+
       <hr class="hide">
 <!-- Footer -->
     <hr class="hide">
