@@ -2,12 +2,13 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: TCS_X.xml,v 1.2 2005-08-29 04:37:57 jacobsen Exp $ -->
+<!-- $Id: TCS_X.xml,v 1.3 2005-10-27 05:50:27 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Michael Mosher" 
-					version="1" lastUpdated="20050828"/>
+					version="2" lastUpdated="20050913"/>
 
-		<!-- Version 1 - New file -->
+		<!-- Version 1 - made from TSC Tx -->
+		<!-- Version 2 - correction to CV61 -->
 
 
 <decoder>
@@ -38,7 +39,7 @@
 			<output name="Motor" />
 			</model>
 		<model model="DP5X" numOuts="5" numFns="14" lowVersionID="33" highVersionID="33"
-    		maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="NMRAmedium">
+    		maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP">
 			<size length="0845" width="0.680" height="0.165" units="inches" />
 			<output name="1" label="White"  connection="plug" maxcurrent="100 mA" />
 			<output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
@@ -104,7 +105,7 @@
 			<output name="Motor" />
 			</model>
 		<model model="T4X"  numOuts="4" numFns="14" lowVersionID="33" highVersionID="33"
-    		maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="9pin">
+    		maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
 			<size length="1.010" width="0.665" height="0.250" units="inches" />
 			<output name="1" label="White"  connection="wire" maxcurrent="100 mA" />
 			<output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
@@ -115,7 +116,7 @@
 			<output name="Motor" />
 			</model>
 		<model model="T5X"  numOuts="5" numFns="14" lowVersionID="33" highVersionID="33"
-    		maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="9pin">
+    		maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
 			<size length="1.000" width="0.680" height="0.250" units="inches" />
 			<output name="1" label="White"  connection="wire" maxcurrent="100 mA" />
 			<output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
@@ -127,7 +128,7 @@
 			<output name="Motor" />
 			</model>
 		<model model="T6X"  numOuts="6" numFns="14" lowVersionID="33" highVersionID="33"
-    		maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="9pin">
+    		maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
 			<size length="1.00" width="0.680" height="0.250" units="inches" />
 			<output name="1" label="White"  connection="wire" maxcurrent="100 mA" />
 			<output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
@@ -151,6 +152,7 @@
 			<output name="Ditch" />
 			<output name="Motor" />
 			</model>
+			
 	</family>
 
 	<programming direct="yes" paged="yes" 
@@ -585,44 +587,50 @@
 			<decVal/>
 			</variable>
 
-		<variable label="Headlight Dimming" CV="61" mask="XXVVXXXX"
+		<variable label="Headlight Dim When Stopped" CV="61" mask="XXXVXXXX"
 				item="Directional Headlights" >
 			<enumVal>
 				<enumChoice choice="Not used"/>
-				<enumChoice choice="Headlight dims when stopped"/>
-				<enumChoice choice="Opposite headlight is dimmed"/>
-				<enumChoice choice="Reserved"/>
+				<enumChoice choice="Enabled"/>
 				</enumVal>
 			</variable>
 			
-		<variable label="Button Control Enable" CV="61" mask="XVXXXXXX"
+		<variable label="Opposite Headlight Dim" CV="61" mask="XXVXXXXX"
+				item="Global lighting option 1" >
+			<enumVal>
+				<enumChoice choice="Not used"/>
+				<enumChoice choice="Enabled"/>
+				</enumVal>
+			</variable>
+			
+		<variable label="Button Control" CV="61" mask="XVXXXXXX"
 				item="EMF Static Config" >
 			<enumVal>
-				<enumChoice choice="Not used (normal motor control)"/>
+				<enumChoice choice="Not used"/>
 				<enumChoice choice="Button control of motor"/>
 				</enumVal>
 			</variable>
 			
-		<variable label="Button Control Type" CV="61" mask="XXXXXVXX"
+		<variable label="Button Control Direction" CV="61" mask="XXXXXVXX"
 				item="EMF Dynamic Config" tooltip="If button control is active">
 			<enumVal>
-				<enumChoice choice="F2 forward, F3 reverse (not mapable)"/>
-				<enumChoice choice="Fn map for on/off, direction switch for forward/reverse"/>
+				<enumChoice choice="Manual F2 for, F3 rev"/>
+				<enumChoice choice="Auto F2 for/rev"/>
 				</enumVal>
 			</variable>
 			
 		<variable label="Momentary Pulse" CV="62" default="60"
-				item="Global lighting option 4" tooltip="1 second = 60 to 4 seconds = 255" >
+				item="Function 2 effect generated" tooltip="1 second = 60 to 4 seconds = 255" >
 			<decVal/>
 			</variable>
 
 		<variable label="Ditch Light Blink Holdover Time" CV="63" default="10" 
-				item="Global lighting option 2" tooltip="1 second = about 12" >
+				item="Global lighting option 3" tooltip="1 second = about 12" >
 			<decVal/>
 			</variable>
 			
 		<variable label="Dimming Brightness" CV="64" default="16" 
-				item="Global lighting option 1" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs" >
+				item="Global lighting option 2" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs" >
 			<decVal/>
 			</variable>
 			
@@ -665,7 +673,7 @@
 			</variable>
 
 		<variable label="Ditch Light Blink Rate" CV="117" default="5" mask="XXXXVVVV"
-				item="Global lighting option 3" >
+				item="Global lighting option 4" >
 			<enumVal>
 				<enumChoice choice="Reserved"/>
 				<enumChoice choice="1 slowest"/>
@@ -759,14 +767,14 @@
 			<decVal/>
 			</variable>
 			
-		<variable label="FL(f) controls output Motor" CV="134" mask="XXXXXXXV" minOut="1" tooltip="If button control enabled" > 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="FL(r) controls output Motor" CV="134" mask="XXXXXXVX" minOut="1" tooltip="If button control enabled" >	 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F1 controls output Motor"    CV="134" mask="XXXXXVXX" minOut="1" tooltip="If button control enabled" > 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
-		<variable label="F2 controls output Motor"    CV="134" mask="XXXXVXXX" minOut="1" tooltip="If button control enabled"  default="1"> 	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
-		<variable label="F3 controls output Motor"    CV="134" mask="XXXVXXXX" minOut="1" tooltip="If button control enabled" > 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
-		<variable label="F4 controls output Motor"    CV="134" mask="XXVXXXXX" minOut="1" tooltip="If button control enabled" > 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
-		<variable label="F5 controls output Motor"    CV="134" mask="XVXXXXXX" minOut="1" tooltip="If button control enabled" > 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
-		<variable label="F6 controls output Motor"    CV="134" mask="VXXXXXXX" minOut="1" tooltip="If button control enabled" > 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="FL(f) controls output Motor" CV="134" mask="XXXXXXXV" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="FL(r) controls output Motor" CV="134" mask="XXXXXXVX" minOut="1" > 			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F1 controls output Motor"    CV="134" mask="XXXXXVXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F2 controls output Motor"    CV="134" mask="XXXXVXXX" minOut="1" default="1"> 	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F3 controls output Motor"    CV="134" mask="XXXVXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F4 controls output Motor"    CV="134" mask="XXVXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F5 controls output Motor"    CV="134" mask="XVXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F6 controls output Motor"    CV="134" mask="VXXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
 		
 
 	</variables>
