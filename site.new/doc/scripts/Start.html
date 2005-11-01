@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Start.html,v 1.4 2005-08-04 13:58:25 jacobsen Exp $ -->
+<!-- $Id: Start.html,v 1.5 2005-11-01 16:25:59 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -96,31 +96,64 @@
 		JMRI: Getting Started with Scripting
         </H2>
 
+<h3>Running "Hello World"</h3>
+There are several ways to use Python scripts with JMRI.
+The easiest is to use the built-in support in the standard JMRI
+applications: PanelPro, DecoderPro, etc.  To do that:
+<UL>
+<LI>From the "Panels" menu, select "Script Entry". This will give
+you a window where you can type one or more commands to execute.  
+(Note that it might take a little while the first time you do this
+as the program finds it's libraries; it will be faster the next time)
+The commands stay
+in the window, so you can edit them and rerun them until you like them.
+<LI>From the "Panels" menu, select "Script Output".  This creates a
+window that shows the output from the script commands you issue.
+<LI>To see this in operation, type
+<PRE>
+print "Hello World"
+</PRE>
+in the input window, and click "Execute". You should see the output in the Script Output
+window immediately:
+<pre>
+>>> print "Hello World"
+Hello World
+</pre>
+<LI>Python also evaluates expressions, etc. Remove the 
+contents of the input window (select it and hit delete), and enter
+<pre>
+print 1+2
+</pre>
+then click execute.  
+The output window should then show something like:
+<pre>
+>>> print 1+2
+3
+</pre>
+</ul>
+
+<h3>Sample layout commands</h3>
 
 <pre>
 
->>> turnouts.newTurnout("LT1", "")
-jmri.jmrix.loconet.LnTurnout@1a8f49
-
->>> turnouts.getTurnout("LT1").getCommandedState()
-1
-
->>> lt1 = turnouts.getTurnout("LT1")
+>>> lt1 = turnouts.provideTurnout("1")
 
 >>> lt1.setCommandedState(CLOSED)
 
->>> lt1.commandedState
+>>> print lt1.commandedState
 2
 
 >>> lt1.commandedState = THROWN
 
->>> lt1.commandedState
+>>> print lt1.commandedState
 4
 
->>> 
+>>> turnouts.provideTurnout("1").getCommandedState()
+1
+
 </PRE>
 
-Note that this is running a complete version of the JmriDemo application;
+Note that this is running a complete version of the JMRI application;
 all of the windows and menus are presented the same way, configuration is
 done by the preferences panel, etc. What the Jython connection adds is a 
 command line from which you can directly manipulate things.
