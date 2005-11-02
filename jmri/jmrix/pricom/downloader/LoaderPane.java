@@ -22,7 +22,7 @@ import java.io.InputStream;
 /**
  * Pane for downloading software updates to PRICOM products
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.3 $
+ * @version	    $Revision: 1.4 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -78,8 +78,8 @@ public class LoaderPane extends javax.swing.JPanel {
     }
 
     synchronized void sendBytes(byte[] bytes) {
-//        System.out.println("Send: "+jmri.util.StringUtil.hexStringFromBytes(bytes));
-        System.out.println("Send "+bytes.length+": "+jmri.util.StringUtil.hexStringFromBytes(bytes));
+        //System.out.println("Send: "+jmri.util.StringUtil.hexStringFromBytes(bytes));
+        //System.out.println("Send "+bytes.length+": "+jmri.util.StringUtil.hexStringFromBytes(bytes));
         try {
             // send the STX at the start
             byte startbyte = 0x02;
@@ -96,6 +96,7 @@ public class LoaderPane extends javax.swing.JPanel {
                 case 0x15:
                     ostream.write(0x01);
                     ostream.write(bytes[i]+64);
+                    break;
                 default:
                     ostream.write(bytes[i]);
                     break;
@@ -125,6 +126,12 @@ public class LoaderPane extends javax.swing.JPanel {
         public void run() {
             // have to limit verbosity!
 
+            try {
+              nibbleIncomingData();            // remove any pending chars in queue
+            }
+            catch (java.io.IOException e) {
+              log.warn("nibble: Exception: "+e.toString());
+            }
             while (true) {   // loop permanently, stream close will exit via exception
                 try {
                     handleIncomingData();
@@ -137,6 +144,22 @@ public class LoaderPane extends javax.swing.JPanel {
 
         static final int maxMsg = 80;
         byte inBuffer[];
+
+        void nibbleIncomingData() throws java.io.IOException{
+            long nibbled = 0;                         // total chars chucked
+            serialStream = new DataInputStream(activeSerialPort.getInputStream());
+            ostream = activeSerialPort.getOutputStream();
+
+            // purge contents, if any
+            int count = serialStream.available();     // check for pending chars
+            while ( count > 0) {                      // go until gone
+                serialStream.skip(count);             // skip the pending chars
+                nibbled += count;                     // add on this pass count
+                count = serialStream.available();     // any more left?
+            }
+
+            System.out.println("nibbled "+nibbled+" from input stream");
+        }
 
         void handleIncomingData() throws java.io.IOException {
             // we sit in this until the message is complete, relying on
@@ -157,7 +180,7 @@ public class LoaderPane extends javax.swing.JPanel {
                 }
                 inBuffer[i] = char1;
             }
-            System.out.println("received "+(i+1)+" bytes "+jmri.util.StringUtil.hexStringFromBytes(inBuffer));
+            //System.out.println("received "+(i+1)+" bytes "+jmri.util.StringUtil.hexStringFromBytes(inBuffer));
 
             nextMessage(inBuffer);
         }
@@ -170,7 +193,7 @@ public class LoaderPane extends javax.swing.JPanel {
          * Send the next message of the download.
          */
         void nextMessage(byte[] buffer) {
-            System.out.println("Recv: "+jmri.util.StringUtil.hexStringFromBytes(buffer));
+            //System.out.println("Recv: "+jmri.util.StringUtil.hexStringFromBytes(buffer));
             // if first message, get size & start
             if (isUploadReady(buffer)) {
                 msgSize = getDataSize(buffer);
