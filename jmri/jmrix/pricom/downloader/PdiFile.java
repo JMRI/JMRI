@@ -14,7 +14,7 @@ import java.io.BufferedInputStream;
  * The PRICOM format documentation is Copyright 2003, 2005, PRICOM Corp. 
  * They have kindly given permission for this use.
  * @author		Bob Jacobsen   Copyright (C) 2005
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class PdiFile {
 
@@ -95,7 +95,7 @@ public class PdiFile {
      * @returns byte buffer, starting with address info and containing data, but not CRC
      */
     public byte[] getNext(int n) {
-        byte[] buffer = new byte[n+3+2];
+        byte[] buffer = new byte[n+3+2]; // 3 at front, 2 at back for CRC
         
         // load header
         if (n == 128) buffer[0] = 60;
@@ -105,12 +105,12 @@ public class PdiFile {
         buffer[2] = (byte) (address & 0xFF);
         address = address+n;
         
-        for (int i = 0; i<n; i++) buffer[2+i] = 0;  // clear data section
+        for (int i = 0; i<n+2; i++) buffer[3+i] = 0;  // clear data section
         
         try {
             // fill data
             for (int i = 0; i<n; i++) {
-                buffer[2+i] = (byte) (buffIn.read()&0xFF);
+                buffer[3+i] = (byte) (buffIn.read()&0xFF);
             }
         } catch (IOException e) {
             log.error("IO exception reading file: "+e);
