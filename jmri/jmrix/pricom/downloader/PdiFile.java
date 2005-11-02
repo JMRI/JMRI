@@ -4,6 +4,7 @@ package jmri.jmrix.pricom.downloader;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.FileInputStream;
 import java.io.BufferedInputStream;
 
@@ -13,7 +14,7 @@ import java.io.BufferedInputStream;
  * The PRICOM format documentation is Copyright 2003, 2005, PRICOM Corp. 
  * They have kindly given permission for this use.
  * @author		Bob Jacobsen   Copyright (C) 2005
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class PdiFile {
 
@@ -22,31 +23,35 @@ public class PdiFile {
     }
 
     File file;
-    private FileInputStream in;
-    private BufferedInputStream buffIn;
-    boolean open = false;
+    private InputStream buffIn;
 
     String comment = "";
     int commentLength;
     
-    int remainingDataLength;
+    int lastAddress;
     int address;
     
     int fileLength;
         
     public void open() throws IOException {
-        in = new FileInputStream(file);
-        buffIn = new BufferedInputStream(in);
-        open = true;
+        InputStream stream = new BufferedInputStream(new FileInputStream(file));
+        open(stream);
+    }
+    
+    public void open(InputStream stream) throws IOException {
+        buffIn = stream;
         
         // get comment length, comment
-        byte high= (byte) (buffIn.read()&0xFF);
-        byte low = (byte) (buffIn.read()&0xFF);
+        int high= (buffIn.read()&0xFF);
+        int low = (buffIn.read()&0xFF);
         commentLength = high*256+low;
         
         StringBuffer buffer = new StringBuffer();
         
-        for (int i = 0; i< (commentLength); i++) {
+        // Note the count is decremented by two in the following.
+        // Apparently, the comment length field includes it's own
+        // two bytes in the count
+        for (int i = 0; i< (commentLength-2); i++) {
             int next = buffIn.read();
             if (next == 0x0d) buffer.append("\n");
             else if (next != 0x0a) buffer.append((char)next);
@@ -55,16 +60,22 @@ public class PdiFile {
         comment = new String(buffer);
     
         // get data base address
-        high= (byte) (buffIn.read()&0xFF);
-        low = (byte) (buffIn.read()&0xFF);
+        high= (buffIn.read()&0xFF);
+        low = (buffIn.read()&0xFF);
         address = high*256+low;
+        System.out.println("address "+high+" "+low);
         
-        // get data length
-        high= (byte) (buffIn.read()&0xFF);
-        low = (byte) (buffIn.read()&0xFF);
-        remainingDataLength = high*256+low;
+        // get last address to write
+        high= (buffIn.read()&0xFF);
+        low = (buffIn.read()&0xFF);
+        lastAddress = high*256+low;
+        System.out.println("length "+high+" "+low);
 
         fileLength = (int)file.length()-6-commentLength;
+        
+        System.out.println("lengths: file "+(int)file.length()
+                        +", comment "+commentLength
+                        +", data "+lastAddress);
     }
     
     /**
@@ -93,6 +104,8 @@ public class PdiFile {
         buffer[1] = (byte) ((address>>8)&0xFF);
         buffer[2] = (byte) (address & 0xFF);
         address = address+n;
+        
+        for (int i = 0; i<n; i++) buffer[2+i] = 0;  // clear data section
         
         try {
             // fill data

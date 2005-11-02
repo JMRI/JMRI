@@ -22,7 +22,7 @@ import java.io.InputStream;
 /**
  * Pane for downloading software updates to PRICOM products
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.1 $
+ * @version	    $Revision: 1.2 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -70,9 +70,6 @@ public class LoaderPane extends javax.swing.JPanel {
         portBox.setEnabled(false);
         // Open the port
         openPort((String)portBox.getSelectedItem(), "JMRI");
-        // start the reader
-        readerThread = new Thread(new Reader());
-        readerThread.start();
         //
         fileButton.setEnabled(true);
         fileButton.setToolTipText(res.getString("TipFileEnabled"));
@@ -81,17 +78,33 @@ public class LoaderPane extends javax.swing.JPanel {
     }
 
     synchronized void sendBytes(byte[] bytes) {
+        System.out.println("Send: "+jmri.util.StringUtil.hexStringFromBytes(bytes));
         try {
+            // send the STX at the start
+            byte startbyte = 0x02;
+            ostream.write(startbyte);
+            
+            // send the rest of the bytes
             for (int i=0; i<bytes.length; i++) {
-                ostream.write(bytes[i]);
-                wait(3);
+                // expand as needed
+                switch (bytes[i]) {
+                case 0x01:
+                case 0x02:
+                case 0x03:
+                case 0x06:
+                case 0x15:
+                    ostream.write(0x01);
+                    ostream.write(bytes[i]+64);
+                default:
+                    ostream.write(bytes[i]);
+                    break;
+                }    
             }
-            final byte endbyte = 13;
+            
+            byte endbyte = 0x03;
             ostream.write(endbyte);
         } catch (java.io.IOException e) {
             log.error("Exception on output: "+e);
-        } catch (java.lang.InterruptedException e) {
-            log.error("Interrupted output: "+e);
         }
     }
 
@@ -101,7 +114,7 @@ public class LoaderPane extends javax.swing.JPanel {
      * Internal class to handle the separate character-receive thread
      *
      */
-     class Reader implements Runnable {
+     class LocalReader extends Thread {
         /**
          * Handle incoming characters.  This is a permanent loop,
          * looking for input messages in character form on the
@@ -122,61 +135,122 @@ public class LoaderPane extends javax.swing.JPanel {
         }
 
         static final int maxMsg = 80;
-        StringBuffer msg;
-        StringBuffer duplicates = new StringBuffer(maxMsg);
-        String msgString;
-        String matchString ="";
-
+        byte inBuffer[];
+                
         void handleIncomingData() throws java.io.IOException {
             // we sit in this until the message is complete, relying on
             // threading to let other stuff happen
 
             // Create output message
-            msg = new StringBuffer(maxMsg);
-            // message exists, now fill it
+            inBuffer = new byte[maxMsg];
+            
+            // wait for start of message
+            while (serialStream.readByte() != 0x02) {}
+            
+            // message started, now store it in buffer
             int i;
             for (i = 0; i < maxMsg; i++) {
-                char char1 = (char) serialStream.readByte();
-                if (char1 == 13) {  // 13 is the CR at the end; done this
-                                    // way to be coding-independent
+                byte char1 = (byte) serialStream.readByte();
+                if (char1 == 0x03) {  // 0x03 is the end of message
                     break;
                 }
-                msg.append(char1);
+                inBuffer[i] = char1;
             }
-
-            // create the String to display (as String has .equals)
-            msgString = new String(msg);
-
-            // is this a duplicate?
-            if (msgString.equals(matchString)) {
-                // yes, suppress and represent with a '+'
-                duplicates.append('+');
-            } else {
-                // no, message is complete, dispatch it!!
-
-                // prepend the duplicate info
-                matchString = msgString;
-                if (duplicates.length()!=0) {
-                    duplicates.append('\n');
-                    msgString = " "+(new String(duplicates))+(msgString);
-                } else {
-                    msgString = "\n"+msgString;
-                }
-                duplicates.setLength(0);
-
-                // return a notification via the queue to ensure end
-                Runnable r = new Runnable() {
-                    // reset the duplicates
-
-                    // retain a copy of the message at startup
-                    String msgForLater = msgString;
-                    public void run() {
-                        // nextLine(msgForLater, "");
-                    }
-                };
-                javax.swing.SwingUtilities.invokeLater(r);
-            }
+            System.out.println("received "+(i+1)+" bytes "+jmri.util.StringUtil.hexStringFromBytes(inBuffer));
+            
+            nextMessage(inBuffer);
         }
+        
+        int msgCount = 0;
+        int msgSize = 64;
+        boolean init = false;
+        
+        /**
+         * Send the next message of the download.
+         */
+        void nextMessage(byte[] buffer) {
+            System.out.println("Recv: "+jmri.util.StringUtil.hexStringFromBytes(buffer));
+            // if first message, get size & start
+            if (isUploadReady(buffer)) {
+                msgSize = getDataSize(buffer);
+                init = true;
+            }
+            
+            // if not initialized yet, just ignore message
+            if (!init) return;
+            
+            // see if its a request for more data
+            if (! (isSendNext(buffer) || isUploadReady(buffer)) ) {
+                System.out.println("extra message, ignore");
+                return;
+            }
+            
+            // update progress bar via the queue to ensure synchronization
+            Runnable r = new Runnable() {
+                public void run() {
+                    updateGUI();
+                }
+            };
+            javax.swing.SwingUtilities.invokeLater(r);
+            
+            // get the next message
+            byte[] outBuffer = pdiFile.getNext(msgSize);
+            
+            // if really a message, send it
+            if (outBuffer != null) {
+                CRC_block(outBuffer);
+                sendBytes(outBuffer);
+                return;
+            }
+            
+            // if here, no next message, send end
+            outBuffer = bootMessage();
+            sendBytes(outBuffer);
+            
+            // signal end to GUI via the queue to ensure synchronization
+            r = new Runnable() {
+                public void run() {
+                    enableGUI();
+                }
+            };
+            javax.swing.SwingUtilities.invokeLater(r);
+
+            // stop this thread
+            // use deprecated stop method to stop thread,
+            // which will be sitting waiting for input
+            readerThread.stop();
+
+        }
+        
+        /**
+         * Update the GUI for progress
+         * <P>
+         * Should be invoked on the Swing thread
+         */
+        void updateGUI() {
+            System.out.println("updateGUI with "+msgCount+" / "+(pdiFile.length()/msgSize));
+            if (!init) return;
+            
+            // update progress bar
+            msgCount++;
+            bar.setValue(100*msgCount*msgSize/pdiFile.length());
+            
+        }
+
+        /**
+         * Signal GUI that it's the end of the download
+         * <P>
+         * Should be invoked on the Swing thread
+         */
+        void enableGUI() {
+            System.out.println("enableGUI");
+            if (!init) log.error("enableGUI with init false");
+            
+            // enable GUI
+            loadButton.setEnabled(true);
+            loadButton.setToolTipText(res.getString("TipLoadEnabled"));
+        }
+
 
      } // end class Reader
 
@@ -184,7 +258,6 @@ public class LoaderPane extends javax.swing.JPanel {
     protected javax.swing.JButton openPortButton = new javax.swing.JButton();
     
     public void dispose() {
-        System.out.println("closing");
         // stop operations here. This is a deprecated method, but OK for us.
         if (readerThread!=null) readerThread.stop();
 
@@ -225,8 +298,10 @@ public class LoaderPane extends javax.swing.JPanel {
 
             // try to set it for communication via SerialDriver
             try {
+                // get selected speed
+                int speed = 9600;
                 // Doc says 7 bits, but 8 seems needed
-                activeSerialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+                activeSerialPort.setSerialPortParams(speed, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (javax.comm.UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port "+portName+": "+e.getMessage());
                 return "Cannot set serial parameters on port "+portName+": "+e.getMessage();
@@ -247,8 +322,6 @@ public class LoaderPane extends javax.swing.JPanel {
             serialStream = new DataInputStream(activeSerialPort.getInputStream());
             ostream = activeSerialPort.getOutputStream();
 
-            // make less verbose
-            sendBytes(new byte[]{(byte)'L',(byte)'-',10,13});
             // purge contents, if any
             int count = serialStream.available();
             log.debug("input stream shows "+count+" bytes available");
@@ -295,9 +368,9 @@ public class LoaderPane extends javax.swing.JPanel {
     JLabel inputFileName = new JLabel("");
     
     JButton fileButton;
-    JButton readButton;
     JButton loadButton;
-                
+    JProgressBar bar;
+    
     public LoaderPane() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         
@@ -328,16 +401,6 @@ public class LoaderPane extends javax.swing.JPanel {
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout());
         
-            readButton = new JButton(res.getString("ButtonRead"));
-            readButton.setEnabled(false);
-            readButton.setToolTipText(res.getString("TipReadDisabled"));
-            p.add(readButton);
-            readButton.addActionListener(new AbstractAction() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    doRead();
-                }
-            });
-        
             loadButton = new JButton(res.getString("ButtonLoad"));
             loadButton.setEnabled(false);
             loadButton.setToolTipText(res.getString("TipLoadDisabled"));
@@ -350,27 +413,134 @@ public class LoaderPane extends javax.swing.JPanel {
             
             add(p);
         }
+
+        add(new JSeparator());
+        comment.setEditable(false);
+        comment.setEnabled(true);
+        comment.setText("\n\n\n\n"); // just to save some space
+        add(comment);
+
+        add(new JSeparator());
+        bar = new JProgressBar();
+        add(bar);
     }
     
+    JFileChooser chooser = new JFileChooser();
+    JTextArea comment = new JTextArea();
+    
     void selectInputFile() {
-        JFileChooser chooser = new JFileChooser(inputFileName.getText());
         int retVal = chooser.showOpenDialog(this);
         if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
         inputFileName.setText(chooser.getSelectedFile().getPath());
-        readButton.setEnabled(true);
-        readButton.setToolTipText(res.getString("TipReadEnabled"));
-        loadButton.setEnabled(false);
-        loadButton.setToolTipText(res.getString("TipLoadDisabled"));
+
+        // now read the file
+        pdiFile = new PdiFile(chooser.getSelectedFile());
+        try {
+            pdiFile.open();
+        } catch (IOException e) { log.error("Error opening file: "+e); }
+        
+        comment.setText(pdiFile.getComment());
+        loadButton.setEnabled(true);
+        loadButton.setToolTipText(res.getString("TipLoadEnabled"));
+        validate();
     }
     
-    void doRead() {
-        loadButton.setEnabled(false);
-        loadButton.setToolTipText(res.getString("TipLoadEnabled"));
-    }
+    PdiFile pdiFile;
         
     void doLoad() {
+        loadButton.setEnabled(false);
+        loadButton.setToolTipText(res.getString("TipLoadGoing"));
+        // start read/write thread
+        readerThread = new LocalReader();
+        readerThread.start();
     }
-        
+
+    long CRC_char(long crcin, byte ch) {
+	    long crc;
+
+	    crc = crcin;				// copy incomming for local use
+
+	    crc = swap(crc);			// swap crc bytes
+	    crc ^= (long)ch;		    // XOR on the char
+	    crc ^= ((crc&0xFF) >> 4);
+	
+	    /*  crc:=crc xor (swap(lo(crc)) shl 4) xor (lo(crc) shl 5);     */
+	    crc = (crc ^ (swap((crc&0xFF)) << 4)) ^ ((crc&0xFF) << 5);
+	
+	    return crc;
+    }
+
+    long swap(long val) {
+        long low = val &0xFF;
+        long high = (val>>8)&0xFF;
+        return low*256+high;
+    }
+    
+
+    /**
+     * Insert the CRC for a block of characters in a buffer
+     * <P>
+     * The last two bytes of the buffer hold the checksum, and are
+     * not included in the checksum.
+     */
+    void CRC_block(byte[] buffer) {
+	    long crc = 0;
+	    
+	    for (int r=0;r<buffer.length-2;r++) {
+		    crc = CRC_char(crc, buffer[r]);	// do this character
+	    }
+
+	    // store into buffer
+	    byte high = (byte) ((crc>>8)&0xFF);
+	    byte low  = (byte) (crc&0xFF);
+	    buffer[buffer.length-2] = low;
+	    buffer[buffer.length-1] = high;
+    }
+
+    /**
+     * Check to see if message starts transmission
+     */
+    boolean isUploadReady(byte[] buffer) {
+        if (buffer[0] != 31) return false;
+        if (buffer[1] != 32) return false;
+        if (buffer[2] != 99) return false;
+        if (buffer[3] != 00) return false;
+        if ( ! ( (buffer[4] == 44) || (buffer[4] == 45) ) ) return false;
+        return true;
+    }
+
+    /**
+     * Check to see if this is a request for the next block
+     */
+    boolean isSendNext(byte[] buffer) {
+        if (buffer[0] != 31) return false;
+        if (buffer[1] != 32) return false;
+        if (buffer[2] != 99) return false;
+        if (buffer[3] != 00) return false;
+        if (buffer[4] != 22) return false;
+        System.out.println("OK isSendNext");
+        return true;
+    }
+     
+    /**
+     * Get output data length from 1st message
+     */
+    int getDataSize(byte[] buffer) {
+        if (buffer[4] == 44) return 64;
+        if (buffer[4] == 45) return 128;
+        log.error("Bad length byte: "+buffer[3]);
+        return 64;
+    }
+    
+    /**
+     * Return a properly formatted boot message, complete with CRC
+     */
+    byte[] bootMessage() {
+        byte[] buffer = new byte[] {99,0,0,0,0};
+        CRC_block(buffer);
+        return buffer;
+    }
+    
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LoaderPane.class.getName());
 
 }

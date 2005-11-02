@@ -15,7 +15,7 @@ import jmri.util.JmriJFrame;
  * This is just an enclosure for the LoaderPane, which does the real work.
  *
  * @author		Bob Jacobsen   Copyright (C) 2005
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class LoaderFrame extends JmriJFrame {
 
@@ -52,7 +52,6 @@ public class LoaderFrame extends JmriJFrame {
 
     // Clean up this window
     public void dispose() {
-        System.out.println("frame dispose");
         pane.dispose();
         super.dispose();
     }
