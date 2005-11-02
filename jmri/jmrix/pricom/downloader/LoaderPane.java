@@ -22,7 +22,7 @@ import java.io.InputStream;
 /**
  * Pane for downloading software updates to PRICOM products
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.2 $
+ * @version	    $Revision: 1.3 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -59,7 +59,7 @@ public class LoaderPane extends javax.swing.JPanel {
         add(p1);
 
     }
-    
+
     /**
      * Open button has been pushed, create the actual display connection
      */
@@ -78,12 +78,13 @@ public class LoaderPane extends javax.swing.JPanel {
     }
 
     synchronized void sendBytes(byte[] bytes) {
-        System.out.println("Send: "+jmri.util.StringUtil.hexStringFromBytes(bytes));
+//        System.out.println("Send: "+jmri.util.StringUtil.hexStringFromBytes(bytes));
+        System.out.println("Send "+bytes.length+": "+jmri.util.StringUtil.hexStringFromBytes(bytes));
         try {
             // send the STX at the start
             byte startbyte = 0x02;
             ostream.write(startbyte);
-            
+
             // send the rest of the bytes
             for (int i=0; i<bytes.length; i++) {
                 // expand as needed
@@ -98,9 +99,9 @@ public class LoaderPane extends javax.swing.JPanel {
                 default:
                     ostream.write(bytes[i]);
                     break;
-                }    
+                }
             }
-            
+
             byte endbyte = 0x03;
             ostream.write(endbyte);
         } catch (java.io.IOException e) {
@@ -136,17 +137,17 @@ public class LoaderPane extends javax.swing.JPanel {
 
         static final int maxMsg = 80;
         byte inBuffer[];
-                
+
         void handleIncomingData() throws java.io.IOException {
             // we sit in this until the message is complete, relying on
             // threading to let other stuff happen
 
             // Create output message
             inBuffer = new byte[maxMsg];
-            
+
             // wait for start of message
             while (serialStream.readByte() != 0x02) {}
-            
+
             // message started, now store it in buffer
             int i;
             for (i = 0; i < maxMsg; i++) {
@@ -157,14 +158,14 @@ public class LoaderPane extends javax.swing.JPanel {
                 inBuffer[i] = char1;
             }
             System.out.println("received "+(i+1)+" bytes "+jmri.util.StringUtil.hexStringFromBytes(inBuffer));
-            
+
             nextMessage(inBuffer);
         }
-        
+
         int msgCount = 0;
         int msgSize = 64;
         boolean init = false;
-        
+
         /**
          * Send the next message of the download.
          */
@@ -175,16 +176,16 @@ public class LoaderPane extends javax.swing.JPanel {
                 msgSize = getDataSize(buffer);
                 init = true;
             }
-            
+
             // if not initialized yet, just ignore message
             if (!init) return;
-            
+
             // see if its a request for more data
             if (! (isSendNext(buffer) || isUploadReady(buffer)) ) {
                 System.out.println("extra message, ignore");
                 return;
             }
-            
+
             // update progress bar via the queue to ensure synchronization
             Runnable r = new Runnable() {
                 public void run() {
@@ -192,21 +193,21 @@ public class LoaderPane extends javax.swing.JPanel {
                 }
             };
             javax.swing.SwingUtilities.invokeLater(r);
-            
+
             // get the next message
             byte[] outBuffer = pdiFile.getNext(msgSize);
-            
+
             // if really a message, send it
             if (outBuffer != null) {
                 CRC_block(outBuffer);
                 sendBytes(outBuffer);
                 return;
             }
-            
+
             // if here, no next message, send end
             outBuffer = bootMessage();
             sendBytes(outBuffer);
-            
+
             // signal end to GUI via the queue to ensure synchronization
             r = new Runnable() {
                 public void run() {
@@ -221,7 +222,7 @@ public class LoaderPane extends javax.swing.JPanel {
             readerThread.stop();
 
         }
-        
+
         /**
          * Update the GUI for progress
          * <P>
@@ -230,11 +231,11 @@ public class LoaderPane extends javax.swing.JPanel {
         void updateGUI() {
             System.out.println("updateGUI with "+msgCount+" / "+(pdiFile.length()/msgSize));
             if (!init) return;
-            
+
             // update progress bar
             msgCount++;
             bar.setValue(100*msgCount*msgSize/pdiFile.length());
-            
+
         }
 
         /**
@@ -245,7 +246,7 @@ public class LoaderPane extends javax.swing.JPanel {
         void enableGUI() {
             System.out.println("enableGUI");
             if (!init) log.error("enableGUI with init false");
-            
+
             // enable GUI
             loadButton.setEnabled(true);
             loadButton.setToolTipText(res.getString("TipLoadEnabled"));
@@ -256,7 +257,7 @@ public class LoaderPane extends javax.swing.JPanel {
 
     protected javax.swing.JComboBox portBox = new javax.swing.JComboBox();
     protected javax.swing.JButton openPortButton = new javax.swing.JButton();
-    
+
     public void dispose() {
         // stop operations here. This is a deprecated method, but OK for us.
         if (readerThread!=null) readerThread.stop();
@@ -269,7 +270,7 @@ public class LoaderPane extends javax.swing.JPanel {
         portNameVector = null;
         opened = false;
     }
-    
+
     public Vector getPortNames() {
         // first, check that the comm package can be opened and ports seen
         portNameVector = new Vector();
@@ -366,16 +367,16 @@ public class LoaderPane extends javax.swing.JPanel {
     static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.pricom.downloader.Loader");
 
     JLabel inputFileName = new JLabel("");
-    
+
     JButton fileButton;
     JButton loadButton;
     JProgressBar bar;
-    
+
     public LoaderPane() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        
+
         addCommGUI();
-        
+
         {
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
@@ -391,16 +392,16 @@ public class LoaderPane extends javax.swing.JPanel {
             p.add(fileButton);
             p.add(new JLabel(res.getString("LabelInpFile")));
             p.add(inputFileName);
-            
+
             add(p);
         }
-            
+
         add(new JSeparator());
 
         {
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout());
-        
+
             loadButton = new JButton(res.getString("ButtonLoad"));
             loadButton.setEnabled(false);
             loadButton.setToolTipText(res.getString("TipLoadDisabled"));
@@ -410,7 +411,7 @@ public class LoaderPane extends javax.swing.JPanel {
                     doLoad();
                 }
             });
-            
+
             add(p);
         }
 
@@ -424,10 +425,10 @@ public class LoaderPane extends javax.swing.JPanel {
         bar = new JProgressBar();
         add(bar);
     }
-    
+
     JFileChooser chooser = new JFileChooser();
     JTextArea comment = new JTextArea();
-    
+
     void selectInputFile() {
         int retVal = chooser.showOpenDialog(this);
         if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
@@ -438,15 +439,15 @@ public class LoaderPane extends javax.swing.JPanel {
         try {
             pdiFile.open();
         } catch (IOException e) { log.error("Error opening file: "+e); }
-        
+
         comment.setText(pdiFile.getComment());
         loadButton.setEnabled(true);
         loadButton.setToolTipText(res.getString("TipLoadEnabled"));
         validate();
     }
-    
+
     PdiFile pdiFile;
-        
+
     void doLoad() {
         loadButton.setEnabled(false);
         loadButton.setToolTipText(res.getString("TipLoadGoing"));
@@ -458,15 +459,15 @@ public class LoaderPane extends javax.swing.JPanel {
     long CRC_char(long crcin, byte ch) {
 	    long crc;
 
-	    crc = crcin;				// copy incomming for local use
+	    crc = crcin;                    // copy incoming for local use
 
-	    crc = swap(crc);			// swap crc bytes
-	    crc ^= (long)ch;		    // XOR on the char
+	    crc = swap(crc);                // swap crc bytes
+            crc ^= ((long)ch & 0xff);       // XOR on the byte, no sign extension
 	    crc ^= ((crc&0xFF) >> 4);
-	
+
 	    /*  crc:=crc xor (swap(lo(crc)) shl 4) xor (lo(crc) shl 5);     */
 	    crc = (crc ^ (swap((crc&0xFF)) << 4)) ^ ((crc&0xFF) << 5);
-	
+            crc &= 0xffff;                  // make sure to mask off anything above 16 bits
 	    return crc;
     }
 
@@ -475,7 +476,7 @@ public class LoaderPane extends javax.swing.JPanel {
         long high = (val>>8)&0xFF;
         return low*256+high;
     }
-    
+
 
     /**
      * Insert the CRC for a block of characters in a buffer
@@ -485,7 +486,7 @@ public class LoaderPane extends javax.swing.JPanel {
      */
     void CRC_block(byte[] buffer) {
 	    long crc = 0;
-	    
+
 	    for (int r=0;r<buffer.length-2;r++) {
 		    crc = CRC_char(crc, buffer[r]);	// do this character
 	    }
@@ -521,7 +522,7 @@ public class LoaderPane extends javax.swing.JPanel {
         System.out.println("OK isSendNext");
         return true;
     }
-     
+
     /**
      * Get output data length from 1st message
      */
@@ -531,7 +532,7 @@ public class LoaderPane extends javax.swing.JPanel {
         log.error("Bad length byte: "+buffer[3]);
         return 64;
     }
-    
+
     /**
      * Return a properly formatted boot message, complete with CRC
      */
@@ -540,7 +541,7 @@ public class LoaderPane extends javax.swing.JPanel {
         CRC_block(buffer);
         return buffer;
     }
-    
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LoaderPane.class.getName());
 
 }
