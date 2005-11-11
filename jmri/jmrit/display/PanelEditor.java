@@ -49,7 +49,7 @@ import com.sun.java.util.collections.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.51 $
+ * @version $Revision: 1.52 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -69,6 +69,7 @@ public class PanelEditor extends JmriJFrame {
     JCheckBox editableBox = new JCheckBox("Panel items popup menus active");
     JCheckBox positionableBox = new JCheckBox("Panel items can be repositioned");
     JCheckBox controllingBox = new JCheckBox("Panel items control layout");
+    JCheckBox menuBox = new JCheckBox("Panel has menu");
 
     JButton labelAdd = new JButton("Add text:");
     JTextField nextLabel = new JTextField(10);
@@ -445,6 +446,16 @@ public class PanelEditor extends JmriJFrame {
                     setAllControlling(controllingBox.isSelected());
                 }
             });
+            
+            this.getContentPane().add(p = new JPanel());
+            p.setLayout(new FlowLayout());
+            p.add(menuBox);
+            menuBox.setSelected(true);
+            menuBox.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setPanelMenu(menuBox.isSelected());
+                }
+            });
        }
 
         // register the resulting panel for later configuration
@@ -647,7 +658,7 @@ public class PanelEditor extends JmriJFrame {
     public JLayeredPane target;
 
     /**
-     * Get the frame containing the results (not the editor)
+     * Get the frame containing the resulting panel (not the editor)
      */
     public JFrame getFrame() { return frame; }
     public void setFrame(JFrame f) {
@@ -739,6 +750,17 @@ public class PanelEditor extends JmriJFrame {
         }
     }
 
+    /**
+     *  Control whether target panel shows a menu
+     * @param state true for controlling.
+     */
+    public void setPanelMenu(boolean state) {
+        if (menuBox.isSelected()!=state) menuBox.setSelected(state); {
+            getFrame().getJMenuBar().setVisible(menuBox.isSelected());
+            getFrame().validate();
+        }
+    }
+
     public boolean isEditable() {
         return editableBox.isSelected();
     }
@@ -749,6 +771,10 @@ public class PanelEditor extends JmriJFrame {
         return controllingBox.isSelected();
     }
 
+    public boolean hasPanelMenu() {
+        return menuBox.isSelected();
+    }
+    
     /**
      * Create sequence of panels, etc, for layout:
      * JFrame contains its ContentPane
@@ -819,7 +845,6 @@ public class PanelEditor extends JmriJFrame {
         this.setFrame(targetFrame);
         this.setTarget(targetPanel);
 
-        // add menu
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
         JMenuBar menuBar = new JMenuBar();
         JMenu editMenu = new JMenu(rb.getString("MenuEdit"));
@@ -831,6 +856,10 @@ public class PanelEditor extends JmriJFrame {
             });
         targetFrame.setJMenuBar(menuBar);
 
+        // show menubar?
+        menuBar.setVisible(menuBox.isSelected());
+        
+        
         // set initial size, and force layout
         targetPanel.setSize(200, 200);
         targetPanel.revalidate();
