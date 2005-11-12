@@ -14,7 +14,7 @@ import java.io.BufferedInputStream;
  * The PRICOM format documentation is Copyright 2003, 2005, PRICOM Corp.
  * They have kindly given permission for this use.
  * @author		Bob Jacobsen   Copyright (C) 2005
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 public class PdiFile {
 
@@ -63,17 +63,17 @@ public class PdiFile {
         high= (buffIn.read()&0xFF);
         low = (buffIn.read()&0xFF);
         address = high*256+low;
-        System.out.println("address "+high+" "+low);
+        if (log.isDebugEnabled()) log.debug("address "+high+" "+low);
 
         // get last address to write
         high= (buffIn.read()&0xFF);
         low = (buffIn.read()&0xFF);
         lastAddress = high*256+low;
-        System.out.println("length "+high+" "+low);
+        if (log.isDebugEnabled()) log.debug("length "+high+" "+low);
 
         fileLength = (int)file.length()-6-commentLength;
 
-        System.out.println("lengths: file "+(int)file.length()
+        if (log.isDebugEnabled()) log.debug("lengths: file "+(int)file.length()
                         +", comment "+commentLength
                         +", data "+lastAddress);
     }
