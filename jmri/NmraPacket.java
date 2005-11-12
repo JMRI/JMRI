@@ -27,7 +27,7 @@ package jmri;
  *<P>
  *
  * @author      Bob Jacobsen Copyright (C) 2001, 2003
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 public class NmraPacket {
 
@@ -393,6 +393,13 @@ public class NmraPacket {
         return 0;
     }
 
+    /**
+     * Convert NMRA packet to a readable form
+     */
+    static public String format(byte[] p) {
+        return jmri.util.StringUtil.hexStringFromBytes(p);        
+    }
+    
     /**
      * Objects of this class should not be created. 
      */ 
