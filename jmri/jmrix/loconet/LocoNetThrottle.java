@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractThrottle;
  * with values from 0 to 127.
  * <P>
  * @author  Glen Oberhauser, Bob Jacobsen  Copyright (C) 2003, 2004
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     private LocoNetSlot slot;
@@ -139,7 +139,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         byte[] result = jmri.NmraPacket.function9Through12Packet(address, (address>=100),
                                          getF9(), getF10(), getF11(), getF12());
 
-        InstanceManager.commandStationInstance().sendPacket(result, 3);
+        InstanceManager.commandStationInstance().sendPacket(result, 4); // repeat = 4
     }
 
     /**
