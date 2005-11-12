@@ -35,7 +35,7 @@ import jmri.util.StringUtil;
  * used with permission.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2003
- * @version			$Revision: 1.33 $
+ * @version			$Revision: 1.34 $
  */
 public class Llnmon {
 
@@ -1397,15 +1397,24 @@ public class Llnmon {
             /* see if it really is a 'Send Packet' as defined in Loconet PE */
             if (val7f == 0x7f) {
                 /* it is */
-                return "Send packet immediate: "+((reps & 0x70) >> 4)
+                String val = "Send packet immediate: "+((reps & 0x70) >> 4)
                     +" bytes, repeat count "+(reps & 0x07)
-                    +", DHI=0x"+Integer.toHexString(dhi)
-                    +",\n\tIM1=0x"+Integer.toHexString(im1)
+                    +"\n\tDHI=0x"+Integer.toHexString(dhi)
+                    +", IM1=0x"+Integer.toHexString(im1)
                     +", IM2=0x"+Integer.toHexString(im2)
                     +", IM3=0x"+Integer.toHexString(im3)
                     +", IM4=0x"+Integer.toHexString(im4)
                     +", IM5=0x"+Integer.toHexString(im5)
-                    +"\n";
+                    +"\n\tpacket: ";
+                int len = ((reps & 0x70) >> 4);
+                byte[] packet = new byte[len];
+                packet[0] = (byte) (im1 + ((dhi&0x01)!=0 ? 0x80 : 0));
+                if (len>=2) packet[1] = (byte) (im2 + ((dhi&0x02)!=0 ? 0x80 : 0));
+                if (len>=3) packet[2] = (byte) (im3 + ((dhi&0x04)!=0 ? 0x80 : 0));
+                if (len>=4) packet[3] = (byte) (im4 + ((dhi&0x08)!=0 ? 0x80 : 0));
+                if (len>=5) packet[4] = (byte) (im5 + ((dhi&0x10)!=0 ? 0x80 : 0));
+                
+                return val+jmri.NmraPacket.format(packet)+"\n";
             } else {
                 /* Hmmmm... */
                 forceHex = true;
