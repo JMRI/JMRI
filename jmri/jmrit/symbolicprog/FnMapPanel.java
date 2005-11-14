@@ -30,7 +30,7 @@ import org.jdom.Attribute;
  * Although support for the "CV label column" is still here, its turned off now.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class FnMapPanel extends JPanel {
     // columns
@@ -47,8 +47,8 @@ public class FnMapPanel extends JPanel {
     // these will eventually be passed in from the ctor
     int numFn = 14;  // include FL(f) and FL(r) in the total
     int numOut = 20;
-    int maxFn = 14;  // include FL(f) and FL(r) in the total
-    int maxOut = 14;
+    int maxFn = 15;  // include FL(f) and FL(r) in the total
+    int maxOut = 15;
     
     GridBagLayout gl = null;
     GridBagConstraints cs = null;
