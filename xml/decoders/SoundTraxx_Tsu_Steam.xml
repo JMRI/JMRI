@@ -2,7 +2,7 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: SoundTraxx_Tsu_Steam.xml,v 1.1 2005-11-14 07:07:55 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_Tsu_Steam.xml,v 1.2 2005-11-14 07:17:40 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen" version="1" lastUpdated="20051101"/>
 
@@ -1113,11 +1113,11 @@
 
 <!-- highest used so far: -->
 <!-- "Advanced Group 1 Option 4" -->
-<!-- "Advanced Group 2 Option 4" -->
+<!-- "Advanced Group 2 Option 5" -->
 <!-- "Sound Option 8" (all) -->
-<!-- "Sound Group 1 Option -" -->
-<!-- "Sound Group 2 Option -" -->
-<!-- "Sound Setting 1" -->
+<!-- "Sound Group 1 Option (none yet)" -->
+<!-- "Sound Group 2 Option (none yet)" -->
+<!-- "Sound Setting 25" -->
 	
 
 	</variables>
