@@ -2,7 +2,7 @@
 <!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
 
 <programmer-config>
-<!-- $Id: Comprehensive.xml,v 1.12 2005-08-02 04:53:53 jacobsen Exp $ -->
+<!-- $Id: Comprehensive.xml,v 1.13 2005-11-14 07:06:38 jacobsen Exp $ -->
 		<version author="Howard G. Penny"
 					version="11" lastUpdated="20050713"/>
 
@@ -177,21 +177,33 @@
 			<display item="Function F0F effect generated"/>
 			<display item="Function F0F behavior"/>
 			<display item="Function F0F options"/>
+			<display item="Function F0F option 2"/>
+			<display item="Function F0F option 3"/>
+			<display item="Function F0F option 4"/>
 			<label label=" "/>
 
 			<display item="Function F0R effect generated"/>
 			<display item="Function F0R behavior"/>
 			<display item="Function F0R options"/>
+			<display item="Function F0R option 2"/>
+			<display item="Function F0R option 3"/>
+			<display item="Function F0R option 4"/>
 			<label label=" "/>
 
 			<display item="Function 1 effect generated"/>
 			<display item="Function 1 behavior"/>
 			<display item="Function 1 options"/>
+			<display item="Function 1 option 2"/>
+			<display item="Function 1 option 3"/>
+			<display item="Function 1 option 4"/>
 			<label label=" "/>
 
 			<display item="Function 2 effect generated"/>
 			<display item="Function 2 behavior"/>
 			<display item="Function 2 options"/>
+			<display item="Function 2 option 2"/>
+			<display item="Function 2 option 3"/>
+			<display item="Function 2 option 4"/>
 			<label label=" "/>
 
 			<display item="Function 3 effect generated"/>
@@ -313,10 +325,14 @@
 				tooltip="Sets the status of function F8(r) when the unit is operating in analog power mode" />
 		</column>
         <column>
+			<display item="Analog Mode Function Status - F9" format="checkbox"
+				tooltip="Sets the status of function F9 when the unit is operating in analog power mode" />
 			<display item="Analog Mode Function Status - F9(f)" format="checkbox"
 				tooltip="Sets the status of function F9(f) when the unit is operating in analog power mode" />
 			<display item="Analog Mode Function Status - F9(r)" format="checkbox"
 				tooltip="Sets the status of function F9(r) when the unit is operating in analog power mode" />
+			<display item="Analog Mode Function Status - F10" format="checkbox"
+				tooltip="Sets the status of function F10 when the unit is operating in analog power mode" />
 			<display item="Analog Mode Function Status - F10(f)" format="checkbox"
 				tooltip="Sets the status of function F10(f) when the unit is operating in analog power mode" />
 			<display item="Analog Mode Function Status - F10(r)" format="checkbox"
@@ -442,6 +458,26 @@
 			<display item="Packet Time-out Value"
 				tooltip="The maximum time period that the decoder will maintain its speed without receiving a valid packet addressed to it" />
 		</column>
+		<column>
+			<display item="Advanced Group 1 Option 1" />
+			<display item="Advanced Group 1 Option 2" />
+			<display item="Advanced Group 1 Option 3" />
+			<display item="Advanced Group 1 Option 4" />
+			<display item="Advanced Group 1 Option 5" />
+			<display item="Advanced Group 1 Option 6" />
+			<display item="Advanced Group 1 Option 7" />
+			<display item="Advanced Group 1 Option 8" />
+		</column>
+		<column>
+			<display item="Advanced Group 2 Option 1" />
+			<display item="Advanced Group 2 Option 2" />
+			<display item="Advanced Group 2 Option 3" />
+			<display item="Advanced Group 2 Option 4" />
+			<display item="Advanced Group 2 Option 5" />
+			<display item="Advanced Group 2 Option 6" />
+			<display item="Advanced Group 2 Option 7" />
+			<display item="Advanced Group 2 Option 8" />
+		</column>
 	</pane>
 
 	<pane name="Sound">
@@ -480,6 +516,7 @@
 	</pane>
 
 	<pane name="Sound Levels">
+	  <row>
 		<column>
 			<row>
 				<display item="Sound Setting 1" layout="above" label=""/>
@@ -534,7 +571,110 @@
 				<label label=" "/>
 				<display item="Sound Setting 9" layout="above" format="hslider"/>
 			</row>
+			<label label=" "/>
+			<row>
+				<display item="Sound Setting 10" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Sound Setting 10" layout="above" format="hslider"/>
+			</row>
+        </column>
+      </row><row>
+        <column>
+			<label label=" "/>
+			<row>
+				<display item="Sound Setting 11" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Sound Setting 11" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Sound Setting 12" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Sound Setting 12" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Sound Setting 13" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Sound Setting 13" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Sound Setting 14" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Sound Setting 14" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Sound Setting 15" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Sound Setting 15" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Sound Setting 16" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Sound Setting 16" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Sound Setting 17" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Sound Setting 17" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Sound Setting 18" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Sound Setting 18" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Sound Setting 19" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Sound Setting 19" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Sound Setting 20" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Sound Setting 20" layout="above" format="hslider"/>
+			</row>
+        </column>
+      </row><row>
+        <column>
+			<label label=" "/>
+			<row>
+				<display item="Sound Setting 21" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Sound Setting 21" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Sound Setting 22" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Sound Setting 22" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Sound Setting 23" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Sound Setting 23" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Sound Setting 24" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Sound Setting 24" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Sound Setting 25" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Sound Setting 25" layout="above" format="hslider"/>
+			</row>
 		</column>
+      </row>
 	</pane>
 
 	<pane name="CVs">
