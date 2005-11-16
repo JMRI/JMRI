@@ -1,0 +1,398 @@
+<?xml version="1.0"?>
+<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<!-- Copyright (C) JMRI 2003, 2004, 2005 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<!-- $Id: Digitrax_TF4.xml,v 1.1 2005-11-16 12:36:16 innkeeper Exp $ -->
+<decoder-config>
+		<version author="Howard G. Penny" 
+					version="1" lastUpdated="20051108"/>
+
+<decoder>
+	<family name="Function Only, with transponding" mfg="Digitrax">
+		<model model="TF4" lowVersionID="254"></model>
+	</family>
+
+	<programming direct="byteOnly" paged="yes" 
+	                     register="yes" ops="no"></programming>
+
+	<variables>
+		<variable label="Primary Address" CV="1" comment="Short address"
+						item="Short Address"  default="03">
+			<shortAddressVal/>
+		</variable>
+
+		<variable label="Version ID" CV="7" readOnly="yes"
+		          item="Decoder Version" default="254">
+			<decVal/>
+		</variable>
+
+		<variable label="Manufacturer ID" CV="8" readOnly="yes" 
+		          item="Manufacturer" default="129">
+			<decVal/>
+		</variable>
+
+		<variable label="Long Address" CV="17" item="Extended Address">
+			<longAddressVal/>
+		</variable>
+
+		<variable label="Addressing Mode" CV="29" mask="XXVXXXXX"
+					item="Address Format">
+			<enumVal>
+				<enumChoice choice="2 digit addressing"/>
+				<enumChoice choice="4 digit addressing"/>
+			</enumVal>
+		</variable>
+
+		<variable label="Effect Generated for White Lead" CV="49" mask="XXXXXVVV"
+					item="Effect Generated W">
+			<enumVal>
+				<enumChoice choice="Normal on/off"/>
+				<enumChoice choice="Simulated FRED"/>
+				<enumChoice choice="Simulated Mars light"/>
+				<enumChoice choice="Slow Strobe"/>
+				<enumChoice choice="Single pulse"/>
+				<enumChoice choice="Double pulse"/>
+				<enumChoice choice="Medium pulse"/>
+				<enumChoice choice="Mostly on blinking off"/>
+				</enumVal>
+			</variable>
+
+		<variable label="Effect Generated for Yellow Lead" CV="50" mask="XXXXXVVV"
+					item="Effect Generated Y">
+			<enumVal>
+				<enumChoice choice="Normal on/off"/>
+				<enumChoice choice="Simulated FRED"/>
+				<enumChoice choice="Simulated Mars light"/>
+				<enumChoice choice="Slow Strobe"/>
+				<enumChoice choice="Single pulse"/>
+				<enumChoice choice="Double pulse"/>
+				<enumChoice choice="Medium pulse"/>
+				<enumChoice choice="Mostly on blinking off"/>
+				</enumVal>
+			</variable>
+
+		<variable label="CV 61" CV="61" mask="XXXXXXVV"
+			item="CV61" default="2">
+			<decVal max="3"/>
+		</variable>
+				
+		<variable label="Effect Rate White Lead" CV="62" mask="XXXXXVVV"
+				      item="Effect Rate W">
+	    <enumVal>
+        <enumChoice choice="0 slowest"/>
+        <enumChoice choice="1"/>
+        <enumChoice choice="2"/>
+        <enumChoice choice="3"/>
+        <enumChoice choice="4"/>
+        <enumChoice choice="5"/>
+        <enumChoice choice="6"/>
+        <enumChoice choice="7 fastest"/>
+      </enumVal>
+		</variable>
+
+		<variable label="Effect Rate Yellow Lead" CV="63" mask="XXXXXVVV"
+				      item="Effect Rate Y">
+	    <enumVal>
+        <enumChoice choice="0 slowest"/>
+        <enumChoice choice="1"/>
+        <enumChoice choice="2"/>
+        <enumChoice choice="3"/>
+        <enumChoice choice="4"/>
+        <enumChoice choice="5"/>
+        <enumChoice choice="6"/>
+        <enumChoice choice="7 fastest"/>
+      </enumVal>
+		</variable>
+
+		<variable label="CV 64" CV="64" mask="XXXXXXXV"
+      item="CV64">
+			<decVal max="3"/>
+		</variable>
+
+	</variables>
+
+</decoder>
+
+<pane name="Function Output">
+  <column>
+    <label label="Use the matrix below to determine the values for CV 61 and 64"/>
+    <label label=" "/>
+    <row>
+      <column>
+        <row>
+          <label label="CV64"/>
+        </row>
+        <row>
+          <label label="0"/>
+        </row>
+        <row>
+          <label label="0"/>
+        </row>
+        <row>
+          <label label="0"/>
+        </row>
+        <row>
+          <label label="0"/>
+        </row>
+        <row>
+          <label label="1"/>
+        </row>
+        <row>
+          <label label="2"/>
+        </row>
+        <row>
+          <label label="3"/>
+        </row>
+        <row>
+          <label label="1"/>
+        </row>
+        <row>
+          <label label="2"/>
+        </row>
+        <row>
+          <label label="3"/>
+        </row>
+      </column>
+      <label label="   "/>
+      <column>
+        <row>
+          <label label="CV61"/>
+        </row>
+        <row>
+          <label label="0"/>
+        </row>
+        <row>
+          <label label="1"/>
+        </row>
+        <row>
+          <label label="2"/>
+        </row>
+        <row>
+          <label label="3"/>
+        </row>
+        <row>
+          <label label="2"/>
+        </row>
+        <row>
+          <label label="2"/>
+        </row>
+        <row>
+          <label label="2"/>
+        </row>
+        <row>
+          <label label="0"/>
+        </row>
+        <row>
+          <label label="0"/>
+        </row>
+        <row>
+          <label label="0"/>
+        </row>
+      </column>
+      <label label="   "/>
+      <column>
+        <row>
+          <label label="White"/>
+        </row>
+        <row>
+          <label label="F1"/>
+        </row>
+        <row>
+          <label label="F0"/>
+        </row>
+        <row>
+          <label label="F1"/>
+        </row>
+        <row>
+          <label label="F0"/>
+        </row>
+        <row>
+          <label label="F3"/>
+        </row>
+        <row>
+          <label label="F5"/>
+        </row>
+        <row>
+          <label label="F9"/>
+        </row>
+        <row>
+          <label label="F3"/>
+        </row>
+        <row>
+          <label label="F5"/>
+        </row>
+        <row>
+          <label label="F9"/>
+        </row>
+      </column>
+      <label label="   "/>
+      <column>
+        <row>
+          <label label="Yellow"/>
+        </row>
+        <row>
+          <label label="F2"/>
+        </row>
+        <row>
+          <label label="F1"/>
+        </row>
+        <row>
+          <label label="F2"/>
+        </row>
+        <row>
+          <label label="F1"/>
+        </row>
+        <row>
+          <label label="F4"/>
+        </row>
+        <row>
+          <label label="F6"/>
+        </row>
+        <row>
+          <label label="F10"/>
+        </row>
+        <row>
+          <label label="F4"/>
+        </row>
+        <row>
+          <label label="F6"/>
+        </row>
+        <row>
+          <label label="F10"/>
+        </row>
+      </column>
+      <label label="   "/>
+      <column>
+        <row>
+          <label label="Green"/>
+        </row>
+        <row>
+          <label label="F3"/>
+        </row>
+        <row>
+          <label label="F2"/>
+        </row>
+        <row>
+          <label label="F3"/>
+        </row>
+        <row>
+          <label label="F2"/>
+        </row>
+        <row>
+          <label label="F5"/>
+        </row>
+        <row>
+          <label label="F7"/>
+        </row>
+        <row>
+          <label label="F11"/>
+        </row>
+        <row>
+          <label label="F5"/>
+        </row>
+        <row>
+          <label label="F7"/>
+        </row>
+        <row>
+          <label label="F11"/>
+        </row>
+      </column>
+      <label label="   "/>
+      <column>
+        <row>
+          <label label="Violet"/>
+        </row>
+        <row>
+          <label label="F4"/>
+        </row>
+        <row>
+          <label label="F3"/>
+        </row>
+        <row>
+          <label label="F4"/>
+        </row>
+        <row>
+          <label label="F3"/>
+        </row>
+        <row>
+          <label label="F6"/>
+        </row>
+        <row>
+          <label label="F8"/>
+        </row>
+        <row>
+          <label label="F12"/>
+        </row>
+        <row>
+          <label label="F6"/>
+        </row>
+        <row>
+          <label label="F8"/>
+        </row>
+        <row>
+          <label label="F12"/>
+        </row>
+      </column>
+      <label label="   "/>
+      <column>
+        <row>
+          <label label="Transponding"/>
+        </row>
+        <row>
+          <label label="OFF"/>
+        </row>
+        <row>
+          <label label="OFF"/>
+        </row>
+        <row>
+          <label label="ON"/>
+        </row>
+        <row>
+          <label label="ON"/>
+        </row>
+        <row>
+          <label label="ON"/>
+        </row>
+        <row>
+          <label label="ON"/>
+        </row>
+        <row>
+          <label label="ON"/>
+        </row>
+        <row>
+          <label label="OFF"/>
+        </row>
+        <row>
+          <label label="OFF"/>
+        </row>
+        <row>
+          <label label="OFF"/>
+        </row>
+      </column>
+    </row>
+    <label label=" "/>
+    <row>
+      <column>
+        <row>
+          <display item="CV64" />
+        </row>
+      </column>
+      <label label="   "/>
+      <column>
+        <row>
+          <display item="CV61" />
+        </row>
+      </column>
+    </row>
+    <label label=" "/>
+    <display item="Effect Generated W" />
+    <display item="Effect Rate W" />
+    <label label=" "/>
+    <display item="Effect Generated Y" />
+    <display item="Effect Rate Y" />
+  </column>
+</pane>
+
+</decoder-config>
+
+

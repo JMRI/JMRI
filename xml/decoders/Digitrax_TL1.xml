@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<!-- Copyright (C) JMRI 2003, 2004, 2005 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<!-- $Id: Digitrax_TL1.xml,v 1.1 2005-11-16 12:36:16 innkeeper Exp $ -->
+<decoder-config>
+		<version author="Howard G. Penny" 
+					version="1" lastUpdated="20051108"/>
+
+<decoder>
+	<family name="Function Only, with transponding" mfg="Digitrax">
+		<model model="TL1" lowVersionID="250"></model>
+	</family>
+
+	<programming direct="byteOnly" paged="yes" 
+	                     register="yes" ops="no"></programming>
+
+	<variables>
+		<variable label="Primary Address" CV="1" comment="Short address"
+						item="Short Address"  default="03">
+			<shortAddressVal/>
+		</variable>
+
+		<variable label="Version ID" CV="7" readOnly="yes"
+		          item="Decoder Version" default="250">
+			<decVal/>
+		</variable>
+
+		<variable label="Manufacturer ID" CV="8" readOnly="yes"
+		          item="Manufacturer" default="129">
+				<decVal/>
+		</variable>
+
+		<variable label="Long Address" CV="17" item="Extended Address">
+			<longAddressVal/>
+		</variable>
+
+		<variable label="Addressing Mode" CV="29" mask="XXVXXXXX"
+					item="Address Format">
+			<enumVal>
+				<enumChoice choice="2 digit addressing"/>
+				<enumChoice choice="4 digit addressing"/>
+			</enumVal>
+		</variable>
+
+		<variable label="Effect Generated" CV="49" mask="XXXXXVVV"
+					item="Effect Generated">
+			<enumVal>
+				<enumChoice choice="Normal on off"/>
+				<enumChoice choice="Simulated FRED"/>
+				<enumChoice choice="Simulated Mars light"/>
+				<enumChoice choice="Slow Strobe"/>
+				<enumChoice choice="Single pulse"/>
+				<enumChoice choice="Double pulse"/>
+				<enumChoice choice="Medium pulse"/>
+				<enumChoice choice="Mostly on blinking off"/>
+				</enumVal>
+			</variable>
+
+		<variable label="Use F0 for function control" CV="61" mask="XXXXXXXV"
+			item="F0 use">
+			<enumVal>
+				<enumChoice choice="Off"/>
+				<enumChoice choice="On"/>
+			</enumVal>
+		</variable>
+				
+		<variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX"
+			item="Transpond" default="1">
+			<enumVal>
+				<enumChoice choice="Off"/>
+				<enumChoice choice="On"/>
+			</enumVal>
+		</variable>
+				
+		<variable label="Effect Rate" CV="62" mask="XXXXXVVV"
+				      item="Effect Rate"	tooltip="0 is slowest- max 7">
+	    <enumVal>
+        <enumChoice choice="0 slowest"/>
+        <enumChoice choice="1"/>
+        <enumChoice choice="2"/>
+        <enumChoice choice="3"/>
+        <enumChoice choice="4"/>
+        <enumChoice choice="5"/>
+        <enumChoice choice="6"/>
+        <enumChoice choice="7 fastest"/>
+      </enumVal>
+		</variable>
+
+		<variable label="Function controlling output" CV="64" mask="XXXXXXXV"
+      item="ControlFn">
+			<enumVal>
+				<enumChoice choice="F0 or F1"/>
+				<enumChoice choice="F2"/>
+				<enumChoice choice="F3"/>
+				<enumChoice choice="F4"/>
+			</enumVal>
+		</variable>
+
+	</variables>
+
+</decoder>
+
+<pane name="Function Output">
+  <column>
+    <display item="Transpond" />
+    <display item="ControlFn" />
+    <display item="F0 use" format="checkbox" tooltip="Do not check this box if 'F0 or F1' is not selected above"/>
+    <display item="Effect Generated" />
+    <display item="Effect Rate" />
+  </column>
+</pane>
+
+</decoder-config>
+
+
