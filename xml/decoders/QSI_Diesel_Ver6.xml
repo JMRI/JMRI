@@ -2,15 +2,16 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: QSI_Diesel_Ver6.xml,v 1.3 2005-07-15 02:35:03 innkeeper Exp $ -->
+<!-- $Id: QSI_Diesel_Ver6.xml,v 1.4 2005-11-16 16:40:16 innkeeper Exp $ -->
 <decoder-config>
-  <version author="Howard G. Penny" version="3" lastUpdated="20050714"/>
+  <version author="Howard G. Penny" version="3" lastUpdated="20051115"/>
 
 <!-- version 1 - modified for QSI CV.PI.SI format version 6 - Howard -->
 <!-- version 2 - added "include" attributes to some indexed variables so
                  that models would get the proper set of choices - Howard -->
 <!-- version 3 - Added product number ivariable and build information
                    on Misc. pane - Howard -->
+<!-- version 4 - Added Life Like U30B - Howard -->
 
 <decoder>
   <family name="QSI Diesel Ver. 6" mfg="QSIndustries" lowVersionID="6" >
@@ -64,6 +65,8 @@
            numFns="14" numOuts="14" productID="112" />
     <model model="Life Like U28B" lowVersionID="6"
            numFns="14" numOuts="14" productID="130" />
+    <model model="Life Like U30B" lowVersionID="6"
+           numFns="14" numOuts="14" productID="124" />
   </family>
 
   <programming direct="yes" paged="yes"
