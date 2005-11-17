@@ -2,25 +2,44 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: QSI_Steam_ver6.xml,v 1.3 2005-07-15 03:28:06 innkeeper Exp $ -->
+<!-- $Id: QSI_Steam_ver6.xml,v 1.4 2005-11-17 23:21:52 innkeeper Exp $ -->
 <decoder-config>
-  <version author="Howard G. Penny" version="3" lastUpdated="20050714"/>
+  <version author="Howard G. Penny" version="4" lastUpdated="20051117"/>
 
 <!-- version 1 - modified for QSI CV.PI.SI Version 6 format - Howard -->
 <!-- version 2 - Added product number ivariable and build information
                    on Misc. pane - Howard -->
 <!-- version 3 - Corrected value for function outputs and defaults - Howard -->                   
+<!-- version 4 - Added new models - Howard -->
 
 <decoder>
   <family name="QSI Steam Ver. 6" mfg="QSIndustries" lowVersionID="6">
     <model model="BLI ATSF 3800 Class 2-10-2 2-10-4" lowVersionID="6"
            numFns="14" numOuts="14" productID="316"/>
+    <model model="BLI C-O T1 2-10-4" lowVersionID="6"
+           numFns="14" numOuts="14" productID="310"/>
+    <model model="BLI Great Northan 700 SP-S" lowVersionID="6"
+           numFns="14" numOuts="14" productID="308"/>
+    <model model="BLI M1A 4-8-2" lowVersionID="6"
+           numFns="14" numOuts="14" productID="302"/>
+    <model model="BLI N-W J 4-8-4" lowVersionID="6"
+           numFns="14" numOuts="14" productID="312"/>
+    <model model="BLI NYC S1b 4-8-4" lowVersionID="6"
+           numFns="14" numOuts="14" productID="306"/>
+    <model model="BLI PRR J1 2-10-4" lowVersionID="6"
+           numFns="14" numOuts="14" productID="313"/>
     <model model="BLI PRR K4 4-6-2" lowVersionID="6"
            numFns="14" numOuts="14" productID="309"/>
     <model model="BLI UP Mountian 4-8-2" lowVersionID="6"
            numFns="14" numOuts="14" productID="307"/>
     <model model="P2K USRA 0-8-0" lowVersionID="6"
            numFns="14" numOuts="14" productID="315"/>
+    <model model="Life Like 2-8-4 Berkshire w/Mars" lowVersionID="6"
+           numFns="14" numOuts="14" productID="317"/>
+    <model model="Life Like 2-8-4 Berkshire wo/Mars" lowVersionID="6"
+           numFns="14" numOuts="14" productID="318"/>
+    <model model="Walthers 0-6-0 Switcher" lowVersionID="6"
+           numFns="14" numOuts="14" productID="319"/>
   </family>
 
   <programming direct="yes" paged="yes"

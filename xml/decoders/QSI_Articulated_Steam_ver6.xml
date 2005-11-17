@@ -2,14 +2,66 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: QSI_Articulated_Steam_ver6.xml,v 1.1 2005-07-15 03:24:47 innkeeper Exp $ -->
+<!-- $Id: QSI_Articulated_Steam_ver6.xml,v 1.2 2005-11-17 23:21:52 innkeeper Exp $ -->
 <decoder-config>
-  <version author="Howard G. Penny" version="1" lastUpdated="20050628"/>
+  <version author="Howard G. Penny" version="2" lastUpdated="20051117"/>
 
 <!-- version 1 - modified for QSI CV.PI.SI version 6 format - Howard -->
+<!-- version 2 - added new models - Howard -->
 
 <decoder>
   <family name="QSI Articulated Steam Ver. 6" mfg="QSIndustries" lowVersionID="6">
+    <model model="BLI N-W Class A" lowVersionID="6"
+           numFns="14" numOuts="14"  productID="400" >
+      <output name="1" label="Plug" connection="other" />
+      <output name="2" label="Plug" connection="other" />
+      <output name="3" label="Snd" connection="other" />
+      <output name="4" label="Snd" connection="other" />
+      <output name="5" label="Snd" connection="other" />
+      <output name="6" label="Snd" connection="other" />
+      <output name="7" label="Snd" connection="other" />
+      <output name="8" label="Snd" connection="other" />
+      <output name="9" label="Snd" connection="other" />
+      <output name="10" label="Snd" connection="other" />
+      <output name="11" label="Snd" connection="other" />
+      <output name="12" label="Snd" connection="other" />
+      <output name="13" label="Snd" connection="other" />
+      <output name="14" label="Snd" connection="other" />
+    </model>
+    <model model="BLI Pennsy Duplex T1" lowVersionID="6"
+           numFns="14" numOuts="14"  productID="401" >
+      <output name="1" label="Plug" connection="other" />
+      <output name="2" label="Plug" connection="other" />
+      <output name="3" label="Snd" connection="other" />
+      <output name="4" label="Snd" connection="other" />
+      <output name="5" label="Snd" connection="other" />
+      <output name="6" label="Snd" connection="other" />
+      <output name="7" label="Snd" connection="other" />
+      <output name="8" label="Snd" connection="other" />
+      <output name="9" label="Snd" connection="other" />
+      <output name="10" label="Snd" connection="other" />
+      <output name="11" label="Snd" connection="other" />
+      <output name="12" label="Snd" connection="other" />
+      <output name="13" label="Snd" connection="other" />
+      <output name="14" label="Snd" connection="other" />
+    </model>
+    <model model="BLI Cab Forward AC4,AC5 (Reed Switch)" lowVersionID="6"
+           numFns="14" numOuts="14"  productID="406" >
+      <output name="1" label="Plug" connection="other" />
+      <output name="2" label="Plug" connection="other" />
+      <output name="3" label="Snd" connection="other" />
+      <output name="4" label="Snd" connection="other" />
+      <output name="5" label="Snd" connection="other" />
+      <output name="6" label="Snd" connection="other" />
+      <output name="7" label="Snd" connection="other" />
+      <output name="8" label="Snd" connection="other" />
+      <output name="9" label="Snd" connection="other" />
+      <output name="10" label="Snd" connection="other" />
+      <output name="11" label="Snd" connection="other" />
+      <output name="12" label="Snd" connection="other" />
+      <output name="13" label="Snd" connection="other" />
+      <output name="14" label="Snd" connection="other" />
+    </model>
     <model model="Life Like USRA 2-8-8-2" lowVersionID="6"
            numFns="14" numOuts="14"  productID="404" >
       <output name="1" label="Plug" connection="other" />
