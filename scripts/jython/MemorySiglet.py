@@ -6,7 +6,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 
 import jarray
 import jmri
@@ -29,7 +29,7 @@ class MemorySiglet(jmri.jmrit.automat.Siglet) :
 	# handle() is called repeatedly until it returns false.
 	#
 	# Modify this to do your calculation.
-	def setOuput(self):
+	def setOutput(self):
 
 		# this example doesn't actually do anything
 		
