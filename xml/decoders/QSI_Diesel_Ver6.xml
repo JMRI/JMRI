@@ -2,9 +2,9 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: QSI_Diesel_Ver6.xml,v 1.4 2005-11-16 16:40:16 innkeeper Exp $ -->
+<!-- $Id: QSI_Diesel_Ver6.xml,v 1.5 2005-11-17 22:33:41 innkeeper Exp $ -->
 <decoder-config>
-  <version author="Howard G. Penny" version="3" lastUpdated="20051115"/>
+  <version author="Howard G. Penny" version="5" lastUpdated="20051117"/>
 
 <!-- version 1 - modified for QSI CV.PI.SI format version 6 - Howard -->
 <!-- version 2 - added "include" attributes to some indexed variables so
@@ -12,6 +12,7 @@
 <!-- version 3 - Added product number ivariable and build information
                    on Misc. pane - Howard -->
 <!-- version 4 - Added Life Like U30B - Howard -->
+<!-- version 5 - Added new models - Howard -->
 
 <decoder>
   <family name="QSI Diesel Ver. 6" mfg="QSIndustries" lowVersionID="6" >
@@ -27,6 +28,8 @@
            numFns="14" numOuts="14" productID="105" />
     <model model="Atlas FM wo/Mars" lowVersionID="6"
            numFns="14" numOuts="14" productID="106" />
+    <model model="Atlas MP-15DC" lowVersionID="6"
+           numFns="14" numOuts="14" productID="129" />
     <model model="Atlas SD24/26" lowVersionID="6"
            numFns="14" numOuts="14" productID="111" />
     <model model="BLI AC6000" lowVersionID="6"
@@ -43,30 +46,52 @@
            numFns="14" numOuts="14" productID="121" />
     <model model="BLI E3/E6 wo/Mars" lowVersionID="6"
            numFns="14" numOuts="14" productID="122" />
+    <model model="BLI F7" lowVersionID="6"
+           numFns="14" numOuts="14" productID="104" />
+    <model model="BLI E8/E9 w/Mars" lowVersionID="6"
+           numFns="14" numOuts="14" productID="117" />
+    <model model="BLI E8/E9 wo/Mars" lowVersionID="6"
+           numFns="14" numOuts="14" productID="118" />
     <model model="BLI GE C30-7" lowVersionID="6"
            numFns="14" numOuts="14" productID="128" />
     <model model="BLI RSD-15" lowVersionID="6"
            numFns="14" numOuts="14" productID="125" />
     <model model="BLI SD40" lowVersionID="6"
            numFns="14" numOuts="14" productID="102" />
+    <model model="BLI SD40 (Reed Switch)" lowVersionID="6"
+           numFns="14" numOuts="14" productID="134" />
     <model model="BLI SW7/NW2" lowVersionID="6"
            numFns="14" numOuts="14" productID="101" />
     <model model="CHC RS 10" lowVersionID="6"
            numFns="14" numOuts="14" productID="113" />
     <model model="CHC RS 18" lowVersionID="6"
            numFns="14" numOuts="14" productID="123" />
+    <model model="Eureka NSWR 620/720" lowVersionID="6"
+           numFns="14" numOuts="14" productID="139" />
+    <model model="InterMtn F7" lowVersionID="6"
+           numFns="14" numOuts="14" productID="110" />
     <model model="Life Like E6 w/Mars" lowVersionID="6"
            numFns="14" numOuts="14" productID="107" />
     <model model="Life Like E6 wo/Mars" lowVersionID="6"
            numFns="14" numOuts="14" productID="108" />
+    <model model="Life Like E8/E9 w/Mars" lowVersionID="6"
+           numFns="14" numOuts="14" productID="135" />
+    <model model="Life Like E8/E9 wo/Mars" lowVersionID="6"
+           numFns="14" numOuts="14" productID="136" />
     <model model="Life Like GP9" lowVersionID="6"
            numFns="14" numOuts="14" productID="112" />
     <model model="Life Like GP20" lowVersionID="6"
-           numFns="14" numOuts="14" productID="112" />
-    <model model="Life Like U28B" lowVersionID="6"
            numFns="14" numOuts="14" productID="130" />
+    <model model="Life Like RS27 ALCO" lowVersionID="6"
+           numFns="14" numOuts="14" productID="137" />
+    <model model="Life Like SW8" lowVersionID="6"
+           numFns="14" numOuts="14" productID="133" />
+    <model model="Life Like U28B/30B" lowVersionID="6"
+           numFns="14" numOuts="14" productID="124" />
     <model model="Life Like U30B" lowVersionID="6"
            numFns="14" numOuts="14" productID="124" />
+    <model model="Walthers GP30" lowVersionID="6"
+           numFns="14" numOuts="14" productID="140" />
   </family>
 
   <programming direct="yes" paged="yes"
