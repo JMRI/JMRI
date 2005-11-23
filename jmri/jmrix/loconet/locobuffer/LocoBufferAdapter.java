@@ -22,7 +22,7 @@ import javax.comm.SerialPortEventListener;
  * <P>
  * Normally controlled by the LocoBufferFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.24 $
+ * @version			$Revision: 1.25 $
  */
 public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -229,7 +229,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
     protected void setSerialPort() throws javax.comm.UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
         int baud = 19200;  // default, but also defaulted in the initial value of selectedSpeed
-        for (int i = 0; i<validSpeeds.length; i++ )
+        for (int i = 0; i<validBaudNumber().length; i++ )
             if (validBaudRates()[i].equals(mBaudRate))
                 baud = validBaudNumber()[i];
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
