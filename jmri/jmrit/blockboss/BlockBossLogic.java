@@ -39,7 +39,7 @@ import java.util.Hashtable;
  * use with CTC logic, etc.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 
 public class BlockBossLogic extends Siglet {
@@ -62,6 +62,7 @@ public class BlockBossLogic extends Siglet {
      * @param name System or user name of the driven signal.
      */
     public BlockBossLogic(String name) {
+        super(name+" BlockBossLogic");
         this.name = name;
         driveSignal = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
         if (driveSignal == null) log.warn("Signal "+name+" was not found!");
