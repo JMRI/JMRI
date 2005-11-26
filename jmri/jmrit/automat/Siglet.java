@@ -22,11 +22,13 @@ import jmri.NamedBean;
  * lists; this will cause a recursive invocation when the output changes.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class Siglet extends AbstractAutomaton {
 
-    public Siglet() {}
+    public Siglet() { super(); }
+
+    public Siglet(String name) { super(name); }
 
     public NamedBean[] inputs;      // public for Jython subclass access
     public NamedBean[] outputs;     // public for Jython subclass access
