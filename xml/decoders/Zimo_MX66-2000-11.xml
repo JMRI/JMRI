@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
 <decoder-config>
 		<version author="sip@euronet.nl"
 			version="3" lastUpdated="20020810" />
@@ -11,8 +11,8 @@
 	<family name="Zimo Silent BEMF decoders, late model" mfg="Zimo">
 		<model model="MX61_2000" numOuts="6" numFns="6"
 		maxMotorCurrent="1 Amp" maxTotalCurrent="1.2 Amp" >
-		<versionCV lowVersionID="11" highVersionID="15" />
-		<output name="1" label="White" />
+		    <versionCV lowVersionID="11" highVersionID="15" />
+		    <output name="1" label="White" />
 	    	<output name="2" label="Yellow" />
 	    	<output name="3" label="Brown" />
 	    	<output name="4" label="Green" />
@@ -21,8 +21,9 @@
 	  	</model>
 		<model model="MX62_2000" numOuts="4" numFns="6"
 		maxMotorCurrent="0.7 Amp" maxTotalCurrent="0.7 Amp" >
-		<versionCV lowVersionID="3" />
-		<output name="1" label="White" />
+			<size length="14.1" width="9.3" height="2.6" units="mm" />
+		    <versionCV lowVersionID="3" />
+		    <output name="1" label="White" />
 	    	<output name="2" label="Yellow" />
 	    	<output name="3" label="NC - Logic Level" />
 	    	<output name="4" label="NC - Logic Level" />
