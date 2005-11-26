@@ -10,7 +10,7 @@ import javax.swing.JMenu;
  * Create a "Systems" menu containing the Jmri LocoNet-specific tools.
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class LocoNetMenu extends JMenu {
     public LocoNetMenu(String name) {
@@ -34,6 +34,7 @@ public class LocoNetMenu extends JMenu {
         add(new jmri.jmrix.loconet.locoio.LocoIOAction(rb.getString("MenuItemLocoIOProgrammer")));
         add(new jmri.jmrix.loconet.pm4.PM4Action(rb.getString("MenuItemPM4Programmer")));
         add(new jmri.jmrix.loconet.se8.SE8Action(rb.getString("MenuItemSE8cProgrammer")));
+        add(new jmri.jmrix.loconet.ds64.DS64Action(rb.getString("MenuItemDS64Programmer")));
         add(new javax.swing.JSeparator());
         add(new jmri.jmrit.messager.MessageFrameAction( rb.getString("MenuItemThrottleMessages")));
         add(new jmri.jmrix.loconet.locormi.LnMessageServerAction( rb.getString("MenuItemStartLocoNetServer")));
