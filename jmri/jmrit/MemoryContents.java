@@ -14,7 +14,7 @@ import com.sun.java.util.collections.ArrayList;
  * in which case a sparse implementation (e.g. 16 bit pages) will be needed.
  *
  * @author	    Bob Jacobsen    Copyright (C) 2005
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class MemoryContents {
 
@@ -44,6 +44,23 @@ public class MemoryContents {
     
     int currentPage = 0;
     
+    // store machine comment lines
+    ArrayList lines = new ArrayList(10);
+
+    public String getComment(String c) {
+        for (int i = 0; i<lines.size(); i++) {
+            String t = (String)lines.get(i);
+            if (t.startsWith("! "+c)) {
+                int f = t.indexOf(": ");
+                if (f<0) return null;
+                String r = t.substring(f+2,t.length());
+                return r;
+            }
+        }
+        return null;
+    }
+    
+    
     public void readHex(File file) throws FileNotFoundException {
         DataInputStream fileStream = new DataInputStream(new BufferedInputStream(new FileInputStream(file)));
 
@@ -61,7 +78,8 @@ public class MemoryContents {
                 if (s.charAt(0)=='#') {
                     // human comment
                 } else if (s.charAt(0)=='!') {
-                    // machine comment
+                    // machine comment; store 
+                    lines.add(s);
                 } else if (s.charAt(0)==':') {
                     // hex file
                     int type = Integer.valueOf(s.substring(7,9),16).intValue();
@@ -94,9 +112,7 @@ public class MemoryContents {
         } catch (Exception e) { log.error("Exception reading file: "+e);}
 
     }
-    
-    ArrayList lines = new ArrayList(10);
-        
+           
     public void writeHex(Writer w) throws IOException {
         int blocksize = 16;
         
