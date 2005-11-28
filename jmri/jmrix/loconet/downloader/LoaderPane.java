@@ -14,7 +14,7 @@ import jmri.jmrit.MemoryContents;
 /**
  * Pane for downloading .hex files
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.1 $
+ * @version	    $Revision: 1.2 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -23,12 +23,12 @@ public class LoaderPane extends javax.swing.JPanel {
 
     JLabel inputFileName = new JLabel("");
     
-    JTextField bootload = new JTextField("");
-    JTextField mfg      = new JTextField("");
-    JTextField product  = new JTextField("");
-    JTextField hardware = new JTextField("");
-    JTextField software = new JTextField("");
-    JTextField delay    = new JTextField("");
+    JTextField bootload = new JTextField("1");
+    JTextField mfg      = new JTextField("1");
+    JTextField product  = new JTextField("1");
+    JTextField hardware = new JTextField("1");
+    JTextField software = new JTextField("1");
+    JTextField delay    = new JTextField("200");
     
     JRadioButton checkhardwareno = new JRadioButton(res.getString("ButtonCheckHardwareNo"));
     JRadioButton checkhardwareexact = new JRadioButton(res.getString("ButtonCheckHardwareExact"));
@@ -228,6 +228,14 @@ public class LoaderPane extends javax.swing.JPanel {
         verifyButton.setEnabled(true);
         verifyButton.setToolTipText(res.getString("TipVerifyEnabled"));
                 
+        // get some contents & update
+        ResourceBundle l = ResourceBundle.getBundle("jmri.jmrix.loconet.downloader.File");
+        bootload.setText(inputContent.getComment(l.getString("StringLoader")));
+        mfg.setText(inputContent.getComment(l.getString("StringManufacturer")));
+        product.setText(inputContent.getComment(l.getString("StringProduct")));
+        hardware.setText(inputContent.getComment(l.getString("StringHardware")));
+        software.setText(inputContent.getComment(l.getString("StringSoftware")));
+        delay.setText(inputContent.getComment(l.getString("StringDelay")));
     }
         
     void doLoad() {
@@ -332,13 +340,10 @@ public class LoaderPane extends javax.swing.JPanel {
             setAddr(location);
             
             do {
+                // wait for completion of last operation
+                doWait(location);
+
                 // send this data
-                try {
-                    synchronized(this) {
-                        wait(delayval);
-                    }
-                } catch (InterruptedException e) {}  // just proceed
-                
                 sendOne(operation,    // either send or verify
                         inputContent.getLocation(location++),
                         inputContent.getLocation(location++),
@@ -354,7 +359,12 @@ public class LoaderPane extends javax.swing.JPanel {
                 int next = inputContent.nextContent(location);
                 if (next<0) break;   // no data left
                 next = next & (~0x07);  // mask off bits to be multiple of 8
-                if (next != location) setAddr(next);
+                if (next != location) {
+                    // wait for completion
+                    doWait(next);
+                    // change to next location
+                    setAddr(next);
+                }
                 location = next;
 
             } while (location <= endaddr);
@@ -381,6 +391,25 @@ public class LoaderPane extends javax.swing.JPanel {
                             0, 0,0,0,0);
         }
         
+        /**
+         * Wait the specified time.
+         *
+         *  16*10/16.44 = 10 msec is the time it takes to send the message.
+         */
+         
+        void doWait(int address) {
+            try {
+                synchronized(this) {
+                    // make sure enough time in EEPROM address space
+                    int tdelay;
+                    if (address >= 0xF00000) tdelay = delayval+50+10;
+                    else tdelay = delayval+4+10;
+                    
+                    // do the actual wait
+                    wait(tdelay);
+                }
+            } catch (InterruptedException e) {}  // just proceed
+        }
     }
     
     
