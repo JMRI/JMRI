@@ -2,7 +2,7 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: SoundTraxx_Tsu_Steam.xml,v 1.2 2005-11-14 07:17:40 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_Tsu_Steam.xml,v 1.3 2005-11-30 15:47:16 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen" version="1" lastUpdated="20051101"/>
 
@@ -1087,8 +1087,222 @@
 		    item="Sound Setting 25">
 			<decVal/></variable>
 
+<!-- The following sounds CVs (currently) don't map to generic -->
+<!-- names, e.g. in the Comprehensive.xml programmer, so they  -->
+<!-- appear on pane definitions in this file -->
 
-<!-- a number of sound CVs are not yet inserted here -->
+		<variable label="Equalizer Control" CV="153" mask="XXXXXVVV">
+			<enumVal>
+				<enumChoice choice="Flat (off)"/>
+				<enumChoice choice="Tiny Speaker"/>
+				<enumChoice choice="Small Speaker"/>
+				<enumChoice choice="Medium Speaker"/>
+				<enumChoice choice="large Speaker"/>
+				<enumChoice choice="Edgeport Speaker"/>
+				<enumChoice choice="Boom Box"/>
+				<enumChoice choice="User Adjustable"/>
+				</enumVal>
+			</variable>
+		<variable label="62 Hz Cut/Boost" CV="154" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="125 Hz Cut/Boost" CV="155" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="250 Hz Cut/Boost" CV="156" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="500 Hz Cut/Boost" CV="157" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="1K Hz Cut/Boost" CV="158" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="2K Hz Cut/Boost" CV="159" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="4K Hz Cut/Boost" CV="160" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+
+		<variable label="Reverb Control" CV="161" mask="XXXXXVVV">
+			<enumVal>
+				<enumChoice choice="Disabled"/>
+				<enumChoice choice="Additional Reverb for Whistle"/>
+				<enumChoice choice="Light Reverb in Exhaust"/>
+				<enumChoice choice="Medium Reverb in Exhaust"/>
+				<enumChoice choice="heavy Reverb in Exhaust"/>
+				<enumChoice choice="Reserved (5)"/>
+				<enumChoice choice="Reserved (6)"/>
+				<enumChoice choice="User Adjustable"/>
+				</enumVal>
+			</variable>
+		<variable label="Reverb Output Level" CV="162" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="Reverb Delay" CV="163" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="Reverb Gain" CV="164" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="Whistle Reverb Level" CV="169" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="Bell Reverb Level" CV="170" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="Exhaust Reverb Level" CV="171" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="Air Pump Reverb Level" CV="172" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="Dynamo Reverb Level" CV="173" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="Blower Reverb Level" CV="174" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+
+		<variable label="Throttle Gain" CV="177" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="Motor Load Gain" CV="178" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="Attack Time Constant" CV="179" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="Release Time Constant" CV="180" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="Exhaust Low Volume Limit" CV="181" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="Exhaust High Volume Limit" CV="182" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="Side Rod Clank Low Volume Limit" CV="183" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="Side Rod Clank High Volume Limit" CV="184" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="Filter Initial Frequency" CV="185" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="Filter Control Gain" CV="186" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="Filter Damping" CV="187" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="Tracking Coefficient" CV="188" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+
+		<variable label="Bell-On Set Point" CV="193" mask="XVVVVVVV"
+		    default="0">
+			<decVal max="127"/></variable>
+		<variable label="Bell-Off Set Point" CV="194" mask="XVVVVVVV"
+		    default="16">
+			<decVal max="127"/></variable>
+		<variable label="Grade Crossing Whistle Sensitivity" CV="195" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="Brake Squeal Sensitivity" CV="196" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+
+		<variable label="Automatic Grade Crossing Whistle Enabled (Analog Mode)" CV="197" mask="XXXXXXXV">
+			<enumVal>
+				<enumChoice choice="Disabled"/>
+				<enumChoice choice="Enabled"/>
+				</enumVal>
+			</variable>
+		<variable label="Automatic Whistle Signal Enabled (Analog Mode)" CV="197" mask="XXXXXXVX">
+			<enumVal>
+				<enumChoice choice="Disabled"/>
+				<enumChoice choice="Enabled"/>
+				</enumVal>
+			</variable>
+		<variable label="Automatic Bell Enabled (Analog Mode)" CV="197" mask="XXXXXVXX">
+			<enumVal>
+				<enumChoice choice="Disabled"/>
+				<enumChoice choice="Enabled"/>
+				</enumVal>
+			</variable>
+		<variable label="Automatic Brake Squeal Enabled (Analog Mode)" CV="197" mask="XXXXVXXX">
+			<enumVal>
+				<enumChoice choice="Disabled"/>
+				<enumChoice choice="Enabled"/>
+				</enumVal>
+			</variable>
+		<variable label="Automatic Steam Blow Down Enabled (Analog Mode)" CV="197" mask="XXXVXXXX">
+			<enumVal>
+				<enumChoice choice="Disabled"/>
+				<enumChoice choice="Enabled"/>
+				</enumVal>
+			</variable>
+
+		<variable label="Automatic Grade Crossing Whistle Enabled" CV="198" mask="XXXXXXXV">
+			<enumVal>
+				<enumChoice choice="Disabled"/>
+				<enumChoice choice="Enabled"/>
+				</enumVal>
+			</variable>
+		<variable label="Automatic Whistle Signal Enabled" CV="198" mask="XXXXXXVX">
+			<enumVal>
+				<enumChoice choice="Disabled"/>
+				<enumChoice choice="Enabled"/>
+				</enumVal>
+			</variable>
+		<variable label="Automatic Bell Enabled" CV="198" mask="XXXXXVXX">
+			<enumVal>
+				<enumChoice choice="Disabled"/>
+				<enumChoice choice="Enabled"/>
+				</enumVal>
+			</variable>
+		<variable label="Automatic Brake Squeal Enabled" CV="198" mask="XXXXVXXX">
+			<enumVal>
+				<enumChoice choice="Disabled"/>
+				<enumChoice choice="Enabled"/>
+				</enumVal>
+			</variable>
+		<variable label="Automatic Steam Blow Down Enabled" CV="198" mask="XXXVXXXX">
+			<enumVal>
+				<enumChoice choice="Disabled"/>
+				<enumChoice choice="Enabled"/>
+				</enumVal>
+			</variable>
+
+		<variable label="Probability Fireman Shovels Coal" CV="201" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="Probability Fireman Fills Tender" CV="202" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="Probability Fireman Turns Wrench" CV="203" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="Probability Fireman Uses Grease Gun" CV="204" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="Probability Fireman Uses Oil Can" CV="205" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="Probability Fireman Uses Injectors" CV="206" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="Probability Fireman Uses Blower" CV="207" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+		<variable label="Probability Pop Value Blows Off" CV="208" mask="VVVVVVVV"
+		    default="128">
+			<decVal/></variable>
+
+<!-- End of variables for file-specific panes -->
 
 		<variable label="Motor Kp Coefficient" CV="209" mask="VVVVVVVV"
 		    item="Advanced Group 2 Option 1">
@@ -1122,6 +1336,275 @@
 
 	</variables>
 </decoder>
+
+<pane name="Equalizer">
+  <column>
+    <row>
+	    <display item="Equalizer Control"/>
+    </row>
+	<label label=" "/>
+    <row>
+	    <column>
+			<row>
+				<display item="62 Hz Cut/Boost" layout="above" label=""/>
+				<label label=" "/>
+				<display item="62 Hz Cut/Boost" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="125 Hz Cut/Boost" layout="above" label=""/>
+				<label label=" "/>
+				<display item="125 Hz Cut/Boost" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="250 Hz Cut/Boost" layout="above" label=""/>
+				<label label=" "/>
+				<display item="250 Hz Cut/Boost" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="500 Hz Cut/Boost" layout="above" label=""/>
+				<label label=" "/>
+				<display item="500 Hz Cut/Boost" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="1K Hz Cut/Boost" layout="above" label=""/>
+				<label label=" "/>
+				<display item="1K Hz Cut/Boost" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="2K Hz Cut/Boost" layout="above" label=""/>
+				<label label=" "/>
+				<display item="2K Hz Cut/Boost" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="4K Hz Cut/Boost" layout="above" label=""/>
+				<label label=" "/>
+				<display item="4K Hz Cut/Boost" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+	    </column>
+    </row>
+  </column>
+</pane>
+
+<pane name="Reverb">
+  <column>
+    <row>
+	    <display item="Reverb Control"/>
+    </row>
+	<label label=" "/>
+    <row>
+	    <column>
+			<row>
+				<display item="Reverb Output Level" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Reverb Output Level" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Reverb Delay" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Reverb Delay" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Whistle Reverb Level" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Whistle Reverb Level" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Bell Reverb Level" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Bell Reverb Level" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Exhaust Reverb Level" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Exhaust Reverb Level" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Air Pump Reverb Level" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Air Pump Reverb Level" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Dynamo Reverb Level" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Dynamo Reverb Level" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Blower Reverb Level" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Blower Reverb Level" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+	    </column>
+    </row>
+  </column>
+</pane>
+
+<pane name="DDE">
+    <row>
+	    <column>
+			<row>
+				<display item="Throttle Gain" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Throttle Gain" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Motor Load Gain" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Motor Load Gain" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Attack Time Constant" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Attack Time Constant" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Release Time Constant" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Release Time Constant" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Exhaust Low Volume Limit" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Exhaust Low Volume Limit" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Exhaust High Volume Limit" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Exhaust High Volume Limit" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Side Rod Clank Low Volume Limit" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Side Rod Clank Low Volume Limit" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Side Rod Clank High Volume Limit" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Side Rod Clank High Volume Limit" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+	    </column>
+	    <column>
+			<row>
+				<display item="Filter Initial Frequency" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Filter Initial Frequency" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Filter Control Gain" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Filter Control Gain" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Filter Damping" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Filter Damping" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Tracking Coefficient" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Tracking Coefficient" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+	    </column>
+	</row>
+</pane>
+
+<pane name="ASC">
+  <column>
+    <row>
+      <column>
+	    <display item="Automatic Grade Crossing Whistle Enabled" format="checkbox"/>
+	    <display item="Automatic Whistle Signal Enabled" format="checkbox"/>
+	    <display item="Automatic Bell Enabled" format="checkbox"/>
+	    <display item="Automatic Brake Squeal Enabled" format="checkbox"/>
+	    <display item="Automatic Steam Blow Down Enabled" format="checkbox"/>
+	  </column>
+      <column>
+	    <display item="Automatic Grade Crossing Whistle Enabled (Analog Mode)" format="checkbox"/>
+	    <display item="Automatic Whistle Signal Enabled (Analog Mode)" format="checkbox"/>
+	    <display item="Automatic Bell Enabled (Analog Mode)" format="checkbox"/>
+	    <display item="Automatic Brake Squeal Enabled (Analog Mode)" format="checkbox"/>
+	    <display item="Automatic Steam Blow Down Enabled (Analog Mode)" format="checkbox"/>
+	  </column>
+    </row>
+	<separator/>
+    <row>
+	    <column>
+			<row>
+				<display item="Bell-On Set Point" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Bell-On Set Point" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Bell-Off Set Point" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Bell-Off Set Point" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Grade Crossing Whistle Sensitivity" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Grade Crossing Whistle Sensitivity" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Brake Squeal Sensitivity" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Brake Squeal Sensitivity" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+	    </column>
+	    <separator/>
+	    <column>
+		    <display item="Probability Fireman Shovels Coal" layout="above" format="hslider"/>
+			<label label=" "/>
+		    <display item="Probability Fireman Fills Tender" layout="above" format="hslider"/>
+			<label label=" "/>
+		    <display item="Probability Fireman Turns Wrench" layout="above" format="hslider"/>
+			<label label=" "/>
+		    <display item="Probability Fireman Uses Grease Gun" layout="above" format="hslider"/>
+			<label label=" "/>
+	    </column>
+	    <column>
+		    <display item="Probability Fireman Uses Oil Can" layout="above" format="hslider"/>
+			<label label=" "/>
+		    <display item="Probability Fireman Uses Injectors" layout="above" format="hslider"/>
+			<label label=" "/>
+		    <display item="Probability Fireman Uses Blower" layout="above" format="hslider"/>
+			<label label=" "/>
+		    <display item="Probability Pop Value Blows Off" layout="above" format="hslider"/>
+			<label label=" "/>
+	    </column>
+    </row>
+  </column>
+</pane>
+
 
 </decoder-config>
 
