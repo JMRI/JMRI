@@ -29,7 +29,7 @@ import Serialio.SerialPortLocal;
  * Neither the baud rate configuration nor the "option 1" option are used.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.21 $
+ * @version			$Revision: 1.22 $
  */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -285,8 +285,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
      * Get an array of valid values for "option 2"; used to display valid options.
      * May not be null, but may have zero entries
      */
-    public String[] validOption2() { return new String[]{"DB150 (Empire Builder)",
-                                                         "DCS100 (Chief)", "DCS50 (Zephyr)"}; }
+    public String[] validOption2() { return commandStationNames; }
 
     /**
      * Get a String that says what Option 2 represents
@@ -300,15 +299,8 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
      */
     public void configureOption2(String value) {
         super.configureOption2(value);
-        log.debug("configureOption2: "+value);
-        if (value.equals("DB150 (Empire Builder)")) {
-            mCanRead = false;
-            mProgPowersOff = true;
-        }
-        else {
-            mCanRead = true;
-            mProgPowersOff = false;
-        }
+    	log.debug("configureOption2: "+value);
+        setCommandStationType(value);
     }
 
     // private control members

@@ -22,7 +22,7 @@ import javax.comm.SerialPortEventListener;
  * <P>
  * Normally controlled by the LocoBufferFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.25 $
+ * @version			$Revision: 1.26 $
  */
 public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -275,9 +275,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
      * Get an array of valid values for "option 2"; used to display valid options.
      * May not be null, but may have zero entries
      */
-    public String[] validOption2() { return new String[]{"DCS100 (Chief)",
-                                                         "DB150 (Empire Builder)",
-                                                         "DCS50 (Zephyr)"}; }
+    public String[] validOption2() { return commandStationNames; }
 
     /**
      * Get a String that says what Option 2 represents
@@ -291,16 +289,8 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
      */
     public void configureOption2(String value) {
         super.configureOption2(value);
-		if (value == null) return;  // can happen while switching protocols
     	log.debug("configureOption2: "+value);
-        if (value.equals("DB150 (Empire Builder)")) {
-            mCanRead = false;
-            mProgPowersOff = true;
-        }
-        else {
-            mCanRead = true;
-            mProgPowersOff = false;
-        }
+        setCommandStationType(value);
     }
 
     protected String [] validSpeeds = new String[]{"19,200 baud (J1 on 1&2)", "57,600 baud (J1 on 2&3)"};
