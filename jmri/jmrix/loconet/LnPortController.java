@@ -8,7 +8,7 @@ import java.io.DataOutputStream;
 /**
  * Base for classes representing a LocoNet communications port
  * @author		Bob Jacobsen    Copyright (C) 2001, 2002
- * @version             $Revision: 1.8 $
+ * @version             $Revision: 1.9 $
  */
 public abstract class LnPortController extends jmri.jmrix.AbstractPortController {
     // base class. Implementations will provide InputStream and OutputStream
@@ -42,6 +42,28 @@ public abstract class LnPortController extends jmri.jmrix.AbstractPortController
     protected boolean mCanRead = true;
     protected boolean mProgPowersOff = false;
 
+    protected String[] commandStationNames = {"DB150 (Empire Builder)",
+                                    "DCS100 (Chief)", 
+                                    "DCS200",
+                                    "DCS50 (Zephyr)",
+                                    "Intellibox"};
+                                    
+    /**
+     * Set config info from the command station type name.
+     */
+    public void setCommandStationType(String value) {
+		if (value == null) return;  // can happen while switching protocols
+    	log.debug("setCommandStationType: "+value);
+        if (value.equals("DB150 (Empire Builder)")) {
+            mCanRead = false;
+            mProgPowersOff = true;
+        }
+        else {
+            mCanRead = true;
+            mProgPowersOff = false;
+        }
+    }
+                                    
     /**
      * Configure the programming manager and "command station" objects
      * @param mCanRead
