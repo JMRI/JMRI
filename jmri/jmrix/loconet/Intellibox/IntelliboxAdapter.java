@@ -6,10 +6,14 @@ import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 
 /**
  * Update the code in jmri.jmrix.loconet.locobuffer so that it
- * operates correctly with the Intellibox on-board serial port
-
+ * operates correctly with the Intellibox on-board serial port.
+ * <P>
+ * Since this is by definition connected to an Intellibox, 
+ * the command station prompt is suppressed.
+ *
  * @author			Alex Shepherd   Copyright (C) 2004
- * @version			$Revision: 1.3 $
+ * @author          Bob Jacobsen    Copyright (C) 2005
+ * @version			$Revision: 1.4 $
  */
 public class IntelliboxAdapter extends LocoBufferAdapter {
 
@@ -52,6 +56,22 @@ public void configure() {
     public int[] validBaudNumber() {
         return validSpeedValues;
     }
+
+    /**
+     * Rephrase option 1, so that it doesn't talk about
+     * LocoBuffer
+     */
+    public String option1Name() { return "Serial connection uses "; }
+
+    /**
+     * Option 2, usually used for command station type, is suppressed by
+     * providing just one option.
+     */
+    public String[] validOption2() { 
+        String[] retval = {"Intellibox"}; 
+        return retval;
+    }
+
 
     static public LocoBufferAdapter instance() {
         if (m3Instance == null) m3Instance = new IntelliboxAdapter();
