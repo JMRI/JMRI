@@ -14,7 +14,7 @@ import java.io.BufferedInputStream;
  * The PRICOM format documentation is Copyright 2003, 2005, PRICOM Corp.
  * They have kindly given permission for this use.
  * @author		Bob Jacobsen   Copyright (C) 2005
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 public class PdiFile {
 
@@ -92,7 +92,7 @@ public class PdiFile {
     /**
      * Get the next n bytes for transmission to the device
      * @param n number of data bytes to include
-     * @returns byte buffer, starting with address info and containing data, but not CRC
+     * @return byte buffer, starting with address info and containing data, but not CRC
      */
     public byte[] getNext(int n) {
         byte[] buffer = new byte[n+3+2]; // 3 at front, 2 at back for CRC
