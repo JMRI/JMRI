@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Examples.html,v 1.8 2005-05-31 22:24:47 jacobsen Exp $ -->
+<!-- $Id: Examples.html,v 1.9 2005-12-02 07:46:21 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -65,8 +65,9 @@
 		<dd>Information on writing scripts to control JMRI in more detail:
 		    <UL>
 		    <LI><dfn><a href="Start.html">Introduction</a></dfn>
-		    <LI><dfn><a href="FAQ.html">Frequently Asked Questions (FAQs)</a></dfn>
+		    <LI><dfn><A HREF="Python.html">The Language</a></dfn>
 		    <LI><dfn><a href="Examples.html">Examples</a></dfn>
+		    <LI><dfn><a href="FAQ.html">Frequently Asked Questions (FAQs)</a></dfn>
 		    </UL>
 		</dd>
 
@@ -103,21 +104,37 @@
 		    <div class=para>
 		    
 		    <p>The JMRI distributions come with a "jython" directory
-		    that contains a few examples.  As of the time of writing (Summer 2004)
+		    that contains a few examples.  As of the time of writing
 		    these are:</p>
 		    <dl>
+		    <dt>SampleSound.py<dd>A straight-forward set of statements
+		    to load and play a sound.  There are some comments 
+		    on how to add various options.
+		    <dt>SetTurnouts.py<dd>Sets a couple of turnouts to specific
+		    positions, waiting between each operation.  Because we
+		    want to have the rest of the program keep running,
+		    there are a few more statements involved than just
+		    the commands to throw the turnouts.
+		    <dt>ListenerExample.py<dd>Example of listing to a Turnout so that
+		    the script can do something every time the Turnout's state changes.
+		    <dt>Sensor-sound.py<dd>An example of using a "listener"
+		    to play a sound every time a particular sensor changes.
 		    <dt>AutomatonExample.py<dd>A simple automation example,
 		    this runs a train back and forth between two blocks.
+		    <dt>OpsProgExample.py<dd>A more complicated automation example.
+		    When a given sensor changes, this script will use ops-mode programming
+		    (programming on the main) to change the momentum value for 
+		    a particular locomotive.
 		    <dt>SigletExample.py<dd>An example of driving a signal from a script.
 		    <dt>JButtonExample.py<dd>This is an example of adding an object to 
 		    the GUI, in this case a button.  When clicked, it doesn't really
 		    do anything except print a message, but it is an example after all!
-		    <dt>ListenerExample.py<dd>Example of listing to a Turnout so that
-		    the script can do something every time the Turnout's state changes.
+		    
 		    </dl>
 		    </div>
 
-			<p>The rest of this page contains examples of specific techniques.
+			<p>The rest of this page contains examples of specific 
+			techniques.
 		</div>
 
 		<div class=section>

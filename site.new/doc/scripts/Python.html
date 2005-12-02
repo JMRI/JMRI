@@ -1,20 +1,101 @@
-<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
-<!-- $Id: Python.html,v 1.3 2005-05-31 22:24:47 jacobsen Exp $ -->
-<html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: Python.html,v 1.4 2005-12-02 07:46:23 jacobsen Exp $ -->
+<html lang="en">
 <head>
-   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-   <meta name="Author" content="Bob Jacobsen, LBL">
-   <meta name="GENERATOR" content="Mozilla/4.75C-CCK-MCD {C-UDP; EBM-APPLE} (Macintosh; U; PPC) [Netscape]">
-   <meta name="Content-Type" content="text/html; charset=iso-8859-1">
-   <title>The Python/Jython language</title>
+  <TITLE>
+ 	JMRI: The Python/Jython language
+  </TITLE>
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+
+  <META content="Bob Jacobsen" name=Author>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <meta name="keywords"
+        content="scripting jython python panelpro">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
 </head>
+
 <body>
+  <div id="container">
+    <p class="skipLink"><a href="#mainContent" accesskey="2">Skip to main content</a></p>
 
-<A href="../index.html">
-<IMG SRC="../images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
-</a>
+<!-- Header -->
+    <div id="header">
+	<!-- Logo -->
+	<a href="/" title="Return to home page" accesskey="1">
+	    <img src="/images/logo-jmri.gif" width="160" height="135" alt="JMRI Logo"> </a>
+	<!-- /Logo -->
+	<ul id="mainNav"> <!-- Top tool bar -->
+	   <li><a href="/download/"  title="Get the latest software">Download</a></li>
+	   <li><a href="/apps/"      title="Learn about JMRI applications">Applications</a></li>
+	   <li><a href="/hardware/"  title="What hardware does JMRI support">Hardware</a></li>
+	   <li><a href="/doc/Manual/"   title="Trouble-shooting, and FAQs">Manual</a></li>
+	   <li><a href="/doc/Technical/" title="Developing and extending JMRI">Developers</a></li>
+	   <li><A href="/community/" title="Who is JMRI">Acknowledgements</a></li>
+	</ul>
 
-<h1>The Python/Jython language</h1>
+	<div id="searchform"> <!--  Search Form -->
+	  <form id="search" method="get" action="http://www.google.com/custom">
+	     <label for="q" title="Search JMRI.SourceForge.net">search JMRI: </label>
+	     <input type="hidden" name="cof" value="LW:200;LH:95;L:http://JMRI.sourceforge.net/images/logo.gif;GIMP:#cc0000;T:black;ALC:#0000ff;GFNT:grey;LC:#990000;BGC:white;AH:center;VLC:purple;GL:0;GALT:#666633;AWFID:9262c37cefe23a86;">
+	    <input type="hidden" name="domains" value="JMRI.sourceforge.net">
+	    <input type="hidden" name="sitesearch" value="JMRI.sourceforge.net">
+	    <input type="text" id="q" name="q" accesskey="s" size="30">
+	    <input type="submit" id="submit" value="go">
+	  </form>
+       </div> <!--  End #searchform -->
+    </div> <!-- closes #header-->
+<!-- /Header -->
+
+
+
+	  <hr class="hide">
+	  <div id="mBody">
+	  <div id="side"> <!-- Block of text on left side of page -->
+	    <dl>
+
+		<dt><h3><a href="index.html">Scripting</a></h3></dt>
+		<dd>Information on writing scripts to control JMRI in more detail:
+		    <UL>
+		    <LI><dfn><a href="Start.html">Introduction</a></dfn>
+		    <LI><dfn><A HREF="Python.html">The Language</a></dfn>
+		    <LI><dfn><a href="Examples.html">Examples</a></dfn>
+		    <LI><dfn><a href="FAQ.html">Frequently Asked Questions (FAQs)</a></dfn>
+		    </UL>
+		</dd>
+
+		<dt><h3><a href="http://www.python.org">Python</a></h3></dt>
+		<dd>JMRI scripts are in Python, a popular general-purpose computer language
+		    <UL>
+		    <LI><dfn><a href="Python.html">Python & JMRI</a></dfn>
+		    <LI><dfn><a href="http://www.python.org">Python home page</a></dfn>
+		    <LI><dfn><a href="http://wiki.python.org/moin/BeginnersGuide/NonProgrammers">Python tutorial for non-programmers</a></dfn>
+		    <LI><dfn><a href="http://wiki.python.org/moin/BeginnersGuide/Programmers">Python tutorial for programmers</a></dfn>
+		    </UL>
+		</dd>
+
+	    </dl>
+
+<a href="http://sourceforge.net/donate/index.php?group_id=26788"><img src="http://images.sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" ALIGN="RIGHT" alt="Support This Project" /> </a> 
+
+	</div> <!-- closes #side -->
+
+
+
+    <hr class="hide">
+
+      <div id="mainContent">
+      <!-- Page Body -->
+        <H2>
+		JMRI: The Python/Jython language
+        </H2>
 
 <A HREF="http://www.python.org">Python<a/> is a widely used scripting language that's
 available on many types of computers.  A Java-based varient, called
@@ -44,7 +125,9 @@ Non-programmers might want to start with some of the resources for them
 <A HREF="http://www.python.org/moin/BeginnersGuide">resources for them</a>
 listed on the python website.
 
-<p>IBM Developerworks has two good articles
+<p>If you are interested in the underlying 
+technicalities of the langugage, 
+IBM Developerworks has two good articles
 <A HREF="http://www-106.ibm.com/developerworks/java/library/j-jython.html">here</a>
 and
 <A HREF="http://www-106.ibm.com/developerworks/java/library/j-alj07064/">here</a>.
@@ -56,6 +139,41 @@ to register with your email address to access it.
 <P>
 Looking at the examples in the "jython" directory in the JMRI distribution
 might also help.
+
+
+<h3>Things somebody should point out to you</h3>
+
+The single oddest thing about Python is that the indentation matters.
+
+Instead of using { and } characters to indicate the beginning and 
+end of a block or function, that's done with indentation in Python.  
+Of course, in a C-like language people usually indent blocks anyway, 
+but it takes a little getting used to that you <em>have</em> to do it
+in Python.
+<P>
+For example, this is a sytax error:
+<PRE>
+   a = 15
+      print a
+   b = 21
+   
+</pre>
+because those statements, though logically grouped at the same level in the program,
+aren't indented the same.  This sounds like a pain at first, but you
+rapidly get used to it. Then it makes things
+like the following
+pretty easy to read, without having to worry about where the { and
+} go:
+
+<pre>
+        if ( now == -1 ) :
+                done = 1
+        else :
+                done = 0
+        print done
+ </PRE>
+If you do get a message about "Syntax error", look at the indicated line
+number to see if your indentation isn't lined up.
 
 <!-- Footer -->
     <hr class="hide">

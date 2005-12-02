@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: FAQ.html,v 1.13 2005-05-31 22:24:47 jacobsen Exp $ -->
+<!-- $Id: FAQ.html,v 1.14 2005-12-02 07:46:23 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -65,8 +65,9 @@
 		<dd>Information on writing scripts to control JMRI in more detail:
 		    <UL>
 		    <LI><dfn><a href="Start.html">Introduction</a></dfn>
-		    <LI><dfn><a href="FAQ.html">Frequently Asked Questions (FAQs)</a></dfn>
+		    <LI><dfn><A HREF="Python.html">The Language</a></dfn>
 		    <LI><dfn><a href="Examples.html">Examples</a></dfn>
+		    <LI><dfn><a href="FAQ.html">Frequently Asked Questions (FAQs)</a></dfn>
 		    </UL>
 		</dd>
 
@@ -107,23 +108,12 @@
 
 		    <div class=para>
 		    
-		    <p>The 
-		    <A HREF="http://www.jython.org">jython.org site</a>
-		    has some introductory information, though their
-		    tutorial spends too much time on the engineering details
-		    at the beginning.  You might want to skip to the 
-		    <a href="http://www.python.org/doc/tut/node5.html">part about the language itself</a>.
-
-		    <p>IBM Developerworks has two good articles
-		    <A HREF="http://www-106.ibm.com/developerworks/java/library/j-jython.html">here</a>
-		    and
-		    <A HREF="http://www-106.ibm.com/developerworks/java/library/j-alj07064/">here</a>.
-		    They also have a nice tutorial
-		   	<A HREF="http://www-106.ibm.com/developerworks/java/edu/j-dw-java-jython1-i.html?S_TACT=104AHW02">here</a>, although they require you
-		   	to register with your email address to access it.
-			</p>
-		    </div>
-
+		    <p>See the
+		    <A HREF="Python.html">Python &amp; JMRI</a>
+		    page for more info, including pointers to articles, etc.
+		    See also the navigation links to the left.
+            </div>
+            
 		</div>
 
 		<div class=section>
@@ -150,22 +140,11 @@
 
 		    <div class=para>
 		    
-		    <p>The JMRI distributions come with a "jython" directory
-		    that contains a few examples.  As of the time of writing (Summer 2004)
-		    these are:</p>
-		    <dl>
-		    <dt>AutomatonExample.py<dd>A simple automation example,
-		    this runs a train back and forth between two blocks.
-		    <dt>SigletExample.py<dd>An example of driving a signal from a script.
-		    <dt>JButtonExample.py<dd>This is an example of adding an object to 
-		    the GUI, in this case a button.  When clicked, it doesn't really
-		    do anything except print a message, but it is an example after all!
-		    <dt>ListenerExample.py<dd>Example of listing to a Turnout so that
-		    the script can do something every time the Turnout's state changes.
-		    </dl>
-		    <P>
-		    See also the 
+		    See the 
 		    <a href="Examples.html">examples page</a>.
+		    Also, the
+		    <a href="Start.html">introductory page</a>
+		    shows some of the basic commands.
 		    </div>
 
 		</div>
@@ -219,19 +198,23 @@
 		    <h2>Are there required naming conventions?</h2>
 
 		    <div class=para>
-            In many of the sample files, turnouts are referred to by the name "toxx", signals by "sixx",
-            and sensors by "boxx". These conventions grew out of how some older code was
-            written, and they can make the code clearer.  But they are in no way required; the
+            In many of the sample files, turnouts are referred to by 
+            names like "to12", signals by names like "si21",
+            and sensors by names like "bo45". These conventions grew out of 
+            how some older code was
+            written, and they can make the code clearer.  
+            But they are in no way required; the
             program doesn't care what you call variables.
             <P>
-            For example, "self.to12" is just the name of a variable.  You can call it anything 
+            For example, "self.to12" is just the name of a variable.  
+            You can call it anything 
             you want, e.g. self.MyBigFatNameForTheLeftTurnout
             <P>
             The "self" part makes it completely local; "self" refers to "an 
             object of the particular class I'm defining right now".  Alternately, 
             you can define a global variable, but that's not recommended.  If you 
             have multiple scripts running (and you can have as many as you'd 
-            like; I recommend that you put each signal head in a separate one), 
+            like; we recommend that you put each signal head in a separate one), 
             the variables can get confused if you use the same variable name to 
             mean too different things.  Using "self" like this one does makes 
             sure that doesn't happen.
@@ -242,11 +225,13 @@
             </div>
 
 		</div>
-		<div class=baseclasses>
+		<div class=section>
 		    <h2>What's the difference between the "Siglet" and "AbstractAutomaton" classes?</h2>
 
 		    <div class=para>
-
+            (Maybe not a <em>frequently</em> asked question, but it needs
+            to go somewhere)
+            <P>
             Some examples use the 
             <A HREF="../../JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">AbstractAutomaton</a>
             class as a base, while
