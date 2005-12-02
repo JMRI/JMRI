@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<!-- Copyright (C) JMRI 2002 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<!-- $Id: MRC_128step.xml,v 1.1 2005-12-02 15:23:16 jacobsen Exp $ -->
+<decoder-config>
+		<version author="Bob Jacobsen" version="1" lastUpdated="20051201"/>
+
+<decoder>
+	<family name="MRC 14/28/128 step decoders" mfg="MRC">
+		<model model="AD322" lowVersionID="32" formFactor="N"
+		    numOuts="4" numFns="6" >
+               <size length="28.0" width="8.5" height="2.5" units="mm" />
+        </model>
+	</family>
+
+	<programming direct="yes" paged="yes" 
+	                     register="yes" ops="yes"></programming>
+
+	<variables>
+		
+		<!-- Register 1 -->
+		<variable label="Primary Address" CV="1" comment="Short address"
+						item="Short Address"  default="03">
+			<shortAddressVal/></variable>
+
+		<!-- Register 2 -->
+		<variable label="Vstart" CV="2"
+						comment="A value of 31 corresponds to 100%">
+			<decVal max="31"/></variable>
+
+		<!-- Register 3 -->
+		<variable label="Acceleration Rate" CV="3"
+						item="Accel" >
+			<decVal max="31"/></variable>
+
+		<!-- Register 4 -->
+		<variable label="Deceleration Rate" CV="4"
+						item="Decel">
+			<decVal max="31"/></variable>
+
+		<variable label="Vhigh" CV="5">
+			<decVal max="31"/></variable>
+			
+		<!-- Register 5 -->
+		<variable label="Locomotive Direction" CV="29" mask="XXXXXXXV">
+			<enumVal>
+				<enumChoice choice="normal"/>
+				<enumChoice choice="reversed"/>
+				</enumVal></variable>
+		<variable label="FL Location" CV="29" mask="XXXXXXVX"
+					item="Speed Step Mode">
+			<enumVal>
+				<enumChoice choice="14 speed step format"/>
+				<enumChoice choice="28 speed step format"/>
+				</enumVal></variable>
+
+		<variable label="Extended Address" CV="17"
+						item="Long Address" >
+			<longAddressVal/></variable>
+			
+		<variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
+			<decVal/></variable>
+		
+		<variable label="Consist Direction" CV="19" mask="VXXXXXXX">
+			<enumVal>
+				<enumChoice choice="Normal"></enumChoice>
+				<enumChoice choice="Reversed"></enumChoice>
+				</enumVal></variable>
+
+		<!-- Register 7 -->
+		<variable label="Manufacturer Version No" CV="7" readOnly="yes"
+						item="Decoder Version"><decVal/></variable>
+
+		<!-- Register 8 -->
+		<variable label="Manufacturer ID" CV="8" readOnly="yes"
+						item="Manufacturer">			<decVal/></variable>
+	
+	</variables>
+</decoder>
+</decoder-config>
