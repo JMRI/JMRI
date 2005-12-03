@@ -32,7 +32,7 @@ import jmri.util.com.sun.Comparator;
  * Based in part on SignalHeadTableAction.java by Bob Jacobson
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -103,6 +103,7 @@ public class RouteTableAction extends AbstractTableAction {
     JTextField sensor3 = new JTextField(8);
     JComboBox  sensor3mode = new JComboBox(sensorModes);
     JTextField cTurnout = new JTextField(8);
+	JTextField timeDelay = new JTextField(5);
 
     JComboBox cTurnoutStateBox = new JComboBox();
     int turnoutClosedIndex = 0;
@@ -295,6 +296,18 @@ public class RouteTableAction extends AbstractTableAction {
             cTurnoutStateBox.setToolTipText("Setting control Turnout to selected state will trigger Route.");
             p34.add(cTurnoutStateBox);
             p3.add(p34);
+			// add added delay
+            JPanel p35 = new JPanel();
+            p35.add(new JLabel("Enter added delay between Turnout Commands (optional)"));
+            p3.add(p35);
+            JPanel p36 = new JPanel();
+            p36.add(new JLabel("Added delay: "));
+            p36.add(timeDelay);
+            timeDelay.setText("0");
+            timeDelay.setToolTipText("Enter time to add to the default of 250 milliseconds between turnout commands.");
+            p36.add(new JLabel(" (milliseconds) "));
+            p3.add(p36);
+			// complete this panel
             Border p3Border = BorderFactory.createEtchedBorder();
             p3.setBorder(p3Border);
             contentPane.add(p3);
@@ -489,7 +502,7 @@ public class RouteTableAction extends AbstractTableAction {
     }
     
     /**
-     * Sets the Sensor and Turnout control information for adding or editting if any
+     * Sets the Sensor, Turnout, and delay control information for adding or editting if any
      */
     void setControlInformation(Route g) {
         // Get sensor control information if any
@@ -545,6 +558,24 @@ public class RouteTableAction extends AbstractTableAction {
             // No control Turnout was entered
             g.setControlTurnout("");
         }
+		// set delay information
+		int addDelay = 0;
+		try 
+		{
+			addDelay = Integer.parseInt(timeDelay.getText());
+		}
+		catch (Exception e)
+		{
+			addDelay = 0;
+			timeDelay.setText("0");
+		}
+		if (addDelay<0) 
+		{
+			// added delay must be a positive integer
+			addDelay = 0;
+			timeDelay.setText("0");
+		}
+		g.setRouteCommandDelay(addDelay);		
     }
         
     /**
@@ -616,6 +647,8 @@ public class RouteTableAction extends AbstractTableAction {
         if (g.getControlTurnoutState()==Turnout.THROWN) {
             cTurnoutStateBox.setSelectedIndex(turnoutThrownIndex);
         }
+		// set up additional delay
+		timeDelay.setText(Integer.toString(g.getRouteCommandDelay()));
         // begin with showing all Turnouts   
         cancelIncludedOnly();
         // set up buttons and notes

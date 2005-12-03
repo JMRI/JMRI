@@ -16,7 +16,7 @@ package jmri;
  * invoked by one or more Sensors (up to the maximum allowed).
  *
  * @author			Dave Duchamp Copyright (C) 2004
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public interface Route extends NamedBean {
 
@@ -105,6 +105,16 @@ public interface Route extends NamedBean {
      * Method to get the State of control Turnout that fires this Route
      */
     public int getControlTurnoutState();
+
+    /**
+     * Method to set delay (milliseconds) between issuing Turnout commands
+     */
+    public void setRouteCommandDelay(int delay);
+
+    /**
+     * Method to get delay (milliseconds) between issuing Turnout commands
+     */
+    public int getRouteCommandDelay();
 
     /**
      * Method to set the Route

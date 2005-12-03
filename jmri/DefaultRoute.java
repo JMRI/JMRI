@@ -6,7 +6,7 @@ package jmri;
  * Class providing the basic logic of the Route interface.
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public class DefaultRoute extends AbstractNamedBean
     implements Route, java.io.Serializable {
@@ -28,6 +28,7 @@ public class DefaultRoute extends AbstractNamedBean
     protected int[] mSensorMode = new int[MAX_CONTROL_SENSORS];
     protected String mControlTurnout = "";
     protected int mControlTurnoutState = jmri.Turnout.THROWN;
+	protected int mDelay = 0;
 
     /**
      *  Operational instance variables (not saved between runs)
@@ -173,6 +174,21 @@ public class DefaultRoute extends AbstractNamedBean
     public String getControlTurnout() {
         return mControlTurnout;
     }
+
+    /**
+     * Method to set delay (milliseconds) between issuing Turnout commands
+     */
+    public void setRouteCommandDelay(int delay) {
+		if (delay >= 0)
+			mDelay = delay;
+	}
+
+    /**
+     * Method to get delay (milliseconds) between issuing Turnout commands
+     */
+    public int getRouteCommandDelay() {
+		return mDelay;
+	}
 
     /**
      * Method to set the State of control Turnout that fires this Route
@@ -405,6 +421,7 @@ class SetRouteThread extends Thread
 	 * Runs the thread - sends commands to Route Turnouts
 	 */
 	public void run () {
+		int delay = r.getRouteCommandDelay();			
 		for (int k = 0; k < Route.MAX_TURNOUTS_PER_ROUTE; k++) {
 			Turnout t = r.getRouteTurnout(k);
 			if (t!=null) {
@@ -421,7 +438,7 @@ class SetRouteThread extends Thread
 					}
 					t.setCommandedState(state);
 					try {
-						Thread.sleep(250);
+						Thread.sleep(250 + delay);
 					}
 					catch (InterruptedException e) {
 						break;

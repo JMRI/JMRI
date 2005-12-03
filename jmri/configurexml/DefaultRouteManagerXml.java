@@ -15,7 +15,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2004
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class DefaultRouteManagerXml implements XmlAdapter {
 
@@ -43,6 +43,7 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                 Route r = tm.getBySystemName(sname);
                 String uname = r.getUserName();
                 String cTurnout = r.getControlTurnout();
+				int addedDelay = r.getRouteCommandDelay();
                 Element elem = new Element("route")
                             .addAttribute("systemName", sname);
                 if (uname!=null) elem.addAttribute("userName", uname);
@@ -56,6 +57,9 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                         elem.addAttribute("controlTurnoutState","CLOSED");
                     }
                 }
+				if (addedDelay>0) {
+					elem.addAttribute("addedDelay",Integer.toString(addedDelay));
+				}
                 // add route Turnouts, if any
                 int index = 0;
                 String rTurnout = null;
@@ -156,12 +160,20 @@ public class DefaultRouteManagerXml implements XmlAdapter {
             String userName = null;
             String cTurnout = null;
             String cTurnoutState = null;
+			String addedDelayTxt = null;
+			int addedDelay = 0;
             if ( ((Element)(routeList.get(i))).getAttribute("userName") != null)
                 userName = ((Element)(routeList.get(i))).getAttribute("userName").getValue();
             if ( ((Element)(routeList.get(i))).getAttribute("controlTurnout") != null)
                 cTurnout = ((Element)(routeList.get(i))).getAttribute("controlTurnout").getValue();
             if ( ((Element)(routeList.get(i))).getAttribute("controlTurnoutState") != null)
                 cTurnoutState = ((Element)(routeList.get(i))).getAttribute("controlTurnoutState").getValue();
+            if ( ((Element)(routeList.get(i))).getAttribute("addedDelay") != null) {
+                addedDelayTxt = ((Element)(routeList.get(i))).getAttribute("addedDelay").getValue();
+				if (addedDelayTxt != null) {
+					addedDelay = Integer.parseInt(addedDelayTxt);
+				}
+			}
             if (log.isDebugEnabled()) log.debug("create route: ("+sysName+")("+
                                                             (userName==null?"<null>":userName)+")");
             Route r = tm.createNewRoute(sysName, userName);
@@ -176,6 +188,8 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                         r.setControlTurnoutState(jmri.Turnout.CLOSED);
                     }
                 }
+				// set added delay
+				r.setRouteCommandDelay(addedDelay);
                 // load route turnouts if there are any
                 List routeTurnoutList = ((Element)(routeList.get(i))).getChildren("routeTurnout");
                 if (routeTurnoutList.size() > 0) {
