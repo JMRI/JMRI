@@ -2,7 +2,7 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!--Copyright (C) JMRI 2003, 2004 All rights reserved -->
 <!--See the COPYING file for more information on licensing and appropriate use -->
-<!--$Id: ESU_LokPilotDCC.xml,v 1.5 2005-08-02 04:49:19 jacobsen Exp $ -->
+<!--$Id: ESU_LokPilotDCC.xml,v 1.6 2005-12-04 15:49:47 jacobsen Exp $ -->
 <decoder-config>
     <version
         author = "Walter Thompson wsthompson#earthlink.net"
@@ -34,8 +34,7 @@
             direct = "yes"
             paged = "yes"
             register = "yes"
-            ops = "yes">
-        </programming>
+            ops = "yes" />
         <variables>
             <variable
                 label = "Primary Address"
