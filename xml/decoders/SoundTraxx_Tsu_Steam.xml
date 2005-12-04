@@ -2,7 +2,7 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: SoundTraxx_Tsu_Steam.xml,v 1.3 2005-11-30 15:47:16 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_Tsu_Steam.xml,v 1.4 2005-12-04 15:49:14 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen" version="1" lastUpdated="20051101"/>
 
@@ -1454,6 +1454,7 @@
 </pane>
 
 <pane name="DDE">
+    <column>  <!-- panes always start with column elements-->
     <row>
 	    <column>
 			<row>
@@ -1532,6 +1533,7 @@
 			<label label=" "/>
 	    </column>
 	</row>
+	</column>
 </pane>
 
 <pane name="ASC">
