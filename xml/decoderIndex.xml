@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <!--Written by JMRI version 1.7.3 on Sun Aug 28 21:34:47 PDT 2005 $Id: decoderIndex.xml,v 1.81 2005-10-18 04:47:32 jacobsen Exp $-->
-  <decoderIndex version="100">
+  <!--Written by JMRI version 1.7.2H on Sun Dec 04 08:00:08 PST 2005 $Id: decoderIndex.xml,v 1.82 2005-12-04 16:10:57 jacobsen Exp $-->
+  <decoderIndex version="102">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -125,6 +125,7 @@
       <family name="DCX Series (late)" mfg="CT Elektronik" type="locomotive" file="CT_Elektronik_DCX_new.xml">
         <model model="DCX74D" numOuts="2" numFns="2" maxMotorCurrent="1.6 A" maxTotalCurrent="0.8 A" connector="unspecified" nmraWarrant="no">
           <versionCV lowVersionID="3" />
+          <size length="13" width="9" height="1.5" units="mm" />
           <output name="1" label="White" connection="unspecified" />
           <output name="2" label="Yellow" connection="unspecified" />
         </model>
@@ -398,17 +399,18 @@
         <model model="DN93" numOuts="3" numFns="4" connector="unspecified" nmraWarrant="no" />
         <model model="DH84" numOuts="3" numFns="4" connector="unspecified" nmraWarrant="no" />
       </family>
+      <family name="Function Only, with transponding" mfg="Digitrax" type="locomotive" file="Digitrax_TF4.xml">
+        <model model="TF4" lowVersionID="254" connector="unspecified" nmraWarrant="no" />
+      </family>
+      <family name="Function Only, with transponding" mfg="Digitrax" type="locomotive" file="Digitrax_TL1.xml">
+        <model model="TL1" lowVersionID="250" connector="unspecified" nmraWarrant="no" />
+      </family>
       <family name="Early decoders" mfg="Digitrax" lowVersionID="34" highVersionID="45" type="locomotive" file="Digitrax_xearly.xml">
         <model model="DH120" numOuts="2" numFns="2" connector="unspecified" nmraWarrant="no" />
         <model model="DZ120" numOuts="2" numFns="2" connector="unspecified" nmraWarrant="no" />
       </family>
       <family name="DS54" mfg="Digitrax" comment="DS54 is a stationary decoder, but it can be programmed in the usual way" type="locomotive" file="Digitrax_yDS54.xml">
         <model model="DS54" lowVersionID="65" connector="unspecified" nmraWarrant="no" />
-      </family>
-      <family name="Function Only, with transponding" mfg="Digitrax" lowVersionID="244" type="locomotive" file="Digitrax_yfunction.xml">
-        <model model="TL1" numOuts="1" numFns="4" connector="unspecified" nmraWarrant="no">
-          <output name="1" label="White" connection="unspecified" />
-        </model>
       </family>
       <family name="ESU LokPilot Silent BEMF decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="21" type="locomotive" file="ESU_LokPilotDCC.xml">
         <model model="ESU_LokPilotDCC" numOuts="6" numFns="8" connector="unspecified" nmraWarrant="no">
@@ -658,6 +660,11 @@
           <output name="03" label="Violet" connection="unspecified" />
           <output name="04" label="Green" connection="unspecified" />
           <output name="05" label="Brown" connection="unspecified" />
+        </model>
+      </family>
+      <family name="MRC 14/28/128 step decoders" mfg="MRC" type="locomotive" file="MRC_128step.xml">
+        <model model="AD322" lowVersionID="32" formFactor="N" numOuts="4" numFns="6" connector="unspecified" nmraWarrant="no">
+          <size length="28.0" width="8.5" height="2.5" units="mm" />
         </model>
       </family>
       <family name="MRC 14/28 step decoders" mfg="MRC" type="locomotive" file="MRC_1428step.xml">
@@ -934,6 +941,54 @@
         </model>
       </family>
       <family name="QSI Articulated Steam Ver. 6" mfg="QSIndustries" lowVersionID="6" type="locomotive" file="QSI_Articulated_Steam_ver6.xml">
+        <model model="BLI N-W Class A" lowVersionID="6" numFns="14" numOuts="14" productID="400" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="Plug" connection="other" />
+          <output name="2" label="Plug" connection="other" />
+          <output name="3" label="Snd" connection="other" />
+          <output name="4" label="Snd" connection="other" />
+          <output name="5" label="Snd" connection="other" />
+          <output name="6" label="Snd" connection="other" />
+          <output name="7" label="Snd" connection="other" />
+          <output name="8" label="Snd" connection="other" />
+          <output name="9" label="Snd" connection="other" />
+          <output name="10" label="Snd" connection="other" />
+          <output name="11" label="Snd" connection="other" />
+          <output name="12" label="Snd" connection="other" />
+          <output name="13" label="Snd" connection="other" />
+          <output name="14" label="Snd" connection="other" />
+        </model>
+        <model model="BLI Pennsy Duplex T1" lowVersionID="6" numFns="14" numOuts="14" productID="401" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="Plug" connection="other" />
+          <output name="2" label="Plug" connection="other" />
+          <output name="3" label="Snd" connection="other" />
+          <output name="4" label="Snd" connection="other" />
+          <output name="5" label="Snd" connection="other" />
+          <output name="6" label="Snd" connection="other" />
+          <output name="7" label="Snd" connection="other" />
+          <output name="8" label="Snd" connection="other" />
+          <output name="9" label="Snd" connection="other" />
+          <output name="10" label="Snd" connection="other" />
+          <output name="11" label="Snd" connection="other" />
+          <output name="12" label="Snd" connection="other" />
+          <output name="13" label="Snd" connection="other" />
+          <output name="14" label="Snd" connection="other" />
+        </model>
+        <model model="BLI Cab Forward AC4,AC5 (Reed Switch)" lowVersionID="6" numFns="14" numOuts="14" productID="406" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="Plug" connection="other" />
+          <output name="2" label="Plug" connection="other" />
+          <output name="3" label="Snd" connection="other" />
+          <output name="4" label="Snd" connection="other" />
+          <output name="5" label="Snd" connection="other" />
+          <output name="6" label="Snd" connection="other" />
+          <output name="7" label="Snd" connection="other" />
+          <output name="8" label="Snd" connection="other" />
+          <output name="9" label="Snd" connection="other" />
+          <output name="10" label="Snd" connection="other" />
+          <output name="11" label="Snd" connection="other" />
+          <output name="12" label="Snd" connection="other" />
+          <output name="13" label="Snd" connection="other" />
+          <output name="14" label="Snd" connection="other" />
+        </model>
         <model model="Life Like USRA 2-8-8-2" lowVersionID="6" numFns="14" numOuts="14" productID="404" connector="unspecified" nmraWarrant="no">
           <output name="1" label="Plug" connection="other" />
           <output name="2" label="Plug" connection="other" />
@@ -961,6 +1016,7 @@
         <model model="Atlas Dash 8-40CW,C (GE pump)" lowVersionID="6" numFns="14" numOuts="14" productID="132" connector="unspecified" nmraWarrant="no" />
         <model model="Atlas FM w/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="105" connector="unspecified" nmraWarrant="no" />
         <model model="Atlas FM wo/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="106" connector="unspecified" nmraWarrant="no" />
+        <model model="Atlas MP-15DC" lowVersionID="6" numFns="14" numOuts="14" productID="129" connector="unspecified" nmraWarrant="no" />
         <model model="Atlas SD24/26" lowVersionID="6" numFns="14" numOuts="14" productID="111" connector="unspecified" nmraWarrant="no" />
         <model model="BLI AC6000" lowVersionID="6" numFns="14" numOuts="14" productID="131" connector="unspecified" nmraWarrant="no" />
         <model model="BLI E3/E6 w/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="115" connector="unspecified" nmraWarrant="no" />
@@ -969,17 +1025,29 @@
         <model model="BLI E7 wo/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="120" connector="unspecified" nmraWarrant="no" />
         <model model="BLI E3/E6 w/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="121" connector="unspecified" nmraWarrant="no" />
         <model model="BLI E3/E6 wo/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="122" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI F7" lowVersionID="6" numFns="14" numOuts="14" productID="104" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI E8/E9 w/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="117" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI E8/E9 wo/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="118" connector="unspecified" nmraWarrant="no" />
         <model model="BLI GE C30-7" lowVersionID="6" numFns="14" numOuts="14" productID="128" connector="unspecified" nmraWarrant="no" />
         <model model="BLI RSD-15" lowVersionID="6" numFns="14" numOuts="14" productID="125" connector="unspecified" nmraWarrant="no" />
         <model model="BLI SD40" lowVersionID="6" numFns="14" numOuts="14" productID="102" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI SD40 (Reed Switch)" lowVersionID="6" numFns="14" numOuts="14" productID="134" connector="unspecified" nmraWarrant="no" />
         <model model="BLI SW7/NW2" lowVersionID="6" numFns="14" numOuts="14" productID="101" connector="unspecified" nmraWarrant="no" />
         <model model="CHC RS 10" lowVersionID="6" numFns="14" numOuts="14" productID="113" connector="unspecified" nmraWarrant="no" />
         <model model="CHC RS 18" lowVersionID="6" numFns="14" numOuts="14" productID="123" connector="unspecified" nmraWarrant="no" />
+        <model model="Eureka NSWR 620/720" lowVersionID="6" numFns="14" numOuts="14" productID="139" connector="unspecified" nmraWarrant="no" />
+        <model model="InterMtn F7" lowVersionID="6" numFns="14" numOuts="14" productID="110" connector="unspecified" nmraWarrant="no" />
         <model model="Life Like E6 w/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="107" connector="unspecified" nmraWarrant="no" />
         <model model="Life Like E6 wo/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="108" connector="unspecified" nmraWarrant="no" />
+        <model model="Life Like E8/E9 w/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="135" connector="unspecified" nmraWarrant="no" />
+        <model model="Life Like E8/E9 wo/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="136" connector="unspecified" nmraWarrant="no" />
         <model model="Life Like GP9" lowVersionID="6" numFns="14" numOuts="14" productID="112" connector="unspecified" nmraWarrant="no" />
-        <model model="Life Like GP20" lowVersionID="6" numFns="14" numOuts="14" productID="112" connector="unspecified" nmraWarrant="no" />
-        <model model="Life Like U28B" lowVersionID="6" numFns="14" numOuts="14" productID="130" connector="unspecified" nmraWarrant="no" />
+        <model model="Life Like GP20" lowVersionID="6" numFns="14" numOuts="14" productID="130" connector="unspecified" nmraWarrant="no" />
+        <model model="Life Like RS27 ALCO" lowVersionID="6" numFns="14" numOuts="14" productID="137" connector="unspecified" nmraWarrant="no" />
+        <model model="Life Like SW8" lowVersionID="6" numFns="14" numOuts="14" productID="133" connector="unspecified" nmraWarrant="no" />
+        <model model="Life Like U28B/30B" lowVersionID="6" numFns="14" numOuts="14" productID="124" connector="unspecified" nmraWarrant="no" />
+        <model model="Life Like U30B" lowVersionID="6" numFns="14" numOuts="14" productID="124" connector="unspecified" nmraWarrant="no" />
+        <model model="Walthers GP30" lowVersionID="6" numFns="14" numOuts="14" productID="140" connector="unspecified" nmraWarrant="no" />
       </family>
       <family name="QSI Electric" mfg="QSIndustries" lowVersionID="3" highVersionID="6" type="locomotive" file="QSI_Electric.xml">
         <model model="BLI GG-1" lowVersionID="3" highVersionID="6" productID="200" connector="unspecified" nmraWarrant="no" />
@@ -1017,9 +1085,18 @@
       </family>
       <family name="QSI Steam Ver. 6" mfg="QSIndustries" lowVersionID="6" type="locomotive" file="QSI_Steam_ver6.xml">
         <model model="BLI ATSF 3800 Class 2-10-2 2-10-4" lowVersionID="6" numFns="14" numOuts="14" productID="316" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI C-O T1 2-10-4" lowVersionID="6" numFns="14" numOuts="14" productID="310" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI Great Northan 700 SP-S" lowVersionID="6" numFns="14" numOuts="14" productID="308" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI M1A 4-8-2" lowVersionID="6" numFns="14" numOuts="14" productID="302" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI N-W J 4-8-4" lowVersionID="6" numFns="14" numOuts="14" productID="312" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI NYC S1b 4-8-4" lowVersionID="6" numFns="14" numOuts="14" productID="306" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI PRR J1 2-10-4" lowVersionID="6" numFns="14" numOuts="14" productID="313" connector="unspecified" nmraWarrant="no" />
         <model model="BLI PRR K4 4-6-2" lowVersionID="6" numFns="14" numOuts="14" productID="309" connector="unspecified" nmraWarrant="no" />
         <model model="BLI UP Mountian 4-8-2" lowVersionID="6" numFns="14" numOuts="14" productID="307" connector="unspecified" nmraWarrant="no" />
         <model model="P2K USRA 0-8-0" lowVersionID="6" numFns="14" numOuts="14" productID="315" connector="unspecified" nmraWarrant="no" />
+        <model model="Life Like 2-8-4 Berkshire w/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="317" connector="unspecified" nmraWarrant="no" />
+        <model model="Life Like 2-8-4 Berkshire wo/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="318" connector="unspecified" nmraWarrant="no" />
+        <model model="Walthers 0-6-0 Switcher" lowVersionID="6" numFns="14" numOuts="14" productID="319" connector="unspecified" nmraWarrant="no" />
       </family>
       <family name="DSD diesel" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_DSD_Diesel.xml">
         <model model="DSD diesel" numOuts="4" numFns="10" connector="unspecified" nmraWarrant="no">
@@ -1276,6 +1353,46 @@
           <output name="Mute" connection="unspecified" />
         </model>
       </family>
+      <family name="Tsunami Diesel" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_Tsu_Diesel.xml">
+        <model model="Tsunami Diesel" numOuts="4" numFns="14" connector="unspecified" nmraWarrant="no">
+          <versionCV lowVersionID="65" />
+          <output name="Whistle" connection="unspecified" />
+          <output name="Bell" connection="unspecified" />
+          <output name="3" label="FX5" connection="unspecified" />
+          <output name="4" label="FX6" connection="unspecified" />
+          <output name="Dynamo" connection="unspecified" />
+          <output name="Short-Whistle" connection="unspecified" />
+          <output name="Steam-Release" connection="unspecified" />
+          <output name="Water-Stop" connection="unspecified" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Mute" connection="unspecified" />
+          <output name="Injector" connection="unspecified" />
+          <output name="Brake-Squeal" connection="unspecified" />
+          <output name="Coupler" connection="unspecified" />
+          <!-- The four electical outputs are front headlight, back -->
+          <!-- headlight, F5, F6 -->
+        </model>
+      </family>
+      <family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_Tsu_Steam.xml">
+        <model model="Tsunami Steam" numOuts="4" numFns="14" connector="unspecified" nmraWarrant="no">
+          <versionCV lowVersionID="64" />
+          <output name="Whistle" connection="unspecified" />
+          <output name="Bell" connection="unspecified" />
+          <output name="3" label="FX5" connection="unspecified" />
+          <output name="4" label="FX6" connection="unspecified" />
+          <output name="Dynamo" connection="unspecified" />
+          <output name="Short-Whistle" connection="unspecified" />
+          <output name="Steam-Release" connection="unspecified" />
+          <output name="Water-Stop" connection="unspecified" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Mute" connection="unspecified" />
+          <output name="Injector" connection="unspecified" />
+          <output name="Brake-Squeal" connection="unspecified" />
+          <output name="Coupler" connection="unspecified" />
+          <!-- The four electical outputs are front headlight, back -->
+          <!-- headlight, F5, F6 -->
+        </model>
+      </family>
       <family name="TCS A1 decoder" mfg="Train Control Systems" type="locomotive" file="TCS_A1.xml">
         <model model="A1" numOuts="4" numFns="2" lowVersionID="161" highVersionID="161" connector="unspecified" nmraWarrant="no" />
       </family>
@@ -1317,6 +1434,9 @@
           <output name="4" label="Purple" connection="unspecified" />
         </model>
       </family>
+      <family name="TCS Tx series decoders" mfg="Train Control Systems" type="locomotive" file="TCS_Tx_v28.xml">
+        <model model="T1_v28+" numOuts="2" numFns="8" lowVersionID="28" highVersionID="33" connector="unspecified" nmraWarrant="no" />
+      </family>
       <family name="TCS X Series Decoders" mfg="Train Control Systems" type="locomotive" file="TCS_X.xml">
         <model model="A4X" numOuts="4" numFns="14" lowVersionID="33" highVersionID="33" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" connector="unspecified" nmraWarrant="no">
           <size length="2.860" width="0.680" height="0.145" units="inches" />
@@ -1340,7 +1460,7 @@
           <output name="Ditch" connection="unspecified" />
           <output name="Motor" connection="unspecified" />
         </model>
-        <model model="DP5X" numOuts="5" numFns="14" lowVersionID="33" highVersionID="33" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="NMRAmedium" nmraWarrant="no">
+        <model model="DP5X" numOuts="5" numFns="14" lowVersionID="33" highVersionID="33" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" connector="unspecified" nmraWarrant="no">
           <size length="0845" width="0.680" height="0.165" units="inches" />
           <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
           <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
@@ -1400,7 +1520,7 @@
           <output name="Ditch" connection="unspecified" />
           <output name="Motor" connection="unspecified" />
         </model>
-        <model model="T4X" numOuts="4" numFns="14" lowVersionID="33" highVersionID="33" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="9pin" nmraWarrant="no">
+        <model model="T4X" numOuts="4" numFns="14" lowVersionID="33" highVersionID="33" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="unspecified" nmraWarrant="no">
           <size length="1.010" width="0.665" height="0.250" units="inches" />
           <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
           <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
@@ -1410,7 +1530,7 @@
           <output name="Ditch" connection="unspecified" />
           <output name="Motor" connection="unspecified" />
         </model>
-        <model model="T5X" numOuts="5" numFns="14" lowVersionID="33" highVersionID="33" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="9pin" nmraWarrant="no">
+        <model model="T5X" numOuts="5" numFns="14" lowVersionID="33" highVersionID="33" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="unspecified" nmraWarrant="no">
           <size length="1.000" width="0.680" height="0.250" units="inches" />
           <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
           <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
@@ -1421,7 +1541,7 @@
           <output name="Ditch" connection="unspecified" />
           <output name="Motor" connection="unspecified" />
         </model>
-        <model model="T6X" numOuts="6" numFns="14" lowVersionID="33" highVersionID="33" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="9pin" nmraWarrant="no">
+        <model model="T6X" numOuts="6" numFns="14" lowVersionID="33" highVersionID="33" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="unspecified" nmraWarrant="no">
           <size length="1.00" width="0.680" height="0.250" units="inches" />
           <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
           <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
@@ -1678,6 +1798,7 @@
           <output name="6" label="NC - Logic Level" connection="unspecified" />
         </model>
         <model model="MX62_2000" numOuts="4" numFns="6" maxMotorCurrent="0.7 Amp" maxTotalCurrent="0.7 Amp" connector="unspecified" nmraWarrant="no">
+          <size length="14.1" width="9.3" height="2.6" units="mm" />
           <versionCV lowVersionID="3" />
           <output name="1" label="White" connection="unspecified" />
           <output name="2" label="Yellow" connection="unspecified" />
