@@ -1,19 +1,19 @@
 // ConnectionConfig.java
 
-package jmri.jmrix.lenz.li100;
+package jmri.jmrix.lenz.li101;
 
 
 /**
  * Handle configuring an XPressNet layout connection
- * via a Lenz LI100 or LI101 adapter.
+ * via a Lenz LI101 adapter.
  * <P>
- * This uses the {@link LI100Adapter} class to do the actual
+ * This uses the {@link LI101Adapter} class to do the actual
  * connection.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
  * @version	$Revision: 2.1 $
  *
- * @see LI100Adapter
+ * @see LI101Adapter
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
@@ -31,8 +31,8 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
         super();
     }
 
-    public String name() { return "Lenz LI100"; }
+    public String name() { return "Lenz LI101"; }
 
-    protected void setInstance() { adapter = LI100Adapter.instance(); }
+    protected void setInstance() { adapter = LI101Adapter.instance(); }
 }
 

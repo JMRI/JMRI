@@ -1,6 +1,9 @@
-// XNetInitilizationManager.java
+// LI100XNetInitilizationManager.java
 
-package jmri.jmrix.lenz;
+package jmri.jmrix.lenz.li100;
+import jmri.jmrix.lenz.AbstractXNetInitilizationManager;
+import jmri.jmrix.lenz.XNetTrafficController;
+import jmri.jmrix.lenz.LenzCommandStation;
 
 /**
  * This class performs Command Station dependant initilization for 
@@ -9,9 +12,9 @@ package jmri.jmrix.lenz;
  * based on the Command Station Type.
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 2.5 $
+ * @version			$Revision: 2.1 $
  */
-public class XNetInitilizationManager extends AbstractXNetInitilizationManager{
+public class LI100XNetInitilizationManager extends AbstractXNetInitilizationManager{
 
     protected void init() {
 	if(log.isDebugEnabled()) log.debug("Init called");
@@ -29,7 +32,7 @@ public class XNetInitilizationManager extends AbstractXNetInitilizationManager{
            jmri.InstanceManager.setThrottleManager(new jmri.jmrix.lenz.XNetThrottleManager());
            jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager());
            jmri.InstanceManager.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager());
-           jmri.InstanceManager.setProgrammerManager(new jmri.jmrix.lenz.XNetProgrammerManager(jmri.jmrix.lenz.XNetProgrammer.instance()));
+           jmri.InstanceManager.setProgrammerManager(new jmri.jmrix.lenz.XNetProgrammerManager(jmri.jmrix.lenz.li100.LI100XNetProgrammer.instance()));
            /* the "raw" Command Station only works on systems that support   
                  Ops Mode Programming */
            /* jmri.InstanceManager.setCommandStation(XNetTrafficController.instance()
@@ -58,7 +61,7 @@ public class XNetInitilizationManager extends AbstractXNetInitilizationManager{
 	      if (log.isDebugEnabled()) log.debug("Command Station is LZ100/LZV100");
               jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager());
               jmri.InstanceManager.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager());
-              jmri.InstanceManager.setProgrammerManager(new jmri.jmrix.lenz.XNetProgrammerManager(jmri.jmrix.lenz.XNetProgrammer.instance()));
+              jmri.InstanceManager.setProgrammerManager(new jmri.jmrix.lenz.XNetProgrammerManager(jmri.jmrix.lenz.li100.LI100XNetProgrammer.instance()));
               /* the "raw" Command Station only works on systems that support   
                  Ops Mode Programming */
               jmri.InstanceManager.setCommandStation(XNetTrafficController.instance()
@@ -71,7 +74,7 @@ public class XNetInitilizationManager extends AbstractXNetInitilizationManager{
 	      if (log.isDebugEnabled()) log.debug("Command Station is Unknown type");
               jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager());
               jmri.InstanceManager.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager());
-              jmri.InstanceManager.setProgrammerManager(new jmri.jmrix.lenz.XNetProgrammerManager(jmri.jmrix.lenz.XNetProgrammer.instance()));
+              jmri.InstanceManager.setProgrammerManager(new jmri.jmrix.lenz.XNetProgrammerManager(jmri.jmrix.lenz.li100.LI100XNetProgrammer.instance()));
               /* the "raw" Command Station only works on systems that support   
                  Ops Mode Programming */
               jmri.InstanceManager.setCommandStation(XNetTrafficController.instance()
@@ -84,6 +87,6 @@ public class XNetInitilizationManager extends AbstractXNetInitilizationManager{
 	if(log.isDebugEnabled()) log.debug("XPressNet Initilization Complete");
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetInitilizationManager.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LI100XNetInitilizationManager.class.getName());
 
 }

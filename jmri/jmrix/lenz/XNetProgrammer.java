@@ -26,55 +26,41 @@ import java.beans.PropertyChangeEvent;
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Paul Bender  Copyright (c) 2003,2004,2005
- * @version $Revision: 2.13 $
+ * @version $Revision: 2.14 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
-	static private final int XNetProgrammerTimeout = 90000;
+	static protected final int XNetProgrammerTimeout = 90000;
 
 	// keep track of whether or not the command station is in service 
         // mode.  Used for determining if "OK" message is an aproriate 
 	// response to a request to a programming request. 
-	static private boolean _service_mode = false;
-
-	// As a temporary fix for version 1.6, we're going to use one 
-	// operation per service mode entry if we can't determine the 
-	// interface we're using (since the LI100 does not respond to 
-	// version inquiries - and we're having trouble with the LI100)
-
-	static private boolean _OneServiceOpPerEntry = true;
+	static protected boolean _service_mode = false;
 
 	public XNetProgrammer() {
-		// error if more than one constructed?
-		if (self != null)
-			log.error("Creating too many XNetProgrammer objects");
+	   // error if more than one constructed?
+	   if (self != null)
+		log.error("Creating too many XNetProgrammer objects");
 
-		// register this as the default, register as the Programmer
-		self = this;
+	   // register this as the default, register as the Programmer
+	   self = this;
 
-        // connect to listen
-        controller().addXNetListener(XNetInterface.CS_INFO |
+           // connect to listen
+           controller().addXNetListener(XNetInterface.CS_INFO |
 			     XNetInterface.COMMINFO |
 			     XNetInterface.INTERFACE,
 			     this);
 
-	// Build the LI version request message
-	XNetMessage msg = new XNetMessage(2);
-	msg.setElement(0,XNetConstants.LI_VERSION_REQUEST);
-        msg.setParity(); // Set the parity bit
-	//Then send to the controller
-        XNetTrafficController.instance().sendXNetMessage(msg,this);
-
-    }
+        }
 
 	/*
 	 * method to find the existing XNetProgrammer object, if need be creating one
 	 */
-	static public final XNetProgrammer instance() {
+	static public XNetProgrammer instance() {
 		if (self == null) self = new XNetProgrammer();
 		return self;
 		}
-	static XNetProgrammer self = null;  // needs to be accessible from tests
+	protected static XNetProgrammer self = null;  // needs to be accessible from tests
 
 	// handle mode
 	protected int _mode = Programmer.DIRECTBYTEMODE;
@@ -138,13 +124,13 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
 	// members for handling the programmer interface
 
-	static int progState = 0;
-		static final int NOTPROGRAMMING = 0; // is notProgramming
-		static final int REQUESTSENT    = 1; // waiting reply to command to go into programming mode
-		static final int INQUIRESENT    = 2; // read/write command sent, waiting reply
-	boolean  _progRead = false;
-	int _val;	// remember the value being read/written for confirmative reply
-	int _cv;	// remember the cv being read/written
+	static protected int progState = 0;
+	static protected final int NOTPROGRAMMING = 0; // is notProgramming
+	static protected final int REQUESTSENT    = 1; // waiting reply to command to go into programming mode
+	static protected final int INQUIRESENT    = 2; // read/write command sent, waiting reply
+	protected boolean  _progRead = false;
+	protected int _val;	// remember the value being read/written for confirmative reply
+	protected int _cv;	// remember the cv being read/written
 
 	// programming interface
 	synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
@@ -163,27 +149,12 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		   // format and send message to go to program mode
         	   if (_mode == Programmer.PAGEMODE) {
 		       XNetMessage msg = XNetMessage.getWritePagedCVMsg(CV,val);
-		       if(_OneServiceOpPerEntry) {
-			  msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
-			  /* We don't want an "OK" message to trigger a request for results */
-		     	  _service_mode = false;
-		       }
 		       controller().sendXNetMessage(msg, this);
         	   } else if (_mode == Programmer.DIRECTBITMODE || _mode == Programmer.DIRECTBYTEMODE) {
 		       XNetMessage msg = XNetMessage.getWriteDirectCVMsg(CV,val);
-		       if(_OneServiceOpPerEntry) {
-			  msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
-			  /* We don't want an "OK" message to trigger a request for results */
-		     	  _service_mode = false;
-		       }
 		       controller().sendXNetMessage(msg, this);
         	   } else  { // register mode by elimination 
 		       XNetMessage msg = XNetMessage.getWriteRegisterMsg(registerFromCV(CV),val);
-		       if(_OneServiceOpPerEntry) {
-			  msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
-			  /* We don't want an "OK" message to trigger a request for results */
-		     	  _service_mode = false;
-		       }
                        controller().sendXNetMessage(msg,this);
 		   }
 		} catch (jmri.ProgrammerException e) {
@@ -210,27 +181,12 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		   // format and send message to go to program mode
         	   if (_mode == Programmer.PAGEMODE) {
 		       XNetMessage msg=XNetMessage.getReadPagedCVMsg(CV);
-		       if(_OneServiceOpPerEntry) {
-			  msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
-			  /* We don't want an "OK" message to trigger a request for results */
-		     	  _service_mode = false;
-		       }
 		       controller().sendXNetMessage(msg, this);
 		   } else if (_mode == Programmer.DIRECTBITMODE || _mode == Programmer.DIRECTBYTEMODE) {
 		       XNetMessage msg=XNetMessage.getReadDirectCVMsg(CV);
-		       if(_OneServiceOpPerEntry) {
-			  msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
-			  /* We don't want an "OK" message to trigger a request for results */
-		     	  _service_mode = false;
-		       }
 		       controller().sendXNetMessage(msg, this);
 		   } else { // register mode by elimination    
 		       XNetMessage msg=XNetMessage.getReadRegisterMsg(registerFromCV(CV));
-		       if(_OneServiceOpPerEntry) {
-			  msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
-			  /* We don't want an "OK" message to trigger a request for results */
-		     	  _service_mode = false;
-		       }
 		       controller().sendXNetMessage(msg, this);
 		   }
 		} catch (jmri.ProgrammerException e) {
@@ -269,10 +225,6 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		     // mode results if progrstate is REQUESTSENT.
 		     _service_mode = false;
 		}
-		if(m.getElement(0)==XNetConstants.LI_VERSION_RESPONSE) {
-			_OneServiceOpPerEntry=false;
-		}
-
 		if (progState == NOTPROGRAMMING) {
 			// we get the complete set of replies now, so ignore these
 			return;
@@ -301,7 +253,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 			   notifyProgListenerEnd(_val, jmri.ProgListener.NotImplemented);
                            return;
             		} else if (m.getElement(0)==XNetConstants.CS_INFO && 
-				   m.getElement(1)==XNetConstants.BC_NORMAL_OPERATIONS && !_OneServiceOpPerEntry) {
+				   m.getElement(1)==XNetConstants.BC_NORMAL_OPERATIONS) {
 			   // We Exited Programming Mode early
 			   log.error("Service mode exited before sequence complete.");
 			   progState = NOTPROGRAMMING;
@@ -356,7 +308,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		     	   notifyProgListenerEnd(_val, jmri.ProgListener.NoLocoDetected);
                	    	   return;
             		} else if (m.getElement(0)==XNetConstants.CS_INFO && 
-				   m.getElement(1)==XNetConstants.BC_NORMAL_OPERATIONS && !_OneServiceOpPerEntry) {
+				   m.getElement(1)==XNetConstants.BC_NORMAL_OPERATIONS) {
 		  	   // We Exited Programming Mode early
 		   	   log.error("Service Mode exited before sequence complete.");
 		   	   progState = NOTPROGRAMMING;

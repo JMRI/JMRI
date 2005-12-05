@@ -1,10 +1,11 @@
-// LI100Adapter.java
+// LI101Adapter.java
 
-package jmri.jmrix.lenz.li100;
+package jmri.jmrix.lenz.li101;
 
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetPacketizer;
 import jmri.jmrix.lenz.XNetPortController;
+import jmri.jmrix.lenz.XNetInitilizationManager;
 import jmri.jmrix.AbstractMRTrafficController;
 
 import java.io.DataInputStream;
@@ -20,13 +21,13 @@ import javax.comm.SerialPortEvent;
 import javax.comm.SerialPortEventListener;
 
 /**
- * Provide access to XPressNet via a LI100 on an attached serial comm port.
- *					Normally controlled by the lenz.li100.LI100Frame class.
+ * Provide access to XPressNet via a LI101 on an attached serial comm port.
+ *					Normally controlled by the lenz.li101.LI101Frame class.
  * @author			Bob Jacobsen   Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003
- * @version			$Revision: 2.4 $
+ * @version			$Revision: 2.1 $
  */
 
-public class LI100Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
+public class LI101Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
 
 	Vector portNameVector = null;
 	SerialPort activeSerialPort = null;
@@ -206,7 +207,7 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
 	}
 
 	/**
-	 * set up all of the other objects to operate with a LI100
+	 * set up all of the other objects to operate with a LI101
 	 * connected to this port
 	 */
 	public void configure() {
@@ -217,8 +218,8 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
             // start operation
             // packets.startThreads();
 
-            new LI100XNetInitilizationManager();
-		
+            new XNetInitilizationManager();
+
             jmri.jmrix.lenz.ActiveFlag.setActive();
 	}
 
@@ -282,7 +283,7 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
 	/**
 	 * Option 1 controls flow control option
 	 */
-	public String option1Name() { return "LI100 connection uses "; }
+	public String option1Name() { return "LI101 connection uses "; }
         public String[] validOption1() { return validOption1; }
 
 	/**
@@ -306,12 +307,12 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
 	private boolean opened = false;
 	InputStream serialStream = null;
 
-        static public LI100Adapter instance() {
-            if (mInstance == null) mInstance = new LI100Adapter();
+        static public LI101Adapter instance() {
+            if (mInstance == null) mInstance = new LI101Adapter();
             return mInstance;
         }
-        static LI100Adapter mInstance = null;
+        static LI101Adapter mInstance = null;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LI100Adapter.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LI101Adapter.class.getName());
 
 }
