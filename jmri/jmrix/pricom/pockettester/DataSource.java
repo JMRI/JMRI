@@ -21,7 +21,7 @@ import java.io.DataInputStream;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class DataSource extends JFrame {
 
@@ -149,27 +149,41 @@ public class DataSource extends JFrame {
         
         self = this;
         
-        MonitorAction a = new MonitorAction() {
-            public void connect(DataListener l) {
-                self.addListener(l);
-            }
-        };
-        JButton b = new JButton((String)a.getValue(Action.NAME));
-        b.addActionListener(a);
-        p4.add(b);
+        { 
+            MonitorAction a = new MonitorAction() {
+                public void connect(DataListener l) {
+                    self.addListener(l);
+                }
+            };
+            JButton b = new JButton((String)a.getValue(Action.NAME));
+            b.addActionListener(a);
+            p4.add(b);
+        }
         
-        PacketTableAction p = new PacketTableAction() {
-            public void connect(DataListener l) {
-                self.addListener(l);
-                ((PacketTableFrame)l).setSource(self);
-            }
-        };
-        b = new JButton((String)p.getValue(Action.NAME));
-        b.addActionListener(p);
-        p4.add(b);
+        {
+            PacketTableAction p = new PacketTableAction() {
+                public void connect(DataListener l) {
+                    self.addListener(l);
+                    ((PacketTableFrame)l).setSource(self);
+                }
+            };
+            JButton b = new JButton((String)p.getValue(Action.NAME));
+            b.addActionListener(p);
+            p4.add(b);
+        }
         
-        getContentPane().add(p4);
-        
+        {
+            StatusAction a = new StatusAction() {
+                public void connect(DataListener l) {
+                    self.addListener(l);
+                }
+            };
+            JButton b = new JButton((String)a.getValue(Action.NAME));
+            b.addActionListener(a);
+            p4.add(b);
+            getContentPane().add(p4);
+        }
+            
         // Done, get ready to display
         pack();
     }
