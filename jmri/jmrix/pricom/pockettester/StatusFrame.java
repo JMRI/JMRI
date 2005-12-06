@@ -10,7 +10,7 @@ import javax.swing.*;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2005
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class StatusFrame extends javax.swing.JFrame implements DataListener {
 
@@ -41,17 +41,14 @@ public class StatusFrame extends javax.swing.JFrame implements DataListener {
         for (int i = 0; i<numAutoPane; i++) {
             // create and install tabbed pane
             JPanel p = new JPanel();
-            p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+            p.setLayout(new java.awt.GridLayout(0, 2));  // 0 rows is a dummy value
             tabPane.addTab(rb.getString("CS"+i+"Title"), p);
             
             // install variables
             int numVars = Integer.parseInt(rb.getString("CS"+i+"NumVars"));
             for (int j = 0; j<numVars; j++) {
-                JPanel line = new JPanel();
-                
-                line.add(new JLabel(rb.getString("CS"+i+"Var"+j+"Name")));
-                line.add(new JLabel("00"));
-                p.add(line);
+                p.add(new JLabel(rb.getString("CS"+i+"Var"+j+"Name")));
+                p.add(new JLabel("-----"));
             }
         }
         
