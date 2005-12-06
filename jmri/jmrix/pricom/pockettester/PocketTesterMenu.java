@@ -10,7 +10,7 @@ import javax.swing.JMenu;
  * Create a menu or menu item containing the PRICOM Pocket Tester tools
  *
  * @author	Bob Jacobsen   Copyright 2005
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class PocketTesterMenu extends JMenu {
     public PocketTesterMenu(String name) {
@@ -28,10 +28,11 @@ public class PocketTesterMenu extends JMenu {
 
         add(new jmri.jmrix.pricom.pockettester.DataSourceAction());
         
-        // rest need to be added dynamically
+        // rest need to be added dynamically after connection is made
         
         // add(new jmri.jmrix.pricom.pockettester.MonitorAction());
         // add(new jmri.jmrix.pricom.pockettester.PacketTableAction());
+        // add(new jmri.jmrix.pricom.pockettester.StatusAction());
 
     }
 
