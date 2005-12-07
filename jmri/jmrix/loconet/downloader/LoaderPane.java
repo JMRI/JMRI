@@ -14,7 +14,7 @@ import jmri.jmrit.MemoryContents;
 /**
  * Pane for downloading .hex files
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.3 $
+ * @version	    $Revision: 1.4 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -29,6 +29,7 @@ public class LoaderPane extends javax.swing.JPanel {
     JTextField hardware = new JTextField("1");
     JTextField software = new JTextField("1");
     JTextField delay    = new JTextField("200");
+    JTextField eestart  = new JTextField("C00000");
     
     JRadioButton checkhardwareno = new JRadioButton(res.getString("ButtonCheckHardwareNo"));
     JRadioButton checkhardwareexact = new JRadioButton(res.getString("ButtonCheckHardwareExact"));
@@ -43,6 +44,9 @@ public class LoaderPane extends javax.swing.JPanel {
     JButton loadButton;
     JButton verifyButton;
     
+    JProgressBar    bar;
+    JLabel          status = new JLabel("");
+
     MemoryContents inputContent = new MemoryContents();
         
     static int PXCT1DOWNLOAD     = 0x40;
@@ -154,6 +158,15 @@ public class LoaderPane extends javax.swing.JPanel {
             add(p);
         }
         
+        {
+            JPanel p = new JPanel();
+            p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+            p.add(new JLabel(res.getString("LabelEEStart")));
+            p.add(eestart);
+            
+            add(p);
+        }
+        
         add(new JSeparator());
 
         {
@@ -191,6 +204,23 @@ public class LoaderPane extends javax.swing.JPanel {
             });
 
             add(p);
+
+            add(new JSeparator());
+    
+            bar = new JProgressBar();
+            add(bar);
+        
+            add(new JSeparator());
+
+            {
+                p = new JPanel();
+                p.setLayout(new FlowLayout());
+                status.setText(res.getString("StatusSelectFile"));
+                status.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+                p.add(status);
+                add(p);
+            }
+
         }
     }
     
@@ -205,6 +235,7 @@ public class LoaderPane extends javax.swing.JPanel {
         loadButton.setToolTipText(res.getString("TipLoadDisabled"));
         verifyButton.setEnabled(false);
         verifyButton.setToolTipText(res.getString("TipVerifyDisabled"));
+        status.setText(res.getString("StatusReadFile"));
     }
     
     void doRead() {
@@ -224,26 +255,60 @@ public class LoaderPane extends javax.swing.JPanel {
             return;
         }
         loadButton.setEnabled(true);
-        loadButton.setToolTipText(res.getString("TipVerifyEnabled"));
+        loadButton.setToolTipText(res.getString("TipLoadEnabled"));
         verifyButton.setEnabled(true);
         verifyButton.setToolTipText(res.getString("TipVerifyEnabled"));
+        status.setText(res.getString("StatusDoDownload"));
                 
         // get some contents & update
         ResourceBundle l = ResourceBundle.getBundle("jmri.jmrix.loconet.downloader.File");
-        bootload.setText(inputContent.getComment(l.getString("StringLoader")));
-        mfg.setText(inputContent.getComment(l.getString("StringManufacturer")));
-        product.setText(inputContent.getComment(l.getString("StringProduct")));
-        hardware.setText(inputContent.getComment(l.getString("StringHardware")));
-        software.setText(inputContent.getComment(l.getString("StringSoftware")));
-        delay.setText(inputContent.getComment(l.getString("StringDelay")));
+        
+        String text = inputContent.getComment(l.getString("StringLoader"));
+        if (text!=null) bootload.setText(text);
+        
+        text = inputContent.getComment(l.getString("StringManufacturer"));
+        if (text!=null) mfg.setText(text);
+
+        text = inputContent.getComment(l.getString("StringProduct"));
+        if (text!=null) product.setText(text);
+
+        text = inputContent.getComment(l.getString("StringHardware"));
+        if (text!=null) hardware.setText(text);
+
+        text = inputContent.getComment(l.getString("StringSoftware"));
+        if (text!=null) software.setText(text);
+
+        text = inputContent.getComment(l.getString("StringDelay"));
+        if (text!=null) delay.setText(text);
+
+        text = inputContent.getComment(l.getString("StringEEStart"));
+        if (text!=null) eestart.setText(text);
     }
         
     void doLoad() {
+        status.setText(res.getString("StatusDownloading"));
+        readButton.setEnabled(false);
+        readButton.setToolTipText(res.getString("TipDisabledDownload"));
+        loadButton.setEnabled(false);
+        loadButton.setToolTipText(res.getString("TipDisabledDownload"));
+        verifyButton.setEnabled(false);
+        verifyButton.setToolTipText(res.getString("TipDisabledDownload"));
+
+        // start the download itself
         operation = PXCT2SENDDATA;
         sendSequence();
     }
     
     void doVerify() {
+        status.setText(res.getString("StatusVerifying"));
+        readButton.setEnabled(false);
+        readButton.setToolTipText(res.getString("TipDisabledDownload"));
+        loadButton.setEnabled(false);
+        loadButton.setToolTipText(res.getString("TipDisabledDownload"));
+        verifyButton.setEnabled(false);
+        verifyButton.setToolTipText(res.getString("TipDisabledDownload"));
+
+        // start the download itself
         operation = PXCT2VERIFYDATA;
         sendSequence();
     }
@@ -267,6 +332,7 @@ public class LoaderPane extends javax.swing.JPanel {
                 control,0,0,0);
         
         delayval = Integer.valueOf(delay.getText()).intValue();
+        eestartval = Integer.valueOf(eestart.getText(),16).intValue();
 
         // start transmission loop
         new Thread(new Sender()).start();
@@ -313,6 +379,7 @@ public class LoaderPane extends javax.swing.JPanel {
     int startaddr;
     int endaddr;
     int delayval;
+    int eestartval;
     
     /**
      * get rid of any held resources
@@ -321,6 +388,9 @@ public class LoaderPane extends javax.swing.JPanel {
     }
     
     class Sender implements Runnable {
+        int totalmsgs;
+        int sentmsgs;
+        
         // send the next data, and a termination record when done
         public void run() {
             // define range to be checked for download
@@ -329,8 +399,23 @@ public class LoaderPane extends javax.swing.JPanel {
             
             if ((startaddr&0x7) != 0) log.error("Can only start on an 8-byte boundary: "+startaddr);
 
-            // find the initial location with data
+            // fast scan to count bytes to send
             int location = inputContent.nextContent(startaddr);
+            totalmsgs = 0;
+            sentmsgs = 0;
+            location = location & (~0x07);  // mask off bits to be multiple of 8
+            do {
+                location = location + 8;
+                totalmsgs++;
+                // update to the next location for data
+                int next = inputContent.nextContent(location);
+                if (next<0) break;   // no data left
+                location = next & (~0x07);  // mask off bits to be multiple of 8
+
+            } while (location <= endaddr);
+            
+            // find the initial location with data
+            location = inputContent.nextContent(startaddr);
             if (location<0) {
                 log.info("No data, which seems odd");
                 return;  // ends load process
@@ -344,6 +429,7 @@ public class LoaderPane extends javax.swing.JPanel {
                 doWait(location);
 
                 // send this data
+                sentmsgs++;
                 sendOne(operation,    // either send or verify
                         inputContent.getLocation(location++),
                         inputContent.getLocation(location++),
@@ -355,6 +441,18 @@ public class LoaderPane extends javax.swing.JPanel {
                         inputContent.getLocation(location++),
                         inputContent.getLocation(location++));
 
+                // update GUI intermittently
+                if ( (sentmsgs % 5) == 0) {
+
+                    // update progress bar via the queue to ensure synchronization
+                    Runnable r = new Runnable() {
+                        public void run() {
+                            updateGUI();
+                        }
+                    };
+                    javax.swing.SwingUtilities.invokeLater(r);
+                }
+                
                 // update to the next location for data
                 int next = inputContent.nextContent(location);
                 if (next<0) break;   // no data left
@@ -372,6 +470,14 @@ public class LoaderPane extends javax.swing.JPanel {
             // send end (after wait)
             doWait(location);            
             sendOne(PXCT2ENDOPERATION, 0,0,0,0, 0,0,0,0);
+            
+            // signal end to GUI via the queue to ensure synchronization
+            Runnable r = new Runnable() {
+                public void run() {
+                    enableGUI();
+                }
+            };
+            javax.swing.SwingUtilities.invokeLater(r);
 
         }
         
@@ -397,7 +503,7 @@ public class LoaderPane extends javax.swing.JPanel {
                 synchronized(this) {
                     // make sure enough time in EEPROM address space
                     int tdelay;
-                    if (address >= 0xF00000) tdelay = delayval+50+10;
+                    if (address >= eestartval) tdelay = delayval+50+10;
                     else tdelay = delayval+4+10;
                     
                     // do the actual wait
@@ -405,6 +511,37 @@ public class LoaderPane extends javax.swing.JPanel {
                 }
             } catch (InterruptedException e) {}  // just proceed
         }
+
+        /**
+         * Signal GUI that it's the end of the download
+         * <P>
+         * Should be invoked on the Swing thread
+         */
+        void enableGUI() {
+            if (log.isDebugEnabled()) log.debug("enableGUI");
+
+            status.setText(res.getString("StatusDone"));
+            readButton.setEnabled(true);
+            readButton.setToolTipText(res.getString("TipReadEnabled"));
+            loadButton.setEnabled(true);
+            loadButton.setToolTipText(res.getString("TipLoadEnabled"));
+            verifyButton.setEnabled(true);
+            verifyButton.setToolTipText(res.getString("TipVerifyEnabled"));
+
+        }
+
+        /**
+         * Update the GUI for progress
+         * <P>
+         * Should be invoked on the Swing thread
+         */
+        void updateGUI() {
+            if (log.isDebugEnabled()) log.debug("updateGUI with "+sentmsgs+" / "+totalmsgs);
+            // update progress bar
+            bar.setValue(100*sentmsgs/totalmsgs);
+
+        }
+
     }
     
     
