@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NCE.html,v 1.7 2004-11-12 02:56:41 jacobsen Exp $ -->
+<!-- $Id: NCE.html,v 1.8 2005-12-10 20:05:51 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -109,6 +109,22 @@
 	  <li>Restart the program. You should be up and running.</p>
 	  </ol>
 
+    <A id="names"/><h3>AIU Numbering</H3>
+    The NCE "AIU" device allows the NCE command station to 
+    check the status of inputs from the layout.  These are
+    referenced in JMRI as "Sensors" with names like "NS785".
+    "NS" means "NCE Sensor", and 785 is the number of a specific sensor input.
+    <P>
+    The sensor number can be found by using the following formula:
+    <P> 
+    Sensor ID = (AIU Cab Address - 1) * 16  + (Pin Number On AIU) -1
+    <P>
+    For example: The AIU cab address is set to 50 and one of the BD20s is connected to pin 2. Therefore the Sensor ID would be:
+    <P>
+    Sensor ID = (50 - 1) * 16  + (2) -1
+    <P>
+    Sensor ID = 785
+    
 	<H3>Debugging</H3>
 
 	<p><a href="http://www.ncedcc.com/catalog2.html">NCE Systems and Cabs Catalog</a></p>
