@@ -47,7 +47,7 @@ import com.sun.java.util.collections.Iterator;
  *</ol>
  * <P>
  * @author	Bob Jacobsen   Copyright (C) 2001, 2005
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  *
  */
 public class CompositeVariableValue extends EnumVariableValue implements ActionListener, PropertyChangeListener {
@@ -152,7 +152,11 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
     public void addSetting(String choice, String varName, VariableValue variable, String value) {
         SettingList s = (SettingList)choiceHash.get(choice);
         s.addSetting(varName, variable, value);
-        variables.add(variable);
+
+        if (variable!=null) {
+            variables.add(variable);
+        } else log.error("Variable pointer null when varName="+varName+" in choice "+choice+"; ignored");
+
     }
     
     /** 
@@ -171,6 +175,7 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
         Iterator i = variables.iterator();
         while (i.hasNext()) {
             VariableValue v = (VariableValue) i.next();
+            if (v==null) log.error("Variable found as null in last item");
             // connect
             v.addPropertyChangeListener(this);
         }
