@@ -33,8 +33,10 @@ import com.sun.java.util.collections.Iterator;
  * <LI>The should be a final choice (entry) that doesn't define any 
  * settings.  This will then form the default value when the target variables
  * change.
- * <LI>Programming operations on one of these variables don't do anything
- * now.  This has two implications:
+ * <LI>Programming operations on a variable of this type doesn't do anything, because
+ * there doesn't seem to be a consistent model of what "read changes" and "write changes"
+ * should do.  
+ * This has two implications:
  *  <UL>
  *  <LI>Variables referenced as targets must appear on some programming pane,
  *      or they won't be updated by programming operations.
@@ -47,7 +49,7 @@ import com.sun.java.util.collections.Iterator;
  *</ol>
  * <P>
  * @author	Bob Jacobsen   Copyright (C) 2001, 2005
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  *
  */
 public class CompositeVariableValue extends EnumVariableValue implements ActionListener, PropertyChangeListener {
@@ -264,11 +266,6 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
     }
 
     public boolean isChanged() {
-/*         Iterator i = variables.iterator(); */
-/*         while (i.hasNext()) { */
-/*             VariableValue v = (VariableValue) i.next(); */
-/*             if (v.isChanged()) return true; */
-/*         } */
         return false;
     }
 
@@ -281,11 +278,6 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
     }
     
     public boolean isToRead() {
-/*         Iterator i = variables.iterator(); */
-/*         while (i.hasNext()) { */
-/*             VariableValue v = (VariableValue) i.next(); */
-/*             if (v.isToRead()) return true; */
-/*         } */
         return false;
     }
 
@@ -298,11 +290,6 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
     }
     
     public boolean isToWrite() {
-/*         Iterator i = variables.iterator(); */
-/*         while (i.hasNext()) { */
-/*             VariableValue v = (VariableValue) i.next(); */
-/*             if (v.isToWrite()) return true; */
-/*         } */
         return false;
     }
 
@@ -317,12 +304,14 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
     public void readAll() {
         setToRead(false);
         // doesn't actually do anything; variables will be naturally read
+        // note busy isn't set, so next operation will be tried
     }
 
     public void writeAll() {
         setToWrite(false);
         if (getReadOnly()) log.error("unexpected write operation when readOnly is set");
         // doesn't actually do anything; variables will be naturally written
+        // note busy isn't set, so next operation will be tried
     }
 
     // handle incoming parameter notification
