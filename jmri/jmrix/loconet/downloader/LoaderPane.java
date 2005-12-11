@@ -14,7 +14,7 @@ import jmri.jmrit.MemoryContents;
 /**
  * Pane for downloading .hex files
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.4 $
+ * @version	    $Revision: 1.5 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -495,7 +495,7 @@ public class LoaderPane extends javax.swing.JPanel {
         /**
          * Wait the specified time.
          *
-         *  16*10/16.44 = 10 msec is the time it takes to send the message.
+         *  16*10/16.44 = 14 msec is the time it takes to send the message.
          */
          
         void doWait(int address) {
@@ -503,8 +503,8 @@ public class LoaderPane extends javax.swing.JPanel {
                 synchronized(this) {
                     // make sure enough time in EEPROM address space
                     int tdelay;
-                    if (address >= eestartval) tdelay = delayval+50+10;
-                    else tdelay = delayval+4+10;
+                    if (address >= eestartval) tdelay = delayval+50+14;
+                    else tdelay = delayval+4+14;
                     
                     // do the actual wait
                     wait(tdelay);
