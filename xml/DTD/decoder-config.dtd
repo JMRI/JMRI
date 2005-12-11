@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a type or types of DCC decoder as  -->
 <!-- a component, esp. information on how to program it. -->
-<!-- $Revision: 1.42 $ -->
+<!-- $Revision: 1.43 $ -->
 
 <!-- This DTD is Copyright 1999, 2000, 2001, 2003, 2004 Bob Jacobsen & JMRI. -->
 <!-- You may freely use it subject to the Open Source Artistic               -->
@@ -151,9 +151,9 @@
 
 <!-- Each variable element defines one item that the user will want to configure -->
 <!ELEMENT variable  (enumVal | decVal | hexVal | speedTableVal |
-                     longAddressVal | shortAddressVal | splitVal) >
+                     longAddressVal | shortAddressVal | splitVal | compositeVal) >
 <!ATTLIST variable label CDATA #REQUIRED>  <!-- name manufacturer used to identify this feature -->
-<!ATTLIST variable CV    CDATA #REQUIRED>  <!-- CV number containing value, if single CV -->
+<!ATTLIST variable CV    CDATA #IMPLIED>   <!-- CV number containing value, if single CV -->
 <!ATTLIST variable mask  CDATA "VVVVVVVV"> <!-- mask of bits within CV -->
                                            <!-- mask is up to 16 characters long, each -->
                                            <!-- representing one bit in the result -->
