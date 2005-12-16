@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: RR-CirKits-TC-64-basic.xml,v 1.1 2005-12-16 13:26:51 jacobsen Exp $ -->
-<decoder-config showEmptyPanes="no" >
+<!-- $Id: RR-CirKits-TC-64-basic.xml,v 1.2 2005-12-16 13:28:57 jacobsen Exp $ -->
+<decoder-config > <!-- showEmptyPanes="no" -->
 		<version author="dick@rr-cirkits.com" 
-					version="1" lastUpdated="20051212"/>
+					version="1" lastUpdated="20051215"/>
 					
 		<!-- Version 1  -->
 		
@@ -177,6 +177,10 @@
 				</enumVal></variable>
 
 		<variable label="Special Interrogate" CV="19" mask="XXXXVXXX">
+			<enumVal><enumChoice choice="No"/><enumChoice choice="Enable"/>
+				</enumVal></variable>
+
+		<variable label="Master Mode" CV="19" mask="VXXXXXXX">
 			<enumVal><enumChoice choice="No"/><enumChoice choice="Enable"/>
 				</enumVal></variable>
 
@@ -7933,6 +7937,8 @@
 	<column>
 		<row><column>
 		<display item="Address" />
+		</column><column>
+		<display item="Master Mode" />
 		</column></row>
 		<row><column>
 		<display item="Port State Memory" />
@@ -8032,13 +8038,11 @@
 		<display item="P8 Type"  label="Port Type" />
  		</column></row>
 		<row><column>
-        	<display item="Manufacturer ID" />
+        <display item="Manufacturer ID" />
 		</column><column>
 		<display item="Version ID" />
  		</column></row>
-		<display item="Address" />
-       </column>
-
+    </column>
 </pane>
 
 <pane name="Port 1">
