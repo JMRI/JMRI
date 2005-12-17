@@ -51,21 +51,29 @@ import javax.swing.JTextArea;
  * <P>
  * For general use, e.g. in scripts, the most useful functions are:
  *<UL>
- *<LI>{@link #waitMsec} Wait for a specific number of milliseconds
- *<LI>{@link #waitSensorActive} Wait for a specific sensor to be active
- *<LI>{@link #waitSensorActive} Wait for a specific sensor to be inactive
- *<LI>{@link #waitChange} Wait for any one of a number of Sensors, Turnouts and/or other objects to change
- *<LI>{@link #getThrottle} Obtain a DCC throttle
- *<LI>{@link #readServiceModeCV} Read a CV from decoder on programming track
- *<LI>{@link #writeServiceModeCV} Write a value to a CV in a decoder on the programming track
- *<LI>{@link #writeOpsModeCV} Write a value to a CV in a decoder on the main track
+ *<LI>Wait for a specific number of milliseconds: {@link #waitMsec(int)} 
+ *<LI>Wait for a specific sensor to be active: {@link #waitSensorActive(jmri.Sensor)} 
+ This is also available
+ in a form that will wait for any of a group of sensors to be active.
+ *<LI>Wait for a specific sensor to be inactive: {@link #waitSensorInactive(jmri.Sensor)} 
+ This is also available
+ in a form that will wait for any of a group of sensors to be inactive. 
+ *<LI>Wait for a specific sensor to be in a specific state: {@link #waitSensorState(jmri.Sensor, int)} 
+ *<LI>Wait for a specific sensor to change: {@link #waitSensorChange(int, jmri.Sensor)} 
+ *<LI>Set a group of turnouts and wait for them to be consistent (actual position matches desired position): {@link #setTurnouts(jmri.Turnout[], jmri.Turnout[])} 
+ *<LI>Wait for a group of turnouts to be consistent (actually as set): {@link #waitTurnoutConsistent(jmri.Turnout[])} 
+ *<LI>Wait for any one of a number of Sensors, Turnouts and/or other objects to change: {@link #waitChange(jmri.NamedBean[])} 
+ *<LI>Obtain a DCC throttle: {@link #getThrottle} 
+ *<LI>Read a CV from decoder on programming track: {@link #readServiceModeCV} 
+ *<LI>Write a value to a CV in a decoder on the programming track: {@link #writeServiceModeCV} 
+ *<LI>Write a value to a CV in a decoder on the main track: {@link #writeOpsModeCV} 
  *</UL>
  * <P>
  * Although this is named an "Abstract" class, it's actually concrete
  * so that Jython code can easily use some of the methods.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.26 $
+ * @version     $Revision: 1.27 $
  */
 public class AbstractAutomaton implements Runnable {
 
@@ -282,51 +290,41 @@ public class AbstractAutomaton implements Runnable {
     }
 
     /**
-     * Wait for a sensor to become active.
-     * <P>
-     * This works by registering a listener, which is likely to
-     * run in another thread.  That listener then interrupts the automaton's
-     * thread, who confirms the change.
+     * Wait for a sensor to be active. (Returns immediately if already active)
      *
      * @param mSensor Sensor to watch
      */
-    public synchronized void waitSensorActive(Sensor mSensor){
-        if (!inThread) log.warn("waitSensorActive invoked from invalid context");
-        if (mSensor.getKnownState() == Sensor.ACTIVE) return;
-        if (log.isDebugEnabled()) log.debug("waitSensorActive starts: "+mSensor.getSystemName());
-        // register a listener
-        java.beans.PropertyChangeListener l;
-        mSensor.addPropertyChangeListener(l = new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent e) {
-                synchronized (self) {
-                    self.notifyAll(); // should be only one thread waiting, but just in case
-                }
-            }
-        });
-
-        while (Sensor.ACTIVE != mSensor.getKnownState()) {
-            wait(-1);   // wait for notification
-        }
-
-        // remove the listener & report new state
-        mSensor.removePropertyChangeListener(l);
-
+    public void waitSensorActive(Sensor mSensor){
+        if (log.isDebugEnabled()) log.debug("waitSensorActive starts");
+        waitSensorState(mSensor, Sensor.ACTIVE);
         return;
     }
 
     /**
-     * Wait for a sensor to become inactive.
+     * Wait for a sensor to be inactive. (Returns immediately if already inactive)
+     *
+     * @param mSensor Sensor to watch
+     */
+    public void waitSensorInactive(Sensor mSensor){
+        if (log.isDebugEnabled()) log.debug("waitSensorInActive starts");
+        waitSensorState(mSensor, Sensor.INACTIVE);
+        return;
+    }
+
+    /**
+     * Internal service routine to wait for one sensor to be
+     * in (or become in) a specific state.
+     * <P>
+     * Used by waitSensorActive and waitSensorInactive
      * <P>
      * This works by registering a listener, which is likely to
      * run in another thread.  That listener then interrupts the automaton's
      * thread, who confirms the change.
-     *
-     * @param mSensor Sensor to watch
      */
-    public synchronized void waitSensorInactive(Sensor mSensor){
-        if (!inThread) log.warn("waitSensorInactive invoked from invalid context");
-        if (mSensor.getKnownState() == Sensor.INACTIVE) return;
-        if (log.isDebugEnabled()) log.debug("waitSensorInactive starts: "+mSensor.getSystemName());
+    public synchronized void waitSensorState(Sensor mSensor, int state){
+        if (!inThread) log.warn("waitSensorState invoked from invalid context");
+        if (mSensor.getKnownState() == state) return;
+        if (log.isDebugEnabled()) log.debug("waitSensorState starts: "+mSensor.getSystemName()+" "+state);
         // register a listener
         java.beans.PropertyChangeListener l;
         mSensor.addPropertyChangeListener(l = new java.beans.PropertyChangeListener() {
@@ -337,7 +335,7 @@ public class AbstractAutomaton implements Runnable {
             }
         });
 
-        while (Sensor.INACTIVE != mSensor.getKnownState()) {
+        while (state != mSensor.getKnownState()) {
             wait(-1);  // wait for notification
         }
 
@@ -346,22 +344,39 @@ public class AbstractAutomaton implements Runnable {
 
         return;
     }
-
+    
     /**
-     * Wait for one of a list of sensors to be active.
+     * Wait for one of a list of sensors to be be active.
+     */
+    public void waitSensorActive(Sensor[] mSensors){
+        if (log.isDebugEnabled()) log.debug("waitSensorInactive[] starts");
+        waitSensorState(mSensors, Sensor.INACTIVE);    
+    }
+    
+    /**
+     * Wait for one of a list of sensors to be be inactive.
+     */
+    public void waitSensorInactive(Sensor[] mSensors){
+        if (log.isDebugEnabled()) log.debug("waitSensorActive[] starts");
+        waitSensorState(mSensors, Sensor.ACTIVE);    
+    }
+    
+    /**
+     * Wait for one of a list of sensors to be be in a selected state.
      * <P>
      * This works by registering a listener, which is likely to
      * run in another thread.  That listener then interrupts the automaton's
      * thread, who confirms the change.
      *
      * @param mSensors Array of sensors to watch
+     * @param state State to check (static value from jmri.Sensors)
      */
-    public synchronized void waitSensorActive(Sensor[] mSensors){
-        if (!inThread) log.warn("waitSensorActive invoked from invalid context");
-        if (log.isDebugEnabled()) log.debug("waitSensorActive[] starts");
+    public synchronized void waitSensorState(Sensor[] mSensors, int state){
+        if (!inThread) log.warn("waitSensorState invoked from invalid context");
+        if (log.isDebugEnabled()) log.debug("waitSensorState[] starts");
 
         // do a quick check first, just in case
-        if (checkForActive(mSensors)) {
+        if (checkForState(mSensors, state)) {
             log.debug("returns immediately");
             return;
         }
@@ -374,7 +389,7 @@ public class AbstractAutomaton implements Runnable {
             mSensors[i].addPropertyChangeListener(listeners[i] = new java.beans.PropertyChangeListener() {
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     synchronized (self) {
-                        log.debug("notify waitSensorActive[] of property change");
+                        log.debug("notify waitSensorState[] of property change");
                         self.notifyAll(); // should be only one thread waiting, but just in case
                     }
                 }
@@ -382,7 +397,7 @@ public class AbstractAutomaton implements Runnable {
 
         }
 
-        while (!checkForActive(mSensors)) {
+        while (!checkForState(mSensors, state)) {
             wait(-1);
         }
 
@@ -516,13 +531,13 @@ public class AbstractAutomaton implements Runnable {
     }
 
     /**
-     * Check an array of sensors to see if any are active
+     * Check an array of sensors to see if any are in a specific state
      * @param mSensors Array to check
      * @return true if any are ACTIVE
      */
-    private boolean checkForActive(Sensor[] mSensors) {
+    private boolean checkForState(Sensor[] mSensors, int state) {
         for (int i=0; i<mSensors.length; i++) {
-            if (mSensors[i].getKnownState() == Sensor.ACTIVE) return true;
+            if (mSensors[i].getKnownState() == state) return true;
         }
         return false;
     }
