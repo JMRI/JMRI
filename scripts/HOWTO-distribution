@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.42 $)
+distribution.  ($Revision: 1.43 $)
 
 Start with a directory, typically called "Distributions", that
 contains:
@@ -187,13 +187,15 @@ To actually create the distribution:
 
 ( ) Decide if worth announcing elsewhere (production version or 
 	big system-specific fix/feature):
+	    RailRoadSoftware&yahoogroups.com
 		MAC_DCC@yahoogroups.com
 		loconet_hackers@yahoogroups.com
 		digitrax@yahoogroups.com
-		2 NCE groups
-		EasyDCC group
+		NCE-DCC@yahoogroups.com
+		NCE-SYS1@yahoogroups.com
+		easydcc@yahoogroups.com
 		Model_TRAINS_DCC_Software@yahoogroups.com
-		Lenz group
+		DigitalPlusbyLenz@yahoogroups.com
 		linux-dcc@yahoogroups.com
 		rrsoftware@yahoogroups.com
 		VersionTracker
