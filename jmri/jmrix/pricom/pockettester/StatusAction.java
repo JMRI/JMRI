@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
  * @see jmri.jmrix.pricom.pockettester.StatusFrame
  *
  * @author			Bob Jacobsen    Copyright (C) 2002,2004, 2005
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public abstract class StatusAction extends AbstractAction  {
 
@@ -36,7 +36,7 @@ public abstract class StatusAction extends AbstractAction  {
 		f.setVisible(true);
 	};
 
-    abstract void connect(DataListener l);
+    abstract void connect(StatusFrame l);
     
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(StatusAction.class.getName());
 

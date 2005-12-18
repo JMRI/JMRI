@@ -21,10 +21,11 @@ import java.io.DataInputStream;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class DataSource extends JFrame {
 
+    DataSource self;
     Vector portNameVector = null;
     SerialPort activeSerialPort = null;
     static java.util.ResourceBundle rb 
@@ -72,6 +73,8 @@ public class DataSource extends JFrame {
         p1.add(openPortButton);
         getContentPane().add(p1);
 
+        self = this;
+        
         // Done, get ready to display
         pack();
     }
@@ -174,8 +177,9 @@ public class DataSource extends JFrame {
         
         {
             StatusAction a = new StatusAction() {
-                public void connect(DataListener l) {
+                public void connect(StatusFrame l) {
                     self.addListener(l);
+                    l.setSource(self);
                 }
             };
             JButton b = new JButton((String)a.getValue(Action.NAME));
@@ -188,8 +192,6 @@ public class DataSource extends JFrame {
         pack();
     }
 
-    DataSource self;
-    
     JButton checkButton = new JButton(rb.getString("ButtonInit"));
     /**
      * Send output bytes, e.g. characters controlling operation, to the
