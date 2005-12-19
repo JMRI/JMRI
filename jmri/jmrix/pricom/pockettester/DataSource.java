@@ -21,7 +21,7 @@ import java.io.DataInputStream;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class DataSource extends JFrame {
 
@@ -371,7 +371,7 @@ public class DataSource extends JFrame {
             }
         }
 
-        static final int maxMsg = 80;
+        static final int maxMsg = 200;
         StringBuffer msg;
         String msgString;
 
@@ -449,7 +449,7 @@ public class DataSource extends JFrame {
             return;
         }
         // Distribute the result
-        // make a copy of the listener vector to synchronized not needed for transmit
+        // make a copy of the listener vector so synchronized not needed for transmit
         Vector v;
         synchronized(this) {
             v = (Vector) listeners.clone();
