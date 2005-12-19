@@ -22,7 +22,7 @@ import java.io.InputStream;
 /**
  * Pane for downloading software updates to PRICOM products
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.5 $
+ * @version	    $Revision: 1.6 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -206,7 +206,7 @@ public class LoaderPane extends javax.swing.JPanel {
             int dataChar; 
             while ( (dataChar = serialStream.readByte()) != 0x02) {
                 mbuff.append(dataChar);
-                System.out.println("char "+dataChar);
+                if (log.isDebugEnabled()) log.debug(" rcv char "+dataChar);
                 if (dataChar == 0x0d) {
                     // Queue the string for display
                     javax.swing.SwingUtilities.invokeLater(new Notify(mbuff));
