@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the StatusFrame class
  * @author		Bob Jacobsen  Copyright 2005
- * @version		$Revision: 1.1 $
+ * @version		$Revision: 1.2 $
  */
 public class StatusFrameTest extends TestCase {
 
@@ -30,8 +30,20 @@ public class StatusFrameTest extends TestCase {
         f.asciiFormattedMessage(PocketTesterTest.status2);
         f.asciiFormattedMessage(PocketTesterTest.status3);
         f.asciiFormattedMessage(PocketTesterTest.status4);
+        f.asciiFormattedMessage(PocketTesterTest.status5);
     }
 
+    // create and show, with zero address data
+    public void testZeroAddr() throws Exception {
+        StatusFrame f = new StatusFrame();
+        f.initComponents();
+        f.show();
+        f.asciiFormattedMessage(PocketTesterTest.version);
+        f.asciiFormattedMessage(PocketTesterTest.speed0003A);
+        f.asciiFormattedMessage(PocketTesterTest.idlePacket);
+        f.asciiFormattedMessage(PocketTesterTest.status6);
+        f.asciiFormattedMessage(PocketTesterTest.status2);
+    }
     // from here down is testing infrastructure
     public StatusFrameTest(String s) {
         super(s);
