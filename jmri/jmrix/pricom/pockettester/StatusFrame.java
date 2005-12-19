@@ -11,7 +11,7 @@ import com.sun.java.util.collections.Hashtable;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2005
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class StatusFrame extends javax.swing.JFrame implements DataListener {
 
@@ -83,14 +83,16 @@ public class StatusFrame extends javax.swing.JFrame implements DataListener {
         return rb.getString("TitleStatus");
     }
 
-    public void asciiFormattedMessage(String m) { 
+    public void asciiFormattedMessage(String input) { 
+        String m = input+" ";  // extra space to make stripping easier
         // check if interesting
         if (!m.substring(0,1).equals(" ")) return;
         if (!m.substring(3,4).equals("=")) return;
         // basically OK. Break into tokens, store if match, quit when done.
-        while (m.length() > 4) {
+        while (m.length() >= 14) {
             String id = m.substring(1, 3);
             String value = m.substring(4, 14);
+            System.out.println("set var "+id+":"+value);
             if (log.isDebugEnabled()) log.debug("set var "+id+":"+value);
             JLabel label = (JLabel)displayHash.get(id);
             String format = (String)formatHash.get(id);
