@@ -1,9 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.html,v 1.2 2005-12-21 06:15:39 jacobsen Exp $ -->
+<!-- $Id: LocoNetClock.html,v 1.1 2005-12-21 06:15:39 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
- 	JMRI: Fast Clocks
+ 	JMRI: LocoNet Fast Clocks
   </TITLE>
   <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
 
@@ -109,50 +109,44 @@
       <div id="mainContent">
       <!-- Page Body -->
         <H2>
-		JMRI: Fast Clocks
+		JMRI: LocoNet Fast Clocks
         </H2>
 
-<h3>JMRI's Fast Clock Capability</h3>
+<h3>JMRI's LocoNet Fast Clock Capability</h3>
 
-JMRI provides two kinds of fast clock capability:
+A Digitrax LocoNet can contain it's own fast clock timebase.
+This can be driven either by a DCS100/DCS200 command station, or by
+a separate fast clock module such as those made by Logic Rail Technologies.
+This page discusses how JMRI can either use or control the LocoNet
+fast clock.
 
+<h3>Controlling the LocoNet clock</h3>
+The "Clock Monitor" tool in the "LocoNet" menu provides a 
+convenient way to:
 <UL>
-<LI>Internal - the computers clock provides the time information
-<LI>External - the DCC system provides the time information
+<LI>Read the current contents of the LocoNet fast clock
+<LI>Set the date and time
+<LI>Set the rate. Note that you can't explicitly pause a LocoNet clock, but you can stop
+it by setting the rate to zero.
 </UL>
 
-This page describes the overall structure.  There
-is a separate page for 
-<a href="LocoNetClock.html">LocoNet clocks</a>.
-As yet, we don't have interfaces for clocks in other DCC systems.
+If you are using a DCS100 or DCS200 command station to create your
+LocoNet fast clock, you may have noticed that it doesn't keep particularly
+good time.  If you select the "Correct LocoNet Fast Clock Master", 
+JMRI will adjust the rate of the LocoNet clock so that it keeps better time.
+
+<h3>Using the LocoNet clock</h3>
+
+You can also have JMRI use the LocoNet clock for it's own, internal timebase.
+This keeps the clocks that JMRI displays on the screen synchronized with the
+LocoNet clock, hence the displays on DT400 throttles, etc.
 
 <P>
-There are two different parts to consider:  A "Timebase" provides the basic
-time information, while one or more displays show you what's going on.
-<P>
-To create a timebase, use the "Setup Fast Clock" item in the 
-"Clocks" submenu under the "Tools" menu.  This gives you a window
-where you can:
-<UL>
-<LI>Select the timebase source to control (typically, this is the internal computer
-clock)
-<LI>Set the rate at which the clock runs
-<LI>Set the time
-<LI>Start and stop the clock
-</UL>
-
-Once you have created a timebase by configuring it in this window, you 
-can open clocks that will display on your screen. Currently, JMRI has three
-types available:
-<UL>
-<LI>Analog clock - the traditional circular clock with hands.  You can resize
-it by dragging the window edges.  There's also a pause/run button.
-<LI>Nixie clock - a digital clock that looks like the old-style Nixie tubes
-<LI>Panel clock - you can also embed a clock in a panel (instead of a separate window)
-from the panel editor.
-</UL>
-
-Happy timekeeping!
+To do this, select the "LocoNet Fast Clock sets Internal Clock" option on the 
+LocoNet clock monitor window.
+Note that you should do this <em>before</em>
+opening the clock windows so that when you open the clock windows they
+connect to the correct timebase.
 
 <!-- Footer -->
     <hr class="hide">
