@@ -2,7 +2,7 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: SoundTraxx_Tsu_Steam.xml,v 1.5 2005-12-12 05:50:58 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_Tsu_Steam.xml,v 1.6 2005-12-21 02:17:18 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen" version="1" lastUpdated="20051101"/>
 		<version author="Ken Weygandt" version="2" lastUpdated="20051203"/>
@@ -957,7 +957,7 @@
 		    item="Sound Option 5">
 			<decVal/></variable>
 
-		<variable label="Bell Ring Rate" CV="114" mask="XXXXVVVV" default="10" 
+		<variable label="Bell Ring Rate" CV="114" mask="XXXXVVVV" default="4" 
 		    item="Sound Setting 1">
 			<decVal/></variable>
 
