@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.7.3.html,v 1.15 2005-12-18 06:40:15 jacobsen Exp $ -->
+<!-- $Id: jmri1.7.3.html,v 1.16 2005-12-21 06:24:24 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -224,6 +224,8 @@ Walthers 0-6-0 Switcher, GP30.
 <P>Decoder definition file for the RR-Cirkits Tower Controller board
 
 <P>Updated the AbstractAutomat class to provide additional utility methods for users writing scripts.
+
+<P>Graeme Brown figured out how to improve memory management on MacOS "classic", making it less likely that DecoderPro will run out of memory with complex decoder definitions.  This is not a perfect situation, however, and machines with less than 96MB of memory may still not be able to open the largest definitions.
 
       <hr class="hide">
 <!-- Footer -->
