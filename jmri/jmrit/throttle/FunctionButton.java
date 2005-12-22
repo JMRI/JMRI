@@ -76,15 +76,27 @@ public class FunctionButton extends JToggleButton implements ActionListener
         return identity;
     }
 
+    /**
+     * Set the keycode that this button should respond to.
+     * <P>
+     * Later, when a key is being processed, checkKeyCode
+     * will determine if there's a match between the key that
+     * was pressed and the key for this button
+     */
 	public void setKeyCode(int key)
 	{
 		actionKey = key;
 	}
 
 
-	public int getKeyCode()
+    /**
+     * Check to see whether a particular KeyCode corresponds
+     * to this function button.  
+     * @returns true if the button should respond to this key
+     */
+	public boolean checkKeyCode(int keycode)
 	{
-		return actionKey;
+		return keycode == actionKey;
 	}
 
     /**
