@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: getcode.html,v 1.4 2004-11-12 02:56:40 jacobsen Exp $ -->
+<!-- $Id: getcode.html,v 1.5 2005-12-22 20:45:04 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -136,9 +136,6 @@ cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/jmri co all
 
 
 <h2>Details</h2>
-See also the 
-<A HREF="CVSFAQ.html">CVS FAQ page</a>.
-<P>
 Our source code is distributed using CVS. If you want to work with the
 code, a few minutes installing CVS is well worth it.  We're sorry, but
 we just can't support other methods (sending .zip files, etc), as they're
@@ -163,27 +160,31 @@ is only needed once; after that, it is remembered on your local machine.  You ma
 be asked for a password. If so, just hit return, as the empty password will be accepted.
 You can then get a copy of the code with
 <PRE>
-cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/jmri co TARGET
+cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/jmri co all
 </PRE>
-where "TARGET" is either "jbuilder" or "ant", see below. 
 <P>
 If you're using a GUI-based client like WinCVS, pull down the "admin"
 menu and select "command line" to get a place to type these commands.
 On other computers, you can type them directly on the command line.
 <P>
-As the common code changes, you might want to update your copy to contain the 
-lastest version.  To do that, use:
-<PRE>
-cvs update
-</PRE>
-Any changes will be merged into the files on your disk, and you should then be up-to-date
-with your own changes still presetn.
+See also the 
+<A HREF="CVSFAQ.html">CVS FAQ page</a>.
+<P>
+After the checkout is complete, you'll find directories called
+"xml", "resources", "jython", "help", "lib", "java" and others.
+Change to the "java" directory.  There, you will find a "src"
+directory that contains the source code for JMRI itself, and a "tests" 
+directory that contains various test routines.
+<P>
+You can look at the code with your favorite text editor.  To compile and
+run it, you need one of the compilation tools described on the bar at the
+left: Ant, JBuilder, etc.  (Ant may be the easiest to install and use)
 <P>
 Once you're working with the code, you'll probably create some improvements
 you'd like to contribute back to the project.  This is where CVS has tremendous
 advantages; with the appropriate permissions and commands, you can merge your
 changes back into the common source automagically.  Contact us when you're ready to
-do that.
+do that or see the <A HREF="index.html#contributing">info on contributing</a>.
 
 <!-- Footer -->
     <hr class="hide">
