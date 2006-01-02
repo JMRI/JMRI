@@ -63,7 +63,7 @@ import com.sun.java.util.collections.List;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.53 $
+ * @version   $Revision: 1.54 $
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -1358,42 +1358,35 @@ public class PaneProgPane extends javax.swing.JPanel
         int col2Width = w.getCharactersPerLine()/2 -3 + 5;
 
         try {
-          //Create a string of spaces the width of the first column
-          String spaces = "";
-          for (int i=0; i < col1Width; i++) {
-            spaces = spaces + " ";
-          }
+            
+            //Create a string of spaces the width of the first column
+            String spaces = "";
+            for (int i=0; i < col1Width; i++) {
+              spaces = spaces + " ";
+            }
             // start with pane name in bold
             String heading1 = "Field";
             String heading2 = "Setting";
             String s;
             int interval = spaces.length()- heading1.length();
             w.setFontStyle(Font.BOLD);
-            if (cvList.size() > 0){
-              s = mName.toUpperCase();
-              w.write(s, 0, s.length());
-              w.writeBorders();
-              //Draw horizontal dividing line for each Pane section
-              w.write(w.getCurrentLineNumber()-1, 0, w.getCurrentLineNumber()-1,
-                      w.getCharactersPerLine()+1);
-              s = "\n";
-              w.write(s,0,s.length());
-            }
-            else {
-              s = mName.toUpperCase();
-              w.write(s, 0, s.length());
-              w.writeBorders();
-              //Draw horizontal dividing line for each Pane section
-              w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(),
-                      w.getCharactersPerLine()+1);
-              s = "\n";
-              w.write(s,0,s.length());
-              w.setFontStyle(Font.BOLD + Font.ITALIC);
-              s = "   " + heading1 + spaces.substring(0,interval) + "   Setting";
-              w.write(s, 0, s.length());
-              w.writeBorders();
-              s = "\n";
-              w.write(s,0,s.length());
+            // write the section name and dividing line
+            s = mName.toUpperCase();
+            w.write(s, 0, s.length());
+            w.writeBorders();
+            //Draw horizontal dividing line for each Pane section
+            w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(),
+                  w.getCharactersPerLine()+1);
+            s = "\n";
+            w.write(s,0,s.length());
+            // if this isn't the raw CV section, write the column headings
+            if (cvList.size()== 0){ 
+            w.setFontStyle(Font.BOLD + Font.ITALIC);
+            s = "   " + heading1 + spaces.substring(0,interval) + "   " + heading2;
+            w.write(s, 0, s.length());
+            w.writeBorders();
+            s = "\n";
+            w.write(s,0,s.length());
             }
             w.setFontStyle(Font.PLAIN);
             // Define a vector to store the names of variables that have been printed
@@ -1421,7 +1414,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 String originalValue = value;
                 name = name +" (CV" +var.getCvNum() + ")";
 
-               //define index values for name and value substrings
+                //define index values for name and value substrings
                 int nameLeftIndex = 0;
                 int nameRightIndex = name.length();
                 int valueLeftIndex = 0;
