@@ -19,31 +19,34 @@ import com.sun.java.util.collections.List;
  * Macintosh MRJ
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version     $Revision: 1.3 $
+ * @author  Dennis Miller  Copyright (C) 2005
+ * @version     $Revision: 1.4 $
  */
 public class PrintDecoderListAction  extends AbstractAction {
 
 
-    public PrintDecoderListAction(Frame frame) {
-        this("Print decoder definitions...", frame);
-    }
-
-    public PrintDecoderListAction(String actionName, Frame frame) {
+    public PrintDecoderListAction(String actionName, Frame frame, boolean preview) {
         super(actionName);
         mFrame = frame;
+        isPreview = preview;
     }
 
     /**
      * Frame hosting the printing
      */
     Frame mFrame;
+    /**
+     * Variable to set whether this is to be printed or previewed
+     */
+    boolean isPreview;
+    
 
     public void actionPerformed(ActionEvent e) {
 
         // obtain a HardcopyWriter to do this
         HardcopyWriter writer = null;
         try {
-            writer = new HardcopyWriter(mFrame, "DecoderPro V"+Version.name()+" Decoder Definitions", 10, .5, .5, .5, .5);
+            writer = new HardcopyWriter(mFrame, "DecoderPro V"+Version.name()+" Decoder Definitions", 10, .5, .5, .5, .5, isPreview);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
             return;

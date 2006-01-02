@@ -14,7 +14,8 @@ import javax.swing.JMenu;
  * <P>
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.6 $
+ * @author  Dennis Miller  Copyright (C) 2005
+ * @version	$Revision: 1.7 $
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
@@ -70,7 +71,9 @@ public class RosterMenu extends JMenu {
 
         // Need a frame here, but are not passed one
         Frame newFrame = new Frame();
-        AbstractAction printAction = new PrintRosterAction(rb.getString("MenuItemPrint"), newFrame);
+        AbstractAction printAction = new PrintRosterAction(rb.getString("MenuItemPrint"), newFrame, false);
+        printAction.setEnabled(false);
+        AbstractAction previewAction = new PrintRosterAction(rb.getString("MenuItemPreview"), newFrame, true);
         printAction.setEnabled(false);
 
         add(copyAction);
@@ -78,6 +81,7 @@ public class RosterMenu extends JMenu {
         add(exportAction);
         add(deleteAction);
         add(printAction);
+        add(previewAction);
 
         // activate the right items
         switch (pMenuType) {
@@ -87,12 +91,15 @@ public class RosterMenu extends JMenu {
                 exportAction.setEnabled(true);
                 copyAction.setEnabled(true);
                 printAction.setEnabled(true);
+                previewAction.setEnabled(true);
                 break;
             case SELECTMENU:
                 printAction.setEnabled(true);
+                previewAction.setEnabled(true);
                 break;
             case ENTRYMENU:
                 printAction.setEnabled(true);
+                previewAction.setEnabled(true);
                 break;
             default:
                 log.error("RosterMenu constructed without a valid menuType parameter: "

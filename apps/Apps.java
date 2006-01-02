@@ -27,7 +27,8 @@ import net.roydesign.mac.MRJAdapter;
  * Base class for Jmri applications.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.30 $
+ * @author  Dennis Miller  Copyright 2005
+ * @version     $Revision: 1.31 $
  */
 public class Apps extends JPanel {
 
@@ -127,7 +128,8 @@ public class Apps extends JPanel {
     protected void fileMenu(JMenuBar menuBar, JFrame frame) {
         JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
         menuBar.add(fileMenu);
-        fileMenu.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(frame));
+        fileMenu.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction("Print decoder definitions...", frame, false));
+        fileMenu.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction("Print Preview decoder definitions...", frame, true));
 
         // On a Mac, MRJAdapter already takes care of Quit
         if (!onMac) {

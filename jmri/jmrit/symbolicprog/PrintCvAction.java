@@ -14,15 +14,16 @@ import javax.swing.*;
  * This uses the older style printing, for compatibility with Java 1.1.8 in
  * Macintosh MRJ
  *
- * @author		Bob Jacobsen   Copyright (C) 2003; D Miller Copyright 2003
- * @version             $Revision: 1.6 $
+ * @author		Bob Jacobsen   Copyright (C) 2003; D Miller Copyright 2003, 2005
+ * @version             $Revision: 1.7 $
  */
 public class PrintCvAction  extends AbstractAction {
 
-    public PrintCvAction(String actionName, CvTableModel pModel, PaneProgFrame pParent) {
+    public PrintCvAction(String actionName, CvTableModel pModel, PaneProgFrame pParent, boolean preview) {
         super(actionName);
         mModel = pModel;
         mFrame = pParent;
+        isPreview = preview;
     }
 
     /**
@@ -30,13 +31,17 @@ public class PrintCvAction  extends AbstractAction {
      */
     PaneProgFrame mFrame;
     CvTableModel mModel;
+    /**
+     * Variable to set whether this is to be printed or previewed
+     */
+    boolean isPreview;
 
     public void actionPerformed(ActionEvent e) {
 
         // obtain a HardcopyWriter to do this
         HardcopyWriter writer = null;
         try {
-            writer = new HardcopyWriter(mFrame, mFrame.getRosterEntry().getId(), 10, .8, .5, .5, .5);
+            writer = new HardcopyWriter(mFrame, mFrame.getRosterEntry().getId(), 10, .8, .5, .5, .5, isPreview);
 
             // print the decoder info section, etc
             mFrame.printInfoSection(writer);

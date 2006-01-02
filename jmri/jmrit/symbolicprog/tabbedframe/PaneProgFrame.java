@@ -14,9 +14,6 @@ import jmri.jmrit.symbolicprog.*;
 import jmri.util.JmriJFrame;
 import java.awt.Dimension;
 import java.awt.Font;
-
-import java.io.*;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -31,17 +28,15 @@ import jmri.util.BusyGlassPane;
 import java.awt.event.ItemListener;
 import java.awt.Cursor;
 
-import java.awt.Rectangle;
-
 import java.awt.event.ItemEvent;
 import jmri.ProgDeferredServiceModePane;
 
 /**
  * Frame providing a command station programmer from decoder definition files.
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005
- * @author    D Miller Copyright 2003
+ * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.54 $
+ * @version   $Revision: 1.55 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -113,9 +108,14 @@ abstract public class PaneProgFrame extends JmriJFrame
         });
 
         JMenu printSubMenu = new JMenu("Print");
-        printSubMenu.add(new PrintAction("All ...", this));
-        printSubMenu.add(new PrintCvAction("CVs ...", cvModel, this));
+        printSubMenu.add(new PrintAction("Print All...", this, false));
+        printSubMenu.add(new PrintCvAction("Print CVs...", cvModel, this, false));
         fileMenu.add(printSubMenu);
+        
+        JMenu printPreviewSubMenu = new JMenu("Print Preview");
+        printPreviewSubMenu.add(new PrintAction("Preview All...", this, true));
+        printPreviewSubMenu.add(new PrintCvAction("Preview CVs...", cvModel, this, true));
+        fileMenu.add(printPreviewSubMenu);
 
         // add "Import" submenu; this is heirarchical because
         // some of the names are so long, and we expect more formats
