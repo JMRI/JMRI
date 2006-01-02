@@ -3,20 +3,32 @@
 package jmri.util.davidflanagan;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.Writer;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Properties;
 import java.util.TimeZone;
+import java.util.Vector;
 
+import javax.swing.JTextField;
 import javax.swing.JWindow;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+import javax.swing.JToolBar;
+import javax.swing.JButton;
+import jmri.util.JmriJFrame;
 
 /**
  * This is from Chapter 12 of the O'Reilly Java book by
  * David Flanagan with the alligator on the front.
  *
  * @author		David Flanagan
- * @version             $Revision: 1.8 $
+ * @version             $Revision: 1.9 $
  */
 public class HardcopyWriter extends Writer {
 
@@ -41,6 +53,23 @@ public class HardcopyWriter extends Writer {
     protected int lines_per_page;
     protected int charnum = 0, linenum = 0;
     protected int pagenum = 0;
+    
+    protected static boolean isPreview;
+    protected Graphics previewedPage;
+    protected Image previewImage;
+    protected Graphics previewImagegr;
+    protected Vector pageImages = new Vector(3,3);
+    protected JmriJFrame previewFrame;
+    protected JPanel previewPanel;
+    protected ImageIcon previewIcon = new ImageIcon();
+    protected JLabel previewLabel = new JLabel();
+    protected JToolBar previewToolBar = new JToolBar();
+    protected Frame frame;
+    protected JButton nextButton;
+    protected JButton previousButton;
+    protected JButton closeButton;
+    protected JLabel pageCount = new JLabel();
+    protected JLabel totalPages = new JLabel();
 
     // save state between invocations of write()
     private boolean last_char_was_return = false;
@@ -48,11 +77,14 @@ public class HardcopyWriter extends Writer {
     // A static variable to hold prefs between print jobs
     protected static Properties printprops = new Properties();
 
+    // constructor modified to add print preview parameter
     public HardcopyWriter(Frame frame, String jobname, int fontsize,
                         double leftmargin, double rightmargin,
-                        double topmargin, double bottommargin)
+                        double topmargin, double bottommargin, boolean preview)
                     throws HardcopyWriter.PrintCanceledException {
-        //
+        
+    	isPreview = preview;
+    	
         Toolkit toolkit = frame.getToolkit();
         synchronized(printprops) {
             job = toolkit.getPrintJob(frame, jobname, printprops);
@@ -98,8 +130,89 @@ public class HardcopyWriter extends Writer {
 
         this.jobname = jobname;
         this.fontsize = fontsize;
+        
+        if (isPreview) {
+            previewFrame = new JmriJFrame("Print Preview");
+            previewFrame.getContentPane().setLayout(new BorderLayout());
+            toolBarInit();
+            previewToolBar.setFloatable(false);
+            previewFrame.getContentPane().add(previewToolBar,
+                    BorderLayout.NORTH);
+            previewPanel = new JPanel();
+            previewPanel.setSize(pagesize.width,pagesize.height);
+            // add the panel to the frame and make visible, otherwise creating the image will fail.
+            // use a scroll pane to handle print images bigger than the window
+            previewFrame.getContentPane().add(new JScrollPane(previewPanel),
+                    BorderLayout.CENTER);
+            previewFrame.setSize(425, 425);
+            previewFrame.setVisible(true);         
+        }
 
     }
+    
+    /**
+     * Creates a print preview toolbar 
+     * added by Dennis Miller
+     */
+    protected void toolBarInit(){
+        previousButton = new JButton("Previous Page");
+        previewToolBar.add(previousButton);
+        previousButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent actionEvent) {
+                pagenum--;
+                displayPage();
+            }
+        });        
+        nextButton = new JButton("Next Page");
+        previewToolBar.add(nextButton);
+        nextButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent actionEvent) {
+                pagenum++;
+                displayPage();
+            }
+        });
+        previewToolBar.add(new JLabel("    Page "));
+        previewToolBar.add(pageCount);
+        previewToolBar.add(new JLabel(" of "));
+        previewToolBar.add(totalPages);
+        closeButton = new JButton(" Close ");
+        previewToolBar.add(closeButton);
+        closeButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent actionEvent) {
+                page.dispose();
+                previewFrame.dispose();
+            }
+        });
+    }
+    
+    /**
+     * Method to display a page image in the preview pane
+     * Not in original class but added later by Dennis Miller
+     */
+    protected void displayPage() {
+        // limit the pages to the actual range
+        if (pagenum > pageImages.size())pagenum = pageImages.size();
+        if (pagenum < 1) pagenum = 1;
+        // enable/disable the previous/next buttons as appropriate
+        previousButton.setEnabled(true);
+        nextButton.setEnabled(true);
+        if (pagenum == pageImages.size())nextButton.setEnabled(false);
+        if (pagenum == 1) previousButton.setEnabled(false);
+        previewImage = (Image) pageImages.elementAt(pagenum-1);
+        previewFrame.setVisible(false);
+        previewIcon.setImage(previewImage);
+        previewLabel.setIcon(previewIcon);
+        // put the label in the panel (already has a scroll pane)
+        previewPanel.add(previewLabel);
+        // set the page count info 
+        pageCount.setText("" + pagenum);
+        totalPages.setText("" + pageImages.size() + "     ");
+        // repaint the frame but don't use pack() as we don't want resizing
+        previewFrame.invalidate();
+        previewFrame.validate();
+        previewFrame.setVisible(true);
+    }
+    
     /**
      * write method, implemented by all Write subclasses
      */
@@ -155,8 +268,16 @@ public class HardcopyWriter extends Writer {
 
     public void flush() {}
 
+    // method modified by Dennis Miller to add preview capability
     public void close() {
         synchronized(this.lock) {
+            if (isPreview) {
+                pageImages.addElement(previewImage);
+                // set up first page for display in preview frame
+                // to get the image displayed, put it in an icon and the icon in a label
+                pagenum = 1;
+                displayPage();
+            }
             if (page!=null) page.dispose();
             job.end();
         }
@@ -183,20 +304,35 @@ public class HardcopyWriter extends Writer {
     public int getLinesPerPage() { return this.lines_per_page; }
 
     /** Internal method begins a new line */
+    //  method modified by Dennis Miller to add preview capability
     protected void newline() {
         charnum = 0;
         linenum++;
         if (linenum >= lines_per_page) {
+            if (isPreview) pageImages.addElement(previewImage);
             page.dispose();
             page = null;
+        	newpage();
         }
     }
 
     /** Internal method beings a new page and prints the header */
+    //  method modified by Dennis Miller to add preview capability
     protected void newpage() {
-        page = job.getGraphics();
-        linenum = 0; charnum = 0;
+        // get a page graphics or image graphics object depending on output destination
+        if (page==null && !isPreview){
+    		page = job.getGraphics();
+    		}
+        else if (page==null && isPreview){
+            previewImage = previewPanel.createImage(pagesize.width, pagesize.height);
+            page = previewImage.getGraphics();
+            page.setColor(Color.white);
+            page.fillRect(0, 0, previewImage.getWidth(previewPanel),
+                    previewImage.getHeight(previewPanel));
+            page.setColor(Color.black);
+            }
         pagenum++;
+        linenum = 0; charnum = 0;
         page.setFont(headerfont);
         page.drawString(jobname, x0, headery);
 
@@ -252,7 +388,7 @@ public class HardcopyWriter extends Writer {
     page.translate(x,y);
     //Window must be visible to print
     jW.setVisible(true);
-    // Have the windoe print itself
+    // Have the window print itself
     jW.printAll(page);
     //Make it invisible again
     jW.setVisible(false);
