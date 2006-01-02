@@ -12,9 +12,7 @@ import java.util.Properties;
 import java.util.TimeZone;
 import java.util.Vector;
 
-import javax.swing.JTextField;
 import javax.swing.JWindow;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
@@ -28,7 +26,7 @@ import jmri.util.JmriJFrame;
  * David Flanagan with the alligator on the front.
  *
  * @author		David Flanagan
- * @version             $Revision: 1.9 $
+ * @version             $Revision: 1.10 $
  */
 public class HardcopyWriter extends Writer {
 
