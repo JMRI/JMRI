@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.7.3.html,v 1.16 2005-12-21 06:24:24 jacobsen Exp $ -->
+<!-- $Id: jmri1.7.3.html,v 1.17 2006-01-03 21:04:20 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -226,6 +226,16 @@ Walthers 0-6-0 Switcher, GP30.
 <P>Updated the AbstractAutomat class to provide additional utility methods for users writing scripts.
 
 <P>Graeme Brown figured out how to improve memory management on MacOS "classic", making it less likely that DecoderPro will run out of memory with complex decoder definitions.  This is not a perfect situation, however, and machines with less than 96MB of memory may still not be able to open the largest definitions.
+
+<P>Paul Bender made sure keyboard commands only increment by 1 step (or one multiple of 10 steps).  Also, made sure keyboard commands don't allow scrolling past the ends of the JSpinner used for the speed step display.
+
+<P>Dennis Miller added a preview option to the print dialogs and fixed a print formatting error.
+
+<P>Minor improvements to the error reporting when a problem is found with a decoder definition file
+
+<P>Fixed bug that prevented ESU LokSound version 3 decoder definition from working. Symptom was that saved roster info might not be readable after being stored.
+
+<P>New decoder definitions for the Team Digital SIC24, SMD2, SMD8, SRC8 boards
 
       <hr class="hide">
 <!-- Footer -->
