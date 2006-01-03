@@ -15,7 +15,7 @@ import javax.swing.*;
  *
  * @author   Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2004, 2005
  * @author   Howard G. Penny Copyright (C) 2005
- * @version  $Revision: 1.24 $
+ * @version  $Revision: 1.25 $
  */
 public abstract class VariableValue extends AbstractValue implements java.beans.PropertyChangeListener {
 
@@ -258,8 +258,12 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
         int mask = 0;
         for (int i=0; i<8; i++) {
             mask = mask << 1;
-            if (maskString.charAt(i) == 'V') {
-                mask = mask+1;
+            try {
+                if (maskString.charAt(i) == 'V') {
+                    mask = mask+1;
+                }
+            } catch (StringIndexOutOfBoundsException e) {
+                log.error("mask /"+maskString+"/ could not be handled for variable "+label());
             }
         }
         return mask;
