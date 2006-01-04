@@ -2,12 +2,13 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2002 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: MRC_1428step.xml,v 1.5 2006-01-04 04:39:07 jacobsen Exp $ -->
+<!-- $Id: MRC_1428step.xml,v 1.6 2006-01-04 22:18:33 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen" version="1" lastUpdated="20020405"/>
 
 <decoder>
-	<family name="MRC 14/28 step decoders" mfg="MRC">
+	<family name="MRC 14/28 step decoders" mfg="MRC"
+	        lowVersionID="3">
 		<model model="AD310" />
 		<model model="AD330" formFactor="N" maxMotorCurrent="0.8A"
 		        numOuts="2" >
