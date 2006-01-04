@@ -2,12 +2,13 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: TCS_Tx_v28.xml,v 1.1 2005-10-27 05:26:16 jacobsen Exp $ -->
+<!-- $Id: TCS_Tx_v28.xml,v 1.2 2006-01-04 05:25:46 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Michael Mosher"
-					version="1" lastUpdated="20050913"/>
+					version="1" lastUpdated="20051231"/>
 
 		<!-- Version 1 - made from TCS_Tx_V27 -->
+		<!-- Version 2 - Fixed bug in CV64 -->
 
 <decoder>
 	<family name="TCS Tx series decoders" mfg="Train Control Systems">
@@ -249,7 +250,7 @@
 			</variable>
 			
 		<variable label="Dimming Brightness" CV="64" default="16" 
-				item="Global lighting option 1" 
+				item="Global lighting option 2" 
 				tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs" >
 			<decVal/>
 			</variable>
