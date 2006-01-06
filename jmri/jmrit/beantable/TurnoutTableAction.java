@@ -42,7 +42,7 @@ import javax.swing.event.ChangeListener;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004
- * @version     $Revision: 1.25 $
+ * @version     $Revision: 1.26 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -55,7 +55,7 @@ public class TurnoutTableAction extends AbstractTableAction {
      * @param actionName
      */
     public TurnoutTableAction(String actionName) { 
-	super(actionName);
+	    super(actionName);
 
         // disable ourself if there is no primary turnout manager available
         if (jmri.InstanceManager.turnoutManagerInstance()==null ||
@@ -69,14 +69,20 @@ public class TurnoutTableAction extends AbstractTableAction {
 
     public TurnoutTableAction() { this("Turnout Table");}
 	
-	String closedText = InstanceManager.turnoutManagerInstance().getClosedText();
-	String thrownText = InstanceManager.turnoutManagerInstance().getThrownText();
+	String closedText;
+	String thrownText;
 
     /**
      * Create the JTable DataModel, along with the changes
      * for the specific case of Turnouts
      */
     void createModel() {
+        // store the terminology
+        closedText = InstanceManager.turnoutManagerInstance().getClosedText();
+	    thrownText = InstanceManager.turnoutManagerInstance().getThrownText();
+
+        // create the data model object that drives the table;
+        // note that this is a class creation, and very long
         m = new BeanTableDataModel() {
 		    static public final int KNOWNCOL = 3;
 		    static public final int MODECOL = 4;
@@ -281,13 +287,16 @@ public class TurnoutTableAction extends AbstractTableAction {
     	cb.removeAllItems();
     	Vector strings = new Vector(20);
     	Vector defStrings = new Vector(20);
+    	System.out.println("start "+ops.length);
     	for (int i=0; i<ops.length; ++i) {
+    	    System.out.println("isDef "+ops[i].isDefinitive()+" mFMM "+ops[i].matchFeedbackMode(t.getFeedbackMode())+" isNonce "+ops[i].isNonce());
     		if (!ops[i].isDefinitive()
     				&& ops[i].matchFeedbackMode(t.getFeedbackMode())
     				&& !ops[i].isNonce()) {
     			strings.addElement(ops[i].getName());
     		}
     	}
+    	System.out.println("end");
     	for (int i=0; i<ops.length; ++i) {
     		if (ops[i].isDefinitive()
     				&& ops[i].matchFeedbackMode(t.getFeedbackMode())) {
