@@ -23,7 +23,7 @@ import javax.comm.SerialPortEventListener;
  * Provide access to C/MRI via a serial comm port.
  * Normally controlled by the cmri.serial.serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -73,7 +73,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 
             // set timeout; framing should work before this anyway
             try {
-                activeSerialPort.enableReceiveTimeout(50);
+                activeSerialPort.enableReceiveTimeout(10);
                 log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
                       +" "+activeSerialPort.isReceiveTimeoutEnabled());
             } catch (Exception et) {
