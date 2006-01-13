@@ -16,7 +16,7 @@ import com.sun.java.util.collections.List;
  * Extends VariableValue to represent a enumerated variable.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.18 $
+ * @version	$Revision: 1.19 $
  *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
@@ -106,21 +106,30 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     public void actionPerformed(ActionEvent e) {
         // see if this is from _value itself, or from an alternate rep.
         // if from an alternate rep, it will contain the value to select
+        if (log.isDebugEnabled()) log.debug(label()+" start action event: "+e);
         if (!(e.getActionCommand().equals(""))) {
             // is from alternate rep
             _value.setSelectedItem(e.getActionCommand());
+            if (log.isDebugEnabled()) log.debug(label()+" action event was from alternate rep");
         }
-        if (log.isDebugEnabled()) log.debug("action event: "+e);
 
-        // notify
-        prop.firePropertyChange("Value", null, new Integer(getIntValue()));
+        int oldVal = getIntValue();
+        
         // called for new values - set the CV as needed
         CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
         // compute new cv value by combining old and request
         int oldCv = cv.getValue();
         int newVal = getIntValue();
         int newCv = newValue(oldCv, newVal, getMask());
-        if (newCv != oldCv) cv.setValue(newCv);  // to prevent CV going EDITED during loading of decoder file
+        if (newCv != oldCv) {
+            cv.setValue(newCv);  // to prevent CV going EDITED during loading of decoder file
+
+            // notify  (this used to be before setting the values)
+            if (log.isDebugEnabled()) log.debug(label()+" about to firePropertyChange");
+            prop.firePropertyChange("Value", null, new Integer(oldVal));
+            if (log.isDebugEnabled()) log.debug(label()+" returned to from firePropertyChange");
+        }
+        if (log.isDebugEnabled()) log.debug(label()+" end action event saw oldCv="+oldCv+" newVal="+newVal+" newCv="+newCv);
     }
 
     // to complete this class, fill in the routines to handle "Value" parameter
@@ -297,7 +306,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * model between this object and the real JComboBox value.
      *
      * @author			Bob Jacobsen   Copyright (C) 2001
-     * @version         $Revision: 1.18 $
+     * @version         $Revision: 1.19 $
      */
     public class VarComboBox extends JComboBox {
 
