@@ -3,13 +3,14 @@
 package jmri.jmrix.loconet.locobufferusb;
 
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
+import javax.comm.SerialPort;
 
 /**
  * Update the code in jmri.jmrix.loconet.locobuffer so that it 
  * refers to the switch settings on the new LocoBuffer-USB
  
  * @author			Bob Jacobsen   Copyright (C) 2004, 2005
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class LocoBufferUsbAdapter extends LocoBufferAdapter {
 
@@ -17,6 +18,30 @@ public class LocoBufferUsbAdapter extends LocoBufferAdapter {
     public LocoBufferUsbAdapter() {
         super();
         m2Instance = this;
+    }
+
+    /**
+     * Always use flow control, not considered a user-setable option
+     */
+    protected void setSerialPort(SerialPort activeSerialPort) throws javax.comm.UnsupportedCommOperationException {
+        // find the baud rate value, configure comm options
+        int baud = 19200;  // default, but also defaulted in the initial value of selectedSpeed
+        for (int i = 0; i<validBaudNumber().length; i++ )
+            if (validBaudRates()[i].equals(mBaudRate))
+                baud = validBaudNumber()[i];
+        activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
+                                             SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+
+        // set RTS high, DTR high - done early, so flow control can be configured after
+        activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
+        activeSerialPort.setDTR(true);		// pin 1 in Mac DIN8; on main connector, this is DTR
+
+        // configure flow control to always on
+        int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; 
+        activeSerialPort.setFlowControlMode(flow);
+        log.debug("Found flow control "+activeSerialPort.getFlowControlMode()
+                  +" RTSCTS_OUT="+SerialPort.FLOWCONTROL_RTSCTS_OUT
+                  +" RTSCTS_IN= "+SerialPort.FLOWCONTROL_RTSCTS_IN);
     }
 
     /**
