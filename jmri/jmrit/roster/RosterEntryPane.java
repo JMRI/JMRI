@@ -28,7 +28,7 @@ import com.sun.java.util.collections.List;
  * Display and edit a RosterEntry.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001; Dennis Miller Copyright 2004, 2005
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class RosterEntryPane extends javax.swing.JPanel  {
 
@@ -294,8 +294,10 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         r.setOwner(owner.getText());
         r.setModel(model.getText());
         DccLocoAddress a = addrSel.getAddress();
-        r.setDccAddress(""+a.getNumber());
-        r.setLongAddress(a.isLongAddress());
+        if (a != null) {
+            r.setDccAddress(""+a.getNumber());
+            r.setLongAddress(a.isLongAddress());
+        }
         r.setComment(comment.getText());
         r.setDecoderFamily(decoderFamily.getText());
         r.setDecoderModel(decoderModel.getText());
