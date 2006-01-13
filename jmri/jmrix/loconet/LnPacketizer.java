@@ -31,7 +31,7 @@ import com.sun.java.util.collections.NoSuchElementException;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.10 $
+ * @version 		$Revision: 1.11 $
  *
  */
 public class LnPacketizer extends LnTrafficController {
@@ -134,6 +134,25 @@ public class LnPacketizer extends LnTrafficController {
 
 
     /**
+     * Read a single byte, protecting against various timeouts, etc.
+     * <P>
+     * When a javax.comm port is set to have a 
+     * receive timeout (via the enableReceiveTimeout() method),
+     * some will return zero bytes or an EOFException at the end of the timeout.
+     * In that case, the read should be repeated to get the next real character.
+     * 
+     */
+    protected byte readByteProtected(DataInputStream istream) throws java.io.IOException {
+        while (true) { // loop will repeat until character found
+            int nchars;
+            nchars = istream.read(rcvBuffer, 0, 1);
+            if (nchars>0) return rcvBuffer[0];
+        }
+    }
+    // Defined this way to reduce new object creation
+    private byte[] rcvBuffer = new byte[1];
+        
+    /**
      * Handle incoming characters.  This is a permanent loop,
      * looking for input messages in character form on the
      * stream connected to the LnPortController via <code>connectPort</code>.
@@ -144,7 +163,7 @@ public class LnPacketizer extends LnTrafficController {
         while (true) {   // loop permanently, program close will exit
             try {
                 // start by looking for command -  skip if bit not set
-                while ( ((opCode = (istream.readByte()&0xFF)) & 0x80) == 0 )  {
+                while ( ((opCode = (readByteProtected(istream)&0xFF)) & 0x80) == 0 )  {
                     //log.debug("Skipping: "+Integer.toHexString(opCode));
                 }
                 // here opCode is OK. Create output message
@@ -154,7 +173,7 @@ public class LnPacketizer extends LnTrafficController {
                 while (msg == null) {
                     try {
                         // Capture 2nd byte, always present
-                        int byte2 = istream.readByte()&0xFF;
+                        int byte2 = readByteProtected(istream)&0xFF;
                         if (log.isDebugEnabled())
                             log.debug("Byte2: "+Integer.toHexString(byte2));
                         // Decide length
@@ -185,7 +204,7 @@ public class LnPacketizer extends LnTrafficController {
                         //log.debug("len: "+len);
                         for (int i = 2; i < len; i++)  {
                             // check for message-blocking error
-                            int b = istream.readByte()&0xFF;
+                            int b = readByteProtected(istream)&0xFF;
                             //log.debug("char "+i+" is: "+Integer.toHexString(b));
                             if ( (b&0x80) != 0) {
                                 log.warn("LocoNet message with opCode: "
@@ -270,7 +289,7 @@ public class LnPacketizer extends LnTrafficController {
             while (true) {   // loop permanently, program close will exit
                 try {
                     // start by looking for command -  skip if bit not set
-                    while ( ((opCode = (istream.readByte()&0xFF)) & 0x80) == 0 )  {
+                    while ( ((opCode = (readByteProtected(istream)&0xFF)) & 0x80) == 0 )  {
                         if (debug) log.debug("Skipping: "+Integer.toHexString(opCode));
                     }
                     // here opCode is OK. Create output message
@@ -279,7 +298,7 @@ public class LnPacketizer extends LnTrafficController {
                     while (msg == null) {
                         try {
                             // Capture 2nd byte, always present
-                            int byte2 = istream.readByte()&0xFF;
+                            int byte2 = readByteProtected(istream)&0xFF;
                             //log.debug("Byte2: "+Integer.toHexString(byte2));
                             // Decide length
                             switch((opCode & 0x60) >> 5) {
@@ -308,7 +327,7 @@ public class LnPacketizer extends LnTrafficController {
                             //log.debug("len: "+len);
                             for (int i = 2; i < len; i++)  {
                                 // check for message-blocking error
-                                int b = istream.readByte()&0xFF;
+                                int b = readByteProtected(istream)&0xFF;
                                 //log.debug("char "+i+" is: "+Integer.toHexString(b));
                                 if ( (b&0x80) != 0) {
                                     log.warn("LocoNet message with opCode: "
