@@ -26,7 +26,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.26 $
+ * @version			$Revision: 1.27 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -525,7 +525,7 @@ abstract public class AbstractMRTrafficController {
      * <P>
      * When a javax.comm port is set to have a 
      * receive timeout (via the enableReceiveTimeout() method),
-     * it will return zero bytes or an EOFException at the end of the timeout.
+     * some will return zero bytes or an EOFException at the end of the timeout.
      * In that case, the read should be repeated to get the next real character.
      * 
      */
