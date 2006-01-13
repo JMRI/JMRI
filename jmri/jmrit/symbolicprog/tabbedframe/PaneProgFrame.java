@@ -36,7 +36,7 @@ import jmri.ProgDeferredServiceModePane;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.55 $
+ * @version   $Revision: 1.56 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -337,7 +337,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                 for (int i=0; i<paneList.size(); i++) {
                     // load each pane
                     String pname = ((Element)(paneList.get(i))).getAttribute("name").getValue();
-                    newPane( pname, ((Element)(paneList.get(i))), modelElem, true);  // show even if empty
+                    newPane( pname, ((Element)(paneList.get(i))), modelElem, true);  // show even if empty??
                 }
             }
         }
@@ -413,6 +413,17 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
         df.loadResetModel(decoderRoot.getChild("decoder"), resetModel);
 
+        // get the showEmptyPanes attribute, if yes/no update our state
+        if (decoderRoot.getAttribute("showEmptyPanes") != null) {
+            if (log.isDebugEnabled()) log.debug("Found in decoder "+decoderRoot.getAttribute("showEmptyPanes").getValue());
+            if (decoderRoot.getAttribute("showEmptyPanes").getValue().equals("yes"))
+                setShowEmptyPanes(true);
+            else if (decoderRoot.getAttribute("showEmptyPanes").getValue().equals("no"))
+                setShowEmptyPanes(false);
+            // leave alone for "default" value
+            if (log.isDebugEnabled()) log.debug("result "+getShowEmptyPanes());
+        }
+        
         // save the pointer to the model element
         modelElem = df.getModelElement();
     }
@@ -423,8 +434,20 @@ abstract public class PaneProgFrame extends JmriJFrame
         try {
             programmerRoot = pf.rootFromName(filename);
 
+            // get the showEmptyPanes attribute, if yes/no update our state
+            if (programmerRoot.getChild("programmer").getAttribute("showEmptyPanes") != null) {
+                if (log.isDebugEnabled()) log.debug("Found in programmer "+programmerRoot.getChild("programmer").getAttribute("showEmptyPanes").getValue());
+                if (programmerRoot.getChild("programmer").getAttribute("showEmptyPanes").getValue().equals("yes"))
+                    setShowEmptyPanes(true);
+                else if (programmerRoot.getChild("programmer").getAttribute("showEmptyPanes").getValue().equals("no"))
+                    setShowEmptyPanes(false);
+                // leave alone for "default" value
+                if (log.isDebugEnabled()) log.debug("result "+getShowEmptyPanes());
+            }
+
             // load programmer config from programmer tree
             readConfig(programmerRoot, r);
+            
         }
         catch (Exception e) {
             log.error("exception reading programmer file: "+filename+" exception: "+e);
@@ -643,7 +666,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     public void newPane(String name, Element pane, Element modelElem, boolean enableEmpty) {
-
+        if (log.isDebugEnabled()) log.debug("newPane with enableEmpty "+enableEmpty+" getShowEmptyPanes() "+getShowEmptyPanes());
         // create a panel to hold columns
         PaneProgPane p = new PaneProgPane(this, name, pane, cvModel, iCvModel, variableModel, modelElem);
 
@@ -1076,6 +1099,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      */
     public static void setShowEmptyPanes(boolean yes) {
         showEmptyPanes = yes;
+        // new Exception().printStackTrace();
     }
     public static boolean getShowEmptyPanes() {
         return showEmptyPanes;
