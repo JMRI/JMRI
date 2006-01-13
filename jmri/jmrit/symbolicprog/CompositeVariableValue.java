@@ -49,7 +49,7 @@ import com.sun.java.util.collections.Iterator;
  *</ol>
  * <P>
  * @author	Bob Jacobsen   Copyright (C) 2001, 2005
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  *
  */
 public class CompositeVariableValue extends EnumVariableValue implements ActionListener, PropertyChangeListener {
@@ -62,6 +62,7 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
         _maxVal = maxVal;
         _minVal = minVal;
         _value = new JComboBox();
+        if (log.isDebugEnabled()) log.debug("New Composite named "+name);
     }
 
     /**
@@ -101,12 +102,15 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
             this.varName = varName;
             this.variable = variable;
             this.value = Integer.valueOf(value).intValue();
+            if (log.isDebugEnabled()) log.debug("    cTor Setting "+varName+" = "+value);
+            
         }
         void setValue() {
             if (log.isDebugEnabled()) log.debug("    Setting.setValue of "+varName+" to "+value);
             variable.setIntValue(value);
         }
         boolean match() {
+            if (log.isDebugEnabled()) log.debug("         Match checks "+variable.getIntValue()+" == "+value);
             return (variable.getIntValue() == value);
         }
     }
@@ -116,6 +120,11 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
      * <P> Serves as a home for various service methods
      */
     class SettingList extends ArrayList {
+        public SettingList() {
+            super();
+            if (log.isDebugEnabled()) log.debug("New setting list");
+        }
+        
         void addSetting(String varName, VariableValue variable, String value) {
             Setting s = new Setting(varName, variable, value);
             add(s);
@@ -129,8 +138,12 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
         }
         boolean match() {
             for (int i = 0; i<size(); i++) {
-                if ( ! ((Setting)this.get(i)).match()) return false;
+                if ( ! ((Setting)this.get(i)).match()) {
+                    if (log.isDebugEnabled()) log.debug("      No match in setting list of length "+size()+" at position "+i);
+                    return false;
+                }
             }
+            if (log.isDebugEnabled()) log.debug("      Match in setting list of length "+size());
             return true;
         }
     }
@@ -317,6 +330,7 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
     // handle incoming parameter notification
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         // notification from CV; check for Value being changed
+        if (log.isDebugEnabled()) log.debug("propertyChange in "+label()+" type "+e.getPropertyName()+" becomes "+e.getNewValue());
         if (e.getPropertyName().equals("Busy")) {
             if (((Boolean)e.getNewValue()).equals(Boolean.FALSE)) {
                 setToRead(false);
@@ -335,7 +349,7 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
      * choice-sequence)
      */
     void findValue() {
-        if (log.isDebugEnabled()) log.debug("findValue invoked");
+        if (log.isDebugEnabled()) log.debug("findValue invoked on "+label());
         for (int i=0; i<_value.getItemCount(); i++) {
             String choice = (String)_value.getItemAt(i);
             SettingList sl = (SettingList) choiceHash.get(choice);

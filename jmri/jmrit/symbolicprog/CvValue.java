@@ -24,7 +24,7 @@ import javax.swing.JTextField;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.16 $
+ * @version   $Revision: 1.17 $
  */
 public class CvValue extends AbstractValue implements ProgListener {
 
@@ -87,6 +87,7 @@ public class CvValue extends AbstractValue implements ProgListener {
      * not for internal uses, as it sets the state to EDITED
      */
     public void setValue(int value) {
+        if (log.isDebugEnabled()) log.debug("CV "+number()+" value changed from "+_value+" to "+value);
         setState(EDITED);
         if (_value != value) {
             int old = _value;
