@@ -22,7 +22,7 @@ import javax.comm.SerialPortEventListener;
  * <P>
  * Normally controlled by the LocoBufferFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.26 $
+ * @version			$Revision: 1.27 $
  */
 public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -59,17 +59,21 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
             }
             // try to set it for LocoNet via LocoBuffer
             try {
-                setSerialPort();
+                setSerialPort(activeSerialPort);
             } catch (javax.comm.UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port "+portName+": "+e.getMessage());
                 return "Cannot set serial parameters on port "+portName+": "+e.getMessage();
             }
 
             // set timeout
-            // activeSerialPort.enableReceiveTimeout(1000);
-            log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
+            try {
+                activeSerialPort.enableReceiveTimeout(10);
+                log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
                       +" "+activeSerialPort.isReceiveTimeoutEnabled());
-
+            } catch (Exception et) {
+                log.info("failed to set serial timeout: "+et);
+            }
+            
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
 
@@ -224,9 +228,9 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
     public boolean status() {return opened;}
 
     /**
-     * Local method to do specific configuration, overridden in the LocoBufferHSAdapter class
+     * Local method to do specific configuration, overridden in class
      */
-    protected void setSerialPort() throws javax.comm.UnsupportedCommOperationException {
+    protected void setSerialPort(SerialPort activeSerialPort) throws javax.comm.UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
         int baud = 19200;  // default, but also defaulted in the initial value of selectedSpeed
         for (int i = 0; i<validBaudNumber().length; i++ )
