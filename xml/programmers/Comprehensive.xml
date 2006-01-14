@@ -2,7 +2,7 @@
 <!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
 
 <programmer-config>
-<!-- $Id: Comprehensive.xml,v 1.13 2005-11-14 07:06:38 jacobsen Exp $ -->
+<!-- $Id: Comprehensive.xml,v 1.14 2006-01-14 01:27:33 jacobsen Exp $ -->
 		<version author="Howard G. Penny"
 					version="11" lastUpdated="20050713"/>
 
@@ -15,7 +15,7 @@
       <!-- Version 9 - added Analog pane wsthompson@earthlink.net -->
       <!-- Version 11 - updated tooltip for Decoder Version -->
 
-<programmer decoderFilePanes="yes">
+<programmer decoderFilePanes="yes" showEmptyPanes="default">
 
 	<pane name="Basic">
 		<column>
