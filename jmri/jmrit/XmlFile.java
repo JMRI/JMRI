@@ -19,7 +19,7 @@ import org.jdom.output.XMLOutputter;
  * Handle common aspects of XML files.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.21 $
+ * @version	$Revision: 1.22 $
  */
 public abstract class XmlFile {
 
@@ -73,7 +73,7 @@ public abstract class XmlFile {
         // String dtdUrl = jmri.util.FileUtil.getUrl(dtdFile);
 
         // Switched to relative path; does our Xerces file not handle true URI/URLs?
-        dtdUrl = "file:xml/DTD/";
+        String dtdUrl = "file:xml/DTD/";
 
         if (log.isDebugEnabled()) log.debug("readFile from stream, DTD URL:"+dtdUrl);
         // This is taken in large part from "Java and XML" page 354
@@ -241,7 +241,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.21 2006-01-15 03:06:55 jacobsen Exp $";
+                        +" $Id: XmlFile.java,v 1.22 2006-01-15 03:10:47 jacobsen Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }
