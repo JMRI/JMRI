@@ -19,7 +19,7 @@ import org.jdom.output.XMLOutputter;
  * Handle common aspects of XML files.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.20 $
+ * @version	$Revision: 1.21 $
  */
 public abstract class XmlFile {
 
@@ -68,15 +68,18 @@ public abstract class XmlFile {
      */
     public Element rootFromStream(InputStream stream) throws org.jdom.JDOMException, java.io.FileNotFoundException {
         // get full pathname to the DTD directory (apath is an absolute path)
-        String dtdpath = "xml"+File.separator+"DTD"+File.separator;
-        File dtdFile = new File(dtdpath);
-        String dtdUrl = jmri.util.FileUtil.getUrl(dtdFile);
+        // String dtdpath = "xml"+File.separator+"DTD"+File.separator;
+        // File dtdFile = new File(dtdpath);
+        // String dtdUrl = jmri.util.FileUtil.getUrl(dtdFile);
+
+        // Switched to relative path; does our Xerces file not handle true URI/URLs?
+        dtdUrl = "file:xml/DTD/";
 
         if (log.isDebugEnabled()) log.debug("readFile from stream, DTD URL:"+dtdUrl);
         // This is taken in large part from "Java and XML" page 354
 
         // Open and parse file
-
+        
         SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation
         Document doc = builder.build(new BufferedInputStream(stream),dtdUrl);
 
@@ -238,7 +241,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.20 2005-08-02 14:37:22 jacobsen Exp $";
+                        +" $Id: XmlFile.java,v 1.21 2006-01-15 03:06:55 jacobsen Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }
