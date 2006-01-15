@@ -15,8 +15,8 @@ import java.io.File;
  * In particular, this is intended to provide Java 2 functionality on a
  * Java 1.1.8 system, or at least try to fake it.
  *
- * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.5 $
+ * @author Bob Jacobsen  Copyright 2003, 2005, 2006
+ * @version $Revision: 1.6 $
  */
 
 public class FileUtil {
@@ -38,7 +38,7 @@ public class FileUtil {
             }
         } catch (Throwable e) {
             if (log.isDebugEnabled()) log.debug(" Exception 2: "+e);
-            return "file:"+file.getAbsolutePath()+File.separator;
+                return "file:"+file.getAbsolutePath()+File.separator;
         }
     }
 
