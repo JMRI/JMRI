@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
  * Create and register a CmdStnConfigFrame object.
  *
  * @author			Alex Shepherd    Copyright (C) 2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 public class CmdStnConfigAction extends AbstractAction {
@@ -27,10 +27,13 @@ public class CmdStnConfigAction extends AbstractAction {
         CmdStnConfigFrame f = new CmdStnConfigFrame();
         f.initComponents();
 
-          // connect to the LnTrafficController
+        // connect to the LnTrafficController
         f.connect(LnTrafficController.instance());
+        
+        // start communications
+        f.start();
 
-          // make visible
+        // make visible
         f.show();
     }
 }

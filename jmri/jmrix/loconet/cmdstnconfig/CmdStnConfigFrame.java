@@ -4,9 +4,9 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
-import apps.Apps;
-
 import jmri.jmrix.loconet.*;
+
+import java.util.ResourceBundle;
 
 /**
  * User interface for Command Station Option Programming
@@ -18,67 +18,119 @@ import jmri.jmrix.loconet.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Alex Shepherd   Copyright (C) 2004
- * @version			$Revision: 1.2 $
+ * @author			Bob Jacobsen  Copyright (C) 2006
+ * @version			$Revision: 1.3 $
  */
 public class CmdStnConfigFrame extends javax.swing.JFrame implements LocoNetListener {
 
-  static final int CONFIG_SLOT = 127 ;
-  static final int MIN_OPTION = 1 ;
-  static final int MAX_OPTION = 72 ;
-
+  int CONFIG_SLOT = 127 ;
+  int MIN_OPTION = 1 ;
+  int MAX_OPTION = 72 ;
+  String LabelT = "T";
+  String LabelC = "C";
+  String LabelTop = "Configure Command Station";
+  
+  String read = "Read";
+  String write = "Write";
+  
   LocoNetMessage ConfigSlotData = null;
 
   public CmdStnConfigFrame() {
     super("Command Station Options Programmer");
   }
 
+  ResourceBundle rb;
   // internal members to hold widgets
-  JButton readButton = new JButton("Read");
-  JButton writeButton = new JButton("Write");
-  JRadioButton option1t = new JRadioButton("Op 1 t" );
-  JRadioButton option1c = new JRadioButton("Op 1 c" );
-  EmptyBorder border1 = new EmptyBorder(1,1,1,1);
+  JButton readButton;
+  JButton writeButton;
 
+  JRadioButton[] closedButtons = new JRadioButton[MAX_OPTION];
+  JRadioButton[] thrownButtons = new JRadioButton[MAX_OPTION];
+  
   public void initComponents() {
+
+    // set up constants from properties file, if possible
+    String name = "<unchanged>";
+    try {
+        name = SlotManager.instance().getCommandStationType();
+        // get first token
+        name = name.substring(0, name.indexOf(' '));
+        log.debug("match /"+name+"/");
+        rb = ResourceBundle.getBundle("jmri.jmrix.loconet.cmdstnconfig."+name+"options");
+    } catch (Exception e) {
+        log.error("Failed to find options properties file for /"+name+"/");
+        rb = ResourceBundle.getBundle("jmri.jmrix.loconet.cmdstnconfig.Defaultoptions");
+    }
+    
+    try {
+        CONFIG_SLOT = Integer.parseInt(rb.getString("CONFIG_SLOT"));
+        MIN_OPTION =  Integer.parseInt(rb.getString("MIN_OPTION"));
+        MAX_OPTION =  Integer.parseInt(rb.getString("MAX_OPTION"));
+        LabelT = rb.getString("LabelT");
+        LabelC = rb.getString("LabelC");
+        LabelTop = rb.getString("LabelTop");
+        read = rb.getString("ButtonRead");
+        write = rb.getString("ButtonWrite");
+    } catch (Exception e) {
+        log.error("Failed to load values from /"+name+"/ properties");
+    }
+    
+    log.debug("Constants: "+CONFIG_SLOT+" "+MIN_OPTION+" "+MAX_OPTION);
+        
+    setTitle(LabelTop);
 
     getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-    // buttons
     {
+      // section holding buttons buttons
+      readButton = new JButton(read);
+      writeButton = new JButton(write);
+      
       JPanel pane = new JPanel();
       pane.setLayout(new FlowLayout());
       pane.add(readButton);
       pane.add(writeButton);
+      getContentPane().add(pane);
+      
+      // section holding options
       JPanel options = new JPanel();
-      options.setLayout(new FlowLayout());
-      JPanel p2 = createHorizontalPanel();
-      options.add(p2);
-      p2.setBorder( new TitledBorder(null, "Option 1", TitledBorder.LEFT, TitledBorder.TOP));
-      p2.setPreferredSize( new Dimension( 200, 60 ) );
-      p2.add( option1t ) ;
-      p2.add( option1c ) ;
-      option1t.setPreferredSize(new Dimension( 100, 40 ));
-      option1c.setPreferredSize(new Dimension( 100, 40 ));
-
-      getContentPane().add(pane);
-      getContentPane().add(options);
+      GridBagConstraints gc = new GridBagConstraints();
+      GridBagLayout gl = new GridBagLayout();
+      gc.gridy = 0;
+      options.setLayout(gl);
+      for (int i = MIN_OPTION; i<=MAX_OPTION; i++) {
+        JPanel p2 = new JPanel();
+        p2.setLayout(new FlowLayout());
+        ButtonGroup g = new ButtonGroup();
+        JRadioButton c = new JRadioButton(LabelC);
+        JRadioButton t = new JRadioButton(LabelT);
+        g.add(c);
+        g.add(t);
+        
+        p2.add(t);
+        p2.add(c);
+        
+        closedButtons[i-MIN_OPTION] = c;
+        thrownButtons[i-MIN_OPTION] = t;
+        gc.weightx = 1.0;
+        gc.gridx = 0;
+        gc.anchor = GridBagConstraints.CENTER;
+        gl.setConstraints(p2, gc);
+        options.add(p2);
+        gc.gridx = 1;
+        gc.weightx = GridBagConstraints.REMAINDER;
+        gc.anchor = GridBagConstraints.WEST;
+        JLabel l = new JLabel(rb.getString("Option"+i));
+        gl.setConstraints(l, gc);
+        options.add(l);
+        gc.gridy++;
+      }
+      JScrollPane js = new JScrollPane(options);
+      js.setVerticalScrollBarPolicy(js.VERTICAL_SCROLLBAR_AS_NEEDED);
+      js.setHorizontalScrollBarPolicy(js.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+      getContentPane().add(js);
     }
 
-    // address
-    {
-      JPanel pane = new JPanel();
-      pane.setLayout(new FlowLayout());
-
-      getContentPane().add(pane);
-    }
-
-    // results
-    {
-      JPanel pane = new JPanel();
-      pane.setLayout(new FlowLayout());
-
-      getContentPane().add(pane);
-    }
 
     readButton.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -91,12 +143,63 @@ public class CmdStnConfigFrame extends javax.swing.JFrame implements LocoNetList
       }
     });
 
-    // pack to cause display
+    // pack to prepare for display
     pack();
   }
 
   public void readButtonActionPerformed(java.awt.event.ActionEvent e) {
     // format and send request
+    start();
+  }
+
+  public void writeButtonActionPerformed(java.awt.event.ActionEvent e) {
+    LocoNetMessage msg = new LocoNetMessage(14);
+    msg.setElement(0, LnConstants.OPC_WR_SL_DATA);
+    msg.setElement(1, 0x0E);
+    msg.setElement(2, CONFIG_SLOT);
+
+    // load contents to message
+    int j = 0;
+    for (int i = 0; i*8+MIN_OPTION < MAX_OPTION; i++){
+        // i indexes over data bytes in the message
+        int index = i+3; // index = 0 is the first message byte
+        msg.setElement(index,0);  // start with all reset, hence thrown
+
+        if (closedButtons[j++].isSelected()) 
+            msg.setElement(index, msg.getElement(index) | 0x01);
+        
+        if (closedButtons[j++].isSelected()) 
+            msg.setElement(index, msg.getElement(index) | 0x02);
+        
+        if (closedButtons[j++].isSelected()) 
+            msg.setElement(index, msg.getElement(index) | 0x04);
+        
+        if (closedButtons[j++].isSelected()) 
+            msg.setElement(index, msg.getElement(index) | 0x08);
+        
+        if (closedButtons[j++].isSelected()) 
+            msg.setElement(index, msg.getElement(index) | 0x10);
+        
+        if (closedButtons[j++].isSelected()) 
+            msg.setElement(index, msg.getElement(index) | 0x20);
+        
+        if (closedButtons[j++].isSelected()) 
+            msg.setElement(index, msg.getElement(index) | 0x40);
+        
+        j++; // the 8th option doesn't really exist
+    }
+
+    // send message
+    LnTrafficController.instance().sendLocoNetMessage(msg);
+    return;
+  }
+
+  /**
+   *
+   * Start the Frame operating by asking for a read
+   */
+  public void start() {
+    // format and send request for slot contents
     LocoNetMessage l = new LocoNetMessage(4);
     l.setElement(0, LnConstants.OPC_RQ_SL_DATA);
     l.setElement(1, CONFIG_SLOT );
@@ -104,17 +207,7 @@ public class CmdStnConfigFrame extends javax.swing.JFrame implements LocoNetList
     l.setElement(3, 0);
     LnTrafficController.instance().sendLocoNetMessage(l);
   }
-
-  public void writeButtonActionPerformed(java.awt.event.ActionEvent e) {
-    // format message and send
-
-    if( ConfigSlotData != null ) {
-      ConfigSlotData.setOpCode(LnConstants.OPC_WR_SL_DATA);
-      LnTrafficController.instance().sendLocoNetMessage(ConfigSlotData);
-    }
-    return;
-  }
-
+  
   /**
    * Process the incoming message to look for Slot 127 Read
    */
@@ -124,32 +217,37 @@ public class CmdStnConfigFrame extends javax.swing.JFrame implements LocoNetList
     if (msg.getElement(2) != CONFIG_SLOT )
       return;
 
-    ConfigSlotData = msg;
+    int j = 0;
+    for (int i = 0; i*8+MIN_OPTION < MAX_OPTION; i++){
+        // i indexes over bytes in the message
+        int index = i+3; // index = 0 is the first payload byte
+        int data = msg.getElement(index);  // data is the payload byte
+
+        if ( (data&0x01) != 0) closedButtons[j++].setSelected(true);
+        else thrownButtons[j++].setSelected(true);
+
+        if ( (data&0x02) != 0) closedButtons[j++].setSelected(true);
+        else thrownButtons[j++].setSelected(true);
+
+        if ( (data&0x04) != 0) closedButtons[j++].setSelected(true);
+        else thrownButtons[j++].setSelected(true);
+
+        if ( (data&0x08) != 0) closedButtons[j++].setSelected(true);
+        else thrownButtons[j++].setSelected(true);
+
+        if ( (data&0x10) != 0) closedButtons[j++].setSelected(true);
+        else thrownButtons[j++].setSelected(true);
+
+        if ( (data&0x20) != 0) closedButtons[j++].setSelected(true);
+        else thrownButtons[j++].setSelected(true);
+
+        if ( (data&0x40) != 0) closedButtons[j++].setSelected(true);
+        else thrownButtons[j++].setSelected(true);
+
+        thrownButtons[j++].setSelected(true); // the 8th option doesn't really exist
+    }
+
     log.debug("Config Slot Data: " + msg.toString());
-    int option;
-    for (option = MIN_OPTION; option <= MAX_OPTION; option++) {
-      if (getOption(option))
-        log.debug("Option: " + option + " State: On");
-    }
-  }
-
-  boolean getOption(int optNum) {
-    if (ConfigSlotData == null)
-      throw new RuntimeException("Config Message is null");
-
-    int element, bit;
-    element = (optNum / 8) + 3;
-    if (element >= 7)
-      element++;
-
-    bit = (optNum - 1) % 8;
-
-    if ( (ConfigSlotData.getElement(element) & (1 << bit)) != 0) {
-//      log.debug("Option: " + optNum + " Element: " + element + " Bit: " + bit + " Set");
-      return true;
-    }
-
-    return false;
   }
 
   private boolean mShown = false;
@@ -186,16 +284,6 @@ public class CmdStnConfigFrame extends javax.swing.JFrame implements LocoNetList
     tc = t;
     tc.addLocoNetListener(~0, this);
   }
-
-  public JPanel createHorizontalPanel() {
-        JPanel p = new JPanel();
-        p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-        p.setAlignmentY(TOP_ALIGNMENT);
-        p.setAlignmentX(LEFT_ALIGNMENT);
-        return p;
-    }
-
-
 
   // private data
   private LnTrafficController tc = null;
