@@ -16,7 +16,7 @@ import java.util.Vector;
  * Normally controlled by the LnTcpDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class LnTcpDriverAdapter extends LnPortController {
 
@@ -30,7 +30,7 @@ public class LnTcpDriverAdapter extends LnPortController {
         packets.connectPort(this);
 
         // do the common manager config
-        configureCommandStation(mCanRead, mProgPowersOff);
+        configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
         configureManagers();
 
         // start operation

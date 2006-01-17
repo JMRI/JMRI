@@ -8,7 +8,7 @@ import java.io.DataOutputStream;
 /**
  * Base for classes representing a LocoNet communications port
  * @author		Bob Jacobsen    Copyright (C) 2001, 2002
- * @version             $Revision: 1.9 $
+ * @version             $Revision: 1.10 $
  */
 public abstract class LnPortController extends jmri.jmrix.AbstractPortController {
     // base class. Implementations will provide InputStream and OutputStream
@@ -41,7 +41,8 @@ public abstract class LnPortController extends jmri.jmrix.AbstractPortController
 
     protected boolean mCanRead = true;
     protected boolean mProgPowersOff = false;
-
+    protected String commandStationName = "<unknown>";
+    
     protected String[] commandStationNames = {"DB150 (Empire Builder)",
                                     "DCS100 (Chief)", 
                                     "DCS200",
@@ -62,20 +63,24 @@ public abstract class LnPortController extends jmri.jmrix.AbstractPortController
             mCanRead = true;
             mProgPowersOff = false;
         }
+        commandStationName = value;
     }
                                     
     /**
      * Configure the programming manager and "command station" objects
      * @param mCanRead
      * @param mProgPowersOff
+     * @param name Command station type name
      */
-    static public void configureCommandStation(boolean mCanRead, boolean mProgPowersOff) {
+    static public void configureCommandStation(boolean mCanRead, boolean mProgPowersOff, String name) {
         // loconet.SlotManager to do programming (the Programmer instance is registered
         // when the SlotManager is created)
         jmri.jmrix.loconet.SlotManager.instance();
         // set slot manager's read capability
         jmri.jmrix.loconet.SlotManager.instance().setCanRead(mCanRead);
         jmri.jmrix.loconet.SlotManager.instance().setProgPowersOff(mProgPowersOff);
+        jmri.jmrix.loconet.SlotManager.instance().setCommandStationType(name);
+        
         // store as CommandStation object
         jmri.InstanceManager.setCommandStation(jmri.jmrix.loconet.SlotManager.instance());
 

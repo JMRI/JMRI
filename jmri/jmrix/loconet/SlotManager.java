@@ -33,7 +33,7 @@ import java.util.Vector;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.32 $
+ * @version     $Revision: 1.33 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
@@ -538,6 +538,20 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         mCanRead = pCanRead;
     }
 
+    /**
+     * Set the command station type
+     */
+    public void setCommandStationType(String value){
+        commandStationType = value;
+    }
+    /**
+     * Get the command station type
+     */
+    public String getCommandStationType(){
+        return commandStationType;
+    }
+    protected String commandStationType = "<unknown>";
+    
     /**
      * Determine is a mode is available for this Programmer implementation
      * @param mode A mode constant from the Programmer interface

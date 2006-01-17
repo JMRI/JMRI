@@ -22,7 +22,7 @@ import javax.comm.SerialPortEventListener;
  * <P>
  * Normally controlled by the LocoBufferFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.27 $
+ * @version			$Revision: 1.28 $
  */
 public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -194,7 +194,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         packets.connectPort(this);
 
         // do the common manager config
-        configureCommandStation(mCanRead, mProgPowersOff);
+        configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
         configureManagers();
 
         // start operation

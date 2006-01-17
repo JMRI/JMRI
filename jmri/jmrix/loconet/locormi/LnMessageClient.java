@@ -10,7 +10,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * The main() in this class is for test purposes only.
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Alex Shepherd, Bob Jacobsen
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class LnMessageClient extends LnTrafficRouter {
@@ -91,7 +91,7 @@ public class LnMessageClient extends LnTrafficRouter {
             jmri.jmrix.loconet.SlotManager.instance();
 
         // do the common manager config
-        jmri.jmrix.loconet.LnPortController.configureCommandStation(true, false);  // for now, assume full capability
+        jmri.jmrix.loconet.LnPortController.configureCommandStation(true, false,"<unknown>");  // for now, assume full capability
         jmri.jmrix.loconet.LnPortController.configureManagers();
 
         // the serial connections (LocoBuffer et al) start

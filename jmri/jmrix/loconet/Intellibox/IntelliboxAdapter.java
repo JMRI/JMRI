@@ -13,7 +13,7 @@ import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
  *
  * @author			Alex Shepherd   Copyright (C) 2004
  * @author          Bob Jacobsen    Copyright (C) 2005
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class IntelliboxAdapter extends LocoBufferAdapter {
 
@@ -35,7 +35,7 @@ public void configure() {
     packets.connectPort(this);
 
     // do the common manager config
-    configureCommandStation(mCanRead, mProgPowersOff);
+    configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
     configureManagers();
 
     // start operation
