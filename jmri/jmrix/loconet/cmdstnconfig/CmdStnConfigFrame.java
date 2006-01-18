@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  *
  * @author			Alex Shepherd   Copyright (C) 2004
  * @author			Bob Jacobsen  Copyright (C) 2006
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class CmdStnConfigFrame extends javax.swing.JFrame implements LocoNetListener {
 
@@ -33,8 +33,8 @@ public class CmdStnConfigFrame extends javax.swing.JFrame implements LocoNetList
   String read = "Read";
   String write = "Write";
   
-  LocoNetMessage ConfigSlotData = null;
-
+  int[] oldcontent = new int[10];
+  
   public CmdStnConfigFrame() {
     super("Command Station Options Programmer");
   }
@@ -157,6 +157,10 @@ public class CmdStnConfigFrame extends javax.swing.JFrame implements LocoNetList
     msg.setElement(0, LnConstants.OPC_WR_SL_DATA);
     msg.setElement(1, 0x0E);
     msg.setElement(2, CONFIG_SLOT);
+    
+    // load last seen contents into message
+    for (int i = 0; i<10; i++)
+        msg.setElement(3+i, oldcontent[i]);
 
     // load contents to message
     int j = 0;
@@ -167,24 +171,38 @@ public class CmdStnConfigFrame extends javax.swing.JFrame implements LocoNetList
 
         if (closedButtons[j++].isSelected()) 
             msg.setElement(index, msg.getElement(index) | 0x01);
+        else
+            msg.setElement(index, msg.getElement(index) & ~0x01);
         
         if (closedButtons[j++].isSelected()) 
             msg.setElement(index, msg.getElement(index) | 0x02);
+        else
+            msg.setElement(index, msg.getElement(index) & ~0x02);
         
         if (closedButtons[j++].isSelected()) 
             msg.setElement(index, msg.getElement(index) | 0x04);
+        else
+            msg.setElement(index, msg.getElement(index) & ~0x04);
         
         if (closedButtons[j++].isSelected()) 
             msg.setElement(index, msg.getElement(index) | 0x08);
+        else
+            msg.setElement(index, msg.getElement(index) & ~0x08);
         
         if (closedButtons[j++].isSelected()) 
             msg.setElement(index, msg.getElement(index) | 0x10);
+        else
+            msg.setElement(index, msg.getElement(index) & ~0x10);
         
         if (closedButtons[j++].isSelected()) 
             msg.setElement(index, msg.getElement(index) | 0x20);
+        else
+            msg.setElement(index, msg.getElement(index) & ~0x20);
         
         if (closedButtons[j++].isSelected()) 
             msg.setElement(index, msg.getElement(index) | 0x40);
+        else
+            msg.setElement(index, msg.getElement(index) & ~0x40);
         
         j++; // the 8th option doesn't really exist
     }
@@ -217,6 +235,11 @@ public class CmdStnConfigFrame extends javax.swing.JFrame implements LocoNetList
     if (msg.getElement(2) != CONFIG_SLOT )
       return;
 
+    // save contents for later
+    for (int i = 0; i<10; i++)
+        oldcontent[i] = msg.getElement(3+i);
+
+    // set the GUI
     int j = 0;
     for (int i = 0; i*8+MIN_OPTION < MAX_OPTION; i++){
         // i indexes over bytes in the message
