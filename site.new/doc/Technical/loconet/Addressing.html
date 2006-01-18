@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Addressing.html,v 1.4 2005-04-11 21:11:56 jacobsen Exp $ -->
+<!-- $Id: Addressing.html,v 1.5 2006-01-18 21:54:26 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -109,6 +109,23 @@ where "channel number" runs from 1 to 16.  For example, the first circuit
    number = 16 * (11) + (1) - 16 = 161
 </PRE></CODE>
 as we saw in the example above.
+<P>
+If you want to calculate the address of a DS54 switch input, use:
+<CODE><PRE>
+   number = 2 * (turnout number - 1)
+</PRE></CODE>
+For example, the switch input associated with turnout 12 has number:
+<CODE><PRE>
+   number = 2 * ( 12 - 1 ) = 22
+</pre></code>
+If it's the aux input, you add one to that:
+<CODE><PRE>
+   number = 2 * (turnout number - 1) + 1
+</PRE></CODE>
+For example, the aux input associated with turnout 81 has number:
+<CODE><PRE>
+   number = 2 * (81 - 1) + 1 = 161
+</pre></code>
 
 <h2>Addressing Transponding in JMRI</h2>
 
