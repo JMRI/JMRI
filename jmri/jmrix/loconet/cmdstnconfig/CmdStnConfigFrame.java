@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  *
  * @author			Alex Shepherd   Copyright (C) 2004
  * @author			Bob Jacobsen  Copyright (C) 2006
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class CmdStnConfigFrame extends javax.swing.JFrame implements LocoNetListener {
 
@@ -29,12 +29,12 @@ public class CmdStnConfigFrame extends javax.swing.JFrame implements LocoNetList
   String LabelT = "T";
   String LabelC = "C";
   String LabelTop = "Configure Command Station";
-  
+
   String read = "Read";
   String write = "Write";
-  
+
   int[] oldcontent = new int[10];
-  
+
   public CmdStnConfigFrame() {
     super("Command Station Options Programmer");
   }
@@ -46,7 +46,7 @@ public class CmdStnConfigFrame extends javax.swing.JFrame implements LocoNetList
 
   JRadioButton[] closedButtons = new JRadioButton[MAX_OPTION];
   JRadioButton[] thrownButtons = new JRadioButton[MAX_OPTION];
-  
+
   public void initComponents() {
 
     // set up constants from properties file, if possible
@@ -61,7 +61,7 @@ public class CmdStnConfigFrame extends javax.swing.JFrame implements LocoNetList
         log.error("Failed to find options properties file for /"+name+"/");
         rb = ResourceBundle.getBundle("jmri.jmrix.loconet.cmdstnconfig.Defaultoptions");
     }
-    
+
     try {
         CONFIG_SLOT = Integer.parseInt(rb.getString("CONFIG_SLOT"));
         MIN_OPTION =  Integer.parseInt(rb.getString("MIN_OPTION"));
@@ -74,9 +74,9 @@ public class CmdStnConfigFrame extends javax.swing.JFrame implements LocoNetList
     } catch (Exception e) {
         log.error("Failed to load values from /"+name+"/ properties");
     }
-    
+
     log.debug("Constants: "+CONFIG_SLOT+" "+MIN_OPTION+" "+MAX_OPTION);
-        
+
     setTitle(LabelTop);
 
     getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -85,13 +85,13 @@ public class CmdStnConfigFrame extends javax.swing.JFrame implements LocoNetList
       // section holding buttons buttons
       readButton = new JButton(read);
       writeButton = new JButton(write);
-      
+
       JPanel pane = new JPanel();
       pane.setLayout(new FlowLayout());
       pane.add(readButton);
       pane.add(writeButton);
       getContentPane().add(pane);
-      
+
       // section holding options
       JPanel options = new JPanel();
       GridBagConstraints gc = new GridBagConstraints();
@@ -106,10 +106,10 @@ public class CmdStnConfigFrame extends javax.swing.JFrame implements LocoNetList
         JRadioButton t = new JRadioButton(LabelT);
         g.add(c);
         g.add(t);
-        
+
         p2.add(t);
         p2.add(c);
-        
+
         closedButtons[i-MIN_OPTION] = c;
         thrownButtons[i-MIN_OPTION] = t;
         gc.weightx = 1.0;
@@ -157,54 +157,27 @@ public class CmdStnConfigFrame extends javax.swing.JFrame implements LocoNetList
     msg.setElement(0, LnConstants.OPC_WR_SL_DATA);
     msg.setElement(1, 0x0E);
     msg.setElement(2, CONFIG_SLOT);
-    
+
     // load last seen contents into message
     for (int i = 0; i<10; i++)
         msg.setElement(3+i, oldcontent[i]);
 
     // load contents to message
-    int j = 0;
-    for (int i = 0; i*8+MIN_OPTION < MAX_OPTION; i++){
-        // i indexes over data bytes in the message
-        int index = i+3; // index = 0 is the first message byte
-        msg.setElement(index,0);  // start with all reset, hence thrown
+    for (int i = 0; i <= (MAX_OPTION - MIN_OPTION); i++){
+      // i indexes over closed buttons
+      int byteIndex = i / 8; // byteIndex = 0 is the first payload byte
+      if (byteIndex > 3)
+        byteIndex++; // Skip the 4th payload byte for some reason
 
-        if (closedButtons[j++].isSelected()) 
-            msg.setElement(index, msg.getElement(index) | 0x01);
-        else
-            msg.setElement(index, msg.getElement(index) & ~0x01);
-        
-        if (closedButtons[j++].isSelected()) 
-            msg.setElement(index, msg.getElement(index) | 0x02);
-        else
-            msg.setElement(index, msg.getElement(index) & ~0x02);
-        
-        if (closedButtons[j++].isSelected()) 
-            msg.setElement(index, msg.getElement(index) | 0x04);
-        else
-            msg.setElement(index, msg.getElement(index) & ~0x04);
-        
-        if (closedButtons[j++].isSelected()) 
-            msg.setElement(index, msg.getElement(index) | 0x08);
-        else
-            msg.setElement(index, msg.getElement(index) & ~0x08);
-        
-        if (closedButtons[j++].isSelected()) 
-            msg.setElement(index, msg.getElement(index) | 0x10);
-        else
-            msg.setElement(index, msg.getElement(index) & ~0x10);
-        
-        if (closedButtons[j++].isSelected()) 
-            msg.setElement(index, msg.getElement(index) | 0x20);
-        else
-            msg.setElement(index, msg.getElement(index) & ~0x20);
-        
-        if (closedButtons[j++].isSelected()) 
-            msg.setElement(index, msg.getElement(index) | 0x40);
-        else
-            msg.setElement(index, msg.getElement(index) & ~0x40);
-        
-        j++; // the 8th option doesn't really exist
+      byteIndex += 3 ; // Add base offset into slot message to first data byte
+
+      int bitIndex = i % 8;
+      int bitMask = 0x01 << bitIndex ;
+
+      if (closedButtons[ i ].isSelected())
+        msg.setElement(byteIndex, msg.getElement(byteIndex) | bitMask );
+      else
+        msg.setElement(byteIndex, msg.getElement(byteIndex) & ~bitMask );
     }
 
     // send message
@@ -225,7 +198,7 @@ public class CmdStnConfigFrame extends javax.swing.JFrame implements LocoNetList
     l.setElement(3, 0);
     LnTrafficController.instance().sendLocoNetMessage(l);
   }
-  
+
   /**
    * Process the incoming message to look for Slot 127 Read
    */
@@ -240,34 +213,23 @@ public class CmdStnConfigFrame extends javax.swing.JFrame implements LocoNetList
         oldcontent[i] = msg.getElement(3+i);
 
     // set the GUI
-    int j = 0;
-    for (int i = 0; i*8+MIN_OPTION < MAX_OPTION; i++){
-        // i indexes over bytes in the message
-        int index = i+3; // index = 0 is the first payload byte
-        int data = msg.getElement(index);  // data is the payload byte
+    for (int i = 0; i <= (MAX_OPTION - MIN_OPTION); i++){
+      // i indexes over closed/thrown buttons
+      int byteIndex = i / 8; // index = 0 is the first payload byte
+      if (byteIndex > 3)
+        byteIndex++; // Skip the 4th payload byte for some reason
 
-        if ( (data&0x01) != 0) closedButtons[j++].setSelected(true);
-        else thrownButtons[j++].setSelected(true);
+      byteIndex += 3 ; // Add base offset to first data byte
 
-        if ( (data&0x02) != 0) closedButtons[j++].setSelected(true);
-        else thrownButtons[j++].setSelected(true);
+      int bitIndex = i % 8;
+      int bitMask = 0x01 << bitIndex ;
 
-        if ( (data&0x04) != 0) closedButtons[j++].setSelected(true);
-        else thrownButtons[j++].setSelected(true);
+      int data = msg.getElement( byteIndex );  // data is the payload byte
 
-        if ( (data&0x08) != 0) closedButtons[j++].setSelected(true);
-        else thrownButtons[j++].setSelected(true);
-
-        if ( (data&0x10) != 0) closedButtons[j++].setSelected(true);
-        else thrownButtons[j++].setSelected(true);
-
-        if ( (data&0x20) != 0) closedButtons[j++].setSelected(true);
-        else thrownButtons[j++].setSelected(true);
-
-        if ( (data&0x40) != 0) closedButtons[j++].setSelected(true);
-        else thrownButtons[j++].setSelected(true);
-
-        thrownButtons[j++].setSelected(true); // the 8th option doesn't really exist
+      if ( (data & bitMask ) != 0)
+        closedButtons[ i ].setSelected(true);
+      else
+        thrownButtons[ i ].setSelected(true);
     }
 
     log.debug("Config Slot Data: " + msg.toString());
