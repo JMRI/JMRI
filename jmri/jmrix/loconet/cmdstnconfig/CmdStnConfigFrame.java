@@ -19,9 +19,9 @@ import java.util.ResourceBundle;
  *
  * @author			Alex Shepherd   Copyright (C) 2004
  * @author			Bob Jacobsen  Copyright (C) 2006
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
-public class CmdStnConfigFrame extends javax.swing.JFrame implements LocoNetListener {
+public class CmdStnConfigFrame extends jmri.util.JmriJFrame implements LocoNetListener {
 
   int CONFIG_SLOT = 127 ;
   int MIN_OPTION = 1 ;
@@ -35,6 +35,8 @@ public class CmdStnConfigFrame extends javax.swing.JFrame implements LocoNetList
 
   int[] oldcontent = new int[10];
 
+  JCheckBox optionBox;
+  
   public CmdStnConfigFrame() {
     super("Command Station Options Programmer");
   }
@@ -46,7 +48,9 @@ public class CmdStnConfigFrame extends javax.swing.JFrame implements LocoNetList
 
   JRadioButton[] closedButtons = new JRadioButton[MAX_OPTION];
   JRadioButton[] thrownButtons = new JRadioButton[MAX_OPTION];
-
+  JLabel[] labels = new JLabel[MAX_OPTION];
+  boolean[] isReserved = new boolean[MAX_OPTION];
+  
   public void initComponents() {
 
     // set up constants from properties file, if possible
@@ -58,7 +62,7 @@ public class CmdStnConfigFrame extends javax.swing.JFrame implements LocoNetList
         log.debug("match /"+name+"/");
         rb = ResourceBundle.getBundle("jmri.jmrix.loconet.cmdstnconfig."+name+"options");
     } catch (Exception e) {
-        log.error("Failed to find options properties file for /"+name+"/");
+        log.error("Failed to find properties for /"+name+"/ command station type");
         rb = ResourceBundle.getBundle("jmri.jmrix.loconet.cmdstnconfig.Defaultoptions");
     }
 
@@ -91,12 +95,17 @@ public class CmdStnConfigFrame extends javax.swing.JFrame implements LocoNetList
       pane.add(readButton);
       pane.add(writeButton);
       getContentPane().add(pane);
+      
+      optionBox = new JCheckBox(rb.getString("CheckBoxReserved"));
+      getContentPane().add(optionBox);
 
       // section holding options
       JPanel options = new JPanel();
       GridBagConstraints gc = new GridBagConstraints();
       GridBagLayout gl = new GridBagLayout();
       gc.gridy = 0;
+      gc.ipady = 0;
+      
       options.setLayout(gl);
       for (int i = MIN_OPTION; i<=MAX_OPTION; i++) {
         JPanel p2 = new JPanel();
@@ -120,7 +129,16 @@ public class CmdStnConfigFrame extends javax.swing.JFrame implements LocoNetList
         gc.gridx = 1;
         gc.weightx = GridBagConstraints.REMAINDER;
         gc.anchor = GridBagConstraints.WEST;
-        JLabel l = new JLabel(rb.getString("Option"+i));
+        String label;
+        try {
+            label = rb.getString("Option"+i);
+            isReserved[i-MIN_OPTION] = false;
+        } catch (java.util.MissingResourceException e) {
+            label = ""+i+": "+rb.getString("Reserved");
+            isReserved[i-MIN_OPTION] = true;
+        }
+        JLabel l = new JLabel(label);
+        labels[i-MIN_OPTION] = l;
         gl.setConstraints(l, gc);
         options.add(l);
         gc.gridy++;
@@ -129,9 +147,14 @@ public class CmdStnConfigFrame extends javax.swing.JFrame implements LocoNetList
       js.setVerticalScrollBarPolicy(js.VERTICAL_SCROLLBAR_AS_NEEDED);
       js.setHorizontalScrollBarPolicy(js.HORIZONTAL_SCROLLBAR_AS_NEEDED);
       getContentPane().add(js);
+      
     }
 
-
+    optionBox.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent e) {
+        updateVisibility(optionBox.isSelected());
+      }
+    });
     readButton.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent e) {
         readButtonActionPerformed(e);
@@ -143,10 +166,23 @@ public class CmdStnConfigFrame extends javax.swing.JFrame implements LocoNetList
       }
     });
 
+    updateVisibility(optionBox.isSelected());
+    
     // pack to prepare for display
     pack();
   }
 
+  void updateVisibility(boolean show) {
+    for (int i = MIN_OPTION; i<=MAX_OPTION; i++) {
+        if (isReserved[i-MIN_OPTION]) {
+            closedButtons[i-MIN_OPTION].setVisible(show);
+            thrownButtons[i-MIN_OPTION].setVisible(show);
+            labels[i-MIN_OPTION].setVisible(show);
+        }
+    }
+    pack();
+  }
+  
   public void readButtonActionPerformed(java.awt.event.ActionEvent e) {
     // format and send request
     start();
