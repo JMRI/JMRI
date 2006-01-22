@@ -4,23 +4,28 @@ package jmri.jmrit.beantable;
 
 import jmri.Manager;
 import jmri.NamedBean;
+import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
+
+import javax.swing.JComboBox;
+import java.awt.Font;
 
 import com.sun.java.util.collections.List;
 
 /**
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
- * @version		$Revision: 1.13 $
+ * @author      Dennis Miller   Copyright (C) 2006
+ * @version		$Revision: 1.14 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -215,6 +220,112 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         if (sysNameList != null) {
             for (int i = 0; i< sysNameList.size(); i++)
                 getBySystemName((String)sysNameList.get(i)).removePropertyChangeListener(this);
+        }
+    }
+    
+    /**
+     * Method to self print or print preview the table.
+     * Printed in equally sized columns across the page with headings and
+     * vertical lines between each column. Data is word wrapped within a column.
+     * Can handle data as strings, comboboxes or booleans
+     */
+    public void printTable(HardcopyWriter w) {
+        // determine the column size - evenly sized, with space between for lines
+        int columnSize = (w.getCharactersPerLine()- this.getColumnCount() - 1)/this.getColumnCount();
+        
+        // Draw horizontal dividing line
+        w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(),
+              (columnSize+1)*this.getColumnCount());
+        
+        // print the column header labels
+        String[] columnStrings = new String[this.getColumnCount()];
+        // Put each column header in the array
+        for (int i = 0; i < this.getColumnCount(); i++){
+            columnStrings[i] = this.getColumnName(i);
+        }
+        w.setFontStyle(Font.BOLD);
+        printColumns(w, columnStrings, columnSize);
+        w.setFontStyle(0);
+        w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(),
+                (columnSize+1)*this.getColumnCount());
+  
+        // now print each row of data
+        // create a base string the width of the column
+        String spaces = "";
+        for (int i = 0; i < columnSize; i++) {
+            spaces = spaces + " ";
+        }
+        for (int i = 0; i < this.getRowCount(); i++) {
+            for (int j = 0; j < this.getColumnCount(); j++) {
+                //check for special, non string contents
+                if (this.getValueAt(i, j) == null) {
+                    columnStrings[j] = spaces;
+                } else if (this.getValueAt(i, j)instanceof JComboBox){
+                        columnStrings[j] = (String)((JComboBox) this.getValueAt(i, j)).getSelectedItem();
+                    } else if (this.getValueAt(i, j)instanceof Boolean){
+                            columnStrings[j] = ( this.getValueAt(i, j)).toString();
+                        }else columnStrings[j] = (String) this.getValueAt(i, j);
+            }
+        printColumns(w, columnStrings, columnSize);
+        w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(),
+                (columnSize+1)*this.getColumnCount());
+        }            
+        w.close();
+    }
+    
+    protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize) {
+        String columnString = "";
+        String lineString = "";
+        // create a base string the width of the column
+        String spaces = "";
+        for (int i = 0; i < columnSize; i++) {
+            spaces = spaces + " ";
+        }
+        // loop through each column
+        boolean complete = false;
+        while (!complete){
+            complete = true;
+            for (int i = 0; i < columnStrings.length; i++) {
+                // if the column string is too wide cut it at word boundary (valid delimiters are space, - and _)
+                // use the intial part of the text,pad it with spaces and place the remainder back in the array
+                // for further processing on next line
+                // if column string isn't too wide, pad it to column width with spaces if needed
+                if (columnStrings[i].length() > columnSize) {
+                    boolean noWord = true;
+                    for (int k = columnSize; k >= 1 ; k--) {
+                        if (columnStrings[i].substring(k-1,k).equals(" ") 
+                            || columnStrings[i].substring(k-1,k).equals("-")
+                            || columnStrings[i].substring(k-1,k).equals("_")) {
+                            columnString = columnStrings[i].substring(0,k) 
+                                + spaces.substring(columnStrings[i].substring(0,k).length());
+                            columnStrings[i] = columnStrings[i].substring(k);
+                            noWord = false;
+                            complete = false;
+                            break;
+                        }
+                    }
+                    if (noWord) {
+                        columnString = columnStrings[i].substring(0,columnSize);
+                        columnStrings[i] = columnStrings[i].substring(columnSize);
+                        complete = false;
+                    }
+                    
+                } else {
+                    columnString = columnStrings[i] + spaces.substring(columnStrings[i].length());
+                    columnStrings[i] = "";
+                }
+                lineString = lineString + columnString + " ";
+            }
+            try {
+                w.write(lineString);
+                //write vertical dividing lines
+                for (int i = 0; i < w.getCharactersPerLine(); i = i+columnSize+1) {
+                    w.write(w.getCurrentLineNumber(), i, w.getCurrentLineNumber() + 1, i);
+                }
+                lineString = "\n";
+                w.write(lineString);
+                lineString = "";
+            } catch (IOException e) { log.warn("error during printing: "+e);}
         }
     }
 

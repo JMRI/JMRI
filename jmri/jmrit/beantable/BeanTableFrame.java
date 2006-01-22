@@ -6,8 +6,8 @@ import java.awt.Dimension;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
+import javax.swing.JFrame;
 import javax.swing.JMenuBar;
-import java.util.*;
 import javax.swing.JScrollPane;
 import javax.swing.*;
 import java.awt.*;
@@ -17,14 +17,14 @@ import java.awt.event.ActionEvent;
 import jmri.util.JTableUtil;
 import jmri.util.com.sun.TableSorter;
 
-import jmri.util.com.sun.Comparator;
+import jmri.util.davidflanagan.HardcopyWriter;
 
 
 /**
  * Frame providing a table of NamedBeans.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class BeanTableFrame extends javax.swing.JFrame {
 
@@ -64,6 +64,37 @@ public class BeanTableFrame extends javax.swing.JFrame {
         JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
         menuBar.add(fileMenu);
         fileMenu.add(new jmri.configurexml.SaveMenu());
+        
+        JMenuItem printItem = new JMenuItem(rb.getString("PrintTable"));
+        fileMenu.add(printItem);
+        final JFrame tableFrame = this;
+        printItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    HardcopyWriter writer = null;
+                    try {
+                        writer = new HardcopyWriter(tableFrame,tableFrame.getTitle() ,10, .8, .5, .5, .5, false);
+                    } catch (HardcopyWriter.PrintCanceledException ex) {
+                        //log.debug("Print cancelled");
+                        return;
+                    }
+                    dataModel.printTable(writer);
+                }
+        });
+        JMenuItem previewItem = new JMenuItem(rb.getString("PreviewTable"));
+        fileMenu.add(previewItem);        
+        previewItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    HardcopyWriter writer = null;
+                    try {
+                        writer = new HardcopyWriter(tableFrame,tableFrame.getTitle() ,10, .8, .5, .5, .5, true);
+                    } catch (HardcopyWriter.PrintCanceledException ex) {
+                        //log.debug("Print cancelled");
+                        return;
+                    }
+                    dataModel.printTable(writer);
+                }
+        });
+
         setJMenuBar(menuBar);
 
         // install items in GUI
