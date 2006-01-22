@@ -26,7 +26,7 @@ import jmri.util.JmriJFrame;
  * David Flanagan with the alligator on the front.
  *
  * @author		David Flanagan
- * @version             $Revision: 1.10 $
+ * @version             $Revision: 1.11 $
  */
 public class HardcopyWriter extends Writer {
 
@@ -266,7 +266,7 @@ public class HardcopyWriter extends Writer {
 
     public void flush() {}
 
-    // method modified by Dennis Miller to add preview capability
+    /** method modified by Dennis Miller to add preview capability */
     public void close() {
         synchronized(this.lock) {
             if (isPreview) {
@@ -301,8 +301,9 @@ public class HardcopyWriter extends Writer {
     /** Return the number of lines that fit on a page */
     public int getLinesPerPage() { return this.lines_per_page; }
 
-    /** Internal method begins a new line */
-    //  method modified by Dennis Miller to add preview capability
+    /** Internal method begins a new line
+     *  method modified by Dennis Miller to add preview capability
+     */
     protected void newline() {
         charnum = 0;
         linenum++;
@@ -314,8 +315,9 @@ public class HardcopyWriter extends Writer {
         }
     }
 
-    /** Internal method beings a new page and prints the header */
-    //  method modified by Dennis Miller to add preview capability
+    /** Internal method beings a new page and prints the header
+     *  method modified by Dennis Miller to add preview capability
+     */
     protected void newpage() {
         // get a page graphics or image graphics object depending on output destination
         if (page==null && !isPreview){
@@ -372,8 +374,8 @@ public class HardcopyWriter extends Writer {
     * original class, but was added afterwards by Dennis Miller.
     * <P>Intended to allow for a graphic printout of the speed table, but can be
     * used to print any window.  The JWindow is passed to the method and prints itself at the current
-    * line and aligned at the left margin.  It also checks for sufficient
-    * space left on the page and moves it to the top of the next page if there
+    * line and aligned at the left margin.  The calling method should check for sufficient
+    * space left on the page and move it to the top of the next page if there
     * isn't enough space.
     */
 
@@ -401,8 +403,8 @@ public class HardcopyWriter extends Writer {
      * original class, but was added afterwards by Dennis Miller.
      * <P>colStart and colEnd represent the horizontal character positions.  The
      * lines actually start in the middle of the character position to make it easy to
-     * join lines and space them between printed characters.
-     * <P>rowStart and rowEnd represent the vertical character positions.  The
+     * draw vertical lines and space them between printed characters.
+     * <P>rowStart and rowEnd represent the vertical character positions.  Horizontal
      * lines are drawn underneath the row (line) number.  They are offset so they
      * appear evenly spaced, although they don't take into account any space needed
      * for descenders, so they look best with all caps text
@@ -428,7 +430,7 @@ public class HardcopyWriter extends Writer {
 
     /**
      * Print vertical borders on the current line at the left and right sides
-     * of the page at character positions 1 and chars_per_line + 1.
+     * of the page at character positions 0 and chars_per_line + 1.
      * Border lines are one text line in height
      * <P>This was not in the
      * original class, but was added afterwards by Dennis Miller.
