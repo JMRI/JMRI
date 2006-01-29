@@ -23,6 +23,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultTreeSelectionModel;
 import javax.swing.tree.TreePath;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseAdapter;
 
 import com.sun.java.util.collections.List;
 
@@ -39,7 +40,7 @@ import com.sun.java.util.collections.List;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
 
@@ -166,6 +167,21 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
                 }
             }
         });
+        
+//      Mouselistener for doubleclick activation of proprammer   
+        dTree.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent me){
+             /* check for both double click and that it's a decoder 
+             that is being clicked on.  If it's just a Family, the programmer
+             button is enabled by the TreeSelectionListener, but we don't
+             want to automatically open a programmer so a user has the opportunity
+             to select an individual decoder
+             */
+             if (me.getClickCount() == 2){
+                 if (go2.isEnabled() && ((TreeNode)dTree.getSelectionPath().getLastPathComponent()).isLeaf()) go2.doClick();
+                }
+             }
+            } );
 
         // add button
         iddecoder= new JToggleButton("Ident");
