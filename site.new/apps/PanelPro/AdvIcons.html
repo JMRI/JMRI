@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: AdvIcons.html,v 1.4 2005-12-21 06:24:24 jacobsen Exp $ -->
+<!-- $Id: AdvIcons.html,v 1.5 2006-01-31 17:18:18 jacobsen Exp $ -->
 <html lang="en">
 
 <head>
@@ -112,6 +112,44 @@ decoder ID information on your panels.
 See xml/samples/ReporterIconExample.xml for info 
 on how to set this up.
 
+<UL>
+<LI>First check that JMRI is seeing the LocoNet messages OK.  From the tools 
+menu, open the "Reporter Table". Run a locomotive across your 
+transponding sections, and you should see the arrival and departure 
+status show up on one of the lines in the table.
+
+<LI>
+Next, you need to add the "ReporterIcon" that displays this directly 
+to the panel file.
+<P>
+Look in the "xml/samples" directory within JMRI for a file called 
+"ReporterIconExample.xml".
+<P>
+(It's also available 
+<a href="http://jmri.sf.net/xml/samples/ReporterIconExample.xml">on the web</a>
+but many browsers will try to interpret it instead of showing you the 
+text; your browser's "View Source" option might help with that)
+<P>
+You'll see this line:
+<P>
+&lt;reportericon reporter="LR12" x="10" y="10" 
+class="jmri.jmrit.display.configurexml.ReporterIconXml"/&gt;
+<P>
+The "x" and "y" define where you want it on your panel.  The "LR12" 
+is the name of the reporter object, e.g. the name of the one you saw 
+changing when you were looking at the table.
+<LI>
+Open your panel file with your favorite editor (WordPad if you've got 
+nothing you like better), and insert a line like that above  right 
+_after_ the line that starts with
+<P>
+  &lt;paneleditor class="jmri.jmrit.display.configurexml.PanelEditorXml"
+<P>
+(The "paneleditor" line starts a new panel.  If you have more than 
+one panel in the file, you'll have to look for the panel title to see 
+where to insert the new line)
+</UL>
+It's actually not as hard as it sounds.
 
 
 	    </div> <!-- closes .list -->
