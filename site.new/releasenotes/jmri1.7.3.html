@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.7.3.html,v 1.19 2006-01-09 22:15:32 jacobsen Exp $ -->
+<!-- $Id: jmri1.7.3.html,v 1.20 2006-01-31 17:17:14 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -211,6 +211,8 @@ Walthers 0-6-0 Switcher, GP30.
 
 <P>Added the MRC AD322 decoder.
 
+<P>Ken Weygandt contributed a set of panel icons for turnouts tilted at 45-degrees.  They're in the TrackSegments directory under the USSPanels directory.
+
 <P>Added a Loconet tool to configure the Digitrax DS64 board.
 
 <P>David Duchamp added an optional delay between the turnout commands when setting a route. You can set the value in the Route definition panel.
@@ -243,9 +245,26 @@ Walthers 0-6-0 Switcher, GP30.
 
 <P>Michael Mosher updated the NCE_D13SR_TC definition to add definitions for D12IP, D18SR, B18SR-PSC, N14SR, N14SRP, N14IP, Z14SR, Z14SRP decoders. He also updated the D15SR to have 6 functions, and added factory-reset information.
 
-<P>Internal change: Defer TurnoutTableAction's access to the TurnoutManager until actually needed; this speed startup
+<P>Internal change: Defer TurnoutTableAction's access to the TurnoutManager until actually needed; this speeds startup
 
 <P>Update manifest in jar file so the application is again double-clickable
+
+<P>Fix bug that caused crash if decoder definition file didn't define the usual address variables
+
+<P>Added fast timeout to LocoNet serial connections to get around some XP systems using a 100msec (!) read timeout
+
+<P>Speed up CMRI polling on Windows XP machines that have a long default timeout
+
+<P>Added support for LocoBuffer-USB
+
+<P>Fixed timeout problem on Windows XP that would cause messages to wait for a 100msec boundary to be forwarded; this would cause frequent "Port not ready" messages and various related confusions.
+
+<P>Change how URI/URL for the configuration file DTD is resolved.  Rather than use the Java 1.4-specific code in FileUtil, now use a relative path.  Note that FileUtil is still in use for locating sounds and the help files; we need to check that those still work!
+
+<P>Fixed a bug in EnumVariables that would cause CV values to to overwritten while reading from a file if CompositeVariables & EnumVariables were defined in a particular order.
+
+<P>Dennis Miller added Print and Print Preview options to the Sensor, Turnout, Signal, Memory, Reporter and Route tables.  Now you can print these to document your layout.
+
 
       <hr class="hide">
 <!-- Footer -->
