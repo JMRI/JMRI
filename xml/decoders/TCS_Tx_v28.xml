@@ -2,17 +2,18 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: TCS_Tx_v28.xml,v 1.2 2006-01-04 05:25:46 jacobsen Exp $ -->
+<!-- $Id: TCS_Tx_v28.xml,v 1.3 2006-02-01 16:13:11 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Michael Mosher"
-					version="1" lastUpdated="20051231"/>
+					version="3" lastUpdated="20060131"/>
 
 		<!-- Version 1 - made from TCS_Tx_V27 -->
 		<!-- Version 2 - Fixed bug in CV64 -->
+		<!-- Version 3 - Added ver to 35 -->
 
 <decoder>
 	<family name="TCS Tx series decoders" mfg="Train Control Systems">
-		<model model="T1_v28+" numOuts="2" numFns="8" lowVersionID="28" highVersionID="33">
+		<model model="T1_v28+" numOuts="2" numFns="8" lowVersionID="28" highVersionID="35">
 			</model>
 	</family>
 
