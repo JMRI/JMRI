@@ -2,17 +2,17 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2003, 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: TCS_Mfamily.xml,v 1.2 2005-05-01 23:25:42 jacobsen Exp $ -->
+<!-- $Id: TCS_Mfamily.xml,v 1.3 2006-02-01 15:52:29 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
-					version="2" lastUpdated="20030803"/>
+					version="4" lastUpdated="20060112"/>
 
 		<!-- Version 1 - made from TCS_Tx -->
 		<!-- Version 2 - fix "rule 17" typos -->
             <!-- Modified for old version 24  ..Eddie  -->
             <!-- Version 3-->
 		<!-- made from M1 file with corrections and added M2 norman@erwbant.freeserve.co.ukJanuary 2005 -->
-                
+        <!-- Version 4 added M1P-UK from David Cuthbert -->
 <decoder>
 	<family name="TCS Mx series decoders" mfg="Train Control Systems">
 		<model model="M1" numOuts="2" numFns="6" lowVersionID="24" highVersionID="24">
@@ -20,6 +20,8 @@
     		</model>
 		<model model="M2" numOuts="3" numFns="6" lowVersionID="29" highVersionID="29">
 			<size length="0.500" width="0.375" height="0.125" units="inches" />
+    		</model>
+		<model model="M1P-UK" numOuts="2" numFns="6" lowVersionID="35" highVersionID="37">
     		</model>
 	</family>
 
