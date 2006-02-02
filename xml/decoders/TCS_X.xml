@@ -2,7 +2,7 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: TCS_X.xml,v 1.4 2006-02-01 16:16:49 jacobsen Exp $ -->
+<!-- $Id: TCS_X.xml,v 1.5 2006-02-02 04:22:53 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Michael Mosher" 
 					version="4" lastUpdated="20060131"/>
@@ -116,7 +116,7 @@
 			<output name="Motor" />
 			</model>
 		<model model="MP-15N"   numOuts="4" numFns="14" lowVersionID="30" highVersionID="37"
-    		maxMotorCurrent="1A (peak=2A)" formFactor="N">
+    		maxMotorCurrent="1A (peak=2A)" formFactor="N"
 			comment="Fits Atlas N Scale: MP-15">
 			<output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
 			<output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
