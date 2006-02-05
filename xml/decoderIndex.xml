@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <!--Written by JMRI version 1.7.2H on Sun Dec 04 08:00:08 PST 2005 $Id: decoderIndex.xml,v 1.82 2005-12-04 16:10:57 jacobsen Exp $-->
-  <decoderIndex version="102">
+  <!--Written by JMRI version 1.7.2T on Sun Feb 05 15:10:44 PST 2006 $Id: decoderIndex.xml,v 1.83 2006-02-05 23:14:19 jacobsen Exp $-->
+  <decoderIndex version="104">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -123,13 +123,12 @@
         </model>
       </family>
       <family name="DCX Series (late)" mfg="CT Elektronik" type="locomotive" file="CT_Elektronik_DCX_new.xml">
-        <model model="DCX74D" numOuts="2" numFns="2" maxMotorCurrent="1.6 A" maxTotalCurrent="0.8 A" connector="unspecified" nmraWarrant="no">
+        <model model="DCX74D" numOuts="2" numFns="5" maxMotorCurrent="1.6 A" maxTotalCurrent="0.8 A" connector="unspecified" nmraWarrant="no">
           <versionCV lowVersionID="3" />
-          <size length="13" width="9" height="1.5" units="mm" />
           <output name="1" label="White" connection="unspecified" />
           <output name="2" label="Yellow" connection="unspecified" />
         </model>
-        <model model="DCX74DV" numOuts="4" numFns="2" maxMotorCurrent="1.6 A" maxTotalCurrent="0.8 A" connector="unspecified" nmraWarrant="no">
+        <model model="DCX74DV" numOuts="4" numFns="10" maxMotorCurrent="1.6 A" maxTotalCurrent="0.8 A" connector="unspecified" nmraWarrant="no">
           <versionCV lowVersionID="3" />
           <output name="1" label="White" connection="unspecified" />
           <output name="2" label="Yellow" connection="unspecified" />
@@ -451,6 +450,25 @@
           <output name="8" label="AUX 6" connection="unspecified" />
         </model>
       </family>
+      <family name="NMRA-DCC/Motorola" mfg="Kuehn" type="locomotive" file="Kuehn_5Moto.xml">
+        <model model="N025" numOuts="2" numFns="10" maxMotorCurrent="0.7 A" maxTotalCurrent="1 A" connector="unspecified" nmraWarrant="no">
+          <versionCV lowVersionID="34" />
+          <output name="1" label="White" connection="unspecified" />
+          <output name="2" label="Yellow" connection="unspecified" />
+        </model>
+        <model model="T125" numOuts="2" numFns="10" maxMotorCurrent="1.1 A" maxTotalCurrent="1.4 A" connector="unspecified" nmraWarrant="no">
+          <versionCV lowVersionID="34" />
+          <output name="1" label="White" connection="unspecified" />
+          <output name="2" label="Yellow" connection="unspecified" />
+        </model>
+        <model model="T145" numOuts="4" numFns="10" maxMotorCurrent="1.1 A" maxTotalCurrent="2.0 A" connector="unspecified" nmraWarrant="no">
+          <versionCV lowVersionID="34" />
+          <output name="1" label="White" connection="unspecified" />
+          <output name="2" label="Yellow" connection="unspecified" />
+          <output name="3" label="Green" connection="unspecified" />
+          <output name="4" label="Viol" connection="unspecified" />
+        </model>
+      </family>
       <family name="Lenz 4th gen BEMF decoders" mfg="Lenz" lowVersionID="51" type="locomotive" file="Lenz_51.xml">
         <model model="LE030" maxInputVolts="16V" maxMotorCurrent="0.7A" maxTotalCurrent="0.7A" numOuts="2" formFactor="N" connector="unspecified" nmraWarrant="no">
           <output name="1" label="A - White" connection="unspecified" />
@@ -612,6 +630,14 @@
           <output name="4" label="D - Violet" connection="unspecified" />
         </model>
       </family>
+      <family name="Lenz Silver with 6th gen BEMF" mfg="Lenz" highVersionID="65" lowVersionID="65" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" type="locomotive" file="Lenz_Silver.xml">
+        <model model="Silver" numOuts="4" numFns="12" lowVersionID="65" maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="A - White" connection="unspecified" />
+          <output name="2" label="B - Yellow" connection="unspecified" />
+          <output name="3" label="C - Green" connection="unspecified" />
+          <output name="4" label="D - Violet" connection="unspecified" />
+        </model>
+      </family>
       <family name="Lenz Ultra-Drive decoders" mfg="Lenz" lowVersionID="1" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" type="locomotive" file="Lenz_UltraDrive.xml">
         <model model="LE1035" numOuts="4" numFns="8" connector="unspecified" nmraWarrant="no">
           <output name="1" label="A - White" connection="unspecified" />
@@ -667,8 +693,11 @@
           <size length="28.0" width="8.5" height="2.5" units="mm" />
         </model>
       </family>
-      <family name="MRC 14/28 step decoders" mfg="MRC" type="locomotive" file="MRC_1428step.xml">
+      <family name="MRC 14/28 step decoders" mfg="MRC" lowVersionID="3" type="locomotive" file="MRC_1428step.xml">
         <model model="AD310" connector="unspecified" nmraWarrant="no" />
+        <model model="AD330" formFactor="N" maxMotorCurrent="0.8A" numOuts="2" lowVersionID="1" connector="unspecified" nmraWarrant="no">
+          <size length="23.0" width="8.5" height="4.5" units="mm" />
+        </model>
       </family>
       <family name="MRC 14 step decoders" mfg="MRC" type="locomotive" file="MRC_14step.xml">
         <model model="AD305" comment="14 step only" connector="unspecified" nmraWarrant="no" />
@@ -731,27 +760,31 @@
         <model model="N12K2" numOuts="7" numFns="12" connector="unspecified" nmraWarrant="no" />
       </family>
       <family name="Silent Running w/ Torque Compensation" mfg="North Coast Engineering" lowVersionID="35" highVersionID="35" comment="These are the version 3.5 decoders released after September 2003" type="locomotive" file="NCE_D13SR_TC.xml">
-        <model model="D13SR" numOuts="3" numFns="3" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="unspecified" nmraWarrant="no">
+        <model model="D12IP" numOuts="2" numFns="5" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" nmraWarrant="no">
+          <output name="1" label="White" connection="plug" maxcurrent="40 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="40 mA" />
+        </model>
+        <model model="D13SR" numOuts="3" numFns="5" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="unspecified" nmraWarrant="no">
           <output name="1" label="White" connection="wire" maxcurrent="40 mA" />
           <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" />
           <output name="3" label="Green" connection="wire" maxcurrent="40 mA" />
           <size length="1.65" width="0.63" height="0.12" units="inches" />
         </model>
-        <model model="D13SRP" numOuts="3" numFns="3" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" nmraWarrant="no">
+        <model model="D13SRP" numOuts="3" numFns="5" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" nmraWarrant="no">
           <output name="1" label="White" connection="plug" maxcurrent="40 mA" />
           <output name="2" label="Yellow" connection="plug" maxcurrent="40 mA" />
           <output name="3" label="Green" connection="wire" maxcurrent="40 mA" />
           <output name="4" label="Violet" connection="wire" maxcurrent="40 mA" />
           <size length="1.65" width="0.63" height="0.12" units="inches" />
         </model>
-        <model model="D13SRJ" numOuts="4" numFns="6" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="unspecified" nmraWarrant="no">
+        <model model="D13SRJ" numOuts="4" numFns="8" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="unspecified" nmraWarrant="no">
           <output name="1" label="White" connection="wire" maxcurrent="40 mA" />
           <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" />
           <output name="3" label="Green" connection="wire" maxcurrent="40 mA" />
           <output name="4" label="Violet" connection="wire" maxcurrent="40 mA" />
           <size length="1.65" width="0.63" height="0.12" units="inches" />
         </model>
-        <model model="D14SR" numOuts="6" numFns="6" connector="NMRAmedium" maxMotorCurrent="1A (peak=1.5A)" formFactor="HO" nmraWarrant="no">
+        <model model="D14SR" numOuts="6" numFns="8" connector="NMRAmedium" maxMotorCurrent="1A (peak=1.5A)" formFactor="HO" nmraWarrant="no">
           <output name="1" label="White" connection="plug" maxcurrent="40 mA" />
           <output name="2" label="Yellow" connection="plug" maxcurrent="40 mA" />
           <output name="3" label="Pad 3" connection="solder" maxcurrent="40 mA" />
@@ -760,7 +793,7 @@
           <output name="6" label="Pad 6" connection="solder" maxcurrent="40 mA" />
           <size length="0.82" width="0.63" height="0.275" units="inches" />
         </model>
-        <model model="D14SRP" numOuts="6" numFns="6" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" nmraWarrant="no">
+        <model model="D14SRP" numOuts="6" numFns="8" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" nmraWarrant="no">
           <output name="1" label="White" connection="plug" maxcurrent="40 mA" />
           <output name="2" label="Yellow" connection="plug" maxcurrent="40 mA" />
           <output name="3" label="Pad 3" connection="solder" maxcurrent="40 mA" />
@@ -769,27 +802,46 @@
           <output name="6" label="Pad 6" connection="solder" maxcurrent="40 mA" />
           <size length="1.08" width="0.65" height="?" units="inches" />
         </model>
-        <model model="D15SR" numOuts="5" numFns="6" connector="9pin" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" nmraWarrant="no">
+        <model model="D15SR" numOuts="6" numFns="8" connector="9pin" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" nmraWarrant="no">
           <output name="1" label="White" connection="wire" maxcurrent="40 mA" />
           <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" />
           <output name="3" label="Green" connection="wire" maxcurrent="40 mA" />
           <output name="4" label="Violet" connection="wire" maxcurrent="40 mA" />
           <output name="5" label="Pad" connection="solder" maxcurrent="40 mA" />
+          <output name="6" label="Pad" connection="solder" maxcurrent="40 mA" />
           <size length="1.08" width="0.63" height="0.275" units="inches" />
         </model>
-        <model model="D15SRP" numOuts="5" numFns="6" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" nmraWarrant="no">
+        <model model="D15SRP" numOuts="6" numFns="8" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" nmraWarrant="no">
           <output name="1" label="White" connection="wire" maxcurrent="40 mA" />
           <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" />
           <output name="3" label="Green" connection="wire" maxcurrent="40 mA" />
           <output name="4" label="Violet" connection="wire" maxcurrent="40 mA" />
           <output name="5" label="Pad" connection="solder" maxcurrent="40 mA" />
+          <output name="6" label="Pad" connection="solder" maxcurrent="40 mA" />
           <size length="1.08" width="0.63" height="0.275" units="inches" />
         </model>
-        <model model="ATLS4" numOuts="2" numFns="3" maxMotorCurrent="1A (peak=1.25A)" formFactor="HO" connector="unspecified" nmraWarrant="no">
+        <model model="D18SR" numOuts="8" numFns="14" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" nmraWarrant="no">
+          <output name="1" label="White" connection="plug" maxcurrent="40 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="40 mA" />
+          <output name="3" label="Pad 3" connection="solder" maxcurrent="40 mA" />
+          <output name="4" label="Pad 4" connection="solder" maxcurrent="40 mA" />
+          <output name="5" label="Pad 5" connection="solder" maxcurrent="40 mA" />
+          <output name="6" label="Pad 6" connection="solder" maxcurrent="40 mA" />
+          <output name="7" label="Pad 7" connection="solder" maxcurrent="40 mA" />
+          <output name="8" label="Pad 8" connection="solder" maxcurrent="40 mA" />
+        </model>
+        <model model="D18SR-PSC" numOuts="5" numFns="8" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" nmraWarrant="no">
+          <output name="1" label="White" connection="plug" maxcurrent="40 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="40 mA" />
+          <output name="3" label="Pad 3" connection="solder" maxcurrent="40 mA" />
+          <output name="4" label="Pad 4" connection="solder" maxcurrent="40 mA" />
+          <output name="5" label="Pad 5" connection="solder" maxcurrent="40 mA" />
+        </model>
+        <model model="ATLS4" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=1.25A)" formFactor="HO" connector="unspecified" nmraWarrant="no">
           <output name="1" label="Pad" connection="solder" maxcurrent="40 mA" />
           <output name="2" label="Pad" connection="solder" maxcurrent="40 mA" />
         </model>
-        <model model="DA-SR" numOuts="5" numFns="6" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="unspecified" nmraWarrant="no">
+        <model model="DA-SR" numOuts="5" numFns="8" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="unspecified" nmraWarrant="no">
           <output name="1" label="Tab 1" connection="solder" maxcurrent="40 mA" />
           <output name="2" label="Tab 2" connection="solder" maxcurrent="40 mA" />
           <output name="3" label="Pad 3" connection="solder" maxcurrent="40 mA" />
@@ -797,14 +849,14 @@
           <output name="5" label="Optional" connection="solder" maxcurrent="40 mA" />
           <size length="2.85" width="0.66" height="0.12" units="inches" />
         </model>
-        <model model="KRS-SR" numOuts="4" numFns="6" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" nmraWarrant="no">
+        <model model="KRS-SR" numOuts="4" numFns="8" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" nmraWarrant="no">
           <output name="1" label="Pin 6" connection="plug" maxcurrent="40 mA" />
           <output name="2" label="Pin 2" connection="plug" maxcurrent="40 mA" />
           <output name="3" label="Pad A" connection="solder" maxcurrent="40 mA" />
           <output name="4" label="Pad B" connection="solder" maxcurrent="40 mA" />
           <size length="1.9" width="0.65" height="0.125" units="inches" />
         </model>
-        <model model="P2K-SR" numOuts="5" numFns="6" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" nmraWarrant="no">
+        <model model="P2K-SR" numOuts="5" numFns="8" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" nmraWarrant="no">
           <output name="1" label="Pin 6" connection="plug" maxcurrent="40 mA" />
           <output name="2" label="Pin 2" connection="plug" maxcurrent="40 mA" />
           <output name="3" label="Pad A" connection="solder" maxcurrent="40 mA" />
@@ -812,13 +864,13 @@
           <output name="5" label="Pad" connection="solder" maxcurrent="40 mA" />
           <size length="1.92" width="0.63" height="0.12" units="inches" />
         </model>
-        <model model="SW9-SR" numOuts="3" numFns="3" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="unspecified" nmraWarrant="no">
+        <model model="SW9-SR" numOuts="3" numFns="5" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="unspecified" nmraWarrant="no">
           <output name="1" label="Pad" connection="solder" maxcurrent="40 mA" />
           <output name="2" label="Pad F0" connection="solder" maxcurrent="40 mA" />
           <output name="3" label="Pad F1" connection="solder" maxcurrent="40 mA" />
           <size length="1.95" width="0.83" height="0.12" units="inches" />
         </model>
-        <model model="D408SR" numOuts="9" numFns="12" connector="9pin" maxMotorCurrent="4A (peak=10A)" formFactor="O/G" nmraWarrant="no">
+        <model model="D408SR" numOuts="9" numFns="14" connector="9pin" maxMotorCurrent="4A (peak=10A)" formFactor="O/G" nmraWarrant="no">
           <output name="1" label="White" connection="wire" maxcurrent="80 mA" />
           <output name="2" label="Green" connection="wire" maxcurrent="80 mA" />
           <output name="3" label="Violet" connection="wire" maxcurrent="80 mA" />
@@ -830,7 +882,7 @@
           <output name="9" label="Pad 9" connection="solder" maxcurrent="500 mA" />
           <size length="2.3" width="1.2" height="0.375" units="inches" />
         </model>
-        <model model="D808SR" numOuts="8" numFns="12" maxMotorCurrent="8A (peak=30A)" formFactor="O/G" connector="unspecified" nmraWarrant="no">
+        <model model="D808SR" numOuts="8" numFns="14" maxMotorCurrent="8A (peak=30A)" formFactor="O/G" connector="unspecified" nmraWarrant="no">
           <output name="1" label="Screw" connection="other" />
           <output name="2" label="Screw" connection="other" />
           <output name="3" label="Screw" connection="other" />
@@ -841,37 +893,76 @@
           <output name="8" label="Screw" connection="other" />
           <size length="3.75" width="1.45" height="0.625" units="inches" />
         </model>
-        <model model="N12A0" numOuts="2" numFns="3" maxMotorCurrent="1.3A (peak=2A)" formFactor="N" connector="unspecified" nmraWarrant="no">
-          <output name="1" label="LED 1" connection="solder" />
-          <output name="2" label="LED 2" connection="solder" />
-          <size length="2.65" width="0.37" height="0.12" units="inches" />
-        </model>
-        <model model="N12A0e" numOuts="2" numFns="3" maxMotorCurrent="1.3A (peak=2A)" formFactor="N" connector="unspecified" nmraWarrant="no">
-          <output name="1" label="LED 1" connection="solder" />
-          <output name="2" label="LED 2" connection="solder" />
-          <size length="2.65" width="0.37" height="0.12" units="inches" />
-        </model>
-        <model model="N12A1" numOuts="2" numFns="3" maxMotorCurrent="1.3A (peak=2A)" formFactor="N" connector="unspecified" nmraWarrant="no">
-          <output name="1" label="LED 1" connection="solder" />
-          <output name="2" label="LED 2" connection="solder" />
-        </model>
-        <model model="N12SR" numOuts="2" numFns="3" maxMotorCurrent="1A (peak=1.25A)" formFactor="N" connector="unspecified" nmraWarrant="no">
+        <model model="N12SR" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=1.25A)" formFactor="N" connector="unspecified" nmraWarrant="no">
           <output name="1" label="White" connection="wire" maxcurrent="40 mA" />
           <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" />
           <size length="0.70" width="0.34" height="0.12" units="inches" />
         </model>
-        <model model="N12SRP" numOuts="2" numFns="3" connector="NMRAmedium" maxMotorCurrent="1A (peak=1.25A)" formFactor="N" nmraWarrant="no">
-          <output name="1" label="White" connection="wire" maxcurrent="40 mA" />
-          <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" />
+        <model model="N12SRP" numOuts="2" numFns="5" connector="NMRAmedium" maxMotorCurrent="1A (peak=1.25A)" formFactor="N" nmraWarrant="no">
+          <output name="1" label="White" connection="plug" maxcurrent="40 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="40 mA" />
           <size length="0.70" width="0.34" height="0.12" units="inches" />
         </model>
-        <model model="NIMFT-A" numOuts="2" numFns="3" maxMotorCurrent="1A (peak=1.25A)" formFactor="N" connector="unspecified" nmraWarrant="no">
+        <model model="N14SR" numOuts="4" numFns="8" maxMotorCurrent="1A (peak=1.25A)" formFactor="N" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="White" connection="wire" maxcurrent="50 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="50 mA" />
+          <output name="3" label="Pad 3" connection="solder" maxcurrent="50 mA" />
+          <output name="4" label="Pad 4" connection="solder" maxcurrent="50 mA" />
+          <size length="1.15" width="0.34" height="0.12" units="inches" />
+        </model>
+        <model model="N14SRP" numOuts="4" numFns="8" maxMotorCurrent="1A (peak=1.25A)" formFactor="NMRAmedium" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="White" connection="plug" maxcurrent="50 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="50 mA" />
+          <output name="3" label="Pad 3" connection="solder" maxcurrent="50 mA" />
+          <output name="4" label="Pad 4" connection="solder" maxcurrent="50 mA" />
+          <size length="1.15" width="0.34" height="0.12" units="inches" />
+        </model>
+        <model model="N14IP" numOuts="4" numFns="8" maxMotorCurrent="1A (peak=1.25A)" formFactor="NMRAmedium" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="White" connection="plug" maxcurrent="50 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="50 mA" />
+          <output name="3" label="Pad 3" connection="solder" maxcurrent="50 mA" />
+          <output name="4" label="Pad 4" connection="solder" maxcurrent="50 mA" />
+          <size length="1.15" width="0.34" height="0.12" units="inches" />
+        </model>
+        <model model="N12A0" numOuts="2" numFns="5" maxMotorCurrent="1.3A (peak=2A)" formFactor="N" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="LED 1" connection="solder" />
+          <output name="2" label="LED 2" connection="solder" />
+          <size length="2.65" width="0.37" height="0.12" units="inches" />
+        </model>
+        <model model="N12A0e" numOuts="2" numFns="5" maxMotorCurrent="1.3A (peak=2A)" formFactor="N" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="LED 1" connection="solder" />
+          <output name="2" label="LED 2" connection="solder" />
+          <size length="2.65" width="0.37" height="0.12" units="inches" />
+        </model>
+        <model model="N12A1" numOuts="2" numFns="5" maxMotorCurrent="1.3A (peak=2A)" formFactor="N" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="LED 1" connection="solder" />
+          <output name="2" label="LED 2" connection="solder" />
+        </model>
+        <model model="NIMF3" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=1.25A)" formFactor="N" connector="unspecified" nmraWarrant="no">
           <output name="1" label="Pad 1" connection="solder" />
           <output name="2" label="Pad 2" connection="solder" />
         </model>
-        <model model="NIMFT-B" numOuts="2" numFns="3" maxMotorCurrent="1A (peak=1.25A)" formFactor="N" connector="unspecified" nmraWarrant="no">
+        <model model="NIMFT-A" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=1.25A)" formFactor="N" connector="unspecified" nmraWarrant="no">
           <output name="1" label="Pad 1" connection="solder" />
           <output name="2" label="Pad 2" connection="solder" />
+        </model>
+        <model model="NIMFT-B" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=1.25A)" formFactor="N" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="Pad 1" connection="solder" />
+          <output name="2" label="Pad 2" connection="solder" />
+        </model>
+        <model model="Z14SR" numOuts="4" numFns="8" maxMotorCurrent="1A (peak=1.25A)" formFactor="Z" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="White" connection="wire" maxcurrent="50 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="50 mA" />
+          <output name="3" label="Pad 3" connection="solder" maxcurrent="50 mA" />
+          <output name="4" label="Pad 4" connection="solder" maxcurrent="50 mA" />
+          <size length="0.57" width="0.34" height="0.13" units="inches" />
+        </model>
+        <model model="Z14SRP" numOuts="4" numFns="8" maxMotorCurrent="1A (peak=1.25A)" formFactor="NMRAmedium" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="White" connection="plug" maxcurrent="50 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="50 mA" />
+          <output name="3" label="Pad 3" connection="solder" maxcurrent="50 mA" />
+          <output name="4" label="Pad 4" connection="solder" maxcurrent="50 mA" />
+          <size length="0.57" width="0.34" height="0.13" units="inches" />
         </model>
       </family>
       <family name="QSI Articulated Steam" mfg="QSIndustries" lowVersionID="2" highVersionID="5" type="locomotive" file="QSI_Articulated_Steam.xml">
@@ -1097,6 +1188,9 @@
         <model model="Life Like 2-8-4 Berkshire w/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="317" connector="unspecified" nmraWarrant="no" />
         <model model="Life Like 2-8-4 Berkshire wo/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="318" connector="unspecified" nmraWarrant="no" />
         <model model="Walthers 0-6-0 Switcher" lowVersionID="6" numFns="14" numOuts="14" productID="319" connector="unspecified" nmraWarrant="no" />
+      </family>
+      <family name="TC-64" mfg="RR-CirKits" type="stationary" comment="TC-64 is a stationary decoder that may be programmed in OPs mode" file="RR-CirKits-TC-64-basic.xml">
+        <model model="TC-64" lowVersionID="02" connector="unspecified" nmraWarrant="no" />
       </family>
       <family name="DSD diesel" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_DSD_Diesel.xml">
         <model model="DSD diesel" numOuts="4" numFns="10" connector="unspecified" nmraWarrant="no">
@@ -1353,9 +1447,9 @@
           <output name="Mute" connection="unspecified" />
         </model>
       </family>
-      <family name="Tsunami Diesel" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_Tsu_Diesel.xml">
-        <model model="Tsunami Diesel" numOuts="4" numFns="14" connector="unspecified" nmraWarrant="no">
-          <versionCV lowVersionID="65" />
+      <family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_Tsu_Steam.xml">
+        <model model="Tsunami Steam" numOuts="4" numFns="14" connector="unspecified" nmraWarrant="no">
+          <versionCV lowVersionID="64" />
           <output name="Whistle" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
           <output name="3" label="FX5" connection="unspecified" />
@@ -1373,8 +1467,108 @@
           <!-- headlight, F5, F6 -->
         </model>
       </family>
-      <family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_Tsu_Steam.xml">
-        <model model="Tsunami Steam" numOuts="4" numFns="14" connector="unspecified" nmraWarrant="no">
+      <family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_Tsu_Steam_1Hvy.xml">
+        <model model="Tsunami Heavy Steam" numOuts="4" numFns="14" connector="unspecified" nmraWarrant="no">
+          <versionCV lowVersionID="64" />
+          <output name="Whistle" connection="unspecified" />
+          <output name="Bell" connection="unspecified" />
+          <output name="3" label="FX5" connection="unspecified" />
+          <output name="4" label="FX6" connection="unspecified" />
+          <output name="Dynamo" connection="unspecified" />
+          <output name="Short-Whistle" connection="unspecified" />
+          <output name="Steam-Release" connection="unspecified" />
+          <output name="Water-Stop" connection="unspecified" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Mute" connection="unspecified" />
+          <output name="Injector" connection="unspecified" />
+          <output name="Brake-Squeal" connection="unspecified" />
+          <output name="Coupler" connection="unspecified" />
+          <!-- The four electical outputs are front headlight, back -->
+          <!-- headlight, F5, F6 -->
+        </model>
+      </family>
+      <family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_Tsu_Steam_2Med.xml">
+        <model model="Tsunami Medium Steam" numOuts="4" numFns="14" connector="unspecified" nmraWarrant="no">
+          <versionCV lowVersionID="64" />
+          <output name="Whistle" connection="unspecified" />
+          <output name="Bell" connection="unspecified" />
+          <output name="3" label="FX5" connection="unspecified" />
+          <output name="4" label="FX6" connection="unspecified" />
+          <output name="Dynamo" connection="unspecified" />
+          <output name="Short-Whistle" connection="unspecified" />
+          <output name="Steam-Release" connection="unspecified" />
+          <output name="Water-Stop" connection="unspecified" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Mute" connection="unspecified" />
+          <output name="Injector" connection="unspecified" />
+          <output name="Brake-Squeal" connection="unspecified" />
+          <output name="Coupler" connection="unspecified" />
+          <!-- The four electical outputs are front headlight, back -->
+          <!-- headlight, F5, F6 -->
+        </model>
+      </family>
+      <family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_Tsu_Steam_3Light.xml">
+        <model model="Tsunami Light Steam" numOuts="4" numFns="14" connector="unspecified" nmraWarrant="no">
+          <versionCV lowVersionID="64" />
+          <output name="Whistle" connection="unspecified" />
+          <output name="Bell" connection="unspecified" />
+          <output name="3" label="FX5" connection="unspecified" />
+          <output name="4" label="FX6" connection="unspecified" />
+          <output name="Dynamo" connection="unspecified" />
+          <output name="Short-Whistle" connection="unspecified" />
+          <output name="Steam-Release" connection="unspecified" />
+          <output name="Water-Stop" connection="unspecified" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Mute" connection="unspecified" />
+          <output name="Injector" connection="unspecified" />
+          <output name="Brake-Squeal" connection="unspecified" />
+          <output name="Coupler" connection="unspecified" />
+          <!-- The four electical outputs are front headlight, back -->
+          <!-- headlight, F5, F6 -->
+        </model>
+      </family>
+      <family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_Tsu_Steam_4Lt_Log.xml">
+        <model model="Tsunami Lt Logging Steam" numOuts="4" numFns="14" connector="unspecified" nmraWarrant="no">
+          <versionCV lowVersionID="64" />
+          <output name="Whistle" connection="unspecified" />
+          <output name="Bell" connection="unspecified" />
+          <output name="3" label="FX5" connection="unspecified" />
+          <output name="4" label="FX6" connection="unspecified" />
+          <output name="Dynamo" connection="unspecified" />
+          <output name="Short-Whistle" connection="unspecified" />
+          <output name="Steam-Release" connection="unspecified" />
+          <output name="Water-Stop" connection="unspecified" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Mute" connection="unspecified" />
+          <output name="Injector" connection="unspecified" />
+          <output name="Brake-Squeal" connection="unspecified" />
+          <output name="Coupler" connection="unspecified" />
+          <!-- The four electical outputs are front headlight, back -->
+          <!-- headlight, F5, F6 -->
+        </model>
+      </family>
+      <family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_Tsu_Steam_DRGC.xml">
+        <model model="Tsunami DRG C-Class Steam" numOuts="4" numFns="14" connector="unspecified" nmraWarrant="no">
+          <versionCV lowVersionID="64" />
+          <output name="Whistle" connection="unspecified" />
+          <output name="Bell" connection="unspecified" />
+          <output name="3" label="FX5" connection="unspecified" />
+          <output name="4" label="FX6" connection="unspecified" />
+          <output name="Dynamo" connection="unspecified" />
+          <output name="Short-Whistle" connection="unspecified" />
+          <output name="Steam-Release" connection="unspecified" />
+          <output name="Water-Stop" connection="unspecified" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Mute" connection="unspecified" />
+          <output name="Injector" connection="unspecified" />
+          <output name="Brake-Squeal" connection="unspecified" />
+          <output name="Coupler" connection="unspecified" />
+          <!-- The four electical outputs are front headlight, back -->
+          <!-- headlight, F5, F6 -->
+        </model>
+      </family>
+      <family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_Tsu_Steam_DRGK.xml">
+        <model model="Tsunami DRGW K-Class Steam" numOuts="4" numFns="14" connector="unspecified" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Whistle" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
@@ -1411,6 +1605,7 @@
         <model model="M2" numOuts="3" numFns="6" lowVersionID="29" highVersionID="29" connector="unspecified" nmraWarrant="no">
           <size length="0.500" width="0.375" height="0.125" units="inches" />
         </model>
+        <model model="M1P-UK" numOuts="2" numFns="6" lowVersionID="35" highVersionID="37" connector="unspecified" nmraWarrant="no" />
       </family>
       <family name="TCS 150 series decoders" mfg="Train Control Systems" type="locomotive" file="TCS_TH150DP.xml">
         <model model="TH150DP" numOuts="5" numFns="6" connector="unspecified" nmraWarrant="no">
@@ -1435,10 +1630,10 @@
         </model>
       </family>
       <family name="TCS Tx series decoders" mfg="Train Control Systems" type="locomotive" file="TCS_Tx_v28.xml">
-        <model model="T1_v28+" numOuts="2" numFns="8" lowVersionID="28" highVersionID="33" connector="unspecified" nmraWarrant="no" />
+        <model model="T1_v28+" numOuts="2" numFns="8" lowVersionID="28" highVersionID="35" connector="unspecified" nmraWarrant="no" />
       </family>
       <family name="TCS X Series Decoders" mfg="Train Control Systems" type="locomotive" file="TCS_X.xml">
-        <model model="A4X" numOuts="4" numFns="14" lowVersionID="33" highVersionID="33" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" connector="unspecified" nmraWarrant="no">
+        <model model="A4X" numOuts="4" numFns="14" lowVersionID="30" highVersionID="37" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" connector="unspecified" nmraWarrant="no">
           <size length="2.860" width="0.680" height="0.145" units="inches" />
           <output name="1" label="White" connection="solder" maxcurrent="100 mA" />
           <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
@@ -1448,7 +1643,7 @@
           <output name="Ditch" connection="unspecified" />
           <output name="Motor" connection="unspecified" />
         </model>
-        <model model="A6X" numOuts="6" numFns="14" lowVersionID="33" highVersionID="33" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" connector="unspecified" nmraWarrant="no">
+        <model model="A6X" numOuts="6" numFns="14" lowVersionID="30" highVersionID="37" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" connector="unspecified" nmraWarrant="no">
           <size length="2.860" width="0.680" height="0.145" units="inches" />
           <output name="1" label="White" connection="solder" maxcurrent="200 mA" />
           <output name="2" label="Yellow" connection="solder" maxcurrent="200 mA" />
@@ -1460,7 +1655,14 @@
           <output name="Ditch" connection="unspecified" />
           <output name="Motor" connection="unspecified" />
         </model>
-        <model model="DP5X" numOuts="5" numFns="14" lowVersionID="33" highVersionID="33" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" connector="unspecified" nmraWarrant="no">
+        <model model="AMD1" numOuts="2" numFns="8" lowVersionID="37" highVersionID="37" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: B23-7, B30-7, B36-7, C628, C630, Dash8-32BW, Dash8-40B, Dash8-40BW and GP-38. Fits Atlas DCC Ready:  GP-40, GP-40-2, SD-7, SD-9, SD-35, Trainmaster and U25B" connector="unspecified" nmraWarrant="no">
+          <size length="3.03" width="0.355" height="0.135" units="inches" />
+          <output name="1" label="Front LED" connection="other" comment="Prewired with Golden White LED" maxcurrent="100 mA" />
+          <output name="2" label="Rear LED" connection="other" comment="Prewired with Golden White LED" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+        </model>
+        <model model="DP5X" numOuts="5" numFns="14" lowVersionID="30" highVersionID="37" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" connector="unspecified" nmraWarrant="no">
           <size length="0845" width="0.680" height="0.165" units="inches" />
           <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
           <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
@@ -1471,7 +1673,7 @@
           <output name="Ditch" connection="unspecified" />
           <output name="Motor" connection="unspecified" />
         </model>
-        <model model="M3" numOuts="3" numFns="14" lowVersionID="33" highVersionID="33" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="unspecified" nmraWarrant="no">
+        <model model="M3" numOuts="3" numFns="14" lowVersionID="30" highVersionID="37" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="unspecified" nmraWarrant="no">
           <size length="0.570" width="0.355" height="0.132" units="inches" />
           <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
           <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
@@ -1480,7 +1682,7 @@
           <output name="Ditch" connection="unspecified" />
           <output name="Motor" connection="unspecified" />
         </model>
-        <model model="M4" numOuts="4" numFns="14" lowVersionID="33" highVersionID="33" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="unspecified" nmraWarrant="no">
+        <model model="M4" numOuts="4" numFns="14" lowVersionID="30" highVersionID="37" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="unspecified" nmraWarrant="no">
           <size length="0.570" width="0.355" height="0.132" units="inches" />
           <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
           <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
@@ -1490,7 +1692,7 @@
           <output name="Ditch" connection="unspecified" />
           <output name="Motor" connection="unspecified" />
         </model>
-        <model model="MC2" numOuts="2" numFns="6" lowVersionID="33" highVersionID="33" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="unspecified" nmraWarrant="no">
+        <model model="MC2" numOuts="2" numFns="8" lowVersionID="30" highVersionID="37" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="unspecified" nmraWarrant="no">
           <size length="0.71" width="0.41" height="0.19" units="inches" />
           <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
           <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
@@ -1498,7 +1700,7 @@
           <output name="Ditch" connection="unspecified" />
           <output name="Motor" connection="unspecified" />
         </model>
-        <model model="MC4" numOuts="4" numFns="14" lowVersionID="33" highVersionID="33" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="unspecified" nmraWarrant="no">
+        <model model="MC4" numOuts="4" numFns="14" lowVersionID="30" highVersionID="37" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="unspecified" nmraWarrant="no">
           <size length="0.71" width="0.41" height="0.19" units="inches" />
           <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
           <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
@@ -1508,7 +1710,7 @@
           <output name="Ditch" connection="unspecified" />
           <output name="Motor" connection="unspecified" />
         </model>
-        <model model="MC6" numOuts="6" numFns="14" lowVersionID="33" highVersionID="33" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="unspecified" nmraWarrant="no">
+        <model model="MC6" numOuts="6" numFns="14" lowVersionID="30" highVersionID="37" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="unspecified" nmraWarrant="no">
           <size length="0.71" width="0.41" height="0.19" units="inches" />
           <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
           <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
@@ -1520,7 +1722,16 @@
           <output name="Ditch" connection="unspecified" />
           <output name="Motor" connection="unspecified" />
         </model>
-        <model model="T4X" numOuts="4" numFns="14" lowVersionID="33" highVersionID="33" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="unspecified" nmraWarrant="no">
+        <model model="MP-15N" numOuts="4" numFns="14" lowVersionID="30" highVersionID="37" maxMotorCurrent="1A (peak=2A)" formFactor="N" comment="Fits Atlas N Scale: MP-15" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+        </model>
+        <model model="T4X" numOuts="4" numFns="14" lowVersionID="30" highVersionID="37" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="unspecified" nmraWarrant="no">
           <size length="1.010" width="0.665" height="0.250" units="inches" />
           <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
           <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
@@ -1530,7 +1741,7 @@
           <output name="Ditch" connection="unspecified" />
           <output name="Motor" connection="unspecified" />
         </model>
-        <model model="T5X" numOuts="5" numFns="14" lowVersionID="33" highVersionID="33" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="unspecified" nmraWarrant="no">
+        <model model="T5X" numOuts="5" numFns="14" lowVersionID="30" highVersionID="37" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="unspecified" nmraWarrant="no">
           <size length="1.000" width="0.680" height="0.250" units="inches" />
           <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
           <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
@@ -1541,7 +1752,7 @@
           <output name="Ditch" connection="unspecified" />
           <output name="Motor" connection="unspecified" />
         </model>
-        <model model="T6X" numOuts="6" numFns="14" lowVersionID="33" highVersionID="33" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="unspecified" nmraWarrant="no">
+        <model model="T6X" numOuts="6" numFns="14" lowVersionID="30" highVersionID="37" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="unspecified" nmraWarrant="no">
           <size length="1.00" width="0.680" height="0.250" units="inches" />
           <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
           <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
@@ -1553,7 +1764,7 @@
           <output name="Ditch" connection="unspecified" />
           <output name="Motor" connection="unspecified" />
         </model>
-        <model model="W5X" numOuts="5" numFns="14" lowVersionID="33" highVersionID="33" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="unspecified" nmraWarrant="no">
+        <model model="W5X" numOuts="5" numFns="14" lowVersionID="30" highVersionID="37" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="unspecified" nmraWarrant="no">
           <size length="0.850" width="0.690" height="0.190" units="inches" />
           <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
           <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
@@ -1569,6 +1780,18 @@
         <model model="M1" numOuts="2" numFns="2" lowVersionID="24" highVersionID="24" connector="unspecified" nmraWarrant="no">
           <size length="0.500" width="0.375" height="0.125" units="inches" />
         </model>
+      </family>
+      <family name="SIC24" mfg="Team Digital" type="stationary" comment="SIC24 is not stationary decoder, but it can be programmed in the usual way" file="TD_SIC24.xml">
+        <model model="SIC24" lowVersionID="12" connector="unspecified" nmraWarrant="no" />
+      </family>
+      <family name="Stationary Decoder" mfg="Team Digital" type="stationary" comment="SMD2 is a stationary decoder, but it can be programmed in the usual way" file="TD_SMD2.xml">
+        <model model="SMD2" lowVersionID="1" connector="unspecified" nmraWarrant="no" />
+      </family>
+      <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SMD8.xml">
+        <model model="SMD8" lowVersionID="52" comment="SMD8 is a stationary decoder, but it can be programmed in the usual way" connector="unspecified" nmraWarrant="no" />
+      </family>
+      <family name="SRC8" mfg="Team Digital" type="stationary" comment="SRC8 is not stationary decoder, but it can be programmed in the usual way" file="TD_SRC8.xml">
+        <model model="SRC8" lowVersionID="12" connector="unspecified" nmraWarrant="no" />
       </family>
       <family name="Umelec ATLPlus Engine Module" mfg="Umelec Ing Buero" type="locomotive" file="Umelec_ATL2051.xml">
         <model model="ATL2051" lowVersionID="59" highVersionID="59" comment="For DC Motors, or AC Motors with Infrared Light Barrier" maxInputVolts="12V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="HO" numOuts="9" numFns="8" connector="unspecified" nmraWarrant="no" />
