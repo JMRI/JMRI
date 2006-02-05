@@ -2,25 +2,26 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: CT_Elektronik_DCX_new.xml,v 1.3 2005-11-26 04:32:59 jacobsen Exp $ -->
+<!-- $Id: CT_Elektronik_DCX_new.xml,v 1.4 2006-02-05 23:01:04 jacobsen Exp $ -->
 <decoder-config>
 		<version author="peter.brandenburg@t-online.de"
-			version="1" lastUpdated="20042912" />
+			version="2" lastUpdated="2006/01/31" />
 
 		<!-- version  - add consist direction - jake -->
 
 		<!-- version 1 - added CT-programmer panes and tooltips- Peter -->
+		
+		<!-- version 2 - added missing CV's - Peter -->
 
 <decoder>
 	<family name="DCX Series (late)" mfg="CT Elektronik">
-		<model model="DCX74D" numOuts="2" numFns="2"
+		<model model="DCX74D" numOuts="2" numFns="5"
 		maxMotorCurrent="1.6 A" maxTotalCurrent="0.8 A" >
-		    <versionCV lowVersionID="3" />
-            <size length="13" width="9" height="1.5" units="mm" />		
-            <output name="1" label="White" />
+		<versionCV lowVersionID="3" />
+		<output name="1" label="White" />
 	    	<output name="2" label="Yellow" />
 		</model>
-		<model model="DCX74DV" numOuts="4" numFns="2"
+		<model model="DCX74DV" numOuts="4" numFns="10"
 		maxMotorCurrent="1.6 A" maxTotalCurrent="0.8 A" >
 		<versionCV lowVersionID="3" />
 		<output name="1" label="White" />
@@ -76,10 +77,7 @@
 				item="Manufacturer" default="117">
 			<decVal/>
 			</variable>
-	<!--	<variable label="Manufacturer ID - Reset" CV="8">
-			<decVal/>
-			</variable>	-->
-
+	
 		<variable label="Total PWM Period" CV="9" default="150" item="Total PWM Period"
 				tooltip="13-63=30-150Hz, 141-191=16kHz"
 				comment="Range 13-63/141-191">
@@ -145,7 +143,8 @@
 				</enumVal>
 			</variable>
 
-		<variable label="FL(f) controls output 1" CV="33" default="1" mask="XXXXXXXV" minOut="1"> <enumVal> 
+		<!-- Define the Function-Output mapping based on NMRA definitions -->
+			<variable label="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
@@ -159,13 +158,12 @@
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="FL(f) controls output 7" CV="33" mask="XVXXXXXX" minOut="7"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-
-
-
+		<variable label="FL(f) controls output 8" CV="33" mask="VXXXXXXX" minOut="8"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 
 		<variable label="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="FL(r) controls output 2" CV="34" default="1" mask="XXXXXXVX" minOut="2"> <enumVal> 
+		<variable label="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2" default="1"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
@@ -177,15 +175,14 @@
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="FL(r) controls output 7" CV="34" mask="XVXXXXXX" minOut="7"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-
-
-
+		<variable label="FL(r) controls output 8" CV="34" mask="VXXXXXXX" minOut="8"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 
 		<variable label="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="1"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" minFn="1"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F1 controls output 3" CV="35" default="1" mask="XXXXXVXX" minOut="3" minFn="1"> <enumVal> 
+		<variable label="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" minFn="1" default="1"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="F1 controls output 4" CV="35" mask="XXXXVXXX" minOut="4" minFn="1"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
@@ -195,9 +192,8 @@
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="F1 controls output 7" CV="35" mask="XVXXXXXX" minOut="7" minFn="1"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-
-
-
+		<variable label="F1 controls output 8" CV="35" mask="VXXXXXXX" minOut="8" minFn="1"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 
 		<variable label="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
@@ -205,7 +201,7 @@
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="3" minFn="2"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F2 controls output 4" CV="36" default="1" mask="XXXXVXXX" minOut="4" minFn="2"> <enumVal> 
+		<variable label="F2 controls output 4" CV="36" mask="XXXXVXXX" minOut="4" minFn="2" default="1"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="F2 controls output 5" CV="36" mask="XXXVXXXX" minOut="5" minFn="2"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
@@ -213,63 +209,178 @@
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="F2 controls output 7" CV="36" mask="XVXXXXXX" minOut="7" minFn="2"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F2 controls output 8" CV="36" mask="VXXXXXXX" minOut="8" minFn="2"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 
-
-
+		<variable label="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" minFn="3"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" minFn="3"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="3"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="F3 controls output 4" CV="37" mask="XXXXVXXX" minOut="4" minFn="3"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F3 controls output 5" CV="37" default="1" mask="XXXVXXXX" minOut="5" minFn="3"> <enumVal> 
+		<variable label="F3 controls output 5" CV="37" mask="XXXVXXXX" minOut="5" minFn="3" default="1"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="F3 controls output 6" CV="37" mask="XXVXXXXX" minOut="6" minFn="3"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="F3 controls output 7" CV="37" mask="XVXXXXXX" minOut="7" minFn="3"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-
-
-
-
-		<variable label="F4 controls output 3" CV="38" mask="XXXXXXXV" minOut="3" minFn="4"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F4 controls output 4" CV="38" mask="XXXXXXVX" minOut="4" minFn="4"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F4 controls output 5" CV="38" mask="XXXXXVXX" minOut="5" minFn="4"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F4 controls output 6" CV="38" default="1" mask="XXXXVXXX" minOut="6" minFn="4"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F4 controls output 7" CV="38" mask="XXXVXXXX" minOut="7" minFn="4"> <enumVal> 
+		<variable label="F3 controls output 8" CV="37" mask="VXXXXXXX" minOut="8" minFn="3"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 
+		<variable label="F4 controls output 4" CV="38" mask="XXXXXXXV" minOut="4" minFn="4"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F4 controls output 5" CV="38" mask="XXXXXXVX" minOut="5" minFn="4"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F4 controls output 6" CV="38" mask="XXXXXVXX" minOut="6" minFn="4" default="1"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F4 controls output 7" CV="38" mask="XXXXVXXX" minOut="7" minFn="4"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F4 controls output 8" CV="38" mask="XXXVXXXX" minOut="8" minFn="4"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F4 controls output 9" CV="38" mask="XXVXXXXX" minOut="9" minFn="4"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F4 controls output 10" CV="38" mask="XVXXXXXX" minOut="10" minFn="4"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F4 controls output 11" CV="38" mask="VXXXXXXX" minOut="11" minFn="4"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+			
+		<variable label="F5 controls output 4" CV="39" mask="XXXXXXXV" minOut="4" minFn="5"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F5 controls output 5" CV="39" mask="XXXXXXVX" minOut="5" minFn="5"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F5 controls output 6" CV="39" mask="XXXXXVXX" minOut="6" minFn="5"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F5 controls output 7" CV="39" mask="XXXXVXXX" minOut="7" minFn="5" default="1"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F5 controls output 8" CV="39" mask="XXXVXXXX" minOut="8" minFn="5"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F5 controls output 9" CV="39" mask="XXVXXXXX" minOut="9" minFn="5"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F5 controls output 10" CV="39" mask="XVXXXXXX" minOut="10" minFn="5"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F5 controls output 11" CV="39" mask="VXXXXXXX" minOut="11" minFn="5"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+			
+		<variable label="F6 controls output 4" CV="40" mask="XXXXXXXV" minOut="4" minFn="6"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F6 controls output 5" CV="40" mask="XXXXXXVX" minOut="5" minFn="6"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F6 controls output 6" CV="40" mask="XXXXXVXX" minOut="6" minFn="6"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F6 controls output 7" CV="40" mask="XXXXVXXX" minOut="7" minFn="6"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F6 controls output 8" CV="40" mask="XXXVXXXX" minOut="8" minFn="6" default="1"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F6 controls output 9" CV="40" mask="XXVXXXXX" minOut="9" minFn="6"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F6 controls output 10" CV="40" mask="XVXXXXXX" minOut="10" minFn="6"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F6 controls output 11" CV="40" mask="VXXXXXXX" minOut="11" minFn="6"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+			
+		<variable label="F7 controls output 4" CV="41" mask="XXXXXXXV" minOut="4" minFn="7"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F7 controls output 5" CV="41" mask="XXXXXXVX" minOut="5" minFn="7"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F7 controls output 6" CV="41" mask="XXXXXVXX" minOut="6" minFn="7"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F7 controls output 7" CV="41" mask="XXXXVXXX" minOut="7" minFn="7"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F7 controls output 8" CV="41" mask="XXXVXXXX" minOut="8" minFn="7"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F7 controls output 9" CV="41" mask="XXVXXXXX" minOut="9" minFn="7" default="1"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F7 controls output 10" CV="41" mask="XVXXXXXX" minOut="10" minFn="7"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F7 controls output 11" CV="41" mask="VXXXXXXX" minOut="11" minFn="7"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 
-
-
-		<variable label="F5 controls output 3" CV="39" mask="XXXXXXXV" minOut="3" minFn="5"> <enumVal> 
+		<variable label="F8 controls output 4" CV="42" mask="XXXXXXXV" minOut="4" minFn="8"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F5 controls output 4" CV="39" mask="XXXXXXVX" minOut="4" minFn="5"> <enumVal> 
+		<variable label="F8 controls output 5" CV="42" mask="XXXXXXVX" minOut="5" minFn="8"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F5 controls output 5" CV="39" mask="XXXXXVXX" minOut="5" minFn="5"> <enumVal> 
+		<variable label="F8 controls output 6" CV="42" mask="XXXXXVXX" minOut="6" minFn="8"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F5 controls output 6" CV="39" mask="XXXXVXXX" minOut="6" minFn="5"> <enumVal> 
+		<variable label="F8 controls output 7" CV="42" mask="XXXXVXXX" minOut="7" minFn="8"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F5 controls output 7" CV="39" default="1" mask="XXXVXXXX" minOut="7" minFn="5"> <enumVal> 
+		<variable label="F8 controls output 8" CV="42" mask="XXXVXXXX" minOut="8" minFn="8"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-
-
-
-		
-		<variable label="F6 controls output 3" CV="40" mask="XXXXXXXV" minOut="3" minFn="6"> <enumVal> 
+		<variable label="F8 controls output 9" CV="42" mask="XXVXXXXX" minOut="9" minFn="8"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F6 controls output 4" CV="40" mask="XXXXXXVX" minOut="4" minFn="6"> <enumVal> 
+		<variable label="F8 controls output 10" CV="42" mask="XVXXXXXX" minOut="10" minFn="8" default="1"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F6 controls output 5" CV="40" mask="XXXXXVXX" minOut="5" minFn="6"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F6 controls output 6" CV="40" mask="XXXXVXXX" minOut="6" minFn="6"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F6 controls output 7" CV="40" mask="XXXVXXXX" minOut="7" minFn="6"> <enumVal> 
+		<variable label="F8 controls output 11" CV="42" mask="VXXXXXXX" minOut="11" minFn="8"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 
+		<variable label="F9 controls output 7" CV="43" mask="XXXXXXXV" minOut="7" minFn="9"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F9 controls output 8" CV="43" mask="XXXXXXVX" minOut="8" minFn="9"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F9 controls output 9" CV="43" mask="XXXXXVXX" minOut="9" minFn="9"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F9 controls output 10" CV="43" mask="XXXXVXXX" minOut="10" minFn="9"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F9 controls output 11" CV="43" mask="XXXVXXXX" minOut="11" minFn="9" default="1"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F9 controls output 12" CV="43" mask="XXVXXXXX" minOut="12" minFn="9"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F9 controls output 13" CV="43" mask="XVXXXXXX" minOut="13" minFn="9"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F9 controls output 14" CV="43" mask="VXXXXXXX" minOut="14" minFn="9"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 
+		<variable label="F10 controls output 7" CV="44" mask="XXXXXXXV" minOut="7" minFn="10"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F10 controls output 8" CV="44" mask="XXXXXXVX" minOut="8" minFn="10"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F10 controls output 9" CV="44" mask="XXXXXVXX" minOut="9" minFn="10"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F10 controls output 10" CV="44" mask="XXXXVXXX" minOut="10" minFn="10"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F10 controls output 11" CV="44" mask="XXXVXXXX" minOut="11" minFn="10"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F10 controls output 12" CV="44" mask="XXVXXXXX" minOut="12" minFn="10" default="1"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F10 controls output 13" CV="44" mask="XVXXXXXX" minOut="13" minFn="10"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F10 controls output 14" CV="44" mask="VXXXXXXX" minOut="14" minFn="10"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+		<variable label="F11 controls output 7" CV="45" mask="XXXXXXXV" minOut="7" minFn="11"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F11 controls output 8" CV="45" mask="XXXXXXVX" minOut="8" minFn="11"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F11 controls output 9" CV="45" mask="XXXXXVXX" minOut="9" minFn="11"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F11 controls output 10" CV="45" mask="XXXXVXXX" minOut="10" minFn="11"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F11 controls output 11" CV="45" mask="XXXVXXXX" minOut="11" minFn="11"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F11 controls output 12" CV="45" mask="XXVXXXXX" minOut="12" minFn="11"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F11 controls output 13" CV="45" mask="XVXXXXXX" minOut="13" minFn="11" default="1"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F11 controls output 14" CV="45" mask="VXXXXXXX" minOut="14" minFn="11"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+		<variable label="F12 controls output 7" CV="46" mask="XXXXXXXV" minOut="7" minFn="12"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F12 controls output 8" CV="46" mask="XXXXXXVX" minOut="8" minFn="12"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F12 controls output 9" CV="46" mask="XXXXXVXX" minOut="9" minFn="12"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F12 controls output 10" CV="46" mask="XXXXVXXX" minOut="10" minFn="12"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F12 controls output 11" CV="46" mask="XXXVXXXX" minOut="11" minFn="12"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F12 controls output 12" CV="46" mask="XXVXXXXX" minOut="12" minFn="12"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F12 controls output 13" CV="46" mask="XVXXXXXX" minOut="13" minFn="12"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F12 controls output 14" CV="46" mask="VXXXXXXX" minOut="14" minFn="12" default="1"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 
 			
 		<variable label="Signal Dependent Acceleration" CV="61" default="0"
@@ -293,6 +404,10 @@
 			<decVal max="252"/>
 			</variable>
 		
+		<variable label="HLU" CV="59" default="3"
+				comment="Range 0-255">
+			<decVal/>
+			</variable>
 
 		<variable label="P adjustment" CV="51" default="80" item="EMF Static Config"
 				tooltip="P adjustment, 0-255"
@@ -365,6 +480,10 @@
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
 				</enumVal>
+			</variable>
+			
+		<variable label="ACK Pulse Intensity" CV="111" default="255">
+				<decVal/>
 			</variable>
 
 
@@ -509,45 +628,49 @@
 				</enumVal>
 			</variable>
 
+
+		<variable label="Short Level 1 Function" CV="139" default="10" comment="Shut down at once at overload function">
+		      <decVal/>
+			</variable>
 		
+		<variable label="Short Level 2 Function" CV="140" default="8" comment="Shut down quickly at overload function">
+		      <decVal/>
+			</variable>
+			
+		<variable label="Short Level 3 Function" CV="141" default="6" comment="Shut down slowly at overload function">
+		      <decVal/>
+			</variable>
+			
+		<variable label="Short Level 1 Motor" CV="142" default="60" comment="Shut down at once at overload motor">
+		      <decVal/>
+			</variable>
 		
+		<variable label="Short Level 2 Motor" CV="143" default="50" comment="Shut down quickly at overload motor">
+		      <decVal/>
+			</variable>
+			
+		<variable label="Short Level 3 Motor" CV="144" default="40" comment="Shut down slowly at overload motor">
+		      <decVal/>
+			</variable>
 		
 	</variables>
 </decoder>
 
-<!--		
-<pane name="Motor">
+	<pane name="Short Handling">
 		<column>
-			<display item="Acceleration" tooltip="CV 3"/>
-			<display item="Deceleration" tooltip="CV 4"/>
-			<label label=" "/>
-			<display item="Forward Trim" tooltip="CV 66"/>
-			<display item="Reverse Trim" tooltip="CV 95"/>
-			<label label=" "/>
-			<display item="Total PWM Period" tooltip="CV 9, read manual"/>
+			<label label="Shutting down on shorts" />
 			<separator/>
-			<display item="PWM period low/high" tooltip="CV 29, bit 7, read manual"/>
-		</column>
-		
-		<column>
-			<display item="Exponential Acceleration" tooltip="CV 121"/>
-			<display item="Exponential Deceleration" tooltip="CV 122"/>
-			<display item="Adapts Acceleration and Deceleration" tooltip="CV 123"/>
-		</column>
-
-		<column>
-			<display item="EMF Feedback Cutoff" tooltip="CV 10"/>
-			<display item="Volume EMF Feedback Cutoff" tooltip="CV 113"/>
-			<display item="BEMF Pull" tooltip="CV 50"/>
 			<label label=" "/>
-			<display item="P adjustment" tooltip="CV 51"/>
-			<display item="I adjustment" tooltip="CV 52"/>
-			<display item="Adjust EMK Voltage" tooltip="CV 49"/>
+			<display item="Short Level 1 Function" tooltip="Shut down at once at overload function"/>
+			<display item="Short Level 2 Function" tooltip="Shut down quickly at overload function"/>
+			<display item="Short Level 3 Function" tooltip="Shut down slowly at overload function"/>
+			<separator/>
+			<label label=" "/>
+			<display item="Short Level 1 Motor" tooltip="Shut down at once at overload motor"/>
+			<display item="Short Level 2 Motor" tooltip="Shut down quickly at overload motor"/>
+			<display item="Short Level 3 Motor" tooltip="Shut down slowly at overload motor"/>
 		</column>
 	</pane>
--->
-	
-
 	
 
 	<pane name="Output Handling">
@@ -649,6 +772,8 @@
 	<display item="Shunting, CV3 and 4 ON/OFF" />
 	<display item="Shunting, Half max. Speed"  />
 	<display item="Shunting, Reverse Speed 65% of Full"  />
+	<separator />
+	<display item="ACK Pulse Intensity" tooltip="CV 111" />
 
 	</column>
 	
@@ -657,9 +782,11 @@
 	<separator />
 	<label label=" " /> 
 	
-	<display item="-U-" tooltip="60" />
+	<display item="-L-" tooltip="CV 59" />
 	
-	<display item="-L-" tooltip="59" />
+	<display item="-U-" tooltip="CV 60" />
+	
+	<display item="HLU" tooltip="CV 138" />
 	
 	</column>
 			
