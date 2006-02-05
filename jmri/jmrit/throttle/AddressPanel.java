@@ -20,7 +20,7 @@ import org.jdom.Element;
  * notifies them when the user enters a new address.
  *
  * @author     glen   Copyright (C) 2002
- * @version    $Revision: 1.24 $
+ * @version    $Revision: 1.25 $
  */
 public class AddressPanel extends JInternalFrame
 {
@@ -223,7 +223,9 @@ public class AddressPanel extends JInternalFrame
                 AddressListener l = (AddressListener)listeners.get(i);
                 log.debug("Notify address listener "+l);
 				currentAddress = addrSelector.getAddress();
-			    l.notifyAddressChosen(currentAddress.getNumber(), currentAddress.isLongAddress());
+                if (currentAddress!= null) {
+    			    l.notifyAddressChosen(currentAddress.getNumber(), currentAddress.isLongAddress());
+                }
             }
         }
      }

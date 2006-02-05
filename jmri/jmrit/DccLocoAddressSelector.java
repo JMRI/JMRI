@@ -31,7 +31,7 @@ import java.awt.event.ComponentEvent;
  * where you might be configuring a loco to run somewhere else.
  *
  * @author     Bob Jacobsen   Copyright (C) 2005
- * @version    $Revision: 1.2 $
+ * @version    $Revision: 1.3 $
  */
 public class DccLocoAddressSelector extends JPanel
 {
@@ -81,9 +81,11 @@ public class DccLocoAddressSelector extends JPanel
     }
 
     public void setAddress(DccLocoAddress a) {
-        text.setText(""+a.getNumber());
-        if (a.isLongAddress()) box.setSelectedIndex(2);
-        else box.setSelectedIndex(1);
+        if (a!=null) {
+            text.setText(""+a.getNumber());
+            if (a.isLongAddress()) box.setSelectedIndex(2);
+            else box.setSelectedIndex(1);
+        }
     }
     
     public void setVariableSize(boolean s) { varFontSize = s; }
