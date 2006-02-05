@@ -24,7 +24,7 @@ import javax.comm.SerialPortEventListener;
  * Provide access to XPressNet via a LI100 on an attached serial comm port.
  *					Normally controlled by the lenz.li100.LI100Frame class.
  * @author			Bob Jacobsen   Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 public class LI100Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
@@ -181,30 +181,34 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
 		OutputBufferEmpty = s;
         }
 
-	/**
-	 * Can the port accept additional characters?
-	 * The state of CTS determines this, as there seems to
-	 * be no way to check the number of queued bytes and buffer length.
-	 * This might
-	 * go false for short intervals, but it might also stick
-	 * off if something goes wrong.
-	 */
-	public boolean okToSend() {
-	 if((activeSerialPort.getFlowControlMode() & SerialPort.FLOWCONTROL_RTSCTS_OUT) == SerialPort.FLOWCONTROL_RTSCTS_OUT) {
-		if(CheckBuffer) {
-			return (activeSerialPort.isCTS() && OutputBufferEmpty);
-		} else {
-			return (activeSerialPort.isCTS());
-		}
+        /**
+         * Can the port accept additional characters?
+         * The state of CTS determines this, as there seems to
+         * be no way to check the number of queued bytes and buffer length.
+         * This might
+         * go false for short intervals, but it might also stick
+         * off if something goes wrong.
+         */
+        public boolean okToSend() {
+         if((activeSerialPort.getFlowControlMode() & SerialPort.FLOWCONTROL_RTSCTS_OUT) == SerialPort.FLOWCONTROL_RTSCTS_OUT) {
+                if(CheckBuffer) {
+                        log.debug("CTS: " + activeSerialPort.isCTS() + " Buffer Empty: " + OutputBufferEmpty);
+                        return (activeSerialPort.isCTS() && OutputBufferEmpty);
+                } else {
+                        log.debug("CTS: " + activeSerialPort.isCTS());
+                        return (activeSerialPort.isCTS());
+                }
            }
-	   else {
-		if(CheckBuffer) {
-			return (OutputBufferEmpty);
-		} else {
-			return(true);
-		}
-	   }
-	}
+           else {
+                if(CheckBuffer) {
+                        log.debug("Buffer Empty: " + OutputBufferEmpty);
+                        return (OutputBufferEmpty);
+                } else {
+                        log.debug("No Flow Control or Buffer Check");
+                        return(true);
+                }
+           }
+        }
 
 	/**
 	 * set up all of the other objects to operate with a LI100
@@ -263,12 +267,12 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
 		activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
 
 		// find and configure flow control
-		int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftauls in selectedOption1
-		if (selectedOption1.equals(validOption1[1]))
-			flow = 0;
-		activeSerialPort.setFlowControlMode(flow);
-		if (selectedOption2.equals(validOption2[1]))
-			CheckBuffer = false;
+		int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftaul for mOpt1
+                if (!mOpt1.equals(validOption1[0]))
+                        flow = 0;
+                activeSerialPort.setFlowControlMode(flow);
+                if (!mOpt2.equals(validOption2[0]))
+                        CheckBuffer = false;    
 	}
 
 
@@ -298,11 +302,9 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
 
 	// meanings are assigned to these above, so make sure the order is consistent
 	protected String [] validOption1 = new String[]{"hardware flow control (recommended)", "no flow control"};
-	protected String selectedOption1=validOption1[0];
 
 	// meanings are assigned to these above, so make sure the order is consistent
 	protected String [] validOption2 = new String[]{"yes (recommended)", "no"};
-	protected String selectedOption2=validOption2[0];
 
 	private boolean opened = false;
 	InputStream serialStream = null;

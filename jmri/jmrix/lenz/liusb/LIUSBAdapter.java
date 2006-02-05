@@ -24,7 +24,7 @@ import javax.comm.SerialPortEventListener;
  * Provide access to XPressNet via a LIUSB on an FTDI Virtual Comm Port.
  *		Normally controlled by the lenz.liusb.LIUSBFrame class.
  * @author			Paul Bender Copyright (C) 2005, Portions
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 public class LIUSBAdapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
@@ -192,15 +192,19 @@ public class LIUSBAdapter extends XNetPortController implements jmri.jmrix.Seria
 	public boolean okToSend() {
 	 if((activeSerialPort.getFlowControlMode() & SerialPort.FLOWCONTROL_RTSCTS_OUT) == SerialPort.FLOWCONTROL_RTSCTS_OUT) {
 		if(CheckBuffer) {
+			log.debug("CTS: " + activeSerialPort.isCTS() + " Buffer Empty: " + OutputBufferEmpty);
 			return (activeSerialPort.isCTS() && OutputBufferEmpty);
 		} else {
+			log.debug("CTS: " + activeSerialPort.isCTS());
 			return (activeSerialPort.isCTS());
 		}
            }
 	   else {
 		if(CheckBuffer) {
+			log.debug("Buffer Empty: " + OutputBufferEmpty);
 			return (OutputBufferEmpty);
 		} else {
+			log.debug("No Flow Control or Buffer Check");
 			return(true);
 		}
 	   }
@@ -263,12 +267,12 @@ public class LIUSBAdapter extends XNetPortController implements jmri.jmrix.Seria
 		activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
 
 		// find and configure flow control
-		int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftauls in selectedOption1
-		if (selectedOption1.equals(validOption1[1]))
-			flow = 0;
-		activeSerialPort.setFlowControlMode(flow);
-		if (selectedOption2.equals(validOption2[1]))
-			CheckBuffer = false;
+		int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftaul for mOpt1
+                if (!mOpt1.equals(validOption1[0]))
+                        flow = 0;
+                activeSerialPort.setFlowControlMode(flow);
+                if (!mOpt2.equals(validOption2[0]))
+                        CheckBuffer = false;  
 	}
 
 
@@ -298,11 +302,9 @@ public class LIUSBAdapter extends XNetPortController implements jmri.jmrix.Seria
 
 	// meanings are assigned to these above, so make sure the order is consistent
 	protected String [] validOption1 = new String[]{"hardware flow control (recommended)", "no flow control"};
-	protected String selectedOption1=validOption1[0];
 
 	// meanings are assigned to these above, so make sure the order is consistent
 	protected String [] validOption2 = new String[]{"yes (recommended)", "no"};
-	protected String selectedOption2=validOption2[0];
 
 	private boolean opened = false;
 	InputStream serialStream = null;
