@@ -11,7 +11,7 @@ import com.sun.java.util.collections.Hashtable;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2005
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class StatusFrame extends javax.swing.JFrame implements DataListener {
 
@@ -84,22 +84,24 @@ public class StatusFrame extends javax.swing.JFrame implements DataListener {
     }
 
     // note that the message coming from the unit has
-    // an invisible character after the "="
+    // an invisible null character after the "=" in version 1.5.1
+    // but not in later versions
     public void asciiFormattedMessage(String input) { 
         String m = input+" ";  // extra space to make stripping easier
         // check if interesting
         if (!m.substring(0,1).equals(" ")) return;
         if (!m.substring(3,4).equals("=")) return;
+        int addOne = 0;
+        if (m.substring(4,5).equals("\000")) addOne = 1;
         // basically OK. Break into tokens, store if match, quit when done.
-        while (m.length() >= 15) {
+        while (m.length() >= 14+addOne) {
             String id = m.substring(1, 3);
-            String value = m.substring(5, 15);
-            System.out.println("set var "+id+":"+value);
+            String value = m.substring(4+addOne, 14+addOne);
             if (log.isDebugEnabled()) log.debug("set var "+id+":"+value);
             JLabel label = (JLabel)displayHash.get(id);
             String format = (String)formatHash.get(id);
             if (label != null) label.setText(convertValue(value, format));
-            m = m.substring(15);
+            m = m.substring(14+addOne);
         }
     }
     
