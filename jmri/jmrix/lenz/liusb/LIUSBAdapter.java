@@ -24,7 +24,7 @@ import javax.comm.SerialPortEventListener;
  * Provide access to XPressNet via a LIUSB on an FTDI Virtual Comm Port.
  *		Normally controlled by the lenz.liusb.LIUSBFrame class.
  * @author			Paul Bender Copyright (C) 2005, Portions
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 public class LIUSBAdapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
@@ -68,9 +68,13 @@ public class LIUSBAdapter extends XNetPortController implements jmri.jmrix.Seria
 			}
 
 			// set timeout
-			// activeSerialPort.enableReceiveTimeout(1000);
-			log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
+                        try {
+			    activeSerialPort.enableReceiveTimeout(10);
+			    log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
 						+" "+activeSerialPort.isReceiveTimeoutEnabled());
+                        } catch (Exception et) {
+                            log.info("failed to set serial timeout: "+et);
+                        }
 
 			// get and save stream
 			serialStream = activeSerialPort.getInputStream();

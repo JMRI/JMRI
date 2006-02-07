@@ -17,7 +17,7 @@ import com.sun.java.util.collections.Hashtable;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2004,2005
- * @version 		$Revision: 2.8 $
+ * @version 		$Revision: 2.9 $
  *
  */
 public abstract class XNetTrafficController extends AbstractMRTrafficController implements XNetInterface {
@@ -191,7 +191,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     protected void loadChars(AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
         int i;
         for (i = 0; i < msg.maxSize; i++) { 
-            byte char1 = istream.readByte();
+            byte char1 = readByteProtected(istream);
             msg.setElement(i, char1 &0xFF);
             if (endOfMessage(msg)) {
                 break;

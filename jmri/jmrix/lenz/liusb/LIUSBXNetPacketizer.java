@@ -24,7 +24,7 @@ import jmri.jmrix.lenz.XNetTrafficController;
  * 0xFF 0xFE or 0xFF 0xFD bytes that appear prior to any message read in.
  *
  * @author		Paul Bender  Copyright (C) 2005
- * @version 		$Revision: 1.0 $
+ * @version 		$Revision: 1.1 $
  *
  */
 public class LIUSBXNetPacketizer extends XNetPacketizer {
@@ -75,12 +75,12 @@ public class LIUSBXNetPacketizer extends XNetPacketizer {
         int i;
 	if(log.isDebugEnabled()) log.debug("loading characters from port");
         for (i = 0; i < msg.maxSize; i++) {
-            byte char1 = istream.readByte();
+            byte char1 = readByteProtected(istream);
             // This is a test for the LIUSB device
             while((i==0) && ((char1 & 0xF0)==0xF0)) {
                 if((char1&0xFF) !=0xF0 && (char1&0xFF)!=0xF2){
                    //  toss this byte and read the next one
-                   char1 = istream.readByte();
+                   char1 = readByteProtected(istream);
                 }
             }
             msg.setElement(i, char1 &0xFF);

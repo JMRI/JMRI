@@ -24,7 +24,7 @@ import jmri.jmrix.lenz.XNetTrafficController;
  * 0xFF bytes that appear prior to some messages.
  *
  * @author		Paul Bender  Copyright (C) 2006
- * @version 		$Revision: 1.1 $
+ * @version 		$Revision: 1.2 $
  *
  */
 public class ZTC640XNetPacketizer extends XNetPacketizer {
@@ -49,12 +49,12 @@ public class ZTC640XNetPacketizer extends XNetPacketizer {
         int i;
 	if(log.isDebugEnabled()) log.debug("loading characters from port");
         for (i = 0; i < msg.maxSize; i++) {
-            byte char1 = istream.readByte();
+            byte char1 = readByteProtected(istream);
             // This is a test for the ZTC640 device
             while((i==0) && ((char1 & 0xF0)==0xF0)) {
                 if((char1&0xFF) !=0xF0 && (char1&0xFF)!=0xF2){
                    //  toss this byte and read the next one
-                   char1 = istream.readByte();
+                   char1 = readByteProtected(istream);
                 }
             }
             msg.setElement(i, char1 &0xFF);

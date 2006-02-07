@@ -25,7 +25,7 @@ import javax.comm.SerialPortEventListener;
  *              comm port. Normally controlled by the lenz.ztc640.ZTC640Frame 
  *              class.
  * @author			Bob Jacobsen   Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003-2006
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
@@ -69,9 +69,13 @@ public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.Seri
 			}
 
 			// set timeout
-			// activeSerialPort.enableReceiveTimeout(1000);
-			log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
+                        try {
+			    activeSerialPort.enableReceiveTimeout(10);
+			    log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
 						+" "+activeSerialPort.isReceiveTimeoutEnabled());
+                        } catch (Exception et) {
+                            log.info("failed to set serial timeout: "+et);
+                        }
 
 			// get and save stream
 			serialStream = activeSerialPort.getInputStream();
