@@ -3,6 +3,8 @@ package jmri.jmrit.throttle;
 import jmri.DccThrottle;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
+import jmri.JmriException;
+import jmri.PowerManager;
 import jmri.ThrottleListener;
 
 import java.awt.Dimension;
@@ -14,11 +16,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.FlowLayout;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JDesktopPane;
-import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -27,6 +27,10 @@ import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
+import javax.swing.JButton;
+
+import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.powerpanel.PowerPane;
 import jmri.util.JmriJFrame;
 
 import org.jdom.Element;
@@ -39,9 +43,13 @@ import org.jdom.Element;
  *  directed by the interface.
  *
  * @author     Glen Oberhauser
- * @version    $Revision: 1.26 $
+ * @version    $Revision: 1.27 $
  */
-public class ThrottleFrame extends JmriJFrame implements AddressListener, ThrottleListener
+/**
+ * @author DSM
+ *
+ */
+public class ThrottleFrame extends JmriJFrame implements AddressListener, ThrottleListener, java.beans.PropertyChangeListener
 {
 	private final Integer PANEL_LAYER = new Integer(1);
 	private static int NEXT_FRAME_KEY = KeyEvent.VK_RIGHT;
@@ -62,15 +70,29 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
 	private JCheckBoxMenuItem viewControlPanel;
 	private JCheckBoxMenuItem viewFunctionPanel;
 	private JCheckBoxMenuItem viewAddressPanel;
+    
+    private DccThrottle throttle;
 
-	private DccThrottle throttle;
-
+    PowerPane powerControl  = new PowerPane();
+    PowerManager p = null;
+    JButton powerLight;
+    // Load the power lights as icons to be placed in an invisible JButton so the light 
+    // can be clicked to change the power status
+    NamedIcon powerOnIcon = new NamedIcon("resources/GreenPowerLED.gif", "resources/GreenPowerLED.gif");
+    NamedIcon powerOffIcon = new NamedIcon("resources/RedPowerLED.gif", "resources/RedPowerLED.gif");
+    NamedIcon powerXIcon = new NamedIcon("resources/YellowPowerLED.gif", "resources/YellowPowerLED.gif");
+    
 	/**
 	 *  Default constructor
 	 */
 	public ThrottleFrame()
 	{
-		initGUI();
+        p = InstanceManager.powerManagerInstance();
+        if (p == null) {
+            log.error("No power manager instance found, panel not active");
+        }
+        else p.addPropertyChangeListener(this);
+        initGUI();
 	}
 
     /**
@@ -186,11 +208,11 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
                    {addressPanel.setSize(addressPanel.getWidth(),controlPanel.getHeight()-functionPanel.getHeight());}
                 if (functionPanel.getWidth() < addressPanel.getWidth())
                    {functionPanel.setSize(addressPanel.getWidth(),functionPanel.getHeight());}
-		desktop.add(controlPanel, PANEL_LAYER);
+   		desktop.add(controlPanel, PANEL_LAYER);
 		desktop.add(functionPanel, PANEL_LAYER);
 		desktop.add(addressPanel, PANEL_LAYER);
 
-		frameList = new JInternalFrame[3];
+		frameList = new JInternalFrame[NUM_FRAMES];
 		frameList[ADDRESS_PANEL_INDEX] = addressPanel;
 		frameList[CONTROL_PANEL_INDEX] = controlPanel;
 		frameList[FUNCTION_PANEL_INDEX] = functionPanel;
@@ -217,7 +239,7 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
 
 
 	/**
-	 *  Description of the Method
+	 *  Set up View, Edit and Power Menus
 	 */
 	private void initializeMenu()
 	{
@@ -253,7 +275,7 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
 					functionPanel.setVisible(e.getStateChange() == e.SELECTED);
 				}
 			});
-
+        
 		viewMenu.add(viewAddressPanel);
 		viewMenu.add(viewControlPanel);
 		viewMenu.add(viewFunctionPanel);
@@ -269,9 +291,50 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
 					editPreferences();
 				}
 			});
+        
+        JMenu powerMenu = new JMenu("  Power:");
+        JMenuItem powerOn = new JMenuItem("Power On");
+        powerMenu.add(powerOn);
+        powerOn.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        powerControl.onButtonPushed();
+                    }
+                });
+        
+        JMenuItem powerOff = new JMenuItem("Power Off");
+        powerMenu.add(powerOff);
+        powerOff.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        powerControl.offButtonPushed();
+                    }
+                });
+        
 		this.setJMenuBar(new JMenuBar());
 		this.getJMenuBar().add(viewMenu);
 		this.getJMenuBar().add(editMenu);
+        this.getJMenuBar().add(powerMenu);
+        powerLight = new JButton();
+        setPowerIcons();
+        // make the button itself invisible, just display the power LED
+        powerLight.setBorderPainted(false);
+        powerLight.setContentAreaFilled(false);
+        powerLight.setFocusPainted(false);
+        this.getJMenuBar().add(powerLight);
+        powerLight.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        try {
+                            if (p.getPower()==PowerManager.ON) powerControl.offButtonPushed();
+                            else if (p.getPower()==PowerManager.OFF)powerControl.onButtonPushed();
+                                else if (p.getPower()==PowerManager.UNKNOWN)powerControl.offButtonPushed();
+                        } catch (JmriException ex) {
+                            powerLight.setIcon(powerXIcon);
+                        }
+                    }
+                }
+        );
 	}
 
 	private void editPreferences()
@@ -300,6 +363,8 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
 		// dispose of this last because it will release and destroy throttle.
 		addressPanel.destroy();
 
+        if (p!=null) p.removePropertyChangeListener(this);
+        
 		// Handle disposing of the throttle
 		if (throttle != null)
 		{
@@ -359,7 +424,44 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
 		}
 	}
 
-
+    /**
+     *  implement a property change listener to monitor the power state and change
+     *  the power LED displayed as appropriate
+     */
+    public void propertyChange(java.beans.PropertyChangeEvent ev) {
+        setPowerIcons();
+    }
+ 
+    /**
+     *  change the power LED displayed as appropriate and set corresponding tooltip
+     *  
+     */
+    public void setPowerIcons() {
+        try {
+            if (p.getPower()==PowerManager.ON) {
+                powerLight.setIcon(powerOnIcon);
+                powerLight.setToolTipText("Layout Power On.  Click light to turn off, or use Power menu");
+            }
+            else if (p.getPower()==PowerManager.OFF) {
+                powerLight.setIcon(powerOffIcon);
+                powerLight.setToolTipText("Layout Power Off.  Click light to turn on, or use Power menu");
+            }
+            else if (p.getPower()==PowerManager.UNKNOWN) {
+                powerLight.setIcon(powerXIcon);
+                powerLight.setToolTipText("Layout Power state unknown.  Click light to turn off, or use Power menu");
+            }
+            else {
+                powerLight.setIcon(powerXIcon);
+                powerLight.setToolTipText("Layout Power state unknown.  Click light to turn off, or use Power menu");
+                log.error("Unexpected state value: +"+p.getPower());
+            }
+        } catch (JmriException ex) {
+            powerLight.setIcon(powerXIcon);
+            powerLight.setToolTipText("Layout Power state unknown.  Click light to turn off, or use Power menu");
+        }
+    }
+    
+    
 	/**
 	 *  An extension of InternalFrameAdapter for listening to the closing of of
 	 *  this frame's internal frames.
