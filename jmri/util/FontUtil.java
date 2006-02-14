@@ -16,7 +16,7 @@ import java.awt.Font;
  * Java 1.1.8 system, or at least try to fake it.
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class FontUtil {
@@ -30,7 +30,7 @@ public class FontUtil {
     
     static void init() {
         doInit = false;
-        // see if on a system where shouldnt even try
+        // see if on a Mac Classic system where shouldnt even try
         if (System.getProperty("os.name").equals("Mac OS")) {
             skip = true;
         }
