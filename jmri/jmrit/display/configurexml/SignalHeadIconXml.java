@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class SignalHeadIconXml implements XmlAdapter {
 
@@ -41,6 +41,7 @@ public class SignalHeadIconXml implements XmlAdapter {
         element.addAttribute("flashyellow", p.getFlashYellowIcon().getName());
         element.addAttribute("green", p.getGreenIcon().getName());
         element.addAttribute("rotate", String.valueOf(p.getGreenIcon().getRotation()));
+        element.addAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
 
         element.addAttribute("class", "jmri.jmrit.display.configurexml.SignalHeadIconXml");
 
@@ -98,6 +99,12 @@ public class SignalHeadIconXml implements XmlAdapter {
             }
         } catch (org.jdom.DataConversionException e) {}
 
+        Attribute a = element.getAttribute("forcecontroloff");
+        if ( (a!=null) && a.getValue().equals("true"))
+            l.setForceControlOff(true);
+        else
+            l.setForceControlOff(false);
+            
         l.displayState(l.headState());
 
         // find coordinates
