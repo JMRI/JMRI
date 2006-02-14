@@ -14,7 +14,7 @@ import javax.swing.JPopupMenu;
  * An icon to display a status of a Sensor.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -143,6 +143,8 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                     }
                 });
 
+            addControlEntry(popup);
+            
             popup.add(new AbstractAction("Remove") {
                     public void actionPerformed(ActionEvent e) {
                         remove();
@@ -207,6 +209,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
      */
     public void mouseClicked(java.awt.event.MouseEvent e) {
         if (!getControlling()) return;
+        if (getForceControlOff()) return;
         if (e.isAltDown() || e.isMetaDown()) return;
         if (sensor==null) {  // no sensor connected for this protocol
             log.error("No sensor connection, can't process click");

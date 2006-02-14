@@ -19,7 +19,7 @@ import javax.swing.JPopupMenu;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -158,6 +158,8 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
                     }
                 });
 
+            addControlEntry(popup);
+            
             popup.add(new AbstractAction("Remove") {
                 public void actionPerformed(ActionEvent e) {
                     remove();
@@ -233,6 +235,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
      */
     public void mouseClicked(java.awt.event.MouseEvent e) {
         if (!getControlling()) return;
+        if (getForceControlOff()) return;
         if (e.isMetaDown() || e.isAltDown() ) return;
         if (mHead==null) {
             log.error("No turnout connection, can't process click");
