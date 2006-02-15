@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractThrottle;
  * with values from 0 to 127.
  * <P>
  * @author  Glen Oberhauser, Bob Jacobsen  Copyright (C) 2003, 2004
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     private LocoNetSlot slot;
@@ -221,9 +221,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         slot = null;
         network = null;
 
-        // if this object has registered any listeners, remove those.
-
-        // is there a dispose method in the superclass?
+        super.dispose();
      }
 
     javax.swing.Timer mRefreshTimer = null;
