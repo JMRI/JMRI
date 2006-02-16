@@ -17,7 +17,7 @@ import jmri.TurnoutOperationManager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class ProxyTurnoutManager extends AbstractProxyManager implements TurnoutManager {
 
@@ -27,12 +27,21 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
     	super();
     }
     
-    /**
-     * override of generic class, hook to support TurnoutOPerations
-     */
+	/**
+	 * Revise superclass behavior: Added managers mean that the
+	 * default internal manager is not the primary. 
+	 * Also support TurnoutOperations
+	 */
     public void addManager(Manager m) {
-    	super.addManager(m);
-    	TurnoutOperationManager.getInstance().loadOperationTypes();
+        if (mgrs.size() == 0) { 
+            log.debug("initial addmanager");
+            mgrs.add(m);
+            mgrs.add(new InternalTurnoutManager());
+        } else {
+            mgrs.add(m);
+        }
+        log.debug("added manager");
+        TurnoutOperationManager.getInstance().loadOperationTypes();
     }
 
     /**
@@ -193,6 +202,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
 		return TurnoutOperationManager.concatenateTypeLists((String[])typeList.toArray(new String[0]));
 	}
 	
+
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ProxyTurnoutManager.class.getName());
 }

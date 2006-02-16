@@ -4,6 +4,7 @@ package jmri.managers;
 
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.Manager;
 
 /**
  * Implementation of a SensorManager that can serves as a proxy
@@ -11,10 +12,29 @@ import jmri.SensorManager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class ProxySensorManager extends AbstractProxyManager
                             implements SensorManager {
+
+    public ProxySensorManager() {
+        super();
+    }
+    
+    /**
+     * Override super-class behaviour to include internal 
+     * manager.
+     */
+    public void addManager(Manager m) {
+        if (mgrs.size() == 0) { 
+            log.debug("initial addmanager");
+            mgrs.add(m);
+            mgrs.add(new InternalSensorManager());
+        } else {
+            mgrs.add(m);
+        }
+        log.debug("added manager");
+    }
 
     /**
      * Locate via user name, then system name if needed.
@@ -140,4 +160,4 @@ public class ProxySensorManager extends AbstractProxyManager
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ProxySensorManager.class.getName());
 }
 
-/* @(#)ProxyTurnoutManager.java */
+/* @(#)ProxySensorManager.java */
