@@ -92,7 +92,7 @@ public class FunctionButton extends JToggleButton implements ActionListener
     /**
      * Check to see whether a particular KeyCode corresponds
      * to this function button.  
-     * @returns true if the button should respond to this key
+     * @return true if the button should respond to this key
      */
 	public boolean checkKeyCode(int keycode)
 	{
