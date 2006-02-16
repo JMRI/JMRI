@@ -5,16 +5,18 @@ import jmri.Sensor;
 import jmri.jmrit.catalog.NamedIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.AbstractAction;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.JCheckBoxMenuItem;
 
 /**
  * An icon to display a status of a Sensor.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -143,7 +145,15 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                     }
                 });
 
-            addControlEntry(popup);
+            addDisableMenuEntry(popup);
+            
+            momentaryItem = new JCheckBoxMenuItem("Momentary");
+            popup.add(momentaryItem);
+            momentaryItem.addActionListener(new ActionListener(){
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    setMomentary(momentaryItem.isSelected());
+                }
+            });
             
             popup.add(new AbstractAction("Remove") {
                     public void actionPerformed(ActionEvent e) {
@@ -156,6 +166,8 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         popup.show(e.getComponent(), e.getX(), e.getY());
     }
 
+    JCheckBoxMenuItem momentaryItem;
+    
     /**
      * Drive the current state of the display from the state of the
      * turnout.
@@ -203,28 +215,65 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
             );
     }
 
+    boolean momentary = false;
+    public boolean getMomentary() { return momentary; }
+    public void setMomentary(boolean m) { momentary = m; }
+    
     /**
      * (Temporarily) change occupancy on click
      * @param e
      */
     public void mouseClicked(java.awt.event.MouseEvent e) {
-        if (!getControlling()) return;
-        if (getForceControlOff()) return;
+        super.mouseClicked(e);
         if (e.isAltDown() || e.isMetaDown()) return;
-        if (sensor==null) {  // no sensor connected for this protocol
-            log.error("No sensor connection, can't process click");
-            return;
-        }
+        if (getMomentary()) return; // click is only for non-momentary
+        if (!buttonLive()) return;
         try {
             if (sensor.getKnownState()==jmri.Sensor.INACTIVE)
                 sensor.setKnownState(jmri.Sensor.ACTIVE);
             else
                 sensor.setKnownState(jmri.Sensor.INACTIVE);
         } catch (jmri.JmriException reason) {
-            log.warn("Exception changing sensor: "+reason);
+            log.warn("Exception flipping sensor: "+reason);
         }
     }
 
+    boolean buttonLive() {
+        if (!getControlling()) return false;
+        if (getForceControlOff()) return false;
+        if (sensor==null) {  // no sensor connected for this protocol
+            log.error("No sensor connection, can't process click");
+            return false;
+        }
+        return true;        
+    }
+
+    public void mousePressed(MouseEvent e) {
+        if (getMomentary() && buttonLive()) {
+            // this is a momentary button
+            try {
+                sensor.setKnownState(jmri.Sensor.ACTIVE);
+            } catch (jmri.JmriException reason) {
+                log.warn("Exception setting momentary sensor: "+reason);
+            }        
+        }
+        // do rest of mouse processing
+        super.mousePressed(e);
+    }
+
+    public void mouseReleased(MouseEvent e) {
+        if (getMomentary() && buttonLive()) {
+            // this is a momentary button
+            try {
+                sensor.setKnownState(jmri.Sensor.INACTIVE);
+            } catch (jmri.JmriException reason) {
+                log.warn("Exception setting momentary sensor: "+reason);
+            }        
+        }
+        // do rest of mouse processing
+        super.mouseReleased(e);
+    }
+ 
     public void dispose() {
         sensor.removePropertyChangeListener(this);
         sensor = null;
