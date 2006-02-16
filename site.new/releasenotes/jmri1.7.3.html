@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.7.3.html,v 1.22 2006-02-04 04:21:19 jacobsen Exp $ -->
+<!-- $Id: jmri1.7.3.html,v 1.23 2006-02-16 06:27:25 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -112,7 +112,7 @@
 
 <P>David Duchamp fixed a bug that caused problems when the serial port that the program was expecting wasn't available at startup.
 
-<P>Bob Jacobsen has updated the PRICOM Pocket Tester support. There are now both "monitor" windows to see the time history of the data as it comes from the unit, plus a "table" that allows you to see the most recent packets of a particular type or for a particular address.  You can also see the monitor for just the packets to a particular address. It's also been internationalized, so it would be easy for somebody to translate it to another language. When using the version 1.5.1 firmware in the Pocket Tester, there is also a "DCC Status" window that provides continuously updating information similar to the Pocket Tester's summary displays.
+<P>Bob Jacobsen has updated the PRICOM Pocket Tester support. There are now both "monitor" windows to see the time history of the data as it comes from the unit, plus a "table" that allows you to see the most recent packets of a particular type or for a particular address.  You can also see the monitor for just the packets to a particular address. It's also been internationalized, so it would be easy for somebody to translate it to another language. When using the version 1.5.1 or later firmware in the Pocket Tester, there is also a "DCC Status" window that provides continuously updating information similar to the Pocket Tester's summary displays.
 
 <P>Paul Bender has fixed a problem that would sometimes make the speed slider not appear in the throttle tool.  He has also improved the way that a control-click (right click, etc) in the speed section of the throttle gets you access to the alternate method of setting speeds.
 
@@ -207,7 +207,7 @@ Walthers 0-6-0 Switcher, GP30.
 
 <P>Added a decoder definition for the Tsunami decoder from Soundtraxx. Fix a bug in the function-mapping display that improperly limited the number of columns (this had no effect until the Tsunami, as there wasn't a decoder that needed so many)
 
-<P>Added the DCS100 to the list of possible command stations when configuring a loconet connection.  When configuring a direct-serial connection to an Intellibox, you are no longer asked about which command station to configure.
+<P>Added the DCS100, DCS200, DB150 to the list of possible command stations when configuring a loconet connection.  When configuring a direct-serial connection to an Intellibox, you are no longer asked about which command station to configure.
 
 <P>Added the MRC AD322 decoder.
 
@@ -276,6 +276,25 @@ Walthers 0-6-0 Switcher, GP30.
 <P>Bob Jacobsen added a tool to make it easy to set the LocoNet ID, for example if you have multiple radio layouts at a show
 
 <P>Dennis Miller updated DecoderPro so that when you double click to select a decoder type it opens the programmer (RFE-1094360)
+
+<P>Dennis Miller fixed a bug that prevents a throttle saved with no selected address from being reopened (Bug-1424366)
+
+<P>Peter Brandenburg updated the definitions for the CT Elektronik DCX Series (late) decoders: DCX74D, DCX74DV.
+
+<P> Ken Weygandt contributed customized versions of the Soundtraxx files to adapt to the individual steam models
+
+<P>Peter Brandenburg provided definitions for the Kuehn N025, T125, T145 decoders
+
+<P>Paul Bender added support for XpressNet connections via the ZTC Controls ZTC640 adapter
+
+<P>Dick Bronson contributed a new set of icons for USS CTC panels. They're available in resouces/icons/USS, and are organized in much more convenient way than prior icon sets.
+
+<P>Dennis Miller provided a preliminary fix for Bug 1333359, where the Turnout Table couldn't be resized under certain circumstances.
+
+<P>Turnout, sensor and signal icons on panels can now be set "disabled" via their popup menu, in which case clicking on them doesn't change the layout state.
+
+<P>Sensor icons on panels can now be set "momentary" via their popup menu, in which case they set the sensor ACTIVE when the mouse goes down on them, and INACTIVE when the mouse is released.  This models a momentary button in real life, and is useful for e.g. putting an icon on a screen to trigger a route.
+
 
       <hr class="hide">
 <!-- Footer -->
