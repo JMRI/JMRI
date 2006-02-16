@@ -24,7 +24,7 @@ import javax.swing.JRadioButtonMenuItem;
  * PositionableLabel is a JLabel that can be dragged around the
  * inside of the enclosing Container using a right-drag.
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 
 public class PositionableLabel extends JLabel
@@ -264,43 +264,17 @@ public class PositionableLabel extends JLabel
         menu.add(r);
     }
 
-    void addControlEntry(JPopupMenu popup) {
-        JMenu m = new JMenu("Layout Control");
-        
-        // assume we start with this option in default "false" case
-        controlOff = new AbstractAction("Currently Allowed") {
-                public void actionPerformed(ActionEvent e) {
-                    setForceControlOff(false);
-                    controlOff.putValue(javax.swing.Action.NAME,"Currently Allowed");
-                    controlOff.setEnabled(false);
-                    controlOn.putValue(javax.swing.Action.NAME,"Disable Control");
-                    controlOn.setEnabled(true);
-                }
-            };
-        controlOff.setEnabled(false);
-        controlOn = new AbstractAction("Disable Control") {
-                public void actionPerformed(ActionEvent e) {
-                    setForceControlOff(true);
-                    controlOn.putValue(javax.swing.Action.NAME,"Currently Disabled");
-                    controlOn.setEnabled(false);
-                    controlOff.putValue(javax.swing.Action.NAME,"Allow Control");
-                    controlOff.setEnabled(true);
-                }
-            };
-        if (getForceControlOff()) {
-            controlOn.putValue(javax.swing.Action.NAME,"Currently Disabled");
-            controlOn.setEnabled(false);
-            controlOff.putValue(javax.swing.Action.NAME,"Allow Control");
-            controlOff.setEnabled(true);
-        }
-        m.add(controlOff);
-        m.add(controlOn);
-        popup.add(m);
+    JCheckBoxMenuItem disableItem = null;
+    void addDisableMenuEntry(JPopupMenu popup) {
+        disableItem = new JCheckBoxMenuItem("Disable");
+        popup.add(disableItem);
+        disableItem.addActionListener(new ActionListener(){
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                setForceControlOff(disableItem.isSelected());
+            }
+        });
     }
-    
-    AbstractAction controlOn = null;
-    AbstractAction controlOff = null;
-    
+        
     public JMenuItem newStyleMenuItem(AbstractAction a, int mask) {
         // next two lines needed because JCheckBoxMenuItem(AbstractAction) not in 1.1.8
         JCheckBoxMenuItem c = new JCheckBoxMenuItem((String)a.getValue(a.NAME));
