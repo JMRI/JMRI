@@ -19,7 +19,7 @@ import org.jdom.output.XMLOutputter;
  * Handle common aspects of XML files.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.22 $
+ * @version	$Revision: 1.23 $
  */
 public abstract class XmlFile {
 
@@ -47,46 +47,119 @@ public abstract class XmlFile {
     }
 
     /**
-     * Read a File as XML.
-     * @throws org.jdom.JDOMException
+     * Read a File as XML, and return the root object.
+     *
+     * Multiple methods are tried to locate the DTD needed to do this.
+     * Exceptions are only thrown when local recovery is impossible.
+     *
+     * @throws org.jdom.JDOMException only when all methods have failed
      * @throws java.io.FileNotFoundException
      * @param file File to be parsed.  A FileNotFoundException is thrown if it doesn't exist.
      * @return root element from the file. This should never be null, as an
      *          exception should be thrown if anything goes wrong.
      */
     public Element rootFromFile(File file) throws org.jdom.JDOMException, java.io.FileNotFoundException {
-        return rootFromStream(new BufferedInputStream(new FileInputStream(file)));
+        Element e;
+        try {
+            InputStream stream = new BufferedInputStream(new FileInputStream(file));
+            return getRootViaURI(verify, stream);
+        }
+        catch (org.jdom.JDOMException e1) {
+            // 1st attempt failed, try second
+            if (!openWarn1) reportError1(file, e1);
+            openWarn1 = true;
+            try {
+                InputStream stream = new BufferedInputStream(new FileInputStream(file));
+                e = getRootViaURL(verify, stream);
+                log.info("getRootViaURL succeeded as 2nd try");
+                return e;
+            }
+            catch (org.jdom.JDOMException e2) {
+                // 2nd attempt failed, try third.
+                if (!openWarn2) reportError2(file, e2);
+                openWarn2 = true;
+                // All exceptions are allowed to propagate out, 
+                // as we have no retry algorithms left
+                InputStream stream = new BufferedInputStream(new FileInputStream(file));
+                e = getRootViaRelative(verify, stream);
+                log.info("GetRootViaRelative succeeded as 3rd try");
+                return e;
+            }
+            // other errors are allowed to propagate out
+        }
+        // other errors are allowed to propagate out
     }
 
+    static boolean openWarn1 = false;
+    static boolean openWarn2 = false;
+    static boolean openWarn3 = false;
+    
+    // made members for overriding in tests
+    protected void reportError1(File file, Exception e) {
+        log.warn("Failed to open "+file.getName()+" on 1st attempt, error was: "+e);
+    }
+    protected void reportError2(File file, Exception e) {
+        log.warn("Failed to open on 2nd attempt, error was: "+e);
+    }
+    
     /**
-     * Read the contents of a stream as XML, and return the root object
-     * @throws org.jdom.JDOMException
-     * @throws java.io.FileNotFoundException
-     * @param stream to be parsed.
-     * @return root element within the stream. This should never be null, as an
-     *          exception should be thrown if anything goes wrong.
+     * Find the DTD via a relative path and get the root element.
+     * 
      */
-    public Element rootFromStream(InputStream stream) throws org.jdom.JDOMException, java.io.FileNotFoundException {
-        // get full pathname to the DTD directory (apath is an absolute path)
-        // String dtdpath = "xml"+File.separator+"DTD"+File.separator;
-        // File dtdFile = new File(dtdpath);
-        // String dtdUrl = jmri.util.FileUtil.getUrl(dtdFile);
+    protected Element getRootViaRelative(boolean verify, InputStream stream) throws org.jdom.JDOMException, java.io.FileNotFoundException {
+        // Invoke a utility service routine to provide the URL for DTDs
+        String dtdUrl = "file:xml"+File.separator+"DTD";
 
-        // Switched to relative path; does our Xerces file not handle true URI/URLs?
-        String dtdUrl = "file:xml/DTD/";
-
-        if (log.isDebugEnabled()) log.debug("readFile from stream, DTD URL:"+dtdUrl);
-        // This is taken in large part from "Java and XML" page 354
+        if (log.isDebugEnabled()) log.debug("getRootViaRelative, DTD via:"+dtdUrl);
 
         // Open and parse file
-        
         SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation
         Document doc = builder.build(new BufferedInputStream(stream),dtdUrl);
 
         // find root
         return doc.getRootElement();
     }
+    
+    /**
+     * Find the DTD via a URL and get the root element.
+     * 
+     */
+    protected Element getRootViaURL(boolean verify, InputStream stream) throws org.jdom.JDOMException, java.io.FileNotFoundException {
+        // Invoke a utility service routine to provide the URL for DTDs
+        String dtdpath = "xml"+File.separator+"DTD"+File.separator;
+        File dtdFile = new File(dtdpath);
+        String dtdUrl = jmri.util.FileUtil.getUrl(dtdFile);
 
+        if (log.isDebugEnabled()) log.debug("getRootViaURL, DTD URL:"+dtdUrl);
+
+        // Open and parse file
+        SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation
+        Document doc = builder.build(new BufferedInputStream(stream),dtdUrl);
+
+        // find root
+        return doc.getRootElement();
+    }
+    
+    /**
+     * Find the DTD via a URI and get the root element.
+     * 
+     */
+    protected Element getRootViaURI(boolean verify, InputStream stream) throws org.jdom.JDOMException, java.io.FileNotFoundException {
+        // Invoke a utility service routine to provide the URL for DTDs
+        String dtdpath = "xml"+File.separator+"DTD"+File.separator;
+        File dtdFile = new File(dtdpath);
+        String dtdUrl = jmri.util.FileUtil.getUrlViaUri(dtdFile);
+
+        if (log.isDebugEnabled()) log.debug("getRootViaURI, DTD URI:"+dtdUrl);
+
+        // Open and parse file
+        SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation
+        Document doc = builder.build(new BufferedInputStream(stream),dtdUrl);
+
+        // find root
+        return doc.getRootElement();
+    }
+    
     /**
      * Write a File as XML.
      * @throws org.jdom.JDOMException
@@ -241,7 +314,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.22 2006-01-15 03:10:47 jacobsen Exp $";
+                        +" $Id: XmlFile.java,v 1.23 2006-02-16 06:13:56 jacobsen Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }
@@ -280,7 +353,7 @@ public abstract class XmlFile {
 
         if ( !mrjVersion.equals("<unknown>")) {
             // Macintosh, test for OS X
-            if (osName.equals("Mac OS X")) {
+            if (osName.toLowerCase().equals("mac os x")) {
                 // Mac OS X
                 result = userHome+"Library"+File.separator+"Preferences"
                     +File.separator+"JMRI"+File.separator;
