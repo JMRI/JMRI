@@ -9,11 +9,13 @@ import com.sun.java.util.collections.List;
 
 /**
  * Implementation of a Manager that can serves as a proxy
- * for multiple system-specific implementations.  The first to
- * be added is the "Primary".
+ * for multiple system-specific implementations.  
+ * <P>
+ * The first to
+ * be added is the "Primary", used if a system letter is not provided.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class AbstractProxyManager implements Manager {
 
