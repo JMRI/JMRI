@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.54 2006-02-15 03:31:05 jacobsen Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.55 2006-02-16 06:19:46 jacobsen Exp $ -->
 
 <!-- This DTD is Copyright 2001-2005 JMRI.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -263,6 +263,7 @@
     <!ATTLIST sensoricon inconsistent		CDATA #IMPLIED>
     <!ATTLIST sensoricon sensor		CDATA #IMPLIED>
     <!ATTLIST sensoricon forcecontroloff	(true|false) "false">
+    <!ATTLIST sensoricon momentary	(true|false) "false">
 
   <!ELEMENT reportericon EMPTY>
     <!ATTLIST reportericon class	CDATA #REQUIRED>
