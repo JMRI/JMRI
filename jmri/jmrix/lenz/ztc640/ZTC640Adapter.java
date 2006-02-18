@@ -25,7 +25,7 @@ import javax.comm.SerialPortEventListener;
  *              comm port. Normally controlled by the lenz.ztc640.ZTC640Frame 
  *              class.
  * @author			Bob Jacobsen   Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003-2006
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
@@ -273,7 +273,7 @@ public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.Seri
 
 		// find and configure flow control
 		int flow = 0; // default, but also deftaul for mOpt1
-                if (!mOpt1.equals(validOption1[1]))
+                if (!mOpt1.equals(validOption1[0]))
                         flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
                 activeSerialPort.setFlowControlMode(flow);
                 if (!mOpt2.equals(validOption2[0]))
@@ -306,7 +306,7 @@ public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.Seri
 	protected int [] validSpeedValues = new int[]{19200};
 
 	// meanings are assigned to these above, so make sure the order is consistent
-	protected String [] validOption1 = new String[]{"hardware flow control ", "no flow control (recommended)"};
+	protected String [] validOption1 = new String[]{"no flow control (recommended)","hardware flow control "};
 
 	// meanings are assigned to these above, so make sure the order is consistent
 	protected String [] validOption2 = new String[]{"yes (recommended)", "no"};
