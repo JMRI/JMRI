@@ -2,15 +2,16 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: TCS_X.xml,v 1.5 2006-02-02 04:22:53 jacobsen Exp $ -->
+<!-- $Id: TCS_X.xml,v 1.6 2006-02-18 22:18:40 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Michael Mosher" 
-					version="4" lastUpdated="20060131"/>
+					version="5" lastUpdated="20060206"/>
 
 		<!-- Version 1 - made from TSC Tx -->
 		<!-- Version 2 - correction to CV61 -->
 		<!-- Version 3 - version range 30 to 35 -->
 		<!-- Version 4 - added AMD1 & MP-15N & ver to 37 -->
+		<!-- Version 5 - fix bug in MP-15N -->
 
 
 <decoder>
