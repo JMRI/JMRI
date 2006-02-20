@@ -33,7 +33,7 @@ import java.util.Vector;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.33 $
+ * @version     $Revision: 1.34 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
@@ -309,7 +309,18 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                     progState = 0;
                     // notify user ProgListener
                     stopTimer();
-                    notifyProgListenerEnd(-1, 0);  // no value (e.g. -1), no error status (e.g.0)
+                    // have to send this in a little while to 
+                    // allow command station time to execute
+                    int delay = 100; // milliseconds
+                    javax.swing.Timer timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
+                            public void actionPerformed(java.awt.event.ActionEvent e) {
+                                notifyProgListenerEnd(-1, 0); // no value (e.g. -1), no error status (e.g.0)
+                            }
+                        });
+                    timer.stop();
+                    timer.setInitialDelay(delay);
+                    timer.setRepeats(false);
+                    timer.start();
                     return i;
                 }
                 else { // not sure how to cope, so complain
