@@ -49,7 +49,7 @@ import com.sun.java.util.collections.Iterator;
  *</ol>
  * <P>
  * @author	Bob Jacobsen   Copyright (C) 2001, 2005
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  *
  */
 public class CompositeVariableValue extends EnumVariableValue implements ActionListener, PropertyChangeListener {
@@ -171,7 +171,7 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
         if (variable!=null) {
             variables.add(variable);
         } else log.error("Variable pointer null when varName="+varName+" in choice "+choice+"; ignored");
-
+        if (!variable.label().equals(varName)) log.warn("Unexpected label /"+variable.label()+"/ for varName /"+varName+"/ during addSetting");
     }
     
     /** 
@@ -279,10 +279,16 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
     }
 
     public boolean isChanged() {
+        Iterator i = variables.iterator();
+        while (i.hasNext()) {
+            VariableValue v = (VariableValue) i.next();
+            if (v.isChanged()) return true;
+        }
         return false;
     }
 
     public void setToRead(boolean state) {
+
         Iterator i = variables.iterator();
         while (i.hasNext()) {
             VariableValue v = (VariableValue) i.next();
@@ -290,52 +296,146 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
         }
     }
     
+    /**
+     * This variable needs to be read if any of it's subsidiary 
+     * variables needs to be read.
+     */
     public boolean isToRead() {
+        Iterator i = variables.iterator();
+        while (i.hasNext()) {
+            VariableValue v = (VariableValue) i.next();
+            if (v.isToRead()) return true;
+        }
         return false;
     }
 
     public void setToWrite(boolean state) {
+        if (log.isDebugEnabled()) log.debug("Start setToWrite with "+state);
+        
         Iterator i = variables.iterator();
         while (i.hasNext()) {
             VariableValue v = (VariableValue) i.next();
             v.setToWrite(state);
         }
+        log.debug("End setToWrite");
     }
     
+    /**
+     * This variable needs to be written if any of it's subsidiary 
+     * variables needs to be written.
+     */
     public boolean isToWrite() {
+        Iterator i = variables.iterator();
+        while (i.hasNext()) {
+            VariableValue v = (VariableValue) i.next();
+            if (v.isToWrite()) return true;
+        }
         return false;
     }
 
     public void readChanges() {
-         if (isChanged()) readAll();
+        if (isChanged()) {
+            readingChanges = true;
+            amReading = true;
+            continueRead();
+        }
     }
 
     public void writeChanges() {
-         if (isChanged()) writeAll();
+        if (isChanged()) {
+            writingChanges = true;
+            amWriting = true;
+            continueWrite();
+        }
     }
 
     public void readAll() {
-        setToRead(false);
-        // doesn't actually do anything; variables will be naturally read
-        // note busy isn't set, so next operation will be tried
+        readingChanges = false;
+        amReading = true;
+        continueRead();
     }
-
+    boolean amReading = false;
+    boolean readingChanges = false;
+    
+    /**
+     * See if there's anything to read, and if so do it.
+     */
+    protected void continueRead() {
+        // search for something to do
+        if (log.isDebugEnabled()) log.debug("Start continueRead");
+        
+        Iterator i = variables.iterator();
+        while (i.hasNext()) {
+            VariableValue v = (VariableValue) i.next();
+            if (v.isToRead() && (!readingChanges || v.isChanged())) {
+                // something to do!
+                amReading = true; // should be set already
+                setBusy(true);
+                if (readingChanges) v.readChanges();
+                else v.readAll();
+                return;  // wait for busy change event to continue
+            }
+        }
+        // found nothing, ensure cleaned up
+        amReading = false;
+        super.setState(READ);
+        setBusy(false);
+        log.debug("End continueRead, nothing to do");        
+    }
+    
     public void writeAll() {
-        setToWrite(false);
         if (getReadOnly()) log.error("unexpected write operation when readOnly is set");
-        // doesn't actually do anything; variables will be naturally written
-        // note busy isn't set, so next operation will be tried
+        writingChanges = false;
+        amWriting = true;
+        continueWrite();
+    }
+    boolean amWriting = false;
+    boolean writingChanges = false;
+    
+    /**
+     * See if there's anything to write, and if so do it.
+     */
+    protected void continueWrite() {
+        // search for something to do
+        if (log.isDebugEnabled()) log.debug("Start continueWrite");
+        
+        Iterator i = variables.iterator();
+        while (i.hasNext()) {
+            VariableValue v = (VariableValue) i.next();
+            if (v.isToWrite() && (!writingChanges || v.isChanged())) {
+                // something to do!
+                amWriting = true; // should be set already
+                setBusy(true);
+                log.debug("request write of "+v.label()+" writing changes "+writingChanges);
+                if (writingChanges) v.writeChanges();
+                else v.writeAll();
+                log.debug("return from starting write request");
+                return;  // wait for busy change event to continue
+            }
+        }
+        // found nothing, ensure cleaned up
+        amWriting = false;
+        super.setState(STORED);
+        setBusy(false);
+        log.debug("End continueWrite, nothing to do");        
     }
 
     // handle incoming parameter notification
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         // notification from CV; check for Value being changed
-        if (log.isDebugEnabled()) log.debug("propertyChange in "+label()+" type "+e.getPropertyName()+" becomes "+e.getNewValue());
+        if (log.isDebugEnabled()) log.debug("propertyChange in "+label()+" type "+e.getPropertyName()+" new value "+e.getNewValue());
         if (e.getPropertyName().equals("Busy")) {
             if (((Boolean)e.getNewValue()).equals(Boolean.FALSE)) {
-                setToRead(false);
-                setToWrite(false);  // some programming operation just finished
-                setBusy(false);
+                log.debug("busy change continues programming");
+                // some programming operation just finished
+                if (amReading) {
+                    continueRead();
+                    return;
+                } else if (amWriting) {
+                    continueWrite();
+                    return;
+                } 
+                // if we're not reading or writing, no problem, that's just something else happening
             }
         } else if (e.getPropertyName().equals("Value")) {
             findValue();
