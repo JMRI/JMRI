@@ -34,7 +34,7 @@ import javax.swing.JPanel;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class PaneOpsProgAction 	extends AbstractAction {
 
@@ -69,7 +69,7 @@ public class PaneOpsProgAction 	extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
 
-        if (log.isInfoEnabled()) log.info("Pane programmer requested");
+        if (log.isDebugEnabled()) log.debug("Pane programmer requested");
 
         // create the initial frame that steers
         final JmriJFrame f = new JmriJFrame("Ops-mode Programmer Setup");
@@ -111,7 +111,7 @@ public class PaneOpsProgAction 	extends AbstractAction {
         f.getContentPane().add(pane1);
 
         f.pack();
-        if (log.isInfoEnabled()) log.info("Tab-Programmer setup created");
+        if (log.isDebugEnabled()) log.debug("Tab-Programmer setup created");
         f.show();
     }
 

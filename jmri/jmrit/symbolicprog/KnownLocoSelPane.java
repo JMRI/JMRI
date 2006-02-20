@@ -26,7 +26,7 @@ import com.sun.java.util.collections.List;
  * you're interested in.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class KnownLocoSelPane extends LocoSelPane  {
 
@@ -57,7 +57,7 @@ public class KnownLocoSelPane extends LocoSelPane  {
             JButton idloco = new JButton("Identify locomotive");
             idloco.addActionListener( new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (log.isInfoEnabled()) log.info("Identify locomotive pressed");
+                    if (log.isDebugEnabled()) log.debug("Identify locomotive pressed");
                     startIdentify();
                 }
             });
@@ -74,7 +74,7 @@ public class KnownLocoSelPane extends LocoSelPane  {
         JButton go2 = new JButton("Open programmer");
         go2.addActionListener( new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (log.isInfoEnabled()) log.info("Open programmer pressed");
+                    if (log.isDebugEnabled()) log.debug("Open programmer pressed");
                     openButton();
                 }
             });
