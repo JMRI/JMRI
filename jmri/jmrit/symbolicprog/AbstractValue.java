@@ -17,7 +17,7 @@ import java.awt.Color;
  *
  * Description:		Represents a single CV value
  * @author			Bob Jacobsen   Copyright (C) 2001, 2005
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public abstract class AbstractValue {
 
@@ -69,4 +69,20 @@ public abstract class AbstractValue {
     public boolean isToWrite() { return _toWrite; }
     private boolean _toWrite = false;
 
+    public static String stateNameFromValue(int val) {
+        switch (val) {
+            case UNKNOWN:
+                return "Unknown";
+            case EDITED:
+                return "Edited";
+            case READ:
+                return "Read";
+            case STORED:
+                return "Stored";
+            case FROMFILE:
+                return "FromFile";
+            default:
+                return "<unexpected value: "+val+">";
+        }
+    }
 }
