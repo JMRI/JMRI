@@ -49,7 +49,7 @@ import com.sun.java.util.collections.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.52 $
+ * @version $Revision: 1.53 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -484,6 +484,8 @@ public class PanelEditor extends JmriJFrame {
         NamedIcon icon = new NamedIcon(inputFileChooser.getSelectedFile().getPath(),
                                        inputFileChooser.getSelectedFile().getPath());
         PositionableLabel l = new PositionableLabel(icon);
+        l.setFixed(true);
+        l.setShowTooltip(false);
         l.setSize(icon.getIconWidth(), icon.getIconHeight());
         l.setDisplayLevel(BKG);
         putLabel(l);
