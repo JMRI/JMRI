@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.55 2006-02-16 06:19:46 jacobsen Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.56 2006-02-20 20:31:53 jacobsen Exp $ -->
 
 <!-- This DTD is Copyright 2001-2005 JMRI.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -248,6 +248,8 @@
     <!ATTLIST positionablelabel green	CDATA #IMPLIED>
     <!ATTLIST positionablelabel blue	CDATA #IMPLIED>
     <!ATTLIST positionablelabel forcecontroloff	(true|false) "false">
+    <!ATTLIST positionablelabel fixed	(true|false) "false">
+    <!ATTLIST positionablelabel showtooltip	(true|false) "true">
     
 
   <!ELEMENT sensoricon EMPTY>

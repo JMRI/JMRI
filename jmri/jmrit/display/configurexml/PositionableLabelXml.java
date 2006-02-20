@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class PositionableLabelXml implements XmlAdapter {
 
@@ -35,6 +35,8 @@ public class PositionableLabelXml implements XmlAdapter {
 
         Element element = new Element("positionablelabel");
         element.addAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
+        element.addAttribute("fixed", p.getFixed()?"true":"false");
+        element.addAttribute("showtooltip", p.getShowTooltip()?"true":"false");
         element.addAttribute("class", "jmri.jmrit.display.configurexml.PositionableLabelXml");
 
         // include contents
@@ -89,12 +91,6 @@ public class PositionableLabelXml implements XmlAdapter {
                 log.warn("invalid style attribute value");
             }
 
-        a = element.getAttribute("forcecontroloff");
-        if ( (a!=null) && a.getValue().equals("true"))
-            l.setForceControlOff(true);
-        else
-            l.setForceControlOff(false);
-            
         } else if (element.getAttribute("icon")!=null) {
             String name = element.getAttribute("icon").getValue();
             NamedIcon icon = CatalogPane.getIconByName(name);
@@ -107,6 +103,25 @@ public class PositionableLabelXml implements XmlAdapter {
                 }
             } catch (org.jdom.DataConversionException e) {}
         }
+
+        Attribute a = element.getAttribute("forcecontroloff");
+        if ( (a!=null) && a.getValue().equals("true"))
+            l.setForceControlOff(true);
+        else
+            l.setForceControlOff(false);
+            
+        a = element.getAttribute("fixed");
+        if ( (a!=null) && a.getValue().equals("true"))
+            l.setFixed(true);
+        else
+            l.setFixed(false);
+            
+        a = element.getAttribute("showtooltip");
+        if ( (a!=null) && a.getValue().equals("false"))
+            l.setShowTooltip(false);
+        else
+            l.setShowTooltip(true);
+            
         // find coordinates
         int x = 0;
         int y = 0;

@@ -23,8 +23,12 @@ import javax.swing.JRadioButtonMenuItem;
 /**
  * PositionableLabel is a JLabel that can be dragged around the
  * inside of the enclosing Container using a right-drag.
+ * 
+ * The positionable parameter is a global, set from outside.
+ * The 'fixed' parameter is local, set from the popup here.
+ *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  */
 
 public class PositionableLabel extends JLabel
@@ -132,7 +136,7 @@ public class PositionableLabel extends JLabel
     }
     public void mouseDragged(MouseEvent e) {
         if (e.isMetaDown()) {
-            if (!getPositionable()) return;
+            if (!getPositionable() || getFixed()) return;
             // update object postion by how far dragged
             int xObj = getX()+(e.getX()-xClick);
             int yObj = getY()+(e.getY()-yClick);
@@ -159,6 +163,10 @@ public class PositionableLabel extends JLabel
                     setIcon(namedIcon);
                 }
             });
+            
+            addFixedItem(popup);
+            addShowTooltipItem(popup);
+            
             popup.add(new AbstractAction("Remove") {
                 public void actionPerformed(ActionEvent e) {
                     remove();
@@ -220,6 +228,9 @@ public class PositionableLabel extends JLabel
             addColorMenuEntry(colorMenu, "Magenta",Color.magenta);
             popup.add(colorMenu);
 
+            addFixedItem(popup);
+            addShowTooltipItem(popup);
+            
             popup.add(new AbstractAction("Remove") {
                 public void actionPerformed(ActionEvent e) {
                     remove();
@@ -264,9 +275,34 @@ public class PositionableLabel extends JLabel
         menu.add(r);
     }
 
+    JCheckBoxMenuItem showTooltipItem = null;
+    void addShowTooltipItem(JPopupMenu popup) {
+        showTooltipItem = new JCheckBoxMenuItem("Tooltip");
+        showTooltipItem.setSelected(getShowTooltip());
+        popup.add(showTooltipItem);
+        showTooltipItem.addActionListener(new ActionListener(){
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                setShowTooltip(showTooltipItem.isSelected());
+            }
+        });
+    }
+        
+    JCheckBoxMenuItem showFixedItem = null;
+    void addFixedItem(JPopupMenu popup) {
+        showFixedItem = new JCheckBoxMenuItem("Fixed");
+        showFixedItem.setSelected(getFixed());
+        popup.add(showFixedItem);
+        showFixedItem.addActionListener(new ActionListener(){
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                setFixed(showFixedItem.isSelected());
+            }
+        });
+    }
+        
     JCheckBoxMenuItem disableItem = null;
     void addDisableMenuEntry(JPopupMenu popup) {
         disableItem = new JCheckBoxMenuItem("Disable");
+        disableItem.setSelected(getForceControlOff());
         popup.add(disableItem);
         disableItem.addActionListener(new ActionListener(){
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -305,7 +341,7 @@ public class PositionableLabel extends JLabel
 
     boolean debug = false;
 
-    public void setPositionable(boolean enabled) {positionable = enabled;}
+    public void setPositionable(boolean enabled) { positionable = enabled; }
     public boolean getPositionable() { return positionable; }
     private boolean positionable = true;
 
@@ -313,13 +349,34 @@ public class PositionableLabel extends JLabel
     public boolean getEditable() { return editable; }
     private boolean editable = true;
 
+    public void setFixed(boolean enabled) {
+        fixed = enabled;
+        if (showFixedItem!=null) showFixedItem.setSelected(getFixed());
+    }
+    public boolean getFixed() { return fixed; }
+    private boolean fixed = false;
+
     public void setControlling(boolean enabled) {controlling = enabled;}
     public boolean getControlling() { return controlling; }
     private boolean controlling = true;
 
-    public void setForceControlOff(boolean set) {forceControlOff = set;}
+    public void setForceControlOff(boolean set) {
+        forceControlOff = set;
+        if (disableItem!=null) disableItem.setSelected(getForceControlOff());
+    }
     public boolean getForceControlOff() { return forceControlOff; }
     private boolean forceControlOff = false;
+
+    public void setShowTooltip(boolean set) {
+        if (set)
+            setProperToolTip();
+        else
+            setToolTipText(null);
+        showTooltip = set;
+        if (showTooltipItem!=null) showTooltipItem.setSelected(getShowTooltip());
+    }
+    public boolean getShowTooltip() { return showTooltip; }
+    private boolean showTooltip = true;
 
     /**
      * Clean up when this object is no longer needed.  Should not
