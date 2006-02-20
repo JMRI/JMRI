@@ -21,7 +21,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.27 $
+ * @version   $Revision: 1.28 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -745,7 +745,9 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     public void propertyChange(PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("prop changed "+e.getPropertyName()
-                      +" new value: "+e.getNewValue()+" Source "+e.getSource());
+                      +" new value: "+e.getNewValue()
+                      +(e.getPropertyName().equals("State") ? (" ("+VariableValue.stateNameFromValue(((Integer)e.getNewValue()).intValue())+") "):" ")
+                      +" Source "+e.getSource());
         }
         if (e.getNewValue() == null) {
             log.error("new value of "+e.getPropertyName()+" should not be null!");

@@ -15,7 +15,7 @@ import javax.swing.*;
  *
  * @author   Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2004, 2005
  * @author   Howard G. Penny Copyright (C) 2005
- * @version  $Revision: 1.25 $
+ * @version  $Revision: 1.26 $
  */
 public abstract class VariableValue extends AbstractValue implements java.beans.PropertyChangeListener {
 
@@ -220,8 +220,11 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      */
     public void setToWrite(boolean state) {
         if (getInfoOnly() || getReadOnly()) {
+            if (log.isDebugEnabled() && state && getInfoOnly()) log.debug("setToWrite forced false due to getInfoOnly");
+            if (log.isDebugEnabled() && state && getReadOnly()) log.debug("setToWrite forced false due to getInfoOnly");
             state = false;
         }
+        if (log.isDebugEnabled()) log.debug("setToWrite("+state+") for "+label()+" via CvNum "+getCvNum());
         ((CvValue)_cvVector.elementAt(getCvNum())).setToWrite(state);
     }
     /**
