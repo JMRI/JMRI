@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: RR-CirKits-TC-64-basic.xml,v 1.4 2006-02-18 22:19:10 jacobsen Exp $ -->
+<!-- $Id: RR-CirKits-TC-64-basic.xml,v 1.5 2006-02-20 20:33:47 jacobsen Exp $ -->
 <decoder-config > <!-- showEmptyPanes="no" -->
 		<version author="dick@rr-cirkits.com" 
-					version="1" lastUpdated="20051215"/>
+					version="1.0" lastUpdated="20060219"/>
 					
-		<!-- Version 1  -->
+		<!-- Version 1.0  -->
 		
 <decoder>
-	<family name="TC-64" mfg="RR-CirKits" type="stationary"
-				comment="TC-64 is a stationary decoder that may be programmed in OPs mode">
-			<model model= "TC-64" lowVersionID="02"/>
+	<family name="Tower Controller" mfg="RR-CirKits" type="stationary"
+				comment="The Tower Controller is normally programmed in OPs mode">
+			<model model= "TC-64" comment= "64 line I/O" lowVersionID="01"/>
 		</family>
 
 	<programming direct="no" paged="yes"
@@ -7933,26 +7933,26 @@
 </variables>
 </decoder>
 
-<pane name="Basic">
+<pane name="Tower Controller">
 	<column>
 		<row><column>
-		<display item="Long Address" />
+		<display item="Long Address" tooltip="Use 4 digit address from 0-16383"/>
 		</column><column>
-		<display item="Master Mode" />
+		<display item="Master Mode" tooltip="Do not enable if there is a command station attached"/>
 		</column></row>
 		<row><column>
-		<display item="Port State Memory" />
+		<display item="Port State Memory" tooltip="Remembers state of layout during power down" />
 		</column><column>
-		<display item="OPS Mode Programing" />
+		<display item="OPS Mode Programing"  tooltip="Default, must be enabled" />
 		</column><column>
-		<display item="GPON Interrogate" />
+		<display item="GPON Interrogate"  tooltip="Reports sensor status at GPON"/>
 		</column><column>
-		<display item="Special Interrogate" />
+		<display item="Special Interrogate"  tooltip="Allows status readout"/>
  		</column></row>
 		<row><column>
 		<display item="P1 High Address" />
 		</column><column>
-		<display item="P1 Base Address" />
+		<display item="P1 Base Address" tooltip="CV1"/>
 		</column><column>
 		<display item="P1 Direction" />
 		</column><column>
@@ -7963,7 +7963,7 @@
 		<row><column>
 		<display item="P2 High Address" />
 		</column><column>
-		<display item="P2 Base Address" />
+		<display item="P2 Base Address"  tooltip="CV3"/>
 		</column><column>
 		<display item="P2 Direction" />
 		</column><column>
@@ -7974,7 +7974,7 @@
 		<row><column>
 		<display item="P3 High Address" />
 		</column><column>
-		<display item="P3 Base Address" />
+		<display item="P3 Base Address"  tooltip="CV5"/>
 		</column><column>
 		<display item="P3 Direction" />
 		</column><column>
@@ -7985,7 +7985,7 @@
 		<row><column>
 		<display item="P4 High Address" />
 		</column><column>
-		<display item="P4 Base Address" />
+		<display item="P4 Base Address" tooltip="CV7" />
 		</column><column>
 		<display item="P4 Direction" />
 		</column><column>
@@ -7996,7 +7996,7 @@
 		<row><column>
 		<display item="P5 High Address" />
 		</column><column>
-		<display item="P5 Base Address" />
+		<display item="P5 Base Address" tooltip="CV9" />
 		</column><column>
 		<display item="P5 Direction" />
 		</column><column>
@@ -8007,7 +8007,7 @@
 		<row><column>
 		<display item="P6 High Address" />
 		</column><column>
-		<display item="P6 Base Address" />
+		<display item="P6 Base Address" tooltip="CV11" />
 		</column><column>
 		<display item="P6 Direction" />
 		</column><column>
@@ -8018,7 +8018,7 @@
 		<row><column>
 		<display item="P7 High Address" />
 		</column><column>
-		<display item="P7 Base Address" />
+		<display item="P7 Base Address" tooltip="CV13" />
 		</column><column>
 		<display item="P7 Direction" />
 		</column><column>
@@ -8029,7 +8029,7 @@
 		<row><column>
 		<display item="P8 High Address" />
 		</column><column>
-		<display item="P8 Base Address" />
+		<display item="P8 Base Address" tooltip="CV15" />
 		</column><column>
 		<display item="P8 Direction" />
 		</column><column>
@@ -8038,11 +8038,11 @@
 		<display item="P8 Type"  label="Port Type" />
  		</column></row>
 		<row><column>
-        	<display item="Manufacturer ID" />
+        	<display item="Manufacturer ID" tooltip="RR-CirKits, Inc."/>
 		</column><column>
-		<display item="Version ID" />
+		<display item="Version ID"  tooltip="Firmware version number"/>
  		</column></row>
-		<display item="Long Address" />
+		<display item="Long Address" tooltip="Use 4 digit address from 0-16383" />
        </column>
 
 </pane>
@@ -8052,7 +8052,7 @@
 		<row><column>
 		<display item="P1 High Address" />
 		</column><column>
-		<display item="P1 Base Address" />
+		<display item="P1 Base Address"  tooltip="CV1"/>
 		</column><column>
 		<display item="P1 Direction" />
 		</column><column>
@@ -8263,7 +8263,7 @@
 		<row><column>
 		<display item="P2 High Address" />
 		</column><column>
-		<display item="P2 Base Address" />
+		<display item="P2 Base Address" tooltip="CV3" />
 		</column><column>
 		<display item="P2 Direction" />
 		</column><column>
@@ -8473,7 +8473,7 @@
 		<row><column>
 		<display item="P3 High Address" />
 		</column><column>
-		<display item="P3 Base Address" />
+		<display item="P3 Base Address"  tooltip="CV5"/>
 		</column><column>
 		<display item="P3 Direction" />
 		</column><column>
@@ -8683,7 +8683,7 @@
 		<row><column>
 		<display item="P4 High Address" />
 		</column><column>
-		<display item="P4 Base Address" />
+		<display item="P4 Base Address" tooltip="CV7" />
 		</column><column>
 		<display item="P4 Direction" />
 		</column><column>
@@ -8893,7 +8893,7 @@
 		<row><column>
 		<display item="P5 High Address" />
 		</column><column>
-		<display item="P5 Base Address" />
+		<display item="P5 Base Address" tooltip="CV9" />
 		</column><column>
 		<display item="P5 Direction" />
 		</column><column>
@@ -9103,7 +9103,7 @@
 		<row><column>
 		<display item="P6 High Address" />
 		</column><column>
-		<display item="P6 Base Address" />
+		<display item="P6 Base Address" tooltip="CV11" />
 		</column><column>
 		<display item="P6 Direction" />
 		</column><column>
@@ -9313,7 +9313,7 @@
 		<row><column>
 		<display item="P7 High Address" />
 		</column><column>
-		<display item="P7 Base Address" />
+		<display item="P7 Base Address" tooltip="CV13" />
 		</column><column>
 		<display item="P7 Direction" />
 		</column><column>
@@ -9523,7 +9523,7 @@
 		<row><column>
 		<display item="P8 High Address" />
 		</column><column>
-		<display item="P8 Base Address" />
+		<display item="P8 Base Address" tooltip="CV15" />
 		</column><column>
 		<display item="P8 Direction" />
 		</column><column>
