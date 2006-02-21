@@ -24,7 +24,7 @@ import javax.swing.JTextField;
  * SignalHeadTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -107,9 +107,9 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 switch (oldState) {
                 case SignalHead.RED: newState = SignalHead.YELLOW; break;
                 case SignalHead.YELLOW: newState = SignalHead.GREEN; break;
-                case SignalHead.GREEN: newState = SignalHead.DARK; break;
-                case SignalHead.FLASHRED: newState = SignalHead.DARK; break;
-                case SignalHead.FLASHYELLOW: newState = SignalHead.DARK; break;
+                case SignalHead.GREEN: newState = SignalHead.FLASHRED; break;
+                case SignalHead.FLASHRED: newState = SignalHead.FLASHYELLOW; break;
+                case SignalHead.FLASHYELLOW: newState = SignalHead.FLASHGREEN; break;
                 case SignalHead.FLASHGREEN: newState = SignalHead.DARK; break;
                 case SignalHead.DARK: newState = SignalHead.RED; break;
                 default: newState = SignalHead.DARK; this.log.warn("Unexpected state "+oldState+" becomes DARK");break;
