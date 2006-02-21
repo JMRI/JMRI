@@ -19,7 +19,7 @@ import javax.swing.JPopupMenu;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -59,6 +59,9 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
     String redName = "resources/icons/smallschematics/searchlights/left-red-marker.gif";
     NamedIcon red = new NamedIcon(redName, redName);
 
+    String flashRedName = "resources/icons/smallschematics/searchlights/left-flashred-marker.gif";
+    NamedIcon flashRed = new NamedIcon(flashRedName, flashRedName);
+
     String yellowName = "resources/icons/smallschematics/searchlights/left-yellow-marker.gif";
     NamedIcon yellow = new NamedIcon(yellowName, yellowName);
 
@@ -68,9 +71,27 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
     String greenName = "resources/icons/smallschematics/searchlights/left-green-marker.gif";
     NamedIcon green = new NamedIcon(greenName, greenName);
 
+    String flashGreenName = "resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif";
+    NamedIcon flashGreen = new NamedIcon(flashGreenName, flashGreenName);
+
+    String darkName = "resources/icons/smallschematics/searchlights/left-dark-marker.gif";
+    NamedIcon dark = new NamedIcon(darkName, darkName);
+
+    public NamedIcon getDarkIcon() { return dark; }
+    public void setDarkIcon(NamedIcon i) {
+        dark = i;
+        displayState(headState());
+    }
+
     public NamedIcon getRedIcon() { return red; }
     public void setRedIcon(NamedIcon i) {
         red = i;
+        displayState(headState());
+    }
+
+    public NamedIcon getFlashRedIcon() { return flashRed; }
+    public void setFlashRedIcon(NamedIcon i) {
+        flashRed = i;
         displayState(headState());
     }
 
@@ -89,6 +110,12 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
     public NamedIcon getGreenIcon() { return green; }
     public void setGreenIcon(NamedIcon i) {
         green = i;
+        displayState(headState());
+    }
+
+    public NamedIcon getFlashGreenIcon() { return flashGreen; }
+    public void setFlashGreenIcon(NamedIcon i) {
+        flashGreen = i;
         displayState(headState());
     }
 
@@ -200,6 +227,10 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
             if (text) super.setText("<red>");
             if (icon) super.setIcon(red);
             break;
+        case SignalHead.FLASHRED:
+            if (text) super.setText("<flash red>");
+            if (icon) super.setIcon(flashRed);
+            break;
         case SignalHead.YELLOW:
             if (text) super.setText("<yellow>");
             if (icon) super.setIcon(yellow);
@@ -212,12 +243,13 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
             if (text) super.setText("<green>");
             if (icon) super.setIcon(green);
             break;
+        case SignalHead.FLASHGREEN:
+            if (text) super.setText("<flash green>");
+            if (icon) super.setIcon(flashGreen);
+            break;
         case SignalHead.DARK:
             if (text) super.setText("<dark>");
-            if (icon) super.setIcon(red);       // for now, DARK is red
-            if (!warned)
-                log.warn("DARK signals are shown as RED");
-            warned = true;
+            if (icon) super.setIcon(dark);
             break;
 
         default:
