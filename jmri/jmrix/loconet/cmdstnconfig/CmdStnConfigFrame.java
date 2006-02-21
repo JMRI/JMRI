@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  *
  * @author			Alex Shepherd   Copyright (C) 2004
  * @author			Bob Jacobsen  Copyright (C) 2006
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class CmdStnConfigFrame extends jmri.util.JmriJFrame implements LocoNetListener {
 
@@ -99,6 +99,9 @@ public class CmdStnConfigFrame extends jmri.util.JmriJFrame implements LocoNetLi
       optionBox = new JCheckBox(rb.getString("CheckBoxReserved"));
       getContentPane().add(optionBox);
 
+      // heading
+      getContentPane().add(new JLabel(rb.getString("HeadingText")));
+      
       // section holding options
       JPanel options = new JPanel();
       GridBagConstraints gc = new GridBagConstraints();
