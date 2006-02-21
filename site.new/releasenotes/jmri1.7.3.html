@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.7.3.html,v 1.24 2006-02-16 16:17:10 jacobsen Exp $ -->
+<!-- $Id: jmri1.7.3.html,v 1.25 2006-02-21 03:20:01 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -76,9 +76,11 @@
 
 <h3>New warnings for this test version:</h3>
 
-<P>We have added additional information to the roster files in this version to help properly handle short/long addressing in systems that allow low addresses (e.g. 65) to be either short or long addresses. The only current system we support that has this capability is NCE.  If you have an NCE system, and you have locomotives with addresses of 127 or less, you should open their roster entries in DecoderPro, check that the proper short or long address is selected,  and save them again.
+<P>The "LocoNet Hexfile" protocol name in the preferences has always been a poor name. This is changed to "LocoNet Simulator" to better reflect it's purpose.  Some documentation may still contain the old name.
 
 <h3>Older warnings from this series of test versions:</h3>
+
+<P>We have added additional information to the roster files in this version to help properly handle short/long addressing in systems that allow low addresses (e.g. 65) to be either short or long addresses. The only current system we support that has this capability is NCE.  If you have an NCE system, and you have locomotives with addresses of 127 or less, you should open their roster entries in DecoderPro, check that the proper short or long address is selected,  and save them again.
 
 <P>Indexed CVs will not be included in any printouts for this release.
  
@@ -124,7 +126,13 @@
 
 <P>Soundtraxx DSD definitions now properly show function mapping for functions 7 and 8 (Don Mitchell, Robin Becker)
 
-<P>John Harper updated the Throttle tool so that (optionally) the locomotive speed will continually change as you move the slider. Previously, it only updated when you released the slider.
+<P>John Harper updated the Throttle tool so that (optionally) the locomotive speed will continually change as you move the slider. Previously, it only updated when you released the slider. This is disabled by default.
+To enable it: right
+click on the speed control panel.  This brings up a menu which only has
+one choice (Properties).  
+After you click on Properties you get a new window with radio buttons to
+select the speed control in use and a checkbox to enable or disable the
+slider tracking.
 
 <P>Alfredo Sola updated the Spanish translation
 
@@ -182,8 +190,7 @@
 
 <P>Michael Mosher updated the TCS X-series decoder definition.
 
-<P>Bob Jacobsen improved the LocoNet monitor's display of the "send DCC packet" 
-message, and fixed a bug in it.
+<P>Bob Jacobsen improved the LocoNet monitor's display of the "send DCC packet" message, and fixed a bug in it.
 
 <P>Open added to the PanelPro panel editor so that you can decide whether or not the panel window should use space for a menubar.  Turning the menubar off gives you a few more pixels for the panel, but without the menubar you can't reopen the editor if it gets accidentally closed.
 
@@ -265,6 +272,8 @@ Walthers 0-6-0 Switcher, GP30.
 
 <P>Dennis Miller added Print and Print Preview options to the Sensor, Turnout, Signal, Memory, Reporter and Route tables.  Now you can print these to document your layout.
 
+<P>PanelPro by default now makes the background image for new panels not display the tooltip, and not be movable.  All other icons continue to show tooltips and be movable.  The popup menu for all items lets you override these behaviors.  The "Fixed" item if checked keeps the icon from being moved.  The "Tooltip" item if checked (the default) will display the tip if the mouse dwells on the icon. If you have an existing panel, you can update the background image options via the popup menu and store it again.
+
 <P>Updated the MRC "14/28 speed step" definition so that DecoderPro would identify a couple more models.
 
 <P>David Cuthbert provided info so we could add the TCS M1P-UK model as an identified decoder.
@@ -274,6 +283,8 @@ Walthers 0-6-0 Switcher, GP30.
 <P>Michael Mosher added the TCS AMD1 and MP-15N decoders
 
 <P>Bob Jacobsen added a tool to make it easy to set the LocoNet ID, for example if you have multiple radio layouts at a show
+
+<P>Added a tool to configure LocoNet command stations. Note for this to work properly, you need to have selected your command station type in the program preferences.
 
 <P>Dennis Miller updated DecoderPro so that when you double click to select a decoder type it opens the programmer (RFE-1094360)
 
@@ -297,6 +308,13 @@ Walthers 0-6-0 Switcher, GP30.
 
 <P>Sensor icons on panels can now be set "momentary" via their popup menu, in which case they set the sensor ACTIVE when the mouse goes down on them, and INACTIVE when the mouse is released.  This models a momentary button in real life, and is useful for e.g. putting an icon on a screen to trigger a route.
 
+<P>On Mac OS X, JMRI now uses Java 1.4 if it's available.  This may result in some small cosmetic changes, but should resolve several bugs in the user interface
+
+<P>Fix for problem flooding the LocoNet command station when sending lots of ops-mode writes
+
+<P>"LocoNet Hexfile" protocol choice has been renamed "LocoNet Simulator".  Some documentation may still use the older name.
+
+<P>Signal icons on panels can now display graphics for dark, flashing red and flashing green aspects. The Signal Table lets you step through all seven combinations, though the icons themselves just use the main red/yellow/green combinations instead of the flashing ones too.
 
       <hr class="hide">
 <!-- Footer -->
