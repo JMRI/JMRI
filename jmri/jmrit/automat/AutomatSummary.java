@@ -12,7 +12,7 @@ import com.sun.java.util.collections.ArrayList;
  * for now we're going through an explicit instance() reference.
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class AutomatSummary  {
 
@@ -63,6 +63,22 @@ public class AutomatSummary  {
 		return (AbstractAutomaton)automats.get(i);
 	}
 
+    /**
+     * Provide a convenience method to look up 
+     * a managed object by it's name.
+     * @since 1.7.3
+     * @param name Name of the automat to be located
+     * @return null if name not found
+     */
+	public AbstractAutomaton get(String name) {
+	    AbstractAutomaton a;
+	    for (int i=0; i<length(); i++) {
+	        a = (AbstractAutomaton)automats.get(i);
+	        if (a.getName().equals(name)) return a;
+        }
+		return null;
+	}
+	
 	public int indexOf(AbstractAutomaton a) {
 		return automats.indexOf(a);
 	}
