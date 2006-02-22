@@ -73,7 +73,7 @@ import javax.swing.JTextArea;
  * so that Jython code can easily use some of the methods.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.27 $
+ * @version     $Revision: 1.28 $
  */
 public class AbstractAutomaton implements Runnable {
 
@@ -90,7 +90,9 @@ public class AbstractAutomaton implements Runnable {
 
     Thread currentThread = null;
     /**
-     * Part of the implementation; not for general use.
+     * Start this automat processing.
+     *
+     * Overrides the superclass method to do local accounting.
      */
     public void start() {
         if (currentThread != null) log.error("Start with currentThread not null!");
@@ -116,7 +118,9 @@ public class AbstractAutomaton implements Runnable {
     }
 
     /**
-     * Part of the implementation; not for general use.
+     * Stop the thread immediately.
+     *
+     * Overrides superclass method to handle local accounting.
      */
     public void stop() {
         if (currentThread == null) log.error("Stop with currentThread null!");
@@ -139,19 +143,17 @@ public class AbstractAutomaton implements Runnable {
 	private int count;
 
 	/**
-     * Part of the implementation; not for general use.
+	 * Returns the number of times the handle routine has executed.
 	 *
-	 * Returns the number of times the handle routine has executed,
-	 * used by e.g. {@link jmri.jmrit.automat.monitor} to monitor progress
+	 * Used by e.g. {@link jmri.jmrit.automat.monitor} to monitor progress
 	 */
 	public int getCount() {
 		return count;
 	}
 
 	/**
-     * Part of the internal implementation; not for general use.
-	 *
-	 * Gives access to the thread name for e.g. {@link jmri.jmrit.automat.monitor}
+	 * Gives access to the thread name.
+	 * Used internally for e.g. {@link jmri.jmrit.automat.monitor}
 	 */
 	public String getName() {
 		return name;
