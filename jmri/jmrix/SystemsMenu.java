@@ -15,7 +15,7 @@ import javax.swing.JMenu;
  *
  * @see ActiveSystemsMenu
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public class SystemsMenu extends JMenu {
     public SystemsMenu(String name) {
@@ -31,22 +31,33 @@ public class SystemsMenu extends JMenu {
 
         setText(rb.getString("MenuSystems"));
 
-        add(new jmri.jmrix.cmri.CMRIMenu());
-        add(new jmri.jmrix.easydcc.EasyDCCMenu());
-        add(new jmri.jmrix.loconet.LocoNetMenu());
-        add(new jmri.jmrix.nce.NceMenu());
-        add(new jmri.jmrix.sprog.SPROGMenu());
-        add(new jmri.jmrix.wangrow.WangrowMenu());
-        add(new jmri.jmrix.lenz.XNetMenu());
-        add(new jmri.jmrix.xpa.XpaMenu());
-        add(new jmri.jmrix.zimo.Mx1Menu());
+        addMenu("jmri.jmrix.cmri.CMRIMenu");
+        addMenu("jmri.jmrix.easydcc.EasyDCCMenu");
+        addMenu("jmri.jmrix.loconet.LocoNetMenu");
+        addMenu("jmri.jmrix.nce.NceMenu");
+        addMenu("jmri.jmrix.sprog.SPROGMenu");
+        addMenu("jmri.jmrix.wangrow.WangrowMenu");
+        addMenu("jmri.jmrix.lenz.XNetMenu");
+        addMenu("jmri.jmrix.xpa.XpaMenu");
+        addMenu("jmri.jmrix.zimo.Mx1Menu");
         add(new javax.swing.JSeparator());
-        add(new jmri.jmrix.direct.DirectMenu());
-        add(new jmri.jmrix.tmcc.TMCCMenu());
-        add(new jmri.jmrix.oaktree.OakTreeMenu());
+        addMenu("jmri.jmrix.direct.DirectMenu");
+        addMenu("jmri.jmrix.tmcc.TMCCMenu");
+        addMenu("jmri.jmrix.oaktree.OakTreeMenu");
 
     }
 
+    void addMenu(String className) {
+        JMenu j = null;
+        try {
+            j = (JMenu) Class.forName(className).newInstance();
+        } catch (Exception e) {
+            log.debug("Could menu from class "+className+"; "+e);
+        }
+        if (j!=null) add(j);
+    }
+    
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SystemsMenu.class.getName());
 }
 
 
