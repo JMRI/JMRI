@@ -19,7 +19,7 @@ import javax.swing.JMenuBar;
  * @see SystemsMenu
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class ActiveSystemsMenu extends JMenu {
     public ActiveSystemsMenu(String name) {
@@ -61,8 +61,15 @@ public class ActiveSystemsMenu extends JMenu {
             m.add(getMenu("jmri.jmrix.xpa.XpaMenu"));
         if (jmri.jmrix.zimo.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.zimo.Mx1Menu"));
+        
+        m.add(new javax.swing.JSeparator());
+        
         if (jmri.jmrix.direct.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.direct.DirectMenu"));
+        if (jmri.jmrix.tmcc.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.tmcc.TMCCMenu"));
+        if (jmri.jmrix.oaktree.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.oaktree.OakTreeMenu"));
     }
 
     static public void addItems(JMenuBar m) {
@@ -99,6 +106,12 @@ public class ActiveSystemsMenu extends JMenu {
 
         if (jmri.jmrix.direct.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.direct.DirectMenu"));
+
+        if (jmri.jmrix.tmcc.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.tmcc.TMCCMenu"));
+
+        if (jmri.jmrix.oaktree.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.oaktree.OakTreeMenu"));
     }
 
     static JMenu getMenu(String className) {
