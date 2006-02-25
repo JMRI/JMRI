@@ -4,8 +4,9 @@ package jmri.jmrix.loconet.loconetovertcp;
  * Implementation of the LocoNetOverTcp LbServer Server Protocol
  *
  * @author      Alex Shepherd Copyright (C) 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
+
 
 public interface ServerListner {
   public void notifyServerStateChanged( Server s );
