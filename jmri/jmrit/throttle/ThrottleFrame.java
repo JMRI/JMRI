@@ -43,7 +43,7 @@ import org.jdom.Element;
  *  directed by the interface.
  *
  * @author     Glen Oberhauser
- * @version    $Revision: 1.27 $
+ * @version    $Revision: 1.28 $
  */
 /**
  * @author DSM
@@ -74,7 +74,7 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
     private DccThrottle throttle;
 
     PowerPane powerControl  = new PowerPane();
-    PowerManager p = null;
+    PowerManager powerMgr = null;
     JButton powerLight;
     // Load the power lights as icons to be placed in an invisible JButton so the light 
     // can be clicked to change the power status
@@ -87,11 +87,11 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
 	 */
 	public ThrottleFrame()
 	{
-        p = InstanceManager.powerManagerInstance();
-        if (p == null) {
-            log.error("No power manager instance found, panel not active");
+        powerMgr = InstanceManager.powerManagerInstance();
+        if (powerMgr == null) {
+            log.info("No power manager instance found, panel not active");
         }
-        else p.addPropertyChangeListener(this);
+        else powerMgr.addPropertyChangeListener(this);
         initGUI();
 	}
 
@@ -292,49 +292,52 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
 				}
 			});
         
-        JMenu powerMenu = new JMenu("  Power:");
-        JMenuItem powerOn = new JMenuItem("Power On");
-        powerMenu.add(powerOn);
-        powerOn.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent e){
-                        powerControl.onButtonPushed();
-                    }
-                });
-        
-        JMenuItem powerOff = new JMenuItem("Power Off");
-        powerMenu.add(powerOff);
-        powerOff.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent e){
-                        powerControl.offButtonPushed();
-                    }
-                });
-        
 		this.setJMenuBar(new JMenuBar());
 		this.getJMenuBar().add(viewMenu);
 		this.getJMenuBar().add(editMenu);
-        this.getJMenuBar().add(powerMenu);
-        powerLight = new JButton();
-        setPowerIcons();
-        // make the button itself invisible, just display the power LED
-        powerLight.setBorderPainted(false);
-        powerLight.setContentAreaFilled(false);
-        powerLight.setFocusPainted(false);
-        this.getJMenuBar().add(powerLight);
-        powerLight.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent e){
-                        try {
-                            if (p.getPower()==PowerManager.ON) powerControl.offButtonPushed();
-                            else if (p.getPower()==PowerManager.OFF)powerControl.onButtonPushed();
-                                else if (p.getPower()==PowerManager.UNKNOWN)powerControl.offButtonPushed();
-                        } catch (JmriException ex) {
-                            powerLight.setIcon(powerXIcon);
+
+        if (powerMgr !=null) {
+            JMenu powerMenu = new JMenu("  Power:");
+            JMenuItem powerOn = new JMenuItem("Power On");
+            powerMenu.add(powerOn);
+            powerOn.addActionListener(
+                    new ActionListener() {
+                        public void actionPerformed(ActionEvent e){
+                            powerControl.onButtonPushed();
+                        }
+                    });
+            
+            JMenuItem powerOff = new JMenuItem("Power Off");
+            powerMenu.add(powerOff);
+            powerOff.addActionListener(
+                    new ActionListener() {
+                        public void actionPerformed(ActionEvent e){
+                            powerControl.offButtonPushed();
+                        }
+                    });
+            
+            this.getJMenuBar().add(powerMenu);
+            powerLight = new JButton();
+            setPowerIcons();
+            // make the button itself invisible, just display the power LED
+            powerLight.setBorderPainted(false);
+            powerLight.setContentAreaFilled(false);
+            powerLight.setFocusPainted(false);
+            this.getJMenuBar().add(powerLight);
+            powerLight.addActionListener(
+                    new ActionListener() {
+                        public void actionPerformed(ActionEvent e){
+                            try {
+                                if (powerMgr.getPower()==PowerManager.ON) powerControl.offButtonPushed();
+                                else if (powerMgr.getPower()==PowerManager.OFF)powerControl.onButtonPushed();
+                                    else if (powerMgr.getPower()==PowerManager.UNKNOWN)powerControl.offButtonPushed();
+                            } catch (JmriException ex) {
+                                powerLight.setIcon(powerXIcon);
+                            }
                         }
                     }
-                }
-        );
+            );
+        }
 	}
 
 	private void editPreferences()
@@ -363,7 +366,7 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
 		// dispose of this last because it will release and destroy throttle.
 		addressPanel.destroy();
 
-        if (p!=null) p.removePropertyChangeListener(this);
+        if (powerMgr!=null) powerMgr.removePropertyChangeListener(this);
         
 		// Handle disposing of the throttle
 		if (throttle != null)
@@ -437,23 +440,24 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
      *  
      */
     public void setPowerIcons() {
+        if (powerMgr==null) return;
         try {
-            if (p.getPower()==PowerManager.ON) {
+            if (powerMgr.getPower()==PowerManager.ON) {
                 powerLight.setIcon(powerOnIcon);
                 powerLight.setToolTipText("Layout Power On.  Click light to turn off, or use Power menu");
             }
-            else if (p.getPower()==PowerManager.OFF) {
+            else if (powerMgr.getPower()==PowerManager.OFF) {
                 powerLight.setIcon(powerOffIcon);
                 powerLight.setToolTipText("Layout Power Off.  Click light to turn on, or use Power menu");
             }
-            else if (p.getPower()==PowerManager.UNKNOWN) {
+            else if (powerMgr.getPower()==PowerManager.UNKNOWN) {
                 powerLight.setIcon(powerXIcon);
                 powerLight.setToolTipText("Layout Power state unknown.  Click light to turn off, or use Power menu");
             }
             else {
                 powerLight.setIcon(powerXIcon);
                 powerLight.setToolTipText("Layout Power state unknown.  Click light to turn off, or use Power menu");
-                log.error("Unexpected state value: +"+p.getPower());
+                log.error("Unexpected state value: +"+powerMgr.getPower());
             }
         } catch (JmriException ex) {
             powerLight.setIcon(powerXIcon);
