@@ -1,12 +1,7 @@
+// LnTcpDriverAdapter.java
+
 package jmri.jmrix.loconet.loconetovertcp;
 
-/**
- * Implementation of the LocoNetOverTcp LbServer Server Protocol
- *
- * @author      Alex Shepherd Copyright (C) 2006
- * @version	$Revision: 1.5 $
- */
- 
 import jmri.jmrix.loconet.LnPortController;
 
 import java.io.DataInputStream;
@@ -21,8 +16,10 @@ import java.util.Vector;
  * Normally controlled by the LnTcpDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.5 $
+ * @author      Alex Shepherd Copyright (C) 2003, 2006
+ * @version	$Revision: 1.6 $
  */
+
 public class LnTcpDriverAdapter extends LnPortController {
 
     /**

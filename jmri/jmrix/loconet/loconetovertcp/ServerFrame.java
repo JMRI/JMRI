@@ -1,12 +1,6 @@
-package jmri.jmrix.loconet.loconetovertcp;
+// ServerFrame.java
 
-/**
- * Implementation of the LocoNetOverTcp LbServer Server Protocol
- *
- * @author      Alex Shepherd Copyright (C) 2006
- * @version	$Revision: 1.2 $
- */
- 
+package jmri.jmrix.loconet.loconetovertcp;
 
 import jmri.jmrix.loconet.*;
 import jmri.*;
@@ -32,9 +26,11 @@ import javax.swing.event.ChangeEvent;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  *
- * @author			Bob Jacobsen   Copyright (C) 2003, 2004
- * @version			$Revision: 1.2 $
+ * @author	Bob Jacobsen  Copyright (C) 2003, 2004
+ * @author      Alex Shepherd Copyright (C) 2006
+ * @version	$Revision: 1.3 $
  */
+
 public class ServerFrame extends JFrame implements ServerListner {
 
   private ServerFrame() {

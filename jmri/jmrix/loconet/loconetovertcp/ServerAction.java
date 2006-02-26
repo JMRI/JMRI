@@ -1,27 +1,34 @@
-package jmri.jmrix.loconet.loconetovertcp;
+// ServerAction.java
 
-/**
- * Implementation of the LocoNetOverTcp LbServer Server Protocol
- *
- * @author      Alex Shepherd Copyright (C) 2006
- * @version	$Revision: 1.2 $
- */
- 
+package jmri.jmrix.loconet.loconetovertcp;
 
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
 import jmri.jmrix.loconet.LnTrafficController;
 
+/**
+ * Implementation of the LocoNetOverTcp LbServer Server Protocol
+ *
+ * @author      Alex Shepherd Copyright (C) 2006
+ * @version	$Revision: 1.3 $
+ */
+
 public class ServerAction
   extends AbstractAction {
 
   public ServerAction(String s) {
     super(s);
+      // Get a server instance to cause the config to be read and the server
+      // started if necessary
+    Server.getInstance();
   }
 
   public ServerAction() {
     this("LocoNetOverTcp Server");
+      // Get a server instance to cause the config to be read and the server
+      // started if necessary
+    Server.getInstance();
   }
 
   public void actionPerformed(ActionEvent e) {

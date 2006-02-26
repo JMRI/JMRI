@@ -1,12 +1,6 @@
-package jmri.jmrix.loconet.loconetovertcp ;
+// Server.java
 
-/**
- * Implementation of the LocoNetOverTcp LbServer Server Protocol
- *
- * @author      Alex Shepherd Copyright (C) 2006
- * @version	$Revision: 1.2 $
- */
- 
+package jmri.jmrix.loconet.loconetovertcp ;
 
 import jmri.jmrix.loconet.*;
 import java.net.ServerSocket;
@@ -14,6 +8,13 @@ import java.net.Socket;
 import java.io.*;
 import com.sun.java.util.collections.LinkedList;
 import java.util.Properties;
+
+/**
+ * Implementation of the LocoNetOverTcp LbServer Server Protocol
+ *
+ * @author      Alex Shepherd Copyright (C) 2006
+ * @version	$Revision: 1.3 $
+ */
 
 public class Server{
   static Server self ;
@@ -50,11 +51,7 @@ public class Server{
     if( settings == null){
       settings = new Properties();
 
-      String settingsFileName = System.getProperty( "user.home" ) ;
-      if( settingsFileName != null )
-        settingsFileName += File.separator ;
-
-      settingsFileName += SETTINGS_FILE_NAME ;
+      String settingsFileName = jmri.jmrit.XmlFile.prefsDir() + SETTINGS_FILE_NAME;
 
       try {
         java.io.InputStream settingsStream = new FileInputStream(settingsFileName);
@@ -75,11 +72,7 @@ public class Server{
 
   public void saveSettings(){
     if( settings != null){
-      String settingsFileName = System.getProperty( "user.home" ) ;
-      if( settingsFileName != null )
-        settingsFileName += File.separator ;
-
-      settingsFileName += SETTINGS_FILE_NAME ;
+      String settingsFileName = jmri.jmrit.XmlFile.prefsDir() + SETTINGS_FILE_NAME;
 
       try {
         java.io.OutputStream settingsStream = new FileOutputStream(settingsFileName);
@@ -112,7 +105,7 @@ public class Server{
 
   public int getPortNumber(){
     loadSettings();
-    String val = settings.getProperty( PORT_NUMBER_KEY, "9999" );
+    String val = settings.getProperty( PORT_NUMBER_KEY, "1234" );
     return Integer.parseInt( val, 10 ) ;
   }
 

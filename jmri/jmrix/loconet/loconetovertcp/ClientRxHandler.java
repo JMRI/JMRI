@@ -1,12 +1,6 @@
-package jmri.jmrix.loconet.loconetovertcp;
+// ClientRxHandler.java
 
-/**
- * Implementation of the LocoNetOverTcp LbServer Server Protocol
- *
- * @author      Alex Shepherd Copyright (C) 2006
- * @version	$Revision: 1.2 $
- */
- 
+package jmri.jmrix.loconet.loconetovertcp;
 
 import java.net.Socket;
 import jmri.jmrix.loconet.LocoNetMessage;
@@ -17,6 +11,13 @@ import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LocoNetMessageException;
 import java.util.StringTokenizer;
+
+/**
+ * Implementation of the LocoNetOverTcp LbServer Server Protocol
+ *
+ * @author      Alex Shepherd Copyright (C) 2006
+ * @version	$Revision: 1.3 $
+ */
 
 public class ClientRxHandler extends Thread implements LocoNetListener{
   Socket          clientSocket ;
