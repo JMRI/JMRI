@@ -45,7 +45,7 @@ import org.jdom.Attribute;
  *  TODO: fix speed increments (14, 28)
  *
  * @author     glen   Copyright (C) 2002
- * @version    $Revision: 1.48 $
+ * @version    $Revision: 1.49 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener,ActionListener
 {
@@ -116,10 +116,12 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 		
 		try {
 		speedSpinner = JSpinnerUtil.getJSpinner();
+		    if (speedSpinner !=null) {
                 JSpinnerUtil.setModelMaximum(speedSpinner, new Integer(MAX_SPEED));
                 JSpinnerUtil.setModelMinimum(speedSpinner, new Integer(0));
                 JSpinnerUtil.setValue(speedSpinner, new Integer(0));
-		SwingUtil.setFocusable(speedSpinner,false);
+		        SwingUtil.setFocusable(speedSpinner,false);
+		    }
 		} catch (NoClassDefFoundError e1) {
 			// we can't use a JSpinner Object.
 			speedSpinner = null;
@@ -302,17 +304,20 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	public void setSpeedController(int displaySlider) {
 		switch(displaySlider) {
 		   case STEPDISPLAY: {
-			sliderPanel.setVisible(false);
-		        speedSlider.setEnabled(false);
-			spinnerPanel.setVisible(true);
-			speedSpinner.setEnabled(true);
-			break;
+		        if (speedSpinner!=null) {
+			        sliderPanel.setVisible(false);
+		            speedSlider.setEnabled(false);
+			        spinnerPanel.setVisible(true);
+			        speedSpinner.setEnabled(true);
+			        break;
+			    }
+			    // if speedSpinner == null, fall through to default case
 			}
 		   default: {
-			sliderPanel.setVisible(true);
+			    sliderPanel.setVisible(true);
 		        speedSlider.setEnabled(true);
-			spinnerPanel.setVisible(false);
-			speedSpinner.setEnabled(false);
+			    spinnerPanel.setVisible(false);
+			    if (speedSpinner!=null) speedSpinner.setEnabled(false);
 		   }
 		}
 		_displaySlider=displaySlider;
@@ -648,7 +653,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	 *  A KeyAdapter that listens for the keys that work the control pad buttons
 	 *
 	 * @author     glen
-         * @version    $Revision: 1.48 $
+         * @version    $Revision: 1.49 $
 	 */
 	class ControlPadKeyListener extends KeyAdapter
 	{
