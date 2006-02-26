@@ -14,7 +14,7 @@ import java.util.Vector;
  * it has some DCC-specific content.
  *
  * @author  Bob Jacobsen  Copyright (C) 2001, 2005
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 abstract public class AbstractThrottle implements DccThrottle {
     protected float speedSetting;
@@ -243,25 +243,34 @@ abstract public class AbstractThrottle implements DccThrottle {
      * Send the message to set the state of
      * functions F0, F1, F2, F3, F4.
      * <P>
-     * This is used in the setFn implementations provided in this class.
+     * This is used in the setFn implementations provided in this class,
+     * but a real implementation needs to be provided.
      */
-    abstract protected void sendFunctionGroup1();
+    protected void sendFunctionGroup1() {
+        log.error("sendFunctionGroup1 needs to be implemented if invoked");
+    }
 
     /**
      * Send the message to set the state of
      * functions F5, F6, F7, F8.
      * <P>
-     * This is used in the setFn implementations provided in this class.
+     * This is used in the setFn implementations provided in this class,
+     * but a real implementation needs to be provided.
      */
-    abstract protected void sendFunctionGroup2();
+    protected void sendFunctionGroup2() {
+        log.error("sendFunctionGroup2 needs to be implemented if invoked");
+    }
 
     /**
      * Send the message to set the state of
      * functions F9, F10, F11, F12
      * <P>
-     * This is used in the setFn implementations provided in this class.
+     * This is used in the setFn implementations provided in this class,
+     * but a real implementation needs to be provided.
      */
-    abstract protected void sendFunctionGroup3();
+    protected void sendFunctionGroup3() {
+        log.error("sendFunctionGroup3 needs to be implemented if invoked");
+    }
 
 
     /*
@@ -273,7 +282,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      *              speed step mode in most cases
      */
      public void setSpeedStepMode(int Mode) {
-	speedStepMode = Mode;
+	    speedStepMode = Mode;
      }
 
     /*
@@ -281,7 +290,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      * <P>
      */
      public int getSpeedStepMode() {
-	return speedStepMode;
+	    return speedStepMode;
      }
 
 
