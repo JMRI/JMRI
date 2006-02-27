@@ -16,7 +16,7 @@ import com.sun.java.util.collections.List;
  * Extends VariableValue to represent a enumerated variable.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
@@ -256,11 +256,15 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     }
 
     public void readChanges() {
-         if (isChanged()) readAll();
+         if (isToRead() && !isChanged()) 
+            log.debug("!!!!!!! unacceptable combination in readChanges: "+label());
+         if (isChanged() || isToRead()) readAll();
     }
 
     public void writeChanges() {
-         if (isChanged()) writeAll();
+         if (isToWrite() && !isChanged()) 
+            log.debug("!!!!!! unacceptable combination in writeChanges: "+label());
+         if (isChanged() || isToWrite()) writeAll();
     }
 
     public void readAll() {
@@ -306,7 +310,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * model between this object and the real JComboBox value.
      *
      * @author			Bob Jacobsen   Copyright (C) 2001
-     * @version         $Revision: 1.19 $
+     * @version         $Revision: 1.20 $
      */
     public class VarComboBox extends JComboBox {
 
