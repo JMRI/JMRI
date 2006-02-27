@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: TD_SIC24.xml,v 1.1 2006-01-03 18:44:44 jacobsen Exp $ -->
-<decoder-config showEmptyPanes="no">
+<!-- $Id: TD_SIC24.xml,v 1.2 2006-02-27 03:15:40 jacobsen Exp $ -->
+<decoder-config>
 		<version author="td@teamdigital1.com" 
-					version="1" lastUpdated="20051213"/>
+					version="1.1" lastUpdated="20060223"/>
 					
-		<!-- Version 1 inital release -->
+		<!-- Version 1 inital release 12/13/05-->
+		<!-- Version 1.1 release 2/23/06 - correct logic cell 3 -->
 		
 <decoder>
 	<family name="SIC24" mfg="Team Digital" type="stationary"
@@ -474,7 +475,7 @@
 		<variable label="Element B Address" CV="66" mask="VVVVVVVV" item="Address 3B">
 			<splitVal highCV="67" upperMask="XXXXVVVV"/>
 			</variable>
-		<variable label="Message Type " CV="76" mask="XXVVXXXX" item="Message 3B">
+		<variable label="Message Type " CV="67" mask="XXVVXXXX" item="Message 3B">
 			<enumVal> <enumChoice choice="Switch Request"/> <enumChoice choice="Switch Feedback"/>
 				<enumChoice choice="Sensor Message"/> </enumVal>
 			</variable>
@@ -494,7 +495,7 @@
 		<variable label="State" CV="69" mask="XVXXXXXX" item="State 3C">
 			<enumVal> <enumChoice choice="False (Throw or Low)"/> <enumChoice choice="True (Close or Hi)"/> </enumVal>
 			</variable>
-		<variable label="Logic" CV="62" mask="VXXXXXXX" item="Logic 3C">
+		<variable label="Logic" CV="69" mask="VXXXXXXX" item="Logic 3C">
 			<enumVal> <enumChoice choice="OR"/> <enumChoice choice="AND"/> </enumVal>
 			</variable>
 
