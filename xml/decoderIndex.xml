@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <!--Written by JMRI version 1.7.2T on Sun Feb 05 15:10:44 PST 2006 $Id: decoderIndex.xml,v 1.84 2006-02-16 08:26:17 jacobsen Exp $-->
-  <decoderIndex version="105">
+  <!--Written by JMRI version 1.7.3 on Sun Feb 26 19:16:34 PST 2006 $Id: decoderIndex.xml,v 1.85 2006-02-27 03:18:10 jacobsen Exp $-->
+  <decoderIndex version="107">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -339,6 +339,14 @@
         <model model="DZ143PS" numOuts="4" numFns="8" lowVersionID="64" highVersionID="65" maxMotorCurrent="1.5A (peak=2A)" formFactor="Z" connector="unspecified" nmraWarrant="no">
           <output name="4" label="Violet" connection="wire" />
           <size length="0.55" width="0.36" height="0.13" units="inches" />
+        </model>
+      </family>
+      <family name="SFX Sound Decoders" mfg="Digitrax" lowVersionID="49" highVersionID="49" type="locomotive" file="Digitrax_0SFX.xml">
+        <model model="EVO GE Diesel" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin" nmraWarrant="no">
+          <output name="4" label="Violet" connection="wire" />
+          <output name="5" label="Pad" connection="solder" />
+          <output name="6" label="Pad" connection="solder" />
+          <size length="1.05" width="0.67" height="0.25" units="inches" />
         </model>
       </family>
       <family name="Premium FX with BEMF" mfg="Digitrax" lowVersionID="240" highVersionID="250" type="locomotive" file="Digitrax_1x2.xml">
@@ -1189,8 +1197,8 @@
         <model model="Life Like 2-8-4 Berkshire wo/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="318" connector="unspecified" nmraWarrant="no" />
         <model model="Walthers 0-6-0 Switcher" lowVersionID="6" numFns="14" numOuts="14" productID="319" connector="unspecified" nmraWarrant="no" />
       </family>
-      <family name="TC-64" mfg="RR-CirKits" type="stationary" comment="TC-64 is a stationary decoder that may be programmed in OPs mode" file="RR-CirKits-TC-64-basic.xml">
-        <model model="TC-64" lowVersionID="02" connector="unspecified" nmraWarrant="no" />
+      <family name="Tower Controller" mfg="RR-CirKits" type="stationary" comment="The Tower Controller is normally programmed in OPs mode" file="RR-CirKits-TC-64-basic.xml">
+        <model model="TC-64" comment="64 line I/O" lowVersionID="01" connector="unspecified" nmraWarrant="no" />
       </family>
       <family name="DSD diesel" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_DSD_Diesel.xml">
         <model model="DSD diesel" numOuts="4" numFns="10" connector="unspecified" nmraWarrant="no">
