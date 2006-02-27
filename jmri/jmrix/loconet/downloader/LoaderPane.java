@@ -14,7 +14,7 @@ import jmri.jmrit.MemoryContents;
 /**
  * Pane for downloading .hex files
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.5 $
+ * @version	    $Revision: 1.6 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -245,7 +245,15 @@ public class LoaderPane extends javax.swing.JPanel {
                                       JOptionPane.ERROR_MESSAGE);
             return;
         }
-
+        
+        // force load, verify disabled in case read fails
+        loadButton.setEnabled(false);
+        loadButton.setToolTipText(res.getString("TipLoadDisabled"));
+        verifyButton.setEnabled(false);
+        verifyButton.setToolTipText(res.getString("TipVerifyDisabled"));
+        // clear the existing memory contents
+        inputContent = new MemoryContents();
+        
         try {
             inputContent.readHex(new File(inputFileName.getText()));
         } catch (FileNotFoundException f) {
