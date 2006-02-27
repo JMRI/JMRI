@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.7.3.html,v 1.25 2006-02-21 03:20:01 jacobsen Exp $ -->
+<!-- $Id: jmri1.7.3.html,v 1.26 2006-02-27 08:23:11 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -62,7 +62,7 @@
       Release Notes for JMRI 1.7.3 test release
       </H2>
 
-	<p>Date: MM NN, 2005</p>
+	<p>Date: February 26, 2006</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 1.7.3 of JMRI/DecoderPro is available for download.
 
@@ -70,13 +70,13 @@
 
 <P>This is a test release.  Please post a note if you encounter any new or old bugs!  And please back up your JMRI files before installing this, in case you want to go back to an earlier version.
 
-<P>This is the next in a series of test versions that contain long-awaited new features, particularly improved support for QSI decoders, wait cursors in the programmer, and significant internal updates.  Some of the changes involved are quite extensive, and may require a certain amount of experience before they are working well.  Therefore, this test version should be considered experimental.
-
-<P>This test version contains important fixes for users programming QSI decoders and Digitrax boards in the PM, BDL and SE series.
+<P>This is the next in a series of test versions that contain long-awaited new features, particularly improved support for Tsunami and DIgitrax sound decoders, better configurability for panel graphics, and significant internal updates.  Some of the changes involved are quite extensive, and may require a certain amount of experience before they are working well.  Therefore, this test version should be considered experimental.
 
 <h3>New warnings for this test version:</h3>
 
 <P>The "LocoNet Hexfile" protocol name in the preferences has always been a poor name. This is changed to "LocoNet Simulator" to better reflect it's purpose.  Some documentation may still contain the old name.
+
+<P>On Mac OS X, JMRI now uses Java 1.4 if it's available.  This may result in some small cosmetic changes, but should resolve several bugs in the user interface. Also, Mac OS X is now being distributed as a disk image (DMG) file. To install it, double click on the file to mount it, and then drag the resulting JMRI folder to the Applications folder.
 
 <h3>Older warnings from this series of test versions:</h3>
 
@@ -97,7 +97,7 @@
 <P>Please use these links for downloading, including the "?download" at the end. That adds to SourceForge's advertising statistics, which makes them happy to host our stuff.
 
 <P>MacOS X:
-     <A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.1.7.3.hqx?download">http://prdownloads.sourceforge.net/jmri/JMRI.1.7.3.hqx?download</a>
+     <A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.1.7.3.dmg?download">http://prdownloads.sourceforge.net/jmri/JMRI.1.7.3.dmg?download</a>
 
 <P>Windows:
      <A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.1.7.3.exe?download">http://prdownloads.sourceforge.net/jmri/JMRI.1.7.3.exe?download</a>
@@ -105,12 +105,27 @@
 <P>Linux:
      <A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.1.7.3.tgz?download">http://prdownloads.sourceforge.net/jmri/JMRI.1.7.3.tgz?download</a>
 
-<P>MacOS 8/9 "Classic":
-     <A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.1.7.3.Classic.hqx?download">http://prdownloads.sourceforge.net/jmri/JMRI.1.7.3.Classic.hqx?download</a>
+<P>MacOS 8/9 "Classic" will be available shortly; consult the JMRI downloads page for the link.
+<!-- <P>MacOS 8/9 "Classic": -->
+<!--      <A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.1.7.3.Classic.hqx?download">http://prdownloads.sourceforge.net/jmri/JMRI.1.7.3.Classic.hqx?download</a> -->
 
 
 
 <h3>Changes since test version 1.7.2:</h3>
+
+<P>An initial implementation of the TMCC protocol for Lionel trains is available
+
+<P>JMRI can now act as an LbServer to provide LocoNet access to remote client computers running JMRI or non-JMRI programs that use the LocoNetOverTCP protocol. To use this, configure your JMRI program to connect to LocoNet in one of the usual ways, then select 
+
+<P>An initial definition for the new Digitrax "SFX" sound decoders was added, in particular the GE EVO model now shipping
+
+<P>John Harper and Bob Jacobsen updated the serial infrastructure to improve response time for NCE, C/MRI, and perhaps others on (some) Windows systems
+
+<P>John Harper added support for asynchronous AIU messages from NCE command stations, to improve sensor response time
+
+<P>On MacOS X, the programs are now distributed as a disk image (DMG) file. To install them, double click on the file to mount it, and then drag the resulting JMRI folder to the Applications folder.
+
+<P>Mark Schutzer updated the Lenz Gold definition to include the "mini" version.
 
 <P>David Duchamp fixed a bug that caused problems when the serial port that the program was expecting wasn't available at startup.
 
@@ -121,6 +136,12 @@
 <P>Bob Jacobsen updated the startup error handling so that the preferences window is again showing if the pre-configured connection fails.  (Also in 1.6.1)
 
 <P>At the suggestion of John Harper, AbstractAutomaton is now using notifyAll() instead of notify().  For more information, see recent discussion in jmri-developers mailing list.
+
+<P>PanelPro by default now makes the background image for new panels not display the tooltip, and not be movable.  All other icons continue to show tooltips and be movable.  The popup menu for all items lets you override these behaviors.  The "Fixed" item if checked keeps the icon from being moved.  The "Tooltip" item if checked (the default) will display the tip if the mouse dwells on the icon. If you have an existing panel, you can update the background image options via the popup menu and store it again.
+
+<P>Turnout, sensor and signal icons on panels can now be set "disabled" via their popup menu, in which case clicking on them doesn't change the layout state.
+
+<P>Sensor icons on panels can now be set "momentary" via their popup menu, in which case they set the sensor ACTIVE when the mouse goes down on them, and INACTIVE when the mouse is released.  This models a momentary button in real life, and is useful for e.g. putting an icon on a screen to trigger a route.
 
 <P>On Linux, the startup scripts are now called "DecoderPro", "PanelPro", etc, with no file extension.  (The old ones were left in place)  Also, they now use the Bourne shell, which is more generally available than C shell. (david zuhn)
 
@@ -139,12 +160,6 @@ slider tracking.
 <P>Paul Bender updated the consisting tools to allow specification of basic (short) or extended (long) format addressing for systems where those overlap, e.g. NCE
 
 <P>John Harper fixed bug 1257961: Serial replies containing negative byte values display them with an extra leading FF
-
-<P>John Harper and Bob Jacobsen updated the serial infrastructure to improve response time for NCE, C/MRI, and perhaps others on (some) Windows systems
-
-<P>John Harper added support for asynchronous AIU messages from NCE command stations, to improve sensor response time
-
-<P>Mark Schutzer updated the Lenz Gold definition to include the "mini" version.
 
 <P>John Harper made the waitMsec() function more reliable
 
@@ -272,8 +287,6 @@ Walthers 0-6-0 Switcher, GP30.
 
 <P>Dennis Miller added Print and Print Preview options to the Sensor, Turnout, Signal, Memory, Reporter and Route tables.  Now you can print these to document your layout.
 
-<P>PanelPro by default now makes the background image for new panels not display the tooltip, and not be movable.  All other icons continue to show tooltips and be movable.  The popup menu for all items lets you override these behaviors.  The "Fixed" item if checked keeps the icon from being moved.  The "Tooltip" item if checked (the default) will display the tip if the mouse dwells on the icon. If you have an existing panel, you can update the background image options via the popup menu and store it again.
-
 <P>Updated the MRC "14/28 speed step" definition so that DecoderPro would identify a couple more models.
 
 <P>David Cuthbert provided info so we could add the TCS M1P-UK model as an identified decoder.
@@ -304,10 +317,6 @@ Walthers 0-6-0 Switcher, GP30.
 
 <P>Dennis Miller provided a preliminary fix for Bug 1333359, where the Turnout Table couldn't be resized under certain circumstances.
 
-<P>Turnout, sensor and signal icons on panels can now be set "disabled" via their popup menu, in which case clicking on them doesn't change the layout state.
-
-<P>Sensor icons on panels can now be set "momentary" via their popup menu, in which case they set the sensor ACTIVE when the mouse goes down on them, and INACTIVE when the mouse is released.  This models a momentary button in real life, and is useful for e.g. putting an icon on a screen to trigger a route.
-
 <P>On Mac OS X, JMRI now uses Java 1.4 if it's available.  This may result in some small cosmetic changes, but should resolve several bugs in the user interface
 
 <P>Fix for problem flooding the LocoNet command station when sending lots of ops-mode writes
@@ -315,6 +324,10 @@ Walthers 0-6-0 Switcher, GP30.
 <P>"LocoNet Hexfile" protocol choice has been renamed "LocoNet Simulator".  Some documentation may still use the older name.
 
 <P>Signal icons on panels can now display graphics for dark, flashing red and flashing green aspects. The Signal Table lets you step through all seven combinations, though the icons themselves just use the main red/yellow/green combinations instead of the flashing ones too.
+
+<P>Many more JUnit test cases have been added to the code; we're up to almost 700 now!
+
+
 
       <hr class="hide">
 <!-- Footer -->
