@@ -20,7 +20,7 @@ import jmri.jmrix.lenz.XNetConstants;
 /**
  * Frame displaying (and logging) XpressNet messages
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version         $Revision: 2.14 $
+ * @version         $Revision: 2.15 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
@@ -246,6 +246,75 @@ import jmri.jmrix.lenz.XNetConstants;
 			default:
 				text = text + l.getElement(1);
 			}
+		// Loco Information Response Messages
+		} else if (l.getElement(0) == XNetConstants.LOCO_INFO_NORMAL_UNIT) {
+		     text = new String("Locomoitve Information Response: Normal Unit ");
+		     text += parseSpeedandDirection(l.getElement(1),l.getElement(2)) + " ";
+                     // message byte 4, contains F0,F1,F2,F3,F4
+	             int element3 = l.getElement(3);
+                     // message byte 5, contains F12,F11,F10,F9,F8,F7,F6,F5
+	             int element4 = l.getElement(4);
+	             text += parseFunctionStatus(element3,element4);
+		} else if (l.getElement(0) == XNetConstants.LOCO_INFO_MUED_UNIT) {
+		     text = new String("Locomoitve Information Response: Locomoitve in Multiple Unit ");
+		     text += parseSpeedandDirection(l.getElement(1),l.getElement(2)) + " ";
+                     // message byte 4, contains F0,F1,F2,F3,F4
+	             int element3 = l.getElement(3);
+                     // message byte 5, contains F12,F11,F10,F9,F8,F7,F6,F5
+	             int element4 = l.getElement(4);
+	             text += parseFunctionStatus(element3,element4);
+		} else if (l.getElement(0) == XNetConstants.LOCO_INFO_MU_ADDRESS) {
+		     text = new String("Locomoitve Information Response: Multi Unit Base Address");
+		     text += parseSpeedandDirection(l.getElement(1),l.getElement(2)) + " ";
+		} else if (l.getElement(0) == XNetConstants.LOCO_INFO_DH_UNIT) {
+		     text = new String("Locomoitve Information Response: Locomoitve in Double Header ");
+		     text += parseSpeedandDirection(l.getElement(1),l.getElement(2)) + " ";
+                     // message byte 4, contains F0,F1,F2,F3,F4
+	             int element3 = l.getElement(3);
+                     // message byte 5, contains F12,F11,F10,F9,F8,F7,F6,F5
+	             int element4 = l.getElement(4);
+	             text += parseFunctionStatus(element3,element4);
+		     text += " Second Locomotive in Double Header is: ";
+		     text += calcLocoAddress(l.getElement(5),l.getElement(6));
+		} else if (l.getElement(0) == XNetConstants.LOCO_INFO_RESPONSE) {
+		    text = new String("Locomoitve Information Response: ");
+                    switch(l.getElement(1)) {
+                       case XNetConstants.LOCO_SEARCH_RESPONSE_N:
+			  text += "Search Response, Normal Locomotive: ";
+			  text += l.getThrottleMsgAddr();
+                          break;
+                       case XNetConstants.LOCO_SEARCH_RESPONSE_DH:
+			  text += "Search Response, Loco in Double Header: ";
+			  text += l.getThrottleMsgAddr();
+                          break;
+                       case XNetConstants.LOCO_SEARCH_RESPONSE_MU_BASE:
+			  text += "Search Response, MU Base Address: ";
+			  text += l.getThrottleMsgAddr();
+                          break;
+                       case XNetConstants.LOCO_SEARCH_RESPONSE_MU:
+			  text += "Search Response, Loco in MU: ";
+			  text += l.getThrottleMsgAddr();
+                          break;
+                       case XNetConstants.LOCO_SEARCH_NO_RESULT:
+			  text += "Search Response, Search failed for: ";
+			  text += l.getThrottleMsgAddr();
+                          break;
+		       case XNetConstants.LOCO_NOT_AVAILABLE:
+			  text += "Locomotive ";
+			  text += l.getThrottleMsgAddr();
+			  text += " is being operated by another device.";
+                          break;
+		       case XNetConstants.LOCO_FUNCTION_STATUS:
+			  text += "Locomotive ";
+			  text += " Function Status: ";
+                          // message byte 3, contains F0,F1,F2,F3,F4
+			  int element3 = l.getElement(2);
+                          // message byte 4, contains F12,F11,F10,F9,F8,F7,F6,F5
+			  int element4 = l.getElement(3);
+			  text += parseFunctionMomentaryStatus(element3,element4);
+                          break;
+		       default: text = l.toString();
+                   }
 		// Feedback Response Messages
 		} else if (l.isFeedbackBroadcastMessage() ) {
 		    text = new String("Feedback Response:");
@@ -655,6 +724,10 @@ import jmri.jmrix.lenz.XNetConstants;
 		  default:
 			text = l.toString();
 		  }
+                // Emergency Stop a locomotive
+		} else if(l.getElement(0)==XNetConstants.EMERGENCY_STOP){
+                         text = "Emergency Stop " + 
+			        calcLocoAddress(l.getElement(2),l.getElement(3));
 		// Disolve or Establish a Double Header
 		} else if(l.getElement(0)==XNetConstants.LOCO_DOUBLEHEAD &&
 			  l.getElement(1)==XNetConstants.LOCO_DOUBLEHEAD_BYTE2){
@@ -666,6 +739,34 @@ import jmri.jmrix.lenz.XNetConstants;
 			} else {
 			   text = text + "Establish Double Header with " + loco1 + " and " + loco2;
 			}
+		// Locomotive Status Request messages
+                } else if(l.getElement(0)==XNetConstants.LOCO_STATUS_REQ) {
+		       switch(l.getElement(1)) {
+		          case XNetConstants.LOCO_INFO_REQ_FUNC:
+			      text=new String("Request for Address " +
+                                  calcLocoAddress(l.getElement(2),l.getElement(3)) + 
+				  " function momentary/continuous status.");
+                              break;
+                          case XNetConstants.LOCO_INFO_REQ_V3:
+			      text=new String("Request for Address " +
+                                  calcLocoAddress(l.getElement(2),l.getElement(3)) + 
+				  " speed/direction/function on/off status.");
+			      break;
+                          case XNetConstants.LOCO_STACK_SEARCH_FWD:
+			      text=new String("Search Command Station Stack Forward - Start Address: " +
+                                  calcLocoAddress(l.getElement(2),l.getElement(3)));
+			      break;
+                          case XNetConstants.LOCO_STACK_SEARCH_BKWD:
+			      text=new String("Search Command Station Stack Backward - Start Address: " +
+                                  calcLocoAddress(l.getElement(2),l.getElement(3)));
+			      break;
+                          case XNetConstants.LOCO_STACK_DELETE:
+			      text=new String("Delete Address " +
+                                  calcLocoAddress(l.getElement(2),l.getElement(3)) +
+                                  " from Command Station Stack.");
+			      break;
+		          default: text=l.toString();
+                      }
 		// Accessory Info Request message
 		} else if(l.getElement(0)==XNetConstants.ACC_INFO_REQ){
 			text = "Accessory Decoder/Feedback Encoder Status Request: "+
@@ -710,6 +811,161 @@ import jmri.jmrix.lenz.XNetConstants;
 			return(address);
 	   	}
 	}
+
+        /* parse the speed step and the direction information for a locomotive
+         * element1 contains the speed step mode designation and 
+         * availability information
+         * element2 contains the data byte including the step mode and 
+         * availability information 
+         */
+
+	private String parseSpeedandDirection(int element1,int element2){
+		String text = new String("");
+                int speedVal = 0;
+                if ((element2 & 0x80)==0x80)
+                    text+= "Direction Forward,";
+		else text+= "Direction Reverse,";
+            
+                if((element1&0x04)==0x04) {
+                   // We're in 128 speed step mode
+                   speedVal=element2 & 0x7f;
+                   // The first speed step used is actually at 2 for 128
+                   // speed step mode.
+                   if(speedVal>=1) { speedVal-=1; }
+                        else speedVal=0;
+		   text += "128 Speed Step Mode,";
+                } else if((element1&0x02)==0x02) { 
+                   // We're in 28 speed step mode
+                   // We have to re-arange the bits, since bit 4 is the LSB,
+                   // but other bits are in order from 0-3
+                   speedVal =((element2 & 0x0F)<<1) + ((element2 & 0x10) >>4);
+                   // The first speed step used is actually at 4 for 28  
+                   // speed step mode.
+                   if(speedVal>=3) { speedVal-=3; }
+                        else speedVal=0;
+		   text += "28 Speed Step Mode,";           
+                } else if((element1&0x01)==0x01) { 
+                   // We're in 27 speed step mode
+                   // We have to re-arange the bits, since bit 4 is the LSB,
+                   // but other bits are in order from 0-3
+                   speedVal =((element2 & 0x0F)<<1) + ((element2 & 0x10) >>4);
+                   // The first speed step used is actually at 4 for 27
+                   // speed step mode.
+                   if(speedVal>=3) { speedVal-=3; }
+                       else speedVal=0;
+		   text += "27 Speed Step Mode,";
+                } else {
+                   // Assume we're in 14 speed step mode.
+                   speedVal=(element2 & 0x0F);
+                   if(speedVal>=1) { speedVal-=1; }
+                        else speedVal=0;
+		   text += "14 Speed Step Mode,";
+                }
+
+		text += "Speed Step " + speedVal +". ";
+
+                if((element1 & 0x08)==0x08) 
+                   text += " Address in use by another device.";
+		else text += " Address is Free for Operation.";
+		return(text);
+        }
+
+        /* Parse the status of functions.
+         * element3 contains the data byte including F0,F1,F2,F3,F4
+         * element4 contains F12,F11,F10,F9,F8,F7,F6,F5
+         */
+
+	private String parseFunctionStatus(int element3,int element4){
+		String text = new String("");
+		if((element3 & 0x10)!=0) 
+		   text += "F0 on ";
+		else text += "F0 off ";
+		if((element3 & 0x01)!=0) 
+		   text += "F1 on ";
+		else text += "F1 off ";
+		if((element3 & 0x02)!=0)
+	           text += "F2 on ";
+		else text += "F2 off ";
+		if((element3 & 0x04)!=0)
+		   text += "F3 on ";
+	        else text += "F3 off ";
+		if((element3 & 0x08)!=0)
+		   text += "F4 on ";
+	        else text += "F4 off ";
+	        if((element4 & 0x01)!=0) 
+		   text += "F5 on ";
+		else text += "F5 off ";
+		if((element4 & 0x02)!=0)
+		   text += "F6 on ";
+		else text += "F6 off ";
+		if((element4 & 0x04)!=0)
+		   text += "F7 on ";
+		else text += "F7 off ";
+		if((element4 & 0x08)!=0)
+		   text += "F8 on ";
+		else text += "F8 off ";
+		if((element4 & 0x10)!=0) 
+		   text += "F9 on ";
+		else text += "F9 off ";
+		if((element4 & 0x20)!=0)
+	 	   text += "F10 on ";
+		else text += "F10 off ";
+		if((element4 & 0x40)!=0)
+		   text += "F11 on ";
+		else text += "F11 off ";
+		if((element4 & 0x80)!=0)
+		   text += "F12 on ";
+		else text += "F12 off ";
+		return(text);
+        }
+        /* Parse the Momentary status of functions.
+         * element3 contains the data byte including F0,F1,F2,F3,F4
+         * element4 contains F12,F11,F10,F9,F8,F7,F6,F5
+         */
+
+	private String parseFunctionMomentaryStatus(int element3,int element4){
+		String text = new String("");
+		if((element3 & 0x10)!=0) 
+		   text += "F0 Momentary ";
+		else text += "F0 Continuous ";
+		if((element3 & 0x01)!=0) 
+		   text += "F1 Momentary ";
+		else text += "F1 Continuous ";
+		if((element3 & 0x02)!=0)
+	           text += "F2 Momentary ";
+		else text += "F2 Continuous ";
+		if((element3 & 0x04)!=0)
+		   text += "F3 Momentary ";
+	        else text += "F3 Continuous ";
+		if((element3 & 0x08)!=0)
+		   text += "F4 Momentary ";
+	        else text += "F4 Continuous ";
+	        if((element4 & 0x01)!=0) 
+		   text += "F5 Momentary ";
+		else text += "F5 Contenuous ";
+		if((element4 & 0x02)!=0)
+		   text += "F6 Momentary ";
+		else text += "F6 Contenuous ";
+		if((element4 & 0x04)!=0)
+		   text += "F7 Momentary ";
+		else text += "F7 Continuous ";
+		if((element4 & 0x08)!=0)
+		   text += "F8 Momentary ";
+		else text += "F8 Continuous ";
+		if((element4 & 0x10)!=0) 
+		   text += "F9 Momentary ";
+		else text += "F9 Continuous ";
+		if((element4 & 0x20)!=0)
+	 	   text += "F10 Momentary ";
+		else text += "F10 Continuous ";
+		if((element4 & 0x40)!=0)
+		   text += "F11 Momentary ";
+		else text += "F11 Continuous ";
+		if((element4 & 0x80)!=0)
+		   text += "F12 Momentary ";
+		else text += "F12 Continuous ";
+		return(text);
+        }
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetMonFrame.class.getName());
 
