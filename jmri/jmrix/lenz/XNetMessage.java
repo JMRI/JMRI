@@ -13,7 +13,7 @@ import java.io.Serializable;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2003,2004
- * @version			$Revision: 2.9 $
+ * @version			$Revision: 2.10 $
  *
  */
 public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Serializable {
@@ -510,6 +510,33 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return(msg);
     }
 
+    /*
+     * Given a locomotive address, request its status 
+     * @param address is the locomotive address
+     */
+    public static XNetMessage getLocomotiveInfoRequestMsg(int address){
+	XNetMessage msg=new XNetMessage(5);
+ 	msg.setElement(0,XNetConstants.LOCO_STATUS_REQ); 
+        msg.setElement(1,XNetConstants.LOCO_INFO_REQ_V3);
+        msg.setElement(2,LenzCommandStation.getDCCAddressHigh(address));
+        msg.setElement(3,LenzCommandStation.getDCCAddressLow(address)); 
+        msg.setParity();
+        return(msg);
+    }
+
+    /*
+     * Given a locomotive address, request the function state (momentary status) 
+     * @param address is the locomotive address
+     */
+    public static XNetMessage getLocomotiveFunctionStatusMsg(int address){
+	XNetMessage msg=new XNetMessage(5);
+ 	msg.setElement(0,XNetConstants.LOCO_STATUS_REQ); 
+        msg.setElement(1,XNetConstants.LOCO_INFO_REQ_FUNC);
+        msg.setElement(2,LenzCommandStation.getDCCAddressHigh(address));
+        msg.setElement(3,LenzCommandStation.getDCCAddressLow(address)); 
+        msg.setParity();
+        return(msg);
+    }
 
 	// initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetMessage.class.getName());
