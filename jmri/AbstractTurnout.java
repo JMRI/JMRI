@@ -18,7 +18,7 @@ package jmri;
  *
  * Description:		Abstract class providing the basic logic of the Turnout interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean 
         implements Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
@@ -181,11 +181,14 @@ public abstract class AbstractTurnout extends AbstractNamedBean
      * Support for turnout automation (see TurnoutOperation and related classes)
      */
 
-    TurnoutOperator myOperator;
-    TurnoutOperation myTurnoutOperation;
-    boolean inhibitOperation = false;			// do not automate this turnout, even if globally operations are on
+    protected TurnoutOperator myOperator;
+    protected TurnoutOperation myTurnoutOperation;
+    protected boolean inhibitOperation = false;		// do not automate this turnout, even if globally operations are on
+
     public TurnoutOperator getCurrentOperator() { return myOperator; }
+
     public TurnoutOperation getTurnoutOperation() { return myTurnoutOperation; }
+
     public void setTurnoutOperation(TurnoutOperation toper) {
     	TurnoutOperation oldOp = myTurnoutOperation;
     	if (myTurnoutOperation != null) {
@@ -197,6 +200,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean
     	}
     	firePropertyChange("TurnoutOperationState", oldOp, myTurnoutOperation);
     };
+
     protected void operationPropertyChange(java.beans.PropertyChangeEvent evt) {
     	if (evt.getSource()==myTurnoutOperation) {
     		if (((TurnoutOperation)evt.getSource()).isDeleted()) {
