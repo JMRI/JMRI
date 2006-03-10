@@ -42,7 +42,7 @@ import javax.swing.event.ChangeListener;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004
- * @version     $Revision: 1.28 $
+ * @version     $Revision: 1.29 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -287,16 +287,18 @@ public class TurnoutTableAction extends AbstractTableAction {
     	cb.removeAllItems();
     	Vector strings = new Vector(20);
     	Vector defStrings = new Vector(20);
-    	System.out.println("start "+ops.length);
+    	if(log.isDebugEnabled()) log.debug("start "+ops.length);
     	for (int i=0; i<ops.length; ++i) {
-    	    System.out.println("isDef "+ops[i].isDefinitive()+" mFMM "+ops[i].matchFeedbackMode(t.getFeedbackMode())+" isNonce "+ops[i].isNonce());
+    	    if(log.isDebugEnabled()) log.debug("isDef "+ops[i].isDefinitive()+
+			" mFMM "+ops[i].matchFeedbackMode(t.getFeedbackMode())+
+			" isNonce "+ops[i].isNonce());
     		if (!ops[i].isDefinitive()
     				&& ops[i].matchFeedbackMode(t.getFeedbackMode())
     				&& !ops[i].isNonce()) {
     			strings.addElement(ops[i].getName());
     		}
     	}
-    	System.out.println("end");
+    	if(log.isDebugEnabled()) log.debug("end");
     	for (int i=0; i<ops.length; ++i) {
     		if (ops[i].isDefinitive()
     				&& ops[i].matchFeedbackMode(t.getFeedbackMode())) {
