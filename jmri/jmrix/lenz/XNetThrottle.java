@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
  * @author     Paul Bender (C) 2002,2003,2004
- * @version    $Revision: 2.11 $
+ * @version    $Revision: 2.12 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -26,7 +26,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 
     static final int THROTTLEIDLE=0;  // Idle Throttle
     static final int THROTTLESTATSENT=1;  // Sent Status request
-    static final int THROTTLECMDSENT=2;  // Sent command to locomotive
+    static final int THROTTLESPEEDSENT=2;  // Sent command to locomotive
 
     private int requestState=THROTTLEIDLE;
 
@@ -55,6 +55,11 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
        this.speedStepMode=DccThrottle.SpeedStepMode128;
 //       this.isForward=true;
        setIsAvailable(false);
+
+       f0Momentary = f1Momentary = f2Momentary = f3Momentary = f4Momentary =   
+       f5Momentary = f6Momentary = f7Momentary = f8Momentary = f9Momentary =
+       f10Momentary = f11Momentary = f12Momentary = false;
+
        XNetTrafficController.instance().addXNetListener(XNetInterface.COMMINFO |
 						XNetInterface.CS_INFO |
 						XNetInterface.THROTTLE, this);
@@ -68,7 +73,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      */
     protected void sendFunctionGroup1()
     {
-       if(requestState!=THROTTLEIDLE) return;
+       if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT))!=THROTTLEIDLE) 
+		return;
        XNetMessage msg=new XNetMessage(6);
        msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
        msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP1);
@@ -102,7 +108,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
        msg.setParity(); // Set the parity bit
        // now, we send the message to the command station
        XNetTrafficController.instance().sendXNetMessage(msg,this);
-       requestState=THROTTLECMDSENT;
+       //requestState=THROTTLECMDSENT;
     }
 
     /**
@@ -111,7 +117,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      */
     protected void sendFunctionGroup2()
     {
-       if(requestState!=THROTTLEIDLE) return;
+       if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT))!=THROTTLEIDLE) 
+		return;
        XNetMessage msg=new XNetMessage(6);
         msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
         msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP2);
@@ -141,7 +148,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
        msg.setParity(); // Set the parity bit
        // now, we send the message to the command station
        XNetTrafficController.instance().sendXNetMessage(msg,this);
-       requestState=THROTTLECMDSENT;
+       //requestState=THROTTLECMDSENT;
     }
 
     /**
@@ -150,7 +157,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      */
     protected void sendFunctionGroup3()
     {
-       if(requestState!=THROTTLEIDLE) return;
+       if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT))!=THROTTLEIDLE) 
+		return;
        XNetMessage msg=new XNetMessage(6);
        msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
        msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP3);
@@ -180,7 +188,131 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
        msg.setParity(); // Set the parity bit
        // now, we send the message to the command station
        XNetTrafficController.instance().sendXNetMessage(msg,this);
-       requestState=THROTTLECMDSENT;
+       //requestState=THROTTLECMDSENT;
+    }
+
+    /**
+     * Send the XpressNet message to set the Momentary state of locomotive
+     * functions F0, F1, F2, F3, F4
+     */
+    protected void sendMomentaryFunctionGroup1()
+    {
+       if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT))!=THROTTLEIDLE) 
+		return;
+       XNetMessage msg=new XNetMessage(6);
+       msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
+       msg.setElement(1,XNetConstants.LOCO_SET_FUNC_Group1);
+       msg.setElement(2,this.getDccAddressHigh());// set to the upper
+						    // byte of the  DCC address
+       msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
+						    //of the DCC address
+       // Now, we need to figure out what to send in element 3
+       int element4value=0;
+       if(f0Momentary)
+	{
+	  element4value += 16;
+	}
+       if(f1Momentary)
+	{
+	  element4value += 1;
+	}
+       if(f2Momentary)
+	{
+	  element4value += 2;
+	}
+       if(f3Momentary)
+	{
+	  element4value += 4;
+	}
+       if(f4Momentary)
+	{
+	  element4value += 8;
+	}
+       msg.setElement(4,element4value);
+       msg.setParity(); // Set the parity bit
+       // now, we send the message to the command station
+       XNetTrafficController.instance().sendXNetMessage(msg,this);
+       //requestState=THROTTLECMDSENT;
+    }
+
+    /**
+     * Send the XpressNet message to set the momentary state of
+     * functions F5, F6, F7, F8
+     */
+    protected void sendMomentaryFunctionGroup2()
+    {
+       if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT))!=THROTTLEIDLE) 
+		return;
+       XNetMessage msg=new XNetMessage(6);
+        msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
+        msg.setElement(1,XNetConstants.LOCO_SET_FUNC_Group2);
+       msg.setElement(2,this.getDccAddressHigh());// set to the upper
+						    // byte of the  DCC address
+       msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
+						    //of the DCC address
+       // Now, we need to figure out what to send in element 3
+       int element4value=0;
+       if(f5Momentary)
+	{
+	  element4value += 1;
+	}
+       if(f6Momentary)
+	{
+	  element4value += 2;
+	}
+       if(f7Momentary)
+	{
+	  element4value += 4;
+	}
+       if(f8Momentary)
+	{
+	  element4value += 8;
+	}
+       msg.setElement(4,element4value);
+       msg.setParity(); // Set the parity bit
+       // now, we send the message to the command station
+       XNetTrafficController.instance().sendXNetMessage(msg,this);
+       //requestState=THROTTLECMDSENT;
+    }
+
+    /**
+     * Send the XpressNet message to set the momentary state of
+     * functions F9, F10, F11, F12
+     */
+    protected void sendMomentaryFunctionGroup3()
+    {
+       if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT))!=THROTTLEIDLE) 
+		return;
+       XNetMessage msg=new XNetMessage(6);
+       msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
+       msg.setElement(1,XNetConstants.LOCO_SET_FUNC_Group3);
+       msg.setElement(2,this.getDccAddressHigh());// set to the upper
+						    // byte of the  DCC address
+       msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
+						    //of the DCC address
+       // Now, we need to figure out what to send in element 3
+       int element4value=0;
+       if(f9Momentary)
+	{
+	  element4value += 1;
+	}
+       if(f10Momentary)
+	{
+	  element4value += 2;
+	}
+       if(f11Momentary)
+	{
+	  element4value += 4;
+	}
+       if(f12Momentary)
+	{
+	  element4value += 8;
+	}
+       msg.setElement(4,element4value);
+       msg.setParity(); // Set the parity bit
+       // now, we send the message to the command station
+       XNetTrafficController.instance().sendXNetMessage(msg,this);
+       //requestState=THROTTLECMDSENT;
     }
 
    /** speed - expressed as a value 0.0 -> 1.0. Negative means emergency stop.
@@ -197,6 +329,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 					  " Current step mode is: " + this.speedStepMode );
 
 	if(requestState!=THROTTLEIDLE) return;
+        if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT))!=THROTTLEIDLE) 
+		return;
         this.speedSetting = speed;
 	if (speed<0)
 	{
@@ -270,7 +404,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 
         // now, we send the message to the command station
         XNetTrafficController.instance().sendXNetMessage(msg,this);
-        requestState=THROTTLECMDSENT;
+        requestState=THROTTLESPEEDSENT;
 	}
     }
 
@@ -289,7 +423,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         msg.setParity(); // Set the parity bit
         // now, we send the message to the command station
         XNetTrafficController.instance().sendXNetMessage(msg,this);
-        requestState=THROTTLECMDSENT;
+        requestState=THROTTLESPEEDSENT;
  	}
 
 
@@ -308,157 +442,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         isForward = forward;
 	setSpeedSetting(this.speedSetting);
     }
-
-    // functions - note that we use the naming for DCC, though that's not the implication;
-    // see also DccThrottle interface
-    public boolean getF0()
-    {
-        return f0;
-    }
-
-    public void setF0(boolean f0)
-    {
-        this.f0 = f0;
-        sendFunctionGroup1();
-    }
-
-    public boolean getF1()
-    {
-        return f1;
-    }
-
-    public void setF1(boolean f1)
-    {
-        this.f1 = f1;
-        sendFunctionGroup1();
-
-    }
-
-    public boolean getF2()
-    {
-        return f2;
-    }
-
-    public void setF2(boolean f2)
-    {
-        this.f2 = f2;
-        sendFunctionGroup1();
-    }
-
-    public boolean getF3()
-    {
-        return f3;
-    }
-
-    public void setF3(boolean f3)
-    {
-        this.f3 = f3;
-        sendFunctionGroup1();
-    }
-
-    public boolean getF4()
-    {
-        return f4;
-    }
-
-    public void setF4(boolean f4)
-    {
-        this.f4 = f4;
-        sendFunctionGroup1();
-    }
-
-
-    public boolean getF5()
-    {
-        return f5;
-    }
-
-    public void setF5(boolean f5)
-    {
-        this.f5 = f5;
-        sendFunctionGroup2();
-    }
-
-    public boolean getF6()
-    {
-        return f6;
-    }
-
-    public void setF6(boolean f6)
-    {
-        this.f6 = f6;
-        sendFunctionGroup2();
-    }
-
-
-    public boolean getF7()
-    {
-        return f7;
-    }
-
-    public void setF7(boolean f7)
-    {
-        this.f7 = f7;
-        sendFunctionGroup2();
-
-    }
-
-
-    public boolean getF8()
-    {
-        return f8;
-    }
-
-    public void setF8(boolean f8)
-    {
-        this.f8 = f8;
-        sendFunctionGroup2();
-    }
-
-    public boolean getF9()
-    {
-        return f9;
-    }
-
-    public void setF9(boolean f9)
-    {
-        this.f9 = f9;
-        sendFunctionGroup3();
-    }
-
-    public boolean getF10()
-    {
-        return f10;
-    }
-
-    public void setF10(boolean f10)
-    {
-        this.f10 = f10;
-        sendFunctionGroup3();
-    }
-
-    public boolean getF11()
-    {
-        return f11;
-    }
-
-    public void setF11(boolean f11)
-    {
-        this.f11 = f11;
-        sendFunctionGroup3();
-    }
-
-    public boolean getF12()
-    {
-        return f12;
-    }
-
-    public void setF12(boolean f12)
-    {
-        this.f12 = f12;
-        sendFunctionGroup3();
-    }
-
 
     /**
      * Dispose when finished with this object.  After this, further usage of
@@ -503,17 +486,10 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 
     // sendStatusInformation sends a request to get the speed,direction
     // and function status from the command station
-    private void sendStatusInformationRequest()
+    synchronized private void sendStatusInformationRequest()
     {
        /* Send the request for status */
-       XNetMessage msg=new XNetMessage(5);
-       msg.setElement(0,XNetConstants.LOCO_STATUS_REQ);
-       msg.setElement(1,XNetConstants.LOCO_INFO_REQ_V3);
-       msg.setElement(2,this.getDccAddressHigh());// set to the upper
-						    // byte of the  DCC address
-       msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
-						    //of the DCC address
-       msg.setParity(); // Set the parity bit
+       XNetMessage msg=XNetMessage.getLocomotiveInfoRequestMsg(this.address);
        msg.setRetries(1); // Since we repeat this ourselves, don't ask the 
 			  // traffic controller to do this for us.
        // now, we send the message to the command station
@@ -524,17 +500,11 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 
     // sendFunctionStatusInformation sends a request to get the status
     // of functions from the command station
-    private void sendFunctionStatusInformationRequest()
+    synchronized private void sendFunctionStatusInformationRequest()
     {
+       if(log.isDebugEnabled())log.debug("Throttle " +address +" sending request for function momentary status.");
        /* Send the request for Function status */
-       XNetMessage msg=new XNetMessage(5);
-       msg.setElement(0,XNetConstants.LOCO_STATUS_REQ);
-       msg.setElement(1,XNetConstants.LOCO_INFO_REQ_FUNC);
-       msg.setElement(2,this.getDccAddressHigh());// set to the upper
-						    // byte of the  DCC address
-       msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
-						    //of the DCC address
-       msg.setParity(); // Set the parity bit
+       XNetMessage msg=XNetMessage.getLocomotiveFunctionStatusMsg(this.address);
        // now, we send the message to the command station
        XNetTrafficController.instance().sendXNetMessage(msg,this);
        requestState=THROTTLESTATSENT;
@@ -605,8 +575,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 		   }
 	       }
            }
-	} else if (requestState==THROTTLECMDSENT) {
-	     if(log.isDebugEnabled()) { log.debug("Current throttle status is THROTTLECMDSENT"); }
+	} else if (requestState==THROTTLESPEEDSENT) {
+	     if(log.isDebugEnabled()) { log.debug("Current throttle status is THROTTLESPEEDSENT"); }
 	     // For a Throttle Command, we're just looking for a return 
              // acknowledgment, Either a Success or Failure message.
 	     if(l.isOkMessage()) 
@@ -649,6 +619,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 
                 //We've processed this request, so set the status to Idle.
 		requestState=THROTTLEIDLE;
+                // And then we want to request the Function Momentary Status
+                sendFunctionStatusInformationRequest();
+                return;
 	    } else if (l.getElement(0)==XNetConstants.LOCO_INFO_MUED_UNIT) {
                 if(log.isDebugEnabled()) {log.debug("Throttle - message is LOCO_INFO_MUED_UNIT "); }
                 /* there is no address sent with this information */
@@ -666,7 +639,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 
                 //We've processed this request, so set the status to Idle.
 		requestState=THROTTLEIDLE;
-
+                // And then we want to request the Function Momentary Status
+                sendFunctionStatusInformationRequest();
+                return;
 	    } else if (l.getElement(0)==XNetConstants.LOCO_INFO_DH_UNIT) {
                 if(log.isDebugEnabled()) {log.debug("Throttle - message is LOCO_INFO_DH_UNIT "); }
                 /* there is no address sent with this information */
@@ -686,7 +661,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 
                 //We've processed this request, so set the status to Idle.
 		requestState=THROTTLEIDLE;
-
+                // And then we want to request the Function Momentary Status
+                sendFunctionStatusInformationRequest();
+                return;
 	    } else if (l.getElement(0)==XNetConstants.LOCO_INFO_MU_ADDRESS) {
                 if(log.isDebugEnabled()) {log.debug("Throttle - message is LOCO_INFO_MU ADDRESS "); }
                 /* there is no address sent with this information */
@@ -698,7 +675,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 
                 //We've processed this request, so set the status to Idle.
 		requestState=THROTTLEIDLE;
-
+                // And then we want to request the Function Momentary Status
+                sendFunctionStatusInformationRequest();
+                return;
 	    } else if (l.getElement(0)==XNetConstants.LOCO_INFO_RESPONSE) {
                 if(log.isDebugEnabled()) {log.debug("Throttle - message is LOCO_INFO_RESPONSE "); }
 		if(l.getElement(1)==XNetConstants.LOCO_NOT_AVAILABLE) {
@@ -709,16 +688,16 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 		      setIsAvailable(false);
 		   }
 		} else if(l.getElement(1)==XNetConstants.LOCO_FUNCTION_STATUS) {
-		    /* Bytes 3 and 4 contain function status information */
-		    int b3=l.getElement(3);
-		    int b4=l.getElement(4);
-	            parseFunctionInformation(b3,b4);
+		    /* Bytes 3 and 4 contain function momentary status information */
+		    int b3=l.getElement(2);
+		    int b4=l.getElement(3);
+	            parseFunctionMomentaryInformation(b3,b4);
 		}
                 //We've processed this request, so set the status to Idle.
 		requestState=THROTTLEIDLE;
 	    }
 	}
-	requestState=THROTTLEIDLE;
+	//requestState=THROTTLEIDLE;
     }
 
     // listen for the messages to the LI100/LI101
@@ -853,7 +832,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
          }
     }
 
-    public void parseFunctionInformation(int b3,int b4)
+    private void parseFunctionInformation(int b3,int b4)
     {
 	/* data byte 3 is the status of F0 F4 F3 F2 F1 */
 	if((b3 & 0x10)==0x10 && getF0()==false) {
@@ -986,6 +965,143 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
            notifyPropertyChangeListener("F12",
 					new Boolean(this.f12),
 					new Boolean(this.f12 = false));
+	}
+    }
+
+    private void parseFunctionMomentaryInformation(int b3,int b4)
+    {
+	if(log.isDebugEnabled()) log.debug("Parsing Function Momentary status, function bytes: " +b3 +" and " +b4);
+	/* data byte 3 is the momentary status of F0 F4 F3 F2 F1 */
+	if((b3 & 0x10)==0x10 && this.f0Momentary==false) {
+	   notifyPropertyChangeListener("F0Momentary",
+                                        new Boolean(this.f0Momentary),
+					new Boolean(this.f0Momentary = true));
+	} else if ((b3 &0x10)==0x00 && this.f0Momentary==true) {
+           notifyPropertyChangeListener("F0Momentary",
+					new Boolean(this.f0),
+					new Boolean(this.f0 = false));
+	}
+
+	if((b3 & 0x01)==0x01 && this.f1Momentary==false) {
+	   notifyPropertyChangeListener("F1Momentary",
+                                        new Boolean(this.f1Momentary),
+                                        new Boolean(this.f1Momentary = true));
+	} else if ((b3 &0x01)==0x00 && this.f1Momentary==true) {
+           notifyPropertyChangeListener("F1Momentary",
+					new Boolean(this.f1Momentary),
+					new Boolean(this.f1 = false));
+	}
+
+	if((b3 & 0x02)==0x02 && this.f2Momentary==false) {
+           notifyPropertyChangeListener("F2Momentary",
+                                        new Boolean(this.f2Momentary),
+                                        new Boolean(this.f2Momentary = true));
+	} else if ((b3 &0x02)==0x00 && this.f2Momentary==true) {
+	   notifyPropertyChangeListener("F2Momentary",
+			                new Boolean(this.f2Momentary),
+					new Boolean(this.f2Momentary = false));
+	}
+	
+	if((b3 & 0x04)==0x04 && this.f3Momentary==false) {
+	   notifyPropertyChangeListener("F3Momentary",
+                                        new Boolean(this.f3Momentary),
+                                        new Boolean(this.f3 = true));
+	} else if ((b3 &0x04)==0x00 && this.f3Momentary==true) {
+	   notifyPropertyChangeListener("F3Momentary",
+				        new Boolean(this.f3Momentary),
+					new Boolean(this.f3Momentary = false));
+	}
+
+	if((b3 & 0x08)==0x08 && this.f4Momentary==false) {
+	   notifyPropertyChangeListener("F4Momentary",
+                                        new Boolean(this.f4Momentary),
+                                        new Boolean(this.f4Momentary = true));
+	} else if ((b4 &0x08)==0x00 && this.f4Momentary==true) {
+	   notifyPropertyChangeListener("F4Momentary",
+					new Boolean(this.f4Momentary),
+					new Boolean(this.f4Momentary = false));
+	}
+
+	/* data byte 4 is the momentary status of F12 F11 F10 F9 F8 F7 F6 F5 */
+
+	if((b4 & 0x01)==0x01 && this.f5Momentary==false)	{
+	   notifyPropertyChangeListener("F5Momentary",
+                                        new Boolean(this.f5Momentary),
+                                        new Boolean(this.f5Momentary = true));
+	} else if ((b4 &0x01)==0x00 && this.f5Momentary==true) {
+	   notifyPropertyChangeListener("F5Momentary",
+					new Boolean(this.f5Momentary),
+					new Boolean(this.f5Momentary = false));
+	}
+
+	if((b4 & 0x02)==0x02 && this.f6Momentary==false) {
+	   notifyPropertyChangeListener("F6Momentary",
+                                        new Boolean(this.f6Momentary),
+                                        new Boolean(this.f6Momentary = true));
+	} else if ((b4 &0x02)==0x00 && this.f6Momentary==true) {
+	   notifyPropertyChangeListener("F6Momentary",
+					new Boolean(this.f6Momentary),
+					new Boolean(this.f6Momentary = false));
+	} 
+
+	if((b4 & 0x04)==0x04 && this.f7Momentary==false) {
+           notifyPropertyChangeListener("F7Momentary",
+                                        new Boolean(this.f7Momentary),
+                                        new Boolean(this.f7Momentary = true));
+	} else if ((b4 &0x04)==0x00 && this.f7Momentary==true) {
+	   notifyPropertyChangeListener("F7Momentary",
+					new Boolean(this.f7Momentary),
+					new Boolean(this.f7Momentary = false));
+	}
+
+	if((b4 & 0x08)==0x08 && this.f8Momentary==false) {
+	   notifyPropertyChangeListener("F8Momentary",
+                                        new Boolean(this.f8Momentary),
+                                        new Boolean(this.f8Momentary = true));
+	} else if ((b4 &0x08)==0x00 && this.f8Momentary==true) {
+	   notifyPropertyChangeListener("F8Momentary",
+					new Boolean(this.f8Momentary),
+					new Boolean(this.f8Momentary = false));
+	}
+
+	if((b4 & 0x10)==0x10 && this.f9Momentary==false) {
+           notifyPropertyChangeListener("F9Momentary",
+                                        new Boolean(this.f9Momentary),
+                                        new Boolean(this.f9Momentary = true));
+	} else if ((b4 &0x10)==0x00 && this.f9Momentary==true) {
+           notifyPropertyChangeListener("F9Momentary",
+					new Boolean(this.f9Momentary),
+					new Boolean(this.f9Momentary = false));
+	}
+		
+	if((b4 & 0x20)==0x20 && this.f10Momentary==false) {
+	   notifyPropertyChangeListener("F10Momentary",
+                                        new Boolean(this.f10Momentary),
+                                        new Boolean(this.f10Momentary = true));
+	} else if ((b4 &0x20)==0x00 && this.f10Momentary==true) {
+           notifyPropertyChangeListener("F10Momentary",
+	 				new Boolean(this.f10Momentary),
+					new Boolean(this.f10Momentary = false));
+	}
+
+	if((b4 & 0x40)==0x40 && this.f11Momentary==false) {
+           notifyPropertyChangeListener("F11Momentary",
+                                        new Boolean(this.f11Momentary),
+                                        new Boolean(this.f11Momentary = true));
+	} else if ((b4 &0x40)==0x00 && this.f11Momentary==true) {
+           notifyPropertyChangeListener("F11Momentary",
+					new Boolean(this.f11Momentary),
+					new Boolean(this.f11Momentary = false));
+	}
+
+	if((b4 & 0x80)==0x80 && this.f12Momentary==false) {
+           notifyPropertyChangeListener("F12Momentary",
+                                        new Boolean(this.f12Momentary),
+                                        new Boolean(this.f12Momentary = true));
+	} else if ((b4 &0x80)==0x00 && this.f12Momentary==true) {
+           notifyPropertyChangeListener("F12Momentary",
+					new Boolean(this.f12Momentary),
+					new Boolean(this.f12Momentary = false));
 	}
     }
 

@@ -22,7 +22,7 @@ package jmri;
  * and deassign locos from this throttle, but that doesn't seem right.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public interface Throttle {
 
@@ -78,6 +78,48 @@ public interface Throttle {
 
     public boolean getF12();
     public void setF12(boolean f12);
+
+    // functions momentary status - note that we use the naming for DCC, 
+    // though that's not the implication;
+    // see also DccThrottle interface
+    public boolean getF0Momentary();
+    public void setF0Momentary(boolean f0Momentary);
+
+    public boolean getF1Momentary();
+    public void setF1Momentary(boolean f1Momentary);
+
+    public boolean getF2Momentary();
+    public void setF2Momentary(boolean f2Momentary);
+
+    public boolean getF3Momentary();
+    public void setF3Momentary(boolean f3Momentary);
+
+    public boolean getF4Momentary();
+    public void setF4Momentary(boolean f4Momentary);
+
+    public boolean getF5Momentary();
+    public void setF5Momentary(boolean f5Momentary);
+
+    public boolean getF6Momentary();
+    public void setF6Momentary(boolean f6Momentary);
+
+    public boolean getF7Momentary();
+    public void setF7Momentary(boolean f7Momentary);
+
+    public boolean getF8Momentary();
+    public void setF8Momentary(boolean f8Momentary);
+
+    public boolean getF9Momentary();
+    public void setF9Momentary(boolean f9Momentary);
+
+    public boolean getF10Momentary();
+    public void setF10Momentary(boolean f10Momentary);
+
+    public boolean getF11Momentary();
+    public void setF11Momentary(boolean f11Momentary);
+
+    public boolean getF12Momentary();
+    public void setF12Momentary(boolean f12Momentary);
 
     /**
      * Locomotive address.  The exact format is defined by the
