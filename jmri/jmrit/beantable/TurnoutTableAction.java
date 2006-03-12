@@ -42,7 +42,7 @@ import javax.swing.event.ChangeListener;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004
- * @version     $Revision: 1.29 $
+ * @version     $Revision: 1.30 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -311,7 +311,11 @@ public class TurnoutTableAction extends AbstractTableAction {
     	strings.insertElementAt(new String("Use Global Default"),1);
     	strings.insertElementAt(new String("Edit..."),2);
     	for (int i=0; i<defStrings.size(); ++i) {
-    		strings.setElementAt(defStrings.elementAt(i),i+3);
+		try {
+    		   strings.setElementAt(defStrings.elementAt(i),i+3);
+		} catch(java.lang.ArrayIndexOutOfBoundsException obe){
+	           strings.insertElementAt(defStrings.elementAt(i),i+3);
+	        }
     	}
     	for (int i=0; i<strings.size(); ++i) {
     		cb.addItem(strings.elementAt(i));
