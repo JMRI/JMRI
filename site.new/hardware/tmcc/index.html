@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.html,v 1.1 2006-03-03 07:06:38 jacobsen Exp $ -->
+<!-- $Id: index.html,v 1.2 2006-03-26 06:58:26 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -62,10 +62,18 @@
     	  
 	<h2>Setup</h2>
 
-	  <p>To connect your computer to a TMCC system, also you need is
-	  an appropriate serial cable to connect between them.
+	  <p>First, connect your computer's serial port to the TMCC
+	  command station using a serial cable.  This should be a "straight-through"
+	  or "modem" cable, <I>not</I>a "crossover" or "null-modem" cable.
+	  if your computer doesn't have a built-in serial port, you can
+	  use a USB-serial adapter, but make sure you install the correct
+	  drivers.
 
-	  <li> Then go to the preferences panel of a JMRI-based program.
+      <P>
+      Next, configure the program.
+      <UL>
+      <LI>Start your JMRI-based program (DecoderPro, PanelPro, etc).
+	  <li> Go to the preferences panel of the program.
 	  This opens automatically the first time a program is run, or you
 	  can select it from the "Edit" menu.  </li>
 
@@ -93,7 +101,7 @@
 	  quit, click "Yes".</li>
 
 	  <li> Restart the program. You should be up and running.</li>
-	  </ol>
+	  </ul>
 
 
 	<h2>Features and Limitations</h2>
@@ -109,12 +117,11 @@
     When using a JMRI throttle to run an engine, the function buttons
     are allocated:
     <DL>
-    <DT>F0<DD>...
-    <DT>F1<DD>...
-    <DT>F2<DD>...
-    <DT>F3<DD>...
-    <DT>F4<DD>...
-    <DT>F5<DD>...
+    <DT>F0<DD>Headlight (AUX2)
+    <DT>F1<DD>Bell
+    <DT>F2<DD>Horn/Whistle 1
+    <DT>F3<DD>Front Coupler
+    <DT>F4<DD>Back Coupler
     </DL>
 
     <P>
