@@ -16,7 +16,7 @@ import java.util.StringTokenizer;
  * Implementation of the LocoNetOverTcp LbServer Server Protocol
  *
  * @author      Alex Shepherd Copyright (C) 2006
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 
 public class ClientRxHandler extends Thread implements LocoNetListener{
@@ -27,7 +27,7 @@ public class ClientRxHandler extends Thread implements LocoNetListener{
   Thread          txThread ;
   String          inString ;
   String          remoteAddress ;
-
+  LocoNetMessage  lastSentMessage ;
 
   public ClientRxHandler( String newRemoteAddress, Socket newSocket ) {
     clientSocket = newSocket ;
@@ -35,6 +35,7 @@ public class ClientRxHandler extends Thread implements LocoNetListener{
     setPriority( Thread.MAX_PRIORITY );
     remoteAddress = newRemoteAddress ;
     setName( "ClientRxHandler:" + remoteAddress );
+    lastSentMessage = null ;
     start();
   }
 
@@ -103,6 +104,9 @@ public class ClientRxHandler extends Thread implements LocoNetListener{
             }
 
             LnTrafficController.instance().sendLocoNetMessage(msg);
+              // Keep the message we just sent so we can ACK it when we hear
+              // the echo from the LocoBuffer
+            lastSentMessage = msg ;
           }
         }
       }
@@ -166,6 +170,12 @@ public class ClientRxHandler extends Thread implements LocoNetListener{
             outBuf.append(msg.toString());
             log.debug("ClientTxHandler: Send: " + outBuf.toString());
             outBuf.append("\r\n");
+              // See if we are waiting for an echo of a sent message
+              // and if it is append the Ack to the client
+            if( ( lastSentMessage != null ) && lastSentMessage.equals( msg ) ) {
+              lastSentMessage = null;
+              outBuf.append("SENT OK\r\n");
+            }
             outStream.write(outBuf.toString().getBytes());
             outStream.flush();
           }
