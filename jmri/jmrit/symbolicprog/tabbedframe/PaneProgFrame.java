@@ -36,7 +36,7 @@ import jmri.ProgDeferredServiceModePane;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.56 $
+ * @version   $Revision: 1.57 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -139,14 +139,10 @@ abstract public class PaneProgFrame extends JmriJFrame
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
 
         // configure GUI elements
-        readChangesButton.setToolTipText("Read highlighted values on all sheets from decoder. Warning: may take a long time!");
-        // check with CVTable programmer to see if read is possible
-        if (cvModel!= null && cvModel.getProgrammer()!= null
-            && !cvModel.getProgrammer().getCanRead()) {
-            // can't read, disable the button
-            readChangesButton.setEnabled(false);
-            readChangesButton.setToolTipText("Button disabled because configured command station can't read CVs");
-        }
+        
+        // set read buttons enabled state, tooltips
+        enableReadButtons();
+        
         readChangesButton.addItemListener(l1 = new ItemListener() {
             public void itemStateChanged (ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -163,14 +159,6 @@ abstract public class PaneProgFrame extends JmriJFrame
             }
         });
 
-        readAllButton.setToolTipText("Read all values on all sheets from decoder. Warning: may take a long time!");
-        // check with CVTable programmer to see if read is possible
-        if (cvModel!= null && cvModel.getProgrammer()!= null
-            && !cvModel.getProgrammer().getCanRead()) {
-            // can't read, disable the button
-            readAllButton.setEnabled(false);
-            readAllButton.setToolTipText("Button disabled because configured command station can't read CVs");
-        }
         readAllButton.addItemListener(l3 = new ItemListener() {
             public void itemStateChanged (ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -258,6 +246,28 @@ abstract public class PaneProgFrame extends JmriJFrame
     public Dimension getMaximumSize() {
         Dimension screen = getToolkit().getScreenSize();
         return new Dimension(screen.width, screen.height-35);
+    }
+
+    /**
+     * Enable the read all and read changes button if possible.
+     * This checks to make sure this is appropriate, given
+     * the attached programmer's capability.
+     */
+    void enableReadButtons() {
+        readChangesButton.setToolTipText("Read highlighted values on all sheets from decoder. Warning: may take a long time!");
+        readAllButton.setToolTipText("Read all values on all sheets from decoder. Warning: may take a long time!");
+        // check with CVTable programmer to see if read is possible
+        if (cvModel!= null && cvModel.getProgrammer()!= null
+            && !cvModel.getProgrammer().getCanRead()) {
+            // can't read, disable the button
+            readChangesButton.setEnabled(false);
+            readAllButton.setEnabled(false);
+            readChangesButton.setToolTipText("Button disabled because configured command station can't read CVs");
+            readAllButton.setToolTipText("Button disabled because configured command station can't read CVs");
+        } else {
+            readChangesButton.setEnabled(true);
+            readAllButton.setEnabled(true);
+        }
     }
 
     /**
@@ -739,8 +749,12 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     void enableButtons(boolean stat) {
-        readChangesButton.setEnabled(stat);
-        readAllButton.setEnabled(stat);
+        if (stat) {
+            enableReadButtons();
+        } else {
+            readChangesButton.setEnabled(false);
+            readAllButton.setEnabled(false);
+        }
         writeChangesButton.setEnabled(stat);
         writeAllButton.setEnabled(stat);
         if (modePane != null) {

@@ -63,7 +63,7 @@ import com.sun.java.util.collections.List;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005, 2006
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.55 $
+ * @version   $Revision: 1.56 $
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -144,13 +144,11 @@ public class PaneProgPane extends javax.swing.JPanel
         panelList.add(p);
         bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));
 
-        readChangesButton.setToolTipText("Read highlighted values on this sheet from decoder. Warning: may take a long time!");
-        if (cvModel.getProgrammer()!= null
-            && !cvModel.getProgrammer().getCanRead()) {
-            // can't read, disable the button
-            readChangesButton.setEnabled(false);
-            readChangesButton.setToolTipText("Button disabled because configured command station can't read CVs");
-        }
+        // enable read buttons, if possible, and 
+        // set their tool tips
+        enableReadButtons();
+
+        // add read button listeners
         readChangesButton.addItemListener(l1 = new ItemListener() {
             public void itemStateChanged (ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -170,14 +168,6 @@ public class PaneProgPane extends javax.swing.JPanel
                 }
             }
         });
-
-        readAllButton.setToolTipText("Read all values on this sheet from decoder. Warning: may take a long time!");
-        if (cvModel.getProgrammer()!= null
-            && !cvModel.getProgrammer().getCanRead()) {
-            // can't read, disable the button
-            readAllButton.setEnabled(false);
-            readAllButton.setToolTipText("Button disabled because configured command station can't read CVs");
-        }
         readAllButton.addItemListener(l2 = new ItemListener() {
             public void itemStateChanged (ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -248,6 +238,29 @@ public class PaneProgPane extends javax.swing.JPanel
         add(bottom);
     }
 
+
+    /**
+     * Enable the read all and read changes button if possible.
+     * This checks to make sure this is appropriate, given
+     * the attached programmer's capability.
+     */
+    void enableReadButtons() {
+        readChangesButton.setToolTipText("Read highlighted values on this sheet from decoder. Warning: may take a long time!");
+        readAllButton.setToolTipText("Read all values on this sheet from decoder. Warning: may take a long time!");
+        if (_cvModel.getProgrammer()!= null
+            && !_cvModel.getProgrammer().getCanRead()) {
+            // can't read, disable the buttons
+            readChangesButton.setEnabled(false);
+            readAllButton.setEnabled(false);
+            // set tooltip to explain why
+            readChangesButton.setToolTipText("Button disabled because configured command station can't read CVs");
+            readAllButton.setToolTipText("Button disabled because configured command station can't read CVs");
+        } else {
+            readChangesButton.setEnabled(true);
+            readAllButton.setEnabled(true);
+        }
+    }
+    
     /**
      * This remembers the variables on this pane for the Read/Write sheet
      * operation.  They are stored as a list of Integer objects, each of which
@@ -338,8 +351,12 @@ public class PaneProgPane extends javax.swing.JPanel
     }
 
     void enableButtons(boolean stat) {
-        readChangesButton.setEnabled(stat);
-        readAllButton.setEnabled(stat);
+        if (stat) {
+            enableReadButtons();
+        } else {
+            readChangesButton.setEnabled(stat);
+            readAllButton.setEnabled(stat);
+        }
         writeChangesButton.setEnabled(stat);
         writeAllButton.setEnabled(stat);
     }
