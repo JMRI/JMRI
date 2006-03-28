@@ -150,6 +150,27 @@ public class DccConsist implements Consist, ProgListener{
 	}
 
         /*
+	 * Restore a Locomotive to an Advanced Consist, but don't write to 
+         * the command station.  This is used for restoring the consist 
+         * from a file or adding a consist read from the command station.
+	 *  @param address is the Locomotive address to add to the locomotive
+	 *  @param directionNormal is True if the locomotive is traveling 
+         *        the same direction as the consist, or false otherwise.
+         */
+	public void restore(DccLocoAddress LocoAddress,boolean directionNormal) {
+	      if(ConsistType==ADVANCED_CONSIST) {
+		 //String Address= Integer.toString(LocoAddress);
+	         Boolean Direction = new Boolean(directionNormal);
+		 if(!(ConsistList.contains(LocoAddress))) ConsistList.add(LocoAddress);
+		 ConsistDir.put(LocoAddress,Direction);
+	      }
+	      else {
+		log.error("Consist Type Not Supported");
+		notifyConsistListeners(LocoAddress,ConsistListener.NotImplemented);
+	      }
+	}
+
+        /*
 	 *  Remove a Locomotive from this Consist
 	 *  @param address is the Locomotive address to add to the locomotive
          */
