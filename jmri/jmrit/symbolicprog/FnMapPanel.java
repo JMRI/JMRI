@@ -30,7 +30,7 @@ import org.jdom.Attribute;
  * Although support for the "CV label column" is still here, its turned off now.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class FnMapPanel extends JPanel {
     // columns
@@ -138,7 +138,7 @@ public class FnMapPanel extends JPanel {
     }
     
     final String[] fnList = new String[] { "FL(f)", "FL(r)", "F1", "F2", "F3", "F4", "F5", "F6", "F7",
-                                           "F8", "F9", "F10", "F11", "F12" };
+                                           "F8", "F9", "F10", "F11", "F12", "F13", "F14", "F15", "F16", "F17", "F18", "F19" };
     
     final String[] outLabel = new String[] {"White", "Yellow", "Green", "Vlt/Brwn", "", "", "", "", "", "",
                                             "", "", "", "", "","", "", "", "", ""  };
