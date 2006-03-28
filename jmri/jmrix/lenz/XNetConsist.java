@@ -5,7 +5,7 @@
  * it uses the XPressNet specific commands to build a consist.
  *
  * @author                      Paul Bender Copyright (C) 2004
- * @version                     $Revision: 2.9 $
+ * @version                     $Revision: 2.10 $
  */
 
 package jmri.jmrix.lenz;
@@ -195,6 +195,25 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 				ConsistListener.CONSIST_FULL);
 			}
 		 }
+	      } else {
+		log.error("Consist Type Not Supported");
+		notifyConsistListeners(LocoAddress,ConsistListener.NotImplemented);
+	      }
+	}
+
+        /*
+         * Restore a Locomotive to an Advanced Consist, but don't write to
+         * the command station.  This is used for restoring the consist
+         * from a file or adding a consist read from the command station.
+         *  @param address is the Locomotive address to add to the locomotive
+         *  @param directionNormal is True if the locomotive is traveling
+         *        the same direction as the consist, or false otherwise.
+         */
+ 	public synchronized void restore(DccLocoAddress LocoAddress, boolean directionNormal) {
+	      if(ConsistType==ADVANCED_CONSIST) {
+		 addToConsistList(LocoAddress,directionNormal);
+	      } else if(ConsistType==CS_CONSIST) {
+		 addToConsistList(LocoAddress,directionNormal);
 	      } else {
 		log.error("Consist Type Not Supported");
 		notifyConsistListeners(LocoAddress,ConsistListener.NotImplemented);
