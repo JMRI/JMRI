@@ -27,7 +27,7 @@ package jmri;
  *<P>
  *
  * @author      Bob Jacobsen Copyright (C) 2001, 2003
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 public class NmraPacket {
 
@@ -337,6 +337,51 @@ public class NmraPacket {
             retVal[2] = (byte) (function&0xFF);
             retVal[3] = (byte) (value&0xFF);
             retVal[4] = (byte) (retVal[0]^retVal[1]^retVal[2]^retVal[3]);
+        }
+        return retVal;
+    }
+
+    /**
+     * Provide an NMRA consist control instruction
+     * @param address  DCC locomotive address
+     * @param longAddr true if this is a long address, false if short address
+     * @param consist the consist address to set for this locomotive. Send 
+     * 00 as consist address if deleteing from consist.
+     * @param isForward true if the normal direction of travel for this 
+     * address is the normal direction of travel for the consist.
+     */
+    public static byte[]  consistControl(int address, boolean longAddr,
+                                        int consist, boolean directionNormal) {
+
+        if (!addressCheck(address, longAddr)) {
+            return null;  // failed!
+        } else if(!addressCheck(consist,false)) {
+	    return null;  // failed - Consist address is not a short address!
+	}
+
+        // end sanity check, format output
+        byte[] retVal;
+        int arg1 = 0x10;  // Consist Control instruction tag
+	if (directionNormal)
+		arg1|=0x02;   // Forward Direction
+	else
+		arg1|=0x03;   // Reverse Direction
+
+        if (longAddr) {
+            // long address form
+            retVal = new byte[5];
+            retVal[0] = (byte) (192+((address/256)&0x3F));
+            retVal[1] = (byte) (address&0xFF);
+            retVal[2] = (byte) arg1;
+            retVal[3] = (byte) (consist&0xFF);
+            retVal[4] = (byte) (retVal[0]^retVal[1]^retVal[2]^retVal[3]);
+        } else {
+            // short address form
+            retVal = new byte[4];
+            retVal[0] = (byte) (address&0xFF);
+            retVal[1] = (byte) arg1;
+            retVal[2] = (byte) (consist&0xFF);
+            retVal[3] = (byte) (retVal[0]^retVal[1]^retVal[2]);
         }
         return retVal;
     }
