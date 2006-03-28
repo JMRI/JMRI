@@ -20,7 +20,7 @@ import java.beans.PropertyChangeListener;
  * which in turn can be located from the {@link InstanceManager}.
  * @see         jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
 public interface Programmer  {
 
@@ -31,7 +31,7 @@ public interface Programmer  {
      */
     public static final int NONE	    =  0;
     /**
-     * NMRA "Rgister" mode
+     * NMRA "Register" mode
      */
     public static final int REGISTERMODE    = 11;
 
@@ -64,6 +64,32 @@ public interface Programmer  {
      * NMRA "Operations" or "Programming on the main" mode, using only the bit-wise operations
      */
     public static final int OPSBITMODE      = 102;
+
+    /**
+     * NMRA "Programming on the main" mode for stationary decoders, 
+     * using only the byte-wise operations. Note that this is 
+     * defined as using the "normal", not "extended" addressing.
+     */
+    public static final int OPSACCBYTEMODE  = 111;
+
+    /**
+     * NMRA "Programming on the main" mode for stationary decoders, 
+     * using only the bit-wise operations. Note that this is 
+     * defined as using the "normal", not "extended" addressing.
+     */
+    public static final int OPSACCBITMODE   = 112;
+
+    /**
+     * NMRA "Programming on the main" mode for stationary decoders, 
+     * using only the byte-wise operations and "extended" addressing.
+     */
+    public static final int OPSACCEXTBYTEMODE = 121;
+
+    /**
+     * NMRA "Programming on the main" mode for stationary decoders, 
+     * using only the bit-wise operations and "extended" addressing.
+     */
+    public static final int OPSACCEXTBITMODE  = 122;
 
     /**
      * Perform a CV write in the system-specific manner,
