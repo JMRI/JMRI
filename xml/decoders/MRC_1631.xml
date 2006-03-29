@@ -2,7 +2,7 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: MRC_1631.xml,v 1.2 2006-03-28 03:38:56 jacobsen Exp $ -->
+<!-- $Id: MRC_1631.xml,v 1.3 2006-03-29 19:05:04 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen"
 			version="1" lastUpdated="20060326" />
@@ -12,17 +12,17 @@
 	<family name="Brilliance Sound Decoders" mfg="MRC"
 			lowVersionID="32" highVersionID="32">
 		<model model="Synch Diesel Sound 1631" numOuts="4" numFns="12"
-		            maxTotalCurrent="1.5A">
+		            maxTotalCurrent="1.5A" extFnsMRC="yes">
 		            <!-- note only F0 to F12 are NMRA compatible -->
                 <size length="48" width="17" height="7.5" units="mm" />
                 </model>
 		<model model="Synch Diesel Sound 1632" numOuts="4" numFns="12"
-		            maxTotalCurrent="1.5A">
+		            maxTotalCurrent="1.5A" extFnsMRC="yes">
 		            <!-- note only F0 to F12 are NMRA compatible -->
                 <size length="48" width="17" height="7.5" units="mm" />
                 </model>
 		<model model="Synch Diesel Sound 1633" numOuts="4" numFns="12"
-		            maxTotalCurrent="1.5A">
+		            maxTotalCurrent="1.5A" extFnsMRC="yes">
 		            <!-- note only F0 to F12 are NMRA compatible -->
                 <size length="48" width="17" height="7.5" units="mm" />
                 </model>
