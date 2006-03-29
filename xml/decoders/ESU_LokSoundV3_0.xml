@@ -2,7 +2,7 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: ESU_LokSoundV3_0.xml,v 1.4 2006-03-29 19:08:45 jacobsen Exp $ -->
+<!-- $Id: ESU_LokSoundV3_0.xml,v 1.5 2006-03-29 19:50:20 jacobsen Exp $ -->
 <decoder-config>
 		<version author="nac@erwbant.freeserve.co.uk"
 			version="1" lastUpdated="20050118"/>
@@ -686,6 +686,7 @@
 			item="Soundkey30" >
 			<decVal max="16"/>
 		</variable>
+
 	<variable label="Sensor1 Fwd" CV="221" mask="XXXXVVVV"
 			item="Soundkey31" >
 			<decVal max="16"/>
@@ -3612,7 +3613,8 @@
 			<label label=" "/>
 			<label label=" "/>
 			<label label=" "/>
-			<label label=" "/><label label="                                                  Range 0 - 127 "/>
+			<label label=" "/>
+			<label label="                                                  Range 0 - 127 "/>
 			<display item="DCstart"/>
 			<display item="DCmax"/>
 			<label label=" "/>
@@ -4081,7 +4083,6 @@
 	<column>		
 		<display item="F0(f) Bright"  layout="below"  />
 	</column>
-	
 	<column>	
 		<display item="F0(r) Bright"  layout="below" /> 
 	</column>
@@ -4106,26 +4107,5 @@
 	</row>
 	</column>
 </pane>
-<pane name="Analogue F9 - F12">
-<column>
-			<display item="Analog F9(f)" format="checkbox"
-				tooltip="Sets the status of function F9(f) when the unit is operating in analog power mode" />
-			
-			<display item="Analog F9(r)" format="checkbox"
-				tooltip="Sets the status of function F9(r) when the unit is operating in analog power mode" />
-			
-			<display item="Analog F10(f)" format="checkbox"
-				tooltip="Sets the status of function F10(f) when the unit is operating in analog power mode" />
-			
-			<display item="Analog F10(r)" format="checkbox"
-				tooltip="Sets the status of function F10(r) when the unit is operating in analog power mode" />
-			
-			<display item="Analog F11" format="checkbox"
-				tooltip="Sets the status of function F11 when the unit is operating in analog power mode" />
-			
-			<display item="Analog F12" format="checkbox"
-				tooltip="Sets the status of function F12 when the unit is operating in analog power mode" />
-					</column>
-	</pane>
 
 </decoder-config>
