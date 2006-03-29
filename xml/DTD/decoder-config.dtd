@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a type or types of DCC decoder as  -->
 <!-- a component, esp. information on how to program it. -->
-<!-- $Revision: 1.44 $ -->
+<!-- $Revision: 1.45 $ -->
 
 <!-- This DTD is Copyright 1999, 2000, 2001, 2003, 2004, 2005 Bob Jacobsen & JMRI. -->
 <!-- You may freely use it subject to the Open Source Artistic               -->
@@ -111,6 +111,10 @@
 <!-- wiring specification -->
 <!ATTLIST model connector ( unspecified | NMRAsmall | 9pin |
                             NMRAmedium | NMRAlarge | other ) "unspecified" >
+<!-- type of extended function packets accepted (not all combinations valid) -->
+<!ATTLIST model extFnsNmraF13 ( no | yes ) "no" >  <!-- RP packets for F13-F20 -->
+<!ATTLIST model extFnsNmraBSC ( no | yes ) "no" >  <!-- "Binary State Control" -->
+<!ATTLIST model extFnsMRC  ( no | yes ) "no" >     <!-- Model Rectifier Corp "extension" -->
 
 <!ELEMENT versionCV EMPTY >
 <!-- lowVersionID, highVersionID define an inclusive range, with both endpoints included. -->
