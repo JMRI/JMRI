@@ -2,7 +2,7 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: ESU_LokSoundV3_5.xml,v 1.1 2006-03-29 19:08:23 jacobsen Exp $ -->
+<!-- $Id: ESU_LokSoundV3_5.xml,v 1.2 2006-03-29 19:50:48 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen rgj1927@pacbell.net"
 			version="1" lastUpdated="20060329"/>
@@ -784,23 +784,54 @@
 			item="Soundkey30" >
 			<decVal max="16"/>
 		</variable>
-	<variable label="Sensor1 Fwd" CV="221" mask="XXXXVVVV"
+
+	<variable label="F13 Fwd" CV="221" mask="XXXXVVVV"
 			item="Soundkey31" >
 			<decVal max="16"/>
 		</variable>
 
-		<variable label="Sensor1 Rev" CV="224" mask="XXXXVVVV"
+		<variable label="F13 Rev" CV="224" mask="XXXXVVVV"
 			item="Soundkey32" >
 			<decVal max="16"/>
 		</variable>
-		
-	<variable label="Sensor2 Fwd" CV="227" mask="XXXXVVVV"
+
+	<variable label="F14 Fwd" CV="227" mask="XXXXVVVV"
 			item="Soundkey33" >
 			<decVal max="16"/>
 		</variable>
 
-		<variable label="Sensor2 Rev" CV="230" mask="XXXXVVVV"
+		<variable label="F14 Rev" CV="230" mask="XXXXVVVV"
 			item="Soundkey34" >
+			<decVal max="16"/>
+		</variable>
+
+	<variable label="F15 Fwd" CV="233" mask="XXXXVVVV"
+			item="Soundkey35" >
+			<decVal max="16"/>
+		</variable>
+
+		<variable label="F15 Rev" CV="236" mask="XXXXVVVV"
+			item="Soundkey36" >
+			<decVal max="16"/>
+		</variable>
+
+	<variable label="Sensor1 Fwd" CV="239" mask="XXXXVVVV"
+			item="Soundkey37" >
+			<decVal max="16"/>
+		</variable>
+
+		<variable label="Sensor1 Rev" CV="242" mask="XXXXVVVV"
+			item="Soundkey38" >
+			<decVal max="16"/>
+		</variable>
+		
+	<variable label="Sensor2 Fwd" CV="245" mask="XXXXVVVV"
+			item="Soundkey39" >
+			<decVal max="16"/>
+		</variable>
+
+		<variable label="Sensor2 Rev" CV="248" mask="XXXXVVVV"
+			item="Soundkey40" >
 			<decVal max="16"/>
 		</variable>
 
@@ -1330,73 +1361,178 @@
 		<variable label="F12(r)8" CV="216" mask="VXXXXXXX" item="F12(r)8" minOut="8" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 
-
-		<variable label="sensor1(f)1" CV="219" mask="XXXXXXXV" item="Sensor1(f)1" minOut="1" > <enumVal> 
+		<variable label="F13(f)1" CV="213" mask="XXXXXXXV" item="F13(f)1" minOut="1" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="sensor1(f)2" CV="219" mask="XXXXXXVX" item="Sensor1(f)2" minOut="2" > <enumVal> 
+		<variable label="F13(f)2" CV="213" mask="XXXXXXVX" item="F13(f)2" minOut="2" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="sensor1(f)3" CV="219" mask="XXXXXVXX" item="Sensor1(f)3" minOut="3" > <enumVal> 
+		<variable label="F13(f)3" CV="213" mask="XXXXXVXX" item="F13(f)3" minOut="3" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="sensor1(f)4" CV="219" mask="XXXXVXXX" item="Sensor1(f)4" minOut="4" > <enumVal> 
+		<variable label="F13(f)4" CV="213" mask="XXXXVXXX" item="F13(f)4" minOut="4" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="sensor1(f)5" CV="219" mask="XXXVXXXX" item="Sensor1(f)5" minOut="5" > <enumVal> 
+		<variable label="F13(f)5" CV="213" mask="XXXVXXXX" item="F13(f)5" minOut="5" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="sensor1(f)6" CV="219" mask="XXVXXXXX" item="Sensor1(f)6" minOut="6" > <enumVal> 
+		<variable label="F13(f)6" CV="213" mask="XXVXXXXX" item="F13(f)6" minOut="6" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="sensor1(f)7" CV="219" mask="XVXXXXXX" item="Sensor1(f)7" minOut="7" > <enumVal> 
+		<variable label="F13(f)7" CV="213" mask="XVXXXXXX" item="F13(f)7" minOut="7" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="sensor1(f)8" CV="219" mask="VXXXXXXX" item="Sensor1(f)8" minOut="8" > <enumVal> 
+		<variable label="F13(f)8" CV="213" mask="VXXXXXXX" item="F13(f)8" minOut="8" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 			
-		<variable label="sensor1(r)1" CV="222" mask="XXXXXXXV" item="Sensor1(r)1" minOut="1" > <enumVal> 
+		
+		<variable label="F13(r)1" CV="216" mask="XXXXXXXV" item="F13(r)1" minOut="1" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="sensor1(r)2" CV="222" mask="XXXXXXVX" item="Sensor1(r)2" minOut="2" > <enumVal> 
+		<variable label="F13(r)2" CV="216" mask="XXXXXXVX" item="F13(r)2" minOut="2" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="sensor1(r)3" CV="222" mask="XXXXXVXX" item="Sensor1(r)3" minOut="3" > <enumVal> 
+		<variable label="F13(r)3" CV="216" mask="XXXXXVXX" item="F13(r)3" minOut="3" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="sensor1(r)4" CV="222" mask="XXXXVXXX" item="Sensor1(r)4" minOut="4" > <enumVal> 
+		<variable label="F13(r)4" CV="216" mask="XXXXVXXX" item="F13(r)4" minOut="4" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="sensor1(r)5" CV="222" mask="XXXVXXXX" item="Sensor1(r)5" minOut="5" > <enumVal> 
+		<variable label="F13(r)5" CV="216" mask="XXXVXXXX" item="F13(r)5" minOut="5" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="sensor1(r)6" CV="222" mask="XXVXXXXX" item="Sensor1(r)6" minOut="6" > <enumVal> 
+		<variable label="F13(r)6" CV="216" mask="XXVXXXXX" item="F13(r)6" minOut="6" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="sensor1(r)7" CV="222" mask="XVXXXXXX" item="Sensor1(r)7" minOut="7" > <enumVal> 
+		<variable label="F13(r)7" CV="216" mask="XVXXXXXX" item="F13(r)7" minOut="7" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="sensor1(r)8" CV="222" mask="VXXXXXXX" item="Sensor1(r)8" minOut="8" > <enumVal> 
+		<variable label="F13(r)8" CV="216" mask="VXXXXXXX" item="F13(r)8" minOut="8" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+		<variable label="F14(f)1" CV="213" mask="XXXXXXXV" item="F14(f)1" minOut="1" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F14(f)2" CV="213" mask="XXXXXXVX" item="F14(f)2" minOut="2" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F14(f)3" CV="213" mask="XXXXXVXX" item="F14(f)3" minOut="3" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F14(f)4" CV="213" mask="XXXXVXXX" item="F14(f)4" minOut="4" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F14(f)5" CV="213" mask="XXXVXXXX" item="F14(f)5" minOut="5" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F14(f)6" CV="213" mask="XXVXXXXX" item="F14(f)6" minOut="6" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F14(f)7" CV="213" mask="XVXXXXXX" item="F14(f)7" minOut="7" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F14(f)8" CV="213" mask="VXXXXXXX" item="F14(f)8" minOut="8" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+			
+		
+		<variable label="F14(r)1" CV="216" mask="XXXXXXXV" item="F14(r)1" minOut="1" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F14(r)2" CV="216" mask="XXXXXXVX" item="F14(r)2" minOut="2" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F14(r)3" CV="216" mask="XXXXXVXX" item="F14(r)3" minOut="3" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F14(r)4" CV="216" mask="XXXXVXXX" item="F14(r)4" minOut="4" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F14(r)5" CV="216" mask="XXXVXXXX" item="F14(r)5" minOut="5" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F14(r)6" CV="216" mask="XXVXXXXX" item="F14(r)6" minOut="6" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F14(r)7" CV="216" mask="XVXXXXXX" item="F14(r)7" minOut="7" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F14(r)8" CV="216" mask="VXXXXXXX" item="F14(r)8" minOut="8" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+		<variable label="F15(f)1" CV="213" mask="XXXXXXXV" item="F15(f)1" minOut="1" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F15(f)2" CV="213" mask="XXXXXXVX" item="F15(f)2" minOut="2" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F15(f)3" CV="213" mask="XXXXXVXX" item="F15(f)3" minOut="3" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F15(f)4" CV="213" mask="XXXXVXXX" item="F15(f)4" minOut="4" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F15(f)5" CV="213" mask="XXXVXXXX" item="F15(f)5" minOut="5" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F15(f)6" CV="213" mask="XXVXXXXX" item="F15(f)6" minOut="6" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F15(f)7" CV="213" mask="XVXXXXXX" item="F15(f)7" minOut="7" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F15(f)8" CV="213" mask="VXXXXXXX" item="F15(f)8" minOut="8" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+			
+		
+		<variable label="F15(r)1" CV="216" mask="XXXXXXXV" item="F15(r)1" minOut="1" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F15(r)2" CV="216" mask="XXXXXXVX" item="F15(r)2" minOut="2" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F15(r)3" CV="216" mask="XXXXXVXX" item="F15(r)3" minOut="3" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F15(r)4" CV="216" mask="XXXXVXXX" item="F15(r)4" minOut="4" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F15(r)5" CV="216" mask="XXXVXXXX" item="F15(r)5" minOut="5" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F15(r)6" CV="216" mask="XXVXXXXX" item="F15(r)6" minOut="6" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F15(r)7" CV="216" mask="XVXXXXXX" item="F15(r)7" minOut="7" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F15(r)8" CV="216" mask="VXXXXXXX" item="F15(r)8" minOut="8" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+
+		<variable label="sensor1(f)1" CV="237" mask="XXXXXXXV" item="Sensor1(f)1" minOut="1" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="sensor1(f)2" CV="237" mask="XXXXXXVX" item="Sensor1(f)2" minOut="2" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="sensor1(f)3" CV="237" mask="XXXXXVXX" item="Sensor1(f)3" minOut="3" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="sensor1(f)4" CV="237" mask="XXXXVXXX" item="Sensor1(f)4" minOut="4" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="sensor1(f)5" CV="237" mask="XXXVXXXX" item="Sensor1(f)5" minOut="5" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="sensor1(f)6" CV="237" mask="XXVXXXXX" item="Sensor1(f)6" minOut="6" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="sensor1(f)7" CV="237" mask="XVXXXXXX" item="Sensor1(f)7" minOut="7" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="sensor1(f)8" CV="237" mask="VXXXXXXX" item="Sensor1(f)8" minOut="8" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+			
+		<variable label="sensor1(r)1" CV="240" mask="XXXXXXXV" item="Sensor1(r)1" minOut="1" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="sensor1(r)2" CV="240" mask="XXXXXXVX" item="Sensor1(r)2" minOut="2" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="sensor1(r)3" CV="240" mask="XXXXXVXX" item="Sensor1(r)3" minOut="3" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="sensor1(r)4" CV="240" mask="XXXXVXXX" item="Sensor1(r)4" minOut="4" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="sensor1(r)5" CV="240" mask="XXXVXXXX" item="Sensor1(r)5" minOut="5" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="sensor1(r)6" CV="240" mask="XXVXXXXX" item="Sensor1(r)6" minOut="6" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="sensor1(r)7" CV="240" mask="XVXXXXXX" item="Sensor1(r)7" minOut="7" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="sensor1(r)8" CV="240" mask="VXXXXXXX" item="Sensor1(r)8" minOut="8" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 				
-		<variable label="sensor2(f)1" CV="225" mask="XXXXXXXV" item="Sensor2(f)1" minOut="1" > <enumVal> 
+		<variable label="sensor2(f)1" CV="243" mask="XXXXXXXV" item="Sensor2(f)1" minOut="1" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="sensor2(f)2" CV="225" mask="XXXXXXVX" item="Sensor2(f)2" minOut="2" > <enumVal> 
+		<variable label="sensor2(f)2" CV="243" mask="XXXXXXVX" item="Sensor2(f)2" minOut="2" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="sensor2(f)3" CV="225" mask="XXXXXVXX" item="Sensor2(f)3" minOut="3" > <enumVal> 
+		<variable label="sensor2(f)3" CV="243" mask="XXXXXVXX" item="Sensor2(f)3" minOut="3" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="sensor2(f)4" CV="225" mask="XXXXVXXX" item="Sensor2(f)4" minOut="4" > <enumVal> 
+		<variable label="sensor2(f)4" CV="243" mask="XXXXVXXX" item="Sensor2(f)4" minOut="4" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="sensor2(f)5" CV="225" mask="XXXVXXXX" item="Sensor2(f)5" minOut="5" > <enumVal> 
+		<variable label="sensor2(f)5" CV="243" mask="XXXVXXXX" item="Sensor2(f)5" minOut="5" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="sensor2(f)6" CV="225" mask="XXVXXXXX" item="Sensor2(f)6" minOut="6" > <enumVal> 
+		<variable label="sensor2(f)6" CV="243" mask="XXVXXXXX" item="Sensor2(f)6" minOut="6" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="sensor2(f)7" CV="225" mask="XVXXXXXX" item="Sensor2(f)7" minOut="7" > <enumVal> 
+		<variable label="sensor2(f)7" CV="243" mask="XVXXXXXX" item="Sensor2(f)7" minOut="7" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="sensor2(f)8" CV="225" mask="VXXXXXXX" item="Sensor2(f)8" minOut="8" > <enumVal> 
+		<variable label="sensor2(f)8" CV="243" mask="VXXXXXXX" item="Sensor2(f)8" minOut="8" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		
-		<variable label="sensor2(r)1" CV="228" mask="XXXXXXXV" item="Sensor2(r)1" minOut="1" > <enumVal> 
+		<variable label="sensor2(r)1" CV="246" mask="XXXXXXXV" item="Sensor2(r)1" minOut="1" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="sensor2(r)2" CV="228" mask="XXXXXXVX" item="Sensor2(r)2" minOut="2" > <enumVal> 
+		<variable label="sensor2(r)2" CV="246" mask="XXXXXXVX" item="Sensor2(r)2" minOut="2" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="sensor2(r)3" CV="228" mask="XXXXXVXX" item="Sensor2(r)3" minOut="3" > <enumVal> 
+		<variable label="sensor2(r)3" CV="246" mask="XXXXXVXX" item="Sensor2(r)3" minOut="3" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="sensor2(r)4" CV="228" mask="XXXXVXXX" item="Sensor2(r)4" minOut="4" > <enumVal> 
+		<variable label="sensor2(r)4" CV="246" mask="XXXXVXXX" item="Sensor2(r)4" minOut="4" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="sensor2(r)5" CV="228" mask="XXXVXXXX" item="Sensor2(r)5" minOut="5" > <enumVal> 
+		<variable label="sensor2(r)5" CV="246" mask="XXXVXXXX" item="Sensor2(r)5" minOut="5" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="sensor2(r)6" CV="228" mask="XXVXXXXX" item="Sensor2(r)6" minOut="6" > <enumVal> 
+		<variable label="sensor2(r)6" CV="246" mask="XXVXXXXX" item="Sensor2(r)6" minOut="6" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="sensor2(r)7" CV="228" mask="XVXXXXXX" item="Sensor2(r)7" minOut="7" > <enumVal> 
+		<variable label="sensor2(r)7" CV="246" mask="XVXXXXXX" item="Sensor2(r)7" minOut="7" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="sensor2(r)8" CV="228" mask="VXXXXXXX" item="Sensor2(r)8" minOut="8" > <enumVal> 
+		<variable label="sensor2(r)8" CV="246" mask="VXXXXXXX" item="Sensor2(r)8" minOut="8" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 
 		
@@ -3124,9 +3260,356 @@
 
 
 
+		<variable label="F13 Forward Button" CV="220" mask="XXXXXXXV"
+				item="F13 forward1">
+				<enumVal><enumChoice choice="OFF/ON"/>
+				<enumChoice choice="Acceleration on/off"/>
+				<enumChoice choice="Shunting Mode on/off"/>
+				<enumChoice choice="Sound on/off" />
+				<enumChoice choice="Shift Mode" />
+				<enumChoice choice="Blower Sound" />
+				</enumVal>
+				</variable>
+
+		<variable label="F13 Forward Button" CV="220" mask="XXXXXXVX"
+				item="F13 (f)2">
+				<enumVal><enumChoice choice="OFF/ON"/>
+				<enumChoice choice="Acceleration on/off"/>
+				<enumChoice choice="Shunting Mode on/off"/>
+				<enumChoice choice="Sound on/off" />
+				<enumChoice choice="Shift Mode" />
+				<enumChoice choice="Blower Sound" />
+				</enumVal>
+				</variable>
 
 
-		<variable label="Sensor 1 forward" CV="220" mask="XXXXXXXV"
+		<variable label="F13 Forward Button" CV="220" mask="XXXXXVXX"
+				item="F13 (f)3">
+				<enumVal><enumChoice choice="OFF/ON"/>
+				<enumChoice choice="Acceleration on/off"/>
+				<enumChoice choice="Shunting Mode on/off"/>
+				<enumChoice choice="Sound on/off" />
+				<enumChoice choice="Shift Mode" />
+				<enumChoice choice="Blower Sound" />
+				</enumVal>
+				</variable>
+
+		<variable label="F13 Forward Button" CV="220" mask="XXXXVXXX"
+				item="F13 (f)4">
+				<enumVal><enumChoice choice="OFF/ON"/>
+				<enumChoice choice="Acceleration on/off"/>
+				<enumChoice choice="Shunting Mode on/off"/>
+				<enumChoice choice="Sound on/off" />
+				<enumChoice choice="Shift Mode" />
+				<enumChoice choice="Blower Sound" />
+				</enumVal>
+				</variable>
+
+		<variable label="F13 Forward Button" CV="220" mask="XXXVXXXX"
+				item="F13 (f)5">
+				<enumVal><enumChoice choice="OFF/ON"/>
+				<enumChoice choice="Acceleration on/off"/>
+				<enumChoice choice="Shunting Mode on/off"/>
+				<enumChoice choice="Sound on/off" />
+				<enumChoice choice="Shift Mode" />
+				<enumChoice choice="Blower Sound" />
+				</enumVal>
+				</variable>
+
+	
+		
+		<variable label="F13 reverse Button" CV="223" mask="XXXXXXXV"
+				item="F13 (r)1">
+				<enumVal><enumChoice choice="OFF/ON"/>
+				<enumChoice choice="Acceleration on/off"/>
+				<enumChoice choice="Shunting Mode on/off"/>
+				<enumChoice choice="Sound on/off" />
+				<enumChoice choice="Shift Mode" />
+				<enumChoice choice="Blower Sound" />
+				</enumVal>
+				</variable>
+
+		<variable label="F13 reverse Button" CV="223" mask="XXXXXXVX"
+				item="F13 (r)2">
+				<enumVal><enumChoice choice="OFF/ON"/>
+				<enumChoice choice="Acceleration on/off"/>
+				<enumChoice choice="Shunting Mode on/off"/>
+				<enumChoice choice="Sound on/off" />
+				<enumChoice choice="Shift Mode" />
+				<enumChoice choice="Blower Sound" />
+				</enumVal>
+				</variable>
+
+
+		<variable label="F13 reverse Button" CV="223" mask="XXXXXVXX"
+				item="F13 (r)3">
+				<enumVal><enumChoice choice="OFF/ON"/>
+				<enumChoice choice="Acceleration on/off"/>
+				<enumChoice choice="Shunting Mode on/off"/>
+				<enumChoice choice="Sound on/off" />
+				<enumChoice choice="Shift Mode" />
+				<enumChoice choice="Blower Sound" />
+				</enumVal>
+				</variable>
+
+		<variable label="F13 reverse Button" CV="223" mask="XXXXVXXX"
+				item="F13 (r)4">
+				<enumVal><enumChoice choice="OFF/ON"/>
+				<enumChoice choice="Acceleration on/off"/>
+				<enumChoice choice="Shunting Mode on/off"/>
+				<enumChoice choice="Sound on/off" />
+				<enumChoice choice="Shift Mode" />
+				<enumChoice choice="Blower Sound" />
+				</enumVal>
+				</variable>
+
+		<variable label="F13 reverse Button" CV="223" mask="XXXVXXXX"
+				item="F13 (r)5">
+				<enumVal><enumChoice choice="OFF/ON"/>
+				<enumChoice choice="Acceleration on/off"/>
+				<enumChoice choice="Shunting Mode on/off"/>
+				<enumChoice choice="Sound on/off" />
+				<enumChoice choice="Shift Mode" />
+				<enumChoice choice="Blower Sound" />
+				</enumVal>
+				</variable>
+
+
+
+		<variable label="F14 Forward Button" CV="226" mask="XXXXXXXV"
+				item="F14 forward1">
+				<enumVal><enumChoice choice="OFF/ON"/>
+				<enumChoice choice="Acceleration on/off"/>
+				<enumChoice choice="Shunting Mode on/off"/>
+				<enumChoice choice="Sound on/off" />
+				<enumChoice choice="Shift Mode" />
+				<enumChoice choice="Blower Sound" />
+				</enumVal>
+				</variable>
+
+		<variable label="F14 Forward Button" CV="226" mask="XXXXXXVX"
+				item="F14 (f)2">
+				<enumVal><enumChoice choice="OFF/ON"/>
+				<enumChoice choice="Acceleration on/off"/>
+				<enumChoice choice="Shunting Mode on/off"/>
+				<enumChoice choice="Sound on/off" />
+				<enumChoice choice="Shift Mode" />
+				<enumChoice choice="Blower Sound" />
+				</enumVal>
+				</variable>
+
+
+		<variable label="F14 Forward Button" CV="226" mask="XXXXXVXX"
+				item="F14 (f)3">
+				<enumVal><enumChoice choice="OFF/ON"/>
+				<enumChoice choice="Acceleration on/off"/>
+				<enumChoice choice="Shunting Mode on/off"/>
+				<enumChoice choice="Sound on/off" />
+				<enumChoice choice="Shift Mode" />
+				<enumChoice choice="Blower Sound" />
+				</enumVal>
+				</variable>
+
+		<variable label="F14 Forward Button" CV="226" mask="XXXXVXXX"
+				item="F14 (f)4">
+				<enumVal><enumChoice choice="OFF/ON"/>
+				<enumChoice choice="Acceleration on/off"/>
+				<enumChoice choice="Shunting Mode on/off"/>
+				<enumChoice choice="Sound on/off" />
+				<enumChoice choice="Shift Mode" />
+				<enumChoice choice="Blower Sound" />
+				</enumVal>
+				</variable>
+
+		<variable label="F14 Forward Button" CV="226" mask="XXXVXXXX"
+				item="F14 (f)5">
+				<enumVal><enumChoice choice="OFF/ON"/>
+				<enumChoice choice="Acceleration on/off"/>
+				<enumChoice choice="Shunting Mode on/off"/>
+				<enumChoice choice="Sound on/off" />
+				<enumChoice choice="Shift Mode" />
+				<enumChoice choice="Blower Sound" />
+				</enumVal>
+				</variable>
+
+	
+		
+		<variable label="F14 reverse Button" CV="229" mask="XXXXXXXV"
+				item="F14 (r)1">
+				<enumVal><enumChoice choice="OFF/ON"/>
+				<enumChoice choice="Acceleration on/off"/>
+				<enumChoice choice="Shunting Mode on/off"/>
+				<enumChoice choice="Sound on/off" />
+				<enumChoice choice="Shift Mode" />
+				<enumChoice choice="Blower Sound" />
+				</enumVal>
+				</variable>
+
+		<variable label="F14 reverse Button" CV="229" mask="XXXXXXVX"
+				item="F14 (r)2">
+				<enumVal><enumChoice choice="OFF/ON"/>
+				<enumChoice choice="Acceleration on/off"/>
+				<enumChoice choice="Shunting Mode on/off"/>
+				<enumChoice choice="Sound on/off" />
+				<enumChoice choice="Shift Mode" />
+				<enumChoice choice="Blower Sound" />
+				</enumVal>
+				</variable>
+
+
+		<variable label="F14 reverse Button" CV="229" mask="XXXXXVXX"
+				item="F14 (r)3">
+				<enumVal><enumChoice choice="OFF/ON"/>
+				<enumChoice choice="Acceleration on/off"/>
+				<enumChoice choice="Shunting Mode on/off"/>
+				<enumChoice choice="Sound on/off" />
+				<enumChoice choice="Shift Mode" />
+				<enumChoice choice="Blower Sound" />
+				</enumVal>
+				</variable>
+
+		<variable label="F14 reverse Button" CV="229" mask="XXXXVXXX"
+				item="F14 (r)4">
+				<enumVal><enumChoice choice="OFF/ON"/>
+				<enumChoice choice="Acceleration on/off"/>
+				<enumChoice choice="Shunting Mode on/off"/>
+				<enumChoice choice="Sound on/off" />
+				<enumChoice choice="Shift Mode" />
+				<enumChoice choice="Blower Sound" />
+				</enumVal>
+				</variable>
+
+		<variable label="F14 reverse Button" CV="229" mask="XXXVXXXX"
+				item="F14 (r)5">
+				<enumVal><enumChoice choice="OFF/ON"/>
+				<enumChoice choice="Acceleration on/off"/>
+				<enumChoice choice="Shunting Mode on/off"/>
+				<enumChoice choice="Sound on/off" />
+				<enumChoice choice="Shift Mode" />
+				<enumChoice choice="Blower Sound" />
+				</enumVal>
+				</variable>
+
+
+
+		<variable label="F15 Forward Button" CV="232" mask="XXXXXXXV"
+				item="F15 forward1">
+				<enumVal><enumChoice choice="OFF/ON"/>
+				<enumChoice choice="Acceleration on/off"/>
+				<enumChoice choice="Shunting Mode on/off"/>
+				<enumChoice choice="Sound on/off" />
+				<enumChoice choice="Shift Mode" />
+				<enumChoice choice="Blower Sound" />
+				</enumVal>
+				</variable>
+
+		<variable label="F15 Forward Button" CV="232" mask="XXXXXXVX"
+				item="F15 (f)2">
+				<enumVal><enumChoice choice="OFF/ON"/>
+				<enumChoice choice="Acceleration on/off"/>
+				<enumChoice choice="Shunting Mode on/off"/>
+				<enumChoice choice="Sound on/off" />
+				<enumChoice choice="Shift Mode" />
+				<enumChoice choice="Blower Sound" />
+				</enumVal>
+				</variable>
+
+
+		<variable label="F15 Forward Button" CV="232" mask="XXXXXVXX"
+				item="F15 (f)3">
+				<enumVal><enumChoice choice="OFF/ON"/>
+				<enumChoice choice="Acceleration on/off"/>
+				<enumChoice choice="Shunting Mode on/off"/>
+				<enumChoice choice="Sound on/off" />
+				<enumChoice choice="Shift Mode" />
+				<enumChoice choice="Blower Sound" />
+				</enumVal>
+				</variable>
+
+		<variable label="F15 Forward Button" CV="232" mask="XXXXVXXX"
+				item="F15 (f)4">
+				<enumVal><enumChoice choice="OFF/ON"/>
+				<enumChoice choice="Acceleration on/off"/>
+				<enumChoice choice="Shunting Mode on/off"/>
+				<enumChoice choice="Sound on/off" />
+				<enumChoice choice="Shift Mode" />
+				<enumChoice choice="Blower Sound" />
+				</enumVal>
+				</variable>
+
+		<variable label="F15 Forward Button" CV="232" mask="XXXVXXXX"
+				item="F15 (f)5">
+				<enumVal><enumChoice choice="OFF/ON"/>
+				<enumChoice choice="Acceleration on/off"/>
+				<enumChoice choice="Shunting Mode on/off"/>
+				<enumChoice choice="Sound on/off" />
+				<enumChoice choice="Shift Mode" />
+				<enumChoice choice="Blower Sound" />
+				</enumVal>
+				</variable>
+
+	
+		
+		<variable label="F15 reverse Button" CV="235" mask="XXXXXXXV"
+				item="F15 (r)1">
+				<enumVal><enumChoice choice="OFF/ON"/>
+				<enumChoice choice="Acceleration on/off"/>
+				<enumChoice choice="Shunting Mode on/off"/>
+				<enumChoice choice="Sound on/off" />
+				<enumChoice choice="Shift Mode" />
+				<enumChoice choice="Blower Sound" />
+				</enumVal>
+				</variable>
+
+		<variable label="F15 reverse Button" CV="235" mask="XXXXXXVX"
+				item="F15 (r)2">
+				<enumVal><enumChoice choice="OFF/ON"/>
+				<enumChoice choice="Acceleration on/off"/>
+				<enumChoice choice="Shunting Mode on/off"/>
+				<enumChoice choice="Sound on/off" />
+				<enumChoice choice="Shift Mode" />
+				<enumChoice choice="Blower Sound" />
+				</enumVal>
+				</variable>
+
+
+		<variable label="F15 reverse Button" CV="235" mask="XXXXXVXX"
+				item="F15 (r)3">
+				<enumVal><enumChoice choice="OFF/ON"/>
+				<enumChoice choice="Acceleration on/off"/>
+				<enumChoice choice="Shunting Mode on/off"/>
+				<enumChoice choice="Sound on/off" />
+				<enumChoice choice="Shift Mode" />
+				<enumChoice choice="Blower Sound" />
+				</enumVal>
+				</variable>
+
+		<variable label="F15 reverse Button" CV="235" mask="XXXXVXXX"
+				item="F15 (r)4">
+				<enumVal><enumChoice choice="OFF/ON"/>
+				<enumChoice choice="Acceleration on/off"/>
+				<enumChoice choice="Shunting Mode on/off"/>
+				<enumChoice choice="Sound on/off" />
+				<enumChoice choice="Shift Mode" />
+				<enumChoice choice="Blower Sound" />
+				</enumVal>
+				</variable>
+
+		<variable label="F15 reverse Button" CV="235" mask="XXXVXXXX"
+				item="F15 (r)5">
+				<enumVal><enumChoice choice="OFF/ON"/>
+				<enumChoice choice="Acceleration on/off"/>
+				<enumChoice choice="Shunting Mode on/off"/>
+				<enumChoice choice="Sound on/off" />
+				<enumChoice choice="Shift Mode" />
+				<enumChoice choice="Blower Sound" />
+				</enumVal>
+				</variable>
+
+
+
+
+		<variable label="Sensor 1 forward" CV="238" mask="XXXXXXXV"
 				item="Sensor1 fwd1">
 			<enumVal>
 				<enumChoice choice="Default Action"/>
@@ -3138,7 +3621,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="Sensor 1 forward" CV="220" mask="XXXXXXVX"
+		<variable label="Sensor 1 forward" CV="238" mask="XXXXXXVX"
 				item="Sensor1 fwd2">
 		
 			<enumVal>
@@ -3151,7 +3634,7 @@
 				</enumVal>
 			</variable>
 
-			<variable label="Sensor 1 forward" CV="220" mask="XXXXXVXX"
+			<variable label="Sensor 1 forward" CV="238" mask="XXXXXVXX"
 				item="Sensor1 fwd3">
 		
 			<enumVal>
@@ -3164,7 +3647,7 @@
 				</enumVal>
 			</variable>
 
-			<variable label="Sensor 1 forward" CV="220" mask="XXXXVXXX"
+			<variable label="Sensor 1 forward" CV="238" mask="XXXXVXXX"
 				item="Sensor1 fwd4">
 		
 			<enumVal>
@@ -3177,7 +3660,7 @@
 				</enumVal>
 			</variable>
 
-			<variable label="Sensor 1 forward" CV="220" mask="XXXVXXXX"
+			<variable label="Sensor 1 forward" CV="238" mask="XXXVXXXX"
 				item="Sensor1 fwd5">
 		
 			<enumVal>
@@ -3191,7 +3674,7 @@
 			</variable>
 
 
-		<variable label="Sensor 1 reverse" CV="223" mask="XXXXXXXV"
+		<variable label="Sensor 1 reverse" CV="241" mask="XXXXXXXV"
 				item="Sensor1 rev1">
 			<enumVal>
 				<enumChoice choice="Default Action"/>
@@ -3203,7 +3686,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="Sensor 1 reverse" CV="223" mask="XXXXXXVX"
+		<variable label="Sensor 1 reverse" CV="241" mask="XXXXXXVX"
 				item="Sensor1 rev2">
 			<enumVal>
 				<enumChoice choice="Default Action"/>
@@ -3215,7 +3698,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="Sensor 1 reverse" CV="223" mask="XXXXXXVXX"
+		<variable label="Sensor 1 reverse" CV="241" mask="XXXXXXVXX"
 				item="Sensor1 rev3">
 			<enumVal>
 				<enumChoice choice="Default Action"/>
@@ -3227,7 +3710,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="Sensor 1 reverse" CV="223" mask="XXXXXVXXX"
+		<variable label="Sensor 1 reverse" CV="241" mask="XXXXXVXXX"
 				item="Sensor1 rev4">
 			<enumVal>
 				<enumChoice choice="Default Action"/>
@@ -3239,7 +3722,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="Sensor 1 reverse" CV="223" mask="XXXVXXXX"
+		<variable label="Sensor 1 reverse" CV="241" mask="XXXVXXXX"
 				item="Sensor1 rev5">
 			<enumVal>
 				<enumChoice choice="Default Action"/>
@@ -3255,7 +3738,7 @@
 
 
 
-		<variable label="Sensor 2 forward" CV="226" mask="XXXXXXXV"
+		<variable label="Sensor 2 forward" CV="244" mask="XXXXXXXV"
 				item="Sensor2 fwd1">
 			<enumVal>
 				<enumChoice choice="Default Action"/>
@@ -3267,7 +3750,7 @@
 				</enumVal>
 			</variable>
 
-			<variable label="Sensor 2 forward" CV="226" mask="XXXXXXVX"
+			<variable label="Sensor 2 forward" CV="244" mask="XXXXXXVX"
 				item="Sensor2 fwd2">
 			<enumVal>
 				<enumChoice choice="Default Action"/>
@@ -3279,7 +3762,7 @@
 				</enumVal>
 			</variable>
 
-			<variable label="Sensor 2 forward" CV="226" mask="XXXXXVXX"
+			<variable label="Sensor 2 forward" CV="244" mask="XXXXXVXX"
 				item="Sensor2 fwd3">
 			<enumVal>
 				<enumChoice choice="Default Action"/>
@@ -3291,7 +3774,7 @@
 				</enumVal>
 			</variable>
 
-			<variable label="Sensor 2 forward" CV="226" mask="XXXXVXXX"
+			<variable label="Sensor 2 forward" CV="244" mask="XXXXVXXX"
 				item="Sensor2 fwd4">
 			<enumVal>
 				<enumChoice choice="Default Action"/>
@@ -3303,7 +3786,7 @@
 				</enumVal>
 			</variable>
 
-			<variable label="Sensor 2 forward" CV="226" mask="XXXVXXXX"
+			<variable label="Sensor 2 forward" CV="244" mask="XXXVXXXX"
 				item="Sensor2 fwd5">
 			<enumVal>
 				<enumChoice choice="Default Action"/>
@@ -3316,7 +3799,7 @@
 			</variable>
 
 
-		<variable label="Sensor 2 reverse" CV="229" mask="XXXXXXXV"
+		<variable label="Sensor 2 reverse" CV="247" mask="XXXXXXXV"
 				item="Sensor2 rev1">
 			<enumVal>
 				<enumChoice choice="Default Action"/>
@@ -3328,7 +3811,7 @@
 				</enumVal>
 			</variable>
 	
-		<variable label="Sensor 2 reverse" CV="229" mask="XXXXXXVX"
+		<variable label="Sensor 2 reverse" CV="247" mask="XXXXXXVX"
 				item="Sensor2 rev2">
 			<enumVal>
 				<enumChoice choice="Default Action"/>
@@ -3340,7 +3823,7 @@
 				</enumVal>
 			</variable>
 	
-			<variable label="Sensor 2 reverse" CV="229" mask="XXXXXVXX"
+			<variable label="Sensor 2 reverse" CV="247" mask="XXXXXVXX"
 				item="Sensor2 rev3">
 			<enumVal>
 				<enumChoice choice="Default Action"/>
@@ -3352,7 +3835,7 @@
 				</enumVal>
 			</variable>
 	
-			<variable label="Sensor 2 reverse" CV="229" mask="XXXXVXXX"
+			<variable label="Sensor 2 reverse" CV="247" mask="XXXXVXXX"
 				item="Sensor2 rev4">
 			<enumVal>
 				<enumChoice choice="Default Action"/>
@@ -3364,7 +3847,7 @@
 				</enumVal>
 			</variable>
 	
-			<variable label="Sensor 2 reverse" CV="229" mask="XXXVXXXX"
+			<variable label="Sensor 2 reverse" CV="247" mask="XXXVXXXX"
 				item="Sensor2 rev5">
 			<enumVal>
 				<enumChoice choice="Default Action"/>
@@ -3552,6 +4035,12 @@
 		<display item="F11 (r)1" format="checkbox" layout="left" label="Reverse"/>
 		<display item="F12 forward1" format="checkbox" layout="left" label="F12 Forward"/>
 		<display item="F12 (r)1" format="checkbox" layout="left" label="Reverse"/>
+		<display item="F13 forward1" format="checkbox" layout="left" label="F13 Forward"/>
+		<display item="F13 (r)1" format="checkbox" layout="left" label="Reverse"/>
+		<display item="F14 forward1" format="checkbox" layout="left" label="F14 Forward"/>
+		<display item="F14 (r)1" format="checkbox" layout="left" label="Reverse"/>
+		<display item="F15 forward1" format="checkbox" layout="left" label="F15 Forward"/>
+		<display item="F15 (r)1" format="checkbox" layout="left" label="Reverse"/>
 		<display item="Stop forward1" format="checkbox" layout="left" label="Stop Forward"/>
 		<display item="Stop (r)1" format="checkbox" layout="left" label="Reverse"/>
 		<display item="Running forward1" format="checkbox" layout="left" label="Running Forward"/>
@@ -3568,6 +4057,12 @@
 		<display item="F11 (r)2" format="checkbox" label=""/>
 		<display item="F12 (f)2" format="checkbox" label=""/>
 		<display item="F12 (r)2" format="checkbox" label=""/>
+		<display item="F13 (f)2" format="checkbox" label=""/>
+		<display item="F13 (r)2" format="checkbox" label=""/>
+		<display item="F14 (f)2" format="checkbox" label=""/>
+		<display item="F14 (r)2" format="checkbox" label=""/>
+		<display item="F15 (f)2" format="checkbox" label=""/>
+		<display item="F15 (r)2" format="checkbox" label=""/>
 		<display item="Stop (f)2" format="checkbox" label=""/>
 		<display item="Stop (r)2" format="checkbox" label=""/>
 		<display item="Running (f)2" format="checkbox" label=""/>
@@ -3586,6 +4081,12 @@
 		<display item="F11 (r)3" format="checkbox" label=""/>
 		<display item="F12 (f)3" format="checkbox" label=""/>
 		<display item="F12 (r)3" format="checkbox" label=""/>
+		<display item="F13 (f)3" format="checkbox" label=""/>
+		<display item="F13 (r)3" format="checkbox" label=""/>
+		<display item="F14 (f)3" format="checkbox" label=""/>
+		<display item="F14 (r)3" format="checkbox" label=""/>
+		<display item="F15 (f)3" format="checkbox" label=""/>
+		<display item="F15 (r)3" format="checkbox" label=""/>
 		<display item="Stop (f)3" format="checkbox" label="" />
 		<display item="Stop (r)3" format="checkbox" label=""/>
 		<display item="Running (f)3" format="checkbox" label=""/>
@@ -3605,6 +4106,12 @@
 		<display item="F11 (r)4" format="checkbox" label=""/>
 		<display item="F12 (f)4" format="checkbox" label=""/>
 		<display item="F12 (r)4" format="checkbox" label=""/>
+		<display item="F13 (f)4" format="checkbox" label=""/>
+		<display item="F13 (r)4" format="checkbox" label=""/>
+		<display item="F14 (f)4" format="checkbox" label=""/>
+		<display item="F14 (r)4" format="checkbox" label=""/>
+		<display item="F15 (f)4" format="checkbox" label=""/>
+		<display item="F15 (r)4" format="checkbox" label=""/>
 		<display item="Stop (f)4" format="checkbox" label="" />
 		<display item="Stop (r)4" format="checkbox" label=""/>
 		<display item="Running (f)4" format="checkbox" label=""/>
@@ -3624,6 +4131,12 @@
 		<display item="F11 (r)5" format="checkbox" label=""/>
 		<display item="F12 (f)5" format="checkbox" label=""/>
 		<display item="F12 (r)5" format="checkbox" label=""/>
+		<display item="F13 (f)5" format="checkbox" label=""/>
+		<display item="F13 (r)5" format="checkbox" label=""/>
+		<display item="F14 (f)5" format="checkbox" label=""/>
+		<display item="F14 (r)5" format="checkbox" label=""/>
+		<display item="F15 (f)5" format="checkbox" label=""/>
+		<display item="F15 (r)5" format="checkbox" label=""/>
 		<display item="Stop (f)5" format="checkbox" label="" />
 		<display item="Stop (r)5" format="checkbox" label=""/>
 		<display item="Running (f)5" format="checkbox" label=""/>
@@ -3672,6 +4185,12 @@
 		<display item="Soundkey28" label="Reverse " layout="left"/>
 		<display item="Soundkey29" label="F12 Forward " layout="left"/>
 		<display item="Soundkey30" label="Reverse " layout="left"/>
+		<display item="Soundkey31" label="F13 Forward " layout="left"/>
+		<display item="Soundkey32" label="Reverse " layout="left"/>
+		<display item="Soundkey33" label="F14 Forward " layout="left"/>
+		<display item="Soundkey34" label="Reverse " layout="left"/>
+		<display item="Soundkey35" label="F15 Forward " layout="left"/>
+		<display item="Soundkey36" label="Reverse " layout="left"/>
 			<row>
 			</row>
 			<separator/>
@@ -3684,10 +4203,10 @@
 			</row>
 			<separator/>
 			<separator/>
-		<display item="Soundkey31" label="Sensor 1 Forward" layout="left"/>
-		<display item="Soundkey32" label="Reverse" layout="left"/>
-		<display item="Soundkey33" label="Sensor 2 Forward" layout="left"/>
-		<display item="Soundkey34" label="Reverse" layout="left"/>
+		<display item="Soundkey37" label="Sensor 1 Forward" layout="left"/>
+		<display item="Soundkey38" label="Reverse" layout="left"/>
+		<display item="Soundkey39" label="Sensor 2 Forward" layout="left"/>
+		<display item="Soundkey40" label="Reverse" layout="left"/>
 	</column>
 </pane>
 
@@ -3720,7 +4239,8 @@
 			<label label=" "/>
 			<label label=" "/>
 			<label label=" "/>
-			<label label=" "/><label label="                                                  Range 0 - 127 "/>
+			<label label=" "/>
+			<label label="                                                  Range 0 - 127 "/>
 			<display item="DCstart"/>
 			<display item="DCmax"/>
 			<label label=" "/>
@@ -4040,6 +4560,15 @@
 		<display item="F12(f)1" format="checkbox" layout="left" label="F12 Forward"/>
 		<display item="F12(r)1" format="checkbox" layout="left" label="Reverse"/>
 		
+		<display item="F13(f)1" format="checkbox" layout="left" label="F13 Forward"/>
+		<display item="F13(r)1" format="checkbox" layout="left" label="Reverse"/>
+		
+		<display item="F14(f)1" format="checkbox" layout="left" label="F14 Forward"/>
+		<display item="F14(r)1" format="checkbox" layout="left" label="Reverse"/>
+		
+		<display item="F15(f)1" format="checkbox" layout="left" label="F15 Forward"/>
+		<display item="F15(r)1" format="checkbox" layout="left" label="Reverse"/>
+		
 		<display item="Stop(f)1" format="checkbox" layout="left" label="Stop Forward"/>
 		<display item="Stop(r)1" format="checkbox" layout="left" label=" Reverse"/>
 		
@@ -4059,6 +4588,12 @@
 		<display item="F11(r)2" format="checkbox" label=""/>
 		<display item="F12(f)2" format="checkbox" label=""/>
 		<display item="F12(r)2" format="checkbox" label=""/>
+		<display item="F13(f)2" format="checkbox" label=""/>
+		<display item="F13(r)2" format="checkbox" label=""/>
+		<display item="F14(f)2" format="checkbox" label=""/>
+		<display item="F14(r)2" format="checkbox" label=""/>
+		<display item="F15(f)2" format="checkbox" label=""/>
+		<display item="F15(r)2" format="checkbox" label=""/>
 		<display item="Stop(f)2" format="checkbox" label=""/>
 		<display item="Stop(r)2" format="checkbox" label=""/>
 		<display item="Run(f)2" format="checkbox" label=""/>
@@ -4077,6 +4612,12 @@
 		<display item="F11(r)3" format="checkbox" label=""/>
 		<display item="F12(f)3" format="checkbox" label=""/>
 		<display item="F12(r)3" format="checkbox" label=""/>
+		<display item="F13(f)3" format="checkbox" label=""/>
+		<display item="F13(r)3" format="checkbox" label=""/>
+		<display item="F14(f)3" format="checkbox" label=""/>
+		<display item="F14(r)3" format="checkbox" label=""/>
+		<display item="F15(f)3" format="checkbox" label=""/>
+		<display item="F15(r)3" format="checkbox" label=""/>
 		<display item="Stop(f)3" format="checkbox" label="" />
 		<display item="Stop(r)3" format="checkbox" label=""/>
 		<display item="Run(f)3" format="checkbox" label=""/>
@@ -4096,6 +4637,12 @@
 		<display item="F11(r)4" format="checkbox" label=""/>
 		<display item="F12(f)4" format="checkbox" label=""/>
 		<display item="F12(r)4" format="checkbox" label=""/>
+		<display item="F13(f)4" format="checkbox" label=""/>
+		<display item="F13(r)4" format="checkbox" label=""/>
+		<display item="F14(f)4" format="checkbox" label=""/>
+		<display item="F14(r)4" format="checkbox" label=""/>
+		<display item="F15(f)4" format="checkbox" label=""/>
+		<display item="F15(r)4" format="checkbox" label=""/>
 		<display item="Stop(f)4" format="checkbox" label="" />
 		<display item="Stop(r)4" format="checkbox" label=""/>
 		<display item="Run(f)4" format="checkbox" label=""/>
@@ -4115,6 +4662,12 @@
 		<display item="F11(r)5" format="checkbox" label=""/>
 		<display item="F12(f)5" format="checkbox" label=""/>
 		<display item="F12(r)5" format="checkbox" label=""/>
+		<display item="F13(f)5" format="checkbox" label=""/>
+		<display item="F13(r)5" format="checkbox" label=""/>
+		<display item="F14(f)5" format="checkbox" label=""/>
+		<display item="F14(r)5" format="checkbox" label=""/>
+		<display item="F15(f)5" format="checkbox" label=""/>
+		<display item="F15(r)5" format="checkbox" label=""/>
 		<display item="Stop(f)5" format="checkbox" label="" />
 		<display item="Stop(r)5" format="checkbox" label=""/>
 		<display item="Run(f)5" format="checkbox" label=""/>
@@ -4130,6 +4683,12 @@
 		<display item="F11(r)6" format="checkbox" label=""/>
 		<display item="F12(f)6" format="checkbox" label=""/>
 		<display item="F12(r)6" format="checkbox" label=""/>
+		<display item="F13(f)6" format="checkbox" label=""/>
+		<display item="F13(r)6" format="checkbox" label=""/>
+		<display item="F14(f)6" format="checkbox" label=""/>
+		<display item="F14(r)6" format="checkbox" label=""/>
+		<display item="F15(f)6" format="checkbox" label=""/>
+		<display item="F15(r)6" format="checkbox" label=""/>
 		<display item="Stop(f)6" format="checkbox" label="" />
 		<display item="Stop(r)6" format="checkbox" label=""/>
 		<display item="Run(f)6" format="checkbox" label=""/>
@@ -4149,6 +4708,12 @@
 		<display item="Stop(r)7" format="checkbox" label=""/>
 		<display item="Run(f)7" format="checkbox" label=""/>
 		<display item="Run(r)7" format="checkbox" label=""/>
+		<display item="F13(f)7" format="checkbox" label=""/>
+		<display item="F13(r)7" format="checkbox" label=""/>
+		<display item="F14(f)7" format="checkbox" label=""/>
+		<display item="F14(r)7" format="checkbox" label=""/>
+		<display item="F15(f)7" format="checkbox" label=""/>
+		<display item="F15(r)7" format="checkbox" label=""/>
 		<display item="Sensor1(f)7" format="checkbox" label=""/>
 		<display item="Sensor1(r)7" format="checkbox" label=""/>
 		<display item="Sensor2(f)7" format="checkbox" label=""/>
@@ -4160,6 +4725,12 @@
 		<display item="F11(r)8" format="checkbox" label=""/>
 		<display item="F12(f)8" format="checkbox" label=""/>
 		<display item="F12(r)8" format="checkbox" label=""/>
+		<display item="F13(f)8" format="checkbox" label=""/>
+		<display item="F13(r)8" format="checkbox" label=""/>
+		<display item="F14(f)8" format="checkbox" label=""/>
+		<display item="F14(r)8" format="checkbox" label=""/>
+		<display item="F15(f)8" format="checkbox" label=""/>
+		<display item="F15(r)8" format="checkbox" label=""/>
 		<display item="Stop(f)8" format="checkbox" label="" />
 		<display item="Stop(r)8" format="checkbox" label=""/>
 		<display item="Run(f)8" format="checkbox" label=""/>
@@ -4188,7 +4759,6 @@
 	<column>		
 		<display item="F0(f) Bright"  layout="below"  />
 	</column>
-	
 	<column>	
 		<display item="F0(r) Bright"  layout="below" /> 
 	</column>
