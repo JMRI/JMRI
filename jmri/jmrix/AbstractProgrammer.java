@@ -12,7 +12,7 @@ import java.util.Vector;
  * Common implementations for the Programmer interface.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public abstract class AbstractProgrammer implements Programmer {
 
@@ -79,7 +79,8 @@ public abstract class AbstractProgrammer implements Programmer {
     /**
      * Internal routine to handle timer starts & restarts
      */
-    protected void restartTimer(int delay) {
+    protected synchronized void restartTimer(int delay) {
+        if (log.isDebugEnabled()) log.debug("restart timer with delay "+delay);
         if (timer==null) {
             timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent e) {
