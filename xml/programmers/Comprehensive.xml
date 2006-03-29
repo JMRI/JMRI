@@ -2,7 +2,7 @@
 <!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
 
 <programmer-config>
-<!-- $Id: Comprehensive.xml,v 1.14 2006-01-14 01:27:33 jacobsen Exp $ -->
+<!-- $Id: Comprehensive.xml,v 1.15 2006-03-29 19:05:56 jacobsen Exp $ -->
 		<version author="Howard G. Penny"
 					version="11" lastUpdated="20050713"/>
 
@@ -442,8 +442,22 @@
 				tooltip="Determines whether the function will respond to the consist address" />
 			<display item="Consist Address Active For F9"
 				tooltip="Determines whether the function will respond to the consist address" />
+
+            <!-- the next two are special for certain sound decoders, generally wont appear -->
+			<display item="Consist Address Active For F9 in Forward"
+				tooltip="Determines whether the function will respond to the consist address" />
+			<display item="Consist Address Active For F9 in Reverse"
+				tooltip="Determines whether the function will respond to the consist address" />
+
 			<display item="Consist Address Active For F10"
 				tooltip="Determines whether the function will respond to the consist address" />
+
+            <!-- the next two are special for certain sound decoders, generally wont appear -->
+			<display item="Consist Address Active For F10 in Forward"
+				tooltip="Determines whether the function will respond to the consist address" />
+			<display item="Consist Address Active For F10 in Reverse"
+				tooltip="Determines whether the function will respond to the consist address" />
+
 			<display item="Consist Address Active For F11"
 				tooltip="Determines whether the function will respond to the consist address" />
 			<display item="Consist Address Active For F12"
