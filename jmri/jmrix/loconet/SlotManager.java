@@ -33,7 +33,7 @@ import java.util.Vector;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.34 $
+ * @version     $Revision: 1.35 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
@@ -289,7 +289,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                     // 'not implemented' (op on main)
                     // but BDL16 and other devices can eventually reply, so
                     // move to commandExecuting state
-                    if (_progRead || _progConfirm)
+                    log.debug("LACK accepted, next state 2");
+                    if ( (_progRead || _progConfirm) && mServiceMode)
                         startLongTimer();
                     else
                         startShortTimer();
@@ -584,9 +585,10 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * Internal routine to handle a timeout
      */
     synchronized protected void timeout() {
+        if (log.isDebugEnabled()) log.debug("timeout fires in state "+progState);
         if (progState != 0) {
             // we're programming, time to stop
-            if (log.isDebugEnabled()) log.debug("timeout!");
+            if (log.isDebugEnabled()) log.debug("timeout while programming");
             // perhaps no communications present? Fail back to end of programming
             progState = 0;
             // and send the notification; error code depends on state
