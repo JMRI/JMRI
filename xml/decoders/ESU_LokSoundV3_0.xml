@@ -2,7 +2,7 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: ESU_LokSoundV3_0.xml,v 1.3 2006-01-03 18:44:12 jacobsen Exp $ -->
+<!-- $Id: ESU_LokSoundV3_0.xml,v 1.4 2006-03-29 19:08:45 jacobsen Exp $ -->
 <decoder-config>
 		<version author="nac@erwbant.freeserve.co.uk"
 			version="1" lastUpdated="20050118"/>
@@ -69,12 +69,6 @@
 			item="Manufacturer">
 			<decVal/>
 		</variable>
-		<variable label="Manufacturer ID - Reset" CV="8" default="0" readOnly="no" mask="XXXXVXXX">
-			<enumVal>
-				<enumChoice choice="off"/>
-				<enumChoice choice="on"/>
-				</enumVal>
-				</variable>
 
 		<variable label="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV">
 			<enumVal>
@@ -3287,6 +3281,10 @@
 
 		</variables>
 
+  <resets>
+  	<factReset label="Reset All CVs" CV="8" default="8"/>
+  </resets>
+
 </decoder>
 
 
@@ -3597,29 +3595,16 @@
 
 <pane name="ESU Extra">
 		<column>
-			<display item="Manufacturer ID - Reset" format="checkbox" 
-			label="Trigger Decoder Reset to Factory values"/>
-			<label label=" "/>
-			<separator/>
-			<label label=" "/>
-			<label label=" "/>
-			<display item="Automatic Speed Step Detection" format="checkbox" layout="left" />
+			<display item="Automatic Speed Step Detection"/>
 			<label label=" "/>				
-			<display item="Marklin delta Mode"	format="checkbox" label="Marklin delta Mode off/on" 
-			layout="left"/>			
-			<display item="Marklin second address" format="checkbox" label="Marklin second address off/on" 
-			layout="left"/>			
+			<display item="Marklin delta Mode"/>			
+			<display item="Marklin second address"/>			
 			<label label=" "/>
-			<display item="EMF Static Config"
-			tooltip="EMF Static Config" />
+			<display item="LGB function button mode"/>
 			<label label=" "/>
-			<display item="LGB function button mode" format="checkbox" label="LGB function button mode off/on"
-			 layout="left"/>
+			<display item="Zimo manual function"/>
 			<label label=" "/>
-			<display item="Zimo manual function" format="checkbox" label="Zimo manual function off/on" 
-			layout="left"/>
-			<label label=" "/>
-			<display item="Brakemode" layout="left"/>
+			<display item="Brakemode"/>
 		</column>
 				
 		<column>
