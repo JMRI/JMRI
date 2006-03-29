@@ -2,7 +2,7 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: ESU_LokSoundV3_5.xml,v 1.2 2006-03-29 19:50:48 jacobsen Exp $ -->
+<!-- $Id: ESU_LokSoundV3_5.xml,v 1.3 2006-03-29 19:53:29 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen rgj1927@pacbell.net"
 			version="1" lastUpdated="20060329"/>
@@ -14,7 +14,7 @@
 	   lowVersionID="59" highVersionID="59">
 		
 		<model model="LokSound Version 3.5" 
-		        numOuts="4" numFns="12" maxMotorCurrent="1.1A">
+		        numOuts="4" numFns="12" maxMotorCurrent="1.1A" extFnsNmraF13="yes">
 		    <output name="1" label="Front lights" maxcurrent="250mA"/>
      	    <output name="2" label="Rear lights" maxcurrent="250mA"/>
      	    <output name="3" label="AUX 1" maxcurrent="250mA"/>
@@ -23,7 +23,7 @@
 	  	</model>
 	  	
 		<model model="LokSoundXL Version 3.5"
-    	        numOuts="8" numFns="12" maxMotorCurrent="3.0A">
+    	        numOuts="8" numFns="12" maxMotorCurrent="3.0A" extFnsNmraF13="yes">
 		    <output name="1" label="Front lights" maxcurrent="600mA"/>
      	    <output name="2" label="Rear lights" maxcurrent="600mA"/>
      	    <output name="3" label="AUX 1" maxcurrent="600mA"/>
