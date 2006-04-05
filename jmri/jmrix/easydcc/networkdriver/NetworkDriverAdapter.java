@@ -24,7 +24,7 @@ import javax.comm.SerialPort;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class NetworkDriverAdapter extends EasyDccPortController {
 
@@ -43,6 +43,11 @@ public class NetworkDriverAdapter extends EasyDccPortController {
         jmri.InstanceManager.setPowerManager(new jmri.jmrix.easydcc.EasyDccPowerManager());
 
         jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.easydcc.EasyDccTurnoutManager());
+
+        // Create an instance of the consist manager.  Make sure this
+        // happens AFTER the programmer manager to override the default   
+        // consist manager.
+        jmri.InstanceManager.setConsistManager(new jmri.jmrix.easydcc.EasyDccConsistManager());
 
         jmri.jmrix.easydcc.ActiveFlag.setActive();
     }

@@ -26,7 +26,7 @@ import javax.comm.SerialPort;
  * not use any other options at configuration time.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 public class SerialDriverAdapter extends EasyDccPortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -133,7 +133,12 @@ public class SerialDriverAdapter extends EasyDccPortController  implements jmri.
 
 		// KSL 20040409 - Create an instance of EasyDccThrottleManager 
 		jmri.InstanceManager.setThrottleManager(new jmri.jmrix.easydcc.EasyDccThrottleManager());
-        
+
+        // Create an instance of the consist manager.  Make sure this 
+        // happens AFTER the programmer manager to override the default 
+        // consist manager. 
+        jmri.InstanceManager.setConsistManager(new jmri.jmrix.easydcc.EasyDccConsistManager());
+
         jmri.jmrix.easydcc.ActiveFlag.setActive();
     }
 

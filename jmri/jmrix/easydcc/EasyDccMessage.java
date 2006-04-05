@@ -10,7 +10,7 @@ package jmri.jmrix.easydcc;
  * class handles the response from the command station.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2004
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -55,6 +55,95 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
         EasyDccMessage m = new EasyDccMessage(1);
         m.setBinary(false);
         m.setOpCode('K');
+        return m;
+    }
+
+    /* 
+     * get a static message to add a locomotive to a Standard Consist 
+     * in the normal direction
+     * @param ConsistAddress - a consist address in the range 1-255
+     * @param LocoAddress - a jmri.DccLocoAddress object representing the 
+     * locomotive to add
+     * @return an EasyDccMessage of the form GN cc llll 
+     */
+    static public EasyDccMessage getAddConsistNormal(int ConsistAddress,jmri.DccLocoAddress LocoAddress) {
+        EasyDccMessage m = new EasyDccMessage(10);
+        m.setBinary(false);
+        m.setOpCode('G');
+        m.setElement(1,'N');
+        m.setElement(2,' ');
+        m.addIntAsTwoHex(ConsistAddress, 3);
+        m.setElement(5,' ');
+        m.addIntAsFourHex(LocoAddress.getNumber(), 6);
+        return m;
+    }
+
+    /* 
+     * get a static message to add a locomotive to a standard consist in 
+     * the reverse direction
+     * @param ConsistAddress - a consist address in the range 1-255
+     * @param LocoAddress - a jmri.DccLocoAddress object representing the 
+     * locomotive to add
+     * @return an EasyDccMessage of the form GS cc llll 
+     */
+    static public EasyDccMessage getAddConsistReverse(int ConsistAddress,jmri.DccLocoAddress LocoAddress) {
+        EasyDccMessage m = new EasyDccMessage(10);
+        m.setBinary(false);
+        m.setOpCode('G');
+        m.setElement(1,'R');
+        m.setElement(2,' ');
+        m.addIntAsTwoHex(ConsistAddress, 3);
+        m.setElement(5,' ');
+        m.addIntAsFourHex(LocoAddress.getNumber(), 6);
+        return m;
+    }
+
+    /* 
+     * get a static message to subtract a locomotive from a Standard Consist
+     * @param ConsistAddress - a consist address in the range 1-255
+     * @param LocoAddress - a jmri.DccLocoAddress object representing the 
+     * locomotive to remove
+     * @return an EasyDccMessage of the form GS cc llll 
+     */
+    static public EasyDccMessage getSubtractConsist(int ConsistAddress,jmri.DccLocoAddress LocoAddress) {
+        EasyDccMessage m = new EasyDccMessage(10);
+        m.setBinary(false);
+        m.setOpCode('G');
+        m.setElement(1,'S');
+        m.setElement(2,' ');
+        m.addIntAsTwoHex(ConsistAddress, 3);
+        m.setElement(5,' ');
+        m.addIntAsFourHex(LocoAddress.getNumber(), 6);
+        return m;
+    }
+
+    /* 
+     * get a static message to delete a standard consist
+     * @param ConsistAddress - a consist address in the range 1-255
+     * @return an EasyDccMessage of the form GK cc 
+     */
+    static public EasyDccMessage getKillConsist(int ConsistAddress) {
+        EasyDccMessage m = new EasyDccMessage(5);
+        m.setBinary(false);
+        m.setOpCode('G');
+        m.setElement(1,'K');
+        m.setElement(2,' ');
+        m.addIntAsTwoHex(ConsistAddress, 3);
+        return m;
+    }
+
+    /* 
+     * get a static message to display a standard consist
+     * @param ConsistAddress - a consist address in the range 1-255
+     * @return an EasyDccMessage of the form GD cc 
+     */
+    static public EasyDccMessage getDisplayConsist(int ConsistAddress) {
+        EasyDccMessage m = new EasyDccMessage(5);
+        m.setBinary(false);
+        m.setOpCode('G');
+        m.setElement(1,'D');
+        m.setElement(2,' ');
+        m.addIntAsTwoHex(ConsistAddress, 3);
         return m;
     }
 
