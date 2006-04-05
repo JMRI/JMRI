@@ -32,7 +32,7 @@ import javax.swing.JOptionPane;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -469,8 +469,8 @@ public class LightTableAction extends AbstractTableAction {
         // Create the new Light
         g = InstanceManager.lightManagerInstance().newLight(sName,uName);
         if (g==null) {
-            // should never get here
-            log.error("Unknown failure to create Light with System Name: "+sName);
+            // should never get here unless there is an assignment conflict
+            log.error("Failure to create Light with System Name: "+sName);
             return;
         }
         // Get control information 
@@ -630,11 +630,18 @@ public class LightTableAction extends AbstractTableAction {
             g.setControlType(Light.SENSOR_CONTROL);
             // Get sensor control information
             String sensorSystemName = field1a.getText();
-            Sensor s = InstanceManager.sensorManagerInstance().
+			Sensor s = null;
+			if (sensorSystemName.length() < 3) {
+				// no sensor system name entered
+				
+			}
+			else {
+				s = InstanceManager.sensorManagerInstance().
                             provideSensor(sensorSystemName);
-			if (s!=null) {
-				// update sensor system name in case it changed
-				sensorSystemName = s.getSystemName();
+				if (s!=null) {
+					// update sensor system name in case it changed
+					sensorSystemName = s.getSystemName();
+				}
 			}
             int sState = Sensor.ACTIVE;
             if ( stateBox.getSelectedItem().equals(rbean.getString
@@ -736,27 +743,32 @@ public class LightTableAction extends AbstractTableAction {
             g.setControlType(Light.TURNOUT_STATUS_CONTROL);
             // Get turnout control information
             String turnoutSystemName = field1c.getText().toUpperCase();
-            // Ensure that this Turnout is not already a Light
-			if (turnoutSystemName.charAt(1)=='T') {
-				// must be a standard format name (not just a number)
-				String testSN = turnoutSystemName.substring(0,1)+"L"+
-						turnoutSystemName.substring(2,turnoutSystemName.length());
-				Light testLight = InstanceManager.lightManagerInstance().
-                                        getBySystemName(testSN);
-				if (testLight != null) {
-					// Requested turnout bit is already assigned to a Light
-					status2.setText( rb.getString("LightWarn3")+" "+testSN+"." );
-					error = true;
-				}
+			if (turnoutSystemName.length() < 3) {
+				// valid turnout system name was not entered
 			}
-            if (!error) {
-                // Requested turnout bit is not assigned to a Light
-                t = InstanceManager.turnoutManagerInstance().
+			else {
+				// Ensure that this Turnout is not already a Light
+				if (turnoutSystemName.charAt(1)=='T') {
+					// must be a standard format name (not just a number)
+					String testSN = turnoutSystemName.substring(0,1)+"L"+
+						turnoutSystemName.substring(2,turnoutSystemName.length());
+					Light testLight = InstanceManager.lightManagerInstance().
+                                        getBySystemName(testSN);
+					if (testLight != null) {
+						// Requested turnout bit is already assigned to a Light
+						status2.setText( rb.getString("LightWarn3")+" "+testSN+"." );
+						error = true;
+					}
+				}
+				if (!error) {
+					// Requested turnout bit is not assigned to a Light
+					t = InstanceManager.turnoutManagerInstance().
                                     provideTurnout(turnoutSystemName);
-            }
-			if (t!=null) {
-				// update turnout system name in case it changed
-				turnoutSystemName = t.getSystemName();
+					if (t!=null) {
+						// update turnout system name in case it changed
+						turnoutSystemName = t.getSystemName();
+					}
+				}
 			}
             // Initialize the requested Turnout State
             int tState = Turnout.CLOSED;
@@ -779,12 +791,18 @@ public class LightTableAction extends AbstractTableAction {
             // Set type of control
             g.setControlType(Light.TIMED_ON_CONTROL);
             // Get trigger sensor control information
-            String triggerSensorSystemName = field1d.getText();
-            Sensor s = InstanceManager.sensorManagerInstance().
+			Sensor s = null;          
+			String triggerSensorSystemName = field1d.getText();
+			if (triggerSensorSystemName.length() < 3) {
+				// Trigger sensor not entered, or invalidly entered
+			}
+			else {
+				s = InstanceManager.sensorManagerInstance().
                             provideSensor(triggerSensorSystemName);
-			if (s!=null) {
-				// update sensor system name in case it changed
-				triggerSensorSystemName = s.getSystemName();
+				if (s!=null) {
+					// update sensor system name in case it changed
+					triggerSensorSystemName = s.getSystemName();
+				}
 			}
             g.setControlTimedOnSensor(triggerSensorSystemName);
 			int dur = 0;       
