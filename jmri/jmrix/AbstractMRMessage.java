@@ -8,7 +8,7 @@ package jmri.jmrix;
  * Carries a sequence of characters, with accessors.
  *
  * @author	        Bob Jacobsen  Copyright (C) 2003
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 abstract public class AbstractMRMessage {
 
@@ -133,6 +133,19 @@ abstract public class AbstractMRMessage {
         setElement(offset,s.charAt(0));
         setElement(offset+1,s.charAt(1));
         setElement(offset+2,s.charAt(2));
+        return;
+    }
+
+    public void addIntAsFourHex(int val, int offset) {
+        String s = (""+Integer.toHexString(val)).toUpperCase();
+        if (s.length() > 4) log.error("can't add as three hex digits: "+s);
+        if (s.length() != 4) s = "0"+s;
+        if (s.length() != 4) s = "0"+s;
+        if (s.length() != 4) s = "0"+s;
+        setElement(offset,s.charAt(0));
+        setElement(offset+1,s.charAt(1));
+        setElement(offset+2,s.charAt(2));
+        setElement(offset+3,s.charAt(3));
         return;
     }
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractMRMessage.class.getName());
