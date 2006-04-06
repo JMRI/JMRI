@@ -13,9 +13,15 @@ import jmri.NmraPacket;
  *  it should be the only object that is sending messages for this turnout;
  *  more than one Turnout object pointing to a single device is not allowed.
  *
+ *  Turnouts may be controlled by one or two output bits.  If a turnout is 
+ *  controlled by two output bits, the output bits must be on the same node,
+ *  the address must point to the first output bit, and the second output bit
+ *  must follow the output bit in the address.  Valid states for the two bits
+ *  controlling the two-bit turnout are:  ON OFF, and OFF ON for the two bits.
+ *
  * Description:		extend jmri.AbstractTurnout for C/MRI serial layouts
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SerialTurnout extends AbstractTurnout {
 
@@ -72,7 +78,13 @@ public class SerialTurnout extends AbstractTurnout {
             // node does not exist, ignore call
             return;
         }
-        tNode.setOutputBit(tBit, closed);
+		if (getNumberOutputBits() == 1) {
+			tNode.setOutputBit(tBit, closed);
+		} 
+		else if (getNumberOutputBits() == 2) {
+			tNode.setOutputBit(tBit,closed);
+			tNode.setOutputBit(tBit+1,!closed);
+		}
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTurnout.class.getName());

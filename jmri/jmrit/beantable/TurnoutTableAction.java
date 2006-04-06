@@ -42,7 +42,7 @@ import javax.swing.event.ChangeListener;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004
- * @version     $Revision: 1.30 $
+ * @version     $Revision: 1.31 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -526,7 +526,18 @@ public class TurnoutTableAction extends AbstractTableAction {
                 }
             }
         }
-        InstanceManager.turnoutManagerInstance().newTurnout(sName, user);
+		// Ask about two bit turnout control if appropriate
+		int iNum;
+		iNum = InstanceManager.turnoutManagerInstance().askNumControlBits(sName);
+		if (iNum==0) {
+			// User specified more bits, but bits are not available - return without creating
+			return;
+		}
+		else {
+			// Create the new turnout
+			Turnout t = InstanceManager.turnoutManagerInstance().newTurnout(sName, user);
+			if (t!=null)  t.setNumberOutputBits(iNum);
+		}
     }
     private boolean noWarn = false;
 

@@ -7,7 +7,7 @@ package jmri;
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  */
 public abstract class AbstractTurnoutManager extends AbstractManager
     implements TurnoutManager {
@@ -77,9 +77,10 @@ public abstract class AbstractTurnoutManager extends AbstractManager
 
         // doesn't exist, make a new one
         s = createNewTurnout(systemName, userName);
-
-        // save in the maps
-        register(s);
+		if (s != null) {
+			// save in the maps if successful
+			register(s);
+		}
 
         return s;
     }
@@ -97,6 +98,19 @@ public abstract class AbstractTurnoutManager extends AbstractManager
 	 * to represent the Turnout.THROWN state.
 	 */
 	public String getThrownText() { return rbt.getString("TurnoutStateThrown"); };
+	
+	/**
+	 * Get from the user, the number of addressed bits used to control a turnout. 
+	 * Normally this is 1, and the default routine returns 1 automatically.  
+	 * Turnout Managers for systems that can handle multiple control bits 
+	 * should override this method with one which asks the user to specify the
+	 * number of control bits.
+	 * If the user specifies more than one control bit, this method should 
+	 * check if the additional bits are available (not assigned to another object).
+	 * If the bits are not available, this method should return 0 for number of 
+	 * control bits, after informing the user of the problem.
+	 */
+	 public int askNumControlBits(String systemName) {return 1; };
 
     /**
      * Internal method to invoke the factory, after all the

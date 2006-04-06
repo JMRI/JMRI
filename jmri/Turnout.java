@@ -24,7 +24,7 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  * @see         jmri.AbstractTurnout
  * @see         jmri.TurnoutManager
  * @see         jmri.InstanceManager
@@ -219,6 +219,20 @@ public interface Turnout extends NamedBean {
 	 *    turnout state is set to UNKNOWN.
      */
     public void setInitialKnownStateFromFeedback();
+    
+    /**
+     * Get number of output bits.
+     *<P>
+     * Currently must be one or two.
+     */
+    public int getNumberOutputBits();    
+    
+    /**
+     * Get number of output bits.
+     *<P>
+     * Currently must be one or two.
+     */
+    public void setNumberOutputBits(int num);    
     
 }
 

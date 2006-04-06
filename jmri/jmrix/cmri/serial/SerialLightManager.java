@@ -13,7 +13,7 @@ import jmri.Light;
  * Based in part on SerialTurnoutManager.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SerialLightManager extends AbstractLightManager {
 
@@ -36,6 +36,22 @@ public class SerialLightManager extends AbstractLightManager {
      */
     public Light createNewLight(String systemName, String userName) {
         Light lgt = null;
+		// check if the output bit is available
+		int nAddress = -1;
+		nAddress = SerialAddress.getNodeAddressFromSystemName(systemName);
+		if (nAddress == -1) return (null);
+		int bitNum = SerialAddress.getBitFromSystemName(systemName);
+		if (bitNum == 0) return (null);
+		String conflict = "";
+		conflict = SerialAddress.isOutputBitFree(nAddress,bitNum);
+		if ( conflict != "" ) {
+			log.error("Assignment conflict with "+conflict+".  Light not created.");
+			javax.swing.JOptionPane.showMessageDialog(null,"The output bit, "+bitNum+
+					", is currently assigned to "+conflict+". Light cannot be created as "+
+						"you specified.","C/MRI Assignment Conflict",
+							javax.swing.JOptionPane.INFORMATION_MESSAGE,null);
+			return (null);
+		}
         // Validate the systemName
         if ( SerialAddress.validSystemNameFormat(systemName,'L') ) {
             lgt = new SerialLight(systemName,userName); 

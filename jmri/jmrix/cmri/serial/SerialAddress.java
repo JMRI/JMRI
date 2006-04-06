@@ -22,8 +22,8 @@ package jmri.jmrix.cmri.serial;
  *      examples: CT0B2 (node address 0, bit 2), CS1B3 (node address 1, bit 3), 
  *              CL11B234 (node address 11, bit234)
  * <P>
- * @author	Dave Duchamp, Copyright (C) 2004
- * @version     $Revision: 1.1 $
+ * @author	Dave Duchamp, Copyright (C) 2004 - 2006
+ * @version     $Revision: 1.2 $
  */
 public class SerialAddress {
 
@@ -31,16 +31,17 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to parse a C/MRI system name and return the Serial Node
-     *  Note:  Returns 'NULL' if illegal systemName format or if the node is not found
+     * Public static method to parse a C/MRI system name and return the Serial Node Address
+     *  Note:  Returns '-1' if illegal systemName format or if the node is not found.
+	 *         Nodes are numbered from 0 - 127.
      */
-    public static SerialNode getNodeFromSystemName(String systemName) {
+    public static int getNodeAddressFromSystemName(String systemName) {
         // validate the system Name leader characters
         if ( (systemName.charAt(0) != 'C') || ( (systemName.charAt(1) != 'L') &&
                 (systemName.charAt(1) != 'S') && (systemName.charAt(1) != 'T') ) ) {
             // here if an illegal format 
             log.error("illegal character in header field of system name: "+systemName);
-            return (null);
+            return (-1);
         }
         String s = "";
         boolean noB = true;
@@ -59,13 +60,13 @@ public class SerialAddress {
             }
             else {
                 log.error("invalid CMRI system name: "+systemName);
-                return (null);
+                return (-1);
             }
         }
         else {
             if (s.length()==0) {
                 log.error("no node address before 'B' in CMRI system name: "+systemName);
-                return (null);
+                return (-1);
             }
             else {
                 try {
@@ -73,10 +74,26 @@ public class SerialAddress {
                 }
                 catch (Exception e) {
                     log.error("illegal character in CMRI system name: "+systemName);
-                    return (null);
+                    return (-1);
                 }
             }
         }
+		
+		return (ua);
+	}
+
+    /**
+     * Public static method to parse a C/MRI system name and return the Serial Node
+     *  Note:  Returns 'null' if illegal systemName format or if the node is not found
+     */
+    public static SerialNode getNodeFromSystemName(String systemName) {
+		// get the node address
+		int ua;
+		ua = getNodeAddressFromSystemName(systemName);
+		if (ua == -1) 
+			// error messages have already been issued by getNodeAddressFromSystemName
+			return null;
+
         return (SerialTrafficController.instance().getNodeFromAddress(ua));
     }
     
@@ -344,6 +361,109 @@ public class SerialAddress {
         }        
         return nName;
     }
+        
+    /**
+     * Public static method to construct a C/MRI system name from type character, 
+	 *		node address, and bit number
+     * <P>
+     * This routine returns a system name in the CLnnnxxx, CTnnnxxx, or CSnnnxxx
+     *      format depending on the type character.  The returned name is normalized.
+     * <P>
+     * If the supplied character is not valid, or the node address is out of the 0 - 127 
+	 *		range, or the bit number is out of the 1 - 999 range, an error message is
+	 *      logged and the null string "" is returned.
+	 */
+    public static String makeSystemName(String type,int nAddress, int bitNum) {
+		String nName = "";
+		// check the type character
+        if ( (type != "S") && (type != "L") && (type != "T") ) {
+            // here if an illegal type character 
+            log.error("illegal type character proposed for system name");
+            return (nName);
+        }
+		// check the node address
+        if ( (nAddress < 0) || (nAddress > 127) ) {
+            // here if an illegal node address 
+            log.error("illegal node adddress proposed for system name");
+            return (nName);
+        }
+		// check the bit number
+        if ( (bitNum < 1) || (bitNum > 999) ) {
+            // here if an illegal bit number 
+            log.error("illegal bit number proposed for system name");
+            return (nName);
+        }
+		// construct the address
+		nName = "C"+type+Integer.toString((nAddress*1000)+bitNum);
+		return (nName);
+	}
+
+    /**
+     * Public static method to test if a C/MRI output bit is free for assignment 
+     *   Returns "" (null string) if the specified output bit is free for assignment,
+     *      else returns the system name of the conflicting assignment.
+	 *   Test is not performed if the node address or bit number are illegal.
+     */
+    public static String isOutputBitFree(int nAddress,int bitNum) {
+		// check the node address
+        if ( (nAddress < 0) || (nAddress > 127) ) {
+            // here if an illegal node address 
+            log.error("illegal node adddress in free bit test");
+            return ("");
+        }
+		// check the bit number
+        if ( (bitNum < 1) || (bitNum > 999) ) {
+            // here if an illegal bit number 
+            log.error("illegal bit number in free bit test");
+            return ("");
+        }
+		
+		// check for a turnout using the bit
+		jmri.Turnout t = null;
+		String	sysName = "";
+		sysName = makeSystemName("T",nAddress,bitNum);
+		t = jmri.InstanceManager.turnoutManagerInstance().getBySystemName(sysName);
+		if (t!=null) return (sysName);
+		String  altName = "";
+		altName = convertSystemNameToAlternate(sysName);
+		t = jmri.InstanceManager.turnoutManagerInstance().getBySystemName(altName);
+		if (t!=null) return (altName);
+		
+		// check for a two-bit turnout assigned to the previous bit
+		if (bitNum > 1) {
+			sysName = makeSystemName("T",nAddress,bitNum-1);
+			t = jmri.InstanceManager.turnoutManagerInstance().getBySystemName(sysName);
+			if (t!=null) {
+				if (t.getNumberOutputBits() == 2) {
+					// bit is second bit for this Turnout
+					return (sysName);
+				}
+			}
+			else {
+				// try alternate addressing
+				altName = convertSystemNameToAlternate(sysName);
+				t = jmri.InstanceManager.turnoutManagerInstance().getBySystemName(altName);
+				if (t!=null) {
+					if (t.getNumberOutputBits() == 2) {
+						// bit is second bit for this Turnout
+						return (altName);
+					}
+				}
+			}
+		}
+		
+		// check for a light using the bit
+		jmri.Light lgt = null;
+		sysName = makeSystemName("L",nAddress,bitNum);
+		lgt = jmri.InstanceManager.lightManagerInstance().getBySystemName(sysName);
+		if (lgt!=null) return (sysName);
+		altName = convertSystemNameToAlternate(sysName);
+		lgt = jmri.InstanceManager.lightManagerInstance().getBySystemName(altName);
+		if (lgt!=null) return (altName);
+		
+		// not assigned to a turnout or a light
+		return("");
+	}
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialAddress.class.getName());
 }

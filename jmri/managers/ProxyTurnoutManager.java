@@ -17,7 +17,7 @@ import jmri.TurnoutOperationManager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class ProxyTurnoutManager extends AbstractProxyManager implements TurnoutManager {
 
@@ -188,6 +188,43 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
 		else 
 			return rbt.getString("TurnoutStateThrown");
 	}
+
+	/**
+	 * Get from the user, the number of addressed bits used to control a turnout. 
+	 * Normally this is 1, and the default routine returns 1 automatically.  
+	 * Turnout Managers for systems that can handle multiple control bits 
+	 * should override this method with one which asks the user to specify the
+	 * number of control bits.
+	 * If the user specifies more than one control bit, this method should 
+	 * check if the additional bits are available (not assigned to another object).
+	 * If the bits are not available, this method should return 0 for number of 
+	 * control bits, after informing the user of the problem.
+	 */
+	 public int askNumControlBits(String sysName) {
+        // if the systemName is specified, find that system
+		String systemName = sysName.toUpperCase();
+        if (systemName != null) {
+            for (int i=0; i<mgrs.size(); i++) {
+                if ( ( (TurnoutManager)mgrs.get(i)).systemLetter() == systemName.charAt(0) )
+                    return ((TurnoutManager)mgrs.get(i)).askNumControlBits(systemName);
+            }
+            // did not find a manager, allow it to default to the primary, if there is one
+            log.debug("Did not find manager for system name "+systemName+", assume it's a number");
+			if (mgrs.size()>0) {
+				return ((TurnoutManager)mgrs.get(0)).askNumControlBits(systemName);
+			} else {
+				log.debug("Did not find a primary turnout manager for system name "+systemName);
+				return (1);
+			}
+        } else {  // no systemName specified, use primary, if there is one
+      		if (mgrs.size()>0) {
+				return ((TurnoutManager)mgrs.get(0)).askNumControlBits(systemName);
+			} else {
+				log.debug("Did not find a primary turnout manager");
+				return (1);
+			}
+        }
+    }
 
 	/**
 	 * TurnoutOperation support. Return a list which is just the concatenation of

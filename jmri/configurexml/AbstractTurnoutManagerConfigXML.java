@@ -24,7 +24,7 @@ import org.jdom.Attribute;
  * specific Turnout or AbstractTurnout subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
 
@@ -66,7 +66,11 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
                 if (s!=null) elem.addAttribute("sensor1", s.getSystemName());
                 s = t.getSecondSensor();
                 if (s!=null) elem.addAttribute("sensor2", s.getSystemName());
-                
+				
+				// include number of control bits, if different from one
+				int iNum = t.getNumberOutputBits();
+				if (iNum!=1) elem.addAttribute("numBits",""+iNum);
+
                 // add operation stuff
                 String opstr = null;
                 TurnoutOperation op = t.getTurnoutOperation();
@@ -158,6 +162,23 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
                 Sensor s = InstanceManager.sensorManagerInstance().provideSensor(a.getValue());
                 t.provideSecondFeedbackSensor(s);
             }
+			
+			// number of bits, if present - if not, defaults to 1
+			a = ((Element)(turnoutList.get(i))).getAttribute("numBits");
+			if (a==null) {
+				t.setNumberOutputBits(1);
+			}
+			else {
+				int iNum = Integer.parseInt(a.getValue());
+				if ( (iNum==1) || (iNum==2) ) {
+					t.setNumberOutputBits(iNum);
+				}
+				else {
+					log.warn("illegal number of output bits for control of turnout "+sysName);
+					t.setNumberOutputBits(1);
+				}
+			}
+			
             // operation stuff
             List myOpList = ((Element)turnoutList.get(i)).getChildren();
             if (myOpList.size()>0) {

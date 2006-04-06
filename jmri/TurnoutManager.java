@@ -27,7 +27,7 @@ import com.sun.java.util.collections.List;
  * class, which provides a simple GUI for controlling a single turnout.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  * @see             jmri.Turnout
  * @see             jmri.AbstractTurnoutManager
  * @see             jmri.InstanceManager
@@ -119,6 +119,19 @@ public interface TurnoutManager extends Manager {
 	  * of this system
 	  */
 	 public String[] getValidOperationTypes();
+	
+	/**
+	 * Get from the user, the number of addressed bits used to control a turnout. 
+	 * Normally this is 1, and the default routine returns one automatically.  
+	 * Turnout Managers for systems that can handle multiple control bits 
+	 * should override this method with one which asks the user to specify the
+	 * number of control bits.
+	 * If the user specifies more than one control bit, this method should 
+	 * check if the additional bits are available (not assigned to another object).
+	 * If the bits are not available, this method should return 0 for number of 
+	 * control bits, after informing the user of the problem.
+	 */
+	 public int askNumControlBits(String systemName);
 
 }
 
