@@ -1,13 +1,4 @@
-/**
- * AbstractConsistManager.java
- *
- * Description:           an Abstract Consist Manager on top of which 
- *                        system specific consist managers can be built.
- *
- * @author                Paul Bender Copyright (C) 2004
- * @version               $Revision: 1.4 $
- */
-
+// AbstractConsistManager.java
 
 package jmri.jmrix;
 
@@ -20,10 +11,17 @@ import jmri.Consist;
 import jmri.ConsistListener;
 import jmri.DccLocoAddress;
 
+/**
+ * An Abstract Consist Manager on top of which 
+ * system specific consist managers can be built.
+ *
+ * @author                Paul Bender Copyright (C) 2004
+ * @version               $Revision: 1.5 $
+ */
 abstract public class AbstractConsistManager implements jmri.ConsistManager{
 
 	protected Hashtable ConsistTable = null;
-
+    
 	protected ArrayList ConsistList = null;
 
 	public AbstractConsistManager(){
