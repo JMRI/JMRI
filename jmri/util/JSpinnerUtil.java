@@ -5,6 +5,7 @@ package jmri.util;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JComponent;
+import javax.swing.JTextField;
 
 /**
  * Common utility methods for working with Swing JSpinners.
@@ -16,7 +17,7 @@ import javax.swing.JComponent;
  * information.
  * <P>
  * @author Bob Jacobsen  Copyright 2005
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class JSpinnerUtil {
@@ -47,7 +48,13 @@ public class JSpinnerUtil {
             new Exception().printStackTrace();
             return;
         }
-        ((JSpinner)spinner).setValue(value);
+        if (JTextField.class.equals(spinner.getClass())) ((JTextField)spinner).setText(value.toString());
+        else if (JSpinner.class.equals(spinner.getClass())) ((JSpinner)spinner).setValue(value);
+        else {
+            log.error("Can't set value in setValue");
+            new Exception().printStackTrace();
+            return;
+        }
     }
     
     /** 
@@ -59,7 +66,14 @@ public class JSpinnerUtil {
             new Exception().printStackTrace();
             return null;
         }
-        return ((JSpinner)spinner).getValue();
+        if (JTextField.class.equals(spinner.getClass())) {
+            String val = ((JTextField)spinner).getText();
+            return new Integer(val);
+        } else if (JSpinner.class.equals(spinner.getClass())) return ((JSpinner)spinner).getValue();
+        else 
+        log.error("Can't return result from getValue");
+        new Exception().printStackTrace();
+        return null;
     }
     
     /** 
@@ -157,7 +171,12 @@ public class JSpinnerUtil {
             new Exception().printStackTrace();
             return;
         }
-        ((JSpinner)spinner).addChangeListener(listener);
+        try {
+            ((JSpinner)spinner).addChangeListener(listener);
+        } catch (Throwable e) {
+            // silently fails
+            log.debug("Can't add change listener");
+        }
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(JSpinnerUtil.class.getName());
