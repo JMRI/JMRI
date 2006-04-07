@@ -28,7 +28,7 @@ import javax.swing.event.ChangeEvent;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003, 2004
  * @author      Alex Shepherd Copyright (C) 2006
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 
 public class ServerFrame extends JFrame implements ServerListner {
@@ -37,21 +37,16 @@ public class ServerFrame extends JFrame implements ServerListner {
     super("LocoNetOverTcp Server");
     getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-    try {
-      portNumber = JSpinnerUtil.getJSpinner();
-      JSpinnerUtil.setModelMaximum(portNumber, new Integer(65535));
-      JSpinnerUtil.setModelMinimum(portNumber, new Integer(1024));
-      JSpinnerUtil.setValue(portNumber, new Integer( 65535 ));
-      SwingUtil.setFocusable(portNumber,false);
-
-    } catch (NoClassDefFoundError e1) {
-            // we can't use a JSpinner Object.
-            portNumber = null;
-    } catch (Exception e2) {
-            // we can't use a JSpinner Object.
-            portNumber = null;
+    portNumber = JSpinnerUtil.getJSpinner();
+    if (portNumber != null) {
+        JSpinnerUtil.setModelMaximum(portNumber, new Integer(65535));
+        JSpinnerUtil.setModelMinimum(portNumber, new Integer(1024));
+        JSpinnerUtil.setValue(portNumber, new Integer( 65535 ));
+    } else {
+        portNumber = new JTextField();
     }
-
+    SwingUtil.setFocusable(portNumber,false);
+    
     // add GUI items
     JPanel panel = new JPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
@@ -143,7 +138,7 @@ public class ServerFrame extends JFrame implements ServerListner {
     Server server = Server.getInstance() ;
     autoStartCheckBox.setSelected( server.getAutoStart() );
     autoStartCheckBox.setEnabled( !server.isEnabled() );
-    JSpinnerUtil.setValue( portNumber, new Integer( server.getPortNumber() ) ) ;
+    if (portNumber!=null) JSpinnerUtil.setValue( portNumber, new Integer( server.getPortNumber() ) ) ;
     portNumber.setEnabled( !server.isEnabled() );
     portNumberLabel.setEnabled( !server.isEnabled() );
     startButton.setEnabled( !server.isEnabled() );
