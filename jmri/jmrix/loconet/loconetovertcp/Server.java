@@ -13,7 +13,7 @@ import java.util.Properties;
  * Implementation of the LocoNetOverTcp LbServer Server Protocol
  *
  * @author      Alex Shepherd Copyright (C) 2006
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 
 public class Server{
@@ -21,16 +21,15 @@ public class Server{
   LinkedList    clients ;
   Thread        socketListener ;
   ServerSocket  serverSocket ;
-  Properties    settings ;
-  boolean       settingsChanged ;
+  boolean       settingsLoaded = false;
   ServerListner stateListner ;
-
+  boolean       settingsChanged = false;
+  
   static final String AUTO_START_KEY = "AutoStart" ;
   static final String PORT_NUMBER_KEY = "PortNumber" ;
   static final String SETTINGS_FILE_NAME = "LocoNetOverTcpSettings.ini" ;
 
   private Server(){
-    settingsChanged = false ;
     clients = new LinkedList() ;
   }
 
@@ -48,37 +47,47 @@ public class Server{
   }
 
   private void loadSettings(){
-    if( settings == null){
-      settings = new Properties();
+    if (!settingsLoaded) {
+        settingsLoaded = true;
+        Properties settings = new Properties();
 
-      String settingsFileName = jmri.jmrit.XmlFile.prefsDir() + SETTINGS_FILE_NAME;
+        String settingsFileName = jmri.jmrit.XmlFile.prefsDir() + SETTINGS_FILE_NAME;
 
-      try {
-        java.io.InputStream settingsStream = new FileInputStream(settingsFileName);
-        settings.load( settingsStream );
-        settingsStream.close();
-
-        settingsChanged = false ;
-      }
-      catch (FileNotFoundException ex) {
-        log.debug( "Server: loadSettings exception: ", ex );
-      }
-      catch (IOException ex) {
-        log.debug( "Server: loadSettings exception: ", ex );
-      }
-      updateServerStateListener();
-    }
+        try {
+            java.io.InputStream settingsStream = new FileInputStream(settingsFileName);
+            settings.load( settingsStream );
+            settingsStream.close();
+            
+            String val = settings.getProperty( AUTO_START_KEY, "0" );
+            autoStart = (val.equals("1"));
+            val = settings.getProperty( PORT_NUMBER_KEY, "1234" );
+            portNumber = Integer.parseInt( val, 10 );
+        }
+        catch (FileNotFoundException ex) {
+            log.debug( "Server: loadSettings file not found");
+        }
+        catch (IOException ex) {
+            log.debug( "Server: loadSettings exception: ", ex );
+        }
+        updateServerStateListener();
+     }
   }
 
   public void saveSettings(){
-    if( settings != null){
+    // we can't use the store capabilities of java.util.Properties, as
+    // they are not present in Java 1.1.8
       String settingsFileName = jmri.jmrit.XmlFile.prefsDir() + SETTINGS_FILE_NAME;
 
       try {
-        java.io.OutputStream settingsStream = new FileOutputStream(settingsFileName);
-        settings.store( settingsStream, "LocoNetOverTcp Configuration Settings" );
+        java.io.OutputStream outStream = new FileOutputStream(settingsFileName);
+        java.io.PrintStream settingsStream = new java.io.PrintStream(outStream);
+        settingsStream.println("# LocoNetOverTcp Configuration Settings");
+        settingsStream.println(AUTO_START_KEY+" = "+(autoStart?"1":"0"));
+        settingsStream.println(PORT_NUMBER_KEY+" = "+portNumber);
+
+        settingsStream.flush();
         settingsStream.close();
-        settingsChanged = false ;
+        settingsChanged = false;
       }
       catch (FileNotFoundException ex) {
         log.warn( "Server: saveSettings exception: ", ex );
@@ -87,33 +96,32 @@ public class Server{
         log.warn( "Server: saveSettings exception: ", ex );
       }
       updateServerStateListener();
-    }
   }
 
+  private boolean autoStart;
   public boolean getAutoStart(){
     loadSettings();
-    String val = settings.getProperty( AUTO_START_KEY, "0" ) ;
-    return val.equals("1") ;
+    return autoStart;
   }
 
   public void setAutoStart(boolean start){
     loadSettings();
-    settings.setProperty( AUTO_START_KEY, (start)?"1":"0" ) ;
-    settingsChanged = true ;
+    autoStart = start;
+    settingsChanged = true;
     updateServerStateListener();
   }
 
+  private int portNumber = 1234;
   public int getPortNumber(){
     loadSettings();
-    String val = settings.getProperty( PORT_NUMBER_KEY, "1234" );
-    return Integer.parseInt( val, 10 ) ;
+    return portNumber;
   }
 
   public void setPortNumber(int port){
     loadSettings();
     if( ( port >= 1024 ) && ( port <= 65535 ) )
     {
-      settings.setProperty(PORT_NUMBER_KEY, Integer.toString(port));
+      portNumber = port;
       settingsChanged = true;
       updateServerStateListener();
     }
@@ -177,10 +185,10 @@ public class Server{
       String remoteAddress;
       try {
         serverSocket = new ServerSocket( getPortNumber() );
-        serverSocket.setReuseAddress(true);
+        jmri.util.SocketUtil.setReuseAddress(serverSocket, true);
         while (!socketListener.isInterrupted()) {
           newClientConnection = serverSocket.accept();
-          remoteAddress = newClientConnection.getRemoteSocketAddress().toString();
+          remoteAddress = jmri.util.SocketUtil.getRemoteSocketAddress(newClientConnection);
           log.info("Server: Connection from: " + remoteAddress);
           addClient( new ClientRxHandler(remoteAddress, newClientConnection) );
         }
