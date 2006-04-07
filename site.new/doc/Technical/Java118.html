@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Java118.html,v 1.6 2005-01-24 05:12:03 jacobsen Exp $ -->
+<!-- $Id: Java118.html,v 1.7 2006-04-07 06:03:20 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -143,7 +143,15 @@ Things to consider:
 	<LI>Use <code>elementAt(int)</code>, not <code>get(int)</code>
 	</UL>
 <LI>Some functions that are not available are
-handled in the jmri.util package.
+handled in the jmri.util package.  If you get a compile
+error due to a missing method while using the "check" target
+(see below), look in jmri.util for a class/method that will 
+provide the same function for you.
+<LI>Note that named innner classes do not have unlimited access
+to the outer class members in Java 1.1.  For example, if you have
+a class Inner declared within a class Outer, the methods and members
+of the Outer object will have to be referenced as Outer.this.foo in 
+many cases.
 </OL>
 
 <h2>Testing compatibility</h2>
