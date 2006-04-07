@@ -17,7 +17,7 @@ import java.net.ServerSocket;
  * back to an explicit implementation when running on Java 1.1
  *
  * @author Bob Jacobsen  Copyright 2006
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class SocketUtil {
@@ -28,7 +28,7 @@ public class SocketUtil {
     static public String getRemoteSocketAddress(Socket socket) {
         try {
             return  socket.getRemoteSocketAddress().toString();
-        } catch (Exception e) {
+        } catch (Throwable e) {
         } finally {
             return "<unknown>";
         }
@@ -42,7 +42,7 @@ public class SocketUtil {
     static public void setReuseAddress(ServerSocket socket, boolean on) {
         try {
             socket.setReuseAddress(on);
-        } catch (Exception e) {
+        } catch (Throwable e) {
         }
     }
     
