@@ -11,7 +11,7 @@ import jmri.Turnout;
  * System names are "CTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
@@ -50,10 +50,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 		conflict = SerialAddress.isOutputBitFree(nAddress,bitNum);
 		if ( conflict != "" ) {
 			log.error("Assignment conflict with "+conflict+".  Turnout not created.");
-			javax.swing.JOptionPane.showMessageDialog(null,"The output bit, "+bitNum+
-					", is currently assigned to "+conflict+". Turnout cannot be created as "+
-						"you specified.","C/MRI Assignment Conflict",
-							javax.swing.JOptionPane.INFORMATION_MESSAGE,null);
+			notifyTurnoutCreationError(conflict,bitNum);
 			return (null);
 		}
 
@@ -67,6 +64,16 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         }
         return t;
     }
+
+    /**
+     * Public method to notify user of Turnout creation error.
+     */
+	public void notifyTurnoutCreationError(String conflict,int bitNum) {
+		javax.swing.JOptionPane.showMessageDialog(null,"The output bit, "+bitNum+
+			", is currently assigned to "+conflict+". Turnout cannot be created as "+
+				"you specified.","C/MRI Assignment Conflict",
+						javax.swing.JOptionPane.INFORMATION_MESSAGE,null);
+	}
 	
 	/**
 	 * Get from the user, the number of addressed bits used to control a turnout. 
@@ -82,12 +89,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 	public int askNumControlBits(String systemName) {
 
 		// ask user how many bits should control the turnout - 1 or 2
-		int iNum = 0;
-		iNum = javax.swing.JOptionPane.showOptionDialog(null,
-				"How many C/MRI output bits should be used to control this turnout?",
-					"C/MRI Turnout Question",javax.swing.JOptionPane.DEFAULT_OPTION,
-						javax.swing.JOptionPane.QUESTION_MESSAGE,
-						null,new String[] {"Use 1 bit","Use 2 bits"},"Use 1 bit");
+		int iNum = selectNumberOfControlBits();
 		if (iNum == javax.swing.JOptionPane.CLOSED_OPTION) {
 			/* user cancelled without selecting an option */
 			iNum = 1;
@@ -109,15 +111,38 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 			conflict = SerialAddress.isOutputBitFree(nAddress,bitNum);
 			if ( conflict != "" ) {
 				log.error("Assignment conflict with "+conflict+".  Turnout not created.");
-				javax.swing.JOptionPane.showMessageDialog(null,"The second output bit, "+bitNum+
-					", is currently assigned to "+conflict+". Turnout cannot be created as "+
-						"you specified.","C/MRI Assignment Conflict",
-							javax.swing.JOptionPane.INFORMATION_MESSAGE,null);
+				notifySecondBitConflict(conflict,bitNum);
 				return (0);
 			}
 		}
 	
 		return (iNum);
+	}
+
+    /**
+     * Public method to allow user to specify one or two output bits for turnout control
+	 *  Note: This method returns 1 or 2 if the user selected, or 0 if the user cancelled
+	 *         without selecting.
+	 */
+	public int selectNumberOfControlBits() {
+		int iNum = 0;
+		iNum = javax.swing.JOptionPane.showOptionDialog(null,
+				"How many C/MRI output bits should be used to control this turnout?",
+					"C/MRI Turnout Question",javax.swing.JOptionPane.DEFAULT_OPTION,
+						javax.swing.JOptionPane.QUESTION_MESSAGE,
+						null,new String[] {"Use 1 bit","Use 2 bits"},"Use 1 bit");
+		return iNum;
+	}
+
+    /**
+     * Public method to notify user when the second bit of a proposed two output bit turnout 
+	 *		has a conflict with another assigned bit
+     */
+	public void notifySecondBitConflict(String conflict,int bitNum) {
+		javax.swing.JOptionPane.showMessageDialog(null,"The second output bit, "+bitNum+
+			", is currently assigned to "+conflict+". Turnout cannot be created as "+
+					"you specified.","C/MRI Assignment Conflict",
+							javax.swing.JOptionPane.INFORMATION_MESSAGE,null);
 	}
 
     static public SerialTurnoutManager instance() {
