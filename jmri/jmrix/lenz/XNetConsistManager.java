@@ -1,13 +1,4 @@
-/**
- * XNetConsistManager.java
- *
- * Description:           Consist Manager for use with the
- *                        XNetConsist class for the consists it builds
- *
- * @author                Paul Bender Copyright (C) 2004
- * @version               $Revision: 2.5 $
- */
-
+// XNetConsistManager.java
 
 package jmri.jmrix.lenz;
 
@@ -19,6 +10,14 @@ import java.util.Enumeration;
 
 import com.sun.java.util.collections.Hashtable;
 import com.sun.java.util.collections.ArrayList;
+
+/**
+ * Consist Manager for use with the
+ * XNetConsist class for the consists it builds
+ *
+ * @author                Paul Bender Copyright (C) 2004
+ * @version               $Revision: 2.6 $
+ */
 
 public class XNetConsistManager extends jmri.jmrix.AbstractConsistManager implements jmri.ConsistManager {
 
@@ -213,8 +212,8 @@ public class XNetConsistManager extends jmri.jmrix.AbstractConsistManager implem
                          }
 
                          // We need to check and see if this consist exists
-                         if(!ConsistTable.containsKey(firstMember) && 
-                            !ConsistTable.containsKey(new DccLocoAddress(_lastMemberAddress,_lastMemberAddress>99))) {
+                         if(!XNetConsistManager.this.ConsistTable.containsKey(firstMember) && 
+                            !XNetConsistManager.this.ConsistTable.containsKey(new DccLocoAddress(_lastMemberAddress,_lastMemberAddress>99))) {
 	                       CurrentConsist=(XNetConsist)addConsist(firstMember); 
                                CurrentConsist.setConsistType(Consist.CS_CONSIST);
                                CurrentConsist.restore(firstMember,
