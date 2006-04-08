@@ -31,7 +31,7 @@ import javax.swing.*;
  * The individual items all share data models to simplify the logic.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  * Revisions to add facing point sensors and tool tips
  *              by Dick Bronson (RJB) 2006
  
@@ -112,9 +112,11 @@ public class BlockBossFrame extends JFrame {
     String turnoutFieldTooltip = "Enter protected turnout number here.";
     String flashBoxTooltip = "One aspect faster than yellow displays\n" 
         + "flashing yellow, rather than green.";
-    String nextSignalFieldTooltip = "Enter the next signal head/s for this track.\n" 
+    String nextSignalFieldTooltip = "Enter the low speed signal head for this track.\n" 
         + "For dual head signals the fastest aspect is protected.";
-    String distantBoxTooltip = "Mirrors the protected (following) signal's status\n" 
+    String highSignalFieldTooltip = "Enter the high speed signal head for this track.\n" 
+        + "For dual head signals the fastest aspect is protected.";
+   String distantBoxTooltip = "Mirrors the protected (following) signal's status\n" 
         + "unless over ridden by an intermediate stop sensor.";
     
     public BlockBossFrame() { this("Simple Signal Logic");}
