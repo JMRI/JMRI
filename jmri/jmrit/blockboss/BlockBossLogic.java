@@ -39,7 +39,7 @@ import java.util.Hashtable;
  * use with CTC logic, etc.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  * Revisions to add facing point sensors Dick Bronosn (RJB) 2006
  */
 
@@ -316,7 +316,7 @@ public class BlockBossLogic extends Siglet {
      * If true, the output is forced to a RED "stop" aspect.
      * This allows CTC and other higher-level functions to 
      * control permission to enter this section of track.
-     *//
+     */
     public boolean getHold() {return mHold;}
     /*
      * Set the current value of the "hold" parameter.
