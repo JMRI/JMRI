@@ -31,7 +31,7 @@ import javax.swing.*;
  * The individual items all share data models to simplify the logic.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  * Revisions to add facing point sensors and tool tips
  *              by Dick Bronson (RJB) 2006
  
@@ -95,6 +95,7 @@ public class BlockBossFrame extends JFrame {
     JCheckBox fDistantBox;
 
     JTextField outSignalField;
+
     
     // New tool tip texts here. RJB
     String buttonSingleTooltip = "In direction of traffic";
@@ -291,7 +292,7 @@ public class BlockBossFrame extends JFrame {
         modeSingle.add(new JLabel("Protects Signal"), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
-        sNextSignalField1.setToolTipText(nextSignalFieldTooltip);
+        sNextSignalField1.setToolTipText(highSignalFieldTooltip);
         modeSingle.add(sNextSignalField1, constraints);
         constraints.gridx = 2;
         sNextSignalField1Alt.setToolTipText(nextSignalFieldTooltip);
@@ -367,7 +368,7 @@ public class BlockBossFrame extends JFrame {
         modeTrailMain.add(new JLabel("Protects Signal"), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
-        tmNextSignalField1.setToolTipText(nextSignalFieldTooltip);
+        tmNextSignalField1.setToolTipText(highSignalFieldTooltip);
         modeTrailMain.add(tmNextSignalField1, constraints);
         constraints.gridx = 2;
         tmNextSignalField1Alt.setToolTipText(nextSignalFieldTooltip);
@@ -443,7 +444,7 @@ public class BlockBossFrame extends JFrame {
         modeTrailDiv.add(new JLabel("Protects Signal"), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
-        tdNextSignalField1.setToolTipText(nextSignalFieldTooltip);
+        tdNextSignalField1.setToolTipText(highSignalFieldTooltip);
         modeTrailDiv.add(tdNextSignalField1, constraints);
         constraints.gridx = 2;
         tdNextSignalField1Alt.setToolTipText(nextSignalFieldTooltip);
@@ -516,7 +517,7 @@ public class BlockBossFrame extends JFrame {
         modeFacing.add(new JLabel("To Protect Signal"), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
-        fNextSignalField1.setToolTipText(nextSignalFieldTooltip);
+        fNextSignalField1.setToolTipText(highSignalFieldTooltip);
         modeFacing.add(fNextSignalField1, constraints);
         constraints.gridx = 2;
         fNextSignalField1Alt.setToolTipText(nextSignalFieldTooltip);
@@ -546,7 +547,7 @@ public class BlockBossFrame extends JFrame {
         modeFacing.add(new JLabel("And To Protect Signal"), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
-        fNextSignalField2.setToolTipText(nextSignalFieldTooltip);
+        fNextSignalField2.setToolTipText(highSignalFieldTooltip);
         modeFacing.add(fNextSignalField2, constraints);
         constraints.gridx = 2;
         fNextSignalField2Alt.setToolTipText(nextSignalFieldTooltip);
