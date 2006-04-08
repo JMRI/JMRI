@@ -24,7 +24,7 @@ import jmri.util.davidflanagan.HardcopyWriter;
  * Frame providing a table of NamedBeans.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class BeanTableFrame extends javax.swing.JFrame {
 
@@ -77,6 +77,7 @@ public class BeanTableFrame extends javax.swing.JFrame {
                         //log.debug("Print cancelled");
                         return;
                     }
+					writer.increaseLineSpacing(20);
                     dataModel.printTable(writer);
                 }
         });

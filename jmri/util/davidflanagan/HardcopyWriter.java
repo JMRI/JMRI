@@ -26,7 +26,7 @@ import jmri.util.JmriJFrame;
  * David Flanagan with the alligator on the front.
  *
  * @author		David Flanagan
- * @version             $Revision: 1.11 $
+ * @version             $Revision: 1.12 $
  */
 public class HardcopyWriter extends Writer {
 
@@ -438,8 +438,23 @@ public class HardcopyWriter extends Writer {
     public void writeBorders() {
       write(this.linenum, 0, this.linenum + 1, 0);
       write(this.linenum, this.chars_per_line + 1, this.linenum + 1, this.chars_per_line + 1);
-}
+	}
 
+    /**
+     * Increase line spacing by a percentage 
+	 * <P>
+	 * This method should be invoked immediately after a new HardcopyWriter is created.
+	 * <P>
+	 * This method was added to improve appearance when printing tables
+     * <P>
+	 * This was not in the original class, added afterwards by DaveDuchamp.
+     */
+    public void increaseLineSpacing(int percent) {
+		int delta = (lineheight * percent) / 100;
+		lineheight = lineheight + delta;
+		lineascent = lineascent + delta;
+		lines_per_page = height / lineheight;
+	}
 
     public static class PrintCanceledException extends Exception {
         public PrintCanceledException(String msg) { super(msg); }
