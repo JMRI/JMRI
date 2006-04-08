@@ -23,7 +23,7 @@ package jmri.jmrix.cmri.serial;
  *              CL11B234 (node address 11, bit234)
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004 - 2006
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class SerialAddress {
 
@@ -367,10 +367,12 @@ public class SerialAddress {
 	 *		node address, and bit number
      * <P>
      * This routine returns a system name in the CLnnnxxx, CTnnnxxx, or CSnnnxxx
-     *      format depending on the type character.  The returned name is normalized.
+     *      format if the bit number is 1 - 999.  If the bit number is 1000 - 2048,
+	 *      the system name is returned in the CLnnnBxxxx, CTnnnBxxxx, or CSnnnBxxxx
+	 *      format. The returned name is normalized.
      * <P>
      * If the supplied character is not valid, or the node address is out of the 0 - 127 
-	 *		range, or the bit number is out of the 1 - 999 range, an error message is
+	 *		range, or the bit number is out of the 1 - 2048 range, an error message is
 	 *      logged and the null string "" is returned.
 	 */
     public static String makeSystemName(String type,int nAddress, int bitNum) {
@@ -394,7 +396,15 @@ public class SerialAddress {
             return (nName);
         }
 		// construct the address
-		nName = "C"+type+Integer.toString((nAddress*1000)+bitNum);
+		if (bitNum<1000) {
+			nName = "C"+type+Integer.toString((nAddress*1000)+bitNum);
+		}
+		else {
+			// must use other address format
+			nName = "C"+type+Integer.toString(nAddress)+"B"+
+											Integer.toString(bitNum);
+		}
+	
 		return (nName);
 	}
 
@@ -426,8 +436,10 @@ public class SerialAddress {
 		if (t!=null) return (sysName);
 		String  altName = "";
 		altName = convertSystemNameToAlternate(sysName);
-		t = jmri.InstanceManager.turnoutManagerInstance().getBySystemName(altName);
-		if (t!=null) return (altName);
+		if (altName!=null) {
+			t = jmri.InstanceManager.turnoutManagerInstance().getBySystemName(altName);
+			if (t!=null) return (altName);
+		}
 		
 		// check for a two-bit turnout assigned to the previous bit
 		if (bitNum > 1) {
@@ -442,11 +454,13 @@ public class SerialAddress {
 			else {
 				// try alternate addressing
 				altName = convertSystemNameToAlternate(sysName);
-				t = jmri.InstanceManager.turnoutManagerInstance().getBySystemName(altName);
-				if (t!=null) {
-					if (t.getNumberOutputBits() == 2) {
-						// bit is second bit for this Turnout
-						return (altName);
+				if (altName!=null) {
+					t = jmri.InstanceManager.turnoutManagerInstance().getBySystemName(altName);
+					if (t!=null) {
+						if (t.getNumberOutputBits() == 2) {
+							// bit is second bit for this Turnout
+							return (altName);
+						}
 					}
 				}
 			}
@@ -458,11 +472,98 @@ public class SerialAddress {
 		lgt = jmri.InstanceManager.lightManagerInstance().getBySystemName(sysName);
 		if (lgt!=null) return (sysName);
 		altName = convertSystemNameToAlternate(sysName);
-		lgt = jmri.InstanceManager.lightManagerInstance().getBySystemName(altName);
-		if (lgt!=null) return (altName);
+		if (altName!=null) {
+			lgt = jmri.InstanceManager.lightManagerInstance().getBySystemName(altName);
+			if (lgt!=null) return (altName);
+		}
 		
 		// not assigned to a turnout or a light
 		return("");
+	}
+
+    /**
+     * Public static method to test if a C/MRI input bit is free for assignment 
+     *   Returns "" (null string) if the specified input bit is free for assignment,
+     *      else returns the system name of the conflicting assignment.
+	 *   Test is not performed if the node address is illegal or bit number is greater
+	 *      than 2048.
+     */
+    public static String isInputBitFree(int nAddress,int bitNum) {
+		// check the node address
+        if ( (nAddress < 0) || (nAddress > 127) ) {
+            // here if an illegal node address 
+            log.error("illegal node adddress in free bit test");
+            return ("");
+        }
+		// check the bit number
+        if ( (bitNum < 1) || (bitNum > 2048) ) {
+            // here if an illegal bit number 
+            log.error("illegal bit number in free bit test");
+            return ("");
+        }
+		
+		// check for a sensor using the bit
+		jmri.Sensor s = null;
+		String	sysName = "";
+		sysName = makeSystemName("S",nAddress,bitNum);
+		s = jmri.InstanceManager.sensorManagerInstance().getBySystemName(sysName);
+		if (s!=null) return (sysName);
+		String  altName = "";
+		altName = convertSystemNameToAlternate(sysName);
+		if (altName!=null) {
+			s = jmri.InstanceManager.sensorManagerInstance().getBySystemName(altName);
+			if (s!=null) return (altName);
+		}
+		// not assigned to a sensor
+		return("");
+	}
+
+    /**
+     * Public static method to the user name for a valid system name 
+     *   Returns "" (null string) if the system name is not valid or does not exist
+     */
+    public static String getUserNameFromSystemName(String systemName) {
+		// check for a valid system name
+		if ( (systemName.length() < 3) || (systemName.charAt(0) != 'C') ) {
+			// not a valid system name for C/MRI
+			return("");
+		}
+		// check for a sensor
+		if (systemName.charAt(1) == 'S') {
+			jmri.Sensor s = null;
+			s = jmri.InstanceManager.sensorManagerInstance().getBySystemName(systemName);
+			if (s!=null) {
+				return s.getUserName();
+			}
+			else {
+				return ("");
+			}
+		}
+		// check for a turnout
+		else if (systemName.charAt(1) == 'T') {
+			jmri.Turnout t = null;
+			t = jmri.InstanceManager.turnoutManagerInstance().getBySystemName(systemName);
+			if (t!=null) {
+				return t.getUserName();
+			}
+			else {
+				return ("");
+			}
+		}
+		// check for a light
+		else if (systemName.charAt(1) == 'L') {
+			jmri.Light lgt = null;
+			lgt = jmri.InstanceManager.lightManagerInstance().getBySystemName(systemName);
+			if (lgt!=null) {
+				return lgt.getUserName();
+			}
+			else {
+				return ("");
+			}
+		}
+		
+		// not any known sensor, light, or turnout
+		return ("");
 	}
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialAddress.class.getName());
