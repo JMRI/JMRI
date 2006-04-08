@@ -24,9 +24,9 @@ import java.util.Hashtable;
  * <LI>TRAILINGDIVERGING - This signal is protecting a trailing point turnout,
  * which can only be passed when the turnout is thrown. It can also be used
  * for the lower head of a two head signal on the facing end of the turnout.
- * <LI>FACING - This signal protects a facing point turnout, which
- * may therefore have two next signals for the closed and thrown
- * states of the turnout.
+ * <LI>FACING - This single head signal protects a facing point turnout, which
+ * may therefore have two next signals and two sets of next sensors for the
+ * closed and thrown states of the turnout.
  * </OL><P>
  * Note that these four possibilities logically require that certain
  * information be configured consistently; e.g. not specifying a turnout
@@ -39,7 +39,8 @@ import java.util.Hashtable;
  * use with CTC logic, etc.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
+ * Revisions to add facing point sensors Dick Bronosn (RJB) 2006
  */
 
 public class BlockBossLogic extends Siglet {
@@ -227,6 +228,81 @@ public class BlockBossLogic extends Siglet {
         return watchedSignal2Alt.getSystemName();
     }
 
+//    Added watched sensors RJB
+        public void setWatchedSensor1(String name) {
+        if (name == null || name.equals("")) {
+            watchedSensor1 = null;
+            return;
+        }
+        watchedSensor1 = InstanceManager.sensorManagerInstance().provideSensor(name);
+        if (watchedSensor1 == null) log.warn("Sensor1 "+name+" was not found!");
+
+    }
+        /**
+         * Return the system name of the sensor being monitored
+         * @return system name; null if no sensor configured
+         */
+        public String getWatchedSensor1() {
+            if (watchedSensor1 == null) return null;
+            return watchedSensor1.getSystemName();
+        }
+
+        public void setWatchedSensor1Alt(String name) {
+        if (name == null || name.equals("")) {
+            watchedSensor1Alt = null;
+            return;
+        }
+        watchedSensor1Alt = InstanceManager.sensorManagerInstance().provideSensor(name);
+        if (watchedSensor1Alt == null) log.warn("Sensor1Alt "+name+" was not found!");
+
+    }
+        /**
+         * Return the system name of the sensor being monitored
+         * @return system name; null if no sensor configured
+         */
+        public String getWatchedSensor1Alt() {
+            if (watchedSensor1Alt == null) return null;
+            return watchedSensor1Alt.getSystemName();
+        }
+
+        public void setWatchedSensor2(String name) {
+        if (name == null || name.equals("")) {
+            watchedSensor2 = null;
+            return;
+        }
+        watchedSensor2 = InstanceManager.sensorManagerInstance().provideSensor(name);
+        if (watchedSensor2 == null) log.warn("Sensor2 "+name+" was not found!");
+
+    }
+        /**
+         * Return the system name of the sensor being monitored
+         * @return system name; null if no sensor configured
+         */
+        public String getWatchedSensor2() {
+            if (watchedSensor2 == null) return null;
+            return watchedSensor2.getSystemName();
+        }
+
+        public void setWatchedSensor2Alt(String name) {
+        if (name == null || name.equals("")) {
+            watchedSensor2Alt = null;
+            return;
+        }
+        watchedSensor2Alt = InstanceManager.sensorManagerInstance().provideSensor(name);
+        if (watchedSensor2Alt == null) log.warn("Sensor2Alt "+name+" was not found!");
+
+    }
+        /**
+         * Return the system name of the sensor being monitored
+         * @return system name; null if no sensor configured
+         */
+        public String getWatchedSensor2Alt() {
+            if (watchedSensor2Alt == null) return null;
+            return watchedSensor2Alt.getSystemName();
+        }
+
+    //    End of added sensors RJB
+    
     public boolean getUseFlash() {
         return protectWithFlashing;
     }
@@ -252,6 +328,12 @@ public class BlockBossLogic extends Siglet {
     SignalHead watchedSignal1Alt = null;
     SignalHead watchedSignal2 = null;
     SignalHead watchedSignal2Alt = null;
+// Added sensors RJB
+    Sensor watchedSensor1 = null;
+    Sensor watchedSensor1Alt = null;
+    Sensor watchedSensor2 = null;
+    Sensor watchedSensor2Alt = null;
+    
     boolean protectWithFlashing = false;
     boolean distantSignal = false;
 
@@ -300,6 +382,25 @@ public class BlockBossLogic extends Siglet {
             n++;
         }
 
+//        Added watched sensors RJB
+        if (watchedSensor1 != null) {
+        tempArray[n]= watchedSensor1;
+        n++;
+        }
+        if (watchedSensor1Alt != null) {
+            tempArray[n]= watchedSensor1Alt;
+            n++;
+        }
+        if (watchedSensor2 != null) {
+            tempArray[n]= watchedSensor2;
+            n++;
+        }
+        if (watchedSensor2Alt != null) {
+            tempArray[n]= watchedSensor2Alt;
+            n++;
+        }
+//        End added watched sensors RJB
+        
         // copy temp to definitive inputs
         inputs = new NamedBean[n];
         for (int i = 0; i< inputs.length; i++)
@@ -484,6 +585,17 @@ public class BlockBossLogic extends Siglet {
         if (watchSensor3!=null && watchSensor3.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
         if (watchSensor4!=null && watchSensor4.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
 
+        // Check for red due to sensors past turnuot Added by RJB 2006        
+        if ((watchTurnout!=null && watchTurnout.getKnownState() != Turnout.THROWN) && ((watchedSensor1!=null && watchedSensor1.getKnownState() != Sensor.INACTIVE)))
+            appearance = SignalHead.RED;
+        if ((watchTurnout!=null && watchTurnout.getKnownState() != Turnout.THROWN) && ((watchedSensor1Alt!=null && watchedSensor1Alt.getKnownState() != Sensor.INACTIVE)))
+            appearance = SignalHead.RED;
+        if ((watchTurnout!=null && watchTurnout.getKnownState() == Turnout.THROWN) && ((watchedSensor2!=null && watchedSensor2.getKnownState() != Sensor.INACTIVE)))
+            appearance = SignalHead.RED;
+        if ((watchTurnout!=null && watchTurnout.getKnownState() == Turnout.THROWN) && ((watchedSensor2Alt!=null && watchedSensor2Alt.getKnownState() != Sensor.INACTIVE)))
+            appearance = SignalHead.RED;
+        // End of added section RJB
+        
         // show result if changed
         if (appearance != oldAppearance)
             ((SignalHead)outputs[0]).setAppearance(appearance);
