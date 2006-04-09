@@ -11,7 +11,7 @@ import jmri.Turnout;
  * System names are "CTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
@@ -23,7 +23,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     public Turnout createNewTurnout(String systemName, String userName) {
         // validate the system name, and normalize it
-        String sName = SerialAddress.normalizeSystemName(systemName);
+        String sName = "";
+		sName = SerialAddress.normalizeSystemName(systemName);
         if (sName=="") {
             // system name is not valid
             return null;
@@ -48,10 +49,10 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 		if (bitNum == 0) return (null);
 		String conflict = "";
 		conflict = SerialAddress.isOutputBitFree(nAddress,bitNum);
-		if ( conflict != "" ) {
-			log.error("Assignment conflict with "+conflict+".  Turnout not created.");
+		if ( ( conflict != "" ) && (conflict != sName) ) {
+			log.error("Assignment conflict with "+conflict+".");
 			notifyTurnoutCreationError(conflict,bitNum);
-			return (null);
+//			return (null);
 		}
 
         // create the turnout
@@ -69,9 +70,9 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * Public method to notify user of Turnout creation error.
      */
 	public void notifyTurnoutCreationError(String conflict,int bitNum) {
-		javax.swing.JOptionPane.showMessageDialog(null,"The output bit, "+bitNum+
-			", is currently assigned to "+conflict+". Turnout cannot be created as "+
-				"you specified.","C/MRI Assignment Conflict",
+		javax.swing.JOptionPane.showMessageDialog(null,"WARNING: The output bit, "+
+			bitNum+", is currently assigned to "+conflict+". Assignment conflicts can "+
+				"lead to serious trouble in operation.","C/MRI Assignment Conflict",
 						javax.swing.JOptionPane.INFORMATION_MESSAGE,null);
 	}
 	
