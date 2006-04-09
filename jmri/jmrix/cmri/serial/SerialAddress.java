@@ -23,7 +23,7 @@ package jmri.jmrix.cmri.serial;
  *              CL11B234 (node address 11, bit234)
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004 - 2006
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class SerialAddress {
 
@@ -390,7 +390,7 @@ public class SerialAddress {
             return (nName);
         }
 		// check the bit number
-        if ( (bitNum < 1) || (bitNum > 999) ) {
+        if ( (bitNum < 1) || (bitNum > 2048) ) {
             // here if an illegal bit number 
             log.error("illegal bit number proposed for system name");
             return (nName);
@@ -422,7 +422,7 @@ public class SerialAddress {
             return ("");
         }
 		// check the bit number
-        if ( (bitNum < 1) || (bitNum > 999) ) {
+        if ( (bitNum < 1) || (bitNum > 2048) ) {
             // here if an illegal bit number 
             log.error("illegal bit number in free bit test");
             return ("");
