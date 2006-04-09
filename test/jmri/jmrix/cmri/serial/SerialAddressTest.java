@@ -10,9 +10,25 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialAddress utility class.
  * @author	Dave Duchamp Copyright 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SerialAddressTest extends TestCase {
+	public void setUp() {
+		// create and register the manager objects
+		jmri.TurnoutManager l = new SerialTurnoutManager() {
+			public void notifyTurnoutCreationError(String conflict,int bitNum) {}
+		};	
+		jmri.InstanceManager.setTurnoutManager(l);
+		
+		jmri.LightManager lgt = new SerialLightManager() {
+			public void notifyLightCreationError(String conflict,int bitNum) {}
+		};	
+		jmri.InstanceManager.setLightManager(lgt);
+		
+		jmri.SensorManager s = new SerialSensorManager();
+		jmri.InstanceManager.setSensorManager(s);
+
+	}
 
 	public void testValidateSystemNameFormat() {
             Assert.assertTrue("valid format - CL2", SerialAddress.validSystemNameFormat("CL2",'L') );
@@ -77,6 +93,17 @@ public class SerialAddressTest extends TestCase {
             Assert.assertEquals("node of CL11B7", null, SerialAddress.getNodeFromSystemName("CL11B7") );
         }
 
+	public void testGetNodeAddressFromSystemName() {
+			Assert.assertEquals("CL14007", 14, SerialAddress.getNodeAddressFromSystemName("CL14007") );
+			Assert.assertEquals("CL14B7", 14, SerialAddress.getNodeAddressFromSystemName("CL14B7") );
+			Assert.assertEquals("CL127007", 127, SerialAddress.getNodeAddressFromSystemName("CL127007") );
+			Assert.assertEquals("CL127B7", 127, SerialAddress.getNodeAddressFromSystemName("CL127B7") );
+			Assert.assertEquals("CL0B7", 0, SerialAddress.getNodeAddressFromSystemName("CL0B7") );
+			Assert.assertEquals("CL7", 0, SerialAddress.getNodeAddressFromSystemName("CL7") );
+			Assert.assertEquals("CLB7", -1, SerialAddress.getNodeAddressFromSystemName("CLB7") );
+			Assert.assertEquals("CR7", -1, SerialAddress.getNodeAddressFromSystemName("CR7") );
+		}
+
 	public void testValidSystemNameConfig() {
             SerialNode d = new SerialNode(4,SerialNode.USIC_SUSIC);
             d.setNumBitsPerCard (32);
@@ -132,7 +159,93 @@ public class SerialAddressTest extends TestCase {
             Assert.assertEquals("normalize CL014B0008", "CL14B8", SerialAddress.normalizeSystemName("CL014B0008") );
             Assert.assertEquals("normalize CL128B7", "", SerialAddress.normalizeSystemName("CL128B7") );
         }
-        
+		
+	public void testConstructSystemName() {
+            Assert.assertEquals("make CL14007", "CL14007", SerialAddress.makeSystemName("L",14,7) );
+            Assert.assertEquals("make CT7", "CT7", SerialAddress.makeSystemName("T",0,7) );
+            Assert.assertEquals("make illegal 1", "", SerialAddress.makeSystemName("L",0,0) );
+            Assert.assertEquals("make illegal 2", "", SerialAddress.makeSystemName("L",128,7) );
+            Assert.assertEquals("make illegal 3", "", SerialAddress.makeSystemName("R",120,7) );
+            Assert.assertEquals("make CL0B1770", "CL0B1770", SerialAddress.makeSystemName("L",0,1770) );
+            Assert.assertEquals("make CS127999", "CS127999", SerialAddress.makeSystemName("S",127,999) );
+            Assert.assertEquals("make CS14B1000", "CS14B1000", SerialAddress.makeSystemName("S",14,1000) );
+		}
+		
+	SerialNode n = new SerialNode(18,SerialNode.SMINI);
+
+	public void testIsOutputBitFree() {
+			// create a new turnout, controlled by two output bits
+			jmri.TurnoutManager tMgr = jmri.InstanceManager.turnoutManagerInstance();
+			jmri.Turnout t1 = tMgr.newTurnout("CT18034","userT34");
+			t1.setNumberOutputBits(2);
+			// check that turnout was created correctly
+            Assert.assertEquals("create CT18034 check 1", "CT18034", t1.getSystemName() );
+            Assert.assertEquals("create CT18034 check 2", 2, t1.getNumberOutputBits() );			
+			// create a new turnout, controlled by one output bit
+			jmri.Turnout t2 = tMgr.newTurnout("CT18032","userT32");
+			// check that turnout was created correctly
+            Assert.assertEquals("create CT18032 check 1", "CT18032", t2.getSystemName() );
+            Assert.assertEquals("create CT18032 check 2", 1, t2.getNumberOutputBits() );			
+			// create two new lights  
+			jmri.LightManager lMgr = jmri.InstanceManager.lightManagerInstance();
+			jmri.Light lgt1 = lMgr.newLight("CL18036","userL36");
+			jmri.Light lgt2 = lMgr.newLight("CL18037","userL37");
+			// check that the lights were created as expected
+            Assert.assertEquals("create CL18036 check", "CL18036", lgt1.getSystemName() );
+            Assert.assertEquals("create CL18037 check", "CL18037", lgt2.getSystemName() );
+			// test
+            Assert.assertEquals("test bit 30", "", SerialAddress.isOutputBitFree(18,30) );
+            Assert.assertEquals("test bit 34", "CT18034", SerialAddress.isOutputBitFree(18,34) );			
+            Assert.assertEquals("test bit 33", "", SerialAddress.isOutputBitFree(18,33) );
+            Assert.assertEquals("test bit 35", "CT18034", SerialAddress.isOutputBitFree(18,35) );			
+            Assert.assertEquals("test bit 36", "CL18036", SerialAddress.isOutputBitFree(18,36) );
+            Assert.assertEquals("test bit 37", "CL18037", SerialAddress.isOutputBitFree(18,37) );			
+            Assert.assertEquals("test bit 38", "", SerialAddress.isOutputBitFree(18,38) );
+            Assert.assertEquals("test bit 39", "", SerialAddress.isOutputBitFree(18,39) );			
+            Assert.assertEquals("test bit 2000", "", SerialAddress.isOutputBitFree(18,2000) );			
+            Assert.assertEquals("test bit bad bit", "", SerialAddress.isOutputBitFree(18,0) );
+            Assert.assertEquals("test bit bad node address", "", SerialAddress.isOutputBitFree(129,34) );			
+		}
+
+	public void testIsInputBitFree() {
+			jmri.SensorManager sMgr = jmri.InstanceManager.sensorManagerInstance();
+			// create 4 new sensors
+			jmri.Sensor s1 = sMgr.newSensor("CS18016","userS16");
+			jmri.Sensor s2 = sMgr.newSensor("CS18014","userS14");
+			jmri.Sensor s3 = sMgr.newSensor("CS18017","userS17");
+			jmri.Sensor s4 = sMgr.newSensor("CS18012","userS12");
+			// check that the sensors were created as expected
+            Assert.assertEquals("create CS18016 check", "CS18016", s1.getSystemName() );
+            Assert.assertEquals("create CS18014 check", "CS18014", s2.getSystemName() );
+            Assert.assertEquals("create CS18017 check", "CS18017", s3.getSystemName() );
+            Assert.assertEquals("create CS18012 check", "CS18012", s4.getSystemName() );
+			// test
+            Assert.assertEquals("test bit 10", "", SerialAddress.isInputBitFree(18,10) );
+            Assert.assertEquals("test bit 11", "", SerialAddress.isInputBitFree(18,11) );
+            Assert.assertEquals("test bit 12", "CS18012", SerialAddress.isInputBitFree(18,12) );
+            Assert.assertEquals("test bit 13", "", SerialAddress.isInputBitFree(18,13) );
+            Assert.assertEquals("test bit 14", "CS18014", SerialAddress.isInputBitFree(18,14) );
+            Assert.assertEquals("test bit 15", "", SerialAddress.isInputBitFree(18,15) );
+            Assert.assertEquals("test bit 16", "CS18016", SerialAddress.isInputBitFree(18,16) );
+            Assert.assertEquals("test bit 17", "CS18017", SerialAddress.isInputBitFree(18,17) );
+            Assert.assertEquals("test bit 18", "", SerialAddress.isInputBitFree(18,18) );
+            Assert.assertEquals("test bit bad bit", "", SerialAddress.isInputBitFree(18,0) );
+            Assert.assertEquals("test bit bad node address", "", SerialAddress.isInputBitFree(129,34) );			
+		}
+
+	public void testGetUserNameFromSystemName() {
+            Assert.assertEquals("test CS18016", "userS16", SerialAddress.getUserNameFromSystemName("CS18016") );
+            Assert.assertEquals("test CS18012", "userS12", SerialAddress.getUserNameFromSystemName("CS18012") );
+            Assert.assertEquals("test CS18017", "userS17", SerialAddress.getUserNameFromSystemName("CS18017") );
+            Assert.assertEquals("test undefined CS18010", "", SerialAddress.getUserNameFromSystemName("CS18010") );
+            Assert.assertEquals("test CL18037", "userL37", SerialAddress.getUserNameFromSystemName("CL18037") );
+            Assert.assertEquals("test CL18036", "userL36", SerialAddress.getUserNameFromSystemName("CL18036") );
+            Assert.assertEquals("test undefined CL18030", "", SerialAddress.getUserNameFromSystemName("CL18030") );
+            Assert.assertEquals("test CT18032", "userT32", SerialAddress.getUserNameFromSystemName("CT18032") );
+            Assert.assertEquals("test CT18034", "userT34", SerialAddress.getUserNameFromSystemName("CT18034") );
+            Assert.assertEquals("test undefined CT18039", "", SerialAddress.getUserNameFromSystemName("CT18039") );
+	}	
+		
 	// from here down is testing infrastructure
 
 	public SerialAddressTest(String s) {
