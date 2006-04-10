@@ -27,7 +27,7 @@ package jmri;
  *<P>
  *
  * @author      Bob Jacobsen Copyright (C) 2001, 2003
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 public class NmraPacket {
 
@@ -347,7 +347,7 @@ public class NmraPacket {
      * @param longAddr true if this is a long address, false if short address
      * @param consist the consist address to set for this locomotive. Send 
      * 00 as consist address if deleteing from consist.
-     * @param isForward true if the normal direction of travel for this 
+     * @param directionNormal true if the normal direction of travel for this 
      * address is the normal direction of travel for the consist.
      */
     public static byte[]  consistControl(int address, boolean longAddr,
