@@ -11,7 +11,7 @@ package jmri.jmrix.lenz.li101;
  * connection.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 2.1 $
+ * @version	$Revision: 2.2 $
  *
  * @see LI101Adapter
  */
@@ -31,7 +31,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
         super();
     }
 
-    public String name() { return "Lenz LI101"; }
+    public String name() { return "Lenz LI101F"; }
 
     protected void setInstance() { adapter = LI101Adapter.instance(); }
 }
