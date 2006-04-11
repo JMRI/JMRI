@@ -11,8 +11,10 @@ import org.jdom.Element;
  * Handle XML persistance of Simple Signal Logic objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2005
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
+//Revisions to add facing point sensors Dick Bronosn (RJB) 2006
+
 public class BlockBossLogicXml implements XmlAdapter {
 
     public BlockBossLogicXml() {
@@ -53,15 +55,31 @@ public class BlockBossLogicXml implements XmlAdapter {
             if (p.getWatchedSignal1()!=null) {
                 block.addAttribute("watchedsignal1", p.getWatchedSignal1());
             }
-             if (p.getWatchedSignal1Alt()!=null) {
+            if (p.getWatchedSignal1Alt()!=null) {
                 block.addAttribute("watchedsignal1alt", p.getWatchedSignal1Alt());
             }
             if (p.getWatchedSignal2()!=null) {
                 block.addAttribute("watchedsignal2", p.getWatchedSignal2());
             }
-           if (p.getWatchedSignal2Alt()!=null) {
+            if (p.getWatchedSignal2Alt()!=null) {
                 block.addAttribute("watchedsignal2alt", p.getWatchedSignal2Alt());
             }
+
+            // Added watched sensors. RJB
+            if (p.getWatchedSensor1()!=null) {
+                block.addAttribute("watchedsensor1", p.getWatchedSensor1());
+            }
+            if (p.getWatchedSensor1Alt()!=null) {
+                block.addAttribute("watchedsensor1alt", p.getWatchedSensor1Alt());
+            }
+            if (p.getWatchedSensor2()!=null) {
+                block.addAttribute("watchedsensor2", p.getWatchedSensor2());
+            }
+            if (p.getWatchedSensor2Alt()!=null) {
+                block.addAttribute("watchedsensor2alt", p.getWatchedSensor2Alt());
+            }
+            // End Added RJB
+
             block.addAttribute("useflashyellow", ""+p.getUseFlash());
             block.addAttribute("distantsignal", ""+p.getDistantSignal());
             blocks.addContent(block);
@@ -112,6 +130,17 @@ public class BlockBossLogicXml implements XmlAdapter {
                     bb.setWatchedSignal2(block.getAttributeValue("watchedsignal2"));
                 if (block.getAttribute("watchedsignal2alt")!=null)
                     bb.setWatchedSignal2Alt(block.getAttributeValue("watchedsignal2alt"));
+            // Added RJB
+                if (block.getAttribute("watchedsensor1")!=null)
+                    bb.setWatchedSensor1(block.getAttributeValue("watchedsensor1"));
+                if (block.getAttribute("watchedsensor1alt")!=null)
+                    bb.setWatchedSensor1Alt(block.getAttributeValue("watchedsensor1alt"));
+                if (block.getAttribute("watchedsensor2")!=null)
+                    bb.setWatchedSensor2(block.getAttributeValue("watchedsensor2"));
+                if (block.getAttribute("watchedsensor2alt")!=null)
+                    bb.setWatchedSensor2Alt(block.getAttributeValue("watchedsensor2alt"));
+            // End Added RJB
+            
             } catch (org.jdom.DataConversionException e) {
                 log.warn("error reading blocks from file"+e);
             }
