@@ -2,17 +2,19 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: SoundTraxx_Tsu_Steam_1Hvy.xml,v 1.1 2006-02-05 23:06:55 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_Tsu_Steam_1Hvy.xml,v 1.2 2006-04-13 04:40:41 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen" version="1" lastUpdated="20051101"/>
 		<version author="Ken Weygandt" version="2" lastUpdated="20051203"/>
+		<version author="Ron McKinnon" version="3" lastUpdated="20060412"/>
 
 		<!-- Made from SoundTraxx_DSD_Steam.xml file by M Mosher -->
 		<!-- Some of the contents are based on info provided pre-release -->
 		<!-- by Soundtraxx, who deserve our thanks -->
 		
 		<!-- Version 2 has updated defaults -->
-
+		<!-- Version 3 has corrected Lighting Option CV's -->
+		
 <decoder>
 	<family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)">
 		<model model="Tsunami Heavy Steam" numOuts="4" numFns="14">
@@ -745,28 +747,28 @@
 				<enumChoice choice="Dyno-light"/>
 				</enumVal>
 			</variable>
-		<variable label="Forward light F0R phase" CV="49" mask="XXXVXXXX"
+		<variable label="Reverse light F0R phase" CV="50" mask="XXXVXXXX"
 					item="Function F0R options">
 			<enumVal>
 				<enumChoice choice="Phase A"/>
 				<enumChoice choice="Phase B"/>
 				</enumVal>
 			</variable>
-		<variable label="Forward light F0R grade crossing logic" CV="49" mask="XXVXXXXX"
+		<variable label="Reverse light F0R grade crossing logic" CV="50" mask="XXVXXXXX"
 					item="Function F0R option 2">
 			<enumVal>
 				<enumChoice choice="Disabled"/>
 				<enumChoice choice="Enabled When Horn On"/>
 				</enumVal>
 			</variable>
-		<variable label="Forward light F0R Rule 17 mode" CV="49" mask="XVXXXXXX"
+		<variable label="Reverse light F0R Rule 17 mode" CV="50" mask="XVXXXXXX"
 					item="Function F0R option 3">
 			<enumVal>
 				<enumChoice choice="Disabled"/>
 				<enumChoice choice="Enabled"/>
 				</enumVal>
 			</variable>
-		<variable label="Forward light F0R light type" CV="49" mask="VXXXXXXX"
+		<variable label="Reverse light F0R light type" CV="50" mask="VXXXXXXX"
 					item="Function F0R option 4">
 			<enumVal>
 				<enumChoice choice="Incandescent"/>
@@ -795,28 +797,28 @@
 				<enumChoice choice="Dyno-light"/>
 				</enumVal>
 			</variable>
-		<variable label="F5 phase" CV="49" mask="XXXVXXXX"
+		<variable label="F5 phase" CV="51" mask="XXXVXXXX"
 					item="Function 1 options">
 			<enumVal>
 				<enumChoice choice="Phase A"/>
 				<enumChoice choice="Phase B"/>
 				</enumVal>
 			</variable>
-		<variable label="F5 grade crossing logic" CV="49" mask="XXVXXXXX"
+		<variable label="F5 grade crossing logic" CV="51" mask="XXVXXXXX"
 					item="Function 1 option 2">
 			<enumVal>
 				<enumChoice choice="Disabled"/>
 				<enumChoice choice="Enabled When Horn On"/>
 				</enumVal>
 			</variable>
-		<variable label="F5 Rule 17 mode" CV="49" mask="XVXXXXXX"
+		<variable label="F5 Rule 17 mode" CV="51" mask="XVXXXXXX"
 					item="Function 1 option 3">
 			<enumVal>
 				<enumChoice choice="Disabled"/>
 				<enumChoice choice="Enabled"/>
 				</enumVal>
 			</variable>
-		<variable label="F5 light type" CV="49" mask="VXXXXXXX"
+		<variable label="F5 light type" CV="51" mask="VXXXXXXX"
 					item="Function 1 option 4">
 			<enumVal>
 				<enumChoice choice="Incandescent"/>
@@ -845,28 +847,28 @@
 				<enumChoice choice="Dyno-light"/>
 				</enumVal>
 			</variable>
-		<variable label="F6 phase" CV="49" mask="XXXVXXXX"
+		<variable label="F6 phase" CV="52" mask="XXXVXXXX"
 					item="Function 2 options">
 			<enumVal>
 				<enumChoice choice="Phase A"/>
 				<enumChoice choice="Phase B"/>
 				</enumVal>
 			</variable>
-		<variable label="F6 grade crossing logic" CV="49" mask="XXVXXXXX"
+		<variable label="F6 grade crossing logic" CV="52" mask="XXVXXXXX"
 					item="Function 2 option 2">
 			<enumVal>
 				<enumChoice choice="Disabled"/>
 				<enumChoice choice="Enabled When Horn On"/>
 				</enumVal>
 			</variable>
-		<variable label="F6 Rule 17 mode" CV="49" mask="XVXXXXXX"
+		<variable label="F6 Rule 17 mode" CV="52" mask="XVXXXXXX"
 					item="Function 2 option 3">
 			<enumVal>
 				<enumChoice choice="Disabled"/>
 				<enumChoice choice="Enabled"/>
 				</enumVal>
 			</variable>
-		<variable label="F6 light type" CV="49" mask="VXXXXXXX"
+		<variable label="F6 light type" CV="52" mask="VXXXXXXX"
 					item="Function 2 option 4">
 			<enumVal>
 				<enumChoice choice="Incandescent"/>
