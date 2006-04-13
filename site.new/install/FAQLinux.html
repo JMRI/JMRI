@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: FAQLinux.html,v 1.5 2005-03-26 03:19:34 jacobsen Exp $ -->
+<!-- $Id: FAQLinux.html,v 1.6 2006-04-13 03:43:34 pbender Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -109,6 +109,45 @@ both the "SDK" and "JRE" forms of java installed, it will <i>usually</i>
 use the SDK directories, but you might want to install to both.
 </dd>
 
+<dt class=left><a id="#comm"/>What do I do if my (USB) serial port isn't 
+listed in the preferences?</dt>
+<dd class=first>
+<P>There are three options for solving this problem.
+<P>Option 1:<p>
+<P> If the RxTx and Java Communications Libraries are installed correctly, 
+and  the serial port to which your device is attached isn't listed, 
+you can force RxTx to recognize a specific serial port.
+<p>If you want to force the use of "/dev/ttyUSB0", you can do this by 
+adding the following to java command line in the "DecoderPro","PanelPro",
+"LocoTools", or "JmriDemo" script:
+<P>
+<pre>
+<code>
+ -Djavax.comm.rxtx.SerialPorts=/dev/ttyUSB0
+</code>
+</pre>
+</dd>
+<p> Multiple ports can be added to the list by using a colon seperated 
+list.
+<p>Option 2:<p>
+<P> If the RxTx and Java Communications Libraries are installed correctly, 
+and  the serial port to which your device is attached isn't listed, 
+you can force RxTx to recognize a specific serial port.
+<p>If you want to force the use of "/dev/ttyUSB0", you can do this by 
+adding the following to the "javax.comm.properties":
+<P>
+<pre>
+<code>
+javax.comm.rxtx.SerialPorts=/dev/ttyUSB0
+</code>
+</pre>
+</dd>
+<p> Multiple ports can be added to the list by using a colon seperated 
+list.
+<p>Option 3:<p>
+<p> Finally, if you want RxTx to scan the available ports for you, you can 
+modify the source code to do this.  The instructions for doing this are 
+included in the INSTALLATION file contained within the RxTx package.</p>
 
 </dl>
       <hr class="hide">
