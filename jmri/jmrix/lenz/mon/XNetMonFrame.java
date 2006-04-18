@@ -20,7 +20,7 @@ import jmri.jmrix.lenz.XNetConstants;
 /**
  * Frame displaying (and logging) XpressNet messages
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version         $Revision: 2.15 $
+ * @version         $Revision: 2.16 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
@@ -647,19 +647,19 @@ import jmri.jmrix.lenz.XNetConstants;
 						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ");
 					int element4 = l.getElement(4);
 					if((element4 & 0x10)!=0)
-						text += "F0 on/off ";
+						text += "F0 continuous ";
 					else text += "F0 momentary ";
 					if((element4 & 0x01)!=0)
-						text += "F1 on/off ";
+						text += "F1 continuous ";
 					else text += "F1 momentary ";
 					if((element4 & 0x02)!=0)
-						text += "F2 on/off ";
+						text += "F2 continuous ";
 					else text += "F2 momentary ";
 					if((element4 & 0x04)!=0)
-						text += "F3 on/off ";
+						text += "F3 continous ";
 					else text += "F3 momentary ";
 					if((element4 & 0x08)!=0) 
-						text += "F4 on/off ";
+						text += "F4 continuous ";
 					else text += "F4 momentary ";
 						break;
 					}
@@ -669,16 +669,16 @@ import jmri.jmrix.lenz.XNetConstants;
 						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ");
 					int element4 = l.getElement(4);
 					if((element4 & 0x01)!=0)
-						text += "F5 on/off ";
+						text += "F5 continuous ";
 					else text += "F5 momentary ";
 					if((element4 & 0x02)!=0)
-						text += "F6 on/off ";
+						text += "F6 continuous ";
 					else text += "F6 momentary ";
 					if((element4 & 0x04)!=0)
-						text += "F7 on/off ";
+						text += "F7 continuous ";
 					else text += "F7 momentary ";
 					if((element4 & 0x08)!=0)
-						text += "F8 on/off ";
+						text += "F8 continuous ";
 					else text += "F8 momentary ";
 						break;
 					}
@@ -688,16 +688,16 @@ import jmri.jmrix.lenz.XNetConstants;
 						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ");
 					int element4 = l.getElement(4);
 					if((element4 & 0x01)!=0)
-						text += "F9 on/off ";
+						text += "F9 continuous ";
 					else text += "F9 momentary ";
 					if((element4 & 0x02)!=0)
-						text += "F10 on/off ";
+						text += "F10 continuous ";
 					else text += "F10 momentary ";
 					if((element4 & 0x04)!=0)
-						text += "F11 on/off ";
+						text += "F11 continuous ";
 					else text += "F11 momentary ";
 					if((element4 & 0x08)!=0) 
-						text += "F12 on/off ";
+						text += "F12 continuous ";
 					else text += "F12 momentary ";
 						break;
 					}
@@ -942,10 +942,10 @@ import jmri.jmrix.lenz.XNetConstants;
 	        else text += "F4 Continuous ";
 	        if((element4 & 0x01)!=0) 
 		   text += "F5 Momentary ";
-		else text += "F5 Contenuous ";
+		else text += "F5 Continuous ";
 		if((element4 & 0x02)!=0)
 		   text += "F6 Momentary ";
-		else text += "F6 Contenuous ";
+		else text += "F6 Continuous ";
 		if((element4 & 0x04)!=0)
 		   text += "F7 Momentary ";
 		else text += "F7 Continuous ";
