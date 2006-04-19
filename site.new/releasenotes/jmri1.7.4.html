@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.7.4.html,v 1.4 2006-04-05 06:54:37 jacobsen Exp $ -->
+<!-- $Id: jmri1.7.4.html,v 1.5 2006-04-19 15:13:09 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -118,7 +118,7 @@ Some of the changes involved are quite extensive, and may require a certain amou
 
 <h3>Changes since test version 1.7.3:</h3>
 
-<P>Paul Bender added additional message formats to the XPressNet monitor.
+<P>Paul Bender added additional message formats to the XPressNet monitor
 
 <P>NCE command stations can now be accessed over the Internet via a terminal server.  Select "NCE over network" in the preferences, then enter the host name and port address for the connection.
 
@@ -147,6 +147,34 @@ Some of the changes involved are quite extensive, and may require a certain amou
 <P>The decoder definition file format (DTD) has had an attribute added to record whether a decoder uses the two NMRA packet formats or the de-facto MRC packet format for functions beyond F12
 
 <P>Christopher Zurek improved the LokSound V3.5 decoder definition
+
+<P>Paul Bender added consisting support for EasyDCC
+
+<P>David Duchamp added more protection against data-entry errors in the Light Table.
+
+<P>Paul Bender updated XPressNet (Lenz) turnout support to fix a problem with turnout outputs staying on for too long. Also, the program now resends the turnout command if the XPressNet system returns a "not-operated" message
+
+<P>David Duchamp updated the C/MRI support so that it can drive turnouts through two outputs.  Some layouts have Tortoise and similar switch motors wired to two C/MRI output pins.  By alterating which pin is enabled, the turnout can be driven one way or the other.  David also added support for configuring and printing these assignments.
+
+<P>Dick Bronson contributed additional PanelPro icons for 90 crossings
+
+<P>David Duchamp improved the formating when printing tables
+
+<P>To reduce confusion, Paul Bender changed the name of one XPressNet connection choice from "Lenz LI101" to "Lenz LI101F"
+
+<P>Dick Bronson updated the "Simple Signal Logic" to be able to take into account more information from past a facing point turnout. He also improved the appearance of the panel
+
+<P>Ron McKinnon fixed some problems in the lighting definitions of the SoundTraxx Tsunami Steam definitions
+
+<P>New sample scripts:
+    <UL>
+    <LI>TurnoutReset.py - listen to a turnout and reset it back to "closed" every time it's "thrown".  This be useful e.g. to 
+        keep a turnout in one position waiting to control a route
+    <LI>TwoOutputTurnouts.py - some wiring methods use two outputs acting alternately to control a turnout.  This 
+        script slaves one output to be the opposite of another.  Note that this is no longer needed
+        for C/MRI systems, due to David Duchamp's updates
+    <LI>NSelectorExample.py - an example of an N-way icon on a panel
+    </UL>
 
       <hr class="hide">
 <!-- Footer -->
