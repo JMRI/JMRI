@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: RR-CirKits-TC-64-basic.xml,v 1.5 2006-02-20 20:33:47 jacobsen Exp $ -->
+<!-- $Id: RR-CirKits-TC-64-basic.xml,v 1.6 2006-04-24 03:04:01 jacobsen Exp $ -->
 <decoder-config > <!-- showEmptyPanes="no" -->
 		<version author="dick@rr-cirkits.com" 
-					version="1.0" lastUpdated="20060219"/>
+					version="1.01" lastUpdated="20060422"/>
 					
 		<!-- Version 1.0  -->
 		
@@ -6671,29 +6671,29 @@
 					<compositeSetting label="P1 Signal" value="0"/>
 
 					<compositeSetting label="P1A Input Direction" value="0"/>
-					<compositeSetting label="1A Mode" value="2"/>
-                    <compositeSetting label="1A Transition" value="3"/>
+					<compositeSetting label="1A Mode" value="0"/>
+                    <compositeSetting label="1A Transition" value="2"/>
 					<compositeSetting label="P1B Input Direction" value="0"/>
-					<compositeSetting label="1B Mode" value="2"/>
-                    <compositeSetting label="1B Transition" value="3"/>
+					<compositeSetting label="1B Mode" value="0"/>
+                    <compositeSetting label="1B Transition" value="2"/>
 					<compositeSetting label="P1C Input Direction" value="0"/>
-					<compositeSetting label="1C Mode" value="2"/>
-                    <compositeSetting label="1C Transition" value="3"/>
+					<compositeSetting label="1C Mode" value="0"/>
+                    <compositeSetting label="1C Transition" value="2"/>
 					<compositeSetting label="P1D Input Direction" value="0"/>
-					<compositeSetting label="1D Mode" value="2"/>
-                    <compositeSetting label="1D Transition" value="3"/>
+					<compositeSetting label="1D Mode" value="0"/>
+                    <compositeSetting label="1D Transition" value="2"/>
 					<compositeSetting label="P1E Input Direction" value="0"/>
-					<compositeSetting label="1E Mode" value="2"/>
-                    <compositeSetting label="1E Transition" value="3"/>
+					<compositeSetting label="1E Mode" value="0"/>
+                    <compositeSetting label="1E Transition" value="2"/>
 					<compositeSetting label="P1F Input Direction" value="0"/>
-					<compositeSetting label="1F Mode" value="2"/>
-                    <compositeSetting label="1F Transition" value="3"/>
+					<compositeSetting label="1F Mode" value="0"/>
+                    <compositeSetting label="1F Transition" value="2"/>
 					<compositeSetting label="P1G Input Direction" value="0"/>
-					<compositeSetting label="1G Mode" value="2"/>
-                    <compositeSetting label="1G Transition" value="3"/>
+					<compositeSetting label="1G Mode" value="0"/>
+                    <compositeSetting label="1G Transition" value="2"/>
 					<compositeSetting label="P1H Input Direction" value="0"/>
-					<compositeSetting label="1H Mode" value="2"/>
-                    <compositeSetting label="1H Transition" value="3"/>
+					<compositeSetting label="1H Mode" value="0"/>
+                    <compositeSetting label="1H Transition" value="2"/>
                 </compositeChoice>
                 <compositeChoice choice="(Custom)" comment="If no other choice matches"/>
             </compositeVal>
@@ -6847,29 +6847,29 @@
 					<compositeSetting label="P2 Signal" value="0"/>
 
 					<compositeSetting label="P2A Input Direction" value="0"/>
-					<compositeSetting label="2A Mode" value="2"/>
-                    <compositeSetting label="2A Transition" value="3"/>
+					<compositeSetting label="2A Mode" value="0"/>
+                    <compositeSetting label="2A Transition" value="2"/>
 					<compositeSetting label="P2B Input Direction" value="0"/>
-					<compositeSetting label="2B Mode" value="2"/>
-                    <compositeSetting label="2B Transition" value="3"/>
+					<compositeSetting label="2B Mode" value="0"/>
+                    <compositeSetting label="2B Transition" value="2"/>
 					<compositeSetting label="P2C Input Direction" value="0"/>
-					<compositeSetting label="2C Mode" value="2"/>
-                    <compositeSetting label="2C Transition" value="3"/>
+					<compositeSetting label="2C Mode" value="0"/>
+                    <compositeSetting label="2C Transition" value="2"/>
 					<compositeSetting label="P2D Input Direction" value="0"/>
-					<compositeSetting label="2D Mode" value="2"/>
-                    <compositeSetting label="2D Transition" value="3"/>
+					<compositeSetting label="2D Mode" value="0"/>
+                    <compositeSetting label="2D Transition" value="2"/>
 					<compositeSetting label="P2E Input Direction" value="0"/>
-					<compositeSetting label="2E Mode" value="2"/>
-                    <compositeSetting label="2E Transition" value="3"/>
+					<compositeSetting label="2E Mode" value="0"/>
+                    <compositeSetting label="2E Transition" value="2"/>
 					<compositeSetting label="P2F Input Direction" value="0"/>
-					<compositeSetting label="2F Mode" value="2"/>
-                    <compositeSetting label="2F Transition" value="3"/>
+					<compositeSetting label="2F Mode" value="0"/>
+                    <compositeSetting label="2F Transition" value="2"/>
 					<compositeSetting label="P2G Input Direction" value="0"/>
-					<compositeSetting label="2G Mode" value="2"/>
-                    <compositeSetting label="2G Transition" value="3"/>
+					<compositeSetting label="2G Mode" value="0"/>
+                    <compositeSetting label="2G Transition" value="2"/>
 					<compositeSetting label="P2H Input Direction" value="0"/>
-					<compositeSetting label="2H Mode" value="2"/>
-                    <compositeSetting label="2H Transition" value="3"/>
+					<compositeSetting label="2H Mode" value="0"/>
+                    <compositeSetting label="2H Transition" value="2"/>
                 </compositeChoice>
                 <compositeChoice choice="(Custom)" comment="If no other choice matches"/>
             </compositeVal>
@@ -7023,29 +7023,29 @@
 					<compositeSetting label="P3 Signal" value="0"/>
 
 					<compositeSetting label="P3A Input Direction" value="0"/>
-					<compositeSetting label="3A Mode" value="2"/>
-                    <compositeSetting label="3A Transition" value="3"/>
+					<compositeSetting label="3A Mode" value="0"/>
+                    <compositeSetting label="3A Transition" value="2"/>
 					<compositeSetting label="P3B Input Direction" value="0"/>
-					<compositeSetting label="3B Mode" value="2"/>
-                    <compositeSetting label="3B Transition" value="3"/>
+					<compositeSetting label="3B Mode" value="0"/>
+                    <compositeSetting label="3B Transition" value="2"/>
 					<compositeSetting label="P3C Input Direction" value="0"/>
-					<compositeSetting label="3C Mode" value="2"/>
-                    <compositeSetting label="3C Transition" value="3"/>
+					<compositeSetting label="3C Mode" value="0"/>
+                    <compositeSetting label="3C Transition" value="2"/>
 					<compositeSetting label="P3D Input Direction" value="0"/>
-					<compositeSetting label="3D Mode" value="2"/>
-                    <compositeSetting label="3D Transition" value="3"/>
+					<compositeSetting label="3D Mode" value="0"/>
+                    <compositeSetting label="3D Transition" value="2"/>
 					<compositeSetting label="P3E Input Direction" value="0"/>
-					<compositeSetting label="3E Mode" value="2"/>
-                    <compositeSetting label="3E Transition" value="3"/>
+					<compositeSetting label="3E Mode" value="0"/>
+                    <compositeSetting label="3E Transition" value="2"/>
 					<compositeSetting label="P3F Input Direction" value="0"/>
-					<compositeSetting label="3F Mode" value="2"/>
-                    <compositeSetting label="3F Transition" value="3"/>
+					<compositeSetting label="3F Mode" value="0"/>
+                    <compositeSetting label="3F Transition" value="2"/>
 					<compositeSetting label="P3G Input Direction" value="0"/>
-					<compositeSetting label="3G Mode" value="2"/>
-                    <compositeSetting label="3G Transition" value="3"/>
+					<compositeSetting label="3G Mode" value="0"/>
+                    <compositeSetting label="3G Transition" value="2"/>
 					<compositeSetting label="P3H Input Direction" value="0"/>
-					<compositeSetting label="3H Mode" value="2"/>
-                    <compositeSetting label="3H Transition" value="3"/>
+					<compositeSetting label="3H Mode" value="0"/>
+                    <compositeSetting label="3H Transition" value="2"/>
                 </compositeChoice>
                 <compositeChoice choice="(Custom)" comment="If no other choice matches"/>
             </compositeVal>
@@ -7199,29 +7199,29 @@
 					<compositeSetting label="P4 Signal" value="0"/>
 
 					<compositeSetting label="P4A Input Direction" value="0"/>
-					<compositeSetting label="4A Mode" value="2"/>
-                    <compositeSetting label="4A Transition" value="3"/>
+					<compositeSetting label="4A Mode" value="0"/>
+                    <compositeSetting label="4A Transition" value="2"/>
 					<compositeSetting label="P4B Input Direction" value="0"/>
-					<compositeSetting label="4B Mode" value="2"/>
-                    <compositeSetting label="4B Transition" value="3"/>
+					<compositeSetting label="4B Mode" value="0"/>
+                    <compositeSetting label="4B Transition" value="2"/>
 					<compositeSetting label="P4C Input Direction" value="0"/>
-					<compositeSetting label="4C Mode" value="2"/>
-                    <compositeSetting label="4C Transition" value="3"/>
+					<compositeSetting label="4C Mode" value="0"/>
+                    <compositeSetting label="4C Transition" value="2"/>
 					<compositeSetting label="P4D Input Direction" value="0"/>
-					<compositeSetting label="4D Mode" value="2"/>
-                    <compositeSetting label="4D Transition" value="3"/>
+					<compositeSetting label="4D Mode" value="0"/>
+                    <compositeSetting label="4D Transition" value="2"/>
 					<compositeSetting label="P4E Input Direction" value="0"/>
-					<compositeSetting label="4E Mode" value="2"/>
-                    <compositeSetting label="4E Transition" value="3"/>
+					<compositeSetting label="4E Mode" value="0"/>
+                    <compositeSetting label="4E Transition" value="2"/>
 					<compositeSetting label="P4F Input Direction" value="0"/>
-					<compositeSetting label="4F Mode" value="2"/>
-                    <compositeSetting label="4F Transition" value="3"/>
+					<compositeSetting label="4F Mode" value="0"/>
+                    <compositeSetting label="4F Transition" value="2"/>
 					<compositeSetting label="P4G Input Direction" value="0"/>
-					<compositeSetting label="4G Mode" value="2"/>
-                    <compositeSetting label="4G Transition" value="3"/>
+					<compositeSetting label="4G Mode" value="0"/>
+                    <compositeSetting label="4G Transition" value="2"/>
 					<compositeSetting label="P4H Input Direction" value="0"/>
-					<compositeSetting label="4H Mode" value="2"/>
-                    <compositeSetting label="4H Transition" value="3"/>
+					<compositeSetting label="4H Mode" value="0"/>
+                    <compositeSetting label="4H Transition" value="2"/>
                 </compositeChoice>
                 <compositeChoice choice="(Custom)" comment="If no other choice matches"/>
             </compositeVal>
@@ -7375,29 +7375,29 @@
 					<compositeSetting label="P5 Signal" value="0"/>
 
 					<compositeSetting label="P5A Input Direction" value="0"/>
-					<compositeSetting label="5A Mode" value="2"/>
-                    <compositeSetting label="5A Transition" value="3"/>
+					<compositeSetting label="5A Mode" value="0"/>
+                    <compositeSetting label="5A Transition" value="2"/>
 					<compositeSetting label="P5B Input Direction" value="0"/>
-					<compositeSetting label="5B Mode" value="2"/>
-                    <compositeSetting label="5B Transition" value="3"/>
+					<compositeSetting label="5B Mode" value="0"/>
+                    <compositeSetting label="5B Transition" value="2"/>
 					<compositeSetting label="P5C Input Direction" value="0"/>
-					<compositeSetting label="5C Mode" value="2"/>
-                    <compositeSetting label="5C Transition" value="3"/>
+					<compositeSetting label="5C Mode" value="0"/>
+                    <compositeSetting label="5C Transition" value="2"/>
 					<compositeSetting label="P5D Input Direction" value="0"/>
-					<compositeSetting label="5D Mode" value="2"/>
-                    <compositeSetting label="5D Transition" value="3"/>
+					<compositeSetting label="5D Mode" value="0"/>
+                    <compositeSetting label="5D Transition" value="2"/>
 					<compositeSetting label="P5E Input Direction" value="0"/>
-					<compositeSetting label="5E Mode" value="2"/>
-                    <compositeSetting label="5E Transition" value="3"/>
+					<compositeSetting label="5E Mode" value="0"/>
+                    <compositeSetting label="5E Transition" value="2"/>
 					<compositeSetting label="P5F Input Direction" value="0"/>
-					<compositeSetting label="5F Mode" value="2"/>
-                    <compositeSetting label="5F Transition" value="3"/>
+					<compositeSetting label="5F Mode" value="0"/>
+                    <compositeSetting label="5F Transition" value="2"/>
 					<compositeSetting label="P5G Input Direction" value="0"/>
-					<compositeSetting label="5G Mode" value="2"/>
-                    <compositeSetting label="5G Transition" value="3"/>
+					<compositeSetting label="5G Mode" value="0"/>
+                    <compositeSetting label="5G Transition" value="2"/>
 					<compositeSetting label="P5H Input Direction" value="0"/>
-					<compositeSetting label="5H Mode" value="2"/>
-                    <compositeSetting label="5H Transition" value="3"/>
+					<compositeSetting label="5H Mode" value="0"/>
+                    <compositeSetting label="5H Transition" value="2"/>
                 </compositeChoice>
                 <compositeChoice choice="(Custom)" comment="If no other choice matches"/>
             </compositeVal>
@@ -7551,29 +7551,29 @@
 					<compositeSetting label="P6 Signal" value="0"/>
 
 					<compositeSetting label="P6A Input Direction" value="0"/>
-					<compositeSetting label="6A Mode" value="2"/>
-                    <compositeSetting label="6A Transition" value="3"/>
+					<compositeSetting label="6A Mode" value="0"/>
+                    <compositeSetting label="6A Transition" value="2"/>
 					<compositeSetting label="P6B Input Direction" value="0"/>
-					<compositeSetting label="6B Mode" value="2"/>
-                    <compositeSetting label="6B Transition" value="3"/>
+					<compositeSetting label="6B Mode" value="0"/>
+                    <compositeSetting label="6B Transition" value="2"/>
 					<compositeSetting label="P6C Input Direction" value="0"/>
-					<compositeSetting label="6C Mode" value="2"/>
-                    <compositeSetting label="6C Transition" value="3"/>
+					<compositeSetting label="6C Mode" value="0"/>
+                    <compositeSetting label="6C Transition" value="2"/>
 					<compositeSetting label="P6D Input Direction" value="0"/>
-					<compositeSetting label="6D Mode" value="2"/>
-                    <compositeSetting label="6D Transition" value="3"/>
+					<compositeSetting label="6D Mode" value="0"/>
+                    <compositeSetting label="6D Transition" value="2"/>
 					<compositeSetting label="P6E Input Direction" value="0"/>
-					<compositeSetting label="6E Mode" value="2"/>
-                    <compositeSetting label="6E Transition" value="3"/>
+					<compositeSetting label="6E Mode" value="0"/>
+                    <compositeSetting label="6E Transition" value="2"/>
 					<compositeSetting label="P6F Input Direction" value="0"/>
-					<compositeSetting label="6F Mode" value="2"/>
-                    <compositeSetting label="6F Transition" value="3"/>
+					<compositeSetting label="6F Mode" value="0"/>
+                    <compositeSetting label="6F Transition" value="2"/>
 					<compositeSetting label="P6G Input Direction" value="0"/>
-					<compositeSetting label="6G Mode" value="2"/>
-                    <compositeSetting label="6G Transition" value="3"/>
+					<compositeSetting label="6G Mode" value="0"/>
+                    <compositeSetting label="6G Transition" value="2"/>
 					<compositeSetting label="P6H Input Direction" value="0"/>
-					<compositeSetting label="6H Mode" value="2"/>
-                    <compositeSetting label="6H Transition" value="3"/>
+					<compositeSetting label="6H Mode" value="0"/>
+                    <compositeSetting label="6H Transition" value="2"/>
                 </compositeChoice>
                 <compositeChoice choice="(Custom)" comment="If no other choice matches"/>
             </compositeVal>
@@ -7727,29 +7727,29 @@
 					<compositeSetting label="P7 Signal" value="0"/>
 
 					<compositeSetting label="P7A Input Direction" value="0"/>
-					<compositeSetting label="7A Mode" value="2"/>
-                    <compositeSetting label="7A Transition" value="3"/>
+					<compositeSetting label="7A Mode" value="0"/>
+                    <compositeSetting label="7A Transition" value="2"/>
 					<compositeSetting label="P7B Input Direction" value="0"/>
-					<compositeSetting label="7B Mode" value="2"/>
-                    <compositeSetting label="7B Transition" value="3"/>
+					<compositeSetting label="7B Mode" value="0"/>
+                    <compositeSetting label="7B Transition" value="2"/>
 					<compositeSetting label="P7C Input Direction" value="0"/>
-					<compositeSetting label="7C Mode" value="2"/>
-                    <compositeSetting label="7C Transition" value="3"/>
+					<compositeSetting label="7C Mode" value="0"/>
+                    <compositeSetting label="7C Transition" value="2"/>
 					<compositeSetting label="P7D Input Direction" value="0"/>
-					<compositeSetting label="7D Mode" value="2"/>
-                    <compositeSetting label="7D Transition" value="3"/>
+					<compositeSetting label="7D Mode" value="0"/>
+                    <compositeSetting label="7D Transition" value="2"/>
 					<compositeSetting label="P7E Input Direction" value="0"/>
-					<compositeSetting label="7E Mode" value="2"/>
-                    <compositeSetting label="7E Transition" value="3"/>
+					<compositeSetting label="7E Mode" value="0"/>
+                    <compositeSetting label="7E Transition" value="2"/>
 					<compositeSetting label="P7F Input Direction" value="0"/>
-					<compositeSetting label="7F Mode" value="2"/>
-                    <compositeSetting label="7F Transition" value="3"/>
+					<compositeSetting label="7F Mode" value="0"/>
+                    <compositeSetting label="7F Transition" value="2"/>
 					<compositeSetting label="P7G Input Direction" value="0"/>
-					<compositeSetting label="7G Mode" value="2"/>
-                    <compositeSetting label="7G Transition" value="3"/>
+					<compositeSetting label="7G Mode" value="0"/>
+                    <compositeSetting label="7G Transition" value="2"/>
 					<compositeSetting label="P7H Input Direction" value="0"/>
-					<compositeSetting label="7H Mode" value="2"/>
-                    <compositeSetting label="7H Transition" value="3"/>
+					<compositeSetting label="7H Mode" value="0"/>
+                    <compositeSetting label="7H Transition" value="2"/>
                 </compositeChoice>
                 <compositeChoice choice="(Custom)" comment="If no other choice matches"/>
             </compositeVal>
@@ -7903,29 +7903,29 @@
 					<compositeSetting label="P8 Signal" value="0"/>
 
 					<compositeSetting label="P8A Input Direction" value="0"/>
-					<compositeSetting label="8A Mode" value="2"/>
-                    <compositeSetting label="8A Transition" value="3"/>
+					<compositeSetting label="8A Mode" value="0"/>
+                    <compositeSetting label="8A Transition" value="2"/>
 					<compositeSetting label="P8B Input Direction" value="0"/>
-					<compositeSetting label="8B Mode" value="2"/>
-                    <compositeSetting label="8B Transition" value="3"/>
+					<compositeSetting label="8B Mode" value="0"/>
+                    <compositeSetting label="8B Transition" value="2"/>
 					<compositeSetting label="P8C Input Direction" value="0"/>
-					<compositeSetting label="8C Mode" value="2"/>
-                    <compositeSetting label="8C Transition" value="3"/>
+					<compositeSetting label="8C Mode" value="0"/>
+                    <compositeSetting label="8C Transition" value="2"/>
 					<compositeSetting label="P8D Input Direction" value="0"/>
-					<compositeSetting label="8D Mode" value="2"/>
-                    <compositeSetting label="8D Transition" value="3"/>
+					<compositeSetting label="8D Mode" value="0"/>
+                    <compositeSetting label="8D Transition" value="2"/>
 					<compositeSetting label="P8E Input Direction" value="0"/>
-					<compositeSetting label="8E Mode" value="2"/>
-                    <compositeSetting label="8E Transition" value="3"/>
+					<compositeSetting label="8E Mode" value="0"/>
+                    <compositeSetting label="8E Transition" value="2"/>
 					<compositeSetting label="P8F Input Direction" value="0"/>
-					<compositeSetting label="8F Mode" value="2"/>
-                    <compositeSetting label="8F Transition" value="3"/>
+					<compositeSetting label="8F Mode" value="0"/>
+                    <compositeSetting label="8F Transition" value="2"/>
 					<compositeSetting label="P8G Input Direction" value="0"/>
-					<compositeSetting label="8G Mode" value="2"/>
-                    <compositeSetting label="8G Transition" value="3"/>
+					<compositeSetting label="8G Mode" value="0"/>
+                    <compositeSetting label="8G Transition" value="2"/>
 					<compositeSetting label="P8H Input Direction" value="0"/>
-					<compositeSetting label="8H Mode" value="2"/>
-                    <compositeSetting label="8H Transition" value="3"/>
+					<compositeSetting label="8H Mode" value="0"/>
+                    <compositeSetting label="8H Transition" value="2"/>
                 </compositeChoice>
                 <compositeChoice choice="(Custom)" comment="If no other choice matches"/>
             </compositeVal>
