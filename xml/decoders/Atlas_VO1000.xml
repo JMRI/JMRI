@@ -2,7 +2,7 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Atlas_VO1000.xml,v 1.3 2006-04-24 04:55:03 pbender Exp $ -->
+<!-- $Id: Atlas_VO1000.xml,v 1.4 2006-04-24 05:14:57 pbender Exp $ -->
 <decoder-config>
 		<version author="Paul Bender (paul.bender@acm.org)"
 			version="1" lastUpdated="20040802" />
@@ -51,7 +51,7 @@
 			<decVal/>
 			</variable>
 
-                <variable label="Manufacturer ID - Reset" CV="8">
+                <variable label="Manufacturer ID - Reset" CV="8"
                         item="Reset"
                         comment="Writing a value of 33 will reset decoder to factory defaults" >
                         <decVal/>
