@@ -2,15 +2,17 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Atlas_VO1000.xml,v 1.2 2005-05-01 23:25:41 jacobsen Exp $ -->
+<!-- $Id: Atlas_VO1000.xml,v 1.3 2006-04-24 04:55:03 pbender Exp $ -->
 <decoder-config>
 		<version author="Paul Bender (paul.bender@acm.org)"
 			version="1" lastUpdated="20040802" />
 
+                <!-- Version 2 - added factory reset menu items (Paul Bender) -->
+
 <decoder>
 	<family name="Atlas N-Scale" mfg="Atlas" 
 			lowVersionID="46" highVersionID="46">
-		<model model="VO1000" numOuts="2" numFns="0"
+		<model model="VO1000 (Part #500099)" numOuts="2" numFns="0"
 			lowVersionID="46" highVersionID="46">
 		</model>
 	</family>
@@ -48,6 +50,13 @@
 				item="Manufacturer" default="127">
 			<decVal/>
 			</variable>
+
+                <variable label="Manufacturer ID - Reset" CV="8">
+                        item="Reset"
+                        comment="Writing a value of 33 will reset decoder to factory defaults" >
+                        <decVal/>
+                </variable>
+
 
 		<variable label="Long Address" CV="17" item="Extended Address"
 		        comment="4 digit address (Range 0001-9999)">
@@ -108,6 +117,10 @@
 
 	<!-- Define the fixed Function-Output mapping -->
 	</variables>
+
+        <resets>
+           <factReset label="Reset All CVs" CV="8" default="33"/>
+        </resets>
 
 </decoder>
 

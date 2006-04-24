@@ -2,11 +2,11 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Bachmann_EZDCC.xml,v 1.2 2005-05-01 23:25:41 jacobsen Exp $ -->
+<!-- $Id: Bachmann_EZDCC.xml,v 1.3 2006-04-24 04:55:03 pbender Exp $ -->
 <decoder-config>
 		<version author="Michael Greene (mgreene@cedarlane.com)"
 			version="1" lastUpdated="20041022" />
-
+                <!-- Version 2 - added factory reset menu items (Paul Bender) -->
 <decoder>
 	<family name="Bachmann E-Z Command decoders" mfg="Bachmann Trains">
 		<model model="E-Z Command Locomotives" numOuts="2" numFns="0"
@@ -148,6 +148,10 @@
 	<constant label="FL(f) controls output 1" minOut="1" default="1" /> 
 	<constant label="FL(r) controls output 2" minOut="2" default="1" /> 
 	</variables>
+
+        <resets>
+           <factReset label="Reset All CVs" CV="8" default="33"/>
+        </resets>
 
 </decoder>
 

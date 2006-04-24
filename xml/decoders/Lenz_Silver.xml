@@ -2,13 +2,13 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2006 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Lenz_Silver.xml,v 1.1 2006-02-01 16:06:24 jacobsen Exp $ -->
+<!-- $Id: Lenz_Silver.xml,v 1.2 2006-04-24 04:55:03 pbender Exp $ -->
 <decoder-config>
 	<version author="Mark Schutzer mark.schutzer@sbcglobal.net"
 				version="2" lastUpdated="20060114" />
 				<!-- Version 1 - created from Lenz_gold.xml "20060111"-->
 				<!-- Version 2 - removed SUSI & motor timeout CV's as they are not supported "20060114"-->
-
+                                <!-- Version 3 - added factory reset menu items (Paul Bender) -->
 <!-- These are the Silver decoders, with "6th gen BEMF", "Precision Braking Control" -->
 <!-- and "Low Gear Switching Drive" -->
 
@@ -78,7 +78,7 @@
 
 		<variable label="Manufacturer ID - Reset" CV="8"
 			item="Reset"
-			comment="Writing a value of 33 using register mode will reset decoder to factory defaults" >
+			comment="Writing a value of 8 or 33 will reset decoder to factory defaults" >
 			<decVal/>
 		</variable>
 
@@ -697,6 +697,11 @@
 		</variable>
 		
 	</variables>
+
+        <resets>
+           <factReset label="Reset All CVs" CV="8" default="33"/>
+        </resets>
+
 </decoder>
 
 <pane name="Lenz Function Map">
