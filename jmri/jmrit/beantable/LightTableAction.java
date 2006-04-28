@@ -32,7 +32,7 @@ import javax.swing.JOptionPane;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -396,7 +396,7 @@ public class LightTableAction extends AbstractTableAction {
             // Invalid System Name format
             log.warn("Invalid Light system name format entered: "+suName);
             status1.setText( rb.getString("LightError3") );
-            status2.setText( rb.getString("LightError4") );
+            status2.setText( rb.getString("LightError6") );
             status2.setVisible(true);
             return;
         }
@@ -498,7 +498,7 @@ public class LightTableAction extends AbstractTableAction {
         if (sName=="") {
             // Entered system name has invalid format
             status1.setText( rb.getString("LightError3") );
-            status2.setText( rb.getString("LightError4") );
+            status2.setText( rb.getString("LightError6") );
             status2.setVisible(true);
             return;
         }            
