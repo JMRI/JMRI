@@ -14,7 +14,7 @@ import jmri.jmrit.MemoryContents;
 /**
  * Pane for downloading .hex files
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.7 $
+ * @version	    $Revision: 1.8 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -425,14 +425,14 @@ public class LoaderPane extends javax.swing.JPanel {
             int location = inputContent.nextContent(startaddr);
             totalmsgs = 0;
             sentmsgs = 0;
-            location = location & (~0x07);  // mask off bits to be multiple of 8
+            location = location & 0xFFFFFFF8;  // mask off bits to be multiple of 8
             do {
                 location = location + 8;
                 totalmsgs++;
                 // update to the next location for data
                 int next = inputContent.nextContent(location);
                 if (next<0) break;   // no data left
-                location = next & (~0x07);  // mask off bits to be multiple of 8
+                location = next & 0xFFFFFFF8;  // mask off bits to be multiple of 8
 
             } while (location <= endaddr);
 
@@ -442,7 +442,7 @@ public class LoaderPane extends javax.swing.JPanel {
                 log.info("No data, which seems odd");
                 return;  // ends load process
             }
-            location = location & (~0x07);  // mask off bits to be multiple of 8
+            location = location & 0xFFFFFFF8;  // mask off bits to be multiple of 8
 
             setAddr(location);
 
@@ -478,7 +478,7 @@ public class LoaderPane extends javax.swing.JPanel {
                 // update to the next location for data
                 int next = inputContent.nextContent(location);
                 if (next<0) break;   // no data left
-                next = next & (~0x07);  // mask off bits to be multiple of 8
+                next = next & 0xFFFFFFF8;  // mask off bits to be multiple of 8
                 if (next != location) {
                     // wait for completion
                     doWait(next);
