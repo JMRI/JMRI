@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.7.4.html,v 1.6 2006-05-01 04:46:41 jacobsen Exp $ -->
+<!-- $Id: jmri1.7.4.html,v 1.7 2006-05-14 18:40:34 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -177,6 +177,14 @@ Some of the changes involved are quite extensive, and may require a certain amou
     </UL>
 
 <LI>Paul Bender added "factory reset" settings to a number of decoder definitions
+
+<LI>David Duchamp added "Light" support to Digitrax connections
+
+<LI>Bob Jacobsen fixed a problem with the waitSensorInactive([]) and waitSensorActive([]) functions that had been accidentally introduced in JMRI 1.7.3.  Only the routines that took an array of Sensors were effected; waiting for a single Sensor is OK in 1.7.3 (bug 1486117)
+
+<LI>Bob fixed a problem with the display of the "dark" and "flashing red" aspects of a signal head on a panel (bug 1474015). Also, the rotation and sizing of the flashing aspects was improved (e.g. fixed)
+
+
 
 <hr class="hide">
 <!-- Footer -->
