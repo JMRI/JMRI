@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.59 2006-04-11 20:51:46 jacobsen Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.60 2006-05-14 17:24:41 jacobsen Exp $ -->
 
 <!-- This DTD is Copyright 2001-2005 JMRI.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -306,6 +306,7 @@
     <!ATTLIST signalheadicon height	CDATA #IMPLIED> <!-- deprecated -->
     <!ATTLIST signalheadicon width	CDATA #IMPLIED> <!-- deprecated -->
     <!ATTLIST signalheadicon rotate  	CDATA #IMPLIED>
+    <!ATTLIST signalheadicon dark        CDATA #IMPLIED>
     <!ATTLIST signalheadicon red         CDATA #IMPLIED>
     <!ATTLIST signalheadicon flashred    CDATA #IMPLIED>
     <!ATTLIST signalheadicon yellow      CDATA #IMPLIED>
