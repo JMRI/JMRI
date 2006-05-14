@@ -126,6 +126,11 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
      */
     public void notifyFunctionLockableChanged(int functionNumber, boolean isLockable)
     {
+        if (throttle==null) {
+            log.error("throttle pointer null in notifyFunctionLockableChanged");
+            return;
+        }
+        
         switch (functionNumber)
         {
             case 0: throttle.setF0Momentary(!isLockable); break;
@@ -202,7 +207,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
 	 *  A KeyAdapter that listens for the keys that work the function buttons
 	 *
 	 * @author     glen
-          * @version    $Revision: 1.26 $
+          * @version    $Revision: 1.27 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter
 	{
