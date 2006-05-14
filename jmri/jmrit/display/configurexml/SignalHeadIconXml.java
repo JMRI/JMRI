@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class SignalHeadIconXml implements XmlAdapter {
 
@@ -36,6 +36,7 @@ public class SignalHeadIconXml implements XmlAdapter {
         element.addAttribute("signalhead", ""+p.getSignalHead().getSystemName());
         element.addAttribute("x", ""+p.getX());
         element.addAttribute("y", ""+p.getY());
+        element.addAttribute("dark", p.getDarkIcon().getName());
         element.addAttribute("red", p.getRedIcon().getName());
         element.addAttribute("yellow", p.getYellowIcon().getName());
         element.addAttribute("flashyellow", p.getFlashYellowIcon().getName());
@@ -91,7 +92,7 @@ public class SignalHeadIconXml implements XmlAdapter {
         NamedIcon dark = null;
         a = element.getAttribute("dark");
         if (a!=null) 
-            l.setFlashRedIcon(dark = CatalogPane.getIconByName(a.getValue()));
+            l.setDarkIcon(dark = CatalogPane.getIconByName(a.getValue()));
 
         NamedIcon flashred = null;
         a = element.getAttribute("flashred");
