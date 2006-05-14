@@ -73,7 +73,7 @@ import javax.swing.JTextArea;
  * so that Jython code can easily use some of the methods.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.28 $
+ * @version     $Revision: 1.29 $
  */
 public class AbstractAutomaton implements Runnable {
 
@@ -348,17 +348,17 @@ public class AbstractAutomaton implements Runnable {
     }
     
     /**
-     * Wait for one of a list of sensors to be be active.
+     * Wait for one of a list of sensors to be be inactive.
      */
-    public void waitSensorActive(Sensor[] mSensors){
+    public void waitSensorInactive(Sensor[] mSensors){
         if (log.isDebugEnabled()) log.debug("waitSensorInactive[] starts");
         waitSensorState(mSensors, Sensor.INACTIVE);    
     }
     
     /**
-     * Wait for one of a list of sensors to be be inactive.
+     * Wait for one of a list of sensors to be be active.
      */
-    public void waitSensorInactive(Sensor[] mSensors){
+    public void waitSensorActive(Sensor[] mSensors){
         if (log.isDebugEnabled()) log.debug("waitSensorActive[] starts");
         waitSensorState(mSensors, Sensor.ACTIVE);    
     }
