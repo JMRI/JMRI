@@ -19,7 +19,7 @@ import javax.swing.JPopupMenu;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -120,20 +120,26 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
     }
 
     protected int maxHeight() {
-        return Math.max(
-                Math.max( (red!=null) ? red.getIconHeight() : 0,
-                        (green!=null) ? green.getIconHeight() : 0),
-                Math.max((yellow!=null) ? yellow.getIconHeight() : 0,
-                        (flashYellow!=null) ? flashYellow.getIconHeight() : 0)
-            );
+        int max = 0;
+        max = Math.max((red!=null) ? red.getIconHeight() : 0, max);
+        max = Math.max((yellow!=null) ? yellow.getIconHeight() : 0, max);
+        max = Math.max((green!=null) ? green.getIconHeight() : 0, max);
+        max = Math.max((flashRed!=null) ? flashRed.getIconHeight() : 0, max);
+        max = Math.max((flashYellow!=null) ? flashYellow.getIconHeight() : 0, max);
+        max = Math.max((flashGreen!=null) ? flashGreen.getIconHeight() : 0, max);
+        max = Math.max((dark!=null) ? dark.getIconHeight() : 0, max);
+        return max;
     }
     protected int maxWidth() {
-        return Math.max(
-                Math.max((red!=null) ? red.getIconWidth() : 0,
-                        (green!=null) ? green.getIconWidth() : 0),
-                Math.max((yellow!=null) ? yellow.getIconWidth() : 0,
-                        (flashYellow!=null) ? flashYellow.getIconWidth() : 0)
-            );
+        int max = 0;
+        max = Math.max((red!=null) ? red.getIconWidth() : 0, max);
+        max = Math.max((yellow!=null) ? yellow.getIconWidth() : 0, max);
+        max = Math.max((green!=null) ? green.getIconWidth() : 0, max);
+        max = Math.max((flashRed!=null) ? flashRed.getIconWidth() : 0, max);
+        max = Math.max((flashYellow!=null) ? flashYellow.getIconWidth() : 0, max);
+        max = Math.max((flashGreen!=null) ? flashGreen.getIconWidth() : 0, max);
+        max = Math.max((dark!=null) ? dark.getIconWidth() : 0, max);
+        return max;
     }
 
     /**
@@ -180,7 +186,10 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
                         green.setRotation(green.getRotation()+1, ours);
                         red.setRotation(red.getRotation()+1, ours);
                         yellow.setRotation(yellow.getRotation()+1, ours);
-                        flashYellow.setRotation(flashYellow.getRotation()+1, ours);
+                        if (flashGreen !=null) flashGreen.setRotation(flashGreen.getRotation()+1, ours);
+                        if (flashRed !=null) flashRed.setRotation(flashRed.getRotation()+1, ours);
+                        if (flashYellow !=null) flashYellow.setRotation(flashYellow.getRotation()+1, ours);
+                        if (dark !=null) dark.setRotation(flashYellow.getRotation()+1, ours);
                         displayState(headState());
                     }
                 });
