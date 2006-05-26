@@ -14,7 +14,7 @@ import org.jdom.Element;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -298,7 +298,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         } catch (java.io.FileNotFoundException e1) {
             // this returns false to indicate un-success, but not enough
             // of an error to require a message
-            log.debug("file not found: "+fi.getName());
+            log.debug("File not found: "+fi.getAbsolutePath());
             return false;
         } catch (org.jdom.JDOMException e) {
             log.error("Exception reading: "+e);
