@@ -13,7 +13,7 @@ import jmri.ProgrammerException;
 /**
  * Debugging implementation of Programmer interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.17 $
+ * @version         $Revision: 1.18 $
  */
 public class ProgDebugger implements Programmer  {
 
@@ -101,8 +101,8 @@ public class ProgDebugger implements Programmer  {
 
     }
 
-    // handle mode
-    protected int _mode = 0;
+    // handle mode - default is paged mode
+    protected int _mode = Programmer.PAGEMODE;
 
     public void setMode(int mode) {
         log.debug("setMode: old="+_mode+" new="+mode);
