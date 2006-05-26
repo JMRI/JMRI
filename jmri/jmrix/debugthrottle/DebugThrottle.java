@@ -8,7 +8,7 @@ import jmri.jmrix.AbstractThrottle;
  * An implementation of DccThrottle for debugging use.
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class DebugThrottle extends AbstractThrottle
 {
@@ -43,6 +43,10 @@ public class DebugThrottle extends AbstractThrottle
     DccLocoAddress address;
 
     public LocoAddress getLocoAddress() { return address; }
+
+    public String toString() {
+        return getLocoAddress().toString();
+    }
 
     /**
      * Send the message to set the state of functions F0, F1, F2, F3, F4

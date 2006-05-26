@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractThrottle;
  * with values from 0 to 127.
  * <P>
  * @author  Glen Oberhauser, Bob Jacobsen  Copyright (C) 2003, 2004
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     private LocoNetSlot slot;
@@ -203,6 +203,10 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         dispose();
     }
 
+    public String toString() {
+        return getLocoAddress().toString();
+    }
+    
     /**
      * Dispose when finished with this object.  After this, further usage of
      * this Throttle object will result in a JmriException.
