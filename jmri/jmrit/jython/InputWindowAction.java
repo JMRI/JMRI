@@ -16,7 +16,7 @@ import jmri.util.PythonInterp;
  * global jython interpreter
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class InputWindowAction extends AbstractAction {
 
@@ -39,7 +39,7 @@ public class InputWindowAction extends AbstractAction {
 
         java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.jython.JythonBundle");
 
-        JFrame f = new JFrame(rb.getString("TitleInputFrame"));
+        f = new JFrame(rb.getString("TitleInputFrame"));
         f.getContentPane().setLayout(new javax.swing.BoxLayout(f.getContentPane(), javax.swing.BoxLayout.Y_AXIS));
         f.getContentPane().add(new InputWindow());
 
@@ -48,6 +48,9 @@ public class InputWindowAction extends AbstractAction {
 
     }
 
+    public JFrame getFrame() { return f; }
+
+    JFrame f;
 }
 
 /* @(#)InputWindowAction.java */

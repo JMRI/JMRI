@@ -13,7 +13,7 @@ import java.awt.Font;
  * the thread output log from the {@link RunJythonScript} class.
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class JythonWindow extends AbstractAction {
 
@@ -36,7 +36,7 @@ public class JythonWindow extends AbstractAction {
 
         java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.jython.JythonBundle");
 
-        JFrame f = new JFrame(rb.getString("TitleOutputFrame"));
+        f = new JFrame(rb.getString("TitleOutputFrame"));
         f.getContentPane().add(
             new javax.swing.JScrollPane(
                 area = new javax.swing.JTextArea(jmri.util.PythonInterp.getOutputArea().getDocument(), null, 12, 50)
@@ -50,7 +50,10 @@ public class JythonWindow extends AbstractAction {
         f.show();
     }
 
+    public JFrame getFrame() { return f; }
+    
     javax.swing.JTextArea area;
+    JFrame f;
 }
 
 /* @(#)JythonWindow.java */
