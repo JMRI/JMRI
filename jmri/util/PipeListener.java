@@ -9,7 +9,7 @@ import java.io.*;
  * and post them to a JTextArea for display
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
  class PipeListener extends Thread {
     private PipedReader pr;
@@ -30,7 +30,7 @@ import java.io.*;
                                                 // way I could think of with only one
                                                 // new object created
                 } catch (IOException ex) {
-                    if (ex.getMessage().equals("Write end dead")) {
+                    if (ex.getMessage().equals("Write end dead") || ex.getMessage().equals("Pipe broken")) {
                         // happens when the writer thread, e.g. a script, terminates
                         synchronized(this) {
                             try {
@@ -45,7 +45,7 @@ import java.io.*;
                 }
             }
         } catch (IOException ex) {
-            ta.append("PipeListener Exiting on IOException");
+            ta.append("PipeListener Exiting on IOException:"+ex);
         }
     }
 }
