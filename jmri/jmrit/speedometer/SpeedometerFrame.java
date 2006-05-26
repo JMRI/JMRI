@@ -26,7 +26,7 @@ import javax.swing.JTextField;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2004
  * @author      Adapted for metric system - S.K. Bosch
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  */
 public class SpeedometerFrame extends javax.swing.JFrame {
 
@@ -41,7 +41,7 @@ public class SpeedometerFrame extends javax.swing.JFrame {
     javax.swing.JRadioButton stopOnEntry1  	= new javax.swing.JRadioButton("entry");
     javax.swing.JRadioButton stopOnExit1    = new javax.swing.JRadioButton("exit");
 
-    JTextField stopSensor2 = new JTextField(5);
+    public JTextField stopSensor2 = new JTextField(5);
     javax.swing.ButtonGroup stopGroup2 		= new javax.swing.ButtonGroup();
     javax.swing.JRadioButton stopOnEntry2  	= new javax.swing.JRadioButton("entry");
     javax.swing.JRadioButton stopOnExit2    = new javax.swing.JRadioButton("exit");
@@ -68,6 +68,14 @@ public class SpeedometerFrame extends javax.swing.JFrame {
     SensorIcon stopSensorIcon1;
     SensorIcon stopSensorIcon2;
 
+    public void setInputs(String start, String stop1, String stop2, String d1, String d2) {
+        startSensor.setText(start);
+        stopSensor1.setText(stop1);
+        stopSensor2.setText(stop2);
+        distance1.setText(d1);
+        distance2.setText(d2);
+    }
+    
     public SpeedometerFrame() {
 
         startOnEntry.setSelected(true);
@@ -244,7 +252,7 @@ public class SpeedometerFrame extends javax.swing.JFrame {
           }
        }
 
-    void setup() {
+    public void setup() {
         startButton.setEnabled(false);
         startButton.setToolTipText("You can only configure this once");
         startButton.setVisible(false);
