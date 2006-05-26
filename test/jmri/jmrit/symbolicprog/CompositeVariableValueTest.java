@@ -19,7 +19,7 @@ import junit.framework.TestSuite;
  * Test CompositeVariableValue class.
  *
  * @author	Bob Jacobsen Copyright 2006
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class CompositeVariableValueTest extends VariableValueTest {
 
@@ -222,8 +222,6 @@ public class CompositeVariableValueTest extends VariableValueTest {
 
         // set value value
         ((JComboBox)testVar.getValue()).setSelectedIndex(1);
-
-        System.out.println("var state "+var17.getState()+" "+cv17.getState());
 
         // now changed, check
         Assert.assertEquals("Var 17 changed ", true, var17.isChanged());
