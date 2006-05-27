@@ -73,7 +73,7 @@ import javax.swing.JTextArea;
  * so that Jython code can easily use some of the methods.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.29 $
+ * @version     $Revision: 1.30 $
  */
 public class AbstractAutomaton implements Runnable {
 
@@ -500,7 +500,7 @@ public class AbstractAutomaton implements Runnable {
             mInputs[i].addPropertyChangeListener(listeners[i] = new java.beans.PropertyChangeListener() {
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     synchronized (self) {
-                        log.debug("notify waitChange[] of property change");
+                        log.debug("notify waitChange[] of property change "+e.getPropertyName()+" from "+((NamedBean)e.getSource()).getSystemName());
                         self.notifyAll(); // should be only one thread waiting, but just in case
                     }
                 }
@@ -584,7 +584,7 @@ public class AbstractAutomaton implements Runnable {
         while (throttle == null) {
             log.debug("waiting for throttle");
             wait(10000);
-            if (throttle == null) log.warn("Still waiting for throttle!");
+            if (throttle == null) log.warn("Still waiting for throttle "+address+"!");
         }
         return throttle;
     }
