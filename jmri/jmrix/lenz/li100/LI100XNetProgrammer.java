@@ -31,7 +31,7 @@ import java.beans.PropertyChangeEvent;
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Paul Bender  Copyright (c) 2003,2004,2005
- * @version $Revision: 2.1 $
+ * @version $Revision: 2.2 $
  */
 public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener {
 
@@ -201,7 +201,17 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
 			   controller().sendXNetMessage(XNetMessage.getExitProgModeMsg(),
                                                             this);
 			   notifyProgListenerEnd(_val, jmri.ProgListener.ProgrammingShort);
-			}
+                        } else if(m.isCommErrorMessage()) {
+                           // We experienced a communicatiosn error
+                           // If this is a Timeslot error, ignore it,
+                           //otherwise report it as an error
+                           if(m.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_TIMESLOT_ERROR)
+                                   return;
+                           log.error("Communications error in REQUESTSENT state while programming.  Error: " + m.toString());
+                                progState = NOTPROGRAMMING;
+                           stopTimer();
+                           notifyProgListenerEnd(_val, jmri.ProgListener.UnknownError);
+   			}
 		} else if (progState == INQUIRESENT) {
 			if (log.isDebugEnabled()) log.debug("reply in INQUIRESENT state");
             		// check for right message, else return
@@ -265,6 +275,16 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
 			   controller().sendXNetMessage(XNetMessage.getExitProgModeMsg(),
                                                             this);
 			   notifyProgListenerEnd(_val, jmri.ProgListener.ProgrammingShort);
+                        } else if(m.isCommErrorMessage()) {
+                           // We experienced a communicatiosn error
+                           // If this is a Timeslot error, ignore it,
+                           //otherwise report it as an error
+                           if(m.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_TIMESLOT_ERROR)
+                                   return;
+                           log.error("Communications error in INQUIRESENT state while programming.  Error: " + m.toString());
+                                progState = NOTPROGRAMMING;
+                           stopTimer();
+                           notifyProgListenerEnd(_val, jmri.ProgListener.UnknownError);
 			} else {
                            // nothing important, ignore
                            return;
