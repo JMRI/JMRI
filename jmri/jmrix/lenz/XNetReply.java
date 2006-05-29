@@ -7,7 +7,7 @@ package jmri.jmrix.lenz;
  *<P>
  *
  * @author			Paul Bender Copyright (C) 2004
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  *
  */
 public class XNetReply extends jmri.jmrix.AbstractMRReply {
@@ -109,14 +109,24 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                   return(address + 1);
                } else if(((a2 & 0x1c)==0x04) || ((a2 &0x1c)==0x08)) {
                   // This is the second address in the group
-                  return(address + 2);
+                  // return the odd address associated with this turnout
+                  return(address + 1);
                } else if(((a2 & 0x13)==0x11) || ((a2 &0x13)==0x12)) {
                   // This is the third address in the group
                   return(address + 3);
                } else if(((a2 & 0x1c)==0x14) || ((a2 &0x1c)==0x18)) { 
                   // This is the fourth address in the group
-                  return(address + 4);
-     	       } else return -1;
+                  // return the odd address associated with this turnout
+                  return(address + 3);
+               } else if((a2&0x1f)==0x10) {
+                  // This is an address in the upper nibble, but neither 
+                  // address has been operated.
+                  return(address + 3);
+     	       } else {
+                  // This is an address in the lower nibble, but neither 
+                  // address has been operated
+                  return(address + 1); 
+               }
             } else return -1;
         } else return -1;
     }
@@ -145,14 +155,24 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                   return(address + 1);
                } else if(((a2 & 0x1c)==0x04) || ((a2 &0x1c)==0x08)) {
                   // This is the second address in the group
-                  return(address + 2);
+                  // return the odd address associated with this turnout
+                  return(address + 1);
                } else if(((a2 & 0x13)==0x11) || ((a2 &0x13)==0x12)) {
                   // This is the third address in the group
                   return(address + 3);
                } else if(((a2 & 0x1c)==0x14) || ((a2 &0x1c)==0x18)) { 
                   // This is the fourth address in the group
-                  return(address + 4);
-     	       } else return -1;
+                   // return the odd address associated with this turnout
+                 return(address + 3);
+               } else if((a2&0x1f)==0x10) {
+                  // This is an address in the upper nibble, but neither 
+                  // address has been operated.
+                  return(address + 3);
+     	       } else {
+                  // This is an address in the lower nibble, but neither 
+                  // address has been operated
+                  return(address + 1); 
+               }
             } else return -1;
         } else return -1;
     }
