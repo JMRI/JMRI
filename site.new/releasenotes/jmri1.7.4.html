@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.7.4.html,v 1.7 2006-05-14 18:40:34 jacobsen Exp $ -->
+<!-- $Id: jmri1.7.4.html,v 1.8 2006-05-31 17:37:41 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -152,7 +152,7 @@ Some of the changes involved are quite extensive, and may require a certain amou
 
 <P>David Duchamp added more protection against data-entry errors in the Light Table.
 
-<P>Paul Bender updated XPressNet (Lenz) turnout support to fix a problem with turnout outputs staying on for too long. Also, the program now resends the turnout command if the XPressNet system returns a "not-operated" message
+<P>Paul Bender updated XPressNet (Lenz) turnout support to fix a problem with turnout outputs staying on for too long. Also, the program now resends the turnout command if the XPressNet system returns a "not-operated" message. On feedback replies for turnouts, make sure correct address is returned when neither turnout has been operated.  
 
 <P>David Duchamp updated the C/MRI support so that it can drive turnouts through two outputs.  Some layouts have Tortoise and similar switch motors wired to two C/MRI output pins.  By alterating which pin is enabled, the turnout can be driven one way or the other.  David also added support for configuring and printing these assignments.
 
@@ -184,7 +184,15 @@ Some of the changes involved are quite extensive, and may require a certain amou
 
 <LI>Bob fixed a problem with the display of the "dark" and "flashing red" aspects of a signal head on a panel (bug 1474015). Also, the rotation and sizing of the flashing aspects was improved (e.g. fixed)
 
+<LI>Update a number of tools so they can be easily created and configured from scripts:  Speedometer, scripting input and output windows, loading throttle definitions
 
+<LI>The "debugging programmer" used by the LocoNet simulator mode now properly has a default mode
+
+<LI>Add useful toString() methods to LocoNet and debugging throttles so that the locomotive address is displayed during status display and debugging
+
+<LI>Improved error handling in the Jython scripting to remove spurious messages about "other end dead" in the output window
+
+<LI>Paul Bender extended the XPressNet programmer support to better handle communication errors
 
 <hr class="hide">
 <!-- Footer -->
