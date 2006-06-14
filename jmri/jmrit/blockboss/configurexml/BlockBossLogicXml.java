@@ -11,9 +11,9 @@ import org.jdom.Element;
  * Handle XML persistance of Simple Signal Logic objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2005
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
-//Revisions to add facing point sensors Dick Bronosn (RJB) 2006
+//Revisions to add facing point sensors and limited speed Dick Bronosn (RJB) 2006
 
 public class BlockBossLogicXml implements XmlAdapter {
 
@@ -65,7 +65,6 @@ public class BlockBossLogicXml implements XmlAdapter {
                 block.addAttribute("watchedsignal2alt", p.getWatchedSignal2Alt());
             }
 
-            // Added watched sensors. RJB
             if (p.getWatchedSensor1()!=null) {
                 block.addAttribute("watchedsensor1", p.getWatchedSensor1());
             }
@@ -78,8 +77,9 @@ public class BlockBossLogicXml implements XmlAdapter {
             if (p.getWatchedSensor2Alt()!=null) {
                 block.addAttribute("watchedsensor2alt", p.getWatchedSensor2Alt());
             }
-            // End Added RJB
-
+  
+            block.addAttribute("limitspeed1", ""+p.getLimitSpeed1());
+            block.addAttribute("limitspeed2", ""+p.getLimitSpeed2());
             block.addAttribute("useflashyellow", ""+p.getUseFlash());
             block.addAttribute("distantsignal", ""+p.getDistantSignal());
             blocks.addContent(block);
@@ -117,10 +117,12 @@ public class BlockBossLogicXml implements XmlAdapter {
                 bb.setMode(block.getAttribute("mode").getIntValue());
                 if (block.getAttribute("distantsignal")!=null)
                     bb.setDistantSignal(block.getAttribute("distantsignal").getBooleanValue());
-                    
+                if (block.getAttribute("limitspeed1")!=null)
+                    bb.setLimitSpeed1(block.getAttribute("limitspeed1").getBooleanValue());
+                if (block.getAttribute("limitspeed2")!=null)
+                    bb.setLimitSpeed2(block.getAttribute("limitspeed2").getBooleanValue());
                 if (block.getAttribute("watchedturnout")!=null)
                     bb.setTurnout(block.getAttributeValue("watchedturnout"));
-                    
                 if (block.getAttribute("watchedsignal1")!=null)
                     bb.setWatchedSignal1(block.getAttributeValue("watchedsignal1"),
                                         block.getAttribute("useflashyellow").getBooleanValue());
@@ -130,7 +132,6 @@ public class BlockBossLogicXml implements XmlAdapter {
                     bb.setWatchedSignal2(block.getAttributeValue("watchedsignal2"));
                 if (block.getAttribute("watchedsignal2alt")!=null)
                     bb.setWatchedSignal2Alt(block.getAttributeValue("watchedsignal2alt"));
-            // Added RJB
                 if (block.getAttribute("watchedsensor1")!=null)
                     bb.setWatchedSensor1(block.getAttributeValue("watchedsensor1"));
                 if (block.getAttribute("watchedsensor1alt")!=null)
@@ -139,7 +140,6 @@ public class BlockBossLogicXml implements XmlAdapter {
                     bb.setWatchedSensor2(block.getAttributeValue("watchedsensor2"));
                 if (block.getAttribute("watchedsensor2alt")!=null)
                     bb.setWatchedSensor2Alt(block.getAttributeValue("watchedsensor2alt"));
-            // End Added RJB
             
             } catch (org.jdom.DataConversionException e) {
                 log.warn("error reading blocks from file"+e);
