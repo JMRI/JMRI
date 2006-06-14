@@ -31,9 +31,9 @@ import javax.swing.*;
  * The individual items all share data models to simplify the logic.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.12 $
- * Revisions to add facing point sensors and tool tips
- *              by Dick Bronson (RJB) 2006
+ * @version     $Revision: 1.13 $
+ *              Revisions to add facing point sensors, limited speed,
+ *              change layout, and tool tips.  Dick Bronson (RJB) 2006
  
 */
 
@@ -47,6 +47,7 @@ public class BlockBossFrame extends JFrame {
     JTextField sSensorField4        = new JTextField(6);
     JTextField sNextSignalField1    = new JTextField(6);
     JTextField sNextSignalField1Alt = new JTextField(6);
+    JCheckBox sLimitBox;
     JCheckBox sFlashBox;
     JCheckBox sDistantBox;
 
@@ -59,6 +60,7 @@ public class BlockBossFrame extends JFrame {
     JTextField tmProtectTurnoutField    = new JTextField(6);
     JTextField tmNextSignalField1       = new JTextField(6);
     JTextField tmNextSignalField1Alt    = new JTextField(6);
+    JCheckBox tmLimitBox;
     JCheckBox tmFlashBox;
     JCheckBox tmDistantBox;
 
@@ -71,6 +73,7 @@ public class BlockBossFrame extends JFrame {
     JTextField tdProtectTurnoutField    = new JTextField(6);
     JTextField tdNextSignalField1       = new JTextField(6);
     JTextField tdNextSignalField1Alt    = new JTextField(6);
+    JCheckBox tdLimitBox;
     JCheckBox tdFlashBox;
     JCheckBox tdDistantBox;
 
@@ -85,19 +88,18 @@ public class BlockBossFrame extends JFrame {
     JTextField fNextSignalField1Alt = new JTextField(6);
     JTextField fNextSignalField2    = new JTextField(6);
     JTextField fNextSignalField2Alt = new JTextField(6);
-//  These are the 4 new sensors for the facing point logic. RJB
     JTextField fNextSensorField1    = new JTextField(6);
     JTextField fNextSensorField1Alt = new JTextField(6);
     JTextField fNextSensorField2    = new JTextField(6);
     JTextField fNextSensorField2Alt = new JTextField(6);
-
+    JCheckBox fmLimitBox;
+    JCheckBox fdLimitBox;
     JCheckBox fFlashBox;
     JCheckBox fDistantBox;
 
     JTextField outSignalField;
 
     
-    // New tool tip texts here. RJB
     String buttonSingleTooltip = "In direction of traffic";
     String buttonTrailMainTooltip = "Signal head for main track\n" 
         + "through turnout in either direction";
@@ -112,6 +114,8 @@ public class BlockBossFrame extends JFrame {
     String turnoutFieldTooltip = "Enter protected turnout number here.";
     String flashBoxTooltip = "One aspect faster than yellow displays\n" 
         + "flashing yellow, rather than green.";
+    String limitBoxTooltip = "Limits the fastest aspect displayed\n"
+        + "to yellow, rather than green.";
     String nextSignalFieldTooltip = "Enter the low speed signal head for this track.\n" 
         + "For dual head signals the fastest aspect is protected.";
     String highSignalFieldTooltip = "Enter the high speed signal head for this track.\n" 
@@ -136,6 +140,18 @@ public class BlockBossFrame extends JFrame {
         setJMenuBar(menuBar);
 
         // create GUI items
+        sLimitBox  = new JCheckBox("Limited Speed");
+        tmLimitBox = new JCheckBox("Limited Speed");
+        tmLimitBox.setModel(sLimitBox.getModel());
+        fmLimitBox  = new JCheckBox("Limited Speed");
+        fmLimitBox.setModel(sLimitBox.getModel());
+
+        tdLimitBox = new JCheckBox("Limited Speed");
+        fdLimitBox  = new JCheckBox("Limited Speed");
+        fdLimitBox.setModel(tdLimitBox.getModel());
+
+
+
         sFlashBox  = new JCheckBox("With Flashing Yellow");
         tmFlashBox = new JCheckBox("With Flashing Yellow");
         tmFlashBox.setModel(sFlashBox.getModel());
@@ -204,6 +220,7 @@ public class BlockBossFrame extends JFrame {
         line.add(new JLabel("Signal Named "));
         line.add(outSignalField= new JTextField(5));
         outSignalField.setToolTipText(outSignalFieldTooltip);
+        line.setAlignmentX(1);        
         getContentPane().add(line);
         outSignalField.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -221,6 +238,7 @@ public class BlockBossFrame extends JFrame {
         line.add(buttonTrailDiv);
         buttonFacing.setToolTipText(buttonFacingTooltip);
         line.add(buttonFacing);
+        line.setAlignmentX(0.5f);
         getContentPane().add(line);
 
         getContentPane().add(new JSeparator(JSeparator.HORIZONTAL));
@@ -234,7 +252,8 @@ public class BlockBossFrame extends JFrame {
         getContentPane().add(new JSeparator(JSeparator.HORIZONTAL));
 
         // add OK button at bottom
-        JButton b = new JButton("OK");
+        JButton b = new JButton("Apply");
+        b.setAlignmentX(0.5f);
         getContentPane().add(b);
         b.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
@@ -299,6 +318,10 @@ public class BlockBossFrame extends JFrame {
         constraints.gridx = 2;
         sNextSignalField1Alt.setToolTipText(nextSignalFieldTooltip);
         modeSingle.add(sNextSignalField1Alt, constraints);
+        constraints.gridx = 3;
+        constraints.gridwidth = 2;
+        sLimitBox.setToolTipText(limitBoxTooltip);
+        modeSingle.add(sLimitBox, constraints);
 
         constraints.gridy = 6;
         constraints.gridx = 1;
@@ -375,6 +398,10 @@ public class BlockBossFrame extends JFrame {
         constraints.gridx = 2;
         tmNextSignalField1Alt.setToolTipText(nextSignalFieldTooltip);
         modeTrailMain.add(tmNextSignalField1Alt, constraints);
+        constraints.gridx = 3;
+        constraints.gridwidth = 2;
+        tmLimitBox.setToolTipText(limitBoxTooltip);
+        modeTrailMain.add(tmLimitBox, constraints);
 
         constraints.gridy = 6;
         constraints.gridx = 1;
@@ -451,6 +478,10 @@ public class BlockBossFrame extends JFrame {
         constraints.gridx = 2;
         tdNextSignalField1Alt.setToolTipText(nextSignalFieldTooltip);
         modeTrailDiv.add(tdNextSignalField1Alt, constraints);
+        constraints.gridx = 3;
+        constraints.gridwidth = 2;
+        tdLimitBox.setToolTipText(limitBoxTooltip);
+        modeTrailDiv.add(tdLimitBox, constraints);
 
         constraints.gridy = 6;
         constraints.gridx = 1;
@@ -524,8 +555,13 @@ public class BlockBossFrame extends JFrame {
         constraints.gridx = 2;
         fNextSignalField1Alt.setToolTipText(nextSignalFieldTooltip);
         modeFacing.add(fNextSignalField1Alt, constraints);
+        constraints.gridx = 3;
+        constraints.gridwidth = 2;
+        fmLimitBox.setToolTipText(limitBoxTooltip);
+        modeFacing.add(fmLimitBox, constraints);
 
         constraints.fill = GridBagConstraints.NONE;
+        constraints.gridwidth = 1;
         constraints.gridx = 0;
         constraints.gridy = 3;
         insets.bottom = 9;
@@ -554,8 +590,13 @@ public class BlockBossFrame extends JFrame {
         constraints.gridx = 2;
         fNextSignalField2Alt.setToolTipText(nextSignalFieldTooltip);
         modeFacing.add(fNextSignalField2Alt, constraints);
+        constraints.gridx = 3;
+        constraints.gridwidth = 2;
+        fdLimitBox.setToolTipText(limitBoxTooltip);
+        modeFacing.add(fdLimitBox, constraints);
 
         constraints.fill = GridBagConstraints.NONE;
+        constraints.gridwidth = 1;
         constraints.gridx = 0;
         constraints.gridy = 5;
         insets.bottom = 9;
@@ -620,6 +661,7 @@ public class BlockBossFrame extends JFrame {
 
         b.setWatchedSignal1(sNextSignalField1.getText(), sFlashBox.isSelected());
         b.setWatchedSignal1Alt(sNextSignalField1Alt.getText());
+        b.setLimitSpeed1(sLimitBox.isSelected());
         b.setDistantSignal(sDistantBox.isSelected());
         b.retain();
         b.start();
@@ -636,6 +678,7 @@ public class BlockBossFrame extends JFrame {
 
         b.setWatchedSignal1(tmNextSignalField1.getText(), tmFlashBox.isSelected());
         b.setWatchedSignal1Alt(tmNextSignalField1Alt.getText());
+        b.setLimitSpeed1(tmLimitBox.isSelected());
         b.setDistantSignal(tmDistantBox.isSelected());
         b.retain();
         b.start();
@@ -651,6 +694,7 @@ public class BlockBossFrame extends JFrame {
 
         b.setWatchedSignal1(tdNextSignalField1.getText(), tdFlashBox.isSelected());
         b.setWatchedSignal1Alt(tdNextSignalField1Alt.getText());
+        b.setLimitSpeed2(tdLimitBox.isSelected());
         b.setDistantSignal(tdDistantBox.isSelected());
         b.retain();
         b.start();
@@ -669,12 +713,12 @@ public class BlockBossFrame extends JFrame {
         b.setWatchedSignal1Alt(fNextSignalField1Alt.getText());
         b.setWatchedSignal2(fNextSignalField2.getText());
         b.setWatchedSignal2Alt(fNextSignalField2Alt.getText());
-        // Added RJB
         b.setWatchedSensor1(fNextSensorField1.getText());
         b.setWatchedSensor1Alt(fNextSensorField1Alt.getText());
         b.setWatchedSensor2(fNextSensorField2.getText());
         b.setWatchedSensor2Alt(fNextSensorField2Alt.getText());
-        // End Added RJB
+        b.setLimitSpeed1(fmLimitBox.isSelected());
+        b.setLimitSpeed2(fdLimitBox.isSelected());
         
         b.setDistantSignal(fDistantBox.isSelected());
         b.retain();
@@ -711,6 +755,13 @@ public class BlockBossFrame extends JFrame {
         fNextSignalField2.setText(b.getWatchedSignal2());
         fNextSignalField2Alt.setText(b.getWatchedSignal2Alt());
 
+        fNextSensorField1.setText(b.getWatchedSensor1());
+        fNextSensorField1Alt.setText(b.getWatchedSensor1Alt());
+        fNextSensorField2.setText(b.getWatchedSensor2());
+        fNextSensorField2Alt.setText(b.getWatchedSensor2Alt());
+
+        sLimitBox.setSelected(b.getLimitSpeed1());
+        tdLimitBox.setSelected(b.getLimitSpeed2());
         sFlashBox.setSelected(b.getUseFlash());
         sDistantBox.setSelected(b.getDistantSignal());
 
