@@ -1,6 +1,6 @@
 <!-- Special build file for doing Java 1.1.8 compatibility tests -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.21 $ -->
+<!-- Revision $Revision: 1.22 $ -->
 
 <project name="JMRI" default="check" basedir=".">
 
@@ -122,6 +122,14 @@
     </javac>
   </target>
 
+
+  <target name="sync" description="compile methods with synchronized keyword" depends="nativecompile">
+    <!-- Compile "synchronized" code using classic compiler -->
+    <echo message="Create compile command for files that need 1.1.8 compiler"/>
+    <exec executable="./synchlist.csh" />
+    <echo message="Run the Ant task to compile files that need 1.1.8 compiler" />
+    <ant target="ClassicCompile" antfile="ClassicCompile.xml"/>	
+  </target>
 
   <target name="compile" description="compile for 1.1.8 JVM, with all its oddities">
     <!-- Check and initialize -->
