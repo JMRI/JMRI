@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractThrottle;
  * with values from 0 to 127.
  * <P>
  * @author  Glen Oberhauser, Bob Jacobsen  Copyright (C) 2003, 2004
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     private LocoNetSlot slot;
@@ -70,7 +70,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         // listen for changes
         slot.addSlotListener(this);
 
-        // start a periodically sending the speed, to keep this
+        // start periodically sending the speed, to keep this
         // attached
         startRefresh();
 
@@ -160,6 +160,12 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         log.debug( "setSpeedSetting: float speed: " + speed + " LocoNet speed: " + value );
         msg.setElement(2, value);
         network.sendLocoNetMessage(msg);
+        
+        // reset timeout
+        mRefreshTimer.stop();
+        mRefreshTimer.setRepeats(true);     // refresh until stopped by dispose
+        mRefreshTimer.start();
+        
     }
 
     /**
