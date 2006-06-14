@@ -95,7 +95,7 @@
  * may be necessary to poll for the feedback response data.
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001, Portions by Paul Bender Copyright (C) 2003 
- * @version			$Revision: 2.8 $
+ * @version			$Revision: 2.9 $
  */
 
 package jmri.jmrix.lenz;
@@ -146,7 +146,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         _validFeedbackModes = modeValues;
 
         // At construction, register for messages
-        XNetTrafficController.instance().addXNetListener(XNetInterface.FEEDBACK|XNetInterface.COMMINFO|XNetInterface.CS_INFO, this);
+        // XNetTrafficController.instance().addXNetListener(XNetInterface.FEEDBACK|XNetInterface.COMMINFO|XNetInterface.CS_INFO, this);
 	// And to get property change information from the superclass
 	_stateListener=new XNetTurnoutStateListener(this);
 	this.addPropertyChangeListener(_stateListener);
@@ -288,7 +288,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                    }
                 }  
              }     
-          } else if(l.isOkMessage() && InternalState==COMMANDSENT) {
+          } else if(l.isOkMessage()) {
              // Finally, we may just recieve an OK message.
              if(log.isDebugEnabled()) log.debug("Turnout " + mNumber + " DIRECT feedback mode - OK message triggering OFF message."); 
 	     sendOffMessage();
@@ -348,7 +348,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                    }
                 }
              }       
-	  } else if (l.isOkMessage() && InternalState==COMMANDSENT) {
+	  } else if (l.isOkMessage()) {
              // Finally, we may just recieve an OK message.
              if(log.isDebugEnabled()) log.debug("Turnout " + mNumber + " MONITORING feedback mode - OK message triggering OFF message."); 
 	     sendOffMessage();
@@ -434,7 +434,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                    break;
                 }
              }
-	  } else if (l.isOkMessage() && InternalState==COMMANDSENT) {
+	  } else if (l.isOkMessage()) {
              // Finally, we may just recieve an OK message.
              if(log.isDebugEnabled()) log.debug("Turnout " + mNumber + " EXACT feedback mode - OK message triggering OFF message."); 
 	     sendOffMessage();
@@ -556,7 +556,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     }
 
     public void dispose() {
-        XNetTrafficController.instance().removeXNetListener(XNetInterface.FEEDBACK|XNetInterface.COMMINFO|XNetInterface.CS_INFO, this);
+        //XNetTrafficController.instance().removeXNetListener(XNetInterface.FEEDBACK|XNetInterface.COMMINFO|XNetInterface.CS_INFO, this);
 	this.removePropertyChangeListener(_stateListener);
     }
 
