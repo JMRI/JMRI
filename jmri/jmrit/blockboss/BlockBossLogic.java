@@ -39,8 +39,8 @@ import java.util.Hashtable;
  * use with CTC logic, etc.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.17 $
- * Revisions to add facing point sensors Dick Bronosn (RJB) 2006
+ * @version     $Revision: 1.18 $
+ * Revisions to add facing point sensors and check box to limit speed. Dick Bronosn (RJB) 2006
  */
 
 public class BlockBossLogic extends Siglet {
@@ -228,7 +228,6 @@ public class BlockBossLogic extends Siglet {
         return watchedSignal2Alt.getSystemName();
     }
 
-//    Added watched sensors RJB
         public void setWatchedSensor1(String name) {
         if (name == null || name.equals("")) {
             watchedSensor1 = null;
@@ -300,8 +299,14 @@ public class BlockBossLogic extends Siglet {
             if (watchedSensor2Alt == null) return null;
             return watchedSensor2Alt.getSystemName();
         }
-
-    //    End of added sensors RJB
+       public void setLimitSpeed1(boolean d) { limitSpeed1 = d; }
+       public boolean getLimitSpeed1() {
+        return limitSpeed1;
+    }
+       public void setLimitSpeed2(boolean d) { limitSpeed2 = d; }
+       public boolean getLimitSpeed2() {
+        return limitSpeed2;
+    }
     
     public boolean getUseFlash() {
         return protectWithFlashing;
@@ -340,12 +345,13 @@ public class BlockBossLogic extends Siglet {
     SignalHead watchedSignal1Alt = null;
     SignalHead watchedSignal2 = null;
     SignalHead watchedSignal2Alt = null;
-// Added sensors RJB
     Sensor watchedSensor1 = null;
     Sensor watchedSensor1Alt = null;
     Sensor watchedSensor2 = null;
     Sensor watchedSensor2Alt = null;
     
+    boolean limitSpeed1 = false;
+    boolean limitSpeed2 = false;
     boolean protectWithFlashing = false;
     boolean distantSignal = false;
 
@@ -376,7 +382,6 @@ public class BlockBossLogic extends Siglet {
             tempArray[n]= watchSensor4;
             n++;
         }
-
         if (watchedSignal1 != null) {
             tempArray[n]= watchedSignal1;
             n++;
@@ -394,7 +399,6 @@ public class BlockBossLogic extends Siglet {
             n++;
         }
 
-//        Added watched sensors RJB
         if (watchedSensor1 != null) {
         tempArray[n]= watchedSensor1;
         n++;
@@ -411,7 +415,6 @@ public class BlockBossLogic extends Siglet {
             tempArray[n]= watchedSensor2Alt;
             n++;
         }
-//        End added watched sensors RJB
         
         // copy temp to definitive inputs
         inputs = new NamedBean[n];
@@ -496,6 +499,16 @@ public class BlockBossLogic extends Siglet {
         return result;
     }
     
+    /**
+     * Given two {@link SignalHead} color constants, returns the one corresponding
+     * to the slower speed.
+     */
+    static int slowerOf(int a, int b)
+    {
+        // DARK is smallest, FLASHING GREEN is largest
+        return Math.min(a, b);
+    }
+
     void doSingleBlock() {
         int appearance = SignalHead.GREEN;
         int oldAppearance = ((SignalHead)outputs[0]).getAppearance();
@@ -509,11 +522,19 @@ public class BlockBossLogic extends Siglet {
         if (distantSignal)
             appearance = fastestColor1();
             
+        // if limited speed and green, reduce to yellow
+        if (limitSpeed1)
+            appearance = slowerOf(appearance, SignalHead.YELLOW);
+      
         // check for red overriding yellow or green
-        if (watchSensor1!=null && watchSensor1.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
-        if (watchSensor2!=null && watchSensor2.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
-        if (watchSensor3!=null && watchSensor3.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
-        if (watchSensor4!=null && watchSensor4.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
+        if (watchSensor1!=null && watchSensor1.getKnownState() != Sensor.INACTIVE)
+            appearance = SignalHead.RED;
+        if (watchSensor2!=null && watchSensor2.getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
+        if (watchSensor3!=null && watchSensor3.getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
+        if (watchSensor4!=null && watchSensor4.getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
 
         // show result if changed
         if (appearance != oldAppearance)
@@ -533,11 +554,19 @@ public class BlockBossLogic extends Siglet {
         if (distantSignal)
             appearance = fastestColor1();
 
+        // if limited speed and green, reduce to yellow
+        if (limitSpeed1)
+            appearance = slowerOf(appearance, SignalHead.YELLOW);
+      
         // check for red overriding yellow or green
-        if (watchSensor1!=null && watchSensor1.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
-        if (watchSensor2!=null && watchSensor2.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
-        if (watchSensor3!=null && watchSensor3.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
-        if (watchSensor4!=null && watchSensor4.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
+        if (watchSensor1!=null && watchSensor1.getKnownState() != Sensor.INACTIVE)
+            appearance = SignalHead.RED;
+        if (watchSensor2!=null && watchSensor2.getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
+        if (watchSensor3!=null && watchSensor3.getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
+        if (watchSensor4!=null && watchSensor4.getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
         if (watchTurnout!=null && watchTurnout.getKnownState() != Turnout.CLOSED)
             appearance = SignalHead.RED;
 
@@ -559,11 +588,19 @@ public class BlockBossLogic extends Siglet {
         if (distantSignal)
             appearance = fastestColor1();
 
+        // if limited speed and green, reduce to yellow
+        if (limitSpeed2)
+            appearance = slowerOf(appearance, SignalHead.YELLOW);
+      
         // check for red overriding yellow or green
-        if (watchSensor1!=null && watchSensor1.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
-        if (watchSensor2!=null && watchSensor2.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
-        if (watchSensor3!=null && watchSensor3.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
-        if (watchSensor4!=null && watchSensor4.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
+        if (watchSensor1!=null && watchSensor1.getKnownState() != Sensor.INACTIVE)
+            appearance = SignalHead.RED;
+        if (watchSensor2!=null && watchSensor2.getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
+        if (watchSensor3!=null && watchSensor3.getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
+        if (watchSensor4!=null && watchSensor4.getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
         if (watchTurnout!=null && watchTurnout.getKnownState() != Turnout.THROWN)
             appearance = SignalHead.RED;
 
@@ -571,15 +608,17 @@ public class BlockBossLogic extends Siglet {
         if (appearance != oldAppearance)
             ((SignalHead)outputs[0]).setAppearance(appearance);
     }
-
+    
     void doFacing() {
         int appearance = SignalHead.GREEN;
         int oldAppearance = ((SignalHead)outputs[0]).getAppearance();
-
-        // find downstream appearance
-        int s = fastestColor1();
-        if (watchTurnout!=null && watchTurnout.getKnownState() == Turnout.THROWN )
-            s = fastestColor2();
+        
+        // find downstream appearance, being pessimistic if we're not sure of the state
+        int s = SignalHead.GREEN;
+        if (watchTurnout!=null && watchTurnout.getKnownState() != Turnout.THROWN)
+            s = slowerOf(s, fastestColor1());
+        if (watchTurnout!=null && watchTurnout.getKnownState() != Turnout.CLOSED)
+            s = slowerOf(s, fastestColor2());
 
         // check for yellow, flashing yellow overriding green
         if (protectWithFlashing && s==SignalHead.YELLOW)
@@ -589,13 +628,24 @@ public class BlockBossLogic extends Siglet {
         // if distant signal, show exactly what the home signal does
         if (distantSignal)
             appearance = s;
-          
+
+        // if limited speed and green or flashing yellow, reduce to yellow
+        if (watchTurnout!=null && limitSpeed1 && watchTurnout.getKnownState()!=Turnout.THROWN)
+            appearance = slowerOf(appearance, SignalHead.YELLOW);
+
+        if (watchTurnout!=null && limitSpeed2 && watchTurnout.getKnownState()!=Turnout.CLOSED)
+            appearance = slowerOf(appearance, SignalHead.YELLOW);
+           
 
         // check for red overriding yellow or green
-        if (watchSensor1!=null && watchSensor1.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
-        if (watchSensor2!=null && watchSensor2.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
-        if (watchSensor3!=null && watchSensor3.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
-        if (watchSensor4!=null && watchSensor4.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
+        if (watchSensor1!=null && watchSensor1.getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
+        if (watchSensor2!=null && watchSensor2.getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
+        if (watchSensor3!=null && watchSensor3.getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
+        if (watchSensor4!=null && watchSensor4.getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
 
         // Check for red due to sensors past turnuot Added by RJB 2006        
         if ((watchTurnout!=null && watchTurnout.getKnownState() != Turnout.THROWN) && ((watchedSensor1!=null && watchedSensor1.getKnownState() != Sensor.INACTIVE)))
@@ -606,7 +656,6 @@ public class BlockBossLogic extends Siglet {
             appearance = SignalHead.RED;
         if ((watchTurnout!=null && watchTurnout.getKnownState() == Turnout.THROWN) && ((watchedSensor2Alt!=null && watchedSensor2Alt.getKnownState() != Sensor.INACTIVE)))
             appearance = SignalHead.RED;
-        // End of added section RJB
         
         // show result if changed
         if (appearance != oldAppearance)
@@ -644,27 +693,27 @@ public class BlockBossLogic extends Siglet {
      * @return never null
      */
     public static BlockBossLogic getStoppedObject(String signal) {
-        BlockBossLogic b;
+        BlockBossLogic b = null;
         setup(); // ensure we've been registered
-        if (smap.contains(signal)) {
+        if (smap.containsKey(signal)) {
             b = (BlockBossLogic)smap.get(signal);
-            b.stop();
-            smap.remove(b);
-            if (b.driveSignal.getUserName()!=null)
-                umap.remove(b.driveSignal.getUserName());
-            return b;
-        } else if (umap.contains(signal)) {
+        }
+        else if (umap.containsKey(signal)) {
             b = (BlockBossLogic)umap.get(signal);
-            b.stop();
-            umap.remove(b);
+        }
+        if (b != null) {
+            // found an existing one, remove it from the map and stop its thread
             smap.remove(b.driveSignal.getSystemName());
-            return b;
-
-        } else {
-            b = new BlockBossLogic(signal);
+            if (b.driveSignal.getUserName() != null) {
+                umap.remove(b.driveSignal.getUserName());
+            }
+            b.stop();
             return b;
         }
-
+        else {
+            // no existing one, create a new one
+            return new BlockBossLogic(signal);
+        }
     }
     /**
      * Return the BlockBossLogic item governing a specific signal.
