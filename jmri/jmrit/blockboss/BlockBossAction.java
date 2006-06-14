@@ -12,7 +12,7 @@ import javax.swing.JFrame;
  * "Simple Signal Logic" GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 
 public class BlockBossAction extends AbstractAction {
@@ -30,7 +30,7 @@ public class BlockBossAction extends AbstractAction {
 
         // create the frame
         JFrame f = new BlockBossFrame();
-        f.show();
+        f.setVisible(true);
     }
 }
 
