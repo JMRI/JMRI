@@ -31,12 +31,19 @@ import com.sun.java.util.collections.NoSuchElementException;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.11 $
+ * @version 		$Revision: 1.12 $
  *
  */
 public class LnPacketizer extends LnTrafficController {
 
-    public LnPacketizer() {self=this;}
+    final static boolean fulldebug = false;
+  
+  	boolean debug = false;
+  	
+    public LnPacketizer() {
+    	self=this;
+    	debug = log.isDebugEnabled();
+   	}
 
 
     // The methods to implement the LocoNetInterface
@@ -89,7 +96,7 @@ public class LnPacketizer extends LnTrafficController {
         for (int i=0; i< len; i++)
             msg[i] = (byte) m.getElement(i);
 
-        if (log.isDebugEnabled()) log.debug("queue LocoNet packet: "+m.toString());
+        if (debug) log.debug("queue LocoNet packet: "+m.toString());
         // in an atomic operation, queue the request and wake the xmit thread
         synchronized(xmtHandler) {
             xmtList.addLast(msg);
@@ -164,17 +171,17 @@ public class LnPacketizer extends LnTrafficController {
             try {
                 // start by looking for command -  skip if bit not set
                 while ( ((opCode = (readByteProtected(istream)&0xFF)) & 0x80) == 0 )  {
-                    //log.debug("Skipping: "+Integer.toHexString(opCode));
+                    if (fulldebug && debug) log.debug("Skipping: "+Integer.toHexString(opCode));
                 }
                 // here opCode is OK. Create output message
-                if (log.isDebugEnabled())
-                    log.debug("Start message with opcode: "+Integer.toHexString(opCode));
+                if (fulldebug)
+                    log.debug("(run) Start message with opcode: "+Integer.toHexString(opCode));
                 LocoNetMessage msg = null;
                 while (msg == null) {
                     try {
                         // Capture 2nd byte, always present
                         int byte2 = readByteProtected(istream)&0xFF;
-                        if (log.isDebugEnabled())
+                        if (fulldebug)
                             log.debug("Byte2: "+Integer.toHexString(byte2));
                         // Decide length
                         switch((opCode & 0x60) >> 5)
@@ -201,11 +208,11 @@ public class LnPacketizer extends LnTrafficController {
                         msg.setOpCode(opCode);
                         msg.setElement(1, byte2);
                         int len = msg.getNumDataElements();
-                        //log.debug("len: "+len);
+                        if (fulldebug) log.debug("len: "+len);
                         for (int i = 2; i < len; i++)  {
                             // check for message-blocking error
                             int b = readByteProtected(istream)&0xFF;
-                            //log.debug("char "+i+" is: "+Integer.toHexString(b));
+                            if (fulldebug) log.debug("char "+i+" is: "+Integer.toHexString(b));
                             if ( (b&0x80) != 0) {
                                 log.warn("LocoNet message with opCode: "
                                          +Integer.toHexString(opCode)
@@ -283,23 +290,22 @@ public class LnPacketizer extends LnTrafficController {
         }
 
         public void run() {
-            boolean debug = log.isDebugEnabled();
-
+ 
             int opCode;
             while (true) {   // loop permanently, program close will exit
                 try {
                     // start by looking for command -  skip if bit not set
                     while ( ((opCode = (readByteProtected(istream)&0xFF)) & 0x80) == 0 )  {
-                        if (debug) log.debug("Skipping: "+Integer.toHexString(opCode));
+                        if (fulldebug) log.debug("Skipping: "+Integer.toHexString(opCode));
                     }
                     // here opCode is OK. Create output message
-                    if (debug) log.debug("Start message with opcode: "+Integer.toHexString(opCode));
+                    if (fulldebug) log.debug(" (RcvHandler) Start message with opcode: "+Integer.toHexString(opCode));
                     LocoNetMessage msg = null;
                     while (msg == null) {
                         try {
                             // Capture 2nd byte, always present
                             int byte2 = readByteProtected(istream)&0xFF;
-                            //log.debug("Byte2: "+Integer.toHexString(byte2));
+                            if (fulldebug) log.debug("Byte2: "+Integer.toHexString(byte2));
                             // Decide length
                             switch((opCode & 0x60) >> 5) {
                             case 0:     /* 2 byte message */
@@ -324,11 +330,11 @@ public class LnPacketizer extends LnTrafficController {
                             msg.setOpCode(opCode);
                             msg.setElement(1, byte2);
                             int len = msg.getNumDataElements();
-                            //log.debug("len: "+len);
+                            if (fulldebug) log.debug("len: "+len);
                             for (int i = 2; i < len; i++)  {
                                 // check for message-blocking error
                                 int b = readByteProtected(istream)&0xFF;
-                                //log.debug("char "+i+" is: "+Integer.toHexString(b));
+                                if (fulldebug) log.debug("char "+i+" is: "+Integer.toHexString(b));
                                 if ( (b&0x80) != 0) {
                                     log.warn("LocoNet message with opCode: "
                                              +Integer.toHexString(opCode)
@@ -355,7 +361,7 @@ public class LnPacketizer extends LnTrafficController {
                     }
                     // message is complete, dispatch it !!
                     {
-                        if (log.isDebugEnabled()) log.debug("queue message for notification");
+                        if (debug) log.debug("queue message for notification: "+msg.toString());
                         final LocoNetMessage thisMsg = msg;
                         final LnPacketizer thisTC = trafficController;
                         // return a notification via the queue to ensure end
@@ -377,7 +383,7 @@ public class LnPacketizer extends LnTrafficController {
                 }
                 catch (java.io.EOFException e) {
                     // posted from idle port when enableReceiveTimeout used
-                    if (debug) log.debug("EOFException, is LocoNet serial I/O using timeouts?");
+                    if (fulldebug) log.debug("EOFException, is LocoNet serial I/O using timeouts?");
                 }
                 catch (java.io.IOException e) {
                     // fired when write-end of HexFile reaches end
@@ -406,7 +412,7 @@ public class LnPacketizer extends LnTrafficController {
                 // any input?
                 try {
                     // get content; failure is a NoSuchElementException
-                    if (debug) log.debug("check for input");
+                    if (fulldebug) log.debug("check for input");
                     byte msg[] = null;
                     synchronized (this) {
                         msg = (byte[])xmtList.removeFirst();
@@ -416,9 +422,9 @@ public class LnPacketizer extends LnTrafficController {
                     try {
                         if (ostream != null) {
                             if (!controller.okToSend()) log.warn("LocoNet port not ready to receive");
-                            if (debug) log.debug("start write to stream");
+                            if (debug) log.debug("start write to stream: "+jmri.util.StringUtil.hexStringFromBytes(msg));
                             ostream.write(msg);
-                            if (debug) log.debug("end write to stream");
+                            if (fulldebug) log.debug("end write to stream: "+jmri.util.StringUtil.hexStringFromBytes(msg));
                         } else {
                             // no stream connected
                             log.warn("sendLocoNetMessage: no connection established");
@@ -430,7 +436,7 @@ public class LnPacketizer extends LnTrafficController {
                 }
                 catch (NoSuchElementException e) {
                     // message queue was empty, wait for input
-                    if (debug) log.debug("start wait");
+                    if (fulldebug) log.debug("start wait");
                     try {
                         synchronized(this) {
                             // Java 1.4 gets confused by "wait()" in the
@@ -439,7 +445,7 @@ public class LnPacketizer extends LnTrafficController {
                         }
                     }
                     catch (java.lang.InterruptedException ei) {}
-                    if (debug) log.debug("end wait");
+                    if (fulldebug) log.debug("end wait");
                 }
             }
         }
