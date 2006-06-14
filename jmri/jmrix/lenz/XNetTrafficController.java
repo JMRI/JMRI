@@ -17,7 +17,7 @@ import com.sun.java.util.collections.Hashtable;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2004,2005
- * @version 		$Revision: 2.9 $
+ * @version 		$Revision: 2.10 $
  *
  */
 public abstract class XNetTrafficController extends AbstractMRTrafficController implements XNetInterface {
@@ -84,6 +84,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
                 if (!((XNetReply)m).checkParity()) {
                     log.warn("Ignore packet with bad checksum: "+((XNetReply)m).toString());
 		} else {
+                   try {
 		   int mask = ((Integer)mListenerMasks.get((XNetListener)client)).intValue();
 		   if(mask==XNetInterface.ALL) {
 		   	((XNetListener)client).message((XNetReply)m);		   
@@ -124,6 +125,11 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
 					XNetConstants.LI101_REQUEST)) {
   		   	   ((XNetListener)client).message((XNetReply)m);
 		   } 
+                } catch (NullPointerException e) {
+                  // catch null pointer exceptions, caused by a client
+                  // that sent a message without being a registered listener
+  		  ((XNetListener)client).message((XNetReply)m);
+                }
 		}
         }
 
