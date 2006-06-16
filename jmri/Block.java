@@ -4,17 +4,24 @@ import com.sun.java.util.collections.ArrayList;
 
 /**
  * Represents a particular piece of track, more informally a "Block".
+ * A trains move around the layout, a set of Block objects interact to
+ * keep track of which train is where, going in which direction.
+ * As a result of this, the set of Block objects pass around  "token" (value)
+ * Objects representing the trains.  This could be e.g. a Throttle to
+ * control the train, or something else.
  * <P>
  * A Block (at least in this implementation) corresponds exactly to the
- * track covered by a single sensor. That can be generalized in the future.
- *
+ * track covered by a single sensor. That should be generalized in the future.
+ * 
  *<p>
  * Objects of this class are Named Beans, so can be manipulated through tables,
  * have listeners, etc.
  *
  * <p>
- * There is no real requirement for a type letter in the System Name, but
- * by convention we use 'B' for 'Block'.
+ * There is no functional requirement for a type letter in the System Name, but
+ * by convention we use 'B' for 'Block'. The default implementation is not 
+ * system-specific, so a system letter of 'I' is appropriate.  This leads to 
+ * system names like "IB201".
  *
  * <P>Issues:
  * <UL>
@@ -27,9 +34,18 @@ import com.sun.java.util.collections.ArrayList;
  * <LI> The assumption is that a train will only go through a set turnout.  For example, a train could
  *      come into the turnout block from the main even if the turnout is set to the siding.  (Ignoring those
  *      layouts where this would cause a short; it doesn't do so on all layouts)  
- * </UL>
+ * <LI> Does not handle closely-following trains where there is only one 
+ *      electrical block per signal.   To do this, it probably needs some type of
+ *      "assume a train doesn't back up" logic.  A better solution is to have multiple
+ *      senors and Block objects between each signal head.
+ *</UL>
+ *
+ *<P>Do not assume that a Block object uniquely represents a piece of track.
+ * To allow independent development, it must be possible for multiple Block objects
+ * to take care of a particular section of track.
+ *<P>
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class Block extends jmri.AbstractNamedBean {
 
