@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.43 $)
+distribution.  ($Revision: 1.44 $)
 
 Start with a directory, typically called "Distributions", that
 contains:
@@ -32,6 +32,10 @@ Make sure everything is up-to-date:
     Make sure file is saved with Unix line ends.
     Commit.
     
+( ) If the decoder definitions have changed, make a .zip file and send to:
+    Hans Tanner:  hans.tanner@complexitymanager.com
+    Graham Plowman: gppsoftware@gppsoftware.com
+
 ( ) Check if the help has changed since the previous tag
     If so, remake the help index  (need a command line approach, so can put in ant!)
     cd JMRI/jhelp/help/en
@@ -79,6 +83,7 @@ To actually create the distribution:
 ( ) Once they launch, you can start building the Windows installer
 	in parallel.
 	
+	Using VPC, make sure you have the Z disk available.
 	Launch Installer Vise from the last build file.
 	"Update archive"; Check changes make sense.
 	Click the "test archive" button (right one of the pair)
@@ -92,6 +97,16 @@ To actually create the distribution:
     Mount PC.  Copy last .vct and Windows/JMRI to C:\WINDOWS\Desktop
     Create and test installer as above.  Copy the .exe back
     to the Distributions directory
+    
+    
+( ) Create MacOS X DMG
+   
+    hdiutil create -size 20MB -fs HFS+ -volname "JMRI 1.7.3" temp.dmg
+    (copy JMRI folder)
+    cd /Volumes/JMRI^D 
+    ln -s /Applications .
+    (eject)
+    hdiutil convert temp.dmg -format UDZO -o JMRI.1.7.3.dmg
     
 ( ) Once the three StuffIt processes are done
 	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release2
@@ -152,7 +167,7 @@ To actually create the distribution:
 	Note on using SF "Quick File Release" system:
 		In Spring 2004, it would often give an error about "could not
 		add file".  In that case, reupload the file, and edit the release
-		to include the file.
+		to include the file (was a Safari problem; use IE)
 		
 		Alternately, use the Quick File Release system without selecting
 		a file, then add it later.  This prevents the original uploads from
