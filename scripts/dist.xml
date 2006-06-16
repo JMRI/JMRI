@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.11 $ -->
+<!-- Revision $Revision: 1.12 $ -->
 
 <project name="JMRI" basedir="." default="none">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -246,10 +246,7 @@
  					description="create MacOS X archive">
 	<!-- The following steps build the distribution archive -->
     <!-- using MacOSX tools -->
-    <echo message="create MacOS X archive"/>
-    <exec executable="open">
-    	<arg line="-a DropStuff.app MacOSX/JMRI" />
-    </exec>
+    <echo message="create MacOS X disk image now"/>
 </target>
 
 <target name="x-rel-installer-linux" depends=""
@@ -277,7 +274,6 @@
     <exec executable="open">
     	<arg line="-a DropStuff.app MacClassic/JMRI"/>
     </exec>
-    <move file="MacOSX/JMRI.hqx" tofile="JMRI.${number}.hqx" />
     <move file="Linux/JMRI.tgz" tofile="JMRI.${number}.tgz" />
     <move file="OS2/JMRI.zip" tofile="JMRI.${number}.zip" />
 	<echo message="end of part 2; do part 3 after MacClassic upload completely built"/>
@@ -311,7 +307,7 @@
  </target>
  
  <target name="release4" depends=""
- 					description="part 4 of build a release; useage is ant -Drelease=R1.2.3 -Dnumber=1.2.3 release4">
+ 					description="part 4 of build a release; usage is ant -Drelease=R1.2.3 -Dnumber=1.2.3 release4">
 	<echo message="upload file Windows .exe file"/>
 	<echo message="if you get an error, upload manually, then ant uploadjavadoc"/>
     <ftp server="upload.sourceforge.net"
