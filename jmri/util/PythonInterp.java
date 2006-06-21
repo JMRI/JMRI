@@ -21,7 +21,7 @@ import java.io.*;
  * on Windows machines where it might normally appear in a filename.
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class PythonInterp {
 
@@ -109,7 +109,7 @@ public class PythonInterp {
             // PySystemState.initialize();
             Class cs = Class.forName("org.python.core.PySystemState");
             java.lang.reflect.Method initialize =
-                        cs.getMethod("initialize",null);
+                        cs.getMethod("initialize",(Class[])null);
             initialize.invoke(null, null);
 
             // interp = new PythonInterpreter();
