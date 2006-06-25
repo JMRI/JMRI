@@ -26,7 +26,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.27 $
+ * @version			$Revision: 1.28 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -34,10 +34,10 @@ abstract public class AbstractMRTrafficController {
         if (log.isDebugEnabled()) log.debug("setting instance: "+this);
         mCurrentMode = NORMALMODE;
         mCurrentState = IDLESTATE;
-	allowUnexpectedReply=false;
+	    allowUnexpectedReply=false;
         setInstance();
         self = this;
-	jmri.util.RuntimeUtil.addShutdownHook(new Thread(new cleanupHook(this)));
+	    jmri.util.RuntimeUtil.addShutdownHook(new Thread(new cleanupHook(this)));
     }
 
     AbstractMRTrafficController self;  // this is needed for synchronization
