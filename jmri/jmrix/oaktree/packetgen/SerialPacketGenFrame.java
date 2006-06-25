@@ -19,7 +19,7 @@ import javax.swing.JSeparator;
 /**
  * Frame for user input of serial messages
  * @author	Bob Jacobsen   Copyright (C) 2002, 2003, 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SerialPacketGenFrame extends javax.swing.JFrame implements jmri.jmrix.oaktree.SerialListener {
 
@@ -108,7 +108,7 @@ public class SerialPacketGenFrame extends javax.swing.JFrame implements jmri.jmr
         // gather bytes in result
         byte b[] = StringUtil.bytesFromHexString(s);
         if ((b.length < 4) || (b.length > 5)) return null;  // no such thing as message with other than 4 or 5 bytes
-        SerialMessage m = new SerialMessage();
+        SerialMessage m = new SerialMessage(5);
         for (int i=0; i<b.length; i++) m.setElement(i, b[i]);
         return m;
     }

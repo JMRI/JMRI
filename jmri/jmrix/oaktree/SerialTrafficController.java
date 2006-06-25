@@ -10,7 +10,7 @@ import jmri.jmrix.AbstractMRTrafficController;
 import java.io.DataInputStream;
 
 /**
- * Converts Stream-based I/O to/from TMCC serial messages.
+ * Converts Stream-based I/O to/from Oak Tree serial messages.
  * <P>
  * The "SerialInterface"
  * side sends/receives message objects.
@@ -27,7 +27,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003, 2006
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -56,12 +56,12 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
 
 // remove this code when SerialLight is operational - obsoleted and doesn't belong here anyway
     /**
-     * Public method to set a TMCC Serial Output bit
+     * Public method to set a Oak Tree Serial Output bit
      *     Note: systemName is of format CNnnnBxxxx where
      *              "nnn" is the serial node number (0 - 127)
      *              "xxxx' is the bit number within that node (1 thru number of defined bits)
      *           state is 'true' for 0, 'false' for 1
-     *     The bit is transmitted to the TMCC hardware immediately before the
+     *     The bit is transmitted to the Oak Tree hardware immediately before the
      *           next poll packet is sent.
      */
     public void setSerialOutput(String systemName, boolean state) {
@@ -171,11 +171,11 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     }
 
     protected AbstractMRMessage enterProgMode() {
-        log.warn("enterProgMode doesnt make sense for TMCC serial");
+        log.warn("enterProgMode doesnt make sense for Oak Tree serial");
         return null;
     }
     protected AbstractMRMessage enterNormalMode() {
-        log.warn("enterNormalMode doesnt make sense for TMCC serial");
+        log.warn("enterNormalMode doesnt make sense for Oak Tree serial");
         return null;
     }
 
@@ -198,7 +198,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
 
     int curSerialNodeIndex = 0;   // cycles over defined nodes when pollMessage is called
     /**
-     *  Handles initialization, output and polling for TMCC
+     *  Handles initialization, output and polling for Oak Tree
      *      from within the running thread
      */
     protected synchronized AbstractMRMessage pollMessage() {
@@ -214,16 +214,18 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         if (mustInit[curSerialNodeIndex]) {
             mustInit[curSerialNodeIndex] = false;
             SerialMessage m = nodeArray[curSerialNodeIndex].createInitPacket();
-            log.debug("send init message: "+m);
-            m.setTimeout(2000);  // wait for init to finish (milliseconds)
-            return m;
+            if (m!=null) { // Oak Tree boards don't need this yet
+                log.debug("send init message: "+m);
+                m.setTimeout(2000);  // wait for init to finish (milliseconds)
+                return m;
+            }   // else fall through to continue
         }
         // send Output packet if needed
         if (nodeArray[curSerialNodeIndex].mustSend()) {
             log.debug("request write command to send");
-            nodeArray[curSerialNodeIndex].resetMustSend();
             SerialMessage m = nodeArray[curSerialNodeIndex].createOutPacket();
-            m.setTimeout(50);  // no need to wait for output to answer
+            nodeArray[curSerialNodeIndex].resetMustSend();
+            m.setTimeout(500);
             return m;
         }
         // poll for Sensor input
@@ -295,28 +297,25 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     }
     
     protected int currentAddr= -1; // at startup, can't match
-
+    protected int incomingLength = 0;
+    
     protected void loadChars(AbstractMRReply msg, DataInputStream istream) throws java.io.IOException {
         // get 1st byte, see if ending too soon
-        System.out.println("loadChars start");
         byte char1 = readByteProtected(istream);
-        System.out.println("loadChars byte");
+        msg.setElement(0, char1&0xFF);
         if ( (char1&0xFF) != currentAddr) {
             // mismatch, end early
-            msg.setElement(0, char1&0xFF);
-            System.out.println("loadChars early exit");
             return;
         }
-        for (int i = 1; i < 5; i++) {  // reading next four bytes
+        if (incomingLength <= 1) return;
+        for (int i = 1; i < incomingLength; i++) {  // reading next four bytes
             char1 = readByteProtected(istream);
             msg.setElement(i, char1&0xFF);
         }
-        System.out.println("loadChars normal exit");
     }
 
     protected void waitForStartOfReply(DataInputStream istream) throws java.io.IOException {
         // does nothing
-        System.out.println("waitForStartOfReply");
     }
 
     /**
@@ -329,12 +328,17 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     }
 
     /**
-     * Not used for this protocol
+     * Although this protocol doesn't use a trailer, 
+     * we implement this method to set the 
+     * expected reply length and address for this message.
      *
      * @param msg  The output byte stream
      * @param offset the first byte not yet used
+     * @param m the original message
      */
     protected void addTrailerToOutput(byte[] msg, int offset, AbstractMRMessage m) {
+        incomingLength = ((SerialMessage)m).getResponseLength();
+        currentAddr = ((SerialMessage)m).getAddr();
         return;
     }
 

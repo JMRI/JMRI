@@ -10,20 +10,14 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialSensorManager class.
  * @author	Bob Jacobsen  Copyright 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SerialSensorManagerTest extends TestCase {
 
     public void testSensorCreationAndRegistration() {
         SerialNode n0 = new SerialNode();
-        SerialNode n1 = new SerialNode(1,SerialNode.SMINI);
-        SerialNode n2 = new SerialNode(2,SerialNode.USIC_SUSIC);
-        n2.setNumBitsPerCard (24);
-        n2.setCardTypeByAddress (0,SerialNode.INPUT_CARD);
-        n2.setCardTypeByAddress (1,SerialNode.OUTPUT_CARD);
-        n2.setCardTypeByAddress (3,SerialNode.OUTPUT_CARD);
-        n2.setCardTypeByAddress (4,SerialNode.INPUT_CARD);
-        n2.setCardTypeByAddress (2,SerialNode.OUTPUT_CARD);
+        SerialNode n1 = new SerialNode(1,SerialNode.IO48);
+        SerialNode n2 = new SerialNode(2,SerialNode.IO24);
         SerialSensorManager s = new SerialSensorManager();
         Assert.assertTrue("none expected A0", !(n0.sensorsActive()) );
         Assert.assertTrue("none expected A1", !(n1.sensorsActive()) );
@@ -36,7 +30,7 @@ public class SerialSensorManagerTest extends TestCase {
         s.provideSensor("8");
         s.provideSensor("19");
         s.provideSensor("23");
-        s.provideSensor("OS2048");
+        s.provideSensor("OS2006");
         Assert.assertTrue("2nd UA 0", n0.sensorsActive() );
         Assert.assertTrue("3rd none expected UA 1", !(n1.sensorsActive()) );
         Assert.assertTrue("UA 2", n2.sensorsActive() );
@@ -47,7 +41,7 @@ public class SerialSensorManagerTest extends TestCase {
         Assert.assertTrue("2nd UA 2", n0.sensorsActive() );
         s.provideSensor("17");
         s.provideSensor("1017");
-        s.provideSensor("2017");
+        s.provideSensor("2007");
         Assert.assertTrue("4th UA 0", n0.sensorsActive() );
         Assert.assertTrue("2nd UA 1", n1.sensorsActive() );
         Assert.assertTrue("3rd UA 2", n0.sensorsActive() );

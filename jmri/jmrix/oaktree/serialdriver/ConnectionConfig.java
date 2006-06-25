@@ -9,7 +9,7 @@ import jmri.jmrix.oaktree.nodeconfig.*;
  * Definition of objects to handle configuring a Oak Tree layout connection
  *
  * @author      Bob Jacobsen   Copyright (C) 2003, 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
@@ -44,7 +44,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 		b.addActionListener(new NodeConfigAction());		
         
     }
-    public String name() { return "Oak Tree Systems"; }
+    public String name() { return "Oak Tree Systems RCI bus"; }
 
     protected void setInstance() { adapter = SerialDriverAdapter.instance(); }
 }

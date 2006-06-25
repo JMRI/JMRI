@@ -6,12 +6,12 @@ import jmri.AbstractTurnoutManager;
 import jmri.Turnout;
 
 /**
- * Implement turnout manager for TMCC serial systems
+ * Implement turnout manager for Oak Tree systems
  * <P>
- * System names are "TTnnn", where nnn is the turnout number without padding.
+ * System names are "OTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 

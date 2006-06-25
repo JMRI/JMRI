@@ -10,16 +10,16 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialMessage class.
  * @author	Bob Jacobsen Copyright 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SerialMessageTest extends TestCase {
 
 	public void testCreate() {
-		SerialMessage m = new SerialMessage();
+		SerialMessage m = new SerialMessage(5);
 	}
 
 	public void testBytesToString() {
-		SerialMessage m = new SerialMessage();
+		SerialMessage m = new SerialMessage(5);
 		m.setOpCode(0x81);
 		m.setElement(1, (byte)0x02);
 		m.setElement(2, (byte)0xA2);

@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialAddress utility class.
  * @author	Dave Duchamp Copyright 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SerialAddressTest extends TestCase {
 
@@ -58,15 +58,11 @@ public class SerialAddressTest extends TestCase {
             Assert.assertEquals("OL0B2048", 2048, SerialAddress.getBitFromSystemName("OL0B2048") );
             Assert.assertEquals("OL11B2048", 2048, SerialAddress.getBitFromSystemName("OL11B2048") );
         }
-
-        SerialNode d = new SerialNode(4,SerialNode.USIC_SUSIC);
-        SerialNode c = new SerialNode(10,SerialNode.SMINI);
-        SerialNode b = new SerialNode(127,SerialNode.SMINI);
         
 	public void testGetNodeFromSystemName() {
-            SerialNode d = new SerialNode(14,SerialNode.USIC_SUSIC);
-            SerialNode c = new SerialNode(17,SerialNode.SMINI);
-            SerialNode b = new SerialNode(127,SerialNode.SMINI);
+            SerialNode d = new SerialNode(14,SerialNode.IO48);
+            SerialNode c = new SerialNode(17,SerialNode.IO24);
+            SerialNode b = new SerialNode(127,SerialNode.IO24);
             Assert.assertEquals("node of OL14007", d, SerialAddress.getNodeFromSystemName("OL14007") );
             Assert.assertEquals("node of OL14B7", d, SerialAddress.getNodeFromSystemName("OL14B7") );
             Assert.assertEquals("node of OL127007", b, SerialAddress.getNodeFromSystemName("OL127007") );
@@ -78,35 +74,28 @@ public class SerialAddressTest extends TestCase {
         }
 
 	public void testValidSystemNameConfig() {
-            SerialNode d = new SerialNode(4,SerialNode.USIC_SUSIC);
-            d.setNumBitsPerCard (32);
-            d.setCardTypeByAddress (0,SerialNode.INPUT_CARD);
-            d.setCardTypeByAddress (1,SerialNode.OUTPUT_CARD);
-            d.setCardTypeByAddress (2,SerialNode.OUTPUT_CARD);
-            d.setCardTypeByAddress (3,SerialNode.OUTPUT_CARD);
-            d.setCardTypeByAddress (4,SerialNode.INPUT_CARD);
-            d.setCardTypeByAddress (5,SerialNode.OUTPUT_CARD);
-            SerialNode c = new SerialNode(10,SerialNode.SMINI);
+            SerialNode d = new SerialNode(4,SerialNode.IO24);
+            SerialNode c = new SerialNode(10,SerialNode.IO48);
             Assert.assertTrue("valid config OL4007", SerialAddress.validSystemNameConfig("OL4007",'L') );
             Assert.assertTrue("valid config OL4B7", SerialAddress.validSystemNameConfig("OL4B7",'L') );
             Assert.assertTrue("valid config OS10007", SerialAddress.validSystemNameConfig("OS10007",'S') );
             Assert.assertTrue("valid config OS10B7", SerialAddress.validSystemNameConfig("OS10B7",'S') );
-            Assert.assertTrue("valid config OL10048", SerialAddress.validSystemNameConfig("OL10048",'L') );
-            Assert.assertTrue("valid config OL10B48", SerialAddress.validSystemNameConfig("OL10B48",'L') );
-            Assert.assertTrue("invalid config OL10049", !SerialAddress.validSystemNameConfig("OL10049",'L') );
-            Assert.assertTrue("invalid config OL10B49", !SerialAddress.validSystemNameConfig("OL10B49",'L') );
-            Assert.assertTrue("valid config OS10024", SerialAddress.validSystemNameConfig("OS10024",'S') );
-            Assert.assertTrue("valid config OS10B24", SerialAddress.validSystemNameConfig("OS10B24",'S') );
-            Assert.assertTrue("invalid config OS10025", !SerialAddress.validSystemNameConfig("OS10025",'S') );
-            Assert.assertTrue("invalid config OS10B25", !SerialAddress.validSystemNameConfig("OS10B25",'S') );
-            Assert.assertTrue("valid config OT4128", SerialAddress.validSystemNameConfig("OT4128",'T') );
-            Assert.assertTrue("valid config OT4B128", SerialAddress.validSystemNameConfig("OT4B128",'T') );
-            Assert.assertTrue("invalid config OT4129", !SerialAddress.validSystemNameConfig("OT4129",'T') );
-            Assert.assertTrue("invalid config OT4129", !SerialAddress.validSystemNameConfig("OT4B129",'T') );
-            Assert.assertTrue("valid config OS4064", SerialAddress.validSystemNameConfig("OS4064",'S') );
-            Assert.assertTrue("valid config OS4B64", SerialAddress.validSystemNameConfig("OS4B64",'S') );
-            Assert.assertTrue("invalid config OS4065", !SerialAddress.validSystemNameConfig("OS4065",'S') );
-            Assert.assertTrue("invalid config OS4B65", !SerialAddress.validSystemNameConfig("OS4B65",'S') );
+            Assert.assertTrue("valid config OL10032", SerialAddress.validSystemNameConfig("OL10032",'L') );
+            Assert.assertTrue("valid config OL10B32", SerialAddress.validSystemNameConfig("OL10B32",'L') );
+            Assert.assertTrue("invalid config OL10033", !SerialAddress.validSystemNameConfig("OL10033",'L') );
+            Assert.assertTrue("invalid config OL10B33", !SerialAddress.validSystemNameConfig("OL10B33",'L') );
+            Assert.assertTrue("valid config OS10016", SerialAddress.validSystemNameConfig("OS10016",'S') );
+            Assert.assertTrue("valid config OS10B16", SerialAddress.validSystemNameConfig("OS10B16",'S') );
+            Assert.assertTrue("invalid config OS10017", !SerialAddress.validSystemNameConfig("OS10017",'S') );
+            Assert.assertTrue("invalid config OS10B17", !SerialAddress.validSystemNameConfig("OS10B17",'S') );
+            Assert.assertTrue("valid config OT4016", SerialAddress.validSystemNameConfig("OT4016",'T') );
+            Assert.assertTrue("valid config OT4B16", SerialAddress.validSystemNameConfig("OT4B16",'T') );
+            Assert.assertTrue("invalid config OT4017", !SerialAddress.validSystemNameConfig("OT4017",'T') );
+            Assert.assertTrue("invalid config OT4017", !SerialAddress.validSystemNameConfig("OT4B17",'T') );
+            Assert.assertTrue("valid config OS4008", SerialAddress.validSystemNameConfig("OS4008",'S') );
+            Assert.assertTrue("valid config OS4B8", SerialAddress.validSystemNameConfig("OS4B8",'S') );
+            Assert.assertTrue("invalid config OS4009", !SerialAddress.validSystemNameConfig("OS4009",'S') );
+            Assert.assertTrue("invalid config OS4B9", !SerialAddress.validSystemNameConfig("OS4B9",'S') );
             Assert.assertTrue("invalid config OL11007", !SerialAddress.validSystemNameConfig("OL11007",'L') );
             Assert.assertTrue("invalid config OL11B7", !SerialAddress.validSystemNameConfig("OL11B7",'L') );
         }        

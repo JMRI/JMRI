@@ -8,7 +8,7 @@ package jmri.jmrix.oaktree;
  * packet.  Note that its _only_ the payload.
  *
  * @author	Bob Jacobsen  Copyright (C) 2002, 2006
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
@@ -29,7 +29,6 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
     /**
      * Is reply to poll message
      */
-    public boolean isRcv()  { return getElement(1)==48;}
     public int getAddr() { return getElement(0); }
 
     protected int skipPrefix(int index) {

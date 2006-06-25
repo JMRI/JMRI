@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the SerialTrafficController class
  * @author			Bob Jacobsen
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 package jmri.jmrix.oaktree;
@@ -28,10 +28,10 @@ public class SerialTrafficControllerTest extends TestCase {
     
     public void testSerialNodeEnumeration() {
         SerialTrafficController c = new SerialTrafficController();
-        SerialNode b = new SerialNode(1,SerialNode.USIC_SUSIC);
-        SerialNode f = new SerialNode(3,SerialNode.SMINI);
-        SerialNode d = new SerialNode(2,SerialNode.SMINI);
-        SerialNode e = new SerialNode(6,SerialNode.USIC_SUSIC);
+        SerialNode b = new SerialNode(1,SerialNode.IO48);
+        SerialNode f = new SerialNode(3,SerialNode.IO24);
+        SerialNode d = new SerialNode(2,SerialNode.IO24);
+        SerialNode e = new SerialNode(6,SerialNode.IO48);
         Assert.assertEquals("1st Node", b, c.getSerialNode(0) );
         Assert.assertEquals("2nd Node", f, c.getSerialNode(1) );
         Assert.assertEquals("3rd Node", d, c.getSerialNode(2) );
@@ -55,7 +55,7 @@ public class SerialTrafficControllerTest extends TestCase {
     public void testSerialOutput() {
         SerialTrafficController c = new SerialTrafficController();
         SerialNode a = new SerialNode();
-        SerialNode g = new SerialNode(5,SerialNode.SMINI);
+        SerialNode g = new SerialNode(5,SerialNode.IO24);
         Assert.assertTrue("must Send", g.mustSend() );
         g.resetMustSend();
         Assert.assertTrue("must Send off", !(g.mustSend()) );
@@ -73,7 +73,7 @@ public class SerialTrafficControllerTest extends TestCase {
         SerialMessage m = g.createOutPacket();
         Assert.assertEquals("packet size", 5, m.getNumDataElements() );
         Assert.assertEquals("node address", 5, m.getElement(0) );
-        Assert.assertEquals("packet type", 84, m.getElement(1) );  // 'T'        
+        Assert.assertEquals("packet type", 17, m.getElement(1) );  // 'T'        
     }
 
     private boolean waitForReply() {

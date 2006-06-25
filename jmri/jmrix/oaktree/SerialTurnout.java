@@ -9,13 +9,13 @@ import jmri.NmraPacket;
 /**
  * SerialTurnout.java
  *
- *  This object doesn't listen to the TMCC communications.  This is because
+ *  This object doesn't listen to the Oak Tree serial communications.  This is because
  *  it should be the only object that is sending messages for this turnout;
  *  more than one Turnout object pointing to a single device is not allowed.
  *
- * Description:		extend jmri.AbstractTurnout for TMCC serial layouts
+ * Description:		extend jmri.AbstractTurnout for oak tree serial layouts
  * @author			Bob Jacobsen Copyright (C) 2003, 2006
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SerialTurnout extends AbstractTurnout {
 

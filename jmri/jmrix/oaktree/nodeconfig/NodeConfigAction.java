@@ -10,14 +10,14 @@ import java.awt.event.ActionEvent;
  *       			NodeConfigFrame object
  *
  * @author	Bob Jacobsen    Copyright (C) 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class NodeConfigAction extends AbstractAction {
 
 	public NodeConfigAction(String s) { super(s);}
 
     public NodeConfigAction() {
-        this("Configure C/MRI Nodes");
+        this("Configure Oak Tree Systems Nodes");
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -35,4 +35,4 @@ public class NodeConfigAction extends AbstractAction {
 }
 
 
-/* @(#)SerialPacketGenAction.java */
+/* @(#)NodeConfigAction.java */

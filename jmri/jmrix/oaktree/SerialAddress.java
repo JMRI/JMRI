@@ -24,7 +24,7 @@ package jmri.jmrix.oaktree;
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004
  * @author  Bob Jacobsen, Copyright (C) 2006
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SerialAddress {
 
@@ -169,7 +169,7 @@ public class SerialAddress {
                                                     +systemName);
                 return (false);
             }
-            if ( (num < 1) || (num >=128000) ) {
+            if ( (num < 1) || (num >=256000) ) {
                 log.error("number field out of range in system name: "
                                                     +systemName);
                 return (false);
@@ -228,23 +228,27 @@ public class SerialAddress {
     public static boolean validSystemNameConfig(String systemName,char type) {
         if ( !validSystemNameFormat(systemName,type) ) {
             // No point in trying if a valid system name format is not present
+            log.warn(systemName+" invalid; bad format");
             return false;
         }
         SerialNode node = getNodeFromSystemName(systemName);
         if ( node==null ) {
+            log.warn(systemName+" invalid; no such node");
             // The node indicated by this system address is not present
             return false;
         }
         int bit = getBitFromSystemName(systemName);
         if ( ( type=='T' ) || (type=='L') ) {
-            if ( ( bit <= 0 ) || ( bit > (node.numOutputCards()*node.getNumBitsPerCard()) ) ) {
+            if ( ( bit <= 0 ) || ( bit > SerialNode.outputBytes[node.nodeType]*8 ) ) {
                 // The bit is not valid for this defined Serial node
+                log.warn(systemName+" invalid; bad bit number");
                 return false;
             }
         }
         else if ( type=='S' ) {
-            if ( ( bit <= 0 ) || ( bit > (node.numInputCards()*node.getNumBitsPerCard()) ) ) {
+            if ( ( bit <= 0 ) || ( bit > SerialNode.inputBytes[node.nodeType]*8 ) ) {
                 // The bit is not valid for this defined Serial node
+                log.warn(systemName+" invalid; bad bit number");
                 return false;
             }
         }
