@@ -49,7 +49,7 @@ import com.sun.java.util.collections.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.53 $
+ * @version $Revision: 1.54 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -524,7 +524,7 @@ public class PanelEditor extends JmriJFrame {
     }
     public void putTurnout(TurnoutIcon l) {
         l.invalidate();
-        target.add(l, TURNOUTS);
+        target.add(l, l.getDisplayLevel());
         contents.add(l);
         // reshow the panel
         target.validate();
@@ -563,7 +563,7 @@ public class PanelEditor extends JmriJFrame {
     }
     public void putSensor(SensorIcon l) {
         l.invalidate();
-        target.add(l, SENSORS);
+        target.add(l, l.getDisplayLevel());
         contents.add(l);
         // reshow the panel
         target.validate();
@@ -584,7 +584,7 @@ public class PanelEditor extends JmriJFrame {
     }
     public void putSignal(SignalHeadIcon l) {
         l.invalidate();
-        target.add(l, SIGNALS);
+        target.add(l, l.getDisplayLevel());
         contents.add(l);
         // reshow the panel
         target.validate();
