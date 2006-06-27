@@ -19,7 +19,7 @@ import javax.swing.JPopupMenu;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -30,6 +30,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
                             "resources/icons/smallschematics/searchlights/left-red-marker.gif"));
         icon = true;
         text = false;
+        setDisplayLevel(PanelEditor.SIGNALS);
 
         displayState(SignalHead.RED);
     }
