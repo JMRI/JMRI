@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle configuration for display.TurnoutIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class TurnoutIconXml implements XmlAdapter {
 
@@ -36,6 +36,7 @@ public class TurnoutIconXml implements XmlAdapter {
         element.addAttribute("turnout", p.getTurnout().getSystemName());
         element.addAttribute("x", ""+p.getX());
         element.addAttribute("y", ""+p.getY());
+        element.addAttribute("level", String.valueOf(p.getDisplayLevel()));
         element.addAttribute("closed", p.getClosedIcon().getName());
         element.addAttribute("thrown", p.getThrownIcon().getName());
         element.addAttribute("unknown", p.getUnknownIcon().getName());
@@ -114,6 +115,17 @@ public class TurnoutIconXml implements XmlAdapter {
             log.error("failed to convert positional attribute");
         }
         l.setLocation(x,y);
+
+        // find display level
+        int level = PanelEditor.LABELS.intValue();
+        if (element.getAttribute("icon")!=null) level = PanelEditor.ICONS.intValue();
+        try {
+            level = element.getAttribute("level").getIntValue();
+        } catch ( org.jdom.DataConversionException e) {
+            log.warn("Could not parse level attribute!");
+        } catch ( NullPointerException e) {  // considered normal if the attribute not present
+        }
+        l.setDisplayLevel(level);
 
         p.putTurnout(l);
     }

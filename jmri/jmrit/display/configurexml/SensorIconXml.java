@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class SensorIconXml implements XmlAdapter {
 
@@ -36,6 +36,7 @@ public class SensorIconXml implements XmlAdapter {
         element.addAttribute("sensor", p.getSensor().getSystemName());
         element.addAttribute("x", ""+p.getX());
         element.addAttribute("y", ""+p.getY());
+        element.addAttribute("level", String.valueOf(p.getDisplayLevel()));
         element.addAttribute("active", p.getActiveIcon().getName());
         element.addAttribute("inactive", p.getInactiveIcon().getName());
         element.addAttribute("unknown", p.getUnknownIcon().getName());
@@ -117,6 +118,17 @@ public class SensorIconXml implements XmlAdapter {
             log.error("failed to convert positional attribute");
         }
         l.setLocation(x,y);
+
+        // find display level
+        int level = PanelEditor.LABELS.intValue();
+        if (element.getAttribute("icon")!=null) level = PanelEditor.ICONS.intValue();
+        try {
+            level = element.getAttribute("level").getIntValue();
+        } catch ( org.jdom.DataConversionException e) {
+            log.warn("Could not parse level attribute!");
+        } catch ( NullPointerException e) {  // considered normal if the attribute not present
+        }
+        l.setDisplayLevel(level);
 
         p.putSensor(l);
     }

@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class SignalHeadIconXml implements XmlAdapter {
 
@@ -36,6 +36,7 @@ public class SignalHeadIconXml implements XmlAdapter {
         element.addAttribute("signalhead", ""+p.getSignalHead().getSystemName());
         element.addAttribute("x", ""+p.getX());
         element.addAttribute("y", ""+p.getY());
+        element.addAttribute("level", String.valueOf(p.getDisplayLevel()));
         element.addAttribute("dark", p.getDarkIcon().getName());
         element.addAttribute("red", p.getRedIcon().getName());
         element.addAttribute("yellow", p.getYellowIcon().getName());
@@ -141,6 +142,17 @@ public class SignalHeadIconXml implements XmlAdapter {
             log.error("failed to convert positional attribute");
         }
         l.setLocation(x,y);
+
+        // find display level
+        int level = PanelEditor.LABELS.intValue();
+        if (element.getAttribute("icon")!=null) level = PanelEditor.ICONS.intValue();
+        try {
+            level = element.getAttribute("level").getIntValue();
+        } catch ( org.jdom.DataConversionException e) {
+            log.warn("Could not parse level attribute!");
+        } catch ( NullPointerException e) {  // considered normal if the attribute not present
+        }
+        l.setDisplayLevel(level);
 
         p.putSignal(l);
     }
