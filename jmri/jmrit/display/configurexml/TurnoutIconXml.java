@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle configuration for display.TurnoutIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class TurnoutIconXml implements XmlAdapter {
 
@@ -117,8 +117,7 @@ public class TurnoutIconXml implements XmlAdapter {
         l.setLocation(x,y);
 
         // find display level
-        int level = PanelEditor.LABELS.intValue();
-        if (element.getAttribute("icon")!=null) level = PanelEditor.ICONS.intValue();
+        int level = PanelEditor.TURNOUTS.intValue();
         try {
             level = element.getAttribute("level").getIntValue();
         } catch ( org.jdom.DataConversionException e) {

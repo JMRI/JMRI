@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class SignalHeadIconXml implements XmlAdapter {
 
@@ -144,8 +144,7 @@ public class SignalHeadIconXml implements XmlAdapter {
         l.setLocation(x,y);
 
         // find display level
-        int level = PanelEditor.LABELS.intValue();
-        if (element.getAttribute("icon")!=null) level = PanelEditor.ICONS.intValue();
+        int level = PanelEditor.SIGNALS.intValue();
         try {
             level = element.getAttribute("level").getIntValue();
         } catch ( org.jdom.DataConversionException e) {
