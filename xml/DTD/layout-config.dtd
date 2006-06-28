@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.61 2006-06-27 05:13:24 jacobsen Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.62 2006-06-28 17:20:05 jacobsen Exp $ -->
 
 <!-- This DTD is Copyright 2001-2005 JMRI.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -273,6 +273,7 @@
     <!ATTLIST reportericon class	CDATA #REQUIRED>
     <!ATTLIST reportericon x		CDATA #REQUIRED>
     <!ATTLIST reportericon y		CDATA #REQUIRED>
+    <!ATTLIST reportericon level	CDATA #IMPLIED>
     <!ATTLIST reportericon height	CDATA #IMPLIED> <!-- deprecated -->
     <!ATTLIST reportericon width	CDATA #IMPLIED> <!-- deprecated -->
     <!ATTLIST reportericon rotate  	CDATA #IMPLIED>
@@ -283,6 +284,7 @@
     <!ATTLIST memoryicon class	CDATA #REQUIRED>
     <!ATTLIST memoryicon x		CDATA #REQUIRED>
     <!ATTLIST memoryicon y		CDATA #REQUIRED>
+    <!ATTLIST memoryicon level	CDATA #IMPLIED>
     <!ATTLIST memoryicon height	CDATA #IMPLIED> <!-- deprecated -->
     <!ATTLIST memoryicon width	CDATA #IMPLIED> <!-- deprecated -->
     <!ATTLIST memoryicon rotate  	CDATA #IMPLIED>
