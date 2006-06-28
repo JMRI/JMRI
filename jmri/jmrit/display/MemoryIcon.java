@@ -17,7 +17,7 @@ import javax.swing.JSeparator;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -27,6 +27,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         super(new NamedIcon("resources/icons/misc/X-red.gif",
                             "resources/icons/misc/X-red.gif"));
                             
+        setDisplayLevel(PanelEditor.LABELS);
         // have to do following explicitly, after the ctor
         resetDefaultIcon();
         

@@ -13,7 +13,7 @@ import com.sun.java.util.collections.List;
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class MemoryIconXml implements XmlAdapter {
 
@@ -36,6 +36,7 @@ public class MemoryIconXml implements XmlAdapter {
         element.addAttribute("memory", p.getMemory().getSystemName());
         element.addAttribute("x", ""+p.getX());
         element.addAttribute("y", ""+p.getY());
+        element.addAttribute("level", String.valueOf(p.getDisplayLevel()));
         element.addAttribute("selectable", (p.isSelectable()?"yes":"no"));
 
         element.addAttribute("class", "jmri.jmrit.display.configurexml.MemoryIconXml");
@@ -104,7 +105,18 @@ public class MemoryIconXml implements XmlAdapter {
             log.error("failed to convert positional attribute");
         }
         l.setLocation(x,y);
-        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
+ 
+         // find display level
+        int level = PanelEditor.LABELS.intValue();
+        try {
+            level = element.getAttribute("level").getIntValue();
+        } catch ( org.jdom.DataConversionException e) {
+            log.warn("Could not parse level attribute!");
+        } catch ( NullPointerException e) {  // considered normal if the attribute not present
+        }
+        l.setDisplayLevel(level);
+
+       l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(p.LABELS);
         p.putLabel(l);
     }
