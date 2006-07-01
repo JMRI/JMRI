@@ -8,7 +8,7 @@ import junit.framework.*;
 /**
  * Tests for the jmri.jmrix.loconet.spjfile package
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SpjFileTest extends TestCase {
 
@@ -17,7 +17,7 @@ public class SpjFileTest extends TestCase {
     }
 
     public void testRead() throws java.io.IOException {
-        new SpjFile("sd38_2.spj").read();
+        new SpjFile("java/test/jmri/jmrix/loconet/spjfile/sd38_2.spj").read();
     }
 
     // from here down is testing infrastructure
