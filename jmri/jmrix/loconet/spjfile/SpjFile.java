@@ -9,7 +9,7 @@ import java.io.*;
  * Digitrax SPJ files
  *
  * @author		Bob Jacobsen  Copyright (C) 2006
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 
 public class SpjFile {
@@ -39,7 +39,7 @@ public class SpjFile {
         for (int i = 1; i< n; i++) {  // header 0 already read
             headers[i] = new Header();
             headers[i].load(s);
-            System.out.println(headers[i].toString());
+            System.out.println("Header "+i+" "+headers[i].toString());
         }
    
         // mow read the rest of the file, loading bytes
@@ -51,8 +51,10 @@ public class SpjFile {
                         +" greater than record length "+headers[i].getRecordLength());
 
             for (int j = 1; j<i; j++) {
-                if (headers[i].getHandle() == headers[j].getHandle())
-                    log.error("Duplicate handle number in records "+i+"("+headers[i].getHandle()+") and"
+                if (headers[i].getHandle() == headers[j].getHandle()
+                    && headers[i].getType() == 1
+                    && headers[j].getType() == 1)
+                    log.error("Duplicate handle number in records "+i+"("+headers[i].getHandle()+") and "
                             +j+"("+headers[j].getHandle()+")");
             }
             if (headers[i].getType()  > 6 ) log.error("Type field unexpected value: "+headers[i].getType());
