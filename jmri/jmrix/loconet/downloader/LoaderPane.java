@@ -14,7 +14,7 @@ import jmri.jmrit.MemoryContents;
 /**
  * Pane for downloading .hex files
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.8 $
+ * @version	    $Revision: 1.9 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -234,11 +234,19 @@ public class LoaderPane extends javax.swing.JPanel {
         }
     }
 
+    JFileChooser chooser;
+    
     void selectInputFile() {
-        JFileChooser chooser = new JFileChooser(inputFileName.getText());
+        String name = inputFileName.getText();
+        if (name.equals("")) {
+            name = System.getProperty("user.dir");
+        }
+        if (chooser == null) chooser = new JFileChooser(name);
+        inputFileName.setText("");  // clear out in case of failure
         int retVal = chooser.showOpenDialog(this);
         if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
-        inputFileName.setText(chooser.getSelectedFile().getPath());
+        inputFileName.setText(chooser.getSelectedFile().getName());
+
         readButton.setEnabled(true);
         readButton.setToolTipText(res.getString("TipReadEnabled"));
         loadButton.setEnabled(false);
@@ -261,11 +269,12 @@ public class LoaderPane extends javax.swing.JPanel {
         loadButton.setToolTipText(res.getString("TipLoadDisabled"));
         verifyButton.setEnabled(false);
         verifyButton.setToolTipText(res.getString("TipVerifyDisabled"));
+
         // clear the existing memory contents
         inputContent = new MemoryContents();
 
         try {
-            inputContent.readHex(new File(inputFileName.getText()));
+            inputContent.readHex(new File(chooser.getSelectedFile().getPath()));
         } catch (FileNotFoundException f) {
             JOptionPane.showMessageDialog(this, res.getString("ErrorFileNotFound"),
                                       res.getString("ErrorTitle"),
