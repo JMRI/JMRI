@@ -1,40 +1,26 @@
 package jmri.jmrit.display;
 
-import jmri.jmrix.loconet.SecurityElement;
+import jmri.jmrix.loconet.*;
 
-import java.awt.Container;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.*;
+import java.awt.event.*;
 
-import javax.swing.AbstractAction;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
+import javax.swing.*;
 
 /**
- * An icon to display a status of a SecurityElement.
+ * SecurityElementIcon provides a small icon to display a status of a SecurityElement.
  * <p>
- * Unfortunately, this cannot inherit from PositionableLabel, as that displays
+ * Unfortunately, this cannot inherit from PositionableLabel, as it displays
  * only text or icon.  So instead we inherit from JPanel and
- * explicitly add the code for Positionable.
- * <P>
- * This also has LocoNet-specific code, so perhaps should be in the
- * jmrix.loconet package.  See also {@link jmri.jmrit.display.configurexml.SecurityElementIconXml}
- * if you move this.
+ * explicitly add the code for Positionable
  *
  * @author Bob Jacobsen Copyright 2002
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.14 $
  */
 
 public class SecurityElementIcon extends JPanel
     implements java.beans.PropertyChangeListener,
-               MouseListener, MouseMotionListener, Positionable {
+               MouseListener, MouseMotionListener {
 
     JLabel rlspeed;  // speed from right to left, on the top
     JLabel dir;      // direction bits
@@ -64,11 +50,12 @@ public class SecurityElementIcon extends JPanel
         add(lrspeed = new JLabel("????"));
 
         // set the labels to a smaller font
-        float newsize = lrspeed.getFont().getSize() * 0.8f;
-        Font f = jmri.util.FontUtil.deriveFont(lrspeed.getFont(), newsize);
-        rlspeed.setFont(f);
-        lrspeed.setFont(f);
-        dir.setFont(f);
+        try {
+            float newsize = lrspeed.getFont().getSize() * 0.8f;
+            rlspeed.setFont(lrspeed.getFont().deriveFont(newsize));
+            lrspeed.setFont(lrspeed.getFont().deriveFont(newsize));
+            dir.setFont(lrspeed.getFont().deriveFont(newsize));
+        } catch (NoSuchMethodError e) {}  // just carry on with larger fonts
 
         // and make movable
         connect();
@@ -187,7 +174,7 @@ public class SecurityElementIcon extends JPanel
     }
     public void mouseDragged(MouseEvent e) {
         if (e.isMetaDown()) {
-            if (!getPositionable()) return;
+            //if (debug) log.debug("Dragged: "+where(e));
             // update object postion by how far dragged
             int xObj = getX()+(e.getX()-xClick);
             int yObj = getY()+(e.getY()-yClick);
@@ -203,7 +190,6 @@ public class SecurityElementIcon extends JPanel
      * Pop-up displays the config
      */
     protected void showPopUp(MouseEvent e) {
-        if (!getEditable()) return;
         popup = new JPopupMenu();
         popup.add(new JMenuItem("SE "+element.getNumber()));
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
@@ -554,18 +540,6 @@ public class SecurityElementIcon extends JPanel
         // remove from persistance
         active = false;
     }
-
-    public void setPositionable(boolean enabled) {positionable = enabled;}
-    public boolean getPositionable() { return positionable; }
-    private boolean positionable = true;
-
-    public void setEditable(boolean enabled) {editable = enabled;}
-    public boolean getEditable() { return editable; }
-    private boolean editable = true;
-
-    public void setControlling(boolean enabled) {controlling = enabled;}
-    public boolean getControlling() { return controlling; }
-    private boolean controlling = true;
 
     boolean active = true;
     /**

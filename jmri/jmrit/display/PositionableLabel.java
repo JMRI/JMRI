@@ -4,9 +4,7 @@ import jmri.jmrit.catalog.NamedIcon;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -23,12 +21,8 @@ import javax.swing.JRadioButtonMenuItem;
 /**
  * PositionableLabel is a JLabel that can be dragged around the
  * inside of the enclosing Container using a right-drag.
- * 
- * The positionable parameter is a global, set from outside.
- * The 'fixed' parameter is local, set from the popup here.
- *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.16 $
  */
 
 public class PositionableLabel extends JLabel
@@ -136,7 +130,7 @@ public class PositionableLabel extends JLabel
     }
     public void mouseDragged(MouseEvent e) {
         if (e.isMetaDown()) {
-            if (!getPositionable() || getFixed()) return;
+            //if (debug) log.debug("Dragged: "+where(e));
             // update object postion by how far dragged
             int xObj = getX()+(e.getX()-xClick);
             int yObj = getY()+(e.getY()-yClick);
@@ -152,21 +146,15 @@ public class PositionableLabel extends JLabel
      * For over-riding in the using classes: only provides icon rotation
      */
     protected void showPopUp(MouseEvent e) {
-        if (!getEditable()) return;
         ours = this;
         if (icon && popup == null ) {
             popup = new JPopupMenu();
             popup.add(new AbstractAction("Rotate") {
                 public void actionPerformed(ActionEvent e) {
                     namedIcon.setRotation(namedIcon.getRotation()+1, ours);
-                    updateSize();
                     setIcon(namedIcon);
                 }
             });
-            
-            addFixedItem(popup);
-            addShowTooltipItem(popup);
-            
             popup.add(new AbstractAction("Remove") {
                 public void actionPerformed(ActionEvent e) {
                     remove();
@@ -180,7 +168,6 @@ public class PositionableLabel extends JLabel
             addFontMenuEntry(sizeMenu, 6);
             addFontMenuEntry(sizeMenu, 8);
             addFontMenuEntry(sizeMenu, 10);
-            addFontMenuEntry(sizeMenu, 11);
             addFontMenuEntry(sizeMenu, 12);
             addFontMenuEntry(sizeMenu, 14);
             addFontMenuEntry(sizeMenu, 16);
@@ -194,19 +181,13 @@ public class PositionableLabel extends JLabel
             JMenu styleMenu = new JMenu("Font style");
             styleMenu.add(italic = newStyleMenuItem(new AbstractAction("Italic") {
                 public void actionPerformed(ActionEvent e) {
-                    if (log.isDebugEnabled())
-                        log.debug("When style item selected "+((String)getValue(NAME))
-                                    +" italic state is "+italic.isSelected());
-                    if (italic.isSelected()) setFontStyle(Font.ITALIC, 0);
+                    if (bold.isSelected()) setFontStyle(Font.ITALIC, 0);
                     else setFontStyle(0, Font.ITALIC);
                 }
               }, Font.ITALIC));
 
             styleMenu.add(bold = newStyleMenuItem(new AbstractAction("Bold") {
                 public void actionPerformed(ActionEvent e) {
-                    if (log.isDebugEnabled())
-                        log.debug("When style item selected "+((String)getValue(NAME))
-                                    +" bold state is "+bold.isSelected());
                     if (bold.isSelected()) setFontStyle(Font.BOLD, 0);
                     else setFontStyle(0, Font.BOLD);
                 }
@@ -228,9 +209,6 @@ public class PositionableLabel extends JLabel
             addColorMenuEntry(colorMenu, "Magenta",Color.magenta);
             popup.add(colorMenu);
 
-            addFixedItem(popup);
-            addShowTooltipItem(popup);
-            
             popup.add(new AbstractAction("Remove") {
                 public void actionPerformed(ActionEvent e) {
                     remove();
@@ -238,18 +216,17 @@ public class PositionableLabel extends JLabel
                 }
             });
 
-        } else if (!text && !icon)
-            log.warn("showPopUp when neither text nor icon true");
+        } else log.warn("showPopUp when neither text nor icon true");
         // show the result
         if (popup != null) popup.show(e.getComponent(), e.getX(), e.getY());
     }
 
     void addFontMenuEntry(JMenu menu, final int size) {
-        JRadioButtonMenuItem r = new JRadioButtonMenuItem(""+size);
-        r.addActionListener(new ActionListener() {
+        AbstractAction a = new AbstractAction(""+size) {
             final float desiredSize = size+0.f;
             public void actionPerformed(ActionEvent e) { setFontSize(desiredSize); }
-        });
+        };
+        JRadioButtonMenuItem r = new JRadioButtonMenuItem(a);
         fontButtonGroup.add(r);
         if (getFont().getSize() == size) r.setSelected(true);
         else r.setSelected(false);
@@ -257,66 +234,25 @@ public class PositionableLabel extends JLabel
     }
 
     public void setFontSize(float newSize) {
-        setFont(jmri.util.FontUtil.deriveFont(getFont(), newSize));
+        setFont(getFont().deriveFont(newSize));
         setSize(getPreferredSize().width, getPreferredSize().height);
     }
 
     void addColorMenuEntry(JMenu menu, final String name, final Color color) {
-        ActionListener a = new ActionListener() {
+        AbstractAction a = new AbstractAction(name) {
             final String desiredName = name;
             final Color desiredColor = color;
             public void actionPerformed(ActionEvent e) { setForeground(desiredColor); }
         };
-        JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
-        r.addActionListener(a);
+        JRadioButtonMenuItem r = new JRadioButtonMenuItem(a);
         colorButtonGroup.add(r);
-        if (getForeground().getRGB() == color.getRGB())  r.setSelected(true);
+        if (getForeground() == color) r.setSelected(true);
         else r.setSelected(false);
         menu.add(r);
     }
 
-    JCheckBoxMenuItem showTooltipItem = null;
-    void addShowTooltipItem(JPopupMenu popup) {
-        showTooltipItem = new JCheckBoxMenuItem("Tooltip");
-        showTooltipItem.setSelected(getShowTooltip());
-        popup.add(showTooltipItem);
-        showTooltipItem.addActionListener(new ActionListener(){
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                setShowTooltip(showTooltipItem.isSelected());
-            }
-        });
-    }
-        
-    JCheckBoxMenuItem showFixedItem = null;
-    void addFixedItem(JPopupMenu popup) {
-        showFixedItem = new JCheckBoxMenuItem("Fixed");
-        showFixedItem.setSelected(getFixed());
-        popup.add(showFixedItem);
-        showFixedItem.addActionListener(new ActionListener(){
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                setFixed(showFixedItem.isSelected());
-            }
-        });
-    }
-        
-    JCheckBoxMenuItem disableItem = null;
-    void addDisableMenuEntry(JPopupMenu popup) {
-        disableItem = new JCheckBoxMenuItem("Disable");
-        disableItem.setSelected(getForceControlOff());
-        popup.add(disableItem);
-        disableItem.addActionListener(new ActionListener(){
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                setForceControlOff(disableItem.isSelected());
-            }
-        });
-    }
-        
     public JMenuItem newStyleMenuItem(AbstractAction a, int mask) {
-        // next two lines needed because JCheckBoxMenuItem(AbstractAction) not in 1.1.8
-        JCheckBoxMenuItem c = new JCheckBoxMenuItem((String)a.getValue(a.NAME));
-        c.addActionListener(a);
-        if (log.isDebugEnabled()) log.debug("When creating style item "+((String)a.getValue(a.NAME))
-                                            +" mask was "+mask+" state was "+getFont().getStyle());
+        JCheckBoxMenuItem c = new JCheckBoxMenuItem(a);
         if ( (mask & getFont().getStyle()) == mask ) c.setSelected(true);
         return c;
     }
@@ -330,8 +266,7 @@ public class PositionableLabel extends JLabel
         int styleValue = (getFont().getStyle() & ~dropStyle) | addStyle;
         if (bold != null) bold.setSelected( (styleValue & Font.BOLD) != 0);
         if (italic != null) italic.setSelected( (styleValue & Font.ITALIC) != 0);
-        setFont(jmri.util.FontUtil.deriveFont(getFont(),styleValue));
-
+        setFont(getFont().deriveFont(styleValue));
         setSize(getPreferredSize().width, getPreferredSize().height);
     }
 
@@ -341,42 +276,9 @@ public class PositionableLabel extends JLabel
 
     boolean debug = false;
 
-    public void setPositionable(boolean enabled) { positionable = enabled; }
+    public void setPositionable(boolean enabled) {positionable = enabled;}
     public boolean getPositionable() { return positionable; }
     private boolean positionable = true;
-
-    public void setEditable(boolean enabled) {editable = enabled;}
-    public boolean getEditable() { return editable; }
-    private boolean editable = true;
-
-    public void setFixed(boolean enabled) {
-        fixed = enabled;
-        if (showFixedItem!=null) showFixedItem.setSelected(getFixed());
-    }
-    public boolean getFixed() { return fixed; }
-    private boolean fixed = false;
-
-    public void setControlling(boolean enabled) {controlling = enabled;}
-    public boolean getControlling() { return controlling; }
-    private boolean controlling = true;
-
-    public void setForceControlOff(boolean set) {
-        forceControlOff = set;
-        if (disableItem!=null) disableItem.setSelected(getForceControlOff());
-    }
-    public boolean getForceControlOff() { return forceControlOff; }
-    private boolean forceControlOff = false;
-
-    public void setShowTooltip(boolean set) {
-        if (set)
-            setProperToolTip();
-        else
-            setToolTipText(null);
-        showTooltip = set;
-        if (showTooltipItem!=null) showTooltipItem.setSelected(getShowTooltip());
-    }
-    public boolean getShowTooltip() { return showTooltip; }
-    private boolean showTooltip = true;
 
     /**
      * Clean up when this object is no longer needed.  Should not
@@ -396,16 +298,12 @@ public class PositionableLabel extends JLabel
      * Removes this object from display and persistance
      */
     void remove() {
-        Point p = this.getLocation();
-        int w = this.getWidth();
-        int h = this.getHeight();
         Container parent = this.getParent();
         parent.remove(this);
         // force redisplay
         parent.validate();
-        parent.repaint(p.x,p.y,w,h);
 
-        // remove from persistance by flagging inactive
+        // remove from persistance
         active = false;
     }
 

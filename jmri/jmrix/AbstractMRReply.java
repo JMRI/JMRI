@@ -8,7 +8,7 @@ package jmri.jmrix;
  * Handles the character manipulation.
  *
  * @author		Bob Jacobsen  Copyright (C) 2003
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.3 $
  */
 abstract public class AbstractMRReply {
     // is this logically an abstract class?
@@ -16,7 +16,6 @@ abstract public class AbstractMRReply {
     // create a new one
     public  AbstractMRReply() {
         setBinary(false);
-        unsolicited = false;
     }
 
     // copy one
@@ -51,10 +50,6 @@ abstract public class AbstractMRReply {
     private boolean _isBinary;
     public boolean isBinary() { return _isBinary; }
     public void setBinary(boolean b) { _isBinary = b; }
-    
-    public final void setUnsolicited() { unsolicited = true; }
-    
-    public boolean isUnsolicited() { return unsolicited; };
 
     // display format
     public String toString() {
@@ -62,7 +57,8 @@ abstract public class AbstractMRReply {
         for (int i=0; i<_nDataChars; i++) {
             if (_isBinary) {
                 if (i!=0) s+=" ";
-                s = jmri.util.StringUtil.appendTwoHexFromInt(_dataChars[i]&0xFF, s);
+                if (_dataChars[i] < 16) s+="0";
+                s+=Integer.toHexString(_dataChars[i]);
             } else {
                 s+=(char)_dataChars[i];
             }
@@ -122,9 +118,8 @@ abstract public class AbstractMRReply {
     static public final int maxSize = 120;
 
     // contents (private)
-    private int _nDataChars = 0;
+    private int _nDataChars;
     private char _dataChars[] = new char[maxSize];
-    private boolean unsolicited;
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractMRReply.class.getName());
 

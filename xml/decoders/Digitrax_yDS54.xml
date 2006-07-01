@@ -1,31 +1,20 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
-<!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Digitrax_yDS54.xml,v 1.7 2005-05-01 23:25:41 jacobsen Exp $ -->
+<!-- $Id: Digitrax_yDS54.xml,v 1.4 2003-01-03 12:44:21 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
-					version="3" lastUpdated="20031112"/>
+					version="2" lastUpdated="20021007"/>
 					
-		<!-- Version 3 fixes typo in CV47 definition -->
-		
 <decoder>
 	<family name="DS54" mfg="Digitrax" 
 				comment="DS54 is a stationary decoder, but it can be programmed in the usual way">
-			<model model= "DS54" lowVersionID="65"/>
+			<model model= "DS54"/>
 		</family>
 
 	<programming direct="no" paged="yes" 
 	                     register="no" ops="no"></programming>
 
 	<variables>
-		<variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
-				<decVal/>
-			</variable>
-		<variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer">
-				<decVal/>
-			</variable>
-
 		<variable label="Address" CV="1" mask="VVVVVVVV" comment="Decoder address">
 			<decVal min="1" max="127"/>
 			</variable>
@@ -583,7 +572,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="When Aux D input changes, send" CV="47" mask="XXXXVVVV">
+		<variable label="When Aux D input changes, send" CV="4" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Sensor input message"/>
 				<enumChoice choice="No message"/>

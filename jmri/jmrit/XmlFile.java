@@ -8,27 +8,23 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 
 import com.sun.java.util.collections.List;
-import org.jdom.Comment;
 import org.jdom.Document;
-import org.jdom.DocType;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
-import org.jdom.output.XMLOutputter;
 
 /**
- * Handle common aspects of XML files.
+ * XmlFile contains various member implementations for handling aspects of XML files.
  *
- * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.23 $
+ * @author		Bob Jacobsen   Copyright (C) 2001, 2002
+ * @version		$Revision: 1.7 $
  */
 public abstract class XmlFile {
 
 
     /**
-     * Read the contents of an XML file from its name.  
-     * The name is expanded by the {@link #findFile}
-     * routine.
-     * @param name Filename, as needed by {@link #findFile}
+     * Read the contents of an XML file from its name.  The search order is implemented in
+     * this routine via testing for the existance, not the parsebility, of the files
+     * @param name Filename, without xml or preferences part (which is searched for)
      * @throws org.jdom.JDOMException
      * @throws java.io.FileNotFoundException
      * @return null if not found, else root element of located file
@@ -47,147 +43,65 @@ public abstract class XmlFile {
     }
 
     /**
-     * Read a File as XML, and return the root object.
-     *
-     * Multiple methods are tried to locate the DTD needed to do this.
-     * Exceptions are only thrown when local recovery is impossible.
-     *
-     * @throws org.jdom.JDOMException only when all methods have failed
+     * Read a File as XML.
+     * @throws org.jdom.JDOMException
      * @throws java.io.FileNotFoundException
      * @param file File to be parsed.  A FileNotFoundException is thrown if it doesn't exist.
      * @return root element from the file. This should never be null, as an
      *          exception should be thrown if anything goes wrong.
      */
     public Element rootFromFile(File file) throws org.jdom.JDOMException, java.io.FileNotFoundException {
-        Element e;
-        try {
-            InputStream stream = new BufferedInputStream(new FileInputStream(file));
-            return getRootViaURI(verify, stream);
-        }
-        catch (org.jdom.JDOMException e1) {
-            // 1st attempt failed, try second
-            if (!openWarn1) reportError1(file, e1);
-            openWarn1 = true;
-            try {
-                InputStream stream = new BufferedInputStream(new FileInputStream(file));
-                e = getRootViaURL(verify, stream);
-                log.info("getRootViaURL succeeded as 2nd try");
-                return e;
-            }
-            catch (org.jdom.JDOMException e2) {
-                // 2nd attempt failed, try third.
-                if (!openWarn2) reportError2(file, e2);
-                openWarn2 = true;
-                // All exceptions are allowed to propagate out, 
-                // as we have no retry algorithms left
-                InputStream stream = new BufferedInputStream(new FileInputStream(file));
-                e = getRootViaRelative(verify, stream);
-                log.info("GetRootViaRelative succeeded as 3rd try");
-                return e;
-            }
-            // other errors are allowed to propagate out
-        }
-        // other errors are allowed to propagate out
+        return rootFromStream(new BufferedInputStream(new FileInputStream(file)));
     }
 
-    static boolean openWarn1 = false;
-    static boolean openWarn2 = false;
-    static boolean openWarn3 = false;
-    
-    // made members for overriding in tests
-    protected void reportError1(File file, Exception e) {
-        log.warn("Failed to open "+file.getName()+" on 1st attempt, error was: "+e);
-    }
-    protected void reportError2(File file, Exception e) {
-        log.warn("Failed to open on 2nd attempt, error was: "+e);
-    }
-    
     /**
-     * Find the DTD via a relative path and get the root element.
-     * 
-     */
-    protected Element getRootViaRelative(boolean verify, InputStream stream) throws org.jdom.JDOMException, java.io.FileNotFoundException {
-        // Invoke a utility service routine to provide the URL for DTDs
-        String dtdUrl = "file:xml"+File.separator+"DTD";
-
-        if (log.isDebugEnabled()) log.debug("getRootViaRelative, DTD via:"+dtdUrl);
-
-        // Open and parse file
-        SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation
-        Document doc = builder.build(new BufferedInputStream(stream),dtdUrl);
-
-        // find root
-        return doc.getRootElement();
-    }
-    
-    /**
-     * Find the DTD via a URL and get the root element.
-     * 
-     */
-    protected Element getRootViaURL(boolean verify, InputStream stream) throws org.jdom.JDOMException, java.io.FileNotFoundException {
-        // Invoke a utility service routine to provide the URL for DTDs
-        String dtdpath = "xml"+File.separator+"DTD"+File.separator;
-        File dtdFile = new File(dtdpath);
-        String dtdUrl = jmri.util.FileUtil.getUrl(dtdFile);
-
-        if (log.isDebugEnabled()) log.debug("getRootViaURL, DTD URL:"+dtdUrl);
-
-        // Open and parse file
-        SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation
-        Document doc = builder.build(new BufferedInputStream(stream),dtdUrl);
-
-        // find root
-        return doc.getRootElement();
-    }
-    
-    /**
-     * Find the DTD via a URI and get the root element.
-     * 
-     */
-    protected Element getRootViaURI(boolean verify, InputStream stream) throws org.jdom.JDOMException, java.io.FileNotFoundException {
-        // Invoke a utility service routine to provide the URL for DTDs
-        String dtdpath = "xml"+File.separator+"DTD"+File.separator;
-        File dtdFile = new File(dtdpath);
-        String dtdUrl = jmri.util.FileUtil.getUrlViaUri(dtdFile);
-
-        if (log.isDebugEnabled()) log.debug("getRootViaURI, DTD URI:"+dtdUrl);
-
-        // Open and parse file
-        SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation
-        Document doc = builder.build(new BufferedInputStream(stream),dtdUrl);
-
-        // find root
-        return doc.getRootElement();
-    }
-    
-    /**
-     * Write a File as XML.
+     * Read the contents of a stream as XML, and return the root object
      * @throws org.jdom.JDOMException
      * @throws java.io.FileNotFoundException
-     * @param file File to be created.
-     * @param doc Document to be written out. This should never be null.
+     * @param stream to be parsed.
+     * @return root element within the stream. This should never be null, as an
+     *          exception should be thrown if anything goes wrong.
      */
-    public void writeXML(File file, Document doc) throws org.jdom.JDOMException, java.io.IOException, java.io.FileNotFoundException {
-        // write the result to selected file
-        java.io.FileOutputStream o = new java.io.FileOutputStream(file);
-        XMLOutputter fmt = new XMLOutputter();
-        fmt.setNewlines(true); // pretty printing
-        fmt.setIndent(true);
-        fmt.output(doc, o);
-        o.close();
+    public Element rootFromStream(InputStream stream) throws org.jdom.JDOMException, java.io.FileNotFoundException {
+        String rawpath = new File("xml"+File.separator+"DTD"+File.separator).getAbsolutePath();
+        String apath = rawpath;
+        if (File.separatorChar != '/') {
+            apath = apath.replace(File.separatorChar, '/');
+        }
+        if (!apath.startsWith("/")) {
+            apath = "/" + apath;
+        }
+        if (!apath.endsWith("/")) {
+            apath = apath+"/";
+        }
+        String path = "file:"+apath;
+
+        if (log.isDebugEnabled()) log.debug("readFile from stream, search path:"+path);
+        // This is taken in large part from "Java and XML" page 354
+
+        // Open and parse file
+
+        // DOMBuilder builder = new DOMBuilder(verify);  // argument controls validation, on for now
+        // Document doc = builder.build(new BufferedInputStream(stream));
+
+        SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation, on for now
+        Document doc = builder.build(new BufferedInputStream(stream),path);
+
+        // find root
+        return doc.getRootElement();
     }
 
+
     /**
-     * Check if a file of the given name exists. This uses the 
-     * same search order as {@link #findFile} 
-     *
-     * @param name file name, either absolute or relative
+     * Check if a file of the given name exists. This is here so it can
+     * be overridden during tests. Note that it also obeys the
+     * search rules.
+     * @param name subdirectory and file name, not including the leading path
+     *                   to either the xml or preferences directory
      * @return true if the file exists in a searched place
      */
     protected boolean checkFile(String name) {
-        File fp = new File(name);
-        if (fp.exists()) return true;
-        fp = new File(prefsDir()+name);
+        File fp = new File(prefsDir()+name);
         if (fp.exists()) {
             return true;
         }
@@ -205,20 +119,13 @@ public abstract class XmlFile {
 
     /**
      * Return a File object for a name. This is here to implement the
-     * search rule:
-     * <OL>
-     * <LI>Check for absolute name.
-     * <LI>If not found look in user preferences directory, located by {@link #prefsDir}
-     * <LI>If still not found, look in distribution directory, located by {@link #xmlDir}
-     * </OL>
-     * @param name Filename perhaps containing
+     * search rule: Look first in prefsDir, then xmlDir()
+     * @param name Filename without path information, but perhaps containing
      *               subdirectory information (e.g. "decoders/Mine.xml")
      * @return null if file found, otherwise the located File
      */
     protected File findFile(String name) {
-        File fp = new File(name);
-        if (fp.exists()) return fp;
-        fp = new File(prefsDir()+name);
+        File fp = new File(prefsDir()+name);
         if (fp.exists()) {
             return fp;
         }
@@ -253,7 +160,7 @@ public abstract class XmlFile {
     public void makeBackupFile(String name) {
         File file = findFile(name);
         if (file!=null) {
-            file.renameTo(new File(backupFileName(file.getAbsolutePath())));
+            file.renameTo(new File(backupFileName(name)));
         }
         else log.info("No "+name+" file to backup");
     }
@@ -266,7 +173,8 @@ public abstract class XmlFile {
      * @return Complete filename, including path information into preferences directory
      */
     public String backupFileName(String name) {
-        String f = name+".bak";
+        // File.createTempFile is not available in java 1, so use millisecond time as unique string
+        String f = prefsDir()+name+".bak";
         if (log.isDebugEnabled()) log.debug("backup file name is "+f);
         return f;
     }
@@ -283,48 +191,6 @@ public abstract class XmlFile {
         }
     }
 
-    /**
-     * Create the Document object to store a particular root Element.
-     *
-     * @param root Root element of the final document
-     * @param dtd name of an external DTD
-     * @return new Document, with root installed
-     */
-    static public Document newDocument(Element root, String dtd) {
-        Document doc = new Document(root);
-        doc.setDocType(new DocType(root.getName(),dtd));
-        addDefaultInfo(root);
-        return doc;
-    }
-
-    /**
-     * Add default information to the XML before writing it out.
-     * <P>
-     * Currently, this is identification information as an XML comment. This includes:
-     * <UL>
-     * <LI>The JMRI version used
-     * <LI>Date of writing
-     * <LI>A CVS id string, in case the file gets checked in or out
-     * </UL>
-     * <P>
-     * It may be necessary to extend this to check whether the info is
-     * already present, e.g. if re-writing a file.
-     * @param root The root element of the document that will be written.
-     */
-    static public void addDefaultInfo(Element root) {
-        String content = "Written by JMRI version "+jmri.Version.name()
-                        +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.23 2006-02-16 06:13:56 jacobsen Exp $";
-        Comment comment = new Comment(content);
-        root.addContent(comment);
-    }
-
-    /**
-     * Define the location of XML files within the distribution
-     * directory. <P>
-     * Because the programs runtime working directory is also the
-     * distribution directory, we just use a relative file name.
-     */
     static public String xmlDir() {return "xml"+File.separator;}
 
     /**
@@ -353,7 +219,7 @@ public abstract class XmlFile {
 
         if ( !mrjVersion.equals("<unknown>")) {
             // Macintosh, test for OS X
-            if (osName.toLowerCase().equals("mac os x")) {
+            if (osName.equals("Mac OS X")) {
                 // Mac OS X
                 result = userHome+"Library"+File.separator+"Preferences"
                     +File.separator+"JMRI"+File.separator;
@@ -386,7 +252,7 @@ public abstract class XmlFile {
         return result;
     }
 
-    static boolean verify = false;
+    static boolean verify = true;
 
     // initialize SAXbuilder
     static private SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation, on for now

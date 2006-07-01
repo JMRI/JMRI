@@ -4,7 +4,6 @@ package jmri.managers;
 
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.Manager;
 
 /**
  * Implementation of a SensorManager that can serves as a proxy
@@ -12,29 +11,10 @@ import jmri.Manager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.2 $
  */
 public class ProxySensorManager extends AbstractProxyManager
                             implements SensorManager {
-
-    public ProxySensorManager() {
-        super();
-    }
-    
-    /**
-     * Override super-class behaviour to include internal 
-     * manager.
-     */
-    public void addManager(Manager m) {
-        if (mgrs.size() == 0) { 
-            log.debug("initial addmanager");
-            mgrs.add(m);
-            mgrs.add(new InternalSensorManager());
-        } else {
-            mgrs.add(m);
-        }
-        log.debug("added manager");
-    }
 
     /**
      * Locate via user name, then system name if needed.
@@ -52,21 +32,14 @@ public class ProxySensorManager extends AbstractProxyManager
         Sensor t = getSensor(name);
         if (t!=null) return t;
         // if the systemName is specified, find that system
-		String sName = name.toUpperCase();
         for (int i=0; i<mgrs.size(); i++) {
-            if ( ( (SensorManager)mgrs.get(i)).systemLetter() == sName.charAt(0) )
-                return ((SensorManager)mgrs.get(i)).newSensor(sName, null);
+            if ( ( (SensorManager)mgrs.get(i)).systemLetter() == name.charAt(0) )
+                return ((SensorManager)mgrs.get(i)).newSensor(name, null);
         }
-        // did not find a manager, allow it to default to the primary, if there is one
-        log.debug("Did not find manager for name "+sName+", assume it's a number");
-		if (mgrs.size()>0) {
-			return ((SensorManager)mgrs.get(0)).newSensor(
-                    ((SensorManager)mgrs.get(0)).makeSystemName(sName), null);
-		}
-		else {
-			log.debug("Did not find a primary sensor manager for name "+sName);
-			return (null);
-		}		
+        // did not find a manager, allow it to default to the primary
+        log.debug("Did not find manager for name "+name+", assume it's a number");
+        return ((SensorManager)mgrs.get(0)).newSensor(
+                    ((SensorManager)mgrs.get(0)).makeSystemName(name), null);
     }
 
 
@@ -76,10 +49,9 @@ public class ProxySensorManager extends AbstractProxyManager
      * @return requested Turnout object or null if none exists
      */
     public Sensor getBySystemName(String systemName) {
-		String sName = systemName.toUpperCase();
         Sensor t = null;
         for (int i=0; i<mgrs.size(); i++) {
-            t = ( (SensorManager)mgrs.get(i)).getBySystemName(sName);
+            t = ( (SensorManager)mgrs.get(i)).getBySystemName(systemName);
             if (t!=null) return t;
         }
         return null;
@@ -127,37 +99,24 @@ public class ProxySensorManager extends AbstractProxyManager
      * be looking them up.
      * @return requested Sensor object (never null)
      */
-    public Sensor newSensor(String sysName, String userName) {
-		String systemName = sysName.toUpperCase();
+    public Sensor newSensor(String systemName, String userName) {
         // if the systemName is specified, find that system
         if (systemName != null) {
+            Sensor t = null;
             for (int i=0; i<mgrs.size(); i++) {
                 if ( ( (SensorManager)mgrs.get(i)).systemLetter() == systemName.charAt(0) )
                     return ( (SensorManager)mgrs.get(i)).newSensor(systemName, userName);
             }
-            // did not find a manager, allow it to default to the primary, if there is one
+            // did not find a manager, allow it to default to the primary
             log.debug("Did not find manager for system name "+systemName+", assume it's a number");
-			if (mgrs.size()>0) {
-				return ( (SensorManager)mgrs.get(0)).newSensor(systemName, userName);
-			} else {
-				log.debug("Did not find a primary sensor manager for system name "+systemName);
-				return (null);
-			}	
-        } else {  // no systemName specified, use primary, if there is one
-			if (mgrs.size()>0) {
-				return ( (SensorManager)mgrs.get(0)).newSensor(systemName, userName);
-			} else {
-				log.debug("Did not find a primary sensor manager");
-				return (null);
-			}	
+            return ( (SensorManager)mgrs.get(0)).newSensor(systemName, userName);
+        } else {  // no systemName specified, use primary
+            return ( (SensorManager)mgrs.get(0)).newSensor(systemName, userName);
         }
     }
-
-	// null implementation to satisfy the SensorManager interface
-	public void updateAll() {  };
 
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ProxySensorManager.class.getName());
 }
 
-/* @(#)ProxySensorManager.java */
+/* @(#)ProxyTurnoutManager.java */

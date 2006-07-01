@@ -18,8 +18,8 @@ import jmri.Sensor;
  * change a state via an icon, and not have it change back the next time
  * that AIU is polled.
  *
- * @author			Bob Jacobsen Copyright (C) 2003, 2005
- * @version			$Revision: 1.4 $
+ * @author			Bob Jacobsen Copyright (C) 2003
+ * @version			$Revision: 1.2 $
  */
 public class NceAIU {
 
@@ -32,51 +32,33 @@ public class NceAIU {
 
     Sensor[] sensorArray = new Sensor[15];
     int[] sensorLastSetting = new int[15];
-    int lastAIUValue = 0xc000;      // can't ever take this value
 
     /**
      *
      * @param bits int value of response from poll command
      */
     public void markChanges(int bits) {
-        if (bits != lastAIUValue) {
-            if (log.isDebugEnabled()) {
-                log.debug("sensor array change from "+Integer.toHexString(lastAIUValue)+
-                    " to "+Integer.toHexString(bits));
-            }
-            lastAIUValue = bits;
+        try {
             for (int i=0; i<14; i++) {
                 if ( (bits&1) ==0 ) {
-                    sensorChange(i, Sensor.ACTIVE);
+                    // bit reset, considered ACTIVE
+                    if ( sensorArray[i]!=null &&
+                            ( sensorLastSetting[i] != Sensor.ACTIVE) ) {
+                        sensorLastSetting[i] = Sensor.ACTIVE;
+                        sensorArray[i].setKnownState(Sensor.ACTIVE);
+                    }
                 } else {
-                    sensorChange(i, Sensor.INACTIVE);
+                    // bit set, considered INACTIVE
+                    if ( sensorArray[i]!=null &&
+                            ( sensorLastSetting[i] != Sensor.INACTIVE) ) {
+                        sensorLastSetting[i] = Sensor.INACTIVE;
+                        sensorArray[i].setKnownState(Sensor.INACTIVE);
+                    }
                 }
                 bits = bits/2;
-            } 
-        }
-    }
-    /**
-     * set state of a single sensor based on AIU input
-     * 
-     * @param offset sensor number within the current array
-     * @param newState new state (Sensor.ACTIVE / .INACTIVE)
-     */
-    public void sensorChange(int offset, int newState) {
-        if (sensorArray[offset]!=null && sensorLastSetting[offset]!=newState) {
-            sensorLastSetting[offset] = newState;
-            if (log.isDebugEnabled()) {
-                String newStateStr = "Active";
-                if (newState==Sensor.INACTIVE) {
-                    newStateStr = "Inactive";
-                }
-                log.debug("setting sensor "+sensorArray[offset].getSystemName()+": "+newStateStr);
             }
-            try {
-                sensorArray[offset].setKnownState(newState);
-            } catch (JmriException e) { log.error("exception in sensorChange: "+e); }
-        }
+        } catch (JmriException e) { log.error("exception in markChanges: "+e); }
     }
-    
 
     /**
      * The numbers here are 0 to 15, not 1 to 16
@@ -85,15 +67,6 @@ public class NceAIU {
      */
     public void registerSensor(Sensor s, int i) {
         sensorArray[i] = s;
-    }
-    
-    /**
-     * Return the sensor object for the specified AIU
-     * @param index AIU index (0..15)
-     * @return sensor object
-     */
-    public Sensor getSensor(int index) {
-        return sensorArray[index];
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceAIU.class.getName());

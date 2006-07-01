@@ -6,11 +6,9 @@ import jmri.jmrix.loconet.LocoNetMessage;
 
 /**
  * Client for the RMI LocoNet server.
- * <P>
- * The main() in this class is for test purposes only.
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Alex Shepherd, Bob Jacobsen
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.13 $
  */
 
 public class LnMessageClient extends LnTrafficRouter {
@@ -29,10 +27,6 @@ public class LnMessageClient extends LnTrafficRouter {
      * Forward messages to the server.
      */
     public void sendLocoNetMessage(LocoNetMessage m) {
-        // update statistics
-        transmittedMsgCount++;
-
-        // attempt to forward message
         try{
             if( lnMessageBuffer != null )
                 lnMessageBuffer.sendLocoNetMessage( m );
@@ -72,14 +66,14 @@ public class LnMessageClient extends LnTrafficRouter {
             pollThread = new LnMessageClientPollThread( this ) ;
         }
         catch( Exception ex ){
-            log.error( "Exception while trying to connect: " + ex );
+            log.error( "Exception: " + ex );
             throw new LocoNetException( "Failed to Connect to Server: " + serverName ) ;
         }
     }
 
     /**
-     * Set up all of the other objects to operate with a server
-     * connected to this application.
+     * set up all of the other objects to operate with a server
+     * connected to this application
      */
     public void configureLocalServices() {
         // This is invoked on the LnMessageClient after it is
@@ -91,14 +85,11 @@ public class LnMessageClient extends LnTrafficRouter {
             jmri.jmrix.loconet.SlotManager.instance();
 
         // do the common manager config
-        jmri.jmrix.loconet.LnPortController.configureCommandStation(true, false,"<unknown>");  // for now, assume full capability
+        jmri.jmrix.loconet.LnPortController.configureCommandStation(true, false);  // for now, assume full capability
         jmri.jmrix.loconet.LnPortController.configureManagers();
 
         // the serial connections (LocoBuffer et al) start
         // various threads here.
-
-        jmri.jmrix.loconet.ActiveFlag.setActive();
-
     }
 
     public static void main( String[] args ){

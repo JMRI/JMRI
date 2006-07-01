@@ -1,10 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- Copyright (C) JMRI 2003 All rights reserved -->
-<!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: SoundTraxx_LC_Diesel_pnp.xml,v 1.7 2005-08-18 05:07:48 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_LC_Diesel_pnp.xml,v 1.4 2003-07-16 06:01:05 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Michael Mosher" version="11" lastUpdated="20050817"/>
+		<version author="Michael Mosher" version="10" lastUpdated="20030703"/>
 
 		<!-- version 4: updates to minOut usage, function mapping -->
 		<!-- version 5: added LL100LC -->
@@ -14,12 +12,10 @@
 		<!-- version 8: remove Atlas/Kato to other file -->
 		<!-- version 9: moved LL100LC to other file -->
 		<!-- version 10: added FX1 & FX2 to fun map & CV105&106 set CV9 default to 180   -->
-      <!-- Version 10.1: changed spelling of "behavior" (Jack Shall) -->
-        <!-- version 11 (20050817 BobJ): numFns corrected from 8 to 10 -->
 
 <decoder>
 	<family name="LC Diesel PNP decoders" mfg="Throttle-Up (SoundTraxx)">
-		<model model="AT100LC/KT100LC Diesel" numOuts="4" numFns="10">
+		<model model="AT100LC/KT100LC Diesel" numOuts="4" numFns="8">
 			<versionCV lowVersionID="35"/>
 			<output name="Horn"/> 
 			<output name="Bell"/> 
@@ -31,7 +27,7 @@
 			<output name="Dim"/>
 			<output name="Mute"/> 
 			</model>
-		<model model="LL110LC Diesel" numOuts="4" numFns="10">
+		<model model="LL110LC Diesel" numOuts="4" numFns="8">
 			<versionCV lowVersionID="35"/>
 			<output name="Horn"/> 
 			<output name="Bell"/> 
@@ -43,7 +39,7 @@
 			<output name="Dim"/>
 			<output name="Mute"/> 
 			</model>
-		<model model="LL090LC Diesel" numOuts="4" numFns="10">
+		<model model="LL090LC Diesel" numOuts="4" numFns="8">
 			<versionCV lowVersionID="35"/>
 			<output name="Horn"/> 
 			<output name="Bell"/> 
@@ -523,8 +519,8 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="Forward light F0F behavior" CV="49" mask="XVVVXXXX"
-					item="Function F0F behavior">
+		<variable label="Forward light F0F behaviour" CV="49" mask="XVVVXXXX"
+					item="Function F0F behaviour">
 			<enumVal>
 				<enumChoice choice="Phase A"/>
 				<enumChoice choice="Phase B"/>
@@ -557,8 +553,8 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="Reverse light F0R behavior" CV="50" mask="XVVVXXXX"
-					item="Function F0R behavior">
+		<variable label="Reverse light F0R behaviour" CV="50" mask="XVVVXXXX"
+					item="Function F0R behaviour">
 			<enumVal>
 				<enumChoice choice="Phase A"/>
 				<enumChoice choice="Phase B"/>

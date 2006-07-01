@@ -19,18 +19,16 @@ import javax.comm.PortInUseException;
 import javax.comm.SerialPort;
 
 /**
- * Implements SerialPortAdapter for the NCE system.
- * <P>
- * This connects
+ * Implements SerialPortAdapter for the NCE system.  This connects
  * an NCE command station via a serial com port.
  * Normally controlled by the SerialDriverFrame class.
  * <P>
- * The current implementation only handles the 9,600 baud rate, and does
+ * The current implementation only handles the 19,200 baud rate, and does
  * not use any other options at configuration time.
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.21 $
+ * @version			$Revision: 1.16 $
  */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -73,9 +71,8 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
             activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
             activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
 
-            // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
+            // disable flow control; hardware lines used for signalling, XON/XOFF might appear in data
             activeSerialPort.setFlowControlMode(0);
-            activeSerialPort.enableReceiveTimeout(50);  // 50 mSec timeout before sending chars
 
             // set timeout
             // activeSerialPort.enableReceiveTimeout(1000);
@@ -141,8 +138,6 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
 
         jmri.InstanceManager.setThrottleManager(new jmri.jmrix.nce.NceThrottleManager());
 
-        jmri.jmrix.nce.ActiveFlag.setActive();
-
     }
 
     private Thread sinkThread;
@@ -185,6 +180,9 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
         return mInstance;
     }
     static SerialDriverAdapter mInstance = null;
+    static public boolean hasInstance() {
+        return (mInstance != null);
+    }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialDriverAdapter.class.getName());
 

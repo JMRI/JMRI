@@ -8,7 +8,7 @@ import java.io.DataOutputStream;
 /**
  * Base for classes representing a LocoNet communications port
  * @author		Bob Jacobsen    Copyright (C) 2001, 2002
- * @version             $Revision: 1.12 $
+ * @version             $Revision: 1.6 $
  */
 public abstract class LnPortController extends jmri.jmrix.AbstractPortController {
     // base class. Implementations will provide InputStream and OutputStream
@@ -30,58 +30,21 @@ public abstract class LnPortController extends jmri.jmrix.AbstractPortController
      * Can the port accept additional characters?  This might
      * go false for short intervals, but it might also stick
      * off if something goes wrong.
-     *<P>
-     * Provide a default implementation for the MS100, etc,
-     * in which this is _always_ true, as we rely on the
-     * queueing in the port itself.
      */
-    public boolean okToSend() {
-        return true;
-    }
+    public abstract boolean okToSend();
 
-    protected boolean mCanRead = true;
-    protected boolean mProgPowersOff = false;
-    protected String commandStationName = "<unknown>";
-    
-    protected String[] commandStationNames = {
-                                    "DCS100 (Chief)", 
-                                    "DCS200",
-                                    "DCS50 (Zephyr)",
-                                    "DB150 (Empire Builder)",
-                                    "Intellibox"};
-                                    
-    /**
-     * Set config info from the command station type name.
-     */
-    public void setCommandStationType(String value) {
-		if (value == null) return;  // can happen while switching protocols
-    	log.debug("setCommandStationType: "+value);
-        if (value.equals("DB150 (Empire Builder)")) {
-            mCanRead = false;
-            mProgPowersOff = true;
-        }
-        else {
-            mCanRead = true;
-            mProgPowersOff = false;
-        }
-        commandStationName = value;
-    }
-                                    
     /**
      * Configure the programming manager and "command station" objects
      * @param mCanRead
      * @param mProgPowersOff
-     * @param name Command station type name
      */
-    static public void configureCommandStation(boolean mCanRead, boolean mProgPowersOff, String name) {
+    static public void configureCommandStation(boolean mCanRead, boolean mProgPowersOff) {
         // loconet.SlotManager to do programming (the Programmer instance is registered
         // when the SlotManager is created)
         jmri.jmrix.loconet.SlotManager.instance();
         // set slot manager's read capability
         jmri.jmrix.loconet.SlotManager.instance().setCanRead(mCanRead);
         jmri.jmrix.loconet.SlotManager.instance().setProgPowersOff(mProgPowersOff);
-        jmri.jmrix.loconet.SlotManager.instance().setCommandStationType(name);
-        
         // store as CommandStation object
         jmri.InstanceManager.setCommandStation(jmri.jmrix.loconet.SlotManager.instance());
 
@@ -99,13 +62,9 @@ public abstract class LnPortController extends jmri.jmrix.AbstractPortController
 
         jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager());
 
-        jmri.InstanceManager.setLightManager(new jmri.jmrix.loconet.LnLightManager());
-
         jmri.InstanceManager.setSensorManager(new jmri.jmrix.loconet.LnSensorManager());
 
         jmri.InstanceManager.setThrottleManager(new jmri.jmrix.loconet.LnThrottleManager());
-
-        jmri.InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager());
 
     }
 }

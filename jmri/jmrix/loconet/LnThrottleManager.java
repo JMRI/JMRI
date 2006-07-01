@@ -3,12 +3,8 @@ package jmri.jmrix.loconet;
 import jmri.DccThrottle;
 import jmri.ThrottleListener;
 import jmri.ThrottleManager;
-import jmri.LocoAddress;
-import jmri.DccLocoAddress;
-
 import com.sun.java.util.collections.HashMap;
 
-import jmri.jmrix.AbstractThrottleManager;
 
 /**
  * LocoNet implementation of a ThrottleManager.
@@ -18,9 +14,9 @@ import jmri.jmrix.AbstractThrottleManager;
  *
  * @see SlotManager
  * @author		Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.19 $
+ * @version 		$Revision: 1.14 $
  */
-public class LnThrottleManager extends AbstractThrottleManager implements ThrottleManager, SlotListener {
+public class LnThrottleManager implements ThrottleManager, SlotListener {
     private SlotManager slotManager;
     private HashMap throttleListeners;
 
@@ -28,66 +24,61 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      * Constructor. Gets a reference to the LocoNet SlotManager.
      */
     public LnThrottleManager() {
-    	super();
         slotManager = SlotManager.instance();
     }
 
-	/**
-	 * LocoNet allows multiple throttles for the same device
+    /**
+     * Request a throttle, given a decoder address. When the decoder address
+     * is located, the ThrottleListener gets a callback via the ThrottleListener.notifyThrottleFound
+     * method.
+     * @param address The decoder address desired.
+     * @param l The ThrottleListener awaiting notification of a found throttle.
+     * @return True if the request will continue, false if the request will not
+     * be made. False may be returned if the throttle is already in use.
      */
-	protected boolean singleUse() { return false; }
+    public boolean requestThrottle(int address, ThrottleListener l)
+    {
+        boolean throttleInUse = false;
+        if (throttleListeners == null) {
+            throttleListeners = new HashMap(5);
+        }
 
+        Integer addressKey = new Integer(address);
+        if (throttleListeners.containsKey(addressKey)) {
+            throttleInUse = true;
+        } else {
+            throttleListeners.put(addressKey, l);
+            slotManager.slotFromLocoAddress(address, this);
+        }
+        return throttleInUse;
 
-	/** 
-	 * Start creating a Throttle object.
-	 *
-	 * This returns directly, having arranged for the Throttle
-	 * object to be delivered via callback
-	 */
-	public void requestThrottleSetup(LocoAddress address) {
-    	slotManager.slotFromLocoAddress(((DccLocoAddress)address).getNumber(), this);
-	}
-	
+    }
 
     /**
-     * LocoNet does have a Dispatch function
-     **/
-    public boolean hasDispatchFunction(){ return true; }     
+     * Cancel a request for a throttle
+     * @param address The decoder address desired.
+     * @param l The ThrottleListener cancelling request for a throttle.
+     */
+    public void cancelThrottleRequest(int address, ThrottleListener l) {
+        if (throttleListeners != null) {
+            Integer addressKey = new Integer(address);
+            throttleListeners.remove(addressKey);
+        }
 
+    }
     /**
      * SlotListener contract. Get notification that an address has changed slot.
      * This method creates a throttle for all ThrottleListeners of that address
      * and notifies them via the ThrottleListener.notifyThrottleFound method.
      */
     public void notifyChangedSlot(LocoNetSlot s) {
-    	DccThrottle throttle = new LocoNetThrottle(s);
-    	notifyThrottleKnown(throttle, new DccLocoAddress(s.locoAddr(),isLongAddress(s.locoAddr()) ) );
+        Integer address = new Integer(s.locoAddr());
+        ThrottleListener l = (ThrottleListener)throttleListeners.get(address);
+        if (l != null) {
+            DccThrottle throttle = new LocoNetThrottle(s);
+            l.notifyThrottleFound(throttle);
+        }
     }
 
-    /**
-     * Address 128 and above is a long address
-     **/
-    public boolean canBeLongAddress(int address) {
-        return isLongAddress(address);
-    }
-    
-    /**
-     * Address 127 and below is a short address
-     **/
-    public boolean canBeShortAddress(int address) {
-        return !isLongAddress(address);
-    }
-
-    /**
-     * Are there any ambiguous addresses (short vs long) on this system?
-     */
-    public boolean addressTypeUnique() { return true; }
-
-    /*
-     * Local method for deciding short/long address
-     */
-    static boolean isLongAddress(int num) {
-        return (num>=128);
-    }
 
 }

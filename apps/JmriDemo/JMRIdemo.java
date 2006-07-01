@@ -6,8 +6,7 @@ import apps.Apps;
 
 import java.text.MessageFormat;
 
-import javax.swing.*;
-import jmri.util.JmriJFrame;
+import javax.swing.JFrame;
 
 /**
  * The JMRI demo program.
@@ -17,7 +16,7 @@ import jmri.util.JmriJFrame;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.63 $
+ * @version     $Revision: 1.60 $
  */
 public class JMRIdemo extends Apps {
 
@@ -30,24 +29,6 @@ public class JMRIdemo extends Apps {
                                 new String[]{jmri.Version.name()});
     }
 
-    /**
-     * Adds the development menu to the default main menu bar.
-     *
-     * @param menuBar
-     * @param frame
-     */
-    protected void createMenus(JMenuBar menuBar, JFrame frame) {
-        super.createMenus(menuBar, frame);
-        developmentMenu(menuBar, frame);
-    }
-
-    /**
-     * Show all systems in the menu bar.
-     */
-    protected void systemsMenu(JMenuBar menuBar, JFrame frame) {
-        menuBar.add(new jmri.jmrix.SystemsMenu());
-    }
-
     // Main entry point
     public static void main(String args[]) {
 
@@ -55,10 +36,9 @@ public class JMRIdemo extends Apps {
         splash(true);
 
         initLog4J();
-        log.info(apps.Apps.startupInfo("JMRIdemo"));
-
+        log.info("program starts");
         setConfigFilename("JmriDemoConfig2.xml", args);
-        JmriJFrame f = new JmriJFrame("JmriDemo");
+        JFrame f = new JFrame("JmriDemo");
         createFrame(new JMRIdemo(f), f);
 
         log.info("main initialization done");

@@ -1,10 +1,5 @@
 # Python code to start a DecoderPro app, complete with menu bar
-#
-# Author: Bob Jacobsen, copyright 2004
-# Part of the JMRI distribution
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision: 1.3 $
+# $Id: DecoderPro.py,v 1.1 2003-10-24 04:21:50 jacobsen Exp $
 
 # start the program
 import apps

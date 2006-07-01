@@ -5,14 +5,11 @@ package jmri.jmrix.cmri.serial;
 
 /**
  * Contains the data payload of a CMRI serial
- * packet.
- * <P>
- * Note that <i>only</i> the payload, not
+ * packet.  Note that _only_ the payload, not
  * the header or trailer, nor the padding DLE characters
  * are included. These are added during transmission.
- *
- * @author    Bob Jacobsen  Copyright (C) 2001,2003
- * @version   $Revision: 1.9 $
+ * @author    Bob Jacobsen  Copyright (C) 2001
+ * @version   $Revision: 1.7 $
  */
 
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
@@ -43,8 +40,8 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
 
     /**
      * This ctor interprets the byte array as
-     * a sequence of characters to send.
-     * @param a Array of bytes to send
+     * a sequence of characters to send
+     * @param m
      */
     public  SerialMessage(byte[] a) {
         super(String.valueOf(a));
@@ -71,10 +68,13 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         SerialMessage m = new SerialMessage(2);
         m.setElement(0, 65+UA);
         m.setElement(1, 0x50); // 'P'
-        m.setTimeout(SHORT_TIMEOUT);    // minumum reasonable timeout
+        m.setTimeout(200);
         return m;
     }
 
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialMessage.class.getName());
+
 }
+
 
 /* @(#)SerialMessage.java */

@@ -22,13 +22,9 @@ import javax.comm.SerialPortEventListener;
  * <P>
  * Normally controlled by the LocoBufferFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.28 $
+ * @version			$Revision: 1.17 $
  */
 public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
-
-    public LocoBufferAdapter() {
-        super();
-    }
 
     Vector portNameVector = null;
     SerialPort activeSerialPort = null;
@@ -59,21 +55,17 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
             }
             // try to set it for LocoNet via LocoBuffer
             try {
-                setSerialPort(activeSerialPort);
+                setSerialPort();
             } catch (javax.comm.UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port "+portName+": "+e.getMessage());
                 return "Cannot set serial parameters on port "+portName+": "+e.getMessage();
             }
 
             // set timeout
-            try {
-                activeSerialPort.enableReceiveTimeout(10);
-                log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
+            // activeSerialPort.enableReceiveTimeout(1000);
+            log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
                       +" "+activeSerialPort.isReceiveTimeoutEnabled());
-            } catch (Exception et) {
-                log.info("failed to set serial timeout: "+et);
-            }
-            
+
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
 
@@ -185,8 +177,8 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
     }
 
     /**
-     * Set up all of the other objects to operate with a LocoBuffer
-     * connected to this port.
+     * set up all of the other objects to operate with a LocoBuffer
+     * connected to this port
      */
     public void configure() {
         // connect to a packetizing traffic controller
@@ -194,13 +186,11 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         packets.connectPort(this);
 
         // do the common manager config
-        configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
+        configureCommandStation(mCanRead, mProgPowersOff);
         configureManagers();
 
         // start operation
         packets.startThreads();
-        jmri.jmrix.loconet.ActiveFlag.setActive();
-
     }
 
     private Thread sinkThread;
@@ -228,14 +218,14 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
     public boolean status() {return opened;}
 
     /**
-     * Local method to do specific configuration, overridden in class
+     * Local method to do specific configuration, overridden in the LocoBufferHSAdapter class
      */
-    protected void setSerialPort(SerialPort activeSerialPort) throws javax.comm.UnsupportedCommOperationException {
+    protected void setSerialPort() throws javax.comm.UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
         int baud = 19200;  // default, but also defaulted in the initial value of selectedSpeed
-        for (int i = 0; i<validBaudNumber().length; i++ )
-            if (validBaudRates()[i].equals(mBaudRate))
-                baud = validBaudNumber()[i];
+        for (int i = 0; i<validSpeeds.length; i++ )
+            if (validSpeeds[i].equals(mBaudRate))
+                baud = validSpeedValues[i];
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                                              SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
@@ -246,7 +236,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also defaults in selectedOption1
         if (mOpt1.equals(validOption1[1]))
-            flow = SerialPort.FLOWCONTROL_NONE;
+            flow = 0;
         activeSerialPort.setFlowControlMode(flow);
         log.debug("Found flow control "+activeSerialPort.getFlowControlMode()
                   +" RTSCTS_OUT="+SerialPort.FLOWCONTROL_RTSCTS_OUT
@@ -254,32 +244,26 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
     }
 
     /**
-     * Get an array of valid baud rates as strings. This allows subclasses
-     * to change the arrays of speeds.
+     * Get an array of valid baud rates. This is currently just a message
+     * saying its fixed
      */
     public String[] validBaudRates() {
         return validSpeeds;
     }
 
     /**
-     * Get an array of valid baud rates as integers. This allows subclasses
-     * to change the arrays of speeds.
-     */
-    public int[] validBaudNumber() {
-        return validSpeedValues;
-    }
-
-    /**
      * Option 1 controls flow control option
      */
-    public String option1Name() { return "LocoBuffer connection uses "; }
+    public String option1Name() { return "LocoBuffer connections uses "; }
     public String[] validOption1() { return validOption1; }
 
     /**
      * Get an array of valid values for "option 2"; used to display valid options.
      * May not be null, but may have zero entries
      */
-    public String[] validOption2() { return commandStationNames; }
+    public String[] validOption2() { return new String[]{"DCS100 (Chief)",
+                                                         "DB150 (Empire Builder)",
+                                                         "DB50 (Zephyr)"}; }
 
     /**
      * Get a String that says what Option 2 represents
@@ -293,9 +277,20 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
      */
     public void configureOption2(String value) {
         super.configureOption2(value);
+
     	log.debug("configureOption2: "+value);
-        setCommandStationType(value);
+        if (value.equals("DB150 (Empire Builder)")) {
+            mCanRead = false;
+            mProgPowersOff = true;
+        }
+        else {
+            mCanRead = true;
+            mProgPowersOff = false;
+        }
     }
+
+    boolean mCanRead = true;
+    boolean mProgPowersOff = false;
 
     protected String [] validSpeeds = new String[]{"19,200 baud (J1 on 1&2)", "57,600 baud (J1 on 2&3)"};
     protected int [] validSpeedValues = new int[]{19200, 57600};
@@ -307,16 +302,11 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
     private boolean opened = false;
     InputStream serialStream = null;
 
-    static public boolean hasInstance() { return (null!=mInstance); }
     static public LocoBufferAdapter instance() {
-        if (mInstance == null) {
-        	mInstance = new LocoBufferAdapter();
-        	log.debug("new default instance in LocoBufferAdapter");
-        }
-        log.debug("LocoBufferAdapter.instance returns object of class "+mInstance.getClass().getName());
+        if (mInstance == null) mInstance = new LocoBufferAdapter();
         return mInstance;
     }
-    static private LocoBufferAdapter mInstance = null;
+    static LocoBufferAdapter mInstance = null;
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoBufferAdapter.class.getName());
 

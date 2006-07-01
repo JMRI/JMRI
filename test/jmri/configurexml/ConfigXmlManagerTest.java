@@ -6,7 +6,6 @@ import jmri.jmrit.XmlFile;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.PrintStream;
 
 import junit.framework.Assert;
@@ -19,7 +18,7 @@ import junit.framework.TestSuite;
  * <P>
  * Uses the local preferences for test files.
  * @author Bob Jacobsen Copyright 2003
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.6 $
  */
 public class ConfigXmlManagerTest extends TestCase {
 
@@ -31,7 +30,7 @@ public class ConfigXmlManagerTest extends TestCase {
 
     public void testRegisterFail() {
         ConfigXmlManager configxmlmanager = new ConfigXmlManager(){
-                void locateClassFailed(java.lang.ClassNotFoundException ex, String adapterName, Object o) {
+                void locateFailed(java.lang.ClassNotFoundException ex, String adapterName, Object o) {
                     innerFlag=true;
                 }
             };
@@ -87,13 +86,10 @@ public class ConfigXmlManagerTest extends TestCase {
                             c.adapterName(""));
     }
 
-    public void testFindFile() throws FileNotFoundException, IOException {
+    public void testFindFile() throws FileNotFoundException {
         ConfigXmlManager configxmlmanager = new ConfigXmlManager(){
-            void locateClassFailed(java.lang.ClassNotFoundException ex, String adapterName, Object o) {
+                void locateFailed(java.lang.ClassNotFoundException ex, String adapterName, Object o) {
                     innerFlag=true;
-                }
-            void locateFileFailed(String f) {
-                    // suppress warning during testing
                 }
             };
         File result;

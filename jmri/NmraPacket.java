@@ -3,7 +3,7 @@
 package jmri;
 
 /**
- * Utilities for coding/decoding NMRA S&RP DCC packets.
+ * Provide utilities for coding/decoding NMRA S&RP DCC packets
  *<P>
  * Packets are (now) represented by an array of bytes. Preamble/postamble
  * not included. Note that this is a data representation, _not_ a representation
@@ -14,23 +14,23 @@ package jmri;
  * JMRI utilities. In particular, it returns null instead of throwing JmriException
  * for invalid requests. Callers need to check upstream.
  *<P>
- * The function is provided by static member functions; objects of this
- * class should not be created.
- *<P>
- * Note that these functions are structured by packet type, not by what want to do.  E.g.
- * there are functions to create specific packet formats instead of a general "loco speed
+ * Note that this is structured by packet type, not by what want to do.  E.g.
+ * there are functions to specific packet formats instead of a general "loco speed
  * packet" routine which figures out which type of packet to use.  Those decisions
  * are to be made somewhere else.
  * <P>
  * Range and value checking is intended to be aggressive; if we can check, we
  * should.  Problems are reported as warnings.
  *<P>
+ * Conventions:
+ *<P>
+ * "S" vs "L" in the last character of the loco function name selects
+ *            short vs long address type
  *
  * @author      Bob Jacobsen Copyright (C) 2001, 2003
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.7 $
  */
 public class NmraPacket {
-
 
     public static byte[] accDecoderPkt(int addr, int active, int outputChannel) {
         // From the NMRA RP:
@@ -77,32 +77,6 @@ public class NmraPacket {
         return retVal;
     }
 
-    /**
-     * Provide an accessory control packet via a simplified interface
-     * @param number Address of accessory output, starting with 1
-     * @param closed true if the output is to be configured to the "closed", a.k.a. the
-     * "normal" or "unset" position
-     */
-    public static byte[] accDecoderPkt(int number, boolean closed) {
-        // dBit is the "channel" info, least 7 bits, for the packet
-        // The lowest channel bit represents CLOSED (1) and THROWN (0)
-        int dBits = (( (number-1) & 0x03) << 1 );  // without the low CLOSED vs THROWN bit
-        dBits = closed ? (dBits | 1) : dBits;
-
-        // aBits is the "address" part of the nmra packet, which starts with 1
-        // 07/01/05 R.Scheffler - Removed the mask, this will allow any 'too high' numbers
-        // through to accDecoderPkt() above which will log the error if out of bounds. If we
-        // mask it here, then the number will 'wrap' without any indication that it did so.
-        int aBits = (number-1) >> 2;      // Divide by 4 to get the 'base'
-        aBits += 1;                       // Base is +1
-
-        // cBit is the control bit, we're always setting it active
-        int cBit = 1;
-
-        // get the packet
-        return NmraPacket.accDecoderPkt(aBits, cBit, dBits);
-    }
-
     static byte[] locoSpeed14S(int address, int speedStep, boolean F0 ) {
         if (log.isDebugEnabled()) log.debug("create "+address+" "+speedStep+" "+F0);
         if (speedStep < 0 || speedStep>14) {
@@ -119,11 +93,18 @@ public class NmraPacket {
 
     public static byte[] opsCvWriteByte(int address, boolean longAddr, int cvNum, int data ) {
         if (log.isDebugEnabled()) log.debug("opswrite "+address+" "+cvNum+" "+data);
-
-        if (!addressCheck(address, longAddr)) {
-            return null;  // failed!
+        if (address < 0 ) {  // zero is valid broadcast
+            log.error("invalid address "+address);
+            return null;
         }
-
+        if (longAddr&& (address> (255+(231-192)*256)) ) {
+            log.error("invalid address "+address);
+            return null;
+        }
+        if (!longAddr&& (address> 127) ) {
+            log.error("invalid address "+address);
+            return null;
+        }
         if (data<0 || data>255) {
             log.error("invalid data "+data);
             return null;
@@ -162,11 +143,18 @@ public class NmraPacket {
 
     public static byte[] speedStep128Packet(int address, boolean longAddr, int speed, boolean fwd ) {
         if (log.isDebugEnabled()) log.debug("128 step packet "+address+" "+speed);
-
-        if (!addressCheck(address, longAddr)) {
-            return null;  // failed!
+        if (address < 0 ) {  // zero is valid broadcast
+            log.error("invalid address "+address);
+            return null;
         }
-
+        if (longAddr&& (address> (255+(231-192)*256)) ) {
+            log.error("invalid address "+address);
+            return null;
+        }
+        if (!longAddr&& (address> 127) ) {
+            log.error("invalid address "+address);
+            return null;
+        }
         if (speed<0 || speed>127) {
             log.error("invalid speed "+speed);
             return null;
@@ -199,13 +187,20 @@ public class NmraPacket {
     public static byte[] function0Through4Packet(int address, boolean longAddr,
                         boolean f0, boolean f1, boolean f2, boolean f3, boolean f4 ) {
         if (log.isDebugEnabled()) log.debug("f0 through f4 packet "+address);
-
-        if (!addressCheck(address, longAddr)) {
-            return null;  // failed!
+        if (address < 0 ) {  // zero is valid broadcast
+            log.error("invalid address "+address);
+            return null;
+        }
+        if (longAddr&& (address> (255+(231-192)*256)) ) {
+            log.error("invalid address "+address);
+            return null;
+        }
+        if (!longAddr&& (address> 127) ) {
+            log.error("invalid address "+address);
+            return null;
         }
 
-        // end sanity check, format output
-
+        // end sanity checks, format output
         byte[] retVal;
         int arg1 = 0x80 |
                     ( f0 ? 0x10 : 0) |
@@ -234,12 +229,20 @@ public class NmraPacket {
     public static byte[] function5Through8Packet(int address, boolean longAddr,
                         boolean f5, boolean f6, boolean f7, boolean f8 ) {
         if (log.isDebugEnabled()) log.debug("f5 through f8 packet "+address);
-
-        if (!addressCheck(address, longAddr)) {
-            return null;  // failed!
+        if (address < 0 ) {  // zero is valid broadcast
+            log.error("invalid address "+address);
+            return null;
+        }
+        if (longAddr&& (address> (255+(231-192)*256)) ) {
+            log.error("invalid address "+address);
+            return null;
+        }
+        if (!longAddr&& (address> 127) ) {
+            log.error("invalid address "+address);
+            return null;
         }
 
-        // end sanity check, format output
+        // end sanity checks, format output
         byte[] retVal;
         int arg1 = 0xB0 |
                     ( f8 ? 0x08 : 0) |
@@ -267,12 +270,20 @@ public class NmraPacket {
     public static byte[] function9Through12Packet(int address, boolean longAddr,
                         boolean f9, boolean f10, boolean f11, boolean f12 ) {
         if (log.isDebugEnabled()) log.debug("f9 through f12 packet "+address);
-
-        if (!addressCheck(address, longAddr)) {
-            return null;  // failed!
+        if (address < 0 ) {  // zero is valid broadcast
+            log.error("invalid address "+address);
+            return null;
+        }
+        if (longAddr&& (address> (255+(231-192)*256)) ) {
+            log.error("invalid address "+address);
+            return null;
+        }
+        if (!longAddr&& (address> 127) ) {
+            log.error("invalid address "+address);
+            return null;
         }
 
-        // end sanity check, format output
+        // end sanity checks, format output
         byte[] retVal;
         int arg1 = 0xA0 |
                     ( f12 ? 0x08 : 0) |
@@ -296,163 +307,9 @@ public class NmraPacket {
         }
         return retVal;
     }
-    
-    /**
-     * Provide an NMRA analog control instruction
-     *<P>Note that the NMRA draft of Fall 2004 only defines the value
-     * of "1" for the "function parameter", calling that the value for
-     * "volume control".  However, DCC systems in the wild have been
-     * observed to use 0x7F for the function byte for volume control.
-     * @param address  DCC locomotive address
-     * @param longAddr true if this is a long address, false if short address
-     * @param function see note above
-     * @param value  value to be sent in analog control instruction
-     */
-    public static byte[]  analogControl(int address, boolean longAddr,
-                                        int function, int value) {
 
-        if (!addressCheck(address, longAddr)) {
-            return null;  // failed!
-        }
-
-        // end sanity check, format output
-        byte[] retVal;
-        int arg1 = 0x3D;  // analog instruction tag
-
-
-        if (longAddr) {
-            // long address form
-            retVal = new byte[6];
-            retVal[0] = (byte) (192+((address/256)&0x3F));
-            retVal[1] = (byte) (address&0xFF);
-            retVal[2] = (byte) arg1;
-            retVal[3] = (byte) (function&0xFF);
-            retVal[4] = (byte) (value&0xFF);
-            retVal[5] = (byte) (retVal[0]^retVal[1]^retVal[2]^retVal[3]^retVal[4]);
-        } else {
-            // short address form
-            retVal = new byte[5];
-            retVal[0] = (byte) (address&0xFF);
-            retVal[1] = (byte) arg1;
-            retVal[2] = (byte) (function&0xFF);
-            retVal[3] = (byte) (value&0xFF);
-            retVal[4] = (byte) (retVal[0]^retVal[1]^retVal[2]^retVal[3]);
-        }
-        return retVal;
-    }
-
-    /**
-     * Provide an NMRA consist control instruction
-     * @param address  DCC locomotive address
-     * @param longAddr true if this is a long address, false if short address
-     * @param consist the consist address to set for this locomotive. Send 
-     * 00 as consist address if deleteing from consist.
-     * @param directionNormal true if the normal direction of travel for this 
-     * address is the normal direction of travel for the consist.
-     */
-    public static byte[]  consistControl(int address, boolean longAddr,
-                                        int consist, boolean directionNormal) {
-
-        if (!addressCheck(address, longAddr)) {
-            return null;  // failed!
-        } else if(!addressCheck(consist,false)) {
-	    return null;  // failed - Consist address is not a short address!
-	}
-
-        // end sanity check, format output
-        byte[] retVal;
-        int arg1 = 0x10;  // Consist Control instruction tag
-	if (directionNormal)
-		arg1|=0x02;   // Forward Direction
-	else
-		arg1|=0x03;   // Reverse Direction
-
-        if (longAddr) {
-            // long address form
-            retVal = new byte[5];
-            retVal[0] = (byte) (192+((address/256)&0x3F));
-            retVal[1] = (byte) (address&0xFF);
-            retVal[2] = (byte) arg1;
-            retVal[3] = (byte) (consist&0xFF);
-            retVal[4] = (byte) (retVal[0]^retVal[1]^retVal[2]^retVal[3]);
-        } else {
-            // short address form
-            retVal = new byte[4];
-            retVal[0] = (byte) (address&0xFF);
-            retVal[1] = (byte) arg1;
-            retVal[2] = (byte) (consist&0xFF);
-            retVal[3] = (byte) (retVal[0]^retVal[1]^retVal[2]);
-        }
-        return retVal;
-    }
-
-    static boolean addressCheck(int address, boolean longAddr) {
-        if (address < 0 ) {  // zero is valid broadcast
-            log.error("invalid address "+address);
-            return false;
-        }
-        if (longAddr&& (address> (255+(231-192)*256)) ) {
-            log.error("invalid address "+address);
-            return false;
-        }
-        if (!longAddr&& (address> 127) ) {
-            log.error("invalid address "+address);
-            return false;
-        }
-        return true;  // passes test, hence OK
-    }
-                           
-    static final public int NO_ADDRESS = 1;
-    static final public int LOCO_SHORT_ADDRESS = 2;
-    static final public int LOCO_LONG_ADDRESS = 4;
-    static final public int ACCESSORY_SHORT_ADDRESS = 8;
-
-    /**
-     * Extract the address type from an NMRA packet.
-     *<P>
-     * This finds and returns the type of address within a specific
-     * packet, e.g. "the stationary decoder space".
-     */
-    static int extractAddressType(byte[] packet) {
-        return 0;
-    }
-
-    /**
-     * Extract the numerical address from an NMRA packet.
-     *<P>
-     * This finds and returns the numerical address within a specific
-     * type, e.g. "first address within the stationary decoder space".
-     */
-    static int extractAddressNumber(byte[] packet) {
-        return 0;
-    }
-
-     /**
-     * Extract the instruction from an NMRA packet
-     *<P>
-     * This finds and returns the instruction bits within a specific
-     * type of packet/instruction, masking off the other bits.
-     *
-     */
-    static int extractInstruction(byte[] packet) {
-        return 0;
-    }
-
-    /**
-     * Convert NMRA packet to a readable form
-     */
-    static public String format(byte[] p) {
-        return jmri.util.StringUtil.hexStringFromBytes(p);        
-    }
-    
-    /**
-     * Objects of this class should not be created. 
-     */ 
-     
-    private NmraPacket() {}
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NmraPacket.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NmraPacket.class.getName());
 }
 
 
 /* @(#)NmraPacket.java */
-

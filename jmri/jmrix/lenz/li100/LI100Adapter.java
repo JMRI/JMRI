@@ -5,7 +5,6 @@ package jmri.jmrix.lenz.li100;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetPacketizer;
 import jmri.jmrix.lenz.XNetPortController;
-import jmri.jmrix.AbstractMRTrafficController;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -22,17 +21,14 @@ import javax.comm.SerialPortEventListener;
 /**
  * Provide access to XPressNet via a LI100 on an attached serial comm port.
  *					Normally controlled by the lenz.li100.LI100Frame class.
- * @author			Bob Jacobsen   Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003
- * @version			$Revision: 2.6 $
+ * @author			Bob Jacobsen   Copyright (C) 2002
+ * @version			$Revision: 1.11 $
  */
 
 public class LI100Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
 
 	Vector portNameVector = null;
 	SerialPort activeSerialPort = null;
-
-        private boolean OutputBufferEmpty = true;
-	private boolean CheckBuffer = true;
 
 	public Vector getPortNames() {
 		// first, check that the comm package can be opened and ports seen
@@ -67,13 +63,9 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
 			}
 
 			// set timeout
-                        try {
-			    activeSerialPort.enableReceiveTimeout(10);
-			    log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
+			// activeSerialPort.enableReceiveTimeout(1000);
+			log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
 						+" "+activeSerialPort.isReceiveTimeoutEnabled());
-                        } catch (Exception et) {
-                            log.info("failed to set serial timeout: " +et);
-                        }
 
 			// get and save stream
 			serialStream = activeSerialPort.getInputStream();
@@ -103,64 +95,62 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
 				log.debug(" port flow control shows "+
 							(activeSerialPort.getFlowControlMode()==SerialPort.FLOWCONTROL_RTSCTS_OUT?"hardware flow control":"no flow control"));
 			}
-			// arrange to notify later
-			activeSerialPort.addEventListener(new SerialPortEventListener(){
-				public void serialEvent(SerialPortEvent e) {
-					int type = e.getEventType();
-					switch (type) {
-						case SerialPortEvent.DATA_AVAILABLE:
-							if(log.isDebugEnabled()) log.debug("SerialEvent: DATA_AVAILABLE is "+e.getNewValue());
-							return;
-						case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
-							if(log.isDebugEnabled()) log.debug("SerialEvent: OUTPUT_BUFFER_EMPTY is "+e.getNewValue());
-                                                        setOutputBufferEmpty(true);
-							return;
-						case SerialPortEvent.CTS:
-							if(log.isDebugEnabled()) log.debug("SerialEvent: CTS is "+e.getNewValue());
-							return;
-						case SerialPortEvent.DSR:
-							if(log.isDebugEnabled()) log.debug("SerialEvent: DSR is "+e.getNewValue());
-							return;
-						case SerialPortEvent.RI:
-							if(log.isDebugEnabled()) log.debug("SerialEvent: RI is "+e.getNewValue());
-							return;
-						case SerialPortEvent.CD:
-							if(log.isDebugEnabled()) log.debug("SerialEvent: CD is "+e.getNewValue());
-							return;
-						case SerialPortEvent.OE:
-							if(log.isDebugEnabled()) log.debug("SerialEvent: OE (overrun error) is "+e.getNewValue());
-							return;
-						case SerialPortEvent.PE:
-							if(log.isDebugEnabled()) log.debug("SerialEvent: PE (parity error) is "+e.getNewValue());
-							return;
-						case SerialPortEvent.FE:
-							if(log.isDebugEnabled()) log.debug("SerialEvent: FE (framing error) is "+e.getNewValue());
-							return;
-						case SerialPortEvent.BI:
-							if(log.isDebugEnabled()) log.debug("SerialEvent: BI (break interrupt) is "+e.getNewValue());
-							return;
-						default:
-							if(log.isDebugEnabled()) log.debug("SerialEvent of unknown type: "+type+" value: "+e.getNewValue());
-							return;
+			if (log.isDebugEnabled()) {
+				// arrange to notify later
+				activeSerialPort.addEventListener(new SerialPortEventListener(){
+						public void serialEvent(SerialPortEvent e) {
+							int type = e.getEventType();
+							switch (type) {
+								case SerialPortEvent.DATA_AVAILABLE:
+									log.info("SerialEvent: DATA_AVAILABLE is "+e.getNewValue());
+									return;
+								case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
+									log.info("SerialEvent: OUTPUT_BUFFER_EMPTY is "+e.getNewValue());
+									return;
+								case SerialPortEvent.CTS:
+									log.info("SerialEvent: CTS is "+e.getNewValue());
+									return;
+								case SerialPortEvent.DSR:
+									log.info("SerialEvent: DSR is "+e.getNewValue());
+									return;
+								case SerialPortEvent.RI:
+									log.info("SerialEvent: RI is "+e.getNewValue());
+									return;
+								case SerialPortEvent.CD:
+									log.info("SerialEvent: CD is "+e.getNewValue());
+									return;
+								case SerialPortEvent.OE:
+									log.info("SerialEvent: OE (overrun error) is "+e.getNewValue());
+									return;
+								case SerialPortEvent.PE:
+									log.info("SerialEvent: PE (parity error) is "+e.getNewValue());
+									return;
+								case SerialPortEvent.FE:
+									log.info("SerialEvent: FE (framing error) is "+e.getNewValue());
+									return;
+								case SerialPortEvent.BI:
+									log.info("SerialEvent: BI (break interrupt) is "+e.getNewValue());
+									return;
+								default:
+									log.info("SerialEvent of unknown type: "+type+" value: "+e.getNewValue());
+									return;
+							}
 						}
 					}
-				}
-			);
-			try { activeSerialPort.notifyOnFramingError(true); }
-				catch (Exception e) { if(log.isDebugEnabled()) log.debug("Could not notifyOnFramingError: "+e); }
+				);
+				try { activeSerialPort.notifyOnFramingError(true); }
+					catch (Exception e) { log.debug("Could not notifyOnFramingError: "+e); }
 
-			try { activeSerialPort.notifyOnBreakInterrupt(true); }
-				catch (Exception e) { if(log.isDebugEnabled()) log.debug("Could not notifyOnBreakInterrupt: "+e); }
+				try { activeSerialPort.notifyOnBreakInterrupt(true); }
+					catch (Exception e) { log.debug("Could not notifyOnBreakInterrupt: "+e); }
 
-			try { activeSerialPort.notifyOnParityError(true); }
-				catch (Exception e) { if(log.isDebugEnabled()) log.debug("Could not notifyOnParityError: "+e); }
+				try { activeSerialPort.notifyOnParityError(true); }
+					catch (Exception e) { log.debug("Could not notifyOnParityError: "+e); }
 
-			try { activeSerialPort.notifyOnOutputEmpty(true); }
-				catch (Exception e) { if(log.isDebugEnabled()) log.debug("Could not notifyOnOutputEmpty: "+e); }
+				try { activeSerialPort.notifyOnOverrunError(true); }
+					catch (Exception e) { log.debug("Could not notifyOnOverrunError: "+e); }
 
-			try { activeSerialPort.notifyOnOverrunError(true); }
-				catch (Exception e) { if(log.isDebugEnabled()) log.debug("Could not notifyOnOverrunError: "+e); }
-
+			}
 
 			opened = true;
 
@@ -175,43 +165,17 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
 		return null; // normal operation
 	}
 
-        /**
-         * we need a way to say if the output buffer is empty or full
-         * this should only be set to false by external processes
-         **/         
-        synchronized public void setOutputBufferEmpty(boolean s)
-        {
-		OutputBufferEmpty = s;
-        }
-
-        /**
-         * Can the port accept additional characters?
-         * The state of CTS determines this, as there seems to
-         * be no way to check the number of queued bytes and buffer length.
-         * This might
-         * go false for short intervals, but it might also stick
-         * off if something goes wrong.
-         */
-        public boolean okToSend() {
-         if((activeSerialPort.getFlowControlMode() & SerialPort.FLOWCONTROL_RTSCTS_OUT) == SerialPort.FLOWCONTROL_RTSCTS_OUT) {
-                if(CheckBuffer) {
-                        log.debug("CTS: " + activeSerialPort.isCTS() + " Buffer Empty: " + OutputBufferEmpty);
-                        return (activeSerialPort.isCTS() && OutputBufferEmpty);
-                } else {
-                        log.debug("CTS: " + activeSerialPort.isCTS());
-                        return (activeSerialPort.isCTS());
-                }
-           }
-           else {
-                if(CheckBuffer) {
-                        log.debug("Buffer Empty: " + OutputBufferEmpty);
-                        return (OutputBufferEmpty);
-                } else {
-                        log.debug("No Flow Control or Buffer Check");
-                        return(true);
-                }
-           }
-        }
+	/**
+	 * Can the port accept additional characters?
+	 * The state of CTS determines this, as there seems to
+	 * be no way to check the number of queued bytes and buffer length.
+	 * This might
+	 * go false for short intervals, but it might also stick
+	 * off if something goes wrong.
+	 */
+	public boolean okToSend() {
+		return activeSerialPort.isCTS();
+	}
 
 	/**
 	 * set up all of the other objects to operate with a LI100
@@ -219,15 +183,16 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
 	 */
 	public void configure() {
             // connect to a packetizing traffic controller
-            AbstractMRTrafficController packets = (AbstractMRTrafficController) (new XNetPacketizer(new LenzCommandStation()));
+            XNetPacketizer packets = new XNetPacketizer(new LenzCommandStation());
             packets.connectPort(this);
 
-            // start operation
-            // packets.startThreads();
+            jmri.jmrix.lenz.XNetProgrammer.instance();
+            jmri.InstanceManager.setPowerManager(new jmri.jmrix.lenz.XNetPowerManager());
+            jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager());
+            jmri.InstanceManager.setThrottleManager(new jmri.jmrix.lenz.XNetThrottleManager());
 
-            new LI100XNetInitilizationManager();
-		
-            jmri.jmrix.lenz.ActiveFlag.setActive();
+            // start operation
+            packets.startThreads();
 	}
 
 	private Thread sinkThread;
@@ -270,12 +235,10 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
 		activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
 
 		// find and configure flow control
-		int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftaul for mOpt1
-                if (!mOpt1.equals(validOption1[0]))
-                        flow = 0;
-                activeSerialPort.setFlowControlMode(flow);
-                if (!mOpt2.equals(validOption2[0]))
-                        CheckBuffer = false;    
+		int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftauls in selectedOption1
+		if (selectedOption1.equals(validOption1[1]))
+			flow = 0;
+		activeSerialPort.setFlowControlMode(flow);
 	}
 
 
@@ -290,24 +253,15 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
 	/**
 	 * Option 1 controls flow control option
 	 */
-	public String option1Name() { return "LI100 connection uses "; }
+	public String option1Name() { return "LI100 connections uses "; }
         public String[] validOption1() { return validOption1; }
-
-	/**
-	 * Option 2 controls if the buffer status will be checked when 
-         * sending data
-	 */
-	public String option2Name() { return "Check Buffer Status when sending? "; }
-        public String[] validOption2() { return validOption2; }
 
 	protected String [] validSpeeds = new String[]{"9,600 baud","19,200 baud","38,400 baud","57,600 baud","115,200 baud"};
 	protected int [] validSpeedValues = new int[]{9600,19200,38400,57600,115200};
 
 	// meanings are assigned to these above, so make sure the order is consistent
 	protected String [] validOption1 = new String[]{"hardware flow control (recommended)", "no flow control"};
-
-	// meanings are assigned to these above, so make sure the order is consistent
-	protected String [] validOption2 = new String[]{"yes (recommended)", "no"};
+	protected String selectedOption1=validOption1[0];
 
 	private boolean opened = false;
 	InputStream serialStream = null;
@@ -317,6 +271,9 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
             return mInstance;
         }
         static LI100Adapter mInstance = null;
+        static public boolean hasInstance() {
+            return (mInstance != null);
+        }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LI100Adapter.class.getName());
 

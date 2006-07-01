@@ -3,31 +3,25 @@
 package jmri;
 
 
+
 /**
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.21 $
+ * @version			$Revision: 1.15 $
  */
 public abstract class AbstractTurnoutManager extends AbstractManager
     implements TurnoutManager {
-	
-	public AbstractTurnoutManager() {
-		TurnoutOperationManager.getInstance();		// force creation of an instance
-	}
-
-    final java.util.ResourceBundle rbt = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
     public char typeLetter() { return 'T'; }
 
     public Turnout provideTurnout(String name) {
         Turnout t = getTurnout(name);
         if (t!=null) return t;
-		String sName = name.toUpperCase();
-        if (sName.startsWith(""+systemLetter()+typeLetter()))
-            return newTurnout(sName, null);
+        if (name.startsWith(""+systemLetter()+typeLetter()))
+            return newTurnout(name, null);
         else
-            return newTurnout(makeSystemName(sName), null);
+            return newTurnout(makeSystemName(name), null);
     }
 
     public Turnout getTurnout(String name) {
@@ -38,16 +32,14 @@ public abstract class AbstractTurnoutManager extends AbstractManager
     }
 
     public Turnout getBySystemName(String key) {
-		String name = key.toUpperCase();
-        return (Turnout)_tsys.get(name);
+        return (Turnout)_tsys.get(key);
     }
 
     public Turnout getByUserName(String key) {
         return (Turnout)_tuser.get(key);
     }
 
-    public Turnout newTurnout(String sysName, String userName) {
-		String systemName = sysName.toUpperCase();
+    public Turnout newTurnout(String systemName, String userName) {
         if (log.isDebugEnabled()) log.debug("newTurnout:"
                                             +( (systemName==null) ? "null" : systemName)
                                             +";"+( (userName==null) ? "null" : userName));
@@ -68,49 +60,19 @@ public abstract class AbstractTurnoutManager extends AbstractManager
             return s;
         }
         if ( (s = getBySystemName(systemName)) != null) {
-			if ((s.getUserName() == null) && (userName != null))
-				s.setUserName(userName);
-            else if (userName != null) log.warn("Found turnout via system name ("+systemName
+            if (userName != null) log.warn("Found turnout via system name ("+systemName
                                     +") with non-null user name ("+userName+")");
             return s;
         }
 
         // doesn't exist, make a new one
         s = createNewTurnout(systemName, userName);
-		if (s != null) {
-			// save in the maps if successful
-			register(s);
-		}
+
+        // save in the maps
+        register(s);
 
         return s;
     }
-    	
-	/**
-	 * Get text to be used for the Turnout.CLOSED state in user communication.
-	 * Allows text other than "CLOSED" to be use with certain hardware system 
-	 * to represent the Turnout.CLOSED state.
-	 */
-	public String getClosedText() { return rbt.getString("TurnoutStateClosed"); };
-	
-	/**
-	 * Get text to be used for the Turnout.THROWN state in user communication.
-	 * Allows text other than "THROWN" to be use with certain hardware system 
-	 * to represent the Turnout.THROWN state.
-	 */
-	public String getThrownText() { return rbt.getString("TurnoutStateThrown"); };
-	
-	/**
-	 * Get from the user, the number of addressed bits used to control a turnout. 
-	 * Normally this is 1, and the default routine returns 1 automatically.  
-	 * Turnout Managers for systems that can handle multiple control bits 
-	 * should override this method with one which asks the user to specify the
-	 * number of control bits.
-	 * If the user specifies more than one control bit, this method should 
-	 * check if the additional bits are available (not assigned to another object).
-	 * If the bits are not available, this method should return 0 for number of 
-	 * control bits, after informing the user of the problem.
-	 */
-	 public int askNumControlBits(String systemName) {return 1; };
 
     /**
      * Internal method to invoke the factory, after all the
@@ -118,15 +80,6 @@ public abstract class AbstractTurnoutManager extends AbstractManager
      * @return never null
      */
     abstract protected Turnout createNewTurnout(String systemName, String userName);
-    
-    /*
-     * Turnout operation support. Overrideable function to return the acceptable
-     * turnout operation types for this system's turnouts. Order is important because
-     * they will be tried in the order specified.
-     */
-    String[] validOperationTypes = {"Sensor", "NoFeedback"};
-    
-    public String[] getValidOperationTypes() { return validOperationTypes; }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractTurnoutManager.class.getName());
 }

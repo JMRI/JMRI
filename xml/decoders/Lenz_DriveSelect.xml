@@ -1,8 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
-<!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Lenz_DriveSelect.xml,v 1.12 2006-04-24 05:14:57 pbender Exp $ -->
+<!-- $Id: Lenz_DriveSelect.xml,v 1.8 2003-08-01 20:15:40 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Phil Grainger (phil.grainger@ca.com)"
 			version="5" lastUpdated="20030731" />
@@ -11,15 +9,13 @@
 		<!-- Version 3 - added outputs C & D programing, copied from Lenz_54.xml  -->
 		<!-- Version 4 - fixed varable name mismatch between definition and dispaly on Lenz pane & vstart bug  --> 
 		<!-- Version 5 - made speed table selection more generic -->
-                <!-- Version 6 - added factory reset menu items (Paul Bender) -->
+
 
 <decoder>
 	<family name="Lenz Drive-Select decoders" mfg="Lenz" 
 			lowVersionID="46" highVersionID="46">
-		<model model="LE0511" numOuts="2" numFns="8">
-			<size length="0.53" width="0.39" height="0.14" units="inches" />
-		</model>
-		<model model="LE1014" numOuts="4" numFns="8" />
+		<model model="LE0511" numOuts="2" numFns="8" />
+		<model model="LE1014" numOuts="4" numFns="8"/>
 	</family>
 
 	<programming direct="yes" paged="yes"
@@ -59,11 +55,9 @@
 			</variable>
 
 
-		<variable label="Manufacturer ID - Reset" CV="8"
-                        item="Reset"
-                        comment="Writing a value of 33 using register mode will reset decoder to factory defaults" >
+		<variable label="Manufacturer ID - Reset" CV="8" default="99">
 			<decVal/>
-		</variable>
+			</variable>
 
 <!-- Deleted all CV 13 references-->
 
@@ -361,10 +355,6 @@
 	<constant label="FL(r) controls output 2" minOut="2" default="1" /> 
 
 	</variables>
-
-        <resets>
-           <factReset label="Reset All CVs" CV="8" default="33"/>
-        </resets>
 
 </decoder>
 

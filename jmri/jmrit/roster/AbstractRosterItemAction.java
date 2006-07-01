@@ -12,13 +12,10 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
- * Base class for Actions to copy, export and import RosterEntrys.
- * <P>
- * Note that {@link DeleteRosterItemAction} is sufficiently
- * different that it doesn't use this base class.
+ * Base class for Actions to copy, export and import RosterEntrys
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.6 $
  * @see         jmri.jmrit.XmlFile
  */
 abstract public class AbstractRosterItemAction extends AbstractAction {
@@ -29,6 +26,7 @@ abstract public class AbstractRosterItemAction extends AbstractAction {
     }
 
     Component mParent;
+    Roster roster = Roster.instance();
 
     public void actionPerformed(ActionEvent event) {
 
@@ -47,15 +45,7 @@ abstract public class AbstractRosterItemAction extends AbstractAction {
     abstract boolean selectFrom();
     abstract boolean selectTo();
     abstract boolean doTransfer();
-
-    /**
-     * Common, but not unique implementation to add the "To" entry
-     * to the Roster and rewrite the roster file.
-     */
-    void updateRoster() {
-        addToEntryToRoster();
-    }
-
+    abstract void updateRoster();
 
     // variables to communicate the "from" entry, file, etc
     String mFromID = null;
@@ -73,7 +63,7 @@ abstract public class AbstractRosterItemAction extends AbstractAction {
 
     boolean selectExistingFromEntry() {
         // create a dialog to select the roster entry to copy
-        JComboBox selections = Roster.instance().fullRosterComboBox();
+        JComboBox selections = roster.matchingComboBox(null, null, null, null, null, null, null);
         int retval = JOptionPane.showOptionDialog(mParent,
                                                   "Select one roster entry", "Select roster entry",
                                                   0, JOptionPane.INFORMATION_MESSAGE, null,
@@ -85,9 +75,9 @@ abstract public class AbstractRosterItemAction extends AbstractAction {
         mFromID = (String) selections.getSelectedItem();
 
         // find the file for the selected entry to copy
-        mFromEntry = Roster.instance().entryFromTitle(mFromID);
-        mFromFilename = Roster.instance().fileFromTitle(mFromID);
-        mFullFromFilename = LocoFile.getFileLocation()+mFromFilename;
+        mFromEntry = roster.entryFromTitle(mFromID);
+        mFromFilename = roster.fileFromTitle(mFromID);
+        mFullFromFilename = LocoFile.fileLocation+mFromFilename;
         log.debug(" from resolves to \""+mFromFilename+"\", \""+mFullFromFilename+"\"");
         return true;
     }
@@ -99,7 +89,7 @@ abstract public class AbstractRosterItemAction extends AbstractAction {
             if (mToID==null) return false;
 
             // check for duplicate
-            if (0 == Roster.instance().matchingList(null, null, null, null, null, null, mToID).size()) break;
+            if (0 == roster.matchingList(null, null, null, null, null, null, mToID).size()) break;
 
             // here it is a duplicate, reprompt
             JOptionPane.showMessageDialog(mParent,
@@ -144,8 +134,8 @@ abstract public class AbstractRosterItemAction extends AbstractAction {
 
     void addToEntryToRoster() {
         // add the new entry to the roster & write it out
-        Roster.instance().addEntry(mToEntry);
-        Roster.instance().writeRosterFile();
+        roster.addEntry(mToEntry);
+        roster.writeRosterFile();
     }
 
     // initialize logging

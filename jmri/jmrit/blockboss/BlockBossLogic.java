@@ -14,59 +14,22 @@ import java.util.Hashtable;
 /**
  * Represents the "simple signal" logic for one signal; provides
  * some collection services.
- * <P>
- * There are four situations that this logic can handle:
- * <OL>
- * <LI>SIMPLEBLOCK - A simple block, without a turnout.
- * <LI>TRAILINGMAIN - This signal is protecting a trailing point turnout,
- * which can only be passed when the turnout is closed. It can also be used
- * for the upper head of a two head signal on the facing end of the turnout.
- * <LI>TRAILINGDIVERGING - This signal is protecting a trailing point turnout,
- * which can only be passed when the turnout is thrown. It can also be used
- * for the lower head of a two head signal on the facing end of the turnout.
- * <LI>FACING - This single head signal protects a facing point turnout, which
- * may therefore have two next signals and two sets of next sensors for the
- * closed and thrown states of the turnout.
- * </OL><P>
- * Note that these four possibilities logically require that certain
- * information be configured consistently; e.g. not specifying a turnout
- * in TRAILINGMAIN doesn't make any sense. That's not enforced explicitly, 
- * but violating it can result in confusing behavior.
  *
- * <P>
- * The "hold" unbound parameter can be used to set this 
- * logic to show red, regardless of input.  That's intended for
- * use with CTC logic, etc.
- *
- * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.18 $
- * Revisions to add facing point sensors and check box to limit speed. Dick Bronosn (RJB) 2006
+ * @author	Bob Jacobsen    Copyright (C) 2003
+ * @version     $Revision: 1.5 $
  */
 
 public class BlockBossLogic extends Siglet {
 
-    static public final int SINGLEBLOCK = 1;
-    static public final int TRAILINGMAIN = 2;
-    static public final int TRAILINGDIVERGING = 3;
-    static public final int FACING = 4;
-
-    int mode = 0;
-
     /**
-     * Create a default object, without contents.
+     * Create a default object, without contents
      */
     public BlockBossLogic() {
     }
 
-    /**
-     * Create an object to drive a specific signal.
-     * @param name System or user name of the driven signal.
-     */
     public BlockBossLogic(String name) {
-        super(name+" BlockBossLogic");
         this.name = name;
-        driveSignal = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
-        if (driveSignal == null) log.warn("Signal "+name+" was not found!");
+        driveSignal = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
     }
 
     /**
@@ -78,70 +41,22 @@ public class BlockBossLogic extends Siglet {
         return driveSignal.getSystemName();
     }
 
-    public void setSensor1(String name) {
-        if (name == null || name.equals("")) {
-            watchSensor1 = null;
-            return;
-        }
-        watchSensor1 = InstanceManager.sensorManagerInstance().provideSensor(name);
-        if (watchSensor1 == null) log.warn("Sensor1 "+name+" was not found!");
-    }
-
-    public void setSensor2(String name) {
-        if (name == null || name.equals("")) {
-            watchSensor2 = null;
-            return;
-        }
-        watchSensor2 = InstanceManager.sensorManagerInstance().provideSensor(name);
-        if (watchSensor2 == null) log.warn("Sensor2 "+name+" was not found!");
-    }
-
-    public void setSensor3(String name) {
-        if (name == null || name.equals("")) {
-            watchSensor3 = null;
-            return;
-        }
-        watchSensor3 = InstanceManager.sensorManagerInstance().provideSensor(name);
-        if (watchSensor3 == null) log.warn("Sensor3 "+name+" was not found!");
-    }
-
-    public void setSensor4(String name) {
-        if (name == null || name.equals("")) {
-            watchSensor4 = null;
-            return;
-        }
-        watchSensor4 = InstanceManager.sensorManagerInstance().provideSensor(name);
-        if (watchSensor4 == null) log.warn("Sensor4 "+name+" was not found!");
+    public void setSensor(String name) {
+        watchSensor = InstanceManager.sensorManagerInstance().getSensor(name);
     }
 
     /**
      * Return the system name of the sensor being monitored
      * @return system name; null if no sensor configured
      */
-    public String getSensor1() {
-        if (watchSensor1 == null) return null;
-        return watchSensor1.getSystemName();
-    }
-    public String getSensor2() {
-        if (watchSensor2 == null) return null;
-        return watchSensor2.getSystemName();
-    }
-    public String getSensor3() {
-        if (watchSensor3 == null) return null;
-        return watchSensor3.getSystemName();
-    }
-    public String getSensor4() {
-        if (watchSensor4 == null) return null;
-        return watchSensor4.getSystemName();
+    public String getSensor() {
+        if (watchSensor == null) return null;
+        return watchSensor.getSystemName();
     }
 
-    public void setTurnout(String name) {
-        if (name == null || name.equals("")) {
-            watchTurnout = null;
-            return;
-        }
-        watchTurnout = InstanceManager.turnoutManagerInstance().provideTurnout(name);
-        if (watchTurnout == null) log.warn("Turnout "+name+" was not found!");
+    public void setTurnout(String name, int state) {
+        watchTurnout = InstanceManager.turnoutManagerInstance().getTurnout(name);
+        watchTurnoutState = state;
     }
 
     /**
@@ -152,208 +67,33 @@ public class BlockBossLogic extends Siglet {
         if (watchTurnout == null) return null;
         return watchTurnout.getSystemName();
     }
-    public void setMode(int mode) {
-        this.mode = mode;
+    public int getTurnoutState() {
+        return watchTurnoutState;
     }
-    public int getMode() {
-        return mode;
-    }
-    
-    public void setWatchedSignal1(String name, boolean useFlash) {
-        if (name == null || name.equals("")) {
-            watchedSignal1 = null;
-            return;
-        }
-        watchedSignal1 = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
-        if (watchedSignal1 == null) log.warn("Signal "+name+" was not found!");
+    public void setWatchedSignal(String name, boolean useFlash) {
+        protectSignal = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
         protectWithFlashing = useFlash;
     }
     /**
-     * Return the system name of the signal being monitored for first route
-     * @return system name; null if no primary signal configured
+     * Return the system name of the turnout being monitored
+     * @return system name; null if no turnout configured
      */
-    public String getWatchedSignal1() {
-        if (watchedSignal1 == null) return null;
-        return watchedSignal1.getSystemName();
+    public String getWatchedSignal() {
+        if (protectSignal == null) return null;
+        return protectSignal.getSystemName();
     }
 
-    public void setWatchedSignal1Alt(String name) {
-        if (name == null || name.equals("")) {
-            watchedSignal1Alt = null;
-            return;
-        }
-        watchedSignal1Alt = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
-        if (watchedSignal1Alt == null) log.warn("Signal "+name+" was not found!");
-    }
-    /**
-     * Return the system name of the alternate signal being monitored for first route
-     * @return system name; null if no signal configured
-     */
-    public String getWatchedSignal1Alt() {
-        if (watchedSignal1Alt == null) return null;
-        return watchedSignal1Alt.getSystemName();
-    }
-
-    public void setWatchedSignal2(String name) {
-        if (name == null || name.equals("")) {
-            watchedSignal2 = null;
-            return;
-        }
-        watchedSignal2 = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
-        if (watchedSignal2 == null) log.warn("Signal "+name+" was not found!");
-    }
-    /**
-     * Return the system name of the signal being monitored for the 2nd route
-     * @return system name; null if no signal configured
-     */
-    public String getWatchedSignal2() {
-        if (watchedSignal2 == null) return null;
-        return watchedSignal2.getSystemName();
-    }
-
-    public void setWatchedSignal2Alt(String name) {
-        if (name == null || name.equals("")) {
-            watchedSignal2Alt = null;
-            return;
-        }
-        watchedSignal2Alt = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
-        if (watchedSignal2Alt == null) log.warn("Signal "+name+" was not found!");
-    }
-    /**
-     * Return the system name of the secondary signal being monitored for the 2nd route
-     * @return system name; null if no secondary signal configured
-     */
-    public String getWatchedSignal2Alt() {
-        if (watchedSignal2Alt == null) return null;
-        return watchedSignal2Alt.getSystemName();
-    }
-
-        public void setWatchedSensor1(String name) {
-        if (name == null || name.equals("")) {
-            watchedSensor1 = null;
-            return;
-        }
-        watchedSensor1 = InstanceManager.sensorManagerInstance().provideSensor(name);
-        if (watchedSensor1 == null) log.warn("Sensor1 "+name+" was not found!");
-
-    }
-        /**
-         * Return the system name of the sensor being monitored
-         * @return system name; null if no sensor configured
-         */
-        public String getWatchedSensor1() {
-            if (watchedSensor1 == null) return null;
-            return watchedSensor1.getSystemName();
-        }
-
-        public void setWatchedSensor1Alt(String name) {
-        if (name == null || name.equals("")) {
-            watchedSensor1Alt = null;
-            return;
-        }
-        watchedSensor1Alt = InstanceManager.sensorManagerInstance().provideSensor(name);
-        if (watchedSensor1Alt == null) log.warn("Sensor1Alt "+name+" was not found!");
-
-    }
-        /**
-         * Return the system name of the sensor being monitored
-         * @return system name; null if no sensor configured
-         */
-        public String getWatchedSensor1Alt() {
-            if (watchedSensor1Alt == null) return null;
-            return watchedSensor1Alt.getSystemName();
-        }
-
-        public void setWatchedSensor2(String name) {
-        if (name == null || name.equals("")) {
-            watchedSensor2 = null;
-            return;
-        }
-        watchedSensor2 = InstanceManager.sensorManagerInstance().provideSensor(name);
-        if (watchedSensor2 == null) log.warn("Sensor2 "+name+" was not found!");
-
-    }
-        /**
-         * Return the system name of the sensor being monitored
-         * @return system name; null if no sensor configured
-         */
-        public String getWatchedSensor2() {
-            if (watchedSensor2 == null) return null;
-            return watchedSensor2.getSystemName();
-        }
-
-        public void setWatchedSensor2Alt(String name) {
-        if (name == null || name.equals("")) {
-            watchedSensor2Alt = null;
-            return;
-        }
-        watchedSensor2Alt = InstanceManager.sensorManagerInstance().provideSensor(name);
-        if (watchedSensor2Alt == null) log.warn("Sensor2Alt "+name+" was not found!");
-
-    }
-        /**
-         * Return the system name of the sensor being monitored
-         * @return system name; null if no sensor configured
-         */
-        public String getWatchedSensor2Alt() {
-            if (watchedSensor2Alt == null) return null;
-            return watchedSensor2Alt.getSystemName();
-        }
-       public void setLimitSpeed1(boolean d) { limitSpeed1 = d; }
-       public boolean getLimitSpeed1() {
-        return limitSpeed1;
-    }
-       public void setLimitSpeed2(boolean d) { limitSpeed2 = d; }
-       public boolean getLimitSpeed2() {
-        return limitSpeed2;
-    }
-    
     public boolean getUseFlash() {
         return protectWithFlashing;
     }
 
-    public void setDistantSignal(boolean d) { distantSignal = d; }
-    public boolean getDistantSignal() { return distantSignal; }
-    
-    boolean mHold = false;
-    /**
-     * Provide the current value of the "hold" parameter.
-     * If true, the output is forced to a RED "stop" aspect.
-     * This allows CTC and other higher-level functions to 
-     * control permission to enter this section of track.
-     */
-    public boolean getHold() {return mHold;}
-    /*
-     * Set the current value of the "hold" parameter.
-     * If true, the output is forced to a RED "stop" aspect.
-     * This allows CTC and other higher-level functions to 
-     * control permission to enter this section of track.
-     */
-    public void setHold(boolean m) { 
-        mHold = m;
-        setOutput();  // to invoke the new state
-    }
-    
     String name;
     SignalHead driveSignal = null;
-    Sensor watchSensor1 = null;
-    Sensor watchSensor2 = null;
-    Sensor watchSensor3 = null;
-    Sensor watchSensor4 = null;
+    Sensor watchSensor = null;
     Turnout watchTurnout = null;
-    SignalHead watchedSignal1 = null;
-    SignalHead watchedSignal1Alt = null;
-    SignalHead watchedSignal2 = null;
-    SignalHead watchedSignal2Alt = null;
-    Sensor watchedSensor1 = null;
-    Sensor watchedSensor1Alt = null;
-    Sensor watchedSensor2 = null;
-    Sensor watchedSensor2Alt = null;
-    
-    boolean limitSpeed1 = false;
-    boolean limitSpeed2 = false;
+    int watchTurnoutState = -1;
+    SignalHead protectSignal = null;
     boolean protectWithFlashing = false;
-    boolean distantSignal = false;
 
     /**
      * Define the siglet's input and output.
@@ -366,56 +106,16 @@ public class BlockBossLogic extends Siglet {
             tempArray[n]= watchTurnout;
             n++;
         }
-        if (watchSensor1 != null) {
-            tempArray[n]= watchSensor1;
-            n++;
-        }
-        if (watchSensor2 != null) {
-            tempArray[n]= watchSensor2;
-            n++;
-        }
-        if (watchSensor3 != null) {
-            tempArray[n]= watchSensor3;
-            n++;
-        }
-        if (watchSensor4 != null) {
-            tempArray[n]= watchSensor4;
-            n++;
-        }
-        if (watchedSignal1 != null) {
-            tempArray[n]= watchedSignal1;
-            n++;
-        }
-        if (watchedSignal1Alt != null) {
-            tempArray[n]= watchedSignal1Alt;
-            n++;
-        }
-        if (watchedSignal2 != null) {
-            tempArray[n]= watchedSignal2;
-            n++;
-        }
-        if (watchedSignal2Alt != null) {
-            tempArray[n]= watchedSignal2Alt;
+        if (watchSensor != null) {
+            tempArray[n]= watchSensor;
             n++;
         }
 
-        if (watchedSensor1 != null) {
-        tempArray[n]= watchedSensor1;
-        n++;
-        }
-        if (watchedSensor1Alt != null) {
-            tempArray[n]= watchedSensor1Alt;
+        if (protectSignal != null) {
+            tempArray[n]= protectSignal;
             n++;
         }
-        if (watchedSensor2 != null) {
-            tempArray[n]= watchedSensor2;
-            n++;
-        }
-        if (watchedSensor2Alt != null) {
-            tempArray[n]= watchedSensor2Alt;
-            n++;
-        }
-        
+
         // copy temp to definitive inputs
         inputs = new NamedBean[n];
         for (int i = 0; i< inputs.length; i++)
@@ -429,111 +129,22 @@ public class BlockBossLogic extends Siglet {
      * and apply it.
      */
     public void setOutput() {
-        // make sure init is complete
-        if ( (outputs == null) || (outputs[0]==null) ) return;
-
-        // if "hold" is true, must show red
-        if (getHold()) {
-            ((SignalHead)outputs[0]).setAppearance(SignalHead.RED);
-            return;
-        }
-        
-        // otherwise, process algorithm
-        switch (mode) {
-        case SINGLEBLOCK:
-            doSingleBlock();
-            break;
-        case TRAILINGMAIN:
-            doTrailingMain();
-            break;
-        case TRAILINGDIVERGING:
-            doTrailingDiverging();
-            break;
-        case FACING:
-            doFacing();
-            break;
-        default:
-            log.error("Unexpected mode: "+mode);
-        }
-    }
-
-    int fastestColor1() {
-        int result = SignalHead.RED;
-        // special case:  GREEN if no next signal
-        if (watchedSignal1==null && watchedSignal1Alt==null ) 
-            result = SignalHead.GREEN;
-        
-        if (watchedSignal1!=null && watchedSignal1.getAppearance()==SignalHead.YELLOW)
-            result = SignalHead.YELLOW;
-        if (watchedSignal1Alt!=null && watchedSignal1Alt.getAppearance()==SignalHead.YELLOW)
-            result = SignalHead.YELLOW;
-        if (watchedSignal1!=null && watchedSignal1.getAppearance()==SignalHead.FLASHYELLOW)
-            result = SignalHead.FLASHYELLOW;
-        if (watchedSignal1Alt!=null && watchedSignal1Alt.getAppearance()==SignalHead.FLASHYELLOW)
-            result = SignalHead.FLASHYELLOW;
-        if (watchedSignal1!=null && watchedSignal1.getAppearance()==SignalHead.GREEN)
-            result = SignalHead.GREEN;
-        if (watchedSignal1Alt!=null && watchedSignal1Alt.getAppearance()==SignalHead.GREEN)
-            result = SignalHead.GREEN;
-        return result;
-    }
-    
-    int fastestColor2() {
-        int result = SignalHead.RED;
-        // special case:  GREEN if no next signal
-        if (watchedSignal2==null && watchedSignal2Alt==null ) 
-            result = SignalHead.GREEN;
-
-        if (watchedSignal2!=null && watchedSignal2.getAppearance()==SignalHead.YELLOW)
-            result = SignalHead.YELLOW;
-        if (watchedSignal2Alt!=null && watchedSignal2Alt.getAppearance()==SignalHead.YELLOW)
-            result = SignalHead.YELLOW;
-        if (watchedSignal2!=null && watchedSignal2.getAppearance()==SignalHead.FLASHYELLOW)
-            result = SignalHead.FLASHYELLOW;
-        if (watchedSignal2Alt!=null && watchedSignal2Alt.getAppearance()==SignalHead.FLASHYELLOW)
-            result = SignalHead.FLASHYELLOW;
-        if (watchedSignal2!=null && watchedSignal2.getAppearance()==SignalHead.GREEN)
-            result = SignalHead.GREEN;
-        if (watchedSignal2Alt!=null && watchedSignal2Alt.getAppearance()==SignalHead.GREEN)
-            result = SignalHead.GREEN;
-        return result;
-    }
-    
-    /**
-     * Given two {@link SignalHead} color constants, returns the one corresponding
-     * to the slower speed.
-     */
-    static int slowerOf(int a, int b)
-    {
-        // DARK is smallest, FLASHING GREEN is largest
-        return Math.min(a, b);
-    }
-
-    void doSingleBlock() {
         int appearance = SignalHead.GREEN;
         int oldAppearance = ((SignalHead)outputs[0]).getAppearance();
-        // check for yellow, flashing yellow overriding green
-        if (protectWithFlashing && fastestColor1()==SignalHead.YELLOW)
-            appearance = SignalHead.FLASHYELLOW;
-        if (fastestColor1()==SignalHead.RED)
-            appearance = SignalHead.YELLOW;
 
-        // if distant signal, show exactly what the home signal does
-        if (distantSignal)
-            appearance = fastestColor1();
-            
-        // if limited speed and green, reduce to yellow
-        if (limitSpeed1)
-            appearance = slowerOf(appearance, SignalHead.YELLOW);
-      
+        // check for yellow, flashing yellow overriding green
+        if (protectSignal!=null && protectWithFlashing && protectSignal.getAppearance()==SignalHead.FLASHYELLOW)
+            appearance = SignalHead.YELLOW;
+        if (protectSignal!=null && protectSignal.getAppearance()==SignalHead.RED)
+            if (protectWithFlashing)
+                appearance = SignalHead.FLASHYELLOW;
+            else
+                appearance = SignalHead.YELLOW;
+
         // check for red overriding yellow or green
-        if (watchSensor1!=null && watchSensor1.getKnownState() != Sensor.INACTIVE)
+        if (watchSensor!=null && watchSensor.getKnownState() != Sensor.INACTIVE)
             appearance = SignalHead.RED;
-        if (watchSensor2!=null && watchSensor2.getKnownState() != Sensor.INACTIVE) 
-            appearance = SignalHead.RED;
-        if (watchSensor3!=null && watchSensor3.getKnownState() != Sensor.INACTIVE) 
-            appearance = SignalHead.RED;
-        if (watchSensor4!=null && watchSensor4.getKnownState() != Sensor.INACTIVE) 
+        if (watchTurnout!=null && watchTurnout.getKnownState() == watchTurnoutState)
             appearance = SignalHead.RED;
 
         // show result if changed
@@ -541,149 +152,22 @@ public class BlockBossLogic extends Siglet {
             ((SignalHead)outputs[0]).setAppearance(appearance);
     }
 
-    void doTrailingMain() {
-        int appearance = SignalHead.GREEN;
-        int oldAppearance = ((SignalHead)outputs[0]).getAppearance();
-        // check for yellow, flashing yellow overriding green
-        if (protectWithFlashing && fastestColor1()==SignalHead.YELLOW)
-            appearance = SignalHead.FLASHYELLOW;
-        if (fastestColor1()==SignalHead.RED)
-            appearance = SignalHead.YELLOW;
 
-        // if distant signal, show exactly what the home signal does
-        if (distantSignal)
-            appearance = fastestColor1();
-
-        // if limited speed and green, reduce to yellow
-        if (limitSpeed1)
-            appearance = slowerOf(appearance, SignalHead.YELLOW);
-      
-        // check for red overriding yellow or green
-        if (watchSensor1!=null && watchSensor1.getKnownState() != Sensor.INACTIVE)
-            appearance = SignalHead.RED;
-        if (watchSensor2!=null && watchSensor2.getKnownState() != Sensor.INACTIVE) 
-            appearance = SignalHead.RED;
-        if (watchSensor3!=null && watchSensor3.getKnownState() != Sensor.INACTIVE) 
-            appearance = SignalHead.RED;
-        if (watchSensor4!=null && watchSensor4.getKnownState() != Sensor.INACTIVE) 
-            appearance = SignalHead.RED;
-        if (watchTurnout!=null && watchTurnout.getKnownState() != Turnout.CLOSED)
-            appearance = SignalHead.RED;
-
-        // show result if changed
-        if (appearance != oldAppearance)
-            ((SignalHead)outputs[0]).setAppearance(appearance);
-    }
-
-    void doTrailingDiverging() {
-        int appearance = SignalHead.GREEN;
-        int oldAppearance = ((SignalHead)outputs[0]).getAppearance();
-        // check for yellow, flashing yellow overriding green
-        if (protectWithFlashing && fastestColor1()==SignalHead.YELLOW)
-            appearance = SignalHead.FLASHYELLOW;
-        if (fastestColor1()==SignalHead.RED)
-            appearance = SignalHead.YELLOW;
-
-        // if distant signal, show exactly what the home signal does
-        if (distantSignal)
-            appearance = fastestColor1();
-
-        // if limited speed and green, reduce to yellow
-        if (limitSpeed2)
-            appearance = slowerOf(appearance, SignalHead.YELLOW);
-      
-        // check for red overriding yellow or green
-        if (watchSensor1!=null && watchSensor1.getKnownState() != Sensor.INACTIVE)
-            appearance = SignalHead.RED;
-        if (watchSensor2!=null && watchSensor2.getKnownState() != Sensor.INACTIVE) 
-            appearance = SignalHead.RED;
-        if (watchSensor3!=null && watchSensor3.getKnownState() != Sensor.INACTIVE) 
-            appearance = SignalHead.RED;
-        if (watchSensor4!=null && watchSensor4.getKnownState() != Sensor.INACTIVE) 
-            appearance = SignalHead.RED;
-        if (watchTurnout!=null && watchTurnout.getKnownState() != Turnout.THROWN)
-            appearance = SignalHead.RED;
-
-        // show result if changed
-        if (appearance != oldAppearance)
-            ((SignalHead)outputs[0]).setAppearance(appearance);
-    }
-    
-    void doFacing() {
-        int appearance = SignalHead.GREEN;
-        int oldAppearance = ((SignalHead)outputs[0]).getAppearance();
-        
-        // find downstream appearance, being pessimistic if we're not sure of the state
-        int s = SignalHead.GREEN;
-        if (watchTurnout!=null && watchTurnout.getKnownState() != Turnout.THROWN)
-            s = slowerOf(s, fastestColor1());
-        if (watchTurnout!=null && watchTurnout.getKnownState() != Turnout.CLOSED)
-            s = slowerOf(s, fastestColor2());
-
-        // check for yellow, flashing yellow overriding green
-        if (protectWithFlashing && s==SignalHead.YELLOW)
-            appearance = SignalHead.FLASHYELLOW;
-        if (s==SignalHead.RED)
-            appearance = SignalHead.YELLOW;
-        // if distant signal, show exactly what the home signal does
-        if (distantSignal)
-            appearance = s;
-
-        // if limited speed and green or flashing yellow, reduce to yellow
-        if (watchTurnout!=null && limitSpeed1 && watchTurnout.getKnownState()!=Turnout.THROWN)
-            appearance = slowerOf(appearance, SignalHead.YELLOW);
-
-        if (watchTurnout!=null && limitSpeed2 && watchTurnout.getKnownState()!=Turnout.CLOSED)
-            appearance = slowerOf(appearance, SignalHead.YELLOW);
-           
-
-        // check for red overriding yellow or green
-        if (watchSensor1!=null && watchSensor1.getKnownState() != Sensor.INACTIVE) 
-            appearance = SignalHead.RED;
-        if (watchSensor2!=null && watchSensor2.getKnownState() != Sensor.INACTIVE) 
-            appearance = SignalHead.RED;
-        if (watchSensor3!=null && watchSensor3.getKnownState() != Sensor.INACTIVE) 
-            appearance = SignalHead.RED;
-        if (watchSensor4!=null && watchSensor4.getKnownState() != Sensor.INACTIVE) 
-            appearance = SignalHead.RED;
-
-        // Check for red due to sensors past turnuot Added by RJB 2006        
-        if ((watchTurnout!=null && watchTurnout.getKnownState() != Turnout.THROWN) && ((watchedSensor1!=null && watchedSensor1.getKnownState() != Sensor.INACTIVE)))
-            appearance = SignalHead.RED;
-        if ((watchTurnout!=null && watchTurnout.getKnownState() != Turnout.THROWN) && ((watchedSensor1Alt!=null && watchedSensor1Alt.getKnownState() != Sensor.INACTIVE)))
-            appearance = SignalHead.RED;
-        if ((watchTurnout!=null && watchTurnout.getKnownState() == Turnout.THROWN) && ((watchedSensor2!=null && watchedSensor2.getKnownState() != Sensor.INACTIVE)))
-            appearance = SignalHead.RED;
-        if ((watchTurnout!=null && watchTurnout.getKnownState() == Turnout.THROWN) && ((watchedSensor2Alt!=null && watchedSensor2Alt.getKnownState() != Sensor.INACTIVE)))
-            appearance = SignalHead.RED;
-        
-        // show result if changed
-        if (appearance != oldAppearance)
-            ((SignalHead)outputs[0]).setAppearance(appearance);
-    }
-
-    static Hashtable umap = null;
-    static Hashtable smap = null;
+    static Hashtable map = null;
 
     public static Enumeration entries() {
-        return smap.elements();
+        return map.elements();
     }
 
     private static void setup() {
-        if (smap == null) {
-            smap = new Hashtable();
-            umap = new Hashtable();
+        if (map == null) {
+            map = new Hashtable();
             InstanceManager.configureManagerInstance().registerConfig(new BlockBossLogic());
         }
     }
 
-    /**
-     * Ensure that this BlockBossLogic object is available for later retrieval
-     */
     public void retain() {
-        smap.put(driveSignal.getSystemName(), this);
-        if (driveSignal.getUserName()!=null)
-            umap.put(driveSignal.getUserName(), this);
+        map.put(name, this);
     }
 
     /**
@@ -693,27 +177,16 @@ public class BlockBossLogic extends Siglet {
      * @return never null
      */
     public static BlockBossLogic getStoppedObject(String signal) {
-        BlockBossLogic b = null;
+        BlockBossLogic b;
         setup(); // ensure we've been registered
-        if (smap.containsKey(signal)) {
-            b = (BlockBossLogic)smap.get(signal);
-        }
-        else if (umap.containsKey(signal)) {
-            b = (BlockBossLogic)umap.get(signal);
-        }
-        if (b != null) {
-            // found an existing one, remove it from the map and stop its thread
-            smap.remove(b.driveSignal.getSystemName());
-            if (b.driveSignal.getUserName() != null) {
-                umap.remove(b.driveSignal.getUserName());
-            }
+        if (map.contains(signal)) {
+            b = (BlockBossLogic)map.get(signal);
             b.stop();
-            return b;
+            map.remove(b);
+        } else {
+            b = new BlockBossLogic(signal);
         }
-        else {
-            // no existing one, create a new one
-            return new BlockBossLogic(signal);
-        }
+        return b;
     }
     /**
      * Return the BlockBossLogic item governing a specific signal.
@@ -726,10 +199,8 @@ public class BlockBossLogic extends Siglet {
     public static BlockBossLogic getExisting(String signal) {
         BlockBossLogic b;
         setup(); // ensure we've been registered
-        if (smap.containsKey(signal)) {
-            b = (BlockBossLogic)smap.get(signal);
-        } else if (umap.containsKey(signal)) {
-            b = (BlockBossLogic)umap.get(signal);
+        if (map.containsKey(signal)) {
+            b = (BlockBossLogic)map.get(signal);
         } else {
             b = new BlockBossLogic(signal);
         }
@@ -737,6 +208,7 @@ public class BlockBossLogic extends Siglet {
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(BlockBossLogic.class.getName());
+
 }
 
 /* @(#)BlockBossLogic.java */

@@ -20,10 +20,10 @@ import javax.swing.JTextField;
 
 /**
  * Swing action to create and register a
- * SensorTable GUI.
+ * SensorTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.8 $
  */
 
 public class SensorTableAction extends AbstractTableAction {
@@ -33,20 +33,10 @@ public class SensorTableAction extends AbstractTableAction {
      * <P>
      * Note that the argument is the Action title, not the title of the
      * resulting frame.  Perhaps this should be changed?
-     * @param actionName
+     * @param s
      */
-    public SensorTableAction(String actionName) {
-        super(actionName);
-
-        // disable ourself if there is no primary sensor manager available
-        if (jmri.InstanceManager.sensorManagerInstance()==null ||
-            (((jmri.managers.AbstractProxyManager)jmri.InstanceManager
-                                                 .sensorManagerInstance())
-                                                 .systemLetter()=='\0')) {
-            setEnabled(false);
-        }
-    }
-    public SensorTableAction() { this("Sensor Table");}
+    public SensorTableAction(String s) { super(s); }
+    public SensorTableAction() {}
 
     /**
      * Create the JTable DataModel, along with the changes
@@ -120,7 +110,7 @@ public class SensorTableAction extends AbstractTableAction {
     void okPressed(ActionEvent e) {
         String user = userName.getText();
         if (user.equals("")) user=null;
-        InstanceManager.sensorManagerInstance().newSensor(sysName.getText().toUpperCase(), user);
+        InstanceManager.sensorManagerInstance().newSensor(sysName.getText(), user);
     }
 
     static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SensorTableAction.class.getName());

@@ -51,9 +51,8 @@ public class FunctionButton extends JToggleButton implements ActionListener
         //Add listener to components that can bring up popup menus.
         MouseListener popupListener = new PopupListener();
         this.addMouseListener(popupListener);
-        this.setFont(new Font("Monospaced",Font.PLAIN, 12));
-        this.setPreferredSize(new Dimension(54,30));
 
+        this.setPreferredSize(new Dimension(54,30));
         this.setMargin(new Insets(2,2,2,2));
     }
 
@@ -76,27 +75,15 @@ public class FunctionButton extends JToggleButton implements ActionListener
         return identity;
     }
 
-    /**
-     * Set the keycode that this button should respond to.
-     * <P>
-     * Later, when a key is being processed, checkKeyCode
-     * will determine if there's a match between the key that
-     * was pressed and the key for this button
-     */
 	public void setKeyCode(int key)
 	{
 		actionKey = key;
 	}
 
 
-    /**
-     * Check to see whether a particular KeyCode corresponds
-     * to this function button.  
-     * @return true if the button should respond to this key
-     */
-	public boolean checkKeyCode(int keycode)
+	public int getKeyCode()
 	{
-		return keycode == actionKey;
+		return actionKey;
 	}
 
     /**
@@ -118,7 +105,6 @@ public class FunctionButton extends JToggleButton implements ActionListener
     public void setIsLockable(boolean isLockable)
     {
         this.isLockable = isLockable;
-        listener.notifyFunctionLockableChanged(identity, isLockable);
     }
 
     /**
@@ -152,10 +138,6 @@ public class FunctionButton extends JToggleButton implements ActionListener
      */
     public void changeState(boolean newState)
     {
-        if (log.isDebugEnabled()) {
-        	log.debug("Change state to "+newState);
-        	new Exception().printStackTrace();
-        }
         isOn = newState;
 		this.setSelected(isOn);
         if (listener != null)
@@ -190,9 +172,6 @@ public class FunctionButton extends JToggleButton implements ActionListener
          */
         public void mousePressed(MouseEvent e)
         {
-            if (log.isDebugEnabled()) log.debug("pressed "+(e.getModifiers() & e.BUTTON1_MASK)+" "+e.isPopupTrigger()
-                    +" "+(e.getModifiers() & (e.ALT_MASK+e.META_MASK+e.CTRL_MASK))
-                    +(" "+e.ALT_MASK+"/"+e.META_MASK+"/"+e.CTRL_MASK));
             JToggleButton button = (JToggleButton)e.getSource();
             if (e.isPopupTrigger())
             {
@@ -201,15 +180,12 @@ public class FunctionButton extends JToggleButton implements ActionListener
             }
             /* Must check button mask since some platforms wait
             for mouse release to do popup. */
-            else if (button.isEnabled()
-                     && ((e.getModifiers() & e.BUTTON1_MASK) != 0)
-                    && ((e.getModifiers() & (e.ALT_MASK+e.META_MASK+e.CTRL_MASK)) == 0)
+            else if (button.isEnabled() &&
+                    ((e.getModifiers() & e.BUTTON1_MASK) > 0)
                      && !isLockable)
             {
                 changeState(true);
             }
-            // force button to desired state; click might have changed it
-            button.setSelected(isOn);
         }
 
         /**
@@ -221,19 +197,13 @@ public class FunctionButton extends JToggleButton implements ActionListener
          */
         public void mouseReleased(MouseEvent e)
         {
-            if (log.isDebugEnabled()) log.debug("released "+(e.getModifiers() & e.BUTTON1_MASK)+" "+e.isPopupTrigger()
-                    +" "+(e.getModifiers() & (e.ALT_MASK+e.META_MASK+e.CTRL_MASK)));
             JToggleButton button = (JToggleButton)e.getSource();
             if (e.isPopupTrigger())
             {
                 popup.show(e.getComponent(),
                            e.getX(), e.getY());
             }
-            // mouse events have to be unmodified; to change function, so that
-            // we don't act on 1/2 of a popup request.
-            else if (button.isEnabled()
-                    && ((e.getModifiers() & e.BUTTON1_MASK) != 0)
-                    && ((e.getModifiers() & (e.ALT_MASK+e.META_MASK+e.CTRL_MASK)) == 0) )
+            else if (button.isEnabled())
             {
                 if (!isLockable)
                 {
@@ -244,8 +214,6 @@ public class FunctionButton extends JToggleButton implements ActionListener
                     changeState(!isOn);
                 }
             }
-            // force button to desired state
-            button.setSelected(isOn);
         }
     }
 
@@ -289,16 +257,12 @@ public class FunctionButton extends JToggleButton implements ActionListener
             this.setIsLockable(isLockable);
             boolean isVisible = e.getAttribute("isVisible").getBooleanValue();
             this.setVisible(isVisible);
-            this.setFont(new Font("Monospaced", Font.PLAIN, e.getAttribute("fontSize").getIntValue()));
-            int butWidth = this.getFontMetrics(this.getFont()).stringWidth(this.getText());
-            if (butWidth < 34) butWidth = 34;
-            this.setPreferredSize(new Dimension(butWidth+20,30));
-
+            this.setFont(new Font("", Font.PLAIN, e.getAttribute("fontSize").getIntValue()));
         }
         catch (org.jdom.DataConversionException ex)
         {
-            log.error("DataConverstionException in setXml: "+ex);
+            System.out.println("Ugh");
         }
     }
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(FunctionButton.class.getName());
+
 }

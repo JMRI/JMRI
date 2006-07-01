@@ -13,7 +13,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.locoio.LocoIOFrame class
  * @author	    Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.8 $
+ * @version         $Revision: 1.5 $
  */
 public class LocoIOFrameTest extends TestCase {
 
@@ -39,10 +39,10 @@ public class LocoIOFrameTest extends TestCase {
 
         // check first message of ReadAll
         Assert.assertEquals("One message sent", 1, lnis.outbound.size());
-        LocoNetMessage msg = (LocoNetMessage)lnis.outbound.elementAt(0);
+        LocoNetMessage msg = (LocoNetMessage)lnis.outbound.get(0);
         Assert.assertEquals("message length", 16, msg.getNumDataElements());
         Assert.assertEquals("message opCode", 0xE5, msg.getOpCode());
-        Assert.assertEquals("message bytes", "E5 10 50 51 01 00 02 04 00 00 10 00 00 00 00 00", msg.toString());
+        Assert.assertEquals("message bytes", "e5 10 50 51 1 0 2 4 0 0 10 0 0 0 0 0 ", msg.toString());
 
         // dispose and end operation
         f.dispose();
@@ -64,10 +64,10 @@ public class LocoIOFrameTest extends TestCase {
 
         // check first message of readAll
         Assert.assertEquals("One message sent", 1, lnis.outbound.size());
-        LocoNetMessage msg = (LocoNetMessage)lnis.outbound.elementAt(0);
+        LocoNetMessage msg = (LocoNetMessage)lnis.outbound.get(0);
         Assert.assertEquals("message length", 16, msg.getNumDataElements());
         Assert.assertEquals("message opCode", 0xE5, msg.getOpCode());
-        Assert.assertEquals("message bytes", "E5 10 50 34 12 00 02 04 00 00 10 00 00 00 00 00", msg.toString());
+        Assert.assertEquals("message bytes", "e5 10 50 34 12 0 2 4 0 0 10 0 0 0 0 0 ", msg.toString());
 
         // dispose and end operation
         f.dispose();
@@ -82,17 +82,17 @@ public class LocoIOFrameTest extends TestCase {
             protected int cautionAddrSet() { return 1;}
         };
 
-        f.addrField.setText("0134");
+        f.addrField.setText("1234");
 
         // click button
         f.addrSetButton.doClick();
 
         // check first message of readAll
         Assert.assertEquals("One message sent", 1, lnis.outbound.size());
-        LocoNetMessage msg = (LocoNetMessage)lnis.outbound.elementAt(0);
+        LocoNetMessage msg = (LocoNetMessage)lnis.outbound.get(0);
         Assert.assertEquals("message length", 16, msg.getNumDataElements());
         Assert.assertEquals("message opCode", 0xE5, msg.getOpCode());
-        Assert.assertEquals("message bytes", "E5 10 50 00 10 00 01 01 00 34 10 00 00 00 00 00", msg.toString());
+        Assert.assertEquals("message bytes", "e5 10 50 0 10 0 1 1 0 34 10 0 0 0 0 0 ", msg.toString());
 
         // dispose and end operation
         f.dispose();
@@ -117,9 +117,5 @@ public class LocoIOFrameTest extends TestCase {
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoIOFrameTest.class.getName());
-    // The minimal setup for log4J
-    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
-    protected void setUp() { log4jfixtureInst.setUp(); }
-    protected void tearDown() { log4jfixtureInst.tearDown(); }
 
 }

@@ -10,19 +10,13 @@ import java.awt.event.ActionEvent;
  * DualDecoderTool
  *
  * @author    Bob Jacobsen    Copyright (C) 2001
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.1 $
  */
 
 public class DualDecoderToolAction extends AbstractAction {
 
     public DualDecoderToolAction(String s) {
         super(s);
-
-        // disable ourself if programming is not possible
-        if (jmri.InstanceManager.programmerManagerInstance()==null) {
-            setEnabled(false);
-        }
-
     }
 
     public DualDecoderToolAction() {

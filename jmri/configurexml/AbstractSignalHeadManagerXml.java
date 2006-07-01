@@ -20,7 +20,7 @@ import org.jdom.Element;
  * Based on AbstractTurnoutManagerConfigXML
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.3 $
  */
 public class AbstractSignalHeadManagerXml implements XmlAdapter {
 
@@ -71,11 +71,12 @@ public class AbstractSignalHeadManagerXml implements XmlAdapter {
     /**
      * Create a SignalHeadManager object of the correct class, then
      * register and fill it.
-     * @param signalheads Top level Element to unpack.
+     * @param turnouts Top level Element to unpack.
      */
     public void load(Element signalheads) {
         // create the master object
-        replaceSignalHeadManager();
+        AbstractSignalHeadManager mgr = new AbstractSignalHeadManager();
+        replaceSignalHeadManager(mgr);
 
         // load individual turnouts
         loadSignalHeads(signalheads);
@@ -90,7 +91,7 @@ public class AbstractSignalHeadManagerXml implements XmlAdapter {
      * Utility method to load the individual SignalHead objects.
      * If there's no additional info needed for a specific signal head type,
      * invoke this with the parent of the set of SignalHead elements.
-     * @param signalheads Element containing the SignalHead elements to load.
+     * @param turnouts Element containing the SignalHead elements to load.
      */
     public void loadSignalHeads(Element signalheads) {
         SignalHeadManager sm = InstanceManager.signalHeadManagerInstance();
@@ -118,10 +119,11 @@ public class AbstractSignalHeadManagerXml implements XmlAdapter {
      * Replace the current signal head manager, if there is one, with
      * one newly created during a load operation. This is skipped
      * if they are of the same absolute type.
+     * @param pManager
      */
-    protected void replaceSignalHeadManager() {
+    protected void replaceSignalHeadManager(SignalHeadManager pManager) {
         if (InstanceManager.signalHeadManagerInstance().getClass().getName()
-                .equals(AbstractSignalHeadManager.class.getName()))
+                .equals(pManager.getClass().getName()))
             return;
         // if old manager exists, remove it from configuration process
         if (InstanceManager.signalHeadManagerInstance() != null)
@@ -129,7 +131,6 @@ public class AbstractSignalHeadManagerXml implements XmlAdapter {
                 InstanceManager.signalHeadManagerInstance() );
 
         // register new one with InstanceManager
-        AbstractSignalHeadManager pManager = new AbstractSignalHeadManager();
         InstanceManager.setSignalHeadManager(pManager);
         // register new one for configuration
         InstanceManager.configureManagerInstance().registerConfig(pManager);

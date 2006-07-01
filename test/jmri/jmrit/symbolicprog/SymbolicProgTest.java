@@ -2,18 +2,14 @@
 
 package jmri.jmrit.symbolicprog;
 
-import jmri.DefaultProgrammerManager;
-import jmri.InstanceManager;
-import jmri.Programmer;
-import jmri.progdebugger.ProgDebugger;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import jmri.*;
+import jmri.progdebugger.*;
+import junit.framework.*;
 
 /**
  * Test the jmri.jmrix.symbolicprog package.
  * @author			Bob Jacobsen
- * @version         $Revision: 1.10 $
+ * @version         $Revision: 1.7 $
  */
 public class SymbolicProgTest extends TestCase {
 
@@ -40,8 +36,6 @@ public class SymbolicProgTest extends TestCase {
     // test suite from all defined tests, including others in the package
     public static Test suite() {
         TestSuite suite = new TestSuite(SymbolicProgTest.class);
-        suite.addTest(jmri.jmrit.symbolicprog.CompositeVariableValueTest.suite());
-        suite.addTest(jmri.jmrit.symbolicprog.Pr1ImporterTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.PaneProgPaneTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.ComboCheckBoxTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.ComboRadioButtonsTest.suite());
@@ -58,6 +52,7 @@ public class SymbolicProgTest extends TestCase {
         return suite;
     }
 
+    // static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SymbolicProgTest.class.getName());
     // The minimal setup for log4J
     apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
     protected void setUp() { log4jfixtureInst.setUp(); }

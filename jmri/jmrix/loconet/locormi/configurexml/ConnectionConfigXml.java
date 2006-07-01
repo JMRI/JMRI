@@ -20,7 +20,7 @@ import org.jdom.Element;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.2 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -45,7 +45,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
     }
     /**
      * Port name carries the hostname for the RMI connection
-     * @param e Top level Element to unpack.
+     * @param element Top level Element to unpack.
       */
     public void load(Element e) {
         // configure port name
@@ -55,7 +55,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         JFrame f = new JFrame("LocoNet server connection");
         f.getContentPane().add(new JLabel("Connecting to "+hostName));
         f.pack();
-        f.setVisible(true);
+        f.show();
 
         // slightly different, as not based on a serial port...
         // create the LnMessageClient
@@ -64,29 +64,19 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         // start the connection
         try {
             client.configureRemoteConnection(hostName, 500);
-            connected = true;   // exception during connect skips this
         } catch (jmri.jmrix.loconet.LocoNetException ex) {
             log.error("Error opening connection to "+hostName+" was: "+ex);
-            f.setTitle("Server connection failed");
-            f.getContentPane().removeAll();
-            f.getContentPane().add(new JLabel("failed, error was "+ex));
-            f.pack();
-            connected = false;
         }
 
         // configure the other instance objects
         client.configureLocalServices();
 
-        if (connected) {
-            f.setVisible(false);
-            f.dispose();
-        }
+        f.hide();
+        f.dispose();
 
         // register, so can be picked up
         register(hostName);
     }
-
-    boolean connected = false;
 
     protected void register() {
         log.error("unexpected call to register()");

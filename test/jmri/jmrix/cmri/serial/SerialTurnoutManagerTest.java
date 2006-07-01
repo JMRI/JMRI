@@ -2,7 +2,9 @@
 
 package jmri.jmrix.cmri.serial;
 
+import java.io.*;
 import junit.framework.Test;
+import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import jmri.*;
@@ -10,17 +12,15 @@ import jmri.*;
 /**
  * SerialTurnoutManagerTest.java
  *
- * Description:	    tests for the jmri.jmrix.cmri.SerialTurnoutManager class
+ * Description:	    tests for the jmri.jmrix.nce.NceTurnoutManager class
  * @author			Bob Jacobsen
- * @version  $Revision: 1.4 $
+ * @version  $Revision: 1.2 $
  */
 public class SerialTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 
 	public void setUp() {
 		// create and register the manager object
-		l = new SerialTurnoutManager() {
-			public void notifyTurnoutCreationError(String conflict,int bitNum) {}
-		};	
+		l = new SerialTurnoutManager();
 		jmri.InstanceManager.setTurnoutManager(l);
 	}
 

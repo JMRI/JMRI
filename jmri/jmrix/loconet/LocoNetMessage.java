@@ -26,7 +26,7 @@ import java.io.Serializable;
  * <P>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.15 $
  * @see             jmri.jmrix.nce.NceMessage
  *
  */
@@ -53,11 +53,6 @@ public class LocoNetMessage implements Serializable {
         for (int i=0; i<contents.length; i++) this.setElement(i, contents[i]);
     }
 
-    public LocoNetMessage(byte[] contents) {
-        this(contents.length);
-        for (int i=0; i<contents.length; i++) this.setElement(i, contents[i]&0xFF);
-    }
-
     public void setOpCode(int i) { _dataBytes[0]=i;}
     public int getOpCode() {return _dataBytes[0];}
 
@@ -71,7 +66,7 @@ public class LocoNetMessage implements Serializable {
             log.error("reference element "+n
                       +" in message of "+_dataBytes.length
                       +" elements: "+this.toString());
-        return _dataBytes[n] & 0xFF;
+        return _dataBytes[n];
     }
     public void setElement(int n, int v) {
         if (n < 0 || n >= _dataBytes.length)
@@ -83,18 +78,9 @@ public class LocoNetMessage implements Serializable {
 
     /** Get a String representation of the entire message in hex */
     public String toString() {
-			int val ;
-      StringBuffer sb = new StringBuffer() ;
-      for (int i=0; i<_nDataBytes; i++)
-			{
-				if( i > 0 )
-					sb.append( ' ' ) ;
-
-				val = _dataBytes[i] & 0xFF ;
-				sb.append( hexChars[ val >> 4 ] );
-				sb.append( hexChars[ val & 0x0F ] ) ;
-			}
-		  return sb.toString() ;
+        String s = "";
+        for (int i=0; i<_nDataBytes; i++) s+=Integer.toHexString(_dataBytes[i])+" ";
+        return s;
     }
 
     /**
@@ -149,7 +135,7 @@ public class LocoNetMessage implements Serializable {
      * Two messages are the same if their entire data content
      * is the same.  We ignore the error-check byte to ease
      * comparisons before a message is transmitted.
-     * @param m
+     * @param obj
      * @return true if objects contain the same message contents
      */
     public boolean equals(LocoNetMessage m) {
@@ -267,9 +253,6 @@ public class LocoNetMessage implements Serializable {
     // contents (private)
     private int _nDataBytes = 0;
     private int _dataBytes[] = null;
-
-		  // Hex char array for toString conversion
-		static char[] hexChars = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' } ;
 
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoNetMessage.class.getName());

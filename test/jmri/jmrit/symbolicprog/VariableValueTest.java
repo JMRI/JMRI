@@ -18,14 +18,13 @@ import jmri.progdebugger.*;
 /**
  * Base for tests of classes inheriting from VariableValue abstract class
  * @author	Bob Jacobsen, Copyright 2002
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.9 $
  */
 public abstract class VariableValueTest extends TestCase {
 
     ProgDebugger p = new ProgDebugger();
 
-    abstract VariableValue makeVar(String label, String comment, String cvName,
-                                   boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
+    abstract VariableValue makeVar(String label, String comment, boolean readOnly,
                                    int cvNum, String mask, int minVal, int maxVal,
                                    Vector v, JLabel status, String item);
 
@@ -45,7 +44,7 @@ public abstract class VariableValueTest extends TestCase {
         cv.setValue(3);
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, check name
-        VariableValue variable = makeVar("label check", "comment", "", false, false, false, false, 81, "XXVVVVVV", 0, 255, v, null, "item check");
+        VariableValue variable = makeVar("label check", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, "item check");
         Assert.assertEquals("label", "label check", variable.label() );
         Assert.assertEquals("item", "item check", variable.item() );
     }
@@ -57,7 +56,7 @@ public abstract class VariableValueTest extends TestCase {
         cv.setValue(3);
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, check name
-        VariableValue variable = makeVar("label", "comment", "", false, false, false, false, 81, "XXVVVVXX", 0, 255, v, null, null);
+        VariableValue variable = makeVar("label", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
         Assert.assertEquals("label", "label", variable.label() );
         checkValue(variable, "value object initially contains ", "0");
 
@@ -78,7 +77,7 @@ public abstract class VariableValueTest extends TestCase {
         cv.setValue(3);
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, loaded as 5
-        VariableValue variable = makeVar("label", "comment", "", false, false, false, false, 81, "XXVVVVXX", 0, 255, v, null, null);
+        VariableValue variable = makeVar("label", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
         Assert.assertTrue("getValue not null ", variable.getValue() != null);
         setValue(variable, "5");
         checkValue(variable, "variable value", "5");
@@ -96,7 +95,7 @@ public abstract class VariableValueTest extends TestCase {
         cv.setValue(3);
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, loaded as 5
-        VariableValue variable = makeVar("label", "comment", "", true, false, false, false, 81, "XXVVVVXX", 0, 255, v, null, null);
+        VariableValue variable = makeVar("label", "comment", true, 81, "XXVVVVXX", 0, 255, v, null, null);
         Assert.assertTrue( variable.getValue() != null);
         setReadOnlyValue(variable, "5");
         checkReadOnlyValue(variable, "value", "5");
@@ -110,10 +109,10 @@ public abstract class VariableValueTest extends TestCase {
         CvValue cv = new CvValue(81, p);
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, loaded as 5, manually notified
-        VariableValue variable = makeVar("label", "comment", "", false, false, false, false, 81, "XXVVVVXX", 0, 255, v, null, null);
+        VariableValue variable = makeVar("label", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
         setValue(variable, "5");
 
-        variable.readAll();
+        variable.read();
         // wait for reply (normally, done by callback; will check that later)
         int i = 0;
         while ( variable.isBusy() && i++ < 100 )  {
@@ -123,6 +122,7 @@ public abstract class VariableValueTest extends TestCase {
             }
         }
         if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+variable.getValue()+" state="+variable.getState());
+        if (i==0) log.warn("textVariableValueRead saw an immediate return from isBusy");
 
         Assert.assertTrue("wait time for message",i<100);
         checkValue(variable, "text var value ", "14");
@@ -139,10 +139,10 @@ public abstract class VariableValueTest extends TestCase {
         CvValue cv = new CvValue(81, p);
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, loaded as 5, manually notified
-        VariableValue variable = makeVar("label", "comment", "", false, false, false, false, 81, "XXVVVVXX", 0, 255, v, null, null);
+        VariableValue variable = makeVar("label", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
         setValue(variable, "5");
 
-        variable.writeAll();
+        variable.write();
         // wait for reply (normally, done by callback; will check that later)
         int i = 0;
         while ( variable.isBusy() && i++ < 100  )  {
@@ -152,6 +152,7 @@ public abstract class VariableValueTest extends TestCase {
             }
         }
         if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+variable.getValue()+" state="+variable.getState());
+        if (i==0) log.warn("testVariableValueWrite saw an immediate return from isBusy");
 
         Assert.assertTrue("iterations ",i<100);
         checkValue(variable, "value ","5");
@@ -168,7 +169,7 @@ public abstract class VariableValueTest extends TestCase {
         CvValue cv = new CvValue(81, p);
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, loaded as 5, manually notified
-        VariableValue variable = makeVar("label", "comment", "", false, false, false, false, 81, "XXVVVVXX", 0, 255, v, null, null);
+        VariableValue variable = makeVar("label", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
         setValue(variable, "5");
 
         JLabel statusLabel = new JLabel("nothing");
@@ -182,6 +183,7 @@ public abstract class VariableValueTest extends TestCase {
             }
         }
         if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+cv.getValue()+" state="+cv.getState());
+        if (i==0) log.warn("testVariableCvWrite saw an immediate return from isBusy");
 
         Assert.assertTrue("iterations needed ", i<100);
         checkValue(variable, "value ","5");
@@ -199,7 +201,7 @@ public abstract class VariableValueTest extends TestCase {
         CvValue cv = new CvValue(81, p);
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, loaded as 5, manually notified
-        VariableValue variable = makeVar("label", "comment", "", false, false, false, false, 81, "XXVVVVXX", 0, 255, v, null, null);
+        VariableValue variable = makeVar("label", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
         Assert.assertEquals("initial state", VariableValue.FROMFILE, variable.getState());
         cv.setState(CvValue.UNKNOWN);
         Assert.assertEquals("after CV set unknown", VariableValue.UNKNOWN, variable.getState());
@@ -214,7 +216,7 @@ public abstract class VariableValueTest extends TestCase {
         CvValue cv = new CvValue(81, p);
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, loaded as 5, manually notified
-        VariableValue variable = makeVar("label", "comment", "", false, false, false, false, 81, "XXVVVVXX", 0, 255, v, null, null);
+        VariableValue variable = makeVar("label", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
         Assert.assertEquals("FROM_FILE color", VariableValue.COLOR_FROMFILE, variable.getValue().getBackground() );
 
         cv.setState(CvValue.UNKNOWN);
@@ -228,7 +230,7 @@ public abstract class VariableValueTest extends TestCase {
         CvValue cv = new CvValue(81, p);
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, loaded as 5, manually notified
-        VariableValue variable = makeVar("label", "comment", "", false, false, false, false, 81, "XXVVVVXX", 0, 255, v, null, null);
+        VariableValue variable = makeVar("label", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
         // get a representation
         JComponent rep = (JComponent)variable.getRep("");
 
@@ -253,7 +255,7 @@ public abstract class VariableValueTest extends TestCase {
         CvValue cv = new CvValue(81, p);
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, loaded as 5, manually notified
-        VariableValue variable = makeVar("label", "comment", "", false, false, false, false, 81, "XXVVVVXX", 0, 255, v, null, null);
+        VariableValue variable = makeVar("label", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
         // get a representation
         JComponent rep = (JComponent)variable.getRep("");
 
@@ -281,7 +283,7 @@ public abstract class VariableValueTest extends TestCase {
         CvValue cv = new CvValue(81, p);
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, loaded as 5, manually notified
-        VariableValue variable = makeVar("label", "comment", "", false, false, false, false, 81, "XXVVVVXX", 0, 255, v, null, null);
+        VariableValue variable = makeVar("label", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
         setValue(variable, "5");
 
         // now get value, check
@@ -321,11 +323,11 @@ public abstract class VariableValueTest extends TestCase {
         CvValue cv = new CvValue(81, p);
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, loaded as 5, manually notified
-        VariableValue var1 = makeVar("label", "comment", "", false, false, false, false, 81, "XXVVVVXX", 0, 255, v, null, null);
-        VariableValue var2 = makeVar("alternate", "comment", "", false, false, false, false, 81, "XXVVVVXX", 0, 255, v, null, null);
+        VariableValue var1 = makeVar("label", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
+        VariableValue var2 = makeVar("alternate", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
         setValue(var1, "5");
 
-        var1.writeAll();
+        var1.write();
         // wait for reply (normally, done by callback; will check that later)
         int i = 0;
         while ( var1.isBusy() && i++ < 100  )  {
@@ -335,6 +337,7 @@ public abstract class VariableValueTest extends TestCase {
             }
         }
         if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+var1.getValue()+" state="+var1.getState());
+        if (i==0) log.warn("testWriteSynch2 saw an immediate return from isBusy");
 
         Assert.assertTrue("Number of iterations ",i<100);
         checkValue(var1, "var 1 value","5");
@@ -355,7 +358,7 @@ public abstract class VariableValueTest extends TestCase {
         cv.setValue(3);
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, loaded as 5
-        DecVariableValue var = new DecVariableValue("label", "comment", "", false, false, false, false, 81, "XXVVVVXX", 0, 255, v, null, null);
+        DecVariableValue var = new DecVariableValue("label", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
         System.out.println("free, total memory at start = "+Runtime.getRuntime().freeMemory()
                            +" "+Runtime.getRuntime().totalMemory());
         Runtime.getRuntime().gc();

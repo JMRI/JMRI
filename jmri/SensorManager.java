@@ -5,9 +5,9 @@ package jmri;
 import com.sun.java.util.collections.List;
 
 /**
- * Interface for controlling sensors.
+ * Interface for controlling sensors
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.9 $
  */
 public interface SensorManager extends Manager {
 
@@ -17,6 +17,7 @@ public interface SensorManager extends Manager {
      * is a valid system name, it will be used for the new
      * sensor.  Otherwise, the makeSystemName method
      * will attempt to turn it into a valid system name.
+     *
      *
      * @param name
      * @return Never null under normal circumstances
@@ -64,16 +65,6 @@ public interface SensorManager extends Manager {
     public Sensor getBySystemName(String s);
 
     public List getSystemNameList();
-	
-    /**
-     * Requests status of all layout sensors under this Sensor Manager.
-	 * This method may be invoked whenever the status of sensors needs to be updated from
-	 *		the layout, for example, when an XML configuration file is read in.
-	 * Note that there is a null implementation of this method in AbstractSensorManager.
-	 *		This method only needs be implemented in system-specific Sensor Managers where
-	 *		readout of sensor status from the layout is possible.
-	 */
-	public void updateAll();
 
 }
 

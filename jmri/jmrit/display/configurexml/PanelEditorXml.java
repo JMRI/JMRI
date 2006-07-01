@@ -3,24 +3,22 @@ package jmri.jmrit.display.configurexml;
 import jmri.InstanceManager;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.display.PanelEditor;
-import java.awt.Dimension;
-import java.awt.Point;
-
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 
 import com.sun.java.util.collections.List;
-import org.jdom.*;
+import org.jdom.Element;
 
 /**
- * Handle configuration for {@link PanelEditor} panes.
+ * Handle configuration for display.PanelEditor panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.10 $
  */
 public class PanelEditorXml implements XmlAdapter {
 
-    public PanelEditorXml() {}
+    public PanelEditorXml() {
+    }
 
     /**
      * Default implementation for storing the contents of a
@@ -32,20 +30,12 @@ public class PanelEditorXml implements XmlAdapter {
         PanelEditor p = (PanelEditor)o;
         Element panel = new Element("paneleditor");
 
-        Dimension size = p.getFrame().getSize();
-        Point posn = p.getFrame().getLocation();
-
         panel.addAttribute("class", "jmri.jmrit.display.configurexml.PanelEditorXml");
         panel.addAttribute("name", ""+p.getFrame().getTitle());
-        panel.addAttribute("x", ""+posn.x);
-        panel.addAttribute("y", ""+posn.y);
-        panel.addAttribute("height", ""+size.height);
-        panel.addAttribute("width", ""+size.width);
-        panel.addAttribute("editable", ""+(p.isEditable()?"yes":"no"));
-        panel.addAttribute("positionable", ""+(p.isPositionable()?"yes":"no"));
-        panel.addAttribute("controlling", ""+(p.isControlling()?"yes":"no"));
-        panel.addAttribute("hide", p.isVisible()?"no":"yes");
-        panel.addAttribute("panelmenu", p.hasPanelMenu()?"yes":"no");
+        panel.addAttribute("x", ""+p.getFrame().getX());
+        panel.addAttribute("y", ""+p.getFrame().getY());
+        panel.addAttribute("height", ""+p.getFrame().getHeight());
+        panel.addAttribute("width", ""+p.getFrame().getWidth());
 
         // include contents
 
@@ -93,12 +83,16 @@ public class PanelEditorXml implements XmlAdapter {
         if (element.getAttribute("name")!=null)
             name = element.getAttribute("name").getValue();
         // create the objects
-        PanelEditor panel = new PanelEditor();
-        panel.makeFrame(name);
-        panel.getFrame().setLocation(x,y);
-        panel.getFrame().setSize(width,height);
-        
-        panel.setTitle();
+        JFrame targetFrame = new JFrame(name);
+        JLayeredPane targetPanel = new JLayeredPane();
+        targetFrame.setSize(width, height);
+        targetFrame.setLocation(x,y);
+
+        targetFrame.getContentPane().add(targetPanel);
+        targetPanel.setLayout(null);
+        PanelEditor panel = new PanelEditor(name+" Editor");
+        panel.setFrame(targetFrame);
+        panel.setTarget(targetPanel);
 
         // load the contents
         List items = element.getChildren();
@@ -117,39 +111,10 @@ public class PanelEditorXml implements XmlAdapter {
             }
         }
 
-        // set contents state
-        Attribute a;
-        boolean value = true;
-        if ((a = element.getAttribute("editable"))!=null && a.getValue().equals("no"))
-            value = false;
-        panel.setAllEditable(value);
-
-        value = true;
-        if ((a = element.getAttribute("positionable"))!=null && a.getValue().equals("no"))
-            value = false;
-        panel.setAllPositionable(value);
-
-        value = true;
-        if ((a = element.getAttribute("controlling"))!=null && a.getValue().equals("no"))
-            value = false;
-        panel.setAllControlling(value);
-
-        boolean hide = false;
-        if ((a = element.getAttribute("hide"))!=null && a.getValue().equals("yes"))
-            hide = true;
-
-        value = true;
-        if ((a = element.getAttribute("panelmenu"))!=null && a.getValue().equals("no"))
-            value = false;
-        panel.setPanelMenu(value);
-
-        // display the results, with the editor in back
+        // display the results, with the editorin back
         panel.pack();
-
-        if (!hide) panel.show();    // show the editor if wanted
-
-        // we don't pack the target frame here, because size was specified
-        panel.getFrame().show();    // always show the panel
+        panel.show();
+        targetFrame.show();
 
         // register the resulting panel for later configuration
         InstanceManager.configureManagerInstance().registerUser(panel);

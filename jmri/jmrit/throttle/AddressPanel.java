@@ -5,36 +5,32 @@ import java.awt.*;
 import java.awt.event.*;
 import com.sun.java.util.collections.*;
 import java.beans.*;
-import javax.swing.BoxLayout;
 
 import jmri.DccThrottle;
-import jmri.DccLocoAddress;
-import jmri.InstanceManager;
 import jmri.jmrit.roster.*;
-import jmri.jmrit.DccLocoAddressSelector;
 import org.jdom.Element;
 
 /**
  * A JInternalFrame that provides a way for the user to enter a
  * decoder address. This class also store AddressListeners and
  * notifies them when the user enters a new address.
- *
- * @author     glen   Copyright (C) 2002
- * @version    $Revision: 1.25 $
  */
 public class AddressPanel extends JInternalFrame
 {
 
     private DccThrottle throttle;
 
-    private DccLocoAddressSelector addrSelector = new DccLocoAddressSelector();
-    private DccLocoAddress         currentAddress;
     private ArrayList listeners;
+    private JTextField addressField;
+    private int currentAddress;
 
 	private JButton releaseButton;
 	private JButton dispatchButton;
 	private JButton setButton;
 	private JComboBox rosterBox;
+
+    /** The longest 4 character string. Used for resizing. */
+    private static final String LONGEST_STRING = "mmmm";
 
     /**
      * Constructor
@@ -78,29 +74,23 @@ public class AddressPanel extends JInternalFrame
     {
         this.throttle = t;
         releaseButton.setEnabled(true);
-     	currentAddress= (DccLocoAddress)t.getLocoAddress();
-	    addrSelector.setAddress(currentAddress);
-
-    	if(InstanceManager.throttleManagerInstance()
-			       .hasDispatchFunction()) {
-        	dispatchButton.setEnabled(true);
-    	}
-
+        dispatchButton.setEnabled(true);
 		setButton.setEnabled(false);
-		addrSelector.setEnabled(false);
+		addressField.setEditable(false);
 		rosterBox.setEnabled(false);
     }
 
 
 	/**
 	 * Receive notification that an address has been release or dispatched.
+	 * @param address The address released/dispatched
 	 */
 	public void notifyThrottleDisposed()
 	{
 		dispatchButton.setEnabled(false);
 		releaseButton.setEnabled(false);
 		setButton.setEnabled(true);
-		addrSelector.setEnabled(true);
+		addressField.setEditable(true);
 		rosterBox.setEnabled(true);
 		throttle = null;
 	}
@@ -126,8 +116,10 @@ public class AddressPanel extends JInternalFrame
          constraints.gridy = 0;
 
 		 constraints.ipadx = constraints.ipady = -16;
-		 addrSelector.setVariableSize(true);
-         mainPanel.add(addrSelector.getCombinedJPanel(), constraints);
+         addressField = new JTextField();
+         addressField.setColumns(4);
+         addressField.setFont(new Font("", Font.PLAIN, 32));
+         mainPanel.add(addressField, constraints);
 
          setButton = new JButton("Set");
          constraints.gridx = GridBagConstraints.RELATIVE;
@@ -145,7 +137,7 @@ public class AddressPanel extends JInternalFrame
              }
          });
 
-		 rosterBox = Roster.instance().fullRosterComboBox();
+		 rosterBox = Roster.instance().matchingComboBox(null,null,null,null,null,null,null);
 		 rosterBox.insertItemAt(new NullComboBoxItem(), 0);
 		 rosterBox.setSelectedIndex(0);
 		 rosterBox.addActionListener(new ActionListener()
@@ -159,7 +151,7 @@ public class AddressPanel extends JInternalFrame
 		 constraints.gridy= GridBagConstraints.RELATIVE;
 		 constraints.fill = GridBagConstraints.HORIZONTAL;
 		 constraints.weightx = 1;
-		 constraints.weighty = 0;
+		 constraints.weighty = 1;
 		 mainPanel.add(rosterBox, constraints);
 
 		 JPanel buttonPanel = new JPanel();
@@ -194,8 +186,15 @@ public class AddressPanel extends JInternalFrame
 		 constraints.weighty = 0;
 		 constraints.insets = new Insets(0,0,0,0);
 		 mainPanel.add(buttonPanel, constraints);
-         
-         pack();
+
+         this.addComponentListener(
+                 new ComponentAdapter()
+         {
+             public void componentResized(ComponentEvent e)
+             {
+                 changeFontSizes();
+             }
+         });
     }
 
 	private void rosterItemSelected()
@@ -204,30 +203,70 @@ public class AddressPanel extends JInternalFrame
 		{
 			String rosterEntryTitle = rosterBox.getSelectedItem().toString();
 			RosterEntry entry = Roster.instance().entryFromTitle(rosterEntryTitle);
-			
-			addrSelector.setAddress(entry.getDccLocoAddress());
-			
+			addressField.setText(entry.getDccAddress());
 			changeOfAddress();
 		}
 	}
 
+    /**
+     * A resizing has occurred, so determine the optimum font size
+     * for the addressField.
+     */
+    private void changeFontSizes()
+    {
+        double fieldWidth = addressField.getSize().getWidth();
+        int stringWidth = addressField.getFontMetrics(addressField.getFont()).
+                          stringWidth(LONGEST_STRING);
+        int fontSize = addressField.getFont().getSize();
+        if (stringWidth > fieldWidth) // component has shrunk.
+        {
+            while (stringWidth > fieldWidth)
+            {
+                fontSize -= 2;
+                Font f = new Font("", Font.PLAIN, fontSize);
+                addressField.setFont(f);
+                stringWidth = addressField.getFontMetrics(addressField.getFont()).
+                              stringWidth(LONGEST_STRING);
+            }
+        }
+        else // component has grown
+        {
+            while (fieldWidth - stringWidth > 10)
+            {
+                fontSize += 2;
+                Font f = new Font("", Font.PLAIN, fontSize);
+                addressField.setFont(f);
+                stringWidth = addressField.getFontMetrics(addressField.getFont()).
+                              stringWidth(LONGEST_STRING);
+            }
+        }
+
+    }
 
     /**
      * The user has selected a new address. Notify all listeners.
      */
      public void changeOfAddress()
      {
-	    // send notification of new address
-	    if (listeners != null) {
-	        for (int i=0; i<listeners.size(); i++) {
-                AddressListener l = (AddressListener)listeners.get(i);
-                log.debug("Notify address listener "+l);
-				currentAddress = addrSelector.getAddress();
-                if (currentAddress!= null) {
-    			    l.notifyAddressChosen(currentAddress.getNumber(), currentAddress.isLongAddress());
-                }
-            }
-        }
+         try
+         {
+             Integer value = new Integer(addressField.getText());
+			 // send notification of new address
+			 if (listeners != null)
+			 {
+				 for (int i=0; i<listeners.size(); i++)
+				 {
+					 AddressListener l = (AddressListener)listeners.get(i);
+					 log.debug("Notify address listener "+l);
+					 currentAddress = value.intValue();
+					 l.notifyAddressChosen(currentAddress);
+				 }
+			 }
+         }
+         catch (NumberFormatException ex)
+         {
+             addressField.setText(String.valueOf(currentAddress));
+         }
      }
 
 	 /**
@@ -256,7 +295,7 @@ public class AddressPanel extends JInternalFrame
 			 {
 				 AddressListener l = (AddressListener)listeners.get(i);
 				 log.debug("Notify address listener "+l);
-				 l.notifyAddressReleased(currentAddress.getNumber(), currentAddress.isLongAddress());
+				 l.notifyAddressReleased(currentAddress);
 			 }
 		 }
 	 }
@@ -279,14 +318,16 @@ public class AddressPanel extends JInternalFrame
          com.sun.java.util.collections.ArrayList children =
                  new com.sun.java.util.collections.ArrayList(1);
          children.add(wp.getPreferences(this));
-         children.add((new jmri.configurexml.LocoAddressXml()).store(addrSelector.getAddress()));
+         Element address = new Element("address");
+         address.addAttribute("value", String.valueOf(addressField.getText()));
+         children.add(address);
          me.setChildren(children);
          return me;
      }
 
      /**
       * Use the Element passed to initialize based on user prefs.
-      * @param e The Element containing prefs as defined
+      * @param The Element containing prefs as defined
       * in DTD/throttle-config
       */
      public void setXml(Element e)
@@ -296,17 +337,9 @@ public class AddressPanel extends JInternalFrame
          wp.setPreferences(this, window);
 
          Element addressElement = e.getChild("address");
-         if (addressElement != null) {
-            String address = addressElement.getAttribute("value").getValue();
-            addrSelector.setAddress(new DccLocoAddress(Integer.parseInt(address), false));  // guess at the short/long
-            changeOfAddress();
-         }
-         addressElement = e.getChild("locoaddress");
-         if (addressElement != null) {
-            addrSelector.setAddress((DccLocoAddress)(new jmri.configurexml.LocoAddressXml()).getAddress(addressElement));
-            changeOfAddress();
-         }
-         
+         String address = addressElement.getAttribute("value").getValue();
+         addressField.setText(address);
+         changeOfAddress();
      }
 
 	 class NullComboBoxItem

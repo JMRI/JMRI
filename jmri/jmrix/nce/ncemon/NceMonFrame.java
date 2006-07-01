@@ -8,6 +8,15 @@
 
 package jmri.jmrix.nce.ncemon;
 
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.util.Date;
+import java.text.DateFormat;
+import java.io.File;
+import java.io.PrintStream;
+import java.io.FileOutputStream;
+
 import jmri.jmrix.nce.NceListener;
 import jmri.jmrix.nce.NceTrafficController;
 import jmri.jmrix.nce.NceMessage;
@@ -31,25 +40,14 @@ public class NceMonFrame extends jmri.jmrix.AbstractMonFrame implements NceListe
 	}
 			
 	public synchronized void message(NceMessage l) {  // receive a message and log it
-        if (l.isBinary())
-          	nextLine("binary cmd: "+l.toString()+"\n", null);
-        else
-            nextLine("cmd: \""+l.toString()+"\"\n", null);
-
+		// NceMessage rawMsg = new NceMessage(l);
+		// rawMsg.setBinary();
+		nextLine("cmd: \""+l.toString()+"\"\n", "");
 	}
-
 	public synchronized void reply(NceReply l) {  // receive a reply message and log it
-	    String raw = "";
-	    for (int i=0;i<l.getNumDataElements(); i++) {
-	        if (i>0) raw+=" ";
-            raw = jmri.util.StringUtil.appendTwoHexFromInt(l.getElement(i)&0xFF, raw);
-        }
-	        
-	    if (l.isUnsolicited()) {    
-            nextLine("msg: \""+l.toString()+"\"\n", raw);
-        } else {
-            nextLine("rep: \""+l.toString()+"\"\n", raw);
-        }
+		NceReply rawMsg = new NceReply(l);
+		rawMsg.setBinary(true);
+		nextLine("rep: \""+l.toString()+"\"\n", "raw: \""+rawMsg.toString()+"\"\n");
 	}
 	
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceMonFrame.class.getName());

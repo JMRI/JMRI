@@ -1,14 +1,17 @@
-// EasyDccListenerScaffold.java
-
-package jmri.jmrix.easydcc;
-
 /** 
- * Stands in for the EasyDccTrafficController class
+ * EasyDccInterfaceScaffold.java
+ *
+ * Description:	    Stands in for the EasyDccTrafficController class
  * @author			Bob Jacobsen
  * @version			
  */
-class EasyDccListenerScaffold implements EasyDccListener {
-	public EasyDccListenerScaffold() {
+
+package jmri.jmrix.easydcc;
+
+import jmri.*;
+
+class EasyDccInterfaceScaffold implements EasyDccListener {
+	public EasyDccInterfaceScaffold() {
 		rcvdReply = null;
 		rcvdMsg = null;
 	}
@@ -18,6 +21,6 @@ class EasyDccListenerScaffold implements EasyDccListener {
 	EasyDccReply rcvdReply;
 	EasyDccMessage rcvdMsg;
 	
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccListenerScaffold.class.getName());
+	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccInterfaceScaffold.class.getName());
 
 }

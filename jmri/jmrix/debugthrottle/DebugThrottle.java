@@ -1,21 +1,19 @@
 package jmri.jmrix.debugthrottle;
 
-import jmri.LocoAddress;
-import jmri.DccLocoAddress;
 import jmri.jmrix.AbstractThrottle;
 
 /**
  * An implementation of DccThrottle for debugging use.
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.2 $
  */
 public class DebugThrottle extends AbstractThrottle
 {
     /**
      * Constructor
      */
-    public DebugThrottle(DccLocoAddress address)
+    public DebugThrottle(int address)
     {
         super();
 
@@ -37,16 +35,9 @@ public class DebugThrottle extends AbstractThrottle
         this.f12           = false;
         this.address      = address;
         this.isForward    = true;
-        this.address      = address;
+
     }
 
-    DccLocoAddress address;
-
-    public LocoAddress getLocoAddress() { return address; }
-
-    public String toString() {
-        return getLocoAddress().toString();
-    }
 
     /**
      * Send the message to set the state of functions F0, F1, F2, F3, F4

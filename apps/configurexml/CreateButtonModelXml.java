@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Handle XML persistance of CreateButtonModel objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.4 $
  * @see apps.CreateButtonPanel
  */
 public class CreateButtonModelXml implements XmlAdapter {
@@ -38,7 +38,7 @@ public class CreateButtonModelXml implements XmlAdapter {
 
     /**
      * Create object from XML file
-     * @param e Top level Element to unpack.
+     * @param element Top level Element to unpack.
       */
     public void load(Element e) {
         String className = e.getAttribute("name").getValue();
@@ -48,7 +48,7 @@ public class CreateButtonModelXml implements XmlAdapter {
             if (Apps.buttonSpace()!=null) {
                 // Complicated construct to get around no JButton(Action)
                 // ctor in Java 1.1.8
-                JButton b = new JButton((String)action.getValue(Action.NAME));
+                JButton b = new JButton((String)action.getValue(action.NAME));
                 b.addActionListener(action);
                 Apps.buttonSpace().add(b);
             }

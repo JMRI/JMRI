@@ -3,7 +3,6 @@
 package jmri.jmrix.loconet.hexfile;
 
 import jmri.jmrix.loconet.LnPacketizer;
-import jmri.util.JmriJFrame;
 
 import java.awt.Dimension;
 import java.io.File;
@@ -19,9 +18,9 @@ import javax.swing.JPanel;
  * a .hex file, feeding the information to a LocoMonFrame (monitor) and
  * connecting to a LocoGenFrame (for sending a few commands).
  * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version                     $Revision: 1.17 $
+ * @version                     $Revision: 1.13 $
  */
-public class HexFileFrame extends JmriJFrame {
+public class HexFileFrame extends javax.swing.JFrame {
 
     // member declarations
     javax.swing.JButton openHexFileButton = new javax.swing.JButton();
@@ -178,23 +177,17 @@ public class HexFileFrame extends JmriJFrame {
         connected = true;
 
         // do the common manager config
-        jmri.jmrix.loconet.LnPortController.configureCommandStation(true, false, "<unknown>");   // full featured by default
+        jmri.jmrix.loconet.LnPortController.configureCommandStation(true, false);   // full featured by default
         jmri.jmrix.loconet.LnPortController.configureManagers();
 
         // Install a debug programmer, replacing the existing LocoNet one
         jmri.InstanceManager.setProgrammerManager(
                 new jmri.progdebugger.DebugProgrammerManager());
 
-        // Install a debug throttle manager, replacing the existing LocoNet one
-        jmri.InstanceManager.setThrottleManager(
-                new jmri.jmrix.debugthrottle.DebugThrottleManager());
-
         // start operation of packetizer
         packets.startThreads();
         sourceThread = new Thread(port);
         sourceThread.start();
-
-        jmri.jmrix.loconet.ActiveFlag.setActive();
 
     }
 

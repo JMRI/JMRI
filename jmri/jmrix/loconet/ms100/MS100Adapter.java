@@ -29,7 +29,7 @@ import Serialio.SerialPortLocal;
  * Neither the baud rate configuration nor the "option 1" option are used.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.24 $
+ * @version			$Revision: 1.17 $
  */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -157,17 +157,12 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
             activeSerialPort.setRTS(true);          // not connected in some serial ports and adapters
             activeSerialPort.setDTR(false);         // pin 1 in DIN8; on main connector, this is DTR
 
-            // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
+            // disable flow control; hardware lines used for signalling, XON/XOFF might appear in data
             activeSerialPort.setFlowControlMode(0);
 
-            // set timeout
-            try {
-                activeSerialPort.enableReceiveTimeout(10);
-                log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
+            // activeSerialPort.enableReceiveTimeout(1000);
+            log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
                       +" "+activeSerialPort.isReceiveTimeoutEnabled());
-            } catch (Exception et) {
-                log.info("failed to set serial timeout: "+et);
-            }
 
             // get and save stream
             serialInStream = activeSerialPort.getInputStream();
@@ -227,6 +222,16 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
 
 
     /**
+     * Can the port accept additional characters?
+     * For an MS100, this is _always_ true, as we rely on the
+     * queueing in the port itself.  But if a lot is being
+     * send, this might result in the main thread getting stalled...
+     */
+    public boolean okToSend() {
+        return true;
+    }
+
+    /**
      * set up all of the other objects to operate with a MS100
      * connected to this port
      */
@@ -237,14 +242,11 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
         packets.connectPort(this);
 
         // do the common manager config
-        configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
+        configureCommandStation(mCanRead, mProgPowersOff);
         configureManagers();
 
         // start operation
         packets.startThreads();
-
-        jmri.jmrix.loconet.ActiveFlag.setActive();
-
     }
 
     private Thread sinkThread;
@@ -290,7 +292,8 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
      * Get an array of valid values for "option 2"; used to display valid options.
      * May not be null, but may have zero entries
      */
-    public String[] validOption2() { return commandStationNames; }
+    public String[] validOption2() { return new String[]{"DB150 (Empire Builder)",
+                                                         "DCS100 (Chief)", "DB50 (Zephyr)"}; }
 
     /**
      * Get a String that says what Option 2 represents
@@ -304,9 +307,19 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
      */
     public void configureOption2(String value) {
         super.configureOption2(value);
-    	log.debug("configureOption2: "+value);
-        setCommandStationType(value);
+        log.debug("configureOption2: "+value);
+        if (value.equals("DB150 (Empire Builder)")) {
+            mCanRead = false;
+            mProgPowersOff = true;
+        }
+        else {
+            mCanRead = true;
+            mProgPowersOff = false;
+        }
     }
+
+    boolean mCanRead = true;
+    boolean mProgPowersOff = false;
 
     // private control members
     private boolean opened = false;

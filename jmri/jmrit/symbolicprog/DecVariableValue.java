@@ -2,37 +2,30 @@
 
 package jmri.jmrit.symbolicprog;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.beans.PropertyChangeListener;
+import java.awt.*;
+import java.awt.event.*;
+import java.beans.*;
 import java.util.Vector;
 
-import javax.swing.JLabel;
-import javax.swing.JSlider;
-import javax.swing.JTextField;
-import javax.swing.text.Document;
+import javax.swing.*;
+import javax.swing.text.*;
 
 import com.sun.java.util.collections.ArrayList;
 
 /**
  * Decimal representation of a value.
  *
- * @author		Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.20 $
+ * @author			Bob Jacobsen   Copyright (C) 2001
+ * @version             $Revision: 1.7 $
  *
  */
 public class DecVariableValue extends VariableValue
     implements ActionListener, PropertyChangeListener, FocusListener {
 
-    public DecVariableValue(String name, String comment, String cvName,
-                            boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
+    public DecVariableValue(String name, String comment, boolean readOnly,
                             int cvNum, String mask, int minVal, int maxVal,
                             Vector v, JLabel status, String stdname) {
-        super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
+        super(name, comment, readOnly, cvNum, mask, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
         _value = new JTextField("0",3);
@@ -46,17 +39,8 @@ public class DecVariableValue extends VariableValue
         cv.setState(CvValue.FROMFILE);
     }
 
-    public void setTooltipText(String t) {
-        super.setTooltipText(t);   // do default stuff
-        _value.setToolTipText(t);  // set our value
-    }
-
     int _maxVal;
     int _minVal;
-
-    public CvValue[] usesCVs() {
-        return new CvValue[]{(CvValue)_cvVector.elementAt(getCvNum())};
-    }
 
     public Object rangeVal() {
         return new String("Decimal: "+_minVal+" - "+_maxVal);
@@ -68,8 +52,7 @@ public class DecVariableValue extends VariableValue
         oldContents = _value.getText();
     }
     void exitField() {
-        // there may be a lost focus event left in the queue when disposed so protect
-        if (_value != null && !oldContents.equals(_value.getText())) {
+        if (!oldContents.equals(_value.getText())) {
             int newVal = Integer.valueOf(_value.getText()).intValue();
             int oldVal = Integer.valueOf(oldContents).intValue();
             updatedTextField();
@@ -96,7 +79,7 @@ public class DecVariableValue extends VariableValue
         }
         catch (java.lang.NumberFormatException ex) { newVal = 0; }
         int newCv = newValue(oldCv, newVal, getMask());
-                if (oldCv != newCv)
+		if (oldCv != newCv)
                     cv.setValue(newCv);
     }
 
@@ -129,40 +112,30 @@ public class DecVariableValue extends VariableValue
         setValue(i);
     }
 
-    public int getIntValue() {
-        return Integer.valueOf(_value.getText()).intValue();
-    }
-    
     public Component getValue()  {
-        if (getReadOnly())  {
-            JLabel r = new JLabel(_value.getText());
-            updateRepresentation(r);
-            return r;
-        } else
+        if (getReadOnly())  //
+            return new JLabel(_value.getText());
+        else
             return _value;
     }
 
     public Component getRep(String format)  {
-        if (format.equals("vslider")) {
+        if (getReadOnly())  //
+            return new JLabel(_value.getText());
+        else if (format.equals("vslider")) {
             DecVarSlider b = new DecVarSlider(this, _minVal, _maxVal);
             b.setOrientation(JSlider.VERTICAL);
             sliders.add(b);
-            updateRepresentation(b);
             return b;
         }
         else if (format.equals("hslider")) {
             DecVarSlider b = new DecVarSlider(this, _minVal, _maxVal);
             b.setOrientation(JSlider.HORIZONTAL);
             sliders.add(b);
-            updateRepresentation(b);
             return b;
         }
         else {
             JTextField value = new VarTextField(_value.getDocument(),_value.getText(), 3, this);
-            if (getReadOnly() || getInfoOnly()) {
-                value.setEditable(false);
-            }
-            updateRepresentation(value);
             return value;
         }
     }
@@ -205,33 +178,16 @@ public class DecVariableValue extends VariableValue
         ((CvValue)_cvVector.elementAt(getCvNum())).setState(state);
     }
 
-    public boolean isChanged() {
-        CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()));
-        if (log.isDebugEnabled()) log.debug("isChanged for "+getCvNum()+" state "+cv.getState());
-        return considerChanged(cv);
-    }
-
-    public void readChanges() {
-         if (isChanged()) readAll();
-    }
-
-    public void writeChanges() {
-         if (isChanged()) writeAll();
-    }
-
-    public void readAll() {
-        setToRead(false);
+    public void read() {
         setBusy(true);  // will be reset when value changes
         //super.setState(READ);
         ((CvValue)_cvVector.elementAt(getCvNum())).read(_status);
     }
 
-    public void writeAll() {
-        setToWrite(false);
-        if (getReadOnly()) {
-            log.error("unexpected write operation when readOnly is set");
-        }
+    public void write() {
+        if (getReadOnly()) log.error("unexpected write operation when readOnly is set");
         setBusy(true);  // will be reset when value changes
+        //super.setState(STORED);
         ((CvValue)_cvVector.elementAt(getCvNum())).write(_status);
     }
 
@@ -240,19 +196,14 @@ public class DecVariableValue extends VariableValue
         // notification from CV; check for Value being changed
         if (log.isDebugEnabled()) log.debug("Property changed: "+e.getPropertyName());
         if (e.getPropertyName().equals("Busy")) {
-            if (((Boolean)e.getNewValue()).equals(Boolean.FALSE)) {
-                setToRead(false);
-                setToWrite(false);  // some programming operation just finished
-                setBusy(false);
-            }
+            if (((Boolean)e.getNewValue()).equals(Boolean.FALSE)) setBusy(false);
         }
         else if (e.getPropertyName().equals("State")) {
             CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
-            if (cv.getState() == STORED) setToWrite(false);
-            if (cv.getState() == READ) setToRead(false);
             setState(cv.getState());
         }
         else if (e.getPropertyName().equals("Value")) {
+            //setBusy(false);
             // update value of Variable
             CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
             int newVal = (cv.getValue() & maskVal(getMask())) >>> offsetVal(getMask());

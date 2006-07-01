@@ -10,13 +10,13 @@ import com.sun.java.util.collections.List;
  * when the program is started.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.1 $
  * @see PerformFilePanel
  */
 public class PerformFileModel {
 
     public PerformFileModel() {
-        fileName=null;
+        fileName="";
     }
 
     String fileName;
@@ -36,6 +36,8 @@ public class PerformFileModel {
         return l;
     }
     static List l = new ArrayList();
+
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PerformFileModel.class.getName());
 }
 
 

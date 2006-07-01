@@ -26,7 +26,7 @@ import com.sun.java.util.collections.List;
  * you're interested in.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.6 $
  */
 public class KnownLocoSelPane extends LocoSelPane  {
 
@@ -57,7 +57,7 @@ public class KnownLocoSelPane extends LocoSelPane  {
             JButton idloco = new JButton("Identify locomotive");
             idloco.addActionListener( new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (log.isDebugEnabled()) log.debug("Identify locomotive pressed");
+                    if (log.isInfoEnabled()) log.info("Identify locomotive pressed");
                     startIdentify();
                 }
             });
@@ -66,7 +66,7 @@ public class KnownLocoSelPane extends LocoSelPane  {
         }
         add(pane2a);
 
-        locoBox = Roster.instance().fullRosterComboBox();
+        locoBox = Roster.instance().matchingComboBox(null, null, null, null, null, null, null);
         add(locoBox);
 
         addProgrammerBox();
@@ -74,7 +74,7 @@ public class KnownLocoSelPane extends LocoSelPane  {
         JButton go2 = new JButton("Open programmer");
         go2.addActionListener( new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (log.isDebugEnabled()) log.debug("Open programmer pressed");
+                    if (log.isInfoEnabled()) log.info("Open programmer pressed");
                     openButton();
                 }
             });
@@ -91,9 +91,9 @@ public class KnownLocoSelPane extends LocoSelPane  {
         pane3a.add(new JLabel("Programmer format: "));
 
         // create the programmer box
-        programmerBox = new JComboBox(ProgDefault.findListOfProgFiles());
+        programmerBox = new JComboBox(findListOfProgFiles());
         programmerBox.setSelectedIndex(0);
-        if (ProgDefault.getDefaultProgFile()!=null) programmerBox.setSelectedItem(ProgDefault.getDefaultProgFile());
+        if (defaultProgFile!=null) programmerBox.setSelectedItem(defaultProgFile);
         pane3a.add(programmerBox);
         // pane3a.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
         add(pane3a);

@@ -14,9 +14,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
-
-import jmri.util.JmriJFrame;
 
 /**
  * The JMRI application for configuring DCC decoders.
@@ -26,7 +25,7 @@ import jmri.util.JmriJFrame;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.47 $
+ * @version     $Revision: 1.41 $
  */
 public class DecoderPro extends Apps {
 
@@ -36,6 +35,19 @@ public class DecoderPro extends Apps {
 
     protected AppConfigPanel newPrefs() {
         return new AppConfigPanel(configFilename, 1);
+    }
+    protected void createMenus(JMenuBar menuBar, JFrame frame) {
+        fileMenu(menuBar, frame);
+        editMenu(menuBar, frame);
+        toolsMenu(menuBar, frame);
+        rosterMenu(menuBar, frame);
+        panelMenu(menuBar, frame);
+
+        // show active systems
+        jmri.jmrix.ActiveSystemsMenu.addItems(menuBar);
+
+        // debug, but not development
+        debugMenu(menuBar, frame);
     }
 
     protected String logo() {
@@ -69,10 +81,7 @@ public class DecoderPro extends Apps {
         b1.addActionListener(serviceprog);
         b1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         j.add(b1);
-        if (jmri.InstanceManager.programmerManagerInstance()==null) {
-            b1.setEnabled(false);
-            b1.setToolTipText(rb.getString("MsgServiceButtonDisabled"));
-        }
+
         JButton m1 = new JButton(rb.getString("DpButtonProgramOnMainTrack"));
         m1.addActionListener(opsprog);
         m1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
@@ -97,15 +106,15 @@ public class DecoderPro extends Apps {
         splash(true);
 
         initLog4J();
-        log.info(apps.Apps.startupInfo("DecoderPro"));
-
+        log.info("program starts");
         setConfigFilename("DecoderProConfig2.xml", args);
-        JmriJFrame f = new JmriJFrame("DecoderPro");
+        JFrame f = new JFrame("DecoderPro");
         createFrame(new DecoderPro(f), f);
 
         log.info("main initialization done");
         splash(false);
     }
+
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DecoderPro.class.getName());
 }

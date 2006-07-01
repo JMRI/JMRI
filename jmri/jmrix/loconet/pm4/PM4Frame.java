@@ -2,14 +2,17 @@
 
 package jmri.jmrix.loconet.pm4;
 
-import java.awt.FlowLayout;
-
+import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
+
+import jmri.jmrix.loconet.LocoNetListener;
+import jmri.jmrix.loconet.LnTrafficController;
+import jmri.jmrix.loconet.LocoNetMessage;
 
 /**
  * Frame displaying and programming a PM4 configuration.
- * <P>
- * The read and write require a sequence of operations, which
+ * <P>The read and write require a sequence of operations, which
  * we handle with a state variable.
  * <P>
  * Programming of the PM4 is done via configuration messages, so
@@ -22,109 +25,143 @@ import javax.swing.*;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  *
- * @author			Bob Jacobsen   Copyright (C) 2002, 2004
- * @version			$Revision: 1.9 $
+ * @author			Bob Jacobsen   Copyright (C) 2002
+ * @version			$Revision: 1.4 $
  */
-public class PM4Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
+public class PM4Frame extends JFrame implements LocoNetListener {
 
     public PM4Frame() {
         super("PM4 programmer");
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-        appendLine(provideAddressing("PM4"));  // add read/write buttons, address
+        JPanel pane0 = new JPanel();
+        pane0.setLayout(new FlowLayout());
+            pane0.add(new JLabel("Unit address: "));
+            pane0.add(addrField);
+            pane0.add(readAllButton);
+            pane0.add(writeAllButton);
+        getContentPane().add(pane0);
 
         JPanel panec = new JPanel();
         panec.setLayout(new FlowLayout());
             panec.add(new JLabel("Current limit: "));
             panec.add(current);
             current.setSelectedIndex(1);
-        appendLine(panec);
+        getContentPane().add(panec);
 
         JPanel pane1 = new JPanel();
         pane1.setLayout(new FlowLayout());
-            pane1.add(new JLabel("Section 1:  Speed "));
+            pane1.add(new JLabel("Section 1:  Slow "));
             pane1.add(slow1);
             pane1.add(new JLabel(" Autoreversing "));
             pane1.add(rev1);
-        appendLine(pane1);
+        getContentPane().add(pane1);
 
         JPanel pane2 = new JPanel();
         pane2.setLayout(new FlowLayout());
-            pane2.add(new JLabel("Section 2:  Speed "));
+            pane2.add(new JLabel("Section 2:  Slow "));
             pane2.add(slow2);
             pane2.add(new JLabel(" Autoreversing "));
             pane2.add(rev2);
-        appendLine(pane2);
+        getContentPane().add(pane2);
 
         JPanel pane3 = new JPanel();
         pane3.setLayout(new FlowLayout());
-            pane3.add(new JLabel("Section 3:  Speed "));
+            pane3.add(new JLabel("Section 3:  Slow "));
             pane3.add(slow3);
             pane3.add(new JLabel(" Autoreversing "));
             pane3.add(rev3);
-        appendLine(pane3);
+        getContentPane().add(pane3);
 
         JPanel pane4 = new JPanel();
         pane4.setLayout(new FlowLayout());
-            pane4.add(new JLabel("Section 4:  Speed "));
+            pane4.add(new JLabel("Section 4:  Slow "));
             pane4.add(slow4);
             pane4.add(new JLabel(" Autoreversing "));
             pane4.add(rev4);
-        appendLine(pane4);
+        getContentPane().add(pane4);
 
-        appendLine(provideStatusLine());
+        status.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
+        getContentPane().add(status);
 
-        slow1.setSelectedIndex(1);
-        slow2.setSelectedIndex(1);
-        slow3.setSelectedIndex(1);
-        slow4.setSelectedIndex(1);
+        // install read all, write all button handlers
+        readAllButton.addActionListener( new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                	readAll();
+                }
+            }
+        );
+        writeAllButton.addActionListener( new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                	writeAll();
+                }
+            }
+        );
 
         // add status
-        getContentPane().add(provideStatusLine());
-        setStatus("The PM4 should be in normal mode. (Don't push the buttons on the PM4)");
-        
-        setTypeWord(0x70);  // configure PM4 message type
-        
+        getContentPane().add(status);
+
+        // notice the window is closing
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                thisWindowClosing(e);
+            }
+        });
+
+        // listen for PM4 traffic
+        LnTrafficController.instance().addLocoNetListener(~0, this);
+
         // and prep for display
         pack();
     }
 
-    void setSpeedFromDisplay(int offset, JComboBox box) {
-        switch (box.getSelectedIndex()) {
-        case 0:
-            opsw[offset] = false;
-            opsw[offset+2] = true;      // true is closed
-            return;
-        default:
-        case 1:
-            opsw[offset] = false;
-            opsw[offset+2] = false;
-            return;
-        case 2:
-            opsw[offset] = true;
-            opsw[offset+2] = true;
-            return;
-        case 3:
-            opsw[offset] = true;
-            opsw[offset+2] = false;
-            return;
+    boolean read = false;
+    int state = 0;
+
+    void readAll() {
+        // Start the first operation
+        read = true;
+        state = 1;
+        nextRequest();
+    }
+
+    void nextRequest() {
+        if (read) {
+            // read op
+            status.setText("Reading opsw "+state);
+            LocoNetMessage l = new LocoNetMessage(6);
+            l.setOpCode(0xD0);
+            l.setElement(1, 0x62);
+            l.setElement(2, (Integer.parseInt(addrField.getText())-1)&0x7F);
+            l.setElement(3, 0x70);
+            int loc = (state-1)/8;
+            int bit = (state-1)-loc*8;
+            l.setElement(4, loc*16+bit*2);
+            LnTrafficController.instance().sendLocoNetMessage(l);
+        } else {
+            //write op
+            status.setText("Writing opsw "+state);
+            LocoNetMessage l = new LocoNetMessage(6);
+            l.setOpCode(0xD0);
+            l.setElement(1, 0x72);
+            l.setElement(2, (Integer.parseInt(addrField.getText())-1)&0x7F);
+            l.setElement(3, 0x70);
+            int loc = (state-1)/8;
+            int bit = (state-1)-loc*8;
+            l.setElement(4, loc*16+bit*2+(opsw[state]?1:0));
+            LnTrafficController.instance().sendLocoNetMessage(l);
         }
     }
 
-    /**
-     * Copy from the GUI to the opsw array. 
-     * <p>
-     * Used before write operations start
-     */
-    protected void copyToOpsw() {
+    void writeAll() {
         // copy over the display
-        setSpeedFromDisplay(3, slow1);
+        opsw[5] = slow1.isSelected();
         opsw[6] = rev1.isSelected();
-        setSpeedFromDisplay(11, slow2);
+        opsw[13] = slow2.isSelected();
         opsw[14] = rev2.isSelected();
-        setSpeedFromDisplay(19, slow3);
+        opsw[21] = slow3.isSelected();
         opsw[22] = rev3.isSelected();
-        setSpeedFromDisplay(27, slow4);
+        opsw[29] = slow4.isSelected();
         opsw[30] = rev4.isSelected();
         // get current limit
         // bit 9 is the low bit, but "closed" is a 0 in the calculation
@@ -135,23 +172,57 @@ public class PM4Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
         opsw[1] = ((index&0x02)!=0) ? true : false;
         opsw[9] = ((index&0x01)!=0) ? false : true;
 
+        // Start the first operation
+        read = false;
+        state = 1;
+        nextRequest();
     }
 
-    void setDisplaySpeed(int offset, JComboBox box) {
-        int index = 0;
-        if (!opsw[offset+2]) index++;
-        if (opsw[offset]) index+=2;
-        box.setSelectedIndex(index);
+    /**
+     * True is "closed", false is "thrown". This matches how we
+     * do the check boxes also, where we use the terminology for the
+     * "closed" option.
+     */
+    boolean[] opsw = new boolean[64];
+
+    public void message(LocoNetMessage m) {
+        // are we reading? If not, ignore
+        if (state == 0) return;
+        // check for right type, unit
+        if (m.getOpCode() != 0xb4 || m.getElement(1) != 0x50)  return;
+        // LACK to D0; assume its us
+        boolean value = false;
+        if ( (m.getElement(2)&0x20) != 0) value = true;
+
+        // record this bit
+        opsw[state] = value;
+
+        // show what we've got so far
+        if (read) updateDisplay();
+
+        // and continue through next state, if any
+        state = nextState();
+        if (state == 0) {
+            // done
+            readAllButton.setSelected(false);
+            writeAllButton.setSelected(false);
+            status.setText("Done");
+            return;
+        } else {
+            // create next
+            nextRequest();
+            return;
+        }
     }
 
-    protected void updateDisplay() {
-        setDisplaySpeed(3, slow1);
+    void updateDisplay() {
+        slow1.setSelected(opsw[5]);
         rev1.setSelected(opsw[6]);
-        setDisplaySpeed(11, slow2);
+        slow2.setSelected(opsw[13]);
         rev2.setSelected(opsw[14]);
-        setDisplaySpeed(19, slow3);
+        slow3.setSelected(opsw[21]);
         rev3.setSelected(opsw[22]);
-        setDisplaySpeed(27, slow4);
+        slow4.setSelected(opsw[29]);
         rev4.setSelected(opsw[30]);
         // display current limit
         // bit 9 is the low bit, but "closed" is a 0 in the calculation
@@ -164,21 +235,17 @@ public class PM4Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
         current.setSelectedIndex(index);
     }
 
-    protected int nextState(int state) {
+    int nextState() {
         switch (state) {
             case 1: return 2;
-            case 2: return 3;
-            case 3: return 5;
+            case 2: return 5;
             case 5: return 6;
             case 6: return 9;
-            case 9: return 11;
-            case 11: return 13;
+            case 9: return 13;
             case 13: return 14;
-            case 14: return 19;
-            case 19: return 21;
+            case 14: return 21;
             case 21: return 22;
-            case 22: return 27;
-            case 27: return 29;
+            case 22: return 29;
             case 29: return 30;
             case 30: return 0;   // done!
             default:
@@ -187,21 +254,35 @@ public class PM4Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
         }
     }
 
+    JTextField addrField = new JTextField("1");
+
     JComboBox current = new JComboBox(new String[]{ "1.5 amps", "3 amps", "4.5 amps", "6 amps",
                 				"7.5 amps", "9 amps", "10.5 amps", "12 amps"});
 
-    JComboBox slow1 = new JComboBox(new String[]{ "Slow", "Standard",
-                                            "Faster (PM42 only)", "Fastest (PM42 only)"});
+    JCheckBox slow1 = new JCheckBox();
     JCheckBox rev1  = new JCheckBox();
-    JComboBox slow2 = new JComboBox(new String[]{ "Slow", "Standard",
-                                            "Faster (PM42 only)", "Fastest (PM42 only)"});
+    JCheckBox slow2 = new JCheckBox();
     JCheckBox rev2  = new JCheckBox();
-    JComboBox slow3 = new JComboBox(new String[]{ "Slow", "Standard",
-                                            "Faster (PM42 only)", "Fastest (PM42 only)"});
+    JCheckBox slow3 = new JCheckBox();
     JCheckBox rev3  = new JCheckBox();
-    JComboBox slow4 = new JComboBox(new String[]{ "Slow", "Standard",
-                                            "Faster (PM42 only)", "Fastest (PM42 only)"});
+    JCheckBox slow4 = new JCheckBox();
     JCheckBox rev4  = new JCheckBox();
+
+    JLabel status = new JLabel("The PM4 should be on and in normal mode. (Don't push the buttons on the PM4)");
+
+    JToggleButton readAllButton = new JToggleButton("Read from PM4");
+    JToggleButton writeAllButton = new JToggleButton("Write to PM4");
+
+    // Close the window when the close box is clicked
+    void thisWindowClosing(java.awt.event.WindowEvent e) {
+        setVisible(false);
+        dispose();
+    }
+
+    public void dispose() {
+        // take apart the JFrame
+        super.dispose();
+    }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PM4Frame.class.getName());
 

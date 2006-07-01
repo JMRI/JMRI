@@ -11,7 +11,7 @@ import jmri.*;
  * SlotManager object.
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.6 $
  */
 public class LnOpsModeProgrammer implements Programmer  {
 
@@ -41,13 +41,8 @@ public class LnOpsModeProgrammer implements Programmer  {
     }
 
     public void setMode(int mode) {
-        if (mode!=Programmer.OPSBYTEMODE) {
-            reportBadMode(mode);
-        }
-    }
-
-    void reportBadMode(int mode) {
-        log.error("Can't switch to mode "+mode);
+        if (mode!=Programmer.OPSBYTEMODE)
+            log.error("Can't switch to mode "+mode);
     }
 
     public int  getMode() {
@@ -59,12 +54,12 @@ public class LnOpsModeProgrammer implements Programmer  {
     }
 
     /**
-     * Can this ops-mode programmer read back values?  Yes,
-     * if transponding hardware is present.  
-     * @return always true
+     * Can this ops-mode programmer read back values?  For now, no,
+     * but maybe later.
+     * @return always false for now
      */
     public boolean getCanRead() {
-        return true;
+        return false;
     }
 
     public void addPropertyChangeListener(PropertyChangeListener p) {

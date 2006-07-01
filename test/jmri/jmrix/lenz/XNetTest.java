@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.lenz package
  * @author			Bob Jacobsen
- * @version			$Revision: 2.0 $
+ * @version			$Revision: 1.3 $
  */
 public class XNetTest extends TestCase {
 
@@ -31,11 +31,9 @@ public class XNetTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.lenz.XNetTest");  // no tests in this class itself
         suite.addTest(new TestSuite(XNetMessageTest.class));
         suite.addTest(new TestSuite(XNetTurnoutTest.class));
-        suite.addTest(new TestSuite(XNetSensorTest.class));
         suite.addTest(new TestSuite(XNetPacketizerTest.class));
         suite.addTest(new TestSuite(jmri.jmrix.lenz.packetgen.PacketGenFrameTest.class));
         suite.addTest(new TestSuite(XNetTurnoutManagerTest.class));
-        suite.addTest(new TestSuite(XNetSensorManagerTest.class));
         suite.addTest(new TestSuite(XNetTrafficControllerTest.class));
         suite.addTest(new TestSuite(XNetTrafficRouterTest.class));
         return suite;

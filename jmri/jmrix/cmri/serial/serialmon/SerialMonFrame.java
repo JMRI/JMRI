@@ -2,15 +2,24 @@
 
 package jmri.jmrix.cmri.serial.serialmon;
 
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.util.Date;
+import java.text.DateFormat;
+import java.io.File;
+import java.io.PrintStream;
+import java.io.FileOutputStream;
+
 import jmri.jmrix.cmri.serial.SerialListener;
+import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.serial.SerialMessage;
 import jmri.jmrix.cmri.serial.SerialReply;
-import jmri.jmrix.cmri.serial.SerialTrafficController;
 
 /**
  * Frame displaying (and logging) CMRI serial command messages
  * @author	    Bob Jacobsen   Copyright (C) 2001
- * @version         $Revision: 1.8 $
+ * @version         $Revision: 1.5 $
  */
 
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
@@ -28,21 +37,21 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 
     public void dispose() {
         SerialTrafficController.instance().removeSerialListener(this);
-    }
+	}
 
     public synchronized void message(SerialMessage l) {  // receive a message and log it
         // check for valid length
         if (l.getNumDataElements() < 2) {
             nextLine("Truncated message of length "+l.getNumDataElements()+"\n",
-                            l.toString());
+                            l.toString()+"\n");
             return;
         } else if (l.isPoll()) {
-            nextLine("Poll ua="+l.getUA()+"\n", l.toString());
+            nextLine("Poll ua="+l.getUA()+"\n", l.toString()+"\n");
         } else if (l.isXmt()) {
             String s = "Transmit ua="+l.getUA()+" OB=";
             for (int i=2; i<l.getNumDataElements(); i++)
-                s+=Integer.toHexString(l.getElement(i)&0x000000ff)+" ";
-            nextLine(s+"\n", l.toString());
+                s+=Integer.toHexString(l.getElement(i))+" ";
+            nextLine(s+"\n", l.toString()+"\n");
         } else if (l.isInit()) {
             String s = "Init ua="+l.getUA()
                 +" type="+((char)l.getElement(2));
@@ -52,9 +61,9 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
             if (len>=6) {
                 s+=" NS="+l.getElement(5)+" CT: ";
                 for (int i=6; i<l.getNumDataElements(); i++)
-                    s+=Integer.toHexString(l.getElement(i)&0x000000ff)+" ";
+                    s+=Integer.toHexString(l.getElement(i))+" ";
             }
-            nextLine(s+"\n", l.toString());
+            nextLine(s+"\n", l.toString()+"\n");
         } else
             nextLine("unrecognized cmd: \""+l.toString()+"\"\n", "");
     }
@@ -63,13 +72,13 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         // check for valid length
         if (l.getNumDataElements() < 2) {
             nextLine("Truncated reply of length "+l.getNumDataElements()+"\n",
-                            l.toString());
+                            l.toString()+"\n");
             return;
         } else if (l.isRcv()) {
             String s = "Receive ua="+l.getUA()+" IB=";
             for (int i=2; i<l.getNumDataElements(); i++)
                 s+=Integer.toHexString(l.getElement(i))+" ";
-            nextLine(s+"\n", l.toString());
+            nextLine(s+"\n", l.toString()+"\n");
         } else
             nextLine("unrecognized rep: \""+l.toString()+"\"\n", "");
     }

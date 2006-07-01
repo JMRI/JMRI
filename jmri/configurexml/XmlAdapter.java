@@ -6,7 +6,7 @@ import org.jdom.Element;
  * Interface assumed during configuration operations.
  *
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.3 $
  * @see ConfigXmlManager
  */
 
@@ -15,10 +15,8 @@ public interface XmlAdapter {
      * Create a set of configured objects from their
      * XML description
      * @param e Top-level XML element containing the description
-     * @throws Exception when a error prevents creating the objects as
-     *          as required by the input XML.  
      */
-    public void load(Element e) throws Exception;
+    public void load(Element e);
 
     /**
      * Create a set of configured objects from their
@@ -29,10 +27,8 @@ public interface XmlAdapter {
      *
      * @param e Top-level XML element containing the description
      * @param o Implementation-specific Object needed for the conversion
-     * @throws Exception when a error prevents creating the objects as
-     *          as required by the input XML.  
      */
-    public void load(Element e, Object o) throws Exception;
+    public void load(Element e, Object o);
 
     /**
      * Store the

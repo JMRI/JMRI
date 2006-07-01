@@ -2,23 +2,15 @@
 
 package jmri.jmrix.loconet.locoio;
 
-import apps.tests.Log4JFixture;
+import jmri.jmrix.loconet.*;
 
-import jmri.jmrix.loconet.LnConstants;
-import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
-import jmri.jmrix.loconet.LocoNetMessage;
-
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import jmri.util.StringUtil;
+import apps.tests.*;
+import junit.framework.*;
 
 /**
- * Tests for the jmri.jmrix.loconet.locoio.LocoIOTableModel class.
+ * Tests for the jmri.jmrix.loconet.locoio.LocoIOTableModel class
  * @author	    Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.14 $
+ * @version         $Revision: 1.11 $
  */
 public class LocoIOTableModelTest extends TestCase {
 
@@ -150,12 +142,12 @@ public class LocoIOTableModelTest extends TestCase {
         if (pre133) readcv = 14;
         // check transmitted message
         Assert.assertEquals("One message sent", 1, lnis.outbound.size());
-        LocoNetMessage msg = (LocoNetMessage)lnis.outbound.elementAt(0);
+        LocoNetMessage msg = (LocoNetMessage)lnis.outbound.get(0);
         // read low addr
         Assert.assertEquals("message length", 16, msg.getNumDataElements());
         Assert.assertEquals("message opCode", 0xE5, msg.getOpCode());
-        Assert.assertEquals("message bytes", "E5 10 50 51 10 00 02 "
-                            +StringUtil.twoHexFromInt(channel*3+4)+" 00 00 10 00 00 00 00 00", msg.toString());
+        Assert.assertEquals("message bytes", "e5 10 50 51 10 0 2 "
+                            +Integer.toHexString(channel*3+4)+" 0 0 10 0 0 0 0 0 ", msg.toString());
 
         // turn that message around as the echo; we only do this the first time
         lnis.sendTestMessage(msg);
@@ -178,12 +170,12 @@ public class LocoIOTableModelTest extends TestCase {
 
         // 2nd read
         Assert.assertEquals("reply does 2nd read", 2, lnis.outbound.size());
-        msg = (LocoNetMessage)lnis.outbound.elementAt(1);
+        msg = (LocoNetMessage)lnis.outbound.get(1);
         // CV11 for read high address
         Assert.assertEquals("message length", 16, msg.getNumDataElements());
         Assert.assertEquals("message opCode", 0xE5, msg.getOpCode());
-        Assert.assertEquals("message bytes", "E5 10 50 51 10 00 02 "
-                            +StringUtil.twoHexFromInt(channel*3+5)+" 00 00 10 00 00 00 00 00", msg.toString());
+        Assert.assertEquals("message bytes", "e5 10 50 51 10 0 2 "
+                            +Integer.toHexString(channel*3+5)+" 0 0 10 0 0 0 0 0 ", msg.toString());
 
         // turn around as the reply to the read high
         src = msg.getElement(2);
@@ -201,12 +193,12 @@ public class LocoIOTableModelTest extends TestCase {
 
         // 3rd read
         Assert.assertEquals("reply does 3rd read", 3, lnis.outbound.size());
-        msg = (LocoNetMessage)lnis.outbound.elementAt(2);
+        msg = (LocoNetMessage)lnis.outbound.get(2);
         // channel 2 (above) is CV 9 for read mode
         Assert.assertEquals("message length", 16, msg.getNumDataElements());
         Assert.assertEquals("message opCode", 0xE5, msg.getOpCode());
-        Assert.assertEquals("message bytes", "E5 10 50 51 10 00 02 "
-                            +StringUtil.twoHexFromInt(channel*3+3)+" 00 00 10 00 00 00 00 00", msg.toString());
+        Assert.assertEquals("message bytes", "e5 10 50 51 10 0 2 "
+                            +Integer.toHexString(channel*3+3)+" 0 0 10 0 0 0 0 0 ", msg.toString());
 
         // turnaround as the reply to the mode read
         src = msg.getElement(2);
@@ -309,14 +301,14 @@ public class LocoIOTableModelTest extends TestCase {
         int dst;
         // check transmitted message
         Assert.assertEquals("One message sent", 1, lnis.outbound.size());
-        LocoNetMessage msg = (LocoNetMessage)lnis.outbound.elementAt(0);
+        LocoNetMessage msg = (LocoNetMessage)lnis.outbound.get(0);
         // write low addr
         Assert.assertEquals("message length", 16, msg.getNumDataElements());
         Assert.assertEquals("message opCode", 0xE5, msg.getOpCode());
-        Assert.assertEquals("message bytes", "E5 10 50 51 10 "
-                            +(((val1&0x80)!=0)?("08"):"00")+" 01 "
-                            +StringUtil.twoHexFromInt(channel*3+4)+" 00 "
-                            +StringUtil.twoHexFromInt(val1&0x7f)+" 10 00 00 00 00 00", msg.toString());
+        Assert.assertEquals("message bytes", "e5 10 50 51 10 "
+                            +(((val1&0x80)!=0)?("8"):"0")+" 1 "
+                            +Integer.toHexString(channel*3+4)+" 0 "
+                            +Integer.toHexString(val1&0x7f)+" 10 0 0 0 0 0 ", msg.toString());
 
         // turn that message around as the echo
         lnis.sendTestMessage(msg);
@@ -336,14 +328,14 @@ public class LocoIOTableModelTest extends TestCase {
 
         // 2nd write
         Assert.assertEquals("reply does 2nd read", 2, lnis.outbound.size());
-        msg = (LocoNetMessage)lnis.outbound.elementAt(1);
+        msg = (LocoNetMessage)lnis.outbound.get(1);
         // CV11 for read high address
         Assert.assertEquals("message length", 16, msg.getNumDataElements());
         Assert.assertEquals("message opCode", 0xE5, msg.getOpCode());
-        Assert.assertEquals("message bytes", "E5 10 50 51 10 "
-                            +(((val2&0x80)!=0)?("08"):"00")+" 01 "
-                            +StringUtil.twoHexFromInt(channel*3+5)+" 00 "
-                            +StringUtil.twoHexFromInt(val2&0x7f)+" 10 00 00 00 00 00", msg.toString());
+        Assert.assertEquals("message bytes", "e5 10 50 51 10 "
+                            +(((val2&0x80)!=0)?("8"):"0")+" 1 "
+                            +Integer.toHexString(channel*3+5)+" 0 "
+                            +Integer.toHexString(val2&0x7f)+" 10 0 0 0 0 0 ", msg.toString());
 
         // turn around as the reply to the write high
         src = msg.getElement(2);
@@ -358,14 +350,14 @@ public class LocoIOTableModelTest extends TestCase {
 
         // 3rd read
         Assert.assertEquals("reply does 3rd read", 3, lnis.outbound.size());
-        msg = (LocoNetMessage)lnis.outbound.elementAt(2);
+        msg = (LocoNetMessage)lnis.outbound.get(2);
         // channel 2 (above) is CV 9 for read mode
         Assert.assertEquals("message length", 16, msg.getNumDataElements());
         Assert.assertEquals("message opCode", 0xE5, msg.getOpCode());
-        Assert.assertEquals("message bytes", "E5 10 50 51 10 "
-                            +(((cv&0x80)!=0)?("08"):"00")+" 01 "
-                            +StringUtil.twoHexFromInt(channel*3+3)+" 00 "
-                            +StringUtil.twoHexFromInt(cv&0x7f)+" 10 00 00 00 00 00", msg.toString());
+        Assert.assertEquals("message bytes", "e5 10 50 51 10 "
+                            +(((cv&0x80)!=0)?("8"):"0")+" 1 "
+                            +Integer.toHexString(channel*3+3)+" 0 "
+                            +Integer.toHexString(cv&0x7f)+" 10 0 0 0 0 0 ", msg.toString());
 
         // turnaround as the reply to the mode read
         src = msg.getElement(2);
@@ -392,10 +384,10 @@ public class LocoIOTableModelTest extends TestCase {
 
         // check transmitted message
         Assert.assertEquals("One message sent", 1, lnis.outbound.size());
-        LocoNetMessage msg = (LocoNetMessage)lnis.outbound.elementAt(0);
+        LocoNetMessage msg = (LocoNetMessage)lnis.outbound.get(0);
         Assert.assertEquals("message length", 16, msg.getNumDataElements());
         Assert.assertEquals("message opCode", 0xE5, msg.getOpCode());
-        Assert.assertEquals("message bytes", "E5 10 50 51 10 00 02 01 00 00 10 00 00 00 00 00", msg.toString());
+        Assert.assertEquals("message bytes", "e5 10 50 51 10 0 2 1 0 0 10 0 0 0 0 0 ", msg.toString());
     }
 
     // test for outgoing write request
@@ -409,10 +401,10 @@ public class LocoIOTableModelTest extends TestCase {
 
         // check transmitted message
         Assert.assertEquals("One message sent", 1, lnis.outbound.size());
-        LocoNetMessage msg = (LocoNetMessage)lnis.outbound.elementAt(0);
+        LocoNetMessage msg = (LocoNetMessage)lnis.outbound.get(0);
         Assert.assertEquals("message length", 16, msg.getNumDataElements());
         Assert.assertEquals("message opCode", 0xE5, msg.getOpCode());
-        Assert.assertEquals("message bytes", "E5 10 50 51 10 00 01 01 00 31 10 00 00 00 00 00", msg.toString());
+        Assert.assertEquals("message bytes", "e5 10 50 51 10 0 1 1 0 31 10 0 0 0 0 0 ", msg.toString());
     }
 
     // test Alex Shepherd's sequence with pre1.3.7.1 microcode
@@ -431,7 +423,7 @@ public class LocoIOTableModelTest extends TestCase {
         write3Sequence(channel, 0xC0, 0x00, 0x00,lnis );
 
         // clear the test interface
-        lnis.outbound.setSize(0);
+        lnis.outbound.clear();
 
         // change the mode value to confirm
         m.setValueAt(LocoIOTableModel.TURNOUTTHROW, channel, LocoIOTableModel.ONMODECOLUMN);
@@ -462,7 +454,7 @@ public class LocoIOTableModelTest extends TestCase {
         write3Sequence(channel, 0xC0, 0x00, 0x00,lnis );
 
         // clear the test interface
-        lnis.outbound.setSize(0);
+        lnis.outbound.clear();
 
         // change the mode value to confirm
         m.setValueAt(LocoIOTableModel.TURNOUTTHROW, channel, LocoIOTableModel.ONMODECOLUMN);

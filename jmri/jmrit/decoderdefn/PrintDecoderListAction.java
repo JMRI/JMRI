@@ -19,34 +19,31 @@ import com.sun.java.util.collections.List;
  * Macintosh MRJ
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @author  Dennis Miller  Copyright (C) 2005
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.2 $
  */
 public class PrintDecoderListAction  extends AbstractAction {
 
 
-    public PrintDecoderListAction(String actionName, Frame frame, boolean preview) {
+    public PrintDecoderListAction(Frame frame) {
+        this("Print decoder definitions...", frame);
+    }
+
+    public PrintDecoderListAction(String actionName, Frame frame) {
         super(actionName);
         mFrame = frame;
-        isPreview = preview;
     }
 
     /**
      * Frame hosting the printing
      */
     Frame mFrame;
-    /**
-     * Variable to set whether this is to be printed or previewed
-     */
-    boolean isPreview;
-    
 
     public void actionPerformed(ActionEvent e) {
 
         // obtain a HardcopyWriter to do this
         HardcopyWriter writer = null;
         try {
-            writer = new HardcopyWriter(mFrame, "DecoderPro V"+Version.name()+" Decoder Definitions", 10, .5, .5, .5, .5, isPreview);
+            writer = new HardcopyWriter(mFrame, "DecoderPro V"+Version.name()+" Decoder Definitions", 10, .5, .5, .5, .5);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
             return;
@@ -62,7 +59,7 @@ public class PrintDecoderListAction  extends AbstractAction {
         String lastFamily = "";
 
         DecoderIndexFile f = DecoderIndexFile.instance();
-        List l = f.matchingDecoderList(null, null, null, null, null, null); // take all
+        List l = f.matchingDecoderList(null, null, null, null, null); // take all
         int i=-1;
         log.debug("Roster list size: "+l.size());
         for (i = 0; i<l.size(); i++) {

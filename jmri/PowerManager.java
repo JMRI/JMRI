@@ -5,7 +5,7 @@ package jmri;
 import java.beans.PropertyChangeListener;
 
  /**
- * Provide controls for layout power.
+ * Interface for controlling layout power.
  *<P>
  *  The PowerManager handles two states:
  *<UL>
@@ -16,7 +16,7 @@ import java.beans.PropertyChangeListener;
  *  to change them should return an exception.  If the state cannot
  *  be sensed, that should also return an exception.
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.5 $
  */
 public interface PowerManager {
 

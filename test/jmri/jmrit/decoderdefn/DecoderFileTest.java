@@ -2,12 +2,15 @@
 
 package jmri.jmrit.decoderdefn;
 
+import java.io.*;
+import java.util.*;
 import javax.swing.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.framework.Assert;
 import org.jdom.*;
+import org.jdom.output.*;
 import jmri.jmrit.symbolicprog.*;
 import jmri.progdebugger.*;
 
@@ -15,7 +18,7 @@ import jmri.progdebugger.*;
  * DecoderFileTest.java
  *
  * @author			Bob Jacobsen, Copyright (C) 2001, 2002
- * @version         $Revision: 1.7 $
+ * @version         $Revision: 1.5 $
  */
 public class DecoderFileTest extends TestCase {
 
@@ -92,12 +95,11 @@ public class DecoderFileTest extends TestCase {
         setupDecoder();
 
         // this test should probably be done in terms of a test class instead of the real one...
-        JLabel progStatus            = new JLabel(" OK ");
-        CvTableModel cvModel         = new CvTableModel(progStatus, p);
-        IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
-        VariableTableModel variableModel = new VariableTableModel(progStatus,
-                                                                  new String[]  {"Name", "Value"},
-                                                                  cvModel, icvModel);
+        JLabel progStatus       	= new JLabel(" OK ");
+        CvTableModel	cvModel		= new CvTableModel(progStatus, p);
+        VariableTableModel		variableModel	= new VariableTableModel(progStatus,
+                                                                                 new String[]  {"Name", "Value"},
+                                                                                 cvModel);
         DecoderFile d = new DecoderFile("mfg", "mfgID", "model", "23", "24",
                                         "family", "filename", 16, 16, null);
 
@@ -111,12 +113,11 @@ public class DecoderFileTest extends TestCase {
         setupDecoder();
 
         // this test should probably be done in terms of a test class instead of the real one...
-        JLabel progStatus            = new JLabel(" OK ");
-        CvTableModel cvModel         = new CvTableModel(progStatus, p);
-        IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
-        VariableTableModel variableModel = new VariableTableModel(progStatus,
-                                                                  new String[]  {"Name", "Value"},
-                                                                  cvModel, icvModel);
+        JLabel progStatus       	= new JLabel(" OK ");
+        CvTableModel	cvModel		= new CvTableModel(progStatus, p);
+        VariableTableModel		variableModel	= new VariableTableModel(progStatus,
+                                                                                 new String[]  {"Name", "Value"},
+                                                                                 cvModel);
         DecoderFile d = new DecoderFile("mfg", "mfgID", "model", "23", "24",
                                         "family", "filename", 16, 3, null);
 
@@ -128,12 +129,11 @@ public class DecoderFileTest extends TestCase {
         setupDecoder();
 
         // this test should probably be done in terms of a test class instead of the real one...
-        JLabel progStatus            = new JLabel(" OK ");
-        CvTableModel cvModel         = new CvTableModel(progStatus, p);
-        IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
-        VariableTableModel variableModel = new VariableTableModel(progStatus,
-                                                                  new String[]  {"Name", "Value"},
-                                                                  cvModel, icvModel);
+        JLabel progStatus       	= new JLabel(" OK ");
+        CvTableModel	cvModel		= new CvTableModel(progStatus, p);
+        VariableTableModel		variableModel	= new VariableTableModel(progStatus,
+                                                                                 new String[]  {"Name", "Value"},
+                                                                                 cvModel);
         DecoderFile d = new DecoderFile("mfg", "mfgID", "model", "23", "24",
                                         "family", "filename", 3, 16, null);
 

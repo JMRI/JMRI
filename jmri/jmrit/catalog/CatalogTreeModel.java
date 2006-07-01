@@ -2,11 +2,10 @@
 
 package jmri.jmrit.catalog;
 
-import jmri.jmrit.XmlFile;
-import java.io.File;
+import jmri.jmrit.*;
+import java.io.*;
 
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.*;
 
 /**
  * TreeModel used by CatalogPane to create a tree of resources.
@@ -24,7 +23,7 @@ import javax.swing.tree.DefaultTreeModel;
  * CVS directories, or files whose name starts with a "."
  *
  * @author			Bob Jacobsen  Copyright 2002
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.2 $
  */
 public class CatalogTreeModel extends DefaultTreeModel {
     public CatalogTreeModel() {

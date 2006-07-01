@@ -5,7 +5,6 @@ package jmri.jmrit.beantable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
-import jmri.util.AbstractFrameAction;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -15,14 +14,13 @@ import javax.swing.JButton;
  * SignalHeadTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.1 $
  */
 
 abstract public class AbstractTableAction extends AbstractAction {
 
-    public AbstractTableAction(String actionName) {
-        super(actionName);
-    }
+    public AbstractTableAction(String s) { super(s);}
+    public AbstractTableAction() { }
 
     BeanTableDataModel m;
 
@@ -53,7 +51,7 @@ abstract public class AbstractTableAction extends AbstractAction {
              */
             void extras() {
                 JButton addButton = new JButton(this.rb.getString("ButtonAdd"));
-                addToBottomBox(addButton);
+                this.getContentPane().add(addButton);
                 addButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         addPressed(e);
@@ -62,16 +60,8 @@ abstract public class AbstractTableAction extends AbstractAction {
             }
         };
         setTitle();
-        addToFrame(f);
         f.pack();
         f.show();
-    }
-    
-    /**
-     * Allow subclasses to add to the frame
-     * without have to actually suclass the BeanTableDataFrame
-     */
-    public void addToFrame(BeanTableFrame f) {
     }
 
     abstract void addPressed(ActionEvent e);

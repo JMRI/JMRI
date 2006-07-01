@@ -3,15 +3,15 @@
  *
  * Description:	    Stands in for the NceTrafficController class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.2 $
  */
 
 package jmri.jmrix.nce;
 
 import jmri.*;
 
-class NceListenerScaffold implements jmri.jmrix.nce.NceListener {
-	public NceListenerScaffold() {
+class NceInterfaceScaffold implements jmri.jmrix.nce.NceListener {
+	public NceInterfaceScaffold() {
 		rcvdReply = null;
 		rcvdMsg = null;
 	}
@@ -21,6 +21,6 @@ class NceListenerScaffold implements jmri.jmrix.nce.NceListener {
 	NceReply rcvdReply;
 	NceMessage rcvdMsg;
 	
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceListenerScaffold.class.getName());
+	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceInterfaceScaffold.class.getName());
 
 }

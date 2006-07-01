@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: CSVsummary.xsl,v 1.5 2005-10-18 04:09:33 jacobsen Exp $ -->
+<!-- $Id: CSVsummary.xsl,v 1.2 2003-08-10 17:41:58 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI decoder definition to -->
 <!-- one line of a CSV file  per decoder -->
@@ -27,7 +27,7 @@
 
 <!-- template to write the header line -->
 <xsl:template name="writeHeader">
-<xsl:text>"mfg","model","family"</xsl:text>
+	<xsl:text>"mfg","model","family"</xsl:text>
 
 			<xsl:for-each select="document('interestingCVs.xml')/CVs/CV">
 				<!-- at this point, @num is the CV number -->
@@ -45,14 +45,12 @@
 <xsl:template match="familyList">
 	
 	<xsl:for-each select="family">
-           <xsl:if test="not( @mfg = 'NMRA' )" >
 		<xsl:variable name="filename" select="@file" />
 		<xsl:for-each select="document(@file)/decoder-config/decoder/family">
 			<xsl:call-template name="doFileFamily">
 				<xsl:with-param name="file" select="$filename"/>
 			</xsl:call-template>
 		</xsl:for-each>
-           </xsl:if>
 	</xsl:for-each>
 </xsl:template>
 
@@ -90,7 +88,7 @@
 			<xsl:if test="$cv = @CV">
 				<!-- here current element is to be displayed, -->
 				<!-- as it defines our CV -->
-				<xsl:value-of select="@label"/>
+				<xsl: select="@label"/>
 				<xsl:text>;</xsl:text>
 			</xsl:if>
 		</xsl:for-each>

@@ -9,13 +9,11 @@ import com.sun.java.util.collections.List;
 
 /**
  * Implementation of a Manager that can serves as a proxy
- * for multiple system-specific implementations.  
- * <P>
- * The first to
- * be added is the "Primary", used if a system letter is not provided.
+ * for multiple system-specific implementations.  The first to
+ * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.4 $
  */
 public class AbstractProxyManager implements Manager {
 
@@ -54,11 +52,7 @@ public class AbstractProxyManager implements Manager {
      * @return The system-specific prefix letter for the primary implementation
      */
     public char systemLetter() {
-	try {
-          return ((Manager)mgrs.get(0)).systemLetter();
-        } catch(IndexOutOfBoundsException ie) {
-          return '\0';
-        }
+        return ((Manager)mgrs.get(0)).systemLetter();
     }
 
     /**

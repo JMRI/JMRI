@@ -12,7 +12,7 @@ package jmri;
  * non-system-specific code.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.25 $
+ * @version			$Revision: 1.18 $
  */
 public class InstanceManager {
 
@@ -23,8 +23,6 @@ public class InstanceManager {
     static public SensorManager sensorManagerInstance()  { return instance().sensorManager; }
 
     static public TurnoutManager turnoutManagerInstance()  { return instance().turnoutManager; }
-
-    static public LightManager lightManagerInstance()  { return instance().lightManager; }
 
     static public ConfigureManager configureManagerInstance()  { return instance().configureManager; }
 
@@ -38,34 +36,7 @@ public class InstanceManager {
         return instance().signalHeadManager;
     }
 
-    static public RouteManager routeManagerInstance()  {
-        if (instance().routeManager != null) return instance().routeManager;
-        // As a convenience, we create a default object if none was provided explicitly.
-        // This must be replaced when we start registering specific implementations
-        instance().routeManager = new DefaultRouteManager();
-        return instance().routeManager;
-    }
-
-    static public Timebase timebaseInstance()  {
-        if (instance().timebase != null) return instance().timebase;
-        // As a convenience, we create a default object if none was provided explicitly.
-        // This must be replaced when we start registering specific implementations
-        instance().timebase = new jmri.jmrit.simpleclock.SimpleTimebase();
-        if (InstanceManager.configureManagerInstance() != null)
-            InstanceManager.configureManagerInstance().registerConfig(instance().timebase);        
-        return instance().timebase;
-    }
-
-    static public ConsistManager consistManagerInstance() { return instance().consistManager; }
-
     static public CommandStation commandStationInstance()  { return instance().commandStation; }
-
-    static public ReporterManager reporterManagerInstance()  { return instance().reporterManager; }
-
-    static public MemoryManager memoryManagerInstance()  { 
-    	if (instance().memoryManager == null) instance().memoryManager = DefaultMemoryManager.instance();
-    	return instance().memoryManager; 
-    }
 
     static private InstanceManager instance() {
         if (root==null) root = new InstanceManager();
@@ -75,8 +46,6 @@ public class InstanceManager {
     private InstanceManager() {
         turnoutManager = new jmri.managers.ProxyTurnoutManager();
         sensorManager = new jmri.managers.ProxySensorManager();
-        lightManager = new jmri.managers.ProxyLightManager();
-        reporterManager = new jmri.managers.ProxyReporterManager();
     }
 
     /**
@@ -103,12 +72,6 @@ public class InstanceManager {
         if (p!=programmerManager && programmerManager!=null && log.isDebugEnabled()) log.debug("ProgrammerManager instance is being replaced: "+p);
         if (p!=programmerManager && programmerManager==null && log.isDebugEnabled()) log.debug("ProgrammerManager instance is being installed: "+p);
         programmerManager = p;
-	// Now that we have a programmer manager, install the default
-        // Consist manager if Ops mode is possible, and there isn't a
-        // consist manager already.
-	if(programmerManager.isOpsModePossible() && consistManager == null) {
-   		 setConsistManager(new DccConsistManager());
-	}
     }
 
     private SensorManager sensorManager = null;
@@ -125,14 +88,6 @@ public class InstanceManager {
     }
     protected void addTurnoutManager(TurnoutManager p) {
         ((jmri.managers.AbstractProxyManager)instance().turnoutManager).addManager(p);
-    }
-
-    private LightManager lightManager = null;
-    static public void setLightManager(LightManager p) {
-        instance().addLightManager(p);
-    }
-    protected void addLightManager(LightManager p) {
-        ((jmri.managers.AbstractProxyManager)instance().lightManager).addManager(p);
     }
 
     private ConfigureManager configureManager = null;
@@ -165,30 +120,6 @@ public class InstanceManager {
         signalHeadManager = p;
     }
 
-    private RouteManager routeManager = null;
-    static public void setRouteManager(RouteManager p) {
-        instance().addRouteManager(p);
-    }
-    protected void addRouteManager(RouteManager p) {
-        if (p!=routeManager && routeManager!=null && log.isDebugEnabled()) log.debug("RouteManager instance is being replaced: "+p);
-        if (p!=routeManager && routeManager==null && log.isDebugEnabled()) log.debug("RouteManager instance is being installed: "+p);
-        routeManager = p;
-    }
-
-    private Timebase timebase = null;
-
-    private ConsistManager consistManager = null;
-
-    static public void setConsistManager(ConsistManager p) {
-        instance().addConsistManager(p);
-    }
-
-    protected void addConsistManager(ConsistManager p) {
-        if (p!=consistManager && consistManager!=null && log.isDebugEnabled()) log.debug("ConsistManager instance is being replaced: "+p);
-        if (p!=consistManager && consistManager==null && log.isDebugEnabled()) log.debug("consistManager instance is being installed: "+p);
-        consistManager = p;
-    }
-
     private CommandStation commandStation = null;
     static public void setCommandStation(CommandStation p) {
         instance().addCommandStation(p);
@@ -199,16 +130,6 @@ public class InstanceManager {
         commandStation = p;
     }
 
-    private ReporterManager reporterManager = null;
-    static public void setReporterManager(ReporterManager p) {
-        instance().addReporterManager(p);
-    }
-    protected void addReporterManager(ReporterManager p) {
-        ((jmri.managers.AbstractProxyManager)instance().reporterManager).addManager(p);
-    }
-
-
-	private MemoryManager memoryManager = null;
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(InstanceManager.class.getName());
 }
 

@@ -15,19 +15,19 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.2 $
  */
 abstract public class AbstractConnectionConfig  implements jmri.jmrix.ConnectionConfig {
 
     /**
-     * Ctor for an object being created during load process
+     * Ctor for an object being created during load process;
+     * Swing init is deferred.
      */
     public AbstractConnectionConfig(jmri.jmrix.SerialPortAdapter p){
         adapter = p;
     }
     /**
-     * Ctor for a functional object with no prexisting adapter.
-     * Expect that the subclass ctor will fill the adapter member.
+     * Ctor for a functional Swing object with no prexisting adapter
      */
     public AbstractConnectionConfig() {
         adapter = null;
@@ -36,7 +36,6 @@ abstract public class AbstractConnectionConfig  implements jmri.jmrix.Connection
     boolean init = false;
 
     void checkInitDone() {
-    	if (log.isDebugEnabled()) log.debug("init called for "+name());
         if (init) return;
         portBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -79,45 +78,21 @@ abstract public class AbstractConnectionConfig  implements jmri.jmrix.Connection
     }
 
     public void loadDetails(JPanel details) {
-    	
         setInstance();
 
-        Vector v;
-        try {
-            v = adapter.getPortNames();
-    	    if (log.isDebugEnabled()) {
-    		    log.debug("loadDetails called in class "+this.getClass().getName());
-    		    log.debug("adapter class: "+adapter.getClass().getName());
-    		    log.debug("loadDetails called for "+name());
-        	    log.debug("Found "+v.size()+" ports");
-            }
-        } catch (java.lang.UnsatisfiedLinkError e1) {
-            log.error("UnsatisfiedLinkError - the javax.comm library has not been installed properly");
-            log.error("java.library.path="+System.getProperty("java.library.path","<unknown>"));
-            javax.swing.JOptionPane.showMessageDialog(null, "Failed to load comm library.\nYou have to fix that before setting preferences.");
-            return;
-        }
+        Vector v = adapter.getPortNames();
+        log.debug("Found "+v.size()+" ports");
         String portName;
-        portBox.removeAllItems();
-        portBox.addItem("(None)");
         for (int i=0; i<v.size(); i++) {
             if (i==0) portName = (String) v.elementAt(i);
                 portBox.addItem(v.elementAt(i));
         }
 
         String[] baudList = adapter.validBaudRates();
-        baudBox.removeAllItems();
-    	if (log.isDebugEnabled()) log.debug("after remove, "+baudBox.getItemCount()+" items, first is "
-    											+baudBox.getItemAt(0));        
         for (int i=0; i<baudList.length; i++) baudBox.addItem(baudList[i]);
-    	if (log.isDebugEnabled()) log.debug("after reload, "+baudBox.getItemCount()+" items, first is "
-    											+baudBox.getItemAt(0));        
-    	
         String[] opt1List = adapter.validOption1();
-        opt1Box.removeAllItems();
         for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
         String[] opt2List = adapter.validOption2();
-        opt2Box.removeAllItems();
         for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
 
         if (baudList.length>1) {

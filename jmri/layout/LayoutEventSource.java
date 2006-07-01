@@ -1,11 +1,16 @@
 package jmri.layout;
 
-import com.sun.java.util.collections.ArrayList;
-
 /**
- * @author   Alex Shepherd Copyright (c) 2002
- * @version $Revision: 1.2 $
+ * Title:
+ * Description:
+ * Copyright:    Copyright (c) 2002
+ * Company:
+ * @author
+ * @version $Revision: 1.1 $
  */
+
+import java.util.ArrayList;
+
 public class LayoutEventSource implements LayoutEventInterface
 {
     private ArrayList   mListeners = new ArrayList() ;

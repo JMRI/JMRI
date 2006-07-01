@@ -1,14 +1,11 @@
-<!-- Ant build.xml file for JMRI development -->
-<!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.61 $ -->
+<!-- ugly first attempt at an ANT build.xml file for JMRI development -->
+<!-- Bob Jacobsen, April 2002 -->
+<!-- Revision $Revision: 1.22 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
 <!-- in the project.  We expect that lib et al will be present in -->
 <!-- .. from there -->
-
-<!-- Note that this file controls builds for JVM 1.3 and later. -->
-<!-- All of the builds for JVM 1.1.8 are done via the check.xml file -->
 
   <description>
   Provides build services for JMRI libraries and applications
@@ -19,18 +16,19 @@
   <property name="test" value="test"/>
   <property name="target" value="classes"/>
   <property name="jartarget" value=".."/>
-  
+
+  <property name="dist" value="NODISTNAME" />
+  <property name="distdir" value="../${dist}" />
+
   <path id="project.class.path">
     <pathelement location="../lib/collections.jar" />
     <pathelement location="../lib/crimson.jar" />
     <pathelement location="../lib/comm.jar" />
     <pathelement location="../lib/jdom-jdk11.jar" />
     <pathelement location="../lib/log4j.jar" />
-    <pathelement location="../lib/jh.jar" />
     <pathelement location="../lib/Serialio.jar" />
     <pathelement location="../lib/junit.jar" />
     <pathelement location="../lib/jython.jar" />
-    <pathelement location="../lib/MRJAdapter.jar" />
     <pathelement location="classes/" />
   </path>
 
@@ -48,37 +46,21 @@
     </delete>
   </target>
 
-  <target name="copyfiles" depends="init" description="copy resource files">
+  <target name="compile" depends="init" description="compile source, omitting tests">
+    <!-- Compile the java code from ${source} into ${target} -->
+    <javac srcdir="${source}" 
+           destdir="${target}" 
+           target="1.1" 
+           debug="no" >
+       <classpath refid="project.class.path"    />
+    </javac>
     <!-- Copy top level resources to include in jar file -->
     <copy todir="${target}/resources/">
       <fileset dir="src/resources" includes="*.gif"  /> 
     </copy>
-    <copy todir="${target}/resources/icons/cornwall/">
-      <fileset dir="src/resources/icons/cornwall" includes="cornwall_logo.gif"  /> 
-    </copy>
     <copy todir="${target}">
       <fileset dir="src/" includes="**/*.properties"  /> 
     </copy>
-  </target>
-
-  <target name="compile" depends="init, copyfiles" description="compile source, omitting tests">
-    <!-- Compile the java code from ${source} into ${target} -->
-    <javac srcdir="${source}" 
-           destdir="${target}" 
-           target="1.3" 
-           debug="no" >
-       <classpath refid="project.class.path"    />
-    </javac>
-  </target>
-
-  <target name="debug" depends="init, copyfiles" description="compile source with debugging on, omitting tests">
-    <!-- Compile the java code from ${source} into ${target} -->
-    <javac srcdir="${source}" 
-           destdir="${target}" 
-           target="1.3" 
-           debug="yes" >
-       <classpath refid="project.class.path"    />
-    </javac>
   </target>
 
   <target name="rmic" depends="compile" description="build RMI stubs and compile">
@@ -89,12 +71,10 @@
     </rmic>
   </target>
 
-  <target name="tests" depends="debug" description="compile test classes">
+  <target name="tests" depends="compile" description="compile test classes">
     <!-- Compile the test java code from ${source} into ${target} -->
     <javac srcdir="${test}" 
-           destdir="${target}"
-           target="1.3" 
-           debug="yes" >
+           destdir="${target}" >
        <classpath refid="project.class.path"    />
     </javac>
   </target>
@@ -105,12 +85,6 @@
 	  fork="yes" >
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
-       <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
-       <jvmarg value="-Xms10m"/>
-       <!-- <jvmarg value="-Xmx60m"/> -->
-       <!-- <jvmarg value="-verbose"/> -->
-       <!-- <jvmarg value="-verbosegc"/> -->
-       <!-- <jvmarg value="-Xloggc:memory.vgc"/> --> <!-- for JTune -->
     </java>
  </target>
 
@@ -120,7 +94,6 @@
 	  fork="yes" >
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
-       <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
     </java>
  </target>
 
@@ -130,7 +103,6 @@
 	  fork="yes" >
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
-       <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
     </java>
   </target>
 
@@ -140,7 +112,6 @@
 	  fork="yes" >
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
-       <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
     </java>
  </target>
 
@@ -150,27 +121,8 @@
 	  fork="yes" >
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
-       <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
     </java>
  </target>
-
-  <target name="faceless" depends="compile" description="build and run faceless app">
-    <java classname="apps.FacelessApp"
-          dir=".." 
-	  fork="yes" >
-       <classpath refid="project.class.path"    />
-       <sysproperty key="java.security.policy" value="lib/security.policy"/> 
-       <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
-    </java>
- </target>
-
-  <!-- this really doesn't work, as it doesn't hook up stdin right -->
-  <target name="packetpro" depends="compile" description="build and run PacketPro app">
-    <exec executable="csh" dir="${jartarget}">
-      <arg value="PacketPro.csh"/>
-    </exec>
- </target>
-
 
   <target name="profile" depends="compile" description="build and run JmriDemo app with profiling">
     <java classname="apps.JmriDemo.JMRIdemo"
@@ -191,16 +143,8 @@
     </java>
   </target>
 
-  <target name="jar" depends="compile, rmic"  
-          description="create working jar file with current contents">
-    <jar jarfile="${jartarget}/jmri.jar" 
-         basedir="${target}"
-         manifest="manifest" 
-         compress="true" />   <!-- compress="true" is default -->
-    <!-- create the index, using the information in the manifest -->
-    <exec executable="jar" dir="${jartarget}">
-    	<arg line="i jmri.jar"/>
-    </exec>
+  <target name="jar" depends="compile, rmic"  description="create jar file with current contents">
+    <jar jarfile="${jartarget}/jmri.jar" basedir="${target}" />
   </target>
 
   <target name="javadoc" depends="init" description="create JavaDocs">
@@ -215,22 +159,17 @@
            use="true"
            windowtitle="JMRI API">
       <group title="Core" packages="jmri"/>
-      <group title="Cross-system Tools" packages="jmri.jmrit:jmri.jmrit.*"/>
       <group title="Layout Connections" packages="jmri.jmrix:jmri.jmrix.*"/>
-      <group title="Utilities" packages="jmri.util:jmri.util.*"/>
-      <group title="XML persistance" packages="jmri.configurexml:apps.configurexml"/>
+      <group title="Cross-system Tools" packages="jmri.jmrit:jmri.jmrit.*"/>
       <group title="Applications" packages="apps:apps.*"/>
-      <group title="Implementations" packages="jmri.managers:jmri.progdebugger:jmri.layout"/>
-	  
       <classpath refid="project.class.path"    />
       <doctitle><![CDATA[<h1>JMRI Library API</h1>]]></doctitle>
-      <bottom><![CDATA[<i>Copyright &copy; 1997 - 2005 JMRI Community. 
-                    <br>JMRI, DecoderPro, PanelPro, SoundPro, DispatcherPro and associated logos are our trademarks.</i>
-                       <br>Site hosted by: 
+      <bottom><![CDATA[<i>Copyright &#169; 2003 JMRI; All Rights Reserved.</i>
+                       Site hosted by: 
                        <A href="http://sourceforge.net"> 
-                       <IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge_Logo"> </A>
+                       <IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A>
                 ]]></bottom>
-      <link href="http://java.sun.com/j2se/1.4.1/docs/api/" />
+      <link href="http://developer.java.sun.com/developer/products/xml/docs/api/"/>
     </javadoc>
   </target>
 
@@ -238,14 +177,45 @@
     <exec executable="scp">
       <arg value="-r"/>
       <arg value="doc"/>
-      <arg value="jacobsen@jmri.sf.net:htdocs/JavaDoc/"/>
+      <arg value="jacobsen@jmri.sf.net:htdocs/Technical/"/>
     </exec>
   </target>
 
  <!-- dist target forces the jar file to be built without test classes -->
  <target name="dist" depends="clean, init, compile, rmic, jar"
- 		 description="create a distribution jar file"/>
+ 					 description="create a distribution jar file"/>
 
+ <!-- items below here are obsolete, kept only as examples -->
+
+  <!-- make update distribution .zip file -->
+  <target name="makeupdate" depends="compile, jar">
+    <echo message="Building ${dist} update into ${distdir}" />
+
+    <delete dir="${distdir}" />
+    <mkdir dir="${distdir}" />
+
+    <!-- make a new xml directory, then remove the CVS directories -->
+    <cvs package="xml" dest="${distdir}" />
+    <!-- Ant default excludes will keep the zip action -->
+    <!-- from including the CVS directories  -->
+
+    <!-- zip it! -->
+    <zip zipfile="../${dist}.zip"  >
+        <zipfileset dir="${distdir}" prefix="${dist}"/>
+    </zip>
+
+    <!-- and remove working directory -->
+    <delete dir="${distdir}" />
+  </target>
+
+  <target name="uploadupdate">
+    <ftp server="upload.sourceforge.net"
+         userid="ftp" password="jake@physics.berkeley.edu"
+         action="put"
+         verbose="yes" remotedir="incoming" >
+      <fileset dir=".." includes="${dist}.zip" />
+    </ftp>
+  </target>
 
 </project>
 

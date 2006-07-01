@@ -1,20 +1,15 @@
 package jmri.jmrit.catalog;
 
-import java.awt.Component;
-import java.awt.Image;
-import java.awt.MediaTracker;
-import java.awt.image.ColorModel;
-import java.awt.image.MemoryImageSource;
-import java.awt.image.PixelGrabber;
+import java.awt.image.*;
+import java.awt.*;
 import java.net.URL;
-
-import javax.swing.ImageIcon;
+import javax.swing.*;
 
 /**
- * Extend an ImageIcon to remember the name from which it was created
- * and provide rotation services.
+ * Extend an ImageIcon to remember the name from which it was created,
+ * and to provide rotation services
  * @author Bob Jacobsen  Copyright 2002
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.5 $
  */
 
 public class NamedIcon extends ImageIcon {

@@ -2,18 +2,12 @@
 
 package jmri.jmrit.roster;
 
-import jmri.DccLocoAddress;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.symbolicprog.CvTableModel;
-import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.StringTokenizer;
-import java.util.Vector;
-import jmri.util.davidflanagan.HardcopyWriter;
-
 
 import org.jdom.Element;
 
@@ -34,29 +28,18 @@ import org.jdom.Element;
  * When the filePath attribute is non-null, the user has decided to
  * organize the roster into directories.
  *
- * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005
- * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.21 $
- * @see       jmri.jmrit.roster.LocoFile
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2002
+ * @version	$Revision: 1.12 $
+ * @see jmri.jmrit.roster.LocoFile
  *
  */
 public class RosterEntry {
 
-    /**
-     * Construct a blank object.
-     *
-     */
-    public RosterEntry() {
-        _owner = _defaultOwner;
-    }
-
     public RosterEntry(String fileName) {
-        this();
         _fileName = fileName;
     }
 
     public RosterEntry(RosterEntry pEntry, String pID) {
-        this();
         // The ID is different for this element
         _id = pID;
 
@@ -69,7 +52,6 @@ public class RosterEntry {
         _mfg =          pEntry._mfg;
         _model =        pEntry._model;
         _dccAddress =   pEntry._dccAddress;
-        _isLongAddress = pEntry._isLongAddress;
         _comment =      pEntry._comment;
         _decoderModel = pEntry._decoderModel;
         _decoderFamily = pEntry._decoderFamily;
@@ -77,12 +59,7 @@ public class RosterEntry {
         _owner = pEntry._owner;
     }
 
-    public void setId(String s) {
-        String oldID = _id;
-        _id = s;
-        if (! oldID.equals(s))
-            Roster.instance().entryIdChanged(this);
-    }
+    public void   setId(String s) { _id = s; }
     public String getId() { return _id; }
 
     public void   setFileName(String s) { _fileName = s; }
@@ -104,9 +81,10 @@ public class RosterEntry {
                                             .replace('\\', '-')
                                             .replace(':', '-');
             String newFilename = nameWithoutSpecialChars+".xml";
+
             // we don't want to overwrite a file that exists, whether or not
             // it's in the roster
-            File testFile = new File(LocoFile.getFileLocation()+newFilename);
+            File testFile = new File(XmlFile.prefsDir()+LocoFile.fileLocation+newFilename);
             int count = 0;
             String oldFilename = newFilename;
             while (testFile.exists()) {
@@ -114,7 +92,7 @@ public class RosterEntry {
                 newFilename = oldFilename.substring(0, oldFilename.length()-4)+count+".xml";
                 count++;
                 log.debug("try to use "+newFilename+" as filename instead of "+oldFilename);
-                testFile = new File(LocoFile.getFileLocation()+newFilename);
+                testFile = new File(XmlFile.prefsDir()+LocoFile.fileLocation+newFilename);
             }
             setFileName(newFilename);
             log.debug("new filename: "+getFileName());
@@ -139,9 +117,6 @@ public class RosterEntry {
     public void   setDccAddress(String s) { _dccAddress = s; }
     public String getDccAddress() { return _dccAddress; }
 
-    public void   setLongAddress(boolean b) { _isLongAddress = b; }
-    public boolean isLongAddress() { return _isLongAddress; }
-
     public void   setComment(String s) { _comment = s; }
     public String getComment() { return _comment; }
 
@@ -154,9 +129,12 @@ public class RosterEntry {
     public void   setDecoderComment(String s) { _decoderComment = s; }
     public String getDecoderComment() { return _decoderComment; }
 
-    public DccLocoAddress getDccLocoAddress() {
-        int n = Integer.parseInt(getDccAddress());
-        return new DccLocoAddress(n,isLongAddress());
+
+    /**
+     * Construct a blank object.
+     *
+     */
+    public RosterEntry() {
     }
 
     /**
@@ -177,40 +155,6 @@ public class RosterEntry {
         if ((a = e.getAttribute("mfg")) != null )  _mfg = a.getValue();
         if ((a = e.getAttribute("model")) != null )  _model = a.getValue();
         if ((a = e.getAttribute("dccAddress")) != null )  _dccAddress = a.getValue();
-        org.jdom.Element e3;
-        if ((e3 = e.getChild("locoaddress")) != null )  {
-            DccLocoAddress la = (DccLocoAddress)((new jmri.configurexml.LocoAddressXml()).getAddress(e3));
-            if (la!=null) {
-                _dccAddress = ""+la.getNumber();
-                _isLongAddress = la.isLongAddress();
-            } else {
-                _dccAddress = "";
-                _isLongAddress = false;
-            }
-        } else {// Did not find "locoaddress" element carrying the short/long, probably
-                // because this is an older-format file, so try to use system default.
-                // This is generally the best we can do without parsing the decoder file now
-                // but may give the wrong answer in some cases (low value long addresses on NCE)
-
-            jmri.ThrottleManager tf = jmri.InstanceManager.throttleManagerInstance();
-            int address =0;
-            try {
-                address = Integer.parseInt(_dccAddress);
-            } catch (IllegalArgumentException e2) { address = 3;}  // ignore, accepting the default value
-            if (tf!=null && tf.canBeLongAddress(address) && !tf.canBeShortAddress(address)) {
-                // if it has to be long, handle that
-                _isLongAddress = true;
-            } else if (tf!=null && !tf.canBeLongAddress(address) && tf.canBeShortAddress(address)) {
-                // if it has to be short, handle that
-                _isLongAddress = false;
-            } else {
-                // else guess short address
-                // These people should resave their roster, so we'll warn them
-                log.warn("Roster entry \""+_id+"\" should be saved again to store the short/long address value");
-                _isLongAddress = false;
-
-            }
-        }        
         if ((a = e.getAttribute("comment")) != null )  _comment = a.getValue();
         org.jdom.Element d = e.getChild("decoder");
         if (d != null) {
@@ -244,11 +188,6 @@ public class RosterEntry {
 
         e.addContent(d);
 
-        if (_dccAddress.equals("")) {
-            e.addContent( (new jmri.configurexml.LocoAddressXml()).store(null));  // store a null address
-        } else {
-            e.addContent( (new jmri.configurexml.LocoAddressXml()).store(new DccLocoAddress(Integer.parseInt(_dccAddress), _isLongAddress)));
-        }
         return e;
     }
 
@@ -282,20 +221,20 @@ public class RosterEntry {
      * @param variableModel Variable contents to include in file
      *
      */
-    public void writeFile(CvTableModel cvModel, IndexedCvTableModel iCvModel, VariableTableModel variableModel) {
+    public void writeFile(CvTableModel cvModel, VariableTableModel variableModel) {
         LocoFile df = new LocoFile();
 
         // do I/O
-        XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());
+        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+LocoFile.fileLocation);
 
         try {
-            String fullFilename = LocoFile.getFileLocation()+getFileName();
+            String fullFilename = XmlFile.prefsDir()+LocoFile.fileLocation+getFileName();
             File f = new File(fullFilename);
             // do backup
-            df.makeBackupFile(LocoFile.getFileLocation()+getFileName());
+            df.makeBackupFile(LocoFile.fileLocation+getFileName());
 
             // and finally write the file
-            df.writeFile(f, cvModel, iCvModel, variableModel, this);
+            df.writeFile(f, cvModel, variableModel, this);
 
         } catch (Exception e) {
             log.error("error during locomotive file output: "+e);
@@ -313,208 +252,33 @@ public class RosterEntry {
      * of this entry
      * @param cvModel Model to load, must exist
      */
-    public void loadCvModel(CvTableModel cvModel, IndexedCvTableModel iCvModel) {
+    public void loadCvModel(CvTableModel cvModel) {
         if (cvModel == null) log.error("loadCvModel must be given a non-null argument");
         if (mRootElement == null) log.error("loadCvModel called before readFile() succeeded");
-        LocoFile.loadCvModel(mRootElement.getChild("locomotive"), cvModel, iCvModel);
+        LocoFile.loadCvModel(mRootElement.getChild("locomotive"), cvModel);
     }
 
-    /**
-     *Prints the roster information. Updated to allow for multiline
-     *comment and decoder comment fields.
-     *Created separate write statements for text and line feeds to work
-     *around the HardcopyWriter bug that misplaces borders
-     */
-    public void printEntry(Writer w)
-    {
+    public void printEntry(Writer w) {
         try {
-            String indent = "                      ";
-            int indentWidth = indent.length();
-            HardcopyWriter ww = (HardcopyWriter) w;
-            int textSpace = ww.getCharactersPerLine() - indentWidth -1;
-            String newLine = "\n";
-
-            w.write(newLine,0,1);
-            String s = "   ID:                "+_id;
-            w.write(s,0,s.length());
-            w.write(newLine,0,1);
-            s =  "   Filename:          "+(_fileName!=null?_fileName:"<null>");
-            w.write(s,0,s.length());
-
-            if (!(_roadName.equals("")))
-            {
-              w.write(newLine,0,1);
-              s = "   Road name:         " + _roadName;
-              w.write(s,0,s.length());
-            }
-            if (!(_roadNumber.equals("")))
-            {
-              w.write(newLine,0,1);
-              s = "   Road number:       " + _roadNumber;
-              w.write(s,0,s.length());
-            }
-            if (!(_mfg.equals("")))
-            {
-              w.write(newLine,0,1);
-              s = "   Manufacturer:      " + _mfg;
-              w.write(s,0,s.length());
-            }
-            if (!(_owner.equals("")))
-            {
-              w.write(newLine,0,1);
-              s = "   Owner:             " + _owner;
-              w.write(s,0,s.length());
-            }
-            if (!(_model.equals("")))
-            {
-              w.write(newLine,0,1);
-              s = "   Model:             " + _model;
-              w.write(s,0,s.length());
-            }
-            if (!(_dccAddress.equals("")))
-            {
-              w.write(newLine,0,1);
-              s = "   DCC Address:       " + _dccAddress;
-              w.write(s,0,s.length());
-            }
-
-            //If there is a comment field, then wrap it using the new wrapCommment
-            //method and print it
-            if (!(_comment.equals("")))
-            {
-              Vector commentVector = wrapComment(_comment, textSpace);
-
-              //Now have a vector of text pieces and line feeds that will all
-              //fit in the allowed space. Print each piece, prefixing the first one
-              //with the label and indenting any remainding.
-              int k = 0;
-              w.write(newLine,0,1);
-              s = "   Comment:           " + (String)commentVector.elementAt(k);
-              w.write(s,0,s.length());
-              k++;
-              while (k < commentVector.size())
-              {
-                String token = (String) commentVector.elementAt(k);
-                if (!token.equals("\n")) s = indent + token;
-                else s = token;
-                w.write(s,0,s.length());
-                k++;
-              }
-            }
-
-            if (!(_decoderModel.equals("")))
-            {
-              w.write(newLine,0,1);
-              s = "   Decoder Model:     " + _decoderModel;
-              w.write(s,0,s.length());
-            }
-            if (!(_decoderFamily.equals("")))
-            {
-              w.write(newLine,0,1);
-              s = "   Decoder Family:    " + _decoderFamily;
-              w.write(s,0,s.length());
-            }
-
-            //If there is a decoderComment field, need to wrap it
-            if (!(_decoderComment.equals("")))
-            {
-              Vector decoderCommentVector = wrapComment(_decoderComment, textSpace);
-
-                //Now have a vector of text pieces and line feeds that will all
-                //fit in the allowed space. Print each piece, prefixing the first one
-                //with the label and indenting the remainder.
-                int k = 0;
-                w.write(newLine,0,1);
-                s = "   Decoder Comment:   " + (String)decoderCommentVector.elementAt(k);
-                w.write(s,0,s.length());
-                k++;
-                while (k < decoderCommentVector.size())
-                {
-                  String token = (String) decoderCommentVector.elementAt(k);
-                  if (!token.equals("\n")) s = indent + token;
-                  else s = token;
-                  w.write(s,0,s.length());
-                  k++;
-                }
-              }
-              w.write(newLine,0,1);
-            } catch (IOException e) {
-              log.error("Error printing RosterEntry: "+e);
-              }
-    }
-
-    /**
-     * Take a String comment field and perform line wrapping on it.
-     * String must be non-null and may or may not have \n
-     * characters embedded.
-     * textSpace is the width of the space to print for wrapping purposes.
-     * The comment is wrapped on a word wrap basis
-     */
-    public Vector wrapComment(String comment, int textSpace)
-    {
-      //Tokenize the string using \n to separate the text on mulitple lines
-      //and create a vector to hold the processed text pieces
-      StringTokenizer commentTokens = new StringTokenizer (comment,"\n",true);
-      Vector textVector = new Vector(commentTokens.countTokens());
-      String newLine = "\n";
-      while (commentTokens.hasMoreTokens())
-      {
-        String commentToken = commentTokens.nextToken();
-        int startIndex = 0;
-        int endIndex = textSpace;
-        //Check each token to see if it needs to have a line wrap.
-        //Get a piece of the token, either the size of the allowed space or
-        //a shorter piece if there isn't enough text to fill the space
-        if (commentToken.substring(startIndex).length() < startIndex+textSpace)
-        {
-          //the piece will fit so extract it and put it in the vector
-          String tokenPiece = commentToken.substring(startIndex);
-          textVector.addElement(tokenPiece);
+            String s =
+                 "\n   ID:                "+_id
+                +"\n   Filename:          "+(_fileName!=null?_fileName:"<null>");
+            if (!(_roadName.equals("")))    s+="\n   Road name:         "+_roadName;
+            if (!(_roadNumber.equals("")))  s+="\n   Road number:       "+_roadNumber;
+            if (!(_mfg.equals("")))         s+="\n   Manufacturer:      "+_mfg;
+            if (!(_owner.equals("")))       s+="\n   Owner:             "+_owner;
+            if (!(_model.equals("")))       s+="\n   Model:             "+_model;
+            if (!(_dccAddress.equals("")))  s+="\n   DCC Address:       "+_dccAddress;
+            if (!(_comment.equals("")))     s+="\n   Comment:           "+_comment;
+            if (!(_decoderModel.equals(""))) s+="\n   Decoder Model:     "+_decoderModel;
+            if (!(_decoderFamily.equals(""))) s+="\n   Decoder Family:    "+_decoderFamily;
+            if (!(_decoderComment.equals(""))) s+="\n   Decoder Comment:   "+_decoderComment;
+            s+="\n";
+            w.write(s, 0, s.length());
+        } catch (IOException e) {
+            log.error("Error printing RosterEntry: "+e);
         }
-        else
-        {
-          //Piece too long to fit. Extract a piece the size of the textSpace
-          //and check for farthest right space for word wrapping.
-          if (log.isDebugEnabled()) log.debug("token: /"+commentToken+"/");
-          while (startIndex < commentToken.length())
-          {
-            String tokenPiece = commentToken.substring(startIndex, startIndex + textSpace);
-            if (log.isDebugEnabled()) log.debug("loop: /"+tokenPiece+"/ "+tokenPiece.lastIndexOf(" "));
-            if (tokenPiece.lastIndexOf(" ") == -1)
-            {
-              //If no spaces, put the whole piece in the vector and add a line feed, then
-              //increment the startIndex to reposition for extracting next piece
-              textVector.addElement(tokenPiece);
-              textVector.addElement(newLine);
-              startIndex += textSpace;
-            }
-            else
-            {
-              //If there is at least one space, extract up to and including the
-              //last space and put in the vector as well as a line feed
-              endIndex = tokenPiece.lastIndexOf(" ") + 1;
-              if (log.isDebugEnabled()) log.debug("/"+tokenPiece+"/ "+startIndex+" "+endIndex);
-              textVector.addElement(tokenPiece.substring(0, endIndex));
-              textVector.addElement(newLine);
-              startIndex += endIndex;
-            }
-            //Check the remaining piece to see if it fits - startIndex now points
-            //to the start of the next piece
-            if (commentToken.substring(startIndex).length() < textSpace)
-            {
-              //It will fit so just insert it, otherwise will cycle through the
-              //while loop and the checks above will take care of the remainder.
-              //Line feed is not required as this is the last part of the token.
-              tokenPiece = commentToken.substring(startIndex);
-              textVector.addElement(commentToken.substring(startIndex));
-              startIndex += textSpace;
-            }
-          }
-        }
-      }
-      return textVector;
     }
-
 
     /**
      * Read a file containing the contents of this RosterEntry.
@@ -529,7 +293,7 @@ public class RosterEntry {
 
         LocoFile lf = new LocoFile();  // used as a temporary
         try {
-            mRootElement = lf.rootFromName(lf.getFileLocation()+getFileName());
+            mRootElement = lf.rootFromName(lf.fileLocation+File.separator+getFileName());
         } catch (Exception e) { log.error("Exception while loading loco XML file: "+getFileName()+" exception: "+e); }
     }
 
@@ -540,18 +304,13 @@ public class RosterEntry {
     protected String _roadName = "";
     protected String _roadNumber = "";
     protected String _mfg = "";
-    protected String _owner = _defaultOwner;
+    protected String _owner ="";
     protected String _model = "";
     protected String _dccAddress = "";
-    protected boolean _isLongAddress = false;
     protected String _comment = "";
     protected String _decoderModel = "";
     protected String _decoderFamily = "";
     protected String _decoderComment = "";
-
-    public static String getDefaultOwner() { return _defaultOwner; }
-    public static void setDefaultOwner(String n) { _defaultOwner = n; }
-    static private String _defaultOwner = "";
 
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RosterEntry.class.getName());

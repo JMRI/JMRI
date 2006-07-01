@@ -6,7 +6,6 @@ import java.io.*;
 import com.sun.java.util.collections.List;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.symbolicprog.VariableTableModel;
-import jmri.jmrit.symbolicprog.ResetTableModel;
 import org.jdom.Element;
 
 // try to limit the JDOM to this class, so that others can manipulate...
@@ -18,15 +17,14 @@ import org.jdom.Element;
  * This object is created by DecoderIndexFile to represent the
  * decoder identification info _before_ the actual decoder file is read.
  *
- * @author    Bob Jacobsen   Copyright (C) 2001
- * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.10 $
- * @see       jmri.jmrit.decoderdefn.DecoderIndexFile
+ * @author			Bob Jacobsen   Copyright (C) 2001
+ * @version			$Revision: 1.6 $
+ * @see jmri.jmrit.decoderdefn.DecoderIndexFile
  */
 public class DecoderFile extends XmlFile {
-
+    
     public DecoderFile() {}
-
+    
     public DecoderFile(String mfg, String mfgID, String model, String lowVersionID,
                        String highVersionID, String family, String filename,
                        int numFns, int numOuts, Element decoder) {
@@ -38,11 +36,11 @@ public class DecoderFile extends XmlFile {
         _numFns = numFns;
         _numOuts = numOuts;
         _element = decoder;
-
+        
         // store the default range of version id's
         setVersionRange(lowVersionID, highVersionID);
     }
-
+    
     // store acceptable version numbers
     boolean versions[] = new boolean[256];
     public void setOneVersion(int i) { versions[i] = true; }
@@ -71,48 +69,40 @@ public class DecoderFile extends XmlFile {
             }
         }
     }
-
+    
     public boolean isVersion(int i) { return versions[i]; }
-
+    
     // store indexing information
     String _mfg       = null;
     String _mfgID     = null;
     String _model     = null;
     String _family    = null;
     String _filename  = null;
-    String _productID = null;
     int _numFns  = -1;
     int _numOuts  = -1;
     Element _element = null;
-
+    
     public String getMfg()       { return _mfg; }
     public String getMfgID()     { return _mfgID; }
     public String getModel()     { return _model; }
     public String getFamily()    { return _family; }
     public String getFilename()  { return _filename; }
-    public int getNumFunctions() { return _numFns; }
-    public int getNumOutputs()   { return _numOuts; }
-
-    public String getModelComment() { return _element.getAttributeValue("comment"); }
-    public String getFamilyComment() { return _element.getParent().getAttributeValue("comment"); }
-    public String getProductID() {
-       _productID = _element.getAttributeValue("productID");
-       return _productID;
-   }
-
+    public int getNumFunctions()  { return _numFns; }
+    public int getNumOutputs()  { return _numOuts; }
+    
     public Element getModelElement() { return _element; }
-
+    
     // static service methods - extract info from a given Element
     public static String getMfgName(Element decoderElement) {
         return decoderElement.getChild("family").getAttribute("mfg").getValue();
     }
-
+    
     // use the decoder Element from the file to load a VariableTableModel for programming.
     public void loadVariableModel(Element decoderElement,
                                   VariableTableModel variableModel) {
         // find decoder id, assuming first decoder is fine for now (e.g. one per file)
         Element decoderID = decoderElement.getChild("id");
-
+        
         // load variables to table
         List varList = decoderElement.getChild("variables").getChildren("variable");
         for (int i=0; i<varList.size(); i++) {
@@ -157,68 +147,22 @@ public class DecoderFile extends XmlFile {
             // load each row
             variableModel.setConstant(e);
         }
-        int row = 0;
-        List iVarList = decoderElement.getChild("variables").getChildren("ivariable");
-        for (int i=0; i<iVarList.size(); i++) {
-            Element e = (Element)(iVarList.get(i));
-            try {
-                // if its associated with an inconsistent number of functions,
-                // skip creating it
-                if (getNumFunctions() >= 0 && e.getAttribute("minFn") != null
-                    && getNumFunctions() < Integer.valueOf(e.getAttribute("minFn").getValue()).intValue() )
-                    continue;
-                // if its associated with an inconsistent number of outputs,
-                // skip creating it
-                if (getNumOutputs() >= 0 && e.getAttribute("minOut") != null
-                    && getNumOutputs() < Integer.valueOf(e.getAttribute("minOut").getValue()).intValue() )
-                    continue;
-            } catch (Exception ex) {
-                log.warn("Problem parsing minFn or minOut in decoder file, variable "
-                         +e.getAttribute("item")+" exception: "+ex);
-            }
-            // load each row
-            if (variableModel.setIndxRow(row, e, _productID) == row) {
-                // if this one existed, we will not update the row count.
-                row++;
-            }
-        }
-
         variableModel.configDone();
     }
-
-    // use the decoder Element from the file to load a VariableTableModel for programming.
-    public void loadResetModel(Element decoderElement,
-                               ResetTableModel resetModel) {
-        if (decoderElement.getChild("resets") != null) {
-            List resetList = decoderElement.getChild("resets").getChildren("factReset");
-            for (int i=0; i<resetList.size(); i++) {
-                Element e = (Element)(resetList.get(i));
-                resetModel.setRow(i,e);
-            }
-            List iresetList = decoderElement.getChild("resets").getChildren("ifactReset");
-            for (int i=0; i<iresetList.size(); i++) {
-                Element e = (Element)(iresetList.get(i));
-                resetModel.setIndxRow(i,e);
-            }
-        }
-    }
-
+    
     /**
      * Convert to a cannonical text form for ComboBoxes, etc.
-     * <P>
-     * Must distinquish identical models in different families.
+     * Early on, this had been mfg+" "+model, but
+     * that resulted in a lot of duplicate mfg names in listings,
+     * so now this is the same as the model
      */
     public String titleString() {
-        return titleString(getModel(), getFamily());
+        return getModel();
     }
-
-    static public String titleString(String model, String family) {
-        return model+" ("+family+")";
-    }
-
+    
     static public String fileLocation = "decoders"+File.separator;
-
+    
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DecoderFile.class.getName());
-
+    
 }

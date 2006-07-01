@@ -3,14 +3,17 @@
  *
  * Description:	    tests for the jmrit.display package
  * @author			Bob Jacobsen
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.2 $
  */
 
 package jmri.jmrit.display;
 
+import java.io.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.jdom.*;
+import org.jdom.output.*;
 
 public class DisplayTest extends TestCase {
 
@@ -28,7 +31,6 @@ public class DisplayTest extends TestCase {
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite("jmri.jmrit.display");   // no tests in this class itself
-		suite.addTest(jmri.jmrit.display.PanelEditorTest.suite());
 		suite.addTest(jmri.jmrit.display.PositionableLabelTest.suite());
 		suite.addTest(jmri.jmrit.display.TurnoutIconTest.suite());
 		return suite;

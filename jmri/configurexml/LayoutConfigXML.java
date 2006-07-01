@@ -5,8 +5,10 @@ import jmri.TurnoutManager;
 import java.io.File;
 
 import com.sun.java.util.collections.List;
+import org.jdom.DocType;
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.output.XMLOutputter;
 
 /**
  * Provides the mechanisms for storing an entire layout configuration
@@ -14,7 +16,7 @@ import org.jdom.Element;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.6 $
  */
 public class LayoutConfigXML extends jmri.jmrit.XmlFile {
 
@@ -27,7 +29,8 @@ public class LayoutConfigXML extends jmri.jmrit.XmlFile {
 
             // create root element
             Element root = new Element("layout-config");
-            Document doc = newDocument(root, "layout-config.dtd");
+            Document doc = new Document(root);
+            doc.setDocType(new DocType("layout-config","layout-config.dtd"));
 
             // add top-level elements
             Element turnouts;  // will fill this with turnout info
@@ -53,7 +56,13 @@ public class LayoutConfigXML extends jmri.jmrit.XmlFile {
 
                 }
             }
-            writeXML(file, doc);
+            // write the result to selected file
+            java.io.FileOutputStream o = new java.io.FileOutputStream(file);
+            XMLOutputter fmt = new XMLOutputter();
+            fmt.setNewlines(true);   // pretty printing
+            fmt.setIndent(true);
+            fmt.output(doc, o);
+            o.close();
         }
         catch (Exception e) {
             log.error(e);

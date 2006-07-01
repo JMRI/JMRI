@@ -15,7 +15,7 @@ import jmri.NmraPacket;
  *
  * Description:		extend jmri.AbstractTurnout for EasyDcc layouts
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.6 $
  */
 public class EasyDccTurnout extends AbstractTurnout {
 
@@ -55,20 +55,32 @@ public class EasyDccTurnout extends AbstractTurnout {
 	int _number;   // turnout number
 
 	protected void sendMessage(boolean closed) {
+		// The address space in the packet starts with zero, not one
+
+		// dBit is the "channel" info, least 7 bits, for the packet
+		// The lowest channel bit represents CLOSED (1) and THROWN (0)
+		int dBits = (( (_number-1) & 0x03) << 1 );  // without the low CLOSED vs THROWN bit
+		dBits = closed ? (dBits | 1) : dBits;
+
+		// aBits is the "address" part of the nmra packet, which starts with 1
+		int aBits = (( (_number-1) & 0x1FC) >> 2 )+1;
+
+		// cBit is the control bit, we're always setting it active
+		int cBit = 1;
+
 		// get the packet
-		byte[] bl = NmraPacket.accDecoderPkt(_number, closed);
+		if (log.isDebugEnabled()) log.debug("build packet from (addr, control, channel): "+aBits+" "+cBit+" "+dBits);
+		byte[] bl = NmraPacket.accDecoderPkt(aBits, cBit, dBits);
 		if (log.isDebugEnabled()) log.debug("packet: "
 											+Integer.toHexString(0xFF & bl[0])
 											+" "+Integer.toHexString(0xFF & bl[1])
 											+" "+Integer.toHexString(0xFF & bl[2]));
 
-		EasyDccMessage m = new EasyDccMessage(13);
+		EasyDccMessage m = new EasyDccMessage(9);
 		int i = 0; // counter to make it easier to format the message
 		m.setElement(i++, 'S');  // "S02 " means send it twice
-		m.setElement(i++, ' ');
 		m.setElement(i++, '0');
 		m.setElement(i++, '2');
-		m.setElement(i++, ' ');
 		String s = Integer.toHexString((int)bl[0]&0xFF).toUpperCase();
 		if (s.length() == 1) {
 			m.setElement(i++, '0');
@@ -78,7 +90,6 @@ public class EasyDccTurnout extends AbstractTurnout {
 			m.setElement(i++, s.charAt(1));
 		}
 		s = Integer.toHexString((int)bl[1]&0xFF).toUpperCase();
-		m.setElement(i++, ' ');
 		if (s.length() == 1) {
 			m.setElement(i++, '0');
 			m.setElement(i++, s.charAt(0));
@@ -87,7 +98,6 @@ public class EasyDccTurnout extends AbstractTurnout {
 			m.setElement(i++, s.charAt(1));
 		}
 		s = Integer.toHexString((int)bl[2]&0xFF).toUpperCase();
-		m.setElement(i++, ' ');
 		if (s.length() == 1) {
 			m.setElement(i++, '0');
 			m.setElement(i++, s.charAt(0));

@@ -1,14 +1,19 @@
 package jmri.jmrix.loconet;
 
+import java.io.*;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import jmri.jmrix.loconet.*;
+
 /**
- * Tests for the jmri.jmrix.loconet.LocoNetMessage class.
+ * LocoNetMessageTest.java
+ *
+ * Description:	    tests for the jmri.jmrix.loconet.LocoNetMessage class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.5 $
+ * @version         $Id: LocoNetMessageTest.java,v 1.4 2003-01-05 08:53:49 jacobsen Exp $
  */
 public class LocoNetMessageTest extends TestCase {
 

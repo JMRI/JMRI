@@ -9,10 +9,10 @@ import java.awt.Component;
 import org.jdom.Element;
 
 /**
- * Handle XML persistance of PerformActionPanel objects.
+ * Handle XML persistance of PerformActionModel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.2 $
  * @see apps.PerformActionPanel
  */
 public class PerformActionPanelXml implements XmlAdapter {
@@ -22,7 +22,7 @@ public class PerformActionPanelXml implements XmlAdapter {
 
     /**
      * Arrange for all the model objects to be stored
-     * @param o Object to store, of type PerformActionPanel
+     * @param o Object to store, of type GuiLafConfigPane
      * @return null, after updating state so others are stored
      */
     public Element store(Object o) {
@@ -39,7 +39,7 @@ public class PerformActionPanelXml implements XmlAdapter {
 
     /**
      * Create object from XML file
-     * @param e Top level Element to unpack.
+     * @param element Top level Element to unpack.
       */
     public void load(Element e) {
         log.error("load(Element) should not have been invoked");

@@ -6,9 +6,6 @@ import java.io.InputStream;
 import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.Vector;
-import jmri.jmrix.sprog.serialdriver.SerialDriverAdapter;
-
-import javax.comm.SerialPort;
 
 /**
  * Converts Stream-based I/O to/from Sprog messages.  The "SprogInterface"
@@ -18,7 +15,7 @@ import javax.comm.SerialPort;
  * handled in an independent thread.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.2 $
  */
 public class SprogTrafficController implements SprogInterface, Runnable {
 
@@ -79,32 +76,6 @@ public class SprogTrafficController implements SprogInterface, Runnable {
 
 	SprogListener lastSender = null;
 
-        // Current SPROG state
-        public static final int NORMAL = 0;
-        public static final int SIIBOOTMODE = 1;
-        public static final int V4BOOTMODE = 2;
-
-        private int sprogState = NORMAL;
-
-        public int getSprogState() { return sprogState; }
-        public void setSprogState(int s) {
-          sprogState = s;
-          if (s==V4BOOTMODE) {
-            // enable flow control - required for sprog v4 bootloader
-            SerialDriverAdapter.instance().setHandshake(SerialPort.FLOWCONTROL_RTSCTS_IN
-                                                        | SerialPort.FLOWCONTROL_RTSCTS_OUT);
-
-          } else {
-            // disable flow control
-            SerialDriverAdapter.instance().setHandshake(0);
-          }
-          if (log.isDebugEnabled()) log.debug("Setting sprogState " + s);
-        }
-        public boolean isNormalMode() {return sprogState == NORMAL; }
-        public boolean isSIIBootMode() {return sprogState == SIIBOOTMODE; }
-        public boolean isV4BootMode() {return sprogState == V4BOOTMODE; }
-
-
 	protected void notifyReply(SprogReply r) {
           // make a copy of the listener vector to synchronized (not needed for transmit?)
           Vector v;
@@ -118,9 +89,7 @@ public class SprogTrafficController implements SprogInterface, Runnable {
             SprogListener client = (SprogListener) v.elementAt(i);
             if (log.isDebugEnabled()) log.debug("notify client: "+client);
             try {
-              // skip forwarding to the last sender for now, we'll get them later
-              if (lastSender != client)
-                client.reply(r);
+              client.reply(r);
             }
             catch (Exception e)
             {
@@ -135,9 +104,9 @@ public class SprogTrafficController implements SprogInterface, Runnable {
         }
 
 
-        /**
-         * Forward a preformatted message to the actual interface.
-         */
+	/**
+	 * Forward a preformatted message to the actual interface.
+	 */
         public void sendSprogMessage(SprogMessage m, SprogListener reply) {
           if (log.isDebugEnabled()) log.debug("sendSprogMessage message: ["+m+"]");
           // remember who sent this
@@ -146,18 +115,15 @@ public class SprogTrafficController implements SprogInterface, Runnable {
           // notify all _other_ listeners
           notifyMessage(m, reply);
 
-          // stream to port in single write, as that's needed by serial
+		// stream to port in single write, as that's needed by serial
           int len = m.getNumDataElements();
-
-          // space for carriage return if required
-          int cr = 0;
-          if (!isSIIBootMode()) { cr = 1; }
+          int cr = 1;  // space for carriage return linefeed
 
           byte msg[] = new byte[len+cr];
 
           for (int i=0; i< len; i++)
             msg[i] = (byte) m.getElement(i);
-          if (!isSIIBootMode()) { msg[len] = 0x0d; }
+          msg[len] = 0x0d;
 
           try {
             if (ostream != null) {
@@ -165,15 +131,14 @@ public class SprogTrafficController implements SprogInterface, Runnable {
               ostream.write(msg);
             }
             else {
-            // no stream connected
-            log.warn("sendMessage: no connection established");
-          }
+              // no stream connected
+              log.warn("sendMessage: no connection established");
+            }
+			}
+                        catch (Exception e) {
+                          log.warn("sendMessage: Exception: "+e.toString());
+                        }
         }
-        catch (Exception e) {
-          log.warn("sendMessage: Exception: "+e.toString());
-        }
-      }
-
 
         // methods to connect/disconnect to a source of data in a LnPortController
 	private SprogPortController controller = null;
@@ -271,62 +236,21 @@ public class SprogTrafficController implements SprogInterface, Runnable {
         }
 
         /*
-         * Normal SPROG replies will end with the prompt for the next command
-         * Bootloader will end with ETX with no preceding DLE
-         * SPROG v4 bootloader replies "L>" on entry and replies "." at other
-         * times
+         * SPROG replies will end with the prompt for the next command
         */
-       boolean endReply(SprogReply msg) {
-         if (endNormalReply(msg)) return true;
-         if (endBootReply(msg)) return true;
-         if (endBootloaderReply(msg)) return true;
-         return false;
-       }
-
-       boolean endNormalReply(SprogReply msg) {
-         // Detect that the reply buffer ends with "P> " or "R> " (note ending space)
-         int num = msg.getNumDataElements();
-         if ( num >= 3) {
-           // ptr is offset of last element in SprogReply
-           int ptr = num-1;
-           if (msg.getElement(ptr)   != ' ') return false;
-           if (msg.getElement(ptr-1) != '>') return false;
-           if ((msg.getElement(ptr-2) != 'P')&&(msg.getElement(ptr-2) != 'R')) return false;
-           return true;
-         }
-         else return false;
-       }
-
-       boolean endBootReply(SprogReply msg) {
-         // Detect that the reply buffer ends with ETX with no preceding DLE
-         // This is the end of a SPROG II bootloader reply or the end of
-         // a SPROG v4 echoing the botloader version request
-         int num = msg.getNumDataElements();
-         if ( num >= 2) {
-           // ptr is offset of last element in SprogReply
-           int ptr = num-1;
-           if ((int)(msg.getElement(ptr) & 0xff)   != SprogMessage.ETX) return false;
-           if ((int)(msg.getElement(ptr-1) & 0xff) == SprogMessage.DLE) return false;
-           return true;
-         }
-         else return false;
-       }
-
-       boolean endBootloaderReply(SprogReply msg) {
-         // Detect that the reply buffer ends with "L>" or "." from a SPROG v4
-         // bootloader
-         int num = msg.getNumDataElements();
-         int ptr = num-1;
-         if ((sprogState == V4BOOTMODE) && ((msg.getElement(ptr)   == '.')
-                                            || (msg.getElement(ptr)   == 'S'))) return true;
-         if ( num >= 2) {
-           // ptr is offset of last element in SprogReply
-           if (msg.getElement(ptr)   != '>') return false;
-           if (msg.getElement(ptr-1) != 'L') return false;
-           return true;
-         }
-         else return false;
-       }
+        boolean endReply(SprogReply msg) {
+          // detect that the reply buffer ends with "P> " (note ending space)
+          int num = msg.getNumDataElements();
+          if ( num >= 3) {
+            // ptr is offset of last element in NceReply
+            int ptr = num-1;
+            if (msg.getElement(ptr)   != ' ') return false;
+            if (msg.getElement(ptr-1) != '>') return false;
+            if (msg.getElement(ptr-2) != 'P') return false;
+            return true;
+          }
+          else return false;
+        }
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogTrafficController.class.getName());
 }

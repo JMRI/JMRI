@@ -2,14 +2,12 @@
 
 package jmri;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import junit.framework.*;
 
 /**
  * Invoke complete set of tests for the Jmri package
  * @author	Bob Jacobsen, Copyright (C) 2001, 2002
- * @version         $Revision: 1.9 $
+ * @version         $Revision: 1.6 $
  */
 public class JmriTest extends TestCase {
 
@@ -29,11 +27,6 @@ public class JmriTest extends TestCase {
     public static Test suite() {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.JmriTest");  // no tests in this class itself
-		suite.addTest(jmri.BlockTest.suite());
-		suite.addTest(jmri.BlockManagerTest.suite());
-		suite.addTest(jmri.BeanSettingTest.suite());
-		suite.addTest(jmri.PathTest.suite());
-        suite.addTest(jmri.DccLocoAddressTest.suite());
         suite.addTest(jmri.progdebugger.ProgDebuggerTest.suite());
         suite.addTest(jmri.NmraPacketTest.suite());
         suite.addTest(jmri.configurexml.ConfigXmlTest.suite());

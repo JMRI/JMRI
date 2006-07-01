@@ -9,7 +9,7 @@ package jmri.jmrix;
  *<P>
  * To configure for operation, a
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.4 $
  * @see         jmri.jmrix.SerialConfigException
  */
 public interface SerialPortAdapter  {
@@ -30,12 +30,12 @@ public interface SerialPortAdapter  {
 	 * as far as is known, return true */
 	public boolean status();
 
-    /**
-     * Remember the associated port name
-     * @param s
-     */
-    public void setPort(String s);
-    public String getCurrentPortName();
+        /**
+         * Remember the associated port name
+         * @param s
+         */
+        public void setPort(String s);
+        public String getCurrentPortName();
 
 	/**
 	 * Get an array of valid baud rates; used to display valid options.
@@ -88,10 +88,10 @@ public interface SerialPortAdapter  {
 	 */
 	public void configureOption2(String value);
 
-    /**
-     * Get current option 2 value
-     */
-    public String getCurrentOption2Setting();
+        /**
+         * Get current option 2 value
+         */
+        public String getCurrentOption2Setting();
 
     /**
      * Error handling for busy port at open.

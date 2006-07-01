@@ -16,8 +16,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import jmri.util.JTableUtil;
-
 /**
  * Frame provinging a command station slot manager.
  * <P>
@@ -25,7 +23,7 @@ import jmri.util.JTableUtil;
  * so are shown separately.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.8 $
  */
 public class SlotMonFrame extends javax.swing.JFrame {
 
@@ -39,14 +37,11 @@ public class SlotMonFrame extends javax.swing.JFrame {
     javax.swing.JCheckBox 	showSystemCheckBox = new javax.swing.JCheckBox();
 
     JButton                     estopAllButton  = new JButton("estop all");
-    SlotMonDataModel	slotModel 	= new SlotMonDataModel(128,16);
-    JTable				slotTable;
-    JScrollPane 		slotScroll;
+    SlotMonDataModel		slotModel 	= new SlotMonDataModel(128,16);
+    JTable			slotTable	= new JTable(slotModel);
+    JScrollPane 		slotScroll	= new JScrollPane(slotTable);
 
     public SlotMonFrame() {
-
-    	slotTable	= JTableUtil.sortableDataModel(slotModel);
-    	slotScroll	= new JScrollPane(slotTable);
 
         // configure items for GUI
         showAllCheckBox.setText("Show unused slots");
@@ -112,7 +107,6 @@ public class SlotMonFrame extends javax.swing.JFrame {
         pack();
         pane1.setMaximumSize(pane1.getSize());
         pack();
-
     }
 
     private boolean mShown = false;

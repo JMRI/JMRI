@@ -8,7 +8,7 @@ package jmri.jmrix.nce;
  * Some rudimentary support is provided for the "binary" option.
  *
  * @author		Bob Jacobsen  Copyright (C) 2001
- * @version             $Revision: 1.10 $
+ * @version             $Revision: 1.6 $
  */
 public class NceReply extends jmri.jmrix.AbstractMRReply {
 
@@ -41,35 +41,6 @@ public class NceReply extends jmri.jmrix.AbstractMRReply {
         return index;
     }
 
-    /**
-     * Extract poll values from binary reply
-     */
-     
-    public int pollValue() {  // integer value of first two bytes
-        int first = 0xFF & ((byte)getElement(0));
-        int second = 0xFF & ((byte)getElement(1));
-        
-        return first*256 + second;
-    }
-    
-    /**
-     * Examine message to see if it is an asynchronous sensor (AIU) state report
-     * @return true if message asynch sensor message
-     */
-    
-    public boolean isSensorMessage() {
-    	return getElement(0)==0x61 && getNumDataElements()>=3;
-    }
-    
-    public boolean isUnsolicited() {
-    	if (isSensorMessage()) {
-    		setUnsolicited();
-    		return true;
-    	} else {
-    		return false;
-    	}
-    }
-    
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceReply.class.getName());
 
 }

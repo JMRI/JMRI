@@ -11,14 +11,14 @@ import jmri.*;
  *  of tu20, tu21, tu22. Includes additional routes.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.2 $
  */
 public class CrrSection18B extends CrrSection {
 
     void defineIO() {
         sig  = InstanceManager.signalHeadManagerInstance().getByUserName("Signal 18B");
         inputs = new NamedBean[]{ tu[18], tu[19], tu[20], tu[21], tu[22], tu[23],
-                                  bo[24], bo[25], bo[26], bo[27], bo[34],
+                                  bo[24], bo[25], bo[26], bo[27],
                                   si[93], si[96] };
     }
 
@@ -37,21 +37,16 @@ public class CrrSection18B extends CrrSection {
         boolean bo25 = ( bo[25].getKnownState() == Sensor.ACTIVE);
         boolean bo26 = ( bo[26].getKnownState() == Sensor.ACTIVE);
         boolean bo27 = ( bo[27].getKnownState() == Sensor.ACTIVE);
-        boolean bo34 = ( bo[34].getKnownState() == Sensor.ACTIVE);
 
         boolean si93 = ( si[93].getCommandedState() == THROWN);
         boolean si96 = ( si[96].getCommandedState() == THROWN);
 
         int value = GREEN;
-        if ( !tu23 )
-            value = RED;
-        else if ( bo27 )
+        if ( !tu23 || bo27 )
             value = RED;
         else if ( !tu22 && bo24 )
             value = RED;
-        else if ( !tu22 && !tu18 && bo34 )
-            value = RED;
-        else if ( !tu22 && tu18 && !tu19 )
+        else if ( !tu22 && tu19 )
             value = RED;
         else if ( tu22 && !tu21 && bo25 )
             value = RED;

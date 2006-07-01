@@ -13,22 +13,13 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
 /**
- * Provide GUI to configure communications links.
- * <P>
- * This is
+ * Provide GUI to configure communications links.  This is
  * really just a catalog of connections to classes within
  * the systems. Reflection is used to reduce coupling.
  * <P>
- * To add a new system package, add entries
- * to the list in {@link #availableProtocolClasses}.
- * <P>
- * The classes referenced are the specific
- * subclasses of {@link jmri.jmrix.AbstractConnectionConfig}
- * which provides the methods providing data to the 
- * configuration GUI, and responding to its changes.
  *
- * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2004
- * @version	$Revision: 1.21 $
+ * @author      Bob Jacobsen   Copyright (C) 2001, 2003
+ * @version	$Revision: 1.4 $
  */
 public class JmrixConfigPane extends JPanel {
 
@@ -52,30 +43,14 @@ public class JmrixConfigPane extends JPanel {
         return  new String[] {
                               "jmri.jmrix.cmri.serial.serialdriver.ConnectionConfig",
                               "jmri.jmrix.easydcc.serialdriver.ConnectionConfig",
-                              "jmri.jmrix.easydcc.networkdriver.ConnectionConfig",  
                               "jmri.jmrix.lenz.li100.ConnectionConfig",
-                              "jmri.jmrix.lenz.li100f.ConnectionConfig",
-                              "jmri.jmrix.lenz.li101.ConnectionConfig",
-                              "jmri.jmrix.lenz.liusb.ConnectionConfig",
-                              "jmri.jmrix.loconet.locobufferii.ConnectionConfig",
-                              "jmri.jmrix.loconet.locobufferusb.ConnectionConfig",
-                              "jmri.jmrix.loconet.pr2.ConnectionConfig",
+                              "jmri.jmrix.loconet.locobuffer.ConnectionConfig",
                               "jmri.jmrix.loconet.ms100.ConnectionConfig",
-                              "jmri.jmrix.loconet.Intellibox.ConnectionConfig",
                               "jmri.jmrix.loconet.hexfile.ConnectionConfig",
                               "jmri.jmrix.loconet.locormi.ConnectionConfig",
-                              "jmri.jmrix.loconet.loconetovertcp.ConnectionConfig",
-                              "jmri.jmrix.loconet.locobuffer.ConnectionConfig",
                               "jmri.jmrix.nce.serialdriver.ConnectionConfig",
-                              "jmri.jmrix.nce.networkdriver.ConnectionConfig",
-                              "jmri.jmrix.oaktree.serialdriver.ConnectionConfig",
                               "jmri.jmrix.sprog.serialdriver.ConnectionConfig",
-                              "jmri.jmrix.tmcc.serialdriver.ConnectionConfig",
-                              "jmri.jmrix.wangrow.serialdriver.ConnectionConfig",
-                              "jmri.jmrix.xpa.serialdriver.ConnectionConfig",
-                              "jmri.jmrix.zimo.mx1.ConnectionConfig",
-                              "jmri.jmrix.lenz.ztc640.ConnectionConfig",
-                              "jmri.jmrix.direct.serial.ConnectionConfig"          // experimental
+                              "jmri.jmrix.zimo.mx1.ConnectionConfig"
         };
     }
 
@@ -128,16 +103,12 @@ public class JmrixConfigPane extends JPanel {
                 selection();
             }
         });
-        selection();  // first time through, pretend we've selected a value
-        			  // to load the rest of the GUI
+        selection();
     }
 
     void selection() {
         int current = modeBox.getSelectedIndex();
         details.removeAll();
-        // first choice is -no- protocol chosen
-        if (log.isDebugEnabled()) log.debug("new selection is "+current
-        							+" "+modeBox.getSelectedItem());
         if (current!=0) classList[current].loadDetails(details);
         validate();
         if (getTopLevelAncestor()!=null) ((JFrame)getTopLevelAncestor()).pack();

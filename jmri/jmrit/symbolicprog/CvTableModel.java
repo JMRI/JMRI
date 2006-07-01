@@ -8,8 +8,6 @@ import java.util.*;
 
 import javax.swing.*;
 
-import java.util.Vector;
-
 import jmri.*;
 
 /**
@@ -17,9 +15,8 @@ import jmri.*;
  * <P>This represents the contents of a single decoder, so the
  * Programmer used to access it is a data member.
  *
- * @author    Bob Jacobsen   Copyright (C) 2001, 2002
- * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.16 $
+ * @author			Bob Jacobsen   Copyright (C) 2001, 2002
+ * @version			$Revision: 1.11 $
  */
 public class CvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -54,7 +51,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         for (int i=0; i<=MAXCVNUM; i++) _cvAllVector.addElement(null);
 
         // define just address CV at start, pending some variables
-        addCV("1", false, false, false);
+        addCV("1");
     }
 
     /**
@@ -96,13 +93,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
     public boolean isCellEditable(int row, int col) {
         switch (col) {
         case NUMCOLUMN: return false;
-        case VALCOLUMN:
-            if ( ((CvValue)_cvDisplayVector.elementAt(row)).getReadOnly() ||
-                 ((CvValue)_cvDisplayVector.elementAt(row)).getInfoOnly() ) {
-                return false;
-            } else {
-                return true;
-            }
+        case VALCOLUMN: return true;
         case STATECOLUMN: return false;
         case READCOLUMN: return true;
         case WRITECOLUMN: return true;
@@ -148,9 +139,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
     public void setValueAt(Object value, int row, int col) {
         switch (col) {
         case VALCOLUMN: // Object is actually an Integer
-          if (((CvValue)_cvDisplayVector.elementAt(row)).getValue() != ((Integer)value).intValue()) {
-              ((CvValue) _cvDisplayVector.elementAt(row)).setValue(((Integer)value).intValue());
-          }
+            ((CvValue)_cvDisplayVector.elementAt(row)).setValue(((Integer)value).intValue() );
             break;
         default:
             break;
@@ -175,57 +164,25 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         fireTableDataChanged();
     }
 
-    public void addCV(String s, boolean readOnly, boolean infoOnly, boolean writeOnly) {
+    public void addCV(String s) {
         int num = Integer.valueOf(s).intValue();
         if (_cvAllVector.elementAt(num) == null) {
+            JButton bw = new JButton("Write");
+            bw.setActionCommand("W"+_numRows);
+            bw.addActionListener(this);
+            _writeButtons.addElement(bw);
+            JButton br = new JButton("Read");
+            br.setActionCommand("R"+_numRows);
+            br.addActionListener(this);
+            _readButtons.addElement(br);
+            _numRows++;
             CvValue cv = new CvValue(num, mProgrammer);
-            cv.setReadOnly(readOnly);
             _cvAllVector.setElementAt(cv, num);
             _cvDisplayVector.addElement(cv);
             // connect to this CV to ensure the table display updates
             cv.addPropertyChangeListener(this);
-            JButton bw = new JButton("Write");
-            _writeButtons.addElement(bw);
-            JButton br = new JButton("Read");
-            _readButtons.addElement(br);
-            if (infoOnly || readOnly) {
-                if (writeOnly) {
-                    bw.setEnabled(true);
-                    bw.setActionCommand("W"+_numRows);
-                    bw.addActionListener(this);
-                } else {
-                    bw.setEnabled(false);
-                }
-                if (infoOnly) {
-                    br.setEnabled(false);
-                } else {
-                    br.setEnabled(true);
-                    br.setActionCommand("R"+_numRows);
-                    br.addActionListener(this);
-                }
-            } else {
-                bw.setEnabled(true);
-                bw.setActionCommand("W"+_numRows);
-                bw.addActionListener(this);
-                if (writeOnly) {
-                    br.setEnabled(false);
-                } else {
-                    br.setEnabled(true);
-                    br.setActionCommand("R" + _numRows);
-                    br.addActionListener(this);
-                }
-           }
-            _numRows++;
             fireTableDataChanged();
         }
-        // make sure readonly set true if required
-        CvValue cv = (CvValue) _cvAllVector.elementAt(num);
-        if (readOnly) cv.setReadOnly(readOnly);
-        if (infoOnly) {
-            cv.setReadOnly(infoOnly);
-            cv.setInfoOnly(infoOnly);
-        }
-        if (writeOnly) cv.setWriteOnly(writeOnly);
     }
 
     public boolean decoderDirty() {

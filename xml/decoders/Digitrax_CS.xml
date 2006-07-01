@@ -1,11 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- Copyright (C) JMRI 2003, 2005 All rights reserved -->
-<!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Digitrax_CS.xml,v 1.14 2005-06-20 17:45:04 pbender Exp $ -->
+<!-- $Id: Digitrax_CS.xml,v 1.8 2003-06-05 17:45:34 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Michael Mosher mjmx@comcast.net" 
-					version="8" lastUpdated="20050112"/>
+		<version author="jake@physics.berkeley.edu" 
+					version="6" lastUpdated="20030606"/>
 					
 		<!-- made from 150 file (Basic FX) -->
 		<!-- version 3 added BEMF, transponding control, short address -->
@@ -13,15 +11,11 @@
 		<!-- version 4 adjusts versionID range -->
 		<!-- version 5 correct BEMF defaults -->
 		<!-- version 6 - add consist direction - jake -->
-		<!-- version 7 - fixed numOuts & numFns numbers and add cv29 defaults -->
-      <!-- Version 7.1 - changed spelling of "behavior" (Jack Shall) -->
-      <!-- Version 8 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" - Bob Jacobsen -->
-      <!-- Version 9 - fixed labels for Enable/Disable "Vstart/Vmid/Vfull in 128 step mode" - Paul Bender -->
 
 <decoder>
 	<family name="Basic CS" mfg="Digitrax" lowVersionID="225" highVersionID="239">
-		<model model="DZ121" numOuts="2" numFns="0"/>
-		<model model="DN122K2" numOuts="2" numFns="0"/>
+		<model model="DZ121" numOuts="5" numFns="3"/>
+		<model model="DN122K2" numOuts="5" numFns="3"/>
 	</family>
 
 	<programming direct="no" paged="yes" 
@@ -133,14 +127,13 @@
 				</enumVal>
 			</variable>
 		<variable label="Speed steps" CV="29" mask="XXXXXXVX"
-					item="Speed Step Mode" default="1" >
+					item="Speed Step Mode">
 			<enumVal>
 				<enumChoice choice="14"/>
 				<enumChoice choice="28/128"/>
 				</enumVal>
 			</variable>
-		<variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" 
-					item="Analog (DC) Operation" default="1" >
+		<variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" item="Analog (DC) Operation">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
@@ -172,7 +165,7 @@
 				<enumChoice choice="Reserved (0x07)"/>
 				</enumVal>
 			</variable>
-		<variable label="Function F0F behavior" CV="49" mask="VVVVXXXX">
+		<variable label="Function F0F behaviour" CV="49" mask="VVVVXXXX">
 			<enumVal>
 				<enumChoice choice="Forward direction"/>
 				<enumChoice choice="Reverse direction"/>
@@ -191,7 +184,7 @@
 				<enumChoice choice="Reserved (0x07)"/>
 				</enumVal>
 			</variable>
-		<variable label="Function F0R behavior" CV="50" mask="VVVVXXXX">
+		<variable label="Function F0R behaviour" CV="50" mask="VVVVXXXX">
 			<enumVal>
 				<enumChoice choice="Forward direction"/>
 				<enumChoice choice="Reverse direction"/>
@@ -239,10 +232,10 @@
 				<enumChoice choice="Enable configurable strobes"/>
 				</enumVal>
 			</variable>
-		<variable label="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXVXXXXX">
+		<variable label="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXXVXXXX">
 			<enumVal>
-				<enumChoice choice="Enabled"/>
-				<enumChoice choice="Disabled"/>
+				<enumChoice choice="enabled"/>
+				<enumChoice choice="disabled"/>
 				</enumVal>
 			</variable>
 		<variable label="Short-circuit protection" CV="61" mask="XVXXXXXX"
@@ -308,7 +301,6 @@
 	<column>
 		<display item="Vstart/Vmid/Vfull in 128 step mode" />
 		<display item="Short-circuit protection" />
-                <display item="Speed Compensation Control" />
 	</column>
 </pane>
 

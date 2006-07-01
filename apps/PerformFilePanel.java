@@ -25,7 +25,7 @@ import javax.swing.JPanel;
  *
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.2 $
  * @see apps.PerformFileModel
  */
 public class PerformFilePanel extends JPanel {
@@ -88,7 +88,6 @@ public class PerformFilePanel extends JPanel {
             model.setFileName(fc.getSelectedFile().getAbsolutePath());
             add(selected);
         }
-
         Item(PerformFileModel m) {
             setLayout(new FlowLayout());
             add(removeButton);

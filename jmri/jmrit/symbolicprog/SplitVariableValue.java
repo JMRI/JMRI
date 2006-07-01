@@ -13,31 +13,21 @@ import javax.swing.text.Document;
 
 /**
  * Extends VariableValue to represent a variable
- * split across two CVs.
- * <P>The mask represents the part of the value that's
- * present in the first CV; higher-order bits are loaded to the
- * second CV.
- * <P>The original use is for addresses of stationary (accessory)
- * <P>Factor and Offset are applied when going <i>to</i> value
- * of the variable <i>to</> the CV values:
- *<PRE>
- Value to put in CVs = ((value in text field) - Offset)/Factor
- Value to put in text field = ((value in CVs) * Factor) + Offset
- *</PRE>
- * decoders.
- * @author			Bob Jacobsen   Copyright (C) 2002, 2003, 2004
- * @version			$Revision: 1.17 $
+ * split across two CVs. The original use is for addresses of stationary (accessory)
+ * decoders
+ * @author			Bob Jacobsen   Copyright (C) 2002
+ * @version			$Revision: 1.5 $
  *
  */
 public class SplitVariableValue extends VariableValue
     implements ActionListener, PropertyChangeListener, FocusListener {
-
-    public SplitVariableValue(String name, String comment, String cvName,
-                              boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
+    
+    public SplitVariableValue(String name, String comment, boolean readOnly,
                               int cvNum, String mask, int minVal, int maxVal,
                               Vector v, JLabel status, String stdname,
-                              int pSecondCV, int pFactor, int pOffset, String uppermask) {
-        super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
+                              int pSecondCV,
+                              int pFactor, int pOffset) {
+        super(name, comment, readOnly, cvNum, mask, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
         _value = new JTextField("0", 5);
@@ -49,22 +39,13 @@ public class SplitVariableValue extends VariableValue
         _value.addActionListener(this);
         _value.addFocusListener(this);
         mSecondCV = pSecondCV;
-
-        lowerbitmask = maskVal(mask);
-        lowerbitoffset = offsetVal(mask);
-        upperbitmask = maskVal(uppermask);
-
-        // upper bit offset includes lower bit offset, and MSB bits missing from upper part
-        upperbitoffset = offsetVal(uppermask);
+        mShift = 0;
         String t = mask;
-        while (t.length()>0) {
-            if (!t.startsWith("V"))
-                upperbitoffset++;
-            t = t.substring(1);
+        while (t.endsWith("V")) {
+            mShift++;
+            t = t.substring(0,t.length()-1);
         }
-        if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" upper mask "+uppermask+" had offsetVal="+offsetVal(uppermask)
-            +" so upperbitoffset="+upperbitoffset);
-
+        if (mShift<=0) log.warn("split variable "+name+" mask "+mask+" must have V in the right most position");
         // connect for notification
         CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()));
         cv.addPropertyChangeListener(this);
@@ -73,108 +54,78 @@ public class SplitVariableValue extends VariableValue
         cv1.addPropertyChangeListener(this);
         cv1.setState(CvValue.FROMFILE);
     }
-
-    public CvValue[] usesCVs() {
-        return new CvValue[]{
-            (CvValue) _cvVector.elementAt(getCvNum()),
-            (CvValue) _cvVector.elementAt(getSecondCvNum())};
-    }
-
+    
     int mSecondCV;
     int mFactor;
     int mOffset;
-
+    
     public int getSecondCvNum() { return mSecondCV;}
-
-    int lowerbitmask;
-    int lowerbitoffset;
-    int upperbitmask;
-    // number of bits to shift _left_ the 8-16 bits in 2nd CV
-    // e.g. multiply by 256, then shift by this
-    int upperbitoffset;
-
-    public void setTooltipText(String t) {
-        super.setTooltipText(t);   // do default stuff
-        _value.setToolTipText(t);  // set our value
-    }
-
+    int mShift;
+    
     // the connection is to cvNum and cvNum+1
-
+    
     int _maxVal;
     int _minVal;
-
+    
     public Object rangeVal() {
-        return new String("Split value");
+        return new String("Long address");
     }
-
+    
     String oldContents = "";
-
+    
     void enterField() {
         oldContents = _value.getText();
     }
-
+    
     void exitField() {
-        // there may be a lost focus event left in the queue when disposed so protect
-        if (_value != null && !oldContents.equals(_value.getText())) {
+        if (!oldContents.equals(_value.getText())) {
             int newVal = ((Integer.valueOf(_value.getText()).intValue())-mOffset)/mFactor;
             int oldVal = ((Integer.valueOf(oldContents).intValue())-mOffset)/mFactor;
             updatedTextField();
             prop.firePropertyChange("Value", new Integer(oldVal), new Integer(newVal));
         }
     }
-
+    
     void updatedTextField() {
-        if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" enter updatedTextField in SplitVal");
+        if (log.isDebugEnabled()) log.debug("actionPerformed");
         // called for new values - set the CV as needed
         CvValue cv1 = (CvValue)_cvVector.elementAt(getCvNum());
         CvValue cv2 = (CvValue)_cvVector.elementAt(getSecondCvNum());
-
+        // no masking involved for long address
         int newEntry;  // entered value
         try { newEntry = Integer.valueOf(_value.getText()).intValue(); }
         catch (java.lang.NumberFormatException ex) { newEntry = 0; }
-
+        
         // calculate resulting number
         int newVal = (newEntry-mOffset)/mFactor;
-
-        // combine with existing values via mask
-        if (log.isDebugEnabled())
-            log.debug("CV "+getCvNum()+","+getSecondCvNum()+" lo cv was "+cv1.getValue()+" mask="+lowerbitmask+" offset="+lowerbitoffset);
-        int newCv1 = ( (newVal << lowerbitoffset) & lowerbitmask )
-                    | (~lowerbitmask & cv1.getValue());
-
-        if (log.isDebugEnabled())
-            log.debug("CV "+getCvNum()+","+getSecondCvNum()+" hi cv was "+cv2.getValue()+" mask="+upperbitmask+" offset="+upperbitoffset);
-        int newCv2 = (((newVal << upperbitoffset)>>8)&upperbitmask)
-                    | (~upperbitmask & cv2.getValue());
-        if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" new value "+newVal+" gives first="+newCv1+" second="+newCv2);
-
-        // cv updates here trigger updated property changes, which means
-        // we're going to get notified sooner or later.
+        
+        // no masked combining of old value required, as this fills the two CVs
+        int newCv1 = newVal& ((1<<mShift)-1);
+        int newCv2 = newVal >>mShift;
         cv1.setValue(newCv1);
         cv2.setValue(newCv2);
-        if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" exit updatedTextField");
-
+        if (log.isDebugEnabled()) log.debug("new value "+newVal+" gives first="+newCv1+" second="+newCv2);
     }
-
+    
     /** ActionListener implementations */
     public void actionPerformed(ActionEvent e) {
-        if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" actionPerformed");
+        if (log.isDebugEnabled()) log.debug("actionPerformed");
         int newVal = ((Integer.valueOf(_value.getText()).intValue())-mOffset)/mFactor;
         updatedTextField();
         prop.firePropertyChange("Value", null, new Integer(newVal));
     }
-
+    
     /** FocusListener implementations */
     public void focusGained(FocusEvent e) {
-        if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" focusGained");
+        if (log.isDebugEnabled()) log.debug("focusGained");
         enterField();
     }
-
+    
     public void focusLost(FocusEvent e) {
-        if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" focusLost");
+        if (log.isDebugEnabled()) log.debug("focusLost");
         exitField();
     }
-
+    
     // to complete this class, fill in the routines to handle "Value" parameter
     // and to read/write/hear parameter changes.
     public String getValueString() {
@@ -184,45 +135,46 @@ public class SplitVariableValue extends VariableValue
     public void setIntValue(int i) {
         setValue((i-mOffset)/mFactor);
     }
-
-    public int getIntValue() {
-        return ((Integer.valueOf(_value.getText()).intValue())-mOffset)/mFactor;
-    }
     
     public Component getValue()  {
-        if (getReadOnly())  {
-            JLabel r = new JLabel(_value.getText());
-            updateRepresentation(r);
-            return r;
-        } else
+        if (getReadOnly())  //
+            return new JLabel(_value.getText());
+        else
             return _value;
     }
-
+    
     public void setValue(int value) {
-        if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" enter setValue "+value);
         int oldVal;
         try {
             oldVal = (Integer.valueOf(_value.getText()).intValue()-mOffset)/mFactor;
         } catch (java.lang.NumberFormatException ex) { oldVal = -999; }
-        if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" setValue with new value "+value+" old value "+oldVal);
+        if (log.isDebugEnabled()) log.debug("setValue with new value "+value+" old value "+oldVal);
         _value.setText(String.valueOf( value*mFactor + mOffset));
         if (oldVal != value || getState() == VariableValue.UNKNOWN)
             actionPerformed(null);
         prop.firePropertyChange("Value", new Integer(oldVal), new Integer(value*mFactor + mOffset));
-        if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" exit setValue "+value);
     }
-
+    
     Color _defaultColor;
-
+    
     // implement an abstract member to set colors
     void setColor(Color c) {
         if (c != null) _value.setBackground(c);
         else _value.setBackground(_defaultColor);
         // prop.firePropertyChange("Value", null, null);
     }
-
+    
+    /**
+     * Notify the connected CVs of a state change from above
+     * @param state
+     */
+    public void setCvState(int state) {
+        ((CvValue)_cvVector.elementAt(getCvNum())).setState(state);
+        ((CvValue)_cvVector.elementAt(getSecondCvNum())).setState(state);
+    }
+    
     public Component getRep(String format)  {
-        return updateRepresentation(new VarTextField(_value.getDocument(),_value.getText(), 5, this));
+        return new VarTextField(_value.getDocument(),_value.getText(), 5, this);
     }
     private int _progState = 0;
     private static final int IDLE = 0;
@@ -230,69 +182,47 @@ public class SplitVariableValue extends VariableValue
     private static final int READING_SECOND = 2;
     private static final int WRITING_FIRST = 3;
     private static final int WRITING_SECOND = 4;
-
-    /**
-     * Notify the connected CVs of a state change from above
-     * @param state
-     */
-    public void setCvState(int state) {
-        ((CvValue)_cvVector.elementAt(getCvNum())).setState(state);
-    }
-
-    public boolean isChanged() {
-        CvValue cv1 = ((CvValue)_cvVector.elementAt(getCvNum()));
-        CvValue cv2 = ((CvValue)_cvVector.elementAt(getSecondCvNum()));
-        return (considerChanged(cv1)||considerChanged(cv2));
-    }
-
-    public void readChanges() {
-         if (isChanged()) readAll();
-    }
-
-    public void writeChanges() {
-         if (isChanged()) writeAll();
-    }
-
-    public void readAll() {
-        if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" splitval read() invoked");
-        setToRead(false);
+    
+    //
+    public void read() {
+        if (log.isDebugEnabled()) log.debug("longAddr read() invoked");
         setBusy(true);  // will be reset when value changes
         //super.setState(READ);
-        if (_progState != IDLE) log.warn("CV "+getCvNum()+","+getSecondCvNum()+" programming state "+_progState+", not IDLE, in read()");
+        if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in read()");
         _progState = READING_FIRST;
-        if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" invoke CV read");
+        if (log.isDebugEnabled()) log.debug("invoke CV read");
         ((CvValue)_cvVector.elementAt(getCvNum())).read(_status);
     }
-
-    public void writeAll() {
-        if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" write() invoked");
-        if (getReadOnly()) log.error("CV "+getCvNum()+","+getSecondCvNum()+" unexpected write operation when readOnly is set");
-        setToWrite(false);
+    
+    public void write() {
+        if (log.isDebugEnabled()) log.debug("write() invoked");
+        if (getReadOnly()) log.error("unexpected write operation when readOnly is set");
         setBusy(true);  // will be reset when value changes
-        if (_progState != IDLE) log.warn("CV "+getCvNum()+","+getSecondCvNum()+" Programming state "+_progState+", not IDLE, in write()");
+        //super.setState(STORED);
+        if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in write()");
         _progState = WRITING_FIRST;
-        if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" invoke CV write");
+        if (log.isDebugEnabled()) log.debug("invoke CV write");
         ((CvValue)_cvVector.elementAt(getCvNum())).write(_status);
     }
-
+    
     // handle incoming parameter notification
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" property changed event - name: "
+        if (log.isDebugEnabled()) log.debug("property changed event - name: "
                                             +e.getPropertyName());
         // notification from CV; check for Value being changed
         if (e.getPropertyName().equals("Busy") && ((Boolean)e.getNewValue()).equals(Boolean.FALSE)) {
             // busy transitions drive the state
             switch (_progState) {
             case IDLE:  // no, just a CV update
-                if (log.isDebugEnabled()) log.error("CV "+getCvNum()+","+getSecondCvNum()+" Busy goes false with state IDLE");
+                if (log.isDebugEnabled()) log.error("Busy goes false with state IDLE");
                 return;
             case READING_FIRST:   // read first CV, now read second
-                if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" Busy goes false with state READING_FIRST");
+                if (log.isDebugEnabled()) log.debug("Busy goes false with state READING_FIRST");
                 _progState = READING_SECOND;
                 ((CvValue)_cvVector.elementAt(getSecondCvNum())).read(_status);
                 return;
             case READING_SECOND:  // finally done, set not busy
-                if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" Busy goes false with state READING_SECOND");
+                if (log.isDebugEnabled()) log.debug("Busy goes false with state READING_SECOND");
                 _progState = IDLE;
                 ((CvValue)_cvVector.elementAt(getCvNum())).setState(READ);
                 ((CvValue)_cvVector.elementAt(getSecondCvNum())).setState(READ);
@@ -300,70 +230,66 @@ public class SplitVariableValue extends VariableValue
                 setBusy(false);
                 return;
             case WRITING_FIRST:  // no, just a CV update
-                if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" Busy goes false with state WRITING_FIRST");
+                if (log.isDebugEnabled()) log.debug("Busy goes false with state WRITING_FIRST");
                 _progState = WRITING_SECOND;
                 ((CvValue)_cvVector.elementAt(getSecondCvNum())).write(_status);
                 return;
             case WRITING_SECOND:  // now done with complete request
-                if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" Busy goes false with state WRITING_SECOND");
+                if (log.isDebugEnabled()) log.debug("Busy goes false with state WRITING_SECOND");
                 _progState = IDLE;
                 super.setState(STORED);
                 setBusy(false);
                 return;
             default:  // unexpected!
-                log.error("CV "+getCvNum()+","+getSecondCvNum()+" Unexpected state found: "+_progState);
+                log.error("Unexpected state found: "+_progState);
                 _progState = IDLE;
                 return;
             }
         }
         else if (e.getPropertyName().equals("State")) {
             CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
-            if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" State changed to "+cv.getState());
+            if (log.isDebugEnabled()) log.debug("CV State changed to "+cv.getState());
             setState(cv.getState());
         }
         else if (e.getPropertyName().equals("Value")) {
             // update value of Variable
             CvValue cv0 = (CvValue)_cvVector.elementAt(getCvNum());
             CvValue cv1 = (CvValue)_cvVector.elementAt(getSecondCvNum());
-            int newVal = ((cv0.getValue()&lowerbitmask) >> lowerbitoffset)
-                + (((cv1.getValue()&upperbitmask)*256)>>upperbitoffset);
-            if (log.isDebugEnabled())
-                log.debug("CV "+getCvNum()+","+getSecondCvNum()+" set value to "+newVal+" based on cv0="+cv0.getValue()+" cv1="+cv1.getValue());
+            int newVal = (cv0.getValue()&((1<<mShift)-1))
+                + (cv1.getValue()<<mShift);
             setValue(newVal);  // check for duplicate done inside setVal
-            if (log.isDebugEnabled())
-                log.debug("CV "+getCvNum()+","+getSecondCvNum()+" in property change after setValue call, cv0="+cv0.getValue()+" cv1="+cv1.getValue());
             // state change due to CV state change, so propagate that
             setState(cv0.getState());
             // see if this was a read or write operation
             switch (_progState) {
             case IDLE:  // no, just a CV update
-                if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" Value changed with state IDLE");
+                if (log.isDebugEnabled()) log.debug("Value changed with state IDLE");
                 return;
             case READING_FIRST:  // yes, now read second
-                if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" Value changed with state READING_FIRST");
+                if (log.isDebugEnabled()) log.debug("Value changed with state READING_FIRST");
                 return;
             case READING_SECOND:  // now done with complete request
-                if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" Value changed with state READING_SECOND");
+                if (log.isDebugEnabled()) log.debug("Value changed with state READING_SECOND");
                 return;
             default:  // unexpected!
-                log.error("CV "+getCvNum()+","+getSecondCvNum()+" Unexpected state found: "+_progState);
+                log.error("Unexpected state found: "+_progState);
                 _progState = IDLE;
                 return;
             }
         }
     }
-
+    
     // stored value
     JTextField _value = null;
-
+    
     /* Internal class extends a JTextField so that its color is consistent with
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.17 $
+     * @version     $Revision: 1.5 $
      */
     public class VarTextField extends JTextField {
-
+        
         VarTextField(Document doc, String text, int col, SplitVariableValue var) {
             super(doc, text, col);
             _var = var;
@@ -377,12 +303,12 @@ public class SplitVariableValue extends VariableValue
                 });
             addFocusListener(new java.awt.event.FocusListener() {
                     public void focusGained(FocusEvent e) {
-                        if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" focusGained");
+                        if (log.isDebugEnabled()) log.debug("focusGained");
                         enterField();
                     }
-
+                    
                     public void focusLost(FocusEvent e) {
-                        if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" focusLost");
+                        if (log.isDebugEnabled()) log.debug("focusLost");
                         exitField();
                     }
                 });
@@ -393,35 +319,35 @@ public class SplitVariableValue extends VariableValue
                     }
                 });
         }
-
+        
         SplitVariableValue _var;
-
+        
         void thisActionPerformed(java.awt.event.ActionEvent e) {
             // tell original
             _var.actionPerformed(e);
         }
-
+        
         void originalPropertyChanged(java.beans.PropertyChangeEvent e) {
             // update this color from original state
             if (e.getPropertyName().equals("State")) {
                 setBackground(_var._value.getBackground());
             }
         }
-
+        
     }
-
+    
     // clean up connections when done
     public void dispose() {
         if (log.isDebugEnabled()) log.debug("dispose");
         if (_value != null) _value.removeActionListener(this);
         ((CvValue)_cvVector.elementAt(getCvNum())).removePropertyChangeListener(this);
-        ((CvValue)_cvVector.elementAt(getSecondCvNum())).removePropertyChangeListener(this);
-
+        ((CvValue)_cvVector.elementAt(getCvNum()+1)).removePropertyChangeListener(this);
+        
         _value = null;
         // do something about the VarTextField
     }
-
+    
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SplitVariableValue.class.getName());
-
+    
 }

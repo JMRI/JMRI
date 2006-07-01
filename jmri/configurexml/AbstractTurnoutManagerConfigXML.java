@@ -2,15 +2,8 @@ package jmri.configurexml;
 
 import jmri.InstanceManager;
 import jmri.TurnoutManager;
-import jmri.Turnout;
-import jmri.Sensor;
-import jmri.TurnoutOperation;
-import jmri.TurnoutOperationManager;
-import jmri.configurexml.turnoutoperations.TurnoutOperationXml;
-
 import com.sun.java.util.collections.List;
 import org.jdom.Element;
-import org.jdom.Attribute;
 
 /**
  * Provides the abstract base and store functionality for
@@ -24,7 +17,7 @@ import org.jdom.Attribute;
  * specific Turnout or AbstractTurnout subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.9 $
  */
 public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
 
@@ -33,7 +26,7 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
 
     /**
      * Default implementation for storing the contents of a
-     * TurnoutManager and associated TurnoutOperation's
+     * TurnoutManager
      * @param o Object to store, of type TurnoutManager
      * @return Element containing the complete info
      */
@@ -42,9 +35,6 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
         setStoreElementClass(turnouts);
         TurnoutManager tm = (TurnoutManager) o;
         if (tm!=null) {
-        	TurnoutOperationManagerXml tomx = new TurnoutOperationManagerXml();
-        	Element opElem = tomx.store(TurnoutOperationManager.getInstance());
-        	turnouts.addContent(opElem);
             com.sun.java.util.collections.Iterator iter =
                                     tm.getSystemNameList().iterator();
 
@@ -52,47 +42,11 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
                 String sname = (String)iter.next();
                 if (sname==null) log.error("System name null during store");
                 log.debug("system name is "+sname);
-                Turnout t = tm.getBySystemName(sname);
-                String uname = t.getUserName();
+                String uname = tm.getBySystemName(sname).getUserName();
                 Element elem = new Element("turnout")
                             .addAttribute("systemName", sname);
                 if (uname!=null) elem.addAttribute("userName", uname);
                 log.debug("store turnout "+sname+":"+uname);
-                
-                // include feedback info
-                elem.addAttribute("feedback", t.getFeedbackModeName());
-                Sensor s;
-                s = t.getFirstSensor();
-                if (s!=null) elem.addAttribute("sensor1", s.getSystemName());
-                s = t.getSecondSensor();
-                if (s!=null) elem.addAttribute("sensor2", s.getSystemName());
-				
-				// include number of control bits, if different from one
-				int iNum = t.getNumberOutputBits();
-				if (iNum!=1) elem.addAttribute("numBits",""+iNum);
-
-                // add operation stuff
-                String opstr = null;
-                TurnoutOperation op = t.getTurnoutOperation();
-                if (t.getInhibitOperation()) {
-                	opstr = "Off";
-                } else if (op==null) {
-                	opstr = "Default";
-                } else if (op.isNonce()) {	// nonce operation appears as subelement
-        			TurnoutOperationXml adapter = TurnoutOperationXml.getAdapter(op);
-        			if (adapter != null) {
-        				Element nonceOpElem = adapter.store(op);
-        				if (opElem != null) {
-        					elem.addContent(nonceOpElem);
-        				}
-        			}
-                } else {
-                	opstr = op.getName();
-                }
-                if (opstr != null) {
-                	elem.addAttribute("automate", opstr);
-                }                
-                // add element
                 turnouts.addContent(elem);
 
             }
@@ -122,17 +76,9 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
      * @param turnouts Element containing the Turnout elements to load.
      */
     public void loadTurnouts(Element turnouts) {
-    	List operationList = turnouts.getChildren("operations");
-    	if (operationList.size()>1) {
-    		log.warn("unexpected extra elements found in turnout operations list");
-    	}
-    	if (operationList.size()>0) {
-    		TurnoutOperationManagerXml tomx = new TurnoutOperationManagerXml();
-    		tomx.load((Element)operationList.get(0));
-    	}
-    	List turnoutList = turnouts.getChildren("turnout");
-    	if (log.isDebugEnabled()) log.debug("Found "+turnoutList.size()+" turnouts");
-    	TurnoutManager tm = InstanceManager.turnoutManagerInstance();
+        List turnoutList = turnouts.getChildren("turnout");
+        if (log.isDebugEnabled()) log.debug("Found "+turnoutList.size()+" turnouts");
+        TurnoutManager tm = InstanceManager.turnoutManagerInstance();
 
         for (int i=0; i<turnoutList.size(); i++) {
             if ( ((Element)(turnoutList.get(i))).getAttribute("systemName") == null) {
@@ -144,67 +90,8 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
             if ( ((Element)(turnoutList.get(i))).getAttribute("userName") != null)
             userName = ((Element)(turnoutList.get(i))).getAttribute("userName").getValue();
             if (log.isDebugEnabled()) log.debug("create turnout: ("+sysName+")("+(userName==null?"<null>":userName)+")");
-            Turnout t = tm.newTurnout(sysName, userName);
-            
-            // now add feedback if needed
-            Attribute a;
-            a = ((Element)(turnoutList.get(i))).getAttribute("feedback");
-            if (a!=null) {
-            	t.setFeedbackMode(a.getValue());
-            }
-            a = ((Element)(turnoutList.get(i))).getAttribute("sensor1");
-            if (a!=null) { 
-                Sensor s = InstanceManager.sensorManagerInstance().provideSensor(a.getValue());
-                t.provideFirstFeedbackSensor(s);
-            }
-            a = ((Element)(turnoutList.get(i))).getAttribute("sensor2");
-            if (a!=null) { 
-                Sensor s = InstanceManager.sensorManagerInstance().provideSensor(a.getValue());
-                t.provideSecondFeedbackSensor(s);
-            }
-			
-			// number of bits, if present - if not, defaults to 1
-			a = ((Element)(turnoutList.get(i))).getAttribute("numBits");
-			if (a==null) {
-				t.setNumberOutputBits(1);
-			}
-			else {
-				int iNum = Integer.parseInt(a.getValue());
-				if ( (iNum==1) || (iNum==2) ) {
-					t.setNumberOutputBits(iNum);
-				}
-				else {
-					log.warn("illegal number of output bits for control of turnout "+sysName);
-					t.setNumberOutputBits(1);
-				}
-			}
-			
-            // operation stuff
-            List myOpList = ((Element)turnoutList.get(i)).getChildren();
-            if (myOpList.size()>0) {
-            	if (myOpList.size()>1) {
-            		log.warn("unexpected extra elements found in turnout-specific operations");
-            	}
-            	TurnoutOperation toper = TurnoutOperationXml.loadOperation((Element)myOpList.get(0));
-        		t.setTurnoutOperation(toper);
-            } else {
-            	a = ((Element)(turnoutList.get(i))).getAttribute("automate");
-            	if (a!=null) {
-            		String str = a.getValue();
-            		if (str.equals("Off")) {
-            			t.setInhibitOperation(true);
-            		} else if (!str.equals("Default")) {
-            			TurnoutOperation toper =
-            				TurnoutOperationManager.getInstance().getOperation(str);
-            			t.setTurnoutOperation(toper);
-            		}
-            	}
-            }
-			
-			//  set initial state from sensor feedback if appropriate
-			t.setInitialKnownStateFromFeedback();
+            tm.newTurnout(sysName, userName);
         }
-       
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractTurnoutManagerConfigXML.class.getName());

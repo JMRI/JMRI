@@ -1,15 +1,18 @@
-// DecoderDefnTest.java
-
 package jmri.jmrit.decoderdefn;
 
 import junit.framework.Test;
+import junit.framework.Assert;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import java.io.*;
+
 /**
- * Tests for the jmrit.decoderdefn package
+ * DecoderDefnTest.java
+ *
+ * Description:	    tests for the jmrit.decoderdefn package
  * @author			Bob Jacobsen
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.2 $
  */
 public class DecoderDefnTest extends TestCase {
 

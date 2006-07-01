@@ -14,15 +14,21 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ResourceBundle;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
 
 import com.sun.java.util.collections.ArrayList;
 
 /**
- * Basic configuration GUI infrastructure.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.6 $
  */
 public class AppConfigPanel extends JPanel {
 
@@ -50,7 +56,7 @@ public class AppConfigPanel extends JPanel {
 
         // default programmer configuration
         log.debug("start prog");
-        jmri.jmrit.symbolicprog.ProgrammerConfigPane p4;
+        JPanel p4;
         addAndRemember(p4 = new jmri.jmrit.symbolicprog.ProgrammerConfigPane());
         p4.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutProgrammer")));
 
@@ -67,14 +73,10 @@ public class AppConfigPanel extends JPanel {
 
         // add advanced section itself
         log.debug("start adv");
-        advScroll = new JPanel();
-        advScroll.setLayout(new BoxLayout(advScroll, BoxLayout.Y_AXIS));
-        advancedPane = new JPanel();
-        JScrollPane js = new JScrollPane(advancedPane);
+	advancedPane = new JPanel();
         advancedPane.setLayout(new BoxLayout(advancedPane, BoxLayout.Y_AXIS));
-        advScroll.setVisible(false);  // have to click first
-        advScroll.add(js);
-        add(advScroll);
+        advancedPane.setVisible(false);  // have to click first
+        add(advancedPane);
         showAdvanced.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (showAdvanced.isSelected()) {
@@ -82,34 +84,28 @@ public class AppConfigPanel extends JPanel {
                         localeSpace.add(p3.doLocale());
                         localeAdded = true;
                     }
-                    advScroll.setVisible(true);
-                    advScroll.validate();
+                    advancedPane.setVisible(true);
+                    advancedPane.validate();
                     if (getTopLevelAncestor()!=null) ((JFrame)getTopLevelAncestor()).pack();
-                    advScroll.repaint();
+                    advancedPane.repaint();
                 }
                 else {
-                    advScroll.setVisible(false);
-                    advScroll.validate();
+                    advancedPane.setVisible(false);
+                    advancedPane.validate();
                     if (getTopLevelAncestor()!=null) ((JFrame)getTopLevelAncestor()).pack();
-                    advScroll.repaint();
+                    advancedPane.repaint();
                 }
             }
         });
 
-        // fill advanced section
         log.debug("start comm 2");
+        // fill advanced section
         if (nConnections>1) {
             if (p2 == null) p2 = JmrixConfigPane.instance(2);
             p2.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutAuxConnection")));
             advancedPane.add(p2);
             clist.add(p2);
         }
-
-        // add advanced programmer options
-        JPanel advProgSpace = new JPanel();
-        advProgSpace.add(p4.getAdvancedPanel());
-        advProgSpace.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutProgrammer")));
-        advancedPane.add(advProgSpace);
 
         // reserve space for Locale later
         log.debug("start res locale");
@@ -124,32 +120,11 @@ public class AppConfigPanel extends JPanel {
         advancedPane.add(action);
         clist.add(action);
 
-        log.debug("start button");
-        if (Apps.buttonSpace()!=null) {
-            CreateButtonPanel buttons = new CreateButtonPanel();
-            buttons.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutCreateButton")));
-            advancedPane.add(buttons);
-            clist.add(buttons);
-        }
-
         log.debug("start file");
         PerformFilePanel files = new PerformFilePanel();
         files.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutStartupFiles")));
         advancedPane.add(files);
         clist.add(files);
-
-        log.debug("start scripts");
-        PerformScriptPanel scripts = new PerformScriptPanel();
-        scripts.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutStartupScripts")));
-        advancedPane.add(scripts);
-        clist.add(scripts);
-
-        // default roster location configuration
-        log.debug("start roster");
-        JPanel roster = new jmri.jmrit.roster.RosterConfigPane();
-        roster.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutRoster")));
-        advancedPane.add(roster);
-        clist.add(roster);
 
         // put the "Save" button at the bottom
         JButton save = new JButton(rb.getString("ButtonSave"));
@@ -163,7 +138,6 @@ public class AppConfigPanel extends JPanel {
     }
 
     JCheckBox showAdvanced;
-    JPanel advScroll;
     JPanel advancedPane;
 
     JPanel localeSpace = null;

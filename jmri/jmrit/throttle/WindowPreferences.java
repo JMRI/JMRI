@@ -2,7 +2,6 @@ package jmri.jmrit.throttle;
 
 import org.jdom.Element;
 import java.awt.Container;
-import java.awt.Dimension;
 
 /**
  * A helper class for getting and setting XML attributes of a Container.
@@ -25,9 +24,8 @@ public class WindowPreferences
         Element window = new Element("window");
         window.addAttribute("x", String.valueOf(c.getLocation().x));
         window.addAttribute("y", String.valueOf(c.getLocation().y));
-        Dimension size = c.getSize();
-        window.addAttribute("width", String.valueOf(size.width));
-        window.addAttribute("height", String.valueOf(size.height));
+        window.addAttribute("width", String.valueOf(c.getWidth()));
+        window.addAttribute("height", String.valueOf(c.getHeight()));
         return window;
     }
 

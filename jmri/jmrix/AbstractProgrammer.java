@@ -1,4 +1,11 @@
-// AbstractProgrammer.java
+/**
+ * AbstractProgrammer.java
+ *
+ * Common implementations for the Programmer interface
+ *
+ * @author	Bob Jacobsen  Copyright (C) 2001
+ * @version     $Revision: 1.7 $
+ */
 
 package jmri.jmrix;
 
@@ -8,12 +15,6 @@ import jmri.ProgrammerException;
 import java.beans.PropertyChangeListener;
 import java.util.Vector;
 
-/**
- * Common implementations for the Programmer interface.
- *
- * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.11 $
- */
 public abstract class AbstractProgrammer implements Programmer {
 
     public String decodeErrorCode(int code) {
@@ -28,7 +29,6 @@ public abstract class AbstractProgrammer implements Programmer {
         if ((code & ProgListener.FailedTimeout) != 0) sbuf.append("timeout talking to command station; ");
         if ((code & ProgListener.UnknownError) != 0) sbuf.append("Unknown error; ");
         if ((code & ProgListener.NoAck) != 0) sbuf.append("No acknowledge from locomotive; ");
-	if ((code & ProgListener.ProgrammingShort) != 0) sbuf.append("Short Circuit on Programming Track; ");
 
         // remove trailing separators
         if (sbuf.length() > 2) sbuf.setLength(sbuf.length()-2);
@@ -79,8 +79,7 @@ public abstract class AbstractProgrammer implements Programmer {
     /**
      * Internal routine to handle timer starts & restarts
      */
-    protected synchronized void restartTimer(int delay) {
-        if (log.isDebugEnabled()) log.debug("restart timer with delay "+delay);
+    protected void restartTimer(int delay) {
         if (timer==null) {
             timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -121,8 +120,8 @@ public abstract class AbstractProgrammer implements Programmer {
      */
     abstract protected void timeout();
 
-    protected int SHORT_TIMEOUT=2000;
-    protected int LONG_TIMEOUT=60000;
+    static private int SHORT_TIMEOUT=2000;
+    static private int LONG_TIMEOUT=60000;
 
     javax.swing.Timer timer = null;
 

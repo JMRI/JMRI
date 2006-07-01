@@ -3,13 +3,14 @@
 package jmri;
 
 /**
- * Allow notification of the completion of programming operations.
- * <P>
- * This allows a {@link Programmer} object to return delayed status, including
+ * Interface to be implemented by classes using Programmer.
+ * This allows a Programmer object to return delayed status, including
  * the CV value from a read operation.
  *
+ * Callbacks are guaranteed to be in the Swing execution thread.
+ *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.8 $
  */
 public interface ProgListener extends java.util.EventListener{
 	/** Receive a callback at the end of a programming operation.
@@ -55,9 +56,6 @@ public interface ProgListener extends java.util.EventListener{
 
 	/** Constant denoting that the programming operation timed out */
 	public final int FailedTimeout  = 0x80;
-
-	/** Constant denoting that a short circuit occured while programming */
-	public final int ProgrammingShort  = 0x100;
 
 }
 

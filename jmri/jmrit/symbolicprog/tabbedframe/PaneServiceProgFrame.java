@@ -14,10 +14,10 @@ import org.jdom.Element;
  * Extend the PaneProgFrame to handle service mode operations
  *
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.4 $
  */
 public class PaneServiceProgFrame extends PaneProgFrame
-                                                        implements java.beans.PropertyChangeListener  {
+							implements java.beans.PropertyChangeListener  {
 
     jmri.ProgModeSelector  modePane;
 
@@ -47,7 +47,7 @@ public class PaneServiceProgFrame extends PaneProgFrame
      */
     public PaneServiceProgFrame(DecoderFile decoderFile, RosterEntry r,
                                 String name, String file, Programmer pProg) {
-        super(decoderFile, r, name, file, pProg, false);
+        super(decoderFile, r, name, file, pProg);
 
         // set the programming mode
         if (jmri.InstanceManager.programmerManagerInstance() != null) {
@@ -82,12 +82,12 @@ public class PaneServiceProgFrame extends PaneProgFrame
                 || (currentMode == Programmer.DIRECTBITMODE && directbit)
                 || (currentMode == Programmer.REGISTERMODE && register) ) ) {
                 // if not, find a mode to set it to
-                if (mProgrammer.hasMode(Programmer.DIRECTBITMODE)&&directbit)
-                    mProgrammer.setMode(jmri.Programmer.DIRECTBITMODE);
+                if (mProgrammer.hasMode(Programmer.PAGEMODE)&&paged)
+                    mProgrammer.setMode(jmri.Programmer.PAGEMODE);
                 else if (mProgrammer.hasMode(Programmer.DIRECTBYTEMODE)&&directbyte)
                     mProgrammer.setMode(jmri.Programmer.DIRECTBYTEMODE);
-                else if (mProgrammer.hasMode(Programmer.PAGEMODE)&&paged)
-                    mProgrammer.setMode(jmri.Programmer.PAGEMODE);
+                else if (mProgrammer.hasMode(Programmer.DIRECTBITMODE)&&directbit)
+                    mProgrammer.setMode(jmri.Programmer.DIRECTBITMODE);
                 else if (mProgrammer.hasMode(Programmer.REGISTERMODE)&&register)
                     mProgrammer.setMode(jmri.Programmer.REGISTERMODE);
                 else log.warn("No acceptable mode found, leave as found");

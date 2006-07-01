@@ -23,7 +23,7 @@ import javax.comm.SerialPortEventListener;
  * Provide access to C/MRI via a serial comm port.
  * Normally controlled by the cmri.serial.serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.13 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -61,25 +61,11 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
                 return "Cannot set serial parameters on port "+portName+": "+e.getMessage();
             }
 
-
-            // set framing (end) character
-            try {
-                activeSerialPort.enableReceiveFraming(0x03);
-                log.debug("Serial framing was observed as: "+activeSerialPort.isReceiveFramingEnabled()
-                      +" "+activeSerialPort.getReceiveFramingByte());
-            } catch (Exception ef) {
-                log.info("failed to set serial framing: "+ef);
-            }
-
-            // set timeout; framing should work before this anyway
-            try {
-                activeSerialPort.enableReceiveTimeout(10);
-                log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
+            // set timeout
+            // activeSerialPort.enableReceiveTimeout(1000);
+            log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
                       +" "+activeSerialPort.isReceiveTimeoutEnabled());
-            } catch (Exception et) {
-                log.info("failed to set serial timeout: "+et);
-            }
-            
+
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
 
@@ -194,12 +180,10 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         SerialTrafficController.instance().connectPort(this);
 
         jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.cmri.serial.SerialTurnoutManager());
-        jmri.InstanceManager.setLightManager(new jmri.jmrix.cmri.serial.SerialLightManager());
 
         SerialSensorManager s;
         jmri.InstanceManager.setSensorManager(s = new jmri.jmrix.cmri.serial.SerialSensorManager());
         SerialTrafficController.instance().setSensorManager(s);
-        jmri.jmrix.cmri.serial.ActiveFlag.setActive();
     }
 
     private Thread sinkThread;
@@ -263,23 +247,57 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         super.configureBaudRate(rate);
     }
 
-    String[] stdOption1Values = new String[]{""};
+    String[] stdOption1Values = new String[]{
+            "SMINI: UA=0 I M 00",
+            "Cornwall: UA=0 I N DL=10 NS=3 CT=90,150,02"
+        };
 
     /**
-     * Option 1 is not used for anything
+     * Option 1 is used to select an init string
      */
-    public String[] validOption1() { return new String[]{""}; }
+    public String[] validOption1() {
+        log.debug("request option 1 values. Current setting is: "+((opt1CurrentValue!=null)?opt1CurrentValue:"<null>"));
+        if (opt1CurrentValue == null) return stdOption1Values;
+        // if the current value is one of the standard values, return them
+        for (int i = 0; i<stdOption1Values.length; i++)
+            if (opt1CurrentValue.equals(stdOption1Values[i])) return stdOption1Values;
+        String[] r = new String[stdOption1Values.length+1];
+        r[0] = opt1CurrentValue;
+        for (int i = 0; i<stdOption1Values.length; i++)
+            r[i+1]= stdOption1Values[i];
+        return r;
+
+    }
     String opt1CurrentValue = null;
 
     /**
      * Option 1 not used, so return a null string.
      */
-    public String option1Name() { return ""; }
+    public String option1Name() { return "Init command"; }
 
     /**
      * The first port option isn't used, so just ignore this call.
      */
-    public void configureOption1(String value) {}
+    public void configureOption1(String value) {
+        super.configureOption1(value);
+        opt1CurrentValue = value;
+        // check the special cases
+        String inputString;
+        if (value.startsWith("SMINI")) {
+            inputString = "41 49 4D 00";
+        }
+        else if (value.startsWith("Cornwall")) {
+            inputString = "41 49 4D 00 0A 03 5A 9A 02";  // 90,154,2 e.g. 05A, 09A, 0x02
+        }
+        else {
+            inputString = value;
+        }
+        byte[] a = jmri.util.StringUtil.bytesFromHexString(inputString);
+        SerialMessage m = new SerialMessage(a.length);
+        for (int i = 0; i<a.length; i++)
+            m.setElement(i, a[i]);
+        SerialTrafficController.setInitMessage(m);
+    }
 
     protected String [] validSpeeds = new String[]{"9,600 baud","19,200 baud", "57,600 baud"};
     protected int [] validSpeedValues = new int[]{9600, 19200, 57600};
@@ -306,6 +324,9 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         return mInstance;
     }
     static SerialDriverAdapter mInstance = null;
+    static public boolean hasInstance() {
+        return (mInstance != null);
+    }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialDriverAdapter.class.getName());
 

@@ -18,7 +18,7 @@ import java.util.Vector;
  * without traffic over the connection.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version 		$Revision: 2.3 $
+ * @version 		$Revision: 1.2 $
  *
  */
 public class XNetTrafficRouter extends XNetTrafficController implements XNetListener {
@@ -36,32 +36,23 @@ public class XNetTrafficRouter extends XNetTrafficController implements XNetList
     boolean connected = false;
 	public boolean status() { return connected; }
 
-
-    /* store the last sender */
-    XNetListener lastSender=null;
-
 	/**
 	 * Forward a preformatted XNetMessage to the actual interface.
 	 *
      * @param m Message to send; will be updated with CRC
 	 */
 	public void sendXNetMessage(XNetMessage m, XNetListener replyTo) {
-		lastSender=replyTo;
-	        destination.sendXNetMessage(m, replyTo);
+        destination.sendXNetMessage(m, replyTo);
 	}
 
     /**
      * Receive a XNet message from upstream and forward it to
      * all the local clients.
      */
-    public void message(XNetReply m) {
+    public void message(XNetMessage m) {
         notify(m);
     }
-   
-     // listen for the messages to the LI100/LI101
-     public void message(XNetMessage l) {
-     }
- 
+
     // methods to connect/disconnect to a source of data in another
     // XNetInterface
 	private XNetInterface destination = null;
@@ -93,9 +84,19 @@ public class XNetTrafficRouter extends XNetTrafficController implements XNetList
 	 * Forward a XNetMessage to all registered listeners.
      * @param m Message to forward. Listeners should not modify it!
 	 */
-	protected void notify(XNetReply m) {
-		notifyReply((jmri.jmrix.AbstractMRReply)m,lastSender);
-	        lastSender=null;
+	protected void notify(XNetMessage m) {
+		// make a copy of the listener vector to synchronized not needed for transmit
+		Vector v;
+		synchronized(this) {
+			v = (Vector) listeners.clone();
+		}
+		if (log.isDebugEnabled()) log.debug("notify of incoming packet: "+m.toString());
+		// forward to all listeners
+		int cnt = v.size();
+		for (int i=0; i < cnt; i++) {
+			XNetListener client = (XNetListener) listeners.elementAt(i);
+			client.message(m);
+		}
 	}
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetTrafficRouter.class.getName());

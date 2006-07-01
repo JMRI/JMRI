@@ -2,39 +2,36 @@
 
 package jmri.jmrit.symbolicprog;
 
-import jmri.progdebugger.ProgDebugger;
 import java.util.Vector;
 
-import javax.swing.JLabel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import com.sun.java.util.collections.ArrayList;
 import com.sun.java.util.collections.List;
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import jmri.*;
+import jmri.progdebugger.*;
+import junit.framework.*;
 
 /**
- * Test LongAddrVariableValue class.
+ * LongAddrVariableValueTest.java
  *
  * @todo need a check of the MIXED state model for long address
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.7 $
  */
 public class LongAddrVariableValueTest extends VariableValueTest {
 
     ProgDebugger p = new ProgDebugger();
 
     // abstract members invoked by tests in parent VariableValueTest class
-    VariableValue makeVar(String label, String comment, String cvName,
-                          boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
+    VariableValue makeVar(String label, String comment, boolean readOnly,
                           int cvNum, String mask, int minVal, int maxVal,
                           Vector v, JLabel status, String item) {
         // make sure next CV exists
         CvValue cvNext = new CvValue(cvNum+1,p);
         cvNext.setValue(0);
         v.setElementAt(cvNext, cvNum+1);
-        return new LongAddrVariableValue(label, comment, "", readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, item);
+        return new LongAddrVariableValue(label, comment, readOnly, cvNum, mask, minVal, maxVal, v, status, item);
     }
 
 
@@ -75,7 +72,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
         v.setElementAt(cv17, 17);
         v.setElementAt(cv18, 18);
         // create a variable pointed at CV 17&18, check name
-        LongAddrVariableValue var = new LongAddrVariableValue("label", "comment", "", false, false, false, false, 17, "VVVVVVVV", 0, 255, v, null, null);
+        LongAddrVariableValue var = new LongAddrVariableValue("label", "comment", false, 17, "VVVVVVVV", 0, 255, v, null, null);
         Assert.assertTrue(var.label() == "label");
         // pretend you've edited the value, check its in same object
         ((JTextField)var.getValue()).setText("4797");
@@ -97,7 +94,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
         v.setElementAt(cv17, 17);
         v.setElementAt(cv18, 18);
         // create a variable pointed at CV 17 & 18
-        LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", "", false, false, false, false, 17, "VVVVVVVV", 0, 255, v, null, null);
+        LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "VVVVVVVV", 0, 255, v, null, null);
         ((JTextField)var.getValue()).setText("1029");
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 
@@ -122,7 +119,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
         v.setElementAt(cv17, 17);
         v.setElementAt(cv18, 18);
 
-        LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", "", false, false, false, false, 17, "XXVVVVXX", 0, 255, v, null, null);
+        LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "XXVVVVXX", 0, 255, v, null, null);
         // register a listener for parameter changes
         java.beans.PropertyChangeListener listen = new java.beans.PropertyChangeListener() {
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -138,7 +135,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
         ((JTextField)var.getValue()).setText("5");
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 
-        var.readAll();
+        var.read();
         // wait for reply (normally, done by callback; will check that later)
         int i = 0;
         while ( var.isBusy() && i++ < 100 )  {
@@ -148,11 +145,13 @@ public class LongAddrVariableValueTest extends VariableValueTest {
             }
         }
         if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+((JTextField)var.getValue()).getText()+" state="+var.getState());
+        if (i==0) log.warn("testLongAddressRead saw an immediate return from isBusy");
         Assert.assertTrue("wait satisfied ", i<100);
 
         int nBusyFalse = 0;
         for (int k = 0; k < evtList.size(); k++) {
             java.beans.PropertyChangeEvent e = (java.beans.PropertyChangeEvent) evtList.get(k);
+            // System.out.println("name: "+e.getPropertyName()+" new value: "+e.getNewValue());
             if (e.getPropertyName().equals("Busy") && ((Boolean)e.getNewValue()).equals(Boolean.FALSE))
                 nBusyFalse++;
         }
@@ -174,11 +173,11 @@ public class LongAddrVariableValueTest extends VariableValueTest {
         v.setElementAt(cv17, 17);
         v.setElementAt(cv18, 18);
 
-        LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", "", false, false, false, false, 17, "XXVVVVXX", 0, 255, v, null, null);
+        LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "XXVVVVXX", 0, 255, v, null, null);
         ((JTextField)var.getValue()).setText("4797");
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 
-        var.writeAll();
+        var.write();
         // wait for reply (normally, done by callback; will check that later)
         int i = 0;
         while ( var.isBusy() && i++ < 100  )  {
@@ -190,6 +189,8 @@ public class LongAddrVariableValueTest extends VariableValueTest {
         if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+((JTextField)var.getValue()).getText()
                                             +" state="+var.getState()
                                             +" last write: "+p.lastWrite());
+        if (i==0) log.warn("testLongAddressWrite saw an immediate return from isBusy");
+
         Assert.assertTrue("wait satisfied ", i<100);
 
         Assert.assertEquals("CV 17 value ", 210, cv17.getValue());
@@ -225,11 +226,6 @@ public class LongAddrVariableValueTest extends VariableValueTest {
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance( LongAddrVariableValueTest.class.getName());
-
-    // The minimal setup for log4J
-    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
-    protected void setUp() { log4jfixtureInst.setUp(); }
-    protected void tearDown() { log4jfixtureInst.tearDown(); }
 
 }
 

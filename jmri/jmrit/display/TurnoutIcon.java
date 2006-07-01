@@ -1,17 +1,14 @@
 package jmri.jmrit.display;
 
-import jmri.InstanceManager;
-import jmri.Turnout;
-import jmri.jmrit.catalog.NamedIcon;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
-import javax.swing.AbstractAction;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
+import javax.swing.*;
+
+import jmri.*;
+import jmri.jmrit.catalog.*;
 
 /**
- * An icon to display a status of a turnout.<P>
+ * TurnoutIcon provides a small icon to display a status of a turnout.<P>
  * This responds to only KnownState, leaving CommandedState to some other
  * graphic representation later.
  * <P>
@@ -21,8 +18,8 @@ import javax.swing.JPopupMenu;
  *<P>
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
- * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.28 $
+ * @author Bob Jacobsen
+ * @version $Revision: 1.22 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -31,7 +28,6 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         // super ctor call to make sure this is an icon label
         super(new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif",
                             "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif"));
-        setDisplayLevel(PanelEditor.TURNOUTS);
         displayState(turnoutState());
         icon = true;
         text = false;
@@ -42,18 +38,19 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
 
     /**
      * Attached a named turnout to this display item
-     * @param pName Used as a system/user name to lookup the turnout object
+     * @param pUserName Used as a user name to lookup the turnout object
+     * @param pSystemName Used as a system name to lookup the turnout object
      */
-    public void setTurnout(String pName) {
+    public void setTurnout(String pSystemName, String pUserName) {
         if (InstanceManager.turnoutManagerInstance()!=null) {
             turnout = InstanceManager.turnoutManagerInstance().
-                provideTurnout(pName);
+                newTurnout(pSystemName, pUserName);
             if (turnout != null) {
                 displayState(turnoutState());
                 turnout.addPropertyChangeListener(this);
                 setProperToolTip();
             } else {
-                log.error("Turnout '"+pName+"' not available, icon won't see changes");
+                log.error("Turnout '"+pSystemName+"' not available, icon won't see changes");
             }
         } else {
             log.error("No TurnoutManager for this protocol, icon won't see changes");
@@ -152,7 +149,6 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
      * Pop-up displays the turnout name, allows you to rotate the icons
      */
     protected void showPopUp(MouseEvent e) {
-        if (!getEditable()) return;
         ours = this;
         if (popup==null) {
             popup = new JPopupMenu();
@@ -167,8 +163,6 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
                     }
                 });
 
-            addDisableMenuEntry(popup);
-            
             popup.add(new AbstractAction("Remove") {
                 public void actionPerformed(ActionEvent e) {
                     remove();
@@ -194,11 +188,11 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
             if (icon) super.setIcon(unknown);
             break;
         case Turnout.CLOSED:
-            if (text) super.setText(InstanceManager.turnoutManagerInstance().getClosedText());
+            if (text) super.setText("Closed");
             if (icon) super.setIcon(closed);
             break;
         case Turnout.THROWN:
-            if (text) super.setText(InstanceManager.turnoutManagerInstance().getThrownText());
+            if (text) super.setText("Thrown");
             if (icon) super.setIcon(thrown);
             break;
         default:
@@ -215,8 +209,6 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
      * @param e
      */
     public void mouseClicked(java.awt.event.MouseEvent e) {
-        if (!getControlling()) return;
-        if (getForceControlOff()) return;
         if (e.isMetaDown() || e.isAltDown() ) return;
         if (turnout==null) {
             log.error("No turnout connection, can't process click");

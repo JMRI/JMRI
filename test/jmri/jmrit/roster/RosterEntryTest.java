@@ -1,19 +1,14 @@
 package jmri.jmrit.roster;
 
-import jmri.jmrit.XmlFile;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import jmri.jmrit.*;
+import java.io.*;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import junit.framework.*;
 
 /**
- * Tests for the jmrit.roster.RosterEntry class.
+ * Tests for the jmrit.roster.RosterEntry class
  * @author	Bob Jacobsen     Copyright (C) 2001, 2002
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.4 $
  */
 public class RosterEntryTest extends TestCase {
 
@@ -122,38 +117,23 @@ public class RosterEntryTest extends TestCase {
         Assert.assertEquals("initial filename ", null, r.getFileName());
         r.setId("test Roster Entry 123456789ABC");
         Assert.assertEquals("initial ID ", "test Roster Entry 123456789ABC", r.getId());
-        File f = new File(LocoFile.getFileLocation()+"test_Roster_Entry_123456789ABC.xml");
+        File f = new File(XmlFile.prefsDir()+LocoFile.fileLocation+File.separator+"test_Roster_Entry_123456789ABC.xml");
         if (f.exists()) f.delete();
         r.ensureFilenameExists();
         Assert.assertEquals("final filename ", "test_Roster_Entry_123456789ABC.xml", r.getFileName());
-        if (f.exists()) f.delete();  // clean up afterwards
     }
 
     public void testEnsureFilenameExistsOld() throws IOException {
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-        XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());
         RosterEntry r = new RosterEntry();
         Assert.assertEquals("initial filename ", null, r.getFileName());
         r.setId("test Roster Entry 123456789ABC");
         Assert.assertEquals("initial ID ", "test Roster Entry 123456789ABC", r.getId());
-        File f1 = new File(LocoFile.getFileLocation()+"test_Roster_Entry_123456789ABC.xml");
-        if (!f1.exists()) {
-            // create a dummy
-            FileOutputStream f = new FileOutputStream(f1);
-            f.write(0);
-            f.close();
-        }
-        File f2 = new File(LocoFile.getFileLocation()+"test_Roster_Entry_123456789ABC0.xml");
-        if (!f2.exists()) {
-            // create a dummy
-            FileOutputStream f = new FileOutputStream(f2);
-            f.write(0);
-            f.close();
-        }
+        File f1 = new File(XmlFile.prefsDir()+LocoFile.fileLocation+File.separator+"test_Roster_Entry_123456789ABC.xml");
+        if (!f1.exists()) f1.createNewFile();
+        File f2 = new File(XmlFile.prefsDir()+LocoFile.fileLocation+File.separator+"test_Roster_Entry_123456789ABC0.xml");
+        if (!f2.exists()) f2.createNewFile();
         r.ensureFilenameExists();
         Assert.assertEquals("final filename ", "test_Roster_Entry_123456789ABC1.xml", r.getFileName());
-        if (f1.exists()) f1.delete();  // clean up afterwards
-        if (f2.exists()) f2.delete();
     }
 
     // from here down is testing infrastructure
@@ -164,7 +144,7 @@ public class RosterEntryTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {RosterEntryTest.class.getName()};
+        String[] testCaseName = {RosterEntry.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 

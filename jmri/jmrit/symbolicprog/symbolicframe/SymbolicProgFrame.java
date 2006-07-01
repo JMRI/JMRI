@@ -17,7 +17,7 @@ import org.jdom.output.*;
 /**
  * Frame providing a table-organized command station programmer from decoder definition files
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.5 $
  */
 public class SymbolicProgFrame extends javax.swing.JFrame  {
 
@@ -37,13 +37,9 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
     JTable cvTable		= new JTable(cvModel);
     JScrollPane cvScroll	= new JScrollPane(cvTable);
 
-    IndexedCvTableModel icvModel = new IndexedCvTableModel(progStatus, null);
-    JTable icvTable		= new JTable(icvModel);
-    JScrollPane icvScroll	= new JScrollPane(icvTable);
-
-    VariableTableModel	variableModel = new VariableTableModel(progStatus,
-        new String[]  {"Name", "Value", "Range", "State", "Read", "Write", "CV", "Mask", "Comment" },
-        cvModel, icvModel);
+    VariableTableModel	variableModel	= new VariableTableModel(progStatus,
+                                        new String[]  {"Name", "Value", "Range", "State", "Read", "Write", "CV", "Mask", "Comment" },
+                                                                         cvModel);
     JTable variableTable	= new JTable(variableModel);
     JScrollPane variableScroll	= new JScrollPane(variableTable);
 
@@ -125,7 +121,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
             });
         newCvButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    cvModel.addCV(newCvNum.getText(), false, false, false);
+                    cvModel.addCV(newCvNum.getText());
                 }
             });
         newVarButton.addActionListener(new java.awt.event.ActionListener() {
@@ -234,7 +230,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
         String mask = newVarMask.getText();
 
         // ask Table model to do the actuall add
-        variableModel.newDecVariableValue(name, CV, mask, false, false, false, false);
+        variableModel.newDecVariableValue(name, CV, mask);
         variableModel.configDone();
     }
 
@@ -410,7 +406,8 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 
             // create root element
             Element root = new Element("locomotive-config");
-            Document doc = jmri.jmrit.XmlFile.newDocument(root, "locomotive-config.dtd");
+            Document doc = new Document(root);
+            doc.setDocType(new DocType("locomotive:locomotive-config","locomotive-config.dtd"));
 
             // add top-level elements
             Element values;

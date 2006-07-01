@@ -2,14 +2,9 @@
 
 package jmri.managers;
 
-import com.sun.java.util.collections.List;
-import com.sun.java.util.collections.Arrays;
-import com.sun.java.util.collections.LinkedList;
-
-import jmri.Manager;
+import jmri.Sensor;
 import jmri.Turnout;
 import jmri.TurnoutManager;
-import jmri.TurnoutOperationManager;
 
 /**
  * Implementation of a TurnoutManager that can serves as a proxy
@@ -17,33 +12,9 @@ import jmri.TurnoutOperationManager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.3 $
  */
 public class ProxyTurnoutManager extends AbstractProxyManager implements TurnoutManager {
-
-    final java.util.ResourceBundle rbt = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
-
-    public ProxyTurnoutManager() {
-    	super();
-    }
-    
-	/**
-	 * Revise superclass behavior: Added managers mean that the
-	 * default internal manager is not the primary. 
-	 * Also support TurnoutOperations
-	 */
-    public void addManager(Manager m) {
-        if (mgrs.size() == 0) { 
-            log.debug("initial addmanager");
-            mgrs.add(m);
-            mgrs.add(new InternalTurnoutManager());
-        } else {
-            mgrs.add(m);
-        }
-        log.debug("added manager");
-        TurnoutOperationManager.getInstance().loadOperationTypes();
-    }
-
     /**
      * Locate via user name, then system name if needed.
      *
@@ -60,21 +31,16 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
         Turnout t = getTurnout(name);
         if (t!=null) return t;
         // if the systemName is specified, find that system
-		String sName = name.toUpperCase();
         for (int i=0; i<mgrs.size(); i++) {
-            if ( ( (TurnoutManager)mgrs.get(i)).systemLetter() == sName.charAt(0) )
-                return ((TurnoutManager)mgrs.get(i)).newTurnout(sName, null);
+            if ( ( (TurnoutManager)mgrs.get(i)).systemLetter() == name.charAt(0) )
+                return ((TurnoutManager)mgrs.get(i)).newTurnout(name, null);
         }
-        // did not find a manager, allow it to default to the primary, if there is one
-        log.debug("Did not find manager for name "+sName+", assume it's a number");
-		if (mgrs.size()>0) {		
-			return ((TurnoutManager)mgrs.get(0)).newTurnout(
-                    ((TurnoutManager)mgrs.get(0)).makeSystemName(sName), null);
-		} else {
-			log.debug("Did not find a primary turnout manager for name "+sName);
-			return (null);
-		}
+        // did not find a manager, allow it to default to the primary
+        log.debug("Did not find manager for name "+name+", assume it's a number");
+        return ((TurnoutManager)mgrs.get(0)).newTurnout(
+                    ((TurnoutManager)mgrs.get(0)).makeSystemName(name), null);
     }
+
 
     /**
      * Locate an instance based on a system name.  Returns null if no
@@ -82,10 +48,9 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
      * @return requested Turnout object or null if none exists
      */
     public Turnout getBySystemName(String systemName) {
-		String sName = systemName.toUpperCase();
         Turnout t = null;
         for (int i=0; i<mgrs.size(); i++) {
-            t = ( (TurnoutManager)mgrs.get(i)).getBySystemName(sName);
+            t = ( (TurnoutManager)mgrs.get(i)).getBySystemName(systemName);
             if (t!=null) return t;
         }
         return null;
@@ -133,112 +98,21 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
      * be looking them up.
      * @return requested Sensor object (never null)
      */
-    public Turnout newTurnout(String sysName, String userName) {
+    public Turnout newTurnout(String systemName, String userName) {
         // if the systemName is specified, find that system
-		String systemName = sysName.toUpperCase();
         if (systemName != null) {
+            Sensor t = null;
             for (int i=0; i<mgrs.size(); i++) {
                 if ( ( (TurnoutManager)mgrs.get(i)).systemLetter() == systemName.charAt(0) )
                     return ( (TurnoutManager)mgrs.get(i)).newTurnout(systemName, userName);
             }
-            // did not find a manager, allow it to default to the primary, if there is one
+            // did not find a manager, allow it to default to the primary
             log.debug("Did not find manager for system name "+systemName+", assume it's a number");
-			if (mgrs.size()>0) {
-				return ( (TurnoutManager)mgrs.get(0)).newTurnout(systemName, userName);
-			} else {
-				log.debug("Did not find a primary turnout manager for system name "+systemName);
-				return (null);
-			}
-        } else {  // no systemName specified, use primary, if there is one
-      		if (mgrs.size()>0) {
-				return ( (TurnoutManager)mgrs.get(0)).newTurnout(systemName, userName);
-			} else {
-				log.debug("Did not find a primary turnout manager");
-				return (null);
-			}
+            return ( (TurnoutManager)mgrs.get(0)).newTurnout(systemName, userName);
+        } else {  // no systemName specified, use primary
+            return ( (TurnoutManager)mgrs.get(0)).newTurnout(systemName, userName);
         }
     }
-    	
-	/**
-	 * Get text to be used for the Turnout.CLOSED state in user communication.
-	 * Allows text other than "CLOSED" to be use with certain hardware system 
-	 * to represent the Turnout.CLOSED state.  
-	 * Defaults to the primary manager.  This means that the primary manager sets the terminology
-	 * used.  Note: the primary manager need not override the method in AbstractTurnoutManager if
-	 * "CLOSED" is the desired terminology.
-	 */
-	public String getClosedText() { 
-		if (mgrs.size()>0)
-			return ( (TurnoutManager)mgrs.get(0)).getClosedText(); 
-		else 
-			return rbt.getString("TurnoutStateClosed");
-	}
-	
-	/**
-	 * Get text to be used for the Turnout.THROWN state in user communication.
-	 * Allows text other than "THROWN" to be use with certain hardware system 
-	 * to represent the Turnout.THROWN state.
-	 * Defaults to the primary manager.  This means that the primary manager sets the terminology
-	 * used.  Note: the primary manager need not override the method in AbstractTurnoutManager if
-	 * "THROWN" is the desired terminology.
-	 */
-	public String getThrownText() { 
-		if (mgrs.size()>0)
-			return ( (TurnoutManager)mgrs.get(0)).getThrownText(); 
-		else 
-			return rbt.getString("TurnoutStateThrown");
-	}
-
-	/**
-	 * Get from the user, the number of addressed bits used to control a turnout. 
-	 * Normally this is 1, and the default routine returns 1 automatically.  
-	 * Turnout Managers for systems that can handle multiple control bits 
-	 * should override this method with one which asks the user to specify the
-	 * number of control bits.
-	 * If the user specifies more than one control bit, this method should 
-	 * check if the additional bits are available (not assigned to another object).
-	 * If the bits are not available, this method should return 0 for number of 
-	 * control bits, after informing the user of the problem.
-	 */
-	 public int askNumControlBits(String sysName) {
-        // if the systemName is specified, find that system
-		String systemName = sysName.toUpperCase();
-        if (systemName != null) {
-            for (int i=0; i<mgrs.size(); i++) {
-                if ( ( (TurnoutManager)mgrs.get(i)).systemLetter() == systemName.charAt(0) )
-                    return ((TurnoutManager)mgrs.get(i)).askNumControlBits(systemName);
-            }
-            // did not find a manager, allow it to default to the primary, if there is one
-            log.debug("Did not find manager for system name "+systemName+", assume it's a number");
-			if (mgrs.size()>0) {
-				return ((TurnoutManager)mgrs.get(0)).askNumControlBits(systemName);
-			} else {
-				log.debug("Did not find a primary turnout manager for system name "+systemName);
-				return (1);
-			}
-        } else {  // no systemName specified, use primary, if there is one
-      		if (mgrs.size()>0) {
-				return ((TurnoutManager)mgrs.get(0)).askNumControlBits(systemName);
-			} else {
-				log.debug("Did not find a primary turnout manager");
-				return (1);
-			}
-        }
-    }
-
-	/**
-	 * TurnoutOperation support. Return a list which is just the concatenation of
-	 * all the valid operation types
-	 */
-	public String[] getValidOperationTypes() {
-		List typeList = new LinkedList();
-		for (int i=0; i<mgrs.size(); ++i) {
-			String[] thisTypes = ((TurnoutManager)mgrs.get(i)).getValidOperationTypes();
-			typeList.addAll(Arrays.asList(thisTypes));
-		}
-		return TurnoutOperationManager.concatenateTypeLists((String[])typeList.toArray(new String[0]));
-	}
-	
 
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ProxyTurnoutManager.class.getName());

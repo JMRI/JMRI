@@ -2,21 +2,17 @@
 
 package jmri.jmrit.roster;
 
-import jmri.jmrit.XmlFile;
-import java.io.File;
+import jmri.jmrit.*;
+import java.io.*;
 
 import javax.swing.*;
 
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.List;
-import org.jdom.DocType;
-import org.jdom.Document;
-import org.jdom.Element;
+import com.sun.java.util.collections.*;
+import org.jdom.*;
+import org.jdom.output.*;
 
 /**
- * Roster manages and manipulates a roster of locomotives.
- * <P>
- * It works
+ * Roster manages and manipulates a roster of locomotives.  It works
  * with the "roster-config" XML DTD to load and store its information.
  *<P>
  * This is an in-memory representation of the roster xml file (see below
@@ -38,8 +34,8 @@ import org.jdom.Element;
  * The entries are stored in an ArrayList, sorted alphabetically.  That
  * sort is done manually each time an entry is added.
  *
- * @author	Bob Jacobsen   Copyright (C) 2001;  Dennis Miller Copyright 2004
- * @version	$Revision: 1.28 $
+ * @author	Bob Jacobsen   Copyright (C) 2001
+ * @version	$Revision: 1.11 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -74,14 +70,18 @@ public class Roster extends XmlFile {
      */
     public void addEntry(RosterEntry e) {
         if (log.isDebugEnabled()) log.debug("Add entry "+e);
-        int i = _list.size()-1;// Last valid index
-        while (i>=0) {
+        int i;
+        for (i=0; i<_list.size(); i++) {
             // compareToIgnoreCase not present in Java 1.1.8
-            if (e.getId().toUpperCase().compareTo(((RosterEntry)_list.get(i)).getId().toUpperCase()) > 0 )
-                break; // I can never remember whether I want break or continue here
-            i--;
+            try {
+                if (e.getId().compareToIgnoreCase(((RosterEntry)_list.get(i)).getId()) < 0 )
+                    break; // I can never remember whether I want break or continue here
+            } catch (NoSuchMethodError ex) {
+                if (e.getId().toUpperCase().compareTo(((RosterEntry)_list.get(i)).getId().toUpperCase()) < 0 )
+                    break; // I can never remember whether I want break or continue here
+            }
         }
-        _list.add(i+1, e);
+        _list.add(i, e);
         setDirty(true);
         firePropertyChange("add", null, e);
     }
@@ -102,17 +102,6 @@ public class Roster extends XmlFile {
      * @return Number of entries in the Roster
      */
     public int numEntries() { return _list.size(); }
-
-    /**
-     * Return a combo box containing the entire roster.
-     * <P>
-     * This is based on a single model, so it can be updated
-     * when the roster changes.
-     *
-     */
-    public JComboBox fullRosterComboBox() {
-        return matchingComboBox(null, null, null, null, null, null, null);
-    }
 
     /**
      * Get a JComboBox representing the choices that match
@@ -201,67 +190,18 @@ public class Roster extends XmlFile {
      * Write the entire roster to a file. This does not do backup; that has
      * to be done separately. See writeRosterFile() for a function that
      * finds the default location, does a backup and then calls this.
-     * @param name Filename for new file, including path info as needed.
+     * @param name Filename for new file
      * @throws IOException
      */
-    void writeFile(String name) throws org.jdom.JDOMException, java.io.FileNotFoundException, java.io.IOException {
+    void writeFile(String name) throws java.io.IOException {
         if (log.isDebugEnabled()) log.debug("writeFile "+name);
         // This is taken in large part from "Java and XML" page 368
-        File file = findFile(name);
-        if (file == null) {
-            file = new File(name);
-        }
+        File file = new File(prefsDir()+name);
+
         // create root element
         Element root = new Element("roster-config");
-        Document doc = newDocument(root, "roster-config.dtd");
-
-        //Check the Comment and Decoder Comment fields for line breaks and
-        //convert them to a processor directive for storage in XML
-        //Note: this is also done in the LocoFile.java class to do
-        //the same thing in the indidvidual locomotive roster files
-        //Note: these changes have to be undone after writing the file
-        //since the memory version of the roster is being changed to the
-        //file version for writing
-        for (int i=0; i<numEntries(); i++){
-
-            //Extract the RosterEntry at this index and inspect the Comment and
-            //Decoder Comment fields to change any \n characters to <?p?> processor
-            //directives so they can be stored in the xml file and converted
-            //back when the file is read.
-            RosterEntry r = (RosterEntry) (RosterEntry)_list.get(i);
-            String tempComment = r.getComment();
-            String xmlComment = new String();
-
-            //transfer tempComment to xmlComment one character at a time, except
-            //when \n is found.  In that case, insert <?p?>
-            for (int k = 0; k < tempComment.length(); k++) {
-                if (tempComment.startsWith("\n", k)) {
-                    xmlComment = xmlComment + "<?p?>";
-                }
-                else {
-                    xmlComment = xmlComment + tempComment.substring(k, k + 1);
-                }
-            }
-            r.setComment(xmlComment);
-
-            //Now do the same thing for the decoderComment field
-            String tempDecoderComment = r.getDecoderComment();
-            String xmlDecoderComment = new String();
-
-            for (int k = 0; k < tempDecoderComment.length(); k++) {
-                if (tempDecoderComment.startsWith("\n", k)) {
-                    xmlDecoderComment = xmlDecoderComment + "<?p?>";
-                }
-                else {
-                    xmlDecoderComment = xmlDecoderComment +
-                        tempDecoderComment.substring(k, k + 1);
-                }
-            }
-            r.setDecoderComment(xmlDecoderComment);
-
-        }
-        //All Comments and Decoder Comment line feeds have been changed to processor directives
-
+        Document doc = new Document(root);
+        doc.setDocType(new DocType("roster-config","roster-config.dtd"));
 
         // add top-level elements
         Element values;
@@ -270,44 +210,13 @@ public class Roster extends XmlFile {
         for (int i=0; i<numEntries(); i++) {
             values.addContent(((RosterEntry)_list.get(i)).store());
         }
-        writeXML(file, doc);
-
-        //Now that the roster has been rewritten in file form we need to
-        //restore the RosterEntry object to its normal \n state for the
-        //Comment and Decoder comment fields, otherwise it can cause problems in
-        //other parts of the program (e.g. in copying a roster)
-        for (int i=0; i<numEntries(); i++){
-            RosterEntry r = (RosterEntry) (RosterEntry)_list.get(i);
-            String xmlComment = r.getComment();
-            String tempComment = new String();
-
-            for (int k = 0; k < xmlComment.length(); k++) {
-                if (xmlComment.startsWith("<?p?>", k)) {
-                    tempComment = tempComment + "\n";
-                    k = k + 4;
-                }
-                else {
-                    tempComment = tempComment + xmlComment.substring(k, k + 1);
-                }
-            }
-            r.setComment(tempComment);
-
-            String xmlDecoderComment = r.getDecoderComment();
-            String tempDecoderComment = new String();
-
-            for (int k = 0; k < xmlDecoderComment.length(); k++) {
-                if (xmlDecoderComment.startsWith("<?p?>", k)) {
-                    tempDecoderComment = tempDecoderComment + "\n";
-                    k = k + 4;
-                }
-                else {
-                    tempDecoderComment = tempDecoderComment +
-                        xmlDecoderComment.substring(k, k + 1);
-                }
-            }
-            r.setDecoderComment(tempDecoderComment);
-
-        }
+        // write the result to selected file
+        java.io.FileOutputStream o = new java.io.FileOutputStream(file);
+        XMLOutputter fmt = new XMLOutputter();
+        fmt.setNewlines(true);   // pretty printing
+        fmt.setIndent(true);
+        fmt.output(doc, o);
+        o.close();
 
         // done - roster now stored, so can't be dirty
         setDirty(false);
@@ -333,50 +242,6 @@ public class Roster extends XmlFile {
             for (int i=0; i<l.size(); i++) {
                 addEntry(new RosterEntry((Element)l.get(i)));
             }
-
-            //Scan the object to check the Comment and Decoder Comment fields for
-            //any <?p?> processor directives and change them to back \n characters
-            for (int i = 0; i < numEntries(); i++) {
-                //Get a RosterEntry object for this index
-                RosterEntry r = (RosterEntry) (RosterEntry) _list.get(i);
-
-                //Extract the Comment field and create a new string for output
-                String tempComment = r.getComment();
-                String xmlComment = new String();
-
-                //transfer tempComment to xmlComment one character at a time, except
-                //when <?p?> is found.  In that case, insert a \n and skip over those
-                //characters in tempComment.
-                for (int k = 0; k < tempComment.length(); k++) {
-                    if (tempComment.startsWith("<?p?>", k)) {
-                        xmlComment = xmlComment + "\n";
-                        k = k + 4;
-                    }
-                    else {
-                        xmlComment = xmlComment + tempComment.substring(k, k + 1);
-                    }
-                }
-                r.setComment(xmlComment);
-
-                //Now do the same thing for the decoderComment field
-                String tempDecoderComment = r.getDecoderComment();
-                String xmlDecoderComment = new String();
-
-                for (int k = 0; k < tempDecoderComment.length(); k++) {
-                    if (tempDecoderComment.startsWith("<?p?>", k)) {
-                        xmlDecoderComment = xmlDecoderComment + "\n";
-                        k = k + 4;
-                    }
-                    else {
-                        xmlDecoderComment = xmlDecoderComment +
-                            tempDecoderComment.substring(k, k + 1);
-                    }
-                }
-
-                r.setDecoderComment(xmlDecoderComment);
-            }
-
-
         }
         else {
             log.error("Unrecognized roster file contents in file: "+name);
@@ -425,43 +290,10 @@ public class Roster extends XmlFile {
      * Return the filename String for the default roster file, including location.
      * This is here to allow easy override in tests.
      */
-    public static String defaultRosterFilename() { return getFileLocation()+rosterFileName;}
+    public static String defaultRosterFilename() { return fileLocation+rosterFileName;}
 
-    /**
-     * Set the default location for the Roster file, and all
-     * individual locomotive files.
-     *
-     * @param f Absolute pathname to use. A null or "" argument flags
-     * a return to the original default in prefsdir.
-     */
-    public static void setFileLocation(String f) {
-        if (f!=null && !f.equals("")) {
-            fileLocation = f;
-            if (f.endsWith(File.separator))
-                LocoFile.setFileLocation(f+"roster");
-            else
-                LocoFile.setFileLocation(f+File.separator+"roster");
-        } else {
-            if (log.isDebugEnabled()) log.debug("Roster location reset to default");
-            fileLocation = XmlFile.prefsDir();
-            LocoFile.setFileLocation(XmlFile.prefsDir()+File.separator+"roster"+File.separator);
-        }
-        // and make sure next request gets the new one
-        resetInstance();
-    }
-
-    static String getFileLocation() { return fileLocation; }
-
-    /**
-     * Absolute path to roster file location.
-     * <P>
-     * Default is in the prefsDir, but can be set to anything.
-     * @see XmlFile.prefsDir()
-     */
-    private static String fileLocation  = XmlFile.prefsDir();
-
-    public static void setRosterFileName(String name) { rosterFileName = name; }
-    private static String rosterFileName = "roster.xml";
+    static protected String fileLocation  = "";
+    static final protected String rosterFileName = "roster.xml";
 
     // since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
     // reflect to it.
@@ -472,29 +304,12 @@ public class Roster extends XmlFile {
         pcs.addPropertyChangeListener(l);
     }
 
-    protected void firePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p,old,n);
-    }
+    protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
 
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
 
-    /**
-     * Notify that the ID of an entry has changed.  This doesn't actually change the
-     * Roster per se, but triggers recreation.
-     */
-    public void entryIdChanged(RosterEntry r) {
-        log.debug("EntryIdChanged");
-
-        // order may be wrong! Sort
-        RosterEntry[] rarray = new RosterEntry[_list.size()];
-        for (int i=0; i<rarray.length; i++) rarray[i] =(RosterEntry) (_list.get(i));
-        jmri.util.StringUtil.sortUpperCase(rarray);
-        for (int i=0; i<rarray.length; i++) _list.set(i,rarray[i]);
-
-        firePropertyChange("change", null, r);
-    }
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Roster.class.getName());
 

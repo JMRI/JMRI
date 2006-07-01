@@ -89,8 +89,9 @@ public class ThrottleFramePropertyEditor extends JDialog
 	}
 	
     /**
-     * Set the ThrottleFrame used here. Does some initialization of the
-     * Frame.
+     * Set the FunctionButton this dialog will edit. Method will
+     * initialize GUI from button properties.
+     * @param button The FunctionButton to edit.
      */
     public void setThrottleFrame(ThrottleFrame f)
     {

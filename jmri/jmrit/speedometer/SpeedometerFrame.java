@@ -2,31 +2,20 @@
 
 package jmri.jmrit.speedometer;
 
-import jmri.InstanceManager;
-import jmri.Sensor;
-import jmri.jmrit.display.SensorIcon;
-import java.awt.FlowLayout;
+import java.awt.*;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
+
+import jmri.*;
+import jmri.jmrit.display.*;
 
 /**
- * Frame providing access to a speedometer.
- * <P>
- * This contains very simple debouncing logic:
- * <UL>
- * <LI>The clock starts when the "start" sensor makes
- * the correct transition.
- * <LI>When a "stop" sensor makes the correct transition,
- * the speed is computed and displayed.
- * </UL>
+ * Frame providing access to a speedometer
+ * @author			Bob Jacobsen   Copyright (C) 2001
+ * @version			$Revision: 1.14 $
  *
- * @author	Bob Jacobsen   Copyright (C) 2001, 2004
- * @author      Adapted for metric system - S.K. Bosch
- * @version	$Revision: 1.20 $
+ * Adapted for metric system - S.K. Bosch
+ *
  */
 public class SpeedometerFrame extends javax.swing.JFrame {
 
@@ -41,7 +30,7 @@ public class SpeedometerFrame extends javax.swing.JFrame {
     javax.swing.JRadioButton stopOnEntry1  	= new javax.swing.JRadioButton("entry");
     javax.swing.JRadioButton stopOnExit1    = new javax.swing.JRadioButton("exit");
 
-    public JTextField stopSensor2 = new JTextField(5);
+    JTextField stopSensor2 = new JTextField(5);
     javax.swing.ButtonGroup stopGroup2 		= new javax.swing.ButtonGroup();
     javax.swing.JRadioButton stopOnEntry2  	= new javax.swing.JRadioButton("entry");
     javax.swing.JRadioButton stopOnExit2    = new javax.swing.JRadioButton("exit");
@@ -68,14 +57,6 @@ public class SpeedometerFrame extends javax.swing.JFrame {
     SensorIcon stopSensorIcon1;
     SensorIcon stopSensorIcon2;
 
-    public void setInputs(String start, String stop1, String stop2, String d1, String d2) {
-        startSensor.setText(start);
-        stopSensor1.setText(stop1);
-        stopSensor2.setText(stop2);
-        distance1.setText(d1);
-        distance2.setText(d2);
-    }
-    
     public SpeedometerFrame() {
 
         startOnEntry.setSelected(true);
@@ -203,18 +184,18 @@ public class SpeedometerFrame extends javax.swing.JFrame {
         // start displaying the sensor status when the number is entered
         startSensor.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    startSensorIcon.setSensor(startSensor.getText());
+                    startSensorIcon.setSensor(null, startSensor.getText());
                 }
             });
         stopSensor1.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    stopSensorIcon1.setSensor(stopSensor1.getText());
+                    stopSensorIcon1.setSensor(null, stopSensor1.getText());
                 }
             });
 
         stopSensor2.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    stopSensorIcon2.setSensor(stopSensor2.getText());
+                    stopSensorIcon2.setSensor(null, stopSensor2.getText());
                 }
             });
 
@@ -227,7 +208,7 @@ public class SpeedometerFrame extends javax.swing.JFrame {
     long stopTime2 = 0;
 
     /**
-     * "Distance Is Metric": If true, metric distances are being used.
+     * "Distance Is Metric": If true, metric distances are being used
      */
     boolean dim;
 
@@ -252,7 +233,7 @@ public class SpeedometerFrame extends javax.swing.JFrame {
           }
        }
 
-    public void setup() {
+    void setup() {
         startButton.setEnabled(false);
         startButton.setToolTipText("You can only configure this once");
         startButton.setVisible(false);
@@ -286,7 +267,7 @@ public class SpeedometerFrame extends javax.swing.JFrame {
                     }
                 }
             });
-        startSensorIcon.setSensor(s.getSystemName());
+        startSensorIcon.setSensor(s.getSystemName(), s.getUserName());
 
         // set stop sensor1
         try {
@@ -310,14 +291,14 @@ public class SpeedometerFrame extends javax.swing.JFrame {
                             stopTime1 = System.currentTimeMillis();  // milliseconds
                             if (log.isDebugEnabled()) log.debug("set stop "+stopTime1);
                             // calculate and show speed
-                            float secs = (stopTime1-startTime)/1000.f;
-                            float feet = Float.valueOf(distance1.getText()).floatValue();
-                            float speed;
+                            double secs = (stopTime1-startTime)/1000.;
+                            double feet = Double.parseDouble(distance1.getText());
+                            double speed;
                             if (dim == false) {
-                              speed = (feet/5280.f)*(3600.f/secs);
+                              speed = (feet/5280.)*(3600./secs);
                               }
                             else {
-                              speed = (feet/100000.f)*(3600.f/secs);
+                              speed = (feet/100000.)*(3600./secs);
                               }
                             if (log.isDebugEnabled()) log.debug("calc from "+secs+","+feet+":"+speed);
                             result1.setText(String.valueOf(speed).substring(0,4));
@@ -331,7 +312,7 @@ public class SpeedometerFrame extends javax.swing.JFrame {
                     }
                 }
             });
-        stopSensorIcon1.setSensor(s.getSystemName());
+        stopSensorIcon1.setSensor(s.getSystemName(), s.getUserName());
 
         // set stop sensor2
         try {
@@ -346,7 +327,6 @@ public class SpeedometerFrame extends javax.swing.JFrame {
             return;
         }
         s.addPropertyChangeListener(new java.beans.PropertyChangeListener(){
-                // handle change in stop sensor
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     SpeedometerFrame.log.debug("stop sensor fired");
                     if (e.getPropertyName().equals("KnownState")) {
@@ -356,15 +336,14 @@ public class SpeedometerFrame extends javax.swing.JFrame {
                             stopTime2 = System.currentTimeMillis();  // milliseconds
                             if (log.isDebugEnabled()) log.debug("set stop "+stopTime2);
                             // calculate and show speed
-                            float secs = (stopTime2-startTime)/1000.f;
-                            float feet = Float.valueOf(distance2.getText()).floatValue();
-
-                            float speed;
+                            double secs = (stopTime2-startTime)/1000.;
+                            double feet = Double.parseDouble(distance2.getText());
+                            double speed;
                             if (dim == false) {
-                              speed = (feet/5280.f)*(3600.f/secs);
+                              speed = (feet/5280.)*(3600./secs);
                               }
                             else {
-                              speed = (feet/100000.f)*(3600.f/secs);
+                              speed = (feet/100000.)*(3600./secs);
                               }
                             if (log.isDebugEnabled()) log.debug("calc from "+secs+","+feet+":"+speed);
                             result2.setText(String.valueOf(speed).substring(0,4));
@@ -378,7 +357,7 @@ public class SpeedometerFrame extends javax.swing.JFrame {
                     }
                 }
             });
-        stopSensorIcon2.setSensor(s.getSystemName());
+        stopSensorIcon2.setSensor(s.getSystemName(), s.getUserName());
 
     }
 

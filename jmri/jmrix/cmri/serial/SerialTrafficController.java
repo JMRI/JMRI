@@ -10,9 +10,7 @@ import jmri.jmrix.AbstractMRTrafficController;
 import java.io.DataInputStream;
 
 /**
- * Converts Stream-based I/O to/from C/MRI serial messages.
- * <P>
- * The "SerialInterface"
+ * Converts Stream-based I/O to/from C/MRI serial messages.  The "SerialInterface"
  * side sends/receives message objects.
  * <P>
  * The connection to
@@ -22,12 +20,9 @@ import java.io.DataInputStream;
  * <P>
  * This handles the state transistions, based on the
  * necessary state in each message.
- * <P>
- * Handles initialization, polling, output, and input for multiple Serial Nodes.
  *
- * @author	Bob Jacobsen  Copyright (C) 2003
- * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.22 $
+ * @author			Bob Jacobsen  Copyright (C) 2003
+ * @version			$Revision: 1.11 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -36,13 +31,9 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
 
         // entirely poll driven, so reduce interval
         mWaitBeforePoll = 25;  // default = 25
-
-        // clear the array of SerialNodes
-        for (int i=0; i<=MAXNODE; i++) {
-            nodeArray[i] = null;
-            mustInit[i] = true;
-        }
     }
+
+    boolean mustInit = true;
 
     // The methods to implement the SerialInterface
 
@@ -54,128 +45,47 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         this.removeListener(l);
     }
 
-// remove this code when SerialLight is operational - obsoleted and doesn't belong here anyway
     /**
-     * Public method to set a C/MRI Serial Output bit
-     *     Note: systemName is of format CNnnnBxxxx where
-     *              "nnn" is the serial node number (0 - 127)
-     *              "xxxx' is the bit number within that node (1 thru number of defined bits)
-     *           state is 'true' for 0, 'false' for 1
-     *     The bit is transmitted to the C/MRI hardware immediately before the
-     *           next poll packet is sent.
+     * Do we need to send an output message?
+     * <P>
+     * This is currently written for only one node,
+     * so only need to remember one bit of info
      */
-    public void setSerialOutput(String systemName, boolean state) {
-        // get the node and bit numbers
-        SerialNode node = SerialAddress.getNodeFromSystemName(systemName);
-        if ( node == null ) {
-            log.error("bad SerialNode specification in SerialOutput system name:"+systemName);
-            return;
-        }
-        int bit = SerialAddress.getBitFromSystemName(systemName);
-        if ( bit == 0 ) {
-            log.error("bad output bit specification in SerialOutput system name:"+systemName);
-            return;
-        }
-        // set the bit
-        node.setOutputBit(bit,state);
-    }
-// end of code to be removed
+    private boolean mustSend = false;
 
-    private int numNodes = 0;       // Incremented as Serial Nodes are created and registered
-                                    // Corresponds to next available address in nodeArray
-    private static int MINNODE = 0;
-    private static int MAXNODE = 127;
-    private SerialNode[] nodeArray = new SerialNode[MAXNODE+1];  // numbering from 0
-    private boolean[] mustInit = new boolean[MAXNODE+1];
+    int highByte = 0;
+
+    int[] outputArray = new int[48];
 
     /**
-     *  Public method to register a Serial node
+     * Manage the outputs
      */
-     public void registerSerialNode(SerialNode node) {
+    public void setOutputState(int number, boolean closed) {
+        int loc = (number-1)/8;
+        if (loc>highByte) highByte=loc;
+        int bit = 1<<((number-1) % 8);
+
+        // update that bit
+        int oldValue = outputArray[loc];
+
+        // closed is a 0 in the output
+        if (!closed) outputArray[loc] |= bit;
+        else outputArray[loc] &= (~bit);
+        if (log.isDebugEnabled()) log.debug("setOutputState n="+number+" loc="+loc+" bit="+bit+" closed="+closed);
+
+        // force a send next time if the value changed
         synchronized (this) {
-            // no validity checking because at this point the node may not be fully defined
-            nodeArray[numNodes] = node;
-            mustInit[numNodes] = true;
-            numNodes++;
+            if (oldValue != outputArray[loc])
+                mustSend = true;
         }
-    }
-
-    /**
-     *  Public method to set up for initialization of a Serial node
-     */
-     public void initializeSerialNode(SerialNode node) {
-        synchronized (this) {
-            // find the node in the registered node list
-            for (int i=0; i<numNodes; i++) {
-                if (nodeArray[i] == node) {
-                    // found node - set up for initialization
-                    mustInit[i] = true;
-                    return;
-                }
-            }
-        }
-    }
-
-    /**
-     * Public method to identify a SerialNode from its node address
-     *      Note:   'ua' is the node address, numbered from 0.
-     *              Returns 'null' if a SerialNode with the specified address
-     *                  was not found
-     */
-    public SerialNode getNodeFromAddress(int ua) {
-        for (int i=0; i<numNodes; i++) {
-            if (nodeArray[i].getNodeAddress() == ua) {
-                return(nodeArray[i]);
-            }
-        }
-    	return (null);
-    }
-
-    /**
-     *  Public method to delete a Serial node by node address
-     */
-     public synchronized void deleteSerialNode(int nodeAddress) {
-        // find the serial node
-        int index = 0;
-        for (int i=0; i<numNodes; i++) {
-            if (nodeArray[i].getNodeAddress() == nodeAddress) {
-                index = i;
-            }
-        }
-        if (index==curSerialNodeIndex) {
-            log.warn("Deleting the serial node active in the polling loop");
-        }
-        // Delete the node from the node list
-        numNodes --;
-        if (index<numNodes) {
-            // did not delete the last node, shift 
-            for (int j=index; j<numNodes; j++) {
-                nodeArray[j] = nodeArray[j+1];
-            }
-        }
-        nodeArray[numNodes] = null;
-    }
-
-    /**
-     *  Public method to return the Serial node with a given index
-     *  Note:   To cycle through all nodes, begin with index=0, 
-     *              and increment your index at each call.  
-     *          When index exceeds the number of defined nodes,
-     *              this routine returns 'null'.
-     */
-     public SerialNode getSerialNode(int index) {
-        if (index >= numNodes) {
-            return null;
-        }
-        return nodeArray[index];
     }
 
     protected AbstractMRMessage enterProgMode() {
-        log.warn("enterProgMode doesnt make sense for C/MRI serial");
+        log.error("enterProgMode doesnt make sense for C/MRI serial");
         return null;
     }
     protected AbstractMRMessage enterNormalMode() {
-        log.warn("enterNormalMode doesnt make sense for C/MRI serial");
+        log.error("enterNormalMode doesnt make sense for C/MRI serial");
         return null;
     }
 
@@ -195,72 +105,44 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
 
     SerialSensorManager mSensorManager = null;
     public void setSensorManager(SerialSensorManager m) { mSensorManager = m; }
-
-    int curSerialNodeIndex = 0;   // cycles over defined nodes when pollMessage is called
-    /**
-     *  Handles initialization, output and polling for C/MRI Serial Nodes
-     *      from within the running thread
-     */
-    protected synchronized AbstractMRMessage pollMessage() {
-        // ensure validity of call
-        if (numNodes<=0) return null;
-        
-        // move to a new node
-        curSerialNodeIndex ++;
-        if (curSerialNodeIndex>=numNodes) {
-            curSerialNodeIndex = 0;
-        }
-        // ensure that each node is initialized        
-        if (mustInit[curSerialNodeIndex]) {
-            mustInit[curSerialNodeIndex] = false;
-            SerialMessage m = nodeArray[curSerialNodeIndex].createInitPacket();
+    protected AbstractMRMessage pollMessage() {
+        if (mustInit) {
+            mustInit = false;
+            // send the initial message
+            SerialMessage m = mInitMessage;
             log.debug("send init message: "+m);
-            m.setTimeout(2000);  // wait for init to finish (milliseconds)
+            m.setTimeout(2000);  // wait for init to finish
             return m;
         }
-        // send Output packet if needed
-        if (nodeArray[curSerialNodeIndex].mustSend()) {
-            log.debug("request write command to send");
-            nodeArray[curSerialNodeIndex].resetMustSend();
-            SerialMessage m = nodeArray[curSerialNodeIndex].createOutPacket();
-            m.setTimeout(50);  // no need to wait for output to answer
-            return m;
+        synchronized (this) {
+            // if need to send, do so
+            if (mustSend) {
+                mustSend = false;
+                log.debug("request write command to send");
+                return nextWrite();
+            }
         }
-        // poll for Sensor input
-        if ( nodeArray[curSerialNodeIndex].sensorsActive() ) {
-            // Some sensors are active for this node, issue poll
-            SerialMessage m = SerialMessage.getPoll(
-                                nodeArray[curSerialNodeIndex].getNodeAddress());
-            if (curSerialNodeIndex>=numNodes) curSerialNodeIndex = 0;
-            return m;
-        }
-        else {
-            // no Sensors (inputs) are active for this node
-            return null;
-        }
+        if (mSensorManager == null) return null;
+        else return mSensorManager.nextPoll();
     }
-
-    protected void handleTimeout(AbstractMRMessage m) {
-        // don't use super behavior, as timeout to init, transmit message is normal
-
-        // inform node, and if it resets then reinitialize        
-        if (nodeArray[curSerialNodeIndex].handleTimeout(m)) 
-            mustInit[curSerialNodeIndex] = true;
-        
-    }
-    
-    protected void resetTimeout(AbstractMRMessage m) {
-        // don't use super behavior, as timeout to init, transmit message is normal
-
-        // and inform node
-        nodeArray[curSerialNodeIndex].resetTimeout(m);
-        
-    }
-    
     protected AbstractMRListener pollReplyHandler() {
         return mSensorManager;
     }
 
+    /**
+     * Create the write message with the current states
+     */
+    SerialMessage nextWrite() {
+        SerialMessage m = new SerialMessage(highByte+3);  // UA, 'T', plus 1 OB even if highByte == 0
+        m.setElement(0,(byte)0x41);
+        m.setElement(1,(byte)0x54);
+        for (int i = 0; i<=highByte; i++) {
+            m.setElement(i+2, outputArray[i]);
+        }
+        if (log.isDebugEnabled()) log.debug("nextWrite with highByte="+highByte+" is "+m);
+        m.setTimeout(25); // short delay, as no reply expected in C/MRI
+        return m;
+    }
     /**
      * Forward a preformatted message to the actual interface.
      */
@@ -287,7 +169,6 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     protected AbstractMRReply newReply() { return new SerialReply(); }
 
     protected boolean endOfMessage(AbstractMRReply msg) {
-        // our version of loadChars doesn't invoke this, so it shouldn't be called
         log.error("Not using endOfMessage, should not be called");
         return false;
     }
@@ -295,16 +176,16 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     protected void loadChars(AbstractMRReply msg, DataInputStream istream) throws java.io.IOException {
         int i;
         for (i = 0; i < msg.maxSize; i++) {
-            byte char1 = readByteProtected(istream);
+            byte char1 = istream.readByte();
             if (char1 == 0x03) break;           // check before DLE handling
-            if (char1 == 0x10) char1 = readByteProtected(istream);
-            msg.setElement(i, char1&0xFF);
+            if (char1 == 0x10) char1 = istream.readByte();
+            msg.setElement(i, char1);
         }
     }
 
     protected void waitForStartOfReply(DataInputStream istream) throws java.io.IOException {
         // loop looking for the start character
-        while (readByteProtected(istream)!=0x02) {}
+        while (istream.readByte()!=0x02) {}
     }
 
     /**
@@ -338,10 +219,17 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         int len = m.getNumDataElements();
         int cr = 4;
         return len+cr;
+
+    }
+
+    static SerialMessage mInitMessage;
+    static public void setInitMessage(SerialMessage s) {
+        mInitMessage = s;
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTrafficController.class.getName());
 }
+
 
 /* @(#)SerialTrafficController.java */
 

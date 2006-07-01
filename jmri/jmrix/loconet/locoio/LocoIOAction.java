@@ -14,7 +14,7 @@ import javax.swing.AbstractAction;
  *       			LocoIOFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2002
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.2 $
  */
 public class LocoIOAction 			extends AbstractAction {
 
@@ -23,7 +23,7 @@ public class LocoIOAction 			extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
 		// create a LocoMonFrame
 		LocoIOFrame f = new LocoIOFrame();
-		f.setVisible(true);
+		f.show();
 	}
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoIOAction.class.getName());

@@ -10,11 +10,9 @@ import org.jdom.Element;
 /**
  * Handle XML persistance of Simple Signal Logic objects.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2005
- * @version $Revision: 1.8 $
+ * @author Bob Jacobsen Copyright: Copyright (c) 2003
+ * @version $Revision: 1.1 $
  */
-//Revisions to add facing point sensors and limited speed Dick Bronosn (RJB) 2006
-
 public class BlockBossLogicXml implements XmlAdapter {
 
     public BlockBossLogicXml() {
@@ -42,58 +40,20 @@ public class BlockBossLogicXml implements XmlAdapter {
             BlockBossLogic p = (BlockBossLogic) e.nextElement();
             Element block = new Element("block");
             block.addAttribute("signal", p.getDrivenSignal());
-            block.addAttribute("mode", ""+p.getMode());
-
-            if (p.getSensor1()!=null) block.addContent(storeSensor(p.getSensor1()));
-            if (p.getSensor2()!=null) block.addContent(storeSensor(p.getSensor2()));
-            if (p.getSensor3()!=null) block.addContent(storeSensor(p.getSensor3()));
-            if (p.getSensor4()!=null) block.addContent(storeSensor(p.getSensor4()));
-
+            if (p.getSensor()!=null) block.addAttribute("watchedsensor", p.getSensor());
             if (p.getTurnout()!=null) {
                 block.addAttribute("watchedturnout", p.getTurnout());
+                block.addAttribute("watchedturnoutstate", ""+p.getTurnoutState());
             }
-            if (p.getWatchedSignal1()!=null) {
-                block.addAttribute("watchedsignal1", p.getWatchedSignal1());
+            if (p.getWatchedSignal()!=null) {
+                block.addAttribute("watchedsignal", p.getWatchedSignal());
+                block.addAttribute("useflashyellow", ""+p.getUseFlash());
             }
-            if (p.getWatchedSignal1Alt()!=null) {
-                block.addAttribute("watchedsignal1alt", p.getWatchedSignal1Alt());
-            }
-            if (p.getWatchedSignal2()!=null) {
-                block.addAttribute("watchedsignal2", p.getWatchedSignal2());
-            }
-            if (p.getWatchedSignal2Alt()!=null) {
-                block.addAttribute("watchedsignal2alt", p.getWatchedSignal2Alt());
-            }
-
-            if (p.getWatchedSensor1()!=null) {
-                block.addAttribute("watchedsensor1", p.getWatchedSensor1());
-            }
-            if (p.getWatchedSensor1Alt()!=null) {
-                block.addAttribute("watchedsensor1alt", p.getWatchedSensor1Alt());
-            }
-            if (p.getWatchedSensor2()!=null) {
-                block.addAttribute("watchedsensor2", p.getWatchedSensor2());
-            }
-            if (p.getWatchedSensor2Alt()!=null) {
-                block.addAttribute("watchedsensor2alt", p.getWatchedSensor2Alt());
-            }
-  
-            block.addAttribute("limitspeed1", ""+p.getLimitSpeed1());
-            block.addAttribute("limitspeed2", ""+p.getLimitSpeed2());
-            block.addAttribute("useflashyellow", ""+p.getUseFlash());
-            block.addAttribute("distantsignal", ""+p.getDistantSignal());
             blocks.addContent(block);
 
         }
 
         return blocks;
-    }
-
-    Element storeSensor(String name) {
-        Element e = new Element("sensor");
-        jmri.Sensor s = jmri.InstanceManager.sensorManagerInstance().getSensor(name);
-        e.addAttribute("systemName", s.getSystemName());
-        return e;
     }
 
     /**
@@ -105,42 +65,15 @@ public class BlockBossLogicXml implements XmlAdapter {
         for (int i = 0; i<l.size(); i++) {
             Element block = (Element)l.get(i);
             BlockBossLogic bb = BlockBossLogic.getStoppedObject(block.getAttributeValue("signal"));
-            if (block.getAttribute("watchedsensor")!=null)   // for older XML files
-                bb.setSensor1(block.getAttributeValue("watchedsensor"));
-            List sl = block.getChildren("sensor");
-            if (sl.size()>=1 && sl.get(0)!= null) bb.setSensor1(((Element)sl.get(0)).getAttributeValue("systemName"));
-            if (sl.size()>=2 && sl.get(1)!= null) bb.setSensor2(((Element)sl.get(1)).getAttributeValue("systemName"));
-            if (sl.size()>=3 && sl.get(2)!= null) bb.setSensor3(((Element)sl.get(2)).getAttributeValue("systemName"));
-            if (sl.size()>=4 && sl.get(3)!= null) bb.setSensor4(((Element)sl.get(3)).getAttributeValue("systemName"));
-
+            if (block.getAttribute("watchedsensor")!=null)
+                bb.setSensor(block.getAttributeValue("watchedsensor"));
             try {
-                bb.setMode(block.getAttribute("mode").getIntValue());
-                if (block.getAttribute("distantsignal")!=null)
-                    bb.setDistantSignal(block.getAttribute("distantsignal").getBooleanValue());
-                if (block.getAttribute("limitspeed1")!=null)
-                    bb.setLimitSpeed1(block.getAttribute("limitspeed1").getBooleanValue());
-                if (block.getAttribute("limitspeed2")!=null)
-                    bb.setLimitSpeed2(block.getAttribute("limitspeed2").getBooleanValue());
                 if (block.getAttribute("watchedturnout")!=null)
-                    bb.setTurnout(block.getAttributeValue("watchedturnout"));
-                if (block.getAttribute("watchedsignal1")!=null)
-                    bb.setWatchedSignal1(block.getAttributeValue("watchedsignal1"),
+                    bb.setTurnout(block.getAttributeValue("watchedturnout"),
+                                  block.getAttribute("watchedturnoutstate").getIntValue());
+                if (block.getAttribute("watchedsignal")!=null)
+                    bb.setWatchedSignal(block.getAttributeValue("watchedsignal"),
                                         block.getAttribute("useflashyellow").getBooleanValue());
-                if (block.getAttribute("watchedsignal1alt")!=null)
-                    bb.setWatchedSignal1Alt(block.getAttributeValue("watchedsignal1alt"));
-                if (block.getAttribute("watchedsignal2")!=null)
-                    bb.setWatchedSignal2(block.getAttributeValue("watchedsignal2"));
-                if (block.getAttribute("watchedsignal2alt")!=null)
-                    bb.setWatchedSignal2Alt(block.getAttributeValue("watchedsignal2alt"));
-                if (block.getAttribute("watchedsensor1")!=null)
-                    bb.setWatchedSensor1(block.getAttributeValue("watchedsensor1"));
-                if (block.getAttribute("watchedsensor1alt")!=null)
-                    bb.setWatchedSensor1Alt(block.getAttributeValue("watchedsensor1alt"));
-                if (block.getAttribute("watchedsensor2")!=null)
-                    bb.setWatchedSensor2(block.getAttributeValue("watchedsensor2"));
-                if (block.getAttribute("watchedsensor2alt")!=null)
-                    bb.setWatchedSensor2Alt(block.getAttributeValue("watchedsensor2alt"));
-            
             } catch (org.jdom.DataConversionException e) {
                 log.warn("error reading blocks from file"+e);
             }

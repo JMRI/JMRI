@@ -2,10 +2,11 @@
 
 package jmri;
 
+import java.beans.PropertyChangeListener;
 import java.io.File;
 
 /**
- * Provide load/store capabilities for general configuration.
+ * Interface to general configuration capabilities.
  * <P>
  * Areas of responsibility:
  * <UL>
@@ -15,21 +16,18 @@ import java.io.File;
  * <LI>Give access to the configuration objects for independent GUIs
  * </UL>
  *<P>
- *The managed items are divided into four types:
+ *The managed items are divided into three types:
  *<OL>
  *<LI>"Prefs" - handled first on read, these are the general preferences
  *controlling how the program starts up
  *<LI>"Config" - layout configuration information, e.g. turnout, signal, etc
- *<LI>"Tool" - (Not really clear yet, but present)
- *<LI>"User" - typically information about panels and windows, these are handled
+ *<LI>"User" - typically information about tools and window, these are handled
  *last during startup
  *</OL>
  *<P>
- *The configuration manager is generally located through the InstanceManager.
- *<P>
- *The original implementation was via the {@link jmri.configurexml} package.
+ *The configuration manager is generally located through the InstanceManager
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.4 $
  * @see jmri.InstanceManager
  * @see jmri.configurexml.ConfigXmlManager
  */
@@ -47,44 +45,31 @@ public interface ConfigureManager {
     public Object findInstance(Class c, int index);
 
     /**
-     * Stores prefs, config, tools and user information.
-     * @param file Output file
+     * Writes prefs, config, tools and user to a file
+     * @param file
      */
-    public void storeAll(File file);
-
+    public void store(File f);
     /**
-     * Stores just preferences information.
-     * @param file Output file
+     * Writes prefs to a file
+     * @param file
      */
-    public void storePrefs(File file);
-
-    /**
-     * Stores just configuration information.
-     * @param file Output file
-     */
-    public void storeConfig(File file);
-
-    /**
-     * Stores just user information.
-     * @param file Output file
-     */
-    public void storeUser(File file);
+    public void storePrefs(File f);
 
     /**
      * Create the objects defined in a particular configuration
      * file
-     * @param file Input file
+     * @param f
      * @return true if succeeded
      */
-    public boolean load(File file);
+    public boolean load(File f);
 
     /**
      * Provide a method-specific way of locating a file to be
      * loaded from a name.
-     * @param filename Local filename, perhaps without path information
+     * @param f Local filename, perhaps without path information
      * @return Corresponding File object
      */
-    public File find(String filename);
+    public File find(String f);
 
 }
 

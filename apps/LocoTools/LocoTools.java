@@ -18,7 +18,7 @@ import javax.swing.JMenuBar;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.27 $
+ * @version     $Revision: 1.24 $
  */
 public class LocoTools extends Apps {
 
@@ -28,6 +28,15 @@ public class LocoTools extends Apps {
 
     protected AppConfigPanel newPrefs() {
         return new AppConfigPanel(configFilename, 1);
+    }
+    protected void createMenus(JMenuBar menuBar, JFrame frame) {
+        fileMenu(menuBar, frame);
+        editMenu(menuBar, frame);
+        toolsMenu(menuBar, frame);
+        rosterMenu(menuBar, frame);
+        panelMenu(menuBar, frame);
+        systemsMenu(menuBar, frame);
+        debugMenu(menuBar, frame);
     }
 
     protected void systemsMenu(JMenuBar menuBar, JFrame frame) {
@@ -51,8 +60,7 @@ public class LocoTools extends Apps {
         splash(true);
 
         initLog4J();
-        log.info(apps.Apps.startupInfo("LocoTools"));
-
+        log.info("program starts");
         setConfigFilename("LocoToolsConfig2.xml", args);
         JFrame f = new JFrame("LocoTools");
         createFrame(new LocoTools(f), f);

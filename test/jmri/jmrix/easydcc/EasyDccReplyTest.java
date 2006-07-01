@@ -3,10 +3,12 @@
  *
  * Description:	    JUnit tests for the EasyDccReplyclass
  * @author			Bob Jacobsen
- * @version         $Revision: 1.7 $
+ * @version         $Revision: 1.5 $
  */
 
 package jmri.jmrix.easydcc;
+
+import jmri.*;
 
 import apps.tests.Log4JFixture;
 import junit.framework.Test;
@@ -60,7 +62,7 @@ public class EasyDccReplyTest extends TestCase {
 	public void testValue1() {
 		// value when just the string comes back
 		EasyDccReply m = new EasyDccReply();
-                int i= 0;
+        int i= 0;
 		m.setElement(i++, 'C');
 		m.setElement(i++, 'V');
 		m.setElement(i++, '0');

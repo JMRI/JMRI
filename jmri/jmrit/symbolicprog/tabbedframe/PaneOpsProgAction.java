@@ -9,7 +9,6 @@ import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.KnownLocoSelPane;
-import jmri.util.JmriJFrame;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
@@ -34,7 +33,7 @@ import javax.swing.JPanel;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.6 $
  */
 public class PaneOpsProgAction 	extends AbstractAction {
 
@@ -50,8 +49,6 @@ public class PaneOpsProgAction 	extends AbstractAction {
         if (jmri.InstanceManager.programmerManagerInstance()==null ||
             !jmri.InstanceManager.programmerManagerInstance().isOpsModePossible()) {
             setEnabled(false);
-            // This needs to return so the xmlThread is not started;
-	    return;
         }
 
         // start a low priority request for the Roster & DecoderInstance
@@ -69,10 +66,10 @@ public class PaneOpsProgAction 	extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
 
-        if (log.isDebugEnabled()) log.debug("Pane programmer requested");
+        if (log.isInfoEnabled()) log.info("Pane programmer requested");
 
         // create the initial frame that steers
-        final JmriJFrame f = new JmriJFrame("Ops-mode Programmer Setup");
+        final JFrame f = new JFrame("Ops-mode Programmer Setup");
         f.getContentPane().setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));
 
         // add the Roster menu
@@ -111,7 +108,7 @@ public class PaneOpsProgAction 	extends AbstractAction {
         f.getContentPane().add(pane1);
 
         f.pack();
-        if (log.isDebugEnabled()) log.debug("Tab-Programmer setup created");
+        if (log.isInfoEnabled()) log.info("Tab-Programmer setup created");
         f.show();
     }
 

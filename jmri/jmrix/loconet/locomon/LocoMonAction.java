@@ -13,6 +13,9 @@ package jmri.jmrix.loconet.locomon;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
+import jmri.jmrix.loconet.LnTrafficController;
+
+
 public class LocoMonAction 			extends AbstractAction {
 
 	public LocoMonAction(String s) { super(s);}
@@ -31,7 +34,7 @@ public class LocoMonAction 			extends AbstractAction {
 		catch (Exception ex) {
 			log.warn("LocoMonAction starting LocoMonFrame: Exception: "+ex.toString());
 			}
-		f.setVisible(true);
+		f.show();
 
 	}
 

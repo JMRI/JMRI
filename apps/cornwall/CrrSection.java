@@ -6,12 +6,9 @@ import jmri.*;
 
 /**
  * Abstract base class for Cornwall RR automation.
- * <P>
- * Defines useful constants, and handles basic structure of hte
- * update process.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.10 $
  */
 public abstract class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
     static final int RED    = SignalHead.RED;
@@ -107,7 +104,7 @@ public abstract class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
                 null,
                 tm.getByUserName("Cornwall Jct 1 tu(01)"),
                 tm.getByUserName("Ridge tu(02)"),
-                tm.getByUserName("Cornwall Jct 3 tu(03)"),
+                tm.getByUserName("unused tu(03)"),
                 tm.getByUserName("Reading Relay Track West Switch tu(04)"),
                 tm.getByUserName("Lickdale East tu(05)"),
                 tm.getByUserName("Colebrook West tu(06)"),
@@ -174,11 +171,10 @@ public abstract class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
                 tm.getByUserName("Relay Track 1 bo(30)"),
                 tm.getByUserName("Lickdale Interchange Track 2 bo(31)"),
                 tm.getByUserName("Lickdale Interchange Track 1 bo(32)"),
-                tm.getByUserName("Conewago Interlocking bo(33)"),
-                tm.getByUserName("Conewago Pocket bo(34)")
+                tm.getByUserName("Conewago Interlocking bo(33)")
             };
             // check for error!
-            if (bo.length != 34+1) log.error("Unexpected bo[] length: "+bo.length);
+            if (bo.length != 33+1) log.error("Unexpected bo[] length: "+bo.length);
             for (int i = 1; i<bo.length; i++)
                 if (bo[i]==null) log.error("bo["+i+"] unexpectedly null");
 

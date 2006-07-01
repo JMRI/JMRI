@@ -9,10 +9,10 @@ import org.jdom.Attribute;
 import org.jdom.Element;
 
 /**
- * Handle configuration for display.TurnoutIcon objects.
+ * Handle configuration for display.TurnoutIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.9 $
  */
 public class TurnoutIconXml implements XmlAdapter {
 
@@ -36,13 +36,11 @@ public class TurnoutIconXml implements XmlAdapter {
         element.addAttribute("turnout", p.getTurnout().getSystemName());
         element.addAttribute("x", ""+p.getX());
         element.addAttribute("y", ""+p.getY());
-        element.addAttribute("level", String.valueOf(p.getDisplayLevel()));
         element.addAttribute("closed", p.getClosedIcon().getName());
         element.addAttribute("thrown", p.getThrownIcon().getName());
         element.addAttribute("unknown", p.getUnknownIcon().getName());
         element.addAttribute("inconsistent", p.getInconsistentIcon().getName());
         element.addAttribute("rotate", String.valueOf(p.getClosedIcon().getRotation()));
-        element.addAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
 
         element.addAttribute("class", "jmri.jmrit.display.configurexml.TurnoutIconXml");
 
@@ -97,13 +95,7 @@ public class TurnoutIconXml implements XmlAdapter {
             }
         } catch (org.jdom.DataConversionException e) {}
 
-        Attribute a = element.getAttribute("forcecontroloff");
-        if ( (a!=null) && a.getValue().equals("true"))
-            l.setForceControlOff(true);
-        else
-            l.setForceControlOff(false);
-            
-        l.setTurnout(element.getAttribute("turnout").getValue());
+        l.setTurnout(element.getAttribute("turnout").getValue(), null);
 
         // find coordinates
         int x = 0;
@@ -115,16 +107,6 @@ public class TurnoutIconXml implements XmlAdapter {
             log.error("failed to convert positional attribute");
         }
         l.setLocation(x,y);
-
-        // find display level
-        int level = PanelEditor.TURNOUTS.intValue();
-        try {
-            level = element.getAttribute("level").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
-            log.warn("Could not parse level attribute!");
-        } catch ( NullPointerException e) {  // considered normal if the attribute not present
-        }
-        l.setDisplayLevel(level);
 
         p.putTurnout(l);
     }

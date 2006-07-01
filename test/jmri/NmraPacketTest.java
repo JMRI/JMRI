@@ -15,8 +15,6 @@ import junit.framework.Assert;
 
 public class NmraPacketTest extends TestCase {
 
-    // output values for some of these tests were provided by Bob Scheffler
-
 	// create an accessory decoder packet
 	public void testAccDecoderPacket1() {
 		// test fixed bits
@@ -54,58 +52,18 @@ public class NmraPacketTest extends TestCase {
 		Assert.assertEquals("third byte ", 0x50, ba[2] & 0xFF);
 	}
 	public void testAccDecoderPacket6() {
+		// "all bits set" test
+		byte[] ba = NmraPacket.accDecoderPkt(511, 1, 7);
+		Assert.assertEquals("first byte ", 0xBF, ba[0] & 0xFF);
+		Assert.assertEquals("second byte ", 0x8F, ba[1] & 0xFF);
+		Assert.assertEquals("third byte ", 0x30, ba[2] & 0xFF);
+	}
+	public void testAccDecoderPacket7() {
 		// "typical packet" test
 		byte[] ba = NmraPacket.accDecoderPkt(33, 1, 5);
 		Assert.assertEquals("first byte ", 0xA1, ba[0] & 0xFF);
 		Assert.assertEquals("second byte ", 0xFD, ba[1] & 0xFF);
 		Assert.assertEquals("third byte ", 0x5C, ba[2] & 0xFF);
-	}
-	public void testAccDecoderPacket7() {
-		// address 256
-		byte[] ba = NmraPacket.accDecoderPkt(256, true);
-		Assert.assertEquals("first byte ", 0x80, ba[0] & 0xFF);
-		Assert.assertEquals("second byte ", 0xEF, ba[1] & 0xFF);
-		Assert.assertEquals("third byte ", 0x6F, ba[2] & 0xFF);
-	}
-
-	public void testAccDecoderPacket8() {
-		// address 257
-		byte[] ba = NmraPacket.accDecoderPkt(257, true);
-		Assert.assertEquals("first byte ", 0x81, ba[0] & 0xFF);
-		Assert.assertEquals("second byte ", 0xE9, ba[1] & 0xFF);
-		Assert.assertEquals("third byte ", 0x68, ba[2] & 0xFF);
-	}
-
-	public void testAccDecoderPacket9() {
-		// address 512
-		byte[] ba = NmraPacket.accDecoderPkt(512, true);
-		Assert.assertEquals("first byte ", 0x80, ba[0] & 0xFF);
-		Assert.assertEquals("second byte ", 0xDF, ba[1] & 0xFF);
-		Assert.assertEquals("third byte ", 0x5F, ba[2] & 0xFF);
-	}
-
-	public void testAccDecoderPacket10() {
-		// address 513
-		byte[] ba = NmraPacket.accDecoderPkt(513, true);
-		Assert.assertEquals("first byte ", 0x81, ba[0] & 0xFF);
-		Assert.assertEquals("second byte ", 0xD9, ba[1] & 0xFF);
-		Assert.assertEquals("third byte ", 0x58, ba[2] & 0xFF);
-	}
-
-	public void testAccDecoderPacket11() {
-		// address 1024
-		byte[] ba = NmraPacket.accDecoderPkt(1024, true);
-		Assert.assertEquals("first byte ", 0x80, ba[0] & 0xFF);
-		Assert.assertEquals("second byte ", 0xBF, ba[1] & 0xFF);
-		Assert.assertEquals("third byte ", 0x3F, ba[2] & 0xFF);
-	}
-
-	public void testAccDecoderPacket12() {
-		// address 1025
-		byte[] ba = NmraPacket.accDecoderPkt(1025, true);
-		Assert.assertEquals("first byte ", 0x81, ba[0] & 0xFF);
-		Assert.assertEquals("second byte ", 0xB9, ba[1] & 0xFF);
-		Assert.assertEquals("third byte ", 0x38, ba[2] & 0xFF);
 	}
 
 	public void testOpsModeLong() {
@@ -129,61 +87,6 @@ public class NmraPacketTest extends TestCase {
 		Assert.assertEquals("fifth byte ",  0xF2, ba[4] & 0xFF);
 	}
 
-	public void testAnalog1() {
-		// "typical packet" test
-		byte[] ba = NmraPacket.analogControl(60, false, 1, 00);
-		Assert.assertEquals("first byte ",  0x3C, ba[0] & 0xFF);
-		Assert.assertEquals("second byte ", 0x3D, ba[1] & 0xFF);
-		Assert.assertEquals("third byte ",  0x01, ba[2] & 0xFF);
-		Assert.assertEquals("fourth byte ", 0x00, ba[3] & 0xFF);
-		Assert.assertEquals("fifth byte ",  0x3C^0x3D^0x01, ba[4] & 0xFF);
-	}
-
-	public void testAnalog2() {
-		// "typical packet" test
-		byte[] ba = NmraPacket.analogControl(60, false, 1, 12);
-		Assert.assertEquals("first byte ",  0x3C, ba[0] & 0xFF);
-		Assert.assertEquals("second byte ", 0x3D, ba[1] & 0xFF);
-		Assert.assertEquals("third byte ",  0x01, ba[2] & 0xFF);
-		Assert.assertEquals("fourth byte ", 0x0C, ba[3] & 0xFF);
-		Assert.assertEquals("fifth byte ",  0x3C^0x3D^0x01^0x0C, ba[4] & 0xFF);
-	}
-
-	public void testAddressShortLoco1() {
-	    byte [] ba = new byte[]{};
-	    NmraPacket.extractAddressNumber(ba);
-	    NmraPacket.extractAddressType(ba);
-        }
-
-	public void testConsist1() {
-		// "typical packet" test
-		byte[] ba = NmraPacket.consistControl(60, false, 1, true);
-		Assert.assertEquals("first byte ",  0x3C, ba[0] & 0xFF);
-		Assert.assertEquals("second byte ", 0x12, ba[1] & 0xFF);
-		Assert.assertEquals("third byte ",  0x01, ba[2] & 0xFF);
-		Assert.assertEquals("fourth byte ",  0x3C^0x12^0x01, ba[3] & 0xFF);
-	}
-
-	public void testConsist2() {
-		// "typical packet" test
-		byte[] ba = NmraPacket.consistControl(2065, true, 12, false);
-		Assert.assertEquals("first byte ",  0xC8, ba[0] & 0xFF);
-		Assert.assertEquals("second byte ", 0x11, ba[1] & 0xFF);
-		Assert.assertEquals("third byte ",  0x13, ba[2] & 0xFF);
-		Assert.assertEquals("fourth byte ", 0x0C, ba[3] & 0xFF);
-		Assert.assertEquals("fifth byte ",  0xC8^0x11^0x13^0x0C, ba[4] & 0xFF);
-	}
-
-	public void testConsist3() {
-		// "typical packet" test
-		byte[] ba = NmraPacket.consistControl(2065, true, 0, false);
-		Assert.assertEquals("first byte ",  0xC8, ba[0] & 0xFF);
-		Assert.assertEquals("second byte ", 0x11, ba[1] & 0xFF);
-		Assert.assertEquals("third byte ",  0x13, ba[2] & 0xFF);
-		Assert.assertEquals("fourth byte ", 0x00, ba[3] & 0xFF);
-		Assert.assertEquals("fifth byte ",  0xC8^0x11^0x13^0x00, ba[4] & 0xFF);
-	}
-        
 	// from here down is testing infrastructure
 	public NmraPacketTest(String s) {
 		super(s);

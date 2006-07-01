@@ -18,33 +18,26 @@ import com.sun.java.util.collections.List;
  * Macintosh MRJ
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @author  Dennis Miller  Copyright (C) 2005
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.2 $
  */
 public class PrintRosterAction  extends AbstractAction {
 
-    public PrintRosterAction(String actionName, Frame frame, boolean preview) {
+    public PrintRosterAction(String actionName, Frame frame) {
         super(actionName);
         mFrame = frame;
-        isPreview = preview;
     }
 
     /**
      * Frame hosting the printing
      */
     Frame mFrame;
-    /**
-     * Variable to set whether this is to be printed or previewed
-     */
-    boolean isPreview;
-    
 
     public void actionPerformed(ActionEvent e) {
 
         // obtain a HardcopyWriter to do this
         HardcopyWriter writer = null;
         try {
-            writer = new HardcopyWriter(mFrame, "DecoderPro Roster", 10, .5, .5, .5, .5, isPreview);
+            writer = new HardcopyWriter(mFrame, "DecoderPro Roster", 10, .5, .5, .5, .5);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
             return;

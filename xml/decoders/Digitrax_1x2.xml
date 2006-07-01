@@ -1,11 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- Copyright (C) JMRI 2003, 2005 All rights reserved -->
-<!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Digitrax_1x2.xml,v 1.26 2005-05-01 23:25:41 jacobsen Exp $ -->
+<!-- $Id: Digitrax_1x2.xml,v 1.23 2003-08-03 20:40:00 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
-					version="10" lastUpdated="20050112"/>
+					version="9" lastUpdated="20030805"/>
 
 		<!-- Version 4 - added wire colors -->
 		<!-- Version 5 - added some specific models, extended CV7 range to 249 -->
@@ -13,8 +11,6 @@
 		<!-- version 7 - adjusted top range of versionID -->
 		<!-- version 8 - default BEMF value corrected -->
 		<!-- Version 9 - fix "rule 17" typos -->
-      <!-- Version 9.1 - changed spelling of "behavior" (Jack Shall) -->
-      <!-- Version 10 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" - Bob Jacobsen -->
 		
 <decoder>
 	<family name="Premium FX with BEMF" mfg="Digitrax" 
@@ -205,8 +201,8 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="Forward light F0F behavior" CV="49" mask="VVVVXXXX"
-					item="Function F0F behavior">
+		<variable label="Forward light F0F behaviour" CV="49" mask="VVVVXXXX"
+					item="Function F0F behaviour">
 			<enumVal>
 				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
 				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
@@ -247,8 +243,8 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="Reverse light F0R behavior" CV="50" mask="VVVVXXXX"
-					item="Function F0R behavior">
+		<variable label="Reverse light F0R behaviour" CV="50" mask="VVVVXXXX"
+					item="Function F0R behaviour">
 			<enumVal>
 				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
 				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
@@ -288,7 +284,7 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="Function 1 behavior" CV="51" mask="VVVVXXXX" minFn="1">
+		<variable label="Function 1 behaviour" CV="51" mask="VVVVXXXX" minFn="1">
 			<enumVal>
 				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
 				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
@@ -328,7 +324,7 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="Function 2 behavior" CV="52" mask="VVVVXXXX" minFn="2">
+		<variable label="Function 2 behaviour" CV="52" mask="VVVVXXXX" minFn="2">
 			<enumVal>
 				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
 				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
@@ -368,7 +364,7 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="Function 3 behavior" CV="53" mask="VVVVXXXX" minFn="3">
+		<variable label="Function 3 behaviour" CV="53" mask="VVVVXXXX" minFn="3">
 			<enumVal>
 				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
 				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
@@ -408,7 +404,7 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="Function 4 behavior" CV="54" mask="VVVVXXXX" minFn="4">
+		<variable label="Function 4 behaviour" CV="54" mask="VVVVXXXX" minFn="4">
 			<enumVal>
 				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
 				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
@@ -475,7 +471,7 @@
 				<enumChoice choice="Reverse light lead controlled by F4"/>
 				</enumVal></variable>
 				
-		<variable label="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXVXXXXX">
+		<variable label="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXXVXXXX">
 			<enumVal>
 				<enumChoice choice="Enabled"/>
 				<enumChoice choice="Disabled"/>

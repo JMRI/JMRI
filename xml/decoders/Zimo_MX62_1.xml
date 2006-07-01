@@ -1,14 +1,11 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
-<!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Zimo_MX62_1.xml,v 1.5 2005-05-01 23:25:43 jacobsen Exp $ -->
+<!-- $Id: Zimo_MX62_1.xml,v 1.1 2003-08-10 21:58:18 jacobsen Exp $ -->
 <decoder-config>
 		<version author="sip@euronet.nl"
-			version="1.2" lastUpdated="20031008" />
+			version="1.1" lastUpdated="20030204" />
 			<!-- Based on various decoder xml files -->
 
-         <!-- V 1.2 changed spelling of "behavior" (Jack Shall) -->
 
 <decoder>
 	<family name="Zimo Silent BEMF decoders, late model" mfg="Zimo">
@@ -16,11 +13,10 @@
 		 maxInputVolts="12-24V" maxMotorCurrent="0.7A (peak=1.5A, 5 sec.)"
 		 maxTotalCurrent="0.8A" formFactor="N, HOe, HOm"
 		 numOuts="4" numFns="6" >
-		<size length="0.55" width="0.35" height="0.10" units="inches" />
 		<output name="1" label="White" />
-	    <output name="2" label="Yellow" />
-	    <output name="3" label="NC - Logic Level" />
-	    <output name="4" label="NC - Logic Level" />
+	    	<output name="2" label="Yellow" />
+	    	<output name="3" label="NC - Logic Level" />
+	    	<output name="4" label="NC - Logic Level" />
 	  	</model>
 	</family>
 
@@ -657,8 +653,8 @@
 				<enumChoice choice="Slow Dimming Up"/>
 				</enumVal>
 			</variable>
-		<variable label="behavior" CV="125" mask="XXXXXXVV"
-					item="Output 1 behavior">
+		<variable label="Behaviour" CV="125" mask="XXXXXXVV"
+					item="Output 1 behaviour">
 			<enumVal>
 				<enumChoice choice="Both directions"/>
 				<enumChoice choice="Only in forward"/>
@@ -684,8 +680,8 @@
 				<enumChoice choice="Slow Dimming Up"/>
 				</enumVal>
 			</variable>
-		<variable label="behavior" CV="126" mask="XXXXXXVV"
-					item="Output 2 behavior">
+		<variable label="Behaviour" CV="126" mask="XXXXXXVV"
+					item="Output 2 behaviour">
 			<enumVal>
 				<enumChoice choice="Both directions"/>
 				<enumChoice choice="Only in forward"/>
@@ -711,8 +707,8 @@
 				<enumChoice choice="Slow Dimming Up"/>
 				</enumVal>
 			</variable>
-		<variable label="behavior" CV="127" mask="XXXXXXVV"
-					item="Output 3 behavior">
+		<variable label="Behaviour" CV="127" mask="XXXXXXVV"
+					item="Output 3 behaviour">
 			<enumVal>
 				<enumChoice choice="Both directions"/>
 				<enumChoice choice="Only in forward"/>
@@ -738,8 +734,8 @@
 				<enumChoice choice="Slow Dimming Up"/>
 				</enumVal>
 			</variable>
-		<variable label="behavior" CV="128" mask="XXXXXXVV"
-					item="Output 4 behavior">
+		<variable label="Behaviour" CV="128" mask="XXXXXXVV"
+					item="Output 4 behaviour">
 			<enumVal>
 				<enumChoice choice="Both directions"/>
 				<enumChoice choice="Only in forward"/>

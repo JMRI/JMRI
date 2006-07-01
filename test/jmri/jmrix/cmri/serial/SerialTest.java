@@ -2,15 +2,17 @@
 
 package jmri.jmrix.cmri.serial;
 
-import junit.framework.Assert;
+import java.io.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.jdom.*;
+import org.jdom.output.*;
 
 /**
- * Tests for the jmri.jmrix.cmri.serial package.
- * @author      Bob Jacobsen  Copyright 2003
- * @version   $Revision: 1.3 $
+ * tests for the jmri.jmrix.cmri.serial package
+ * @author			Bob Jacobsen
+ * @version   $Revision: 1.1 $
  */
 public class SerialTest extends TestCase {
 
@@ -20,9 +22,9 @@ public class SerialTest extends TestCase {
         super(s);
     }
 
-    public void testDefinitions() {
-        Assert.assertEquals("Node definitions match", SerialSensorManager.SENSORSPERUA,
-                                    SerialNode.MAXSENSORS+1);
+    // a dummy test to avoid JUnit warning
+    public void testDemo() {
+        assertTrue(true);
     }
 
     // Main entry point
@@ -37,11 +39,9 @@ public class SerialTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.cmri.serial.SerialTest");
         suite.addTest(jmri.jmrix.cmri.serial.SerialTurnoutTest.suite());
         suite.addTest(jmri.jmrix.cmri.serial.SerialTurnoutManagerTest.suite());
-        suite.addTest(jmri.jmrix.cmri.serial.SerialSensorManagerTest.suite());
         suite.addTest(jmri.jmrix.cmri.serial.SerialNodeTest.suite());
         suite.addTest(jmri.jmrix.cmri.serial.SerialMessageTest.suite());
         suite.addTest(jmri.jmrix.cmri.serial.SerialTrafficControllerTest.suite());
-        suite.addTest(jmri.jmrix.cmri.serial.SerialAddressTest.suite());
         return suite;
     }
 

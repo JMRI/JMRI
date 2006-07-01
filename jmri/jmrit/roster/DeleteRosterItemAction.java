@@ -2,26 +2,21 @@
 
 package jmri.jmrit.roster;
 
-import jmri.jmrit.XmlFile;
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.io.File;
+import jmri.jmrit.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 /**
- * Remove a locomotive from the roster.
- *
- * <P>In case of error, this
+ * Remove a locomotive from the roster.  In case of error, this
  * moves the definition file to a backup.  This action posts
  * a dialog box to select the loco to be deleted, and then posts
  * an "are you sure" dialog box before acting.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.3 $
  * @see         jmri.jmrit.XmlFile
  */
 public class DeleteRosterItemAction extends AbstractAction {
@@ -47,9 +42,9 @@ public class DeleteRosterItemAction extends AbstractAction {
         if ( event.getSource() instanceof Component) parent = (Component)event.getSource();
 
         // create a dialog to select the roster entry
-        JComboBox selections = roster.fullRosterComboBox();
+        JComboBox selections = roster.matchingComboBox(null,null, null, null, null,null,null);
         int retval = JOptionPane.showOptionDialog(_who,
-                                                  "Select one roster entry", "Delete roster entry",
+                                                  "Select one roster entry", "Select roster entry",
                                                   0, JOptionPane.INFORMATION_MESSAGE, null,
                                                   new Object[]{"Cancel", "OK", selections}, null );
         log.debug("Dialog value "+retval+" selected "+selections.getSelectedIndex()+":"
@@ -59,7 +54,7 @@ public class DeleteRosterItemAction extends AbstractAction {
 
         // find the file for the selected entry
         String filename = roster.fileFromTitle(entry);
-        String fullFilename = LocoFile.getFileLocation()+filename;
+        String fullFilename = XmlFile.prefsDir()+LocoFile.fileLocation+filename;
         log.debug("resolves to \""+filename+"\", \""+fullFilename+"\"");
 
         // prompt for one last chance
@@ -72,11 +67,11 @@ public class DeleteRosterItemAction extends AbstractAction {
         // backup the file & delete it
         try {
             // ensure preferences will be found
-            XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());
+            XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+LocoFile.fileLocation);
 
             // do backup
             LocoFile df = new LocoFile();   // need a dummy object to do this operation in next line
-            df.makeBackupFile(LocoFile.getFileLocation()+filename);
+            df.makeBackupFile(LocoFile.fileLocation+filename);
 
             // locate the file and delete
             File f = new File(fullFilename);
@@ -111,10 +106,10 @@ public class DeleteRosterItemAction extends AbstractAction {
      */
     public static void main(String s[]) {
 
-        // initialize log4j - from logging control file (lcf) only
-        // if can find it!
-        String logFile = "default.lcf";
-        try {
+    	// initialize log4j - from logging control file (lcf) only
+    	// if can find it!
+    	String logFile = "default.lcf";
+    	try {
             if (new java.io.File(logFile).canRead()) {
                 org.apache.log4j.PropertyConfigurator.configure("default.lcf");
             } else {

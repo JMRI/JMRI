@@ -19,19 +19,17 @@ import com.sun.java.util.collections.ArrayList;
 
 /**
  * Extends VariableValue to represent a constant enum-like-thing
- * Note that there's no CV associated with this.
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
- * @version   $Revision: 1.12 $
+ * @version   $Revision: 1.4 $
  *
  */
 public class ConstantValue extends VariableValue {
 
-    public ConstantValue(String name, String comment, String cvName,
-                         boolean readOnly, boolean infoOnly, boolean writeOnly,  boolean opsOnly,
+    public ConstantValue(String name, String comment, boolean readOnly,
                          int cvNum, String mask, int minVal, int maxVal,
                          Vector v, JLabel status, String stdname) {
-        super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
+        super(name, comment, readOnly, cvNum, mask, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
         _value = new JComboBox();
@@ -45,17 +43,8 @@ public class ConstantValue extends VariableValue {
      */
     public ConstantValue() {}
 
-    public CvValue[] usesCVs() {
-        return new CvValue[]{};
-    }
-
     // stored value
     JComboBox _value = null;
-
-    public void setTooltipText(String t) {
-        super.setTooltipText(t);   // do default stuff
-        _value.setToolTipText(t);  // set our value
-    }
 
     // place to keep the items
     String[] _itemArray = null;
@@ -97,25 +86,21 @@ public class ConstantValue extends VariableValue {
             b.setEnabled(false);
             b.setSelected(true);
             comboCBs.add(b);
-            updateRepresentation(b);
             return b;
         }
         else if (format.equals("radiobuttons")) {
             JRadioButton b = new JRadioButton();
             comboRBs.add(b);
-            updateRepresentation(b);
             return b;
         }
         else if (format.equals("onradiobutton")) {
             JRadioButton b = new JRadioButton();
             comboRBs.add(b);
-            updateRepresentation(b);
             return b;
         }
         else if (format.equals("offradiobutton")) {
             JRadioButton b = new JRadioButton();
             comboRBs.add(b);
-            updateRepresentation(b);
             return b;
         }
         else {
@@ -132,64 +117,37 @@ public class ConstantValue extends VariableValue {
     }
 
     /**
-     * No connected CV, so this notify does nothing
+     * Notify the connected CVs of a state change from above
      * @param state
      */
     public void setCvState(int state) {
-    }
-
-    public boolean isChanged() {
-        return false;
-    }
-
-    public void setToRead(boolean state) {}
-
-    public boolean isToRead() {
-        return false;
-    }
-
-    public void setToWrite(boolean state) {}
-
-    public boolean isToWrite() {
-        return false;
-    }
-
-    public void readChanges() {
-         if (isChanged()) readAll();
-    }
-
-    public void writeChanges() {
-         if (isChanged()) writeAll();
+        CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()));
+        if (cv!=null) cv.setState(state);
+        else log.error("try to set state on CV "+getCvNum()+" with null entry");
     }
 
     /**
-     * Skip actually reading, but set states and notifications anyway.
-     * <P>
-     * This sets the state to READ so that you can
-     * have algorithms like "write all variables that aren't in READ state"
+     * read() sets the state to READ so that you can
+     * have algorithms like "read all variables that aren't in READ state".
      * This is different from the 'normal' VariableValue objects, which
      * rely on the associated CV objects to drive state changes at the
-     * end of the write.
+     * end of the read.
      */
-    public void readAll() {
+    public void read() {
         if (log.isDebugEnabled()) log.debug("read invoked");
-        setToRead(false);
         setState(READ);
         setBusy(true);
         setBusy(false);
     }
     /**
-     * Skip actually writing, but set states and notifications anyway.
-     * <P>
-     * This sets the state to STORED so that you can
+     * write() sets the state to STORED so that you can
      * have algorithms like "write all variables that aren't in STORED state"
      * This is different from the 'normal' VariableValue objects, which
      * rely on the associated CV objects to drive state changes at the
      * end of the write.
      */
-    public void writeAll() {
+    public void write() {
         if (log.isDebugEnabled()) log.debug("write invoked");
-        setToWrite(false);
         setState(STORED);
         setBusy(true);
         setBusy(false);

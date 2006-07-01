@@ -2,21 +2,19 @@
 
 package jmri.jmrit.roster;
 
-import jmri.jmrit.XmlFile;
-import java.awt.event.ActionEvent;
-import java.io.File;
+import jmri.jmrit.*;
+import java.awt.event.*;
+import java.io.*;
 
-import javax.swing.AbstractAction;
+import javax.swing.*;
 
-import org.jdom.Element;
+import org.jdom.*;
 
 /**
- * Recreate the roster index file if it's been damaged or lost.
- * <P>
- * Scans the roster directory for xml files, including any that are found.
+ * Recreate the roster index file if it's been damaged or lost
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.2 $
  */
 public class RecreateRosterAction extends AbstractAction {
 
@@ -35,7 +33,7 @@ public class RecreateRosterAction extends AbstractAction {
             LocoFile lf = new LocoFile();  // used as a temporary
             Element lroot = null;
             try {
-                lroot = lf.rootFromName(LocoFile.getFileLocation()+fullFromFilename);
+                lroot = lf.rootFromName(LocoFile.fileLocation+fullFromFilename);
             } catch (Exception ex) {
                 log.error("Exception while loading loco XML file: "+fullFromFilename+" exception: "+ex);
                 continue;
@@ -43,13 +41,12 @@ public class RecreateRosterAction extends AbstractAction {
 
             // create a new entry from XML info - find the element
             Element loco = lroot.getChild("locomotive");
-            if (loco != null) {
-                RosterEntry toEntry = new RosterEntry(loco);
-                toEntry.setFileName(fullFromFilename);
+            RosterEntry toEntry = new RosterEntry(loco);
+            toEntry.setFileName(fullFromFilename);
 
-                // add to roster
-                roster.addEntry(toEntry);
-            }
+            // add to roster
+            roster.addEntry(toEntry);
+
         }
 
         // write updated roster
@@ -68,44 +65,49 @@ public class RecreateRosterAction extends AbstractAction {
     String[] getFileNames() {
         // ensure preferences will be found for read
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-        XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());
+        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+LocoFile.fileLocation);
 
         // create an array of file names from roster dir in preferences, count entries
         int i;
         int np = 0;
         String[] sp = null;
-        XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());
-        if (log.isDebugEnabled()) log.debug("search directory "+LocoFile.getFileLocation());
-        File fp = new File(LocoFile.getFileLocation());
+        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+LocoFile.fileLocation);
+        File fp = new File(XmlFile.prefsDir()+LocoFile.fileLocation);
         if (fp.exists()) {
             sp = fp.list();
             for (i=0; i<sp.length; i++) {
-                if (sp[i].endsWith(".xml") || sp[i].endsWith(".XML")) {
+                if (sp[i].endsWith(".xml") || sp[i].endsWith(".XML"))
                     np++;
-                }
             }
         } else {
             log.warn(XmlFile.prefsDir()+"roster directory was missing, though tried to create it");
         }
-
-        // Copy the entries to the final array
-        String sbox[] = new String[np];
+        // create an array of file names from xml/roster, count entries
+        String[] sx = (new File(XmlFile.xmlDir()+LocoFile.fileLocation)).list();
+        int nx = 0;
+        for (i=0; i<sx.length; i++) {
+            if (sx[i].endsWith(".xml") || sx[i].endsWith(".XML")) {
+                nx++;
+            }
+        }
+        // copy the entries to the final array
+        // note: this results in duplicate entries if the same name is also local.
+        // But for now I can live with that.
+        String sbox[] = new String[np+nx];
         int n=0;
         if (sp != null && np> 0)
             for (i=0; i<sp.length; i++) {
-                if (sp[i].endsWith(".xml") || sp[i].endsWith(".XML")) {
+                if (sp[i].endsWith(".xml") || sp[i].endsWith(".XML"))
                     sbox[n++] = sp[i];
-                }
             }
-        // The resulting array is now sorted on file-name to make it easier
-        // for humans to read
-        jmri.util.StringUtil.sort(sbox);
-
-        if (log.isDebugEnabled()) {
-            log.debug("filename list:");
-            for (i=0; i<sbox.length; i++)
-                log.debug("      "+sbox[i]);
+        for (i=0; i<sx.length; i++) {
+            if (sx[i].endsWith(".xml") || sx[i].endsWith(".XML"))
+                sbox[n++] = sx[i];
         }
+        //the resulting array is now sorted on file-name to make it easier
+        // for humans to read
+        java.util.Arrays.sort(sbox);
+
         return sbox;
     }
 

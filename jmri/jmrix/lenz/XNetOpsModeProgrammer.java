@@ -13,63 +13,54 @@ import jmri.*;
  *
  * @see            jmri.Programmer
  * @author         Paul Bender Copyright (C) 2003
- * @version        $Revision: 2.6 $
+ * @version        $Revision: 1.1 $
  */
 
 public class XNetOpsModeProgrammer implements Programmer,XNetListener 
 {
 
-    private int _mode;
     int mAddressHigh;
     int mAddressLow;
-    int progState=0;
-    int value;
-    jmri.ProgListener progListener = null;
-
     public XNetOpsModeProgrammer(int pAddress) {
-	if(log.isDebugEnabled()) log.debug("Creating Ops Mode Programmer for Address " + pAddress);
-	mAddressLow=LenzCommandStation.getDCCAddressLow(pAddress);
-	mAddressHigh=LenzCommandStation.getDCCAddressHigh(pAddress);
-	if(log.isDebugEnabled()) log.debug("High Address: " + mAddressHigh +" Low Address: " +mAddressLow);
-        // register as a listener
-        XNetTrafficController.instance().addXNetListener(
-			XNetInterface.COMMINFO|XNetInterface.CS_INFO,this);
+        if(pAddress < 100)
+        {
+                mAddressHigh=0x00;
+                mAddressLow=pAddress;
+        }
+        else
+        {
+                int temp=pAddress + 0xC000;
+                temp=temp & 0xFF00;
+                temp=temp/256;
+                mAddressHigh=temp;
+                temp=pAddress+0xC000;
+                temp = temp &0x00FF;
+                mAddressLow=temp;
+        }
     }
 
     /**
      * Send an ops-mode write request to the XPressnet.
      */
     public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
-        XNetMessage msg=XNetMessage.getWriteOpsModeCVMsg(mAddressHigh,mAddressLow,CV,val);
+        XNetMessage msg=XNetTrafficController.instance().getCommandStation().getWriteOpsModeCVMsg(mAddressHigh,mAddressLow,CV,val);
 	XNetTrafficController.instance().sendXNetMessage(msg,this);
-        /* we need to save the programer and value so we can send messages 
-        back to the screen when the programing screen when we recieve 
-        something from the command station */
-        progListener=p;
-        value=val;
-        progState=XNetProgrammer.REQUESTSENT;
+        /* In the long run, this is probably NOT what we want to do, but 
+        we're writing an XPressNet message that returns no feedback if
+        the operation fails */
+        p.programmingOpReply(val,jmri.ProgListener.OK);
     }
 
     public void readCV(int CV, ProgListener p) throws ProgrammerException {
-           XNetMessage msg=XNetMessage.getVerifyOpsModeCVMsg(mAddressHigh,mAddressLow,CV,value);
-	   XNetTrafficController.instance().sendXNetMessage(msg,this);
-           /* We can trigger a read to an LRC120, but the information is not
-	      currently sent back to us via the XPressNet */
-           p.programmingOpReply(CV,jmri.ProgListener.NotImplemented);
+           /* read is not yet implemented by XPressNet*/
     }
 
     public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
-           XNetMessage msg=XNetMessage.getVerifyOpsModeCVMsg(mAddressHigh,mAddressLow,CV,val);
-	   XNetTrafficController.instance().sendXNetMessage(msg,this);
-           /* We can trigger a read to an LRC120, but the information is not
-	      currently sent back to us via the XPressNet */
-           p.programmingOpReply(val,jmri.ProgListener.NotImplemented);
+           /* read is not yet implemented by XPressNet*/
     }
 
     public void setMode(int mode) {
-        if (mode==Programmer.OPSBYTEMODE) {
-		_mode=mode;
-	} else {
+        if (mode!=Programmer.OPSBYTEMODE) {
             reportBadMode(mode);
         }
     }
@@ -79,7 +70,7 @@ public class XNetOpsModeProgrammer implements Programmer,XNetListener
     }
 
     public int  getMode() {
-        return _mode;
+        return Programmer.OPSBYTEMODE;
     }
 
     public boolean hasMode(int mode) {
@@ -87,14 +78,12 @@ public class XNetOpsModeProgrammer implements Programmer,XNetListener
     }
 
     /**
-     * Can this ops-mode programmer read back values?
-     * Indirectly we can, though this requires an external display 
-     * (a Lenz LRC120) and enabling railcom.
-     * @return true to allow us to trigger an ops mode read
+     * Can this ops-mode programmer read back values?  For now, no,
+     * but maybe later.
+     * @return always false for now
      */
     public boolean getCanRead() {
-	//return false;
-	return true;
+        return false;
     }
 
     public String decodeErrorCode(int i) {
@@ -108,46 +97,8 @@ public class XNetOpsModeProgrammer implements Programmer,XNetListener
     }
 
 
-    synchronized public void message(XNetReply l) {
-	if (progState == XNetProgrammer.NOTPROGRAMMING) {
-           // We really don't care about any messages unless we send a 
-           // request, so just ignore anything that comes in
-           return;
-        } else if (progState==XNetProgrammer.REQUESTSENT) {
-            if(l.isOkMessage()) {
-                  progState=XNetProgrammer.NOTPROGRAMMING;
-	  	  progListener.programmingOpReply(value,jmri.ProgListener.OK);
-	    } else {
-              /* this is an error */
-              if(l.getElement(0)==XNetConstants.LI_MESSAGE_RESPONSE_HEADER &&
-		((l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_UNKNOWN_DATA_ERROR ||
-		  l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_CS_DATA_ERROR ||
-		  l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_PC_DATA_ERROR ||
-		  l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_TIMESLOT_ERROR))) {   
-                     /* this is a communications error */
-	             progState=XNetProgrammer.NOTPROGRAMMING;
-                     progListener.programmingOpReply(value,jmri.ProgListener.FailedTimeout);
-	      } else if(l.getElement(0)==XNetConstants.CS_INFO &&
-		        l.getElement(2)==XNetConstants.CS_NOT_SUPPORTED) {
-	                   progState=XNetProgrammer.NOTPROGRAMMING;
-		     	   progListener.programmingOpReply(value,jmri.ProgListener.NotImplemented);
-	      } else if(l.getElement(0)==XNetConstants.CS_INFO &&
-		        l.getElement(2)==XNetConstants.CS_BUSY) {
-	                   progState=XNetProgrammer.NOTPROGRAMMING;
-		     	   progListener.programmingOpReply(value,jmri.ProgListener.ProgrammerBusy);
-              } else { 
-                        /* this is an unknown error */
-	                progState=XNetProgrammer.NOTPROGRAMMING;
-                   	progListener.programmingOpReply(value,jmri.ProgListener.UnknownError);
-              }
-            }
-	}
+    public void message(XNetMessage l) {
     }
-
-    // listen for the messages to the LI100/LI101
-    public synchronized void message(XNetMessage l) {
-    }
-
 
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetOpsModeProgrammer.class.getName());

@@ -10,7 +10,7 @@ import javax.swing.JPanel;
  * via a LocoNet hexfile emulator
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.1 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
@@ -28,7 +28,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
         super();
     }
 
-    public String name() { return "LocoNet Simulator"; }
+    public String name() { return "LocoNet Hexfile"; }
 
     public void loadDetails(JPanel details) {
         details.add(new JLabel("No options"));

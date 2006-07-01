@@ -14,7 +14,7 @@ import jmri.jmrix.nce.NceReply;
 /**
  * JUnit tests for the NceReplyclass
  * @author			Bob Jacobsen
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.5 $
  */
 public class NceReplyTest extends TestCase {
 
@@ -41,7 +41,7 @@ public class NceReplyTest extends TestCase {
         m.setElement(1, 0x02);
         m.setElement(2, 0xA2);
         m.setElement(3, 0x00);
-        Assert.assertEquals("string compare ", "81 02 A2 00", m.toString());
+        Assert.assertEquals("string compare ", "81 02 a2 00", m.toString());
     }
 
     public void testAsciiToString() {
@@ -111,31 +111,31 @@ public class NceReplyTest extends TestCase {
 
     public void testPollValue1() {
         NceReply m = new NceReply();
-        m.setBinary(true);
-        m.setElement(0, 0x02);
-        m.setElement(1, 0x00);
-        m.setElement(2, 0x01);
-        m.setElement(3, 0x02);
+        m.setBinary(false);
+        m.setElement(0, '0');
+        m.setElement(1, '2');
+        m.setElement(2, '0');
+        m.setElement(3, '0');
         Assert.assertEquals("value ", 0x0200, m.pollValue());
     }
 
     public void testPollValue2() {
         NceReply m = new NceReply();
-        m.setBinary(true);
-        m.setElement(0, 0x00);
-        m.setElement(1, 0x04);
-        m.setElement(2, 0x01);
-        m.setElement(3, 0x02);
+        m.setBinary(false);
+        m.setElement(0, '0');
+        m.setElement(1, '0');
+        m.setElement(2, '0');
+        m.setElement(3, '4');
         Assert.assertEquals("value ", 0x4, m.pollValue());
     }
 
     public void testPollValue3() {
         NceReply m = new NceReply();
-        m.setBinary(true);
-        m.setElement(0, 0x12);
-        m.setElement(1, 0x34);
-        m.setElement(2, 0x01);
-        m.setElement(3, 0x02);
+        m.setBinary(false);
+        m.setElement(0, '1');
+        m.setElement(1, '2');
+        m.setElement(2, '3');
+        m.setElement(3, '4');
         Assert.assertEquals("value ", 0x1234, m.pollValue());
     }
 

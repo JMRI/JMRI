@@ -2,21 +2,21 @@
 
 package jmri;
 
+import java.util.Hashtable;
 import java.util.Enumeration;
-
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.Hashtable;
 import com.sun.java.util.collections.List;
+import com.sun.java.util.collections.ArrayList;
+import com.sun.java.util.collections.Collections;
 
 
 /**
- * Abstract partial implementation for all Manager-type classes.
+ * Abstract partial implementation for all Manager-type classes
  * <P>
  * Note that this does not enforce any particular system naming convention
  * at the present time.  They're just names...
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.8 $
  */
 abstract public class AbstractManager
     implements Manager, java.beans.PropertyChangeListener {
@@ -110,7 +110,7 @@ abstract public class AbstractManager
             arr[i] = (String)en.nextElement();
             i++;
         }
-        jmri.util.StringUtil.sort(arr);
+        java.util.Arrays.sort(arr);
         for (i=0; i<arr.length; i++) out.add(arr[i]);
         return out;
     }
@@ -128,4 +128,4 @@ abstract public class AbstractManager
 
 }
 
-/* @(#)AbstractManager.java */
+/* @(#)AbstractSignalHeadManager.java */

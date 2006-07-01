@@ -11,7 +11,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import org.jdom.Element;
 
 /**
- * Handle XML persistance of layout connections.
+ * Handle XML persistance of layout connections
  * <P>
  * This class is named as being the persistant form of the
  * JmrixConfigPane class, but there's no object of that
@@ -20,7 +20,7 @@ import org.jdom.Element;
  * e.g. jmrix.easydcc.serialdriver.configurexml
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.1 $
  */
 public class JmrixConfigPaneXml implements XmlAdapter {
 
@@ -47,7 +47,7 @@ public class JmrixConfigPaneXml implements XmlAdapter {
 
     /**
      * Update static data from XML file
-     * @param e Top level Element to unpack.
+     * @param element Top level Element to unpack.
       */
     public void load(Element e) {
         UIManager.LookAndFeelInfo[] plafs = UIManager.getInstalledLookAndFeels();
@@ -103,7 +103,7 @@ public class JmrixConfigPaneXml implements XmlAdapter {
      * @param o  ignored
      */
     public void load(Element element, Object o) {
-        jmri.jmrit.symbolicprog.ProgDefault.setDefaultProgFile(element.getAttribute("defaultFile").getValue());
+        jmri.jmrit.symbolicprog.CombinedLocoSelPane.setDefaultProgFile(element.getAttribute("defaultFile").getValue());
     }
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(GuiLafConfigPaneXml.class.getName());

@@ -2,21 +2,22 @@
 
 package jmri.jmrix.lenz.li101;
 
+import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
-import javax.swing.AbstractAction;
+//import jmri.jmrix.loconet.LnTrafficController;
+
 
 /**
- * Swing action to create and register an LI101Frame object.
- * <P>
- * The {@link LI101Frame} is a configuration tool. Note that this
- * class does not provide port services for the LI101; that's
- * the {@link jmri.jmrix.lenz.li101.LI101Frame} class.
+ * LI101Action.java
+ *
+ * Description:		Swing action to create and register an
+ *       			LI101Frame object
  *
  * @author			Paul Bender    Copyright (C) 2003
- * @version			$Revision: 2.1 $
+ * @version			$Revision: 1.1 $
  */
-public class LI101Action extends AbstractAction {
+public class LI101Action 			extends AbstractAction {
 
     public LI101Action(String s) { super(s);}
     public LI101Action() {

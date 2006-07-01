@@ -6,90 +6,32 @@ import jmri.ProgListener;
 import java.beans.PropertyChangeListener;
 
 /**
- * Provide access to the hardware DCC decoder programming capability.
- * <P>
- * Programmers come in two types:
+ * "Programmer" is a capability to program decoders.  These come in two types:
  * <UL>
  * <LI>Service Mode, e.g. on a programming track
  * <LI>Ops Mode, e.g. "programming on the main"
  * </UL>
  * depending on which type you have, only certain modes can
- * be set. Valid modes are specified by the class static constants.
+ * be set.
  * <P>
- * You get a Programmer object from a {@link ProgrammerManager},
- * which in turn can be located from the {@link InstanceManager}.
+ * You get a Programmer object from a ProgrammerManager,
+ * which in turn can be located from the InstanceManager.
  * @see         jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.17 $
+ * @version	$Revision: 1.14 $
  */
 public interface Programmer  {
 
     // mode e.g. register, direct, paged
-
-    /**
-     * No programming mode available
-     */
     public static final int NONE	    =  0;
-    /**
-     * NMRA "Register" mode
-     */
     public static final int REGISTERMODE    = 11;
-
-    /**
-     * NMRA "Paged" mode
-     */
     public static final int PAGEMODE        = 21;
-    
-    /**
-     * NMRA "Direct" mode, using only the bit-wise operations
-     */
     public static final int DIRECTBITMODE   = 31;
-
-    /**
-     * NMRA "Direct" mode, using only the byte-wise operations
-     */
     public static final int DIRECTBYTEMODE  = 32;
-    /**
-     * NMRA "Address-only" mode. Often implemented as
-     * a proper subset of "Register" mode, as the 
-     * underlying operation is the same.
-     */
     public static final int ADDRESSMODE     = 41;
 
-    /**
-     * NMRA "Operations" or "Programming on the main" mode, using only the byte-wise operations
-     */
     public static final int OPSBYTEMODE     = 101;
-    /**
-     * NMRA "Operations" or "Programming on the main" mode, using only the bit-wise operations
-     */
     public static final int OPSBITMODE      = 102;
-
-    /**
-     * NMRA "Programming on the main" mode for stationary decoders, 
-     * using only the byte-wise operations. Note that this is 
-     * defined as using the "normal", not "extended" addressing.
-     */
-    public static final int OPSACCBYTEMODE  = 111;
-
-    /**
-     * NMRA "Programming on the main" mode for stationary decoders, 
-     * using only the bit-wise operations. Note that this is 
-     * defined as using the "normal", not "extended" addressing.
-     */
-    public static final int OPSACCBITMODE   = 112;
-
-    /**
-     * NMRA "Programming on the main" mode for stationary decoders, 
-     * using only the byte-wise operations and "extended" addressing.
-     */
-    public static final int OPSACCEXTBYTEMODE = 121;
-
-    /**
-     * NMRA "Programming on the main" mode for stationary decoders, 
-     * using only the bit-wise operations and "extended" addressing.
-     */
-    public static final int OPSACCEXTBITMODE  = 122;
 
     /**
      * Perform a CV write in the system-specific manner,
@@ -124,17 +66,11 @@ public interface Programmer  {
      */
     public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException;
 
-    /**
-     * Set the programmer to a particular mode.  Only certain
-     * modes may be available for any particular implementation.
-     * If an invalid mode is requested, the active mode is unchanged.
-     * @param mode One of the class-constant mode values
+    /*
+     * Mode is a property that can be set and queried for the
+     * programmer.  Notification is also possible...
      */
     public void setMode(int mode);
-    /**
-     * Get the current programming mode
-     * @return one of the class constants identifying a mode
-     */
     public int  getMode();
 
     /**

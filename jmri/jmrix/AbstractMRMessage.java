@@ -8,7 +8,7 @@ package jmri.jmrix;
  * Carries a sequence of characters, with accessors.
  *
  * @author	        Bob Jacobsen  Copyright (C) 2003
- * @version             $Revision: 1.8 $
+ * @version             $Revision: 1.3 $
  */
 abstract public class AbstractMRMessage {
 
@@ -16,7 +16,6 @@ abstract public class AbstractMRMessage {
         setBinary(false);
         setNeededMode(AbstractMRTrafficController.NORMALMODE);
         setTimeout(SHORT_TIMEOUT);  // default value is the short timeout
-	setRetries(0);  // Default to no retries
     }
 
     // create a new one
@@ -37,7 +36,6 @@ abstract public class AbstractMRMessage {
         _dataChars = new int[_nDataChars];
         for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
         setTimeout(m.getTimeout());
-        setRetries(m.getRetries());
         setNeededMode(m.getNeededMode());
     }
 
@@ -67,26 +65,12 @@ abstract public class AbstractMRMessage {
     public boolean isBinary() { return _isBinary; }
     public void setBinary(boolean b) { _isBinary = b; }
 
-    /**
-     * Minimum timeout that's acceptable.
-     * <P>
-     * Also used as default for normal operations.  Don't shorten
-     * this "to make recovery faster", as sometimes <i>internal</i> delays
-     * can slow processing down.
-     * <P>
-     * Units are milliseconds.
-     */
-    static protected int SHORT_TIMEOUT=2000;
-    static protected int LONG_TIMEOUT=60000;  // e.g. for programming options
+    // recommended timeout for reply
+    static protected int SHORT_TIMEOUT=1000;
+    static protected int LONG_TIMEOUT=60000;
     int mTimeout;  // in milliseconds
     public void setTimeout(int t) { mTimeout = t; }
     public int getTimeout() { return mTimeout; }
-
-    /* For some systems, we want to retry sending a message if the port
-       isn't ready for them. */
-    private int mRetries=0; // number of retries, default = 0;
-    public void setRetries(int i) { mRetries = i; }
-    public int getRetries() { return mRetries; }
 
     // display format
     public String toString() {
@@ -94,7 +78,8 @@ abstract public class AbstractMRMessage {
         for (int i=0; i<_nDataChars; i++) {
             if (_isBinary) {
                 if (i!=0) s+=" ";
-                s = jmri.util.StringUtil.appendTwoHexFromInt(_dataChars[i]&0xFF, s);
+                if (_dataChars[i] < 16) s+="0";
+                s+=Integer.toHexString(_dataChars[i]);
             } else {
                 s+=(char)_dataChars[i];
             }
@@ -125,29 +110,6 @@ abstract public class AbstractMRMessage {
         return;
     }
 
-    public void addIntAsThreeHex(int val, int offset) {
-        String s = (""+Integer.toHexString(val)).toUpperCase();
-        if (s.length() > 3) log.error("can't add as three hex digits: "+s);
-        if (s.length() != 3) s = "0"+s;
-        if (s.length() != 3) s = "0"+s;
-        setElement(offset,s.charAt(0));
-        setElement(offset+1,s.charAt(1));
-        setElement(offset+2,s.charAt(2));
-        return;
-    }
-
-    public void addIntAsFourHex(int val, int offset) {
-        String s = (""+Integer.toHexString(val)).toUpperCase();
-        if (s.length() > 4) log.error("can't add as three hex digits: "+s);
-        if (s.length() != 4) s = "0"+s;
-        if (s.length() != 4) s = "0"+s;
-        if (s.length() != 4) s = "0"+s;
-        setElement(offset,s.charAt(0));
-        setElement(offset+1,s.charAt(1));
-        setElement(offset+2,s.charAt(2));
-        setElement(offset+3,s.charAt(3));
-        return;
-    }
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractMRMessage.class.getName());
 
 }

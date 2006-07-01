@@ -5,12 +5,14 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import java.io.*;
+
 /**
  * IdentifyLocoTest.java
  *
  * Description:	    tests for the jmrit.roster.IdentifyLoco class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.4 $
  */
 public class IdentifyLocoTest extends TestCase {
     

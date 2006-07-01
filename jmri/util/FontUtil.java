@@ -16,7 +16,7 @@ import java.awt.Font;
  * Java 1.1.8 system, or at least try to fake it.
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.3 $
  */
 
 public class FontUtil {
@@ -25,30 +25,12 @@ public class FontUtil {
         return true;
     }
 
-    static boolean doInit = true;
-    static boolean skip = false;
-    
-    static void init() {
-        doInit = false;
-        // see if on a Mac Classic system where shouldnt even try
-        if (System.getProperty("os.name").equals("Mac OS")) {
-            skip = true;
-        }
-    }
-    
     static public Font deriveFont(Font f, int style) {
-        if (doInit) init();
-        
-        // dont even attempt this on certain systems
-        if (skip) return f;        
-        
-        // on other platforms, try it
         try {
             return f.deriveFont(style);
-        } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
-            // just carry on with original fonts
+        } catch (NoSuchMethodError e) {
             return f;
-        }
+        }  // just carry on with original fonts
     }
 
     static public boolean canResize() {
@@ -56,16 +38,9 @@ public class FontUtil {
     }
 
     static public Font deriveFont(Font f, float size) {
-        if (doInit) init();
-
-        // dont even attempt this on certain systems
-        if (skip) return f;        
-        
-        
-        // on other platforms, try it
         try {
             return f.deriveFont(size);
-        } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
+        } catch (NoSuchMethodError e) {
             return f; // just carry on with original fonts
         }
     }

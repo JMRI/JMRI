@@ -3,7 +3,7 @@
  *
  * Description:		PowerManager implementation for controlling layout power
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 2.3 $
+ * @version			$Revision: 1.4 $
  */
 
 package jmri.jmrix.lenz;
@@ -18,10 +18,7 @@ public class XNetPowerManager implements PowerManager, XNetListener {
 	public XNetPowerManager() {
 		// connect to the TrafficManager
 		tc = XNetTrafficController.instance();
-		tc.addXNetListener(XNetInterface.CS_INFO, this);
-		// request the current command station status
-		tc.sendXNetMessage(tc.getCommandStation()
-                                     .getCSStatusRequestMessage(),this);
+		tc.addXNetListener(~0, this);
 	}
 
 	int power = UNKNOWN;
@@ -49,7 +46,7 @@ public class XNetPowerManager implements PowerManager, XNetListener {
 
 	// to free resources when no longer used
 	public void dispose() throws JmriException {
-		tc.removeXNetListener(XNetInterface.CS_INFO, this);
+		tc.removeXNetListener(~0, this);
 		tc = null;
 	}
 
@@ -69,76 +66,20 @@ public class XNetPowerManager implements PowerManager, XNetListener {
 
 	XNetTrafficController tc = null;
 
-	// to listen for Broadcast messages related to track power.
-        // There are 5 messages to listen for
-	public void message(XNetReply m) {
-		if (log.isDebugEnabled()) log.debug("Message recieved: " +m.toString());
-                // First, we check for a "normal operations resumed message"
-                // This indicates the power to the track is ON
+	// to listen for status changes from net
+	public void message(XNetMessage m) {
 		if (m.getElement(0) == jmri.jmrix.lenz.XNetConstants.CS_INFO &&
                     m.getElement(1) == jmri.jmrix.lenz.XNetConstants.BC_NORMAL_OPERATIONS) {
 			power = ON;
 			firePropertyChange("Power", null, null);
 		}
-                // Next, we check for a Track Power Off message
-                // This indicates the power to the track is OFF
-		else if (m.getElement(0) == jmri.jmrix.lenz.XNetConstants.CS_INFO &&
+		else if (m.getElement(0) == jmri.jmrix.lenz.XNetConstants.CS_INFO ||
+                         m.getElement(0) == jmri.jmrix.lenz.XNetConstants.CS_BUSY &&
                          m.getElement(1) == jmri.jmrix.lenz.XNetConstants.BC_EVERYTHING_OFF) {
 			power = OFF;
 			firePropertyChange("Power", null, null);
 		}
-                // Then, we check for an "Emergency Stop" message
-                // This indicates the track power is ON, but all 
-                // locomotives are stopped
-		else if (m.getElement(0) == jmri.jmrix.lenz.XNetConstants.BC_EMERGENCY_STOP &&
-                         m.getElement(1) == jmri.jmrix.lenz.XNetConstants.BC_EVERYTHING_OFF) {
-			power = OFF;
-			firePropertyChange("Power", null, null);
-		} 
-                // Next we check for a "Service Mode Entry" message
-                // This indicatse track power is off on the mainline.
-		else if (m.getElement(0) == jmri.jmrix.lenz.XNetConstants.CS_INFO &&
-                         m.getElement(1) == jmri.jmrix.lenz.XNetConstants.BC_SERVICE_MODE_ENTRY) {
-			power = OFF;
-			firePropertyChange("Power", null, null);
-		}
-		// Finally, we look at for the response to a Command 
-                // Station Status Request
-		else if (m.getElement(0) == jmri.jmrix.lenz.XNetConstants.CS_REQUEST_RESPONSE &&
-                         m.getElement(1) == jmri.jmrix.lenz.XNetConstants.CS_STATUS_RESPONSE) {
-                     int statusByte=m.getElement(2); 
-                     if((statusByte&0x01)==0x01) {
-                        // Command station is in Emergency Off Mode
-			power = OFF;
-			firePropertyChange("Power", null, null);
-                     } else if ((statusByte&0x02)==0x02){
-                        // Command station is in Emergency Stop Mode
-			power = OFF;
-			firePropertyChange("Power", null, null);
-                     } else if ((statusByte&0x08)==0x08){
-                        // Command station is in Service Mode, power to the 
-                        // track is off
-			power = OFF;
-			firePropertyChange("Power", null, null);
-                     } else if ((statusByte&0x40)==0x40){
-                        // Command station is in Power Up Mode, and not yet on
-			power = OFF;
-			firePropertyChange("Power", null, null);
-                     } else {
-		        power = ON;
-			firePropertyChange("Power", null, null);
-		     }
-              }
-
 	}
-
-        // listen for the messages to the LI100/LI101
-        public void message(XNetMessage l) {
-        }
-
-
-	// Initialize logging information
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetPowerManager.class.getName());
 
 }
 

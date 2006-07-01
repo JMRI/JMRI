@@ -2,9 +2,7 @@
 
 package jmri.jmrit.automat;
 
-import jmri.InstanceManager;
-import jmri.Sensor;
-import jmri.Turnout;
+import jmri.*;
 
 /**
  * This sample Automaton watches a Sensor, and adjusts the
@@ -21,7 +19,7 @@ import jmri.Turnout;
  * created and invoked by a SampleAutomatonAction.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.5 $
  * @see         jmri.jmrit.automat.SampleAutomatonAction
  */
 public class SampleAutomaton extends AbstractAutomaton {
@@ -36,42 +34,23 @@ public class SampleAutomaton extends AbstractAutomaton {
     Sensor sensor;
 
     /**
-     * By default, monitors sensor "31"
-     */
-    String sensorName = "31";
-
-    /**
-     * By default, controls turnout "26".
-     */
-    String turnoutName = "26";
-
-    /**
+     * By default, monitors sensor "31" and controls turnout "26".
      * <P>
      * This also sets the turnout to the current (initial) state
      * to make sure everything is consistent at the start.
      */
     protected void init() {
-
-        log.info("SampleAutomaton monitors sensor "+sensorName+
-                 " and controls turnout "+turnoutName);
-
         // get references to sample layout objects
+
         turnout = InstanceManager.turnoutManagerInstance().
-                    provideTurnout(turnoutName);
-		if (turnout==null) {
-			log.error("Failure to provide turnout "+turnoutName+" when initialized");
-		}
+                    provideTurnout("26");
 
         sensor = InstanceManager.sensorManagerInstance().
-                    provideSensor(sensorName);
-					
-		if (sensor!=null) {
-			// set up the initial correlation
-			now = sensor.getKnownState();
-			setTurnout(now);
-		} else {
-			log.error("Failure to provide sensor "+sensorName+" when initialized");
-		}
+                    provideSensor("31");
+
+        // set up the initial correlation
+        now = sensor.getKnownState();
+        setTurnout(now);
     }
 
     int now;

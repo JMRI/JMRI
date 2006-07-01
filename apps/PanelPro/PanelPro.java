@@ -3,11 +3,12 @@
 package apps.PanelPro;
 
 import apps.Apps;
-import jmri.util.JmriJFrame;
+import apps.SplashWindow;
 
 import java.text.MessageFormat;
 
 import javax.swing.JFrame;
+import javax.swing.JMenuBar;
 
 /**
  * The JMRI program for creating control panels.
@@ -17,7 +18,7 @@ import javax.swing.JFrame;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.10 $
  */
 public class PanelPro extends Apps {
 
@@ -25,8 +26,18 @@ public class PanelPro extends Apps {
         super(p);
     }
 
-    protected String logo() {
-        return "resources/PanelPro.gif";
+    protected void createMenus(JMenuBar menuBar, JFrame frame) {
+        fileMenu(menuBar, frame);
+        editMenu(menuBar, frame);
+        toolsMenu(menuBar, frame);
+        rosterMenu(menuBar, frame);
+        panelMenu(menuBar, frame);
+
+        // show active systems
+        jmri.jmrix.ActiveSystemsMenu.addItems(menuBar);
+
+        // debug, but not development
+        debugMenu(menuBar, frame);
     }
 
     protected String line1() {
@@ -45,10 +56,9 @@ public class PanelPro extends Apps {
         splash(true);
 
         initLog4J();
-        log.info(apps.Apps.startupInfo("PanelPro"));
-
+        log.info("program starts");
         setConfigFilename("PanelProConfig2.xml", args);
-        JmriJFrame f = new JmriJFrame("PanelPro");
+        JFrame f = new JFrame("PanelPro");
         createFrame(new PanelPro(f), f);
 
         log.info("main initialization done");

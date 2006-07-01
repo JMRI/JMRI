@@ -14,7 +14,7 @@ import jmri.*;
  *
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.1 $
  */
 public class EasyDccOpsModeProgrammer extends EasyDccProgrammer  {
 
@@ -41,14 +41,14 @@ public class EasyDccOpsModeProgrammer extends EasyDccProgrammer  {
         int j = 4;
         for (int i=0; i<contents.length; i++) {
             msg.setElement(j++, ' ');
-            msg.addIntAsTwoHex(((int)contents[i])&0xFF, j);
+            EasyDccMessage.addIntAsTwoHex(((int)contents[i])&0xFF, msg, j);
             j = j+2;
         }
 
-        // record state.  COMMANDSENT is just waiting for a reply...
+        // record state.  RETURNSENT is just waiting for a reply...
         useProgrammer(p);
         _progRead = false;
-        progState = COMMANDSENT;
+        progState = RETURNSENT;
         _val = val;
         _cv = CV;
 

@@ -16,10 +16,8 @@ import javax.swing.JMenuBar;
  * Also provides a static member for adding these items to an
  * existing menu.
  *
- * @see SystemsMenu
- *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.2 $
  */
 public class ActiveSystemsMenu extends JMenu {
     public ActiveSystemsMenu(String name) {
@@ -43,33 +41,20 @@ public class ActiveSystemsMenu extends JMenu {
 
         // the following is somewhat brute-force!
 
-        if (jmri.jmrix.cmri.serial.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.cmri.CMRIMenu"));
-        if (jmri.jmrix.easydcc.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.easydcc.EasyDCCMenu"));
-        if (jmri.jmrix.loconet.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.loconet.LocoNetMenu"));
-        if (jmri.jmrix.nce.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.nce.NceMenu"));
-        if (jmri.jmrix.sprog.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.sprog.SPROGMenu"));
-        if (jmri.jmrix.wangrow.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.wangrow.WangrowMenu"));
-        if (jmri.jmrix.lenz.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.lenz.XNetMenu"));
-        if (jmri.jmrix.xpa.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.xpa.XpaMenu"));
-        if (jmri.jmrix.zimo.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.zimo.Mx1Menu"));
-        
-        m.add(new javax.swing.JSeparator());
-        
-        if (jmri.jmrix.direct.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.direct.DirectMenu"));
-        if (jmri.jmrix.tmcc.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.tmcc.TMCCMenu"));
-        if (jmri.jmrix.oaktree.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.oaktree.OakTreeMenu"));
+        if (jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter.hasInstance())
+            m.add(new jmri.jmrix.cmri.CMRIMenu());
+        if (jmri.jmrix.easydcc.serialdriver.SerialDriverAdapter.hasInstance())
+            m.add(new jmri.jmrix.easydcc.EasyDCCMenu());
+        if (jmri.jmrix.loconet.LnTrafficController.hasInstance())
+            m.add(new jmri.jmrix.loconet.LocoNetMenu());
+        if (jmri.jmrix.nce.serialdriver.SerialDriverAdapter.hasInstance())
+            m.add(new jmri.jmrix.nce.NceMenu());
+        if (jmri.jmrix.lenz.li100.LI100Adapter.hasInstance())
+            m.add(new jmri.jmrix.lenz.XNetMenu());
+        if (jmri.jmrix.sprog.serialdriver.SerialDriverAdapter.hasInstance())
+            m.add(new jmri.jmrix.sprog.SPROGMenu());
+        if (jmri.jmrix.zimo.mx1.Mx1Adapter.hasInstance())
+            m.add(new jmri.jmrix.zimo.Mx1Menu());
     }
 
     static public void addItems(JMenuBar m) {
@@ -77,51 +62,19 @@ public class ActiveSystemsMenu extends JMenu {
 
         // the following is somewhat brute-force!
 
-        if (jmri.jmrix.cmri.serial.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.cmri.CMRIMenu"));
-
-        if (jmri.jmrix.easydcc.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.easydcc.EasyDCCMenu"));
-
-        if (jmri.jmrix.loconet.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.loconet.LocoNetMenu"));
-
-        if (jmri.jmrix.nce.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.nce.NceMenu"));
-
-        if (jmri.jmrix.sprog.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.sprog.SPROGMenu"));
-
-        if (jmri.jmrix.wangrow.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.wangrow.WangrowMenu"));
-
-        if (jmri.jmrix.lenz.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.lenz.XNetMenu"));
-
-        if (jmri.jmrix.xpa.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.xpa.XpaMenu"));
-
-        if (jmri.jmrix.zimo.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.zimo.Mx1Menu"));
-
-        if (jmri.jmrix.direct.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.direct.DirectMenu"));
-
-        if (jmri.jmrix.tmcc.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.tmcc.TMCCMenu"));
-
-        if (jmri.jmrix.oaktree.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.oaktree.OakTreeMenu"));
+        if (jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter.hasInstance())
+            m.add(new jmri.jmrix.cmri.CMRIMenu());
+        if (jmri.jmrix.easydcc.serialdriver.SerialDriverAdapter.hasInstance())
+            m.add(new jmri.jmrix.easydcc.EasyDCCMenu());
+        if (jmri.jmrix.loconet.LnTrafficController.hasInstance())
+            m.add(new jmri.jmrix.loconet.LocoNetMenu());
+        if (jmri.jmrix.nce.serialdriver.SerialDriverAdapter.hasInstance())
+            m.add(new jmri.jmrix.nce.NceMenu());
+        if (jmri.jmrix.lenz.li100.LI100Adapter.hasInstance())
+            m.add(new jmri.jmrix.lenz.XNetMenu());
+        if (jmri.jmrix.sprog.serialdriver.SerialDriverAdapter.hasInstance())
+            m.add(new jmri.jmrix.sprog.SPROGMenu());
+        if (jmri.jmrix.zimo.mx1.Mx1Adapter.hasInstance())
+            m.add(new jmri.jmrix.zimo.Mx1Menu());
     }
-
-    static JMenu getMenu(String className) {
-        try {
-            return (JMenu) Class.forName(className).newInstance();
-        } catch (Exception e) {
-            log.error("Could not load class "+className+"; "+e);
-            return null;
-        }
-    }
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ActiveSystemsMenu.class.getName());
-
 }

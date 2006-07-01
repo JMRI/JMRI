@@ -1,40 +1,47 @@
 package jmri.jmrit.display;
 
-import jmri.util.JmriJFrame;
 import java.awt.event.ActionEvent;
-
 import javax.swing.AbstractAction;
+import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
+import jmri.InstanceManager;
 
 /**
- * Start a PanelEditor.
+ * Start a PanelEditor.  Creates a JFrame to contain it, and another to
+ * connect it to.
  *
- * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.13 $
- * @see         jmri.jmrit.display.PanelEditorAction
+ * @author			Bob Jacobsen   Copyright (C) 2002
+ * @version			$Revision: 1.8 $
+ * @see             jmri.jmrit.display.PanelEditorAction
  */
 public class PanelEditorAction extends AbstractAction {
 
-    public PanelEditorAction(String s) {
-        super(s);
-    }
+	public PanelEditorAction(String s) {
+		super(s);
+	}
 
     public PanelEditorAction() {
         this("New Panel");
     }
 
     public void actionPerformed(ActionEvent e) {
-        PanelEditor panel = new PanelEditor();
-        JmriJFrame targetFrame = panel.makeFrame("Panel");
-        targetFrame.setLocation(20,20);
+        JFrame targetFrame = new JFrame("Panel");
+        targetFrame.setSize(200,200);
+        JLayeredPane targetPanel = new JLayeredPane();
+        targetFrame.getContentPane().add(targetPanel);
+        targetPanel.setLayout(null);
 
-        panel.setTitle();
-
-        targetFrame.pack();
         targetFrame.show();
 
+        PanelEditor panel = new PanelEditor();
+        panel.setFrame(targetFrame);
+        panel.setTarget(targetPanel);
         panel.pack();
         panel.show();
 
 	}
+
+	// initialize logging
+    //static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PanelEditorAction.class.getName());
+
 }

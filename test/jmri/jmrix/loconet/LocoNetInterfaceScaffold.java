@@ -11,6 +11,7 @@
 package jmri.jmrix.loconet;
 
 import jmri.jmrix.loconet.LnTrafficController;
+import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 
 import java.util.Vector;
@@ -44,7 +45,7 @@ public class LocoNetInterfaceScaffold extends LnTrafficController {
      * Forward a message that came from unit under test
      */
     void forwardMessage(int i) {
-        sendTestMessage((LocoNetMessage)outbound.elementAt(i));
+        sendTestMessage((LocoNetMessage)outbound.get(i));
     }
 
 	/**

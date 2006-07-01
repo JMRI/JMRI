@@ -2,87 +2,88 @@ package jmri.jmrix.lenz;
 
 import jmri.ThrottleListener;
 import jmri.ThrottleManager;
-import jmri.LocoAddress;
-
 import com.sun.java.util.collections.HashMap;
 
-import jmri.jmrix.AbstractThrottleManager;
-
 /**
- * XNet implementation of a ThrottleManager based on the AbstractThrottleManager.
- * @author     Paul Bender Copyright (C) 2002-2004
- * @version    $Revision: 2.5 $
+ * XNet implementation of a ThrottleManager
+ * @author     Paul Bender Copyright (C) 2002,2003
+ * @version    $Revision: 1.7 $
  */
 
-public class XNetThrottleManager extends AbstractThrottleManager implements ThrottleManager
+public class XNetThrottleManager implements ThrottleManager,XNetListener
 {
+    private HashMap throttleListeners;
+    private HashMap throttleMap;
+
     /**
      * Constructor.
      */
     public XNetThrottleManager()
     {
        super();
+       XNetTrafficController.instance().addXNetListener(~0, this);
     }
 
     /**
-     * Request a new throttle object be creaetd for the address, and let 
-     * the throttle listeners know about it.
-     **/
-     public void requestThrottleSetup(LocoAddress address) {
-	if(log.isDebugEnabled()) log.debug("Requesting Throttle: " +address);
-	XNetThrottle throttle=new XNetThrottle(address);
-	notifyThrottleKnown(throttle,address);	
-     }
-
-    /*
-     * XPressNet based systems DO NOT use the Dispatch Function
+     * Request a throttle, given a decoder address. When the decoder address
+     * is located, the ThrottleListener gets a callback via the ThrottleListener.notifyThrottleFound
+     * method.
+     * @param address The decoder address desired.
+     * @param l The ThrottleListener awaiting notification of a found throttle.
+     * @return True if the request will not continue, false if the request
+     * will be made.  False may be returned if the throttle is already in use.
      */
-    public boolean hasDispatchFunction() { return false; }
+    public boolean requestThrottle(int address, ThrottleListener l)
+    {
+	boolean throttleInUse = false;
+        if (throttleListeners == null)
+        {
+            throttleListeners = new HashMap(5);
+        }
 
-    /*
-     * XPressNet based systems can have multiple throttles for the same 
-     * device
-     */
-     protected boolean singleUse() { return false; }
-
-    /**
-     * Address 100 and above is a long address
-     **/
-    public boolean canBeLongAddress(int address) {
-        return isLongAddress(address);
-    }
-    
-    /**
-     * Address 99 and below is a short address
-     **/
-    public boolean canBeShortAddress(int address) {
-        return !isLongAddress(address);
+        Integer addressKey = new Integer(address);
+        if (throttleListeners.containsKey(addressKey))
+        {
+ 	    throttleInUse=true;
+        }
+	else
+	{
+        	throttleListeners.put(addressKey, l);
+		XNetThrottle throttle=new XNetThrottle(address);
+		l.notifyThrottleFound(throttle);
+        }
+        return(throttleInUse);
     }
 
     /**
-     * Are there any ambiguous addresses (short vs long) on this system?
+     * Cancel a request for a throttle
+     * @param address The decoder address desired.
+     * @param l The ThrottleListener cancelling request for a throttle.
      */
-    public boolean addressTypeUnique() { return true; }
-
-    /*
-     * Local method for deciding short/long address
-     */
-    static boolean isLongAddress(int num) {
-        return (num>=100);
+    public void cancelThrottleRequest(int address, ThrottleListener l)
+    {
+        if (throttleListeners != null)
+        {
+            Integer addressKey = new Integer(address);
+            throttleListeners.remove(addressKey);
+        }
     }
 
-   /**
-     * What speed modes are supported by this system?
-     * value should be xor of possible modes specifed by the
-     * DccThrottle interface
-     * XPressNet supports 14,27,28 and 128 speed step modes
-     */
-    public int supportedSpeedModes() {
-        return( jmri.DccThrottle.SpeedStepMode128 | 
-		jmri.DccThrottle.SpeedStepMode28 |
-		jmri.DccThrottle.SpeedStepMode27 | 
-		jmri.DccThrottle.SpeedStepMode14 );
+    // implementing classes will typically have a function/listener to get
+    // updates from the layout, which will then call
+    //          public void firePropertyChange(String propertyName,
+    //
+    //
+    // _once_ if anything has changed state (or set the commanded state directly
+    public void message(XNetMessage l) {
+        // check validity & addressing
+        //if (XNetTrafficController.instance()
+        //    .getCommandStation()
+        //    .getThrottleMsgAddr(l) != address) return;
+        // is for this object, parse message type
+        //log.error("message function invoked, but not yet prepared");
     }
+
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetThrottleManager.class.getName());
 

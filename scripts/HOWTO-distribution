@@ -1,222 +1,172 @@
-This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.44 $)
+Making a combined JMRI/DecoderPro distribution (substitute the 
+release-number for M.N and M-N throughout):
 
-Start with a directory, typically called "Distributions", that
-contains:
+( ) Copy and rename the last distribution
 
-  scripts
-  ln -s scripts/build.xml build.xml
-  ln -s scripts/dist.xml dist.xml
+( ) update the specific README files in site section in cvs to include 
+    any changes, esp. including updating the release name and URLs. 
 
-  Linux
-  	JMRI (the most recent distribution)
-  MacClassic
-  	JMRI (the most recent distribution)
-  MacOSX
-  	JMRI (the most recent distribution)
-  OS2
-  	JMRI (the most recent distribution)
+( ) apps.DecoderPro.DecoderPro needs to have the version number updated.
 
-  (Windows is separate, and involves a shared disk with VPC, but
-   basically all the necessary stuff is in a VPC directory)
-   
-This probably already exists. Make sure that scripts, etc, have
-been updated!
+( ) Commit all cvs source and tag "Release-App-M-N"
 
-Make sure everything is up-to-date:
+( ) Make the jmri.jar file - there's some flux in how to do this, but for
+    now use CodeWarrior and ClassBrowser
 
-( ) Check if the decoder definitions have changed since the previous tag
-    If so, remake the decoder index. 
-    Copy the new file from preferences into the CVS tree.
-    Update the version number by hand.
-    Make sure file is saved with Unix line ends.
-    Commit.
-    
-( ) If the decoder definitions have changed, make a .zip file and send to:
-    Hans Tanner:  hans.tanner@complexitymanager.com
-    Graham Plowman: gppsoftware@gppsoftware.com
+( ) Move the jmri.jar file to the distribution folder
 
-( ) Check if the help has changed since the previous tag
-    If so, remake the help index  (need a command line approach, so can put in ant!)
-    cd JMRI/jhelp/help/en
-    (launch JHelpDev, e.g. "open jhelpdev.jar")
-    (navigate to JHelpDev.xml & open it)
-    
-( ) Check that the Version.java file has been updated and committed
+( ) Remove the .DS_Store, .FBCIndex, .FBCLockFolder files in the distribution
 
-( ) To ensure that you've got the HEAD of CVS, in your test area do:
+( ) Update the various text files from the CVS scripts module. 
 
-    cvs -q update -dA help jython lib lib118 resources xml
-    cd java
-    cvs -q update -dA build.xml check.xml jmri.jpx JMRILibraries.library lib manifest src test
+( ) Create the two text README files from the site area. Change the
+	creator code of README to ttxt (SimpleText)
 
-    
-    cd Distributions/scripts
-    cvs -q update -dA
-    
-To actually create the distribution:
+( ) Update the xml subdirectory, removing the CVS subdirs
 
-( ) Go to your working directory and
-	cvs tag Release-1-2-3 src test build.xml check.xml jmri.jpx JMRILibraries.library manifest
-	cd ..
-	cvs tag Release-1-2-3 help jython resources xml lib lib118
+( ) Make sure there's a clean "prefs" directory with a clean
+    "roster" subdir
 
-    Note that you have to have the "all" and "check" 
-    cvs targets checked-out into your working directory when 
-    you do this.
+( ) Any new jar files that need to be put in the lib area? If so, the app
+	will have to change (next step).  Move them into the distribution lib
+	area now.
 
-( ) Come back to Distributions and 
-    cd scripts
-	(be sure that's the default.lcf you want!)
-	cvs tag Release-1-2-3
-    cd ..
-    
-	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release1
-	
-	Ensure tests pass!
-	
-	Check DecoderPro for no startup errors, right version
-
-	Ant will launch three StuffIt processes; click
-	each to proceed, and wait for them to be running.
-	
-( ) Once they launch, you can start building the Windows installer
-	in parallel.
-	
-	Using VPC, make sure you have the Z disk available.
-	Launch Installer Vise from the last build file.
-	"Update archive"; Check changes make sense.
-	Click the "test archive" button (right one of the pair)
-	Name the installer JMRI.1.2.3.exe or so
-	After the installer runs, run DecoderPro from desktop icon and check.
-	In IV, "Save as..." the VCT file as the new name
-	Drag-copy .exe to Mac, copy to final Distributions; name should be OK
-
-    Alternate method:
-    
-    Mount PC.  Copy last .vct and Windows/JMRI to C:\WINDOWS\Desktop
-    Create and test installer as above.  Copy the .exe back
-    to the Distributions directory
-    
-    
-( ) Create MacOS X DMG
-   
-    hdiutil create -size 20MB -fs HFS+ -volname "JMRI 1.7.3" temp.dmg
-    (copy JMRI folder)
-    cd /Volumes/JMRI^D 
-    ln -s /Applications .
-    (eject)
-    hdiutil convert temp.dmg -format UDZO -o JMRI.1.7.3.dmg
-    
-( ) Once the three StuffIt processes are done
-	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release2
-	
-	This will launch one more StuffIt process (for MacClassic)
-	Wait for it to complete.
-	
-( ) Once the 4th StuffIt process is done, start uploading via
-	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release3
-	
-	If this fails due to ant not knowing about ftp:
-	
-	1) fix the problem by installing Jakarta commons-net, e.g.
-	   commons-net-1.2.2.jar into /Library/Java/Extensions
-	2) rename JMRI.${number}.Classic.hqx back to MacClassic/JMRI.hqx
-	
-	and then retry.
-	
-( ) Create and upload the XSLT pages. This can be done at any time after now,
-    but doing it now works well in parallel with the rest of the Windows build
-    if that's going slowly in VPC.
-    
-    cd Release-1-2-3/xml/XLST
-    ant xslt
-      (proceed only if no errors)
-    ant upload
-    cd ../../..
-
-( ) The Windows .exe must be present before the next step
-	
-( ) When ready to upload the Windows version:
-	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release4
-	
-    This also creates and uploads the JavaDocs as a last step
+( ) This step is only needed if you've changed any of the properties, classpath, etc.
+    Under MacOS 9, start MRJAppBuilder.
+		Properties:  Release properties
 		
-( ) Format the email announcement; you'll cut and paste parts
-	to the release form.
+		(Warning - does this handle App.jar OK?)
+		
+		Output file:  App (in your target location; overwrite existing)
+		Merge files:  (none)
+    And then make the output app.  Copy that application file to the 
+    release (if you didn't create it there) and update its icon.
+    
+    A similar thing might be needed under MacOS X; consult the work log
+    for the exact setup needed. 
+	   
+( ) Make an opt-copy of the folder to the desktop, then into a CD.
 
-( ) Login to SourceForge web using IE, not Safari (to use Quick Release)
+( ) Test CD on the test machine!
 
-	Go to the project home page, then admin page
+( ) Test copied folder under Windows (use dropZip to create a transfer file)
+
+( ) Create the Macintosh distribution
+	( ) Create a clean copy of the folder on the desktop, with the same name
 	
+	( ) Drag folder onto DropStuff, which will create a file JMRI.M.N.hqx
+		(Preferences should be set for Macintosh, include linefeeds, remote .sit
+		suffix)
+
+	( ) Upload Mac distribution to sourceforge home via SSH
+
+( ) Upload original distribution folder to jmri.sourceforge.net via NiftyTelnet/SSH
+
+( ) Make the windows & OS/2 distribution:
+
+	( ) Start with a new copy of the distribution directory
+	
+	( ) Remove the Macintosh Apps and Mac-only jar files:
+
+    	cd JMRI.M.N
+    	rm Decoder\ Pro
+    	rm JmriDemo
+    	rm -rf DecoderProX.app
+    	rm -rf JmriDemoX.app
+ 
+   	At this point, lib should contain only:
+     	collections.jar  crimson.jar  jdom-jdk11.jar  log4j.jar
+   
+	( ) Make a zip file
+
+    	cd ..
+    	# now above the distribution directory
+    
+    	zip -rl JMRI.M.N.zip JMRI.M.N
+		zip JMRI.M.N.zip JMRI.M.N/*.jar JMRI.M.N/win32com.dll JMRI.M.N/lib/*.jar
+	
+		# the first line adds CR's, and the second replaces the .jar files so they
+		# don't have CR inserted
+	
+( ) Make the Linux distribution from the distribution directory above:
+
+	( ) Update permissions
+
+    	chmod 755 JmriDemo.csh DecoderPro.csh
+    
+	( ) Make a .tar.gz
+
+		tar cf JMRI.M.N.tar JMRI.M.N
+		gzip JMRI.M.N.tar
+	
+( ) Move to distribution site via SourceForge release:
+
+	ftp upload.sourceforge.net 
+		user: ftp 
+		password: me@myself.org 
+		cd incoming 
+		bin 
+		put JMRI.M.N.zip
+		put JMRI.M.N.tar.gz
+		put JMRI.M.N.hqx
+		
+	Login to SourceForge web 
+	Go to the project home page, then admin page
 	Click on Edit/Release Files  & release each of the three files
 	in the order:
 	
-		OS/2
-		Macintosh classic
-		Linux
-		MacOS X
-		Windows
+		linux
+		windows & OS/2
+		macintosh
 		
 	Be sure to update the top of the release note paragraph.
 	
-	The test release name convention is "JMRI 1.2.3 test version for Linux"
+	The release name convention is "JMRI M.N (demo | development release) for XXX"
 	
 	Be sure to select "preserve preformatted text"
+
+( ) Update web page source:
+	site/index.html - download links, demo release name
+	site/InstallJMRI.html - download instructions
+	site/demoFiles/DecoderPro.README.html - new README contents
+	site/demoFiles/JmriDemo.README.html - new README contents
 	
-	Note on using SF "Quick File Release" system:
-		In Spring 2004, it would often give an error about "could not
-		add file".  In that case, reupload the file, and edit the release
-		to include the file (was a Safari problem; use IE)
-		
-		Alternately, use the Quick File Release system without selecting
-		a file, then add it later.  This prevents the original uploads from
-		being erased, so you don't have to upload them twice.
+( ) commit site and update on server
+	
+( ) Update CVS copy
 
-( ) Commit announcement file to the web site CVS directory
-
-( ) For a test version, update the web site downloads page
-    and add a release-note page
+    cd cvs
+    cvs -d cvs.jmri.sourceforge.net:/cvsroot/jmri update -d -r Release-App-M-N
     
-( ) For a production version, update web page source:
-    	Linux install.html         
-    	MacOS Classic install.html 
-    	MacOS X install.html       
-    	OS2 install.html          
-    	Windows install.html
-		index.html
-		DecoderPro/index.html
-		README.html
-		
-( ) Commit site and update on server
+( ) Create a snapshot in zip format
+
+	cd
+	zip -rl snapshot-JMRI-M-N.zip cvs
+	mv snapshot-JMRI-M-N.zip htdocs/Technical/snapshots/
 	
-( ) Mail announcement to jmriusers@yahoogroups.com
+( ) Create JavaDoc
+	Ensure that CW JavaDoc target has JavaDoc selected as prelinker
+	Build JavaDoc target
 
-( ) Mail announcement to jmri-announce@lists.sourceforge.net
+( ) Upload JavaDoc
 
-    You'll get a moderation message via email; handle it.
+	Upload the Development Project:Docs folder to htdocs/Technical/
+
+( ) Update the XML area
+
+( ) Wait for the files to appear in the upload area
 
 ( ) News item from JMRI sourceforge page
 
 	Title is of the form "JMRI M.N is available"
 
-( ) Decide if worth announcing elsewhere (production version or 
-	big system-specific fix/feature):
-	    RailRoadSoftware&yahoogroups.com
+( ) mail announcement to jmri-announce@lists.sourceforge.net
+
+( ) Decide if worth announcing elsewhere:
 		MAC_DCC@yahoogroups.com
 		loconet_hackers@yahoogroups.com
 		digitrax@yahoogroups.com
-		NCE-DCC@yahoogroups.com
-		NCE-SYS1@yahoogroups.com
-		easydcc@yahoogroups.com
-		Model_TRAINS_DCC_Software@yahoogroups.com
-		DigitalPlusbyLenz@yahoogroups.com
-		linux-dcc@yahoogroups.com
-		rrsoftware@yahoogroups.com
-		VersionTracker
-		Apple MacOS Software
+		2 NCE groups
 		
-( ) Commit back any changes made to this doc
-
 ( ) Take a break!
 

@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.10 $
  */
 public class SensorIconXml implements XmlAdapter {
 
@@ -36,14 +36,11 @@ public class SensorIconXml implements XmlAdapter {
         element.addAttribute("sensor", p.getSensor().getSystemName());
         element.addAttribute("x", ""+p.getX());
         element.addAttribute("y", ""+p.getY());
-        element.addAttribute("level", String.valueOf(p.getDisplayLevel()));
         element.addAttribute("active", p.getActiveIcon().getName());
         element.addAttribute("inactive", p.getInactiveIcon().getName());
         element.addAttribute("unknown", p.getUnknownIcon().getName());
         element.addAttribute("inconsistent", p.getInconsistentIcon().getName());
         element.addAttribute("rotate", String.valueOf(p.getActiveIcon().getRotation()));
-        element.addAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
-        element.addAttribute("momentary", p.getMomentary()?"true":"false");
 
         element.addAttribute("class", "jmri.jmrit.display.configurexml.SensorIconXml");
 
@@ -94,19 +91,7 @@ public class SensorIconXml implements XmlAdapter {
             }
         } catch (org.jdom.DataConversionException e) {}
 
-        Attribute a = element.getAttribute("forcecontroloff");
-        if ( (a!=null) && a.getValue().equals("true"))
-            l.setForceControlOff(true);
-        else
-            l.setForceControlOff(false);
-            
-        a = element.getAttribute("momentary");
-        if ( (a!=null) && a.getValue().equals("true"))
-            l.setMomentary(true);
-        else
-            l.setMomentary(false);
-            
-        l.setSensor(element.getAttribute("sensor").getValue());
+        l.setSensor(element.getAttribute("sensor").getValue(), null);
 
         // find coordinates
         int x = 0;
@@ -118,16 +103,6 @@ public class SensorIconXml implements XmlAdapter {
             log.error("failed to convert positional attribute");
         }
         l.setLocation(x,y);
-
-        // find display level
-        int level = PanelEditor.SENSORS.intValue();
-        try {
-            level = element.getAttribute("level").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
-            log.warn("Could not parse level attribute!");
-        } catch ( NullPointerException e) {  // considered normal if the attribute not present
-        }
-        l.setDisplayLevel(level);
 
         p.putSensor(l);
     }

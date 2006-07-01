@@ -1,8 +1,8 @@
-<!-- an ANT build.xml file for JMRI XSLT -->
-<!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2005 -->
-<!-- Revision $Revision: 1.11 $ -->
+<!-- ugly first attempt at an ANT build.xml file for JMRI development -->
+<!-- Bob Jacobsen, April 2002 -->
+<!-- Revision $Revision: 1.5 $ -->
 
-<project name="JMRI" default="xslt" basedir=".">
+<project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
 <!-- in the project.  We expect that lib et al will be present in -->
 <!-- .. from there -->
@@ -16,7 +16,6 @@
   <property name="dtd" value="../DTD"/>
   <property name="decoders" value="../decoders"/>
   <property name="target" value="pages"/>
-  <property name="propertiesdir" value="properties"/>
   <property name="jartarget" value=".."/>
 
   <path id="project.class.path">
@@ -36,7 +35,12 @@
     <tstamp/>
     <!-- Create the build directory structure used by compile -->
     <mkdir dir="${target}"/>
-    <mkdir dir="${propertiesdir}"/>
+  </target>
+
+  <target name="clean" description="remove compilation results to force rebuild">
+    <delete includeEmptyDirs="true">
+      <fileset dir="classes"/>
+    </delete>
   </target>
 
   <target name="copyDTD" description="ensure local DTD file copies present where needed for processing">
@@ -65,22 +69,6 @@
       		<include name="interestingCVs.xml"/>
     	</fileset>
   	</copy> 
-  </target>
-  
-  <target name="reserved" depends="init, copyDTD, copyXML" 
-  			description="create CSV file listing reserved CVs used by decoders">
-	<copy todir="${target}" >
-    	<fileset dir="." >
-      		<include name="CSVindex.html"/>
-    	</fileset>
-  	</copy> 
-    <style  basedir="${target}"
-    		destdir="${target}"
-    		style="reservedCSV.xsl"
-    		in="pages/decoderIndex.xml"
-    		out="pages/reservedCVs.csv"
-    	>
-	</style>
   </target>
   
   <target name="csv" depends="init, copyDTD, copyXML" 
@@ -157,46 +145,9 @@
 	</style>
   </target>
   
-  <target name="id" depends="init, copyDTD, copyXML" 
-  			description="create a page on decoder selection">
-    <style  basedir="${target}"
-    		destdir="${target}"
-    		extension=".xml.html"
-    		style="DecoderID.xsl"
-    		in="pages/decoderIndex.xml"
-    		out="pages/DecoderId.html"
-    	>
-	</style>
-  </target>
-  
-  <target name="properties" depends="init, copyDTD, copyXML" 
-  			description="tranform definitions into properties files">
-    <style  basedir="${target}"
-    		destdir="${propertiesdir}"
-    		extension=".properties"
-    		style="PropertiesFiles.xsl"
-    		includes="*.xml"
-    		excludes="decoderIndex.xml, names.html, interestingCVs.xml"
-    	>
-	</style>
-  </target>
-  
-  <target name="xslt" depends="init, models, index, selection, csv, id, cvsummary"
+  <target name="xslt" depends="init, models, index, selection, csv"
   		description="run the whole sequence of processing" />
   		
-  <target name="upload" description="Upload existing results to web site" >
-    <exec executable="scp">
-      <arg value="-r"/>
-      <arg value="pages"/>
-      <arg value="jacobsen@jmri.sf.net:htdocs/xml/XSLT/"/>
-    </exec>
-    <exec executable="scp">
-      <arg value="-r"/>
-      <arg value="properties"/>
-      <arg value="jacobsen@jmri.sf.net:htdocs/xml/XSLT/"/>
-    </exec>
-  </target>
-
 </project>
 
 

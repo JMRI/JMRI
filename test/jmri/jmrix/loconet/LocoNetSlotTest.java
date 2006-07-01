@@ -2,6 +2,8 @@
 package jmri.jmrix.loconet;
 
 import junit.framework.*;
+import jmri.*;
+
 
 public class LocoNetSlotTest extends TestCase {
 
@@ -16,7 +18,7 @@ public class LocoNetSlotTest extends TestCase {
         };
         slotmanager.slotFromLocoAddress(21, p2);
         Assert.assertEquals("slot request message",
-			    "BF 00 15 00",
+			    "bf 0 15 0 ",
 			    lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
     }
 

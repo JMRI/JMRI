@@ -11,7 +11,7 @@ import com.sun.java.util.collections.List;
  * from the InstanceManager. A typical call
  * sequence might be:
  *<PRE>
- * Turnout turnout = InstanceManager.turnoutManagerInstance().provideTurnout("23");
+ * Turnout turnout = InstanceManager.turnoutManagerInstance().newTurnout(null,"23");
  *</PRE>
  * <P>
  * Each turnout has a two names.  The "user" name is entirely free form, and
@@ -22,12 +22,11 @@ import com.sun.java.util.collections.List;
  * Much of the book-keeping is implemented in the AbstractTurnoutManager class, which
  * can form the basis for a system-specific implementation.
  * <P>
- * A sample use of the TurnoutManager interface can be seen in the 
- * jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
+ * A sample use of the TurnoutManager interface can be seen in the jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
  * class, which provides a simple GUI for controlling a single turnout.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.12 $
  * @see             jmri.Turnout
  * @see             jmri.AbstractTurnoutManager
  * @see             jmri.InstanceManager
@@ -99,39 +98,6 @@ public interface TurnoutManager extends Manager {
      * Get a list of all Turnouts' system names.
      */
     public List getSystemNameList();
-	
-	/**
-	 * Get text to be used for the Turnout.CLOSED state in user communication.
-	 * Allows text other than "CLOSED" to be use with certain hardware system 
-	 * to represent the Turnout.CLOSED state.
-	 */
-	 public String getClosedText();
-	
-	/**
-	 * Get text to be used for the Turnout.THROWN state in user communication.
-	 * Allows text other than "THROWN" to be use with certain hardware system 
-	 * to represent the Turnout.THROWN state.
-	 */
-	 public String getThrownText();
-	 
-	 /**
-	  * Get a list of the valid TurnoutOPeration subtypes for use with turnouts
-	  * of this system
-	  */
-	 public String[] getValidOperationTypes();
-	
-	/**
-	 * Get from the user, the number of addressed bits used to control a turnout. 
-	 * Normally this is 1, and the default routine returns one automatically.  
-	 * Turnout Managers for systems that can handle multiple control bits 
-	 * should override this method with one which asks the user to specify the
-	 * number of control bits.
-	 * If the user specifies more than one control bit, this method should 
-	 * check if the additional bits are available (not assigned to another object).
-	 * If the bits are not available, this method should return 0 for number of 
-	 * control bits, after informing the user of the problem.
-	 */
-	 public int askNumControlBits(String systemName);
 
 }
 

@@ -8,14 +8,16 @@
 
 package jmri.jmrix.loconet;
 
-import jmri.Turnout;
-import jmri.TurnoutAddress;
-import jmri.TurnoutManager;
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.List;
+import java.io.*;
 import junit.framework.Assert;
 import junit.framework.Test;
+import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import com.sun.java.util.collections.List;
+import com.sun.java.util.collections.ArrayList;
+
+import jmri.jmrix.loconet.*;
+import jmri.*;
 
 public class LnTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 
@@ -35,7 +37,7 @@ public class LnTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 
     public void testArraySort() {
         String[] str = new String[]{"8567", "8456"};
-        jmri.util.StringUtil.sort(str);
+        java.util.Arrays.sort(str);
         Assert.assertEquals("first ","8456",str[0]);
     }
 

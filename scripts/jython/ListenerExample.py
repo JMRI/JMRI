@@ -1,21 +1,12 @@
 # example of an event listener for a JMRI class, in this case
 # a Turnout.
-#
-# Author: Bob Jacobsen, copyright 2004
-# Part of the JMRI distribution
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision: 1.4 $
 
 # First, define the listener.  This one just prints some
 # information on the change, but more complicated code is
 # of course possible.
 class MyListener(java.beans.PropertyChangeListener):
   def propertyChange(self, event):
-    print "change",event.propertyName
-    print "from", event.oldValue, "to", event.newValue
-    print "source systemName", event.source.systemName
-    print "source userName", event.source.userName
+    print "change",event.propertyName, "from", event.oldValue, "to", event.newValue
 
 # Second, attach that listener to a particular turnout. The variable m
 # is used to remember the listener so we can remove it later

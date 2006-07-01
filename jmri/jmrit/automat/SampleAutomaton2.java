@@ -2,10 +2,7 @@
 
 package jmri.jmrit.automat;
 
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.Programmer;
-import jmri.Sensor;
+import jmri.*;
 
 /**
  * This sample Automaton watches a Sensor, and adjusts
@@ -23,7 +20,7 @@ import jmri.Sensor;
  * created and invoked by a SampleAutomaton2Action.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.4 $
  * @see         jmri.jmrit.automat.SampleAutomaton2Action
  */
 public class SampleAutomaton2 extends AbstractAutomaton {
@@ -38,17 +35,6 @@ public class SampleAutomaton2 extends AbstractAutomaton {
     Sensor sensor;
 
     /**
-     * By default, monitors sensor "31"
-     */
-    String sensorName = "31";
-
-    /**
-     * By default, controls locomotive 1234(long).
-     */
-    int locoNumber = 1234;
-    boolean locoLong = true;
-
-    /**
      * By default, monitors sensor "32" and controls locomotive 1234(long).
      *
      */
@@ -56,18 +42,14 @@ public class SampleAutomaton2 extends AbstractAutomaton {
         // get references to sample layout objects
 
         sensor = InstanceManager.sensorManagerInstance().
-                    provideSensor(sensorName);
+                    provideSensor("32");
 
         programmer = InstanceManager.programmerManagerInstance()
-                        .getOpsModeProgrammer(locoLong, locoNumber);
+                        .getOpsModeProgrammer(true, 4321);
 
-		if (sensor!=null) {
-			// set up the initial correlation
-			now = sensor.getKnownState();
-			setMomentum(now);
-		} else {
-			log.error("Failure to provide sensor "+sensorName+" on initialization");
-		}
+        // set up the initial correlation
+        now = sensor.getKnownState();
+        setMomentum(now);
     }
 
     int now;

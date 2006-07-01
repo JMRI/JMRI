@@ -3,14 +3,18 @@
  *
  * Description:	    tests for the jmri.jmrix.nce.packetgen.EasyDccPacketGenFrame class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.2 $
  */
 
 package jmri.jmrix.easydcc.packetgen;
 
+import java.io.*;
 import junit.framework.Test;
+import junit.framework.Assert;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import jmri.jmrix.easydcc.*;
 
 public class EasyDccPacketGenFrameTest extends TestCase {
 

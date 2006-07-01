@@ -10,7 +10,7 @@ import org.jdom.Element;
  * classes persisting the status of serial port adapters.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.3 $
  */
 abstract public class AbstractConnectionConfigXml implements XmlAdapter {
 
@@ -52,22 +52,14 @@ abstract public class AbstractConnectionConfigXml implements XmlAdapter {
 
         e.addAttribute("class", this.getClass().getName());
 
-        extendElement(e);
-
         return e;
     }
 
     /**
-     * Customizable method if you need to add anything more
-     * @param e Element being created, update as needed
-     */
-    protected void extendElement(Element e) {}
-
-    /**
      * Update static data from XML file
-     * @param e Top level Element to unpack.
+     * @param element Top level Element to unpack.
       */
-    public void load(Element e) throws Exception {
+    public void load(Element e) {
 
         getInstance();
         // configure port name
@@ -83,37 +75,19 @@ abstract public class AbstractConnectionConfigXml implements XmlAdapter {
             String option2Setting = e.getAttribute("option2").getValue();
             adapter.configureOption2(option2Setting);
         }
-
-        // register, so can be picked up next time
-        register();
-
-        // try to open the port
-        String result = adapter.openPort(portName, "JMRI app");
-        if (result != null ) {
-            // indicates an error, return it
-            throw new Exception(result);
-        }
-        
-        // if successful so far, go ahead and configure
+        // open the port
+        adapter.openPort(portName, "JMRI app");
         adapter.configure();
 
-        // once all the configure processing has happened, do any
-        // extra config
-        unpackElement(e);
-
+        // register, so can be picked up
+        register();
     }
-
-    /**
-     * Customizable method if you need to add anything more
-     * @param e Element being created, update as needed
-     */
-    protected void unpackElement(Element e) {}
 
     /**
      * Update static data from XML file
      * @param element Top level Element to unpack.
       */
-    public void load(Element element, Object o) {
+    public void load(Element e, Object o) {
         log.error("method with two args invoked");
     }
 

@@ -11,15 +11,15 @@ import java.awt.Toolkit;
 import java.io.File;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-import jmri.util.JmriJFrame;
 
 /**
  * A splash screen for showing during JMRI startup
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.1 $
  */
-public class SplashWindow extends JmriJFrame {
+public class SplashWindow extends JFrame {
     Image splashIm;
 
     public SplashWindow() {

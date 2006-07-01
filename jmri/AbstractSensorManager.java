@@ -2,10 +2,11 @@
 
 package jmri;
 
+
 /**
- * Abstract base implementation of the SensorManager interface.
+ * Abstract base implementation of the SensorManager interface
  * @author			Bob Jacobsen Copyright (C) 2001, 2003
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.10 $
  */
 public abstract class AbstractSensorManager extends AbstractManager implements SensorManager {
 
@@ -14,31 +15,28 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
     public Sensor provideSensor(String name) {
         Sensor t = getSensor(name);
         if (t!=null) return t;
-		String sName = name.toUpperCase();
-        if (sName.startsWith(""+systemLetter()+typeLetter()))
-            return newSensor(sName, null);
+        if (name.startsWith(""+systemLetter()+typeLetter()))
+            return newSensor(name, null);
         else
-            return newSensor(makeSystemName(sName), null);
+            return newSensor(makeSystemName(name), null);
     }
 
     public Sensor getSensor(String name) {
         Sensor t = getByUserName(name);
         if (t!=null) return t;
-	
+
         return getBySystemName(name);
     }
 
     public Sensor getBySystemName(String key) {
-		String name = key.toUpperCase();
-        return (Sensor)_tsys.get(name);
+        return (Sensor)_tsys.get(key);
     }
 
     public Sensor getByUserName(String key) {
         return (Sensor)_tuser.get(key);
     }
 
-    public Sensor newSensor(String sysName, String userName) {
-		String systemName = sysName.toUpperCase();
+    public Sensor newSensor(String systemName, String userName) {
         if (log.isDebugEnabled()) log.debug("newSensor:"
                                             +( (systemName==null) ? "null" : systemName)
                                             +";"+( (userName==null) ? "null" : userName));
@@ -59,9 +57,7 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
             return s;
         }
         if ( (s = getBySystemName(systemName)) != null) {
-			if ((s.getUserName() == null) && (userName != null))
-				s.setUserName(userName);
-            else if (userName != null) log.warn("Found sensor via system name ("+systemName
+            if (userName != null) log.warn("Found turnout via system name ("+systemName
                                     +") with non-null user name ("+userName+")");
             return s;
         }
@@ -81,17 +77,8 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
      * @return new null
      */
     abstract protected Sensor createNewSensor(String systemName, String userName);
-	
-    /**
-     * Requests status of all layout sensors under this Sensor Manager.
-	 * This method may be invoked whenever the status of sensors needs to be updated from
-	 *		the layout, for example, when an XML configuration file is read in.
-	 * Note that this null implementation only needs be implemented in system-specific 
-	 *		Sensor Managers where readout of sensor status from the layout is possible.
-	 */
-	public void updateAll() { };
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractSensorManager.class.getName());
 }
 
-/* @(#)AbstractSensorManager.java */
+/* @(#)AbstractTurnoutManager.java */

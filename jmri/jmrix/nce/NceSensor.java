@@ -3,12 +3,13 @@
 package jmri.jmrix.nce;
 
 import jmri.AbstractSensor;
+import jmri.Sensor;
 
 /**
  * Extend jmri.AbstractSensor for NCE systems
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.2 $
  */
 public class NceSensor extends AbstractSensor {
 

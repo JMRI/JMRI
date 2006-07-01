@@ -1,31 +1,22 @@
 package jmri.jmrix;
 
 import jmri.DccThrottle;
-import jmri.LocoAddress;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.Vector;
+import java.util.*;
+import java.beans.*;
 
 /**
  * An abstract implementation of DccThrottle.
- * Based on Glen Oberhauser's original LnThrottleManager implementation.
- * <P>
- * Note that this implements DccThrottle, not Throttle directly, so 
- * it has some DCC-specific content.
+ * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
- * @author  Bob Jacobsen  Copyright (C) 2001, 2005
- * @version $Revision: 1.14 $
+ * @author  Bob Jacobsen  Copyright (C) 2001
+ * @version $Revision: 1.7 $
  */
 abstract public class AbstractThrottle implements DccThrottle {
     protected float speedSetting;
     protected float speedIncrement;
-    protected int speedStepMode;
+    protected int address;
     protected boolean isForward;
     protected boolean f0, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12;
-    protected boolean f0Momentary, f1Momentary, f2Momentary, f3Momentary, 
-                      f4Momentary, f5Momentary, f6Momentary, f7Momentary, 
-                      f8Momentary, f9Momentary, f10Momentary, f11Momentary,
-                      f12Momentary;
 
     /**
      * Is this object still usable?  Set false after dispose, this
@@ -36,7 +27,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     public AbstractThrottle() {
 		active = true;
     }
-
+	
     /** speed - expressed as a value 0.0 -> 1.0. Negative means emergency stop.
      * This is an bound parameter.
      */
@@ -105,59 +96,28 @@ abstract public class AbstractThrottle implements DccThrottle {
         return f12;
     }
 
-    // function momentary status  - note that we use the naming for DCC, 
-    // though that's not the implication;
-    // see also DccThrottle interface
-    public boolean getF0Momentary() {
-        return f0Momentary;
+    /**
+     * Locomotive identification.  The exact format is defined by the
+     * specific implementation, but its intended that this is a user-specified
+     * name like "UP 777", or whatever convention the user wants to employ.
+     *
+     * This is an unbound parameter.
+     */
+    public String getLocoIdentification() {
+        return "";
     }
 
-    public boolean getF1Momentary() {
-        return f1Momentary;
-    }
 
-    public boolean getF2Momentary() {
-        return f2Momentary;
-    }
-
-    public boolean getF3Momentary() {
-        return f3Momentary;
-    }
-
-    public boolean getF4Momentary() {
-        return f4Momentary;
-    }
-
-    public boolean getF5Momentary() {
-        return f5Momentary;
-    }
-
-    public boolean getF6Momentary() {
-        return f6Momentary;
-    }
-
-    public boolean getF7Momentary() {
-        return f7Momentary;
-    }
-
-    public boolean getF8Momentary() {
-        return f8Momentary;
-    }
-
-    public boolean getF9Momentary() {
-        return f9Momentary;
-    }
-
-    public boolean getF10Momentary() {
-        return f10Momentary;
-    }
-
-    public boolean getF11Momentary() {
-        return f11Momentary;
-    }
-
-    public boolean getF12Momentary() {
-        return f12Momentary;
+    /**
+     * Locomotive address.  The exact format is defined by the
+     * specific implementation, but for DCC systems it is intended that this
+     * will be the DCC address in the form "nnnn" (extended) vs "nnn" or "nn" (short).
+     * Non-DCC systems may use a different form.
+     *
+     * This is an unbound parameter.
+     */
+    public String getLocoAddress() {
+        return "";
     }
 
 
@@ -177,6 +137,7 @@ abstract public class AbstractThrottle implements DccThrottle {
 
     /**
      * Trigger the notification of all PropertyChangeListeners
+     * @param s The changed slot to notify.
      */
     protected void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
         if (oldValue.equals(newValue)) log.error("notifyPropertyChangeListener without change");
@@ -221,6 +182,10 @@ abstract public class AbstractThrottle implements DccThrottle {
     public void release() {
         if (!active) log.warn("release called when not active");
         dispose();
+    }
+
+    public int getDccAddress() {
+        return address;
     }
 
     /**
@@ -302,157 +267,25 @@ abstract public class AbstractThrottle implements DccThrottle {
      * Send the message to set the state of
      * functions F0, F1, F2, F3, F4.
      * <P>
-     * This is used in the setFn implementations provided in this class,
-     * but a real implementation needs to be provided.
+     * This is used in the setFn implementations provided in this class.
      */
-    protected void sendFunctionGroup1() {
-        log.error("sendFunctionGroup1 needs to be implemented if invoked");
-    }
+    abstract protected void sendFunctionGroup1();
 
     /**
      * Send the message to set the state of
      * functions F5, F6, F7, F8.
      * <P>
-     * This is used in the setFn implementations provided in this class,
-     * but a real implementation needs to be provided.
+     * This is used in the setFn implementations provided in this class.
      */
-    protected void sendFunctionGroup2() {
-        log.error("sendFunctionGroup2 needs to be implemented if invoked");
-    }
+    abstract protected void sendFunctionGroup2();
 
     /**
      * Send the message to set the state of
      * functions F9, F10, F11, F12
      * <P>
-     * This is used in the setFn implementations provided in this class,
-     * but a real implementation needs to be provided.
+     * This is used in the setFn implementations provided in this class.
      */
-    protected void sendFunctionGroup3() {
-        log.error("sendFunctionGroup3 needs to be implemented if invoked");
-    }
-
-    // function momentary status  - note that we use the naming for DCC, 
-    // though that's not the implication;
-    // see also DccThrottle interface
-    public void setF0Momentary(boolean f0Momentary) {
-        this.f0Momentary = f0Momentary;
-        sendMomentaryFunctionGroup1();
-    }
-
-    public void setF1Momentary(boolean f1Momentary) {
-        this.f1Momentary = f1Momentary;
-        sendMomentaryFunctionGroup1();
-    }
-
-    public void setF2Momentary(boolean f2Momentary) {
-        this.f2Momentary = f2Momentary;
-        sendMomentaryFunctionGroup1();
-    }
-
-    public void setF3Momentary(boolean f3Momentary) {
-        this.f3Momentary = f3Momentary;
-        sendMomentaryFunctionGroup1();
-    }
-
-    public void setF4Momentary(boolean f4Momentary) {
-        this.f4Momentary = f4Momentary;
-        sendMomentaryFunctionGroup1();
-    }
-
-    public void setF5Momentary(boolean f5Momentary) {
-        this.f5Momentary = f5Momentary;
-        sendMomentaryFunctionGroup2();
-    }
-
-    public void setF6Momentary(boolean f6Momentary) {
-        this.f6Momentary = f6Momentary;
-        sendMomentaryFunctionGroup2();
-    }
-
-    public void setF7Momentary(boolean f7Momentary) {
-        this.f7Momentary = f7Momentary;
-        sendMomentaryFunctionGroup2();
-    }
-
-    public void setF8Momentary(boolean f8Momentary) {
-        this.f8Momentary = f8Momentary;
-        sendMomentaryFunctionGroup2();
-    }
-
-    public void setF9Momentary(boolean f9Momentary) {
-        this.f9Momentary = f9Momentary;
-        sendMomentaryFunctionGroup3();
-    }
-
-    public void setF10Momentary(boolean f10Momentary) {
-        this.f10Momentary = f10Momentary;
-        sendMomentaryFunctionGroup3();
-    }
-
-    public void setF11Momentary(boolean f11Momentary) {
-        this.f11Momentary = f11Momentary;
-        sendMomentaryFunctionGroup3();
-    }
-
-    public void setF12Momentary(boolean f12Momentary) {
-        this.f12Momentary = f12Momentary;
-        sendMomentaryFunctionGroup3();
-    }
-
-    /**
-     * Send the message to set the momentary state of
-     * functions F0, F1, F2, F3, F4.
-     * <P>
-     * This is used in the setFnMomentary implementations provided in this 
-     * class, a real implementation needs to be provided if the 
-     * hardware supports setting functions momentary. 
-     */
-    protected void sendMomentaryFunctionGroup1() {
-    }
-
-    /**
-     * Send the message to set the momentary state of
-     * functions F5, F6, F7, F8.
-     * <P>
-     * This is used in the setFnMomentary implementations provided in this 
-     * class, but a real implementation needs to be provided if the 
-     * hardware supports setting functions momentary.
-     */
-    protected void sendMomentaryFunctionGroup2() {
-    }
-
-    /**
-     * Send the message to set the Momentary state of
-     * functions F9, F10, F11, F12
-     * <P>
-     * This is used in the setFnMomentary implementations provided in this 
-     * class, but a real implementation needs to be provided if the 
-     * hardware supports setting functions momentary.
-     */
-    protected void sendMomentaryFunctionGroup3() {
-    }
-
-
-    /*
-     * setSpeedStepMode - set the speed step value.
-     * <P>
-     * specific implementations should override this function
-     * <P>
-     * @param Mode - the current speed step mode - default should be 128
-     *              speed step mode in most cases
-     */
-     public void setSpeedStepMode(int Mode) {
-	    speedStepMode = Mode;
-     }
-
-    /*
-     * getSpeedStepMode - get the current speed step value.
-     * <P>
-     */
-     public int getSpeedStepMode() {
-	    return speedStepMode;
-     }
-
+    abstract protected void sendFunctionGroup3();
 
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractThrottle.class.getName());

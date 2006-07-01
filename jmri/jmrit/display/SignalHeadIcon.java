@@ -1,25 +1,20 @@
 package jmri.jmrit.display;
 
-import jmri.InstanceManager;
-import jmri.SignalHead;
-import jmri.jmrit.catalog.NamedIcon;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
+import jmri.*;
+import jmri.jmrit.catalog.*;
+import java.awt.event.*;
 
-import javax.swing.AbstractAction;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
+import javax.swing.*;
 
 /**
- * An icon to display a status of a SignalHead.
+ * SignalHeadIcon provides a small icon to display a status of a SignalHead.
  * <P>
  * SignalHeads are located via the SignalHeadManager, which in turn is located
- * via the InstanceManager.
- *
+ * via the InstanceManager
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.15 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -30,7 +25,6 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
                             "resources/icons/smallschematics/searchlights/left-red-marker.gif"));
         icon = true;
         text = false;
-        setDisplayLevel(PanelEditor.SIGNALS);
 
         displayState(SignalHead.RED);
     }
@@ -39,7 +33,8 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
 
     /**
      * Attached a numbered element to this display item
-     * @param pName Used as a system/user name to lookup the SignalHead object
+     * @param name Used as a number to lookup the AspectGenerator object
+     * @param number Number of the head on the generator
      */
     public void setSignalHead(String pName) {
         mHead = InstanceManager.signalHeadManagerInstance().getBySystemName(pName);
@@ -60,9 +55,6 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
     String redName = "resources/icons/smallschematics/searchlights/left-red-marker.gif";
     NamedIcon red = new NamedIcon(redName, redName);
 
-    String flashRedName = "resources/icons/smallschematics/searchlights/left-flashred-marker.gif";
-    NamedIcon flashRed = new NamedIcon(flashRedName, flashRedName);
-
     String yellowName = "resources/icons/smallschematics/searchlights/left-yellow-marker.gif";
     NamedIcon yellow = new NamedIcon(yellowName, yellowName);
 
@@ -72,27 +64,9 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
     String greenName = "resources/icons/smallschematics/searchlights/left-green-marker.gif";
     NamedIcon green = new NamedIcon(greenName, greenName);
 
-    String flashGreenName = "resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif";
-    NamedIcon flashGreen = new NamedIcon(flashGreenName, flashGreenName);
-
-    String darkName = "resources/icons/smallschematics/searchlights/left-dark-marker.gif";
-    NamedIcon dark = new NamedIcon(darkName, darkName);
-
-    public NamedIcon getDarkIcon() { return dark; }
-    public void setDarkIcon(NamedIcon i) {
-        dark = i;
-        displayState(headState());
-    }
-
     public NamedIcon getRedIcon() { return red; }
     public void setRedIcon(NamedIcon i) {
         red = i;
-        displayState(headState());
-    }
-
-    public NamedIcon getFlashRedIcon() { return flashRed; }
-    public void setFlashRedIcon(NamedIcon i) {
-        flashRed = i;
         displayState(headState());
     }
 
@@ -114,33 +88,21 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         displayState(headState());
     }
 
-    public NamedIcon getFlashGreenIcon() { return flashGreen; }
-    public void setFlashGreenIcon(NamedIcon i) {
-        flashGreen = i;
-        displayState(headState());
-    }
-
     protected int maxHeight() {
-        int max = 0;
-        max = Math.max((red!=null) ? red.getIconHeight() : 0, max);
-        max = Math.max((yellow!=null) ? yellow.getIconHeight() : 0, max);
-        max = Math.max((green!=null) ? green.getIconHeight() : 0, max);
-        max = Math.max((flashRed!=null) ? flashRed.getIconHeight() : 0, max);
-        max = Math.max((flashYellow!=null) ? flashYellow.getIconHeight() : 0, max);
-        max = Math.max((flashGreen!=null) ? flashGreen.getIconHeight() : 0, max);
-        max = Math.max((dark!=null) ? dark.getIconHeight() : 0, max);
-        return max;
+        return Math.max(
+                Math.max( (red!=null) ? red.getIconHeight() : 0,
+                        (green!=null) ? green.getIconHeight() : 0),
+                Math.max((yellow!=null) ? yellow.getIconHeight() : 0,
+                        (flashYellow!=null) ? flashYellow.getIconHeight() : 0)
+            );
     }
     protected int maxWidth() {
-        int max = 0;
-        max = Math.max((red!=null) ? red.getIconWidth() : 0, max);
-        max = Math.max((yellow!=null) ? yellow.getIconWidth() : 0, max);
-        max = Math.max((green!=null) ? green.getIconWidth() : 0, max);
-        max = Math.max((flashRed!=null) ? flashRed.getIconWidth() : 0, max);
-        max = Math.max((flashYellow!=null) ? flashYellow.getIconWidth() : 0, max);
-        max = Math.max((flashGreen!=null) ? flashGreen.getIconWidth() : 0, max);
-        max = Math.max((dark!=null) ? dark.getIconWidth() : 0, max);
-        return max;
+        return Math.max(
+                Math.max((red!=null) ? red.getIconWidth() : 0,
+                        (green!=null) ? green.getIconWidth() : 0),
+                Math.max((yellow!=null) ? yellow.getIconWidth() : 0,
+                        (flashYellow!=null) ? flashYellow.getIconWidth() : 0)
+            );
     }
 
     /**
@@ -177,7 +139,6 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
      * Pop-up just displays the name
      */
     protected void showPopUp(MouseEvent e) {
-        if (!getEditable()) return;
         ours = this;
         if (popup==null) {
             popup = new JPopupMenu();
@@ -187,16 +148,11 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
                         green.setRotation(green.getRotation()+1, ours);
                         red.setRotation(red.getRotation()+1, ours);
                         yellow.setRotation(yellow.getRotation()+1, ours);
-                        if (flashGreen !=null) flashGreen.setRotation(flashGreen.getRotation()+1, ours);
-                        if (flashRed !=null) flashRed.setRotation(flashRed.getRotation()+1, ours);
-                        if (flashYellow !=null) flashYellow.setRotation(flashYellow.getRotation()+1, ours);
-                        if (dark !=null) dark.setRotation(flashYellow.getRotation()+1, ours);
+                        flashYellow.setRotation(flashYellow.getRotation()+1, ours);
                         displayState(headState());
                     }
                 });
 
-            addDisableMenuEntry(popup);
-            
             popup.add(new AbstractAction("Remove") {
                 public void actionPerformed(ActionEvent e) {
                     remove();
@@ -204,19 +160,6 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
                 }
             });
 
-            popup.add(new AbstractAction("Edit Logic...") {
-                public void actionPerformed(ActionEvent e) {
-                    jmri.jmrit.blockboss.BlockBossFrame f = new jmri.jmrit.blockboss.BlockBossFrame();
-                    String name;
-                    if (mHead.getUserName()==null || mHead.getUserName().equals(""))
-                        name = mHead.getSystemName();
-                    else
-                        name = mHead.getUserName();
-                    f.setTitle("Signal logic for"+name);
-                    f.setSignal(name);
-                    f.show();
-                }
-            });
         } // end creation of pop-up menu
 
         popup.show(e.getComponent(), e.getX(), e.getY());
@@ -237,10 +180,6 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
             if (text) super.setText("<red>");
             if (icon) super.setIcon(red);
             break;
-        case SignalHead.FLASHRED:
-            if (text) super.setText("<flash red>");
-            if (icon) super.setIcon(flashRed);
-            break;
         case SignalHead.YELLOW:
             if (text) super.setText("<yellow>");
             if (icon) super.setIcon(yellow);
@@ -253,13 +192,12 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
             if (text) super.setText("<green>");
             if (icon) super.setIcon(green);
             break;
-        case SignalHead.FLASHGREEN:
-            if (text) super.setText("<flash green>");
-            if (icon) super.setIcon(flashGreen);
-            break;
         case SignalHead.DARK:
             if (text) super.setText("<dark>");
-            if (icon) super.setIcon(dark);
+            if (icon) super.setIcon(red);       // for now, DARK is red
+            if (!warned)
+                log.warn("DARK signals are shown as RED");
+            warned = true;
             break;
 
         default:
@@ -267,38 +205,6 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         }
 
         return;
-    }
-
-    /**
-     * Change the SignalHead state when the icon is clicked.
-     * Note that this change may not be permanent if there is
-     * logic controlling the signal head.
-     * @param e
-     */
-    public void mouseClicked(java.awt.event.MouseEvent e) {
-        if (!getControlling()) return;
-        if (getForceControlOff()) return;
-        if (e.isMetaDown() || e.isAltDown() ) return;
-        if (mHead==null) {
-            log.error("No turnout connection, can't process click");
-            return;
-        }
-        switch (mHead.getAppearance()) {
-        case jmri.SignalHead.RED:
-        case jmri.SignalHead.FLASHRED:
-            mHead.setAppearance(jmri.SignalHead.YELLOW);
-            break;
-        case jmri.SignalHead.YELLOW:
-        case jmri.SignalHead.FLASHYELLOW:
-            mHead.setAppearance(jmri.SignalHead.GREEN);
-            break;
-        case jmri.SignalHead.GREEN:
-        case jmri.SignalHead.FLASHGREEN:
-            mHead.setAppearance(jmri.SignalHead.RED);
-            break;
-        default:
-            mHead.setAppearance(jmri.SignalHead.RED);
-        }
     }
 
     private static boolean warned = false;

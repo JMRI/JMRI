@@ -14,16 +14,15 @@ import javax.swing.*;
  * This uses the older style printing, for compatibility with Java 1.1.8 in
  * Macintosh MRJ
  *
- * @author		Bob Jacobsen   Copyright (C) 2003; D Miller Copyright 2003, 2005
- * @version             $Revision: 1.7 $
+ * @author		Bob Jacobsen   Copyright (C) 2003; D Miller Copyright 2003
+ * @version             $Revision: 1.4 $
  */
 public class PrintCvAction  extends AbstractAction {
 
-    public PrintCvAction(String actionName, CvTableModel pModel, PaneProgFrame pParent, boolean preview) {
+    public PrintCvAction(String actionName, CvTableModel pModel, PaneProgFrame pParent) {
         super(actionName);
         mModel = pModel;
         mFrame = pParent;
-        isPreview = preview;
     }
 
     /**
@@ -31,17 +30,13 @@ public class PrintCvAction  extends AbstractAction {
      */
     PaneProgFrame mFrame;
     CvTableModel mModel;
-    /**
-     * Variable to set whether this is to be printed or previewed
-     */
-    boolean isPreview;
 
     public void actionPerformed(ActionEvent e) {
 
         // obtain a HardcopyWriter to do this
         HardcopyWriter writer = null;
         try {
-            writer = new HardcopyWriter(mFrame, mFrame.getRosterEntry().getId(), 10, .8, .5, .5, .5, isPreview);
+            writer = new HardcopyWriter(mFrame, mFrame.getRosterEntry().getId(), 10, .8, .5, .5, .5);
 
             // print the decoder info section, etc
             mFrame.printInfoSection(writer);
@@ -49,9 +44,7 @@ public class PrintCvAction  extends AbstractAction {
             writer.write(s, 0, s.length());
 
             //Initialize some variables to define the CV table size
-            int cvCount = mModel.getRowCount();
-            int tableLeft = 1, tableRight = 65, tableTopRow = 0, tableBottomRow = 0, tableHeight = cvCount/4;
-            if (cvCount%4 > 0) tableHeight++;
+            int tableLeft = 1, tableRight = 65, tableTopRow = 0, tableBottomRow = 0, tableHeight = 20;
 
             /*Start drawing the table of CVs. Set up the table with 4 columns of CV/Value
              pairs and Draw the table borders and lines.  Each column width is
@@ -106,7 +99,7 @@ public class PrintCvAction  extends AbstractAction {
                 String numString = Integer.toString(num);
                 String valueString = Integer.toString(value);
                 String valueStringHex = Integer.toHexString(value).toUpperCase();
-                if (value<16) valueStringHex = "0"+ valueStringHex;
+                if (value<10) valueStringHex = "0"+ valueStringHex;
                 for (int j=1; j<3; j++){
                   if (numString.length() < 3) numString = " "+numString;
                 }

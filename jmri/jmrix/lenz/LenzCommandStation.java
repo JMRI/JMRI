@@ -6,128 +6,18 @@ package jmri.jmrix.lenz;
 
 
 /**
- * Defines the standard/common routines used in multiple classes related 
- * to the a Lenz Command Station, on an XPressNet network.
+ * Defines standard operations for Dcc command stations.
  *
  * @author			Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
- * @version			$Revision: 2.5 $
+ * @version			$Revision: 1.9 $
  */
-public class LenzCommandStation implements jmri.jmrix.DccCommandStation,jmri.CommandStation {
-
-    /* The First group of routines is for obtaining the Software and
-       hardware version of the Command station */
-
-    /**
-     *  We need to add a few data members for saving the version 
-     *  information we get from the layout.
-     **/
-
-     private int cmdStationType = -1;
-     private float cmdStationSoftwareVersion = -1;
-
-    /**
-     * return the CS Type
-     **/
-     public int getCommandStationType() { return cmdStationType; }
-
-    /**
-     * set the CS Type
-     **/
-     public void setCommandStationType(int t) { cmdStationType = t; }
-
-    /**
-     * Set the CS type based on an XPressNet Message
-     **/
-     public void setCommandStationType(XNetReply l) {
-       if(l.getElement(0)==XNetConstants.CS_SERVICE_MODE_RESPONSE)
-       {
-              // This is the Command Station Software Version Response
-              if(l.getElement(1)==XNetConstants.CS_SOFTWARE_VERSION)
-              {
-                cmdStationType=l.getElement(3);
-              }
-       }
-    }
-
-    /**
-     * return the CS Software Version
-     **/
-     public float getCommandStationSoftwareVersion() { return cmdStationSoftwareVersion; }
-
-    /**
-     * set the CS Software Version
-     **/
-     public void setCommandStationSoftwareVersion(float v) { cmdStationSoftwareVersion = v; }
-
-    /**
-     * Set the CS Software Version based on an XPressNet Message
-     **/
-     public void setCommandStationSoftwareVersion(XNetReply l) {
-       if(l.getElement(0)==XNetConstants.CS_SERVICE_MODE_RESPONSE)
-       {
-              // This is the Command Station Software Version Response
-              if(l.getElement(1)==XNetConstants.CS_SOFTWARE_VERSION)
-              {
-                cmdStationSoftwareVersion=(l.getElementBCD(2).floatValue())/10;
-              }
-       }
-    }
-
-    /**
-     * Generate the message to request the Command Station 
-     * Hardware/Software Version
-     **/
-     public XNetMessage getCSVersionRequestMessage() {
-	XNetMessage msg=new XNetMessage(3);   
-        msg.setElement(0,XNetConstants.CS_REQUEST);
-        msg.setElement(1,XNetConstants.CS_VERSION);
-        msg.setParity(); // Set the parity bit
-        return msg;
-     } 
-
-    /**
-     * Provides the version string returned during the initial check.
-     * This function is not yet implemented...
-     **/
-    public String getVersionString() { return "<unknown>"; }
-
-    /**
-     * Generate the message to request the Command Station 
-     * Status
-     **/
-     public XNetMessage getCSStatusRequestMessage() {
-	XNetMessage msg=new XNetMessage(3);   
-        msg.setElement(0,XNetConstants.CS_REQUEST);
-        msg.setElement(1,XNetConstants.CS_STATUS);
-        msg.setParity(); // Set the parity bit
-        return msg;
-     } 
-
-    /**
-     * Generate the message to set the Command Station 
-     * to Auto or Manual restart mode.
-     **/
-     public XNetMessage getCSAutoStartMessage(boolean autoMode) {
-	XNetMessage msg=new XNetMessage(4);   
-        msg.setElement(0,XNetConstants.CS_SET_POWERMODE);
-        msg.setElement(1,XNetConstants.CS_SET_POWERMODE);
-	if(autoMode) msg.setElement(2,XNetConstants.CS_POWERMODE_AUTO);
-	   else msg.setElement(2,XNetConstants.CS_POWERMODE_MANUAL);
-        msg.setParity(); // Set the parity bit
-        return msg;
-     } 
+public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
     
-    /* 
-     * The next group of messages has to do with determining if the
-     * command station has, and is currently in service mode 
-     */
-
     /**
      * Lenz does use a service mode
      */
     public boolean getHasServiceMode() {return true;}
-
-
+    
     /**
      * If this command station has a service mode, is the command
      * station currently in that mode?
@@ -135,89 +25,159 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation,jmri.Com
     public boolean getInServiceMode() { return mInServiceMode; }
     
     /**
+     * Provides the version string returned during the initial check.
+     * This function is not yet implemented...
+     **/
+    public String getVersionString() { return "<unknown>"; }
+    
+    /**
      * Remember whether or not in service mode
      **/
     boolean mInServiceMode = false;
-
-    // A few utility functions
     
     /**
-     * Get the Lower byte of a locomotive address from the decimal 
-     * locomotive address 
+     * Generate a message to change turnout state
      */
-     public static int getDCCAddressLow(int address) {
-        /* For addresses below 100, we just return the address, otherwise,
-        we need to return the upper byte of the address after we add the
-        offset 0xC000. The first address used for addresses over 99 is 0xC064*/
-        if(address < 100)
-        {
-                return(address);
-        }
-        else
-        {
-                int temp=address + 0xC000;
-                temp=temp & 0x00FF;
-                return temp;
-        }
-     }
-
+    public XNetMessage getTurnoutCommandMsg(int pNumber, boolean pClose,
+                                            boolean pThrow, boolean pOn) {
+        XNetMessage l = new XNetMessage(4);
+        l.setElement(0, XNetConstants.ACC_OPER_REQ);
+        
+        // compute address byte fields
+        int hiadr = (pNumber-1)/4;
+        int loadr = ((pNumber-1)-hiadr*4)*2;
+        
+        // load On/Off with on
+        loadr |= 0x10;
+        if (!pOn) loadr |= 0x40;
+        if (pThrow) loadr |= 0x01;
+        
+        // we don't know how to command both states right now!
+        if (pClose & pThrow)
+            log.error("XPressNet turnout logic can't handle both THROWN and CLOSED yet");
+        
+        // store and send
+        l.setElement(1,hiadr);
+        l.setElement(2,loadr);
+        
+        return l;
+    }
+    
     /**
-     * Get the Upper byte of a locomotive address from the decimal 
-     * locomotive address 
+     * If this is a turnout-type message, return address. Otherwise
+     * return -1.
+     * Note we only identify the command now; the reponse to a
+     * request for status is not yet seen here.
      */
-     public static int getDCCAddressHigh(int address) {
-        /* this isn't actually the high byte, For addresses below 100, we
-        just return 0, otherwise, we need to return the upper byte of the
-        address after we add the offset 0xC000 The first address used for
-        addresses over 99 is 0xC064*/
-        if(address < 100)
-        {
-                return(0x00);
+    public int getTurnoutMsgAddr(XNetMessage pMsg) {
+        if (isTurnoutCommand(pMsg)) {
+            int a1 = pMsg.getElement(1);
+            int a2 = pMsg.getElement(2);
+            return (((a1 & 0xff) * 4) + (a2 & 0x6)/2 + 1);
         }
-        else
-        {
-                int temp=address + 0xC000;
-                temp=temp & 0xFF00;
-                temp=temp/256;
-                return temp;
-        }
-
-     }
-
-    /* To Implement the CommandStation Interface, we have to define the 
-	sendPacket function */
-
-    /**
-     * Send a specific packet to the rails.
-     *
-     * @param packet Byte array representing the packet, including
-     * the error-correction byte.  Must not be null.
-     * @param repeats Number of times to repeat the transmission.
-     */
-    public void sendPacket(byte[] packet, int repeats) {
-
-	/* On Current (v3.5) Lenz command stations, the Operations Mode 
-           Programming Request is implemented by sending a packet directly 
-           to the rails.  This packet is not checked by the XPressNet 
-	   protocol, and is just the track packet with an added header
-	   byte. */
-
-	XNetMessage msg = new XNetMessage(packet.length+2);
-	msg.setOpCode((XNetConstants.OPS_MODE_PROG_REQ & 0xF0)>>4);
-	msg.setElement(1,0x30);
-	for(int i=0;i<packet.length;i++) {
-		msg.setElement((i+2),packet[i]&0xff);
-	}
-	msg.setParity();
-	XNetTrafficController.instance().sendXNetMessage(msg,null);
+        else return -1;
     }
 
-
-
-
-    /*
-     * We need to register for logging
+    /**
+     * Is this a command to change turnout state?
      */
+    public boolean isTurnoutCommand(XNetMessage pMsg) {
+        return pMsg.getOpCode()==0x05;
+    }
+    /**
+     * If this is a throttle-type message, return address. Otherwise
+     * return -1.
+     * Note we only identify the command now; the reponse to a
+     * request for status is not yet seen here.
+     */
+    public int getThrottleMsgAddr(XNetMessage pMsg) {
+        if (isThrottleCommand(pMsg)) {
+            int a1 = pMsg.getElement(3);
+            int a2 = pMsg.getElement(4);
+            return ((a1 * 100) + a2);
+        }
+        else return -1;
+    }
+    
+    /**
+     * Is this a throttle message?
+     */
+    public boolean isThrottleCommand(XNetMessage pMsg) {
+        int message=pMsg.getElement(0);
+        if( message==0x83 || message==0x84 || message==0xA3 || 
+            message == 0xA4 ||message == 0xE2 || message == 0xE3 || 
+           message == 0xE4) return true;
+        return false;
+    }
+    
+    // start of programming messages
+    public XNetMessage getServiceModeResultsMsg() {
+        XNetMessage m = new XNetMessage(3);
+        m.setElement(0, 0x21);
+        m.setElement(1, 0x10);
+        return m;
+    }
+    
+    public XNetMessage getExitProgModeMsg() {
+        XNetMessage m = new XNetMessage(3);
+        m.setElement(0, 0x21);
+        m.setElement(1, 0x81);
+        return m;
+    }
+    
+    public XNetMessage getReadPagedCVMsg(int cv) {
+        XNetMessage m = new XNetMessage(4);
+        m.setElement(0, 0x22);
+        m.setElement(1, 0x14);
+        m.setElement(2, cv);
+        return m;
+    }
+    
+    public XNetMessage getReadDirectCVMsg(int cv) {
+        XNetMessage m = new XNetMessage(4);
+        m.setElement(0, 0x22);
+        m.setElement(1, 0x15);
+        m.setElement(2, cv);
+        return m;
+    }
+    
+    public XNetMessage getWritePagedCVMsg(int cv, int val) {
+        XNetMessage m = new XNetMessage(5);
+        m.setElement(0, 0x23);
+        m.setElement(1, 0x17);
+        m.setElement(2, cv);
+        m.setElement(3, val);
+        return m;
+    }
+    
+    public XNetMessage getWriteDirectCVMsg(int cv, int val) {
+        XNetMessage m = new XNetMessage(5);
+        m.setElement(0, 0x23);
+        m.setElement(1, 0x16);
+        m.setElement(2, cv);
+        m.setElement(3, val);
+        return m;
+    }
+    
+    public XNetMessage getReadRegisterMsg(int reg) {
+        if (reg>8) log.error("register number too large: "+reg);
+        XNetMessage m = new XNetMessage(4);
+        m.setElement(0, 0x22);
+        m.setElement(1, 0x11);
+        m.setElement(2, reg);
+        return m;
+    }
+    
+    public XNetMessage getWriteRegisterMsg(int reg, int val) {
+        if (reg>8) log.error("register number too large: "+reg);
+        XNetMessage m = new XNetMessage(5);
+        m.setElement(0, 0x23);
+        m.setElement(1, 0x12);
+        m.setElement(2, reg);
+        m.setElement(3, val);
+        return m;
+    }
+    
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LenzCommandStation.class.getName());
     
 }

@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import javax.swing.ActionMap;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
@@ -14,7 +15,7 @@ import org.jdom.Element;
 /**
  * A JInternalFrame that contains buttons for each decoder function.
  */
-public class FunctionPanel extends JInternalFrame implements FunctionListener,java.beans.PropertyChangeListener
+public class FunctionPanel extends JInternalFrame implements FunctionListener
 {
     public static final int NUM_FUNCTION_BUTTONS = 13;
     private DccThrottle throttle;
@@ -83,13 +84,11 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
            }
         }
         this.setEnabled(true);
-        this.throttle.addPropertyChangeListener(this);
     }
 
 	public void notifyThrottleDisposed()
 	{
 		this.setEnabled(false);
-		this.throttle.removePropertyChangeListener(this);
 		throttle = null;
 	}
 
@@ -119,37 +118,6 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
     }
 
     /**
-     * Get notification that a function's lockable status has changed.
-     * @param functionNumber The function that has changed (0-9).
-     * @param isLockable True if the function is now Lockable 
-     * (continuously active).
-     */
-    public void notifyFunctionLockableChanged(int functionNumber, boolean isLockable)
-    {
-        if (throttle==null) {
-            log.error("throttle pointer null in notifyFunctionLockableChanged");
-            return;
-        }
-        
-        switch (functionNumber)
-        {
-            case 0: throttle.setF0Momentary(!isLockable); break;
-            case 1: throttle.setF1Momentary(!isLockable); break;
-            case 2: throttle.setF2Momentary(!isLockable); break;
-            case 3: throttle.setF3Momentary(!isLockable); break;
-            case 4: throttle.setF4Momentary(!isLockable); break;
-            case 5: throttle.setF5Momentary(!isLockable); break;
-            case 6: throttle.setF6Momentary(!isLockable); break;
-            case 7: throttle.setF7Momentary(!isLockable); break;
-            case 8: throttle.setF8Momentary(!isLockable); break;
-            case 9: throttle.setF9Momentary(!isLockable); break;
-            case 10: throttle.setF10Momentary(!isLockable); break;
-            case 11: throttle.setF11Momentary(!isLockable); break;
-            case 12: throttle.setF12Momentary(!isLockable); break;
-        }
-    }
-
-    /**
      * Enable or disable all the buttons
      */
     public void setEnabled(boolean isEnabled)
@@ -170,11 +138,14 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
         JPanel mainPanel = new JPanel();
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        mainPanel.setLayout(new FlowLayout(FlowLayout.CENTER,5,5));
+        mainPanel.setLayout(new FlowLayout());
         functionButton = new FunctionButton[NUM_FUNCTION_BUTTONS];
         for (int i=0; i<NUM_FUNCTION_BUTTONS; i++)
         {
             functionButton[i] = new FunctionButton();
+            try {   // not present in old JVMs
+                functionButton[i].setActionMap(new ActionMap());
+            } catch (NoClassDefFoundError ec) {}
             functionButton[i].setIdentity(i);
             functionButton[i].setFunctionListener(this);
             functionButton[i].setText("F"+String.valueOf(i));
@@ -207,7 +178,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
 	 *  A KeyAdapter that listens for the keys that work the function buttons
 	 *
 	 * @author     glen
-          * @version    $Revision: 1.27 $
+          * @version    $Revision: 1.18 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter
 	{
@@ -222,10 +193,10 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
 		{
 			if (keyReleased)
 			{
-				log.debug("Pressed");
+				System.out.println("Pressed");
 				for (int i=0; i<NUM_FUNCTION_BUTTONS; i++)
 				{
-					if ( functionButton[i].checkKeyCode(e.getKeyCode()) )
+					if (e.getKeyCode() == functionButton[i].getKeyCode())
 					{
 						functionButton[i].changeState(!functionButton[i].isSelected());
 					}
@@ -236,15 +207,15 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
 
 		public void keyTyped(KeyEvent e)
 		{
-			log.debug("Typed");
+			System.out.println("Typed");
 		}
 
 		public void keyReleased(KeyEvent e)
 		{
- 			log.debug("Released");
+			System.out.println("Released");
 			for (int i=0; i<NUM_FUNCTION_BUTTONS; i++)
 			{
-				if ( functionButton[i].checkKeyCode(e.getKeyCode()) )
+				if (e.getKeyCode() == functionButton[i].getKeyCode())
 				{
 					if (!functionButton[i].getIsLockable())
 					{
@@ -255,91 +226,6 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
 			keyReleased = true;
 		}
 	}
-
- 	// update the state of this panel if any of the properties change
-        public void propertyChange(java.beans.PropertyChangeEvent e) {
-                if (e.getPropertyName().equals("F0")) {
-                     boolean function=((Boolean) e.getNewValue()).booleanValue();
-		     functionButton[0].changeState(function);
-                } else if (e.getPropertyName().equals("F1")) {
-                   boolean function=((Boolean) e.getNewValue()).booleanValue();
-		   functionButton[1].changeState(function);
-                } else if (e.getPropertyName().equals("F2")) {
-                   boolean function=((Boolean) e.getNewValue()).booleanValue();
-		   functionButton[2].changeState(function);
-                } else if (e.getPropertyName().equals("F3")) {
-                   boolean function=((Boolean) e.getNewValue()).booleanValue();
-		   functionButton[3].changeState(function);
-                } else if (e.getPropertyName().equals("F4")) {
-                   boolean function=((Boolean) e.getNewValue()).booleanValue();
-		   functionButton[4].changeState(function);
-                } else if (e.getPropertyName().equals("F5")) {
-                   boolean function=((Boolean) e.getNewValue()).booleanValue();
-		   functionButton[5].changeState(function);
-                } else if (e.getPropertyName().equals("F6")) {
-                   boolean function=((Boolean) e.getNewValue()).booleanValue();
-		   functionButton[6].changeState(function);
-                } else if (e.getPropertyName().equals("F7")) {
-                   boolean function=((Boolean) e.getNewValue()).booleanValue();
-		   functionButton[7].changeState(function);
-                } else if (e.getPropertyName().equals("F8")) {
-                   boolean function=((Boolean) e.getNewValue()).booleanValue();
-		   functionButton[8].changeState(function);
-                } else if (e.getPropertyName().equals("F9")) {
-                   boolean function=((Boolean) e.getNewValue()).booleanValue();
-		   functionButton[9].changeState(function);
-                } else if (e.getPropertyName().equals("F10")) {
-                   boolean function=((Boolean) e.getNewValue()).booleanValue();
-		   functionButton[10].changeState(function);
-                } else if (e.getPropertyName().equals("F11")) {
-                   boolean function=((Boolean) e.getNewValue()).booleanValue();
-		   functionButton[11].changeState(function);
-                } else if (e.getPropertyName().equals("F12")) {
-                   boolean function=((Boolean) e.getNewValue()).booleanValue();
-		   functionButton[12].changeState(function);
-                } else if (e.getPropertyName().equals("F0Momentary")) {
-                   boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-		   functionButton[0].setIsLockable(lockable);
-                } else if (e.getPropertyName().equals("F1Momentary")) {
-                   boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-		   functionButton[1].setIsLockable(lockable);
-                } else if (e.getPropertyName().equals("F2Momentary")) {
-                   boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-		   functionButton[2].setIsLockable(lockable);
-                } else if (e.getPropertyName().equals("F3Momentary")) {
-                   boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-		   functionButton[3].setIsLockable(lockable);
-                } else if (e.getPropertyName().equals("F4Momentary")) {
-                   boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-		   functionButton[4].setIsLockable(lockable);
-                } else if (e.getPropertyName().equals("F5Momentary")) {
-                   boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-		   functionButton[5].setIsLockable(lockable);
-                } else if (e.getPropertyName().equals("F6Momentary")) {
-                   boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-		   functionButton[6].setIsLockable(lockable);
-                } else if (e.getPropertyName().equals("F7Momentary")) {
-                   boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-		   functionButton[7].setIsLockable(lockable);
-                } else if (e.getPropertyName().equals("F8Momentary")) {
-                   boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-		   functionButton[8].setIsLockable(lockable);
-                } else if (e.getPropertyName().equals("F9Momentary")) {
-                   boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-		   functionButton[9].setIsLockable(lockable);
-                } else if (e.getPropertyName().equals("F10Momentary")) {
-                   boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-		   functionButton[10].setIsLockable(lockable);
-                } else if (e.getPropertyName().equals("F11Momentary")) {
-                   boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-		   functionButton[11].setIsLockable(lockable);
-                } else if (e.getPropertyName().equals("F12Momentary")) {
-                   boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-		   functionButton[12].setIsLockable(lockable);
-                }
-
-
-        }
 
 
     /**

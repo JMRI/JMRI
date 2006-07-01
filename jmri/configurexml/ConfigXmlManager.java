@@ -1,12 +1,14 @@
 package jmri.configurexml;
 
+import jmri.InstanceManager;
 import java.io.File;
 
 import com.sun.java.util.collections.ArrayList;
 import com.sun.java.util.collections.List;
-//import org.jdom.DocType;
+import org.jdom.DocType;
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.output.XMLOutputter;
 
 /**
  * Provides the mechanisms for storing an entire layout configuration
@@ -14,7 +16,7 @@ import org.jdom.Element;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.14 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -32,7 +34,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             try {
                 Class.forName(adapter);
             } catch (java.lang.ClassNotFoundException ex) {
-                locateClassFailed(ex, adapter, o);
+                locateFailed(ex, adapter, o);
             }
         // and add to list
         plist.add(o);
@@ -69,9 +71,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             try {
                 Class.forName(adapter);
             } catch (java.lang.ClassNotFoundException ex) {
-                locateClassFailed(ex, adapter, o);
-            } catch (java.lang.NoClassDefFoundError ex) {
-            log.error("Could not load adapter class = "+adapter+" "+ex);
+                locateFailed(ex, adapter, o);
             }
         // and add to list
         clist.add(o);
@@ -85,7 +85,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             try {
                 Class.forName(adapter);
             } catch (java.lang.ClassNotFoundException ex) {
-                locateClassFailed(ex, adapter, o);
+                locateFailed(ex, adapter, o);
             }
         // and add to list
         tlist.add(o);
@@ -105,7 +105,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             try {
                 Class.forName(adapter);
             } catch (java.lang.ClassNotFoundException ex) {
-                locateClassFailed(ex, adapter, o);
+                locateFailed(ex, adapter, o);
             }
         // and add to list
         ulist.add(o);
@@ -153,7 +153,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * Handle failure to load adapter class. Although only a
      * one-liner in this class, it is a separate member to facilitate testing.
      */
-    void locateClassFailed(java.lang.ClassNotFoundException ex, String adapterName, Object o) {
+    void locateFailed(java.lang.ClassNotFoundException ex, String adapterName, Object o) {
         log.error("could not load adapter class "+adapterName);
     }
 
@@ -191,22 +191,27 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
     protected void finalStore(Element root, File file) {
         try {
-            Document doc = newDocument(root, "layout-config.dtd");
-            writeXML(file, doc);
-        } catch (java.io.FileNotFoundException ex3) {
-            log.error("FileNotFound error writing file: "+ex3.getLocalizedMessage());
-        } catch (java.io.IOException ex2) {
-            log.error("IO error writing file: "+ex2.getLocalizedMessage());
-        } catch (org.jdom.JDOMException ex1) {
+            Document doc = new Document(root);
+            doc.setDocType(new DocType("layout-config","layout-config.dtd"));
+            // write the result to selected file
+            java.io.FileOutputStream o = new java.io.FileOutputStream(file);
+            XMLOutputter fmt = new XMLOutputter();
+            fmt.setNewlines(true);   // pretty printing
+            fmt.setIndent(true);
+            fmt.output(doc, o);
+            o.close();
+        } catch (java.io.FileNotFoundException ex2) {
+            log.error("FileNotFound error writing file: "+ex2.getLocalizedMessage());
+        } catch (java.io.IOException ex1) {
             log.error("IO exception writing file: "+ex1.getLocalizedMessage());
         }
     }
 
     /**
-     * Writes config, tools and user to a file.
+     * Writes config, tools and user to a file
      * @param file
      */
-    public void storeAll(File file) {
+    public void store(File file) {
         Element root = initStore();
         addConfigStore(root);
         addToolsStore(root);
@@ -214,37 +219,12 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         finalStore(root, file);
     }
     /**
-     * Writes prefs to a file.
+     * Writes prefs to a file
      * @param file
      */
     public void storePrefs(File file) {
         Element root = initStore();
         addPrefsStore(root);
-        finalStore(root, file);
-    }
-
-    /**
-     * Writes prefs to a file.
-     * @param file
-     */
-    public void storeConfig(File file) {
-        Element root = initStore();
-        addConfigStore(root);
-        finalStore(root, file);
-    }
-
-     /**
-     * Writes user and config info to a file.
-     * <P>
-     * Config is included here because it doesnt hurt to
-     * read it again, and the user data (typically a panel)
-     * requires it to be present first.
-     * @param file
-     */
-    public void storeUser(File file) {
-        Element root = initStore();
-        addConfigStore(root);
-        addUserStore(root);
         finalStore(root, file);
     }
 
@@ -270,7 +250,6 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
 
     public boolean load(File fi) {
-        boolean result = true;
         try {
             Element root = super.rootFromFile(fi);
             // get the objects to load
@@ -287,20 +266,22 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 } catch (Exception e) {
                     log.error("Exception while loading "+item.getName()+":"+e);
                     e.printStackTrace();
-                    result = false;  // keep going, but return false to signal problem
                 } catch (Throwable et) {
                     log.error("Thrown while loading "+item.getName()+":"+et);
                     et.printStackTrace();
-                    result = false;  // keep going, but return false to signal problem
                 }
             }
 
         } catch (java.io.FileNotFoundException e1) {
             // this returns false to indicate un-success, but not enough
             // of an error to require a message
-            log.debug("File not found: "+fi.getAbsolutePath());
+            log.debug("file not found: "+fi.getName());
             return false;
         } catch (org.jdom.JDOMException e) {
+            log.error("Exception reading: "+e);
+            e.printStackTrace();
+            return false;
+        } catch (java.io.IOException e) {
             log.error("Exception reading: "+e);
             e.printStackTrace();
             return false;
@@ -309,7 +290,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             e.printStackTrace();
             return false;
         }
-        return result;
+        return true;
     }
 
     static public String fileLocation = "layout"+File.separator;
@@ -340,18 +321,9 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             log.debug("found at "+result.getAbsolutePath());
             return result;
         } else {
-            locateFileFailed(f);
+            log.warn("Could not locate file "+f);
             return null;
         }
-    }
-
-    /**
-     * Report a failure to find a file.  This is a separate member
-     * to ease testing.
-     * @param f Name of file not located.
-     */
-    void locateFileFailed(String f) {
-        log.warn("Could not locate file "+f);
     }
 
     // initialize logging

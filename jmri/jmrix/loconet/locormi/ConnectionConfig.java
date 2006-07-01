@@ -9,10 +9,10 @@ import javax.swing.JTextField;
 
 /**
  * Definition of objects to handle configuring  the layout connection
- * via LocoNet RMI.
+ * via LocoNet RMI
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.3 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
@@ -46,13 +46,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
     /**
      * Reimplement this method to show the connected host,
      * rather than the usual port name.
-     * <P>
-     * If the connection isn't active, that's also indicated.
-     * <P>
-     * Do not use this to record the port name, as it also
-     * contains that error information.
-     *
-     * @return Human-readable connection information
+     * @return human-readable connection information
      */
     public String getInfo() {
         String t = host.getText();

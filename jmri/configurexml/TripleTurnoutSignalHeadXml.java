@@ -9,14 +9,15 @@ import org.jdom.Attribute;
 import org.jdom.Element;
 
 /**
- * Handle XML configuration for TripleTurnoutSignalHead objects.
+ * Handle configuration for TripleTurnoutSignalHead objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.3 $
  */
 public class TripleTurnoutSignalHeadXml implements XmlAdapter {
 
-    public TripleTurnoutSignalHeadXml() {}
+    public TripleTurnoutSignalHeadXml() {
+    }
 
     /**
      * Default implementation for storing the contents of a
@@ -28,7 +29,7 @@ public class TripleTurnoutSignalHeadXml implements XmlAdapter {
         TripleTurnoutSignalHead p = (TripleTurnoutSignalHead)o;
 
         Element element = new Element("signalhead");
-        element.addAttribute("class", this.getClass().getName());
+        element.addAttribute("class", "jmri.configurexml.TripleTurnoutSignalHeadXml");
 
         // include contents
         element.addAttribute("systemName", p.getSystemName());
@@ -47,7 +48,7 @@ public class TripleTurnoutSignalHeadXml implements XmlAdapter {
 
         Element el = new Element("turnout");
         el.addAttribute("systemName", sys);
-        if (user!=null) el.addAttribute("userName", user);
+        el.addAttribute("userName", user);
 
         return el;
     }

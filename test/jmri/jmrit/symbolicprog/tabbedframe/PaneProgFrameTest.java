@@ -2,23 +2,29 @@
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import jmri.jmrit.decoderdefn.DecoderFile;
-import jmri.jmrit.roster.RosterEntry;
-import javax.swing.JPanel;
-
-import org.jdom.DocType;
-import org.jdom.Document;
-import org.jdom.Element;
+import java.awt.*;
+import java.io.*;
+import java.util.*;
+import javax.swing.*;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.jdom.*;
+import org.jdom.output.*;
+import org.jdom.input.*;
+
+import jmri.*;
+import jmri.progdebugger.*;
+import jmri.jmrit.symbolicprog.*;
+import jmri.jmrit.decoderdefn.*;
+import jmri.jmrit.roster.*;
 
 /**
  * Test PaneProgFrame
  *
  * @author			Bob Jacobsen
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.5 $
  */
 public class PaneProgFrameTest extends TestCase {
 
@@ -31,9 +37,9 @@ public class PaneProgFrameTest extends TestCase {
 
         PaneProgFrame p = new PaneProgFrame(null, new RosterEntry(),
                                             "test frame", "programmers/Basic.xml",
-                                            new jmri.progdebugger.ProgDebugger(), false) {
+                                            new jmri.progdebugger.ProgDebugger()) {
                 // dummy implementations
-                JPanel getModePane() { return new JPanel(); }
+                JPanel getModePane() { return null; }
             };
 
         // invoke
@@ -48,8 +54,7 @@ public class PaneProgFrameTest extends TestCase {
     public void testFrame() {
         setupDoc();
         PaneProgFrame p = new PaneProgFrame(null, new RosterEntry(),
-                                            "test frame", "programmers/Basic.xml",
-                                            new jmri.progdebugger.ProgDebugger(), false) {
+                                            "test frame", "programmers/Basic.xml", new jmri.progdebugger.ProgDebugger()) {
                 // dummy implementations
                 JPanel getModePane() { return null; }
             };
@@ -155,9 +160,5 @@ public class PaneProgFrameTest extends TestCase {
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PaneProgFrameTest.class.getName());
-    // The minimal setup for log4J
-    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
-    protected void setUp() { log4jfixtureInst.setUp(); }
-    protected void tearDown() { log4jfixtureInst.tearDown(); }
 
 }

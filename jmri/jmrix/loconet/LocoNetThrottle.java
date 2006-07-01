@@ -1,9 +1,5 @@
 package jmri.jmrix.loconet;
 
-import jmri.LocoAddress;
-import jmri.DccLocoAddress;
-import jmri.InstanceManager;
-
 import jmri.jmrix.AbstractThrottle;
 
 /**
@@ -13,13 +9,12 @@ import jmri.jmrix.AbstractThrottle;
  * Speed in the Throttle interfaces and AbstractThrottle is a float, but in LocoNet is an int
  * with values from 0 to 127.
  * <P>
- * @author  Glen Oberhauser, Bob Jacobsen  Copyright (C) 2003, 2004
- * @version $Revision: 1.19 $
+ * @author  Glen Oberhauser, Bob Jacobsen  Copyright (C) 2003
+ * @version $Revision: 1.12 $
  */
 public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     private LocoNetSlot slot;
     private LocoNetInterface network;
-    private int address;
 
     /**
      * Constructor
@@ -70,7 +65,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         // listen for changes
         slot.addSlotListener(this);
 
-        // start periodically sending the speed, to keep this
+        // start a periodically sending the speed, to keep this
         // attached
         startRefresh();
 
@@ -84,18 +79,6 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         if (lSpeed == 0) return 0.f;
         else if (lSpeed == 1) return -1.f;   // estop
         else return ( (lSpeed-1)/126.f);
-    }
-
-    /**
-     * Convert a float speed value to a LocoNet speed integer
-     */
-    protected int intSpeed(float fSpeed) {
-      if (fSpeed == 0.f)
-        return 0;
-      else if (fSpeed < 0.f)
-        return 1;   // estop
-        // add the 0.5 to handle float to int round for positive numbers
-      return (int)(fSpeed * 126.f + 0.5) + 1 ;
     }
 
     /**
@@ -136,10 +119,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     }
 
     protected void sendFunctionGroup3() {
-        byte[] result = jmri.NmraPacket.function9Through12Packet(address, (address>=100),
-                                         getF9(), getF10(), getF11(), getF12());
-
-        InstanceManager.commandStationInstance().sendPacket(result, 4); // repeat = 4
+        // not implemented yet
     }
 
     /**
@@ -156,16 +136,12 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         LocoNetMessage msg = new LocoNetMessage(4);
         msg.setOpCode(LnConstants.OPC_LOCO_SPD);
         msg.setElement(1, slot.getSlot());
-        int value = intSpeed( speed );
-        log.debug( "setSpeedSetting: float speed: " + speed + " LocoNet speed: " + value );
+        int value = (int)((127-1)*speed);     // -1 for rescale to avoid estop
+        if (value>0) value = value+1;  // skip estop
+        if (value>127) value = 127;    // max possible speed
+        if (value<0) value = 1;        // emergency stop
         msg.setElement(2, value);
         network.sendLocoNetMessage(msg);
-        
-        // reset timeout
-        mRefreshTimer.stop();
-        mRefreshTimer.setRepeats(true);     // refresh until stopped by dispose
-        mRefreshTimer.start();
-        
     }
 
     /**
@@ -209,10 +185,6 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         dispose();
     }
 
-    public String toString() {
-        return getLocoAddress().toString();
-    }
-    
     /**
      * Dispose when finished with this object.  After this, further usage of
      * this Throttle object will result in a JmriException.
@@ -231,7 +203,9 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         slot = null;
         network = null;
 
-        super.dispose();
+        // if this object has registered any listeners, remove those.
+
+        // is there a dispose method in the superclass?
      }
 
     javax.swing.Timer mRefreshTimer = null;
@@ -261,11 +235,8 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
         // handle change in each state
         if (this.speedSetting != floatSpeed(slot.speed())) {
-          Float newSpeed = new Float( floatSpeed(slot.speed() ) ) ;
-          log.debug( "notifyChangedSlot: old speed: " + this.speedSetting + " new Speed: " + newSpeed );
-          notifyPropertyChangeListener("SpeedSetting",
-                    new Float(this.speedSetting), newSpeed );
-          this.speedSetting = newSpeed.floatValue() ;
+            notifyPropertyChangeListener("SpeedSetting",
+                    new Float(this.speedSetting), new Float(this.speedSetting = floatSpeed(slot.speed())));
         }
 
         if (this.isForward != slot.isForward()) {
@@ -313,11 +284,6 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         // f9 through f12 are not in the slot
 
     }
-
-    public LocoAddress getLocoAddress() {
-        return new DccLocoAddress(address, LnThrottleManager.isLongAddress(address));
-    }
-
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoNetThrottle.class.getName());
 

@@ -9,7 +9,7 @@ package jmri;
  *
  * @see             jmri.ProgrammerManager
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.4 $
  */
 public class DefaultProgrammerManager implements ProgrammerManager {
 
@@ -36,7 +36,7 @@ public class DefaultProgrammerManager implements ProgrammerManager {
     public Programmer reserveOpsModeProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     };
-    public void releaseOpsModeProgrammer(Programmer p) {}
+    public void releaseOopsModeProgrammer(Programmer p) {}
 
     /**
      * Default programmer does not provide Ops Mode

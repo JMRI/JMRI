@@ -1,4 +1,6 @@
-// DebugMenu.java
+/**
+ * DebugMenu.java
+ */
 
 package jmri.jmrit;
 
@@ -6,11 +8,10 @@ import javax.swing.*;
 import java.util.*;
 
 /**
- * Create a "Debug" menu containing the JMRI system-independent 
- * debugging tools.
+ * Create a "Debug" menu containing the Jmri system-independent debugging tools
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.1 $
  */
 public class DebugMenu extends JMenu {
     public DebugMenu(String name, JPanel panel) {
@@ -32,7 +33,6 @@ public class DebugMenu extends JMenu {
         add(new jmri.jmrit.roster.RecreateRosterAction(rb.getString("MenuItemRecreateRoster")));
         add(new JSeparator());
         add(new jmri.jmrit.XmlFileCheckAction(rb.getString("MenuItemCheckXMLFile"), panel));
-        add(new jmri.jmrit.XmlFileValidateAction(rb.getString("MenuItemValidateXMLFile"), panel));
         add(new jmri.jmrit.decoderdefn.NameCheckAction(rb.getString("MenuItemCheckDecoderNames"), panel));
         add(new jmri.jmrit.symbolicprog.tabbedframe.ProgCheckAction(rb.getString("MenuItemCheckProgrammerNames"), panel));
 

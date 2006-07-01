@@ -1,10 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- Copyright (C) JMRI 2004 All rights reserved -->
-<!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: SoundTraxx_LC_Diesel_pnpFX.xml,v 1.7 2005-08-18 05:07:48 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_LC_Diesel_pnpFX.xml,v 1.3 2003-07-06 16:59:13 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Michael Mosher" version="11" lastUpdated="20050817"/>
+		<version author="Michael Mosher" version="10" lastUpdated="20030703"/>
 
 		<!-- version 4: updates to minOut usage, function mapping -->
 		<!-- version 5: added LL100LC -->
@@ -14,14 +12,11 @@
 		<!-- version 8: remove Atlas/Kato to other file -->
 		<!-- version 9: remove non-FX units to other file -->
 		<!-- version 10: added CV105&106, set CV9 default to 180 -->
-     		<!-- Version 10.1: changed spelling of "behavior" (Jack Shall) -->
-		<!-- Version 10.2: corrected label on CV52 - FX2 effect generated (Michael Greene) -->
-        <!-- version 11: (20050817 BobJ): numFns corrected from 8 to 10 -->
 
 <decoder>
 	<family name="LC Diesel PNP + FX decoders" mfg="Throttle-Up (SoundTraxx)">
 
-		<model model="C628LC Diesel" numOuts="4" numFns="10">
+		<model model="C628LC Diesel" numOuts="4" numFns="8">
 			<versionCV lowVersionID="37"/>
 			<output name="Horn"/> 
 			<output name="Bell"/> 
@@ -501,8 +496,8 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="Forward light F0F behavior" CV="49" mask="XVVVXXXX"
-					item="Function F0F behavior">
+		<variable label="Forward light F0F behaviour" CV="49" mask="XVVVXXXX"
+					item="Function F0F behaviour">
 			<enumVal>
 				<enumChoice choice="Phase A"/>
 				<enumChoice choice="Phase B"/>
@@ -535,8 +530,8 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="Reverse light F0R behavior" CV="50" mask="XVVVXXXX"
-					item="Function F0R behavior">
+		<variable label="Reverse light F0R behaviour" CV="50" mask="XVVVXXXX"
+					item="Function F0R behaviour">
 			<enumVal>
 				<enumChoice choice="Phase A"/>
 				<enumChoice choice="Phase B"/>
@@ -571,8 +566,8 @@
 				</enumVal>
 			</variable>
 
-		<variable label="FX1 behavior" CV="51" mask="XXVVXXXX"
-					item="Function 1 behavior">
+		<variable label="FX1 behaviour" CV="51" mask="XXVVXXXX"
+					item="Function 1 behaviour">
 			<enumVal>
 				<enumChoice choice="Phase A"/>
 				<enumChoice choice="Phase B"/>
@@ -580,7 +575,7 @@
 				<enumChoice choice="Grade crossing enable, phase B"/>
 				</enumVal>
 			</variable>
-		<variable label="FX2 effect generated" CV="52" mask="XXXXVVVV"
+		<variable label="FX1 effect generated" CV="52" mask="XXXXVVVV"
 					item="Function 2 effect generated">
 			<enumVal>
 				<enumChoice choice="On/Off"/>
@@ -601,8 +596,8 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="FX2 behavior" CV="52" mask="XXVVXXXX"
-					item="Function 2 behavior">
+		<variable label="FX2 behaviour" CV="52" mask="XXVVXXXX"
+					item="Function 2 behaviour">
 			<enumVal>
 				<enumChoice choice="Phase A"/>
 				<enumChoice choice="Phase B"/>
@@ -729,7 +724,6 @@
 </pane>
 
 </decoder-config>
-
 
 
 

@@ -13,7 +13,7 @@ import jmri.jmrix.loconet.LnTrafficController;
  *       			SE8Frame object
  *
  * @author	Bob Jacobsen    Copyright (C) 2002
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.1 $
  */
 public class SE8Action  extends AbstractAction {
 
@@ -22,8 +22,12 @@ public class SE8Action  extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         // create a PM4Frame
         SE8Frame f = new SE8Frame();
+        f.show();
     }
+
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SE8Action.class.getName());
+
 }
 
 
-/* @(#)SE8Action.java */
+/* @(#)PM4Action.java */

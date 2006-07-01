@@ -5,7 +5,7 @@
  * Description:		Provide access to Zimo's MX-1 on an attached serial comm port.
  *			Normally controlled by the zimo.mx1.Mx1Frame class.
  * @author		Bob Jacobsen   Copyright (C) 2002
- * @version		$Revision: 1.3 $
+ * @version		$Revision: 1.1 $
  *
  * Adapted for use with Zimo MX-1 by Sip Bosch
  *
@@ -199,9 +199,6 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
 
              // start operation
              packets.startThreads();
-
-             jmri.jmrix.zimo.ActiveFlag.setActive();
-
 	}
 
 	private Thread sinkThread;
@@ -261,7 +258,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
         /**
          * Option 1 controls flow control option
          */
-        public String option1Name() { return "MX-1 connection uses "; }
+        public String option1Name() { return "MX-1 connections uses "; }
         public String[] validOption1() { return validOption1; }
 
         protected String [] validSpeeds = new String[]{"1,200 baud", "2,400 baud", "4,800 baud",
@@ -280,6 +277,9 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
             return mInstance;
         }
         static Mx1Adapter mInstance = null;
+        static public boolean hasInstance() {
+            return (mInstance != null);
+        }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Mx1Adapter.class.getName());
 

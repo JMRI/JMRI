@@ -6,7 +6,6 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
-//import jmri.jmrix.nce.serialdriver.SerialDriverAdapter;
 
 /**
  * Converts Stream-based I/O to/from NCE messages.  The "NceInterface"
@@ -21,11 +20,11 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.7 $
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface {
 
-	public NceTrafficController() {
+    public NceTrafficController() {
         super();
     }
 
@@ -50,15 +49,15 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     /**
      * Forward a NceReply to all registered NceInterface listeners.
      */
-    protected void forwardReply(AbstractMRListener client, AbstractMRReply r) {
-        ((NceListener)client).reply((NceReply)r);
+    protected void forwardReply(AbstractMRListener client, AbstractMRReply m) {
+        ((NceListener)client).reply((NceReply)m);
     }
 
     NceSensorManager mSensorManager = null;
     public void setSensorManager(NceSensorManager m) { mSensorManager = m; }
-    public NceSensorManager getSensorManager() { return mSensorManager; }
     protected AbstractMRMessage pollMessage() {
-        return null;
+        if (mSensorManager == null) return null;
+        else return mSensorManager.nextAiuPoll();
     }
     protected AbstractMRListener pollReplyHandler() {
         return mSensorManager;
@@ -71,16 +70,6 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         sendMessage(m, reply);
     }
 
-    protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
-        replyBinary = m.isBinary();
-        replyLen = ((NceMessage)m).getReplyLen();
-        super.forwardToPort(m, reply);
-    }
-    
-    protected int replyLen;
-    protected boolean replyBinary;
-    protected boolean unsolicitedSensorMessageSeen = false;
-    
     protected AbstractMRMessage enterProgMode() {
         return NceMessage.getProgMode();
     }
@@ -104,55 +93,22 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     static protected NceTrafficController self = null;
     protected void setInstance() { self = this; }
 
-    protected AbstractMRReply newReply() { 
-        NceReply reply = new NceReply();
-        reply.setBinary(replyBinary);
-        return reply;
-    }
+    protected AbstractMRReply newReply() { return new NceReply(); }
 
     protected boolean endOfMessage(AbstractMRReply msg) {
-        // first try boolean
-        if (replyBinary) {
-            if (msg.getElement(0) == 0x61) {
-                return msg.getNumDataElements() >= 3;
-            } else if (msg.getNumDataElements() >= replyLen ) {
-                return true;
-            } else 
-                return false;
-        } else {
-            // detect that the reply buffer ends with "COMMAND: " (note ending space)
-            int num = msg.getNumDataElements();
+        // detect that the reply buffer ends with "COMMAND: " (note ending space)
+        int num = msg.getNumDataElements();
+        if ( num >= 9) {
             // ptr is offset of last element in NceReply
             int ptr = num-1;
-            if ( (num >= 9) && 
-                (msg.getElement(ptr)   == ' ') &&
-                (msg.getElement(ptr-1) == ':') &&
-                (msg.getElement(ptr-2) == 'D') )
-                    return true;
-                    
-            // this got harder with the new PROM at the beginning of 2005.
-            // It doesn't always send the "COMMAND: " prompt at the end
-            // of each response. Try for the error message:
-            else if ( (num >= 19) && 
-                // don't check space,NL at end of buffer
-                (msg.getElement(ptr-2)  == '*') &&
-                (msg.getElement(ptr-3)  == '*') &&
-                (msg.getElement(ptr-4)  == '*') &&
-                (msg.getElement(ptr-5)  == '*') &&
-                (msg.getElement(ptr-6)  == ' ') &&
-                (msg.getElement(ptr-7)  == 'D') &&
-                (msg.getElement(ptr-8)  == 'O') &&
-                (msg.getElement(ptr-9)  == 'O') &&
-                (msg.getElement(ptr-10) == 'T') &&
-                (msg.getElement(ptr-11) == 'S') &&
-                (msg.getElement(ptr-12) == 'R') )
-                    return true;
-            
-            // otherwise, it's not the end
-            return false;
+            if (msg.getElement(ptr-1) != ':') return false;
+            if (msg.getElement(ptr)   != ' ') return false;
+            if (msg.getElement(ptr-2) != 'D') return false;
+            return true;
         }
+        else return false;
     }
-    
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceTrafficController.class.getName());
 }
 

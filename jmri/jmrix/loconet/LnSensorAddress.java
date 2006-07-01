@@ -15,8 +15,7 @@ package jmri.jmrix.loconet;
  * numbers are part of the address.  These are represented by names of
  * the form LScccA1 through LScccA4, LScccB1 through LScccB4, and
  * on through LScccD4.  ccc is the BDL16 card number.
- * <LI>A straight-forward numeric space, represented by LSmmm. Note
- * that this is a 1-4096 scheme, not a 0-4095.
+ * <LI>A straight-forward numeric space, represented by LSmmm.
  * </UL>
  * <P>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
@@ -25,8 +24,8 @@ package jmri.jmrix.loconet;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version     $Revision: 1.9 $
+ * @author			Bob Jacobsen Copyright (C) 2001, 2002
+ * @version         $Revision: 1.6 $
  */
 public class LnSensorAddress {
 
@@ -83,7 +82,7 @@ public class LnSensorAddress {
                     _valid = true;
                 } else {
                     // assume that its LSnnn style
-                    int n = Integer.parseInt(s.substring(2, s.length()))-1;
+                    int n = Integer.parseInt(s.substring(2, s.length()));
                     _high = n/256;
                     _low = (n&0xFE)/2;
                     _as = (n&0x01)*0x20;
@@ -92,17 +91,13 @@ public class LnSensorAddress {
             }
         } else {
             // didn't find a leading LS, complain
-            reportParseError(s);
+            log.error("Can't parse sensor address string: "+s);
         }
-    }
-
-    void reportParseError(String s) {
-        log.error("Can't parse sensor address string: "+s);
     }
 
     /**
      * Update a LocoNet message to have this address.
-     * @param m
+     * @param msg
      */
     public void insertAddress(LocoNetMessage m) {
         m.setElement(1, getLowBits());
@@ -118,9 +113,9 @@ public class LnSensorAddress {
     }
 
     /**
-     * @return integer value of this address in 0-4095 space
+     * @return integer value of this address
      */
-    protected int asInt() {
+    public int asInt() {
         return _high*256+_low*2+(_as!=0 ? 1 : 0);
     }
 
@@ -146,7 +141,7 @@ public class LnSensorAddress {
      * @return LSnnn
      */
     public String getNumericAddress() {
-        return "LS"+(asInt()+1);
+        return "LS"+asInt();
     }
 
     /**

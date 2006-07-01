@@ -21,13 +21,11 @@ import javax.swing.JTextField;
  * operation is complete, and the Value and State are stable.  During a read
  * operation, Value changes before State, so you can assume that Value is stable
  * if notified of a State change.
- *
- * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004
- * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.17 $
+ * @author			Bob Jacobsen   Copyright (C) 2001
+ * @version			$Revision: 1.9 $
  */
 public class CvValue extends AbstractValue implements ProgListener {
-
+    
     public CvValue(int num, Programmer pProgrammer) {
         _num = num;
         mProgrammer = pProgrammer;
@@ -35,50 +33,17 @@ public class CvValue extends AbstractValue implements ProgListener {
         _defaultColor = _tableEntry.getBackground();
         _tableEntry.setBackground(COLOR_UNKNOWN);
     }
-
-    public CvValue(int num, String cvName, int piCv, int piVal, int siCv, int siVal, int iCv, Programmer pProgrammer) {
-        _num   = num;
-        _cvName  = cvName;
-        _piCv  = piCv;
-        _piVal = piVal;
-        _siCv  = siCv;
-        _siVal = siVal;
-        _iCv    = iCv;
-        mProgrammer = pProgrammer;
-        _tableEntry = new JTextField("0", 3);
-        _defaultColor = _tableEntry.getBackground();
-        _tableEntry.setBackground(COLOR_UNKNOWN);
-    }
-
     public int number() { return _num; }
     private int _num;
-
-    public String cvName() { return _cvName; }
-    private String _cvName = "";
-
-    public int piCv() { return _piCv; }
-    private int _piCv;
-
-    public int piVal() { return _piVal; }
-    private int _piVal;
-
-    public int siCv() { return _siCv; }
-    private int _siCv;
-
-    public int siVal() { return _siVal; }
-    private int _siVal;
-
-    public int iCv() { return _iCv; }
-    private int _iCv;
-
+    
     private JLabel _status = null;
-
+    
     private Programmer mProgrammer;
-
+    
     public int getValue()  { return _value; }
-
+    
     Color getColor() { return _tableEntry.getBackground(); }
-
+    
     protected void notifyValueChange(int value) {
         prop.firePropertyChange("Value", null, new Integer(value));
     }
@@ -87,7 +52,6 @@ public class CvValue extends AbstractValue implements ProgListener {
      * not for internal uses, as it sets the state to EDITED
      */
     public void setValue(int value) {
-        if (log.isDebugEnabled()) log.debug("CV "+number()+" value changed from "+_value+" to "+value);
         setState(EDITED);
         if (_value != value) {
             int old = _value;
@@ -108,7 +72,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         _state = state;
         switch (state) {
         case UNKNOWN : setColor(COLOR_UNKNOWN ); break;
-        case EDITED  : setColor(COLOR_EDITED ); break;
+        case EDITED : setColor(COLOR_EDITED ); break;
         case READ    : setColor(COLOR_READ    ); break;
         case STORED  : setColor(COLOR_STORED  ); break;
         case FROMFILE: setColor(COLOR_FROMFILE); break;
@@ -157,83 +121,12 @@ public class CvValue extends AbstractValue implements ProgListener {
         return _tableEntry;
     }
 
-    /**
-     * Set bean keeping track of whether this CV is intended to be
-     * read-only.  Does not otherwise affect behaviour!
-     * Default is "false".
-     */    public void setReadOnly(boolean is) {
-        _readOnly = is;
-    }
-
-    private boolean _readOnly = false;
-    /**
-     * Retrieve bean keeping track of whether this CV is intended to be
-     * read-only.  Does not otherwise affect behaviour!
-     * Default is "false".
-     */
-    public boolean getReadOnly() {
-        return _readOnly;
-    }
-
-    /**
-     * Set bean keeping track of whether this CV is intended to
-     * be used as info-only.  Does not otherwise affect behaviour!
-     * Default is "false".
-     */
-    public void setInfoOnly(boolean is) {
-        _infoOnly = is;
-    }
-
-    private boolean _infoOnly = false;
-    /**
-     * Retrieve bean keeping track of whether this CV is intended to
-     * be used as info-only.  Does not otherwise affect behaviour!
-     * Default is "false".
-     */
-    public boolean getInfoOnly() {
-        return _infoOnly;
-    }
-
-    /**
-     * Set bean keeping track of whether this CV is intended to
-     * be used as write-only.  Does not otherwise affect behaviour!
-     * Default is "false".
-     */
-    public void setWriteOnly(boolean is) {
-        _writeOnly = is;
-    }
-
-    private boolean _writeOnly = false;
-    /**
-     * Retrieve bean keeping track of whether this CV is intended to
-     * be used as write-only.  Does not otherwise affect behaviour!
-     * Default is "false".
-     */
-    public boolean getWriteOnly() {
-        return _writeOnly;
-    }
-
-    public void setToRead(boolean state) {
-        if (getInfoOnly() || getWriteOnly()) state = false;
-        _toRead = state;
-    }
-    public boolean isToRead() { return _toRead; }
-    private boolean _toRead = false;
-
-    public void setToWrite(boolean state) {
-        if (getInfoOnly() || getReadOnly()) state = false;
-        _toWrite = state;
-    }
-    public boolean isToWrite() { return _toWrite; }
-    private boolean _toWrite = false;
-
     // read, write support
     private boolean _reading = false;
     private boolean _confirm = false;
 
     public void read(JLabel status) {
         if (log.isDebugEnabled()) log.debug("read call with Cv number "+_num);
-        setToRead(false);
         // get a programmer reference and write
         _status = status;
         if (status != null) status.setText("Reading CV"+_num+"...");
@@ -246,32 +139,6 @@ public class CvValue extends AbstractValue implements ProgListener {
             } catch (Exception e) {
                 if (status != null) status.setText("Exception during CV read: "+e);
                 log.warn("Exception during CV read: "+e);
-                setBusy(false);
-            }
-        } else {
-            if (status != null) status.setText("No programmer available!");
-            log.error("No programmer available!");
-        }
-    }
-
-    public void readIcV(JLabel status) {
-        setToRead(false);
-        // get a programmer reference and write an indexed CV
-        _status = status;
-        if (status != null) status.setText("Reading Indexed CV"+_iCv+"."+_piVal+(_siVal>=0?"."+_siVal:"")+" ...");
-        if (mProgrammer != null) {
-            setBusy(true);
-            _reading = true;
-            _confirm = false;
-            try {
-                setState(UNKNOWN);
-                mProgrammer.readCV(_iCv, this);
-            }
-            catch (Exception e) {
-                setState(UNKNOWN);
-                if (status != null) status.setText(
-                    "Exception during IndexedCV read: " + e);
-                log.warn("Exception during IndexedCV read: " + e);
                 setBusy(false);
             }
         } else {
@@ -304,7 +171,6 @@ public class CvValue extends AbstractValue implements ProgListener {
 
     public void write(JLabel status) {
         if (log.isDebugEnabled()) log.debug("write call with Cv number "+_num);
-        setToWrite(false);
         // get a programmer reference and write
         _status = status;
         if (status != null) status.setText("Writing CV"+_num+"...");
@@ -315,86 +181,6 @@ public class CvValue extends AbstractValue implements ProgListener {
             try {
                 setState(UNKNOWN);
                 mProgrammer.writeCV(_num, _value, this);
-            } catch (Exception e) {
-                setState(UNKNOWN);
-                if (status != null) status.setText("Exception during CV write: "+e);
-                log.warn("Exception during CV write: "+e);
-                setBusy(false);
-            }
-        } else {
-            if (status != null) status.setText("No programmer available!");
-            log.error("No programmer available!");
-        }
-    }
-
-    public void writePI(JLabel status) {
-        if (log.isDebugEnabled()) log.debug("write call with PI number "+_piVal);
-        // get a programmer reference and write to the primary index
-        _status = status;
-        if (status != null) status.setText("Writing PI CV"+_piCv+" ...");
-        if (mProgrammer != null) {
-            setBusy(true);
-            _reading = false;
-            _confirm = false;
-            try {
-                setState(UNKNOWN);
-                mProgrammer.writeCV(_piCv, _piVal, this);
-            } catch (Exception e) {
-                setState(UNKNOWN);
-                if (status != null) status.setText("Exception during CV write: "+e);
-                log.warn("Exception during CV write: "+e);
-                setBusy(false);
-            }
-        } else {
-            if (status != null) status.setText("No programmer available!");
-            log.error("No programmer available!");
-        }
-    }
-
-    public void writeSI(JLabel status) {
-        if (log.isDebugEnabled()) log.debug("write call with SI number " +_siVal);
-        // get a programmer reference and write to the secondary index
-        _status = status;
-        if (status != null) status.setText("Writing SI CV" + _siCv + " ...");
-        if (mProgrammer != null) {
-            setBusy(true);
-            _reading = false;
-            _confirm = false;
-                try {
-                    setState(UNKNOWN);
-                    if ( _siVal >= 0 ) {
-                        mProgrammer.writeCV(_siCv, _siVal, this);
-                    } else { // just in case we get called without a real SI value
-                        mProgrammer.writeCV(_siCv, 0, this);
-                    }
-                }
-                catch (Exception e) {
-                    setState(UNKNOWN);
-                    if (status != null) status.setText(
-                        "Exception during CV write: " + e);
-                    log.warn("Exception during CV write: " + e);
-                    setBusy(false);
-                }
-        }
-        else {
-            if (status != null) status.setText("No programmer available!");
-            log.error("No programmer available!");
-        }
-    }
-
-    public void writeIcV(JLabel status) {
-        if (log.isDebugEnabled()) log.debug("write call with IndexedCv number "+_iCv);
-        setToWrite(false);
-        // get a programmer reference and write the indexed CV
-        _status = status;
-        if (status != null) status.setText("Writing Indexed CV"+_iCv+"."+_piVal+(_siVal>=0?"."+_siVal:"")+" ...");
-        if (mProgrammer != null) {
-            setBusy(true);
-            _reading = false;
-            _confirm = false;
-            try {
-                setState(UNKNOWN);
-                mProgrammer.writeCV(_iCv, _value, this);
             } catch (Exception e) {
                 setState(UNKNOWN);
                 if (status != null) status.setText("Exception during CV write: "+e);
@@ -428,7 +214,7 @@ public class CvValue extends AbstractValue implements ProgListener {
                 notifyBusyChange(oldBusy, _busy);
             }
             else if (_confirm) {
-                // value doesn't change, just the state
+				// value doesn't change, just the state
                 setState(READ);
                 _busy = false;
                 notifyBusyChange(oldBusy, _busy);
@@ -452,7 +238,7 @@ public class CvValue extends AbstractValue implements ProgListener {
             timer.start();
         }
         if (log.isDebugEnabled()) log.debug("CV progOpReply end of handling CV "+_num);
-        }
+	}
 
     void errorTimeout() {
         setState(UNKNOWN);

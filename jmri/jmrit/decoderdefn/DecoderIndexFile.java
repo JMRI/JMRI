@@ -8,20 +8,19 @@ import java.util.Enumeration;
 
 import javax.swing.JComboBox;
 
+import com.sun.java.util.collections.ArrayList;
+import com.sun.java.util.collections.Hashtable;
+import com.sun.java.util.collections.List;
 import org.jdom.Attribute;
 import org.jdom.DocType;
 import org.jdom.Document;
 import org.jdom.Element;
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.Hashtable;
-import com.sun.java.util.collections.List;
+import org.jdom.output.XMLOutputter;
 
 // try to limit the JDOM to this class, so that others can manipulate...
 
 /**
- * DecoderIndex represents a decoderIndex.xml file in memory.
- * <P>
- * This allows a program
+ * DecoderIndex represents a decoderIndex.xml file in memory, allowing a program
  * to navigate to various decoder descriptions without having to
  * manipulate files.
  *<P>
@@ -32,7 +31,7 @@ import com.sun.java.util.collections.List;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.24 $
+ * @version			$Revision: 1.18 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -63,10 +62,10 @@ public class DecoderIndexFile extends XmlFile {
     /**
      *	Get a List of decoders matching some information
      */
-    public List matchingDecoderList(String mfg, String family, String decoderMfgID, String decoderVersionID, String decoderProductID, String model ) {
+    public List matchingDecoderList(String mfg, String family, String decoderMfgID, String decoderVersionID, String model ) {
         List l = new ArrayList();
         for (int i = 0; i < numDecoders(); i++) {
-            if ( checkEntry(i, mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model )) {
+            if ( checkEntry(i, mfg, family, decoderMfgID, decoderVersionID, model )) {
                 l.add(decoderList.get(i));
             }
         }
@@ -77,8 +76,8 @@ public class DecoderIndexFile extends XmlFile {
      * Get a JComboBox representing the choices that match
      * some information
      */
-    public JComboBox matchingComboBox(String mfg, String family, String decoderMfgID, String decoderVersionID, String decoderProductID, String model ) {
-        List l = matchingDecoderList(mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model );
+    public JComboBox matchingComboBox(String mfg, String family, String decoderMfgID, String decoderVersionID, String model ) {
+        List l = matchingDecoderList(mfg, family, decoderMfgID, decoderVersionID, model );
         return jComboBoxFromList(l);
     }
 
@@ -105,6 +104,8 @@ public class DecoderIndexFile extends XmlFile {
 
     /**
      * Return DecoderFile from a "title" string, ala selection in matchingComboBox.
+     * Search backwards, so that if there is a decoder-entry and family-entry
+     * with the same title, we get the decoder.
      */
     public DecoderFile fileFromTitle(String title ) {
         for (int i = numDecoders()-1; i >= 0; i--) {
@@ -120,7 +121,7 @@ public class DecoderIndexFile extends XmlFile {
      * Don't bother asking about the model number...
      *
      */
-    public boolean checkEntry(int i, String mfgName, String family, String mfgID, String decoderVersionID, String decoderProductID, String model) {
+    public boolean checkEntry(int i, String mfgName, String family, String mfgID, String decoderVersionID, String model) {
         DecoderFile r = (DecoderFile)decoderList.get(i);
         if (mfgName != null && !mfgName.equals(r.getMfg())) return false;
         if (family != null && !family.equals(r.getFamily())) return false;
@@ -131,7 +132,6 @@ public class DecoderIndexFile extends XmlFile {
             int versionID = Integer.valueOf(decoderVersionID).intValue();
             if (!r.isVersion(versionID)) return false;
         }
-        if (decoderProductID != null && !decoderProductID.equals(r.getProductID())) return false;
         return true;
     }
 
@@ -264,7 +264,7 @@ public class DecoderIndexFile extends XmlFile {
 
         //the resulting array is now sorted on file-name to make it easier
         // for humans to read
-        jmri.util.StringUtil.sort(sbox);
+        java.util.Arrays.sort(sbox);
 
         // create a new decoderIndex
         // the existing version is used, so that a new master file
@@ -276,8 +276,6 @@ public class DecoderIndexFile extends XmlFile {
         try {
             index.writeFile("decoderIndex.xml", _instance, sbox);
         } catch (java.io.IOException ex) {
-            log.error("Error writing new decoder index file: "+ex.getMessage());
-        } catch (org.jdom.JDOMException ex) {
             log.error("Error writing new decoder index file: "+ex.getMessage());
         }
     }
@@ -397,14 +395,15 @@ public class DecoderIndexFile extends XmlFile {
         }
     }
 
-    public void writeFile(String name, DecoderIndexFile oldIndex, String files[]) throws org.jdom.JDOMException, java.io.IOException {
+    public void writeFile(String name, DecoderIndexFile oldIndex, String files[]) throws java.io.IOException {
         if (log.isInfoEnabled()) log.info("writeFile "+name);
         // This is taken in large part from "Java and XML" page 368
         File file = new File(prefsDir()+name);
 
         // create root element
         Element root = new Element("decoderIndex-config");
-        Document doc = newDocument(root, "decoderIndex-config.dtd");
+        Document doc = new Document(root);
+        doc.setDocType(new DocType("decoderIndex-config","decoderIndex-config.dtd"));
 
         // add top-level elements
         Element index;
@@ -427,7 +426,7 @@ public class DecoderIndexFile extends XmlFile {
         }
         Object[] s = l.toArray();
         // all of the above mess was to get something we can sort into alpha order
-        jmri.util.StringUtil.sort(s);
+        java.util.Arrays.sort(s);
         for (int i=0; i<s.length; i++) {
             String mfgName = (String)s[i];
             if (!mfgName.equals("NMRA")){
@@ -455,7 +454,13 @@ public class DecoderIndexFile extends XmlFile {
         index.addContent(mfgList);
         index.addContent(familyList);
 
-        writeXML(file, doc);
+        // write the result to selected file
+        java.io.FileOutputStream o = new java.io.FileOutputStream(file);
+        XMLOutputter fmt = new XMLOutputter();
+        fmt.setNewlines(true);   // pretty printing
+        fmt.setIndent(true);
+        fmt.output(doc, o);
+        o.close();
 
         // force a read of the new file next time
         _instance = null;

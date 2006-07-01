@@ -1,25 +1,23 @@
 package jmri.jmrit.display;
 
-import jmri.jmrit.catalog.CatalogPane;
-import jmri.jmrit.catalog.NamedIcon;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import jmri.*;
+import jmri.jmrit.catalog.*;
+import java.awt.*;
+import java.awt.event.*;
 
-import javax.swing.BoxLayout;
-import javax.swing.Icon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
+
+import com.sun.java.util.collections.*;
 
 /**
  * Provides a simple editor for selecting N NamedIcons, perhaps
- * for use in creating a panel icon.
- * <P>See {@link SensorIcon} for an item
+ * for use in creating a panel icon (see SensorIcon for an item
  * that might want to have that type of information, and
- * {@link PanelEditor} for an example of how to use this.
+ * PanelEditor for an example of how to use this)
  *
- * @author Bob Jacobsen  Copyright (c) 2003
- * @version $Revision: 1.5 $
+ * <p>Copyright: Copyright (c) 2003</p>
+ * @author Bob Jacobsen
+ * @version $Revision: 1.2 $
  * @see jmri.jmrit.display.SensorIcon
  * @see jmri.jmrit.display.PanelEditor
  * @see jmri.jmrit.catalog
@@ -44,7 +42,6 @@ public class MultiIconEditor extends JPanel {
         iconList[iconNum] = new NamedIcon(name, name);
         // make a button to change that icon
         JButton j = new IconButton(iconNum, iconList[iconNum]);
-        j.setToolTipText(iconList[iconNum].getName());
         buttonList[iconNum] = j;
 
         // and add it to this panel
@@ -54,13 +51,8 @@ public class MultiIconEditor extends JPanel {
         this.add(p);
     }
 
-    /**
-     * Returns a new NamedIcon object for your own use.
-     * @param iconNum 0 to n-1
-     * @return Unique object
-     */
     public NamedIcon getIcon(int iconNum) {
-        return new NamedIcon(iconList[iconNum]);
+        return iconList[iconNum];
     }
 
     public void complete() {

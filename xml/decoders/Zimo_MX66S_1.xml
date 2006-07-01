@@ -1,14 +1,11 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
-<!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Zimo_MX66S_1.xml,v 1.4 2005-05-01 23:25:43 jacobsen Exp $ -->
+<!-- $Id: Zimo_MX66S_1.xml,v 1.1 2003-08-10 21:58:18 jacobsen Exp $ -->
 <decoder-config>
 		<version author="sip@euronet.nl"
-			version="1.1" lastUpdated="20031008" />
+			version="1.0" lastUpdated="20030505" />
 			<!-- Based on the contribution of many others -->
-
-         <!-- V 1.1 changed spelling of "behavior" (Jack Shall) -->			
+			
 
 <decoder>
 	<family name="Zimo Silent BEMF decoders, large scales" mfg="Zimo">
@@ -689,8 +686,8 @@
 				<enumChoice choice="Soft Start"/>
 				</enumVal>
 			</variable>
-		<variable label="behavior" CV="125" mask="XXXXXXVV"
-					item="Output 3 behavior">
+		<variable label="Behaviour" CV="125" mask="XXXXXXVV"
+					item="Output 3 behaviour">
 			<enumVal>
 				<enumChoice choice="Both directions"/>
 				<enumChoice choice="Only in forward"/>
@@ -716,8 +713,8 @@
 				<enumChoice choice="Soft Start"/>
 				</enumVal>
 			</variable>
-		<variable label="behavior" CV="126" mask="XXXXXXVV"
-					item="Output 4 behavior">
+		<variable label="Behaviour" CV="126" mask="XXXXXXVV"
+					item="Output 4 behaviour">
 			<enumVal>
 				<enumChoice choice="Both directions"/>
 				<enumChoice choice="Only in forward"/>
@@ -743,8 +740,8 @@
 				<enumChoice choice="Soft Start"/>
 				</enumVal>
 			</variable>
-		<variable label="behavior" CV="127" mask="XXXXXXVV"
-					item="Output 5 behavior">
+		<variable label="Behaviour" CV="127" mask="XXXXXXVV"
+					item="Output 5 behaviour">
 			<enumVal>
 				<enumChoice choice="Both directions"/>
 				<enumChoice choice="Only in forward"/>
@@ -770,8 +767,8 @@
 				<enumChoice choice="Soft Start"/>
 				</enumVal>
 			</variable>
-		<variable label="behavior" CV="128" mask="XXXXXXVV"
-					item="Output 6 behavior">
+		<variable label="Behaviour" CV="128" mask="XXXXXXVV"
+					item="Output 6 behaviour">
 			<enumVal>
 				<enumChoice choice="Both directions"/>
 				<enumChoice choice="Only in forward"/>

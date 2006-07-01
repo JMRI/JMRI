@@ -2,9 +2,7 @@
 
 package jmri.jmrix.loconet.locomon;
 
-import jmri.jmrix.loconet.LnConstants;
-import jmri.jmrix.loconet.LocoNetMessage;
-import jmri.util.StringUtil;
+import jmri.jmrix.loconet.*;
 
  /**
  * A utility class for formatting LocoNet packets
@@ -31,34 +29,25 @@ import jmri.util.StringUtil;
  * the sole user of this. (It could be handled by moving the code from
  * locomon into the display member here)
  * <P>
- * Reverse engineering of OPC_MULTI_SENSE was provided by Al Silverstein,
- * used with permission.
+ * Reverse engineering of OPC_MULTI_SENSE was provided by Al Silverstein.
  *
- * @author			Bob Jacobsen  Copyright 2001, 2002, 2003
- * @version			$Revision: 1.34 $
+ * @author			Bob Jacobsen  Copyright 2001, 2002
+ * @version			$Revision: 1.18 $
  */
 public class Llnmon {
 
     static private int LOCO_ADR(int a1, int a2)   { return (((a1 & 0x7f) * 128) + (a2 & 0x7f)); }
-
-    /**
-     * Convert bytes from LocoNet packet into a 1-based address for
-     * a sensor or turnout.
-     * @param a1 Byte containing the upper bits
-     * @param a2 Byte containing the lower bits
-     * @return 1-4096 address
-     */
-    static private int SENSOR_ADR(int a1, int a2) { return (((a2 & 0x0f) * 128) + (a1 & 0x7f)) + 1; }
+    static private int SENSOR_ADR(int a1, int a2) { return (((a2 & 0x0f) * 128) + (a1 & 0x7f)); }
 
 
     // control data
     private boolean  rawLogMode      = false;  /* logging mode - 0=normal 1=raw (data only)        */
-    private int      msgNumber       = 1;      /* message number                                   */
+    private int   	msgNumber        = 1;      /* message number                                   */
     private boolean  showDecimal     = false;  /* flag that determines if we print decimal values  */
     private boolean  showHex         = false;  /* flag that determines if we print hex values      */
     private boolean  showDiscards    = false;  /* TRUE if the user wants to display discarded data */
     private boolean  showTrackStatus = true;   /* if TRUE, show track status on every slot read    */
-    private int      trackStatus     = -1;     /* most recent track status value                   */
+    private int   	trackStatus      = -1;     /* most recent track status value                   */
 
 
     /**
@@ -120,7 +109,6 @@ public class Llnmon {
 
 	int minutes;  // temporary time values
 	int hours;
-        int frac_mins;
 
 
         switch (l.getOpCode()) {
@@ -370,8 +358,7 @@ public class Llnmon {
                 }
 
             case (LnConstants.OPC_SW_STATE):
-                return "LONG_ACK: Command station response to switch state request 0x"+Integer.toHexString(ack1)
-                		+( ((ack1&0x20)!=0) ? " (Closed)" : " (Thrown)")+"\n";
+                return "LONG_ACK: Response to switch state message 0x"+Integer.toHexString(ack1)+"\n";
 
             case (LnConstants.OPC_MOVE_SLOTS):
                 if (ack1 == 0) {
@@ -400,7 +387,7 @@ public class Llnmon {
             default:
                 // forceHex = TRUE;
                 return "LONG_ACK: Response "+ack1+" (0x"+Integer.toHexString(ack1)
-                    +") to opcode 0x"+Integer.toHexString(opcode)+" not decoded\n";
+                    +") to opcode 0x"+Integer.toHexString(opcode)+" not available in plain english\n";
             }
 
             /********************************************************************************************
@@ -426,23 +413,21 @@ public class Llnmon {
             int in1 = l.getElement(1);
             int in2 = l.getElement(2);
 
-            String bdl = " (BDL16 "+((in1+(in2&0xF)*128)/8+1)+",";
-            int ch = 0;
-            if ( ((in1/2) & 3) == 0 ) ch = 0;
-            else if ( ((in1/2) & 3) == 1 ) ch = 4;
-            else if ( ((in1/2) & 3) == 2 ) ch = 8;
-            else ch = 12;
-            if ( ((in1 & 1) !=0) && ((in2 & LnConstants.OPC_INPUT_REP_SW)!=0) ) ch+=4;
-            else if ( ((in1 & 1) !=0) && ((in2 & LnConstants.OPC_INPUT_REP_SW)==0) ) ch+=3;
-            else if ( ((in1 & 1) ==0) && ((in2 & LnConstants.OPC_INPUT_REP_SW)!=0) ) ch+=2;
-            else ch+=1;
-            bdl = bdl+ch+")";
+            String bdl = " (BDL16 "+in1/8+" ";
+            if ( ((in1/2) & 3) == 0 ) bdl = bdl+"A";
+            else if ( ((in1/2) & 3) == 1 ) bdl = bdl+"B";
+            else if ( ((in1/2) & 3) == 2 ) bdl = bdl+"C";
+            else bdl = bdl+"D";
+            if ( ((in1 & 1) !=0) && ((in2 & LnConstants.OPC_INPUT_REP_SW)!=0) ) bdl=bdl+"4)";
+            else if ( ((in1 & 1) !=0) && ((in2 & LnConstants.OPC_INPUT_REP_SW)==0) ) bdl=bdl+"3)";
+            else if ( ((in1 & 1) ==0) && ((in2 & LnConstants.OPC_INPUT_REP_SW)!=0) ) bdl=bdl+"2)";
+            else bdl=bdl+"1)";
 
-            String ds = " (DS54 switch "+SENSOR_ADR(in1,in2)
+            String ds = " (DS54 "+(SENSOR_ADR(in1,in2)/4)+" ch"+((SENSOR_ADR(in1, in2)&3)+1)
                 +((in2 & LnConstants.OPC_INPUT_REP_SW)!=0 ? " Sw  input)" : " Aux input)");
 
             return "General sensor input report: contact "+
-                ((SENSOR_ADR(in1, in2)-1)*2+((in2 & LnConstants.OPC_INPUT_REP_SW)!=0?2:1))
+                (SENSOR_ADR(in1, in2)*2+((in2 & LnConstants.OPC_INPUT_REP_SW)!=0?1:0))
                 +ds+
                 bdl+
                 " is "+
@@ -485,15 +470,16 @@ public class Llnmon {
             int sn2 = l.getElement(2);
 
             if ((sn2 & LnConstants.OPC_SW_REP_INPUTS)!=0) {
-                return "Turnout "+
+                return "Turnout sensor input state for address "+
                     SENSOR_ADR(sn1, sn2)+
-                    ((sn2 & LnConstants.OPC_SW_REP_SW) !=0 ? " Switch input" : " Aux input")+
+                    ":\n\t"+
+                    ((sn2 & LnConstants.OPC_SW_REP_SW) !=0 ? "Switch" : "Aux input")+
                     " is "+
-                    (((sn2 & LnConstants.OPC_SW_REP_HI)!=0) ? "Closed (input off)" : "Thrown (input on)")+"\n";
+                    (((sn2 & LnConstants.OPC_SW_REP_HI)!=0) ? "Hi" : "Lo")+"\n";
             } else {  // OPC_SW_REP_INPUTS is 0
-                return "Turnout "+
+                return "Turnout sensor output state for address "+
                     SENSOR_ADR(sn1, sn2)+
-                    " output state: Closed output is "+
+                    ":\n\tClosed output is "+
                     ((sn2 & LnConstants.OPC_SW_REP_CLOSED)!=0 ? "ON (sink)" : "OFF (open)")+
                     ", Thrown output is "+
                     ((sn2 & LnConstants.OPC_SW_REP_THROWN)!=0 ? "ON (sink)" : "OFF (open)")+"\n";
@@ -642,6 +628,7 @@ public class Llnmon {
              *************************************************************************/
         case LnConstants.OPC_MULTI_SENSE:     {         // definition courtesy Al Silverstein
             int type = l.getElement(1)&LnConstants.OPC_MULTI_SENSE_MSG;
+            forceHex = true;
             String m;
 
             String zone;
@@ -650,30 +637,29 @@ public class Llnmon {
             else if ((l.getElement(2)&0x0F) == 0x04) zone = "C";
             else if ((l.getElement(2)&0x0F) == 0x06) zone = "D";
             else zone="<unknown "+(l.getElement(2)&0x0F)+">";
-			int section = (l.getElement(2)/16)+(l.getElement(1)&0x1F)*16;
 
             switch (type) {
             case LnConstants.OPC_MULTI_SENSE_POWER:
-                return powerMultiSenseMessage(l);
+                return "OPC_MULTI_SENSE power message PM4 "
+                    +(l.getElement(2)+1)+" ";
             case LnConstants.OPC_MULTI_SENSE_PRESENT:  // from transponding app note
-                m =  "Transponder present in section "+section
-                    +" zone "+zone+" decoder address ";
+                m =  "OPC_MULTI_SENSE transponder present zone "
+                    +zone+" decoder address ";
                 if (l.getElement(3)==0x7D)
                     m+=l.getElement(4)+" (short) ";
                 else
                     m+=l.getElement(3)*128+l.getElement(4)+" (long) ";
-                return m+"\n";
+                return m;
             case LnConstants.OPC_MULTI_SENSE_ABSENT:
-                m =  "Transponder absent in section "+section
-                	+" zone "+zone+" decoder address ";
+                m =  "OPC_MULTI_SENSE transponder absent zone "
+                    +zone+" decoder address ";
                 if (l.getElement(3)==0x7D)
                     m+=l.getElement(4)+" (short) ";
                 else
                     m+=l.getElement(3)*128+l.getElement(4)+" (long) ";
-                return m+"\n";
+                return m;
             default:
-                forceHex = true;
-                return "OPC_MULTI_SENSE unknown format\n";
+                return "OPC_MULTI_SENSE unknown format ";
             }
         }
 
@@ -938,11 +924,10 @@ public class Llnmon {
                     //  "   "  = zero shows not set has happened
 
                     /* recover hours and minutes values */
-                    minutes = ((255 - mins_60) & 0x7f) % 60;
+                    minutes = ((256 - mins_60) & 0x7f) % 60;
                     hours   = ((256 - hours_24)& 0x7f) % 24;
                     hours   = (24 - hours) % 24;
                     minutes = (60 - minutes) % 60;
-                    frac_mins = 0x3FFF - ( frac_minsl + ( frac_minsh << 7 ) ) ;
 
                     /* check track status value and display */
                     if ((trackStatus != track_stat) || showTrackStatus) {
@@ -957,8 +942,8 @@ public class Llnmon {
                             +")\n\t"
                             +(clk_rate != 0 ? "Running" : "Frozen")
                             +", rate is "+clk_rate
-                            +":1. Day "+days+", "+hours+":"+minutes+"."+frac_mins
-                            +". Last set by ID "+idString(id1, id2)
+                            +":1. Day "+days+", "+hours+":"+minutes
+                            +". Last set by ID 0x"+Integer.toHexString(id2)+Integer.toHexString(id1)
                             +"\n\tMaster controller "
                             +((track_stat & LnConstants.GTRK_MLOK1)!=0 ? "implements LocoNet 1.1" : "is a DT-200")
                             +",\n\tTrack Status is "
@@ -975,7 +960,7 @@ public class Llnmon {
                             +(clk_rate != 0 ? "Frozen" : "Running")
                             +", rate is "+clk_rate
                             +":1. Day "+days+", "+hours+":"+minutes
-                            +". Last set by ID "+idString(id1, id2)+"\n";
+                            +". Last set by ID 0x"+Integer.toHexString(id2)+Integer.toHexString(id1)+"\n";
                     }
                     // end fast clock block
 
@@ -1200,8 +1185,8 @@ public class Llnmon {
                                     logString += "\tStatus = Failed, Service Mode programming track empty\n";
                                 }
                                 if ((pstat & 0xF0) != 0) {
-                                    logString += "\tUnexpected PSTAT value = 0x"
-                                        +Integer.toHexString(pstat)+"\n";
+                                    logString += "Warning: reserved bit set. Message may be invalid. PSTAT = 0x"
+                                        +Integer.toHexString(pstat);
                                 }
                             } else {
                                 logString += "\tStatus = Success\n";
@@ -1242,7 +1227,7 @@ public class Llnmon {
                             +",\n\tTrack Status is "+((trk  & LnConstants.GTRK_IDLE) != 0  ? "On" : "Off")
                             +",\n\tProgramming Track is "+((trk  & LnConstants.GTRK_PROG_BUSY) != 0 ? "Busy" : "Available")
                             +"\n\tSS2=0x"+Integer.toHexString(ss2)
-                            +", ID="+idString(id1, id2)+"\n";
+                            +", ID =0x"+Integer.toHexString(id2)+Integer.toHexString(id1)+"\n";
                     } else {
                         logString = mode
                             +" slot "+slot
@@ -1262,7 +1247,7 @@ public class Llnmon {
                             +" Sound3/F7="+((snd  & LnConstants.SND_F7) != 0 ? "On, "  : "Off,")
                             +" Sound4/F8="+((snd  & LnConstants.SND_F8) != 0 ? "On"    : "Off")
                             +"\n\tSS2=0x"+Integer.toHexString(ss2)
-                            +", ID ="+idString(id1, id2)+"\n";
+                            +", ID =0x"+Integer.toHexString(id2)+Integer.toHexString(id1)+"\n";
                     }
                     // end normal slot read/write case
                 }
@@ -1277,12 +1262,11 @@ public class Llnmon {
             {
                 if (l.getElement(1)!=0x10) return "ALM message with unexpected length "+l.getElement(1)+"\n";
                 String message;
-                if (l.getElement(0)==0xEE) message = "Write ALM msg ";
-                else message = "Read ALM msg (Write reply) ";
+                if (l.getElement(0)==0xEE) message = "Write ALM ";
+                else message = "Read ALM ";
                 message = message+l.getElement(2)+" ATASK="+l.getElement(3);
                 if (l.getElement(3) == 2) message=message+" (RD)";
-                else if (l.getElement(3) == 3) message=message+" (WR)";
-                else if (l.getElement(3) == 0) message=message+" (ID)";
+                if (l.getElement(3) == 3) message=message+" (WR)";
                 message = message+" BLKL="+l.getElement(4)+" BLKH="+l.getElement(5);
                 message = message+" LOGIC="+l.getElement(6)+"\n      ";
                 message = message+" ARG1L=0x"+Integer.toHexString(l.getElement(7))
@@ -1302,7 +1286,48 @@ public class Llnmon {
             // the length apparently the distinquishing item.
             switch (l.getElement(1)) {
             case 0x10: {
-                return peerToPeerMessage(l);
+                /***********************************************************************************
+                 * OPC_PEER_XFER    0xE5   ; move 8 bytes PEER to PEER, SRC->DST                    *
+                 *                         ; Message has response                                   *
+                 *                         ; <0xE5>,<10>,<SRC>,<DSTL><DSTH>,<PXCT1>,<D1>,           *
+                 *                         ;        <D2>,<D3>,<D4>,<PXCT2>,<D5>,<D6>,<D7>,          *
+                 *                         ;        <D8>,<CHK>                                      *
+                 *                         ;   SRC/DST are 7 bit args. DSTL/H=0 is BROADCAST msg    *
+                 *                         ;   SRC=0 is MASTER                                      *
+                 *                         ;   SRC=0x70-0x7E are reserved                           *
+                 *                         ;   SRC=7F is THROTTLE msg xfer,                         *
+                 *                         ;        <DSTL><DSTH> encode ID#,                        *
+                 *                         ;        <0><0> is THROT B'CAST                          *
+                 *                         ;   <PXCT1>=<0,XC2,XC1,XC0 - D4.7,D3.7,D2.7,D1.7>        *
+                 *                         ;        XC0-XC2=ADR type CODE-0=7 bit Peer TO Peer adrs *
+                 *                         ;           1=<D1>is SRC HI,<D2>is DST HI                *
+                 *                         ;   <PXCT2>=<0,XC5,XC4,XC3 - D8.7,D7.7,D6.7,D5.7>        *
+                 *                         ;        XC3-XC5=data type CODE- 0=ANSI TEXT string,     *
+                 *                         ;           balance RESERVED                             *
+                 ***********************************************************************************/
+
+                int src 	= l.getElement(2);            	// source of transfer
+                int dst_l 	= l.getElement(3);          	// ls 7 bits of destination
+                int dst_h 	= l.getElement(4);          	// ms 7 bits of destination
+                int pxct1 	= l.getElement(5);
+                int pxct2	= l.getElement(10);
+
+                int d[] = l.getPeerXfrData();
+
+                return "Peer to Peer transfer: SRC=0x"+Integer.toHexString(src)
+                    +", DSTL=0x"+Integer.toHexString(dst_l)
+                    +", DSTH=0x"+Integer.toHexString(dst_h)
+                    +", PXCT1=0x"+Integer.toHexString(pxct1)
+                    +", PXCT2=0x"+Integer.toHexString(pxct2)+"\n"
+                    +"\tD1=0x"+Integer.toHexString(d[0])
+                    +", D2=0x"+Integer.toHexString(d[1])
+                    +", D3=0x"+Integer.toHexString(d[2])
+                    +", D4=0x"+Integer.toHexString(d[3])
+                    +", D5=0x"+Integer.toHexString(d[4])
+                    +", D6=0x"+Integer.toHexString(d[5])
+                    +", D7=0x"+Integer.toHexString(d[6])
+                    +", D8=0x"+Integer.toHexString(d[7])
+                    +"\n";
             }
             case 0x0A: {
                 // throttle status
@@ -1321,8 +1346,7 @@ public class Llnmon {
                     +Integer.toHexString(l.getElement(4))
                     +" SLA="+Integer.toHexString(l.getElement(7))
                     +" SLB="+Integer.toHexString(l.getElement(8))
-                    +"\n";            
-            }
+                    +"\n";            }
             default: {
                 // 0xE5 message of unknown format
                 forceHex = true;
@@ -1338,32 +1362,31 @@ public class Llnmon {
              *                         ; <0xE4>,<0x09>,...                                      *
              ***********************************************************************************/
         case 0XE4:
-            if (l.getElement(1)!=0x0A) {
+            if (l.getElement(1)!=0x09) {
                 forceHex = true;
                 return "Unrecognized command varient\n";
             }
 
             // OK, format
             int element = l.getElement(2)*128+l.getElement(3);
-            int stat1 = l.getElement(5);
-            int stat2 = l.getElement(6);
+            int stat = l.getElement(5);
             String status;
-            if ( (stat1&0x10) !=0 )
-                if ( (stat1&0x20) !=0 )
+            if ( (stat&0x10) !=0 )
+                if ( (stat&0x20) !=0 )
                     status = " AX, XA reserved; ";
                 else
                     status = " AX reserved; ";
             else
-                if ( (stat1&0x20) !=0 )
+                if ( (stat&0x20) !=0 )
                     status = " XA reserved; ";
                 else
                     status = " no reservation; ";
-            if ( (stat2&0x01) !=0 ) status+="Turnout thrown; ";
-            else status+="Turnout closed; ";
-            if ( (stat1&0x01) !=0 ) status+="Occupied";
+            if ( (stat&0x01) !=0 ) status+="Turnout normal; ";
+            else status+="Turnout reversed; ";
+            if ( (stat&0x04) !=0 ) status+="Occupied";
             else status+="Not occupied";
-            return "SE"+(element+1)+" ("+element+") reports AX:"+l.getElement(7)
-                +" XA:"+l.getElement(8)
+            return "SE"+element+" reports AX:"+l.getElement(6)*4
+                +" XA:"+l.getElement(7)*4
                 +status+"\n";
 
             /**************************************************************************
@@ -1397,24 +1420,15 @@ public class Llnmon {
             /* see if it really is a 'Send Packet' as defined in Loconet PE */
             if (val7f == 0x7f) {
                 /* it is */
-                String val = "Send packet immediate: "+((reps & 0x70) >> 4)
+                return "Send packet immediate: "+((reps & 0x70) >> 4)
                     +" bytes, repeat count "+(reps & 0x07)
-                    +"\n\tDHI=0x"+Integer.toHexString(dhi)
-                    +", IM1=0x"+Integer.toHexString(im1)
+                    +", DHI=0x"+Integer.toHexString(dhi)
+                    +",\n\tIM1=0x"+Integer.toHexString(im1)
                     +", IM2=0x"+Integer.toHexString(im2)
                     +", IM3=0x"+Integer.toHexString(im3)
                     +", IM4=0x"+Integer.toHexString(im4)
                     +", IM5=0x"+Integer.toHexString(im5)
-                    +"\n\tpacket: ";
-                int len = ((reps & 0x70) >> 4);
-                byte[] packet = new byte[len];
-                packet[0] = (byte) (im1 + ((dhi&0x01)!=0 ? 0x80 : 0));
-                if (len>=2) packet[1] = (byte) (im2 + ((dhi&0x02)!=0 ? 0x80 : 0));
-                if (len>=3) packet[2] = (byte) (im3 + ((dhi&0x04)!=0 ? 0x80 : 0));
-                if (len>=4) packet[3] = (byte) (im4 + ((dhi&0x08)!=0 ? 0x80 : 0));
-                if (len>=5) packet[4] = (byte) (im5 + ((dhi&0x10)!=0 ? 0x80 : 0));
-                
-                return val+jmri.NmraPacket.format(packet)+"\n";
+                    +"\n";
             } else {
                 /* Hmmmm... */
                 forceHex = true;
@@ -1448,124 +1462,6 @@ public class Llnmon {
             return "";
     }
 
-    /**
-     * Factor out the PM power messages
-     * @param l
-     * @return human readable string, no \n on end
-     */
-    String powerMultiSenseMessage(LocoNetMessage l) {
-        int pCMD = (l.getElement(3) & 0xF0);
-
-        if ( (pCMD == 0x30)|| (pCMD == 0x10)) {
-            // autoreverse
-            int cm1 = l.getElement(3);
-            int cm2 = l.getElement(4);
-            return "PM4 "+(l.getElement(2)+1)
-                +" ch1 "+((cm1&1)!=0 ? "AR " : "SC ")+((cm2&1)!=0 ? "ACT;" : "OK;")
-                +" ch2 "+((cm1&2)!=0 ? "AR " : "SC ")+((cm2&2)!=0 ? "ACT;" : "OK;")
-                +" ch3 "+((cm1&4)!=0 ? "AR " : "SC ")+((cm2&4)!=0 ? "ACT;" : "OK;")
-                +" ch4 "+((cm1&8)!=0 ? "AR " : "SC ")+((cm2&8)!=0 ? "ACT;" : "OK;")
-                +"\n";
-        } else if (pCMD == 0x70) {
-            // programming
-            String device;
-            if ( (l.getElement(3)&0x7) == 0) device = "PM ";
-            else if ( (l.getElement(3)&0x7) == 1) device = "BD ";
-            else if ( (l.getElement(3)&0x7) == 2) device = "SE ";
-            else device = "(unknown type) ";
-
-            int bit = (l.getElement(4)&0x0E)/2;
-            int val = (l.getElement(4)&0x01);
-            int wrd = (l.getElement(4)&0x70)/16;
-            int opsw = (l.getElement(4)&0x7E)/2+1;
-            int bdaddr = l.getElement(2)+1;
-            if ((l.getElement(1)&0x1) != 0 ) bdaddr += 128;
-            return device+bdaddr+
-                ( ((l.getElement(1)&0x10)!=0) ? " write config bit ":" read config bit ")
-                +wrd+","+bit+" (opsw "+opsw+") val="+val
-                +(val==1 ? " (closed) ":" (thrown) ")+"\n";
-        } else  // beats me
-            forceHex = true;
-            return "OPC_MULTI_SENSE power message PM4 "
-                    +(l.getElement(2)+1)+" unknown CMD=0x"+Integer.toHexString(pCMD)+" ";
-    }
-
-    String idString(int id1, int id2) {
-        return "0x"+Integer.toHexString( (id2&0x7F)*128+(id1&0x7F))
-            +" ("+((id2/4&0)&0x3f)+")";
-    }
-
-    String peerToPeerMessage(LocoNetMessage l) {
-        /***********************************************************************************
-         * OPC_PEER_XFER    0xE5   ; move 8 bytes PEER to PEER, SRC->DST                    *
-         *                         ; Message has response                                   *
-         *                         ; <0xE5>,<10>,<SRC>,<DSTL><DSTH>,<PXCT1>,<D1>,           *
-         *                         ;        <D2>,<D3>,<D4>,<PXCT2>,<D5>,<D6>,<D7>,          *
-         *                         ;        <D8>,<CHK>                                      *
-         *                         ;   SRC/DST are 7 bit args. DSTL/H=0 is BROADCAST msg    *
-         *                         ;   SRC=0 is MASTER                                      *
-         *                         ;   SRC=0x70-0x7E are reserved                           *
-         *                         ;   SRC=7F is THROTTLE msg xfer,                         *
-         *                         ;        <DSTL><DSTH> encode ID#,                        *
-         *                         ;        <0><0> is THROT B'CAST                          *
-         *                         ;   <PXCT1>=<0,XC2,XC1,XC0 - D4.7,D3.7,D2.7,D1.7>        *
-         *                         ;        XC0-XC2=ADR type CODE-0=7 bit Peer TO Peer adrs *
-         *                         ;           1=<D1>is SRC HI,<D2>is DST HI                *
-         *                         ;   <PXCT2>=<0,XC5,XC4,XC3 - D8.7,D7.7,D6.7,D5.7>        *
-         *                         ;        XC3-XC5=data type CODE- 0=ANSI TEXT string,     *
-         *                         ;           balance RESERVED                             *
-         ***********************************************************************************/
-
-        int src 	= l.getElement(2);            	// source of transfer
-        int dst_l 	= l.getElement(3);          	// ls 7 bits of destination
-        int dst_h 	= l.getElement(4);          	// ms 7 bits of destination
-        int pxct1 	= l.getElement(5);
-        int pxct2	= l.getElement(10);
-
-        int d[] = l.getPeerXfrData();
-
-        // check for a specific type - download message
-        if ( (src == 0x7F) && (dst_l == 0x7F) && (dst_h == 0x7F)
-             && ((pxct1&0x70) == 0x40) ) {
-             
-            // yes - format as such
-            // decode subtype
-            int sub = pxct2&0x70;
-            switch (sub) {
-                case 0x00:  // setup
-                    return "Download message, setup\n";
-                case 0x10:  // set address
-                    return "Download message, set address "+StringUtil.twoHexFromInt(d[0])+StringUtil.twoHexFromInt(d[1])+StringUtil.twoHexFromInt(d[2])+"\n";
-                case 0x20:  // send data
-                    return "Download message, send data "+StringUtil.twoHexFromInt(d[0])+" "+StringUtil.twoHexFromInt(d[1])+" "+StringUtil.twoHexFromInt(d[2])+" "+StringUtil.twoHexFromInt(d[3])+" "+StringUtil.twoHexFromInt(d[4])+" "+StringUtil.twoHexFromInt(d[5])+" "+StringUtil.twoHexFromInt(d[6])+" "+StringUtil.twoHexFromInt(d[7])+"\n";
-                case 0x30:  // verify
-                    return "Download message, verify\n";
-                case 0x40:  // end op
-                    return "Download message, end operation\n";
-                default:    // everything else isn't understood, go to default
-            }
-        }
-        
-        
-        // no specific type, return generic format
-        String generic =  "Peer to Peer transfer: SRC=0x"+Integer.toHexString(src)
-                    +", DSTL=0x"+Integer.toHexString(dst_l)
-                    +", DSTH=0x"+Integer.toHexString(dst_h)
-                    +", PXCT1=0x"+Integer.toHexString(pxct1)
-                    +", PXCT2=0x"+Integer.toHexString(pxct2)+"\n"
-                    +"\tD1=0x"+Integer.toHexString(d[0])
-                    +", D2=0x"+Integer.toHexString(d[1])
-                    +", D3=0x"+Integer.toHexString(d[2])
-                    +", D4=0x"+Integer.toHexString(d[3])
-                    +", D5=0x"+Integer.toHexString(d[4])
-                    +", D6=0x"+Integer.toHexString(d[5])
-                    +", D7=0x"+Integer.toHexString(d[6])
-                    +", D8=0x"+Integer.toHexString(d[7])
-                    +"\n";
-                    
-        return generic;
-    }
-    
 }  // end of class
 
 

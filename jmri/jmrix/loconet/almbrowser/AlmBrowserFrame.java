@@ -7,7 +7,6 @@ import java.awt.*;
 import javax.swing.*;
 
 import jmri.jmrix.loconet.*;
-import jmri.util.StringUtil;
 
 /**
  * User interface for browsing ALM contents
@@ -23,7 +22,7 @@ import jmri.util.StringUtil;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.1 $
  */
 public class AlmBrowserFrame extends javax.swing.JFrame implements LocoNetListener {
 
@@ -41,9 +40,6 @@ public class AlmBrowserFrame extends javax.swing.JFrame implements LocoNetListen
     JTextField itemNumber = new JTextField("1");
     JTextField elementNumber = new JTextField("1");
 
-    JLabel blkl = new JLabel("    ");
-    JLabel blkh = new JLabel("    ");
-    
     JTextField values[] = new JTextField[4];
 
     public void initComponents() {
@@ -72,20 +68,9 @@ public class AlmBrowserFrame extends javax.swing.JFrame implements LocoNetListen
             pane.add(itemSize);
             pane.add(new JLabel("+"));
             pane.add(elementNumber);
-            itemNumber.setToolTipText("Index of this item, starting with 0");
+            itemNumber.setToolTipText("Number of this item, starting with 0");
             itemSize.setToolTipText("Number of entries per item");
-            elementNumber.setToolTipText("Index of entry in item, starting with zero");
-
-            getContentPane().add(pane);
-        }
-
-        {
-            JPanel pane = new JPanel();
-            pane.setLayout(new FlowLayout());
-            pane.add(new JLabel("BLKL:"));
-            pane.add(blkl);
-            pane.add(new JLabel("BLKH:"));
-            pane.add(blkh);
+            itemSize.setToolTipText("Number of this entry with item, starting with zero");
 
             getContentPane().add(pane);
         }
@@ -94,13 +79,13 @@ public class AlmBrowserFrame extends javax.swing.JFrame implements LocoNetListen
         {
             JPanel pane = new JPanel();
             pane.setLayout(new FlowLayout());
-            values[0] = new JTextField(4);
+            values[0] = new JTextField("    ");
             pane.add(values[0]);
-            values[1] = new JTextField(4);
+            values[1] = new JTextField("    ");
             pane.add(values[1]);
-            values[2] = new JTextField(4);
+            values[2] = new JTextField("    ");
             pane.add(values[2]);
-            values[3] = new JTextField(4);
+            values[3] = new JTextField("    ");
             pane.add(values[3]);
 
             getContentPane().add(pane);
@@ -142,9 +127,6 @@ public class AlmBrowserFrame extends javax.swing.JFrame implements LocoNetListen
         l.setElement(14, 0x00);
         l.setElement(15, 0x00);
         LnTrafficController.instance().sendLocoNetMessage(l);
-
-        blkl.setText("0x"+StringUtil.twoHexFromInt(block()&0x7F));
-        blkh.setText("0x"+StringUtil.twoHexFromInt(block()/128));
     }
 
     int block() {
@@ -179,10 +161,6 @@ public class AlmBrowserFrame extends javax.swing.JFrame implements LocoNetListen
         l.setElement(14, arg4/128);
         l.setElement(15, 0x00);
         LnTrafficController.instance().sendLocoNetMessage(l);
-
-        blkl.setText("0x"+StringUtil.twoHexFromInt(block()&0x7F));
-        blkh.setText("0x"+StringUtil.twoHexFromInt(block()/128));
-
         return;
     }
 
@@ -190,7 +168,7 @@ public class AlmBrowserFrame extends javax.swing.JFrame implements LocoNetListen
     /**
      * Process the incoming message to look for the response
      * to a read request
-     * @param msg
+     * @param m
      */
     public void message(LocoNetMessage msg) {
         if (!reading) return;
