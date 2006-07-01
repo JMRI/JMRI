@@ -33,7 +33,7 @@ import java.util.Vector;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.35 $
+ * @version     $Revision: 1.36 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
@@ -44,7 +44,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
         // need a longer LONG_TIMEOUT for Fleischman command stations
         LONG_TIMEOUT=180000;
-
+        
         // initialize slot array
         for (int i=0; i<=127; i++) _slots[i] = new LocoNetSlot(i);
 
@@ -281,7 +281,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             // assume its for us...
             if (log.isDebugEnabled())
                 log.debug("LACK in state "+progState+" message: "+m.toString());
-            if (m.getElement(1) == 0x6F && progState == 1 ) {
+            if ( (m.getElement(1)&0xEF) == 0x6F && progState == 1 ) {
                 // in programming state
                 // check status byte
                 if ((m.getElement(2) == 1) // task accepted
@@ -766,7 +766,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         m.setElement(4, 0);
         m.setElement(5, hopsa);
         m.setElement(6, lopsa);
-        m.setElement(7, 0);
+        m.setElement(7, 7);  // was 0
 
         // store address in CVH, CVL. Note CVH format is truely wierd...
         m.setElement(8, (addr&0x300)/16 + (addr&0x80)/128 + (val&0x80)/128*2 );
@@ -775,6 +775,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // store low bits of CV value
         m.setElement(10, val&0x7F);
 
+        // throttle ID
+        m.setElement(11, 0x7F);
+        m.setElement(12, 0x7F);
         return m;
     }
 
