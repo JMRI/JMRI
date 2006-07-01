@@ -7,15 +7,18 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import jmri.Block;
+
 /**
  * Tests for the StoppingBlock class
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class StoppingBlockTest extends TestCase {
 
 	public void testDirectCreate() {
-        Assert.assertTrue(false);
+	    // check for exception in ctor
+        new StoppingBlock(new Block("dummy"));
 	}
 
     

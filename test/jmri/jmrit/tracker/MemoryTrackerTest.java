@@ -7,15 +7,22 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import jmri.Block;
+import jmri.MemoryManager;
+import jmri.InstanceManager;
+
 /**
  * Tests for the MemoryTracker class
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class MemoryTrackerTest extends TestCase {
 
 	public void testDirectCreate() {
-        Assert.assertTrue(false);
+	    MemoryManager m = InstanceManager.memoryManagerInstance();
+	    m.provideMemory("dummy");
+	    // check for exception in ctor
+        new MemoryTracker(new Block("dummy"),"");
 	}
 
     
