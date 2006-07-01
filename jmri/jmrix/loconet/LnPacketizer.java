@@ -31,7 +31,7 @@ import com.sun.java.util.collections.NoSuchElementException;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.12 $
+ * @version 		$Revision: 1.13 $
  *
  */
 public class LnPacketizer extends LnTrafficController {
@@ -39,6 +39,8 @@ public class LnPacketizer extends LnTrafficController {
     final static boolean fulldebug = false;
   
   	boolean debug = false;
+  	
+  	protected boolean echo = false;  // echo messages here, instead of in hardware
   	
     public LnPacketizer() {
     	self=this;
@@ -422,9 +424,10 @@ public class LnPacketizer extends LnTrafficController {
                     try {
                         if (ostream != null) {
                             if (!controller.okToSend()) log.warn("LocoNet port not ready to receive");
-                            if (debug) log.debug("start write to stream: "+jmri.util.StringUtil.hexStringFromBytes(msg));
+                            if (debug) log.debug("start write to stream  : "+jmri.util.StringUtil.hexStringFromBytes(msg));
                             ostream.write(msg);
                             if (fulldebug) log.debug("end write to stream: "+jmri.util.StringUtil.hexStringFromBytes(msg));
+                            messageTransmited(msg);
                         } else {
                             // no stream connected
                             log.warn("sendLocoNetMessage: no connection established");
@@ -450,6 +453,27 @@ public class LnPacketizer extends LnTrafficController {
             }
         }
     }
+
+    /**
+     * When a message is finally transmitted, forward it
+     * to listeners if echoing is needed
+     *
+     */
+     void messageTransmited(byte[] msg) {
+        // message is complete, dispatch it !!
+        final LocoNetMessage thisMsg = new LocoNetMessage(msg);
+        final LnPacketizer thisTC = this;
+        // return a notification via the queue to ensure end
+        Runnable r = new Runnable() {
+                LocoNetMessage msgForLater = thisMsg;
+                LnPacketizer myTC = thisTC;
+                public void run() {
+                    myTC.notify(msgForLater);
+                }
+            };
+        javax.swing.SwingUtilities.invokeLater(r);
+    }
+    
 
     /**
      * Invoked at startup to start the threads needed here.
