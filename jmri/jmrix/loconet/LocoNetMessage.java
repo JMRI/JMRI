@@ -26,7 +26,7 @@ import java.io.Serializable;
  * <P>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  * @see             jmri.jmrix.nce.NceMessage
  *
  */
@@ -51,6 +51,11 @@ public class LocoNetMessage implements Serializable {
     public LocoNetMessage(int[] contents) {
         this(contents.length);
         for (int i=0; i<contents.length; i++) this.setElement(i, contents[i]);
+    }
+
+    public LocoNetMessage(byte[] contents) {
+        this(contents.length);
+        for (int i=0; i<contents.length; i++) this.setElement(i, contents[i]&0xFF);
     }
 
     public void setOpCode(int i) { _dataBytes[0]=i;}
