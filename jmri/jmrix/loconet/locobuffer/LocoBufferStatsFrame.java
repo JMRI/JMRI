@@ -19,7 +19,7 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Alex Shepherd   Copyright (C) 2003
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class LocoBufferStatsFrame extends JFrame implements LocoNetListener {
 
@@ -69,21 +69,33 @@ public class LocoBufferStatsFrame extends JFrame implements LocoNetListener {
     }
 
     public void message(LocoNetMessage msg){
-      if( updatePending &&
-          ( msg.getOpCode() == LnConstants.OPC_PEER_XFER ) &&
-          ( msg.getElement( 1 ) == 0x10 ) &&
-          ( msg.getElement( 2 ) == 0x50 ) &&
-          ( msg.getElement( 3 ) == 0x50 ) &&
-          ( msg.getElement( 4 ) == 0x01 ) &&
-          ( ( msg.getElement( 5 ) & 0xF0 ) == 0x0 ) &&
-          ( ( msg.getElement( 10 ) & 0xF0 ) == 0x0 ) )
-      {
-        int[] data = msg.getPeerXfrData() ;
-        version.setText( Integer.toHexString( ( data[0] << 8 ) + data[4] ) );
-        breaks.setText( Integer.toString( (data[5] << 16) + (data[6] << 8) + data[7] ) );
-        errors.setText( Integer.toString( (data[1] << 16) + (data[2] << 8) + data[3] ) );
-        updatePending = false ;
-      }
+        if( updatePending &&
+              ( msg.getOpCode() == LnConstants.OPC_PEER_XFER ) &&
+              ( msg.getElement( 1 ) == 0x10 ) &&
+              ( msg.getElement( 2 ) == 0x50 ) &&
+              ( msg.getElement( 3 ) == 0x50 ) &&
+              ( msg.getElement( 4 ) == 0x01 ) &&
+              ( ( msg.getElement( 5 ) & 0xF0 ) == 0x0 ) &&
+              ( ( msg.getElement( 10 ) & 0xF0 ) == 0x0 ) )
+            { // LocoBuffer form
+            int[] data = msg.getPeerXfrData() ;
+            version.setText( Integer.toHexString( ( data[0] << 8 ) + data[4] ) );
+            breaks.setText( Integer.toString( (data[5] << 16) + (data[6] << 8) + data[7] ) );
+            errors.setText( Integer.toString( (data[1] << 16) + (data[2] << 8) + data[3] ) );
+            updatePending = false ;
+        } else if (updatePending &&
+              ( msg.getOpCode() == LnConstants.OPC_PEER_XFER ) &&
+              ( msg.getElement( 1 ) == 0x10 ) &&
+              ( msg.getElement( 2 ) == 0x22 ) &&
+              ( msg.getElement( 3 ) == 0x22 ) &&
+              ( msg.getElement( 4 ) == 0x01 ) ) 
+            {  // PR2 form
+            int[] data = msg.getPeerXfrData() ;
+            version.setText( Integer.toHexString( ( data[0] << 8 ) + data[4] ) );
+            breaks.setText( Integer.toString( (data[5] << 16) + (data[6] << 8) + data[7] ) );
+            errors.setText( Integer.toString( (data[1] << 16) + (data[2] << 8) + data[3] ) );
+            updatePending = false ;
+        }
     }
 
     public void requestUpdate() {
