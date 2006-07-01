@@ -14,19 +14,19 @@ import java.io.*;
 /**
  * Pane for downloading .hex files
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.1 $
+ * @version	    $Revision: 1.2 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 
     // GUI member declarations
-    static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.loconet.downloader.Loader");
+    static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.loconet.soundloader.Loader");
 
     JLabel inputFileName = new JLabel("");
 
     JButton readButton;
     JButton loadButton;
 
-    JLabel  comment = new JLabel("");
+    JTextField  comment = new JTextField(32);
     
     JProgressBar    bar;
     JLabel          status = new JLabel("");
@@ -74,7 +74,8 @@ public class LoaderPane extends javax.swing.JPanel {
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout());
 
-            p.add(new JLabel("file comment: "));
+            p.add(new JLabel(res.getString("LabelFileComment")));
+            comment.setEditable(false);
             p.add(comment);
             add(p);
         }
@@ -116,15 +117,19 @@ public class LoaderPane extends javax.swing.JPanel {
         }
     }
 
+    JFileChooser chooser;
+    
     void selectInputFile() {
         String name = inputFileName.getText();
         if (name.equals("")) {
             name = System.getProperty("user.dir");
         }
-        JFileChooser chooser = new JFileChooser(name);
+        if (chooser == null) chooser = new JFileChooser(name);
+        inputFileName.setText("");  // clear out in case of failure
         int retVal = chooser.showOpenDialog(this);
         if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
-        inputFileName.setText(chooser.getSelectedFile().getPath());
+        inputFileName.setText(chooser.getSelectedFile().getName());
+
         readButton.setEnabled(true);
         readButton.setToolTipText(res.getString("TipReadEnabled"));
         loadButton.setEnabled(false);
@@ -148,7 +153,7 @@ public class LoaderPane extends javax.swing.JPanel {
         SpjFile file;
         
         try {
-            file = new SpjFile(inputFileName.getText());
+            file = new SpjFile(chooser.getSelectedFile().getPath());
             file.read();
         } catch (FileNotFoundException f) {
             JOptionPane.showMessageDialog(this, res.getString("ErrorFileNotFound"),
