@@ -20,7 +20,7 @@ import jmri.jmrix.lenz.XNetConstants;
 /**
  * Frame displaying (and logging) XpressNet messages
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version         $Revision: 2.16 $
+ * @version         $Revision: 2.17 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
@@ -376,13 +376,13 @@ import jmri.jmrix.lenz.XNetConstants;
 					"Base Address: " + 
 					l.getFeedbackEncoderMsgAddr(i);
 					boolean highnibble = ((l.getElement(i+1) &0x10)==0x10);
-					text = text + " Contact: " + (highnibble?1:5);
+					text = text + " Contact: " + (highnibble?5:1);
 					text = text + " State: " + (((l.getElement(i+1) &0x01)==0x01)?"On;":"Off;");
-					text = text + " Contact: " + (highnibble?2:6);
+					text = text + " Contact: " + (highnibble?6:2);
 					text = text + " State: " + (((l.getElement(i+1) &0x02)==0x02)?"On;":"Off;");
-					text = text + " Contact: " + (highnibble?3:7);
+					text = text + " Contact: " + (highnibble?7:3);
 					text = text + " State: " + (((l.getElement(i+1) &0x04)==0x04)?"On;":"Off;");
-					text = text + " Contact: " + (highnibble?4:8);
+					text = text + " Contact: " + (highnibble?8:4);
 					text = text + " State: " + (((l.getElement(i+1) &0x08)==0x08)?"On;":"Off;");
 					break;
 				default:
