@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.lenz.XNetSensor class.
  * @author	    Paul Bender  Copyright 2004
- * @version         $Revision: 2.2 $
+ * @version         $Revision: 2.3 $
  */
 public class XNetSensorTest extends TestCase {
 
@@ -26,10 +26,11 @@ public class XNetSensorTest extends TestCase {
         XNetSensor t = new XNetSensor("XS044");
         XNetReply m;
 
+
         // Verify this was created in UNKNOWN state
         Assert.assertTrue(t.getKnownState() == jmri.Sensor.UNKNOWN);
 
-        // notify the XPressNet that somebody else changed it...
+        // notify the Sensor that somebody else changed it...
 
         m = new XNetReply();
 	m.setElement(0, 0x42);     // Opcode for feedback response
@@ -38,7 +39,8 @@ public class XNetSensorTest extends TestCase {
                                     // bits of the lower nibble
                                     // are on in the message.
         m.setElement(3, 0x0f);     // The XOR of everything above
-        xnis.sendTestMessage(m);
+        //xnis.sendTestMessage(m);
+        t.message(m);
         Assert.assertEquals("Known state after activate ", jmri.Sensor.ACTIVE, t.getKnownState());
 
         m = new XNetReply();
@@ -48,7 +50,8 @@ public class XNetSensorTest extends TestCase {
                                     // bits of the lower nibble
                                     // are on in the message.
         m.setElement(3, 0x07);     // The XOR of everything above
-        xnis.sendTestMessage(m);
+        //xnis.sendTestMessage(m);
+        t.message(m);
 
         Assert.assertEquals("Known state after inactivate ", jmri.Sensor.INACTIVE, t.getKnownState());
 
@@ -67,11 +70,14 @@ public class XNetSensorTest extends TestCase {
 
     // XNetSensor test for outgoing status request
     public void testXNetSensorStatusRequest() {
+        XNetInterfaceScaffold xnis = new XNetInterfaceScaffold(new LenzCommandStation());
+
         XNetSensor t = new XNetSensor("XS042");
 
         t.requestUpdateFromLayout();
-        // doesn't send a message right now, pending figuring out what
-        // to send.
+        // check that the correct message was sent
+        Assert.assertEquals("Sensor Status Request Sent","42 05 80 00",xnis.outbound.elementAt(0).toString());
+
     }
 
     // from here down is testing infrastructure
