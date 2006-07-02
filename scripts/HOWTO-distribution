@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.44 $)
+distribution.  ($Revision: 1.45 $)
 
 Start with a directory, typically called "Distributions", that
 contains:
@@ -57,9 +57,9 @@ Make sure everything is up-to-date:
 To actually create the distribution:
 
 ( ) Go to your working directory and
-	cvs tag Release-1-2-3 src test build.xml check.xml jmri.jpx JMRILibraries.library manifest
+	cvs tag Release-X-Y-Z src test build.xml check.xml jmri.jpx JMRILibraries.library manifest
 	cd ..
-	cvs tag Release-1-2-3 help jython resources xml lib lib118
+	cvs tag Release-X-Y-Z help jython resources xml lib lib118
 
     Note that you have to have the "all" and "check" 
     cvs targets checked-out into your working directory when 
@@ -68,7 +68,7 @@ To actually create the distribution:
 ( ) Come back to Distributions and 
     cd scripts
 	(be sure that's the default.lcf you want!)
-	cvs tag Release-1-2-3
+	cvs tag Release-X-Y-Z
     cd ..
     
 	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release1
@@ -77,13 +77,16 @@ To actually create the distribution:
 	
 	Check DecoderPro for no startup errors, right version
 
-	Ant will launch three StuffIt processes; click
+	Ant will launch two StuffIt processes; click
 	each to proceed, and wait for them to be running.
 	
 ( ) Once they launch, you can start building the Windows installer
 	in parallel.
 	
-	Using VPC, make sure you have the Z disk available.
+	Using VPC, make sure you have the Z disk available and that it
+	contains the JMRI folder. (If not, check the "shared folders" and 
+	"networking settings"; see Control menu)
+	
 	Launch Installer Vise from the last build file.
 	"Update archive"; Check changes make sense.
 	Click the "test archive" button (right one of the pair)
@@ -101,14 +104,16 @@ To actually create the distribution:
     
 ( ) Create MacOS X DMG
    
-    hdiutil create -size 20MB -fs HFS+ -volname "JMRI 1.7.3" temp.dmg
-    (copy JMRI folder)
-    cd /Volumes/JMRI^D 
+    hdiutil create -size 20MB -fs HFS+ -volname "JMRI 1.2.3" temp.dmg
+    open temp.dmg
+    (copy JMRI folder using finder)
+    cd /Volumes/JMRI(tab) 
     ln -s /Applications .
+    cd (back to Distributions)
     (eject)
     hdiutil convert temp.dmg -format UDZO -o JMRI.1.7.3.dmg
     
-( ) Once the three StuffIt processes are done
+( ) Once the two StuffIt processes are done
 	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release2
 	
 	This will launch one more StuffIt process (for MacClassic)
@@ -123,7 +128,7 @@ To actually create the distribution:
 	   commons-net-1.2.2.jar into /Library/Java/Extensions
 	2) rename JMRI.${number}.Classic.hqx back to MacClassic/JMRI.hqx
 	
-	and then retry.
+	and then retry. Or manual ftp to ftp@upload.sf.net:incoming
 	
 ( ) Create and upload the XSLT pages. This can be done at any time after now,
     but doing it now works well in parallel with the rest of the Windows build
@@ -141,7 +146,10 @@ To actually create the distribution:
 	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release4
 	
     This also creates and uploads the JavaDocs as a last step
-		
+    
+    (You might want to do the ftp by hand; it's a pain if 
+    it fails and leaves a dummy file)
+    
 ( ) Format the email announcement; you'll cut and paste parts
 	to the release form.
 
@@ -188,6 +196,10 @@ To actually create the distribution:
 		DecoderPro/index.html
 		README.html
 		
+( ) If the decoder definitions have changed, make a .zip file and send to:
+    Hans Tanner:  hans.tanner@complexitymanager.com
+    Graham Plowman: gppsoftware@gppsoftware.com
+
 ( ) Commit site and update on server
 	
 ( ) Mail announcement to jmriusers@yahoogroups.com
