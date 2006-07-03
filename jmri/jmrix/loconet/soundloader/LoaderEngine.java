@@ -4,36 +4,158 @@ package jmri.jmrix.loconet.soundloader;
 
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LnTrafficController;
+import jmri.jmrix.loconet.spjfile.SpjFile;
 
 /**
  * Controls the actual LocoNet transfers to download sounds
  * into a Digitrax SFX decoder.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2006
- * @version	    $Revision: 1.1 $
+ * @version	    $Revision: 1.2 $
  */
 public class LoaderEngine {
 
-    public void doEraseAll() {
+    static final int CMD_START = 0x04;
+    static final int CMD_ADD   = 0x08;
+
+    static final int TYPE_SDF  = 0x01;
+    static final int TYPE_WAV  = 0x00;
+
+    static final int SENDPAGESIZE = 256;
+    static final int SENDDATASIZE = 128;
+
+    SpjFile spjFile;
+    
+    /**
+     * Send the complete sequence to download to a decoder.
+     * 
+     * Intended to be run in a separate thread. Uses "notify" method
+     * for status updates; overload that to redirect the messages
+     */
+    public void runDownload(SpjFile file) {
+        this.spjFile = file;
+        
         initController();
+        
+        // erase flash
+        notify("Starting download; erase flash");
+        controller.sendLocoNetMessage(getEraseMessage());
+        protectedWait(2500);
+                
+        // start
+        controller.sendLocoNetMessage(getInitMessage());
+        
+        // send SDF info
+        sendSDF();
+        
+        // send all WAV subfiles
+        sendAllWAV();
+        
+        // end
+        controller.sendLocoNetMessage(getExitMessage());
+        notify("Done");
+                
     }
 
+    void sendSDF() {
+        notify("Send SDF data");
+        
+        // get control info, data
+        SpjFile.Header header = spjFile.findSdfHeader();
+        int handle = header.getHandle();
+        String name = header.getName();
+        byte[] contents = header.getByteArray();
+        
+        // transfer
+        LocoNetMessage m;
+        
+        m = initTransfer(TYPE_SDF, handle, name, contents);
+        controller.sendLocoNetMessage(m);
+        throttleOutbound(m);
+        
+
+        while ( (m = nextTransfer()) != null) {
+            controller.sendLocoNetMessage(m);
+            throttleOutbound(m);
+        }
+    }
+    
+    void sendAllWAV() {
+        notify("Send WAV data");
+        for (int i=1; i<spjFile.numHeaders(); i++) {
+            // see if WAV
+            if (spjFile.getHeader(i).isWAV()) {
+                SendOneWav(i);
+            }
+        }
+    }
+    
+    public void SendOneWav(int index) {
+        notify("Send WAV data block "+index);
+        // get control info, data
+        SpjFile.Header header = spjFile.getHeader(index);
+        int handle = header.getHandle();
+        String name = header.getName();
+        byte[] buffer = header.getByteArray();
+        
+        // that byte array is the "record", not "data";
+        // recopy in offset
+        int offset = header.getDataStart()-header.getRecordStart();
+        int len = header.getDataLength();
+        byte[] contents = new byte[len];
+        for (int i=0; i<len; i++) contents[i]=buffer[i+offset];
+        
+        // transfer
+        LocoNetMessage m;
+        
+        m = initTransfer(TYPE_WAV, handle, name, contents);
+        controller.sendLocoNetMessage(m);
+        throttleOutbound(m);
+        
+
+        while ( (m = nextTransfer()) != null) {
+            controller.sendLocoNetMessage(m);
+            throttleOutbound(m);
+        }
+    }
+    
+    public void notify(String message) {
+        log.debug(message);
+    }
+    
+    void throttleOutbound(LocoNetMessage m) {
+        protectedWait(300);  // based on max message length, provides a 1st order throttling
+    }
+    
+    public void protectedWait(int millis) {
+        synchronized (this) {
+            try {
+                wait(millis);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+    }
+    
     /**
-     * Start a WAV download.
+     * Start a sequence to download a specific type of data.
      * 
      * This returns the message to start the process.
      * You then loop calling nextWavTransfer() until it says it's complete.
+     * @param type Either TYPE_SDF or TYPE_WAV for the data type
      */
-    public LocoNetMessage initWavTransfer(int handle, String name, byte[] contents) {
+    public LocoNetMessage initTransfer(int type, int handle, String name, byte[] contents) {
+        transferType = type;
         transferStart = true;
         transferHandle = handle;
         transferName = name;
         transferContents = contents;
         
-        return getStartWavMessage(handle, contents.length);
+        return getStartDataMessage(transferType, handle, contents.length);
     }
     
     private boolean transferStart;
+    private int transferType;
     private int transferHandle;
     private String transferName;
     private byte[] transferContents;
@@ -45,9 +167,9 @@ public class LoaderEngine {
      * You loop calling nextWavTransfer() until it says it's complete
      * by returning null.
      */
-    public LocoNetMessage nextWavTransfer() {
+    public LocoNetMessage nextTransfer() {
         if (transferStart) {
-
+        
             transferStart = false;
             transferIndex = 0;
 
@@ -63,9 +185,10 @@ public class LoaderEngine {
             header[7] = 0; // spare1
 
             for (int i=8; i<40; i++) header[i] = 0;
-            for (int i=0; i<transferName.length(); i++) header[i+8] = (byte) transferName.charAt(i);
+            if (transferName.length() > 32) log.error("name "+transferName+" is too long, truncated");
+            for (int i=0; i<Math.min(32, transferName.length()); i++) header[i+8] = (byte) transferName.charAt(i);
 
-            return getSendWavDataMessage(transferHandle, header);
+            return getSendDataMessage(transferType, transferHandle, header);
             
         } else {
             // subsequent transfers, send what data you can.
@@ -76,7 +199,7 @@ public class LoaderEngine {
             
             // set up a buffer for this transfer
             int sendSize = remaining;
-            if (remaining > WAVPAGESIZE) sendSize = WAVPAGESIZE;
+            if (remaining > SENDDATASIZE) sendSize = SENDDATASIZE;
             byte[] buffer = new byte[sendSize];
             for (int i=0; i<sendSize; i++) buffer[i] = transferContents[transferIndex+i];
             
@@ -84,25 +207,23 @@ public class LoaderEngine {
             transferIndex = transferIndex + sendSize;
             
             // and return the message
-            return getSendWavDataMessage(transferHandle, buffer);
+            return getSendDataMessage(transferType, transferHandle, buffer);
             
         }
     }
 
-    static final int WAVPAGESIZE = 256;
-
     /**
-     * Get a message to start the download of WAV data
+     * Get a message to start the download of data
      * @param handle Handle number for the following data
      * @param length Total length of the WAV data to load
      */
-     LocoNetMessage getStartWavMessage(int handle, int length) {
+     LocoNetMessage getStartDataMessage(int type, int handle, int length) {
         
-        int pagecount = length/WAVPAGESIZE;
-        int remainder = length - pagecount*WAVPAGESIZE;
+        int pagecount = length/SENDPAGESIZE;
+        int remainder = length - pagecount*SENDPAGESIZE;
         if (remainder != 0) pagecount++;
         
-        LocoNetMessage m = new LocoNetMessage(new int[]{0xD3, 0x04, handle, pagecount&0x7F, 
+        LocoNetMessage m = new LocoNetMessage(new int[]{0xD3,(type|CMD_START), handle, pagecount&0x7F, 
                                     (pagecount/128), 0});
         m.setParity();
         return m;
@@ -114,13 +235,13 @@ public class LoaderEngine {
      * @param handle Handle number for the following data
      * @param contents Data to download
      */
-     LocoNetMessage getSendWavDataMessage(int handle, byte[] contents) {
+     LocoNetMessage getSendDataMessage(int type, int handle, byte[] contents) {
         
         int length = contents.length;
         
         LocoNetMessage m = new LocoNetMessage(length + 7);
         m.setElement(0, 0xD3);
-        m.setElement(1, 0x08);
+        m.setElement(1, type|CMD_ADD);
         m.setElement(2, handle);
         m.setElement(3, length&0x7F);
         m.setElement(4, (length/128));
@@ -142,6 +263,15 @@ public class LoaderEngine {
     }
     
     /**
+     * Get a message to initialize the load sequence
+     */
+    LocoNetMessage getInitMessage() {
+        LocoNetMessage m = new LocoNetMessage(new int[]{0xD3, 0x01, 0x00, 0x00, 0x00, 0x2D});
+        m.setParity();
+        return m;
+    }
+
+    /**
      * Get a message to exit the download process
      */
     LocoNetMessage getExitMessage() {
@@ -155,6 +285,9 @@ public class LoaderEngine {
     }
     
     LnTrafficController controller = null;
+    
+    public void dispose() {
+    }
     
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LoaderEngine.class.getName());
 
