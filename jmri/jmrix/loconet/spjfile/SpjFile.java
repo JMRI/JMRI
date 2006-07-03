@@ -9,7 +9,7 @@ import java.io.*;
  * Digitrax SPJ files
  *
  * @author		Bob Jacobsen  Copyright (C) 2006
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 
 public class SpjFile {
@@ -20,6 +20,17 @@ public class SpjFile {
     
     public String getComment() {
         return h0.getComment();
+    }
+    
+    public Header getHeader(int index) {
+        return headers[index];
+    }
+    
+    public Header findSdfHeader() {
+        int n = numHeaders();
+        for (int i = 1; i< n; i++) 
+            if (headers[i].isSDF()) return headers[i];
+        return null;
     }
     
     /**
@@ -55,7 +66,7 @@ public class SpjFile {
             System.out.println("Header "+i+" "+headers[i].toString());
         }
    
-        // mow read the rest of the file, loading bytes
+        // now read the rest of the file, loading bytes
         
         // first, scan for things we can't handle
         for (int i = 1; i< n; i++) {
@@ -98,21 +109,26 @@ public class SpjFile {
                 
             headers[i].setByteArray(array);
         }
+        
+        s.close();
+        
     }
     
    /**
-    * Write data from WAV headers into separate files.
+    * Write data from headers into separate files.
     *
     * Normally, we just work with the data within this file.
     * This method allows us to extract the contents of the file
     * for external use.
     */
-   public void writeWavFiles() throws IOException {  
+   public void writeSubFiles() throws IOException {  
         // write data from WAV headers into separate files
         int n = numHeaders();
         for (int i = 1; i< n; i++) {
-            if (headers[i].getType() == 1) {
+            if (headers[i].isWAV()) {
                 writeSubFile(i, ""+i+".wav");
+            } else if (headers[i].getType() == 2) {
+                writeSubFile(i, ""+i+".sdf");
             } else if (headers[i].getType() == 3) {
                 writeSubFile(i, ""+i+".cv");
             } else if (headers[i].getType() == 4) {
@@ -135,6 +151,9 @@ public class SpjFile {
         ostream.close();
     }
        
+    public void dispose() {
+    }
+    
     File file;
     FirstHeader h0;
     Header[] headers;
@@ -142,7 +161,7 @@ public class SpjFile {
     /**
      * Class representing a header record
      */
-    class Header {
+    public class Header {
         int type;
         int handle;
         int recordStart;
@@ -162,19 +181,21 @@ public class SpjFile {
         String filename;
         
         int getType() { return type; }
-        int getHandle() {return handle; }
+        public int getHandle() {return handle; }
         
-        int getDataStart() { return dataStart; }
-        int getDataLength() { return dataLength; }
+        public int getDataStart() { return dataStart; }
+        public int getDataLength() { return dataLength; }
         
-        int getRecordStart() { return recordStart; }
-        int getRecordLength() { return recordLength; }
+        public int getRecordStart() { return recordStart; }
+        public int getRecordLength() { return recordLength; }
 
+        public String getName() {return filename;}
+        
         byte[] bytes;
         void setByteArray(byte[] a) {
             bytes = a;
         }
-        byte[] getByteArray() { return bytes; }
+        public byte[] getByteArray() { return bytes; }
         
         void load(InputStream s) throws java.io.IOException {
             type = readInt4(s);
@@ -195,13 +216,26 @@ public class SpjFile {
                         
             byte[] name = new byte[72];
             s.read(name);
-            filename = new String(name);
+            // name is zero-terminated, so we have to truncate that array
+            int len = 0;
+            for (len=0; len<72; len++) if (name[len]==0) break;
+            byte[] shortname = new byte[len];
+            for (int i=0; i<len; i++) shortname[i] = name[i];
+            filename = new String(shortname);
         }
         
         public String toString() {
             return "type= "+typeAsString()+", handle= "+handle+", rs= "+recordStart+", ds= "
                     +dataStart+", dl = "+dataLength+", rl= "+recordLength
                     +", filename= "+filename;
+        }
+        
+        public boolean isWAV() {
+            return (getType() == 1);
+        }
+        
+        public boolean isSDF() {
+            return (getType() == 2);
         }
         
         /**
