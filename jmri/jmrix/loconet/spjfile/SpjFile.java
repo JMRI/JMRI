@@ -9,7 +9,7 @@ import java.io.*;
  * Digitrax SPJ files
  *
  * @author		Bob Jacobsen  Copyright (C) 2006
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 
 public class SpjFile {
@@ -22,6 +22,19 @@ public class SpjFile {
         return h0.getComment();
     }
     
+    /**
+     * Number of headers present in the file, not 
+     * counting (counting as zero) the primary
+     * @return -1 if error
+     */
+    public int numHeaders() {
+        if (headers != null && h0 != null) return h0.numHeaders();
+        else return -1;
+    }
+    
+    /**
+     * Read the file whose name was provided earlier
+     */
     public void read() throws java.io.IOException {
         if (file == null) {
             throw new java.io.IOException("Null file during read");
@@ -72,7 +85,7 @@ public class SpjFile {
         System.out.println("Last byte at "+length);
         
         // inefficient way to read, hecause of all the skips (instead
-        // of seeks)
+        // of seeks)  But it handles non-consecutive and overlapping definitions.
         for (int i = 1; i< n; i++) {
             s.close();
             s = new java.io.BufferedInputStream(new java.io.FileInputStream(file));
@@ -85,9 +98,18 @@ public class SpjFile {
                 
             headers[i].setByteArray(array);
         }
-     
-     
-        // as an experiment, write data from WAV files
+    }
+    
+   /**
+    * Write data from WAV headers into separate files.
+    *
+    * Normally, we just work with the data within this file.
+    * This method allows us to extract the contents of the file
+    * for external use.
+    */
+   public void writeWavFiles() throws IOException {  
+        // write data from WAV headers into separate files
+        int n = numHeaders();
         for (int i = 1; i< n; i++) {
             if (headers[i].getType() == 1) {
                 writeSubFile(i, ""+i+".wav");
