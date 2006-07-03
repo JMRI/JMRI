@@ -4,11 +4,11 @@ package jmri.jmrix.loconet.pr2;
 
 
 /**
- * Definition of objects to handle configuring an LocoBuffer-Usb layout connection
- * via a LocoBufferIIAdapter object.
+ * Definition of objects to handle configuring an PR2 layout connection
+ * via a PR2Adapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
