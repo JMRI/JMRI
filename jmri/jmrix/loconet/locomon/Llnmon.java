@@ -35,7 +35,7 @@ import jmri.util.StringUtil;
  * used with permission.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2003
- * @version			$Revision: 1.34 $
+ * @version			$Revision: 1.35 $
  */
 public class Llnmon {
 
@@ -1431,20 +1431,13 @@ public class Llnmon {
     }  // end of format() member function
 
 
+    /**
+     * Include info on whether the message checksum byte(s) are OK
+     */
     public String crcCheck(LocoNetMessage m) {
-	// set the error correcting code byte
-	int len = m.getNumDataElements();
-	int chksum = 0xff;  /* the seed */
-   	int loop;
-
-        for(loop = 0; loop < len; loop++) {  // calculate contents for data part
-            chksum ^= m.getElement(loop);
-        }
-
-	// if zero, the checksum in the stored message is correct
-	if (chksum != 0)
+    	if (!m.checkParity())
             return "Warning - checksum invalid in message:\n";
-	else
+	    else
             return "";
     }
 

@@ -31,7 +31,7 @@ import com.sun.java.util.collections.NoSuchElementException;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.13 $
+ * @version 		$Revision: 1.14 $
  *
  */
 public class LnPacketizer extends LnTrafficController {
@@ -83,17 +83,11 @@ public class LnPacketizer extends LnTrafficController {
         // update statistics
         transmittedMsgCount++;
         
-        // set the error correcting code byte
-        int len = m.getNumDataElements();
-        int chksum = 0xff;  /* the seed */
-        int loop;
-
-    	for(loop = 0; loop < len-1; loop++) {  // calculate contents for data part
-            chksum ^= m.getElement(loop);
-        }
-        m.setElement(len-1, chksum);  // checksum is last element of message
+        // set the error correcting code byte(s) before transmittal
+        m.setParity();
 
         // stream to port in single write, as that's needed by serial
+        int len = m.getNumDataElements();
         byte msg[] = new byte[len];
         for (int i=0; i< len; i++)
             msg[i] = (byte) m.getElement(i);
