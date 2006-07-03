@@ -11,9 +11,10 @@ import jmri.jmrix.loconet.spjfile.SpjFile;
  * into a Digitrax SFX decoder.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2006
- * @version	    $Revision: 1.2 $
+ * @version	    $Revision: 1.3 $
  */
 public class LoaderEngine {
+    static java.util.ResourceBundle res = java.util.ResourceBundle.getBundle("jmri.jmrix.loconet.soundloader.Loader");
 
     static final int CMD_START = 0x04;
     static final int CMD_ADD   = 0x08;
@@ -37,28 +38,33 @@ public class LoaderEngine {
         
         initController();
         
-        // erase flash
-        notify("Starting download; erase flash");
-        controller.sendLocoNetMessage(getEraseMessage());
-        protectedWait(2500);
-                
-        // start
-        controller.sendLocoNetMessage(getInitMessage());
-        
-        // send SDF info
-        sendSDF();
-        
-        // send all WAV subfiles
-        sendAllWAV();
-        
-        // end
-        controller.sendLocoNetMessage(getExitMessage());
-        notify("Done");
+        // use a try-catch to handle aborts from below
+        try {
+            // erase flash
+            notify(res.getString("EngineEraseFlash"));
+            controller.sendLocoNetMessage(getEraseMessage());
+            protectedWait(2500);
+                    
+            // start
+            controller.sendLocoNetMessage(getInitMessage());
+            
+            // send SDF info
+            sendSDF();
+            
+            // send all WAV subfiles
+            sendAllWAV();
+            
+            // end
+            controller.sendLocoNetMessage(getExitMessage());
+            notify(res.getString("EngineDone"));
+        } catch (DelayException e) {
+            notify(res.getString("EngineAbortDelay"));
+        }
                 
     }
 
-    void sendSDF() {
-        notify("Send SDF data");
+    void sendSDF() throws DelayException {
+        notify(res.getString("EngineSendSdf"));
         
         // get control info, data
         SpjFile.Header header = spjFile.findSdfHeader();
@@ -80,8 +86,8 @@ public class LoaderEngine {
         }
     }
     
-    void sendAllWAV() {
-        notify("Send WAV data");
+    void sendAllWAV() throws DelayException {
+        notify(res.getString("EngineSendWav"));
         for (int i=1; i<spjFile.numHeaders(); i++) {
             // see if WAV
             if (spjFile.getHeader(i).isWAV()) {
@@ -90,8 +96,9 @@ public class LoaderEngine {
         }
     }
     
-    public void SendOneWav(int index) {
-        notify("Send WAV data block "+index);
+    public void SendOneWav(int index) throws DelayException {
+        notify(java.text.MessageFormat.format(
+            res.getString("EngineSendWavBlock"), new String[]{""+index}));
         // get control info, data
         SpjFile.Header header = spjFile.getHeader(index);
         int handle = header.getHandle();
@@ -119,14 +126,42 @@ public class LoaderEngine {
         }
     }
     
+    /**
+     * Nofify of status of download. 
+     *
+     * This implementation doesn't do much, but this is provided as a separate
+     * method to allow easy overloading
+     */
     public void notify(String message) {
         log.debug(message);
     }
     
-    void throttleOutbound(LocoNetMessage m) {
-        protectedWait(300);  // based on max message length, provides a 1st order throttling
+    /**
+     * Delay to prevent too much data being sent down.
+     *
+     * Works with the controller to ensure that too much data
+     * doesn't back up.
+     */
+    void throttleOutbound(LocoNetMessage m) throws DelayException {
+        protectedWait(3);  // minimum wait to clear
+        
+        // wait up to 1 sec in 10mSec chunks for isXmtBusy to clear
+        for (int i=1; i<100; i++) {
+            if (!controller.isXmtBusy()) return; // done, so return
+            // wait a while, and then try again
+            protectedWait(10);
+        }
+        throw new DelayException("Ran out of time after sending "+m.toString());
     }
     
+    class DelayException extends Exception {
+        DelayException(String s) { super(s); }
+    }
+    
+    /**
+     * Provide a simple object wait.
+     * This handles interrupts, synchonization, etc
+     */
     public void protectedWait(int millis) {
         synchronized (this) {
             try {
