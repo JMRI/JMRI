@@ -11,12 +11,14 @@ import java.io.Serializable;
  * sign-extension that bytes have, and because a Java char is
  * actually a variable number of bytes in Unicode.
  *<P>
- * At present, this is primarily a wrapper class for the
- * raw message contents.  Only rudimentary tools for
- * creating and parsing messages are provided here, in part because
- * this class was created early in the project.  For a more recent
- * implementation of a similar idea, see the NceMessage class.  Many of the
- * ideas being tested there will eventually be moved back to here.
+ * Note that this class does not manage the upper bit of
+ * the message.  By convention, most LocoNet messages have 
+ * the upper bit set on the first byte, and on no other byte;
+ * but not all of them do, and that must be managed elsewhere.
+ *<P>
+ * Note that many specific message types are created elsewhere.
+ * In general, if more than one tool will need to use a particular
+ * format, it's useful to refactor it to here.
  * <P>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project.  That permission
@@ -26,7 +28,7 @@ import java.io.Serializable;
  * <P>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  * @see             jmri.jmrix.nce.NceMessage
  *
  */
@@ -98,12 +100,55 @@ public class LocoNetMessage implements Serializable {
     }
 
     /**
+     * Set the parity byte(s) of this message
+     */
+    public void setParity() {
+        // check for the D3 special case
+        if (getOpCode() == 0xD3 && getNumDataElements() > 6 ) {
+            // sum the D3 header separately
+            int sum = 0xFF;
+            for (int i = 0; i< 5; i++) sum = sum ^ getElement(i);
+            setElement(5, sum);
+            // sum back half to 0xFF
+            sum = 0xFF;
+            for (int i = 6; i< getNumDataElements()-1; i++) sum = sum ^ getElement(i);
+            setElement(getNumDataElements()-1, sum);
+            return;            
+        }
+        
+        // normal case - just sum entire message
+        int len = getNumDataElements();
+        int chksum = 0xff;  /* the seed */
+        int loop;
+
+        for(loop = 0; loop < len-1; loop++) {  // calculate contents for data part
+            chksum ^= getElement(loop);
+        }
+        setElement(len-1, chksum);  // checksum is last element of message    }
+    }
+    
+    /**
      * check whether the message has a valid parity
      */
     public boolean checkParity() {
         int len = getNumDataElements();
         int chksum = 0xff;  /* the seed */
         int loop;
+
+        // check for the D3 special case
+        if (getOpCode() == 0xD3 && len > 6 ) {
+            // sum the D3 header separately
+            int sum = 0xFF;
+            for (loop = 0; loop< 5; loop++) sum = sum ^ getElement(loop);
+            if (getElement(5) != sum) return false;
+            // sum back half to 0xFF
+            sum = 0xFF;
+            for (loop = 6; loop< len-1; loop++) sum = sum ^ getElement(loop);
+            if (getElement(len-1) != sum) return false;
+            return true;            
+        }
+        
+        // normal case - just sum entire message
 
     	for(loop = 0; loop < len-1; loop++) {  // calculate contents for data part
             chksum ^= getElement(loop);
