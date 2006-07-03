@@ -13,7 +13,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * Tests for the jmri.jmrix.loconet.soundloader.LoaderEngine class.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2006
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class LoaderEngineTest extends TestCase {
 
@@ -24,6 +24,13 @@ public class LoaderEngineTest extends TestCase {
         Assert.assertEquals("checksum", true, m.checkParity());
     }
 
+    public void testGetIntMessage() {
+        LoaderEngine l = new LoaderEngine();
+        LocoNetMessage m = l.getInitMessage();
+        Assert.assertEquals("contents", "D3 01 00 00 00 2D", m.toString());
+        Assert.assertEquals("checksum", true, m.checkParity());
+    }
+
     public void testGetExitMessage() {
         LoaderEngine l = new LoaderEngine();
         LocoNetMessage m = l.getExitMessage();
@@ -31,17 +38,17 @@ public class LoaderEngineTest extends TestCase {
         Assert.assertEquals("checksum", true, m.checkParity());
     }
 
-    public void testGetStartWavMessage1() {
+    public void testGetStartWavDataMessage1() {
         LoaderEngine l = new LoaderEngine();
-        LocoNetMessage m = l.getStartWavMessage(0x17, 128);
+        LocoNetMessage m = l.getStartDataMessage(LoaderEngine.TYPE_WAV, 0x17, 128);
         Assert.assertEquals("contents", "D3 04 17 01 00 3E", m.toString());
         Assert.assertEquals("checksum", true, m.checkParity());
     }
 
 
-    public void testGetStartWavMessage2() {
+    public void testGetStartWavDataMessage2() {
         LoaderEngine l = new LoaderEngine();
-        LocoNetMessage m = l.getStartWavMessage(0x17, 512);
+        LocoNetMessage m = l.getStartDataMessage(LoaderEngine.TYPE_WAV, 0x17, 512);
         Assert.assertEquals("contents", "D3 04 17 02 00 3D", m.toString());
         Assert.assertEquals("checksum", true, m.checkParity());
     }
@@ -56,7 +63,7 @@ public class LoaderEngineTest extends TestCase {
         byte [] data = new byte[idata.length];
         for (int i=0; i<data.length; i++) data[i] = (byte)(idata[i]&0xFF);
         
-        LocoNetMessage m = l.getSendWavDataMessage(0x17, data);
+        LocoNetMessage m = l.getSendDataMessage(LoaderEngine.TYPE_WAV, 0x17, data);
         Assert.assertEquals("contents", "D3 08 17 28 00 1B 17 80 00 00 00 00 00 00 "+
                                         "4D 75 74 65 2E 77 61 76 00 00 00 00 00 00 "+
                                         "00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
@@ -73,18 +80,18 @@ public class LoaderEngineTest extends TestCase {
         
         LocoNetMessage m;
         
-        m = l.initWavTransfer(handle, name, contents);
+        m = l.initTransfer(LoaderEngine.TYPE_WAV, handle, name, contents);
         Assert.assertEquals("contents", "D3 04 17 01 00 3E", m.toString());
         Assert.assertEquals("checksum", true, m.checkParity());
 
-        m = l.nextWavTransfer();
+        m = l.nextTransfer();
         Assert.assertEquals("contents", "D3 08 17 28 00 1B 17 80 00 00 00 00 00 00 "+
                                         "4D 75 74 65 2E 77 61 76 00 00 00 00 00 00 "+
                                         "00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
                                         "00 00 00 00 0F", m.toString());
         Assert.assertEquals("checksum", true, m.checkParity());
         
-        m = l.nextWavTransfer();
+        m = l.nextTransfer();
         Assert.assertEquals("contents", "D3 08 17 00 01 32 80 80 80 80 80 80 80 80 80 80 "+
                                         "80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 "+
                                         "80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 "+
@@ -96,7 +103,7 @@ public class LoaderEngineTest extends TestCase {
                                         "80 80 80 80 80 80 FF", m.toString());
         Assert.assertEquals("checksum", true, m.checkParity());
 
-        m = l.nextWavTransfer();
+        m = l.nextTransfer();
         Assert.assertEquals("end", null, m);
     }
     
