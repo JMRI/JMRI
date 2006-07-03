@@ -14,7 +14,7 @@ import java.io.*;
 /**
  * Pane for downloading .hex files
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.2 $
+ * @version	    $Revision: 1.3 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -30,7 +30,11 @@ public class LoaderPane extends javax.swing.JPanel {
     
     JProgressBar    bar;
     JLabel          status = new JLabel("");
-
+    String          statusText = "";
+    
+    SpjFile file;
+    LoaderEngine engine;
+    
     public LoaderPane() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -148,9 +152,6 @@ public class LoaderPane extends javax.swing.JPanel {
         // force load, verify disabled in case read fails
         loadButton.setEnabled(false);
         loadButton.setToolTipText(res.getString("TipLoadDisabled"));
-
-
-        SpjFile file;
         
         try {
             file = new SpjFile(chooser.getSelectedFile().getPath());
@@ -184,14 +185,44 @@ public class LoaderPane extends javax.swing.JPanel {
         loadButton.setEnabled(false);
         loadButton.setToolTipText(res.getString("TipDisabledDownload"));
 
+        // Create a loader to run in a separate thread
+        // Override notify() method to do a swing-thread update of status field
+        if (engine == null) engine = new LoaderEngine(){
+            public void notify(String s) {
+                javax.swing.SwingUtilities.invokeLater(new Notifier(s));
+            }
+        };
+        
         // start the download itself
+        new Thread() {
+            public void run() {
+                engine.runDownload(file);
+            }
+        }.start();
+        
     }
-
+    
+    
+    /**
+     * Define objects to update status JLabel in pane
+     */
+    private class Notifier implements Runnable {
+        public Notifier(String msg) {this.msg = msg;}
+        String msg;
+        public void run() {
+            status.setText(msg);
+        }
+    }
 
     /**
      * get rid of any held resources
      */
     void dispose() {
+        file.dispose();
+        file = null;  // not for GC, this flags need to reinit
+        
+        engine.dispose();
+        engine = null;  // not for GC, this flags need to reinit
     }
 
 
