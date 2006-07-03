@@ -31,7 +31,7 @@ import com.sun.java.util.collections.NoSuchElementException;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.14 $
+ * @version 		$Revision: 1.15 $
  *
  */
 public class LnPacketizer extends LnTrafficController {
@@ -40,6 +40,10 @@ public class LnPacketizer extends LnTrafficController {
   
   	boolean debug = false;
   	
+  	/**
+  	 * true if the external hardware is not echoing messages,
+  	 * so we must
+  	 */
   	protected boolean echo = false;  // echo messages here, instead of in hardware
   	
     public LnPacketizer() {
@@ -454,21 +458,26 @@ public class LnPacketizer extends LnTrafficController {
      *
      */
      void messageTransmited(byte[] msg) {
-        // message is complete, dispatch it !!
-        final LocoNetMessage thisMsg = new LocoNetMessage(msg);
-        final LnPacketizer thisTC = this;
+        if (debug) log.debug("message transmitted");
+        if (!echo) return;
+        // message is queued for transmit, echo it when needed
         // return a notification via the queue to ensure end
-        Runnable r = new Runnable() {
-                LocoNetMessage msgForLater = thisMsg;
-                LnPacketizer myTC = thisTC;
-                public void run() {
-                    myTC.notify(msgForLater);
-                }
-            };
-        javax.swing.SwingUtilities.invokeLater(r);
+        javax.swing.SwingUtilities.invokeLater(new Echo(this, new LocoNetMessage(msg)));
     }
     
-
+    class Echo implements Runnable {
+        Echo(LnPacketizer t, LocoNetMessage m) {
+            myTc = t;
+            msgForLater = m;
+        }
+        LocoNetMessage msgForLater;
+        LnPacketizer myTc;
+       
+        public void run() {
+            myTc.notify(msgForLater);
+        }
+    }
+    
     /**
      * Invoked at startup to start the threads needed here.
      */
