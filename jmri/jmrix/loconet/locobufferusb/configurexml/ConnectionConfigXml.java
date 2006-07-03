@@ -1,9 +1,9 @@
-package jmri.jmrix.loconet.pr2.configurexml;
+package jmri.jmrix.loconet.locobufferusb.configurexml;
 
 import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
-import jmri.jmrix.loconet.pr2.ConnectionConfig;
-import jmri.jmrix.loconet.pr2.PR2Adapter;
+import jmri.jmrix.loconet.locobufferusb.ConnectionConfig;
+import jmri.jmrix.loconet.locobufferusb.LocoBufferUsbAdapter;
 
 /**
  * Handle XML persistance of layout connections by persisting
@@ -16,7 +16,7 @@ import jmri.jmrix.loconet.pr2.PR2Adapter;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2005, 2006
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -25,7 +25,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
     }
 
     protected void getInstance() {
-        adapter = PR2Adapter.instance();
+        adapter = LocoBufferUsbAdapter.instance();
     }
 
     protected void register() {
