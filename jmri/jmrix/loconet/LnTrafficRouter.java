@@ -15,7 +15,7 @@ import java.util.Vector;
  * without traffic over the connection.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version 		$Revision: 1.4 $
+ * @version 		$Revision: 1.5 $
  *
  */
 public class LnTrafficRouter extends LnTrafficController implements LocoNetListener {
@@ -79,6 +79,15 @@ public class LnTrafficRouter extends LnTrafficController implements LocoNetListe
 			destination = null;
             connected = false;
 		}
+
+    /**
+     * Implement abstract method to signal if there's a backlog
+     * of information waiting to be sent.
+     * @return true if busy, false if nothing waiting to send
+     */
+    public boolean isXmtBusy() {
+        return false;
+    }
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnTrafficRouter.class.getName());
 }

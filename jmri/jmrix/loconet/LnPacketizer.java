@@ -31,7 +31,7 @@ import com.sun.java.util.collections.NoSuchElementException;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.15 $
+ * @version 		$Revision: 1.16 $
  *
  */
 public class LnPacketizer extends LnTrafficController {
@@ -102,6 +102,17 @@ public class LnPacketizer extends LnTrafficController {
             xmtList.addLast(msg);
             xmtHandler.notify();
         }
+    }
+
+    /**
+     * Implement abstract method to signal if there's a backlog
+     * of information waiting to be sent.
+     * @return true if busy, false if nothing waiting to send
+     */
+    public boolean isXmtBusy() {
+        if (controller == null) return false;
+        
+        return (!controller.okToSend());
     }
 
     // methods to connect/disconnect to a source of data in a LnPortController

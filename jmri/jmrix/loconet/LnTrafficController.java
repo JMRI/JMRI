@@ -12,7 +12,7 @@ import java.util.Vector;
  * statistics support.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.9 $
+ * @version 		$Revision: 1.10 $
  *
  */
 public abstract class LnTrafficController implements LocoNetInterface {
@@ -85,6 +85,14 @@ public abstract class LnTrafficController implements LocoNetInterface {
             client.message(m);
         }
     }
+    
+    /**
+     * Is there a backlog of information for the outbound link?
+     * This includes both in the program (e.g. the outbound queue)
+     * and in the command station interface (e.g. flow control from the port)
+     * @return true if busy, false if nothing waiting to send
+     */
+    abstract public boolean isXmtBusy();
 
     /**
      * Reset statistics (received message count, transmitted message count,
