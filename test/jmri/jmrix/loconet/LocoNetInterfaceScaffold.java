@@ -38,6 +38,8 @@ public class LocoNetInterfaceScaffold extends LnTrafficController {
 		// separately tested
 	}
 
+    public boolean isXmtBusy() { return false; }
+    
 	// test control member functions
 
     /**
