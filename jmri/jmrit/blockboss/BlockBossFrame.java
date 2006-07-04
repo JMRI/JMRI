@@ -31,7 +31,7 @@ import javax.swing.*;
  * The individual items all share data models to simplify the logic.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  *              Revisions to add facing point sensors, limited speed,
  *              change layout, and tool tips.  Dick Bronson (RJB) 2006
  
@@ -101,27 +101,27 @@ public class BlockBossFrame extends JFrame {
 
     
     String buttonSingleTooltip = "In direction of traffic";
-    String buttonTrailMainTooltip = "Signal head for main track\n" 
-        + "through turnout in either direction";
-    String buttonTrailDivTooltip = "Signal head for branching track\n"
-        + "through turnout in either direction";
-    String buttonFacingTooltip = "Single signal head on single\n"
-        + "track facing double track";
-    String outSignalFieldTooltip =  "Enter a new signal head number, or\n"
-        + "enter an existing signal head number\n" 
-        + "then hit return to load its information.";
+    String buttonTrailMainTooltip = "<HTML><BODY>Signal head for main track<BR>" 
+        + "through turnout in either direction</BODY></HTML>";
+    String buttonTrailDivTooltip = "<HTML><BODY>Signal head for branching track<BR>"
+        + "through turnout in either direction</BODY></HTML>";
+    String buttonFacingTooltip = "<HTML><BODY>Single signal head on single<BR>"
+        + "track facing double track</BODY></HTML>";
+    String outSignalFieldTooltip =  "<HTML><BODY>Enter a new signal head number, or<BR>"
+        + "enter an existing signal head number<BR>" 
+        + "then hit return to load its information.</BODY></HTML>";
     String sensorFieldTooltip =  "Sensor active sets this signal to Red.";            
     String turnoutFieldTooltip = "Enter protected turnout number here.";
-    String flashBoxTooltip = "One aspect faster than yellow displays\n" 
-        + "flashing yellow, rather than green.";
-    String limitBoxTooltip = "Limits the fastest aspect displayed\n"
-        + "to yellow, rather than green.";
-    String nextSignalFieldTooltip = "Enter the low speed signal head for this track.\n" 
-        + "For dual head signals the fastest aspect is protected.";
-    String highSignalFieldTooltip = "Enter the high speed signal head for this track.\n" 
-        + "For dual head signals the fastest aspect is protected.";
-   String distantBoxTooltip = "Mirrors the protected (following) signal's status\n" 
-        + "unless over ridden by an intermediate stop sensor.";
+    String flashBoxTooltip = "<HTML><BODY>One aspect faster than yellow displays<BR>" 
+        + "flashing yellow, rather than green.</BODY></HTML>";
+    String limitBoxTooltip = "<HTML><BODY>Limits the fastest aspect displayed<BR>"
+        + "to yellow, rather than green.</BODY></HTML>";
+    String nextSignalFieldTooltip = "<HTML><BODY>Enter the low speed signal head for this track.<BR>" 
+        + "For dual head signals the fastest aspect is protected.</BODY></HTML>";
+    String highSignalFieldTooltip = "<HTML><BODY>Enter the high speed signal head for this track.<BR>" 
+        + "For dual head signals the fastest aspect is protected.</BODY></HTML>";
+   String distantBoxTooltip = "<HTML><BODY>Mirrors the protected (following) signal's status<BR>" 
+        + "unless over ridden by an intermediate stop sensor.</BODY></HTML>";
     
     public BlockBossFrame() { this("Simple Signal Logic");}
     public BlockBossFrame(String frameName) {
