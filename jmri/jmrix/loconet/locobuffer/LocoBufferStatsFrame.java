@@ -21,7 +21,7 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Alex Shepherd   Copyright (C) 2003
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class LocoBufferStatsFrame extends JFrame implements LocoNetListener {
 
@@ -97,12 +97,23 @@ public class LocoBufferStatsFrame extends JFrame implements LocoNetListener {
         if (LnTrafficController.instance()!=null)
             LnTrafficController.instance().addLocoNetListener(~0, this);
         else
-            log.error("No LocoNet connection available, can't function");
+            report("No LocoNet connection available, can't function");
 
         // and prep for display
         pack();
+        lb2Panel.setVisible(false);
+        rawPanel.setVisible(false);
+        pr2Panel.setVisible(false);
+        
+        // finally, request data
+        requestUpdate();
+  
     }
 
+    void report(String msg) {
+        log.error(msg);
+    }
+    
     public void message(LocoNetMessage msg){
       if( updatePending &&
           ( msg.getOpCode() == LnConstants.OPC_PEER_XFER ) &&
@@ -112,14 +123,19 @@ public class LocoBufferStatsFrame extends JFrame implements LocoNetListener {
           ( msg.getElement( 4 ) == 0x01 ) &&
           ( ( msg.getElement( 5 ) & 0xF0 ) == 0x0 ) &&
           ( ( msg.getElement( 10 ) & 0xF0 ) == 0x0 ) ) {
-        // LocoBuffer II form
-        int[] data = msg.getPeerXfrData() ;
+            // LocoBuffer II form
+            int[] data = msg.getPeerXfrData() ;
         
-        version.setText( StringUtil.twoHexFromInt( data[0]) + StringUtil.twoHexFromInt(data[4] ) );
-        breaks.setText( Integer.toString( (data[5] << 16) + (data[6] << 8) + data[7] ) );
-        errors.setText( Integer.toString( (data[1] << 16) + (data[2] << 8) + data[3] ) );
+            version.setText( StringUtil.twoHexFromInt( data[0]) + StringUtil.twoHexFromInt(data[4] ) );
+            breaks.setText( Integer.toString( (data[5] << 16) + (data[6] << 8) + data[7] ) );
+            errors.setText( Integer.toString( (data[1] << 16) + (data[2] << 8) + data[3] ) );
         
-        updatePending = false ;
+            lb2Panel.setVisible(true);
+            rawPanel.setVisible(false);
+            pr2Panel.setVisible(false);
+            pack();
+
+            updatePending = false ;
 
         } else if (updatePending &&
               ( msg.getOpCode() == LnConstants.OPC_PEER_XFER ) &&
@@ -128,13 +144,22 @@ public class LocoBufferStatsFrame extends JFrame implements LocoNetListener {
               ( msg.getElement( 3 ) == 0x22 ) &&
               ( msg.getElement( 4 ) == 0x01 ) ) 
             {  // PR2 form
+            int[] data = msg.getPeerXfrData() ;
             serial.setText(Integer.toString(data[1]*256+data[0]));
             status.setText(StringUtil.twoHexFromInt(data[2]));
             current.setText(Integer.toString( data[3]) );
             hardware.setText(Integer.toString( data[4]) );
             software.setText(Integer.toString( data[5]) );
 
+            lb2Panel.setVisible(false);
+            rawPanel.setVisible(false);
+            pr2Panel.setVisible(true);
+            pack();
+
+            updatePending = false ;
+
         } else if (updatePending) {
+            int[] data = msg.getPeerXfrData() ;
             r1.setText(StringUtil.twoHexFromInt(data[0]));
             r2.setText(StringUtil.twoHexFromInt(data[1]));
             r3.setText(StringUtil.twoHexFromInt(data[2]));
@@ -143,6 +168,14 @@ public class LocoBufferStatsFrame extends JFrame implements LocoNetListener {
             r6.setText(StringUtil.twoHexFromInt(data[5]));
             r7.setText(StringUtil.twoHexFromInt(data[6]));
             r8.setText(StringUtil.twoHexFromInt(data[7]));
+
+            lb2Panel.setVisible(false);
+            rawPanel.setVisible(true);
+            pr2Panel.setVisible(false);
+            pack();
+
+            updatePending = false ;
+
         }
     }
 
