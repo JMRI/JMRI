@@ -25,7 +25,7 @@ import java.beans.PropertyChangeEvent;
  * <LI>Wait for Normal Operations Resumed broadcast
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
  * Adapted by Sip Bosch for use with zimo Mx-1
  *
@@ -261,6 +261,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
                 switch (hex) {
                   case 0x46: return 0x0F;
                   case 0x45: return 0x0E;
+                  case 0x65: return 0x0E;
                   case 0x44: return 0x0D;
                   case 0x43: return 0x0C;
                   case 0x42: return 0x0B;
@@ -284,3 +285,4 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
 
 
 /* @(#)Mx1Programmer.java */
+

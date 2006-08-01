@@ -9,7 +9,7 @@ package jmri.jmrix.zimo;
  * Defines standard operations for Dcc command stations.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  *
  * Adapted by Sip Bosch for use with Zimo Mx-1
  *
@@ -43,26 +43,33 @@ public class Mx1CommandStation implements jmri.jmrix.DccCommandStation {
      */
     public Mx1Message getTurnoutCommandMsg(int pNumber, boolean pClose,
                                             boolean pThrow, boolean pOn) {
-        Mx1Message l = new Mx1Message(4);
-        l.setElement(0,0x52);
+        Mx1Message l = new Mx1Message(6);
+        l.setElement(0,0x4E);
 
-        // compute address byte fields
-        int hiadr = (pNumber-1)/4;
-        int loadr = ((pNumber-1)-hiadr*4)*2;
+        // compute module address
+        int modAdress = ((pNumber-1)/32)+1;
+        // break down into two bytes
+        int modHigh = (modAdress&0xF0)/16;
+        int modLow =  modAdress&0x0F;
 
-        // load On/Off with on
-        loadr |= 0x10;
-        if (!pOn) loadr |= 0x40;
-        if (pThrow) loadr |= 0x01;
+        // compose the command-byte
+        int number = pNumber-1;
+        //if (!pOn) number = (number | 0xC0);
+        if (pThrow) number = (number | 0xC0);
+        if (pClose) number = (number | 0x80);
+        // break output number down into two bytes
+        int numHigh = (number&0xF0)/16;
+        int numLow = number&0x0F;
 
         // we don't know how to command both states right now!
         if (pClose & pThrow)
             log.error("Zimo turnout logic can't handle both THROWN and CLOSED yet");
 
-        // store and send
-        l.setElement(1,hiadr);
-        l.setElement(2,loadr);
-
+        // built and send message
+        l.setElement(1, bcdToAsc(modHigh));
+        l.setElement(2, bcdToAsc(modLow));
+        l.setElement(3, bcdToAsc(numHigh));
+        l.setElement(4, bcdToAsc(numLow));
         return l;
     }
 
@@ -74,6 +81,7 @@ public class Mx1CommandStation implements jmri.jmrix.DccCommandStation {
      */
     public int getTurnoutMsgAddr(Mx1Message pMsg) {
         if (isTurnoutCommand(pMsg)) {
+            javax.swing.JOptionPane.showMessageDialog(null, "A-Programma komt tot hier!");
             int a1 = pMsg.getElement(1);
             int a2 = pMsg.getElement(2);
             return (((a1 & 0xff) * 4) + (a2 & 0x6)/2 + 1);
@@ -85,7 +93,7 @@ public class Mx1CommandStation implements jmri.jmrix.DccCommandStation {
      * Is this a command to change turnout state?
      */
     public boolean isTurnoutCommand(Mx1Message pMsg) {
-        return pMsg.getOpCode()==0x05;
+        return pMsg.getElement(0)==0x4E;
     }
 
     public Mx1Message resetModeMsg() {
@@ -127,7 +135,7 @@ public class Mx1CommandStation implements jmri.jmrix.DccCommandStation {
     public int bcdToAsc(int hex) {
        switch (hex) {
         case 0x0F: return 0x46;
-        case 0x0E: return 0x45;
+        case 0x0E: return 0x65;
         case 0x0D: return 0x44;
         case 0x0C: return 0x43;
         case 0x0B: return 0x42;
@@ -151,3 +159,4 @@ public class Mx1CommandStation implements jmri.jmrix.DccCommandStation {
 
 
 /* @(#)Mx1CommandStation.java */
+
