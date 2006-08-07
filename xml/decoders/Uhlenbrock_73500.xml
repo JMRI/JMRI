@@ -1,0 +1,243 @@
+<?xml version="1.0"?>
+<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<!-- $Id: Uhlenbrock_73500.xml,v 1.1 2006-08-07 08:39:57 jacobsen Exp $ -->
+<decoder-config>
+		<version author="Simon Ginsburg" version="1" lastUpdated="20051018"/>
+
+<decoder>
+	<family name="Mini-Multiprotocoll Decoder" mfg="Uhlenbrock Elektronik"
+	             lowVersionID="8" highVersionID="8">
+		<model model="73500" />
+		<model model="73510" />
+	</family>
+
+	<programming direct="yes" 
+				 paged="yes" 
+				 register="yes" 
+				 ops="yes" />
+
+	<variables>
+		<variable label="Primary Address" CV="1" comment="Short address"
+						item="Short Address"  default="03">
+			<shortAddressVal/></variable>
+		<variable label="Vstart" CV="2"
+						comment="Speed setting between 1 and 63"
+                        default="01">
+			<decVal max="63"/></variable>
+		<variable label="Acceleration Rate" CV="3"
+						comment="A value of 1 will increase each 5 milliseconds by 1"
+						item="Accel" 
+                        default="02">
+			<decVal max="63"/></variable>
+		<variable label="Deceleration Rate" CV="4"
+						comment="A value of 1 will increase each 5 milliseconds by 1"
+						item="Decel"
+                        default="02">
+			<decVal max="63"/></variable>
+		<variable label="Vhigh" CV="5"
+						comment="Speed setting between 1 and 63"
+                        default="48">
+            <decVal max="63"/></variable>
+		<variable label="Vmid" CV="6"
+						comment="Speed setting between 1 and 63"
+                        default="24">
+            <decVal max="63"/></variable>
+		<variable label="Manufacturer Version No: " CV="7" readOnly="yes"
+						item="Decoder Version" default="8"><decVal/></variable>
+		<variable label="Manufacturer ID: " CV="8" readOnly="yes"
+						item="Manufacturer" default="85">	<decVal/></variable>
+
+		<variable label="Extended Address" CV="17"
+						item="Long Address" >
+			<longAddressVal/></variable>
+			
+		<variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
+			<decVal/></variable>
+		
+		<variable label="Consist Direction" CV="19" mask="VXXXXXXX">
+			<enumVal>
+				<enumChoice choice="Normal"></enumChoice>
+				<enumChoice choice="Reversed"></enumChoice>
+				</enumVal></variable>
+		
+		<variable label="Locomotive Direction" CV="29" mask="XXXXXXXV">
+			<enumVal>
+				<enumChoice choice="normal"/>
+				<enumChoice choice="reversed"/>
+				</enumVal></variable>
+		<variable label="FL Location" CV="29" mask="XXXXXXVX"
+					item="Speed Step Mode" default="1">
+			<enumVal>
+				<enumChoice choice="14 speed step format"/>
+				<enumChoice choice="28 speed step format"/>
+				</enumVal></variable>
+		<variable label="Speed Table Definition" CV="29" mask="XXXVXXXX">
+			<enumVal>
+				<enumChoice choice="Use Vstart, Vmid, Vhigh"/>
+				<enumChoice choice="Use table in CVs 66 through 95"/>
+				</enumVal></variable>
+		<variable label="Address Format" CV="29" mask="XXVXXXXX">
+			<enumVal>
+				<enumChoice choice="One byte (short) address"/>
+				<enumChoice choice="Two byte (extended) address"/>
+				</enumVal></variable>
+
+
+		<variable label="Main Motor Control" CV="49" mask="XXXXXXXV">
+			<enumVal>
+				<enumChoice choice="on"/>
+				<enumChoice choice="off"/>
+				</enumVal></variable>
+		<variable label="Braking End" CV="49" mask="XXXXXVXX">
+			<enumVal>
+				<enumChoice choice="to standstill"/>
+				<enumChoice choice="as def. in CV52"/>
+				</enumVal></variable>
+		<variable label="SX Programming" CV="49" mask="XXXXVXXX" default="1">
+			<enumVal>
+				<enumChoice choice="off"/>
+				<enumChoice choice="on"/>
+				</enumVal></variable>
+		<variable label="Data Format" CV="49" mask="XXXVXXXX">
+			<enumVal>
+				<enumChoice choice="Motorola and DDC"/>
+				<enumChoice choice="Selectrix"/>
+				</enumVal></variable>
+		<variable label="Motorola Format" CV="49" mask="XXVXXXXX" default="1">
+			<enumVal>
+				<enumChoice choice="off"/>
+				<enumChoice choice="on"/>
+				</enumVal></variable>
+		<variable label="Lightplugs" CV="49" mask="XVXXXXXX">
+			<enumVal>
+				<enumChoice choice="straight"/>
+				<enumChoice choice="reverse"/>
+			</enumVal>
+		</variable>
+		<variable label="Braking with" CV="49" mask="VXXXXXXX">
+			<enumVal>
+				<enumChoice choice="Braking signal only"/>
+				<enumChoice choice="with analog voltage"/>
+			</enumVal>
+		</variable>
+
+		<variable label="Function output dimming" CV="50" default="32" >
+			<decVal min="0" max="63"/>
+		</variable>
+
+		<variable label="Analog/Digitalswitch" CV="51">
+			<enumVal>
+				<enumChoice choice="Digital operation"/>
+				<enumChoice choice="Analog operation"/>
+			</enumVal>
+		</variable>
+
+		<variable label="End braking speed" CV="52" default="30" 
+		           tooltip="Valid when CV49 Bit 2=1 and Bit 7=1">
+			<decVal/>
+		</variable>
+			
+		<variable label="Repetition rate" CV="53" default="80" 
+		           tooltip="Value * 53 um; useful values 60-255">
+			<decVal/>
+		</variable>
+			
+		<variable label="Raise Motor voltage" CV="54" default="2" 
+		           tooltip="Motor control parameter">
+			<decVal/>
+		</variable>
+			
+		<variable label="Drop Motor voltage" CV="55" default="2" 
+		           tooltip="Motor control parameter">
+			<decVal/>
+		</variable>
+			
+		<variable label="AD Converter parameter" CV="56" default="1"
+					readOnly="yes"
+		           tooltip="Do not change">
+			<decVal/>
+		</variable>
+			
+		<variable label="SX Speed table" CV="57" default="5" 
+		           tooltip="Increment value for steps 29-31">
+			<decVal/>
+		</variable>
+			
+		<variable label="AD Timeslot" CV="58" default="14" 
+		           tooltip="Timeslot for AD converter sensor">
+			<decVal/>
+		</variable>
+			
+		<variable label="Short circuit supervision" CV="60" default="82"
+					readOnly="yes"
+		           tooltip="Do not change! 0=deactivated">
+			<decVal/>
+		</variable>
+			
+		<variable label="Temperature switchoff limit" CV="61" default="0" 
+		           tooltip="Different with each decoder, 0=deactivated">
+			<decVal/>
+		</variable>
+			
+		<variable label="Reserved CV for SX programming" CV="62" default="0" 
+					readOnly="yes"
+		           tooltip="Used with SX programming">
+			<decVal/>
+		</variable>
+			
+		<variable label="Offset Register" CV="63" default="0" 
+					readOnly="yes"
+		           tooltip="Used with Motorola programming">
+			<decVal/>
+		</variable>
+			
+		<variable label="Page Register" CV="64" default="0" 
+					readOnly="yes"
+		           tooltip="Used with DDC paged mode programming">
+			<decVal/>
+		</variable>
+			
+		<variable label="Speed Table" CV="67">
+			<speedTableVal/></variable>
+
+	
+	</variables>
+
+  <resets>
+  	<factReset label="Reset All CVs" CV="59" default="1"/>
+  </resets>
+
+</decoder>
+
+<pane name="Uhlenbrock">
+	<column>
+		<display item="Main Motor Control" />
+		<display item="Braking End" />
+		<display item="SX Programming" />
+		<display item="Data Format" />
+		<display item="Motorola Format" />
+		<display item="Lightplugs" />
+		<display item="Braking with" />
+		<label label=" "/>
+		<display item="Analog/Digitalswitch" />
+	</column>
+	<column>
+		<display item="Function output dimming" />
+		<display item="End braking speed" />
+		<display item="Repetition rate" />
+		<display item="Raise Motor voltage" />
+		<display item="Drop Motor voltage" />
+		<display item="AD Converter parameter" />
+		<display item="SX Speed table" />
+		<display item="AD Timeslot" />
+		<display item="Temperature switchoff limit" />
+		<label label="These CV's are Read-Only: "/>
+		<display item="Short circuit supervision" />
+		<display item="SX register" />
+		<display item="Offset Register" />
+		<display item="Page Register" />
+	</column>
+</pane>
+
+</decoder-config>
