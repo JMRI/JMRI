@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a type or types of DCC decoder as  -->
 <!-- a component, esp. information on how to program it. -->
-<!-- $Revision: 1.45 $ -->
+<!-- $Revision: 1.46 $ -->
 
 <!-- This DTD is Copyright 1999, 2000, 2001, 2003, 2004, 2005 Bob Jacobsen & JMRI. -->
 <!-- You may freely use it subject to the Open Source Artistic               -->
@@ -9,7 +9,7 @@
 <!-- For more information on the JMRI project, including this DTD,           -->
 <!-- see http://jmri.sf.net                                                  -->
 
-<!ELEMENT decoder-config (version, decoder, pane*)>
+<!ELEMENT decoder-config (version*, decoder, pane*)>
 <!-- Each decoder configuration XML file (decoder-config) consists of information -->
 <!-- about the file itself (version element), about the decoder (decoder element) -->
 <!-- and optional recommendations about how to display it to the user (pane element(s)) -->
@@ -366,7 +366,7 @@
 <!-- This is present so that the person writing the decoder definition -->
 <!-- can also express preferences about how the information should be displayed -->
 <!-- to the user. -->
-<!ELEMENT pane (column*)>
+<!ELEMENT pane ((column | display | label | separator )*)>
 <!ATTLIST pane name CDATA #REQUIRED>  <!-- Name used for identification -->
 <!ATTLIST pane nameFmt (label | item) "label"> <!-- Specify which variable attribute to show in GUI -->
 <!ATTLIST pane comment CDATA #IMPLIED >
