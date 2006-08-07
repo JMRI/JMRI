@@ -2,16 +2,17 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: TCS_X.xml,v 1.6 2006-02-18 22:18:40 jacobsen Exp $ -->
+<!-- $Id: TCS_X.xml,v 1.6+ 2006/07/28 SG -->
 <decoder-config>
 		<version author="Michael Mosher" 
-					version="5" lastUpdated="20060206"/>
+					version="6" lastUpdated="20060728"/>
 
 		<!-- Version 1 - made from TSC Tx -->
 		<!-- Version 2 - correction to CV61 -->
 		<!-- Version 3 - version range 30 to 35 -->
 		<!-- Version 4 - added AMD1 & MP-15N & ver to 37 -->
 		<!-- Version 5 - fix bug in MP-15N -->
+		<!-- Version 6 - added VO-1000N -->
 
 
 <decoder>
@@ -119,6 +120,17 @@
 		<model model="MP-15N"   numOuts="4" numFns="14" lowVersionID="30" highVersionID="37"
     		maxMotorCurrent="1A (peak=2A)" formFactor="N"
 			comment="Fits Atlas N Scale: MP-15">
+			<output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
+			<output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
+			<output name="3" label="Green"  connection="solder" maxcurrent="100 mA" />
+			<output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+			<output name="Dim" />
+			<output name="Ditch" />
+			<output name="Motor" />
+			</model>
+		<model model="VO-1000N"   numOuts="4" numFns="14" lowVersionID="30" highVersionID="37"
+    		maxMotorCurrent="1A (peak=2A)" formFactor="N"
+			comment="Fits Atlas N Scale: VO-1000">
 			<output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
 			<output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
 			<output name="3" label="Green"  connection="solder" maxcurrent="100 mA" />
