@@ -1,5 +1,5 @@
 <!-- Defines XML documenting the list of available decoder definitions -->
-<!-- $Revision: 1.18 $ -->
+<!-- $Revision: 1.19 $ -->
 
 <!-- This DTD is Copyright 2001, 2003 JMRI.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -65,6 +65,10 @@
 <!-- wiring specification -->
 <!ATTLIST model connector ( unspecified | NMRAsmall | 9pin |
 							NMRAmedium | NMRAlarge | other ) "unspecified" >
+<!-- type of extended function packets accepted (not all combinations valid) -->
+<!ATTLIST model extFnsNmraF13 ( no | yes ) "no" >  <!-- RP packets for F13-F20 -->
+<!ATTLIST model extFnsNmraBSC ( no | yes ) "no" >  <!-- "Binary State Control" -->
+<!ATTLIST model extFnsMRC  ( no | yes ) "no" >     <!-- Model Rectifier Corp "extension" -->
 
 <!ELEMENT versionCV EMPTY >
 <!-- lowVersionID, highVersionID define an inclusive range, with both endpoints included. -->
