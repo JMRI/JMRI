@@ -2,7 +2,7 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2002, 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Digitrax_01x3.xml,v 1.27 2005-06-08 02:44:53 innkeeper Exp $ -->
+<!-- $Id: Digitrax_01x3.xml,v 1.28 2006-08-07 09:08:32 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Howard G. Penny" version="15" lastUpdated="20050422"/>
 
@@ -22,6 +22,7 @@
     <!-- Version 13 - added DN163K1B and DN163I0 (Simon Ginsburg) -->
     <!-- Version 14 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" - Bob Jacobsen -->
     <!-- Version 15 - added factory reset menu items (Howard G. Penny) -->
+    <!-- Version 16 - added DN163K1C (Simon Ginsburg) -->
 	
 <decoder>
 	<family name="Series 3 with FX3, silent, readback" 
@@ -160,6 +161,14 @@
 			<size length="3.11" width="0.426" height="0.195" units="inches" />
 			</model>
 		<model model="DN163K1B" numOuts="6" numFns="8"
+	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="N" >
+			<output name="4" label="Pad" connection="solder" /> 
+			<output name="5" label="Pad" connection="solder" />
+			<output name="6" label="Pad" connection="solder" />
+			<size length="3.11" width="0.426" height="0.195" units="inches" />
+
+			</model>
+		<model model="DN163K1C" numOuts="6" numFns="8"
 	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="N" >
 			<output name="4" label="Pad" connection="solder" /> 
 			<output name="5" label="Pad" connection="solder" />
