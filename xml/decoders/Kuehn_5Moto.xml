@@ -2,7 +2,7 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Kuehn_5Moto.xml,v 1.1 2006-02-05 23:04:56 jacobsen Exp $ --> 
+<!-- $Id: Kuehn_5Moto.xml,v 1.2 2006-08-07 09:00:34 jacobsen Exp $ --> 
 
 <decoder-config>
 	<version author="peter.brandenburg@t-online.de"
@@ -36,9 +36,8 @@
 		
 	</family>	
 	
-<programming ops="yes" register="yes" paged="yes" direct="yes">
-	</programming>
-	
+<programming ops="yes" register="yes" paged="yes" direct="yes"/>
+
 <variables>
 	<variable label="Primary Address" CV="1" comment="Short address"
 						item="Short Address"  default="03">

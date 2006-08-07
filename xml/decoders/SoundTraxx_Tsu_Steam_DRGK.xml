@@ -2,7 +2,7 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: SoundTraxx_Tsu_Steam_DRGK.xml,v 1.3 2006-04-24 03:12:04 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_Tsu_Steam_DRGK.xml,v 1.4 2006-08-07 09:02:44 jacobsen Exp $ -->
 <decoder-config>
 		<!--version author="Bob Jacobsen" version="1" lastUpdated="20051101"/-->
 		<!--version author="Ken Weygandt" version="2" lastUpdated="20051203"/-->
@@ -965,7 +965,7 @@
 		<variable label="Bell Ring Rate" CV="114" mask="XXXXVVVV" default="4" 
 		    item="Sound Setting 1">
 			<decVal max="15"/>
-			<decVal/></variable>
+		</variable>
 
 		<variable label="Whistle Select" CV="115" mask="XXXXXVVV" default="0"
 		    item="Sound Option 6">
@@ -1002,122 +1002,122 @@
 		<variable label="Engine Exhaust Rate" CV="116" mask="VVVVVVVV" default="80"
 		    item="Sound Setting 2">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 		<variable label="Master Volume" CV="128" mask="VVVVVVVV" default="192" 
 		    item="Sound Setting 3">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 		<variable label="Whistle Volume" CV="129" mask="VVVVVVVV" default="225" 
 		    item="Sound Setting 4">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 		<variable label="Bell Volume" CV="130" mask="VVVVVVVV" default="128" 
 		    item="Sound Setting 5">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 		<variable label="Exhaust Volume" CV="131" mask="VVVVVVVV" default="192" 
 		    item="Sound Setting 6">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 		<variable label="Air Pump Volume" CV="132" mask="VVVVVVVV" default="48" 
 		    item="Sound Setting 7">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 		<variable label="Dynamo Volume" CV="133" mask="VVVVVVVV" default="32" 
 		    item="Sound Setting 8">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 		<variable label="Blower Volume" CV="134" mask="VVVVVVVV" default="16" 
 		    item="Sound Setting 9">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 		<variable label="Rod Clank Volume" CV="135" mask="VVVVVVVV" default="32" 
 		    item="Sound Setting 10">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 		<variable label="Steam Release Volume" CV="136" mask="VVVVVVVV" default="128" 
 		    item="Sound Setting 11">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 		<variable label="Coupler Volume" CV="137" mask="VVVVVVVV" default="128" 
 		    item="Sound Setting 12">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 		<variable label="Glad Hand Release Volume" CV="138" mask="VVVVVVVV" default="0" 
 		    item="Sound Setting 13">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 		<variable label="Brake Squeal Volume" CV="139" mask="VVVVVVVV" default="128" 
 		    item="Sound Setting 14">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 		<variable label="Brake Release Volume" CV="140" mask="VVVVVVVV" default="64" 
 		    item="Sound Setting 15">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 		<variable label="Snifter Valve Volume" CV="141" mask="VVVVVVVV" default="64" 
 		    item="Sound Setting 16">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 		<variable label="Power Reverse Volume" CV="142" mask="VVVVVVVV" default="64" 
 		    item="Sound Setting 17">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 		<variable label="Pop Valve Volume" CV="143" mask="VVVVVVVV" default="128" 
 		    item="Sound Setting 18">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 		<variable label="Blower Draft Volume" CV="145" mask="VVVVVVVV" default="128" 
 		    item="Sound Setting 19">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 		<variable label="Water Stop Volume" CV="146" mask="VVVVVVVV" default="96" 
 		    item="Sound Setting 20">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 		<variable label="Injector Volume" CV="147" mask="VVVVVVVV" default="64" 
 		    item="Sound Setting 21">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 		<variable label="Fireman Shovel Volume" CV="148" mask="VVVVVVVV" default="64" 
 		    item="Sound Setting 22">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 		<variable label="Fireman Wrench Volume" CV="149" mask="VVVVVVVV" default="64" 
 		    item="Sound Setting 23">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 		<variable label="Fireman Oil Can Volume" CV="150" mask="VVVVVVVV" default="64" 
 		    item="Sound Setting 24">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 		<variable label="Fireman Grease Gun Volume" CV="151" mask="VVVVVVVV" default="32" 
 		    item="Sound Setting 25">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 <!-- The following sounds CVs (currently) don't map to generic -->
 <!-- names, e.g. in the Comprehensive.xml programmer, so they  -->
@@ -1138,31 +1138,31 @@
 		<variable label="62 Hz Cut/Boost" CV="154" mask="VVVVVVVV"
 		    default="128">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="125 Hz Cut/Boost" CV="155" mask="VVVVVVVV"
 		    default="128">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="250 Hz Cut/Boost" CV="156" mask="VVVVVVVV"
 		    default="128">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="500 Hz Cut/Boost" CV="157" mask="VVVVVVVV"
 		    default="128">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="1K Hz Cut/Boost" CV="158" mask="VVVVVVVV"
 		    default="128">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="2K Hz Cut/Boost" CV="159" mask="VVVVVVVV"
 		    default="128">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="4K Hz Cut/Boost" CV="160" mask="VVVVVVVV"
 		    default="128">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 		<variable label="Reverb Control" CV="161" mask="XXXXXVVV" default="0">
 			<enumVal>
@@ -1179,88 +1179,88 @@
 		<variable label="Reverb Output Level" CV="162" mask="VVVVVVVV"
 		    default="128">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="Reverb Delay" CV="163" mask="VVVVVVVV"
 		    default="255">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="Reverb Gain" CV="164" mask="VVVVVVVV"
 		    default="64">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="Whistle Reverb Level" CV="169" mask="VVVVVVVV"
 		    default="0">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="Bell Reverb Level" CV="170" mask="VVVVVVVV"
 		    default="0">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="Exhaust Reverb Level" CV="171" mask="VVVVVVVV"
 		    default="0">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="Air Pump Reverb Level" CV="172" mask="VVVVVVVV"
 		    default="0">
 			<decVal max="255"/>
-			<decVal/></variable>		
+		</variable>		
 		<variable label="Dynamo Reverb Level" CV="173" mask="VVVVVVVV"
 		    default="128">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="Blower Reverb Level" CV="174" mask="VVVVVVVV"
 		    default="128">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 		<variable label="Throttle Gain" CV="177" mask="VVVVVVVV"
 		    default="10">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="Motor Load Gain" CV="178" mask="VVVVVVVV"
 		    default="32">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="Attack Time Constant" CV="179" mask="VVVVVVVV"
 		    default="10">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="Release Time Constant" CV="180" mask="VVVVVVVV"
 		    default="10">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="Exhaust Low Volume Limit" CV="181" mask="VVVVVVVV"
 		    default="255">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="Exhaust High Volume Limit" CV="182" mask="VVVVVVVV"
 		    default="255">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="Side Rod Clank Low Volume Limit" CV="183" mask="VVVVVVVV"
 		    default="255">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="Side Rod Clank High Volume Limit" CV="184" mask="VVVVVVVV"
 		    default="255">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="Filter Initial Frequency" CV="185" mask="VVVVVVVV"
 		    default="42">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="Filter Control Gain" CV="186" mask="VVVVVVVV"
 		    default="64">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="Filter Damping" CV="187" mask="VVVVVVVV"
 		    default="255">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="Tracking Coefficient" CV="188" mask="VVVVVVVV"
 		    default="102">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="Bell-On Set Point" CV="193" mask="XVVVVVVV"
 		    default="15">
 			<decVal max="127"/></variable>
@@ -1270,11 +1270,11 @@
 		<variable label="Grade Crossing Whistle Sensitivity" CV="195" mask="VVVVVVVV"
 		    default="4">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="Brake Squeal Sensitivity" CV="196" mask="VVVVVVVV"
 		    default="3">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 		<variable label="Automatic Grade Crossing Whistle Enabled (Analog Mode)" CV="197" mask="XXXXXXXV">
 			<enumVal>
@@ -1341,62 +1341,62 @@
 		<variable label="Probability Fireman Shovels Coal" CV="201" mask="VVVVVVVV"
 		    default="64">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="Probability Fireman Fills Tender" CV="202" mask="VVVVVVVV"
 		    default="32">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="Probability Fireman Turns Wrench" CV="203" mask="VVVVVVVV"
 		    default="16">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="Probability Fireman Uses Grease Gun" CV="204" mask="VVVVVVVV"
 		    default="32">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="Probability Fireman Uses Oil Can" CV="205" mask="VVVVVVVV"
 		    default="64">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="Probability Fireman Uses Injectors" CV="206" mask="VVVVVVVV"
 		    default="64">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="Probability Fireman Uses Blower" CV="207" mask="VVVVVVVV"
 		    default="64">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 		<variable label="Probability Pop Value Blows Off" CV="208" mask="VVVVVVVV"
 		    default="0">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 <!-- End of variables for file-specific panes -->
 
 		<variable label="Motor Kp Coefficient" CV="209" mask="VVVVVVVV" default="25" 
 		    item="Advanced Group 2 Option 1">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 		<variable label="Motor Ki Coefficient" CV="210" mask="VVVVVVVV" default="20" 
 		    item="Advanced Group 2 Option 2">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 		<variable label="Motor Control Intensity" CV="212" mask="VVVVVVVV" default="255" 
 		    item="Advanced Group 2 Option 3">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 		<variable label="Motor Control Sample Period" CV="213" mask="XXXXVVVV" default="15" 
 		    item="Advanced Group 2 Option 4">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 		<variable label="Motor Sample Aperture Time" CV="214" mask="VVVVVVVV" default="15" 
 		    item="Advanced Group 2 Option 5">
 			<decVal max="255"/>
-			<decVal/></variable>
+		</variable>
 
 
 <!-- highest used so far: -->
