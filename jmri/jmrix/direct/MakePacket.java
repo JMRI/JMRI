@@ -3,7 +3,7 @@
  *
  * Description:		<describe the MakePacket class here>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version  $Revision: 1.6 $
+ * @version  $Revision: 1.7 $
  */
 package jmri.jmrix.direct;
 
@@ -274,12 +274,11 @@ public class MakePacket {
       /* Success - there is another child */
 
       case BITS_00:
-        BITS_01:
-            {
-          thisNode.bitPattern = BITS_0;
-          thisNode.patternLength = 1;
-          break;
-        }
+      case BITS_01: {
+        thisNode.bitPattern = BITS_0;
+        thisNode.patternLength = 1;
+        break;
+      }
       case BITS_001: {
         thisNode.bitPattern = BITS_00;
         thisNode.patternLength = 2;
