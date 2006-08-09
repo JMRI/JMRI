@@ -29,7 +29,7 @@ import java.io.File;
  *<P>
  *The original implementation was via the {@link jmri.configurexml} package.
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  * @see jmri.InstanceManager
  * @see jmri.configurexml.ConfigXmlManager
  */
@@ -44,6 +44,21 @@ public interface ConfigureManager {
 
     public void deregister(Object o);
 
+    /**
+     * Find the ith instance of an object of particular class
+     * that's been registered for storage.
+     *<p>
+     * Note that the index of an object can change when
+     * other objects are stored or removed.  The index is
+     * for indexing over the objects stored at a moment,
+     * not for use as an identification number.
+     *<P>
+     * There may be synchronization issues associated with
+     * this, although they are expected to be rare in practice.
+     * @param c Class of the desired objects
+     * @param index a 1-based index of the object to return
+     * @return an object of class c or null
+     */
     public Object findInstance(Class c, int index);
 
     /**
