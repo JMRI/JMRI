@@ -14,7 +14,7 @@ import org.jdom.Element;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -54,8 +54,10 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         temp.addAll(tlist);
         temp.addAll(ulist);
         for (int i=0; i<temp.size(); i++) {
-            if (c.isInstance(temp.get(i))) index--;
-            if (index==0) return temp.get(i);
+            if (c.isInstance(temp.get(i))) { 
+                index--;
+                if (index==0) return temp.get(i);
+            }
         }
         return null;
     }
