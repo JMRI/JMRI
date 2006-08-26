@@ -17,7 +17,7 @@ import javax.swing.JSeparator;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -102,25 +102,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
      * construction of this object is complete.  Be careful about that!
      */
     protected int maxHeight() {
-    	// cached?
-    	if (height > 0) return height;
-    	// no, start with default icon size
-    	if (defaultIcon == null) resetDefaultIcon();
-    	height = defaultIcon.getIconHeight();
-    	
-    	// include the text if any
-    	height = Math.max(height, (new javax.swing.JLabel(this.getText())).getPreferredSize().height);
-
-    	// if there's a map of alternate icons, use largest
-    	if (map == null) return height;
-    	com.sun.java.util.collections.Collection collection = map.values();
-    	com.sun.java.util.collections.Iterator iterator = collection.iterator();
-    	while (iterator.hasNext()) {
-    		NamedIcon next = (NamedIcon) iterator.next();
-    		if (next == null) log.warn("Unexpected null icon in map");
-    		height = Math.max(height, next.getIconHeight());
-    	}
-    	return height;
+        return ((javax.swing.JLabel)this).getMaximumSize().height;  // defer to superclass
     }
     
     private int width = -1;
@@ -129,26 +111,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
      * construction of this object is complete.  Be careful about that!
      */
     protected int maxWidth() {
-    	// cached?
-    	if (width > 0) return width;
-    	// no, loop to update
-    	if (defaultIcon == null) resetDefaultIcon();
-    	width = defaultIcon.getIconWidth();
-    	
-    	// include the text if any
-    	width = Math.max(width, (new javax.swing.JLabel(this.getText())).getPreferredSize().width);
-
-    	if (map == null) return width;
-
-    	// if there's a map of alternate icons, use largest
-    	com.sun.java.util.collections.Collection collection = map.values();
-    	com.sun.java.util.collections.Iterator iterator = collection.iterator();
-    	while (iterator.hasNext()) {
-    		NamedIcon next = (NamedIcon) iterator.next();
-    		if (next == null) log.warn("Unexpected null icon in map");
-    		width = Math.max(width, next.getIconWidth());
-    	}
-    	return width;
+        return ((javax.swing.JLabel)this).getMaximumSize().width;  // defer to superclass
     }
 
     // update icon as state of Memory changes
@@ -181,25 +144,27 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     boolean selectable = false;
     
     /**
-     * Pop-up displays the Memory name, allows you to rotate the icons
+     * Pop-up displays the Memory name, allows you to rotate the icons, etc.
+     * Because this class can change between icon and text forms, 
+     * we recreate the popup object each time.
      */
     protected void showPopUp(MouseEvent e) {
         if (!getEditable()) return;
         ours = this;
-        if (popup==null) {
-            popup = new JPopupMenu();
-            popup.add(new JMenuItem(getNameString()));
-            if (icon) popup.add(new AbstractAction("Rotate") {
-                    public void actionPerformed(ActionEvent e) {
-                    	// rotate all the icons, a real PITA
-    					com.sun.java.util.collections.Iterator iterator = map.values().iterator();
-    					while (iterator.hasNext()) {
-    						NamedIcon next = (NamedIcon) iterator.next();
-    						next.setRotation(next.getRotation()+1, ours);
-    					}
-                        displayState();
+        popup = new JPopupMenu();
+        popup.add(new JMenuItem(getNameString()));
+        if (icon) {
+            popup.add(new AbstractAction("Rotate") {
+                public void actionPerformed(ActionEvent e) {
+                    // rotate all the icons, a real PITA
+                    com.sun.java.util.collections.Iterator iterator = map.values().iterator();
+                    while (iterator.hasNext()) {
+                        NamedIcon next = (NamedIcon) iterator.next();
+                        next.setRotation(next.getRotation()+1, ours);
                     }
-                });
+                    displayState();
+                }
+            });
 
             popup.add(new AbstractAction("Remove") {
                 public void actionPerformed(ActionEvent e) {
@@ -207,22 +172,43 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     dispose();
                 }
             });
-            if (selectable) {
-                popup.add(new JSeparator());
-		
-		        com.sun.java.util.collections.Iterator iterator = map.keySet().iterator();
-    	        while (iterator.hasNext()) {
-    		        String key = iterator.next().toString();
-    		        String value = ((NamedIcon)map.get(key)).getName();
-                    popup.add(new AbstractAction(key) {
-                        public void actionPerformed(ActionEvent e) {
-                            String key = e.getActionCommand();
-                            memory.setValue(key);
-                        }
-                    });
-    	        }
-            }  // end of selectable
-        } // end creation of pop-up menu
+        
+        } else if (text) {
+            popup = new JPopupMenu();
+            popup.add(makeFontSizeMenu());
+
+            popup.add(makeFontStyleMenu());
+
+            popup.add(makeFontColorMenu());
+
+            addFixedItem(popup);
+            addShowTooltipItem(popup);
+            
+            popup.add(new AbstractAction("Remove") {
+                public void actionPerformed(ActionEvent e) {
+                    remove();
+                    dispose();
+                }
+            });
+
+        } else if (!text && !icon)
+            log.warn("showPopUp when neither text nor icon true");
+
+        if (selectable) {
+            popup.add(new JSeparator());
+    
+            com.sun.java.util.collections.Iterator iterator = map.keySet().iterator();
+            while (iterator.hasNext()) {
+                String key = iterator.next().toString();
+                String value = ((NamedIcon)map.get(key)).getName();
+                popup.add(new AbstractAction(key) {
+                    public void actionPerformed(ActionEvent e) {
+                        String key = e.getActionCommand();
+                        memory.setValue(key);
+                    }
+                });
+            }
+        }  // end of selectable
 
         popup.show(e.getComponent(), e.getX(), e.getY());
     }
