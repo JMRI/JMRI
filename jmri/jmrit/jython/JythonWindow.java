@@ -13,7 +13,7 @@ import java.awt.Font;
  * the thread output log from the {@link RunJythonScript} class.
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class JythonWindow extends AbstractAction {
 
@@ -23,6 +23,10 @@ public class JythonWindow extends AbstractAction {
      */
     public JythonWindow(String name) {
         super(name);
+    }
+
+    public JythonWindow() {
+        super("Script Output Window");
     }
 
     /**

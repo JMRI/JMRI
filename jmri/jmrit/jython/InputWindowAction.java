@@ -16,7 +16,7 @@ import jmri.util.PythonInterp;
  * global jython interpreter
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class InputWindowAction extends AbstractAction {
 
@@ -26,6 +26,10 @@ public class InputWindowAction extends AbstractAction {
      */
     public InputWindowAction(String name) {
         super(name);
+    }
+
+    public InputWindowAction() {
+        super("Script Input Window");
     }
 
     /**
