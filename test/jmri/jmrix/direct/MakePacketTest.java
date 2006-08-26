@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the MakePacketTest class
  * @author		Bob Jacobsen  Copyright 2004
- * @version		$Revision: 1.4 $
+ * @version		$Revision: 1.5 $
  */
 public class MakePacketTest extends TestCase {
     
@@ -72,7 +72,20 @@ public class MakePacketTest extends TestCase {
         test_retval = MakePacket.setPreambleLength(15);
         
     }
-    public void testAll3BytePacket() {
+
+
+    /**
+     * Test all possible three-byte packets. This ensures that
+     * MakePacket thinks it can find a way of representing each of those
+     * packets.  Note that the output packet is not checked
+     * for correctness.
+     * <P>
+     * Unfortunately, due to the number of trials, this takes
+     * too long to be included in normal runs.  Hence it's 
+     * name has been modified so that JUnit will not
+     * routinely select it to be run.
+     */
+    public void suppressTestAll3BytePacket() {
         int [] result = new int[100];
         byte i,j;
         byte buffer[] = new byte [3];
@@ -92,7 +105,19 @@ public class MakePacketTest extends TestCase {
     }
 
 
-    public void skipTestAllSpeed128Packets() {
+    /**
+     * Test all possible combinations of locomotive address
+     * (short and long forms) and speed value.  This ensures that
+     * MakePacket thinks it can find a way of representing each of those
+     * packets.  Note that the output packet is not checked
+     * for correctness.
+     * <P>
+     * Unfortunately, due to the number of trials, this takes
+     * too long to be included in normal runs.  Hence it's 
+     * name has been modified so that JUnit will not
+     * routinely select it to be run.
+     */
+    public void suppressTestAllSpeed128Packets() {
         int [] result = new int[100];
         int addressRange,speedRange;
         byte buffer[] = new byte [6];
@@ -129,7 +154,7 @@ public class MakePacketTest extends TestCase {
     }
     
     
-    public void skipTestAllopsCvWrite() {
+    public void testAllOpsCvWrite() {
         int [] result = new int[100];
         int addressRange,cvNum,data;
         byte buffer[] = new byte [6];
