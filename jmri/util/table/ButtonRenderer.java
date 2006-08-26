@@ -73,12 +73,15 @@ public class ButtonRenderer extends JButton
         if (value == null) {
             setText("");
             setIcon(null);
+            setEnabled(false);
         } else if (value instanceof Icon) {
             setText("");
             setIcon((Icon)value);
+            setEnabled(true);
         } else {
             setText(value.toString());
             setIcon(null);
+            setEnabled(true);
         }
     }
 

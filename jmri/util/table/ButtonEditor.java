@@ -51,7 +51,7 @@ public class ButtonEditor extends BasicCellEditor
         return value;
     }
 
-    public void editingStarted(EventObject event) {
+    public void editingStarted(EventObject event) {        
         // Edit starting - click the button if necessary
         if (!(event instanceof MouseEvent)) {
             // Keyboard event - click the button
@@ -82,12 +82,15 @@ public class ButtonEditor extends BasicCellEditor
         if (value == null) {
             button.setText("");
             button.setIcon(null);
+            button.setEnabled(false);
         } else if (value instanceof Icon) {
             button.setText("");
             button.setIcon((Icon)value);
+            button.setEnabled(true);
         } else {
             button.setText(value.toString());
             button.setIcon(null);
+            button.setEnabled(true);
         }
     }
 
