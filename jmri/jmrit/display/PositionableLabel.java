@@ -28,7 +28,7 @@ import javax.swing.JRadioButtonMenuItem;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 
 public class PositionableLabel extends JLabel
@@ -175,58 +175,11 @@ public class PositionableLabel extends JLabel
             });
         } else if (text && popup == null) {
             popup = new JPopupMenu();
-            JMenu sizeMenu = new JMenu("Font size");
-            fontButtonGroup = new ButtonGroup();
-            addFontMenuEntry(sizeMenu, 6);
-            addFontMenuEntry(sizeMenu, 8);
-            addFontMenuEntry(sizeMenu, 10);
-            addFontMenuEntry(sizeMenu, 11);
-            addFontMenuEntry(sizeMenu, 12);
-            addFontMenuEntry(sizeMenu, 14);
-            addFontMenuEntry(sizeMenu, 16);
-            addFontMenuEntry(sizeMenu, 20);
-            addFontMenuEntry(sizeMenu, 24);
-            addFontMenuEntry(sizeMenu, 28);
-            addFontMenuEntry(sizeMenu, 32);
-            addFontMenuEntry(sizeMenu, 36);
-            popup.add(sizeMenu);
+            popup.add(makeFontSizeMenu());
 
-            JMenu styleMenu = new JMenu("Font style");
-            styleMenu.add(italic = newStyleMenuItem(new AbstractAction("Italic") {
-                public void actionPerformed(ActionEvent e) {
-                    if (log.isDebugEnabled())
-                        log.debug("When style item selected "+((String)getValue(NAME))
-                                    +" italic state is "+italic.isSelected());
-                    if (italic.isSelected()) setFontStyle(Font.ITALIC, 0);
-                    else setFontStyle(0, Font.ITALIC);
-                }
-              }, Font.ITALIC));
+            popup.add(makeFontStyleMenu());
 
-            styleMenu.add(bold = newStyleMenuItem(new AbstractAction("Bold") {
-                public void actionPerformed(ActionEvent e) {
-                    if (log.isDebugEnabled())
-                        log.debug("When style item selected "+((String)getValue(NAME))
-                                    +" bold state is "+bold.isSelected());
-                    if (bold.isSelected()) setFontStyle(Font.BOLD, 0);
-                    else setFontStyle(0, Font.BOLD);
-                }
-              }, Font.BOLD));
-            popup.add(styleMenu);
-
-            JMenu colorMenu = new JMenu("Font color");
-            colorButtonGroup = new ButtonGroup();
-            addColorMenuEntry(colorMenu, "Black", Color.black);
-            addColorMenuEntry(colorMenu, "Dark Gray",Color.darkGray);
-            addColorMenuEntry(colorMenu, "Gray",Color.gray);
-            addColorMenuEntry(colorMenu, "Light Gray",Color.lightGray);
-            addColorMenuEntry(colorMenu, "White",Color.white);
-            addColorMenuEntry(colorMenu, "Red",Color.red);
-            addColorMenuEntry(colorMenu, "Orange",Color.orange);
-            addColorMenuEntry(colorMenu, "Yellow",Color.yellow);
-            addColorMenuEntry(colorMenu, "Green",Color.green);
-            addColorMenuEntry(colorMenu, "Blue",Color.blue);
-            addColorMenuEntry(colorMenu, "Magenta",Color.magenta);
-            popup.add(colorMenu);
+            popup.add(makeFontColorMenu());
 
             addFixedItem(popup);
             addShowTooltipItem(popup);
@@ -244,6 +197,24 @@ public class PositionableLabel extends JLabel
         if (popup != null) popup.show(e.getComponent(), e.getX(), e.getY());
     }
 
+    JMenu makeFontSizeMenu() {
+        JMenu sizeMenu = new JMenu("Font size");
+        fontButtonGroup = new ButtonGroup();
+        addFontMenuEntry(sizeMenu, 6);
+        addFontMenuEntry(sizeMenu, 8);
+        addFontMenuEntry(sizeMenu, 10);
+        addFontMenuEntry(sizeMenu, 11);
+        addFontMenuEntry(sizeMenu, 12);
+        addFontMenuEntry(sizeMenu, 14);
+        addFontMenuEntry(sizeMenu, 16);
+        addFontMenuEntry(sizeMenu, 20);
+        addFontMenuEntry(sizeMenu, 24);
+        addFontMenuEntry(sizeMenu, 28);
+        addFontMenuEntry(sizeMenu, 32);
+        addFontMenuEntry(sizeMenu, 36);
+        return sizeMenu;
+    }
+    
     void addFontMenuEntry(JMenu menu, final int size) {
         JRadioButtonMenuItem r = new JRadioButtonMenuItem(""+size);
         r.addActionListener(new ActionListener() {
@@ -261,6 +232,47 @@ public class PositionableLabel extends JLabel
         setSize(getPreferredSize().width, getPreferredSize().height);
     }
 
+    JMenu makeFontStyleMenu() {
+        JMenu styleMenu = new JMenu("Font style");
+        styleMenu.add(italic = newStyleMenuItem(new AbstractAction("Italic") {
+            public void actionPerformed(ActionEvent e) {
+                if (log.isDebugEnabled())
+                    log.debug("When style item selected "+((String)getValue(NAME))
+                                +" italic state is "+italic.isSelected());
+                if (italic.isSelected()) setFontStyle(Font.ITALIC, 0);
+                else setFontStyle(0, Font.ITALIC);
+            }
+          }, Font.ITALIC));
+
+        styleMenu.add(bold = newStyleMenuItem(new AbstractAction("Bold") {
+            public void actionPerformed(ActionEvent e) {
+                if (log.isDebugEnabled())
+                    log.debug("When style item selected "+((String)getValue(NAME))
+                                +" bold state is "+bold.isSelected());
+                if (bold.isSelected()) setFontStyle(Font.BOLD, 0);
+                else setFontStyle(0, Font.BOLD);
+            }
+          }, Font.BOLD));
+         return styleMenu;     
+    }
+    
+    JMenu makeFontColorMenu() {
+        JMenu colorMenu = new JMenu("Font color");
+        colorButtonGroup = new ButtonGroup();
+        addColorMenuEntry(colorMenu, "Black", Color.black);
+        addColorMenuEntry(colorMenu, "Dark Gray",Color.darkGray);
+        addColorMenuEntry(colorMenu, "Gray",Color.gray);
+        addColorMenuEntry(colorMenu, "Light Gray",Color.lightGray);
+        addColorMenuEntry(colorMenu, "White",Color.white);
+        addColorMenuEntry(colorMenu, "Red",Color.red);
+        addColorMenuEntry(colorMenu, "Orange",Color.orange);
+        addColorMenuEntry(colorMenu, "Yellow",Color.yellow);
+        addColorMenuEntry(colorMenu, "Green",Color.green);
+        addColorMenuEntry(colorMenu, "Blue",Color.blue);
+        addColorMenuEntry(colorMenu, "Magenta",Color.magenta);
+        return colorMenu;
+    }
+        
     void addColorMenuEntry(JMenu menu, final String name, final Color color) {
         ActionListener a = new ActionListener() {
             final String desiredName = name;
