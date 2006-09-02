@@ -2,10 +2,12 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2003, 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: ZTC_Stabilized.xml,v 1.2 2005-05-01 23:25:43 jacobsen Exp $ -->
+<!-- $Id: ZTC_Stabilized.xml,v 1.3 2006-09-02 22:55:27 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Phil Grainger (phil.grainger@ca.com)"
-			version="1" lastUpdated="20030805" />
+		<version author="Ian Birchenough(ian@birchenough.demon.co.uk)"
+			version="2" lastUpdated="20060521" />
+        <version author="Phil Grainger (phil.grainger@ca.com)"
+            version="1" lastUpdated="20030805" />
 
 <!-- ZTC Speed Stabilized decoders -->
 
@@ -74,6 +76,12 @@
 		         </enumVal>
 			</variable>
 
+		<variable label="Extended Address (0-9999)" CV="17"
+			item="Long Address" default="100"
+			comment="4 digit address (Range 0-9999)">
+			<longAddressVal/>
+		</variable>
+
 		<variable label="Normal direction of motion" CV="29"
 				mask="XXXXXXXV"
 		        item="Locomotive Direction">
@@ -99,6 +107,12 @@
 				<enumChoice choice="On"/>
 				</enumVal>
 			</variable>
+
+		<variable label="Address Format" CV="29" mask="XXVXXXXX">
+			<enumVal>
+				<enumChoice choice="One byte (short) address"/>
+				<enumChoice choice="Two byte (extended) address"/>
+				</enumVal></variable>
 
 <variable label="Static Compensation" CV="55"				
 item="Static Compensation" default="128"
@@ -150,6 +164,7 @@ item="Decay Rate" default="0"
 </pane>
 
 </decoder-config>
+
 
 
 
