@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <!--Written by JMRI version 1.7.4 on Fri Jun 16 08:13:12 PDT 2006 $Id: decoderIndex.xml,v 1.87 2006-06-16 15:16:58 jacobsen Exp $-->
-  <decoderIndex version="109">
+  <!--Written by JMRI version 1.7.5 on Sat Sep 02 15:53:11 PDT 2006 $Id: decoderIndex.xml,v 1.88 2006-09-02 22:54:55 jacobsen Exp $-->
+  <decoderIndex version="111">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -317,6 +317,12 @@
           <output name="6" label="Pad" connection="solder" />
           <size length="3.11" width="0.426" height="0.195" units="inches" />
         </model>
+        <model model="DN163K1C" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="4" label="Pad" connection="solder" />
+          <output name="5" label="Pad" connection="solder" />
+          <output name="6" label="Pad" connection="solder" />
+          <size length="3.11" width="0.426" height="0.195" units="inches" />
+        </model>
         <model model="DN163K2" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="4" label="Pad" connection="solder" />
           <output name="5" label="Pad" connection="solder" />
@@ -343,6 +349,24 @@
       </family>
       <family name="SFX Sound Decoders" mfg="Digitrax" lowVersionID="49" highVersionID="49" type="locomotive" file="Digitrax_0SFX.xml">
         <model model="EVO GE Diesel" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <output name="4" label="Violet" connection="wire" />
+          <output name="5" label="Pad" connection="solder" />
+          <output name="6" label="Pad" connection="solder" />
+          <size length="1.05" width="0.67" height="0.25" units="inches" />
+        </model>
+        <model model="AC4400" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <output name="4" label="Violet" connection="wire" />
+          <output name="5" label="Pad" connection="solder" />
+          <output name="6" label="Pad" connection="solder" />
+          <size length="1.05" width="0.67" height="0.25" units="inches" />
+        </model>
+        <model model="SD38 2" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <output name="4" label="Violet" connection="wire" />
+          <output name="5" label="Pad" connection="solder" />
+          <output name="6" label="Pad" connection="solder" />
+          <size length="1.05" width="0.67" height="0.25" units="inches" />
+        </model>
+        <model model="SFX064D" numOuts="6" numFns="8" maxMotorCurrent="none" formFactor="HO" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <output name="4" label="Violet" connection="wire" />
           <output name="5" label="Pad" connection="solder" />
           <output name="6" label="Pad" connection="solder" />
@@ -495,6 +519,12 @@
           <output name="2" label="Yellow" connection="unspecified" />
           <output name="3" label="Green" connection="unspecified" />
           <output name="4" label="Viol" connection="unspecified" />
+        </model>
+      </family>
+      <family name="ZTC WhisperDrive" mfg="Kuehn" lowVersionID="0" highVersionID="255" type="locomotive" file="Kuehn_ZTC217.xml">
+        <model model="ZTC217" numOuts="2" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="White" connection="unspecified" />
+          <output name="2" label="Yellow" connection="unspecified" />
         </model>
       </family>
       <family name="Lenz 4th gen BEMF decoders" mfg="Lenz" lowVersionID="51" type="locomotive" file="Lenz_51.xml">
@@ -754,6 +784,12 @@
         <model model="Synch Diesel Sound 1633" numOuts="4" numFns="12" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <!-- note only F0 to F12 are NMRA compatible -->
           <size length="48" width="17" height="7.5" units="mm" />
+        </model>
+      </family>
+      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_1636.xml">
+        <model model="Synch Diesel Sound 1636" numOuts="2" numFns="12" maxTotalCurrent="0.75A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <!-- note only F0 to F12 are NMRA compatible -->
+          <size length="70" width="9.2" height="5.8" units="mm" />
         </model>
       </family>
       <family name="MRC AD370 Sound decoders" mfg="MRC" comment="MRC Sound Decoders" lowVersionID="32" type="locomotive" file="MRC_AD370.xml">
@@ -1779,6 +1815,15 @@
           <output name="Ditch" connection="unspecified" />
           <output name="Motor" connection="unspecified" />
         </model>
+        <model model="VO-1000N" numOuts="4" numFns="14" lowVersionID="30" highVersionID="37" maxMotorCurrent="1A (peak=2A)" formFactor="N" comment="Fits Atlas N Scale: VO-1000" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+        </model>
         <model model="T4X" numOuts="4" numFns="14" lowVersionID="30" highVersionID="37" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <size length="1.010" width="0.665" height="0.250" units="inches" />
           <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
@@ -1840,6 +1885,21 @@
       </family>
       <family name="SRC8" mfg="Team Digital" type="stationary" comment="SRC8 is not stationary decoder, but it can be programmed in the usual way" file="TD_SRC8.xml">
         <model model="SRC8" lowVersionID="12" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+      </family>
+      <family name="Mini-Multiprotocoll Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="8" highVersionID="8" type="locomotive" file="Uhlenbrock_73500.xml">
+        <model model="73500" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+        <model model="73510" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+      </family>
+      <family name="Standard Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="1" highVersionID="20" type="locomotive" file="Uhlenbrock_74400.xml">
+        <model model="74400" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+        <model model="74420" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+      </family>
+      <family name="Multiprotocoll Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="9" highVersionID="20" type="locomotive" file="Uhlenbrock_76400.xml">
+        <model model="76400" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+        <model model="76420" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+      </family>
+      <family name="Multiprotocoll Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="1" highVersionID="20" type="locomotive" file="Uhlenbrock_77500.xml">
+        <model model="77500" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
       <family name="Umelec ATLPlus Engine Module" mfg="Umelec Ing Buero" type="locomotive" file="Umelec_ATL2051.xml">
         <model model="ATL2051" lowVersionID="59" highVersionID="59" comment="For DC Motors, or AC Motors with Infrared Light Barrier" maxInputVolts="12V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="HO" numOuts="9" numFns="8" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
