@@ -16,7 +16,7 @@ package jmri;
  * invoked by one or more Sensors (up to the maximum allowed).
  *
  * @author			Dave Duchamp Copyright (C) 2004
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public interface Route extends NamedBean {
 
@@ -63,6 +63,11 @@ public interface Route extends NamedBean {
     static final int VETOACTIVE = 2;  // sensor must be active for route to fire
     static final int VETOINACTIVE = 3;  // sensor must be inactive for route to fire
     
+    static final int ONCLOSED = 2;    // route fires if turnout goes closed
+    static final int ONTHROWN = 4;  // route fires if turnout goes thrown
+    static final int VETOCLOSED = 8;  // turnout must be closed for route to fire
+    static final int VETOTHROWN = 16;  // turnout must be thrown for route to fire
+
     /**
      * Method to delete all control Sensors from this Route
      */
