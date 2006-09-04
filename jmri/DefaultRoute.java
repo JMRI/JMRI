@@ -6,7 +6,7 @@ package jmri;
  * Class providing the basic logic of the Route interface.
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 public class DefaultRoute extends AbstractNamedBean
     implements Route, java.io.Serializable {
@@ -253,15 +253,9 @@ public class DefaultRoute extends AbstractNamedBean
         log.debug("check activated");
         if (!activated) return;
         
-        log.debug("check for veto");
-        // if we got here, now check any vetos
-        for (int i = 0; i < mNumSensors; i++) {
-            int s = mSensors[i].getKnownState();
-            int mode = getRouteSensorMode(i);
-            if (  ( (mode==VETOACTIVE) && (s==Sensor.ACTIVE) )
-                    || ( (mode==VETOINACTIVE) && (s==Sensor.INACTIVE) ) )
-                 return;
-        }
+        // check for veto of change
+        if (isVetoed()) return; // don't fire
+
         // and finally set the route
         if (log.isDebugEnabled()) log.debug("call setRoute for "+getSystemName());
         setRoute();
@@ -304,6 +298,9 @@ public class DefaultRoute extends AbstractNamedBean
                             if (e.getPropertyName().equals("KnownState")) {
                                 int now = ((Integer) e.getNewValue()).intValue();
                                 if (now==mControlTurnoutState) { 
+                                    // turnout OK, check for vetoes
+                                    if (isVetoed()) return; // skip setting route
+                                    // OK, passed all checks, set the route
                                     setRoute();
                                 }
                             }
@@ -318,6 +315,25 @@ public class DefaultRoute extends AbstractNamedBean
         }
     }
 
+    /**
+     * Internal method to check whether
+     * operation of the route has been vetoed by a sensor
+     * or turnout setting.
+     * @returns true if veto, i.e. don't fire route; false if no veto, OK to fire
+     */
+    boolean isVetoed() {
+        log.debug("check for veto");
+        // check sensors
+        for (int i = 0; i < mNumSensors; i++) {
+            int s = mSensors[i].getKnownState();
+            int mode = getRouteSensorMode(i);
+            if (  ( (mode==VETOACTIVE) && (s==Sensor.ACTIVE) )
+                    || ( (mode==VETOINACTIVE) && (s==Sensor.INACTIVE) ) )
+                 return true;  // veto set
+        }
+        return false;
+    }
+    
     /**
      * Method to deactivate the Route 
      * Deactivates Route based on a list of Sensors and a control Turnout
