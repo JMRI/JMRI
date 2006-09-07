@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ConsistTool.html,v 1.5 2006-02-27 21:27:41 pbender Exp $ -->
+<!-- $Id: ConsistTool.html,v 1.6 2006-09-07 16:50:12 pbender Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -141,7 +141,7 @@
 		<tr>
 		   <td>Manufacturer</td>
                    <td>Trade Name</td>
-                   <td>Useage Notes</td>
+                   <td>Usage Notes</td>
                 </tr>
                 <tr>
                    <td>Digitrax</td>
@@ -171,7 +171,7 @@
 
              <p>
                 The common trait shared by all versions of CSAC is 
-                that a seperate speed and direction command is sent 
+                that a separate speed and direction command is sent 
                 to the track for each locomotive that is in the consist.
              </p>
 
@@ -179,10 +179,10 @@
 	<li> 
              <p>
                 a <i>Decoder Assisted Consist</i> (DAC), Which is also 
-                refered to frequently as an <i>Advanced Consist</i>.
+                referred to frequently as an <i>Advanced Consist</i>.
              </p>  
              <p>
-                The NMRA has set asside CV19 as a dedicated location for 
+                The NMRA has set aside CV19 as a dedicated location for 
                 consist addresses.
              </p>
              <p>
@@ -238,7 +238,7 @@
         </h3>
         <p>
            JMRI provides support for consists using the consist tool, 
-           which is accessable through the tools menu of any JMRI 
+           which is accessible through the tools menu of any JMRI 
            application.
         </p>
         <p>
@@ -261,7 +261,7 @@
               The <i>Generic Consist Manager</i> is used on any system 
               which does not have it's own consist manager, but supports 
               operations mode programming.  This manager is only 
-              able to manipulat Decoder Assisted Consists.
+              able to manipulate Decoder Assisted Consists.
            </p>
            <p>
               <i>The Generic Consist Manager bypasses any routines the 
@@ -289,6 +289,39 @@
               of the consisted locomotive addresses or from the consist 
               address.
            </p>
+           <p>
+              The XPressNet Consist Manager is capable of reading consist 
+              information from the command station, both for Advanced Consists 
+              and Lenz Double Headers.  
+           </p>
+        </li>
+        <li>
+           <p>
+	      The <i>EasyDCC Consist Manager</i> uses support provided 
+              by CVP's EasyDCC system to manipulate consists.  This 
+              consist manager is able to construct EasyDCC "Standard Consists" 
+              in addition to Advanced Consists.
+           </p>
+           <p>
+              CVP does not provide a method to construct Advanced Consists.  
+              As a result, advanced consists are created by bypassing the 
+              command station.  Unlike the Generic Consist Manager, the 
+              EasyDCC Consist Manager creates these by issuing a Consist 
+              Control packet to the track.  This allows inclusion of 
+              locomotives that do not permit writing CV19 using 
+              operations mode programming.  As with the Generic Consist 
+              Manager, you must use the short address selected as the consist 
+              address to control the consist.
+           <p>
+              For EasyDCC Standard Consists, there are a couple of restrictions               imposed by the EasyDCC Protocol.  First, as with consists created               on the command station directly, consists are limited to 8 
+              addresses.  Second, unlike consists created on the command station              directly, CVP limits the standard consist address to addresses 
+              between 1 and 255.
+           </p>
+           <p>
+              The EasyDCC Consist Manager will read Standard Consist information
+              for consists in the allowed range (1-255) from the command 
+              station's memory.  Since the command station is bypassed to create
+              Advanced Consists, these cannot be read from the command station.
         </li>
         </ul>
 
@@ -302,7 +335,7 @@
            Decoder Assisted) Consist and a Command Station Assisted 
            Consist.  If the Command Station Assisted Consists are not 
            supported by the tool for your system, these selections will be 
-           greyed out.
+           grayed out.
         </p>
 	<p>
            The box Next to the label <b>Consist:</b> is used to specify the 
@@ -340,7 +373,7 @@
         </p>
         <p>
            You may notice from the previous screen shots that this box is 
-           greyed out until a lead locomotive is selected.  With 
+           grayed out until a lead locomotive is selected.  With 
            subsequent locomotives, you can check this box to indicate the
            direction of the locomotive relative to the lead locomotive.
         </p>
@@ -375,12 +408,12 @@
         </p>
         <p>
            To Add a new consist, you can select the blank entry in the 
-           dropdown box next to the current consist's ID.
+           drop-down box next to the current consist's ID.
         </p>
 	   <image src=Images/ConsistTool-NewConsist.jpg alt="Select New Consist">
         <p>
            To Recall an existing consist, you can select the appropriate 
-           entry from the dropdown box next to the current consist's ID.
+           entry from the drop-down box next to the current consist's ID.
         </p>
 	   <image src=Images/ConsistTool-SelectConsist.jpg alt="Select a Consist">
 <!-- Footer -->
