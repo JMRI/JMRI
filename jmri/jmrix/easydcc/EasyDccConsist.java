@@ -5,7 +5,7 @@
  * it uses the EasyDcc specific commands to build a consist.
  *
  * @author                      Paul Bender Copyright (C) 2006
- * @version                     $Revision: 1.1 $
+ * @version                     $Revision: 1.2 $
  */
 
 package jmri.jmrix.easydcc;
@@ -273,7 +273,7 @@ public class EasyDccConsist extends jmri.DccConsist implements EasyDccListener {
 	}
 
         /*
-	 *  Remove a Locomotive from a Lenz Double Header
+	 *  Remove a Locomotive from an EasyDCC Standard Consist.
 	 *  @param address is the Locomotive address to add to the locomotive
          */
 	public synchronized void removeFromCSConsist(DccLocoAddress LocoAddress) {
