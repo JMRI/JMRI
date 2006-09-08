@@ -17,7 +17,7 @@ import java.net.ServerSocket;
  * back to an explicit implementation when running on Java 1.1
  *
  * @author Bob Jacobsen  Copyright 2006
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class SocketUtil {
@@ -30,8 +30,9 @@ public class SocketUtil {
             return  socket.getRemoteSocketAddress().toString();
         } catch (Throwable e) {
         } finally {
-            return "<unknown>";
+//            return "<unknown>";
         }
+        return "<unknown>";
 
     }
     
