@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
  * Frame to control and connect Xpa+Modem connected to an XPressNet Based 
  * command station via SerialDriver interface and comm port
  * @author			Paul Bender   Copyright (C) 2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SerialDriverFrame extends jmri.jmrix.SerialPortFrame {
 
@@ -25,7 +25,7 @@ public class SerialDriverFrame extends jmri.jmrix.SerialPortFrame {
 			adapter.configure();
 
 			// hide this frame, since we're done
-			hide();
+      setVisible(false);
 		} else {
 			// not selected
 			JOptionPane.showMessageDialog(this, "Please select a port name first");
