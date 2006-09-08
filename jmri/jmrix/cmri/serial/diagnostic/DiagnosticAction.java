@@ -15,7 +15,7 @@ import jmri.jmrix.cmri.serial.SerialSensorManager;
  *       			DiagnosticFrame object
  *
  * @author                  Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class DiagnosticAction 	extends AbstractAction {
 
@@ -33,7 +33,7 @@ public class DiagnosticAction 	extends AbstractAction {
         catch (Exception ex) {
             log.error("Exception: "+ex.toString());
         }
-        f.show();
+        f.setVisible(true);
     }
 
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DiagnosticAction.class.getName());

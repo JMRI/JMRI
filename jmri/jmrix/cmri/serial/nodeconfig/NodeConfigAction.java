@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  *       			NodeConfigFrame object
  *
  * @author	Bob Jacobsen    Copyright (C) 2001
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class NodeConfigAction extends AbstractAction {
 
@@ -29,7 +29,7 @@ public class NodeConfigAction extends AbstractAction {
             log.error("Exception: "+ex.toString());
             }
         f.setLocation(100,30);
-        f.show();
+        f.setVisible(true);
     }
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NodeConfigAction.class.getName());
 }

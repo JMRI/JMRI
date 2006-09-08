@@ -12,7 +12,7 @@ import jmri.jmrix.SerialPortAdapter;
 /**
  * Frame to control and connect C/MRI serial
  * @author    Bob Jacobsen   Copyright (C) 2001
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 
 public class SerialDriverFrame extends jmri.jmrix.SerialPortFrame {
@@ -32,7 +32,7 @@ public class SerialDriverFrame extends jmri.jmrix.SerialPortFrame {
             if (errCode == null)	{
                 adapter.configure();
                 // hide this frame, since we're done
-                hide();
+                setVisible(false);
             } else {
                 JOptionPane.showMessageDialog(this,errCode);
             }

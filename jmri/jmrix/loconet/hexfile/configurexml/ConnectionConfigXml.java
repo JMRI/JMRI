@@ -18,7 +18,7 @@ import org.jdom.Element;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -59,7 +59,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
             //log.error("starting HexFileFrame exception: "+ex.toString());
         }
         f.pack();
-        f.show();
+        f.setVisible(true);
 
         // register, so can be picked up
         getInstance();

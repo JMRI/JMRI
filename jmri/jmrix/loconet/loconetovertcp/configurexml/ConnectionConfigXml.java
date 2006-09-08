@@ -23,7 +23,7 @@ import org.jdom.Element;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -60,7 +60,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         JFrame f = new JFrame("LocoNetOverTcp network connection");
         f.getContentPane().add(new JLabel("Connecting to "+hostName+":"+portNumber));
         f.pack();
-        f.show();
+        f.setVisible(true);
 
         // slightly different, as not based on a serial port...
         // create the adapter
@@ -76,7 +76,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         // configure the other instance objects
         client.configure();
 
-        f.hide();
+        f.setVisible(false);
         f.dispose();
 
         // register, so can be picked up

@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  *       			ListFrame object
  *
  * @author   Dave Duchamp Copyright (C) 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class ListAction extends AbstractAction {
 
@@ -28,7 +28,7 @@ public class ListAction extends AbstractAction {
         catch (Exception ex) {
             log.error("Exception: "+ex.toString());
         }
-        f.show();
+        f.setVisible(true);
     }
 
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ListAction.class.getName());

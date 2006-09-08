@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
  *       			SerialMonFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SerialMonAction 			extends AbstractAction {
 
@@ -30,7 +30,7 @@ public class SerialMonAction 			extends AbstractAction {
 		catch (Exception ex) {
 			log.warn("SerialMonAction starting SerialMonFrame: Exception: "+ex.toString());
 			}
-		f.show();
+		f.setVisible(true);
 	}
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialMonAction.class.getName());
