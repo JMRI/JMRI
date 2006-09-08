@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
  *       			SprogMonFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 public class SprogMonAction 			extends AbstractAction {
@@ -27,7 +27,7 @@ public class SprogMonAction 			extends AbstractAction {
 		catch (Exception ex) {
 			log.warn("SprogMonAction starting SprogMonFrame: Exception: "+ex.toString());
 			}
-		f.show();
+		f.setVisible(true);
 	}
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogMonAction.class.getName());

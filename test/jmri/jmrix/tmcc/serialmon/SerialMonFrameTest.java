@@ -32,7 +32,7 @@ public class SerialMonFrameTest extends TestCase {
 			log.warn("SerialMonAction starting SerialMonFrame: Exception: "+ex.toString());
 			}
         f.pack();
-        f.show();
+        f.setVisible(true);
         
         SerialReply m = new SerialReply();
         m.setOpCode(0xFE);

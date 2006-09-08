@@ -28,7 +28,7 @@ import net.roydesign.mac.MRJAdapter;
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
  * @author  Dennis Miller  Copyright 2005
- * @version     $Revision: 1.31 $
+ * @version     $Revision: 1.32 $
  */
 public class Apps extends JPanel {
 
@@ -151,7 +151,7 @@ public class Apps extends JPanel {
             prefsFrame.getContentPane().add(prefs);
             prefsFrame.pack();
         }
-        prefsFrame.show();
+        prefsFrame.setVisible(true);
     }
 
     protected void editMenu(JMenuBar menuBar, JFrame frame) {

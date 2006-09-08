@@ -18,7 +18,7 @@ import junit.framework.TestSuite;
  * Test PaneProgFrame
  *
  * @author			Bob Jacobsen
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class PaneProgFrameTest extends TestCase {
 
@@ -62,7 +62,7 @@ public class PaneProgFrameTest extends TestCase {
 
         p.readConfig(root, new RosterEntry());
         p.pack();
-        p.show();
+        p.setVisible(true);
     }
 
     // static variables for internal classes to report their interpretations

@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
  *       			SprogIIUpdateFrame object
  *
  * @author			Andrew crosland    Copyright (C) 2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 public class SprogIIUpdateAction 	extends SprogUpdateAction {
@@ -27,7 +27,7 @@ public class SprogIIUpdateAction 	extends SprogUpdateAction {
     catch (Exception ex) {
       log.warn("SprogIIUpdateAction starting SprogIIUpdateFrame: Exception: "+ex.toString());
     }
-    f.show();
+    f.setVisible(true);
   }
 
   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogIIUpdateAction.class.getName());

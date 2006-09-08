@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the MonitorFrame class
  * @author		Bob Jacobsen  Copyright 2005
- * @version		$Revision: 1.2 $
+ * @version		$Revision: 1.3 $
  */
 public class MonitorFrameTest extends TestCase {
 
@@ -22,7 +22,7 @@ public class MonitorFrameTest extends TestCase {
     public void testShow() throws Exception {
         MonitorFrame f = new MonitorFrame();
         f.initComponents();
-        f.show();
+        f.setVisible(true);
         f.asciiFormattedMessage(PocketTesterTest.version);
         f.asciiFormattedMessage(PocketTesterTest.speed0003A);
         f.asciiFormattedMessage(PocketTesterTest.idlePacket);

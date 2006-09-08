@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the MonitorFrame class
  * @author		Bob Jacobsen  Copyright 2005
- * @version		$Revision: 1.1 $
+ * @version		$Revision: 1.2 $
  */
 public class PacketTableFrameTest extends TestCase {
 
@@ -22,7 +22,7 @@ public class PacketTableFrameTest extends TestCase {
     public void testShow() throws Exception {
         PacketTableFrame f = new PacketTableFrame();
         f.initComponents();
-        f.show();
+        f.setVisible(true);
         f.asciiFormattedMessage(PocketTesterTest.speed012A);
         f.asciiFormattedMessage(PocketTesterTest.speed0123A);
         f.asciiFormattedMessage(PocketTesterTest.speed012A);

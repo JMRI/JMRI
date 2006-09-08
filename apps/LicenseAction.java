@@ -13,7 +13,7 @@ import java.io.*;
  * Swing action to display the JMRI license
  *
  * @author	    Bob Jacobsen    Copyright (C) 2004
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class LicenseAction extends AbstractAction {
 
@@ -49,7 +49,7 @@ public class LicenseAction extends AbstractAction {
 		
 		frame.pack();
 		frame.setSize(new Dimension(660, 550));
-		frame.show();
+		frame.setVisible(true);
 		
 		// start scrolled to top
 		JScrollBar b = jScrollPane.getVerticalScrollBar();

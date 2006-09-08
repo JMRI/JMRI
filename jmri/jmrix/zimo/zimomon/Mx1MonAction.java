@@ -5,7 +5,7 @@
  *       		Mx1MonFrame object
  *
  * @author		Bob Jacobsen    Copyright (C) 2002
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  *
  * Adapted by Sip Bosch for use with MX-1
  *
@@ -32,7 +32,7 @@ public class Mx1MonAction 			extends AbstractAction {
 		catch (Exception ex) {
 			log.warn("Mx1MonAction starting Mx1MonFrame: Exception: "+ex.toString());
 			}
-		f.show();
+		f.setVisible(true);
 
 	}
 
