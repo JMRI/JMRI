@@ -28,7 +28,7 @@ public class MS100Frame extends jmri.jmrix.SerialPortFrame {
 			adapter.openPort((String) portBox.getSelectedItem(),"MS100Frame");
 			adapter.configure();
 			// hide this frame, since we're done
-			hide();
+      setVisible(false);
 		} else {
 			// not selected
 			JOptionPane.showMessageDialog(this, "Please select a port name first");

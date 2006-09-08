@@ -9,7 +9,7 @@ import javax.swing.*;
 /**
  * Frame to control and connect a serial port as two sensors
  * @author			Bob Jacobsen   Copyright (C) 2003
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SerialSensorFrame extends jmri.jmrix.SerialPortFrame {
 
@@ -26,7 +26,7 @@ public class SerialSensorFrame extends jmri.jmrix.SerialPortFrame {
             adapter.configure();
 
             // hide this frame, since we're done
-            hide();
+            setVisible(false);
         } else {
             // not selected
             JOptionPane.showMessageDialog(this, "Please select a port name first");

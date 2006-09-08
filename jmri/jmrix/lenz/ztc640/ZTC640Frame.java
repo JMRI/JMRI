@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 /**
  * Frame to control and connect XPressNet via ZTC640 interface
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class ZTC640Frame extends jmri.jmrix.SerialPortFrame {
 
@@ -38,7 +38,7 @@ public class ZTC640Frame extends jmri.jmrix.SerialPortFrame {
 				   		"ZTC640 not ready", JOptionPane.ERROR_MESSAGE);
 				}
 				// hide this frame, since we're done
-				hide();
+        setVisible(false);
 			} else {
 				JOptionPane.showMessageDialog(this,errCode);
 			}

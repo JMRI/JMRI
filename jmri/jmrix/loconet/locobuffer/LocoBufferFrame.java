@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 /**
  * Frame to control and connect LocoNet via LocoBuffer interface and comm port
  * @author      Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class LocoBufferFrame extends jmri.jmrix.SerialPortFrame {
 
@@ -39,7 +39,7 @@ public class LocoBufferFrame extends jmri.jmrix.SerialPortFrame {
 				   		"LocoBuffer not ready", JOptionPane.ERROR_MESSAGE);
 				}
 				// hide this frame, since we're done
-				hide();
+        setVisible(false);
 			} else {
 				JOptionPane.showMessageDialog(this,errCode);
 			}

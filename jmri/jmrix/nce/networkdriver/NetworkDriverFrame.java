@@ -12,7 +12,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * Frame to control and connect NCE command station via NetworkDriver
  * interface.
  * @author			Bob Jacobsen   Copyright (C) 2003
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class NetworkDriverFrame extends jmri.jmrix.SerialPortFrame {
 
@@ -29,7 +29,7 @@ public class NetworkDriverFrame extends jmri.jmrix.SerialPortFrame {
             adapter.configure();
 
             // hide this frame, since we're done
-            hide();
+            setVisible(false);
         } else {
             // not selected
             JOptionPane.showMessageDialog(this, "Please select a port name first");

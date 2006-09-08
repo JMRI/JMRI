@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 /**
  * Frame to control and connect XPressNet via LI100 interface and comm port
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 2.1 $
+ * @version			$Revision: 2.2 $
  */
 public class LI100Frame extends jmri.jmrix.SerialPortFrame {
 
@@ -38,7 +38,7 @@ public class LI100Frame extends jmri.jmrix.SerialPortFrame {
 				   		"LI100 not ready", JOptionPane.ERROR_MESSAGE);
 				}
 				// hide this frame, since we're done
-				hide();
+        setVisible(false);
 			} else {
 				JOptionPane.showMessageDialog(this,errCode);
 			}

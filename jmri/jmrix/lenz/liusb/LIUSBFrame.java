@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 /**
  * Frame to control and connect XPressNet via LIUSB interface
  * @author			Paul Bender   Copyright (C) 2005
- * @version			$Revision: 1.0 $
+ * @version			$Revision: 1.1 $
  */
 public class LIUSBFrame extends jmri.jmrix.SerialPortFrame {
 
@@ -38,7 +38,7 @@ public class LIUSBFrame extends jmri.jmrix.SerialPortFrame {
 				   		"LIUSB not ready", JOptionPane.ERROR_MESSAGE);
 				}
 				// hide this frame, since we're done
-				hide();
+        setVisible(false);
 			} else {
 				JOptionPane.showMessageDialog(this,errCode);
 			}

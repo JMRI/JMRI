@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 /**
  * Frame to control and connect to a LocoNet via LocoNetOverTcp protocol.
  * @author			Bob Jacobsen   Copyright (C) 2003
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class LnTcpDriverFrame extends jmri.jmrix.SerialPortFrame {
 
@@ -24,7 +24,7 @@ public class LnTcpDriverFrame extends jmri.jmrix.SerialPortFrame {
             adapter.configure();
 
             // hide this frame, since we're done
-            hide();
+            setVisible(false);
         } else {
             // not selected
             JOptionPane.showMessageDialog(this, "Please select a port name first");
