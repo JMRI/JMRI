@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  * DualDecoderTool
  *
  * @author    Bob Jacobsen    Copyright (C) 2001
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 
 public class DualDecoderToolAction extends AbstractAction {
@@ -31,7 +31,7 @@ public class DualDecoderToolAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
 
-        new DualDecoderSelectFrame().show();
+        new DualDecoderSelectFrame().setVisible(true);
 
     }
 

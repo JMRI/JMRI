@@ -10,7 +10,7 @@ import javax.swing.JLayeredPane;
  * Start a PanelEditor.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  * @see         jmri.jmrit.display.PanelEditorAction
  */
 public class PanelEditorAction extends AbstractAction {
@@ -31,10 +31,10 @@ public class PanelEditorAction extends AbstractAction {
         panel.setTitle();
 
         targetFrame.pack();
-        targetFrame.show();
+        targetFrame.setVisible(true);
 
         panel.pack();
-        panel.show();
+        panel.setVisible(true);
 
 	}
 }

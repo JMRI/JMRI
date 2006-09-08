@@ -73,7 +73,7 @@ import javax.swing.JTextArea;
  * so that Jython code can easily use some of the methods.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.30 $
+ * @version     $Revision: 1.31 $
  */
 public class AbstractAutomaton implements Runnable {
 
@@ -745,7 +745,7 @@ public class AbstractAutomaton implements Runnable {
                         synchronized (self) {
                             self.notifyAll(); // should be only one thread waiting, but just in case
                         }
-                        mFrame.hide();
+                        mFrame.setVisible(false);
                     }
                 });
                 mFrame.pack();
@@ -766,9 +766,9 @@ public class AbstractAutomaton implements Runnable {
                 Dimension size = mFrame.getSize();
                 mFrame.setLocation((screen.width-size.width)/2,(screen.height-size.height)/2);
                 // and show it to the user
-                mFrame.show();
+                mFrame.setVisible(true);
             }
-            else mFrame.hide();
+            else mFrame.setVisible(false);
         }
 
         /**
@@ -798,12 +798,12 @@ public class AbstractAutomaton implements Runnable {
                             synchronized (self) {
                                 self.notifyAll(); // should be only one thread waiting, but just in case
                             }
-                            debugWaitFrame.hide();
+                            debugWaitFrame.setVisible(false);
                         }
                     });
                     debugWaitFrame.pack();
                 }
-                debugWaitFrame.show();
+                debugWaitFrame.setVisible(true);
             }
         };
         javax.swing.SwingUtilities.invokeLater(r);

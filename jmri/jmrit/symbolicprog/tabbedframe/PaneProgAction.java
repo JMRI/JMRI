@@ -34,7 +34,7 @@ import javax.swing.JSeparator;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.25 $
+ * @version			$Revision: 1.26 $
  */
 public class PaneProgAction 			extends AbstractAction {
 
@@ -101,7 +101,7 @@ public class PaneProgAction 			extends AbstractAction {
                                                  title, "programmers"+File.separator+filename+".xml",
                                                  modePane.getProgrammer());
                     p.pack();
-                    p.show();
+                    p.setVisible(true);
 
                     // f.setVisible(false);
                     // f.dispose();
@@ -121,7 +121,7 @@ public class PaneProgAction 			extends AbstractAction {
 
         f.pack();
         if (log.isDebugEnabled()) log.debug("Tab-Programmer setup created");
-        f.show();
+        f.setVisible(true);
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PaneProgAction.class.getName());

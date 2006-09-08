@@ -49,7 +49,7 @@ import com.sun.java.util.collections.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.54 $
+ * @version $Revision: 1.55 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -208,7 +208,7 @@ public class PanelEditor extends JmriJFrame {
             JButton j = new JButton("Change icon...");
             j.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
-                        iconFrame.show();
+                        iconFrame.setVisible(true);
                     }
                 }
                                            );
@@ -254,7 +254,7 @@ public class PanelEditor extends JmriJFrame {
             JButton j = new JButton("Change icons...");
             j.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
-                        turnoutRFrame.show();
+                        turnoutRFrame.setVisible(true);
                     }
                 }
                                            );
@@ -300,7 +300,7 @@ public class PanelEditor extends JmriJFrame {
             JButton j = new JButton("Change icons...");
             j.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
-                        turnoutLFrame.show();
+                        turnoutLFrame.setVisible(true);
                     }
                 }
                                            );
@@ -345,7 +345,7 @@ public class PanelEditor extends JmriJFrame {
             JButton j = new JButton("Change icons...");
             j.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
-                        sensorFrame.show();
+                        sensorFrame.setVisible(true);
                     }
                 }
                                            );
@@ -390,7 +390,7 @@ public class PanelEditor extends JmriJFrame {
             JButton j = new JButton("Change icons...");
             j.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
-                        signalFrame.show();
+                        signalFrame.setVisible(true);
                     }
                 }
                                            );
@@ -853,7 +853,7 @@ public class PanelEditor extends JmriJFrame {
         menuBar.add(editMenu);
         editMenu.add(new AbstractAction("Open editor"){
                 public void actionPerformed(ActionEvent e) {
-                    self.show();
+                    self.setVisible(true);
                 }
             });
         targetFrame.setJMenuBar(menuBar);

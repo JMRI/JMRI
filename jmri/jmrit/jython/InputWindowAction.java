@@ -16,7 +16,7 @@ import jmri.util.PythonInterp;
  * global jython interpreter
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class InputWindowAction extends AbstractAction {
 
@@ -48,7 +48,7 @@ public class InputWindowAction extends AbstractAction {
         f.getContentPane().add(new InputWindow());
 
         f.pack();
-        f.show();
+        f.setVisible(true);
 
     }
 

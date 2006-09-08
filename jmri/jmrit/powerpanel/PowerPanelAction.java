@@ -12,7 +12,7 @@ import javax.swing.AbstractAction;
  * PowerPanelFrame object.
  *
  * @author	    Bob Jacobsen    Copyright (C) 2001
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 public class PowerPanelAction extends AbstractAction {
     static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrit.powerpanel.PowerPanelBundle");
@@ -33,7 +33,7 @@ public class PowerPanelAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         // create a PowerPanelFrame
         PowerPanelFrame f = new PowerPanelFrame();
-        f.show();
+        f.setVisible(true);
     }
 }
 

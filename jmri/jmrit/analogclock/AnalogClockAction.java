@@ -11,7 +11,7 @@ import java.awt.event.*;
  * Copied from code for NixieClockAction by Bob Jacobsen
  *
  * @author			Dennis Miller    Copyright (C) 2004
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 
 
@@ -23,7 +23,7 @@ public class AnalogClockAction extends AbstractAction {
   public void actionPerformed(ActionEvent e) {
 
         AnalogClockFrame f = new AnalogClockFrame();
-        f.show();
+        f.setVisible(true);
 
     }
 

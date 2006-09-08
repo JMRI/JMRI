@@ -13,7 +13,7 @@ import java.awt.Font;
  * the thread output log from the {@link RunJythonScript} class.
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class JythonWindow extends AbstractAction {
 
@@ -51,7 +51,7 @@ public class JythonWindow extends AbstractAction {
         area.setFont(new Font("Monospaced", Font.PLAIN, size));
 
         f.pack();
-        f.show();
+        f.setVisible(true);
     }
 
     public JFrame getFrame() { return f; }

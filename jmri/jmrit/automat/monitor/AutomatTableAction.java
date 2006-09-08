@@ -14,7 +14,7 @@ import javax.swing.JButton;
  * AutomatTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class AutomatTableAction extends AbstractAction {
@@ -31,7 +31,7 @@ public class AutomatTableAction extends AbstractAction {
         // create the frame
         f = new AutomatTableFrame(new AutomatTableDataModel());
         f.pack();
-        f.show();
+        f.setVisible(true);
     }
 
 }

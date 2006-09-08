@@ -19,7 +19,7 @@ import javax.swing.JPopupMenu;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -214,7 +214,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
                         name = mHead.getUserName();
                     f.setTitle("Signal logic for"+name);
                     f.setSignal(name);
-                    f.show();
+                    f.setVisible(true);
                 }
             });
         } // end creation of pop-up menu

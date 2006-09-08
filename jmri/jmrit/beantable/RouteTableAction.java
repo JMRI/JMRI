@@ -32,7 +32,7 @@ import jmri.util.com.sun.Comparator;
  * Based in part on SignalHeadTableAction.java by Bob Jacobson
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -397,7 +397,7 @@ public class RouteTableAction extends AbstractTableAction {
                 }
             });
         // display the window
-        addFrame.show();
+        addFrame.setVisible(true);
         ((RouteTurnoutModel)routeTurnoutModel).fireTableDataChanged();
     }
 

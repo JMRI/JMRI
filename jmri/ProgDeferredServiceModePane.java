@@ -30,7 +30,7 @@ import jmri.ProgListener;
  * "set" operations by changing the actual service mode programmer state.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class ProgDeferredServiceModePane extends ProgModeSelector implements java.beans.PropertyChangeListener {
 
@@ -77,7 +77,7 @@ public class ProgDeferredServiceModePane extends ProgModeSelector implements jav
         setButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 // pop the frame
-                setFrame.show();
+                setFrame.setVisible(true);
             }
         });
 

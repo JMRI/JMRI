@@ -34,7 +34,7 @@ public class SimpleTurnoutCtrlAction 			extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
 
 		SimpleTurnoutCtrlFrame f = new SimpleTurnoutCtrlFrame();
-		f.show();
+		f.setVisible(true);
 
 	}
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SimpleTurnoutCtrlAction.class.getName());

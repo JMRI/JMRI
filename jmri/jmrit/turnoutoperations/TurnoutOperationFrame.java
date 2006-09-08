@@ -53,7 +53,7 @@ public class TurnoutOperationFrame extends JDialog {
 		JButton cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent a) {
-						hide();
+            setVisible(false);
 					}
 				}
 			);
@@ -76,7 +76,7 @@ public class TurnoutOperationFrame extends JDialog {
 			}
 		});
 		if (tabPane.getTabCount()>0) {
-			show();
+      setVisible(true);
 		}
 	}
 	
@@ -84,7 +84,7 @@ public class TurnoutOperationFrame extends JDialog {
 		if (currentOperation != null) {
 			currentConfig.endConfigure();
 		}
-		hide();
+    setVisible(false);
 	}
 	
 	private void doDelete() {

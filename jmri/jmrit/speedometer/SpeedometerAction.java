@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  * SpeedometerFrame
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 
 public class SpeedometerAction 			extends AbstractAction {
@@ -35,7 +35,7 @@ public class SpeedometerAction 			extends AbstractAction {
 
         // create a SimpleProgFrame
         SpeedometerFrame f = new SpeedometerFrame();
-        f.show();
+        f.setVisible(true);
 
     }
 

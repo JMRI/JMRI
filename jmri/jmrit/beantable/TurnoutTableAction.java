@@ -42,7 +42,7 @@ import javax.swing.event.ChangeListener;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004
- * @version     $Revision: 1.31 $
+ * @version     $Revision: 1.32 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -245,7 +245,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             });
         }
         addFrame.pack();
-        addFrame.show();
+        addFrame.setVisible(true);
     }
 
     boolean showFeedback = false;
@@ -393,7 +393,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     		myOp.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
     			public void propertyChange(java.beans.PropertyChangeEvent evt) {
     				if (evt.getPropertyName().equals("Deleted")) {
-    					hide();
+    					setVisible(false);
     				}
     			}
     		});
@@ -429,13 +429,13 @@ public class TurnoutTableAction extends AbstractTableAction {
         					myOp.dispose();
         					myOp = null;
         				}
-        				self.hide();
+        				self.setVisible(false);
         			}
         		});
         		JButton cancelButton = new JButton("Cancel");
         		cancelButton.addActionListener(new ActionListener() {
         			public void actionPerformed(ActionEvent e) {
-        				self.hide();
+        				self.setVisible(false);
         			}
         		});
         		buttonBox.add(Box.createHorizontalGlue());
@@ -446,7 +446,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         		buttonBox.add(cancelButton);
         		outerBox.add(buttonBox);
         		getContentPane().add(outerBox);
-        		show();
+            setVisible(true);
         	}
     	}    
     	private void setTitle() {

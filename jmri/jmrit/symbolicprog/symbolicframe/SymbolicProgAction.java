@@ -5,7 +5,7 @@
  *       			SymbolicProg object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 package jmri.jmrit.symbolicprog.symbolicframe;
@@ -21,7 +21,7 @@ public class SymbolicProgAction 			extends AbstractAction {
 
 		// create a SimpleProgFrame
 		SymbolicProgFrame f = new SymbolicProgFrame();
-		f.show();
+		f.setVisible(true);
 
 	}
 }

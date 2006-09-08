@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  * MessageFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2003
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */public class MessageFrameAction extends AbstractAction {
 
      public MessageFrameAction(String s) {
@@ -21,7 +21,7 @@ import java.awt.event.ActionEvent;
 
          // create a SimpleProgFrame
          MessageFrame f = new MessageFrame();
-         f.show();
+         f.setVisible(true);
 
      }
 

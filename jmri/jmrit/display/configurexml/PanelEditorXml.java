@@ -16,7 +16,7 @@ import org.jdom.*;
  * Handle configuration for {@link PanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 public class PanelEditorXml implements XmlAdapter {
 
@@ -146,10 +146,10 @@ public class PanelEditorXml implements XmlAdapter {
         // display the results, with the editor in back
         panel.pack();
 
-        if (!hide) panel.show();    // show the editor if wanted
+        if (!hide) panel.setVisible(true);    // show the editor if wanted
 
         // we don't pack the target frame here, because size was specified
-        panel.getFrame().show();    // always show the panel
+        panel.getFrame().setVisible(true);    // always show the panel
 
         // register the resulting panel for later configuration
         InstanceManager.configureManagerInstance().registerUser(panel);

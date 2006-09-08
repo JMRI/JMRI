@@ -24,7 +24,7 @@ import javax.swing.JTextField;
  * SignalHeadTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -184,7 +184,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
         }
         typeBox.setSelectedIndex(1);  // force GUI status consistent
         addFrame.pack();
-        addFrame.show();
+        addFrame.setVisible(true);
     }
 
     void typeChanged() {

@@ -32,7 +32,7 @@ import javax.swing.JOptionPane;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -298,7 +298,7 @@ public class LightTableAction extends AbstractTableAction {
             });
             
         addFrame.pack();
-        addFrame.show();
+        addFrame.setVisible(true);
     }
 
     /**

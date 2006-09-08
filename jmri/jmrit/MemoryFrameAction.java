@@ -19,7 +19,7 @@ import javax.swing.JTextField;
  * Display memory usage on request
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class MemoryFrameAction extends AbstractAction {
 
@@ -92,7 +92,7 @@ public class MemoryFrameAction extends AbstractAction {
 		});
 
 		f.pack();
-		f.show();
+		f.setVisible(true);
 	}
 
 	void updateDisplay() {

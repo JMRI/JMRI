@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  *       			SimpleProgAction object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */public class SimpleProgAction 			extends AbstractAction {
 
      public SimpleProgAction(String s) {
@@ -27,7 +27,7 @@ import java.awt.event.ActionEvent;
          
          // create a SimpleProgFrame
          SimpleProgFrame f = new SimpleProgFrame();
-         f.show();
+         f.setVisible(true);
          
      }
      

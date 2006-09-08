@@ -15,7 +15,7 @@ import javax.swing.JButton;
  * SignalHeadTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 abstract public class AbstractTableAction extends AbstractAction {
@@ -64,7 +64,7 @@ abstract public class AbstractTableAction extends AbstractAction {
         setTitle();
         addToFrame(f);
         f.pack();
-        f.show();
+        f.setVisible(true);
     }
     
     /**

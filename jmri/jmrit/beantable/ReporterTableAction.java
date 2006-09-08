@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
  * ReporterTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 public class ReporterTableAction extends AbstractTableAction {
@@ -121,7 +121,7 @@ public class ReporterTableAction extends AbstractTableAction {
             });
         }
         addFrame.pack();
-        addFrame.show();
+        addFrame.setVisible(true);
     }
 
     void okPressed(ActionEvent e) {

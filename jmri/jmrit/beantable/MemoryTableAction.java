@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
  * MemoryTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 
 public class MemoryTableAction extends AbstractTableAction {
@@ -129,7 +129,7 @@ public class MemoryTableAction extends AbstractTableAction {
             });
         }
         addFrame.pack();
-        addFrame.show();
+        addFrame.setVisible(true);
     }
 
     void okPressed(ActionEvent e) {

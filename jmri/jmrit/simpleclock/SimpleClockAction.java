@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  *  SimpleClockFrame object
  *
  * @author			Dave Duchamp    Copyright (C) 2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
  
  public class SimpleClockAction extends AbstractAction {
@@ -23,7 +23,7 @@ import java.awt.event.ActionEvent;
          
          SimpleClockFrame f = new SimpleClockFrame();
          if ( f.initComponents() ) {
-            f.show();
+            f.setVisible(true);
         }
      }
      

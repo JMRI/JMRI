@@ -22,7 +22,7 @@ import jmri.util.JmriJFrame;
  * Modified by Dennis Miller for resizing Nov, 2004
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
 
@@ -151,10 +151,10 @@ public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyCh
 //      Ugly hack to force frame to redo the layout.
 //      Without this the image is scaled but the label size and position doesn't change.
 //      doLayout() doesn't work either
-      this.hide();
+      this.setVisible(false);
       this.remove(b);
       this.getContentPane().add(b);
-      this.show();
+      this.setVisible(true);
       return ;
     }
 
