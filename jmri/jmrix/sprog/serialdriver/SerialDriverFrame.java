@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 /**
  * Frame to control and connect Sprog command station via SerialDriver interface and comm port
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SerialDriverFrame extends jmri.jmrix.SerialPortFrame {
 
@@ -24,7 +24,7 @@ public class SerialDriverFrame extends jmri.jmrix.SerialPortFrame {
 			adapter.configure();
 
 			// hide this frame, since we're done
-			hide();
+      setVisible(false);
 		} else {
 			// not selected
 			JOptionPane.showMessageDialog(this, "Please select a port name first");
