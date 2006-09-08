@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
  *       			XpaConfigureFrame object
  *
  * @author			Paul Bender    Copyright (C) 2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class XpaConfigureAction  extends AbstractAction {
 
@@ -25,7 +25,7 @@ public class XpaConfigureAction  extends AbstractAction {
 		catch (Exception ex) {
 			log.error("Exception: "+ex.toString());
 			}
-		f.show();
+		f.setVisible(true);
 	}
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XpaConfigureAction.class.getName());
 }

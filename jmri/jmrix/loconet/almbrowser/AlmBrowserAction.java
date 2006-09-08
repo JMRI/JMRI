@@ -30,7 +30,7 @@ public class AlmBrowserAction 			extends AbstractAction {
 		// connect to the LnTrafficController
 		f.connect(LnTrafficController.instance());
                 // make visible
-		f.show();
+		f.setVisible(true);
 
 	}
 

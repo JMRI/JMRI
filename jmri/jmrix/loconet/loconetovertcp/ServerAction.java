@@ -11,7 +11,7 @@ import jmri.jmrix.loconet.LnTrafficController;
  * Implementation of the LocoNetOverTcp LbServer Server Protocol
  *
  * @author      Alex Shepherd Copyright (C) 2006
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 
 public class ServerAction
@@ -33,6 +33,6 @@ public class ServerAction
 
   public void actionPerformed(ActionEvent e) {
     ServerFrame f = ServerFrame.getInstance();
-    f.show();
+    f.setVisible(true);
   }
 }

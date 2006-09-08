@@ -14,7 +14,7 @@ import javax.swing.AbstractAction;
  * and the command station
  *
  * @author			Paul Bender    Copyright (C) 2003
- * @version			$Revision: 2.0 $
+ * @version			$Revision: 2.1 $
  */
 public class SystemInfoAction extends AbstractAction {
 
@@ -26,7 +26,7 @@ public class SystemInfoAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         // create an SystemInfoFrame
         SystemInfoFrame f = new SystemInfoFrame();
-        f.show();
+        f.setVisible(true);
     }
 }
 

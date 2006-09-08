@@ -5,7 +5,7 @@
  *       			XpressNet PacketGenFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2002
- * @version			$Revision: 2.0 $
+ * @version			$Revision: 2.1 $
  */
 
 package jmri.jmrix.lenz.packetgen;
@@ -32,7 +32,7 @@ public class PacketGenAction 			extends AbstractAction {
 		catch (Exception ex) {
 			log.error("Exception: "+ex.toString());
 			}
-		f.show();
+		f.setVisible(true);
 
 		// connect to the TrafficController
 		f.connect(XNetTrafficController.instance());

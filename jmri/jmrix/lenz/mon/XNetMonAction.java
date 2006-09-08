@@ -5,7 +5,7 @@
  *       			XNetMonFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2002
- * @version         $Revision: 2.0 $
+ * @version         $Revision: 2.1 $
  */
 
 package jmri.jmrix.lenz.mon;
@@ -29,7 +29,7 @@ public class XNetMonAction 			extends AbstractAction {
 		catch (Exception ex) {
 			log.warn("XNetMonAction starting XNetMonFrame: Exception: "+ex.toString());
 			}
-		f.show();
+		f.setVisible(true);
 
 	}
 

@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
  * Station.
  *
  * @author			Paul Bender    Copyright (C) 2005
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class LZ100Action extends AbstractAction {
 
@@ -28,7 +28,7 @@ public class LZ100Action extends AbstractAction {
         // create an LZ100Frame
  	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.lz100.LZ100Bundle");
         LZ100Frame f = new LZ100Frame(rb.getString("LZ100Config"));
-        f.show();
+        f.setVisible(true);
     }
 }
 

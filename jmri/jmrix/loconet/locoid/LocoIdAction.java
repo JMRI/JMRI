@@ -12,7 +12,7 @@ import jmri.jmrix.loconet.LnTrafficController;
  *       			LocoidFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2006
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class LocoIdAction 			extends AbstractAction {
 
@@ -29,7 +29,7 @@ public class LocoIdAction 			extends AbstractAction {
         catch (Exception ex) {
             log.error("Exception: "+ex.toString());
         }
-        f.show();
+        f.setVisible(true);
         
     }
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoIdAction.class.getName());

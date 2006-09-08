@@ -10,7 +10,7 @@ import javax.swing.AbstractAction;
  * LnHexFileFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class LnHexFileAction 			extends AbstractAction {
 
@@ -26,7 +26,7 @@ public class LnHexFileAction 			extends AbstractAction {
             log.error("starting HexFileFrame exception: "+ex.toString());
         }
         f.pack();
-        f.show();
+        f.setVisible(true);
         // it connects to the LnTrafficController when the right button is pressed
 
 

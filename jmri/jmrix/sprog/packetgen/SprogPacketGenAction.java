@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
  *       			SprogPacketGenFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SprogPacketGenAction 			extends AbstractAction {
 
@@ -25,7 +25,7 @@ public class SprogPacketGenAction 			extends AbstractAction {
 		catch (Exception ex) {
 			log.error("Exception: "+ex.toString());
 			}
-		f.show();
+		f.setVisible(true);
 	}
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogPacketGenAction.class.getName());
 }

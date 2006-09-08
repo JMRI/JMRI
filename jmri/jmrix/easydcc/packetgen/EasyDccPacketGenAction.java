@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
  *       			EasyDccPacketGenFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class EasyDccPacketGenAction 			extends AbstractAction {
 
@@ -29,7 +29,7 @@ public class EasyDccPacketGenAction 			extends AbstractAction {
 		catch (Exception ex) {
 			log.error("Exception: "+ex.toString());
 			}
-		f.show();
+		f.setVisible(true);
 	}
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccPacketGenAction.class.getName());
 }

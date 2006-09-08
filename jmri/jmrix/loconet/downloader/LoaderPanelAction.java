@@ -12,7 +12,7 @@ import javax.swing.AbstractAction;
  * LoaderFrame object.
  *
  * @author	    Bob Jacobsen    Copyright (C) 2005
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class LoaderPanelAction extends AbstractAction {
     static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.loconet.downloader.Loader");
@@ -29,7 +29,7 @@ public class LoaderPanelAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         // create a PowerPanelFrame
         LoaderFrame f = new LoaderFrame();
-        f.show();
+        f.setVisible(true);
     }
 }
 

@@ -5,7 +5,7 @@
  *       			frame for serial XPressNet access via a LI100
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 package jmri.jmrix.lenz.li100f;
@@ -26,7 +26,7 @@ public class LI100Action 			extends AbstractAction {
 		catch (Exception ex) {
 			log.error("starting LI100 frame caught exception: "+ex.toString());
 			}
-		f.show();
+		f.setVisible(true);
 	};
 
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LI100Action.class.getName());

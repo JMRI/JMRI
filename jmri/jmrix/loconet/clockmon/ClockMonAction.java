@@ -12,7 +12,7 @@ import jmri.jmrix.loconet.LnTrafficController;
  * Create and register a ClockMonFrame object.
  *
  * @author			Bob Jacobsen    Copyright (C) 2003
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class ClockMonAction extends AbstractAction {
 
@@ -23,7 +23,7 @@ public class ClockMonAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
         ClockMonFrame f = new ClockMonFrame();
-        f.show();
+        f.setVisible(true);
     }
 }
 

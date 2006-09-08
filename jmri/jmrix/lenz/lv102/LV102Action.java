@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
  * booster, and the booster portion of an LZV100 command station.
  *
  * @author			Paul Bender    Copyright (C) 2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class LV102Action extends AbstractAction {
 
@@ -29,7 +29,7 @@ public class LV102Action extends AbstractAction {
         // create an LV102Frame
 	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.lv102.LV102Bundle");
         LV102Frame f = new LV102Frame(rb.getString("LV102Config"));
-        f.show();
+        f.setVisible(true);
     }
 }
 

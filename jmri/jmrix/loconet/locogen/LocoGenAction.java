@@ -30,7 +30,7 @@ public class LocoGenAction 			extends AbstractAction {
         catch (Exception ex) {
             log.error("Exception: "+ex.toString());
         }
-        f.show();
+        f.setVisible(true);
         
         // connect to the LnTrafficController
         f.connect(LnTrafficController.instance());

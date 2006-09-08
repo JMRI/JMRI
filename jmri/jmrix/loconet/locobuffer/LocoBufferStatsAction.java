@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
  * Create and register a LocoBufferStatsFrame object.
  *
  * @author			Alex Shepherd    Copyright (C) 2003
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class LocoBufferStatsAction extends AbstractAction {
 
@@ -35,7 +35,7 @@ public class LocoBufferStatsAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
         LocoBufferStatsFrame f = new LocoBufferStatsFrame();
-        f.show();
+        f.setVisible(true);
     }
 }
 

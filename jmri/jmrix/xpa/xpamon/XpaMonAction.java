@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
  *       			xpaMonFrame object
  *
  * @author			Paul Bender    Copyright (C) 2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 public class XpaMonAction 			extends AbstractAction {
@@ -27,7 +27,7 @@ public class XpaMonAction 			extends AbstractAction {
 		catch (Exception ex) {
 			log.warn("XpaMonAction starting XpaMonFrame: Exception: "+ex.toString());
 			}
-		f.show();
+		f.setVisible(true);
 	}
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XpaMonAction.class.getName());

@@ -13,7 +13,7 @@ import javax.swing.AbstractAction;
  * SlotMonFrame object
  *
  * @author	Bob Jacobsen    Copyright (C) 2001
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 public class SlotMonAction extends AbstractAction {
@@ -28,7 +28,7 @@ public class SlotMonAction extends AbstractAction {
 
         // create a SlotMonFrame
         SlotMonFrame f = new SlotMonFrame();
-        f.show();
+        f.setVisible(true);
 
     }
 }
