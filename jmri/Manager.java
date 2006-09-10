@@ -5,8 +5,6 @@ package jmri;
 import java.util.Hashtable;
 import java.util.Enumeration;
 import com.sun.java.util.collections.List;
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.Collections;
 
 /**
  * Basic interface for access to named, managed objects.
@@ -33,7 +31,7 @@ import com.sun.java.util.collections.Collections;
  * subclasses must notify of changes to the list of available NamedBeans;
  * they may have other properties that will also notify.
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public interface Manager {
 

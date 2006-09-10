@@ -8,15 +8,12 @@ import jmri.DccLocoAddress;
 
 import java.util.Enumeration;
 
-import com.sun.java.util.collections.Hashtable;
-import com.sun.java.util.collections.ArrayList;
-
 /**
  * Consist Manager for use with the
  * XNetConsist class for the consists it builds
  *
  * @author                Paul Bender Copyright (C) 2004
- * @version               $Revision: 2.6 $
+ * @version               $Revision: 2.7 $
  */
 
 public class XNetConsistManager extends jmri.jmrix.AbstractConsistManager implements jmri.ConsistManager {

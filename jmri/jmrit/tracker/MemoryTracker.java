@@ -3,14 +3,12 @@ package jmri.jmrit.tracker;
 import jmri.Block;
 import jmri.Memory;
 
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.List;
 
 /**
  * Tracks train into memory object
  *
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class MemoryTracker  {
 

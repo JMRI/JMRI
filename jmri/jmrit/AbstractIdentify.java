@@ -2,8 +2,6 @@
 
 package jmri.jmrit;
 
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.List;
 
 /**
  * Abstract base for common code of IdentifyLoco and IdentifyDecoder, the
@@ -11,7 +9,7 @@ import com.sun.java.util.collections.List;
  * programming track.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  * @see             jmri.jmrit.decoderdefn.IdentifyDecoder
  * @see             jmri.jmrit.roster.IdentifyLoco
  */

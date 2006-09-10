@@ -4,9 +4,6 @@ package jmri;
 
 import java.util.Hashtable;
 import java.util.Enumeration;
-import com.sun.java.util.collections.List;
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.Collections;
 
 
 /**
@@ -20,7 +17,7 @@ import com.sun.java.util.collections.Collections;
  * at the present time.  They're just names...
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class AbstractSignalHeadManager extends AbstractManager
     implements SignalHeadManager, java.beans.PropertyChangeListener {

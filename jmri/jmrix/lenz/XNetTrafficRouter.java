@@ -2,9 +2,6 @@
 
 package jmri.jmrix.lenz;
 
-import com.sun.java.util.collections.LinkedList;
-import com.sun.java.util.collections.NoSuchElementException;
-
 import java.util.Vector;
 
 /**
@@ -18,7 +15,7 @@ import java.util.Vector;
  * without traffic over the connection.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version 		$Revision: 2.3 $
+ * @version 		$Revision: 2.4 $
  *
  */
 public class XNetTrafficRouter extends XNetTrafficController implements XNetListener {

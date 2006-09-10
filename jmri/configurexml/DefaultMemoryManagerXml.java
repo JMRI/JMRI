@@ -3,7 +3,7 @@ package jmri.configurexml;
 import jmri.InstanceManager;
 import jmri.MemoryManager;
 import jmri.DefaultMemoryManager;
-import com.sun.java.util.collections.List;
+
 import org.jdom.Element;
 
 /**
@@ -11,7 +11,7 @@ import org.jdom.Element;
  * <P>The state of memory objects is not persisted, just their existance.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class DefaultMemoryManagerXml extends AbstractMemoryManagerConfigXML {
 

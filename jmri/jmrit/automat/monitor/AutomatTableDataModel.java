@@ -16,14 +16,13 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 
-import com.sun.java.util.collections.List;
 
 /**
  * Table data model for display of Automat instances.
  *
  *
  * @author		Bob Jacobsen   Copyright (C) 2004
- * @version		$Revision: 1.2 $
+ * @version		$Revision: 1.3 $
  */
 public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {

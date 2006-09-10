@@ -2,7 +2,6 @@
 
 package jmri;
 
-import com.sun.java.util.collections.List;
 
 /**
  * Basic Implementation of a BlockManager.
@@ -13,7 +12,7 @@ import com.sun.java.util.collections.List;
  * of most Managers, because there are currently only one implementation for Blocks.
  *
  * @author      Bob Jacobsen Copyright (C) 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class BlockManager extends AbstractManager
     implements java.beans.PropertyChangeListener {

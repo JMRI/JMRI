@@ -3,7 +3,6 @@
  */
 package jmri;
 
-import com.sun.java.util.collections.TreeMap;
 import com.sun.java.util.collections.HashMap;
 
 

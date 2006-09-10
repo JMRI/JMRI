@@ -5,8 +5,6 @@ package jmri.jmrit.consisttool;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
-import com.sun.java.util.collections.ArrayList;
-
 import jmri.InstanceManager;
 import jmri.Consist;
 import jmri.DccLocoAddress;
@@ -22,7 +20,7 @@ import javax.swing.table.TableColumnModel;
 /**
  * Table data model for display of consist information
  * @author		Paul Bender Copyright (c) 2004-2005
- * @version		$Revision: 1.3 $
+ * @version		$Revision: 1.4 $
  */
 
 public class ConsistDataModel extends javax.swing.table.AbstractTableModel {

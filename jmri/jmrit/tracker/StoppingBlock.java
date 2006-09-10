@@ -5,7 +5,6 @@ import jmri.Block;
 import jmri.SignalHead;
 import jmri.Throttle;
 
-import com.sun.java.util.collections.ArrayList;
 
 /**
  * Stop a train in a block if required.
@@ -29,7 +28,7 @@ import com.sun.java.util.collections.ArrayList;
  * should it not restart? Optional restart?)
  * </UL>
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class StoppingBlock {
     

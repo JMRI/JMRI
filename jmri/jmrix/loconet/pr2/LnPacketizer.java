@@ -8,16 +8,13 @@ import java.util.Vector;
 
 import jmri.jmrix.loconet.*;
 
-import com.sun.java.util.collections.LinkedList;
-import com.sun.java.util.collections.NoSuchElementException;
-
 /**
  * Special LnPacketizer implementation for PR2.
  * 
  * Differs only in handling PR2's non-echo
  *
  * @author			Bob Jacobsen  Copyright (C) 2006
- * @version 		$Revision: 1.1 $
+ * @version 		$Revision: 1.2 $
  *
  */
 public class LnPacketizer extends jmri.jmrix.loconet.LnPacketizer {

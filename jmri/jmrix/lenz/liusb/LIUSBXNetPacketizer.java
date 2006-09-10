@@ -8,9 +8,6 @@ import java.io.InputStream;
 import java.io.DataInputStream;
 import java.io.OutputStream;
 
-import com.sun.java.util.collections.LinkedList;
-import com.sun.java.util.collections.NoSuchElementException;
-
 import java.util.Vector;
 
 import jmri.jmrix.lenz.XNetPacketizer;
@@ -24,7 +21,7 @@ import jmri.jmrix.lenz.XNetTrafficController;
  * 0xFF 0xFE or 0xFF 0xFD bytes that appear prior to any message read in.
  *
  * @author		Paul Bender  Copyright (C) 2005
- * @version 		$Revision: 1.1 $
+ * @version 		$Revision: 1.2 $
  *
  */
 public class LIUSBXNetPacketizer extends XNetPacketizer {

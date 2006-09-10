@@ -5,7 +5,7 @@ import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
 import jmri.jmrix.tmcc.serialdriver.ConnectionConfig;
 import jmri.jmrix.tmcc.serialdriver.SerialDriverAdapter;
 import jmri.jmrix.tmcc.*;
-import com.sun.java.util.collections.List;
+
 import org.jdom.*;
 
 /**
@@ -19,7 +19,7 @@ import org.jdom.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2006
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 

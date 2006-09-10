@@ -5,15 +5,12 @@
  * it uses the XPressNet specific commands to build a consist.
  *
  * @author                      Paul Bender Copyright (C) 2004
- * @version                     $Revision: 2.10 $
+ * @version                     $Revision: 2.11 $
  */
 
 package jmri.jmrix.lenz;
 
 import java.util.Enumeration;
-
-import com.sun.java.util.collections.Hashtable;
-import com.sun.java.util.collections.ArrayList;
 
 import jmri.Consist;
 import jmri.ConsistListener;

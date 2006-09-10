@@ -4,9 +4,6 @@ package jmri;
 
 import java.util.Hashtable;
 import java.util.Enumeration;
-import com.sun.java.util.collections.List;
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.Collections;
 
 /**
  * Abstract partial implementation of a LightManager.
@@ -14,7 +11,7 @@ import com.sun.java.util.collections.Collections;
  * Based on AbstractSignalHeadManager.java and AbstractSensorManager.java
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public abstract class AbstractLightManager extends AbstractManager
     implements LightManager, java.beans.PropertyChangeListener {

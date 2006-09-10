@@ -5,15 +5,12 @@
  * it uses the EasyDcc specific commands to build a consist.
  *
  * @author                      Paul Bender Copyright (C) 2006
- * @version                     $Revision: 1.2 $
+ * @version                     $Revision: 1.3 $
  */
 
 package jmri.jmrix.easydcc;
 
 import java.util.Enumeration;
-
-import com.sun.java.util.collections.Hashtable;
-import com.sun.java.util.collections.ArrayList;
 
 import jmri.Consist;
 import jmri.ConsistListener;

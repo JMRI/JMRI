@@ -5,9 +5,6 @@ package jmri.jmrit.decoderdefn;
 import jmri.Programmer;
 import jmri.InstanceManager;
 
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.List;
-
 /**
  * Interact with a programmer to identify the DecoderIndexFile entry for a decoder
  * on the programming track.
@@ -20,7 +17,7 @@ import com.sun.java.util.collections.List;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.6 $
+ * @version   $Revision: 1.7 $
  * @see       jmri.jmrit.roster.RosterEntry
  * @see       jmri.jmrit.symbolicprog.CombinedLocoSelPane
  * @see       jmri.jmrit.symbolicprog.NewLocoSelPane

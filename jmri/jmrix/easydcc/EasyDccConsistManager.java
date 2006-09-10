@@ -5,7 +5,7 @@
  *                        EasyDccConsist class for the consists it builds
  *
  * @author                Paul Bender Copyright (C) 2006
- * @version               $Revision: 1.1 $
+ * @version               $Revision: 1.2 $
  */
 
 
@@ -16,9 +16,6 @@ import jmri.ConsistManager;
 import jmri.DccLocoAddress;
 
 import java.util.Enumeration;
-
-import com.sun.java.util.collections.Hashtable;
-import com.sun.java.util.collections.ArrayList;
 
 public class EasyDccConsistManager extends jmri.jmrix.AbstractConsistManager implements jmri.ConsistManager {
 

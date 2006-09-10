@@ -8,10 +8,9 @@ import java.io.InputStream;
 import java.io.DataInputStream;
 import java.io.OutputStream;
 
-import com.sun.java.util.collections.LinkedList;
-import com.sun.java.util.collections.NoSuchElementException;
-
 import java.util.Vector;
+
+import com.sun.java.util.collections.LinkedList;
 
 /**
  * Converts Stream-based I/O to/from XNet messages.  The "XNetInterface"
@@ -30,7 +29,7 @@ import java.util.Vector;
  *</UL>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 2.3 $
+ * @version 		$Revision: 2.4 $
  *
  */
 public class XNetPacketizer extends XNetTrafficController {

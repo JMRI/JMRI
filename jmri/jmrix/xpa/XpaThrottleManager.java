@@ -5,14 +5,12 @@ import jmri.ThrottleManager;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 
-import com.sun.java.util.collections.HashMap;
-
 import jmri.jmrix.AbstractThrottleManager;
 
 /**
  * XPA implementation of a ThrottleManager
  * @author     Paul Bender Copyright (C) 2004
- * @version    $Revision: 1.4 $
+ * @version    $Revision: 1.5 $
  */
 
 public class XpaThrottleManager extends AbstractThrottleManager implements ThrottleManager {

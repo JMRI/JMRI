@@ -4,14 +4,12 @@ import jmri.ThrottleListener;
 import jmri.ThrottleManager;
 import jmri.LocoAddress;
 
-import com.sun.java.util.collections.HashMap;
-
 import jmri.jmrix.AbstractThrottleManager;
 
 /**
  * XNet implementation of a ThrottleManager based on the AbstractThrottleManager.
  * @author     Paul Bender Copyright (C) 2002-2004
- * @version    $Revision: 2.5 $
+ * @version    $Revision: 2.6 $
  */
 
 public class XNetThrottleManager extends AbstractThrottleManager implements ThrottleManager
