@@ -6,6 +6,7 @@ package jmri.configurexml.turnoutoperations;
 //import java.lang.reflect.Constructor;
 
 import org.jdom.Element;
+import com.sun.java.util.collections.Collection;
 
 //import jmri.NoFeedbackTurnoutOperation;
 import jmri.TurnoutOperation;
