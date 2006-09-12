@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Routes.html,v 1.6 2006-02-27 21:31:41 pbender Exp $ -->
+<!-- $Id: Routes.html,v 1.7 2006-09-12 05:48:34 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -154,12 +154,44 @@ First make sure the Turnout Table contains all Turnouts involved in the Routes t
 	obey.  This is described in more detail
 	<A HREF="#sensorlogic">below</a>.
 	
-	<li>Also optional, if you want to enable setting of the Route from a physical 
-	throttle that JMRI monitors, enter a Turnout System Name and select the 
+	<li>Also optional, if you want to enable setting of the Route 
+	when a particular turnout changes state, 
+	enter a Turnout System Name and select the new
 	state, closed or thrown, that will trigger the setting of the Route.  This Turnout 
-	can be a real physical Turnout or a 'phantom' Turnout (a Turnout number with no 
-	corresponding physical Turnout).  A phantom Turnout is most often used, but there are 
-	situations where a real Turnout may be advantageous.</li>
+	can be a real physical Turnout, a 'phantom' Turnout (a DCC Turnout number with no 
+	corresponding physical Turnout), or an 'internal' Turnout.  
+	    <UL>
+	    <LI>If a real turnout is used, the real turnout will 
+	    receive the original activation command, and then the
+	    Route will set whatever turnouts positions it contains.
+	    This can be used to set multiple turnouts to match 
+	    the original real turnout, or to set the turnout back
+	    to its original position (if you don't want anybody changing it), etc.
+	    The route will fire when the turnout is set from JMRI, and with
+	    some DCC systems (Digitrax LocoNet and Lenz XPressNet systems), it 
+	    will fire when a layout operator commands the turnout to change
+	    state on a handheld throttle.
+	    <LI>A 'Phantom Turnout' is a DCC turnout that doesn't actually exist.
+	    To use one, just create a turnout entry for an address number
+	    that doesn't exist on your layout, and include it as the 
+	    The layout operators can select that phantom turnout number
+	    on their throttles and send commands to it to cause the route to
+	    be set.  With the addition of sensors as vetos in the route, you
+	    can do things like only allowing the operators to change
+	    turnouts (via the route) when the dispatcher has set a
+	    button to allow local access.
+	    <LI>An 'Internal Turnout' is one that only exists within the
+	    JMRI software; it doesn't correspond to any particular address on
+	    the layout, and it particularly doesn't correspond to any hardware
+	    on the layout.  The system name for internal turnouts start with "IT", 
+	    e.g. "IT201".  JMRI knows that these are separate from the layout, so 
+	    doesn't send any commands to the attached hardware when one changes.
+	    These can be used with routes to build complicated logic underlying
+	    control panels.  For example, an icon on a panel can set an
+	    internal turnout, which in turn can set the turnouts of an entire
+	    yard ladder.
+	    
+	    </UL></li>
 	<li>Select the Add Route button at the bottom of the window.  If everything is fine, 
 	a message stating "New Route added ... " will be displayed in the notes box near
 	the bottom of the window.  If there is trouble with anything, a message will be 
