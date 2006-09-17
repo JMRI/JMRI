@@ -79,6 +79,6 @@ dt.im {
 #tools, #search, #side, #ad, #bn, #int, .skipLink, #brd {
 	display: none;
 }
-#header + hr {
+#header {
 	display: none;
 }
