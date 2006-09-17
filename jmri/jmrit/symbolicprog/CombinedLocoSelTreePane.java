@@ -40,7 +40,7 @@ import com.sun.java.util.collections.List;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
 
@@ -184,7 +184,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
             } );
 
         // add button
-        iddecoder= new JToggleButton("Ident");
+        iddecoder= new JToggleButton("Read type from decoder");
         iddecoder.setToolTipText("Read the decoders mfg and version, then attempt to select its type");
             if (jmri.InstanceManager.programmerManagerInstance()!= null
                     && jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer()!=null
