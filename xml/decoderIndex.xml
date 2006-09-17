@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <!--Written by JMRI version 1.7.5 on Sat Sep 02 15:53:11 PDT 2006 $Id: decoderIndex.xml,v 1.88 2006-09-02 22:54:55 jacobsen Exp $-->
-  <decoderIndex version="111">
+  <!--Written by JMRI version 1.7.5 on Sat Sep 16 22:54:26 PDT 2006 $Id: decoderIndex.xml,v 1.89 2006-09-17 05:56:59 jacobsen Exp $-->
+  <decoderIndex version="112">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -848,13 +848,13 @@
           <output name="1" label="White" connection="plug" maxcurrent="40 mA" />
           <output name="2" label="Yellow" connection="plug" maxcurrent="40 mA" />
         </model>
-        <model model="D13SR" numOuts="3" numFns="5" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="D13SR" numOuts="4" numFns="8" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="1" label="White" connection="wire" maxcurrent="40 mA" />
           <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" />
           <output name="3" label="Green" connection="wire" maxcurrent="40 mA" />
           <size length="1.65" width="0.63" height="0.12" units="inches" />
         </model>
-        <model model="D13SRP" numOuts="3" numFns="5" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+        <model model="D13SRP" numOuts="4" numFns="8" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <output name="1" label="White" connection="plug" maxcurrent="40 mA" />
           <output name="2" label="Yellow" connection="plug" maxcurrent="40 mA" />
           <output name="3" label="Green" connection="wire" maxcurrent="40 mA" />
@@ -925,12 +925,18 @@
           <output name="1" label="Pad" connection="solder" maxcurrent="40 mA" />
           <output name="2" label="Pad" connection="solder" maxcurrent="40 mA" />
         </model>
+        <model model="BACH-DSL" numOuts="4" numFns="8" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="Pad 1" connection="solder" maxcurrent="40 mA" />
+          <output name="2" label="pad 2" connection="solder" maxcurrent="40 mA" />
+          <output name="3" label="Pad 3" connection="solder" maxcurrent="40 mA" />
+          <output name="4" label="Pad 4" connection="solder" maxcurrent="40 mA" />
+        </model>
         <model model="DA-SR" numOuts="5" numFns="8" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="1" label="Tab 1" connection="solder" maxcurrent="40 mA" />
           <output name="2" label="Tab 2" connection="solder" maxcurrent="40 mA" />
           <output name="3" label="Pad 3" connection="solder" maxcurrent="40 mA" />
           <output name="4" label="Pad 4" connection="solder" maxcurrent="40 mA" />
-          <output name="5" label="Optional" connection="solder" maxcurrent="40 mA" />
+          <output name="5" label="Pad 5" connection="solder" maxcurrent="40 mA" />
           <size length="2.85" width="0.66" height="0.12" units="inches" />
         </model>
         <model model="KRS-SR" numOuts="4" numFns="8" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
@@ -943,9 +949,9 @@
         <model model="P2K-SR" numOuts="5" numFns="8" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <output name="1" label="Pin 6" connection="plug" maxcurrent="40 mA" />
           <output name="2" label="Pin 2" connection="plug" maxcurrent="40 mA" />
-          <output name="3" label="Pad A" connection="solder" maxcurrent="40 mA" />
-          <output name="4" label="Pad B" connection="solder" maxcurrent="40 mA" />
-          <output name="5" label="Pad" connection="solder" maxcurrent="40 mA" />
+          <output name="3" label="Pad 3" connection="solder" maxcurrent="40 mA" />
+          <output name="4" label="Pad 4" connection="solder" maxcurrent="40 mA" />
+          <output name="5" label="Pad 5" connection="solder" maxcurrent="40 mA" />
           <size length="1.92" width="0.63" height="0.12" units="inches" />
         </model>
         <model model="SW9-SR" numOuts="3" numFns="5" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
@@ -976,6 +982,15 @@
           <output name="7" label="Screw" connection="other" />
           <output name="8" label="Screw" connection="other" />
           <size length="3.75" width="1.45" height="0.625" units="inches" />
+        </model>
+        <model model="ATL-O" numOuts="6" numFns="8" maxMotorCurrent="4A (peak=10A)" formFactor="O/G" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="Pin 1" connection="wire" />
+          <output name="2" label="Pin 2" connection="wire" />
+          <output name="3" label="Pin 3" connection="wire" />
+          <output name="4" label="Pin 4" connection="wire" />
+          <output name="5" label="Pad 5" connection="wire" />
+          <output name="6" label="Pad 6" connection="wire" />
+          <size length="2.406" width="0.937" height="0.375" units="inches" />
         </model>
         <model model="N12SR" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=1.25A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="1" label="White" connection="wire" maxcurrent="40 mA" />
@@ -1022,6 +1037,14 @@
           <output name="1" label="LED 1" connection="solder" />
           <output name="2" label="LED 2" connection="solder" />
         </model>
+        <model model="N12A2" numOuts="2" numFns="5" maxMotorCurrent="1.3A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="LED 1" connection="solder" />
+          <output name="2" label="LED 2" connection="solder" />
+        </model>
+        <model model="NAVO" numOuts="2" numFns="5" maxMotorCurrent="1.3A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="LED 1" connection="solder" />
+          <output name="2" label="LED 2" connection="solder" />
+        </model>
         <model model="NIMF3" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=1.25A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="1" label="Pad 1" connection="solder" />
           <output name="2" label="Pad 2" connection="solder" />
@@ -1033,6 +1056,10 @@
         <model model="NIMFT-B" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=1.25A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="1" label="Pad 1" connection="solder" />
           <output name="2" label="Pad 2" connection="solder" />
+        </model>
+        <model model="NMP" numOuts="2" numFns="5" maxMotorCurrent="1.3A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="LED 1" connection="solder" />
+          <output name="2" label="LED 2" connection="solder" />
         </model>
         <model model="Z14SR" numOuts="4" numFns="8" maxMotorCurrent="1A (peak=1.25A)" formFactor="Z" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="1" label="White" connection="wire" maxcurrent="50 mA" />
@@ -1047,6 +1074,20 @@
           <output name="3" label="Pad 3" connection="solder" maxcurrent="50 mA" />
           <output name="4" label="Pad 4" connection="solder" maxcurrent="50 mA" />
           <size length="0.57" width="0.34" height="0.13" units="inches" />
+        </model>
+      </family>
+      <family name="Silent Running BEMF" mfg="North Coast Engineering" lowVersionID="40" highVersionID="40" comment="These are the version 4.0 decoders released after September 2006" type="locomotive" file="NCE_E.xml">
+        <model model="D408SR-E" numOuts="9" numFns="14" connector="9pin" maxMotorCurrent="4A (peak=10A)" formFactor="O/G" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <output name="1" label="White" connection="wire" maxcurrent="80 mA" />
+          <output name="2" label="Green" connection="wire" maxcurrent="80 mA" />
+          <output name="3" label="Violet" connection="wire" maxcurrent="80 mA" />
+          <output name="4" label="Brown" connection="wire" maxcurrent="80 mA" />
+          <output name="5" label="Wht/Yel" connection="wire" maxcurrent="80 mA" />
+          <output name="6" label="Wht/Grn" connection="wire" maxcurrent="80 mA" />
+          <output name="7" label="Yellow" connection="wire" maxcurrent="80 mA" />
+          <output name="8" label="Pad 8" connection="solder" maxcurrent="500 mA" />
+          <output name="9" label="Pad 9" connection="solder" maxcurrent="500 mA" />
+          <size length="2.3" width="1.2" height="0.375" units="inches" />
         </model>
       </family>
       <family name="QSI Articulated Steam" mfg="QSIndustries" lowVersionID="2" highVersionID="5" type="locomotive" file="QSI_Articulated_Steam.xml">
