@@ -26,7 +26,7 @@ import com.sun.java.util.collections.List;
  * you're interested in.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class KnownLocoSelPane extends LocoSelPane  {
 
@@ -51,10 +51,10 @@ public class KnownLocoSelPane extends LocoSelPane  {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JPanel pane2a = new JPanel();
         pane2a.setLayout(new BoxLayout(pane2a, BoxLayout.X_AXIS));
-        pane2a.add(new JLabel("Select from roster:"));
+        pane2a.add(new JLabel("Use existing roster entry:"));
 
         if (mCanIdent) {
-            JButton idloco = new JButton("Identify locomotive");
+            JButton idloco = new JButton("Read address & select");
             idloco.addActionListener( new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     if (log.isDebugEnabled()) log.debug("Identify locomotive pressed");
