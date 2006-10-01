@@ -1,16 +1,18 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: RR-CirKits-TC-64-basic.xml,v 1.6 2006-04-24 03:04:01 jacobsen Exp $ -->
+<!-- $Id: RR-CirKits-TC-64-basic.xml,v 1.7 2006-10-01 07:31:50 jacobsen Exp $ -->
 <decoder-config > <!-- showEmptyPanes="no" -->
 		<version author="dick@rr-cirkits.com" 
-					version="1.01" lastUpdated="20060422"/>
+					version="1.02" lastUpdated="20060925"/>
+		<version author="dick@rr-cirkits.com" 
+                    version="1.01" lastUpdated="20060422"/>					
 					
-		<!-- Version 1.0  -->
+		<!-- Version 1.02  -->
 		
 <decoder>
 	<family name="Tower Controller" mfg="RR-CirKits" type="stationary"
 				comment="The Tower Controller is normally programmed in OPs mode">
-			<model model= "TC-64" comment= "64 line I/O" lowVersionID="01"/>
+			<model model= "TC-64" comment= "64 line I/O" lowVersionID="02"/>
 		</family>
 
 	<programming direct="no" paged="yes"
@@ -188,7 +190,7 @@
 				<decVal/>
 			</variable>
 
-		<variable label="Version ID" CV="21" readOnly="yes" item="Version ID" default="1">
+		<variable label="Firmware Version" CV="21" readOnly="yes" item="Firmware Version" default="1">
 				<decVal/>
 			</variable>
 
@@ -253,22 +255,22 @@
 
 		<variable label="1A I/O Timing" CV="24" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -353,20 +355,20 @@
 		<variable label="1B I/O Timing" CV="28" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -451,22 +453,22 @@
 
 		<variable label="1C I/O Timing" CV="32" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -551,20 +553,20 @@
 		<variable label="1D I/O Timing" CV="36" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -649,22 +651,22 @@
 
 		<variable label="1E I/O Timing" CV="40" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -749,20 +751,20 @@
 		<variable label="1F I/O Timing" CV="44" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -847,22 +849,22 @@
 
 		<variable label="1G I/O Timing" CV="48" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -947,20 +949,20 @@
 		<variable label="1H I/O Timing" CV="52" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -1043,22 +1045,22 @@
 
 		<variable label="2A I/O Timing" CV="56" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -1143,20 +1145,20 @@
 		<variable label="2B I/O Timing" CV="60" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -1241,22 +1243,22 @@
 
 		<variable label="2C I/O Timing" CV="64" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -1341,20 +1343,20 @@
 		<variable label="2D I/O Timing" CV="68" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -1439,22 +1441,22 @@
 
 		<variable label="2E I/O Timing" CV="72" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -1539,20 +1541,20 @@
 		<variable label="2F I/O Timing" CV="76" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -1637,22 +1639,22 @@
 
 		<variable label="2G I/O Timing" CV="80" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -1737,20 +1739,20 @@
 		<variable label="2H I/O Timing" CV="84" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -1834,22 +1836,22 @@
 
 		<variable label="3A I/O Timing" CV="88" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -1934,20 +1936,20 @@
 		<variable label="3B I/O Timing" CV="92" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -2032,22 +2034,22 @@
 
 		<variable label="3C I/O Timing" CV="96" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -2132,20 +2134,20 @@
 		<variable label="3D I/O Timing" CV="100" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -2230,22 +2232,22 @@
 
 		<variable label="3E I/O Timing" CV="104" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -2330,20 +2332,20 @@
 		<variable label="3F I/O Timing" CV="108" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -2428,22 +2430,22 @@
 
 		<variable label="3G I/O Timing" CV="112" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -2528,20 +2530,20 @@
 		<variable label="3H I/O Timing" CV="116" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -2625,22 +2627,22 @@
 
 		<variable label="4A I/O Timing" CV="120" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -2725,20 +2727,20 @@
 		<variable label="4B I/O Timing" CV="124" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -2823,22 +2825,22 @@
 
 		<variable label="4C I/O Timing" CV="128" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -2923,20 +2925,20 @@
 		<variable label="4D I/O Timing" CV="132" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -3021,22 +3023,22 @@
 
 		<variable label="4E I/O Timing" CV="136" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -3121,20 +3123,20 @@
 		<variable label="4F I/O Timing" CV="140" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -3219,22 +3221,22 @@
 
 		<variable label="4G I/O Timing" CV="144" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -3319,20 +3321,20 @@
 		<variable label="4H I/O Timing" CV="148" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -3416,22 +3418,22 @@
 
 		<variable label="5A I/O Timing" CV="152" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -3516,20 +3518,20 @@
 		<variable label="5B I/O Timing" CV="156" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -3614,22 +3616,22 @@
 
 		<variable label="5C I/O Timing" CV="160" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -3714,20 +3716,20 @@
 		<variable label="5D I/O Timing" CV="164" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -3812,22 +3814,22 @@
 
 		<variable label="5E I/O Timing" CV="168" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -3912,20 +3914,20 @@
 		<variable label="5F I/O Timing" CV="172" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -4010,22 +4012,22 @@
 
 		<variable label="5G I/O Timing" CV="176" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -4110,20 +4112,20 @@
 		<variable label="5H I/O Timing" CV="180" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -4206,22 +4208,22 @@
 
 		<variable label="6A I/O Timing" CV="184" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -4306,20 +4308,20 @@
 		<variable label="6B I/O Timing" CV="188" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -4404,22 +4406,22 @@
 
 		<variable label="6C I/O Timing" CV="192" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -4504,20 +4506,20 @@
 		<variable label="6D I/O Timing" CV="196" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -4602,22 +4604,22 @@
 
 		<variable label="6E I/O Timing" CV="200" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -4702,20 +4704,20 @@
 		<variable label="6F I/O Timing" CV="204" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -4800,22 +4802,22 @@
 
 		<variable label="6G I/O Timing" CV="208" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -4900,20 +4902,20 @@
 		<variable label="6H I/O Timing" CV="212" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -4997,22 +4999,22 @@
 
 		<variable label="7A I/O Timing" CV="216" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -5097,20 +5099,20 @@
 		<variable label="7B I/O Timing" CV="220" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -5195,22 +5197,22 @@
 
 		<variable label="7C I/O Timing" CV="224" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -5295,20 +5297,20 @@
 		<variable label="7D I/O Timing" CV="228" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -5393,22 +5395,22 @@
 
 		<variable label="7E I/O Timing" CV="232" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -5493,20 +5495,20 @@
 		<variable label="7F I/O Timing" CV="236" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -5591,22 +5593,22 @@
 
 		<variable label="7G I/O Timing" CV="240" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -5691,20 +5693,20 @@
 		<variable label="7H I/O Timing" CV="244" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -5789,22 +5791,22 @@
 
 		<variable label="8A I/O Timing" CV="248" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -5889,20 +5891,20 @@
 		<variable label="8B I/O Timing" CV="252" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -5987,22 +5989,22 @@
 
 		<variable label="8C I/O Timing" CV="256" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -6087,20 +6089,20 @@
 		<variable label="8D I/O Timing" CV="260" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -6185,22 +6187,22 @@
 
 		<variable label="8E I/O Timing" CV="264" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -6285,20 +6287,20 @@
 		<variable label="8F I/O Timing" CV="268" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -6383,22 +6385,22 @@
 
 		<variable label="8G I/O Timing" CV="272" mask="XXXXVVVV">
 			<enumVal>
-				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
-				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
-				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
-				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
+				<enumChoice choice="Steady - 10 sec   -     "/>
+				<enumChoice choice="  0.2  - 15 sec      -"/>
+				<enumChoice choice="  0.3  - 20 sec      -"/>
+				<enumChoice choice="  0.4  - 30 sec      -"/>
+				<enumChoice choice="  0.5  - 40 sec      -"/>
+				<enumChoice choice="  0.6  - 50 sec      -"/>
+				<enumChoice choice="  0.8  - 1 min        -"/>
+				<enumChoice choice=" 1 sec - 1.5min     -"/>
+				<enumChoice choice="1.25sec- 2 min     -"/>
+				<enumChoice choice="1.5sec - 3 min      -"/>
+				<enumChoice choice=" 2 sec - 4 min       -"/>
+				<enumChoice choice=" 3 sec - 5 min       -"/>
+				<enumChoice choice=" 4 sec - 6 min       -"/>
+				<enumChoice choice=" 5 sec - 7 min       -"/>
+				<enumChoice choice=" 6 sec - 8 min       -"/>
+				<enumChoice choice=" 8 sec - 10 min     -"/>
 				</enumVal>
 			</variable>
 
@@ -6483,20 +6485,20 @@
 		<variable label="8H I/O Timing" CV="276" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Steady - 10 sec -  Yellow"/>
-				<enumChoice choice="  0.2  - 15 sec - alt G/Y"/>
-				<enumChoice choice="  0.3  - 20 sec - alt R/Y"/>
+				<enumChoice choice="  0.2  - 15 sec - alt R/Y"/>
+				<enumChoice choice="  0.3  - 20 sec - alt G/Y"/>
 				<enumChoice choice="  0.4  - 30 sec - blink Y"/>
-				<enumChoice choice="  0.5  - 40 sec - alt Y/G"/>
-				<enumChoice choice="  0.6  - 50 sec -  Green "/>
-				<enumChoice choice="  0.8  - 1 min  - alt R/G"/>
-				<enumChoice choice=" 1 sec - 1.5min - blink G"/>
-				<enumChoice choice="1.25sec- 2 min  - alt Y/R"/>
-				<enumChoice choice="1.5sec - 3 min  - alt G/R"/>
-				<enumChoice choice=" 2 sec - 4 min  -   Red  "/>
-				<enumChoice choice=" 3 sec - 5 min  - blink R"/>
+				<enumChoice choice="  0.5  - 40 sec - alt Y/R"/>
+				<enumChoice choice="  0.6  - 50 sec -  Red "/>
+				<enumChoice choice="  0.8  - 1 min  - alt G/R"/>
+				<enumChoice choice=" 1 sec - 1.5min - blink R"/>
+				<enumChoice choice="1.25sec- 2 min  - alt Y/G"/>
+				<enumChoice choice="1.5sec - 3 min  - alt R/G"/>
+				<enumChoice choice=" 2 sec - 4 min  - Green "/>
+				<enumChoice choice=" 3 sec - 5 min  - blink G"/>
 				<enumChoice choice=" 4 sec - 6 min  - blink Y"/>
-				<enumChoice choice=" 5 sec - 7 min  - blink G"/>
-				<enumChoice choice=" 6 sec - 8 min  - blink R"/>
+				<enumChoice choice=" 5 sec - 7 min  - blink R"/>
+				<enumChoice choice=" 6 sec - 8 min  - blink G"/>
 				<enumChoice choice=" 8 sec - 10 min -  dark  "/>
 				</enumVal>
 			</variable>
@@ -6600,41 +6602,41 @@
 					<compositeSetting label="P1 Toggle" value="0"/>
 					<compositeSetting label="P1 Signal" value="1"/>
 
-					<compositeSetting label="P1A Output Direction" value="0"/>
+					<compositeSetting label="P1A Output Direction" value="1"/>
 					<compositeSetting label="1A Mode" value="0"/>
-                    <compositeSetting label="1A I/O Type" value="0"/>
-                    <compositeSetting label="1A I/O Timing" value="0"/>
-					<compositeSetting label="P1B Output Direction" value="0"/>
+                    <compositeSetting label="1A I/O Type" value="2"/>
+                    <compositeSetting label="1A I/O Timing" value="10"/>
+					<compositeSetting label="P1B Output Direction" value="1"/>
 					<compositeSetting label="1B Mode" value="0"/>
-                    <compositeSetting label="1B I/O Type" value="0"/>
-                    <compositeSetting label="1B I/O Timing" value="0"/>
-					<compositeSetting label="P1C Output Direction" value="0"/>
+                    <compositeSetting label="1B I/O Type" value="2"/>
+                    <compositeSetting label="1B I/O Timing" value="15"/>
+					<compositeSetting label="P1C Output Direction" value="1"/>
 					<compositeSetting label="1C Mode" value="0"/>
-                    <compositeSetting label="1C I/O Type" value="0"/>
-                    <compositeSetting label="1C I/O Timing" value="0"/>
-					<compositeSetting label="P1D Output Direction" value="0"/>
+                    <compositeSetting label="1C I/O Type" value="2"/>
+                    <compositeSetting label="1C I/O Timing" value="10"/>
+					<compositeSetting label="P1D Output Direction" value="1"/>
 					<compositeSetting label="1D Mode" value="0"/>
-                    <compositeSetting label="1D I/O Type" value="0"/>
-                    <compositeSetting label="1D I/O Timing" value="0"/>
-					<compositeSetting label="P1E Output Direction" value="0"/>
+                    <compositeSetting label="1D I/O Type" value="2"/>
+                    <compositeSetting label="1D I/O Timing" value="15"/>
+					<compositeSetting label="P1E Output Direction" value="1"/>
 					<compositeSetting label="1E Mode" value="0"/>
-                    <compositeSetting label="1E I/O Type" value="0"/>
-                    <compositeSetting label="1E I/O Timing" value="0"/>
-					<compositeSetting label="P1F Output Direction" value="0"/>
+                    <compositeSetting label="1E I/O Type" value="2"/>
+                    <compositeSetting label="1E I/O Timing" value="10"/>
+					<compositeSetting label="P1F Output Direction" value="1"/>
 					<compositeSetting label="1F Mode" value="0"/>
-                    <compositeSetting label="1F I/O Type" value="0"/>
-                    <compositeSetting label="1F I/O Timing" value="0"/>
-					<compositeSetting label="P1G Output Direction" value="0"/>
+                    <compositeSetting label="1F I/O Type" value="2"/>
+                    <compositeSetting label="1F I/O Timing" value="15"/>
+					<compositeSetting label="P1G Output Direction" value="1"/>
 					<compositeSetting label="1G Mode" value="0"/>
-                    <compositeSetting label="1G I/O Type" value="0"/>
-                    <compositeSetting label="1G I/O Timing" value="0"/>
-					<compositeSetting label="P1H Output Direction" value="0"/>
+                    <compositeSetting label="1G I/O Type" value="2"/>
+                    <compositeSetting label="1G I/O Timing" value="10"/>
+					<compositeSetting label="P1H Output Direction" value="1"/>
 					<compositeSetting label="1H Mode" value="0"/>
-                    <compositeSetting label="1H I/O Type" value="0"/>
-                    <compositeSetting label="1H I/O Timing" value="0"/>
+                    <compositeSetting label="1H I/O Type" value="2"/>
+                    <compositeSetting label="1H I/O Timing" value="15"/>
                 </compositeChoice>
 
-                <compositeChoice choice="Switch">
+                <compositeChoice choice="Contact">
                     <compositeSetting label="P1 Direction" value="1"/>
 					<compositeSetting label="P1 Toggle" value="0"/>
 					<compositeSetting label="P1 Signal" value="0"/>
@@ -6776,41 +6778,41 @@
 					<compositeSetting label="P2 Toggle" value="0"/>
 					<compositeSetting label="P2 Signal" value="1"/>
 
-					<compositeSetting label="P2A Output Direction" value="0"/>
+					<compositeSetting label="P2A Output Direction" value="1"/>
 					<compositeSetting label="2A Mode" value="0"/>
-                    <compositeSetting label="2A I/O Type" value="0"/>
-                    <compositeSetting label="2A I/O Timing" value="0"/>
-					<compositeSetting label="P2B Output Direction" value="0"/>
+                    <compositeSetting label="2A I/O Type" value="2"/>
+                    <compositeSetting label="2A I/O Timing" value="10"/>
+					<compositeSetting label="P2B Output Direction" value="1"/>
 					<compositeSetting label="2B Mode" value="0"/>
-                    <compositeSetting label="2B I/O Type" value="0"/>
-                    <compositeSetting label="2B I/O Timing" value="0"/>
-					<compositeSetting label="P2C Output Direction" value="0"/>
+                    <compositeSetting label="2B I/O Type" value="2"/>
+                    <compositeSetting label="2B I/O Timing" value="15"/>
+					<compositeSetting label="P2C Output Direction" value="1"/>
 					<compositeSetting label="2C Mode" value="0"/>
-                    <compositeSetting label="2C I/O Type" value="0"/>
-                    <compositeSetting label="2C I/O Timing" value="0"/>
-					<compositeSetting label="P2D Output Direction" value="0"/>
+                    <compositeSetting label="2C I/O Type" value="2"/>
+                    <compositeSetting label="2C I/O Timing" value="10"/>
+					<compositeSetting label="P2D Output Direction" value="1"/>
 					<compositeSetting label="2D Mode" value="0"/>
-                    <compositeSetting label="2D I/O Type" value="0"/>
-                    <compositeSetting label="2D I/O Timing" value="0"/>
-					<compositeSetting label="P2E Output Direction" value="0"/>
+                    <compositeSetting label="2D I/O Type" value="2"/>
+                    <compositeSetting label="2D I/O Timing" value="15"/>
+					<compositeSetting label="P2E Output Direction" value="1"/>
 					<compositeSetting label="2E Mode" value="0"/>
-                    <compositeSetting label="2E I/O Type" value="0"/>
-                    <compositeSetting label="2E I/O Timing" value="0"/>
-					<compositeSetting label="P2F Output Direction" value="0"/>
+                    <compositeSetting label="2E I/O Type" value="2"/>
+                    <compositeSetting label="2E I/O Timing" value="10"/>
+					<compositeSetting label="P2F Output Direction" value="1"/>
 					<compositeSetting label="2F Mode" value="0"/>
-                    <compositeSetting label="2F I/O Type" value="0"/>
-                    <compositeSetting label="2F I/O Timing" value="0"/>
-					<compositeSetting label="P2G Output Direction" value="0"/>
+                    <compositeSetting label="2F I/O Type" value="2"/>
+                    <compositeSetting label="2F I/O Timing" value="15"/>
+					<compositeSetting label="P2G Output Direction" value="1"/>
 					<compositeSetting label="2G Mode" value="0"/>
-                    <compositeSetting label="2G I/O Type" value="0"/>
-                    <compositeSetting label="2G I/O Timing" value="0"/>
-					<compositeSetting label="P2H Output Direction" value="0"/>
+                    <compositeSetting label="2G I/O Type" value="2"/>
+                    <compositeSetting label="2G I/O Timing" value="10"/>
+					<compositeSetting label="P2H Output Direction" value="1"/>
 					<compositeSetting label="2H Mode" value="0"/>
-                    <compositeSetting label="2H I/O Type" value="0"/>
-                    <compositeSetting label="2H I/O Timing" value="0"/>
+                    <compositeSetting label="2H I/O Type" value="2"/>
+                    <compositeSetting label="2H I/O Timing" value="15"/>
                 </compositeChoice>
 
-                <compositeChoice choice="Switch">
+                <compositeChoice choice="Contact">
                     <compositeSetting label="P2 Direction" value="1"/>
 					<compositeSetting label="P2 Toggle" value="0"/>
 					<compositeSetting label="P2 Signal" value="0"/>
@@ -6952,41 +6954,41 @@
 					<compositeSetting label="P3 Toggle" value="0"/>
 					<compositeSetting label="P3 Signal" value="1"/>
 
-					<compositeSetting label="P3A Output Direction" value="0"/>
+					<compositeSetting label="P3A Output Direction" value="1"/>
 					<compositeSetting label="3A Mode" value="0"/>
-                    <compositeSetting label="3A I/O Type" value="0"/>
-                    <compositeSetting label="3A I/O Timing" value="0"/>
-					<compositeSetting label="P3B Output Direction" value="0"/>
+                    <compositeSetting label="3A I/O Type" value="2"/>
+                    <compositeSetting label="3A I/O Timing" value="10"/>
+					<compositeSetting label="P3B Output Direction" value="1"/>
 					<compositeSetting label="3B Mode" value="0"/>
-                    <compositeSetting label="3B I/O Type" value="0"/>
-                    <compositeSetting label="3B I/O Timing" value="0"/>
-					<compositeSetting label="P3C Output Direction" value="0"/>
+                    <compositeSetting label="3B I/O Type" value="2"/>
+                    <compositeSetting label="3B I/O Timing" value="15"/>
+					<compositeSetting label="P3C Output Direction" value="1"/>
 					<compositeSetting label="3C Mode" value="0"/>
-                    <compositeSetting label="3C I/O Type" value="0"/>
-                    <compositeSetting label="3C I/O Timing" value="0"/>
-					<compositeSetting label="P3D Output Direction" value="0"/>
+                    <compositeSetting label="3C I/O Type" value="2"/>
+                    <compositeSetting label="3C I/O Timing" value="10"/>
+					<compositeSetting label="P3D Output Direction" value="1"/>
 					<compositeSetting label="3D Mode" value="0"/>
-                    <compositeSetting label="3D I/O Type" value="0"/>
-                    <compositeSetting label="3D I/O Timing" value="0"/>
-					<compositeSetting label="P3E Output Direction" value="0"/>
+                    <compositeSetting label="3D I/O Type" value="2"/>
+                    <compositeSetting label="3D I/O Timing" value="15"/>
+					<compositeSetting label="P3E Output Direction" value="1"/>
 					<compositeSetting label="3E Mode" value="0"/>
-                    <compositeSetting label="3E I/O Type" value="0"/>
-                    <compositeSetting label="3E I/O Timing" value="0"/>
-					<compositeSetting label="P3F Output Direction" value="0"/>
+                    <compositeSetting label="3E I/O Type" value="2"/>
+                    <compositeSetting label="3E I/O Timing" value="10"/>
+					<compositeSetting label="P3F Output Direction" value="1"/>
 					<compositeSetting label="3F Mode" value="0"/>
-                    <compositeSetting label="3F I/O Type" value="0"/>
-                    <compositeSetting label="3F I/O Timing" value="0"/>
-					<compositeSetting label="P3G Output Direction" value="0"/>
+                    <compositeSetting label="3F I/O Type" value="2"/>
+                    <compositeSetting label="3F I/O Timing" value="15"/>
+					<compositeSetting label="P3G Output Direction" value="1"/>
 					<compositeSetting label="3G Mode" value="0"/>
-                    <compositeSetting label="3G I/O Type" value="0"/>
-                    <compositeSetting label="3G I/O Timing" value="0"/>
-					<compositeSetting label="P3H Output Direction" value="0"/>
+                    <compositeSetting label="3G I/O Type" value="2"/>
+                    <compositeSetting label="3G I/O Timing" value="10"/>
+					<compositeSetting label="P3H Output Direction" value="1"/>
 					<compositeSetting label="3H Mode" value="0"/>
-                    <compositeSetting label="3H I/O Type" value="0"/>
-                    <compositeSetting label="3H I/O Timing" value="0"/>
+                    <compositeSetting label="3H I/O Type" value="2"/>
+                    <compositeSetting label="3H I/O Timing" value="15"/>
                 </compositeChoice>
 
-                <compositeChoice choice="Switch">
+                <compositeChoice choice="Contact">
                     <compositeSetting label="P3 Direction" value="1"/>
 					<compositeSetting label="P3 Toggle" value="0"/>
 					<compositeSetting label="P3 Signal" value="0"/>
@@ -7128,41 +7130,41 @@
 					<compositeSetting label="P4 Toggle" value="0"/>
 					<compositeSetting label="P4 Signal" value="1"/>
 
-					<compositeSetting label="P4A Output Direction" value="0"/>
+					<compositeSetting label="P4A Output Direction" value="1"/>
 					<compositeSetting label="4A Mode" value="0"/>
-                    <compositeSetting label="4A I/O Type" value="0"/>
-                    <compositeSetting label="4A I/O Timing" value="0"/>
-					<compositeSetting label="P4B Output Direction" value="0"/>
+                    <compositeSetting label="4A I/O Type" value="2"/>
+                    <compositeSetting label="4A I/O Timing" value="10"/>
+					<compositeSetting label="P4B Output Direction" value="1"/>
 					<compositeSetting label="4B Mode" value="0"/>
-                    <compositeSetting label="4B I/O Type" value="0"/>
-                    <compositeSetting label="4B I/O Timing" value="0"/>
-					<compositeSetting label="P4C Output Direction" value="0"/>
+                    <compositeSetting label="4B I/O Type" value="2"/>
+                    <compositeSetting label="4B I/O Timing" value="15"/>
+					<compositeSetting label="P4C Output Direction" value="1"/>
 					<compositeSetting label="4C Mode" value="0"/>
-                    <compositeSetting label="4C I/O Type" value="0"/>
-                    <compositeSetting label="4C I/O Timing" value="0"/>
-					<compositeSetting label="P4D Output Direction" value="0"/>
+                    <compositeSetting label="4C I/O Type" value="2"/>
+                    <compositeSetting label="4C I/O Timing" value="10"/>
+					<compositeSetting label="P4D Output Direction" value="1"/>
 					<compositeSetting label="4D Mode" value="0"/>
-                    <compositeSetting label="4D I/O Type" value="0"/>
-                    <compositeSetting label="4D I/O Timing" value="0"/>
-					<compositeSetting label="P4E Output Direction" value="0"/>
+                    <compositeSetting label="4D I/O Type" value="2"/>
+                    <compositeSetting label="4D I/O Timing" value="15"/>
+					<compositeSetting label="P4E Output Direction" value="1"/>
 					<compositeSetting label="4E Mode" value="0"/>
-                    <compositeSetting label="4E I/O Type" value="0"/>
-                    <compositeSetting label="4E I/O Timing" value="0"/>
-					<compositeSetting label="P4F Output Direction" value="0"/>
+                    <compositeSetting label="4E I/O Type" value="2"/>
+                    <compositeSetting label="4E I/O Timing" value="10"/>
+					<compositeSetting label="P4F Output Direction" value="1"/>
 					<compositeSetting label="4F Mode" value="0"/>
-                    <compositeSetting label="4F I/O Type" value="0"/>
-                    <compositeSetting label="4F I/O Timing" value="0"/>
-					<compositeSetting label="P4G Output Direction" value="0"/>
+                    <compositeSetting label="4F I/O Type" value="2"/>
+                    <compositeSetting label="4F I/O Timing" value="15"/>
+					<compositeSetting label="P4G Output Direction" value="1"/>
 					<compositeSetting label="4G Mode" value="0"/>
-                    <compositeSetting label="4G I/O Type" value="0"/>
-                    <compositeSetting label="4G I/O Timing" value="0"/>
-					<compositeSetting label="P4H Output Direction" value="0"/>
+                    <compositeSetting label="4G I/O Type" value="2"/>
+                    <compositeSetting label="4G I/O Timing" value="10"/>
+					<compositeSetting label="P4H Output Direction" value="1"/>
 					<compositeSetting label="4H Mode" value="0"/>
-                    <compositeSetting label="4H I/O Type" value="0"/>
-                    <compositeSetting label="4H I/O Timing" value="0"/>
+                    <compositeSetting label="4H I/O Type" value="2"/>
+                    <compositeSetting label="4H I/O Timing" value="15"/>
                 </compositeChoice>
 
-                <compositeChoice choice="Switch">
+                <compositeChoice choice="Contact">
                     <compositeSetting label="P4 Direction" value="1"/>
 					<compositeSetting label="P4 Toggle" value="0"/>
 					<compositeSetting label="P4 Signal" value="0"/>
@@ -7304,41 +7306,41 @@
 					<compositeSetting label="P5 Toggle" value="0"/>
 					<compositeSetting label="P5 Signal" value="1"/>
 
-					<compositeSetting label="P5A Output Direction" value="0"/>
+					<compositeSetting label="P5A Output Direction" value="1"/>
 					<compositeSetting label="5A Mode" value="0"/>
-                    <compositeSetting label="5A I/O Type" value="0"/>
-                    <compositeSetting label="5A I/O Timing" value="0"/>
-					<compositeSetting label="P5B Output Direction" value="0"/>
+                    <compositeSetting label="5A I/O Type" value="2"/>
+                    <compositeSetting label="5A I/O Timing" value="10"/>
+					<compositeSetting label="P5B Output Direction" value="1"/>
 					<compositeSetting label="5B Mode" value="0"/>
-                    <compositeSetting label="5B I/O Type" value="0"/>
-                    <compositeSetting label="5B I/O Timing" value="0"/>
-					<compositeSetting label="P5C Output Direction" value="0"/>
+                    <compositeSetting label="5B I/O Type" value="2"/>
+                    <compositeSetting label="5B I/O Timing" value="15"/>
+					<compositeSetting label="P5C Output Direction" value="1"/>
 					<compositeSetting label="5C Mode" value="0"/>
-                    <compositeSetting label="5C I/O Type" value="0"/>
-                    <compositeSetting label="5C I/O Timing" value="0"/>
-					<compositeSetting label="P5D Output Direction" value="0"/>
+                    <compositeSetting label="5C I/O Type" value="2"/>
+                    <compositeSetting label="5C I/O Timing" value="10"/>
+					<compositeSetting label="P5D Output Direction" value="1"/>
 					<compositeSetting label="5D Mode" value="0"/>
-                    <compositeSetting label="5D I/O Type" value="0"/>
-                    <compositeSetting label="5D I/O Timing" value="0"/>
-					<compositeSetting label="P5E Output Direction" value="0"/>
+                    <compositeSetting label="5D I/O Type" value="2"/>
+                    <compositeSetting label="5D I/O Timing" value="15"/>
+					<compositeSetting label="P5E Output Direction" value="1"/>
 					<compositeSetting label="5E Mode" value="0"/>
-                    <compositeSetting label="5E I/O Type" value="0"/>
-                    <compositeSetting label="5E I/O Timing" value="0"/>
-					<compositeSetting label="P5F Output Direction" value="0"/>
+                    <compositeSetting label="5E I/O Type" value="2"/>
+                    <compositeSetting label="5E I/O Timing" value="10"/>
+					<compositeSetting label="P5F Output Direction" value="1"/>
 					<compositeSetting label="5F Mode" value="0"/>
-                    <compositeSetting label="5F I/O Type" value="0"/>
-                    <compositeSetting label="5F I/O Timing" value="0"/>
-					<compositeSetting label="P5G Output Direction" value="0"/>
+                    <compositeSetting label="5F I/O Type" value="2"/>
+                    <compositeSetting label="5F I/O Timing" value="15"/>
+					<compositeSetting label="P5G Output Direction" value="1"/>
 					<compositeSetting label="5G Mode" value="0"/>
-                    <compositeSetting label="5G I/O Type" value="0"/>
-                    <compositeSetting label="5G I/O Timing" value="0"/>
-					<compositeSetting label="P5H Output Direction" value="0"/>
+                    <compositeSetting label="5G I/O Type" value="2"/>
+                    <compositeSetting label="5G I/O Timing" value="10"/>
+					<compositeSetting label="P5H Output Direction" value="1"/>
 					<compositeSetting label="5H Mode" value="0"/>
-                    <compositeSetting label="5H I/O Type" value="0"/>
-                    <compositeSetting label="5H I/O Timing" value="0"/>
+                    <compositeSetting label="5H I/O Type" value="2"/>
+                    <compositeSetting label="5H I/O Timing" value="15"/>
                 </compositeChoice>
 
-                <compositeChoice choice="Switch">
+                <compositeChoice choice="Contact">
                     <compositeSetting label="P5 Direction" value="1"/>
 					<compositeSetting label="P5 Toggle" value="0"/>
 					<compositeSetting label="P5 Signal" value="0"/>
@@ -7480,41 +7482,41 @@
 					<compositeSetting label="P6 Toggle" value="0"/>
 					<compositeSetting label="P6 Signal" value="1"/>
 
-					<compositeSetting label="P6A Output Direction" value="0"/>
+					<compositeSetting label="P6A Output Direction" value="1"/>
 					<compositeSetting label="6A Mode" value="0"/>
-                    <compositeSetting label="6A I/O Type" value="0"/>
-                    <compositeSetting label="6A I/O Timing" value="0"/>
-					<compositeSetting label="P6B Output Direction" value="0"/>
+                    <compositeSetting label="6A I/O Type" value="2"/>
+                    <compositeSetting label="6A I/O Timing" value="10"/>
+					<compositeSetting label="P6B Output Direction" value="1"/>
 					<compositeSetting label="6B Mode" value="0"/>
-                    <compositeSetting label="6B I/O Type" value="0"/>
-                    <compositeSetting label="6B I/O Timing" value="0"/>
-					<compositeSetting label="P6C Output Direction" value="0"/>
+                    <compositeSetting label="6B I/O Type" value="2"/>
+                    <compositeSetting label="6B I/O Timing" value="15"/>
+					<compositeSetting label="P6C Output Direction" value="1"/>
 					<compositeSetting label="6C Mode" value="0"/>
-                    <compositeSetting label="6C I/O Type" value="0"/>
-                    <compositeSetting label="6C I/O Timing" value="0"/>
-					<compositeSetting label="P6D Output Direction" value="0"/>
+                    <compositeSetting label="6C I/O Type" value="2"/>
+                    <compositeSetting label="6C I/O Timing" value="10"/>
+					<compositeSetting label="P6D Output Direction" value="1"/>
 					<compositeSetting label="6D Mode" value="0"/>
-                    <compositeSetting label="6D I/O Type" value="0"/>
-                    <compositeSetting label="6D I/O Timing" value="0"/>
-					<compositeSetting label="P6E Output Direction" value="0"/>
+                    <compositeSetting label="6D I/O Type" value="2"/>
+                    <compositeSetting label="6D I/O Timing" value="15"/>
+					<compositeSetting label="P6E Output Direction" value="1"/>
 					<compositeSetting label="6E Mode" value="0"/>
-                    <compositeSetting label="6E I/O Type" value="0"/>
-                    <compositeSetting label="6E I/O Timing" value="0"/>
-					<compositeSetting label="P6F Output Direction" value="0"/>
+                    <compositeSetting label="6E I/O Type" value="2"/>
+                    <compositeSetting label="6E I/O Timing" value="10"/>
+					<compositeSetting label="P6F Output Direction" value="1"/>
 					<compositeSetting label="6F Mode" value="0"/>
-                    <compositeSetting label="6F I/O Type" value="0"/>
-                    <compositeSetting label="6F I/O Timing" value="0"/>
-					<compositeSetting label="P6G Output Direction" value="0"/>
+                    <compositeSetting label="6F I/O Type" value="2"/>
+                    <compositeSetting label="6F I/O Timing" value="15"/>
+					<compositeSetting label="P6G Output Direction" value="1"/>
 					<compositeSetting label="6G Mode" value="0"/>
-                    <compositeSetting label="6G I/O Type" value="0"/>
-                    <compositeSetting label="6G I/O Timing" value="0"/>
-					<compositeSetting label="P6H Output Direction" value="0"/>
+                    <compositeSetting label="6G I/O Type" value="2"/>
+                    <compositeSetting label="6G I/O Timing" value="10"/>
+					<compositeSetting label="P6H Output Direction" value="1"/>
 					<compositeSetting label="6H Mode" value="0"/>
-                    <compositeSetting label="6H I/O Type" value="0"/>
-                    <compositeSetting label="6H I/O Timing" value="0"/>
+                    <compositeSetting label="6H I/O Type" value="2"/>
+                    <compositeSetting label="6H I/O Timing" value="15"/>
                 </compositeChoice>
 
-                <compositeChoice choice="Switch">
+                <compositeChoice choice="Contact">
                     <compositeSetting label="P6 Direction" value="1"/>
 					<compositeSetting label="P6 Toggle" value="0"/>
 					<compositeSetting label="P6 Signal" value="0"/>
@@ -7656,41 +7658,41 @@
 					<compositeSetting label="P7 Toggle" value="0"/>
 					<compositeSetting label="P7 Signal" value="1"/>
 
-					<compositeSetting label="P7A Output Direction" value="0"/>
+					<compositeSetting label="P7A Output Direction" value="1"/>
 					<compositeSetting label="7A Mode" value="0"/>
-                    <compositeSetting label="7A I/O Type" value="0"/>
-                    <compositeSetting label="7A I/O Timing" value="0"/>
-					<compositeSetting label="P7B Output Direction" value="0"/>
+                    <compositeSetting label="7A I/O Type" value="2"/>
+                    <compositeSetting label="7A I/O Timing" value="10"/>
+					<compositeSetting label="P7B Output Direction" value="1"/>
 					<compositeSetting label="7B Mode" value="0"/>
-                    <compositeSetting label="7B I/O Type" value="0"/>
-                    <compositeSetting label="7B I/O Timing" value="0"/>
-					<compositeSetting label="P7C Output Direction" value="0"/>
+                    <compositeSetting label="7B I/O Type" value="2"/>
+                    <compositeSetting label="7B I/O Timing" value="15"/>
+					<compositeSetting label="P7C Output Direction" value="1"/>
 					<compositeSetting label="7C Mode" value="0"/>
-                    <compositeSetting label="7C I/O Type" value="0"/>
-                    <compositeSetting label="7C I/O Timing" value="0"/>
-					<compositeSetting label="P7D Output Direction" value="0"/>
+                    <compositeSetting label="7C I/O Type" value="2"/>
+                    <compositeSetting label="7C I/O Timing" value="10"/>
+					<compositeSetting label="P7D Output Direction" value="1"/>
 					<compositeSetting label="7D Mode" value="0"/>
-                    <compositeSetting label="7D I/O Type" value="0"/>
-                    <compositeSetting label="7D I/O Timing" value="0"/>
-					<compositeSetting label="P7E Output Direction" value="0"/>
+                    <compositeSetting label="7D I/O Type" value="2"/>
+                    <compositeSetting label="7D I/O Timing" value="15"/>
+					<compositeSetting label="P7E Output Direction" value="1"/>
 					<compositeSetting label="7E Mode" value="0"/>
-                    <compositeSetting label="7E I/O Type" value="0"/>
-                    <compositeSetting label="7E I/O Timing" value="0"/>
-					<compositeSetting label="P7F Output Direction" value="0"/>
+                    <compositeSetting label="7E I/O Type" value="2"/>
+                    <compositeSetting label="7E I/O Timing" value="10"/>
+					<compositeSetting label="P7F Output Direction" value="1"/>
 					<compositeSetting label="7F Mode" value="0"/>
-                    <compositeSetting label="7F I/O Type" value="0"/>
-                    <compositeSetting label="7F I/O Timing" value="0"/>
-					<compositeSetting label="P7G Output Direction" value="0"/>
+                    <compositeSetting label="7F I/O Type" value="2"/>
+                    <compositeSetting label="7F I/O Timing" value="15"/>
+					<compositeSetting label="P7G Output Direction" value="1"/>
 					<compositeSetting label="7G Mode" value="0"/>
-                    <compositeSetting label="7G I/O Type" value="0"/>
-                    <compositeSetting label="7G I/O Timing" value="0"/>
-					<compositeSetting label="P7H Output Direction" value="0"/>
+                    <compositeSetting label="7G I/O Type" value="2"/>
+                    <compositeSetting label="7G I/O Timing" value="10"/>
+					<compositeSetting label="P7H Output Direction" value="1"/>
 					<compositeSetting label="7H Mode" value="0"/>
-                    <compositeSetting label="7H I/O Type" value="0"/>
-                    <compositeSetting label="7H I/O Timing" value="0"/>
+                    <compositeSetting label="7H I/O Type" value="2"/>
+                    <compositeSetting label="7H I/O Timing" value="15"/>
                 </compositeChoice>
 
-                <compositeChoice choice="Switch">
+                <compositeChoice choice="Contact">
                     <compositeSetting label="P7 Direction" value="1"/>
 					<compositeSetting label="P7 Toggle" value="0"/>
 					<compositeSetting label="P7 Signal" value="0"/>
@@ -7832,41 +7834,41 @@
 					<compositeSetting label="P8 Toggle" value="0"/>
 					<compositeSetting label="P8 Signal" value="1"/>
 
-					<compositeSetting label="P8A Output Direction" value="0"/>
+					<compositeSetting label="P8A Output Direction" value="1"/>
 					<compositeSetting label="8A Mode" value="0"/>
-                    <compositeSetting label="8A I/O Type" value="0"/>
-                    <compositeSetting label="8A I/O Timing" value="0"/>
-					<compositeSetting label="P8B Output Direction" value="0"/>
+                    <compositeSetting label="8A I/O Type" value="2"/>
+                    <compositeSetting label="8A I/O Timing" value="10"/>
+					<compositeSetting label="P8B Output Direction" value="1"/>
 					<compositeSetting label="8B Mode" value="0"/>
-                    <compositeSetting label="8B I/O Type" value="0"/>
-                    <compositeSetting label="8B I/O Timing" value="0"/>
-					<compositeSetting label="P8C Output Direction" value="0"/>
+                    <compositeSetting label="8B I/O Type" value="2"/>
+                    <compositeSetting label="8B I/O Timing" value="15"/>
+					<compositeSetting label="P8C Output Direction" value="1"/>
 					<compositeSetting label="8C Mode" value="0"/>
-                    <compositeSetting label="8C I/O Type" value="0"/>
-                    <compositeSetting label="8C I/O Timing" value="0"/>
-					<compositeSetting label="P8D Output Direction" value="0"/>
+                    <compositeSetting label="8C I/O Type" value="2"/>
+                    <compositeSetting label="8C I/O Timing" value="10"/>
+					<compositeSetting label="P8D Output Direction" value="1"/>
 					<compositeSetting label="8D Mode" value="0"/>
-                    <compositeSetting label="8D I/O Type" value="0"/>
-                    <compositeSetting label="8D I/O Timing" value="0"/>
-					<compositeSetting label="P8E Output Direction" value="0"/>
+                    <compositeSetting label="8D I/O Type" value="2"/>
+                    <compositeSetting label="8D I/O Timing" value="15"/>
+					<compositeSetting label="P8E Output Direction" value="1"/>
 					<compositeSetting label="8E Mode" value="0"/>
-                    <compositeSetting label="8E I/O Type" value="0"/>
-                    <compositeSetting label="8E I/O Timing" value="0"/>
-					<compositeSetting label="P8F Output Direction" value="0"/>
+                    <compositeSetting label="8E I/O Type" value="2"/>
+                    <compositeSetting label="8E I/O Timing" value="10"/>
+					<compositeSetting label="P8F Output Direction" value="1"/>
 					<compositeSetting label="8F Mode" value="0"/>
-                    <compositeSetting label="8F I/O Type" value="0"/>
-                    <compositeSetting label="8F I/O Timing" value="0"/>
-					<compositeSetting label="P8G Output Direction" value="0"/>
+                    <compositeSetting label="8F I/O Type" value="2"/>
+                    <compositeSetting label="8F I/O Timing" value="15"/>
+					<compositeSetting label="P8G Output Direction" value="1"/>
 					<compositeSetting label="8G Mode" value="0"/>
-                    <compositeSetting label="8G I/O Type" value="0"/>
-                    <compositeSetting label="8G I/O Timing" value="0"/>
-					<compositeSetting label="P8H Output Direction" value="0"/>
+                    <compositeSetting label="8G I/O Type" value="2"/>
+                    <compositeSetting label="8G I/O Timing" value="10"/>
+					<compositeSetting label="P8H Output Direction" value="1"/>
 					<compositeSetting label="8H Mode" value="0"/>
-                    <compositeSetting label="8H I/O Type" value="0"/>
-                    <compositeSetting label="8H I/O Timing" value="0"/>
+                    <compositeSetting label="8H I/O Type" value="2"/>
+                    <compositeSetting label="8H I/O Timing" value="15"/>
                 </compositeChoice>
 
-                <compositeChoice choice="Switch">
+                <compositeChoice choice="Contact">
                     <compositeSetting label="P8 Direction" value="1"/>
 					<compositeSetting label="P8 Toggle" value="0"/>
 					<compositeSetting label="P8 Signal" value="0"/>
@@ -8040,7 +8042,7 @@
 		<row><column>
         	<display item="Manufacturer ID" tooltip="RR-CirKits, Inc."/>
 		</column><column>
-		<display item="Version ID"  tooltip="Firmware version number"/>
+		<display item="Firmware Version"  tooltip="Firmware version number"/>
  		</column></row>
 		<display item="Long Address" tooltip="Use 4 digit address from 0-16383" />
        </column>
