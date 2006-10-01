@@ -2,25 +2,28 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: SoundTraxx_DSX_Steam.xml,v 1.12 2005-08-18 05:07:48 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_DSX_Steam.xml,v 1.13 2006-10-01 06:49:54 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Michael Mosher" version="8" lastUpdated="20050817"/>
-
+		<version author="Michael Mosher" version="9" lastUpdated="20060927"/>
+        <version author="Michael Mosher" version="8" lastUpdated="20050817"/>
+        
 		<!-- version 4: updates to minOut usage, function mapping -->
 		<!-- version 5: removed erroneous CV19 definition, corrected VersionID -->
 		<!-- version 6: rename family for better tree shape -->
 		<!-- version 7: added CV105&106  -->
         <!-- version 8: (20050817 BobJ): numFns corrected from 8 to 10 -->
+		<!-- version 9: Added None to function map  -->
 
 <decoder>
 	<family name="DSX Steam" mfg="Throttle-Up (SoundTraxx)">
 		<model model="DSX Steam" numOuts="0" numFns="10">
 			<versionCV lowVersionID="17"/>
-			<!--output name="3" label="F1/grn" /-->
+			<!--output name="3" label="F1/grn" -->
 			<output name="Whistle"/>
 			<output name="Bell"/> 
 			<output name="Hiss"/> 
-			<!-- output name="4" label="F5/brwn" /-->
+			<!-- output name="4" label="F5/brwn" -->
+			<output name="None"/> 
 			<output name="Dynamo"/> 
 			<output name="Coupler"/> 
 			<output name="Mute"/> 
@@ -207,9 +210,8 @@
 		<variable label="FL(f) controls output Hiss" CV="33" mask="XXVXXXXX" 
 				default="0" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="FL(f) controls F5 output" CV="33" mask="XVXXXXXX" 
-				item="FL(f) controls output 4"
-				minOut="4" default="0" > <enumVal> 
+		<variable label="FL(f) controls output None" CV="33" mask="XVXXXXXX" 
+				default="0" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="FL(f) controls output Dynamo" CV="33" mask="VXXXXXXX" 
 				default="0" > <enumVal> 
@@ -236,9 +238,8 @@
 		<variable label="FL(r) controls output Hiss" CV="34" mask="XXVXXXXX" 
 				default="0" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="FL(r) controls F5 output" CV="34" mask="XVXXXXXX" 
-				item="FL(r) controls output 4"
-				minOut="4" default="0" > <enumVal> 
+		<variable label="FL(r) controls output None" CV="34" mask="XVXXXXXX" 
+				default="0" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="FL(r) controls output Dynamo" CV="34" mask="VXXXXXXX" 
 				default="0" > <enumVal> 
@@ -265,9 +266,8 @@
 		<variable label="F1 controls output Hiss" CV="35" mask="XXVXXXXX" 
 				default="0" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F1 controls F5 output" CV="35" mask="XVXXXXXX" 
-				item="F1 controls output 4"
-				minOut="4" default="0" > <enumVal> 
+		<variable label="F1 controls output None" CV="35" mask="XVXXXXXX" 
+				default="0" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="F1 controls output Dynamo" CV="35" mask="VXXXXXXX" 
 				default="0" > <enumVal> 
@@ -294,9 +294,8 @@
 		<variable label="F2 controls output Hiss" CV="36" mask="XXVXXXXX" 
 				default="0" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F2 controls F5 output" CV="36" mask="XVXXXXXX" 
-				item="F2 controls output 4"
-				minOut="4" default="0" > <enumVal> 
+		<variable label="F2 controls output None" CV="36" mask="XVXXXXXX" 
+				default="0" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="F2 controls output Dynamo" CV="36" mask="VXXXXXXX" 
 				default="0" > <enumVal> 
@@ -311,9 +310,8 @@
 		<variable label="F3 controls output Hiss" CV="37" mask="XXXXXVXX" 
 				default="0" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F3 controls F5 output" CV="37" mask="XXXXVXXX" 
-				item="F3 controls output 4"
-				minOut="4" default="0" > <enumVal> 
+		<variable label="F3 controls output None" CV="37" mask="XXXXVXXX" 
+				default="0" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="F3 controls output Dynamo" CV="37" mask="XXXVXXXX" 
 				default="0" > <enumVal> 
@@ -331,9 +329,8 @@
 		<variable label="F4 controls output Hiss" CV="38" mask="XXXXXVXX" 
 				default="1" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F4 controls F5 output" CV="38" mask="XXXXVXXX" 
-				item="F4 controls output 4"
-				minOut="4" default="0" > <enumVal> 
+		<variable label="F4 controls output None" CV="38" mask="XXXXVXXX" 
+				default="0" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="F4 controls output Dynamo" CV="38" mask="XXXVXXXX" 
 				default="0" > <enumVal> 
@@ -351,9 +348,8 @@
 		<variable label="F5 controls output Hiss" CV="39" mask="XXXXXVXX" 
 				default="0" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F5 controls F5 output" CV="39" mask="XXXXVXXX" 
-				item="F5 controls output 4"
-				minOut="4" default="1" > <enumVal> 
+		<variable label="F5 controls output None" CV="39" mask="XXXXVXXX" 
+				default="0" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="F5 controls output Dynamo" CV="39" mask="XXXVXXXX" 
 				default="0" > <enumVal> 
@@ -371,9 +367,8 @@
 		<variable label="F6 controls output Hiss" CV="40" mask="XXXXXVXX" 
 				default="0" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F6 controls F5 output" CV="40" mask="XXXXVXXX" 
-				item="F6 controls output 4"
-				minOut="4" default="0" > <enumVal> 
+		<variable label="F6 controls output None" CV="40" mask="XXXXVXXX" 
+				default="0" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="F6 controls output Dynamo" CV="40" mask="XXXVXXXX" 
 				default="1" > <enumVal> 
@@ -382,9 +377,8 @@
 				default="0" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 
-		<variable label="F7 controls F5 output" CV="41" mask="XXXXXXXV" 
-				item="F7 controls output 4"
-				minOut="4" default="0" > <enumVal> 
+		<variable label="F7 controls output None" CV="41" mask="XXXXXXXV" 
+				default="0" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="F7 controls output Dynamo" CV="41" mask="XXXXXXVX" 
 				default="0" > <enumVal> 
@@ -396,9 +390,8 @@
 				default="0" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 
-		<variable label="F8 controls F5 output" CV="42" mask="XXXXXXXV" 
-				item="F8 controls output 4"
-				minOut="4" default="0" > <enumVal> 
+		<variable label="F8 controls output None" CV="42" mask="XXXXXXXV" 
+				default="0" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="F8 controls output Dynamo" CV="42" mask="XXXXXXVX" 
 				default="0" > <enumVal> 
