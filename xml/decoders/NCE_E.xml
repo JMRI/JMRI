@@ -2,10 +2,12 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: NCE_E.xml,v 1.1 2006-09-17 05:48:39 jacobsen Exp $ -->
+<!-- $Id: NCE_E.xml,v 1.2 2006-10-01 06:28:26 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Michael Mosher" version="1" lastUpdated="20060912"/>
+		<version author="Michael Mosher" version="2" lastUpdated="20060918"/>
+        <version author="Michael Mosher" version="1" lastUpdated="20060912"/>
 		<!-- version 1 created by modifing NCE_SR_TC.xml ver 5 added CV 112, 113, 114, 115 -->
+		<!-- Version 2 - use factory reset feature -->
       
 <decoder>
   <family name="Silent Running BEMF" mfg="North Coast Engineering" 
@@ -148,13 +150,6 @@
 			<enumVal>
 				<enumChoice choice="One byte (short) address"/>
 				<enumChoice choice="Two byte (extended) address"/>
-				</enumVal></variable>
-
-		<variable label="Decoder Reset" CV="30" mask="XXXXXXVX"
-				  default="0" tooltip="When activated, will reset all values in decoder to factory defaults" >
-			<enumVal >
-				<enumChoice choice="System Normal"/>
-				<enumChoice choice="Reset to defaults"/>
 				</enumVal></variable>
 
 		<variable label="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1"> <enumVal> 
@@ -695,6 +690,10 @@
 	
 	</variables>
 
+  <resets>
+  	<factReset label="Reset All CVs(Programing Track Only)" CV="30" default="2"/>
+  </resets>
+
 </decoder>
 
 <pane name="NCE">
@@ -703,11 +702,6 @@
 		<display item="Decoder Lock ID number" />
 		<label label="Tip: you must set CV15 equal to this number to unlock the decoder for programming"/>
 		<label label="Multi-decoder control in the tools menu will set CV15 as needed."/>
-		<label label=" "/>
-		<separator/>
-		<label label=" "/>
-		<display item="Decoder Reset" />
-		<label label="Reset only works when done on the programming track (not OPS)"/>
 
 	</column>
 </pane>

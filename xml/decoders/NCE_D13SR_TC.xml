@@ -2,10 +2,11 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: NCE_D13SR_TC.xml,v 1.7 2006-09-17 04:39:29 jacobsen Exp $ -->
+<!-- $Id: NCE_D13SR_TC.xml,v 1.8 2006-10-01 06:28:26 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Michael Mosher" version="5" lastUpdated="20060912"/>
-		<!-- version 1 created by modifing NCE_SR.xml ver 7 removed CV9, 23, 24, 65, 119 
+      <version author="Michael Mosher" version="6" lastUpdated="20060918"/>
+      <version author="Michael Mosher" version="5" lastUpdated="20060912"/>
+      <!-- version 1 created by modifing NCE_SR.xml ver 7 removed CV9, 23, 24, 65, 119 
 				and added CV 16, 95, 116, 117 -->
       <!-- Version 2 - added version comment (Jack Shall) -->
       <!-- Version 3 - removed CV29 bit-3, added CV11, minor formatting changes,
@@ -14,6 +15,7 @@
       			plus D15SR now has 6 functions (Michael Mosher) -->
       <!-- Version 5 - added ATL-O, BachDsl, N12A2, NAVO, NMP 
       			plus D13SR & D13SRP now have 4 functions (Michael Mosher) -->
+	  <!-- Version 6 - use factory reset feature -->
       
 <decoder>
   <family name="Silent Running w/ Torque Compensation" mfg="North Coast Engineering" 
@@ -409,13 +411,6 @@
 			<enumVal>
 				<enumChoice choice="One byte (short) address"/>
 				<enumChoice choice="Two byte (extended) address"/>
-				</enumVal></variable>
-
-		<variable label="Decoder Reset" CV="30" mask="XXXXXXVX"
-				  default="0" tooltip="When activated, will reset all values in decoder to factory defaults" >
-			<enumVal >
-				<enumChoice choice="System Normal"/>
-				<enumChoice choice="Reset to defaults"/>
 				</enumVal></variable>
 
 		<variable label="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1"> <enumVal> 
@@ -932,6 +927,10 @@
 	
 	</variables>
 
+  <resets>
+  	<factReset label="Reset All CVs(Programing Track Only)" CV="30" default="2"/>
+  </resets>
+
 </decoder>
 
 <pane name="NCE">
@@ -940,11 +939,6 @@
 		<display item="Decoder Lock ID number" />
 		<label label="Tip: you must set CV15 equal to this number to unlock the decoder for programming"/>
 		<label label="Multi-decoder control in the tools menu will set CV15 as needed."/>
-		<label label=" "/>
-		<separator/>
-		<label label=" "/>
-		<display item="Decoder Reset" />
-		<label label="Reset only works when done on the programming track (not OPS)"/>
 
 	</column>
 </pane>
