@@ -5,7 +5,11 @@
 <!-- $Id: TCS_X.xml,v 1.6+ 2006/07/28 SG -->
 <decoder-config>
 		<version author="Michael Mosher" 
-					version="6" lastUpdated="20060728"/>
+					version="7" lastUpdated="20060921"/>
+		<version author="Michael Mosher" 
+                    version="6" lastUpdated="20060728"/>
+		<version author="Michael Mosher" 
+					version="5" lastUpdated="20060206"/>
 
 		<!-- Version 1 - made from TSC Tx -->
 		<!-- Version 2 - correction to CV61 -->
@@ -13,6 +17,8 @@
 		<!-- Version 4 - added AMD1 & MP-15N & ver to 37 -->
 		<!-- Version 5 - fix bug in MP-15N -->
 		<!-- Version 6 - added VO-1000N -->
+		<!-- Version 7 - added T1, M1, M1P-15, M1P-UK as they are full X series now -->
+						<!-- also added factory reset feature  -->
 
 
 <decoder>
@@ -59,6 +65,33 @@
 			<output name="3" label="Green"  connection="solder" maxcurrent="100 mA" />
 			<output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
 			<output name="5" label="Brown"  connection="solder" maxcurrent="100 mA" />
+			<output name="Dim" />
+			<output name="Ditch" />
+			<output name="Motor" />
+			</model>
+		<model model="M1"  numOuts="2" numFns="8" lowVersionID="36" highVersionID="37"
+    		maxMotorCurrent="1A (peak=2A)" formFactor="N">
+			<size length="0.57" width="0.355" height="0.132" units="inches" />
+			<output name="1" label="White"  connection="wire" maxcurrent="100 mA" />
+			<output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+			<output name="Dim" />
+			<output name="Ditch" />
+			<output name="Motor" />
+			</model>
+		<model model="M1P-15"  numOuts="2" numFns="8" lowVersionID="36" highVersionID="37"
+    		maxMotorCurrent="1A (peak=2A)" formFactor="HO">
+			<size length="0.57" width="0.355" height="0.132" units="inches" />
+			<output name="1" label="White"  connection="plug" maxcurrent="100 mA" />
+			<output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+			<output name="Dim" />
+			<output name="Ditch" />
+			<output name="Motor" />
+			</model>
+		<model model="M1P-UK"  numOuts="2" numFns="8" lowVersionID="36" highVersionID="37"
+    		maxMotorCurrent="1A (peak=2A)" formFactor="HO">
+			<size length="0.57" width="0.355" height="0.132" units="inches" />
+			<output name="1" label="White"  connection="plug" maxcurrent="100 mA" />
+			<output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
 			<output name="Dim" />
 			<output name="Ditch" />
 			<output name="Motor" />
@@ -128,13 +161,11 @@
 			<output name="Ditch" />
 			<output name="Motor" />
 			</model>
-		<model model="VO-1000N"   numOuts="4" numFns="14" lowVersionID="30" highVersionID="37"
-    		maxMotorCurrent="1A (peak=2A)" formFactor="N"
-			comment="Fits Atlas N Scale: VO-1000">
-			<output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
-			<output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
-			<output name="3" label="Green"  connection="solder" maxcurrent="100 mA" />
-			<output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+		<model model="T1"  numOuts="2" numFns="8" lowVersionID="36" highVersionID="37"
+    		maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
+			<size length="1.010" width="0.665" height="0.250" units="inches" />
+			<output name="1" label="White"  connection="wire" maxcurrent="100 mA" />
+			<output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
 			<output name="Dim" />
 			<output name="Ditch" />
 			<output name="Motor" />
@@ -171,6 +202,17 @@
 			<output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
 			<output name="5" label="Brown"  connection="wire" maxcurrent="100 mA" />
 			<output name="6" label="Pink"   connection="wire" maxcurrent="100 mA" />
+			<output name="Dim" />
+			<output name="Ditch" />
+			<output name="Motor" />
+			</model>
+		<model model="VO-1000N"   numOuts="4" numFns="14" lowVersionID="30" highVersionID="37"
+    		maxMotorCurrent="1A (peak=2A)" formFactor="N"
+			comment="Fits Atlas N Scale: VO-1000">
+			<output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
+			<output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
+			<output name="3" label="Green"  connection="solder" maxcurrent="100 mA" />
+			<output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
 			<output name="Dim" />
 			<output name="Ditch" />
 			<output name="Motor" />
@@ -339,13 +381,6 @@
 			<enumVal>
 				<enumChoice choice="2 digit addressing"/>
 				<enumChoice choice="4 digit addressing"/>
-				</enumVal>
-			</variable>
-			
-		<variable label="Decoder Reset" CV="30" mask="XXXXXXVX">
-			<enumVal>
-				<enumChoice choice="Normal"/>
-				<enumChoice choice="Reset"/>
 				</enumVal>
 			</variable>
 			
@@ -813,6 +848,10 @@
 		
 
 	</variables>
+	
+  <resets>
+  	<factReset label="Reset All CVs" CV="30" default="2"/>
+  </resets>
 
 </decoder>
 <pane name="Momentum">
@@ -867,10 +906,6 @@
 
 		<display item="Decoder Lock ID number" />
 		<label label="Tip: you must set CV15 equal to this number to unlock the decoder for programming"/>
-		<label label=" "/>
-		<separator/>
-		<label label=" "/>
-		<display item="Decoder Reset" />
 
 	</column>
 </pane>
