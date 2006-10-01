@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <!--Written by JMRI version 1.7.5 on Sat Sep 16 22:54:26 PDT 2006 $Id: decoderIndex.xml,v 1.89 2006-09-17 05:56:59 jacobsen Exp $-->
-  <decoderIndex version="112">
+  <!--Written by JMRI version 1.7.5 on Sun Oct 01 00:37:39 PDT 2006 $Id: decoderIndex.xml,v 1.90 2006-10-01 07:39:46 jacobsen Exp $-->
+  <decoderIndex version="113">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -347,30 +347,39 @@
           <size length="0.55" width="0.36" height="0.13" units="inches" />
         </model>
       </family>
-      <family name="SFX Sound Decoders" mfg="Digitrax" lowVersionID="49" highVersionID="49" type="locomotive" file="Digitrax_0SFX.xml">
-        <model model="EVO GE Diesel" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
-          <output name="4" label="Violet" connection="wire" />
-          <output name="5" label="Pad" connection="solder" />
-          <output name="6" label="Pad" connection="solder" />
+      <family name="SFX Sound Decoders" mfg="Digitrax" type="locomotive" file="Digitrax_0SFX.xml">
+        <model model="EVO GE Diesel" numOuts="12" numFns="14" lowVersionID="49" highVersionID="49" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" comment="SDH104T1" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="F0F Pad" connection="solder" />
+          <output name="2" label="F0R Pad" connection="solder" />
+          <output name="3" label="F1 Pad" connection="solder" />
+          <output name="4" label="F2 Pad" connection="solder" />
+          <output name="5" label="F3 Pad" connection="solder" />
+          <output name="6" label="F4 Pad" connection="solder" />
+          <output name="7" label="F5 Pad" connection="solder" />
+          <output name="8" label="F6 Pad" connection="solder" />
+          <output name="9" label="F7 Pad" connection="solder" />
+          <output name="10" label="F8 Pad" connection="solder" />
+          <output name="11" label="F9 Pad" connection="solder" />
+          <output name="12" label="F10 Pad" connection="solder" />
           <size length="1.05" width="0.67" height="0.25" units="inches" />
         </model>
-        <model model="AC4400" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
-          <output name="4" label="Violet" connection="wire" />
-          <output name="5" label="Pad" connection="solder" />
-          <output name="6" label="Pad" connection="solder" />
-          <size length="1.05" width="0.67" height="0.25" units="inches" />
+        <model model="AC4400" numOuts="4" numFns="8" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" comment="SDH104K1A" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="LED" connection="solder" />
+          <output name="2" label="LED" connection="solder" />
+          <output name="3" label="Pad" connection="solder" />
+          <output name="4" label="Pad" connection="solder" />
         </model>
-        <model model="SD38 2" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
-          <output name="4" label="Violet" connection="wire" />
-          <output name="5" label="Pad" connection="solder" />
-          <output name="6" label="Pad" connection="solder" />
-          <size length="1.05" width="0.67" height="0.25" units="inches" />
+        <model model="SD38-2" numOuts="4" numFns="8" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" comment="SDH104K1B" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="LED" connection="solder" />
+          <output name="2" label="LED" connection="solder" />
+          <output name="3" label="Pad" connection="solder" />
+          <output name="4" label="Pad" connection="solder" />
         </model>
-        <model model="SFX064D" numOuts="6" numFns="8" maxMotorCurrent="none" formFactor="HO" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
-          <output name="4" label="Violet" connection="wire" />
-          <output name="5" label="Pad" connection="solder" />
-          <output name="6" label="Pad" connection="solder" />
-          <size length="1.05" width="0.67" height="0.25" units="inches" />
+        <model model="F40PH" numOuts="4" numFns="8" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" comment="SDH104K1C" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="LED" connection="solder" />
+          <output name="2" label="LED" connection="solder" />
+          <output name="3" label="Pad" connection="solder" />
+          <output name="4" label="Pad" connection="solder" />
         </model>
       </family>
       <family name="Premium FX with BEMF" mfg="Digitrax" lowVersionID="240" highVersionID="250" type="locomotive" file="Digitrax_1x2.xml">
@@ -805,6 +814,9 @@
           <!-- The four electical outputs are front headlight, back -->
           <!-- headlight, F5, F6 -->
         </model>
+      </family>
+      <family name="LGB" mfg="Massoth Elektronik, GmbH" type="locomotive" file="Massoth_LGB.xml">
+        <model model="LGB MTS loco decoders" lowVersionID="10" highVersionID="39" comment="includes 55021, 55022, large and small on-board decoders" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
       <family name="Non silent drive directional Lights" mfg="North Coast Engineering" lowVersionID="21" highVersionID="21" type="locomotive" file="NCE_D102EU.xml">
         <model model="D102EU" numOuts="2" numFns="0" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
@@ -1315,7 +1327,7 @@
         <model model="Walthers 0-6-0 Switcher" lowVersionID="6" numFns="14" numOuts="14" productID="319" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
       <family name="Tower Controller" mfg="RR-CirKits" type="stationary" comment="The Tower Controller is normally programmed in OPs mode" file="RR-CirKits-TC-64-basic.xml">
-        <model model="TC-64" comment="64 line I/O" lowVersionID="01" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+        <model model="TC-64" comment="64 line I/O" lowVersionID="02" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
       <family name="DSD diesel" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_DSD_Diesel.xml">
         <model model="DSD diesel" numOuts="4" numFns="10" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
@@ -1372,11 +1384,12 @@
       <family name="DSX Steam" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_DSX_Steam.xml">
         <model model="DSX Steam" numOuts="0" numFns="10" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <versionCV lowVersionID="17" />
-          <!--output name="3" label="F1/grn" /-->
+          <!--output name="3" label="F1/grn" -->
           <output name="Whistle" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
           <output name="Hiss" connection="unspecified" />
-          <!-- output name="4" label="F5/brwn" /-->
+          <!-- output name="4" label="F5/brwn" -->
+          <output name="None" connection="unspecified" />
           <output name="Dynamo" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
           <output name="Mute" connection="unspecified" />
@@ -1798,6 +1811,30 @@
           <output name="Ditch" connection="unspecified" />
           <output name="Motor" connection="unspecified" />
         </model>
+        <model model="M1" numOuts="2" numFns="8" lowVersionID="36" highVersionID="37" maxMotorCurrent="1A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <size length="0.57" width="0.355" height="0.132" units="inches" />
+          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+        </model>
+        <model model="M1P-15" numOuts="2" numFns="8" lowVersionID="36" highVersionID="37" maxMotorCurrent="1A (peak=2A)" formFactor="HO" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <size length="0.57" width="0.355" height="0.132" units="inches" />
+          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+        </model>
+        <model model="M1P-UK" numOuts="2" numFns="8" lowVersionID="36" highVersionID="37" maxMotorCurrent="1A (peak=2A)" formFactor="HO" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <size length="0.57" width="0.355" height="0.132" units="inches" />
+          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+        </model>
         <model model="M3" numOuts="3" numFns="14" lowVersionID="30" highVersionID="37" maxMotorCurrent="1A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <size length="0.570" width="0.355" height="0.132" units="inches" />
           <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
@@ -1856,11 +1893,10 @@
           <output name="Ditch" connection="unspecified" />
           <output name="Motor" connection="unspecified" />
         </model>
-        <model model="VO-1000N" numOuts="4" numFns="14" lowVersionID="30" highVersionID="37" maxMotorCurrent="1A (peak=2A)" formFactor="N" comment="Fits Atlas N Scale: VO-1000" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
-          <output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
-          <output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
-          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
-          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+        <model model="T1" numOuts="2" numFns="8" lowVersionID="36" highVersionID="37" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <size length="1.010" width="0.665" height="0.250" units="inches" />
+          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
           <output name="Dim" connection="unspecified" />
           <output name="Ditch" connection="unspecified" />
           <output name="Motor" connection="unspecified" />
@@ -1894,6 +1930,15 @@
           <output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
           <output name="5" label="Brown" connection="wire" maxcurrent="100 mA" />
           <output name="6" label="Pink" connection="wire" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+        </model>
+        <model model="VO-1000N" numOuts="4" numFns="14" lowVersionID="30" highVersionID="37" maxMotorCurrent="1A (peak=2A)" formFactor="N" comment="Fits Atlas N Scale: VO-1000" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
           <output name="Dim" connection="unspecified" />
           <output name="Ditch" connection="unspecified" />
           <output name="Motor" connection="unspecified" />
