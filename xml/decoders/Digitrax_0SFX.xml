@@ -2,47 +2,57 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2002, 2005, 2006 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Digitrax_0SFX.xml,v 1.2 2006-08-07 09:05:31 jacobsen Exp $ -->
+<!-- $Id: Digitrax_0SFX.xml,v 1.3 2006-10-01 06:16:59 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Bob Jacobsen" version="2" lastUpdated="20060706"/>
+		<version author="Michael Mosher" version="2" lastUpdated="20060918"/>
+        <version author="Bob Jacobsen" version="1" lastUpdated="20060221"/>
 
 		<!-- Created from version 15 of the Digitrax_01x3 file -->
-		<!-- Version 2 contains new models -->
+		<!-- Ver 2, add CV152,3,5 & AC4400, SD38-2, F40PH decoders  -->
 	
 <decoder>
 	<family name="SFX Sound Decoders" 
-			mfg="Digitrax" lowVersionID="49" highVersionID="49">
-		<model model="EVO GE Diesel" numOuts="6" numFns="8"
+			mfg="Digitrax">
+		<model model="EVO GE Diesel" numOuts="12" numFns="14" lowVersionID="49" highVersionID="49"
 	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="HO"
-				connector="9pin">
-			<output name="4" label="Violet" connection="wire" /> 
-			<output name="5" label="Pad" connection="solder" /> 
-			<output name="6" label="Pad" connection="solder" /> 
+	    		comment="SDH104T1">
+			<output name="1" label="F0F Pad" connection="solder" /> 
+			<output name="2" label="F0R Pad" connection="solder" /> 
+			<output name="3" label="F1 Pad" connection="solder" /> 
+			<output name="4" label="F2 Pad" connection="solder" /> 
+			<output name="5" label="F3 Pad" connection="solder" /> 
+			<output name="6" label="F4 Pad" connection="solder" /> 
+			<output name="7" label="F5 Pad" connection="solder" /> 
+			<output name="8" label="F6 Pad" connection="solder" /> 
+			<output name="9" label="F7 Pad" connection="solder" /> 
+			<output name="10" label="F8 Pad" connection="solder" /> 
+			<output name="11" label="F9 Pad" connection="solder" /> 
+			<output name="12" label="F10 Pad" connection="solder" /> 
 			<size length="1.05" width="0.67" height="0.25" units="inches" />
 			</model>
-		<model model="AC4400" numOuts="6" numFns="8"
+		<model model="AC4400" numOuts="4" numFns="8" lowVersionID="16" highVersionID="16"
 	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="HO"
-				connector="9pin">
-			<output name="4" label="Violet" connection="wire" /> 
-			<output name="5" label="Pad" connection="solder" /> 
-			<output name="6" label="Pad" connection="solder" /> 
-			<size length="1.05" width="0.67" height="0.25" units="inches" />
+	    		comment="SDH104K1A">
+			<output name="1" label="LED" connection="solder" /> 
+			<output name="2" label="LED" connection="solder" /> 
+			<output name="3" label="Pad" connection="solder" /> 
+			<output name="4" label="Pad" connection="solder" /> 
 			</model>
-		<model model="SD38 2" numOuts="6" numFns="8"
+		<model model="SD38-2" numOuts="4" numFns="8" lowVersionID="16" highVersionID="16"
 	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="HO"
-				connector="9pin">
-			<output name="4" label="Violet" connection="wire" /> 
-			<output name="5" label="Pad" connection="solder" /> 
-			<output name="6" label="Pad" connection="solder" /> 
-			<size length="1.05" width="0.67" height="0.25" units="inches" />
+	    		comment="SDH104K1B">
+			<output name="1" label="LED" connection="solder" /> 
+			<output name="2" label="LED" connection="solder" /> 
+			<output name="3" label="Pad" connection="solder" /> 
+			<output name="4" label="Pad" connection="solder" /> 
 			</model>
-		<model model="SFX064D" numOuts="6" numFns="8"
-	    		maxMotorCurrent="none" formFactor="HO"
-				connector="9pin">
-			<output name="4" label="Violet" connection="wire" /> 
-			<output name="5" label="Pad" connection="solder" /> 
-			<output name="6" label="Pad" connection="solder" /> 
-			<size length="1.05" width="0.67" height="0.25" units="inches" />
+		<model model="F40PH" numOuts="4" numFns="8" lowVersionID="16" highVersionID="16"
+	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="HO"
+	    		comment="SDH104K1C">
+			<output name="1" label="LED" connection="solder" /> 
+			<output name="2" label="LED" connection="solder" /> 
+			<output name="3" label="Pad" connection="solder" /> 
+			<output name="4" label="Pad" connection="solder" /> 
 			</model>
 	</family>
 
@@ -903,11 +913,6 @@
 			<decVal max="15"></decVal>
 			</variable>
         
-		<variable label="Scheme" CV="58" item="Sound Option 1"
-						comment="0-2 depending on model"><decVal/>
-			</variable>
-        
-
 		<variable label="Notch Rate" CV="132" item="Sound Setting 2">
 			<decVal/>
 			</variable>
@@ -952,7 +957,7 @@
 			<decVal/>
 			</variable>
         
-		<variable label="Horn Selector" CV="150" item="Sound Option 2">
+		<variable label="Horn Selector" CV="150" item="Sound Option 1">
 			<enumVal>
 				<enumChoice choice="Standard Horn"/>
 				<enumChoice choice="Playable Horn"/>
@@ -961,8 +966,26 @@
 			</variable>
         
 		<variable label="Peak Speed for Auto coupler/brake on dir change" CV="151" 
-		    item="Sound Option 3">
+		    item="Sound Option 2">
 			<decVal/>
+			</variable>
+        
+		<variable label="Sound Project Author ID" CV="152" >
+			<decVal/>
+			</variable>
+        
+		<variable label="Sound Project ID" CV="153" >
+			<decVal/>
+			</variable>
+        
+		<variable label="Notching Mode" CV="155"
+		    item="Sound Option 3"
+		    tooltip="Not supported on early EVO">
+			<enumVal>
+				<enumChoice choice="Automatic"/>
+				<enumChoice choice="Semi-Automatic"/>
+				<enumChoice choice="Manual"/>
+			</enumVal>
 			</variable>
         
 	</variables>
@@ -985,7 +1008,10 @@
 		<display item="Torque compensation" />
 		<display item="Decoder Lock Feature" tooltip="Activates Decoder Locking feature" />
 		<display item="Decoder Lock ID number" tooltip="Set this decoder's unique locking ID number" />
-		
+
+		<display item="Sound Project Author ID" />
+		<display item="Sound Project ID" />
+				
 	</column>
 </pane>
 
