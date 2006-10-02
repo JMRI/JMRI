@@ -2,11 +2,15 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: MRC_1630.xml,v 1.2 2006-03-29 19:04:58 jacobsen Exp $ -->
+<!-- $Id: MRC_1630.xml,v 1.3 2006-10-02 03:13:14 jacobsen Exp $ -->
 <decoder-config>
+		<version author="Walter Thompson"
+			version="2" lastUpdated="20060916" />
 		<version author="Bob Jacobsen"
 			version="1" lastUpdated="20060326" />
 <!-- made from the MRC_1627 file by Rick Beaber -->
+<!--Updated by Walter Thompson 20060916, Many changes lables and CV  to match Geneis BigBoy -->
+
 
 <decoder>
 	<family name="Brilliance Sound Decoders" mfg="MRC"
@@ -120,7 +124,6 @@
 				</enumVal>
 			</variable>
 			
-
         <variable label="Sound On/Off" CV="49" mask="XXXXXXXV" 
                 default="1" item="Sound Option 1">
                 <enumVal>
@@ -128,12 +131,17 @@
                         <enumChoice choice="On"/>
                         </enumVal></variable>
 
-		<variable label="Whistle Type" CV="50" item="Sound Option 2" default="3"
-				comment="Range 0-11">
-			<decVal max="11"/>
+		<variable label="Whistle Type" CV="50" item="Sound Option 1" default="5"
+				comment="Range 0-18">
+			<decVal max="18"/>
+			</variable>
+
+		<variable label="Whistle Volume" CV="51" item="Sound Setting 1" default="3"
+				comment="Range 0-3">
+			<decVal max="3"/>
 			</variable>
 								
-		<variable label="Bell Type" CV="52" item="Sound Option 3" default="3"
+		<variable label="Bell Type" CV="52" item="Sound Option 2" default="3"
 				comment="Range 0-6">
 			<decVal max="6"/>
 			</variable>
@@ -148,21 +156,13 @@
 			<decVal max="50"/>
 			</variable>
 			
-		<variable label="Coupling Sound Type" item="Sound Option 4" CV="55" default="0">
-		     <enumVal>
-		         <enumChoice choice="Single Chuff 0"/>
-		         <enumChoice choice="Single Chuff 1"/>
-		         <enumChoice choice="Single Chuff 2"/>
-		         <enumChoice choice="Single Chuff 3"/>
-		         <enumChoice choice="Double Chuff 4"/>
-		         <enumChoice choice="Double Chuff 5"/>
-		         <enumChoice choice="Double Chuff 6"/>
-		         <enumChoice choice="Double Chuff 7"/>
-		         </enumVal>
+		<variable label="Chuff type" item="Sound Option 3" CV="55" default="3"
+				comment="Range 0-3">
+			<decVal max="3"/>
 			</variable>
 
 
-		<variable label="Brake Squeal Volume" CV="56" item="Sound Setting 4" default="3"
+		<variable label="Chuff volume" CV="56" item="Sound Setting 4" default="3"
 				comment="Range 0-3">
 			<decVal max="3"/>
 			</variable>
@@ -182,7 +182,7 @@
 			<decVal max="3"/>
 			</variable>
 			
-		<variable label="Random Noise Volume" CV="60" item="Sound Setting 8" default="3"
+		<variable label="Fire box door volume" CV="60" item="Sound Setting 8" default="3"
 				comment="Range 0-3">
 			<decVal max="3"/>
 			</variable>
@@ -196,17 +196,13 @@
 				comment="Range 0-3">
 			<decVal max="3"/>
 			</variable>
-			
-        <variable label="Air Pump Type" item="Sound Option 5" CV="63" default="0">
-		     <enumVal>
-		         <enumChoice choice="Type 0"/>
-		         <enumChoice choice="Type 1"/>
-		         <enumChoice choice="Type 2"/>
-		         <enumChoice choice="Type 3"/>
-		         </enumVal>
+
+		<variable label="Air Pump Volume" CV="63" item="Sound Setting 11" default="3"
+				comment="Range 0-3">
+			<decVal max="3"/>
 			</variable>
 
-		<variable label="Air Pump Volume" CV="64" item="Sound Setting 11" default="3"
+		<variable label="Rail clack volume" CV="64" item="Sound Setting 12" default="3"
 				comment="Range 0-3">
 			<decVal max="3"/>
 			</variable>
@@ -218,60 +214,54 @@
 		<variable label="User ID #2" CV="106" item="User Id #2" default="0">
 			<decVal max="255"/>
 			</variable>
-		
-		<variable label="Light Effects" item="Global lighting option 1" CV="112" default="0">
-  			<enumVal>
-				<enumChoice choice="Headlights Normal - Pad#1 Ditch - Pad#2 Ditch" value="0"/>
-				<enumChoice choice="Headlights Normal - Pad#1 Mars  - Pad#2 Single Strobe" value="1"/>
-				<enumChoice choice="Headlights Normal - Pad#1 Mars  - Pad#2 Dual Strobe" value="2"/>
-				<enumChoice choice="Headlights Rule 17 - Pad#1 Ditch - Pad#2 Ditch" value="16"/>
-				<enumChoice choice="Headlights Rule 17 - Pad#1 Mars  - Pad#2 Single Strobe" value="17"/>
-				<enumChoice choice="Headlights Rule 17 - Pad#1 Mars  - Pad#2 Dual Strobe" value="18"/>
-				</enumVal>
+
+		<variable label="Conductor volume" CV="112" item="Sound Setting 13" default="3"
+				comment="Range 0-3">
+			<decVal max="3"/>
 			</variable>
 			
-		<variable label="Ditch Light Rate" item="Global lighting option 2" CV="113" default="3"
-				comment="Range 0-20">
-			<decVal max="20"/>
-			</variable>
-			
-		<variable label="Light Brightness" item="Global lighting option 3" CV="114" default="3"
-				comment="Range 0-12">
-			<decVal max="12"/>
-			</variable>
-			
-		<variable label="Brake squeal" item="Sound Option 6" CV="115" default="1">
+		<variable label="Directional light enabel" item="Global lighting option 2" CV="113" default="1">
 		     <enumVal>
 		         <enumChoice choice="Off"/>
 		         <enumChoice choice="On"/>
 		         </enumVal>
 			</variable>
+			
+		<variable label="Air pump type" item="Sound Option 5" CV="114" default="3"
+				comment="Range 0-3">
+			<decVal max="3"/>
+			</variable>
 
-		<variable label="Rail wheel clack" CV="116" item="Sound Setting 12" default="3"
+		<variable label="Shoveling volume" CV="118" item="Sound Setting 14" default="3"
 				comment="Range 0-3">
 			<decVal max="3"/>
 			</variable>
 						
-		<variable label="Shoveling Volume" CV="117" item="Sound Setting 13" default="3"
+		<variable label="Coupling Fire Volume" CV="119" item="Sound Setting 15" default="3"
 				comment="Range 0-3">
 			<decVal max="3"/>
 			</variable>
 						
-
-		<variable label="Coupling Fire Volume" CV="119" item="Sound Setting 14" default="3"
-				comment="Range 0-3">
-			<decVal max="3"/>
-			</variable>
-						
-		<variable label="Chuff Rate" CV="120" item="Sound Setting 15" default="0"
+		<variable label="Chuff Rate" CV="120" item="Sound Setting 16" default="0"
 				comment="Range 0-30">
 			<decVal max="30"/>
 			</variable>
-						
-		
-		<variable label="Chuff Start Point" CV="121" item="Sound Setting 16" default="0"
+								
+		<variable label="Chuff Start Point" CV="121" item="Sound Setting 17" default="0"
 				comment="Range 0-5">
 			<decVal max="5"/>
+			</variable>
+								
+		<variable label="Double chuff enable" CV="122" item="Sound Option 6" default="0"
+				comment="Range 0-5">
+			<decVal max="5"/>
+			</variable>
+							
+		<variable label="Load Control emf" CV="123" item="EMF Static Config" default="1">
+		     <enumVal>
+		         <enumChoice choice="Off"/>
+		         <enumChoice choice="On"/>
+		         </enumVal>
 			</variable>
 						
 		<variable label="Select Speed Curve" item="Speed Table Selection" CV="124" default="0">
