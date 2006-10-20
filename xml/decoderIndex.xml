@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <!--Written by JMRI version 1.7.5 on Sun Oct 01 00:37:39 PDT 2006 $Id: decoderIndex.xml,v 1.90 2006-10-01 07:39:46 jacobsen Exp $-->
-  <decoderIndex version="113">
+  <!--Written by JMRI version 1.7.5 on Thu Oct 19 17:03:23 PDT 2006 $Id: decoderIndex.xml,v 1.91 2006-10-20 00:05:35 jacobsen Exp $-->
+  <decoderIndex version="114">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -1234,6 +1234,56 @@
           <output name="14" label="Snd" connection="other" />
         </model>
       </family>
+      <family name="QSI Articulated Steam Ver. 7" mfg="QSIndustries" lowVersionID="7" type="locomotive" file="QSI_Articulated_Steam_ver7.xml">
+        <model model="BLI NW Class A" lowVersionID="7" numFns="14" numOuts="14" productID="400" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI PRR Duplex T1" lowVersionID="7" numFns="14" numOuts="14" productID="401" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI SP Cab Forward AC4,AC5 (Pot)" lowVersionID="7" numFns="14" numOuts="14" productID="403" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI SP Cab Forward AC4,AC5 (Reed Switch)" lowVersionID="7" numFns="14" numOuts="14" productID="406" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Eureka NSWGR AD60 Beyer-Garatt" lowVersionID="7" numFns="14" numOuts="14" productID="407" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Lionel UP Challenger" lowVersionID="7" numFns="14" numOuts="14" productID="402" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k NW Class Y3" lowVersionID="7" numFns="14" numOuts="14" productID="408" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k USRA 2-8-8-2" lowVersionID="7" numFns="14" numOuts="14" productID="404" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+      </family>
       <family name="QSI Diesel" mfg="QSIndustries" lowVersionID="4" highVersionID="5" type="locomotive" file="QSI_Diesel.xml">
         <model model="BLI E7A/B" lowVersionID="4" highVersionID="5" numFns="14" numOuts="14" productID="100" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
@@ -1277,11 +1327,305 @@
         <model model="Life Like U30B" lowVersionID="6" numFns="14" numOuts="14" productID="124" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
         <model model="Walthers GP30" lowVersionID="6" numFns="14" numOuts="14" productID="140" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
+      <family name="QSI Diesel Ver. 7" mfg="QSIndustries" lowVersionID="7" type="locomotive" file="QSI_Diesel_Ver7.xml">
+        <model model="Atlas B23-7" numFns="14" numOuts="14" productID="127" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Atlas Dash 8-40B,BW" numFns="14" numOuts="14" productID="126" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Atlas Dash 8-40C,CW" numFns="14" numOuts="14" productID="103" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Atlas Dash 8-40C,CW (GE pump)" numFns="14" numOuts="14" productID="132" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Atlas MP-15DC" numFns="14" numOuts="14" productID="129" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Atlas SD24/26" numFns="14" numOuts="14" productID="111" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Atlas SD35" numFns="14" numOuts="14" productID="149" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Atlas SD35" numFns="14" numOuts="14" productID="150" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Atlas TM w/Mars" numFns="14" numOuts="14" productID="105" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Atlas TM wo/Mars" numFns="14" numOuts="14" productID="106" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI AC6000" numFns="14" numOuts="14" productID="131" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI C30-7" numFns="14" numOuts="14" productID="128" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI E3/E6 w/Mars" numFns="14" numOuts="14" productID="115" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI E3/E6 wo/Mars" numFns="14" numOuts="14" productID="116" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI E3/E6 w/Mars" numFns="14" numOuts="14" productID="121" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI E3/E6 wo/Mars" numFns="14" numOuts="14" productID="122" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI E7 w/Mars" numFns="14" numOuts="14" productID="100" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI E7 w/Mars" numFns="14" numOuts="14" productID="119" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI E7 wo/Mars" numFns="14" numOuts="14" productID="120" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI E8/E9 w/Mars" numFns="14" numOuts="14" productID="117" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI E8/E9 wo/Mars" numFns="14" numOuts="14" productID="118" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI F7" numFns="14" numOuts="14" productID="104" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI F7" numFns="14" numOuts="14" productID="143" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI RSD-15" numFns="14" numOuts="14" productID="125" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI SD40-2" numFns="14" numOuts="14" productID="102" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI SD40-2 (Reed Switch)" numFns="14" numOuts="14" productID="134" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI SW7/NW2" numFns="14" numOuts="14" productID="101" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="CHC C-Liner" numFns="14" numOuts="14" productID="114" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="CHC RS 10" numFns="14" numOuts="14" productID="113" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="CHC RS 18" numFns="14" numOuts="14" productID="123" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Eureka NSWR 620/720" numFns="14" numOuts="14" productID="139" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="InterMtn F7" numFns="14" numOuts="14" productID="110" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k E6 w/Mars" numFns="14" numOuts="14" productID="107" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k E6 wo/Mars" numFns="14" numOuts="14" productID="108" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k E7 w/Mars" numFns="14" numOuts="14" productID="151" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k E7 wo/Mars" numFns="14" numOuts="14" productID="152" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k E8/E9 w/Mars" numFns="14" numOuts="14" productID="135" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k E8/E9 wo/Mars" numFns="14" numOuts="14" productID="136" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k GP7 w/Mars" numFns="14" numOuts="14" productID="144" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k GP7 wo/Mars" numFns="14" numOuts="14" productID="145" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k GP9" numFns="14" numOuts="14" productID="112" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k GP20" numFns="14" numOuts="14" productID="130" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k GP30" numFns="14" numOuts="14" productID="140" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k RS27" numFns="14" numOuts="14" productID="137" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k SW8" numFns="14" numOuts="14" productID="133" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k U28B/30B" numFns="14" numOuts="14" productID="124" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+      </family>
       <family name="QSI Electric" mfg="QSIndustries" lowVersionID="3" highVersionID="6" type="locomotive" file="QSI_Electric.xml">
         <model model="BLI GG-1" lowVersionID="3" highVersionID="6" productID="200" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
+      <family name="QSI Electric Ver. 7" mfg="QSIndustries" lowVersionID="3" highVersionID="7" type="locomotive" file="QSI_Electric_Ver7.xml">
+        <model model="BLI GG-1" productID="200" numFns="14" numOuts="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+      </family>
       <family name="QSI Gas Turbine" mfg="QSIndustries" lowVersionID="4" highVersionID="6" type="locomotive" file="QSI_Gas_Turbine.xml">
         <model model="Lionel Veranda Turbine" lowVersionID="4" numFns="14" numOuts="14" productID="500" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+      </family>
+      <family name="QSI Gas Turbine Ver. 7" mfg="QSIndustries" lowVersionID="7" highVersionID="7" type="locomotive" file="QSI_Gas_Turbine_Ver7.xml">
+        <model model="Lionel Veranda Turbine" numFns="14" numOuts="14" productID="500" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
       </family>
       <family name="QSI Steam" mfg="QSIndustries" lowVersionID="1" highVersionID="5" type="locomotive" file="QSI_Steam.xml">
         <model model="BLI ATSF 3751 4-8-4" lowVersionID="5" numFns="14" numOuts="14" productID="305" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
@@ -1325,6 +1669,140 @@
         <model model="Life Like 2-8-4 Berkshire w/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="317" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
         <model model="Life Like 2-8-4 Berkshire wo/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="318" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
         <model model="Walthers 0-6-0 Switcher" lowVersionID="6" numFns="14" numOuts="14" productID="319" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+      </family>
+      <family name="QSI Steam Ver. 7" mfg="QSIndustries" lowVersionID="7" type="locomotive" file="QSI_Steam_ver7.xml">
+        <model model="BLI ATSF 3751 Class 4-8-4" lowVersionID="7" numFns="14" numOuts="14" productID="305" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI ATSF 3800 Class 2-10-2 2-10-4" lowVersionID="7" numFns="14" numOuts="14" productID="316" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI CO T1 2-10-4" lowVersionID="7" numFns="14" numOuts="14" productID="310" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI DRGW C16 2-8-0" lowVersionID="7" numFns="14" numOuts="14" productID="303" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI DRGW C16 2-8-0 Christmas" lowVersionID="7" numFns="14" numOuts="14" productID="304" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI GN S2 4-8-4" lowVersionID="7" numFns="14" numOuts="14" productID="308" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI NW J 4-8-4" lowVersionID="7" numFns="14" numOuts="14" productID="312" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI NYC J1D-E 4-6-4" lowVersionID="7" numFns="14" numOuts="14" productID="300" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI NYC Steamlined 4-6-4" lowVersionID="7" numFns="14" numOuts="14" productID="314" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI NYC S1b 4-8-4" lowVersionID="7" numFns="14" numOuts="14" productID="306" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI PRR J1 2-10-4" lowVersionID="7" numFns="14" numOuts="14" productID="313" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI PRR K4 4-6-2" lowVersionID="7" numFns="14" numOuts="14" productID="309" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI PRR M1A 4-8-2" lowVersionID="7" numFns="14" numOuts="14" productID="302" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI UP MT-73 4-8-2" lowVersionID="7" numFns="14" numOuts="14" productID="307" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI USRA Mikado 2-8-2" lowVersionID="7" numFns="14" numOuts="14" productID="301" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2K USRA 0-6-0" lowVersionID="7" numFns="14" numOuts="14" productID="319" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2K USRA 0-8-0" lowVersionID="7" numFns="14" numOuts="14" productID="315" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2K USRA 2-10-2" lowVersionID="7" numFns="14" numOuts="14" productID="323" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2K 2-8-4 Berkshire w/Mars" lowVersionID="7" numFns="14" numOuts="14" productID="317" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2K 2-8-4 Berkshire wo/Mars" lowVersionID="7" numFns="14" numOuts="14" productID="318" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Tenshodo D-51 2-8-2" lowVersionID="7" numFns="14" numOuts="14" productID="321" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Mikado" lowVersionID="7" numFns="14" numOuts="14" productID="324" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
       </family>
       <family name="Tower Controller" mfg="RR-CirKits" type="stationary" comment="The Tower Controller is normally programmed in OPs mode" file="RR-CirKits-TC-64-basic.xml">
         <model model="TC-64" comment="64 line I/O" lowVersionID="02" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
@@ -1730,6 +2208,20 @@
       </family>
       <family name="TCS A1X decoder" mfg="Train Control Systems" type="locomotive" file="TCS_A1X.xml">
         <model model="A1X" numOuts="4" numFns="2" lowVersionID="32" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+      </family>
+      <family name="TCS Function Decoders" mfg="Train Control Systems" type="locomotive" file="TCS_Fn.xml">
+        <model model="FL2" numOuts="2" numFns="14" lowVersionID="30" highVersionID="37" formFactor="HO" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <size length="1.000" width="0.650" height="0.160" units="inches" />
+          <output name="1" label="Green" connection="solder" maxcurrent="100 mA" />
+          <output name="2" label="Purple" connection="solder" maxcurrent="100 mA" />
+        </model>
+        <model model="FL4" numOuts="4" numFns="14" lowVersionID="30" highVersionID="37" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <size length="0.565" width="0.355" height="0.132" units="inches" />
+          <output name="1" label="Green" connection="solder" maxcurrent="200 mA" />
+          <output name="2" label="Purple" connection="solder" maxcurrent="200 mA" />
+          <output name="3" label="Brown" connection="solder" maxcurrent="200 mA" />
+          <output name="4" label="Pink" connection="solder" maxcurrent="200 mA" />
+        </model>
       </family>
       <family name="TCS Mx series decoders" mfg="Train Control Systems" type="locomotive" file="TCS_M1_v24.xml">
         <model model="M1_v24" numOuts="2" numFns="2" lowVersionID="24" highVersionID="24" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
