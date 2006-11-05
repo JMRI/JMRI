@@ -2,7 +2,6 @@
 
 package jmri.jmrix.loconet;
 
-import jmri.JmriException;
 import jmri.Turnout;
 
 /**
@@ -18,7 +17,7 @@ import jmri.Turnout;
  * <P>
  * Description:		Implement turnout manager for loconet
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.14 $
+ * @version         $Revision: 1.15 $
  */
 
 public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements LocoNetListener {

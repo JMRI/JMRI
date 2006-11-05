@@ -3,11 +3,9 @@
 package jmri;
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
 import jmri.Programmer;
-import jmri.ProgListener;
 
 /**
  * Provide a JPanel to configure the service mode programmer via a
@@ -30,7 +28,7 @@ import jmri.ProgListener;
  * "set" operations by changing the actual service mode programmer state.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class ProgDeferredServiceModePane extends ProgModeSelector implements java.beans.PropertyChangeListener {
 

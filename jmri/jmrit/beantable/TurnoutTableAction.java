@@ -16,7 +16,7 @@ import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ResourceBundle;
+
 import java.util.Vector;
 
 import javax.swing.BoxLayout;
@@ -34,15 +34,13 @@ import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 /**
  * Swing action to create and register a
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004
- * @version     $Revision: 1.32 $
+ * @version     $Revision: 1.33 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {

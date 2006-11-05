@@ -1,8 +1,6 @@
 package jmri.managers.configurexml;
 
 import org.jdom.Element;
-import jmri.InstanceManager;
-import jmri.managers.InternalTurnoutManager;
 
 /**
  * Provides load and store functionality for
@@ -12,7 +10,7 @@ import jmri.managers.InternalTurnoutManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2006
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class InternalTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManagerConfigXML {
 

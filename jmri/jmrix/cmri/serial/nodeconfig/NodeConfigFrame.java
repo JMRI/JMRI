@@ -3,13 +3,10 @@
 package jmri.jmrix.cmri.serial.nodeconfig;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 
 import java.util.ResourceBundle;
 
 import javax.swing.*;
-import javax.swing.event.*;
 import javax.swing.table.*;
 import javax.swing.border.Border;
 
@@ -21,7 +18,7 @@ import jmri.jmrix.cmri.serial.SerialSensorManager;
  * Frame for user configuration of CMRI serial nodes
  * @author	Bob Jacobsen   Copyright (C) 2004
  * @author	Dave Duchamp   Copyright (C) 2004
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class NodeConfigFrame extends javax.swing.JFrame {
 

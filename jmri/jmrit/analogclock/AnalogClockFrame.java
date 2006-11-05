@@ -8,7 +8,6 @@ import javax.swing.*;
 import java.util.Date;
 import jmri.*;
 
-import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.catalog.*;
 import jmri.util.JmriJFrame;
 
@@ -17,7 +16,7 @@ import jmri.util.JmriJFrame;
  *
  * <p> Time code copied from code for the Nixie clock by Bob Jacobsen</p>
  * @author                     Dennis Miller Copyright (C) 2004
- * @version                    $Revision: 1.6 $
+ * @version                    $Revision: 1.7 $
  */
 
 public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {

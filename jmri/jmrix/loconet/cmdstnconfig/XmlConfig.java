@@ -5,7 +5,6 @@ import org.jdom.*;
 import com.sun.java.util.collections.*;
 
 import jmri.jmrit.XmlFile;
-import apps.Apps;
 
 public class XmlConfig extends XmlFile
 {

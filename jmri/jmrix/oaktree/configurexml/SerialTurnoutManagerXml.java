@@ -1,7 +1,6 @@
 package jmri.jmrix.oaktree.configurexml;
 
 import org.jdom.Element;
-import jmri.InstanceManager;
 import jmri.jmrix.oaktree.*;
 
 /**
@@ -12,7 +11,7 @@ import jmri.jmrix.oaktree.*;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2006
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SerialTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManagerConfigXML {
 

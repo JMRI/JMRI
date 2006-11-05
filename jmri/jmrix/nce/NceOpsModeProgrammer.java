@@ -2,8 +2,6 @@
 
 package jmri.jmrix.nce;
 
-import java.beans.*;
-
 import jmri.*;
 
 /**
@@ -14,7 +12,7 @@ import jmri.*;
  *
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class NceOpsModeProgrammer extends NceProgrammer  {
 

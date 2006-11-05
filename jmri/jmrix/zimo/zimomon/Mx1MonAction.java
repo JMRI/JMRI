@@ -5,7 +5,7 @@
  *       		Mx1MonFrame object
  *
  * @author		Bob Jacobsen    Copyright (C) 2002
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  *
  * Adapted by Sip Bosch for use with MX-1
  *
@@ -15,8 +15,6 @@ package jmri.jmrix.zimo.zimomon;
 
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
-
-import jmri.jmrix.zimo.Mx1TrafficController;
 
 
 public class Mx1MonAction 			extends AbstractAction {

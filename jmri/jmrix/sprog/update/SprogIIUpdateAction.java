@@ -4,14 +4,12 @@ package jmri.jmrix.sprog.update;
 
 import java.awt.event.ActionEvent;
 
-import javax.swing.AbstractAction;
-
 /**
  * Swing action to create and register a
  *       			SprogIIUpdateFrame object
  *
  * @author			Andrew crosland    Copyright (C) 2004
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 public class SprogIIUpdateAction 	extends SprogUpdateAction {

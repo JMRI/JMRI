@@ -9,13 +9,7 @@ import jmri.jmrix.easydcc.EasyDccTrafficController;
 
 import java.io.*;
 import java.net.*;
-import java.io.InputStream;
-import java.util.Enumeration;
 import java.util.Vector;
-
-import javax.comm.CommPortIdentifier;
-import javax.comm.PortInUseException;
-import javax.comm.SerialPort;
 
 /**
  * Implements SerialPortAdapter for the EasyDcc system network connection.
@@ -24,7 +18,7 @@ import javax.comm.SerialPort;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class NetworkDriverAdapter extends EasyDccPortController {
 

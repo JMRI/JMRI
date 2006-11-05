@@ -2,22 +2,19 @@
 
 package jmri.jmrix.loconet.locoid;
 
-import jmri.util.StringUtil;
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 import java.util.ResourceBundle;
 
 import java.awt.Dimension;
-import java.awt.GridLayout;
-
 import javax.swing.*;
 
 /**
  * User interface for setting the LocoNet ID
  *
  * @author			Bob Jacobsen   Copyright (C) 2006
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class LocoIdFrame extends javax.swing.JFrame implements LocoNetListener {
 

@@ -9,7 +9,6 @@ import java.util.Enumeration;
 import javax.swing.JComboBox;
 
 import org.jdom.Attribute;
-import org.jdom.DocType;
 import org.jdom.Document;
 import org.jdom.Element;
 import com.sun.java.util.collections.ArrayList;
@@ -32,7 +31,7 @@ import com.sun.java.util.collections.List;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.24 $
+ * @version			$Revision: 1.25 $
  *
  */
 public class DecoderIndexFile extends XmlFile {

@@ -4,16 +4,10 @@
 
 package jmri.jmrix.zimo;
 
-import java.io.InputStream;
 import java.io.DataInputStream;
 import java.io.OutputStream;
-import java.lang.StringBuffer;
 import com.sun.java.util.collections.LinkedList;
 import com.sun.java.util.collections.NoSuchElementException;
-import java.lang.*;
-import java.lang.String;
-import java.util.Vector;
-import jmri.jmrix.zimo.Mx1Programmer;
 
 /** Zimo !!!!!!!!!!!!!!!!!!!!!!
  * Converts Stream-based I/O to/from Mx1 messages.  The "Mx1Interface"
@@ -32,7 +26,7 @@ import jmri.jmrix.zimo.Mx1Programmer;
  *</UL>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.1 $
+ * @version 		$Revision: 1.2 $
  * 
  * Adapted by Sip Bosch for use with zimo Mx-1
  *

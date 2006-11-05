@@ -2,14 +2,12 @@
 
 package jmri.util;
 
-import java.io.File;
-
 /**
  * Common utility methods for determining which type
  * of operating system is in use.
  *
  * @author Bob Jacobsen  Copyright 2006
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class SystemType {

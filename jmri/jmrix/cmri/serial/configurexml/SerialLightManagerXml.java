@@ -3,7 +3,7 @@
 package jmri.jmrix.cmri.serial.configurexml;
 
 import org.jdom.Element;
-import jmri.InstanceManager;
+
 import jmri.jmrix.cmri.serial.*;
 
 /**
@@ -16,7 +16,7 @@ import jmri.jmrix.cmri.serial.*;
  * Based on SerialTurnoutManagerXml.java
  *
  * @author Dave Duchamp Copyright (c) 2004
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SerialLightManagerXml extends jmri.configurexml.AbstractLightManagerConfigXML {
 

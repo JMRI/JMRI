@@ -3,10 +3,8 @@
 package jmri.jmrix.oaktree;
 
 import jmri.AbstractLight;
-import jmri.SignalHead;
 import jmri.Sensor;
 import jmri.Turnout;
-import jmri.Light;
 
 /**
  * SerialLight.java
@@ -17,7 +15,7 @@ import jmri.Light;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SerialLight extends AbstractLight {
 

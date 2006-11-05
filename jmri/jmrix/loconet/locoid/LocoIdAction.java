@@ -3,8 +3,6 @@ package jmri.jmrix.loconet.locoid;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
-import jmri.jmrix.loconet.LnTrafficController;
-
 /**
  * LocoIdAction.java
  *
@@ -12,7 +10,7 @@ import jmri.jmrix.loconet.LnTrafficController;
  *       			LocoidFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2006
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class LocoIdAction 			extends AbstractAction {
 

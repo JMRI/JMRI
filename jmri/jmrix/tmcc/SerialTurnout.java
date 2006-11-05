@@ -4,7 +4,6 @@ package jmri.jmrix.tmcc;
 
 import jmri.AbstractTurnout;
 import jmri.Turnout;
-import jmri.NmraPacket;
 
 /**
  * SerialTurnout.java
@@ -15,7 +14,7 @@ import jmri.NmraPacket;
  *
  * Description:		extend jmri.AbstractTurnout for TMCC serial layouts
  * @author			Bob Jacobsen Copyright (C) 2003, 2006
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SerialTurnout extends AbstractTurnout {
 

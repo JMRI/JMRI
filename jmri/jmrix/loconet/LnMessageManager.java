@@ -4,8 +4,6 @@ package jmri.jmrix.loconet;
 
 import jmri.JmriException;
 
-import java.beans.PropertyChangeListener;
-
 /**
  * Provide access to throttle-messaging on a LocoNet.
  * <P>
@@ -16,7 +14,7 @@ import java.beans.PropertyChangeListener;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class LnMessageManager implements LocoNetListener {
 

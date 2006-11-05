@@ -2,17 +2,12 @@
 
 package jmri.jmrix.tmcc.serialdriver;
 
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
-import java.util.Vector;
-
-import jmri.jmrix.SerialPortAdapter;
 
 /**
  * Frame to control and connect TMCC
  * @author    Bob Jacobsen   Copyright (C) 2001, 2006
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 
 public class SerialDriverFrame extends jmri.jmrix.SerialPortFrame {

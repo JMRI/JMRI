@@ -2,16 +2,13 @@
 
 package jmri;
 
-import java.util.Hashtable;
-import java.util.Enumeration;
-
 /**
  * Abstract partial implementation of a LightManager.
  * <P>
  * Based on AbstractSignalHeadManager.java and AbstractSensorManager.java
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public abstract class AbstractLightManager extends AbstractManager
     implements LightManager, java.beans.PropertyChangeListener {

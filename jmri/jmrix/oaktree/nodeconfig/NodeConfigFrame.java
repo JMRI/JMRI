@@ -3,14 +3,9 @@
 package jmri.jmrix.oaktree.nodeconfig;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-
 import java.util.ResourceBundle;
 
 import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.table.*;
 import javax.swing.border.Border;
 
 import jmri.jmrix.oaktree.SerialTrafficController;
@@ -21,7 +16,7 @@ import jmri.jmrix.oaktree.SerialSensorManager;
  * Frame for user configuration of serial nodes
  * @author	Bob Jacobsen   Copyright (C) 2004
  * @author	Dave Duchamp   Copyright (C) 2004, 2006
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class NodeConfigFrame extends javax.swing.JFrame {
 

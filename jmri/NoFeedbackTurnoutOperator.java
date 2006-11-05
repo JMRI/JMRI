@@ -5,8 +5,6 @@
  */
 package jmri;
 
-import jmri.jmrix.nce.NceSensorManager;
-
 public class NoFeedbackTurnoutOperator extends TurnoutOperator {
 
 	long interval;

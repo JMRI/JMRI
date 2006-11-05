@@ -3,14 +3,13 @@
  *
  * Description:		Frame for user input of Xpa+Modem (dialing) messages
  * @author			Paul Bender Copyright (C) 2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 
 package jmri.jmrix.xpa.packetgen;
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
 import jmri.jmrix.xpa.XpaTrafficController;

@@ -8,18 +8,14 @@ import jmri.jmrix.tmcc.SerialReply;
 import jmri.jmrix.tmcc.SerialTrafficController;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-
 import javax.swing.BoxLayout;
-import javax.swing.JLabel;
 import javax.swing.JMenuBar;
-import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
 /**
  * Frame for user input of serial messages
  * @author	Bob Jacobsen   Copyright (C) 2002, 2003, 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SerialPacketGenFrame extends javax.swing.JFrame implements jmri.jmrix.tmcc.SerialListener {
 

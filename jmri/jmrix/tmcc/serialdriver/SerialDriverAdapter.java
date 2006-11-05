@@ -2,7 +2,6 @@
 
 package jmri.jmrix.tmcc.serialdriver;
 
-import jmri.jmrix.tmcc.SerialMessage;
 import jmri.jmrix.tmcc.SerialPortController;
 import jmri.jmrix.tmcc.SerialTrafficController;
 
@@ -22,7 +21,7 @@ import javax.comm.SerialPortEventListener;
  * Provide access to TMCC via a serial comm port.
  * Normally controlled by the tmcc.serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2006
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 

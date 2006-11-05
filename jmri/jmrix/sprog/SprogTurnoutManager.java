@@ -2,7 +2,6 @@
 
 package jmri.jmrix.sprog;
 
-import jmri.JmriException;
 import jmri.Turnout;
 
 /**
@@ -11,7 +10,7 @@ import jmri.Turnout;
  * System names are "STnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class SprogTurnoutManager extends jmri.AbstractTurnoutManager {
 

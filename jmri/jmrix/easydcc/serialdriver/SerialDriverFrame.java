@@ -2,16 +2,12 @@
 
 package jmri.jmrix.easydcc.serialdriver;
 
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
-
-import jmri.jmrix.easydcc.EasyDccTrafficController;
 
 /**
  * Frame to control and connect EasyDcc command station via SerialDriver interface and comm port
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SerialDriverFrame extends jmri.jmrix.SerialPortFrame {
 

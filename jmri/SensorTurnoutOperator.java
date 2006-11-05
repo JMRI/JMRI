@@ -6,8 +6,6 @@
 
 package jmri;
 
-import jmri.jmrix.nce.NceSensorManager;
-
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 

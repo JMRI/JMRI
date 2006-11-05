@@ -16,13 +16,12 @@ import java.util.Enumeration;
 import java.util.Vector;
 import java.io.OutputStream;
 import java.io.DataInputStream;
-import java.io.InputStream;
 
 
 /**
  * Pane for downloading software updates to PRICOM products
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.6 $
+ * @version	    $Revision: 1.7 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 

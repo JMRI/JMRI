@@ -2,11 +2,6 @@
 
 package jmri.jmrix.loconet.Intellibox;
 
-import java.io.DataInputStream;
-import java.io.OutputStream;
-import java.util.Vector;
-
-import com.sun.java.util.collections.LinkedList;
 import com.sun.java.util.collections.NoSuchElementException;
 
 import jmri.jmrix.loconet.LnPacketizer;
@@ -36,7 +31,7 @@ import jmri.jmrix.loconet.LocoNetMessageException;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.1 $
+ * @version 		$Revision: 1.2 $
  *
  */
 public class IBLnPacketizer extends LnPacketizer {

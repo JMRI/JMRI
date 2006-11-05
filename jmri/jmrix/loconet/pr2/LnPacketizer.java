@@ -2,19 +2,13 @@
 
 package jmri.jmrix.loconet.pr2;
 
-import java.io.DataInputStream;
-import java.io.OutputStream;
-import java.util.Vector;
-
-import jmri.jmrix.loconet.*;
-
 /**
  * Special LnPacketizer implementation for PR2.
  * 
  * Differs only in handling PR2's non-echo
  *
  * @author			Bob Jacobsen  Copyright (C) 2006
- * @version 		$Revision: 1.2 $
+ * @version 		$Revision: 1.3 $
  *
  */
 public class LnPacketizer extends jmri.jmrix.loconet.LnPacketizer {

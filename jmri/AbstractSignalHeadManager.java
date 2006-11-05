@@ -2,9 +2,6 @@
 
 package jmri;
 
-import java.util.Hashtable;
-import java.util.Enumeration;
-
 
 /**
  * Abstract partial implementation of a SignalHeadManager.
@@ -17,7 +14,7 @@ import java.util.Enumeration;
  * at the present time.  They're just names...
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class AbstractSignalHeadManager extends AbstractManager
     implements SignalHeadManager, java.beans.PropertyChangeListener {

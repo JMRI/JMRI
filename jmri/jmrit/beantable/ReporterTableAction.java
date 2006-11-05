@@ -5,7 +5,7 @@ package jmri.jmrit.beantable;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
-import jmri.Reporter;
+
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,14 +17,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.JOptionPane;
 
 /**
  * Swing action to create and register a
  * ReporterTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 
 public class ReporterTableAction extends AbstractTableAction {

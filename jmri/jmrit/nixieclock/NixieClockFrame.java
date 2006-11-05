@@ -6,9 +6,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.Date;
-import jmri.*;
 
-import jmri.jmrit.display.PositionableLabel;
+import jmri.*;
 import jmri.jmrit.catalog.*;
 import jmri.util.JmriJFrame;
 
@@ -22,7 +21,7 @@ import jmri.util.JmriJFrame;
  * Modified by Dennis Miller for resizing Nov, 2004
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
 

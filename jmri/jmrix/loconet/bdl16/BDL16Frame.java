@@ -2,16 +2,8 @@
 
 package jmri.jmrix.loconet.bdl16;
 
-import java.awt.FlowLayout;
-
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.JToggleButton;
 
 /**
  * Frame displaying and programming a BDL16 configuration.
@@ -30,7 +22,7 @@ import javax.swing.JToggleButton;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002, 2004
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class BDL16Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
 

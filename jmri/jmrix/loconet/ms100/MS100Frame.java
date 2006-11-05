@@ -8,11 +8,7 @@
 
 package jmri.jmrix.loconet.ms100;
 
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
-
-import jmri.jmrix.loconet.LnTrafficController;
 
 public class MS100Frame extends jmri.jmrix.SerialPortFrame {
 

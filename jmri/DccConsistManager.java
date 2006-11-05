@@ -5,13 +5,11 @@
  *                        DccConsist class for the consists it builds
  *
  * @author                Paul Bender Copyright (C) 2003
- * @version               $Revision: 1.5 $
+ * @version               $Revision: 1.6 $
  */
 
 
 package jmri;
-
-import java.util.Enumeration;
 
 import com.sun.java.util.collections.Hashtable;
 import com.sun.java.util.collections.ArrayList;

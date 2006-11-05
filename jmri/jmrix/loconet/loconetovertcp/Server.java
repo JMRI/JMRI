@@ -2,7 +2,6 @@
 
 package jmri.jmrix.loconet.loconetovertcp ;
 
-import jmri.jmrix.loconet.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.io.*;
@@ -13,7 +12,7 @@ import java.util.Properties;
  * Implementation of the LocoNetOverTcp LbServer Server Protocol
  *
  * @author      Alex Shepherd Copyright (C) 2006
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 
 public class Server{

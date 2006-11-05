@@ -5,7 +5,7 @@
  * Description:		Provide access to Zimo's MX-1 on an attached serial comm port.
  *			Normally controlled by the zimo.mx1.Mx1Frame class.
  * @author		Bob Jacobsen   Copyright (C) 2002
- * @version		$Revision: 1.3 $
+ * @version		$Revision: 1.4 $
  *
  * Adapted for use with Zimo MX-1 by Sip Bosch
  *
@@ -28,8 +28,6 @@ import java.util.Vector;
 import java.io.DataOutputStream;
 import java.io.DataInputStream;
 import java.io.InputStream;
-
-import jmri.jmrix.zimo.*;
 
 public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPortAdapter {
 

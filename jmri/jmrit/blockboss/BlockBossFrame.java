@@ -3,7 +3,7 @@
 package jmri.jmrit.blockboss;
 
 import jmri.InstanceManager;
-import jmri.Turnout;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,7 +31,7 @@ import javax.swing.*;
  * The individual items all share data models to simplify the logic.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  *              Revisions to add facing point sensors, limited speed,
  *              change layout, and tool tips.  Dick Bronson (RJB) 2006
  

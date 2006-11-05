@@ -17,14 +17,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.JOptionPane;
 
 /**
  * Swing action to create and register a
  * MemoryTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 
 public class MemoryTableAction extends AbstractTableAction {

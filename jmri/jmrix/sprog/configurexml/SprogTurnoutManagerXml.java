@@ -1,7 +1,6 @@
 package jmri.jmrix.sprog.configurexml;
 
 import org.jdom.Element;
-import jmri.InstanceManager;
 import jmri.jmrix.sprog.SprogTurnoutManager;
 
 /**
@@ -12,7 +11,7 @@ import jmri.jmrix.sprog.SprogTurnoutManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class SprogTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManagerConfigXML {
 

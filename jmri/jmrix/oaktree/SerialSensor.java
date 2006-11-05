@@ -3,13 +3,12 @@
 package jmri.jmrix.oaktree;
 
 import jmri.AbstractSensor;
-import jmri.Sensor;
 
 /**
  * Extend jmri.AbstractSensor for serial systems
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003, 2006
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SerialSensor extends AbstractSensor {
 

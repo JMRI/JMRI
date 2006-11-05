@@ -4,8 +4,6 @@ package jmri.jmrix.xpa.serialdriver;
 
 import jmri.jmrix.xpa.XpaPortController;
 import jmri.jmrix.xpa.XpaTrafficController;
-import jmri.jmrix.xpa.XpaTurnoutManager;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
@@ -28,7 +26,7 @@ import javax.comm.SerialPort;
  * string.
  *
  * @author	Paul Bender   Copyright (C) 2004
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix.SerialPortAdapter {
 

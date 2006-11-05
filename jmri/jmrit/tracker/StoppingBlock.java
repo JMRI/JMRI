@@ -1,6 +1,5 @@
 package jmri.jmrit.tracker;
 
-import jmri.Path;
 import jmri.Block;
 import jmri.SignalHead;
 import jmri.Throttle;
@@ -28,7 +27,7 @@ import jmri.Throttle;
  * should it not restart? Optional restart?)
  * </UL>
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class StoppingBlock {
     

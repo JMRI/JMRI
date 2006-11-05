@@ -10,7 +10,6 @@ import java.beans.PropertyChangeListener;
 import java.util.ResourceBundle;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
@@ -22,7 +21,7 @@ import javax.swing.table.TableColumnModel;
  *
  *
  * @author		Bob Jacobsen   Copyright (C) 2004
- * @version		$Revision: 1.3 $
+ * @version		$Revision: 1.4 $
  */
 public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {

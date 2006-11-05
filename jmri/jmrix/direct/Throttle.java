@@ -3,7 +3,6 @@ package jmri.jmrix.direct;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.jmrix.AbstractThrottle;
-import jmri.util.StringUtil;
 
 /**
  * An implementation of DccThrottle with code specific to a direct 
@@ -14,7 +13,7 @@ import jmri.util.StringUtil;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2004
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class Throttle extends AbstractThrottle
 {

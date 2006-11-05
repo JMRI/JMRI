@@ -2,8 +2,6 @@
 
 package jmri.jmrit.beantable;
 
-import jmri.RouteManager;
-import jmri.DefaultRoute;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -23,16 +21,13 @@ import javax.swing.table.*;
 
 import com.sun.java.util.collections.List;
 
-import jmri.util.com.sun.Comparator;
-
-
 /**
  * Swing action to create and register a Route Table
  
  * Based in part on SignalHeadTableAction.java by Bob Jacobson
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 
 public class RouteTableAction extends AbstractTableAction {

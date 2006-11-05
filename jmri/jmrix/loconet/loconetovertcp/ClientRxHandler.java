@@ -8,15 +8,13 @@ import jmri.jmrix.loconet.LocoNetListener;
 import com.sun.java.util.collections.LinkedList;
 import java.io.*;
 import jmri.jmrix.loconet.LnTrafficController;
-import jmri.jmrix.loconet.LnPacketizer;
-import jmri.jmrix.loconet.LocoNetMessageException;
 import java.util.StringTokenizer;
 
 /**
  * Implementation of the LocoNetOverTcp LbServer Server Protocol
  *
  * @author      Alex Shepherd Copyright (C) 2006
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 
 public class ClientRxHandler extends Thread implements LocoNetListener{

@@ -2,9 +2,6 @@
 
 package jmri.jmrit.decoderdefn;
 
-import jmri.Programmer;
-import jmri.InstanceManager;
-
 /**
  * Interact with a programmer to identify the DecoderIndexFile entry for a decoder
  * on the programming track.
@@ -17,7 +14,7 @@ import jmri.InstanceManager;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.7 $
+ * @version   $Revision: 1.8 $
  * @see       jmri.jmrit.roster.RosterEntry
  * @see       jmri.jmrit.symbolicprog.CombinedLocoSelPane
  * @see       jmri.jmrit.symbolicprog.NewLocoSelPane

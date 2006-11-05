@@ -2,15 +2,7 @@
 
 package jmri.jmrix.loconet.loconetovertcp;
 
-import jmri.jmrix.loconet.*;
-import jmri.*;
-
-import java.util.Date;
-import java.awt.*;
 import java.awt.event.*;
-import java.beans.VetoableChangeListener;
-import java.beans.PropertyChangeEvent;
-
 import javax.swing.*;
 import jmri.util.JSpinnerUtil;
 import jmri.util.SwingUtil;
@@ -28,7 +20,7 @@ import javax.swing.event.ChangeEvent;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003, 2004
  * @author      Alex Shepherd Copyright (C) 2006
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 
 public class ServerFrame extends JFrame implements ServerListner {

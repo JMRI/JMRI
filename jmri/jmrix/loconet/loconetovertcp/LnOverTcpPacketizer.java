@@ -6,7 +6,6 @@ import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetMessageException;
 
-import com.sun.java.util.collections.LinkedList;
 import com.sun.java.util.collections.NoSuchElementException;
 import java.util.StringTokenizer ;
 /**
@@ -32,7 +31,7 @@ import java.util.StringTokenizer ;
  * contact Digitrax Inc for separate permission.
  * @author		Bob Jacobsen  Copyright (C) 2001
  * @author              Alex Shepherd Copyright (C) 2003, 2006
- * @version 		$Revision: 1.4 $
+ * @version 		$Revision: 1.5 $
  *
  */
 public class LnOverTcpPacketizer extends LnPacketizer {

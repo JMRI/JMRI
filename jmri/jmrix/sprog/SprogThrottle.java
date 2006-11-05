@@ -4,7 +4,6 @@ import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 
 import jmri.jmrix.AbstractThrottle;
-import jmri.util.StringUtil;
 
 /**
  * An implementation of DccThrottle with code specific to an SPROG connection.
@@ -15,7 +14,7 @@ import jmri.util.StringUtil;
  * Based on the {@link jmri.jmrix.nce.NceThrottle} implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class SprogThrottle extends AbstractThrottle
 {

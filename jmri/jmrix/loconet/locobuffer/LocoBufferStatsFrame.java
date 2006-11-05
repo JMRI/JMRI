@@ -6,7 +6,6 @@ import jmri.jmrix.loconet.*;
 
 import jmri.util.StringUtil;
 
-import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
@@ -21,7 +20,7 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Alex Shepherd   Copyright (C) 2003
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class LocoBufferStatsFrame extends JFrame implements LocoNetListener {
 

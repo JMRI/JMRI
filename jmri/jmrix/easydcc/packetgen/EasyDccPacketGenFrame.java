@@ -3,14 +3,13 @@
  *
  * Description:		Frame for user input of EasyDcc messages
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 
 package jmri.jmrix.easydcc.packetgen;
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
 import jmri.jmrix.easydcc.EasyDccTrafficController;

@@ -5,7 +5,7 @@ package jmri.jmrit.jython;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import javax.swing.JFrame;
-import javax.swing.text.Document;
+
 import java.awt.Font;
 
 /**
@@ -13,7 +13,7 @@ import java.awt.Font;
  * the thread output log from the {@link RunJythonScript} class.
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class JythonWindow extends AbstractAction {
 

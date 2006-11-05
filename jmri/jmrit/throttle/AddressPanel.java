@@ -4,8 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import com.sun.java.util.collections.*;
-import java.beans.*;
-import javax.swing.BoxLayout;
 
 import jmri.DccThrottle;
 import jmri.DccLocoAddress;
@@ -20,7 +18,7 @@ import org.jdom.Element;
  * notifies them when the user enters a new address.
  *
  * @author     glen   Copyright (C) 2002
- * @version    $Revision: 1.25 $
+ * @version    $Revision: 1.26 $
  */
 public class AddressPanel extends JInternalFrame
 {

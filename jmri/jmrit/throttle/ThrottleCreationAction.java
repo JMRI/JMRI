@@ -2,14 +2,12 @@ package jmri.jmrit.throttle;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
-import jmri.ThrottleManager;
-import jmri.InstanceManager;
 
 /**
  * Create a new throttle.
  *
  * @author			Glen Oberhauser
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class ThrottleCreationAction extends AbstractAction {
 

@@ -4,8 +4,6 @@ package jmri.jmrix.loconet;
 
 import java.io.DataInputStream;
 import java.io.OutputStream;
-import java.util.Vector;
-
 import com.sun.java.util.collections.LinkedList;
 import com.sun.java.util.collections.NoSuchElementException;
 
@@ -31,7 +29,7 @@ import com.sun.java.util.collections.NoSuchElementException;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.16 $
+ * @version 		$Revision: 1.17 $
  *
  */
 public class LnPacketizer extends LnTrafficController {

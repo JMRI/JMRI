@@ -6,7 +6,6 @@ import java.awt.FlowLayout;
 
 import javax.swing.*;
 import java.util.ResourceBundle;
-import jmri.jmrix.loconet.*;
 import jmri.jmrix.loconet.spjfile.SpjFile;
 
 import java.io.*;
@@ -14,7 +13,7 @@ import java.io.*;
 /**
  * Pane for downloading .hex files
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.3 $
+ * @version	    $Revision: 1.4 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 

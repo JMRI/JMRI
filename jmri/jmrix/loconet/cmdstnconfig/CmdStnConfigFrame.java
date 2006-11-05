@@ -2,8 +2,6 @@ package jmri.jmrix.loconet.cmdstnconfig;
 
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.border.*;
-
 import jmri.jmrix.loconet.*;
 
 import java.util.ResourceBundle;
@@ -19,7 +17,7 @@ import java.util.ResourceBundle;
  *
  * @author			Alex Shepherd   Copyright (C) 2004
  * @author			Bob Jacobsen  Copyright (C) 2006
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class CmdStnConfigFrame extends jmri.util.JmriJFrame implements LocoNetListener {
 

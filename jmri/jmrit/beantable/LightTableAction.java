@@ -7,8 +7,8 @@ import jmri.Manager;
 import jmri.NamedBean;
 import jmri.Light;
 import jmri.Sensor;
-import jmri.SignalHead;
 import jmri.Turnout;
+
 import java.awt.FlowLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
@@ -32,7 +32,7 @@ import javax.swing.JOptionPane;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 
 public class LightTableAction extends AbstractTableAction {

@@ -2,7 +2,6 @@
 
 package jmri.jmrix.xpa;
 
-import java.io.InputStream;
 import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.Vector;
@@ -18,7 +17,7 @@ import com.sun.java.util.collections.NoSuchElementException;
  * is handled in an independent thread.
  *
  * @author			Paul Bender  Copyright (C) 2004
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class XpaTrafficController implements XpaInterface, Runnable {
 

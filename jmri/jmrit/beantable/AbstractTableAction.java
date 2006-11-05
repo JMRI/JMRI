@@ -5,7 +5,6 @@ package jmri.jmrit.beantable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
-import jmri.util.AbstractFrameAction;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -15,7 +14,7 @@ import javax.swing.JButton;
  * SignalHeadTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 
 abstract public class AbstractTableAction extends AbstractAction {

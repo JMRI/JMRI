@@ -4,7 +4,6 @@ package jmri.jmrix.cmri.serial;
 
 import jmri.AbstractTurnout;
 import jmri.Turnout;
-import jmri.NmraPacket;
 
 /**
  * SerialTurnout.java
@@ -21,7 +20,7 @@ import jmri.NmraPacket;
  *
  * Description:		extend jmri.AbstractTurnout for C/MRI serial layouts
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class SerialTurnout extends AbstractTurnout {
 

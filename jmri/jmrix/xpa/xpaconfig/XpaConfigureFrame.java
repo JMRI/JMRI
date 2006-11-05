@@ -3,14 +3,13 @@
  *
  * Description:		Frame for configuring an XPA using a modem 
  * @author			Paul Bender Copyright (C) 2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 
 package jmri.jmrix.xpa.xpaconfig;
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
 import jmri.jmrix.xpa.XpaTrafficController;

@@ -3,13 +3,12 @@
 package jmri.jmrix.cmri.serial;
 
 import jmri.AbstractSensor;
-import jmri.Sensor;
 
 /**
  * Extend jmri.AbstractSensor for C/MRI serial systems
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class SerialSensor extends AbstractSensor {
 

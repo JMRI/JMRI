@@ -1,8 +1,6 @@
 package jmri.jmrit.display;
 
 import jmri.InstanceManager;
-import jmri.Sensor;
-import jmri.Turnout;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JmriJFrame;
 import java.awt.*;
@@ -49,7 +47,7 @@ import com.sun.java.util.collections.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.55 $
+ * @version $Revision: 1.56 $
  */
 
 public class PanelEditor extends JmriJFrame {

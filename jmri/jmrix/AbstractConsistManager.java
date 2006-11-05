@@ -2,8 +2,6 @@
 
 package jmri.jmrix;
 
-import java.util.Enumeration;
-
 import com.sun.java.util.collections.Hashtable;
 import com.sun.java.util.collections.ArrayList;
 
@@ -16,7 +14,7 @@ import jmri.DccLocoAddress;
  * system specific consist managers can be built.
  *
  * @author                Paul Bender Copyright (C) 2004
- * @version               $Revision: 1.5 $
+ * @version               $Revision: 1.6 $
  */
 abstract public class AbstractConsistManager implements jmri.ConsistManager{
 

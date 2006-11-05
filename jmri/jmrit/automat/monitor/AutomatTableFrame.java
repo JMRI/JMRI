@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
 import javax.swing.JMenuBar;
-import java.util.*;
 import javax.swing.JScrollPane;
 import javax.swing.*;
 
@@ -17,7 +16,7 @@ import jmri.util.JTableUtil;
  * Frame providing a table of Automat instances
  *
  * @author	Bob Jacobsen   Copyright (C) 2004
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class AutomatTableFrame extends javax.swing.JFrame {
 

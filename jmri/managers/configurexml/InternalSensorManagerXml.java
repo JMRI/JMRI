@@ -1,7 +1,5 @@
 package jmri.managers.configurexml;
 
-import jmri.managers.InternalSensorManager;
-
 import org.jdom.Element;
 
 /**
@@ -12,7 +10,7 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2006
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class InternalSensorManagerXml extends jmri.configurexml.AbstractSensorManagerConfigXML {
 

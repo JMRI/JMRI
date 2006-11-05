@@ -8,8 +8,6 @@ import jmri.ConsistManager;
 import jmri.jmrit.roster.*;
 import jmri.DccLocoAddress;
 
-import jmri.jmrit.throttle.ThrottleFrameManager;
-
 import java.awt.*;
 
 import javax.swing.*;
@@ -20,7 +18,7 @@ import com.sun.java.util.collections.ArrayList;
  * Frame object for manipulating consists.
  *
  * @author               Paul Bender Copyright (C) 2003
- * @version              $Revision: 1.15 $
+ * @version              $Revision: 1.16 $
  */
 public class ConsistToolFrame extends javax.swing.JFrame implements jmri.ConsistListener{
 

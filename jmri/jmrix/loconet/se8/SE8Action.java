@@ -5,15 +5,13 @@ package jmri.jmrix.loconet.se8;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
-import jmri.jmrix.loconet.LnTrafficController;
-
 
 /**
  * Swing action to create and register a
  *       			SE8Frame object
  *
  * @author	Bob Jacobsen    Copyright (C) 2002
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SE8Action  extends AbstractAction {
 

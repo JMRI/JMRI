@@ -2,7 +2,6 @@
 
 package jmri.jmrix.cmri.serial.diagnostic;
 
-import jmri.util.StringUtil;
 import jmri.jmrix.cmri.serial.SerialMessage;
 import jmri.jmrix.cmri.serial.SerialReply;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
@@ -20,7 +19,7 @@ import java.lang.Integer;
 /**
  * Frame for running CMRI diagnostics
  * @author	 Dave Duchamp   Copyright (C) 2004
- * @version	 $Revision: 1.5 $
+ * @version	 $Revision: 1.6 $
  */
 public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cmri.serial.SerialListener {
 

@@ -4,9 +4,6 @@ import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
 import jmri.jmrix.tmcc.serialdriver.ConnectionConfig;
 import jmri.jmrix.tmcc.serialdriver.SerialDriverAdapter;
-import jmri.jmrix.tmcc.*;
-
-import org.jdom.*;
 
 /**
  * Handle XML persistance of layout connections by persisting
@@ -19,7 +16,7 @@ import org.jdom.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2006
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 

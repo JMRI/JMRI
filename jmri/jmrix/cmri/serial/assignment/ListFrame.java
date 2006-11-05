@@ -2,7 +2,6 @@
 
 package jmri.jmrix.cmri.serial.assignment;
 
-import jmri.util.StringUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.serial.SerialNode;
@@ -25,7 +24,7 @@ import java.lang.Integer;
 /**
  * Frame for running CMRI assignment list
  * @author	 Dave Duchamp   Copyright (C) 2006
- * @version	 $Revision: 1.1 $
+ * @version	 $Revision: 1.2 $
  */
 public class ListFrame extends javax.swing.JFrame {
 

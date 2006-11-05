@@ -2,9 +2,6 @@
 
 package jmri.jmrit.jython;
 
-import javax.swing.AbstractAction;
-import java.awt.event.ActionEvent;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
@@ -16,7 +13,7 @@ import jmri.util.PythonInterp;
  * global jython interpreter
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class InputWindow extends JPanel {
 

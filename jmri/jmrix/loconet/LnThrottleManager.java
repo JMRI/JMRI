@@ -1,7 +1,6 @@
 package jmri.jmrix.loconet;
 
 import jmri.DccThrottle;
-import jmri.ThrottleListener;
 import jmri.ThrottleManager;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
@@ -18,7 +17,7 @@ import jmri.jmrix.AbstractThrottleManager;
  *
  * @see SlotManager
  * @author		Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.19 $
+ * @version 		$Revision: 1.20 $
  */
 public class LnThrottleManager extends AbstractThrottleManager implements ThrottleManager, SlotListener {
     private SlotManager slotManager;

@@ -3,17 +3,16 @@
 package jmri.jmrit.simpleprog;
 
 import java.awt.*;
-import java.awt.event.*;
+
 import javax.swing.*;
 
 import jmri.Programmer;
 import jmri.ProgListener;
-import jmri.ProgModePane;
 
 /**
  * Frame providing a simple command station programmer
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgListener {
 

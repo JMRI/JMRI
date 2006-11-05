@@ -1,16 +1,14 @@
 package jmri.configurexml;
 
 import jmri.LocoAddress;
-import jmri.DccLocoAddress;
 
-import org.jdom.Attribute;
 import org.jdom.Element;
 
 /**
  * Handle XML configuration for LocoAddress objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2005
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class LocoAddressXml implements XmlAdapter {
 

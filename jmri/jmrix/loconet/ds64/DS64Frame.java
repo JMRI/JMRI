@@ -2,16 +2,8 @@
 
 package jmri.jmrix.loconet.ds64;
 
-import java.awt.FlowLayout;
-
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.JToggleButton;
 
 /**
  * Frame displaying and programming a DS64 configuration.
@@ -30,7 +22,7 @@ import javax.swing.JToggleButton;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002, 2004, 2005
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class DS64Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
 

@@ -6,9 +6,6 @@ import jmri.jmrit.display.PanelEditor;
 import java.awt.Dimension;
 import java.awt.Point;
 
-import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
-
 import com.sun.java.util.collections.List;
 import org.jdom.*;
 
@@ -16,7 +13,7 @@ import org.jdom.*;
  * Handle configuration for {@link PanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 public class PanelEditorXml implements XmlAdapter {
 

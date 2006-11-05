@@ -2,7 +2,6 @@
 
 package jmri.jmrix.oaktree.serialdriver;
 
-import jmri.jmrix.oaktree.SerialMessage;
 import jmri.jmrix.oaktree.SerialPortController;
 import jmri.jmrix.oaktree.SerialSensorManager;
 import jmri.jmrix.oaktree.SerialTrafficController;
@@ -23,7 +22,7 @@ import javax.comm.SerialPortEventListener;
  * Provide access to Oak Tree via a serial comm port.
  * Normally controlled by the oaktree.serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2006
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 

@@ -9,7 +9,6 @@ import jmri.InstanceManager;
 import jmri.Consist;
 import jmri.DccLocoAddress;
 import jmri.ConsistManager;
-import jmri.jmrit.roster.*;
 
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
@@ -20,7 +19,7 @@ import javax.swing.table.TableColumnModel;
 /**
  * Table data model for display of consist information
  * @author		Paul Bender Copyright (c) 2004-2005
- * @version		$Revision: 1.4 $
+ * @version		$Revision: 1.5 $
  */
 
 public class ConsistDataModel extends javax.swing.table.AbstractTableModel {

@@ -3,7 +3,7 @@
  *
  * Description:		PowerManager implementation for controlling layout power
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  *
  * Adapted by Sip Bosch for use with zimo Mx-1
  *
@@ -13,8 +13,6 @@ package jmri.jmrix.zimo;
 
 import jmri.JmriException;
 import jmri.PowerManager;
-
-import java.beans.PropertyChangeListener;
 
 public class Mx1PowerManager implements PowerManager, Mx1Listener {
 

@@ -5,13 +5,11 @@ package jmri.jmrix.loconet.loconetovertcp;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
-import jmri.jmrix.loconet.LnTrafficController;
-
 /**
  * Implementation of the LocoNetOverTcp LbServer Server Protocol
  *
  * @author      Alex Shepherd Copyright (C) 2006
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 
 public class ServerAction

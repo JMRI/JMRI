@@ -2,17 +2,13 @@
 
 package jmri.jmrix.easydcc.networkdriver;
 
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
-
-import jmri.jmrix.easydcc.EasyDccTrafficController;
 
 /**
  * Frame to control and connect EasyDcc command station via NetworkDriver
  * interface.
  * @author			Bob Jacobsen   Copyright (C) 2003
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class NetworkDriverFrame extends jmri.jmrix.SerialPortFrame {
 

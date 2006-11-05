@@ -15,7 +15,6 @@ package jmri;
 
 import jmri.ConsistListener;
 
-import java.util.Enumeration;
 import java.util.Vector;
 
 import com.sun.java.util.collections.Hashtable;

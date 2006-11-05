@@ -1,18 +1,16 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.configurexml.XmlAdapter;
-import jmri.jmrit.catalog.CatalogPane;
-import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.ReporterIcon;
-import org.jdom.Attribute;
+
 import org.jdom.Element;
 
 /**
  * Handle configuration for display.ReporterIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class ReporterIconXml implements XmlAdapter {
 

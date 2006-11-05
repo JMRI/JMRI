@@ -7,13 +7,12 @@ import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
 import jmri.jmrix.sprog.SprogTrafficController;
 
-import java.io.File;
 import javax.swing.*;
 
 /**
  * Frame for SPROG firmware update utility
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SprogUpdateFrame
     extends JFrame

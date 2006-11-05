@@ -2,17 +2,12 @@
 
 package jmri.jmrix.cmri.serial.serialdriver;
 
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
-import java.util.Vector;
-
-import jmri.jmrix.SerialPortAdapter;
 
 /**
  * Frame to control and connect C/MRI serial
  * @author    Bob Jacobsen   Copyright (C) 2001
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 
 public class SerialDriverFrame extends jmri.jmrix.SerialPortFrame {

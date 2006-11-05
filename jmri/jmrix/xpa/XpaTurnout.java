@@ -3,7 +3,6 @@
 package jmri.jmrix.xpa;
 
 import jmri.AbstractTurnout;
-import jmri.NmraPacket;
 import jmri.Turnout;
 
 /**
@@ -11,7 +10,7 @@ import jmri.Turnout;
  * <P>
  *
  * @author	Paul Bender Copyright (C) 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class XpaTurnout extends AbstractTurnout {
 

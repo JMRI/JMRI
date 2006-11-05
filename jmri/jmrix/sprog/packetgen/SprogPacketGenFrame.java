@@ -3,14 +3,13 @@
  *
  * Description:		Frame for user input of Sprog messages
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 
 package jmri.jmrix.sprog.packetgen;
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
 import jmri.jmrix.sprog.SprogTrafficController;

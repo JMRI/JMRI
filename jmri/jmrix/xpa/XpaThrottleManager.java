@@ -1,16 +1,13 @@
 package jmri.jmrix.xpa;
 
-import jmri.ThrottleListener;
 import jmri.ThrottleManager;
 import jmri.LocoAddress;
-import jmri.DccLocoAddress;
-
 import jmri.jmrix.AbstractThrottleManager;
 
 /**
  * XPA implementation of a ThrottleManager
  * @author     Paul Bender Copyright (C) 2004
- * @version    $Revision: 1.5 $
+ * @version    $Revision: 1.6 $
  */
 
 public class XpaThrottleManager extends AbstractThrottleManager implements ThrottleManager {

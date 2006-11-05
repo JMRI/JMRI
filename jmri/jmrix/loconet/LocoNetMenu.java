@@ -5,13 +5,12 @@ package jmri.jmrix.loconet;
 import java.util.ResourceBundle;
 
 import javax.swing.JMenu;
-import jmri.jmrix.loconet.loconetovertcp.ServerAction;
 
 /**
  * Create a "Systems" menu containing the Jmri LocoNet-specific tools.
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 public class LocoNetMenu extends JMenu {
     public LocoNetMenu(String name) {

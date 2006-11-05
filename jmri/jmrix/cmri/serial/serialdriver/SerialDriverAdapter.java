@@ -2,7 +2,6 @@
 
 package jmri.jmrix.cmri.serial.serialdriver;
 
-import jmri.jmrix.cmri.serial.SerialMessage;
 import jmri.jmrix.cmri.serial.SerialPortController;
 import jmri.jmrix.cmri.serial.SerialSensorManager;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
@@ -23,7 +22,7 @@ import javax.comm.SerialPortEventListener;
  * Provide access to C/MRI via a serial comm port.
  * Normally controlled by the cmri.serial.serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 

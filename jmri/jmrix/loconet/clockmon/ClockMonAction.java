@@ -5,14 +5,12 @@ package jmri.jmrix.loconet.clockmon;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
-import jmri.jmrix.loconet.LnTrafficController;
-
 
 /**
  * Create and register a ClockMonFrame object.
  *
  * @author			Bob Jacobsen    Copyright (C) 2003
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class ClockMonAction extends AbstractAction {
 

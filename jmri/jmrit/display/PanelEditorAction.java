@@ -4,13 +4,12 @@ import jmri.util.JmriJFrame;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
-import javax.swing.JLayeredPane;
 
 /**
  * Start a PanelEditor.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  * @see         jmri.jmrit.display.PanelEditorAction
  */
 public class PanelEditorAction extends AbstractAction {

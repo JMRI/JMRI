@@ -4,7 +4,6 @@ package jmri.jmrix.oaktree;
 
 import jmri.AbstractTurnout;
 import jmri.Turnout;
-import jmri.NmraPacket;
 
 /**
  * SerialTurnout.java
@@ -15,7 +14,7 @@ import jmri.NmraPacket;
  *
  * Description:		extend jmri.AbstractTurnout for oak tree serial layouts
  * @author			Bob Jacobsen Copyright (C) 2003, 2006
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SerialTurnout extends AbstractTurnout {
 

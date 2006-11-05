@@ -5,14 +5,12 @@ package jmri.jmrix.loconet.bdl16;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
-import jmri.jmrix.loconet.LnTrafficController;
-
 
 /**
  * Create and register a BDL16Frame object.
  *
  * @author	Bob Jacobsen    Copyright (C) 2002
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class BDL16Action 			extends AbstractAction {
 

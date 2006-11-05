@@ -6,7 +6,6 @@ import jmri.jmrix.loconet.*;
 import jmri.*;
 
 import java.util.Date;
-import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
@@ -21,7 +20,7 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2003, 2004
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class ClockMonFrame extends JFrame implements SlotListener {
 

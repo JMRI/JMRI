@@ -2,14 +2,12 @@
 
 package jmri.jmrix.serialsensor;
 
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
 /**
  * Frame to control and connect a serial port as two sensors
  * @author			Bob Jacobsen   Copyright (C) 2003
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SerialSensorFrame extends jmri.jmrix.SerialPortFrame {
 

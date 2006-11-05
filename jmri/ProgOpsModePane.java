@@ -2,12 +2,9 @@
 
 package jmri;
 
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
 import jmri.Programmer;
-import jmri.ProgListener;
 
 /**
  * Provide a JPanel to configure the ops programming mode.
@@ -15,7 +12,7 @@ import jmri.ProgListener;
  * Note that you should call the dispose() method when you're really done, so that
  * a ProgModePane object can disconnect its listeners.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class ProgOpsModePane extends javax.swing.JPanel {
 

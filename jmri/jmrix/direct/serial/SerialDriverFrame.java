@@ -2,14 +2,12 @@
 
 package jmri.jmrix.direct.serial;
 
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
 /** 
  * Frame to control and connect serial direct drive
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 public class SerialDriverFrame extends jmri.jmrix.SerialPortFrame {

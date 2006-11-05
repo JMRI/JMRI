@@ -2,8 +2,6 @@
 
 package jmri.jmrix.loconet;
 
-import java.util.Vector;
-
 /**
  * Implements a LocoNetInterface by doing a scatter-gather to
  * another, simpler implementation.
@@ -15,7 +13,7 @@ import java.util.Vector;
  * without traffic over the connection.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version 		$Revision: 1.5 $
+ * @version 		$Revision: 1.6 $
  *
  */
 public class LnTrafficRouter extends LnTrafficController implements LocoNetListener {
