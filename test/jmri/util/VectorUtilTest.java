@@ -8,12 +8,11 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import java.util.Vector;
-import com.sun.java.util.collections.Comparable;
 
 /**
  * Tests for the jmri.util.VectorUtil class.
  * @author	Bob Jacobsen  Copyright 2005
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class VectorUtilTest extends TestCase {
 
