@@ -1,20 +1,20 @@
-/**
- * LocoNetInterfaceScaffold.java
- *
- * Description:	 	Test scaffold implementation of LocoNetInterface
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version
- *
- * Use an object of this type as a LnTrafficController in tests
- */
+// LocoNetInterfaceScaffold.java
 
 package jmri.jmrix.loconet;
 
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetMessage;
 
-import java.util.Vector;
+import com.sun.java.util.collections.Vector;
 
+/**
+ *
+ * Description:	 	Test scaffold implementation of LocoNetInterface
+ * @author			Bob Jacobsen Copyright (C) 2001, 2006
+ * @version
+ *
+ * Use an object of this type as a LnTrafficController in tests
+ */
 public class LocoNetInterfaceScaffold extends LnTrafficController {
 
 	public LocoNetInterfaceScaffold() {

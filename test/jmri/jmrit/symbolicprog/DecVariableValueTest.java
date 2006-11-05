@@ -1,10 +1,4 @@
-/**
- * DecVariableValueTest.java
- *
- * Description:
- * @author			Bob Jacobsen
- * @version
- */
+// DecVariableValueTest.java
 
 package jmri.jmrit.symbolicprog;
 
@@ -14,6 +8,12 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.framework.Assert;
 
+import com.sun.java.util.collections.Vector;
+
+/**
+ * @author			Bob Jacobsen Copyright 2003, 2006
+ * @version
+ */
 public class DecVariableValueTest extends VariableValueTest {
 
     // abstract members invoked by tests in parent VariableValueTest class

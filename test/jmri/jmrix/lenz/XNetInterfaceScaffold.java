@@ -1,17 +1,18 @@
+//  XNetInterfaceScaffold.java
+
+package jmri.jmrix.lenz;
+
+import com.sun.java.util.collections.Vector;
+
 /**
  * XNetInterfaceScaffold.java
  *
  * Description:	 	Test scaffold implementation of XNetInterface
- * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 2.1 $
+ * @author			Bob Jacobsen Copyright (C) 2002, 2006
+ * @version			$Revision: 2.2 $
  *
  * Use an object of this type as a XNetTrafficController in tests
  */
-
-package jmri.jmrix.lenz;
-
-import java.util.Vector;
-
 public class XNetInterfaceScaffold extends XNetTrafficController {
 
 	public XNetInterfaceScaffold(LenzCommandStation pCommandStation) {

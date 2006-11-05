@@ -1,10 +1,4 @@
-/**
- * ComboRadioButtonsTest.java
- *
- * Description:
- * @author			Bob Jacobsen
- * @version
- */
+// ComboRadioButtonsTest.java
 
 package jmri.jmrit.symbolicprog;
 
@@ -17,6 +11,14 @@ import junit.framework.Assert;
 
 import jmri.progdebugger.*;
 
+import com.sun.java.util.collections.Vector;
+
+/**
+ * ComboRadioButtonsTest.java
+ *
+ * @author			Bob Jacobsen Copyright 2006
+ * @version  $Release:$
+ */
 public class ComboRadioButtonsTest extends TestCase {
 
     ProgDebugger p = new ProgDebugger();

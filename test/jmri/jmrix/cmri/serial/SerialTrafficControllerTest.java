@@ -1,10 +1,4 @@
-/**
- * SerialTrafficControllerTest.java
- *
- * Description:	    JUnit tests for the SerialTrafficController class
- * @author			Bob Jacobsen
- * @version $Revision: 1.7 $
- */
+// SerialTrafficControllerTest.java
 
 package jmri.jmrix.cmri.serial;
 
@@ -18,6 +12,13 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import com.sun.java.util.collections.Vector;
+
+/**
+ * Description:	    JUnit tests for the SerialTrafficController class
+ * @author			Bob Jacobsen Copyright 2006
+ * @version $Revision: 1.8 $
+ */
 public class SerialTrafficControllerTest extends TestCase {
 
     public void testCreate() {
@@ -110,7 +111,7 @@ public class SerialTrafficControllerTest extends TestCase {
 
     // internal class to simulate a PortController
     class SerialPortControllerScaffold extends SerialPortController {
-            public java.util.Vector getPortNames() { return null; }
+            public Vector getPortNames() { return null; }
 	    public String openPort(String portName, String appName) { return null; }
 	    public void configure() {}
 	    public String[] validBaudRates() { return null; }

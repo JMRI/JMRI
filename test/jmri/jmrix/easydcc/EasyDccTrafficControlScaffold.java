@@ -1,15 +1,15 @@
-/** 
- * EasyDccInterfaceScaffold.java
- *
- * Description:	    Stands in for the EasyDccTrafficController class
- * @author			Bob Jacobsen
- * @version			
- */
+// EasyDccInterfaceScaffold.java
 
 package jmri.jmrix.easydcc;
 
-import java.util.Vector;
+import com.sun.java.util.collections.Vector;
 
+/** 
+ *
+ * Description:	    Stands in for the EasyDccTrafficController class
+ * @author			Bob Jacobsen Copyright 2006
+ * @version			
+ */
 public class EasyDccTrafficControlScaffold extends EasyDccTrafficController {
 	public EasyDccTrafficControlScaffold() {
 		if (log.isDebugEnabled()) log.debug("setting instance: "+this);

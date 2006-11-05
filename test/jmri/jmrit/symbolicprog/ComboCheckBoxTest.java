@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
+import com.sun.java.util.collections.Vector;
 import com.sun.java.util.collections.List;
 import com.sun.java.util.collections.ArrayList;
 
@@ -14,8 +15,8 @@ import junit.framework.Assert;
 import jmri.progdebugger.*;
 
 /**
- * @author			Bob Jacobsen
- * @version			$Revision: 1.8 $
+ * @author			Bob Jacobsen Copyright 2005
+ * @version			$Revision: 1.9 $
  */
 public class ComboCheckBoxTest extends TestCase {
 

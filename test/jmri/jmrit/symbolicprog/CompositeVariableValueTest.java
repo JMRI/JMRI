@@ -3,7 +3,7 @@
 package jmri.jmrit.symbolicprog;
 
 import jmri.progdebugger.ProgDebugger;
-import java.util.Vector;
+import com.sun.java.util.collections.Vector;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -11,6 +11,8 @@ import javax.swing.JComboBox;
 
 import com.sun.java.util.collections.ArrayList;
 import com.sun.java.util.collections.List;
+import com.sun.java.util.collections.Vector;
+
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -19,7 +21,7 @@ import junit.framework.TestSuite;
  * Test CompositeVariableValue class.
  *
  * @author	Bob Jacobsen Copyright 2006
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class CompositeVariableValueTest extends VariableValueTest {
 

@@ -1,22 +1,21 @@
-/** 
- * EasyDccPowerManagerTest.java
- *
- * Description:	    JUnit tests for the EasyDccPowerManager class
- * @author			Bob Jacobsen
- * @version			
- */
+// EasyDccPowerManagerTest.java
 
 package jmri.jmrix.easydcc;
 
 import jmri.*;
 
-import java.util.Vector;
+import com.sun.java.util.collections.Vector;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import jmri.jmrix.AbstractPowerManagerTest;
 
+/** 
+ * Description:	    JUnit tests for the EasyDccPowerManager class
+ * @author			Bob Jacobsen Copyright 2006
+ * @version			
+ */
 public class EasyDccPowerManagerTest extends AbstractPowerManagerTest {
 
 	/**

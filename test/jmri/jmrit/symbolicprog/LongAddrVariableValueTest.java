@@ -3,13 +3,14 @@
 package jmri.jmrit.symbolicprog;
 
 import jmri.progdebugger.ProgDebugger;
-import java.util.Vector;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import com.sun.java.util.collections.ArrayList;
 import com.sun.java.util.collections.List;
+import com.sun.java.util.collections.Vector;
+
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -19,7 +20,7 @@ import junit.framework.TestSuite;
  *
  * @todo need a check of the MIXED state model for long address
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class LongAddrVariableValueTest extends VariableValueTest {
 

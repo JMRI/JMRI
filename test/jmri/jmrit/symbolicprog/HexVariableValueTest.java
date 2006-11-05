@@ -8,11 +8,13 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.framework.Assert;
 
+import com.sun.java.util.collections.Vector;
+
 /**
  * Test the HexVariableValue class
  *
  * @author	Bob Jacobsen  Copyright 2001
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class HexVariableValueTest extends VariableValueTest {
 

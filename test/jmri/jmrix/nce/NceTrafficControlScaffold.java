@@ -3,12 +3,12 @@
  *
  * Description:	    Stands in for the NceTrafficController class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 
 package jmri.jmrix.nce;
 
-import java.util.Vector;
+import com.sun.java.util.collections.Vector;
 
 public class NceTrafficControlScaffold extends NceTrafficController {
 	public NceTrafficControlScaffold() {

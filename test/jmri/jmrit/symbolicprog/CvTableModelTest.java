@@ -1,10 +1,4 @@
-/**
- * CvTableModelTest.java
- *
- * Description:
- * @author			Bob Jacobsen
- * @version			$Revision: 1.5 $
- */
+// CvTableModelTest.java
 
 package jmri.jmrit.symbolicprog;
 
@@ -13,6 +7,10 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+/**
+ * @author			Bob Jacobsen
+ * @version			$Revision: 1.6 $
+ */
 public class CvTableModelTest extends TestCase {
 
     public void testStart() {

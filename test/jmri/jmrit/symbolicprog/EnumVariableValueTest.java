@@ -9,11 +9,13 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.framework.Assert;
 
+import com.sun.java.util.collections.Vector;
+
 /**
  * Test EnumVariableValue
  *
  * @author		Bob Jacobsen  Copyright 2003
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 
 public class EnumVariableValueTest extends VariableValueTest {

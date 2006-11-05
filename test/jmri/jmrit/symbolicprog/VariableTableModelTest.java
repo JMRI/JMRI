@@ -1,10 +1,4 @@
-/**
- * VariableTableModelTest.java
- *
- * Description:
- * @author			Bob Jacobsen
- * @version    $Revision: 1.6 $
- */
+// VariableTableModelTest.java
 
 package jmri.jmrit.symbolicprog;
 
@@ -14,6 +8,15 @@ import jmri.progdebugger.*;
 import junit.framework.*;
 import org.jdom.*;
 
+import com.sun.java.util.collections.Vector;
+
+/**
+ * VariableTableModelTest.java
+ *
+ * Description:
+ * @author			Bob Jacobsen Copyright 2005
+ * @version    $Revision: 1.7 $
+ */
 public class VariableTableModelTest extends TestCase {
 
     ProgDebugger p = new ProgDebugger();

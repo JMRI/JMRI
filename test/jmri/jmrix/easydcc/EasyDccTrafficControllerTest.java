@@ -1,10 +1,4 @@
-/**
- * EasyDccTrafficControllerTest.java
- *
- * Description:	    JUnit tests for the EasyDccTrafficController class
- * @author			Bob Jacobsen
- * @version
- */
+// EasyDccTrafficControllerTest.java
 
 package jmri.jmrix.easydcc;
 
@@ -18,6 +12,13 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import com.sun.java.util.collections.Vector;
+
+/**
+ * Description:	    JUnit tests for the EasyDccTrafficController class
+ * @author			Bob Jacobsen
+ * @version
+ */
 public class EasyDccTrafficControllerTest extends TestCase {
 
 	public void testCreate() {
@@ -133,7 +134,7 @@ public class EasyDccTrafficControllerTest extends TestCase {
 
 	// internal class to simulate a EasyDccPortController
 	class EasyDccPortControllerScaffold extends EasyDccPortController {
-            public java.util.Vector getPortNames() { return null; }
+            public Vector getPortNames() { return null; }
 	    public String openPort(String portName, String appName) { return null; }
 	    public void configure() {}
 	    public String[] validBaudRates() { return null; }

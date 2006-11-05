@@ -1,10 +1,4 @@
-/**
- * XNetPortControllerScaffold.java
- *
- * Description:	    test implementation of XNetPortController
- * @author			Bob Jacobsen
- * @version         $Revision: 2.0 $
- */
+// XNetPortControllerScaffold.java
 
 package jmri.jmrix.lenz;
 
@@ -13,9 +7,16 @@ import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
+/**
+ * XNetPortControllerScaffold.java
+ *
+ * Description:	    test implementation of XNetPortController
+ * @author			Bob Jacobsen Copyright (C) 2006
+ * @version         $Revision: 2.1 $
+ */
 class XNetPortControllerScaffold extends XNetPortController {
 
-    public java.util.Vector getPortNames() { return null; }
+    public com.sun.java.util.collections.Vector getPortNames() { return null; }
     public String openPort(String portName, String appName) { return null; }
     public void configure() {}
     public String[] validBaudRates() { return null; }

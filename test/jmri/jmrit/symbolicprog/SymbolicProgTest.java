@@ -10,10 +10,12 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import com.sun.java.util.collections.Vector;
+
 /**
  * Test the jmri.jmrix.symbolicprog package.
- * @author			Bob Jacobsen
- * @version         $Revision: 1.10 $
+ * @author			Bob Jacobsen Copyright 2006
+ * @version         $Revision: 1.11 $
  */
 public class SymbolicProgTest extends TestCase {
 
