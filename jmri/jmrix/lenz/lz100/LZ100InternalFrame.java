@@ -2,7 +2,6 @@
 
 package jmri.jmrix.lenz.lz100;
 
-import java.awt.*;
 import java.awt.event.*;
 import java.util.ResourceBundle;
 import javax.swing.*;
@@ -16,7 +15,7 @@ import jmri.jmrix.lenz.*;
  * reset the command station.
  *
  * @author			Paul Bender  Copyright (C) 2005
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XNetListener {
 

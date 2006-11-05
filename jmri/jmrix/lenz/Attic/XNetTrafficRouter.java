@@ -2,8 +2,6 @@
 
 package jmri.jmrix.lenz;
 
-import java.util.Vector;
-
 /**
  * Implements a XNetInterface by doing a scatter-gather to
  * another, simpler implementation.
@@ -15,7 +13,7 @@ import java.util.Vector;
  * without traffic over the connection.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version 		$Revision: 2.4 $
+ * @version 		$Revision: 2.5 $
  *
  */
 public class XNetTrafficRouter extends XNetTrafficController implements XNetListener {

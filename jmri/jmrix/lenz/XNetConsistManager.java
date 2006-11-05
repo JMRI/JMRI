@@ -3,17 +3,14 @@
 package jmri.jmrix.lenz;
 
 import jmri.Consist;
-import jmri.ConsistManager;
 import jmri.DccLocoAddress;
-
-import java.util.Enumeration;
 
 /**
  * Consist Manager for use with the
  * XNetConsist class for the consists it builds
  *
  * @author                Paul Bender Copyright (C) 2004
- * @version               $Revision: 2.7 $
+ * @version               $Revision: 2.8 $
  */
 
 public class XNetConsistManager extends jmri.jmrix.AbstractConsistManager implements jmri.ConsistManager {

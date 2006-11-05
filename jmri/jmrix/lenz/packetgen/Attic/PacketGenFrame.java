@@ -3,7 +3,6 @@
 package jmri.jmrix.lenz.packetgen;
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
 import jmri.util.StringUtil;
@@ -14,7 +13,7 @@ import jmri.jmrix.lenz.XNetTrafficController;
 /**
  * Frame for user input of XpressNet messages
  * @author			Bob Jacobsen   Copyright (C) 2001,2002
- * @version			$Revision: 2.1 $
+ * @version			$Revision: 2.2 $
  */
 public class PacketGenFrame extends jmri.util.JmriJFrame {
 

@@ -5,15 +5,13 @@
  *       			XNetMonFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2002
- * @version         $Revision: 2.1 $
+ * @version         $Revision: 2.2 $
  */
 
 package jmri.jmrix.lenz.mon;
 
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
-
-import jmri.jmrix.lenz.XNetTrafficController;
 
 
 public class XNetMonAction 			extends AbstractAction {

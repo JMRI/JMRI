@@ -1,7 +1,7 @@
 package jmri.jmrix.lenz.configurexml;
 
 import org.jdom.Element;
-import jmri.InstanceManager;
+
 import jmri.jmrix.lenz.XNetTurnoutManager;
 
 /**
@@ -12,7 +12,7 @@ import jmri.jmrix.lenz.XNetTurnoutManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 2.0 $
+ * @version $Revision: 2.1 $
  */
 public class XNetTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManagerConfigXML {
 

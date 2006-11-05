@@ -3,7 +3,6 @@
 package jmri.jmrix.lenz.ztc640;
 
 import jmri.jmrix.lenz.LenzCommandStation;
-import jmri.jmrix.lenz.XNetPacketizer;
 import jmri.jmrix.lenz.XNetPortController;
 import jmri.jmrix.lenz.XNetInitilizationManager;
 import jmri.jmrix.AbstractMRTrafficController;
@@ -25,7 +24,7 @@ import javax.comm.SerialPortEventListener;
  *              comm port. Normally controlled by the lenz.ztc640.ZTC640Frame 
  *              class.
  * @author			Bob Jacobsen   Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003-2006
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 
 public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {

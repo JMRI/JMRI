@@ -4,12 +4,6 @@
 
 package jmri.jmrix.lenz;
 
-import java.io.InputStream;
-import java.io.DataInputStream;
-import java.io.OutputStream;
-
-import java.util.Vector;
-
 import com.sun.java.util.collections.LinkedList;
 
 /**
@@ -29,7 +23,7 @@ import com.sun.java.util.collections.LinkedList;
  *</UL>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 2.4 $
+ * @version 		$Revision: 2.5 $
  *
  */
 public class XNetPacketizer extends XNetTrafficController {

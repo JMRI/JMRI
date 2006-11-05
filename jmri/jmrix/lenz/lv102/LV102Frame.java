@@ -2,13 +2,9 @@
 
 package jmri.jmrix.lenz.lv102;
 
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.ResourceBundle;
-import jmri.Programmer;
-import jmri.ProgListener;
-import jmri.ProgrammerException;
 
 /**
  * Frame displaying the LV102 configuration utility
@@ -17,7 +13,7 @@ import jmri.ProgrammerException;
  * The actual utility is defined in {@link LV102InternalFrame}
  *
  * @author			Paul Bender  Copyright (C) 2004,2005
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class LV102Frame extends jmri.util.JmriJFrame {
 

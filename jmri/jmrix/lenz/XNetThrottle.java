@@ -5,13 +5,11 @@ import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 
-import javax.swing.JOptionPane;
-
 /**
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
  * @author     Paul Bender (C) 2002,2003,2004
- * @version    $Revision: 2.12 $
+ * @version    $Revision: 2.13 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener

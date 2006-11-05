@@ -2,10 +2,8 @@
 
 package jmri.jmrix.lenz.lzv100;
 
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import jmri.jmrix.lenz.*;
 
 /**
  * Frame displaying the LZV100 configuration utility
@@ -18,7 +16,7 @@ import jmri.jmrix.lenz.*;
  * utility for the LV102 power station
  *
  * @author			Paul Bender  Copyright (C) 2003,2005
- * @version			$Revision: 2.5 $
+ * @version			$Revision: 2.6 $
  */
 public class LZV100Frame extends jmri.util.JmriJFrame {
 

@@ -4,14 +4,7 @@
 
 package jmri.jmrix.lenz.ztc640;
 
-import java.io.InputStream;
-import java.io.DataInputStream;
-import java.io.OutputStream;
-
-import java.util.Vector;
-
 import jmri.jmrix.lenz.XNetPacketizer;
-import jmri.jmrix.lenz.XNetTrafficController;
 
 /**
  * This is an extention of the XNetPacketizer to handle the device 
@@ -21,7 +14,7 @@ import jmri.jmrix.lenz.XNetTrafficController;
  * 0xFF bytes that appear prior to some messages.
  *
  * @author		Paul Bender  Copyright (C) 2006
- * @version 		$Revision: 1.4 $
+ * @version 		$Revision: 1.5 $
  *
  */
 public class ZTC640XNetPacketizer extends XNetPacketizer {

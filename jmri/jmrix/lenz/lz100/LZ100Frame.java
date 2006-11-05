@@ -2,11 +2,9 @@
 
 package jmri.jmrix.lenz.lz100;
 
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.ResourceBundle;
-import jmri.jmrix.lenz.*;
 
 /**
  * Frame displaying the LZ100 configuration utility
@@ -15,7 +13,7 @@ import jmri.jmrix.lenz.*;
  * utiliy is defined in {@link LZ100InternalFrame}
  *
  * @author			Paul Bender  Copyright (C) 2005
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class LZ100Frame extends jmri.util.JmriJFrame {
 

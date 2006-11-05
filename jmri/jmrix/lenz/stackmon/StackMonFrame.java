@@ -14,7 +14,6 @@ import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.BoxLayout;
@@ -29,7 +28,7 @@ import javax.swing.BoxLayout;
  * <P>
  *
  * @author	Paul Bender   Copyright (C) 2005
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener {
 

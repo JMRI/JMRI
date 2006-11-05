@@ -3,15 +3,13 @@
  *
  * Description:		PowerManager implementation for controlling layout power
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 2.3 $
+ * @version			$Revision: 2.4 $
  */
 
 package jmri.jmrix.lenz;
 
 import jmri.JmriException;
 import jmri.PowerManager;
-
-import java.beans.PropertyChangeListener;
 
 public class XNetPowerManager implements PowerManager, XNetListener {
 

@@ -4,14 +4,7 @@
 
 package jmri.jmrix.lenz.liusb;
 
-import java.io.InputStream;
-import java.io.DataInputStream;
-import java.io.OutputStream;
-
-import java.util.Vector;
-
 import jmri.jmrix.lenz.XNetPacketizer;
-import jmri.jmrix.lenz.XNetTrafficController;
 
 /**
  * This is an extention of the XNetPacketizer to handle the device 
@@ -21,7 +14,7 @@ import jmri.jmrix.lenz.XNetTrafficController;
  * 0xFF 0xFE or 0xFF 0xFD bytes that appear prior to any message read in.
  *
  * @author		Paul Bender  Copyright (C) 2005
- * @version 		$Revision: 1.2 $
+ * @version 		$Revision: 1.3 $
  *
  */
 public class LIUSBXNetPacketizer extends XNetPacketizer {

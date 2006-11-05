@@ -12,10 +12,6 @@ import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetListener;
 import jmri.jmrix.lenz.XNetConstants;
-import jmri.jmrix.lenz.XNetInterface;
-import java.util.Vector;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
 
 /**
  * Programmer support for Lenz XpressNet.
@@ -31,7 +27,7 @@ import java.beans.PropertyChangeEvent;
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Paul Bender  Copyright (c) 2003,2004,2005
- * @version $Revision: 2.2 $
+ * @version $Revision: 2.3 $
  */
 public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener {
 
