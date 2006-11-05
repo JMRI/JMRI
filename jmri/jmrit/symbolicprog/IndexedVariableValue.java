@@ -10,7 +10,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.beans.PropertyChangeListener;
 import java.util.Hashtable;
-import java.util.Vector;
+import com.sun.java.util.collections.Vector;
 
 import javax.swing.JLabel;
 import javax.swing.JSlider;
@@ -23,7 +23,7 @@ import com.sun.java.util.collections.ArrayList;
  * Extends VariableValue to represent an indexed variable
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.7 $
+ * @version   $Revision: 1.8 $
  */
 public class IndexedVariableValue extends VariableValue
     implements ActionListener, PropertyChangeListener, FocusListener {
@@ -358,7 +358,7 @@ public class IndexedVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.7 $
+     * @version     $Revision: 1.8 $
      */
     public class VarTextField extends JTextField {
 

@@ -7,7 +7,7 @@ import java.beans.*;
 
 import javax.swing.*;
 
-import java.util.Vector;
+import com.sun.java.util.collections.Vector;
 
 import jmri.*;
 
@@ -16,9 +16,9 @@ import jmri.*;
  * <P>This represents the contents of a single decoder, so the
  * Programmer used to access it is a data member.
  *
- * @author    Bob Jacobsen   Copyright (C) 2001, 2002
+ * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2006
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.17 $
+ * @version   $Revision: 1.18 $
  */
 public class CvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 

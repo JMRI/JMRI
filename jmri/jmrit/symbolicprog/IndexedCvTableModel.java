@@ -7,7 +7,7 @@ import java.beans.*;
 
 import javax.swing.*;
 
-import java.util.Vector;
+import com.sun.java.util.collections.Vector;
 
 import jmri.*;
 
@@ -18,7 +18,7 @@ import jmri.*;
  * Programmer used to access it is a data member.
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 

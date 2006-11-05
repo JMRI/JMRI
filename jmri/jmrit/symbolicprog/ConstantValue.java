@@ -3,7 +3,7 @@
 package jmri.jmrit.symbolicprog;
 
 import java.awt.Component;
-import java.util.Vector;
+import com.sun.java.util.collections.Vector;
 import javax.swing.*;
 import java.awt.Color;
 
@@ -15,7 +15,7 @@ import com.sun.java.util.collections.ArrayList;
  * Note that there's no CV associated with this.
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
- * @version   $Revision: 1.13 $
+ * @version   $Revision: 1.14 $
  *
  */
 public class ConstantValue extends VariableValue {

@@ -6,13 +6,13 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
 import java.beans.PropertyChangeListener;
-import java.util.Vector;
+import com.sun.java.util.collections.Vector;
 
 /**
  * Common implementations for the Programmer interface.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 public abstract class AbstractProgrammer implements Programmer {
 

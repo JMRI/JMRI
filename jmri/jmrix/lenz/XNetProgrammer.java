@@ -8,7 +8,7 @@ package jmri.jmrix.lenz;
 
 import jmri.Programmer;
 import jmri.jmrix.AbstractProgrammer;
-import java.util.Vector;
+import com.sun.java.util.collections.Vector;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
@@ -26,7 +26,7 @@ import java.beans.PropertyChangeEvent;
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Paul Bender  Copyright (c) 2003,2004,2005
- * @version $Revision: 2.15 $
+ * @version $Revision: 2.16 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 

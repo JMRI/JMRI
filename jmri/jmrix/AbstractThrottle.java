@@ -3,7 +3,7 @@ package jmri.jmrix;
 import jmri.DccThrottle;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Vector;
+import com.sun.java.util.collections.Vector;
 
 /**
  * An abstract implementation of DccThrottle.
@@ -13,7 +13,7 @@ import java.util.Vector;
  * it has some DCC-specific content.
  *
  * @author  Bob Jacobsen  Copyright (C) 2001, 2005
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 abstract public class AbstractThrottle implements DccThrottle {
     protected float speedSetting;

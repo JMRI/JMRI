@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.beans.PropertyChangeListener;
-import java.util.Vector;
+import com.sun.java.util.collections.Vector;
 
 import javax.swing.JLabel;
 import javax.swing.JSlider;
@@ -22,7 +22,7 @@ import com.sun.java.util.collections.ArrayList;
  * Decimal representation of a value.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.20 $
+ * @version             $Revision: 1.21 $
  *
  */
 public class DecVariableValue extends VariableValue

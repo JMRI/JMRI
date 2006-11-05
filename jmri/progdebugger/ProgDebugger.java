@@ -5,7 +5,7 @@ package jmri.progdebugger;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Hashtable;
-import java.util.Vector;
+import com.sun.java.util.collections.Vector;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
@@ -13,7 +13,7 @@ import jmri.ProgrammerException;
 /**
  * Debugging implementation of Programmer interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.18 $
+ * @version         $Revision: 1.19 $
  */
 public class ProgDebugger implements Programmer  {
 

@@ -6,6 +6,8 @@ import java.util.*;
 
 import javax.swing.*;
 
+import com.sun.java.util.collections.Vector;
+
 /**
  * Representation of a short address (CV1).
  * <P>
@@ -13,8 +15,8 @@ import javax.swing.*;
  * written.  The CVs to be modified and there new values are
  * stored in two arrays for simplicity.
  *
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.10 $
+ * @author			Bob Jacobsen   Copyright (C) 2001, 2006
+ * @version             $Revision: 1.11 $
  *
  */
 public class ShortAddrVariableValue extends DecVariableValue {

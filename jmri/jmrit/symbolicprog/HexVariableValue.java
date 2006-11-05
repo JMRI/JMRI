@@ -1,21 +1,16 @@
-/**
- * HexVariableValue.java
- *
- * Description:		Extends VariableValue to represent a hexadecimal variable
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version
- *
- */
+// HexVariableValue.java
 
 package jmri.jmrit.symbolicprog;
 
 import java.awt.event.ActionEvent;
-import java.util.Vector;
+import com.sun.java.util.collections.Vector;
 
 import javax.swing.JLabel;
 
 /**
  * LIke DecVariableValue, except that the string representation is in hexadecimal
+ * @author			Bob Jacobsen   Copyright (C) 2001
+ * @version
  */
 public class HexVariableValue extends DecVariableValue {
 

@@ -5,18 +5,18 @@ package jmri.jmrit.symbolicprog;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.*;
-import java.util.Vector;
 
 import javax.swing.*;
 
 import com.sun.java.util.collections.ArrayList;
 import com.sun.java.util.collections.List;
+import com.sun.java.util.collections.Vector;
 
 /**
  * Extends VariableValue to represent a enumerated variable.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.20 $
+ * @version	$Revision: 1.21 $
  *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
@@ -310,7 +310,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * model between this object and the real JComboBox value.
      *
      * @author			Bob Jacobsen   Copyright (C) 2001
-     * @version         $Revision: 1.20 $
+     * @version         $Revision: 1.21 $
      */
     public class VarComboBox extends JComboBox {
 

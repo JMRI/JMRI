@@ -17,7 +17,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import java.util.Vector;
+import com.sun.java.util.collections.Vector;
 
 import javax.swing.BoxLayout;
 import javax.swing.Box;
@@ -40,7 +40,7 @@ import javax.swing.JDialog;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004
- * @version     $Revision: 1.33 $
+ * @version     $Revision: 1.34 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {

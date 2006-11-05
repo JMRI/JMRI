@@ -4,12 +4,12 @@ package jmri.jmrix;
 
 import java.awt.*;
 import javax.swing.*;
-import java.util.Vector;
+import com.sun.java.util.collections.Vector;
 
 /**
  * Abstract base Frame to open and configure a SerialPortAdapter
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 abstract public class SerialPortFrame extends javax.swing.JFrame {
 

@@ -2,7 +2,7 @@
 package jmri.jmrit.symbolicprog;
 
 import javax.swing.table.AbstractTableModel;
-import java.util.Vector;
+import com.sun.java.util.collections.Vector;
 import java.beans.PropertyChangeEvent;
 
 import javax.swing.JLabel;
@@ -19,7 +19,7 @@ import java.awt.event.ActionEvent;
  * particular decoder.
  *
  * @author    Howard G. Penny    Copyright (C) 2005
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 public class ResetTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
     private String headers[] = {"Label", "Name",

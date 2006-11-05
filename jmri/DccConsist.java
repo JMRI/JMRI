@@ -1,6 +1,17 @@
+// DccConsist.java
+
+package jmri;
+
+import jmri.ConsistListener;
+
+import java.util.Enumeration;
+import com.sun.java.util.collections.Vector;
+
+import com.sun.java.util.collections.Hashtable;
+import com.sun.java.util.collections.ArrayList;
+
+
 /**
- *  DccConsist.java
- *
  * This is the Default DCC consist.
  * It utilizes the fact that IF a Command Station supports OpsMode 
  * Programing, you can write the consist information to CV19, so ANY 
@@ -10,17 +21,6 @@
  * @author                      Paul Bender Copyright (C) 2003
  * @version                     $ Revision 1.00 $
  */
-
-package jmri;
-
-import jmri.ConsistListener;
-
-import java.util.Vector;
-
-import com.sun.java.util.collections.Hashtable;
-import com.sun.java.util.collections.ArrayList;
-
-
 public class DccConsist implements Consist, ProgListener{
 
 	protected ArrayList ConsistList = null; // A List of Addresses in the consist

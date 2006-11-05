@@ -4,7 +4,7 @@ package jmri.jmrix.easydcc;
 
 import jmri.Programmer;
 import jmri.jmrix.AbstractProgrammer;
-import java.util.Vector;
+import com.sun.java.util.collections.Vector;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
@@ -12,7 +12,7 @@ import java.beans.PropertyChangeEvent;
  * Implements the jmri.Programmer interface via commands for the EasyDcc powerstation
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccListener {
 

@@ -5,7 +5,7 @@ package jmri.jmrit.symbolicprog;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.*;
-import java.util.Vector;
+import com.sun.java.util.collections.Vector;
 
 import javax.swing.*;
 
@@ -48,7 +48,7 @@ import com.sun.java.util.collections.Iterator;
  *</ol>
  * <P>
  * @author	Bob Jacobsen   Copyright (C) 2001, 2005
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  *
  */
 public class CompositeVariableValue extends EnumVariableValue implements ActionListener, PropertyChangeListener {

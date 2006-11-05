@@ -2,7 +2,7 @@
 
 package jmri.jmrix.loconet;
 
-import java.util.Vector;
+import com.sun.java.util.collections.Vector;
 
 /**
  * Abstract base class for implementations of LocoNetInterface.
@@ -12,7 +12,7 @@ import java.util.Vector;
  * statistics support.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.10 $
+ * @version 		$Revision: 1.11 $
  *
  */
 public abstract class LnTrafficController implements LocoNetInterface {

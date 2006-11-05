@@ -2,9 +2,6 @@
 
 package jmri.util;
 
-import java.util.Vector;
-import com.sun.java.util.collections.Comparable;
-
 /**
  * Common utility methods for working with Vectors.
  * <P>
@@ -17,8 +14,8 @@ import com.sun.java.util.collections.Comparable;
  * back to an explicit implementation when running on Java 1.1; this also
  * includes some stand-in methods for java.util.Collections, etc.
  *
- * @author Bob Jacobsen  Copyright 2005
- * @version $Revision: 1.2 $
+ * @author Bob Jacobsen  Copyright 2005, 2006
+ * @version $Revision: 1.3 $
  */
 
 public class VectorUtil {
@@ -28,7 +25,7 @@ public class VectorUtil {
      * as the input length.
      * @param values
      */
-    static public void sort(Vector values) {
+    static public void sort(java.util.Vector values) {
         try {
             java.util.Collections.sort(values);
         } catch (Throwable e1) {  // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
@@ -36,7 +33,22 @@ public class VectorUtil {
         }
     }
 
-    static void bubblesort(Vector values) {
+    static void bubblesort(java.util.Vector values) {
+        for (int i=0; i<=values.size()-2; i++) { // stop sort early to save time!
+            for (int j=values.size()-2; j>=i; j--) {
+                // check that the jth value is smaller than j+1th,
+                // else swap
+                if (0 < ((Comparable)values.elementAt(j)).compareTo(values.elementAt(j+1))) {
+                    // swap
+                    Object temp = values.elementAt(j);
+                    values.setElementAt(values.elementAt(j+1),j);
+                    values.setElementAt(temp, j+1);
+                }
+            }
+        }
+    }
+
+    static public void sort(com.sun.java.util.collections.Vector values) {
         for (int i=0; i<=values.size()-2; i++) { // stop sort early to save time!
             for (int j=values.size()-2; j>=i; j--) {
                 // check that the jth value is smaller than j+1th,

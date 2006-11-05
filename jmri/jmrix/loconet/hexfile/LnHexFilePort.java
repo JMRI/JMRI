@@ -27,7 +27,7 @@ import java.io.PipedOutputStream;
  *	and separated by a space. Variable whitespace is not (yet) supported
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class LnHexFilePort 			extends LnPortController implements Runnable {
 
@@ -138,7 +138,7 @@ public class LnHexFilePort 			extends LnPortController implements Runnable {
     // define operation
     private int delay=100;  				// units are milliseconds; default is quiet a busy LocoNet
 
-    public java.util.Vector getPortNames() {
+    public com.sun.java.util.collections.Vector getPortNames() {
         log.error("getPortNames should not have been invoked");
         new Exception().printStackTrace();
         return null;

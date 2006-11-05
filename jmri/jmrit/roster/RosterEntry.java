@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.StringTokenizer;
-import java.util.Vector;
+import com.sun.java.util.collections.Vector;
 import jmri.util.davidflanagan.HardcopyWriter;
 
 
@@ -36,7 +36,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.21 $
+ * @version   $Revision: 1.22 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */

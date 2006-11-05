@@ -8,7 +8,7 @@ import javax.comm.SerialPort;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Enumeration;
-import java.util.Vector;
+import com.sun.java.util.collections.Vector;
 import java.io.OutputStream;
 import java.io.DataInputStream;
 
@@ -21,7 +21,7 @@ import java.io.DataInputStream;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class DataSource extends JFrame {
 

@@ -6,7 +6,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.*;
 import java.beans.PropertyChangeListener;
-import java.util.Vector;
+import com.sun.java.util.collections.Vector;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.text.Document;
@@ -24,7 +24,7 @@ import javax.swing.text.Document;
  * Value to put in text field = ((value in High CV) * Factor) + Low CV
  *
  * @author   Howard G. Penny  Copyright (C) 2005
- * @version  $Revision: 1.3 $
+ * @version  $Revision: 1.4 $
  *
  */
 public class IndexedPairVariableValue extends VariableValue
@@ -385,7 +385,7 @@ public class IndexedPairVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.3 $
+     * @version     $Revision: 1.4 $
      */
     public class VarTextField extends JTextField {
 

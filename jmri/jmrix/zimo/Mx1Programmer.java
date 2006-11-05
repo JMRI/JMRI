@@ -8,7 +8,7 @@ package jmri.jmrix.zimo;
 
 import jmri.Programmer;
 import jmri.jmrix.AbstractProgrammer;
-import java.util.Vector;
+import com.sun.java.util.collections.Vector;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
@@ -25,7 +25,7 @@ import java.beans.PropertyChangeEvent;
  * <LI>Wait for Normal Operations Resumed broadcast
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  *
  * Adapted by Sip Bosch for use with zimo Mx-1
  *

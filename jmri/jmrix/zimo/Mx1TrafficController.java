@@ -2,7 +2,7 @@
 
 package jmri.jmrix.zimo;
 
-import java.util.Vector;
+import com.sun.java.util.collections.Vector;
 
 /**
  * Abstract base class for implementations of MX-1 Interface.
@@ -11,7 +11,7 @@ import java.util.Vector;
  * method for locating the local implementation.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version 		$Revision: 1.1 $
+ * @version 		$Revision: 1.2 $
  *
  * Adapted by Sip Bosch for use with zimo Mx-1
  *

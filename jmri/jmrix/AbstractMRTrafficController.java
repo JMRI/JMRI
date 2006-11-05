@@ -4,7 +4,7 @@ package jmri.jmrix;
 
 import java.io.DataInputStream;
 import java.io.OutputStream;
-import java.util.Vector;
+import com.sun.java.util.collections.Vector;
 
 import com.sun.java.util.collections.LinkedList;
 
@@ -26,7 +26,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.28 $
+ * @version			$Revision: 1.29 $
  */
 abstract public class AbstractMRTrafficController {
     
