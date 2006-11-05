@@ -1,6 +1,5 @@
 package jmri.jmrix.lenz;
 
-import java.io.*;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -11,7 +10,7 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.XNetMessage class
  * @author			Bob Jacobsen
- * @version         $Revision: 2.0 $
+ * @version         $Revision: 2.1 $
  */
 public class XNetMessageTest extends TestCase {
 

@@ -8,14 +8,14 @@
 
 package jmri.jmrix;
 
+//import jmri.*;
+
+import java.beans.PropertyChangeListener;
+
 import jmri.*;
 
-import java.io.*;
-import java.beans.PropertyChangeListener;
-import junit.framework.Test;
 import junit.framework.Assert;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 public abstract class AbstractPowerManagerTest extends TestCase {
 

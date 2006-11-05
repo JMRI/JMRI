@@ -3,7 +3,6 @@
 package jmri.jmrit.symbolicprog;
 
 import jmri.Programmer;
-import jmri.InstanceManager;
 import jmri.ProgListener;
 
 import java.awt.Color;
@@ -24,7 +23,7 @@ import javax.swing.JTextField;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.17 $
+ * @version   $Revision: 1.18 $
  */
 public class CvValue extends AbstractValue implements ProgListener {
 

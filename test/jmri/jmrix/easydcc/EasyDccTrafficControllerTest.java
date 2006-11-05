@@ -8,8 +8,6 @@
 
 package jmri.jmrix.easydcc;
 
-import jmri.*;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
@@ -19,8 +17,6 @@ import junit.framework.Test;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import jmri.jmrix.easydcc.*;
 
 public class EasyDccTrafficControllerTest extends TestCase {
 

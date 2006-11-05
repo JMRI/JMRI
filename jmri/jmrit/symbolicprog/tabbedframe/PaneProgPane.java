@@ -12,7 +12,7 @@ import jmri.jmrit.symbolicprog.ValueEditor;
 import jmri.jmrit.symbolicprog.ValueRenderer;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.jmrit.symbolicprog.VariableValue;
-import jmri.jmrit.symbolicprog.IndexedVariableValue;
+
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -63,7 +63,7 @@ import com.sun.java.util.collections.List;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005, 2006
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.56 $
+ * @version   $Revision: 1.57 $
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */

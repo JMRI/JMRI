@@ -2,7 +2,6 @@
 
 package jmri.jmrix.lenz.packetgen;
 
-import java.io.*;
 import junit.framework.Test;
 import junit.framework.Assert;
 import junit.framework.TestCase;
@@ -14,7 +13,7 @@ import jmri.jmrix.AbstractMRMessage;
 /**
  * Tests for the jmri.jmrix.lenz.packetgen.PacketGenFrame class
  * @author			Bob Jacobsen   Copyright (c) 2001, 2002
- * @version			$Revision: 2.0 $
+ * @version			$Revision: 2.1 $
  */
 public class PacketGenFrameTest extends TestCase {
 

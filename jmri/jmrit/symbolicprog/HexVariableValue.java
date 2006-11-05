@@ -9,19 +9,10 @@
 
 package jmri.jmrit.symbolicprog;
 
-import jmri.Programmer;
-import jmri.InstanceManager;
-import jmri.ProgListener;
-
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeListener;
 import java.util.Vector;
-import javax.swing.JTextField;
+
 import javax.swing.JLabel;
-import javax.swing.text.Document;
 
 /**
  * LIke DecVariableValue, except that the string representation is in hexadecimal

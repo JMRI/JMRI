@@ -2,13 +2,12 @@
 
 package jmri.jmrix.loconet.spjfile;
 
-import apps.tests.*;
 import junit.framework.*;
 
 /**
  * Tests for the jmri.jmrix.loconet.spjfile package
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class SpjFileTest extends TestCase {
 

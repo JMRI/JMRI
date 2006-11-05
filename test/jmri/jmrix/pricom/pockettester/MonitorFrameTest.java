@@ -1,8 +1,7 @@
 // MonitorFrameTest.java
 
 package jmri.jmrix.pricom.pockettester;
-import jmri.NmraPacket;
-import junit.framework.Assert;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -10,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the MonitorFrame class
  * @author		Bob Jacobsen  Copyright 2005
- * @version		$Revision: 1.3 $
+ * @version		$Revision: 1.4 $
  */
 public class MonitorFrameTest extends TestCase {
 

@@ -2,14 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
-import jmri.Programmer;
-import jmri.InstanceManager;
-import jmri.ProgListener;
-
 import java.awt.Component;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Vector;
 import javax.swing.*;
 import java.awt.Color;
@@ -22,7 +15,7 @@ import com.sun.java.util.collections.ArrayList;
  * Note that there's no CV associated with this.
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
- * @version   $Revision: 1.12 $
+ * @version   $Revision: 1.13 $
  *
  */
 public class ConstantValue extends VariableValue {

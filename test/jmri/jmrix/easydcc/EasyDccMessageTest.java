@@ -3,12 +3,10 @@
  *
  * Description:	    JUnit tests for the EasyDccMessage class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.7 $
+ * @version         $Revision: 1.8 $
  */
 
 package jmri.jmrix.easydcc;
-
-import jmri.*;
 
 import junit.framework.Test;
 import junit.framework.Assert;

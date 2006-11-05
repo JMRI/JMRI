@@ -3,18 +3,15 @@
  *
  * Description:
  * @author			Bob Jacobsen
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 
 package jmri.jmrit.symbolicprog;
 
-import java.io.*;
-import java.util.*;
 import javax.swing.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import junit.framework.Assert;
 
 public class CvTableModelTest extends TestCase {
 

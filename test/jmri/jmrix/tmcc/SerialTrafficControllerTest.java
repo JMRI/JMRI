@@ -3,12 +3,10 @@
  *
  * Description:	    JUnit tests for the SerialTrafficController class
  * @author			Bob Jacobsen
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 package jmri.jmrix.tmcc;
-
-import jmri.*;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

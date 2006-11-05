@@ -2,10 +2,6 @@
 
 package jmri.jmrit.symbolicprog;
 
-import jmri.Programmer;
-import jmri.InstanceManager;
-import jmri.ProgListener;
-
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.*;
@@ -18,7 +14,7 @@ import javax.swing.text.Document;
 /**
  * Extends VariableValue to represent a NMRA long address
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  *
  */
 public class LongAddrVariableValue extends VariableValue

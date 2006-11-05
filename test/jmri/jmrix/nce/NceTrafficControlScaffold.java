@@ -3,12 +3,10 @@
  *
  * Description:	    Stands in for the NceTrafficController class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 package jmri.jmrix.nce;
-
-import jmri.*;
 
 import java.util.Vector;
 

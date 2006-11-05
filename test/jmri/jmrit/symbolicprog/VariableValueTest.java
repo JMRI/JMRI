@@ -2,23 +2,18 @@
 
 package jmri.jmrit.symbolicprog;
 
-import java.io.*;
 import java.util.*;
 import javax.swing.*;
 import java.awt.Component;
 import junit.framework.Assert;
-import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import junit.framework.Assert;
 
-import jmri.*;
 import jmri.progdebugger.*;
 
 /**
  * Base for tests of classes inheriting from VariableValue abstract class
  * @author	Bob Jacobsen, Copyright 2002
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 public abstract class VariableValueTest extends TestCase {
 

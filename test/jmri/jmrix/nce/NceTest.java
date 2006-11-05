@@ -2,17 +2,14 @@
 
 package jmri.jmrix.nce;
 
-import java.io.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.jdom.*;
-import org.jdom.output.*;
 
 /**
  * tests for the jmri.jmrix.nce package
  * @author			Bob Jacobsen
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 public class NceTest extends TestCase {
 

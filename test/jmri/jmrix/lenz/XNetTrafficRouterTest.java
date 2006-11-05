@@ -3,14 +3,12 @@ package jmri.jmrix.lenz;
 
 import junit.framework.*;
 
-import apps.tests.*;
-
 /**
  * <p>Title: XNetTrafficRouterTest </p>
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 2.2 $
+ * @version $Revision: 2.3 $
  */
 public class XNetTrafficRouterTest extends TestCase {
 

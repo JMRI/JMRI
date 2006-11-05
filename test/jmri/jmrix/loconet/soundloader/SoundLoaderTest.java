@@ -2,14 +2,13 @@
 
 package jmri.jmrix.loconet.soundloader;
 
-import apps.tests.*;
 import junit.framework.*;
 
 /**
  * Tests for the jmri.jmrix.loconet.soundloader package
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SoundLoaderTest extends TestCase {
 

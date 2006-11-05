@@ -1,8 +1,7 @@
 // PdiFileTest.java
 
 package jmri.jmrix.pricom.downloader;
-import jmri.NmraPacket;
-import junit.framework.Assert;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -12,7 +11,7 @@ import java.io.IOException;
 /**
  * JUnit tests for the PdiFile class
  * @author		Bob Jacobsen  Copyright 2005
- * @version		$Revision: 1.1 $
+ * @version		$Revision: 1.2 $
  */
 public class PdiFileTest extends TestCase {
 

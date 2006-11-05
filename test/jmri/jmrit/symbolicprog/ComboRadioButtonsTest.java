@@ -8,7 +8,6 @@
 
 package jmri.jmrit.symbolicprog;
 
-import java.io.*;
 import java.util.*;
 import javax.swing.*;
 import junit.framework.Test;
@@ -16,7 +15,6 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.framework.Assert;
 
-import jmri.*;
 import jmri.progdebugger.*;
 
 public class ComboRadioButtonsTest extends TestCase {

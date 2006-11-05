@@ -3,10 +3,8 @@
  */
 package jmri.jmrit.turnoutoperations;
 
-import java.awt.Component;
 import javax.swing.JPanel;
 
-import jmri.NoFeedbackTurnoutOperation;
 import jmri.TurnoutOperation;
 
 import java.lang.reflect.Constructor;
@@ -16,7 +14,7 @@ import java.lang.reflect.Constructor;
  * Must be overridden to define specific panel details for class
  * Must have exactly one constructor like the one shown below
  * @author John Harper	Copyright 2005
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class TurnoutOperationConfig extends JPanel {
 

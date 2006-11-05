@@ -2,19 +2,12 @@
 
 package jmri.jmrit.symbolicprog;
 
-import java.awt.Component;
-import java.util.*;
 import javax.swing.*;
-import javax.swing.table.*;
-import javax.swing.event.*;
-import java.beans.PropertyChangeEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeListener;
 
 /* Represents a JComboBox as a JPanel containing just the "off" button
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class ComboOffRadioButton extends ComboRadioButtons {
 

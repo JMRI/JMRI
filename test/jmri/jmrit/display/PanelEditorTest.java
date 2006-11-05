@@ -8,14 +8,13 @@ import java.io.FileWriter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import java.beans.PropertyChangeEvent;
 
 /**
  * PanelEditorTest.java
  *
  * Description:
  * @author			Bob Jacobsen
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class PanelEditorTest extends TestCase {
 

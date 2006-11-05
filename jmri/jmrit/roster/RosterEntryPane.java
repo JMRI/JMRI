@@ -20,7 +20,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.BoxLayout;
 
 import com.sun.java.util.collections.List;
 
@@ -28,7 +27,7 @@ import com.sun.java.util.collections.List;
  * Display and edit a RosterEntry.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001; Dennis Miller Copyright 2004, 2005
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class RosterEntryPane extends javax.swing.JPanel  {
 

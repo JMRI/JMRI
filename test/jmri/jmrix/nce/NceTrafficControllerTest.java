@@ -3,12 +3,10 @@
  *
  * Description:	    JUnit tests for the NceTrafficController class
  * @author			Bob Jacobsen
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 package jmri.jmrix.nce;
-
-import jmri.*;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

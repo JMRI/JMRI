@@ -8,8 +8,6 @@
 
 package jmri.jmrix.easydcc;
 
-import jmri.*;
-
 import java.util.Vector;
 
 public class EasyDccTrafficControlScaffold extends EasyDccTrafficController {

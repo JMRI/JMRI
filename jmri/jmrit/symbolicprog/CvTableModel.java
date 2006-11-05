@@ -4,7 +4,6 @@ package jmri.jmrit.symbolicprog;
 
 import java.awt.event.*;
 import java.beans.*;
-import java.util.*;
 
 import javax.swing.*;
 
@@ -19,7 +18,7 @@ import jmri.*;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.16 $
+ * @version   $Revision: 1.17 $
  */
 public class CvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 

@@ -2,14 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
-import java.awt.Component;
-import java.util.*;
 import javax.swing.*;
-import javax.swing.table.*;
-import javax.swing.event.*;
-import java.beans.PropertyChangeEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeListener;
 
 /* Represents a JComboBox as a JPanel containing just the "on" button
  *

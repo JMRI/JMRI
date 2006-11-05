@@ -4,7 +4,6 @@ package jmri.jmrit.symbolicprog;
 
 import java.awt.event.*;
 import java.beans.*;
-import java.util.*;
 
 import javax.swing.*;
 
@@ -19,7 +18,7 @@ import jmri.*;
  * Programmer used to access it is a data member.
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 

@@ -3,14 +3,12 @@
  *
  * Description:	    JUnit tests for the XNetProgrammer class
  * @author			Bob Jacobsen
- * @version         $Revision: 2.0 $
+ * @version         $Revision: 2.1 $
  */
 
 package jmri.jmrix.lenz;
 
 import jmri.*;
-
-import java.util.*;
 
 import junit.framework.Test;
 import junit.framework.Assert;

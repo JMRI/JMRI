@@ -9,7 +9,7 @@ import javax.swing.*;
 
 import com.sun.java.util.collections.ArrayList;
 import com.sun.java.util.collections.List;
-import org.jdom.DocType;
+
 import org.jdom.Document;
 import org.jdom.Element;
 
@@ -39,7 +39,7 @@ import org.jdom.Element;
  * sort is done manually each time an entry is added.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001;  Dennis Miller Copyright 2004
- * @version	$Revision: 1.28 $
+ * @version	$Revision: 1.29 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {

@@ -2,7 +2,6 @@
 
 package jmri;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -10,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the BlockManager class
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class BlockManagerTest extends TestCase {
 

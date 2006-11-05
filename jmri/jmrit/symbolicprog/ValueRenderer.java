@@ -9,7 +9,6 @@
 package jmri.jmrit.symbolicprog;
 
 import javax.swing.table.TableCellRenderer;
-import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JLabel;
 import java.awt.Component;

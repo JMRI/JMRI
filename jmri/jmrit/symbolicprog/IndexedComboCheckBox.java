@@ -3,14 +3,14 @@
 package jmri.jmrit.symbolicprog;
 
 import javax.swing.*;
-import java.beans.PropertyChangeEvent;
+
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 
 /* Represents a JComboBox as a JCheckBox for indexed CVs
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class IndexedComboCheckBox extends JCheckBox {
 

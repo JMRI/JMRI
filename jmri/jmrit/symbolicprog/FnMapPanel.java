@@ -4,7 +4,7 @@ package jmri.jmrit.symbolicprog;
 
 import javax.swing.*;
 import java.awt.*;
-import jmri.jmrit.symbolicprog.*;
+
 import com.sun.java.util.collections.List;
 import org.jdom.Element;
 import org.jdom.Attribute;
@@ -30,7 +30,7 @@ import org.jdom.Attribute;
  * Although support for the "CV label column" is still here, its turned off now.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class FnMapPanel extends JPanel {
     // columns

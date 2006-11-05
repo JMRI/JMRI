@@ -6,11 +6,10 @@ package jmri.jmrix.nce;
  * Stands in for the NceTrafficController class
  * 
  * @author			Bob Jacobsen
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 import java.util.Vector;
-import jmri.*;
 
     class NceInterfaceScaffold extends NceTrafficController {
         public NceInterfaceScaffold() {

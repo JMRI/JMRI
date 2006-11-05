@@ -2,22 +2,17 @@
 
 package jmri.jmrit;
 
-import java.io.*;
-import java.util.*;
-import javax.swing.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.framework.Assert;
-import org.jdom.*;
-import org.jdom.output.*;
 
 /**
  * Test the AbstractIdentify class. Since that's an abstract base class,
  * we define a local subclass here for the tests.
  *
  * @author			Bob Jacobsen  Copyright 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class AbstractIdentifyTest extends TestCase {
 

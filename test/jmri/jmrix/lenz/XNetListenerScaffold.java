@@ -3,12 +3,10 @@
  *
  * Description:	    test implementation of XNetListener
  * @author			Bob Jacobsen
- * @version         $Revision: 2.1 $
+ * @version         $Revision: 2.2 $
  */
 
 package jmri.jmrix.lenz;
-
-import jmri.*;
 
 class XNetListenerScaffold implements jmri.jmrix.lenz.XNetListener {
 		public XNetListenerScaffold() {

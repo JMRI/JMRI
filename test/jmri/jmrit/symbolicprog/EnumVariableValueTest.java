@@ -2,23 +2,18 @@
 
 package jmri.jmrit.symbolicprog;
 
-import java.io.*;
 import java.util.*;
 import java.awt.*;
 import javax.swing.*;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.framework.Assert;
-
-import jmri.*;
-import jmri.progdebugger.*;
 
 /**
  * Test EnumVariableValue
  *
  * @author		Bob Jacobsen  Copyright 2003
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 
 public class EnumVariableValueTest extends VariableValueTest {

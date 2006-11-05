@@ -2,7 +2,6 @@
 
 package jmri.jmrit.tracker;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -14,7 +13,7 @@ import jmri.InstanceManager;
 /**
  * Tests for the MemoryTracker class
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class MemoryTrackerTest extends TestCase {
 

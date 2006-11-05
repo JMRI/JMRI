@@ -3,7 +3,6 @@
 package jmri.jmrit.symbolicprog;
 
 import java.awt.event.*;
-import java.util.*;
 import java.io.*;
 
 import javax.swing.*;
@@ -15,7 +14,7 @@ import javax.swing.*;
  * it's not clear they will interoperate.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class Pr1WinExportAction  extends AbstractAction {
 

@@ -2,8 +2,6 @@
 
 package jmri.jmrix.nce;
 
-import jmri.*;
-
 import junit.framework.Test;
 import junit.framework.Assert;
 import junit.framework.TestCase;
@@ -14,7 +12,7 @@ import jmri.jmrix.nce.NceReply;
 /**
  * JUnit tests for the NceReplyclass
  * @author			Bob Jacobsen
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class NceReplyTest extends TestCase {
 

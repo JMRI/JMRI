@@ -2,19 +2,16 @@
 
 package jmri.jmrit.symbolicprog;
 
-import java.awt.Component;
 import java.util.*;
 import javax.swing.*;
-import javax.swing.table.*;
-import javax.swing.event.*;
-import java.beans.PropertyChangeEvent;
+
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 
 /* Represents a JComboBox as a JPanel of radio buttons.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class ComboRadioButtons extends JPanel {
 

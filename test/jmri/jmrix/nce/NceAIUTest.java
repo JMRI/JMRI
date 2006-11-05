@@ -9,12 +9,10 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import jmri.jmrix.nce.NceReply;
-
 /**
  * JUnit tests for the NceAIU class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class NceAIUTest extends TestCase {
 
