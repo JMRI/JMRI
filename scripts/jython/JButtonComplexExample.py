@@ -6,11 +6,28 @@
 # changed to include whatever desired, e.g. throw a turnout,
 # program a CV, etc.
 #
-# Author: Bob Jacobsen, copyright 2004
+# Comments for/by a non-programmer.
+# To get this to script to run, start DecoderPro
+# (set preferences to "Loconet Simulator to run without connecting to a layout),
+# then under Panels select Run Script. Now find and select this script
+# in the jython folder of the JMRI program. This script
+# creates a panel called "Data entry" with two fields that
+# data is entered in. The script waits for something in both
+# fields to be entered and then enables "Enter values". When
+# "Enter values" button is clicked, it causes the data to be displayed
+# on the Java console and the "Data entry" panel to disappear.
+# To see the output on the Java console you need to open the
+# Java console. On a Windows System the Java console can be
+# displayed by clicking the icon for it on the Taskbar.
+#      comments added by wsthompson@earthlink.net 20061101
+#
+#
+#
+# Author: Bob Jacobsen, copyright 2004, 2006
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 
 import java
 import javax.swing
@@ -24,12 +41,19 @@ addressChanged = False    # True means the field has changed
 commandChanged = False
 
 # create the first text field
-address = javax.swing.JTextField(5)    # sized to hold 5 characters, initially empty
+address = javax.swing.JTextField(5)    # sized to show 5 characters, initially empty
 
 # put the text field on a line preceded by a label
 temppanel1 = javax.swing.JPanel()
 temppanel1.add(javax.swing.JLabel("Address"))
 temppanel1.add(address)
+
+# create the second text field similarly
+command = javax.swing.JTextField(5)    # sized to show 5 characters
+
+temppanel2 = javax.swing.JPanel()
+temppanel2.add(javax.swing.JLabel("Command"))
+temppanel2.add(command)
 
 # have that text field enable the button when OK
 def whenAddressChanged(event) :                
@@ -42,13 +66,6 @@ def whenAddressChanged(event) :
     
 address.actionPerformed = whenAddressChanged   # if user hit return or enter
 address.focusLost = whenAddressChanged         # if user tabs away
-
-# create the second text field similarly
-command = javax.swing.JTextField(5)    # sized to hold 5 characters
-
-temppanel2 = javax.swing.JPanel()
-temppanel2.add(javax.swing.JLabel("Command"))
-temppanel2.add(command)
 
 # have that 2nd text field enable the button when OK also
 def whenCommandChanged(event) :
