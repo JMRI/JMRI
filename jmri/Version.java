@@ -6,7 +6,7 @@ package jmri;
  * These JavaDocs are for Version 1.7.3 of JMRI.
  *
  * @author  Bob Jacobsen   Copyright 2000, 2001, 2002, 2003, 2004, 2005, 2006
- * @version $Revision: 1.65 $
+ * @version $Revision: 1.66 $
  */
 
 public class Version {
@@ -18,5 +18,5 @@ public class Version {
      *
      * @return The current version string
      */
-    static public String name() { return "1.7.5"; }
+    static public String name() { return "1.7.5_SG"; }
 }
