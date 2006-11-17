@@ -25,12 +25,10 @@ import javax.comm.SerialPort;
  * an NCE command station via a serial com port.
  * Normally controlled by the SerialDriverFrame class.
  * <P>
- * The current implementation only handles the 9,600 baud rate, and does
- * not use any other options at configuration time.
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.22 $
+ * @version			$Revision: 1.23 $
  */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -63,7 +61,12 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
 
             // try to set it for comunication via SerialDriver
             try {
-                activeSerialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+                // find the baud rate value, configure comm options
+                int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
+                for (int i = 0; i<validSpeeds.length; i++ )
+                    if (validSpeeds[i].equals(mBaudRate))
+                        baud = validSpeedValues[i];
+                activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (javax.comm.UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port "+portName+": "+e.getMessage());
                 return "Cannot set serial parameters on port "+portName+": "+e.getMessage();
@@ -170,11 +173,14 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
     public boolean status() {return opened;}
 
     /**
-     * Get an array of valid baud rates. This is currently only 19,200 bps
+     * Get an array of valid baud rates.
      */
-    public String[] validBaudRates() {
-        return new String[]{"9,600 bps"};
-    }
+	public String[] validBaudRates() {
+		return validSpeeds;
+	}
+
+	protected String [] validSpeeds = new String[]{"9,600 baud", "19,200 baud", "38,400 baud"};
+	protected int [] validSpeedValues = new int[]{9600, 19200, 38400};
 
     // private control members
     private boolean opened = false;
