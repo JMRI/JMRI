@@ -28,7 +28,7 @@ import net.roydesign.mac.MRJAdapter;
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
  * @author  Dennis Miller  Copyright 2005
- * @version     $Revision: 1.32 $
+ * @version     $Revision: 1.33 $
  */
 public class Apps extends JPanel {
 
@@ -48,7 +48,13 @@ public class Apps extends JPanel {
             log.debug("configure from default file "+configFilename);
         }
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-        File file = new File(XmlFile.prefsDir()+configFilename);
+        File file = new File(configFilename);
+        // decide whether name is absolute or relative
+        if (!file.isAbsolute()) {
+            // must be relative, but we want it to 
+            // be relative to the preferences directory
+            file = new File(XmlFile.prefsDir()+configFilename);
+        }
         InstanceManager.setConfigureManager(new jmri.configurexml.ConfigXmlManager());
         log.debug("start load config file");
         configOK = InstanceManager.configureManagerInstance().load(file);
@@ -389,6 +395,26 @@ public class Apps extends JPanel {
         catch (java.lang.NoSuchMethodError e) { log.error("Exception starting logging: "+e); }
     }
 
+    /**
+     * Set up the configuration file name at startup.
+     * <P>
+     * The static configFilename variable holds the name 
+     * used to load the configuration file during later startup
+     * processing.  Applications invoke this method 
+     * to handle the usual startup hierarchy:
+     *<UL>
+     *<LI>If an absolute filename was provided on the command line, use it
+     *<LI>If a filename was provided that's not absolute, consider it to
+     *    be in the preferences directory
+     *<LI>If no filename provided, use a default name (that's application
+     *    specific)
+     *</UL>
+     *This name will be used for reading and writing the preferences. It
+     * need not exist when the program first starts up.
+     *
+     * @param def Default value if no other is provided
+     * @param args Argument array from the main routine
+     */
     static protected void setConfigFilename(String def, String args[]) {
         // save the configuration filename if present on the command line
         if (args.length>=1 && args[0]!=null) {
@@ -398,7 +424,6 @@ public class Apps extends JPanel {
             configFilename = def;
         }
     }
-
 
     static protected void createFrame(Apps containedPane, JFrame frame) {
     	// create the main frame and menus

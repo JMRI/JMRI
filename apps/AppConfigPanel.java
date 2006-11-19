@@ -22,12 +22,20 @@ import com.sun.java.util.collections.ArrayList;
  * Basic configuration GUI infrastructure.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public class AppConfigPanel extends JPanel {
 
     protected ResourceBundle rb;
 
+    /**
+     * Construct a configuration panel for inclusion in a preferences
+     * or configuration dialog.
+     * @param filename Configuration file name; may be either an absolute
+     *      pathname or relative to the existing preferences directory. Need not exist yet.
+     * @param nConnections number of connections configured, e.g. the number of connection
+     *      sub-panels included
+     */
     public AppConfigPanel(String filename, int nConnections) {
         super();
         log.debug("start app");
@@ -218,7 +226,13 @@ public class AppConfigPanel extends JPanel {
         }
         // write file
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-        File file = new File(XmlFile.prefsDir()+mConfigFilename);
+        // decide whether name is absolute or relative
+        File file = new File(mConfigFilename);
+        if (!file.isAbsolute()) {
+            // must be relative, but we want it to 
+            // be relative to the preferences directory
+            file = new File(XmlFile.prefsDir()+mConfigFilename);
+        }
 
         InstanceManager.configureManagerInstance().storePrefs(file);
     }
