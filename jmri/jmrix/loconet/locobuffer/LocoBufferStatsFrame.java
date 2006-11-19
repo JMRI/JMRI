@@ -20,7 +20,7 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Alex Shepherd   Copyright (C) 2003
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class LocoBufferStatsFrame extends JFrame implements LocoNetListener {
 
@@ -157,24 +157,28 @@ public class LocoBufferStatsFrame extends JFrame implements LocoNetListener {
 
             updatePending = false ;
 
-        } else if (updatePending) {
-            int[] data = msg.getPeerXfrData() ;
-            r1.setText(StringUtil.twoHexFromInt(data[0]));
-            r2.setText(StringUtil.twoHexFromInt(data[1]));
-            r3.setText(StringUtil.twoHexFromInt(data[2]));
-            r4.setText(StringUtil.twoHexFromInt(data[3]));
-            r5.setText(StringUtil.twoHexFromInt(data[4]));
-            r6.setText(StringUtil.twoHexFromInt(data[5]));
-            r7.setText(StringUtil.twoHexFromInt(data[6]));
-            r8.setText(StringUtil.twoHexFromInt(data[7]));
-
-            lb2Panel.setVisible(false);
-            rawPanel.setVisible(true);
-            pr2Panel.setVisible(false);
-            pack();
-
-            updatePending = false ;
-
+        } else if (updatePending &&
+              ( msg.getOpCode() == LnConstants.OPC_PEER_XFER ) ) {
+            try {
+                int[] data = msg.getPeerXfrData() ;
+                r1.setText(StringUtil.twoHexFromInt(data[0]));
+                r2.setText(StringUtil.twoHexFromInt(data[1]));
+                r3.setText(StringUtil.twoHexFromInt(data[2]));
+                r4.setText(StringUtil.twoHexFromInt(data[3]));
+                r5.setText(StringUtil.twoHexFromInt(data[4]));
+                r6.setText(StringUtil.twoHexFromInt(data[5]));
+                r7.setText(StringUtil.twoHexFromInt(data[6]));
+                r8.setText(StringUtil.twoHexFromInt(data[7]));
+    
+                lb2Panel.setVisible(false);
+                rawPanel.setVisible(true);
+                pr2Panel.setVisible(false);
+                pack();
+    
+                updatePending = false ;
+            } catch ( Exception e ) {
+                log.error("Error parsing update: "+msg);
+            }
         }
     }
 
