@@ -39,7 +39,7 @@ import java.util.Hashtable;
  * use with CTC logic, etc.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  * Revisions to add facing point sensors and check box to limit speed. Dick Bronosn (RJB) 2006
  */
 
@@ -422,6 +422,18 @@ public class BlockBossLogic extends Siglet {
             inputs[i] = tempArray[i];
 
         outputs = new NamedBean[]{driveSignal};
+        
+        // also need to act if the _signal's_ "held"
+        // parameter changes, but we don't want to 
+        // act if the signals appearance changes (to 
+        // avoid a loop, or avoid somebody changing appearance
+        // manually and having it instantly recomputed & changed back
+        driveSignal.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent e) {
+                if (e.getPropertyName().equals("Held"))
+                    setOutput();
+            }
+        });
     }
 
     /**
@@ -463,19 +475,15 @@ public class BlockBossLogic extends Siglet {
         if (watchedSignal1==null && watchedSignal1Alt==null ) 
             result = SignalHead.GREEN;
         
-        if (watchedSignal1!=null && watchedSignal1.getAppearance()==SignalHead.YELLOW)
-            result = SignalHead.YELLOW;
-        if (watchedSignal1Alt!=null && watchedSignal1Alt.getAppearance()==SignalHead.YELLOW)
-            result = SignalHead.YELLOW;
-        if (watchedSignal1!=null && watchedSignal1.getAppearance()==SignalHead.FLASHYELLOW)
-            result = SignalHead.FLASHYELLOW;
-        if (watchedSignal1Alt!=null && watchedSignal1Alt.getAppearance()==SignalHead.FLASHYELLOW)
-            result = SignalHead.FLASHYELLOW;
-        if (watchedSignal1!=null && watchedSignal1.getAppearance()==SignalHead.GREEN)
-            result = SignalHead.GREEN;
-        if (watchedSignal1Alt!=null && watchedSignal1Alt.getAppearance()==SignalHead.GREEN)
-            result = SignalHead.GREEN;
-        return result;
+        int val = SignalHead.RED;
+        if (watchedSignal1!=null) val = watchedSignal1.getAppearance();
+        if (watchedSignal1!=null && watchedSignal1.getHeld()) val =  SignalHead.RED;  // if Held, act as if Red
+
+        int valAlt = SignalHead.RED;
+        if (watchedSignal1Alt!=null) valAlt = watchedSignal1Alt.getAppearance();
+        if (watchedSignal1Alt!=null && watchedSignal1Alt.getHeld()) valAlt =  SignalHead.RED; // if Held, act as if Red
+        
+        return fasterOf(val, valAlt);
     }
     
     int fastestColor2() {
@@ -484,19 +492,15 @@ public class BlockBossLogic extends Siglet {
         if (watchedSignal2==null && watchedSignal2Alt==null ) 
             result = SignalHead.GREEN;
 
-        if (watchedSignal2!=null && watchedSignal2.getAppearance()==SignalHead.YELLOW)
-            result = SignalHead.YELLOW;
-        if (watchedSignal2Alt!=null && watchedSignal2Alt.getAppearance()==SignalHead.YELLOW)
-            result = SignalHead.YELLOW;
-        if (watchedSignal2!=null && watchedSignal2.getAppearance()==SignalHead.FLASHYELLOW)
-            result = SignalHead.FLASHYELLOW;
-        if (watchedSignal2Alt!=null && watchedSignal2Alt.getAppearance()==SignalHead.FLASHYELLOW)
-            result = SignalHead.FLASHYELLOW;
-        if (watchedSignal2!=null && watchedSignal2.getAppearance()==SignalHead.GREEN)
-            result = SignalHead.GREEN;
-        if (watchedSignal2Alt!=null && watchedSignal2Alt.getAppearance()==SignalHead.GREEN)
-            result = SignalHead.GREEN;
-        return result;
+        int val = SignalHead.RED;
+        if (watchedSignal2!=null) val = watchedSignal2.getAppearance();
+        if (watchedSignal2!=null && watchedSignal2.getHeld()) val =  SignalHead.RED;
+
+        int valAlt = SignalHead.RED;
+        if (watchedSignal2Alt!=null) valAlt = watchedSignal2Alt.getAppearance();
+        if (watchedSignal2Alt!=null && watchedSignal2Alt.getHeld()) valAlt =  SignalHead.RED;
+        
+        return fasterOf(val, valAlt);
     }
     
     /**
@@ -507,6 +511,16 @@ public class BlockBossLogic extends Siglet {
     {
         // DARK is smallest, FLASHING GREEN is largest
         return Math.min(a, b);
+    }
+
+    /**
+     * Given two {@link SignalHead} color constants, returns the one corresponding
+     * to the faster speed.
+     */
+    static int fasterOf(int a, int b)
+    {
+        // DARK is smallest, FLASHING GREEN is largest
+        return Math.max(a, b);
     }
 
     void doSingleBlock() {
@@ -536,6 +550,10 @@ public class BlockBossLogic extends Siglet {
         if (watchSensor4!=null && watchSensor4.getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
 
+        // check if signal if held, forcing a red aspect by this calculation
+        if (((SignalHead)outputs[0]).getHeld())
+            appearance = SignalHead.RED;
+            
         // show result if changed
         if (appearance != oldAppearance)
             ((SignalHead)outputs[0]).setAppearance(appearance);
@@ -570,6 +588,10 @@ public class BlockBossLogic extends Siglet {
         if (watchTurnout!=null && watchTurnout.getKnownState() != Turnout.CLOSED)
             appearance = SignalHead.RED;
 
+        // check if signal if held, forcing a red aspect by this calculation
+        if (((SignalHead)outputs[0]).getHeld())
+            appearance = SignalHead.RED;
+            
         // show result if changed
         if (appearance != oldAppearance)
             ((SignalHead)outputs[0]).setAppearance(appearance);
@@ -604,6 +626,10 @@ public class BlockBossLogic extends Siglet {
         if (watchTurnout!=null && watchTurnout.getKnownState() != Turnout.THROWN)
             appearance = SignalHead.RED;
 
+        // check if signal if held, forcing a red aspect by this calculation
+        if (((SignalHead)outputs[0]).getHeld())
+            appearance = SignalHead.RED;
+            
         // show result if changed
         if (appearance != oldAppearance)
             ((SignalHead)outputs[0]).setAppearance(appearance);
@@ -657,6 +683,10 @@ public class BlockBossLogic extends Siglet {
         if ((watchTurnout!=null && watchTurnout.getKnownState() == Turnout.THROWN) && ((watchedSensor2Alt!=null && watchedSensor2Alt.getKnownState() != Sensor.INACTIVE)))
             appearance = SignalHead.RED;
         
+        // check if signal if held, forcing a red aspect by this calculation
+        if (((SignalHead)outputs[0]).getHeld())
+            appearance = SignalHead.RED;
+            
         // show result if changed
         if (appearance != oldAppearance)
             ((SignalHead)outputs[0]).setAppearance(appearance);
