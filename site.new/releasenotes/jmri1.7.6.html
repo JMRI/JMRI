@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.7.6.html,v 1.11 2006-11-17 07:35:52 jacobsen Exp $ -->
+<!-- $Id: jmri1.7.6.html,v 1.12 2006-11-26 21:28:49 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -154,6 +154,8 @@
 
 <P>Bob fixed a bug that was causing memory and reporter values on panels to sometimes have truncated displays.
 
+<P>Bill Robinson of Team Digital contributed "LnSendTool.py", a script for sending LocoNet messages from a nice GUI
+
 <P>Ian Birchenough added long addressing to the ZTC decoder definitions
 
 <P>Updated the terminology for selecting roster entries and decoder types on the DecoderPro selection window, as discussed back in July.
@@ -191,8 +193,17 @@
 <P>Simon Ginsburg has done a large update to the German translation
 
 <P>David Falkenburg updated the NCE serial support so it works at 19.2K and 38.4K in addition to the previous 9600 bps.
-<hr class="hide">
 
+<P>You can now provide either a relative or absolute pathname for a configuration file as an argument when starting the program.
+
+<P>Fixed a problem where the "lit" column in the Signal Table wouldn't always update properly when changed by some other code or table
+
+<P>Added a new "held" parameter to SignalHeads to allow better connections for e.g. CTC logic.  By setting this, vital logic (e.g. Simple Signal Logic) knows not to clear the signal, even if safety rules allow it.  You can experiment with this by setting it from the panel or from the Signal Table.
+
+<P>Better control of signal icons on panels.  Two new entries in popup allow you to (1) control whether clicking on the icon changes the appearance, or sets/resets the held parameter for controlling e.g. CTC (2) whether the icon should show the color of the signal or dark if the signal is set to be not lit, e.g. for approach lighting.
+
+<P>The panel editor now lets you set the icons for all appearances of a signal head, including dark and all three flashing colors.  If you don't plan on using one, e.g. flashing green, just set it to something similar, e.g. whatever you're setting green to.
+<hr class="hide">
 <!-- Footer -->
     <hr class="hide">
     <div id="footer">
