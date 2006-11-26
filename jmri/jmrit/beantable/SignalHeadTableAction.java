@@ -23,8 +23,8 @@ import javax.swing.JTextField;
  * Swing action to create and register a
  * SignalHeadTable GUI.
  *
- * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.17 $
+ * @author	Bob Jacobsen    Copyright (C) 2003,2006
+ * @version     $Revision: 1.18 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -52,27 +52,37 @@ public class SignalHeadTableAction extends AbstractTableAction {
     void createModel() {
         m = new BeanTableDataModel() {
 		    static public final int LITCOL = 3;
-    		public int getColumnCount( ){ return NUMCOLUMN+1;}
+		    static public final int HELDCOL = 4;
+    		public int getColumnCount( ){ return NUMCOLUMN+2;}
     		public String getColumnName(int col) {
     			if (col==LITCOL) return "Lit";
+    			else if (col==HELDCOL) return "Held";
     			else return super.getColumnName(col);
 		    }
     		public Class getColumnClass(int col) {
     			if (col==LITCOL) return Boolean.class;
+    			else if (col==HELDCOL) return Boolean.class;
     			else return super.getColumnClass(col);
 		    }
     		public int getPreferredWidth(int col) {
     			if (col==LITCOL) return new JTextField(4).getPreferredSize().width;
+    			else if (col==HELDCOL) return new JTextField(4).getPreferredSize().width;
     			else return super.getPreferredWidth(col);
 		    }
     		public boolean isCellEditable(int row, int col) {
     			if (col==LITCOL) return true;
+    			else if (col==HELDCOL) return true;
     			else return super.isCellEditable(row,col);
 			}    		
     		public Object getValueAt(int row, int col) {
     			if (col==LITCOL) {
     				String name = (String)sysNameList.get(row);
     				boolean val = InstanceManager.signalHeadManagerInstance().getBySystemName(name).getLit();
+					return new Boolean(val);
+    			}
+    			else if (col==HELDCOL) {
+    				String name = (String)sysNameList.get(row);
+    				boolean val = InstanceManager.signalHeadManagerInstance().getBySystemName(name).getHeld();
 					return new Boolean(val);
     			}
 				else return super.getValueAt(row, col);
@@ -82,6 +92,11 @@ public class SignalHeadTableAction extends AbstractTableAction {
     				String name = (String)sysNameList.get(row);
     				boolean b = ((Boolean)value).booleanValue();
     				InstanceManager.signalHeadManagerInstance().getBySystemName(name).setLit(b);
+    			}
+    			else if (col==HELDCOL) {
+    				String name = (String)sysNameList.get(row);
+    				boolean b = ((Boolean)value).booleanValue();
+    				InstanceManager.signalHeadManagerInstance().getBySystemName(name).setHeld(b);
     			}
     			else super.setValueAt(value, row, col);
     		}
@@ -118,6 +133,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
             }
             public JButton configureButton() {
                 return new JButton(rbean.getString("SignalHeadStateYellow"));
+            }
+            public boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
+		        if (e.getPropertyName().indexOf("Lit")>=0 || e.getPropertyName().indexOf("Held")>=0) return true;
+                else return super.matchPropertyName(e);
             }
         };
     }
