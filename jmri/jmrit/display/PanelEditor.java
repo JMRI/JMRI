@@ -47,7 +47,7 @@ import com.sun.java.util.collections.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.56 $
+ * @version $Revision: 1.57 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -374,11 +374,15 @@ public class PanelEditor extends JmriJFrame {
             });
 
 
-            signalIconEditor = new MultiIconEditor(4);
+            signalIconEditor = new MultiIconEditor(8);
             signalIconEditor.setIcon(0, "Red:","resources/icons/smallschematics/searchlights/left-red-marker.gif");
-            signalIconEditor.setIcon(1, "Yellow", "resources/icons/smallschematics/searchlights/left-yellow-marker.gif");
-            signalIconEditor.setIcon(2, "Flash yellow:", "resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif");
-            signalIconEditor.setIcon(3, "Green:","resources/icons/smallschematics/searchlights/left-green-marker.gif");
+            signalIconEditor.setIcon(1, "Flash red:", "resources/icons/smallschematics/searchlights/left-flashred-marker.gif");
+            signalIconEditor.setIcon(2, "Yellow:", "resources/icons/smallschematics/searchlights/left-yellow-marker.gif");
+            signalIconEditor.setIcon(3, "Flash yellow:", "resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif");
+            signalIconEditor.setIcon(4, "Green:","resources/icons/smallschematics/searchlights/left-green-marker.gif");
+            signalIconEditor.setIcon(5, "Flash green:","resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif");
+            signalIconEditor.setIcon(6, "Dark:","resources/icons/smallschematics/searchlights/left-dark-marker.gif");
+            signalIconEditor.setIcon(7, "Held:","resources/icons/smallschematics/searchlights/left-held-marker.gif");
             signalIconEditor.complete();
             signalFrame = new JFrame("Change signal icons");
             signalFrame.getContentPane().add(new JLabel("  Select new file, then click on icon to change  "),BorderLayout.NORTH);
@@ -573,9 +577,13 @@ public class PanelEditor extends JmriJFrame {
     void addSignalHead() {
         SignalHeadIcon l = new SignalHeadIcon();
         l.setRedIcon(signalIconEditor.getIcon(0));
-        l.setYellowIcon(signalIconEditor.getIcon(1));
-        l.setFlashYellowIcon(signalIconEditor.getIcon(2));
-        l.setGreenIcon(signalIconEditor.getIcon(3));
+        l.setFlashRedIcon(signalIconEditor.getIcon(1));
+        l.setYellowIcon(signalIconEditor.getIcon(2));
+        l.setFlashYellowIcon(signalIconEditor.getIcon(3));
+        l.setGreenIcon(signalIconEditor.getIcon(4));
+        l.setFlashGreenIcon(signalIconEditor.getIcon(5));
+        l.setDarkIcon(signalIconEditor.getIcon(6));
+        l.setHeldIcon(signalIconEditor.getIcon(7));
         l.setSignalHead(nextSignalHead.getText());
         setNextLocation(l);
         putSignal(l);
