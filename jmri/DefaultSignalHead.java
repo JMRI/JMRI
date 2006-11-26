@@ -6,7 +6,7 @@ package jmri;
  * Default implementation of the basic logic of the SignalHead interface.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public abstract class DefaultSignalHead extends AbstractSignalHead {
 
@@ -50,6 +50,17 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
             updateOutput();
             // notify listeners, if any
             firePropertyChange("Lit", new Boolean(oldLit), new Boolean(newLit));
+        }
+        
+    }
+    
+    public void setHeld(boolean newHeld) {
+        boolean oldHeld = mHeld;
+        mHeld = newHeld;
+        if (oldHeld != newHeld) {
+            updateOutput();
+            // notify listeners, if any
+            firePropertyChange("Held", new Boolean(oldHeld), new Boolean(newHeld));
         }
         
     }
