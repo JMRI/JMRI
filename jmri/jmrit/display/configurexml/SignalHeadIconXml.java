@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public class SignalHeadIconXml implements XmlAdapter {
 
@@ -46,6 +46,8 @@ public class SignalHeadIconXml implements XmlAdapter {
         element.addAttribute("flashgreen", p.getFlashGreenIcon().getName());
         element.addAttribute("rotate", String.valueOf(p.getGreenIcon().getRotation()));
         element.addAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
+        element.addAttribute("clickmode", ""+p.getClickMode());
+        element.addAttribute("litmode", ""+p.getLitMode());
 
         element.addAttribute("class", "jmri.jmrit.display.configurexml.SignalHeadIconXml");
 
@@ -113,16 +115,34 @@ public class SignalHeadIconXml implements XmlAdapter {
         try {
             a = element.getAttribute("rotate");
             if (a!=null) {
-                int rotation = element.getAttribute("rotate").getIntValue();
+                int rotation = a.getIntValue();
                 red.setRotation(rotation, l);
                 yellow.setRotation(rotation, l);
-                 green.setRotation(rotation, l);
+                green.setRotation(rotation, l);
                 if (flashred!=null) flashred.setRotation(rotation, l);
                 if (flashyellow!=null) flashyellow.setRotation(rotation, l);
                 if (flashgreen!=null) flashgreen.setRotation(rotation, l);
                 if (dark!=null) dark.setRotation(rotation, l);
             }
         } catch (org.jdom.DataConversionException e) {}
+
+        try {
+            a = element.getAttribute("clickmode");
+            if (a!=null) {
+                l.setClickMode(a.getIntValue());
+            }
+        } catch (org.jdom.DataConversionException e) {
+            log.error("Failed on clickmode attribute: "+e);
+        }
+
+        try {
+            a = element.getAttribute("litmode");
+            if (a!=null) {
+                l.setLitMode(a.getBooleanValue());
+            }
+        } catch (org.jdom.DataConversionException e) {
+            log.error("Failed on litmode attribute: "+e);
+        }
 
         a = element.getAttribute("forcecontroloff");
         if ( (a!=null) && a.getValue().equals("true"))
