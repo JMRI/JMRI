@@ -4,11 +4,15 @@ import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.jmrit.catalog.NamedIcon;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.ButtonGroup;
+import javax.swing.JRadioButtonMenuItem;
 
 /**
  * An icon to display a status of a SignalHead.
@@ -19,7 +23,7 @@ import javax.swing.JPopupMenu;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -77,6 +81,15 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
 
     String darkName = "resources/icons/smallschematics/searchlights/left-dark-marker.gif";
     NamedIcon dark = new NamedIcon(darkName, darkName);
+
+    String heldName = "resources/icons/smallschematics/searchlights/left-held-marker.gif";
+    NamedIcon held = new NamedIcon(heldName, heldName);
+
+    public NamedIcon getHeldIcon() { return held; }
+    public void setHeldIcon(NamedIcon i) {
+        held = i;
+        displayState(headState());
+    }
 
     public NamedIcon getDarkIcon() { return dark; }
     public void setDarkIcon(NamedIcon i) {
@@ -173,6 +186,9 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         return name;
     }
 
+    ButtonGroup clickButtonGroup = null;
+    ButtonGroup litButtonGroup = null;
+
     /**
      * Pop-up just displays the name
      */
@@ -196,6 +212,64 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
                 });
 
             addDisableMenuEntry(popup);
+            
+            // add menu to select action on click
+            JMenu clickMenu = new JMenu("When clicked");
+            clickButtonGroup = new ButtonGroup();
+            JRadioButtonMenuItem r;
+            r = new JRadioButtonMenuItem("change aspect");
+            r.addActionListener(new ActionListener() {
+                final int desired = 0;
+                public void actionPerformed(ActionEvent e) { setClickMode(desired); }
+            });
+            clickButtonGroup.add(r);
+            if (clickMode == 0)  r.setSelected(true);
+            else r.setSelected(false);
+            clickMenu.add(r);
+            r = new JRadioButtonMenuItem("alternate lit");
+            r.addActionListener(new ActionListener() {
+                final int desired = 1;
+                public void actionPerformed(ActionEvent e) { setClickMode(desired); }
+            });
+            clickButtonGroup.add(r);
+            if (clickMode == 1)  r.setSelected(true);
+            else r.setSelected(false);
+            clickMenu.add(r);
+            r = new JRadioButtonMenuItem("alternate held");
+            r.addActionListener(new ActionListener() {
+                final int desired = 2;
+                public void actionPerformed(ActionEvent e) { setClickMode(desired); }
+            });
+            clickButtonGroup.add(r);
+            if (clickMode == 2)  r.setSelected(true);
+            else r.setSelected(false);
+            clickMenu.add(r);
+            popup.add(clickMenu);
+            
+            
+            // add menu to select handling of lit parameter
+            JMenu litMenu = new JMenu("When not lit");
+            litButtonGroup = new ButtonGroup();
+            r = new JRadioButtonMenuItem(" show appearance");
+            r.addActionListener(new ActionListener() {
+                final boolean desired = false;
+                public void actionPerformed(ActionEvent e) { setLitMode(desired); }
+            });
+            litButtonGroup.add(r);
+            if (!litMode)  r.setSelected(true);
+            else r.setSelected(false);
+            litMenu.add(r);
+            r = new JRadioButtonMenuItem(" show dark icon");
+            r.addActionListener(new ActionListener() {
+                final boolean desired = true;
+                public void actionPerformed(ActionEvent e) { setLitMode(desired); }
+            });
+            litButtonGroup.add(r);
+            if (litMode)  r.setSelected(true);
+            else r.setSelected(false);
+            litMenu.add(r);
+            popup.add(litMenu);
+            
             
             popup.add(new AbstractAction("Remove") {
                 public void actionPerformed(ActionEvent e) {
@@ -224,14 +298,32 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
 
     /**
      * Drive the current state of the display from the state of the
-     * turnout.
+     * underlying SignalHead object.
+     * <UL>
+     * <LI>If the signal is held, display that.
+     * <LI>If set to monitor the status of the lit parameter
+     *     and lit is false, show the dark icon ("dark", when
+     *     set as an explicit appearance, is displayed anyway)
+     * <LI>Show the icon corresponding to one of the seven appearances.
+     * </UL>
      */
     public void displayState(int state) {
-        if (mHead == null)
-            log.debug("Display state "+state+", disconnected");
-        else
-            log.debug("Display state "+state+" for "+mHead.getSystemName());
         updateSize();
+        if (mHead == null) {
+            log.debug("Display state "+state+", disconnected");
+        } else {
+            log.debug("Display state "+state+" for "+mHead.getSystemName());
+            if (mHead.getHeld()) {
+                if (text) super.setText("<held>");
+                if (icon) super.setIcon(held);
+                return;
+            }
+            else if (getLitMode() && !mHead.getLit()) {
+                if (text) super.setText("<dark>");
+                if (icon) super.setIcon(dark);
+                return;
+            }
+        }
         switch (state) {
         case SignalHead.RED:
             if (text) super.setText("<red>");
@@ -270,6 +362,39 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
     }
 
     /**
+     * What to do on click? 0 means 
+     * sequence through aspects; 1 means 
+     * alternate the "lit" aspect; 2 means
+     * alternate the "held" aspect.
+     */
+    protected int clickMode = 0;
+    
+    public void setClickMode(int mode) {
+        clickMode = mode;
+    }
+    public int getClickMode() {
+        return clickMode;
+    }
+    
+    /**
+     * How to handle lit vs not lit?
+     * <P>
+     * False means ignore (always show R/Y/G/etc appearance on screen);
+     * True means show "dark" if lit is set false.
+     * <P>
+     * Note that setting the appearance "DARK" explicitly
+     * will show the dark icon regardless of how this is set.
+     */
+    protected boolean litMode = false;
+    
+    public void setLitMode(boolean mode) {
+        litMode = mode;
+    }
+    public boolean getLitMode() {
+        return litMode;
+    }
+    
+    /**
      * Change the SignalHead state when the icon is clicked.
      * Note that this change may not be permanent if there is
      * logic controlling the signal head.
@@ -283,21 +408,34 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
             log.error("No turnout connection, can't process click");
             return;
         }
-        switch (mHead.getAppearance()) {
-        case jmri.SignalHead.RED:
-        case jmri.SignalHead.FLASHRED:
-            mHead.setAppearance(jmri.SignalHead.YELLOW);
-            break;
-        case jmri.SignalHead.YELLOW:
-        case jmri.SignalHead.FLASHYELLOW:
-            mHead.setAppearance(jmri.SignalHead.GREEN);
-            break;
-        case jmri.SignalHead.GREEN:
-        case jmri.SignalHead.FLASHGREEN:
-            mHead.setAppearance(jmri.SignalHead.RED);
-            break;
+        switch (clickMode) {
+        case 0 :
+            switch (mHead.getAppearance()) {
+            case jmri.SignalHead.RED:
+            case jmri.SignalHead.FLASHRED:
+                mHead.setAppearance(jmri.SignalHead.YELLOW);
+                break;
+            case jmri.SignalHead.YELLOW:
+            case jmri.SignalHead.FLASHYELLOW:
+                mHead.setAppearance(jmri.SignalHead.GREEN);
+                break;
+            case jmri.SignalHead.GREEN:
+            case jmri.SignalHead.FLASHGREEN:
+                mHead.setAppearance(jmri.SignalHead.RED);
+                break;
+            default:
+                mHead.setAppearance(jmri.SignalHead.RED);
+                break;
+            }
+            return;
+        case 1 :
+            mHead.setLit(!mHead.getLit());
+            return;
+        case 2 : 
+            mHead.setHeld(!mHead.getHeld());
+            return;
         default:
-            mHead.setAppearance(jmri.SignalHead.RED);
+            log.error("Click in mode "+clickMode);
         }
     }
 
@@ -308,9 +446,13 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         mHead = null;
 
         red = null;
+        flashRed = null;
         yellow = null;
         flashYellow = null;
         green = null;
+        flashGreen = null;
+        dark = null;
+        held = null;
 
         super.dispose();
     }
