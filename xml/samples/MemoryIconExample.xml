@@ -11,10 +11,10 @@
     <memory systemName="IM20" userName="Image Icons" />
   </memories>
   <paneleditor class="jmri.jmrit.display.configurexml.PanelEditorXml" name="Test memory" x="846" y="22" height="382" width="280" editable="yes" positionable="yes" controlling="yes" hide="no" panelmenu="yes">
-    <memoryicon memory="IM10" x="10" y="10" text="A" level="5" size="13" style="0" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="resources/icons/misc/X-red.gif" />
-    <memoryicon memory="IM11" x="10" y="30" text="B" level="5" size="18" style="0" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="resources/icons/misc/X-red.gif" />
-    <memoryicon memory="IM12" x="10" y="50" text="C" level="5" size="13" style="2" red="255" green="255" blue="0" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="resources/icons/misc/X-red.gif" />
-    <memoryicon memory="IM20" x="10" y="80" level="5" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="resources/icons/misc/Question-black.gif">
+    <memoryicon memory="IM10" x="10" y="10" text="A" level="5" size="12" style="0" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="resources/icons/misc/X-red.gif" />
+    <memoryicon memory="IM11" x="10" y="30" text="B" level="5" size="24" style="0" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="resources/icons/misc/X-red.gif" />
+    <memoryicon memory="IM12" x="10" y="100" text="C" level="5" size="12" style="2" red="255" green="255" blue="0" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="resources/icons/misc/X-red.gif" />
+    <memoryicon memory="IM20" x="10" y="120" level="5" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="resources/icons/misc/Question-black.gif">
       <memorystate value="gray" icon="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" />
       <memorystate value="9" icon="resource:resources/icons/misc/Nixie/M9B.gif" />
       <memorystate value="8" icon="resource:resources/icons/misc/Nixie/M8B.gif" />
@@ -27,7 +27,7 @@
       <memorystate value="1" icon="resource:resources/icons/misc/Nixie/M1B.gif" />
       <memorystate value="0" icon="resource:resources/icons/misc/Nixie/M0B.gif" />
     </memoryicon>
-    <memoryicon memory="IM20" x="145" y="80" level="5" selectable="yes" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="resources/icons/misc/Question-black.gif">
+    <memoryicon memory="IM20" x="145" y="120" level="5" selectable="yes" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="resources/icons/misc/Question-black.gif">
       <memorystate value="gray" icon="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" />
       <memorystate value="9" icon="resource:resources/icons/misc/Nixie/M9B.gif" />
       <memorystate value="8" icon="resource:resources/icons/misc/Nixie/M8B.gif" />
@@ -41,6 +41,6 @@
       <memorystate value="0" icon="resource:resources/icons/misc/Nixie/M0B.gif" />
     </memoryicon>
   </paneleditor>
-  <!--Written by JMRI version 1.7.6 on Thu Aug 03 17:55:38 PDT 2006 $Id: MemoryIconExample.xml,v 1.8 2006-08-26 15:46:26 jacobsen Exp $-->
+  <!--Written by JMRI version 1.7.6 on Thu Aug 03 17:55:38 PDT 2006 $Id: MemoryIconExample.xml,v 1.9 2006-12-27 07:06:18 jacobsen Exp $-->
 </layout-config>
 
