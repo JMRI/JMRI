@@ -10,7 +10,7 @@ import org.jdom.Element;
  * Handle configuration for display.ReporterIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class ReporterIconXml implements XmlAdapter {
 
@@ -70,7 +70,7 @@ public class ReporterIconXml implements XmlAdapter {
         l.setLocation(x,y);
 
         // find display level
-        int level = PanelEditor.LABELS.intValue();
+        int level = PanelEditor.REPORTERS.intValue();
         try {
             level = element.getAttribute("level").getIntValue();
         } catch ( org.jdom.DataConversionException e) {
