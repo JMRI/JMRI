@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractThrottle;
  * with values from 0 to 127.
  * <P>
  * @author  Glen Oberhauser, Bob Jacobsen  Copyright (C) 2003, 2004
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     private LocoNetSlot slot;
@@ -219,7 +219,6 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      */
     public void dispose() {
         log.debug("dispose");
-        super.dispose();
 
         // stop timeout
         mRefreshTimer.stop();
