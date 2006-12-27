@@ -23,7 +23,7 @@ import javax.swing.JTextField;
  * MemoryTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 
 public class MemoryTableAction extends AbstractTableAction {
@@ -63,7 +63,8 @@ public class MemoryTableAction extends AbstractTableAction {
             public Manager getManager() { return InstanceManager.memoryManagerInstance(); }
             public NamedBean getBySystemName(String name) { return InstanceManager.memoryManagerInstance().getBySystemName(name);}
             public void clickOn(NamedBean t) {
-            	// don't do anything on click
+            	// don't do anything on click; not used in this class, because 
+            	// we override setValueAt
             }
     		public void setValueAt(Object value, int row, int col) {
         		if (col==VALUECOL) {
@@ -86,7 +87,8 @@ public class MemoryTableAction extends AbstractTableAction {
         		// no columns hold buttons, so don't make any configure buttons calls
 		    }
 			boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-				return (e.getPropertyName().indexOf("alue")>=0);
+			    return true;
+				// return (e.getPropertyName().indexOf("alue")>=0);
 			}
 			public JButton configureButton() {
 				super.log.error("configureButton should not have been called");
