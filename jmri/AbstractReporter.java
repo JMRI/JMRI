@@ -12,7 +12,7 @@ package jmri;
  *
  * Description:		Abstract class providing the basic logic of the Reporter interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public abstract class AbstractReporter extends AbstractNamedBean implements Reporter, java.io.Serializable {
 
@@ -31,7 +31,7 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
     /**
      * Provide a general method for updating the report.
      */
-    protected void setReport(Object r) {
+    public void setReport(Object r) {
     	Object old = _currentReport;
     	_currentReport = r;
     	if (r != null) _lastReport = r;

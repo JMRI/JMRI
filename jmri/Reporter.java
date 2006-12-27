@@ -28,7 +28,7 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  * @see         jmri.Sensor
  * @see         jmri.AbstractReporter
  * @see         jmri.ReporterManager
@@ -48,7 +48,16 @@ public interface Reporter extends NamedBean {
      * is currently available, this will return a null object.
      */
     public Object getCurrentReport();
-    
+    /**
+     * Set the report to an arbitrary object.
+     * <P>
+     * A Reporter object will usually just "report"; its contents
+     * usually come from the layout, and hence are only set by lower-level
+     * implementation classes.  But there are occasionally reasons
+     * to set it from inside the program, e.g. debugging via entering
+     * values in the Reporter Table.  Hence provision of this method.
+     */
+    public void setReport(Object r);
     /**
      * Provide an int form of the last report.
      *
