@@ -5,6 +5,7 @@ package jmri.jmrit.beantable;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
+import jmri.Reporter;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -23,7 +24,7 @@ import javax.swing.JTextField;
  * ReporterTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 
 public class ReporterTableAction extends AbstractTableAction {
@@ -62,8 +63,16 @@ public class ReporterTableAction extends AbstractTableAction {
             public Manager getManager() { return InstanceManager.reporterManagerInstance(); }
             public NamedBean getBySystemName(String name) { return InstanceManager.reporterManagerInstance().getBySystemName(name);}
             public void clickOn(NamedBean t) {
-            	// don't do anything on click
+            	// don't do anything on click; not used in this class, because 
+            	// we override setValueAt
             }
+    		public void setValueAt(Object value, int row, int col) {
+        		if (col==VALUECOL) {
+            		Reporter t = (Reporter)getBySystemName((String)sysNameList.get(row));
+					t.setReport(value);
+            		fireTableRowsUpdated(row,row);
+        		} else super.setValueAt(value, row, col);
+    		}
     		public String getColumnName(int col) {
         		if (col==VALUECOL) return "Report";
         		return super.getColumnName(col);
@@ -78,7 +87,8 @@ public class ReporterTableAction extends AbstractTableAction {
         		// no columns hold buttons, so don't make any configure buttons calls
 		    }
 			boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-				return (e.getPropertyName().indexOf("Report")>=0);
+			    return true;
+				// return (e.getPropertyName().indexOf("Report")>=0);
 			}
 			public JButton configureButton() {
 				this.log.error("configureButton should not have been called");
