@@ -47,7 +47,7 @@ import com.sun.java.util.collections.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.57 $
+ * @version $Revision: 1.58 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -55,6 +55,8 @@ public class PanelEditor extends JmriJFrame {
     final public static Integer BKG       = new Integer(1);
     final public static Integer ICONS     = new Integer(3);
     final public static Integer LABELS    = new Integer(5);
+    final public static Integer MEMORIES  = new Integer(5);
+    final public static Integer REPORTERS = new Integer(5);
     final public static Integer SECURITY  = new Integer(6);
     final public static Integer TURNOUTS  = new Integer(7);
     final public static Integer SIGNALS   = new Integer(9);
@@ -95,6 +97,12 @@ public class PanelEditor extends JmriJFrame {
     JTextField nextSignalHead = new JTextField(5);
     MultiIconEditor signalIconEditor;
     JFrame signalFrame;
+
+    JButton memoryAdd = new JButton("Add memory:");
+    JTextField nextMemory = new JTextField(5);
+
+    JButton reporterAdd = new JButton("Add reporter:");
+    JTextField nextReporter = new JTextField(5);
 
     JButton clockAdd = new JButton("Add Fast clock:");
 
@@ -401,6 +409,48 @@ public class PanelEditor extends JmriJFrame {
             this.getContentPane().add(panel);
         }
 
+        // add a memory
+        {
+            JPanel panel = new JPanel();
+            panel.setLayout(new FlowLayout());
+            memoryAdd.setEnabled(false);
+            panel.add(memoryAdd);
+            panel.add(nextMemory);
+            memoryAdd.addActionListener( new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                    addMemory();
+                }
+            });
+            nextMemory.addKeyListener(new KeyAdapter() {
+                    public void keyReleased(KeyEvent a){
+                        if (nextMemory.getText().equals("")) memoryAdd.setEnabled(false);
+                        else memoryAdd.setEnabled(true);
+                    }
+                });
+            this.getContentPane().add(panel);
+        }
+
+        // add a reporter
+        {
+            JPanel panel = new JPanel();
+            panel.setLayout(new FlowLayout());
+            reporterAdd.setEnabled(false);
+            panel.add(reporterAdd);
+            panel.add(nextReporter);
+            reporterAdd.addActionListener( new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                    addReporter();
+                }
+            });
+            nextReporter.addKeyListener(new KeyAdapter() {
+                    public void keyReleased(KeyEvent a){
+                        if (nextReporter.getText().equals("")) reporterAdd.setEnabled(false);
+                        else reporterAdd.setEnabled(true);
+                    }
+                });
+            this.getContentPane().add(panel);
+        }
+
         // add a fast clock indicator
         {
             JPanel panel = new JPanel();
@@ -635,6 +685,24 @@ public class PanelEditor extends JmriJFrame {
         target.validate();
     }
 
+    void addMemory() {
+        MemoryIcon l = new MemoryIcon();
+        l.setMemory(nextMemory.getText());
+        setNextLocation(l);
+        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
+        l.setDisplayLevel(MEMORIES);
+        putLabel(l);
+    }
+    
+    void addReporter() {
+        ReporterIcon l = new ReporterIcon();
+        l.setReporter(nextReporter.getText());
+        setNextLocation(l);
+        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
+        l.setDisplayLevel(REPORTERS);
+        putLabel(l);
+    }
+    
     /**
      * Add an icon to the target
      */
