@@ -35,7 +35,7 @@ import jmri.util.StringUtil;
  * used with permission.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2003
- * @version			$Revision: 1.35 $
+ * @version			$Revision: 1.36 $
  */
 public class Llnmon {
 
@@ -1273,9 +1273,8 @@ public class Llnmon {
 
         case 0xEE:
         case 0xE6:
-            // ALM read and write messages
-            {
-                if (l.getElement(1)!=0x10) return "ALM message with unexpected length "+l.getElement(1)+"\n";
+            if (l.getElement(1)==0x10) {
+                // ALM read and write messages
                 String message;
                 if (l.getElement(0)==0xEE) message = "Write ALM msg ";
                 else message = "Read ALM msg (Write reply) ";
@@ -1296,7 +1295,15 @@ public class Llnmon {
                                  +" ARG4H=0x"+Integer.toHexString(l.getElement(14))+"\n";
 
                 return message;
-            }
+            } else if (l.getElement(1) == 0x15) {
+                // write extended master message
+                String message;
+                if (l.getElement(0)==0xEE) message = "Write extended slot: ";
+                else message = "Read extended slot (Write reply): ";
+                
+                return message;
+            } else return "0XE6/0xEE message with unexpected length "+l.getElement(1)+"\n";
+            
         case 0xE5:
             // there are several different formats for 0xE5 messages, with
             // the length apparently the distinquishing item.
