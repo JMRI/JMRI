@@ -10,12 +10,12 @@ import javax.swing.JMenuBar;
 import jmri.util.JmriJFrame;
 
 /**
- * Frame for downloading sound files
+ * Frame for downloading Digitrax SPJ files to sound decoders
  *
  * This is just an enclosure for the LoaderPane, which does the real work.
  *
- * @author		Bob Jacobsen   Copyright (C) 2005
- * @version             $Revision: 1.1 $
+ * @author		Bob Jacobsen   Copyright (C) 2006
+ * @version             $Revision: 1.2 $
  */
 public class LoaderFrame extends JmriJFrame {
 
