@@ -9,13 +9,23 @@ import java.io.*;
  * Digitrax SPJ files
  *
  * @author		Bob Jacobsen  Copyright (C) 2006
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 
 public class SpjFile {
 
     public SpjFile(String name) {
         file = new File(name);
+    }
+    
+    /**
+     * Number of headers present in the file. 
+     *
+     * @return -1 if error
+     */
+    public int numHeaders() {
+        if (headers != null && h0 != null) return h0.numHeaders();
+        else return -1;
     }
     
     public String getComment() {
@@ -34,13 +44,71 @@ public class SpjFile {
     }
     
     /**
-     * Number of headers present in the file, not 
-     * counting (counting as zero) the primary
-     * @return -1 if error
+     * Find the map entry (character string) that 
+     * corresponds to a particular handle number
      */
-    public int numHeaders() {
-        if (headers != null && h0 != null) return h0.numHeaders();
-        else return -1;
+    public String getMapEntry(int i) {
+        loadMapCache();
+        String wanted = ""+i+" ";
+        for (int j = 0; j<mapCache.length; j++) {
+            if (mapCache[j].startsWith(wanted)) {
+                return mapCache[j].substring(wanted.length());
+            }
+        }
+        return null;
+    }
+    
+    String[] mapCache = null;
+    
+    void loadMapCache() {
+        if (mapCache != null) return;
+        // find the map entries
+        int map;
+        for (map = 1; map< numHeaders(); map++) 
+            if (headers[map].isMap()) break;
+        // map holds the map index, hopefully
+        if (map > numHeaders()) {
+            log.error("Did not find map data");
+            return;
+        }
+        
+        // here found it, count lines
+        byte[] buffer = headers[map].getByteArray();
+        log.debug("map buffer length "+buffer.length);
+        int count = 0;
+        for (int i=0; i<buffer.length;i++) if (buffer[i]==0x0D) count++;
+        
+        mapCache = new String[count];
+        
+        log.debug("found "+count+" map entries");
+        
+        int start = 0;
+        int end = 0;
+        int index = 0;
+        
+        while ( (++end) < buffer.length) {
+            if (buffer[end] == 0x0D || buffer[end] == 0x0A) {
+                // sound end; make string
+                String next = new String(buffer, start, end-start);
+                // increment pointers
+                start = ++end;
+                // if another linefeed or newline is present, skip it too
+                if ( (buffer[end-1] == 0x0D || buffer[end] == 0x0A) ||
+                     (buffer[end-1] == 0x0A || buffer[end] == 0x0D) ) {
+                        start++;
+                        end++;
+                }
+                mapCache[index++] = next;
+            }
+        }
+    }
+    
+    /**
+     * Save this file. This is not protected against 
+     * overwrite, etc.
+     * @throws java.io.IOException if anything goes wrong
+     */
+    public void save(String name) throws java.io.IOException {
     }
     
     /**
@@ -55,7 +123,7 @@ public class SpjFile {
         // get first header record
         h0 = new FirstHeader();
         h0.load(s);
-        System.out.println(h0.toString());
+        if (log.isDebugEnabled()) log.debug(h0.toString());
         int n = h0.numHeaders();
         headers = new Header[n];
         headers[0] = h0;
@@ -63,7 +131,7 @@ public class SpjFile {
         for (int i = 1; i< n; i++) {  // header 0 already read
             headers[i] = new Header();
             headers[i].load(s);
-            System.out.println("Header "+i+" "+headers[i].toString());
+            if (log.isDebugEnabled()) log.debug("Header "+i+" "+headers[i].toString());
         }
    
         // now read the rest of the file, loading bytes
@@ -93,7 +161,7 @@ public class SpjFile {
                 length = headers[i].getRecordStart()+headers[i].getRecordLength();
         }
         
-        System.out.println("Last byte at "+length);
+        if (log.isDebugEnabled()) log.debug("Last byte at "+length);
         
         // inefficient way to read, hecause of all the skips (instead
         // of seeks)  But it handles non-consecutive and overlapping definitions.
@@ -127,12 +195,16 @@ public class SpjFile {
         for (int i = 1; i< n; i++) {
             if (headers[i].isWAV()) {
                 writeSubFile(i, ""+i+".wav");
-            } else if (headers[i].getType() == 2) {
+            } else if (headers[i].isSDF()) {
                 writeSubFile(i, ""+i+".sdf");
             } else if (headers[i].getType() == 3) {
                 writeSubFile(i, ""+i+".cv");
             } else if (headers[i].getType() == 4) {
                 writeSubFile(i, ""+i+".txt");
+            } else if (headers[i].isMap()) {
+                writeSubFile(i, ""+i+".map");
+            } else if (headers[i].getType() == 6) {
+                writeSubFile(i, ""+i+".uwav");
             }
         }
     }
@@ -180,7 +252,7 @@ public class SpjFile {
         
         String filename;
         
-        int getType() { return type; }
+        public int getType() { return type; }
         public int getHandle() {return handle; }
         
         public int getDataStart() { return dataStart; }
@@ -238,6 +310,14 @@ public class SpjFile {
             return (getType() == 2);
         }
         
+        public boolean isMap() {
+            return (getType() == 5);
+        }
+
+        public boolean isTxt() {
+            return (getType() == 4);
+        }
+        
         /**
          * Read a 4-byte integer, handling endian-ness of SPJ files
          */
@@ -258,16 +338,16 @@ public class SpjFile {
             return i1+(i2<<8);
         }
 
-        String typeAsString() {
+        public String typeAsString() {
             if (type == -1) return  " initial ";
             if ((type >= 0 ) && (type < 7)) {
-                String[] names = {      "(unused) ",
-                                        "RIFF .wav",
-                                        ".sdf defn",
-                                        " CV data ",
-                                        " comment ",
-                                        ".map file",
-                                        "unas .wav"};
+                String[] names = {      "(unused) ",  // 0
+                                        "WAV      ",  // 1
+                                        "SDF      ",  // 2
+                                        " CV data ",  // 3
+                                        " comment ",  // 4
+                                        ".map file",  // 5
+                                        "WAV (mty)"}; // 6
                 return names[type];
             } 
             // unexpected answer
@@ -283,9 +363,9 @@ public class SpjFile {
     class FirstHeader extends Header {
         /**
          * Number of headers, including the initial
-         * system header
+         * system header.
          */
-        int numHeaders() { return (dataStart/128)-1; }
+        int numHeaders() { return (dataStart/128); }
         float version() { return recordStart/100.f; }
         String getComment() { return filename; }
         
@@ -295,7 +375,7 @@ public class SpjFile {
                     +", comment= "+filename;
         }
     }
-    
+        
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SpjFile.class.getName());
 
 }
