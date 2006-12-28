@@ -20,7 +20,7 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Alex Shepherd   Copyright (C) 2003
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class LocoBufferStatsFrame extends JFrame implements LocoNetListener {
 
@@ -179,6 +179,8 @@ public class LocoBufferStatsFrame extends JFrame implements LocoNetListener {
             } catch ( Exception e ) {
                 log.error("Error parsing update: "+msg);
             }
+        } else if (!updatePending && (msg.getOpCode() == LnConstants.OPC_GPBUSY)) {
+            updatePending = true;
         }
     }
 
