@@ -2,6 +2,7 @@
 
 package jmri.jmrix.nce.serialdriver;
 
+import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NcePortController;
 import jmri.jmrix.nce.NceProgrammer;
 import jmri.jmrix.nce.NceProgrammerManager;
@@ -28,7 +29,7 @@ import javax.comm.SerialPort;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.23 $
+ * @version			$Revision: 1.24 $
  */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -146,6 +147,12 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
 
         jmri.jmrix.nce.ActiveFlag.setActive();
 
+        if (getCurrentOption1Setting().equals(validOption1()[1])) {
+            // setting binary mode
+            NceMessage.setUseBinary(true);
+        } else {
+            NceMessage.setUseBinary(false);
+        }
     }
 
     private Thread sinkThread;
@@ -181,6 +188,27 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
 
 	protected String [] validSpeeds = new String[]{"9,600 baud", "19,200 baud", "38,400 baud"};
 	protected int [] validSpeedValues = new int[]{9600, 19200, 38400};
+
+    /**
+     * Option 1 is binary vs ASCII command set.
+     */
+    public String[] validOption1() { return new String[]{"Uses ASCII commands", "Uses binary commands"}; }
+
+    /**
+     * Get a String that says what Option 1 represents
+     * May be an empty string, but will not be null
+     */
+    public String option1Name() { return "Command Station"; }
+
+    /**
+     * Set the second port option.
+     */
+    public void configureOption1(String value) { mOpt1 = value; }
+    protected String mOpt1 = null;
+    public String getCurrentOption1Setting() {
+        if (mOpt1 == null) return validOption1()[0];
+        return mOpt1;
+    }
 
     // private control members
     private boolean opened = false;
