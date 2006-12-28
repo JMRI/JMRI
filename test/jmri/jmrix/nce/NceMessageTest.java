@@ -10,13 +10,13 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the NceMessage class
  * @author			Bob Jacobsen Copyright 2002-2004
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 
 public class NceMessageTest extends TestCase {
 
     // ensure that the static useBinary value is left OK
-    static boolean saveUseBinary;
+    boolean saveUseBinary;
     
     public void setUp() {
         saveUseBinary = NceMessage.useBinary;
@@ -71,24 +71,52 @@ public class NceMessageTest extends TestCase {
 		Assert.assertEquals("isKillMain", false, m.isKillMain());
 	}
 
-	public void testReadPagedCV() {
+	public void testReadPagedCVAscii() {
+	    NceMessage.useBinary = false;
 		NceMessage m = NceMessage.getReadPagedCV(12);
 		Assert.assertEquals("string compare ", "R012", m.toString());
 	}
 
-	public void testWritePagedCV() {
+	public void testReadPagedCVBin() {
+	    NceMessage.useBinary = true;
+		NceMessage m = NceMessage.getReadPagedCV(12);
+		Assert.assertEquals("string compare ", "A1 00 0C", m.toString());
+	}
+
+	public void testWritePagedCVAscii() {
+	    NceMessage.useBinary = false;
 		NceMessage m = NceMessage.getWritePagedCV(12, 251);
 		Assert.assertEquals("string compare ", "P012 251", m.toString());
 	}
 
-	public void testReadRegister() {
+	public void testWritePagedCVBin() {
+	    NceMessage.useBinary = true;
+		NceMessage m = NceMessage.getWritePagedCV(12, 251);
+		Assert.assertEquals("string compare ", "A0 00 0C FB", m.toString());
+	}
+
+	public void testReadRegisterAscii() {
+	    NceMessage.useBinary = false;
 		NceMessage m = NceMessage.getReadRegister(2);
 		Assert.assertEquals("string compare ", "V2", m.toString());
 	}
 
-	public void testWriteRegister() {
+	public void testReadRegisterBin() {
+	    NceMessage.useBinary = true;
+		NceMessage m = NceMessage.getReadRegister(2);
+		Assert.assertEquals("string compare ", "A7 02", m.toString());
+	}
+
+	public void testWriteRegisterAscii() {
+	    NceMessage.useBinary = false;
 		NceMessage m = NceMessage.getWriteRegister(2, 251);
 		Assert.assertEquals("string compare ", "S2 251", m.toString());
+	}
+
+	public void testWriteRegisterBin() {
+	    NceMessage.useBinary = true;
+		NceMessage m = NceMessage.getWriteRegister(2, 251);
+		Assert.assertEquals("string compare ", "A6 02 FB", m.toString());
 	}
 
 	public void testCheckPacketMessage1Ascii() {
