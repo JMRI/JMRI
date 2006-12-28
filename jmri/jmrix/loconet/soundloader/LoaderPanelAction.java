@@ -12,14 +12,14 @@ import javax.swing.AbstractAction;
  * LoaderFrame object.
  *
  * @author	    Bob Jacobsen    Copyright (C) 2005
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class LoaderPanelAction extends AbstractAction {
     static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.loconet.soundloader.Loader");
 
     public LoaderPanelAction(String s) {
 	    super(s);
-
+        
     }
 
     public LoaderPanelAction() {
