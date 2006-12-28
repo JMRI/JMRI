@@ -4,10 +4,12 @@ package jmri.jmrix.loconet.spjfile;
 
 import junit.framework.*;
 
+import jmri.jmrit.Sound;
+
 /**
  * Tests for the jmri.jmrix.loconet.spjfile package
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class SpjFileTest extends TestCase {
 
@@ -15,10 +17,49 @@ public class SpjFileTest extends TestCase {
         new SpjFile("ac4400.spj");
     }
 
-    public void testRead() throws java.io.IOException {
-        new SpjFile("java/test/jmri/jmrix/loconet/spjfile/sd38_2.spj").read();
+    SpjFile testFile = null;
+    void loadFile() throws java.io.IOException {
+        if (testFile == null) {
+            // testFile = new SpjFile("java/test/jmri/jmrix/loconet/spjfile/sd38_2.spj");
+            testFile = new SpjFile("sd38_2.spj");
+            testFile.read();
+        }
     }
 
+/*     public void testWriteSubFile() throws java.io.IOException { */
+/*         loadFile(); */
+/*          */
+/*         // and write */
+/*         testFile.writeSubFiles(); */
+/*     } */
+
+    public void testPlayWav() throws java.io.IOException {
+        loadFile();
+
+        // and write
+        // play 1st wav header
+        int n = testFile.numHeaders();
+        for (int i = 1; i< n; i++) {
+            if (testFile.headers[i].isWAV()) {
+                byte[] buffer = testFile.headers[i].getByteArray();
+                playSoundBuffer(buffer);
+                return;
+            }
+        }
+    }
+    
+    public void playSoundBuffer(byte[] data) {
+        Sound.playSoundBuffer(data);
+    }
+    
+    public void testGetMapEntries() throws java.io.IOException {
+        loadFile();
+                
+        Assert.assertEquals("1", "DIESEL_START_BELL", testFile.getMapEntry(1));
+        Assert.assertEquals("2", "DIESEL_START", testFile.getMapEntry(2));
+        Assert.assertEquals("31", "USER_F28", testFile.getMapEntry(31));
+    }
+    
     // from here down is testing infrastructure
 
     public SpjFileTest(String s) {
