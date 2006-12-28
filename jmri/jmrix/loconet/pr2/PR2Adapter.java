@@ -10,7 +10,7 @@ import javax.comm.SerialPort;
  * refers to the switch settings on the new Digitrax PR2
  
  * @author			Bob Jacobsen   Copyright (C) 2004, 2005, 2006
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class PR2Adapter extends LocoBufferAdapter {
 
@@ -71,7 +71,7 @@ public class PR2Adapter extends LocoBufferAdapter {
      * This overrides the method in LnPortController, which is more general.
      */
     static public void configureManagers() {
-        /* jmri.InstanceManager.setPowerManager(new jmri.jmrix.loconet.LnPowerManager()); */
+        jmri.InstanceManager.setPowerManager(new jmri.jmrix.loconet.pr2.LnPr2PowerManager());
 
         /* jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager()); */
 
@@ -79,7 +79,7 @@ public class PR2Adapter extends LocoBufferAdapter {
 
         /* jmri.InstanceManager.setSensorManager(new jmri.jmrix.loconet.LnSensorManager()); */
 
-        /* jmri.InstanceManager.setThrottleManager(new jmri.jmrix.loconet.LnThrottleManager()); */
+        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.loconet.LnPr2ThrottleManager());
 
         /* jmri.InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager()); */
 
