@@ -13,7 +13,7 @@ import java.io.*;
 /**
  * Pane for downloading .hex files
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.4 $
+ * @version	    $Revision: 1.5 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -214,7 +214,7 @@ public class LoaderPane extends javax.swing.JPanel {
     }
 
     /**
-     * get rid of any held resources
+     * Get rid of any held resources
      */
     void dispose() {
         file.dispose();
