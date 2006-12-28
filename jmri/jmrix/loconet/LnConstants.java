@@ -7,7 +7,7 @@ package jmri.jmrix.loconet;
  *
  * Description:		Constants to represent values seen in LocoNet traffic
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
 
  * Note that the values in this class have been taken from the llnmom C program of
  * Ron W. Auld, which included some work of John Kabat.  The symbol names
@@ -283,9 +283,26 @@ public final static int OPC_SL_RD_DATA    = 0xe7;
 public final static int OPC_IMM_PACKET    = 0xed;
 public final static int OPC_IMM_PACKET_2  = 0xee;
 public final static int OPC_WR_SL_DATA    = 0xef;
+public final static int OPC_WR_SL_DATA_EXP = 0xee;
 public final static int OPC_MASK          = 0x7f;  /* mask for acknowledge opcodes */
 
 // start of values not from llnmon.c
+
+// Expanded slot index values
+public final static int EXP_MAST            = 0;
+public final static int EXP_SLOT            = 0x01;
+public final static int EXPD_LENGTH         = 16;
+//offsets into message
+public final static int EXPD_STAT           = 0;
+public final static int EXPD_ADRL           = 1;
+public final static int EXPD_ADRH           = 2;
+public final static int EXPD_FLAGS          = 3;
+public final static int EXPD_SPD            = 4;
+public final static int EXPD_F28F20F12      = 5;
+public final static int EXPD_DIR_F0F4_F1    = 6;
+public final static int EXPD_F11_F5         = 7;
+public final static int EXPD_F19_F13        = 8;
+public final static int EXPD_F27_F21        = 9;
 
 //  opcode keys used to express interest in various messages
 //            note these are _not_ the loconet opcode values!
