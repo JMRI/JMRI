@@ -8,7 +8,7 @@ package jmri.jmrix.nce;
  * Some rudimentary support is provided for the "binary" option.
  *
  * @author		Bob Jacobsen  Copyright (C) 2001
- * @version             $Revision: 1.10 $
+ * @version             $Revision: 1.11 $
  */
 public class NceReply extends jmri.jmrix.AbstractMRReply {
 
@@ -39,6 +39,14 @@ public class NceReply extends jmri.jmrix.AbstractMRReply {
             index = index +"COMMAND: ".length();
         }
         return index;
+    }
+
+    public int value() {
+    	if (isBinary()) {
+    		return getElement(0) & 0xFF;  // avoid stupid sign extension
+    	} else {
+    	    return super.value();
+    	}
     }
 
     /**
@@ -76,3 +84,4 @@ public class NceReply extends jmri.jmrix.AbstractMRReply {
 
 
 /* @(#)NceReply.java */
+

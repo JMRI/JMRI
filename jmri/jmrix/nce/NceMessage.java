@@ -9,7 +9,7 @@ package jmri.jmrix.nce;
  * class handles the response from the command station.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -90,63 +90,150 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
     static public NceMessage getProgMode() {
         NceMessage m = new NceMessage(1);
-        m.setBinary(false);
-        m.setOpCode('M');
+        if (useBinary) {
+            m.setBinary(true);
+            m.setReplyLen(1);
+            m.setOpCode(0x9E);
+        }
+        else {
+            m.setBinary(false);
+            m.setOpCode('M');
+        }
         return m;
     }
 
     static public NceMessage getExitProgMode() {
         NceMessage m = new NceMessage(1);
-        m.setBinary(false);
-        m.setOpCode('X');
+        if (useBinary) {
+            m.setBinary(true);
+            m.setReplyLen(1);
+            m.setOpCode(0x9F);
+        }
+        else {
+            m.setBinary(false);
+            m.setOpCode('X');
+        }
         return m;
     }
 
     static public NceMessage getReadPagedCV(int cv) { //Rxxx
-        NceMessage m = new NceMessage(4);
-        m.setBinary(false);
-        m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
-        m.setTimeout(LONG_TIMEOUT);
-        m.setOpCode('R');
-        m.addIntAsThree(cv, 1);
-        return m;
+        if (useBinary) {
+            NceMessage m = new NceMessage(3);
+            m.setBinary(true);
+            m.setReplyLen(2);
+            m.setOpCode(0xA1);
+            m.setElement(1,(cv >> 8));
+            m.setElement(2,(cv & 0x0FF));
+            m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
+            m.setTimeout(LONG_TIMEOUT);
+            return m;
+        } else {
+            NceMessage m = new NceMessage(4);
+            m.setBinary(false);
+            m.setOpCode('R');
+            m.addIntAsThree(cv, 1);
+            m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
+            m.setTimeout(LONG_TIMEOUT);
+            return m;
+        }
     }
 
     static public NceMessage getWritePagedCV(int cv, int val) { //Pxxx xxx
-        NceMessage m = new NceMessage(8);
-        m.setBinary(false);
-        m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
-        m.setTimeout(LONG_TIMEOUT);
-        m.setOpCode('P');
-        m.addIntAsThree(cv, 1);
-        m.setElement(4,' ');
-        m.addIntAsThree(val, 5);
-        return m;
+        if (useBinary) {
+            NceMessage m = new NceMessage(4);
+            m.setBinary(true);
+            m.setReplyLen(1);
+            m.setOpCode(0xA0);
+            m.setElement(1,cv>>8);
+            m.setElement(2,cv&0xFF);
+            m.setElement(3,val);
+            m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
+            m.setTimeout(LONG_TIMEOUT);
+            return m;
+        } else {
+            NceMessage m = new NceMessage(8);
+            m.setBinary(false);
+            m.setOpCode('P');
+            m.addIntAsThree(cv, 1);
+            m.setElement(4,' ');
+            m.addIntAsThree(val, 5);
+            m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
+            m.setTimeout(LONG_TIMEOUT);
+            return m;
+        }
     }
 
     static public NceMessage getReadRegister(int reg) { //Vx
         if (reg>8) log.error("register number too large: "+reg);
-        NceMessage m = new NceMessage(2);
-        m.setBinary(false);
-        m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
-        m.setTimeout(LONG_TIMEOUT);
-        m.setOpCode('V');
-        String s = ""+reg;
-        m.setElement(1, s.charAt(s.length()-1));
-        return m;
+        if (useBinary) {
+            NceMessage m = new NceMessage(2);
+            m.setBinary(true);
+            m.setReplyLen(2);
+            m.setOpCode(0xA7);
+            m.setElement(1,reg);
+            m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
+            m.setTimeout(LONG_TIMEOUT);
+            return m;
+        } else {
+            NceMessage m = new NceMessage(2);
+            m.setBinary(false);
+            m.setOpCode('V');
+            String s = ""+reg;
+            m.setElement(1, s.charAt(s.length()-1));
+            m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
+            m.setTimeout(LONG_TIMEOUT);
+            return m;
+        }
     }
 
     static public NceMessage getWriteRegister(int reg, int val) { //Sx xxx
         if (reg>8) log.error("register number too large: "+reg);
-        NceMessage m = new NceMessage(6);
-        m.setBinary(false);
+        if (useBinary) {
+            NceMessage m = new NceMessage(3);
+            m.setBinary(true);
+            m.setReplyLen(2);
+            m.setOpCode(0xA6);
+            m.setElement(1,reg);
+            m.setElement(2,val);
+            m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
+            m.setTimeout(LONG_TIMEOUT);
+            return m;
+        } else {
+            NceMessage m = new NceMessage(6);
+            m.setBinary(false);
+            m.setOpCode('S');
+            String s = ""+reg;
+            m.setElement(1, s.charAt(s.length()-1));
+            m.setElement(2,' ');
+            m.addIntAsThree(val, 3);
+            m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
+            m.setTimeout(LONG_TIMEOUT);
+            return m;
+        }
+    }
+
+    static public NceMessage getReadDirectCV(int cv) { //Rxxx
+        NceMessage m = new NceMessage(3);
+        m.setBinary(true);
+        m.setReplyLen(2);
+        m.setOpCode(0xA9);
+        m.setElement(1,(cv >> 8));
+        m.setElement(2,(cv & 0x0FF));
         m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setTimeout(LONG_TIMEOUT);
-        m.setOpCode('S');
-        String s = ""+reg;
-        m.setElement(1, s.charAt(s.length()-1));
-        m.setElement(2,' ');
-        m.addIntAsThree(val, 3);
+        return m;
+    }
+
+    static public NceMessage getWriteDirectCV(int cv, int val) { //Pxxx xxx
+        NceMessage m = new NceMessage(4);
+        m.setBinary(true);
+        m.setReplyLen(1);
+        m.setOpCode(0xA8);
+        m.setElement(1,cv>>8);
+        m.setElement(2,cv&0xFF);
+        m.setElement(3,val);
+        m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
+        m.setTimeout(LONG_TIMEOUT);
         return m;
     }
     
@@ -219,9 +306,21 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
     static boolean useBinary = true;
     
+    static boolean binarySet = false;
+    static public void setUseBinary(boolean val) {
+        useBinary = val;
+        if (binarySet) {
+            log.error("setUseBinary called more than once");
+            new Exception().printStackTrace();
+        }
+        binarySet = true;
+    }
+    static public boolean getUseBinary() { return useBinary; }
+    
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceMessage.class.getName());
 
 }
 
 
 /* @(#)NceMessage.java */
+

@@ -15,7 +15,7 @@ import com.sun.java.util.collections.Vector;
  * This has two states:  NOTPROGRAMMING, and COMMANDSENT.  The transistions
  * to and from programming mode are now handled in the TrafficController code.
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 public class NceProgrammer extends AbstractProgrammer implements NceListener {
 
@@ -39,7 +39,9 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
             notifyPropertyChange("Mode", _mode, mode);
             _mode = mode;
         }
-        if (_mode != Programmer.PAGEMODE && _mode != Programmer.REGISTERMODE) {
+        if (_mode != Programmer.PAGEMODE &&
+            _mode != Programmer.DIRECTBYTEMODE &&
+            _mode != Programmer.REGISTERMODE) {
             // attempt to switch to unsupported mode, switch back to previous
             _mode = oldMode;
             notifyPropertyChange("Mode", mode, _mode);
@@ -53,6 +55,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
      */
     public boolean hasMode(int mode) {
         if ( mode == Programmer.PAGEMODE ||
+             mode == Programmer.DIRECTBYTEMODE ||
              mode == Programmer.REGISTERMODE ) {
             log.debug("hasMode request on mode "+mode+" returns true");
             return true;
@@ -159,12 +162,16 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
             // read
             if (_mode == Programmer.PAGEMODE)
                 return NceMessage.getReadPagedCV(cvnum);
-            else
+            else if (_mode == Programmer.DIRECTBYTEMODE)
+                return NceMessage.getReadDirectCV(cvnum);
+			else
                 return NceMessage.getReadRegister(registerFromCV(cvnum));
         } else {
             // write
             if (_mode == Programmer.PAGEMODE)
                 return NceMessage.getWritePagedCV(cvnum, val);
+            else if (_mode == Programmer.DIRECTBYTEMODE)
+                return NceMessage.getWriteDirectCV(cvnum, val);
             else
                 return NceMessage.getWriteRegister(registerFromCV(cvnum), val);
         }
@@ -184,7 +191,9 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
             // operation done, capture result, then post response
             progState = NOTPROGRAMMING;
             // check for errors
-            if (m.match("NO FEEDBACK DETECTED") >= 0) {
+            if ((m.match("NO FEEDBACK DETECTED") >= 0) 
+                    || (m.isBinary() && !_progRead && (m.getElement(0) != '!'))
+                    || (m.isBinary() && _progRead && (m.getElement(1) != '!'))) {
                 if (log.isDebugEnabled()) log.debug("handle NO FEEDBACK DETECTED");
                 // perhaps no loco present? Fail back to end of programming
                 notifyProgListenerEnd(_val, jmri.ProgListener.NoLocoDetected);
@@ -248,3 +257,4 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
 
 
 /* @(#)NceProgrammer.java */
+
