@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 /**
  * LIke DecVariableValue, except that the string representation is in hexadecimal
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version
+ * @version $Revision: 1.6 $
  */
 public class HexVariableValue extends DecVariableValue {
 
