@@ -15,7 +15,7 @@ import com.sun.java.util.collections.Vector;
  * This has two states:  NOTPROGRAMMING, and COMMANDSENT.  The transistions
  * to and from programming mode are now handled in the TrafficController code.
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 public class NceProgrammer extends AbstractProgrammer implements NceListener {
 
@@ -39,9 +39,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
             notifyPropertyChange("Mode", _mode, mode);
             _mode = mode;
         }
-        if (_mode != Programmer.PAGEMODE &&
-            _mode != Programmer.DIRECTBYTEMODE &&
-            _mode != Programmer.REGISTERMODE) {
+        if (!hasMode(_mode)) {
             // attempt to switch to unsupported mode, switch back to previous
             _mode = oldMode;
             notifyPropertyChange("Mode", mode, _mode);
@@ -55,9 +53,13 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
      */
     public boolean hasMode(int mode) {
         if ( mode == Programmer.PAGEMODE ||
-             mode == Programmer.DIRECTBYTEMODE ||
              mode == Programmer.REGISTERMODE ) {
-            log.debug("hasMode request on mode "+mode+" returns true");
+            log.debug("hasMode request on mode "+mode+" returns true (1)");
+            return true;
+        }
+        if ( mode == Programmer.DIRECTBYTEMODE && 
+             NceMessage.getCommandOptions() >= NceMessage.OPTION_2006) {
+            log.debug("hasMode request on mode "+mode+" returns true (2)");
             return true;
         }
         log.debug("hasMode returns false on mode "+mode);
