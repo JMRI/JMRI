@@ -29,7 +29,7 @@ import javax.comm.SerialPort;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.25 $
+ * @version			$Revision: 1.26 $
  */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -149,9 +149,9 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
 
         if (getCurrentOption1Setting().equals(validOption1()[1])) {
             // setting binary mode
-            NceMessage.setCommandOptions(NceMessage.OPTION_2004);
-        } else {
             NceMessage.setCommandOptions(NceMessage.OPTION_2006);
+        } else {
+            NceMessage.setCommandOptions(NceMessage.OPTION_2004);
         }
     }
 
