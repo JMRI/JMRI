@@ -10,20 +10,20 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the NceMessage class
  * @author			Bob Jacobsen Copyright 2002-2004
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 
 public class NceMessageTest extends TestCase {
 
     // ensure that the static useBinary value is left OK
-    boolean saveUseBinary;
+    int saveCommandOptions;
     
     public void setUp() {
-        saveUseBinary = NceMessage.useBinary;
+        saveCommandOptions = NceMessage.commandOptions;
     }
     
     public void tearDown() {
-        NceMessage.useBinary = saveUseBinary;
+        NceMessage.commandOptions = saveCommandOptions;
     }
     
 	public void testCreate() {
@@ -52,14 +52,14 @@ public class NceMessageTest extends TestCase {
 	}
 
 	public void testGetEnableAscii() {
-	    NceMessage.useBinary = false;
+	    NceMessage.commandOptions = NceMessage.OPTION_FORCE_ASCII;
 		NceMessage m = NceMessage.getEnableMain();
 		Assert.assertEquals("length", 1, m.getNumDataElements());
 		Assert.assertEquals("opCode", 'E', m.getOpCode());
 	}
 
 	public void testGetEnableBinary() {
-	    NceMessage.useBinary = true;
+	    NceMessage.commandOptions = NceMessage.OPTION_1999;
 		NceMessage m = NceMessage.getEnableMain();
 		Assert.assertEquals("length", 1, m.getNumDataElements());
 		Assert.assertEquals("opCode", 0x89, m.getOpCode());
@@ -72,61 +72,61 @@ public class NceMessageTest extends TestCase {
 	}
 
 	public void testReadPagedCVAscii() {
-	    NceMessage.useBinary = false;
+	    NceMessage.commandOptions = NceMessage.OPTION_2004;
 		NceMessage m = NceMessage.getReadPagedCV(12);
 		Assert.assertEquals("string compare ", "R012", m.toString());
 	}
 
 	public void testReadPagedCVBin() {
-	    NceMessage.useBinary = true;
+	    NceMessage.commandOptions = NceMessage.OPTION_2006;
 		NceMessage m = NceMessage.getReadPagedCV(12);
 		Assert.assertEquals("string compare ", "A1 00 0C", m.toString());
 	}
 
 	public void testWritePagedCVAscii() {
-	    NceMessage.useBinary = false;
+	    NceMessage.commandOptions = NceMessage.OPTION_2004;
 		NceMessage m = NceMessage.getWritePagedCV(12, 251);
 		Assert.assertEquals("string compare ", "P012 251", m.toString());
 	}
 
 	public void testWritePagedCVBin() {
-	    NceMessage.useBinary = true;
+	    NceMessage.commandOptions = NceMessage.OPTION_2006;
 		NceMessage m = NceMessage.getWritePagedCV(12, 251);
 		Assert.assertEquals("string compare ", "A0 00 0C FB", m.toString());
 	}
 
 	public void testReadRegisterAscii() {
-	    NceMessage.useBinary = false;
+	    NceMessage.commandOptions = NceMessage.OPTION_2004;
 		NceMessage m = NceMessage.getReadRegister(2);
 		Assert.assertEquals("string compare ", "V2", m.toString());
 	}
 
 	public void testReadRegisterBin() {
-	    NceMessage.useBinary = true;
+	    NceMessage.commandOptions = NceMessage.OPTION_2006;
 		NceMessage m = NceMessage.getReadRegister(2);
 		Assert.assertEquals("string compare ", "A7 02", m.toString());
 	}
 
 	public void testWriteRegisterAscii() {
-	    NceMessage.useBinary = false;
+	    NceMessage.commandOptions = NceMessage.OPTION_2004;
 		NceMessage m = NceMessage.getWriteRegister(2, 251);
 		Assert.assertEquals("string compare ", "S2 251", m.toString());
 	}
 
 	public void testWriteRegisterBin() {
-	    NceMessage.useBinary = true;
+	    NceMessage.commandOptions = NceMessage.OPTION_2006;
 		NceMessage m = NceMessage.getWriteRegister(2, 251);
 		Assert.assertEquals("string compare ", "A6 02 FB", m.toString());
 	}
 
 	public void testCheckPacketMessage1Ascii() {
-	    NceMessage.useBinary = false;
+	    NceMessage.commandOptions = NceMessage.OPTION_FORCE_ASCII;
 		NceMessage m = NceMessage.sendPacketMessage(new byte[]{(byte)0x81,(byte)0xff,(byte)0x7e});
 		Assert.assertEquals("content", "S C02 81 FF 7E", m.toString());
 	}
 
 	public void testCheckPacketMessage1Bin() {
-	    NceMessage.useBinary = true;
+	    NceMessage.commandOptions = NceMessage.OPTION_1999;
 		NceMessage m = NceMessage.sendPacketMessage(new byte[]{(byte)0x81,(byte)0xff,(byte)0x7e});
 		Assert.assertEquals("content", "93 02 81 FF 7E", m.toString());
 	}

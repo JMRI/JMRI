@@ -7,9 +7,19 @@ package jmri.jmrix.nce;
  * <P>
  * The {@link NceReply}
  * class handles the response from the command station.
+ * <P>
+ * The NCE protocol has "binary" and "ASCII" command sets.
+ * Depending on the version of the EPROM it contains,
+ * NCE command stations have different support for command sets:
+ *<UL>
+ *<LI>1999 - All ASCII works. Binary works except for programming.
+ *<LI>2004 - ASCII needed for programming, binary for everything else.
+ *<LI>2006 - binary needed for everything
+ *</UL>
+ * See the {@link #setCommandOptions(int)} method for more information.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -64,7 +74,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     // static methods to return a formatted message
     static public NceMessage getEnableMain() {
         NceMessage m = new NceMessage(1);
-        if (useBinary) {
+        if (getCommandOptions() >= OPTION_1999) {
             m.setBinary(true);
             m.setReplyLen(1);
             m.setOpCode(0x89);
@@ -77,7 +87,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
     static public NceMessage getKillMain() {
         NceMessage m = new NceMessage(1);
-        if (useBinary) {
+        if (getCommandOptions() >= OPTION_1999) {
             m.setBinary(true);
             m.setReplyLen(1);
             m.setOpCode(0x8B);
@@ -90,7 +100,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
     static public NceMessage getProgMode() {
         NceMessage m = new NceMessage(1);
-        if (useBinary) {
+        if (getCommandOptions() >= OPTION_2006) {
             m.setBinary(true);
             m.setReplyLen(1);
             m.setOpCode(0x9E);
@@ -104,7 +114,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
     static public NceMessage getExitProgMode() {
         NceMessage m = new NceMessage(1);
-        if (useBinary) {
+        if (getCommandOptions() >= OPTION_2006) {
             m.setBinary(true);
             m.setReplyLen(1);
             m.setOpCode(0x9F);
@@ -117,7 +127,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     static public NceMessage getReadPagedCV(int cv) { //Rxxx
-        if (useBinary) {
+        if (getCommandOptions() >= OPTION_2006) {
             NceMessage m = new NceMessage(3);
             m.setBinary(true);
             m.setReplyLen(2);
@@ -139,7 +149,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     static public NceMessage getWritePagedCV(int cv, int val) { //Pxxx xxx
-        if (useBinary) {
+        if (getCommandOptions() >= OPTION_2006) {
             NceMessage m = new NceMessage(4);
             m.setBinary(true);
             m.setReplyLen(1);
@@ -165,7 +175,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
     static public NceMessage getReadRegister(int reg) { //Vx
         if (reg>8) log.error("register number too large: "+reg);
-        if (useBinary) {
+        if (getCommandOptions() >= OPTION_2006) {
             NceMessage m = new NceMessage(2);
             m.setBinary(true);
             m.setReplyLen(2);
@@ -188,7 +198,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
     static public NceMessage getWriteRegister(int reg, int val) { //Sx xxx
         if (reg>8) log.error("register number too large: "+reg);
-        if (useBinary) {
+        if (getCommandOptions() >= OPTION_2006) {
             NceMessage m = new NceMessage(3);
             m.setBinary(true);
             m.setReplyLen(2);
@@ -213,6 +223,8 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     static public NceMessage getReadDirectCV(int cv) { //Rxxx
+        if (getCommandOptions() < OPTION_2006)
+            log.error("getReadDirectCV with option "+getCommandOptions());
         NceMessage m = new NceMessage(3);
         m.setBinary(true);
         m.setReplyLen(2);
@@ -225,6 +237,8 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     static public NceMessage getWriteDirectCV(int cv, int val) { //Pxxx xxx
+        if (getCommandOptions() < OPTION_2006)
+            log.error("getWriteDirectCV with option "+getCommandOptions());
         NceMessage m = new NceMessage(4);
         m.setBinary(true);
         m.setReplyLen(1);
@@ -238,7 +252,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     }
     
     static public NceMessage sendPacketMessage(byte[] bytes) {
-        if (useBinary) {
+        if (getCommandOptions() >= OPTION_1999) {
             if (bytes.length<3 || bytes.length>6)
                 log.error("Send of NCE track packet too short or long:"+(bytes.length)+
                     " packet:"+bytes);
@@ -274,7 +288,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     static public NceMessage queuePacketMessage(byte[] bytes) {
-        if (useBinary) {
+        if (getCommandOptions() >= OPTION_1999) {
             if (bytes.length<3 || bytes.length>6)
                 log.error("Queue of NCE track packet too long:"+(bytes.length)+
                     " packet:"+bytes);
@@ -304,18 +318,63 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         }
     }
 
-    static boolean useBinary = true;
+
+    /**
+     * Create all commands in the ASCII format.
+     */
+    static public final int OPTION_FORCE_ASCII  = -1;
+    /**
+     * Create commands compatible with the 1999 EPROM.
+     *<P>
+     * This is binary for everything except service-mode CV programming operations.
+     */
+    static public final int OPTION_1999 = 0;
+    /**
+     * Create commands compatible with the 2004 EPROM.
+     *<P>
+     * This is binary for everything except service-mode CV programming operations.
+     */
+    static public final int OPTION_2004 = 10;
+    /**
+     * Create commands compatible with the 2006 EPROM.
+     *<P>
+     * This is binary for everything, including service-mode CV programming operations.
+     */
+    static public final int OPTION_2006 = 20;
+    /**
+     * Create all commands in the binary format.
+     */
+    static public final int OPTION_FORCE_BINARY = 10000;
     
-    static boolean binarySet = false;
-    static public void setUseBinary(boolean val) {
-        useBinary = val;
-        if (binarySet) {
-            log.error("setUseBinary called more than once");
+    static int commandOptions = OPTION_2004;
+    
+    static boolean commandOptionSet = false;
+    
+    /** 
+     * Control which command format should be used for various
+     * commands: ASCII or binary.
+     *<P>
+     * The valid argument values are the class "OPTION"
+     * contants, which are interpreted in the various methods to
+     * get a particular message.
+     *<UL>
+     *<LI>{@link #OPTION_FORCE_ASCII}
+     *<LI>{@link #OPTION_1999}
+     *<LI>{@link #OPTION_2004}
+     *<LI>{@link #OPTION_2006}
+     *<LI>{@link #OPTION_FORCE_BINARY}
+     *</UL>
+     *
+     */
+     static public void setCommandOptions(int val) {
+        commandOptions = val;
+        if (commandOptionSet) {
+            log.error("setCommandOptions called more than once");
             new Exception().printStackTrace();
         }
-        binarySet = true;
+        commandOptionSet = true;
     }
-    static public boolean getUseBinary() { return useBinary; }
+    static public int getCommandOptions() { return commandOptions; }
     
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceMessage.class.getName());
 

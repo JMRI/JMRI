@@ -16,21 +16,21 @@ import jmri.jmrix.nce.NceProgrammer;
 /**
  * JUnit tests for the NceProgrammer class
  * @author			Bob Jacobsen
- * @version          $Revision: 1.8 $
+ * @version          $Revision: 1.9 $
  */
 public class NceProgrammerTest extends TestCase {
 
     public void setUp() {
-        saveUseBinary = NceMessage.useBinary;
+        saveCommandOptions = NceMessage.commandOptions;
     }
     
     public void tearDown() {
-        NceMessage.useBinary = saveUseBinary;
+        NceMessage.commandOptions = saveCommandOptions;
     }
-    boolean saveUseBinary;
+    int saveCommandOptions;
     
     public void testWriteCvSequenceAscii() throws JmriException {
-	    NceMessage.useBinary = false;
+	    NceMessage.commandOptions = NceMessage.OPTION_2004;
         // infrastructure objects
         NceInterfaceScaffold t = new NceInterfaceScaffold();
         NceListenerScaffold l = new NceListenerScaffold();
@@ -51,7 +51,7 @@ public class NceProgrammerTest extends TestCase {
     }
 
     public void testWriteCvSequenceBin() throws JmriException {
-	    NceMessage.useBinary = true;
+	    NceMessage.commandOptions = NceMessage.OPTION_2006;
         // infrastructure objects
         NceInterfaceScaffold t = new NceInterfaceScaffold();
         NceListenerScaffold l = new NceListenerScaffold();
@@ -72,7 +72,7 @@ public class NceProgrammerTest extends TestCase {
     }
 
     public void testWriteRegisterSequenceAscii() throws JmriException {
-	    NceMessage.useBinary = false;
+	    NceMessage.commandOptions = NceMessage.OPTION_2004;
         // infrastructure objects
         NceInterfaceScaffold t = new NceInterfaceScaffold();
         NceListenerScaffold l = new NceListenerScaffold();
@@ -96,7 +96,7 @@ public class NceProgrammerTest extends TestCase {
     }
 
     public void testWriteRegisterSequenceBin() throws JmriException {
-	    NceMessage.useBinary = true;
+	    NceMessage.commandOptions = NceMessage.OPTION_2006;
         // infrastructure objects
         NceInterfaceScaffold t = new NceInterfaceScaffold();
         NceListenerScaffold l = new NceListenerScaffold();
@@ -120,7 +120,7 @@ public class NceProgrammerTest extends TestCase {
     }
 
     public void testReadCvSequenceAscii() throws JmriException {
-	    NceMessage.useBinary = false;
+	    NceMessage.commandOptions = NceMessage.OPTION_2004;
         // infrastructure objects
         NceInterfaceScaffold t = new NceInterfaceScaffold();
         NceListenerScaffold l = new NceListenerScaffold();
@@ -146,7 +146,7 @@ public class NceProgrammerTest extends TestCase {
     }
 
     public void testReadCvSequenceBin() throws JmriException {
-	    NceMessage.useBinary = true;
+	    NceMessage.commandOptions = NceMessage.OPTION_2006;
         // infrastructure objects
         NceInterfaceScaffold t = new NceInterfaceScaffold();
         NceListenerScaffold l = new NceListenerScaffold();
@@ -172,7 +172,7 @@ public class NceProgrammerTest extends TestCase {
     }
 
     public void testReadRegisterSequenceAscii() throws JmriException {
-	    NceMessage.useBinary = false;
+	    NceMessage.commandOptions = NceMessage.OPTION_2004;
         // infrastructure objects
         NceInterfaceScaffold t = new NceInterfaceScaffold();
         NceListenerScaffold l = new NceListenerScaffold();
@@ -201,7 +201,7 @@ public class NceProgrammerTest extends TestCase {
     }
 
     public void testReadRegisterSequenceBin() throws JmriException {
-	    NceMessage.useBinary = true;
+	    NceMessage.commandOptions = NceMessage.OPTION_2006;
         // infrastructure objects
         NceInterfaceScaffold t = new NceInterfaceScaffold();
         NceListenerScaffold l = new NceListenerScaffold();

@@ -29,7 +29,7 @@ import javax.comm.SerialPort;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.24 $
+ * @version			$Revision: 1.25 $
  */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -149,9 +149,9 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
 
         if (getCurrentOption1Setting().equals(validOption1()[1])) {
             // setting binary mode
-            NceMessage.setUseBinary(true);
+            NceMessage.setCommandOptions(NceMessage.OPTION_2004);
         } else {
-            NceMessage.setUseBinary(false);
+            NceMessage.setCommandOptions(NceMessage.OPTION_2006);
         }
     }
 
@@ -186,19 +186,19 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
 		return validSpeeds;
 	}
 
-	protected String [] validSpeeds = new String[]{"9,600 baud", "19,200 baud", "38,400 baud"};
-	protected int [] validSpeedValues = new int[]{9600, 19200, 38400};
+	protected String [] validSpeeds = new String[]{"9,600 baud", "19,200 baud"};
+	protected int [] validSpeedValues = new int[]{9600, 19200};
 
     /**
      * Option 1 is binary vs ASCII command set.
      */
-    public String[] validOption1() { return new String[]{"Uses ASCII commands", "Uses binary commands"}; }
+    public String[] validOption1() { return new String[]{"2004 or earlier", "2006 or later"}; }
 
     /**
      * Get a String that says what Option 1 represents
      * May be an empty string, but will not be null
      */
-    public String option1Name() { return "Command Station"; }
+    public String option1Name() { return "Command Station EPROM"; }
 
     /**
      * Set the second port option.
