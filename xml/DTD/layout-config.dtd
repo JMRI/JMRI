@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.64 2006-11-26 21:09:12 jacobsen Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.65 2006-12-31 02:45:41 jacobsen Exp $ -->
 
 <!-- This DTD is Copyright 2001-2005 JMRI.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -363,6 +363,7 @@
 <!ELEMENT block (sensor*) >
   <!ATTLIST block signal 			  CDATA #REQUIRED >
   <!ATTLIST block mode				  CDATA #IMPLIED>
+  <!ATTLIST block approachsensor1     CDATA #IMPLIED>
   <!ATTLIST block watchedsensor       CDATA #IMPLIED>
   <!ATTLIST block watchedsensor1      CDATA #IMPLIED>
   <!ATTLIST block watchedsensor1alt   CDATA #IMPLIED>
@@ -370,8 +371,12 @@
   <!ATTLIST block watchedsensor2alt   CDATA #IMPLIED>
   <!ATTLIST block watchedturnout      CDATA #IMPLIED>
   <!ATTLIST block watchedsignal1      CDATA #IMPLIED>
+  <!ATTLIST block watchedsignal1alt   CDATA #IMPLIED>
   <!ATTLIST block watchedsignal2      CDATA #IMPLIED>
-  <!ATTLIST block useflashyellow      CDATA #IMPLIED>
-  <!ATTLIST block distantsignal    (true|false) "false" >
+  <!ATTLIST block watchedsignal2alt   CDATA #IMPLIED>
+  <!ATTLIST block useflashyellow    (true|false) "false" >
+  <!ATTLIST block limitspeed1       (true|false) "false" >
+  <!ATTLIST block limitspeed2       (true|false) "false" >
+  <!ATTLIST block distantsignal     (true|false) "false" >
 
 <!ELEMENT signals EMPTY >
