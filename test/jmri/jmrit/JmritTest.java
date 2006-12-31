@@ -8,7 +8,7 @@ import junit.framework.*;
  * Invokes complete set of tests in the jmri.jmrit tree
  *
  * @author	    Bob Jacobsen  Copyright 2001, 2003
- * @version         $Revision: 1.9 $
+ * @version         $Revision: 1.10 $
  */
 public class JmritTest extends TestCase {
 
@@ -26,18 +26,19 @@ public class JmritTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.JmritTest");   // no tests in this class itself
-        suite.addTest(jmri.jmrit.tracker.TrackerTest.suite());
-        suite.addTest(jmri.jmrit.beantable.BeanTableTest.suite());
-        suite.addTest(jmri.jmrit.simpleclock.SimpleClockTest.suite());
         suite.addTest(jmri.jmrit.display.DisplayTest.suite());
-        suite.addTest(jmri.jmrit.AbstractIdentifyTest.suite());
+        suite.addTest(jmri.jmrit.beantable.BeanTableTest.suite());
         suite.addTest(jmri.jmrit.decoderdefn.DecoderDefnTest.suite());
-        suite.addTest(jmri.jmrit.XmlFileTest.suite());
-        suite.addTest(jmri.jmrit.DccLocoAddressSelectorTest.suite());
-        suite.addTest(jmri.jmrit.symbolicprog.SymbolicProgTest.suite());
+        suite.addTest(jmri.jmrit.display.DisplayTest.suite());
         suite.addTest(jmri.jmrit.powerpanel.PowerPanelTest.suite());
         suite.addTest(jmri.jmrit.roster.RosterTest.suite());
         suite.addTest(jmri.jmrit.sendpacket.SendPacketTest.suite());
+        suite.addTest(jmri.jmrit.simpleclock.SimpleClockTest.suite());
+        suite.addTest(jmri.jmrit.symbolicprog.SymbolicProgTest.suite());
+        suite.addTest(jmri.jmrit.tracker.TrackerTest.suite());
+        suite.addTest(jmri.jmrit.AbstractIdentifyTest.suite());
+        suite.addTest(jmri.jmrit.DccLocoAddressSelectorTest.suite());
+        suite.addTest(jmri.jmrit.XmlFileTest.suite());
         return suite;
     }
 
