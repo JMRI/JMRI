@@ -2,12 +2,14 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: QSI_Diesel_Ver7.xml,v 1.1 2006-10-19 15:08:54 jacobsen Exp $ -->
+<!-- $Id: QSI_Diesel_Ver7.xml,v 1.2 2006-12-31 04:05:44 jacobsen Exp $ -->
 <decoder-config>
+  <version author="Michael Mosher" version="2" lastUpdated="20061127"/>
   <version author="Michael Mosher" version="1" lastUpdated="20061009"/>
 
 <!-- version 1 - Created from Ver 6 file -->
 <!--   Added CV55, CV56.5, CV56.18-21, changed CV53  -->
+<!-- version 2 - Added horn/whislte type to differentiate the Atlas SD35 prod ID's -->
 
 <decoder>
  
@@ -19,21 +21,21 @@
       <output name="3" label="" connection="other" />
       <output name="4" label="" connection="other" />
     </model>
-    <model model="Atlas Dash 8-40B,BW" 
+    <model model="Atlas Dash 8-40B/BW" 
            numFns="14" numOuts="14" productID="126" >
       <output name="1" label="" connection="other" />
       <output name="2" label="" connection="other" />
       <output name="3" label="" connection="other" />
       <output name="4" label="" connection="other" />
     </model>
-    <model model="Atlas Dash 8-40C,CW" 
+    <model model="Atlas Dash 8-40C/CW" 
            numFns="14" numOuts="14" productID="103" >
       <output name="1" label="" connection="other" />
       <output name="2" label="" connection="other" />
       <output name="3" label="" connection="other" />
       <output name="4" label="" connection="other" />
     </model>
-    <model model="Atlas Dash 8-40C,CW (GE pump)" 
+    <model model="Atlas Dash 8-40C/CW (GE pump)" 
            numFns="14" numOuts="14" productID="132" >
       <output name="1" label="" connection="other" />
       <output name="2" label="" connection="other" />
@@ -54,14 +56,14 @@
       <output name="3" label="" connection="other" />
       <output name="4" label="" connection="other" />
     </model>
-    <model model="Atlas SD35" 
+    <model model="Atlas SD35 P3 horn" 
            numFns="14" numOuts="14" productID="149" >
       <output name="1" label="" connection="other" />
       <output name="2" label="" connection="other" />
       <output name="3" label="" connection="other" />
       <output name="4" label="" connection="other" />
     </model>
-    <model model="Atlas SD35" 
+    <model model="Atlas SD35 H4710 whistle" 
            numFns="14" numOuts="14" productID="150" >
       <output name="1" label="" connection="other" />
       <output name="2" label="" connection="other" />
@@ -3916,3 +3918,5 @@
 </pane>
 
 </decoder-config>
+
+ 	  	 
