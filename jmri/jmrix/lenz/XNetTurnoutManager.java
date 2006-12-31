@@ -10,9 +10,11 @@ import jmri.Turnout;
  * System names are "XTnnn", where nnn is the turnout number without padding.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 2.4 $
+ * @version			$Revision: 2.5 $
  */
 public class XNetTurnoutManager extends jmri.AbstractTurnoutManager implements XNetListener {
+
+    final java.util.ResourceBundle rbt = java.util.ResourceBundle.getBundle("jmri.jmrix.lenz.XNetBundle");
 
     // ctor has to register for XNet events
     public XNetTurnoutManager() {
@@ -77,6 +79,22 @@ public class XNetTurnoutManager extends jmri.AbstractTurnoutManager implements X
           }
        }
     }
+
+    /**
+     * Get text to be used for the Turnout.CLOSED state in user communication.
+     * Allows text other than "CLOSED" to be use with certain hardware system
+     * to represent the Turnout.CLOSED state.
+     */
+    public String getClosedText() { return rbt.getString("TurnoutStateClosed"); };
+
+     /**
+      * Get text to be used for the Turnout.THROWN state in user communication.
+      * Allows text other than "THROWN" to be use with certain hardware system
+      * to represent the Turnout.THROWN state.
+      */
+     public String getThrownText() { return rbt.getString("TurnoutStateThrown"); };
+
+
 
     // listen for the messages to the LI100/LI101
     public void message(XNetMessage l) {
