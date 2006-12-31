@@ -95,7 +95,7 @@
  * may be necessary to poll for the feedback response data.
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001, Portions by Paul Bender Copyright (C) 2003 
- * @version			$Revision: 2.9 $
+ * @version			$Revision: 2.10 $
  */
 
 package jmri.jmrix.lenz;
@@ -158,13 +158,17 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
     // Set the Commanded State.   This method overides setCommandedState in 
     // the Abstract Turnout class.
-    synchronized public void setCommandedState(int s){
-        log.debug("set commanded state for turnout "+getSystemName()+" to "+s);
-        newCommandedState(s);
+    public void setCommandedState(int s){
+        if(log.isDebugEnabled()) log.debug("set commanded state for turnout "+getSystemName()+" to "+s);
+        synchronized(this){
+           newCommandedState(s);
+        }
         myOperator = getTurnoutOperator();        // MUST set myOperator before starting the thread
         if (myOperator==null) {
                 forwardCommandChangeToLayout(s);
-	        newKnownState(INCONSISTENT);
+                synchronized(this) {
+	           newKnownState(INCONSISTENT);
+                }
         } else
         {       myOperator.start();
         }
@@ -221,8 +225,10 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
             return;
 	  } else if(l.isOkMessage()) {
 	    /* the command was successfully recieved */
-	    newKnownState(getCommandedState());
-	    InternalState=IDLE;
+            synchronized(this) {
+	       newKnownState(getCommandedState());
+	       InternalState=IDLE;
+            }
 	    return;
 	  }
         }
@@ -452,8 +458,10 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                                                   false );
             XNetTrafficController.instance().sendXNetMessage(msg, this);
 	    // Set the known state to the commanded state.
-	    newKnownState(getCommandedState());
-	    InternalState = OFFSENT;
+            synchronized(this) {
+	       newKnownState(getCommandedState());
+	       InternalState = OFFSENT;
+            }
     }
 
 
@@ -478,12 +486,16 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
             // is for this object, parse the message
             if (log.isDebugEnabled()) log.debug("Message for turnout " + mNumber);
             if(l.getTurnoutStatus(startByte,1)==THROWN) {
-               newCommandedState(THROWN);
-               newKnownState(getCommandedState());
+               synchronized(this) {
+                  newCommandedState(THROWN);
+                  newKnownState(getCommandedState());
+               }
 	       return(0);
             } else if(l.getTurnoutStatus(startByte,1)==CLOSED) { 
-               newCommandedState(CLOSED);
-               newKnownState(getCommandedState());
+               synchronized(this) {
+                  newCommandedState(CLOSED);
+                  newKnownState(getCommandedState());
+               }
 	       return(0);
             } else {
                // the state is unknown or inconsistent.  If the command state 
@@ -498,12 +510,16 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
             // is for this object, parse message type
             if (log.isDebugEnabled()) log.debug("Message for turnout" + mNumber);
             if(l.getTurnoutStatus(startByte,0)==THROWN) {
-               newCommandedState(THROWN);
-               newKnownState(getCommandedState());
+               synchronized(this) {
+                  newCommandedState(THROWN);
+                  newKnownState(getCommandedState());
+               }
 	       return(0);
             } else if(l.getTurnoutStatus(startByte,0)==CLOSED) { 
-               newCommandedState(CLOSED);
-               newKnownState(getCommandedState());
+               synchronized(this) {
+                  newCommandedState(CLOSED);
+                  newKnownState(getCommandedState());
+               }
 	       return(0);
             } else {
                // the state is unknown or inconsistent.  If the command state 
