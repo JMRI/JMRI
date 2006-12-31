@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.7.6.html,v 1.13 2006-12-17 21:15:23 jacobsen Exp $ -->
+<!-- $Id: jmri1.7.6.html,v 1.14 2006-12-31 06:10:57 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -130,6 +130,10 @@
 
 <P>Paul Bender provided a definition file for the MRC 1636 Sound Decoder, a drop in replacement board for Atlas N-scale road switchers requiring the "short" light board replacement decoder
 
+<P>The LocoNet menu now contains a tool for examining and changing the individual sounds in a Digitax Sound Project (.spj) file
+
+<P>The Digitrax PR2 connection can now run Digitrax SFX decoders in test mode. The PR2 can't provide enough power to run most motors, but the SFX decoders have a special mode that allows operation of sound and lights without operating the motor.  If the PR2 current limit is exceeded, the "Power Control" will show the layout power going off, and can be used to turn it back on.
+
 <P>Simon Ginsburg added decoder definitions for lots of Uhlenbrock decoders
 
 <P>MemoryIcons can now have their text color, size and emphasis set from their pop-up menus
@@ -205,6 +209,20 @@
 <P>The panel editor now lets you set the icons for all appearances of a signal head, including dark and all three flashing colors.  If you don't plan on using one, e.g. flashing green, just set it to something similar, e.g. whatever you're setting green to.
 
 <P>Added a ReporterFormatter sample script for handling information from Digitrax transponding equipment.
+
+<P>You can now add memory and reporter icons from the panel editor window. You don't have to add them by editing the panel XML file any more.
+
+<P>David Falkenburg updated the NCE support to use binary programming commands.  This will be needed with new NCE EPROMs when they become generally available.  As part of that, a new option has been added to the preferences for the NCE protocol.
+
+<P>Michael Mosher updated the QSI Version 7 Diesel decoder with a horn description for Atlas SD35 versions.
+
+<P>Michael Mosher provided a new file for version 15 of the Zimo MX64(H) decoder.
+
+<P>Michael Mosher updated the TCS decoder version numbers for automatic ID.
+
+<P>Michael Mosher updated the ESU LokSound V3.5 decoder definition and created a new XL V3.5 definition file.
+
+<P>Paul Bender updated the turnout state display for Lenz systems so that the "+"/"-" notation corresponds to the buttons used on an LH100.
 
 <hr class="hide">
 <!-- Footer -->
