@@ -11,9 +11,11 @@ import org.jdom.Element;
  * Handle XML persistance of Simple Signal Logic objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2005
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
+ * 
+ * Revisions to add facing point sensors, approach lighting, 
+ * and limited speed.                 Dick Bronson (RJB) 2006
  */
-//Revisions to add facing point sensors and limited speed Dick Bronosn (RJB) 2006
 
 public class BlockBossLogicXml implements XmlAdapter {
 
@@ -44,6 +46,10 @@ public class BlockBossLogicXml implements XmlAdapter {
             block.addAttribute("signal", p.getDrivenSignal());
             block.addAttribute("mode", ""+p.getMode());
 
+            if (p.getApproachSensor1()!=null) {
+                block.addAttribute("approachsensor1", p.getApproachSensor1());
+            }
+
             if (p.getSensor1()!=null) block.addContent(storeSensor(p.getSensor1()));
             if (p.getSensor2()!=null) block.addContent(storeSensor(p.getSensor2()));
             if (p.getSensor3()!=null) block.addContent(storeSensor(p.getSensor3()));
@@ -64,7 +70,6 @@ public class BlockBossLogicXml implements XmlAdapter {
             if (p.getWatchedSignal2Alt()!=null) {
                 block.addAttribute("watchedsignal2alt", p.getWatchedSignal2Alt());
             }
-
             if (p.getWatchedSensor1()!=null) {
                 block.addAttribute("watchedsensor1", p.getWatchedSensor1());
             }
@@ -105,6 +110,8 @@ public class BlockBossLogicXml implements XmlAdapter {
         for (int i = 0; i<l.size(); i++) {
             Element block = (Element)l.get(i);
             BlockBossLogic bb = BlockBossLogic.getStoppedObject(block.getAttributeValue("signal"));
+            if (block.getAttribute("approachsensor1")!=null)
+                bb.setApproachSensor1(block.getAttributeValue("approachsensor1"));
             if (block.getAttribute("watchedsensor")!=null)   // for older XML files
                 bb.setSensor1(block.getAttributeValue("watchedsensor"));
             List sl = block.getChildren("sensor");

@@ -39,8 +39,10 @@ import java.util.Hashtable;
  * use with CTC logic, etc.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.19 $
- * Revisions to add facing point sensors and check box to limit speed. Dick Bronosn (RJB) 2006
+ * @version     $Revision: 1.20 $
+ * 
+ * Revisions to add facing point sensors, approach lighting, and check box
+ * to limit speed. Dick Bronosn (RJB) 2006
  */
 
 public class BlockBossLogic extends Siglet {
@@ -349,11 +351,32 @@ public class BlockBossLogic extends Siglet {
     Sensor watchedSensor1Alt = null;
     Sensor watchedSensor2 = null;
     Sensor watchedSensor2Alt = null;
+    Sensor approachSensor1 = null;
     
     boolean limitSpeed1 = false;
     boolean limitSpeed2 = false;
     boolean protectWithFlashing = false;
     boolean distantSignal = false;
+
+
+    
+        public void setApproachSensor1(String name) {
+        if (name == null || name.equals("")) {
+            approachSensor1 = null;
+            return;
+        }
+        approachSensor1 = InstanceManager.sensorManagerInstance().provideSensor(name);
+        if (approachSensor1 == null) log.warn("Approach Sensor1 "+name+" was not found!");
+
+    }
+        /**
+         * Return the system name of the sensor being monitored
+         * @return system name; null if no sensor configured
+         */
+        public String getApproachSensor1() {
+            if (approachSensor1 == null) return null;
+            return approachSensor1.getSystemName();
+        }
 
     /**
      * Define the siglet's input and output.
@@ -398,7 +421,6 @@ public class BlockBossLogic extends Siglet {
             tempArray[n]= watchedSignal2Alt;
             n++;
         }
-
         if (watchedSensor1 != null) {
         tempArray[n]= watchedSensor1;
         n++;
@@ -413,6 +435,10 @@ public class BlockBossLogic extends Siglet {
         }
         if (watchedSensor2Alt != null) {
             tempArray[n]= watchedSensor2Alt;
+            n++;
+        }
+        if (approachSensor1 != null) {
+            tempArray[n]= approachSensor1;
             n++;
         }
         
@@ -553,7 +579,10 @@ public class BlockBossLogic extends Siglet {
         // check if signal if held, forcing a red aspect by this calculation
         if (((SignalHead)outputs[0]).getHeld())
             appearance = SignalHead.RED;
-            
+
+        // possible override to dark
+        appearance = applyApproachLighting(appearance);
+        
         // show result if changed
         if (appearance != oldAppearance)
             ((SignalHead)outputs[0]).setAppearance(appearance);
@@ -592,6 +621,9 @@ public class BlockBossLogic extends Siglet {
         if (((SignalHead)outputs[0]).getHeld())
             appearance = SignalHead.RED;
             
+        // possible override to dark
+        appearance = applyApproachLighting(appearance);
+        
         // show result if changed
         if (appearance != oldAppearance)
             ((SignalHead)outputs[0]).setAppearance(appearance);
@@ -630,6 +662,9 @@ public class BlockBossLogic extends Siglet {
         if (((SignalHead)outputs[0]).getHeld())
             appearance = SignalHead.RED;
             
+        // possible override to dark
+        appearance = applyApproachLighting(appearance);
+        
         // show result if changed
         if (appearance != oldAppearance)
             ((SignalHead)outputs[0]).setAppearance(appearance);
@@ -673,7 +708,6 @@ public class BlockBossLogic extends Siglet {
         if (watchSensor4!=null && watchSensor4.getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
 
-        // Check for red due to sensors past turnuot Added by RJB 2006        
         if ((watchTurnout!=null && watchTurnout.getKnownState() != Turnout.THROWN) && ((watchedSensor1!=null && watchedSensor1.getKnownState() != Sensor.INACTIVE)))
             appearance = SignalHead.RED;
         if ((watchTurnout!=null && watchTurnout.getKnownState() != Turnout.THROWN) && ((watchedSensor1Alt!=null && watchedSensor1Alt.getKnownState() != Sensor.INACTIVE)))
@@ -687,9 +721,22 @@ public class BlockBossLogic extends Siglet {
         if (((SignalHead)outputs[0]).getHeld())
             appearance = SignalHead.RED;
             
+        // possible override to dark
+        appearance = applyApproachLighting(appearance);
+        
         // show result if changed
         if (appearance != oldAppearance)
             ((SignalHead)outputs[0]).setAppearance(appearance);
+    }
+    
+    int applyApproachLighting(int appearance) {
+        if (approachSensor1 != null && approachSensor1.getKnownState() == Sensor.INACTIVE) {
+            //if (appearance == SignalHead.GREEN) {
+            //    appearance = SignalHead.DARK;
+            //}
+            appearance = SignalHead.DARK;
+        }        
+        return appearance;
     }
 
     static Hashtable umap = null;
