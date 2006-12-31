@@ -5,8 +5,7 @@ package jmri.jmrit.blockboss;
 import jmri.InstanceManager;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.ResourceBundle;
 
 import javax.swing.*;
@@ -31,9 +30,11 @@ import javax.swing.*;
  * The individual items all share data models to simplify the logic.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.15 $
- *              Revisions to add facing point sensors, limited speed,
- *              change layout, and tool tips.  Dick Bronson (RJB) 2006
+ * @version     $Revision: 1.16 $
+ *              
+ *              Revisions to add facing point sensors, approach lighting,
+ *              limited speed, changed layout, and tool tips.  
+ *                                                  Dick Bronson (RJB) 2006
  
 */
 
@@ -98,6 +99,7 @@ public class BlockBossFrame extends JFrame {
     JCheckBox fDistantBox;
 
     JTextField outSignalField;
+    JTextField approachSensorField1;
 
     
     String buttonSingleTooltip = "In direction of traffic";
@@ -110,6 +112,8 @@ public class BlockBossFrame extends JFrame {
     String outSignalFieldTooltip =  "<HTML><BODY>Enter a new signal head number, or<BR>"
         + "enter an existing signal head number<BR>" 
         + "then hit return to load its information.</BODY></HTML>";
+    String approachSensor1Tooltip = "<HTML><BODY>Enter sensor that lights this signal or<BR>"
+        + "leave blank for always on.";  
     String sensorFieldTooltip =  "Sensor active sets this signal to Red.";            
     String turnoutFieldTooltip = "Enter protected turnout number here.";
     String flashBoxTooltip = "<HTML><BODY>One aspect faster than yellow displays<BR>" 
@@ -187,7 +191,7 @@ public class BlockBossFrame extends JFrame {
         buttonTrailMain.addActionListener(a);
         buttonTrailDiv.addActionListener(a);
         buttonFacing.addActionListener(a);
-
+        
         // share data models
         tmSensorField1.setDocument(sSensorField1.getDocument());
         tdSensorField1.setDocument(sSensorField1.getDocument());
@@ -217,17 +221,22 @@ public class BlockBossFrame extends JFrame {
 
         // add top part of GUI, holds signal head name to drive
         JPanel line = new JPanel();
-        line.add(new JLabel("Signal Named "));
-        line.add(outSignalField= new JTextField(5));
+        line.add(new JLabel("         Signal Named "));
+        line.add(outSignalField= new JTextField(12));
         outSignalField.setToolTipText(outSignalFieldTooltip);
-        line.setAlignmentX(1);        
-        getContentPane().add(line);
         outSignalField.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                // user hit enter, use this name to fill in the rest of the fields
                 activate();
             }
         });
 
+        line.add(new JLabel("   Approach Lighting "));
+        line.add(approachSensorField1= new JTextField(6));
+        approachSensorField1.setToolTipText(approachSensor1Tooltip);
+        line.setAlignmentX(0.5f);        
+        getContentPane().add(line);
+        
         line = new JPanel();
         line.setLayout(new BoxLayout(line, BoxLayout.Y_AXIS));
         buttonSingle.setToolTipText(buttonSingleTooltip);
@@ -290,7 +299,7 @@ public class BlockBossFrame extends JFrame {
         insets.top = 9;
         insets.bottom = 9;
 
-        modeSingle.add(new JLabel("Protects Sensor/s"), constraints);        
+        modeSingle.add(new JLabel("  Protects Sensor/s"), constraints);        
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
         sSensorField1.setToolTipText(sensorFieldTooltip);
@@ -356,7 +365,7 @@ public class BlockBossFrame extends JFrame {
         constraints.gridy = 0;
         insets.top = 9;
         insets.bottom = 9;
-        modeTrailMain.add(new JLabel("Protects Sensor/s"), constraints);        
+        modeTrailMain.add(new JLabel(" Protects Sensor/s"), constraints);        
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
         tmSensorField1.setToolTipText(sensorFieldTooltip);
@@ -436,7 +445,7 @@ public class BlockBossFrame extends JFrame {
         constraints.gridy = 0;
         insets.top = 9;
         insets.bottom = 9;
-        modeTrailDiv.add(new JLabel("Protects Sensor/s"), constraints);        
+        modeTrailDiv.add(new JLabel(" Protects Sensor/s"), constraints);        
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
         tdSensorField1.setToolTipText(sensorFieldTooltip);
@@ -582,7 +591,7 @@ public class BlockBossFrame extends JFrame {
         constraints.gridx = 0;
         constraints.gridy = 4;
         insets.bottom = 2;
-        modeFacing.add(new JLabel("And To Protect Signal"), constraints);
+        modeFacing.add(new JLabel("And Protect Signal"), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
         fNextSignalField2.setToolTipText(highSignalFieldTooltip);
@@ -638,6 +647,7 @@ public class BlockBossFrame extends JFrame {
 
         // it does
         BlockBossLogic b = BlockBossLogic.getStoppedObject(outSignalField.getText());
+        b.setApproachSensor1(approachSensorField1.getText());
         if (buttonSingle.isSelected())
             loadSingle(b);
         else if (buttonTrailMain.isSelected())
@@ -742,6 +752,8 @@ public class BlockBossFrame extends JFrame {
         
         setTitle("Signal logic for "+outSignalField.getText());
 
+        approachSensorField1.setText(b.getApproachSensor1());
+        
         sSensorField1.setText(b.getSensor1());
         sSensorField2.setText(b.getSensor2());
         sSensorField3.setText(b.getSensor3());
@@ -813,6 +825,7 @@ public class BlockBossFrame extends JFrame {
      */
     public void setSignal(String name) {
         outSignalField.setText(name);
+        activate();
     }
     
     public void addNotify() {
