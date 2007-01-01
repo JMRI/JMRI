@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CMRI.html,v 1.11 2006-06-06 04:15:12 jacobsen Exp $ -->
+<!-- $Id: CMRI.html,v 1.12 2007-01-01 22:26:19 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -70,12 +70,34 @@
 	<li>TracTronics
 	</UL>
 
-	<H3>Limitations</H3>
 
-	<p>The JMRI libraries have built-in support for C/MRI serial hardware
-	using the USIC, SUSIC and SMINI.
-	C/MRI inputs can be used as sensors, and outputs can be driven as
-	turnouts.</p>
+    <h3>C/MRI Input and Output Bits </H3>                                                                                          JMRI refers to C/MRI input bits as sensors.  You refer to a C/MRI input bit (sensor) as CSnxxx where nxxx is the address of the bit (see below).  
+    
+	<P>C/MRI inputs can be used as 'sensors', and C/MRI outputs can be driven 
+	as 'turnouts' or 'lights'. Note that C/MRI inputs and 
+	outputs are sometimes called 'pins', sometimes called 'bits', 
+	and sometimes called 'lines'; all are equivalent ways to refer to same things.
+
+    <P>JMRI refers to C/MRI output bits as turnouts or lights.  
+    To refer to a C/MRI output bit as a turnout, 
+    use the system name CTnxxx, where nxxx is the address of the bit (see below). To refer to a C/MRI output bit as a light, use CLnxxx, where nxxx is the address of the bit (see below). Turnouts and lights are different methods of referring to C/MRI outputs.  Each method has different control options. Always use 'turnouts' for C/MRI outputs used to control turnouts (switches) and for C/MRI outputs used to operate signals.  For historical reasons, C/MRI output bits used to control signal aspects are referred to as 'turnouts', even if the output bits are used to control lighted signals.  Use 'lights' to refer to C/MRI output bits used for fascia panel lights, for lights in scenery (structure lighting, street lights, etc.), and for special purposes where the control options for lights suit your needs.
+    
+    <P>A specific output bit may be referred to as a turnout or a light, but not both. 
+    When a new C/MRI turnout or a new C/MRI light is created, JMRI checks that 
+    the specified output bit is available for assignment.  
+    If the requested C/MRI output bit is in use by a turnout or a light, 
+    JMRI will refuse to create the new turnout or new light.  
+    Note that some C/MRI turnout control options use two bits, the addressed one and the 
+    next one (see below), and that both output bits must be unassigned for successful 
+    creation of a new turnout controlled by two output bits. 
+    Lists of current C/MRI bit assignments can be obtained by selecting 
+    System &gt; CMRI &gt; List Assignments.
+
+	<H3>Using Specific C/MRI Boards</H3>
+
+	<p>The JMRI libraries have built-in support for C/MRI serial hardware using the 
+	USIC, SUSIC and SMINI. 
+	Each SMINI, USIC or SUSIC is called a "node". 
 
 	<p>At this time, the directly connected IBEC and UBEC interfaces are
 	not supported.</p>
