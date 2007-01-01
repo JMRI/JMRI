@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CMRI.html,v 1.12 2007-01-01 22:26:19 jacobsen Exp $ -->
+<!-- $Id: CMRI.html,v 1.13 2007-01-01 22:37:15 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -239,14 +239,14 @@
 	and two 32-bit output
 	cards, their addresses will be:
 	    <UL>
-	    <LI>CT1001 is the first pin on the 1st output card
-	    <LI>CT1032 is the last pin on the 1st output card
-	    <LI>CT1033 is the first pin on the 2nd output card
-	    <LI>CT1064 is the last pin on the 2nd output card
-	    <LI>CS1001 is the first pin on the 1st input card
-	    <LI>CS1032 is the last pin on the 1st input card
-	    <LI>CS1033 is the first pin on the 2nd input card
-	    <LI>CS1064 is the last pin on the 3rd input card
+	    <LI>CT4001 is the first pin on the 1st output card
+	    <LI>CT4032 is the last pin on the 1st output card
+	    <LI>CT4033 is the first pin on the 2nd output card
+	    <LI>CT4064 is the last pin on the 2nd output card
+	    <LI>CS4001 is the first pin on the 1st input card
+	    <LI>CS4032 is the last pin on the 1st input card
+	    <LI>CS4033 is the first pin on the 2nd input card
+	    <LI>CS4064 is the last pin on the 3rd input card
 	    </UL>
 	
 	</UL>
@@ -257,7 +257,89 @@
     	
     </dd>
 
+<dt class=left><a name=alternate>Alternate Numbering for System Names</a></dt>
+<dd>
+An alternate scheme for numbering in C/MRI system names was developed 
+to give user access to the full number of lines allowed by C/MRI hardware design.
+The main numbering system (documented above) allows access to 999 input 
+and output lines on each node.
+The C/MRI hardware design, however, supports many more bits for USIC and SUSIC modules.
+Most JMRI users will never need this alternate scheme,
+and should use the main numbering scheme.
+<P>
+The alternate numbering scheme is similar to the main numbering scheme,
+except the node number and bit number are separated by a "B",
+and both node number and bit number can range to any value supported by C/MRI.
+For example, CS1B13 refers to input line 13 of node 1, and is equivalent to CS1013
+in the main numbering scheme.
+Also CT2B1109 refers to output line 1109 of node 2,
+and there is no equivalent in the main numbering scheme.
+Users may use either numbering scheme interchangeably for line numbers up to 999,
+but must use the alternate numbering scheme for line numbers greater than 999.
+</dd>
 
+<dt class=left><a name=options>C/MRI Turnout Control Options</a></dt>
+<dd>
+Turnouts (switches) may be controlled using one or two output bits.  
+When a turnout is created using the Add option in the Turnout Table, 
+the user is asked whether the turnout is to be controlled using one 
+or two output bits.  
+<P>
+If one-output-bit control is selected,
+then that output bit is set "Off" for CLOSED ('normal' in C/MRI manuals) 
+or "On" for THROWN ('reverse' in C/MRI manuals). 
+When setting the output bit, JMRI compares the requested state to the
+state indicated by the current value of the output bit.
+If these states are different, then the output bit is set as indicated above.
+If these states are the same, that state is compared to the state indicated
+by turnout feedback.
+If the states are the same, no action is taken since the turnout is already
+in the requested state.
+If the states are different, the turnout was probably changed by some
+means separate from JMRI.
+To ensure the turnout is actually set to the requested state,
+the output bit is first changed to match the state indicated
+by the turnout feedback, then one second later it is changed again
+to match the requested state.
+This guarantees a change of state for those turnout control
+devices that require a change in state to actually move the turnout.
+<P>
+If two-output-bit control is selected, the bit referenced in the turnout
+system name (see above) and the next bit in sequence
+are used to control the turnout.
+For example, if CT33 has two-output-bit control,
+the 33rd and 34th bits are used to control the turnout.
+If two-output-bit control is selected, the user must select either
+'steady state' or 'pulsed' control.
+Steady state control should be selected for stall motor turnouts,
+such as a Tortoise,
+if it is being controlled according to the recommendation in Chubb's
+C/MRI User's Manual, Version 3.0, page 3-12.
+With steady state control, for CLOSED, the first bit is set "Off" and
+the second bit is set "On"; for THROWN, the bits states are reversed, 
+i.e., the first bit is set "On" and the second bit is set "Off". 
+With pulsed control, both bits are off when nothing is happening. 
+When CLOSED or THROWN is requested, this request is compared to 
+the known state of the turnout (which follows turnout feedback). 
+If the known state indicates the turnout is already in the requested state, 
+nothing is done.
+If the known state is different from the requested state, 
+then the first bit is pulsed if CLOSED is requested,
+or the second bit is pulsed if THROWN is requested.
+In either case, a 'pulse' consists of the bit being turned on for one second,
+then returned to the off position.
+<I>Note that to have two-output-bit control,
+a turnout must be created using the "Add" button in the Turnout Table.</I>
+</dd>
+<dt class=left><a name=diagnostics>C/MRI Diagnostics</a></dt>
+<dd>
+JMRI supports the two automated diagnostic procedures mentioned in 
+Chapter 6 of Bruce Chubb's C/MRI User's Manual, Version 3.0.  
+These automated procedures are controlled via a dialog available by 
+selecting System>CMRI>Run Diagnostic.
+The Wraparound Test requires a special wraparound test cable,
+and the Output Test requires a special output test card.
+</dd>
 	</dl>
 
 	<H3> More info </H3>
