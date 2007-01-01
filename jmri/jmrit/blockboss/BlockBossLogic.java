@@ -39,7 +39,7 @@ import java.util.Hashtable;
  * use with CTC logic, etc.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  * 
  * Revisions to add facing point sensors, approach lighting, and check box
  * to limit speed. Dick Bronosn (RJB) 2006
@@ -580,8 +580,8 @@ public class BlockBossLogic extends Siglet {
         if (((SignalHead)outputs[0]).getHeld())
             appearance = SignalHead.RED;
 
-        // possible override to dark
-        appearance = applyApproachLighting(appearance);
+        // handle approach lighting
+        doApproach();
         
         // show result if changed
         if (appearance != oldAppearance)
@@ -621,8 +621,8 @@ public class BlockBossLogic extends Siglet {
         if (((SignalHead)outputs[0]).getHeld())
             appearance = SignalHead.RED;
             
-        // possible override to dark
-        appearance = applyApproachLighting(appearance);
+        // handle approach lighting
+        doApproach();
         
         // show result if changed
         if (appearance != oldAppearance)
@@ -662,8 +662,8 @@ public class BlockBossLogic extends Siglet {
         if (((SignalHead)outputs[0]).getHeld())
             appearance = SignalHead.RED;
             
-        // possible override to dark
-        appearance = applyApproachLighting(appearance);
+        // handle approach lighting
+        doApproach();
         
         // show result if changed
         if (appearance != oldAppearance)
@@ -721,22 +721,26 @@ public class BlockBossLogic extends Siglet {
         if (((SignalHead)outputs[0]).getHeld())
             appearance = SignalHead.RED;
             
-        // possible override to dark
-        appearance = applyApproachLighting(appearance);
+        // handle approach lighting
+        doApproach();
         
         // show result if changed
         if (appearance != oldAppearance)
             ((SignalHead)outputs[0]).setAppearance(appearance);
     }
     
-    int applyApproachLighting(int appearance) {
+    /**
+     * Handle the approach lighting logic for all modes
+     */
+    void doApproach() {
         if (approachSensor1 != null && approachSensor1.getKnownState() == Sensor.INACTIVE) {
-            //if (appearance == SignalHead.GREEN) {
-            //    appearance = SignalHead.DARK;
-            //}
-            appearance = SignalHead.DARK;
-        }        
-        return appearance;
+            // should not be lit
+            if (driveSignal.getLit()) driveSignal.setLit(false);
+        } else {
+            // should be lit
+            if (!driveSignal.getLit()) driveSignal.setLit(true);
+        }            
+        return;
     }
 
     static Hashtable umap = null;
