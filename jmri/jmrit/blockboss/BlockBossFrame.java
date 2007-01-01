@@ -30,7 +30,7 @@ import javax.swing.*;
  * The individual items all share data models to simplify the logic.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  *              
  *              Revisions to add facing point sensors, approach lighting,
  *              limited speed, changed layout, and tool tips.  
@@ -231,12 +231,8 @@ public class BlockBossFrame extends JFrame {
             }
         });
 
-        line.add(new JLabel("   Approach Lighting "));
-        line.add(approachSensorField1= new JTextField(6));
-        approachSensorField1.setToolTipText(approachSensor1Tooltip);
-        line.setAlignmentX(0.5f);        
         getContentPane().add(line);
-        
+                
         line = new JPanel();
         line.setLayout(new BoxLayout(line, BoxLayout.Y_AXIS));
         buttonSingle.setToolTipText(buttonSingleTooltip);
@@ -257,6 +253,13 @@ public class BlockBossFrame extends JFrame {
         getContentPane().add(fillModeTrailMain());
         getContentPane().add(fillModeTrailDiv());
         getContentPane().add(fillModeFacing());
+
+        line = new JPanel();
+        line.add(new JLabel("   Approach Lighting Sensor "));
+        line.add(approachSensorField1= new JTextField(6));
+        approachSensorField1.setToolTipText(approachSensor1Tooltip);
+        line.setAlignmentX(0.5f);        
+        getContentPane().add(line);
 
         getContentPane().add(new JSeparator(JSeparator.HORIZONTAL));
 
