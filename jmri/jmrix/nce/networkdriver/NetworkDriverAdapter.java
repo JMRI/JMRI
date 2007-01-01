@@ -2,9 +2,12 @@
 
 package jmri.jmrix.nce.networkdriver;
 
+import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NcePortController;
 import jmri.jmrix.nce.NceProgrammer;
 import jmri.jmrix.nce.NceProgrammerManager;
+import jmri.jmrix.nce.NceSensorManager;
+import jmri.jmrix.nce.NceThrottleManager;
 import jmri.jmrix.nce.NceTrafficController;
 
 import java.io.*;
@@ -18,7 +21,7 @@ import com.sun.java.util.collections.Vector;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class NetworkDriverAdapter extends NcePortController {
 
@@ -38,7 +41,20 @@ public class NetworkDriverAdapter extends NcePortController {
 
         jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.nce.NceTurnoutManager());
 
+        NceSensorManager s;
+        jmri.InstanceManager.setSensorManager(s = new jmri.jmrix.nce.NceSensorManager());
+        NceTrafficController.instance().setSensorManager(s);
+
+        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.nce.NceThrottleManager());
+
         jmri.jmrix.nce.ActiveFlag.setActive();
+
+        if (getCurrentOption1Setting().equals(validOption2()[1])) {
+            // setting binary mode
+            NceMessage.setCommandOptions(NceMessage.OPTION_2006);
+        } else {
+            NceMessage.setCommandOptions(NceMessage.OPTION_2004);
+        }
     }
 
     private Thread sinkThread;
@@ -77,6 +93,27 @@ public class NetworkDriverAdapter extends NcePortController {
     }
 
     public boolean status() {return opened;}
+
+    /**
+     * Option 2 is binary vs ASCII command set.
+     */
+    public String[] validOption2() { return new String[]{"2004 or earlier", "2006 or later"}; }
+
+    /**
+     * Get a String that says what Option 2 represents
+     * May be an empty string, but will not be null
+     */
+    public String option2Name() { return "Command Station EPROM"; }
+
+    /**
+     * Set the binary vs ASCII command set option.
+     */
+    public void configureOption2(String value) { mOpt2 = value; }
+    protected String mOpt2 = null;
+    public String getCurrentOption2Setting() {
+        if (mOpt2 == null) return validOption2()[0];
+        return mOpt2;
+    }
 
     // private control members
     private boolean opened = false;

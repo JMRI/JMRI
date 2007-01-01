@@ -21,7 +21,7 @@ import javax.swing.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -40,6 +40,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
         e.addAttribute("port", c.host.getText());
         e.addAttribute("option1", c.port.getText());
+        e.addAttribute("option2", c.getMode());
 
         e.addAttribute("class", this.getClass().getName());
 
@@ -53,7 +54,11 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         // configure port name
         String hostName = e.getAttribute("port").getValue();
         String portNumber = e.getAttribute("option1").getValue();
-
+        String mode = "";
+        if (e.getAttribute("option2") != null) {
+            mode = e.getAttribute("option2").getValue();
+        }
+        
         // notify
         JFrame f = new JFrame("NCE network connection");
         f.getContentPane().add(new JLabel("Connecting to "+hostName+":"+portNumber));
@@ -78,15 +83,16 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         f.dispose();
 
         // register, so can be picked up
-        register(hostName, portNumber);
+        register(hostName, portNumber, mode);
+
     }
 
     protected void register() {
         log.error("unexpected call to register()");
         new Exception().printStackTrace();
     }
-    protected void register(String host, String port) {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(host, port));
+    protected void register(String host, String port, String mode) {
+        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(host, port, mode));
     }
 
     // initialize logging
