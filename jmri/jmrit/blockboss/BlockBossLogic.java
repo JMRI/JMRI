@@ -39,7 +39,7 @@ import java.util.Hashtable;
  * use with CTC logic, etc.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.21 $
+ * @version     $Revision: 1.22 $
  * 
  * Revisions to add facing point sensors, approach lighting, and check box
  * to limit speed. Dick Bronosn (RJB) 2006
@@ -614,7 +614,10 @@ public class BlockBossLogic extends Siglet {
             appearance = SignalHead.RED;
         if (watchSensor4!=null && watchSensor4.getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
+            
         if (watchTurnout!=null && watchTurnout.getKnownState() != Turnout.CLOSED)
+            appearance = SignalHead.RED;
+        if (watchTurnout!=null && watchTurnout.getCommandedState() != Turnout.CLOSED)
             appearance = SignalHead.RED;
 
         // check if signal if held, forcing a red aspect by this calculation
@@ -655,7 +658,10 @@ public class BlockBossLogic extends Siglet {
             appearance = SignalHead.RED;
         if (watchSensor4!=null && watchSensor4.getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
+
         if (watchTurnout!=null && watchTurnout.getKnownState() != Turnout.THROWN)
+            appearance = SignalHead.RED;
+        if (watchTurnout!=null && watchTurnout.getCommandedState() != Turnout.THROWN)
             appearance = SignalHead.RED;
 
         // check if signal if held, forcing a red aspect by this calculation
@@ -708,15 +714,21 @@ public class BlockBossLogic extends Siglet {
         if (watchSensor4!=null && watchSensor4.getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
 
-        if ((watchTurnout!=null && watchTurnout.getKnownState() != Turnout.THROWN) && ((watchedSensor1!=null && watchedSensor1.getKnownState() != Sensor.INACTIVE)))
+        if ((watchTurnout!=null && watchTurnout.getKnownState() == Turnout.CLOSED) && ((watchedSensor1!=null && watchedSensor1.getKnownState() != Sensor.INACTIVE)))
             appearance = SignalHead.RED;
-        if ((watchTurnout!=null && watchTurnout.getKnownState() != Turnout.THROWN) && ((watchedSensor1Alt!=null && watchedSensor1Alt.getKnownState() != Sensor.INACTIVE)))
+        if ((watchTurnout!=null && watchTurnout.getKnownState() == Turnout.CLOSED) && ((watchedSensor1Alt!=null && watchedSensor1Alt.getKnownState() != Sensor.INACTIVE)))
             appearance = SignalHead.RED;
         if ((watchTurnout!=null && watchTurnout.getKnownState() == Turnout.THROWN) && ((watchedSensor2!=null && watchedSensor2.getKnownState() != Sensor.INACTIVE)))
             appearance = SignalHead.RED;
         if ((watchTurnout!=null && watchTurnout.getKnownState() == Turnout.THROWN) && ((watchedSensor2Alt!=null && watchedSensor2Alt.getKnownState() != Sensor.INACTIVE)))
             appearance = SignalHead.RED;
         
+        // check if turnout in motion, if so force red
+        if (watchTurnout!=null && (watchTurnout.getKnownState() != watchTurnout.getCommandedState()) )
+            appearance = SignalHead.RED;
+        if (watchTurnout!=null && (watchTurnout.getKnownState() != Turnout.THROWN) && (watchTurnout.getKnownState() != Turnout.CLOSED) )  // checking for other states
+            appearance = SignalHead.RED;
+
         // check if signal if held, forcing a red aspect by this calculation
         if (((SignalHead)outputs[0]).getHeld())
             appearance = SignalHead.RED;
