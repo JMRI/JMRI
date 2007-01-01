@@ -26,7 +26,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.29 $
+ * @version			$Revision: 1.30 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -461,7 +461,7 @@ abstract public class AbstractMRTrafficController {
             rcvThread.setName("Receive");
             rcvThread.start();
         } catch (Exception e) {
-            log.error("Failed to start up communications. Error eas "+e);
+            log.error("Failed to start up communications. Error was "+e);
         }
     }
 
