@@ -18,7 +18,7 @@ package jmri;
  *
  * Description:		Abstract class providing the basic logic of the Turnout interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean 
         implements Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
@@ -375,6 +375,13 @@ public abstract class AbstractTurnout extends AbstractNamedBean
                 newKnownState(CLOSED);
             else if ( (mode==Sensor.ACTIVE) && (s==_firstSensor))
                 newKnownState(THROWN);
+            else if (!(      ((_firstSensor.getKnownState() == Sensor.ACTIVE)
+                            &&(_secondSensor.getKnownState() == Sensor.INACTIVE))
+                        ||   ((_firstSensor.getKnownState() == Sensor.INACTIVE)
+                            &&(_secondSensor.getKnownState() == Sensor.ACTIVE))
+                      )
+                     ) // INCONSISTENT if sensor has transitioned to an inconsistent state
+                newKnownState(INCONSISTENT);
             // end TWOSENSOR block
         } else
             // don't need to do anything
