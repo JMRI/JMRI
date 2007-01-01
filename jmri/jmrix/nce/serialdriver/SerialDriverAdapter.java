@@ -29,7 +29,7 @@ import javax.comm.SerialPort;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.26 $
+ * @version			$Revision: 1.27 $
  */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -201,7 +201,7 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
     public String option1Name() { return "Command Station EPROM"; }
 
     /**
-     * Set the second port option.
+     * Set the binary vs ASCII command set option.
      */
     public void configureOption1(String value) { mOpt1 = value; }
     protected String mOpt1 = null;
