@@ -11,7 +11,7 @@ import jmri.Turnout;
  * System names are "CTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
@@ -52,7 +52,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 		if ( ( conflict != "" ) && (conflict != sName) ) {
 			log.error("Assignment conflict with "+conflict+".");
 			notifyTurnoutCreationError(conflict,bitNum);
-//			return (null);
+			return (null);
 		}
 
         // create the turnout
@@ -70,9 +70,9 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * Public method to notify user of Turnout creation error.
      */
 	public void notifyTurnoutCreationError(String conflict,int bitNum) {
-		javax.swing.JOptionPane.showMessageDialog(null,"WARNING: The output bit, "+
-			bitNum+", is currently assigned to "+conflict+". Assignment conflicts can "+
-				"lead to serious trouble in operation.","C/MRI Assignment Conflict",
+		javax.swing.JOptionPane.showMessageDialog(null,"ERROR - The output bit, "+
+			bitNum+", is currently assigned to "+conflict+". Turnout can not be "+
+				"created as you specified.","C/MRI Assignment Conflict",
 						javax.swing.JOptionPane.INFORMATION_MESSAGE,null);
 	}
 	
@@ -81,11 +81,14 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 	 * Normally this is 1, and the default routine returns 1 automatically.  
 	 * Turnout Managers for systems that can handle multiple control bits 
 	 * should override this method with one which asks the user to specify the
-	 * number of control bits.
+	 * number of control bits. 
 	 * If the user specifies more than one control bit, this method should 
 	 * check if the additional bits are available (not assigned to another object).
 	 * If the bits are not available, this method should return 0 for number of 
 	 * control bits, after informing the user of the problem.
+	 * This function is called whenever a new turnout is defined in the Turnout
+	 * table.  It can also be used to set up other turnout control options, such
+	 * as pulsed control of turnout machines.
 	 */
 	public int askNumControlBits(String systemName) {
 
@@ -111,13 +114,36 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 			String conflict = "";
 			conflict = SerialAddress.isOutputBitFree(nAddress,bitNum);
 			if ( conflict != "" ) {
-				log.error("Assignment conflict with "+conflict+".  Turnout not created.");
+				log.error("Assignment conflict with "+conflict+". Turnout not created.");
 				notifySecondBitConflict(conflict,bitNum);
 				return (0);
 			}
 		}
 	
 		return (iNum);
+	}
+
+	/**
+	 * Get from the user, the type of output to be used bits to control a turnout. 
+	 * Normally this is 0 for 'steady state' control, and the default routine 
+	 * returns 0 automatically.  
+	 * Turnout Managers for systems that can handle pulsed control as well as  
+	 * steady state control should override this method with one which asks 
+	 * the user to specify the type of control to be used.  The routine should 
+	 * return 0 for 'steady state' control, or n for 'pulsed' control, where n
+	 * specifies the duration of the pulse (normally in seconds).  
+	 */
+	 public int askControlType(String systemName) {
+		// ask if user wants 'steady state' output (stall motors, e.g., Tortoises) or 
+		//   'pulsed' output (some turnout controllers).
+		int iType = selectOutputType();
+		if (iType == javax.swing.JOptionPane.CLOSED_OPTION) {
+			/* user cancelled without selecting an output type */
+			iType = 0;
+			log.warn("User cancelled without selecting output type. Defaulting to 'steady state'.");
+		}
+		// Note: If the user selects 'pulsed', this routine defaults to 1 second.
+		return (iType);
 	}
 
     /**
@@ -133,6 +159,22 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 						javax.swing.JOptionPane.QUESTION_MESSAGE,
 						null,new String[] {"Use 1 bit","Use 2 bits"},"Use 1 bit");
 		return iNum;
+	}
+
+    /**
+     * Public method to allow user to specify pulsed or steady state for two output bits 
+	 *	for turnout control
+	 *  Note: This method returns 1 for steady state or 2 for pulsed if the user selected, 
+	 *			or 0 if the user cancelled without selecting.
+	 */
+	public int selectOutputType() {
+		int iType = 0;
+		iType = javax.swing.JOptionPane.showOptionDialog(null,
+				"Should the C/MRI output bits be 'steady state' or 'pulsed'?",
+					"C/MRI Output Bits Question",javax.swing.JOptionPane.DEFAULT_OPTION,
+						javax.swing.JOptionPane.QUESTION_MESSAGE,
+						null,new String[] {"Steady State Output","Pulsed Output"},"Steady State Output");
+		return iType;
 	}
 
     /**

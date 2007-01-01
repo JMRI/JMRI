@@ -17,7 +17,7 @@ import jmri.TurnoutOperationManager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class ProxyTurnoutManager extends AbstractProxyManager implements TurnoutManager {
 
@@ -222,6 +222,42 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
 			} else {
 				log.debug("Did not find a primary turnout manager");
 				return (1);
+			}
+        }
+    }
+
+	/**
+	 * Get from the user, the type of output to be used bits to control a turnout. 
+	 * Normally this is 0 for 'steady state' control, and the default routine 
+	 * returns 0 automatically.  
+	 * Turnout Managers for systems that can handle pulsed control as well as  
+	 * steady state control should override this method with one which asks 
+	 * the user to specify the type of control to be used.  The routine should 
+	 * return 0 for 'steady state' control, or n for 'pulsed' control, where n
+	 * specifies the duration of the pulse (normally in seconds).  
+	 */
+	 public int askControlType(String sysName) {
+        // if the systemName is specified, find that system
+		String systemName = sysName.toUpperCase();
+        if (systemName != null) {
+            for (int i=0; i<mgrs.size(); i++) {
+                if ( ( (TurnoutManager)mgrs.get(i)).systemLetter() == systemName.charAt(0) )
+                    return ((TurnoutManager)mgrs.get(i)).askControlType(systemName);
+            }
+            // did not find a manager, allow it to default to the primary, if there is one
+            log.debug("Did not find manager for system name "+systemName+", assume it's a number");
+			if (mgrs.size()>0) {
+				return ((TurnoutManager)mgrs.get(0)).askControlType(systemName);
+			} else {
+				log.debug("Did not find a primary turnout manager for system name "+systemName);
+				return (0);
+			}
+        } else {  // no systemName specified, use primary, if there is one
+      		if (mgrs.size()>0) {
+				return ((TurnoutManager)mgrs.get(0)).askControlType(systemName);
+			} else {
+				log.debug("Did not find a primary turnout manager");
+				return (0);
 			}
         }
     }

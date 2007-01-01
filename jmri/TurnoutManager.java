@@ -27,7 +27,7 @@ import com.sun.java.util.collections.List;
  * class, which provides a simple GUI for controlling a single turnout.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  * @see             jmri.Turnout
  * @see             jmri.AbstractTurnoutManager
  * @see             jmri.InstanceManager
@@ -132,6 +132,18 @@ public interface TurnoutManager extends Manager {
 	 * control bits, after informing the user of the problem.
 	 */
 	 public int askNumControlBits(String systemName);
+	
+	/**
+	 * Get from the user, the type of output to be used bits to control a turnout. 
+	 * Normally this is 0 for 'steady state' control, and the default routine 
+	 * returns 0 automatically.  
+	 * Turnout Managers for systems that can handle pulsed control as well as  
+	 * steady state control should override this method with one which asks 
+	 * the user to specify the type of control to be used.  The routine should 
+	 * return 0 for 'steady state' control, or n for 'pulsed' control, where n
+	 * specifies the duration of the pulse (normally in seconds).  
+	 */
+	 public int askControlType(String systemName);
 
 }
 

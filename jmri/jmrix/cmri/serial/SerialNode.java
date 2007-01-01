@@ -25,7 +25,7 @@ import jmri.jmrix.AbstractMRMessage;
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  */
 public class SerialNode {
 
@@ -172,6 +172,31 @@ public class SerialNode {
         if (oldByte != outputArray[byteNumber]) {
             needSend = true;
         }
+    }
+    	
+    /**
+     * Public method get the current state of an output bit.
+     *    Note:  returns 'true' for 0, 'false' for 1
+     *           bits are numbered from 1 (not 0)
+     */
+    public boolean getOutputBit(int bitNumber) {
+        // locate in the outputArray
+        int byteNumber = (bitNumber-1)/8;
+        // validate that this byte number is defined
+        if (byteNumber > (numOutputCards()*(bitsPerCard/8)) ) {
+            warn("C/MRI - Output bit out-of-range for defined node");
+        }
+        if (byteNumber >= 256) byteNumber = 255;
+        // update the byte
+        byte bit = (byte) (1<<((bitNumber-1) % 8));
+		byte testByte = outputArray[byteNumber];
+		testByte &= bit;
+		if (testByte == 0) {
+			return (true);
+		}
+		else {
+			return (false);
+		}
     }
 
     /**

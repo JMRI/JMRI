@@ -20,7 +20,7 @@ import jmri.Turnout;
  *
  * Description:		extend jmri.AbstractTurnout for C/MRI serial layouts
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class SerialTurnout extends AbstractTurnout {
 
@@ -69,22 +69,129 @@ public class SerialTurnout extends AbstractTurnout {
 
     // data members
     String tSystemName; // System Name of this turnout
-    int tBit;          // bit number of turnout control in Serial node
+    protected int tBit;   // bit number of turnout control in Serial node
+	protected SerialNode tNode = null;
+	protected javax.swing.Timer mPulseClosedTimer = null;
+	protected javax.swing.Timer mPulseThrownTimer = null;
+	protected boolean mPulseTimerOn = false;
 
     protected void sendMessage(boolean closed) {
-        SerialNode tNode = SerialAddress.getNodeFromSystemName(tSystemName);
-        if (tNode == null) {
-            // node does not exist, ignore call
-            return;
-        }
-		if (getNumberOutputBits() == 1) {
-			tNode.setOutputBit(tBit, closed);
-		} 
-		else if (getNumberOutputBits() == 2) {
-			tNode.setOutputBit(tBit,closed);
-			tNode.setOutputBit(tBit+1,!closed);
+		// if a Pulse Timer is running, ignore the call
+		if (!mPulseTimerOn) {
+			if (tNode == null){
+				tNode = SerialAddress.getNodeFromSystemName(tSystemName);
+				if (tNode == null) {
+					// node does not exist, ignore call
+					return;
+				}
+			}
+			if (getNumberOutputBits() == 1) {
+				// get current status of the output bit
+				if (tNode.getOutputBit(tBit) != closed) {
+					// bit state is different from the requested state, set it
+					tNode.setOutputBit(tBit, closed);
+				}
+				else {
+					// bit state is the same as requested state, so no change
+					//    will occur if requested state is set.
+					// check if turnout known state is different from requested state
+					int kState = getKnownState();
+					if (closed) {
+						// CLOSED is being requested
+						if ( (kState & Turnout.THROWN) > 0) {
+							// known state is different from output bit, set output bit to be correct
+							//     for known state, then start a timer to set it to requested state
+							tNode.setOutputBit(tBit, false);
+							// start a timer to finish setting this turnout
+							if (mPulseClosedTimer==null) {
+								mPulseClosedTimer = new javax.swing.Timer(1000, new 
+										java.awt.event.ActionListener() {
+									public void actionPerformed(java.awt.event.ActionEvent e) {
+										tNode.setOutputBit(tBit, true);
+										mPulseClosedTimer.stop();
+										mPulseTimerOn = false;
+									}
+								});
+							}
+							mPulseTimerOn = true;
+							mPulseClosedTimer.start();
+						}
+					}
+					else {	
+						// THROWN is being requested
+						if ( (kState & Turnout.CLOSED) > 0) {
+							// known state is different from output bit, set output bit to be correct
+							//     for known state, then start a timer to set it to requested state
+							tNode.setOutputBit(tBit, true);
+							// start a timer to finish setting this turnout
+							if (mPulseThrownTimer==null) {
+								mPulseThrownTimer = new javax.swing.Timer(1000, new 
+										java.awt.event.ActionListener() {
+									public void actionPerformed(java.awt.event.ActionEvent e) {
+										tNode.setOutputBit(tBit, false);
+										mPulseThrownTimer.stop();
+										mPulseTimerOn = false;								
+									}
+								});
+							}
+							mPulseTimerOn = true;
+							mPulseThrownTimer.start();
+						}						
+					}
+				}	
+			} 
+			else if (getNumberOutputBits() == 2) {
+				// two output bits
+				if (getControlType() == 0) {
+					// Steady state control e.g. stall motor turnout control
+					tNode.setOutputBit(tBit,closed);
+					tNode.setOutputBit(tBit+1,!closed);
+				}
+				else {
+					// Pulse control
+					int iTime = 1000*getControlType();
+					// Get current known state of turnout
+					int kState = getKnownState();
+					if (closed && ((kState & Turnout.THROWN) > 0)) {
+						// CLOSED is requested, currently THROWN - Pulse first bit
+						//   Turn bit on
+						tNode.setOutputBit(tBit,false);
+						// Start a timer to return bit to off state
+						if (mPulseClosedTimer==null) {
+							mPulseClosedTimer = new javax.swing.Timer(iTime, new 
+										java.awt.event.ActionListener() {
+								public void actionPerformed(java.awt.event.ActionEvent e) {
+									tNode.setOutputBit(tBit, true);
+									mPulseClosedTimer.stop();
+									mPulseTimerOn = false;
+								}
+							});
+						}
+						mPulseTimerOn = true;
+						mPulseClosedTimer.start();						
+					}
+					else if (!closed && ((kState & Turnout.CLOSED) > 0)) {
+						// THROWN is requested, currently CLOSED - Pulse second bit
+						//   Turn bit on
+						tNode.setOutputBit(tBit+1,false);
+						// Start a timer to return bit to off state
+						if (mPulseThrownTimer==null) {
+							mPulseThrownTimer = new javax.swing.Timer(iTime, new 
+										java.awt.event.ActionListener() {
+								public void actionPerformed(java.awt.event.ActionEvent e) {
+									tNode.setOutputBit(tBit+1, true);
+									mPulseThrownTimer.stop();
+									mPulseTimerOn = false;								
+								}
+							});
+						}
+						mPulseTimerOn = true;
+						mPulseThrownTimer.start();						
+					}
+				}
+			}
 		}
-    }
+	}
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTurnout.class.getName());
 }

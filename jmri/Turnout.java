@@ -24,7 +24,7 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  * @see         jmri.AbstractTurnout
  * @see         jmri.TurnoutManager
  * @see         jmri.InstanceManager
@@ -228,11 +228,27 @@ public interface Turnout extends NamedBean {
     public int getNumberOutputBits();    
     
     /**
-     * Get number of output bits.
+     * Set number of output bits.
      *<P>
      * Currently must be one or two.
      */
     public void setNumberOutputBits(int num);    
+    
+    /**
+     * Get control type.
+     *<P>
+     * Currently must be either 0 for steady state, or n 
+	 *    for pulse for n time units.
+     */
+    public int getControlType();    
+    
+    /**
+     * Set control type.
+     *<P>
+     * Currently must be either 0 for steady state, or n 
+	 *    for pulse for n time units.
+	*/
+    public void setControlType(int num);    
     
 }
 

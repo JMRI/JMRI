@@ -24,7 +24,7 @@ import org.jdom.Attribute;
  * specific Turnout or AbstractTurnout subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
 
@@ -70,6 +70,10 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
 				// include number of control bits, if different from one
 				int iNum = t.getNumberOutputBits();
 				if (iNum!=1) elem.addAttribute("numBits",""+iNum);
+				
+				// include turnout control type, if different from 0
+				int iType = t.getControlType();
+				if (iType!=0) elem.addAttribute("controlType",""+iType);
 
                 // add operation stuff
                 String opstr = null;
@@ -176,6 +180,22 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
 				else {
 					log.warn("illegal number of output bits for control of turnout "+sysName);
 					t.setNumberOutputBits(1);
+				}
+			}
+			
+			// control type, if present - if not, defaults to 0
+			a = ((Element)(turnoutList.get(i))).getAttribute("controlType");
+			if (a==null) {
+				t.setControlType(0);
+			}
+			else {
+				int iType = Integer.parseInt(a.getValue());
+				if (iType>=0) {
+					t.setControlType(iType);
+				}
+				else {
+					log.warn("illegal control type for control of turnout "+sysName);
+					t.setControlType(0);
 				}
 			}
 			

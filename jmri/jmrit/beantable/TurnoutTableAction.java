@@ -40,7 +40,7 @@ import javax.swing.JDialog;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004
- * @version     $Revision: 1.34 $
+ * @version     $Revision: 1.35 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -534,7 +534,15 @@ public class TurnoutTableAction extends AbstractTableAction {
 		else {
 			// Create the new turnout
 			Turnout t = InstanceManager.turnoutManagerInstance().newTurnout(sName, user);
-			if (t!=null)  t.setNumberOutputBits(iNum);
+			if (t!=null) {
+				t.setNumberOutputBits(iNum);
+				int iType = 0;
+				if (iNum==2) {
+					// Ask about the type of turnout control if appropriate
+					iType = InstanceManager.turnoutManagerInstance().askControlType(sName);
+				}
+				t.setControlType(iType);
+			}
 		}
     }
     private boolean noWarn = false;

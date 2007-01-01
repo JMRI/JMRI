@@ -7,7 +7,7 @@ package jmri;
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.21 $
+ * @version			$Revision: 1.22 $
  */
 public abstract class AbstractTurnoutManager extends AbstractManager
     implements TurnoutManager {
@@ -111,6 +111,18 @@ public abstract class AbstractTurnoutManager extends AbstractManager
 	 * control bits, after informing the user of the problem.
 	 */
 	 public int askNumControlBits(String systemName) {return 1; };
+
+	/**
+	 * Get from the user, the type of output to be used bits to control a turnout. 
+	 * Normally this is 0 for 'steady state' control, and the default routine 
+	 * returns 0 automatically.  
+	 * Turnout Managers for systems that can handle pulsed control as well as  
+	 * steady state control should override this method with one which asks 
+	 * the user to specify the type of control to be used.  The routine should 
+	 * return 0 for 'steady state' control, or n for 'pulsed' control, where n
+	 * specifies the duration of the pulse (normally in seconds).  
+	 */
+	 public int askControlType(String systemName) {return 0; };
 
     /**
      * Internal method to invoke the factory, after all the
