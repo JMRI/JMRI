@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.7.6.html,v 1.14 2006-12-31 06:10:57 jacobsen Exp $ -->
+<!-- $Id: jmri1.7.6.html,v 1.15 2007-01-03 16:49:41 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -224,6 +224,13 @@
 
 <P>Paul Bender updated the turnout state display for Lenz systems so that the "+"/"-" notation corresponds to the buttons used on an LH100.
 
+<P>Dick Bronson added approach lighting to Simple Signal Logic
+
+<P>Turnouts using two sensors for position feedback should show "inconsistent" as their known state if there isn't exactly one sensor showing active status; fixed a bug where the state would go directly from closed to thrown without the intermediate state. Also, Simple Signal Logic has been updated to show "red" appearance while turnouts with feedback are in motion.
+
+<P>Peter Brandenburg created decoder definitions for the Haber &amp; Koenig NFA and HFA decoders used in Roco locomotives
+
+<P>Peter Brandenburg created new decoder definition families for the CT Elektronik "DCX Series (v.26 up)" and "Sound Decoder SL (v.26 up)" decoder groups
 <hr class="hide">
 <!-- Footer -->
     <hr class="hide">
