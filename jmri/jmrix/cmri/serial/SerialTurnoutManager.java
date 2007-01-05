@@ -11,7 +11,7 @@ import jmri.Turnout;
  * System names are "CTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
@@ -170,7 +170,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 	public int selectOutputType() {
 		int iType = 0;
 		iType = javax.swing.JOptionPane.showOptionDialog(null,
-				"Should the C/MRI output bits be 'steady state' or 'pulsed'?",
+				"Should the C/MRI output bit(s) be 'steady state' or 'pulsed'?",
 					"C/MRI Output Bits Question",javax.swing.JOptionPane.DEFAULT_OPTION,
 						javax.swing.JOptionPane.QUESTION_MESSAGE,
 						null,new String[] {"Steady State Output","Pulsed Output"},"Steady State Output");
