@@ -36,7 +36,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.22 $
+ * @version   $Revision: 1.23 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -102,6 +102,8 @@ public class RosterEntry {
                                             .replace('.', '_')
                                             .replace('/', '-')
                                             .replace('\\', '-')
+                                            .replace('>', '-')
+                                            .replace('<', '-')
                                             .replace(':', '-');
             String newFilename = nameWithoutSpecialChars+".xml";
             // we don't want to overwrite a file that exists, whether or not
