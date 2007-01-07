@@ -8,11 +8,11 @@ import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 
 /**
- * Swing action to create and register a
- * "Simple Signal Logic" GUI.
+ * Swing action to create and show a
+ * "Simple Signal Logic" GUI panel.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 
 public class BlockBossAction extends AbstractAction {

@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
 import javax.swing.*;
 
 /**
- * Provide "Simple Signal Logic" GUI.
+ * Provide a GUI for configuring "Simple Signal Logic" (BlockBossLogic) objects.
  * <P>
  * Provides four panels, corresponding to the four possible
  * modes described in {@link BlockBossLogic}, which
@@ -30,7 +30,7 @@ import javax.swing.*;
  * The individual items all share data models to simplify the logic.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  *              
  *              Revisions to add facing point sensors, approach lighting,
  *              limited speed, changed layout, and tool tips.  

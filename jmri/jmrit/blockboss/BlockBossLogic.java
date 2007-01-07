@@ -12,21 +12,39 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 /**
- * Represents the "simple signal" logic for one signal; provides
- * some collection services.
+ * Drives the "simple signal" logic for one signal.
+ *<P>
+ * Signals "protect" by telling the engineer
+ * about the conditions ahead.  The engineer
+ * controls the speed of the train based on 
+ * what the signals show, and the signals in turn
+ * react to whether the track ahead is occupied, 
+ * what signals further down the line show, etc.
  * <P>
  * There are four situations that this logic can handle:
  * <OL>
  * <LI>SIMPLEBLOCK - A simple block, without a turnout.
+ *<P>In this case, there is only a single 
+ * set of sensors and a single
+ * next signal to protect.
  * <LI>TRAILINGMAIN - This signal is protecting a trailing point turnout,
  * which can only be passed when the turnout is closed. It can also be used
  * for the upper head of a two head signal on the facing end of the turnout.
+ *<P>In this case, the signal is forced red if the specified turnout is 
+ * THROWN.  When the turnout is CLOSED, there is a single
+ * set of sensors and next signal(s) to protect.
  * <LI>TRAILINGDIVERGING - This signal is protecting a trailing point turnout,
  * which can only be passed when the turnout is thrown. It can also be used
  * for the lower head of a two head signal on the facing end of the turnout.
+ *<P>In this case, the signal is forced red if the specified turnout is 
+ * CLOSED.  When the turnout is THROWN, there is a single
+ * set of sensors and next signal(s) to protect.
  * <LI>FACING - This single head signal protects a facing point turnout, which
  * may therefore have two next signals and two sets of next sensors for the
  * closed and thrown states of the turnout.
+ *<P>If the turnout is THROWN, one set of sensors and next signal(s)
+ * is protected.  If the turnout is CLOSED, another set of sensors and next signal(s)
+ * is protected.
  * </OL><P>
  * Note that these four possibilities logically require that certain
  * information be configured consistently; e.g. not specifying a turnout
@@ -34,12 +52,66 @@ import java.util.Hashtable;
  * but violating it can result in confusing behavior.
  *
  * <P>
+ * The protected sensors should cover the track to the next signal.
+ * If any of the protected sensors show ACTIVE, the signal will be dropped to red.
+ * Normally, the protected sensors cover the occupancy of the track to the next signal.
+ * In this case, the signal will show red to prevent trains from entering
+ * an occupied stretch of track (often called a "block").
+ * But the actual source of the sensors can be anything useful, for example
+ * a microswitch on a local turnout, etc.
+ * <P>
+ * There are several varients to how a next signal is protected. In the
+ * simplest form, the controlled signal provides a warning to the engineer
+ * of what the signal being protected will show when it becomes visible:
+ * <UL>
+ *<LI>If the next signal is red, the engineer needs to be told to slow down;
+ * this signal will be set to yellow.
+ *<LI>If the next signal is green, the engineer can proceed at track speed;
+ * this signal will be set to green.
+ *</UL>
+ * If the next signal is yellow, there are two possible varients that can be
+ * configured:
+ * <UL>
+ * <LI>For the common "three-aspect" signaling system, an engineer doesn't
+ * need any warning before a yellow signal.  In this case, this signal
+ * is set to green when the protected signal is yellow.
+ * <LI>For lines where track speed is very fast or braking distances are
+ * very long, it can be useful to give engineers warning that the
+ * next signal is yellow (and the one after that is red) so that
+ * slowing the train can start early.  Usually flashing yellow preceeds
+ * the yellow signal, and the system is called "four-aspect" signaling.
+ *</UL>
+ *
+ *<P>
+ * In some cases, you want a signal to show <i>exactly</I> what the next
+ * signal shows, instead of one speed faster.  E.g. if the (protected) next
+ * signal is red, this one should be red, instead of yellow.  
+ * In this case, this signal is called a "distant signal", as it
+ * provides a "distant" view of the protected signal's appearance.  Note
+ * that when in this mode, this signal still protects the interveneing track, etc.
+ * <P>
  * The "hold" unbound parameter can be used to set this 
  * logic to show red, regardless of input.  That's intended for
  * use with CTC logic, etc.
+ * <P>
+ * "Approach lit" signaling sets the signal head to dark (off) unless the
+ * specified sensor(s) are ACTIVE.  Normally, those sensors are 
+ * in front  of (before) the signal head. The signal heads then only light
+ * when a train is approaching.  This is used to preserve bulbs and batteries
+ * (and sometimes to reduce engineer workload) on prototype railroads, but is
+ * uncommon on model railroads; once the layout owner has gone to the trouble 
+ * and expense of installing signals, he usually wants them lit up.
+ * <P>
+ * Two signal heads can be protected.  For example, if the next signal
+ * has two heads to control travel onto a main track or siding, then both
+ * heads should be provided here.  The <i>faster</i> signal aspect will control
+ * the appearance of this head.  For example, if the next signal is showing a 
+ * green head and a red head, this signal will be green, because the
+ * train will be able to proceed at track speed when it reaches that next 
+ * signal (along the track with the green signal).
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.22 $
+ * @version     $Revision: 1.23 $
  * 
  * Revisions to add facing point sensors, approach lighting, and check box
  * to limit speed. Dick Bronosn (RJB) 2006
