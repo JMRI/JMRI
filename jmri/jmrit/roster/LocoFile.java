@@ -10,6 +10,7 @@ import jmri.jmrit.symbolicprog.VariableTableModel;
 import java.io.File;
 
 import com.sun.java.util.collections.List;
+import com.sun.java.util.collections.Vector;
 import org.jdom.Document;
 import org.jdom.Element;
 
@@ -23,7 +24,7 @@ import org.jdom.Element;
  * @author    Bob Jacobsen     Copyright (C) 2001, 2002
  * @author    Dennis Miller    Copyright (C) 2004
  * @author    Howard G. Penny  Copyright (C) 2005
- * @version   $Revision: 1.18 $
+ * @version   $Revision: 1.19 $
  * @see       jmri.jmrit.roster.RosterEntry
  * @see       jmri.jmrit.roster.Roster
  */
