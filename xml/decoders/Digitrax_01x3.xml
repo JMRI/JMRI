@@ -2,8 +2,9 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2002, 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Digitrax_01x3.xml,v 1.28 2006-08-07 09:08:32 jacobsen Exp $ -->
+<!-- $Id: Digitrax_01x3.xml,v 1.29 2007-01-08 00:39:15 jacobsen Exp $ -->
 <decoder-config>
+		<version author="Simon Ginsburg" version="16" lastUpdated="20060807"/>
 		<version author="Howard G. Penny" version="15" lastUpdated="20050422"/>
 
 		<!-- Created from version 5 of the 1x2 file -->
@@ -22,7 +23,7 @@
     <!-- Version 13 - added DN163K1B and DN163I0 (Simon Ginsburg) -->
     <!-- Version 14 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" - Bob Jacobsen -->
     <!-- Version 15 - added factory reset menu items (Howard G. Penny) -->
-    <!-- Version 16 - added DN163K1C (Simon Ginsburg) -->
+    <!-- Version 16 - added DN163K1C (Simon Ginsburg, Bob Blackwell) -->
 	
 <decoder>
 	<family name="Series 3 with FX3, silent, readback" 
