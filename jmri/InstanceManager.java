@@ -12,7 +12,7 @@ package jmri;
  * non-system-specific code.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.25 $
+ * @version			$Revision: 1.26 $
  */
 public class InstanceManager {
 
@@ -72,7 +72,13 @@ public class InstanceManager {
         return root;
     }
 
-    private InstanceManager() {
+    public InstanceManager() {
+        init();
+    }
+
+    // This is a separate, protected member so it
+    // can be overridden in unit tests
+    protected void init() {
         turnoutManager = new jmri.managers.ProxyTurnoutManager();
         sensorManager = new jmri.managers.ProxySensorManager();
         lightManager = new jmri.managers.ProxyLightManager();
@@ -81,9 +87,10 @@ public class InstanceManager {
 
     /**
      * The "root" object is the instance manager that's answering
-     * requests for other instances.
+     * requests for other instances. Protected access to allow
+     * changes during JUnit testing.
      */
-    static private InstanceManager root;
+    static protected InstanceManager root;
 
     private PowerManager powerManager = null;
     static public void setPowerManager(PowerManager p) {
