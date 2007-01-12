@@ -23,7 +23,7 @@ import java.util.Hashtable;
  * <P>
  * There are four situations that this logic can handle:
  * <OL>
- * <LI>SIMPLEBLOCK - A simple block, without a turnout.
+ * <LI>SINGLEBLOCK - A simple block, without a turnout.
  *<P>In this case, there is only a single 
  * set of sensors and a single
  * next signal to protect.
@@ -111,7 +111,7 @@ import java.util.Hashtable;
  * signal (along the track with the green signal).
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.23 $
+ * @version     $Revision: 1.24 $
  * 
  * Revisions to add facing point sensors, approach lighting, and check box
  * to limit speed. Dick Bronosn (RJB) 2006
@@ -573,11 +573,11 @@ public class BlockBossLogic extends Siglet {
         if (watchedSignal1==null && watchedSignal1Alt==null ) 
             result = SignalHead.GREEN;
         
-        int val = SignalHead.RED;
+        int val = result;
         if (watchedSignal1!=null) val = watchedSignal1.getAppearance();
         if (watchedSignal1!=null && watchedSignal1.getHeld()) val =  SignalHead.RED;  // if Held, act as if Red
 
-        int valAlt = SignalHead.RED;
+        int valAlt = result;
         if (watchedSignal1Alt!=null) valAlt = watchedSignal1Alt.getAppearance();
         if (watchedSignal1Alt!=null && watchedSignal1Alt.getHeld()) valAlt =  SignalHead.RED; // if Held, act as if Red
         
@@ -590,11 +590,11 @@ public class BlockBossLogic extends Siglet {
         if (watchedSignal2==null && watchedSignal2Alt==null ) 
             result = SignalHead.GREEN;
 
-        int val = SignalHead.RED;
+        int val = result;
         if (watchedSignal2!=null) val = watchedSignal2.getAppearance();
         if (watchedSignal2!=null && watchedSignal2.getHeld()) val =  SignalHead.RED;
 
-        int valAlt = SignalHead.RED;
+        int valAlt = result;
         if (watchedSignal2Alt!=null) valAlt = watchedSignal2Alt.getAppearance();
         if (watchedSignal2Alt!=null && watchedSignal2Alt.getHeld()) valAlt =  SignalHead.RED;
         
