@@ -17,7 +17,7 @@ import jmri.Turnout;
 /**
  * Tests for the BlockBossLogic class
  * @author	Bob Jacobsen
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class BlockBossLogicTest extends TestCase {
 
@@ -115,6 +115,27 @@ public class BlockBossLogicTest extends TestCase {
 		h2.setAppearance(SignalHead.GREEN);
 		Assert.assertEquals("green sets yellow", SignalHead.YELLOW, h1.getAppearance());
 		
+		p.stop();
+	}
+
+	// if no next signal, it's considered green
+	public void testSimpleBlockNoNext() {
+		BlockBossLogic p = new BlockBossLogic("IH1");
+		p.setMode(BlockBossLogic.SINGLEBLOCK);
+		p.start();
+		
+		Assert.assertEquals("missing signal is green", SignalHead.GREEN, h1.getAppearance());
+		p.stop();
+	}
+
+	// if no next signal, it's considered green
+	public void testSimpleBlockNoNextLimited() {
+		BlockBossLogic p = new BlockBossLogic("IH1");
+		p.setMode(BlockBossLogic.SINGLEBLOCK);
+		p.setLimitSpeed1(true);
+		p.start();
+		
+		Assert.assertEquals("missing signal is green, show yellow", SignalHead.YELLOW, h1.getAppearance());
 		p.stop();
 	}
 
