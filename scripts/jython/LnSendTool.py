@@ -1,10 +1,19 @@
+# This script will send several of the most command loconet type messages.
+# These include switch, feedback and sensor type messages.
+# DCC signal packets can also be sent via loconet.
+#
+# Messages are configurated using radio buttons and combo boxes.
+#
+# Portions of this script are taken from LnPowerButton.py by Bob Jacobsen
+# Author: Bill Robinson with help from Bob Jacobsen
+#
+# 5/02/06 - Bill Robinson
 # This adds several buttons to the example.
 # Switch, eedback and sensor type LocoNet messages can be sent.
-# The oringinal PM4 button and action are not used.
-# 5/02/06 - Bill Robinson
+# The original PM4 button and action are not used.
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 
 import java
 import javax.swing
@@ -13,7 +22,7 @@ typePacket = 0
 def whenSendButtonClicked(event) :
      # based on user selection perpare the arg for the specific LocoNet message
      # Loconet message form - opcode,ARG1,ARG2,CHK - the checksum is not calculated here
-     lnAddress = int(address.text) - 1    # get address from entry field and adjust for loconet
+     lnAddress = int(lAddress.text) - 1    # get address from entry field and adjust for loconet
      ARG1 = lnAddress - ((lnAddress / 128) * 128)
      ARG2 = lnAddress / 128
      ARG3 = ARG4 = ARG5 = ARG6 = ARG7 = ARG8 = ARG9 = 0 
@@ -56,29 +65,29 @@ def whenSetButtonClicked(event) :
      msgOutBox.setSelectedIndex(1)
      
      if   interBox.getSelectedItem() == "1017c" :
-         address.setText("1017")     # put address in field
+         lAddress.setText("1017")     # put address in field
          msgActBox.setSelectedIndex(0)
      elif  interBox.getSelectedItem() == "1017t" :
-         address.setText("1017")     # put address in field
+         lAddress.setText("1017")     # put address in field
          msgActBox.setSelectedIndex(1) 
      elif  interBox.getSelectedItem() == "1018c" :
-         address.setText("1018")     # put address in field
+         lAddress.setText("1018")     # put address in field
          msgActBox.setSelectedIndex(0)
      elif  interBox.getSelectedItem() == "1018t" :
-         address.setText("1018")     # put address in field
+         lAddress.setText("1018")     # put address in field
          msgActBox.setSelectedIndex(1)
      elif  interBox.getSelectedItem() == "1019c" :
-         address.setText("1019")     # put address in field
+         lAddress.setText("1019")     # put address in field
          msgActBox.setSelectedIndex(0)
      elif  interBox.getSelectedItem() == "1019t" :
-         address.setText("1019")     # put address in field
+         lAddress.setText("1019")     # put address in field
          msgActBox.setSelectedIndex(1)
      elif  interBox.getSelectedItem() == "1020c" :
-         address.setText("1020")     # put address in field
+         lAddress.setText("1020")     # put address in field
          msgActBox.setSelectedIndex(0)         
      else :
          interBox.getSelectedItem() == "1020t"
-         address.setText("1020")     # put address in field
+         lAddress.setText("1020")     # put address in field
          msgActBox.setSelectedIndex(1)  
      return
 
@@ -293,8 +302,8 @@ sgButton.setToolTipText("Extended Accessory Decoder Packet")
 swButton.setSelected(True)   # initially set the group selection
 
 # create fields
-address = javax.swing.JTextField(4)    # sized to hold 4 characters
-address.setText("1")                   # initialize field
+lAddress = javax.swing.JTextField(4)    # sized to hold 4 characters
+lAddress.setText("1")                   # initialize field
 
 sgAddress = javax.swing.JTextField(4)    # sized to hold 4 characters
 sgAddress.setText("1")                   # initialize field
@@ -341,7 +350,7 @@ panel.add(panelb)            # add the send button panel
 
 panel0 = javax.swing.JPanel()  # use panel to display items horizontally
 panel0.add(javax.swing.JLabel("Address")) # put label discription before combobox
-panel0.add(address)
+panel0.add(lAddress)
 
 panel1 = javax.swing.JPanel()
 panel1.add(javax.swing.JLabel("Type of message"))
