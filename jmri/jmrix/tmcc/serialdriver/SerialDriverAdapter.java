@@ -21,7 +21,7 @@ import javax.comm.SerialPortEventListener;
  * Provide access to TMCC via a serial comm port.
  * Normally controlled by the tmcc.serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2006
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -60,16 +60,9 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
             }
 
 
-            // set framing (end) character
-            try {
-                activeSerialPort.enableReceiveFraming(0x03);
-                log.debug("Serial framing was observed as: "+activeSerialPort.isReceiveFramingEnabled()
-                      +" "+activeSerialPort.getReceiveFramingByte());
-            } catch (Exception ef) {
-                log.info("failed to set serial framing: "+ef);
-            }
+            // no framing character is used
 
-            // set timeout; framing should work before this anyway
+            // set receive timeout; framing not in use
             try {
                 activeSerialPort.enableReceiveTimeout(10);
                 log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
@@ -226,12 +219,12 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
      */
     protected void setSerialPort() throws javax.comm.UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = 19200;  // default, but also defaulted in the initial value of selectedSpeed
+        int baud = 9600;  // default, but also defaulted in the initial value of selectedSpeed
         for (int i = 0; i<validSpeeds.length; i++ )
             if (validSpeeds[i].equals(selectedSpeed))
                 baud = validSpeedValues[i];
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
-                                SerialPort.STOPBITS_2, SerialPort.PARITY_NONE);
+                                SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
         // set RTS high, DTR high - done early, so flow control can be configured after
         activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
