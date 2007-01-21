@@ -4,6 +4,8 @@ package jmri.jmrix.loconet.pr2;
 
 import jmri.PowerManager;
 import jmri.JmriException;
+import jmri.DccLocoAddress;
+import jmri.InstanceManager;
 
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LnOpsModeProgrammer;
@@ -11,6 +13,7 @@ import jmri.jmrix.loconet.LnPowerManager;
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.SlotManager;
+import jmri.jmrix.loconet.LnPr2ThrottleManager;
 
 /**
  * PowerManager implementation for controlling layout power via PR2
@@ -22,22 +25,24 @@ import jmri.jmrix.loconet.SlotManager;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class LnPr2PowerManager extends LnPowerManager {
 
 	public LnPr2PowerManager() {
-        // PR2 - get ops programmer
-        pm = new LnOpsModeProgrammer(SlotManager.instance(), 1, false);
 	}
 
 	public void setPower(int v) throws JmriException {
 		power = UNKNOWN;
 		
         // Instead of GPON/GPOFF, PR2 uses ops-mode writes to CV 128 for control
-        checkOpsProg();
         
         if (v==ON) {
+            // get current active address
+            DccLocoAddress activeAddress = ((LnPr2ThrottleManager) InstanceManager.throttleManagerInstance()).getActiveAddress();
+            pm = new LnOpsModeProgrammer(SlotManager.instance(), activeAddress.getNumber(), activeAddress.isLongAddress());
+            checkOpsProg();
+
             // set bit 1 in CV 128
             pm.writeCV(128, 1, null);
             power = ON;
@@ -56,6 +61,12 @@ public class LnPr2PowerManager extends LnPowerManager {
             
         } else if (v==OFF) {
             timer.stop();
+
+            // get current active address
+            DccLocoAddress activeAddress = ((LnPr2ThrottleManager) InstanceManager.throttleManagerInstance()).getActiveAddress();
+            pm = new LnOpsModeProgrammer(SlotManager.instance(), activeAddress.getNumber(), activeAddress.isLongAddress());
+            checkOpsProg();
+
             // reset bit 1 in CV 128
             pm.writeCV(128, 0, null);
             power = OFF;

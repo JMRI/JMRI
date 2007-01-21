@@ -19,7 +19,7 @@ import jmri.jmrix.AbstractThrottleManager;
  *
  * @see AbstractThrottleManager
  * @author		Bob Jacobsen  Copyright (C) 2001, 2006
- * @version 		$Revision: 1.1 $
+ * @version 		$Revision: 1.2 $
  */
 public class LnPr2ThrottleManager extends AbstractThrottleManager {
 
@@ -46,11 +46,13 @@ public class LnPr2ThrottleManager extends AbstractThrottleManager {
         // The PR2 has only one slot, hence
         // doesn't require an interaction with the command
         // station to allocate slot, so immediately trigger the callback.
-        DccLocoAddress a = (DccLocoAddress) address;
-        log.debug("new Pr2Throttle for "+a);
-        notifyThrottleKnown(new Pr2Throttle(a), a);
+        activeAddress = (DccLocoAddress) address;
+        log.debug("new Pr2Throttle for "+activeAddress);
+        notifyThrottleKnown(new Pr2Throttle(activeAddress), activeAddress);
 	}
 	    
+	DccLocoAddress activeAddress = null;
+	
     /**
      * PR2 does not have a Dispatch function
      **/
@@ -82,6 +84,13 @@ public class LnPr2ThrottleManager extends AbstractThrottleManager {
         return (num>=128);
     }
 
+    /**
+    * Make the active address available
+    * to the power manager, which needs it to 
+    * turn on and off "neutral mode" in the locomotive
+    */
+    public DccLocoAddress getActiveAddress() { return activeAddress; }
+    
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnPr2ThrottleManager.class.getName());
 }
