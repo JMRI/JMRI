@@ -33,7 +33,7 @@ import com.sun.java.util.collections.Vector;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.37 $
+ * @version     $Revision: 1.38 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
@@ -621,7 +621,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         hopsa = 0;
         mServiceMode = true;
         // parse the programming command
-        int pcmd = 0x40;  // write command
+        int pcmd = 0x43;       // LPE imples 0x40, but 0x43 is observed
         if (getMode() == jmri.Programmer.PAGEMODE) pcmd = pcmd | 0x20;
         else if (getMode() == jmri.Programmer.DIRECTBYTEMODE) pcmd = pcmd | 0x28;
         else if (getMode() == jmri.Programmer.REGISTERMODE
@@ -707,8 +707,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         hopsa = 0;
         mServiceMode = true;
         // parse the programming command
-        int pcmd = 0;
-        //if (write) pcmd = pcmd | 0x40;  // write command
+        int pcmd = 0x03;       // LPE imples 0x00, but 0x03 is observed
         if (getMode() == jmri.Programmer.PAGEMODE) pcmd = pcmd | 0x20;
         else if (getMode() == jmri.Programmer.DIRECTBYTEMODE) pcmd = pcmd | 0x28;
         else if (getMode() == jmri.Programmer.REGISTERMODE
@@ -762,11 +761,11 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
         m.setElement(3, pcmd);
 
-        // set zero, then HOPSA, LOPSA, zero TRK
+        // set zero, then HOPSA, LOPSA, TRK
         m.setElement(4, 0);
         m.setElement(5, hopsa);
         m.setElement(6, lopsa);
-        m.setElement(7, 7);  // was 0
+        m.setElement(7, 0);  // TRK was 0, then 7 for PR2, now back to zero
 
         // store address in CVH, CVL. Note CVH format is truely wierd...
         m.setElement(8, (addr&0x300)/16 + (addr&0x80)/128 + (val&0x80)/128*2 );
