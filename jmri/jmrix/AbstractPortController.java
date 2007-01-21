@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  * @see jmri.jmrix.SerialPortAdapter
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 abstract public class AbstractPortController implements SerialPortAdapter {
 
@@ -78,6 +78,54 @@ abstract public class AbstractPortController implements SerialPortAdapter {
         return mBaudRate;
     }
 
+    /**
+     * Get an array of valid baud rates as integers. This allows subclasses
+     * to change the arrays of speeds.
+     * 
+     * This method need not be reimplemented unless the subclass is using
+     * currentBaudNumber, which requires it.
+     */
+    public int[] validBaudNumber() { 
+        log.error("default validBaudNumber implementation should not be used");
+        new Exception().printStackTrace();
+        return null;
+    }
+
+    /**
+     * Convert a baud rate string to a number.
+     * 
+     * Uses the validBaudNumber and validBaudRates methods to do this.
+     * @returns -1 if no match (configuration system should prevent this)
+     */
+    public int currentBaudNumber(String currentBaudRate) {
+        String[] rates = validBaudRates();
+        int[] numbers = validBaudNumber();
+        
+        // return if arrays invalid
+        if (numbers == null) {
+            log.error("numbers array null in currentBaudNumber");
+            return -1;
+        }
+        if (rates == null) {
+            log.error("rates array null in currentBaudNumber");
+            return -1;
+        }
+        if (numbers.length<1 || (numbers.length != rates.length) ) {
+            log.error("arrays wrong length in currentBaudNumber: "+numbers.length+","+rates.length);
+            return -1;
+        }
+        
+        // find the baud rate value, configure comm options
+        int baud = numbers[0];  // default, but also defaulted in the initial value of selectedSpeed
+        for (int i = 0; i<numbers.length; i++ )
+            if (rates[i].equals(currentBaudRate))
+                return numbers[i];
+        
+        // no match
+        log.error("no match to ("+currentBaudRate+") in currentBaudNumber");
+        return -1;
+    }    
+    
     /**
      * Get an array of valid values for "option 1"; used to display valid options.
      * May not be null, but may have zero entries
