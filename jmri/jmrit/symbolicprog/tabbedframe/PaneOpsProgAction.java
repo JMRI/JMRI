@@ -34,7 +34,7 @@ import javax.swing.JPanel;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class PaneOpsProgAction 	extends AbstractAction {
 
@@ -53,17 +53,6 @@ public class PaneOpsProgAction 	extends AbstractAction {
             // This needs to return so the xmlThread is not started;
 	    return;
         }
-
-        // start a low priority request for the Roster & DecoderInstance
-        Thread xmlThread = new Thread( new Runnable() {
-                public void run() {
-                    Roster.instance();
-                    DecoderIndexFile.instance();
-                    if (log.isDebugEnabled()) log.debug("xml loading thread finishes prereading Roster, DecoderIndexFile");
-                }
-            }, "pre-read XML files");
-        xmlThread.setPriority(Thread.NORM_PRIORITY-2);
-        xmlThread.start();
 
     }
 

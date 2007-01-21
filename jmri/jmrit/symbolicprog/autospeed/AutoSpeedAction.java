@@ -23,7 +23,7 @@ import jmri.jmrit.symbolicprog.tabbedframe.*;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class AutoSpeedAction 			extends AbstractAction {
 
@@ -40,17 +40,6 @@ public class AutoSpeedAction 			extends AbstractAction {
             !jmri.InstanceManager.programmerManagerInstance().isOpsModePossible()) {
             setEnabled(false);
         }
-
-        // start a low priority request for the Roster & DecoderInstance
-        Thread xmlThread = new Thread( new Runnable() {
-                public void run() {
-                    Roster.instance();
-                    DecoderIndexFile.instance();
-                    if (log.isDebugEnabled()) log.debug("xml loading thread finishes prereading Roster, DecoderIndexFile");
-                }
-            }, "pre-read XML files");
-        xmlThread.setPriority(Thread.NORM_PRIORITY-2);
-        xmlThread.start();
 
     }
 
