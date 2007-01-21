@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 abstract public class AbstractConnectionConfig  implements jmri.jmrix.ConnectionConfig {
 
@@ -27,10 +27,9 @@ abstract public class AbstractConnectionConfig  implements jmri.jmrix.Connection
     }
     /**
      * Ctor for a functional object with no prexisting adapter.
-     * Expect that the subclass ctor will fill the adapter member.
+     * Expect that the subclass setInstance() will fill the adapter member.
      */
     public AbstractConnectionConfig() {
-        adapter = null;
     }
 
     boolean init = false;
@@ -58,6 +57,8 @@ abstract public class AbstractConnectionConfig  implements jmri.jmrix.Connection
                 adapter.configureOption2((String)opt2Box.getSelectedItem());
             }
         });
+        
+        init = true;
     }
 
     protected JComboBox portBox = new JComboBox();
@@ -65,10 +66,11 @@ abstract public class AbstractConnectionConfig  implements jmri.jmrix.Connection
     protected JComboBox opt1Box = new JComboBox();
     protected JComboBox opt2Box = new JComboBox();
 
-    protected jmri.jmrix.SerialPortAdapter adapter;
+    protected jmri.jmrix.SerialPortAdapter adapter = null;
 
     /**
      * Load the adapter with an appropriate object
+     * <i>unless</I> its already been set.
      */
     abstract protected void setInstance();
 
