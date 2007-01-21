@@ -2,12 +2,14 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Lenz_80.xml,v 1.4 2005-12-04 15:49:47 jacobsen Exp $ -->
+<!-- $Id: Lenz_80.xml,v 1.5 2007-01-21 05:06:05 jacobsen Exp $ -->
 <decoder-config>
-	<version author="Jack Walton jackwalton@ev1.net"
+	<version author="Jack Walton jack@nyrs.com"
 				version="2" lastUpdated="20040208" />
 
-	<!-- version 2 - changed CV2 'Item' to "Vstart", made CV50.1 functional, -->
+    <!-- changed author email from jackwalton@ev1.net -->
+    
+  	<!-- version 2 - changed CV2 'Item' to "Vstart", made CV50.1 functional, -->
 	<!--    Accel/Decel Trim modified, Consist Addressing modified, -->
 	<!--    minor formatting and label changes (Jack Shall) -->
 
