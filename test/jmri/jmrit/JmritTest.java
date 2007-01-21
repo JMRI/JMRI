@@ -8,7 +8,7 @@ import junit.framework.*;
  * Invokes complete set of tests in the jmri.jmrit tree
  *
  * @author	    Bob Jacobsen  Copyright 2001, 2003
- * @version         $Revision: 1.11 $
+ * @version         $Revision: 1.12 $
  */
 public class JmritTest extends TestCase {
 
@@ -27,7 +27,6 @@ public class JmritTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.JmritTest");   // no tests in this class itself
         suite.addTest(jmri.jmrit.blockboss.BlockBossTest.suite());
-        suite.addTest(jmri.jmrit.display.DisplayTest.suite());
         suite.addTest(jmri.jmrit.beantable.BeanTableTest.suite());
         suite.addTest(jmri.jmrit.decoderdefn.DecoderDefnTest.suite());
         suite.addTest(jmri.jmrit.display.DisplayTest.suite());
