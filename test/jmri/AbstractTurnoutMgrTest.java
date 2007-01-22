@@ -52,28 +52,28 @@ public abstract class AbstractTurnoutMgrTest extends TestCase {
 		// create
 		Turnout t = l.newTurnout(getSystemName(21), "mine");
 		// check
-		Assert.assertTrue("real object ", t != null);
-		Assert.assertTrue("user name ", t == l.getByUserName("mine"));
-		Assert.assertTrue("system name ", t == l.getBySystemName(getSystemName(21)));
+		Assert.assertTrue("real object returned ", t != null);
+		Assert.assertTrue("user name correct ", t == l.getByUserName("mine"));
+		Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(21)));
 	}
 
 	public void testDefaultSystemName() {
 		// create
 		Turnout t = l.provideTurnout("21");
 		// check
-		Assert.assertTrue("real object ", t != null);
-		Assert.assertTrue("system name ", t == l.getBySystemName(getSystemName(21)));
+		Assert.assertTrue("real object returned ", t != null);
+		Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(21)));
 	}
 
 	public void testSingleObject() {
 		// test that you always get the same representation
 		Turnout t1 = l.newTurnout(getSystemName(21), "mine");
-		Assert.assertTrue("t1 real object ", t1 != null);
+		Assert.assertTrue("t1 real object returned ", t1 != null);
 		Assert.assertTrue("same by user ", t1 == l.getByUserName("mine"));
 		Assert.assertTrue("same by system ", t1 == l.getBySystemName(getSystemName(21)));
 
 		Turnout t2 = l.newTurnout(getSystemName(21), "mine");
-		Assert.assertTrue("t2 real object ", t2 != null);
+		Assert.assertTrue("t2 real object returned ", t2 != null);
 		// check
 		Assert.assertTrue("same new ", t1 == t2);
 	}
