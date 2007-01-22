@@ -38,6 +38,8 @@ public class EasyDccTrafficControllerTest extends TestCase {
 		m.setElement(1, '1');
 		m.setElement(2, '2');
 		c.sendEasyDccMessage(m, new EasyDccListenerScaffold());
+		wait(2); // relinquish control
+		
 		Assert.assertEquals("total length ", 4, tostream.available());
 		Assert.assertEquals("Char 0", '0', tostream.readByte());
 		Assert.assertEquals("Char 1", '1', tostream.readByte());
@@ -166,6 +168,14 @@ public class EasyDccTrafficControllerTest extends TestCase {
 
 	// from here down is testing infrastructure
 
+	void wait(int msec) {
+		try {
+			super.wait(msec);
+		}
+		catch (Exception e) {
+		}
+	}
+	
 	public EasyDccTrafficControllerTest(String s) {
 		super(s);
 	}

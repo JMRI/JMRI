@@ -17,7 +17,7 @@ import jmri.Turnout;
 /**
  * Tests for the BlockBossLogic class
  * @author	Bob Jacobsen
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class BlockBossLogicTest extends TestCase {
 
@@ -44,12 +44,15 @@ public class BlockBossLogicTest extends TestCase {
 		Assert.assertEquals("driven signal name", "IH1", p.getDrivenSignal());
 		
 		h2.setAppearance(SignalHead.RED);
+		wait(1);  // release control
 		Assert.assertEquals("red sets yellow", SignalHead.YELLOW, h1.getAppearance());
 		
 		h2.setAppearance(SignalHead.YELLOW);
+		wait(1);  // release control
 		Assert.assertEquals("yellow sets green", SignalHead.GREEN, h1.getAppearance());
 		
 		h2.setAppearance(SignalHead.GREEN);
+		wait(1);  // release control
 		Assert.assertEquals("green sets green", SignalHead.GREEN, h1.getAppearance());
 		
 		p.stop();
@@ -65,12 +68,15 @@ public class BlockBossLogicTest extends TestCase {
 		Assert.assertEquals("driven signal name", "IH1", p.getDrivenSignal());
 		
 		h2.setAppearance(SignalHead.RED);
+		wait(1);  // release control
 		Assert.assertEquals("red sets red", SignalHead.RED, h1.getAppearance());
 		
 		h2.setAppearance(SignalHead.YELLOW);
+		wait(1);  // release control
 		Assert.assertEquals("yellow sets yellow", SignalHead.YELLOW, h1.getAppearance());
 		
 		h2.setAppearance(SignalHead.GREEN);
+		wait(1);  // release control
 		Assert.assertEquals("green sets green", SignalHead.GREEN, h1.getAppearance());
 		
 		p.stop();
@@ -86,12 +92,15 @@ public class BlockBossLogicTest extends TestCase {
 		p.start();
 		
 		h2.setAppearance(SignalHead.RED);
+		wait(1);  // release control
 		Assert.assertEquals("red sets yellow", SignalHead.YELLOW, h1.getAppearance());
 		
 		h2.setAppearance(SignalHead.YELLOW);
+		wait(1);  // release control
 		Assert.assertEquals("yellow sets yellow", SignalHead.YELLOW, h1.getAppearance());
 		
 		h2.setAppearance(SignalHead.GREEN);
+		wait(1);  // release control
 		Assert.assertEquals("green sets yellow", SignalHead.YELLOW, h1.getAppearance());
 		
 		p.stop();
@@ -107,12 +116,15 @@ public class BlockBossLogicTest extends TestCase {
 		p.start();
 		
 		h2.setAppearance(SignalHead.RED);
+		wait(1);  // release control
 		Assert.assertEquals("red sets red", SignalHead.RED, h1.getAppearance());
 		
 		h2.setAppearance(SignalHead.YELLOW);
+		wait(1);  // release control
 		Assert.assertEquals("yellow sets yellow", SignalHead.YELLOW, h1.getAppearance());
 		
 		h2.setAppearance(SignalHead.GREEN);
+		wait(1);  // release control
 		Assert.assertEquals("green sets yellow", SignalHead.YELLOW, h1.getAppearance());
 		
 		p.stop();
@@ -124,6 +136,7 @@ public class BlockBossLogicTest extends TestCase {
 		p.setMode(BlockBossLogic.SINGLEBLOCK);
 		p.start();
 		
+		wait(10);  // release control
 		Assert.assertEquals("missing signal is green", SignalHead.GREEN, h1.getAppearance());
 		p.stop();
 	}
@@ -135,23 +148,10 @@ public class BlockBossLogicTest extends TestCase {
 		p.setLimitSpeed1(true);
 		p.start();
 		
+		wait(10);  // release control
 		Assert.assertEquals("missing signal is green, show yellow", SignalHead.YELLOW, h1.getAppearance());
 		p.stop();
 	}
-
-
-
-/* 	public void testShortDelay() { */
-/* 		SimpleTimebase p = new SimpleTimebase(); */
-/* 		Date now = new Date(); */
-/* 		p.setTime(now); */
-/* 		p.setRate(100.); */
-/* 		wait(100); */
-/* 		Date then = p.getTime(); */
-/* 		long delta = then.getTime()-now.getTime(); */
-/* 		Assert.assertTrue("delta ge 50 (nominal value)", delta>=50); */
-/* 		Assert.assertTrue("delta lt 150 (nominal value)", delta<150); */
-/* 	} */
 
 	// from here down is testing infrastructure
 
