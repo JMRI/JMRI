@@ -11,7 +11,7 @@ import jmri.Turnout;
  * System names are "CTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
@@ -32,13 +32,13 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         // does this turnout already exist
         Turnout t = getBySystemName(sName);
         if (t!=null) {
-            return null;
+            return t;
         }
         // check under alternate name
         String altName = SerialAddress.convertSystemNameToAlternate(sName);
         t = getBySystemName(altName);
         if (t!=null) {
-            return null;
+            return t;
         }
 		
 		// check if the addressed output bit is available
@@ -49,8 +49,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 		if (bitNum == 0) return (null);
 		String conflict = "";
 		conflict = SerialAddress.isOutputBitFree(nAddress,bitNum);
-		if ( ( conflict != "" ) && (conflict != sName) ) {
-			log.error("Assignment conflict with "+conflict+".");
+		if ( ( conflict != "" ) && (!conflict.equals(sName)) ) {
+			log.error(sName+" assignment conflict with "+conflict+".");
 			notifyTurnoutCreationError(conflict,bitNum);
 			return (null);
 		}
