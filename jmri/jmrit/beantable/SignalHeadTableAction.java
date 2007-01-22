@@ -23,8 +23,8 @@ import javax.swing.JTextField;
  * Swing action to create and register a
  * SignalHeadTable GUI.
  *
- * @author	Bob Jacobsen    Copyright (C) 2003,2006
- * @version     $Revision: 1.18 $
+ * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007
+ * @version     $Revision: 1.19 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -253,7 +253,16 @@ public class SignalHeadTableAction extends AbstractTableAction {
     void okPressed(ActionEvent e) {
         SignalHead s;
         if (se8c4Aspect.equals(typeBox.getSelectedItem())) {
-            s = new jmri.jmrix.loconet.SE8cSignalHead(Integer.parseInt(to1.getText()),name.getText());
+            // the turnout field can hold either a NNN number or a system name
+            String num = to1.getText();
+            int number;
+            if (num.substring(0,2).equals("LT"))
+                number = Integer.parseInt(num.substring(2,num.length()));
+            else if (num.substring(0,2).equals("lt"))
+                number = Integer.parseInt(num.substring(2,num.length()));
+            else
+                number = Integer.parseInt(num);
+            s = new jmri.jmrix.loconet.SE8cSignalHead(number,name.getText());
             InstanceManager.signalHeadManagerInstance().register(s);
         } else if (tripleTurnout.equals(typeBox.getSelectedItem())) {
             Turnout t1 = InstanceManager.turnoutManagerInstance().provideTurnout(to1.getText());
