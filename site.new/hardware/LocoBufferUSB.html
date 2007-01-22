@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LocoBufferUSB.html,v 1.1 2007-01-22 04:42:09 jacobsen Exp $ -->
+<!-- $Id: LocoBufferUSB.html,v 1.2 2007-01-22 15:17:20 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -71,9 +71,7 @@ The recommended setup for the LocoBuffer-USB is:
 </p>
 
 <UL>
-<LI>Set all switches off (toward the front label side).
-<LI>
-Start DecoderPro or other program and configure it for:
+<LI>Start DecoderPro or other program and configure it for:
 <UL>
 <LI>LocoNet LocoBuffer-USB
 <LI>Select your port
@@ -82,13 +80,9 @@ Start DecoderPro or other program and configure it for:
 
 <h2>Loop-back testing</h2>
 <p>
-The LocoBuffer-USB input circuit and code actually reads from the LocoNet 
-output jack, so if you install the LocoNet terminator 
-(the small circuit that was shipped with the LocoBuffer II) 
-and set SW7-8 to 
-ON (down) so that the input circuitry gets it's power from the 
-wall-wart, then you have created a loop back test. The only thing that is not 
-tested is the LocoNet jack itself.
+The LocoBuffer-USB input circuit and code actually reads from the LocoNet output jack, 
+so if you enable the LocoNet terminator then you have created a loop back test. 
+The only thing that is not tested is the LocoNet jack itself.
 </p>
 
 
@@ -97,36 +91,21 @@ Steps:
 <OL>
 <LI>Unplug the LocoNet cable
 <LI>Open case (use a small screw driver to work open the latches at the small slots on the sides)
-<LI>Install terminator
-<LI>Set Sw 7-8 ON, all other switches OFF
+<LI>Install a jumper on the "term" pins.
 <LI>Open the JMRI LocoNet Monitor window.
 <LI>Using JMRI send some commands (e.g. switch commands)
 <LI>The commands should appear in the LocoNet monitor window and the 
 LocoBuffer-USB activity LED should blink
-<li>Remove the terminator (unless your application requires it)
-<LI>Restore the LocoBuffer-USB option switches to their normal settings for your application
+<li>Remove the terminator jumper (unless your application requires it)
 </OL>
 </p>
 
 <h2>LocoBuffer-USB Power</h2>
 
-When powered by an external supply, the LocoBuffer-USB completely
-isolates your computer from the LocoNet, removing the possibility
-of ground currents flowing through the LocoNet cable.
-<P>
-If you are using an isolated computer, for example a laptop that's
-not connected to any peripherals, you can configure the LocoBuffer-USB
-so that it doesn't need an external power supply. It will then get it's
-power from the RailSynch leads in the LocoNet.
-<P>
-It is strongly advised that you get your computer connection working
-properly with an external power source before you do this.  That way,
-if any problems arise when you try to use internal power, you'll know
-what caused them and they'll be much easier to diagnose.
-<P>
-To do this, remove the power connection and 
-set switches 7 and 8 to ON (down, toward the switch 
-illustration).
+The LocoBuffer-USB completely isolates your computer from the LocoNet, 
+removing the possibility of ground currents flowing through the LocoNet cable. 
+It receives its power partially from the LocoNet and the rest from your 
+computer via the USB cable.
 
       <hr class="hide">
 
