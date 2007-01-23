@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.45 $)
+distribution.  ($Revision: 1.46 $)
 
 Start with a directory, typically called "Distributions", that
 contains:
@@ -32,10 +32,6 @@ Make sure everything is up-to-date:
     Make sure file is saved with Unix line ends.
     Commit.
     
-( ) If the decoder definitions have changed, make a .zip file and send to:
-    Hans Tanner:  hans.tanner@complexitymanager.com
-    Graham Plowman: gppsoftware@gppsoftware.com
-
 ( ) Check if the help has changed since the previous tag
     If so, remake the help index  (need a command line approach, so can put in ant!)
     cd JMRI/jhelp/help/en
@@ -111,7 +107,7 @@ To actually create the distribution:
     ln -s /Applications .
     cd (back to Distributions)
     (eject)
-    hdiutil convert temp.dmg -format UDZO -o JMRI.1.7.3.dmg
+    hdiutil convert temp.dmg -format UDZO -o JMRI.1.2.3.dmg
     
 ( ) Once the two StuffIt processes are done
 	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release2
@@ -203,6 +199,7 @@ To actually create the distribution:
 ( ) Commit site and update on server
 	
 ( ) Mail announcement to jmriusers@yahoogroups.com
+    Subject is "Test version 1.7.4 of JMRI/DecoderPro is available for download"
 
 ( ) Mail announcement to jmri-announce@lists.sourceforge.net
 
