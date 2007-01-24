@@ -39,8 +39,8 @@ import javax.swing.JDialog;
  * Swing action to create and register a
  * TurnoutTable GUI.
  *
- * @author	Bob Jacobsen    Copyright (C) 2003, 2004
- * @version     $Revision: 1.36 $
+ * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
+ * @version     $Revision: 1.37 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
