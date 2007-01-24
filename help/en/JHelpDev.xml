@@ -7,7 +7,7 @@
 
  <config>
    <project>JmriHelp_en</project>
-   <projectdir>/Volumes/Users/jake/Documents/Trains/JMRI/jhelp/java/help/en</projectdir>
+   <projectdir>/Users/jake/Documents/Trains/JMRI/jhelp/java/help/en</projectdir>
    <startpage>index.html</startpage>
    <popupicon>images/popup.gif</popupicon>
  </config>
