@@ -35,7 +35,7 @@ import jmri.util.StringUtil;
  * used with permission.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2003
- * @version			$Revision: 1.36 $
+ * @version			$Revision: 1.37 $
  */
 public class Llnmon {
 
@@ -1345,34 +1345,39 @@ public class Llnmon {
              *                         ; <0xE4>,<0x09>,...                                      *
              ***********************************************************************************/
         case 0XE4:
-            if (l.getElement(1)!=0x0A) {
+            switch (l.getElement(1)) {
+            case 0x08 : // Format LISSY message
+                int unit = (l.getElement(4)&0x7F);
+                int address = (l.getElement(6)&0x7F)+128*(l.getElement(5)&0x7F);
+                return "Lissy "+unit+": Loco "+address+" moving "+((l.getElement(3)&0x20)==0 ? "north":"south");
+
+            case 0x0A : // Format special message
+                int element = l.getElement(2)*128+l.getElement(3);
+                int stat1 = l.getElement(5);
+                int stat2 = l.getElement(6);
+                String status;
+                if ( (stat1&0x10) !=0 )
+                    if ( (stat1&0x20) !=0 )
+                        status = " AX, XA reserved; ";
+                    else
+                        status = " AX reserved; ";
+                else
+                    if ( (stat1&0x20) !=0 )
+                        status = " XA reserved; ";
+                    else
+                        status = " no reservation; ";
+                if ( (stat2&0x01) !=0 ) status+="Turnout thrown; ";
+                else status+="Turnout closed; ";
+                if ( (stat1&0x01) !=0 ) status+="Occupied";
+                else status+="Not occupied";
+                return "SE"+(element+1)+" ("+element+") reports AX:"+l.getElement(7)
+                    +" XA:"+l.getElement(8)
+                    +status+"\n";
+            
+            default :
                 forceHex = true;
                 return "Unrecognized command varient\n";
             }
-
-            // OK, format
-            int element = l.getElement(2)*128+l.getElement(3);
-            int stat1 = l.getElement(5);
-            int stat2 = l.getElement(6);
-            String status;
-            if ( (stat1&0x10) !=0 )
-                if ( (stat1&0x20) !=0 )
-                    status = " AX, XA reserved; ";
-                else
-                    status = " AX reserved; ";
-            else
-                if ( (stat1&0x20) !=0 )
-                    status = " XA reserved; ";
-                else
-                    status = " no reservation; ";
-            if ( (stat2&0x01) !=0 ) status+="Turnout thrown; ";
-            else status+="Turnout closed; ";
-            if ( (stat1&0x01) !=0 ) status+="Occupied";
-            else status+="Not occupied";
-            return "SE"+(element+1)+" ("+element+") reports AX:"+l.getElement(7)
-                +" XA:"+l.getElement(8)
-                +status+"\n";
-
             /**************************************************************************
              * OPC_IMM_PACKET   0xED   ;SEND n-byte packet immediate LACK              *
              *                         ; Follow on message: LACK                       *
