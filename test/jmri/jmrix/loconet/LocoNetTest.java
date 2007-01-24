@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet package.
  * @author	Bob Jacobsen Copyright 2001, 2003
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 public class LocoNetTest extends TestCase {
 
@@ -42,6 +42,7 @@ public class LocoNetTest extends TestCase {
         suite.addTest(LnPowerManagerTest.suite());
         suite.addTest(LnTurnoutTest.suite());
         suite.addTest(LnTurnoutManagerTest.suite());
+        suite.addTest(LnReporterTest.suite());
         suite.addTest(LnSensorTest.suite());
         suite.addTest(LnSensorAddressTest.suite());
         suite.addTest(LnSensorManagerTest.suite());
