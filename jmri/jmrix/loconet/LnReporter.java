@@ -19,6 +19,8 @@ import jmri.AbstractReporter;
  *       transponding zone.  Short vs long address is indicated
  *       by the NNNN value
  *  <LI>NNNN exits - locomotive address NNNN left the transponding zone.
+ *  <LI>NNNN seen northbound - LISSY measurement
+ *  <LI>NNNN seen southbound - LISSY measurement
  * </ul>
  *<p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
@@ -27,8 +29,8 @@ import jmri.AbstractReporter;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * <P>
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @author			Bob Jacobsen Copyright (C) 2001, 2007
+ * @version			$Revision: 1.4 $
  */
  
  public class LnReporter extends AbstractReporter implements LocoNetListener {
@@ -54,14 +56,22 @@ import jmri.AbstractReporter;
      // _once_ if anything has changed state (or set the commanded state directly)
      public void message(LocoNetMessage l) {
          // check message type
-		if (l.getOpCode() != 0xD0) return;
-		if ( (l.getElement(1) & 0xC0) != 0) return;
+		if ( (l.getOpCode() == 0xD0) && ( (l.getElement(1) & 0xC0) == 0) ) 
+		    transpondingReport(l);
+		if ( (l.getOpCode() == 0xE4) && ( l.getElement(1) == 0x08) ) 
+		    lissyReport(l);
+        else return; // nothing
+     }
 
-		// message type OK, check address
+    /**
+     * Handle transponding message
+     */
+    void transpondingReport(LocoNetMessage l) {
+		// check address
         int addr = ((l.getElement(1)&0x1F)*128) + l.getElement(2) + 1;
 		if (addr != getNumber()) return;
 		
-		// this is real, get direction
+		// get direction
 		boolean enter = ( (l.getElement(1) & 0x20) != 0) ;	
 		
 		// get loco address
@@ -73,8 +83,27 @@ import jmri.AbstractReporter;
         
         lastLoco = (enter? loco : -1);
         setReport(""+loco+(enter?" enter":" exits"));
-     }
+    }
+    
+    /**
+     * Handle LISSY message
+     */
+    void lissyReport(LocoNetMessage l) {
+		// check unit address
+        int unit = (l.getElement(4)&0x7F);
+        if (unit != getNumber()) return;
+        
+        // get loco address
+        int loco = (l.getElement(6)&0x7F)+128*(l.getElement(5)&0x7F);
+		
+		// get direction
+		boolean north = ( (l.getElement(3) & 0x20) == 0) ;	
+		
+		// get loco address
+        setReport(""+loco+" seen "+(north?"northbound":"southbound"));
 
+    }
+    
 	/**
 	 * Provide an int value for use in scripts, etc.  This will be
 	 * the numeric locomotive address last seen, unless the last 
