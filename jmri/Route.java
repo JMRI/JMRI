@@ -15,44 +15,144 @@ package jmri;
  * To allow control via fascia panel pushbuttons, Routes may optionally be 
  * invoked by one or more Sensors (up to the maximum allowed).
  *
+ * Note that this class has a large number of deprecated methods.
+ * These <i>will</> eventually be removed.
+ *
  * @author			Dave Duchamp Copyright (C) 2004
- * @version			$Revision: 1.8 $
+ * @author			Bob Jacobsen Copyright (C) 2007
+ * @version			$Revision: 1.9 $
  */
 public interface Route extends NamedBean {
 
-    public static final int MAX_TURNOUTS_PER_ROUTE = 100;
-    public static final int MAX_CONTROL_SENSORS = 3;
 	public static final int TOGGLE = 0x08;
+    static final int MAX_CONTROL_SENSORS = 3;
 
+    // Old interface for outputs 
+    
     /**
-     * Method to add a Turnout to the list of Turnouts in this Route
-     * 'turnoutState' must be Turnout.CLOSED, Turnout.THROWN, or Route.TOGGLE, depending
-     *      depending on how the Turnout is to be switched when this Route is set
+     * @deprecated
      */
     public boolean addTurnoutToRoute(String turnoutSystemName, int turnoutState);
 
     /**
-     * Method to delete all Turnouts from the list of Turnouts in this Route
+     * @deprecated
      */
     public void clearRouteTurnouts();
     
     /**
-     * Method to get a Route Turnout System Name by Index
-     *  Returns null if there is no turnout with that index
-     */
-    public String getRouteTurnoutByIndex(int index);
-
-    /**
-     * Method to inquire if a Turnout is included in this Route
+     * @deprecated
      */
     public boolean isTurnoutIncluded(String turnoutSystemName);
 
     /**
-     * Method to get the Set State of a Turnout included in this Route
-     *   If the Turnout is not found, -1 is returned.
+     * @deprecated
      */
     public int getTurnoutSetState(String turnoutSystemName);
 
+    /**
+     * @deprecated
+     */
+    public String getRouteTurnoutByIndex(int index);
+
+    /**
+     * @deprecated
+	 */
+    public Turnout getRouteTurnout(int k);
+
+    /**
+     * @deprecated
+	 */
+    public int getRouteTurnoutState(int k);
+
+    // new interface for outputs 
+
+    /**
+     * Add an output Turnout to this Route
+     * @param systemName The turnout system name
+     * @param state must be Turnout.CLOSED, Turnout.THROWN, or Route.TOGGLE, 
+     *      which determines how the Turnout is to be switched when this Route is set
+     */
+    public boolean addOutputTurnout(String systemName, int state);
+
+    /**
+     * Delete all output Turnouts from this Route
+     */
+    public void clearOutputTurnouts();
+    
+    /**
+     * Inquire if a Turnout is included in this Route as an output
+     */
+    public boolean isOutputTurnoutIncluded(String systemName);
+
+    /**
+     * Method to get the Set State of an output Turnout
+     * @ return -1 if the Turnout is not found
+     */
+    public int getOutputTurnoutSetState(String systemName);
+
+    /**
+     * Get an output Turnout system name by Index
+     * @return null if there is no turnout with that index
+     */
+    public String getOutputTurnoutByIndex(int index);
+
+    /**
+     * Method to get the 'k'th output Turnout of the Route.
+     * @return null if there are less than 'k' Turnouts defined
+	 */
+    public Turnout getOutputTurnout(int k);
+
+    /**
+     * Method to get the desired state of 'k'th Turnout of the Route.
+     * @return -1 if there are less than 'k' Turnouts defined
+	 */
+    public int getOutputTurnoutState(int k);
+
+    /**
+     * Add an output Sensor to this Route
+     * @param systemName The sensor system name
+     * @param state must be Sensor.ACTIVE, Sensor.INACTIVE, or Route.TOGGLE, 
+     *      which determines how the Sensor is to be switched when this Route is set
+     */
+    public boolean addOutputSensor(String systemName, int state);
+
+    /**
+     * Delete all output Sensors from this Route
+     */
+    public void clearOutputSensors();
+    
+    /**
+     * Inquire if a Sensor is included in this Route as an output
+     */
+    public boolean isOutputSensorIncluded(String systemName);
+
+    /**
+     * Method to get the Set State of an output Sensor
+     * @ return -1 if the Sensor is not found
+     */
+    public int getOutputSensorSetState(String systemName);
+
+    /**
+     * Get an output Sensor system name by Index
+     * @return null if there is no sensor with that index
+     */
+    public String getOutputSensorByIndex(int index);
+
+    /**
+     * Method to get the 'k'th output Sensor of the Route.
+     * @return null if there are less than 'k' Sensor defined
+	 */
+    public Sensor getOutputSensor(int k);
+
+    /**
+     * Method to get the desired state of 'k'th Sensor of the Route.
+     * @return -1 if there are less than 'k' Sensors defined
+	 */
+    public int getOutputSensorState(int k);
+
+
+    // Interface for control inputs
+    
     /**
      * Method to add a Sensor to the list of control Sensors for this Route
      */
@@ -138,18 +238,6 @@ public interface Route extends NamedBean {
      * Deactivates Route based on a list of Sensors
      */
     public void deActivateRoute();
-
-    /**
-     * Method to get the 'k'th Turnout of the Route.
-     *   Returns null if there are less than 'k' Turnouts defined
-	 */
-    public Turnout getRouteTurnout(int k);
-
-    /**
-     * Method to get the desired state of 'k'th Turnout of the Route.
-     *   Returns -1 if there are less than 'k' Turnouts defined
-	 */
-    public int getRouteTurnoutState(int k);
 
 }
 

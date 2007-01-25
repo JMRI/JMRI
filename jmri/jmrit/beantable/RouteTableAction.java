@@ -24,10 +24,12 @@ import com.sun.java.util.collections.List;
 /**
  * Swing action to create and register a Route Table
  
- * Based in part on SignalHeadTableAction.java by Bob Jacobson
+ * Based in part on SignalHeadTableAction.java by Bob Jacobsen
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.17 $
+ * @author Bob Jacobsen Copyright (C) 2007 
+ *
+ * @version     $Revision: 1.18 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -83,12 +85,15 @@ public class RouteTableAction extends AbstractTableAction {
 	String stateClosed = InstanceManager.turnoutManagerInstance().getClosedText();
 	String setStateClosed = "Set "+stateClosed;
 	String setStateThrown = "Set "+stateThrown;
+	String setStateActive = "Set "+"Active";
+	String setStateInactive = "Set "+"Inactive";
 	String setStateToggle = "Toggle";
 
     String[] sensorModes = new String[]{"On Active", "On Inactive", "Veto Active", "Veto Inactive"};
     
     JFrame addFrame = null;
     TableModel routeTurnoutModel = null;
+    TableModel routeSensorModel = null;
     JTextField name = new JTextField(10);
     JTextField userName = new JTextField(22);
     JTextField sensor1 = new JTextField(8);
@@ -126,7 +131,8 @@ public class RouteTableAction extends AbstractTableAction {
     JLabel status1 = new JLabel(createInst);
     JLabel status2 = new JLabel(editInst);
     
-    JPanel p2x = null;   // Turnout list table
+    JPanel p2xt = null;   // Turnout list table
+    JPanel p2xs = null;   // Sensor list table
 
     Route curRoute = null;
     boolean routeCreated = false;
@@ -136,13 +142,23 @@ public class RouteTableAction extends AbstractTableAction {
         // Initialize the turnout list
         for (int i = 0; i<MAX_TURNOUTS ; i++ ) {
             includeTurnout[i] = false;
-			setState[i] = setStateClosed;
-            includedPosition[i] = 0;
+            includeSensor[i] = false;
+			setTurnoutState[i] = setStateClosed;
+			setSensorState[i] = setStateInactive;
+            includedTurnoutPosition[i] = 0;
+            includedSensorPosition[i] = 0;
         }
         turnoutSysNameList = InstanceManager.turnoutManagerInstance().getSystemNameList();
         numTurnouts = turnoutSysNameList.size();
         if (numTurnouts > MAX_TURNOUTS) {
+            log.warn("turnout list too long "+numTurnouts);
             numTurnouts = MAX_TURNOUTS;
+        }
+        sensorSysNameList = InstanceManager.sensorManagerInstance().getSystemNameList();
+        numSensors = sensorSysNameList.size();
+        if (numSensors > MAX_SENSORS) {
+            log.warn("sensor list too long "+numSensors);
+            numSensors = MAX_SENSORS;
         }
         // Set up window
         if (addFrame==null) {
@@ -199,19 +215,21 @@ public class RouteTableAction extends AbstractTableAction {
                 });
             py.add(new JLabel("  Turnouts"));
             contentPane.add(py);
+
             // add turnout table
-            p2x = new JPanel();
-            JPanel p2xSpace = new JPanel();
-            p2xSpace.setLayout(new BoxLayout(p2xSpace, BoxLayout.Y_AXIS));
-            p2xSpace.add(new JLabel("XXX"));
-            p2x.add(p2xSpace);
-            JPanel p21 = new JPanel();
-            p21.setLayout(new BoxLayout(p21, BoxLayout.Y_AXIS));
-            p21.add(new JLabel("Please select "));
-            p21.add(new JLabel(" Turnouts to "));
-            p21.add(new JLabel(" be included "));
-            p21.add(new JLabel(" in this Route."));
-            p2x.add(p21);
+            p2xt = new JPanel();
+            JPanel p2xtSpace = new JPanel();
+            p2xtSpace.setLayout(new BoxLayout(p2xtSpace, BoxLayout.Y_AXIS));
+            p2xtSpace.add(new JLabel("XXX"));
+            p2xt.add(p2xtSpace);
+            
+            JPanel p21t = new JPanel();
+            p21t.setLayout(new BoxLayout(p21t, BoxLayout.Y_AXIS));
+            p21t.add(new JLabel("Please select "));
+            p21t.add(new JLabel(" Turnouts to "));
+            p21t.add(new JLabel(" be included "));
+            p21t.add(new JLabel(" in this Route."));
+            p2xt.add(p21t);
             routeTurnoutModel = new RouteTurnoutModel();
             JTable routeTurnoutTable = jmri.util.JTableUtil.sortableDataModel(routeTurnoutModel);
             try {
@@ -222,37 +240,93 @@ public class RouteTableAction extends AbstractTableAction {
             routeTurnoutTable.setRowSelectionAllowed(false);
             routeTurnoutTable.setPreferredScrollableViewportSize(new 
                                                             java.awt.Dimension(480,100));
-            JComboBox stateCombo = new JComboBox();
-   			stateCombo.addItem(setStateClosed);
-			stateCombo.addItem(setStateThrown);
-			stateCombo.addItem(setStateToggle);
+            JComboBox stateTCombo = new JComboBox();
+   			stateTCombo.addItem(setStateClosed);
+			stateTCombo.addItem(setStateThrown);
+			stateTCombo.addItem(setStateToggle);
             TableColumnModel routeTurnoutColumnModel = routeTurnoutTable.getColumnModel();
-            TableColumn includeColumn = routeTurnoutColumnModel.
+            TableColumn includeColumnT = routeTurnoutColumnModel.
                                                 getColumn(RouteTurnoutModel.INCLUDE_COLUMN);
-            includeColumn.setResizable(false);
-            includeColumn.setMinWidth(50);
-            includeColumn.setMaxWidth(60);
-            TableColumn sNameColumn = routeTurnoutColumnModel.
+            includeColumnT.setResizable(false);
+            includeColumnT.setMinWidth(50);
+            includeColumnT.setMaxWidth(60);
+            TableColumn sNameColumnT = routeTurnoutColumnModel.
                                                 getColumn(RouteTurnoutModel.SNAME_COLUMN);
-            sNameColumn.setResizable(true);
-            sNameColumn.setMinWidth(75);
-            sNameColumn.setMaxWidth(95);
-            TableColumn uNameColumn = routeTurnoutColumnModel.
+            sNameColumnT.setResizable(true);
+            sNameColumnT.setMinWidth(75);
+            sNameColumnT.setMaxWidth(95);
+            TableColumn uNameColumnT = routeTurnoutColumnModel.
                                                 getColumn(RouteTurnoutModel.UNAME_COLUMN);
-            uNameColumn.setResizable(true);
-            uNameColumn.setMinWidth(210);
-            uNameColumn.setMaxWidth(260);
-            TableColumn stateColumn = routeTurnoutColumnModel.
+            uNameColumnT.setResizable(true);
+            uNameColumnT.setMinWidth(210);
+            uNameColumnT.setMaxWidth(260);
+            TableColumn stateColumnT = routeTurnoutColumnModel.
                                                 getColumn(RouteTurnoutModel.STATE_COLUMN);
-            stateColumn.setCellEditor(new DefaultCellEditor(stateCombo));
-            stateColumn.setResizable(false);
-            stateColumn.setMinWidth(90);
-            stateColumn.setMaxWidth(100);
+            stateColumnT.setCellEditor(new DefaultCellEditor(stateTCombo));
+            stateColumnT.setResizable(false);
+            stateColumnT.setMinWidth(90);
+            stateColumnT.setMaxWidth(100);
             JScrollPane routeTurnoutScrollPane = new JScrollPane(routeTurnoutTable);
-            p2x.add(routeTurnoutScrollPane,BorderLayout.CENTER);
-            contentPane.add(p2x);
-            p2x.setVisible(true);
-            // add control sensor table
+            p2xt.add(routeTurnoutScrollPane,BorderLayout.CENTER);
+            contentPane.add(p2xt);
+            p2xt.setVisible(true);
+ 
+             // add sensor table
+            p2xs = new JPanel();
+            JPanel p2xsSpace = new JPanel();
+            p2xsSpace.setLayout(new BoxLayout(p2xsSpace, BoxLayout.Y_AXIS));
+            p2xsSpace.add(new JLabel("XXX"));
+            p2xs.add(p2xsSpace);
+            
+            JPanel p21s = new JPanel();
+            p21s.setLayout(new BoxLayout(p21s, BoxLayout.Y_AXIS));
+            p21s.add(new JLabel("Please select "));
+            p21s.add(new JLabel(" Sensors to "));
+            p21s.add(new JLabel(" be included "));
+            p21s.add(new JLabel(" in this Route."));
+            p2xs.add(p21s);
+            routeSensorModel = new RouteSensorModel();
+            JTable routeSensorTable = jmri.util.JTableUtil.sortableDataModel(routeSensorModel);
+            try {
+                jmri.util.com.sun.TableSorter tmodel = ((jmri.util.com.sun.TableSorter)routeSensorTable.getModel());
+                tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
+                tmodel.setSortingStatus(RouteSensorModel.SNAME_COLUMN, jmri.util.com.sun.TableSorter.ASCENDING);
+            } catch (ClassCastException e3) {}  // if not a sortable table model
+            routeSensorTable.setRowSelectionAllowed(false);
+            routeSensorTable.setPreferredScrollableViewportSize(new 
+                                                            java.awt.Dimension(480,100));
+            JComboBox stateSCombo = new JComboBox();
+   			stateSCombo.addItem(setStateActive);
+			stateSCombo.addItem(setStateInactive);
+			stateSCombo.addItem(setStateToggle);
+            TableColumnModel routeSensorColumnModel = routeSensorTable.getColumnModel();
+            TableColumn includeColumnS = routeSensorColumnModel.
+                                                getColumn(RouteSensorModel.INCLUDE_COLUMN);
+            includeColumnS.setResizable(false);
+            includeColumnS.setMinWidth(50);
+            includeColumnS.setMaxWidth(60);
+            TableColumn sNameColumnS = routeSensorColumnModel.
+                                                getColumn(RouteSensorModel.SNAME_COLUMN);
+            sNameColumnS.setResizable(true);
+            sNameColumnS.setMinWidth(75);
+            sNameColumnS.setMaxWidth(95);
+            TableColumn uNameColumnS = routeSensorColumnModel.
+                                                getColumn(RouteSensorModel.UNAME_COLUMN);
+            uNameColumnS.setResizable(true);
+            uNameColumnS.setMinWidth(210);
+            uNameColumnS.setMaxWidth(260);
+            TableColumn stateColumnS = routeSensorColumnModel.
+                                                getColumn(RouteSensorModel.STATE_COLUMN);
+            stateColumnS.setCellEditor(new DefaultCellEditor(stateSCombo));
+            stateColumnS.setResizable(false);
+            stateColumnS.setMinWidth(90);
+            stateColumnS.setMaxWidth(100);
+            JScrollPane routeSensorScrollPane = new JScrollPane(routeSensorTable);
+            p2xs.add(routeSensorScrollPane,BorderLayout.CENTER);
+            contentPane.add(p2xs);
+            p2xs.setVisible(true);
+
+           // add control sensor table
             JPanel p3 = new JPanel();
             p3.setLayout(new BoxLayout(p3, BoxLayout.Y_AXIS));
             JPanel p31 = new JPanel();
@@ -371,7 +445,8 @@ public class RouteTableAction extends AbstractTableAction {
             contentPane.add(pb);
             // pack and release space
             addFrame.pack();
-            p2xSpace.setVisible(false);
+            p2xsSpace.setVisible(false);
+            p2xtSpace.setVisible(false);
         }
         // set listener for window closing
         addFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -404,7 +479,7 @@ public class RouteTableAction extends AbstractTableAction {
         if (numTurnouts > 0) {
             for (int i = 0; i<numTurnouts; i++) {
                 if (includeTurnout[i]) {
-                    includedPosition[numIncludedTurnouts] = i;
+                    includedTurnoutPosition[numIncludedTurnouts] = i;
                     numIncludedTurnouts ++;
                 }
             }
@@ -442,12 +517,14 @@ public class RouteTableAction extends AbstractTableAction {
             return;
         }
         // Set Turnout information 
-        int numIncluded = setTurnoutInformation(g);
+        int numIncludedT = setTurnoutInformation(g);
+        // Set Sensor information 
+        int numIncludedS = setSensorInformation(g);
         // Set optional control Sensor and control Turnout information
         setControlInformation(g);
         // Provide feedback to user
         status1.setText("New Route created: "+sName+", "+uName+", "+
-                                                        numIncluded+" Turnouts");
+                                                        numIncludedT+" Turnouts, "+numIncludedS+" Sensors");
         status2.setText(editInst);
         // activate the route
         g.activateRoute();
@@ -464,16 +541,40 @@ public class RouteTableAction extends AbstractTableAction {
         int state = 0;
         for (int i = 0; i<numTurnouts; i++) {
             if (includeTurnout[i]) {
-                if (setState[i].equals(setStateClosed) ) {
+                if (setTurnoutState[i].equals(setStateClosed) ) {
                     state = Turnout.CLOSED;
                 }
-                else if (setState[i].equals(setStateThrown) ) {
+                else if (setTurnoutState[i].equals(setStateThrown) ) {
                     state = Turnout.THROWN;
                 }
 				else {
 					state = Route.TOGGLE;
 				}
-                g.addTurnoutToRoute((String)turnoutSysNameList.get(i),state);
+                g.addOutputTurnout((String)turnoutSysNameList.get(i),state);
+                numIncluded ++;
+            }
+        }
+        return numIncluded;
+    }
+
+    /**
+     * Sets the Sensor information for adding or editting
+     */
+    int setSensorInformation(Route g) {
+        int numIncluded = 0;
+        int state = 0;
+        for (int i = 0; i<numSensors; i++) {
+            if (includeSensor[i]) {
+                if (setSensorState[i].equals(setStateInactive) ) {
+                    state = Sensor.INACTIVE;
+                }
+                else if (setSensorState[i].equals(setStateActive) ) {
+                    state = Sensor.ACTIVE;
+                }
+				else {
+					state = Route.TOGGLE;
+				}
+                g.addOutputSensor((String)sensorSysNameList.get(i),state);
                 numIncluded ++;
             }
         }
@@ -599,27 +700,56 @@ public class RouteTableAction extends AbstractTableAction {
             int tState = 0;
             for (int i=0; i<numTurnouts; i++) {
                 String tSysName = (String)turnoutSysNameList.get(i);
-                if (g.isTurnoutIncluded(tSysName)) {
+                if (g.isOutputTurnoutIncluded(tSysName)) {
                     includeTurnout[i] = true;
-                    tState = g.getTurnoutSetState(tSysName);
+                    tState = g.getOutputTurnoutSetState(tSysName);
 					if (tState==Turnout.CLOSED) {
-						setState[i] = setStateClosed;
+						setTurnoutState[i] = setStateClosed;
 					}
                     else if (tState==Turnout.THROWN) {
-                        setState[i] = setStateThrown;
+                        setTurnoutState[i] = setStateThrown;
                     }
 					else if (tState==Route.TOGGLE) {
-						setState[i] = setStateToggle;
+						setTurnoutState[i] = setStateToggle;
 					}
 					else {
-						setState[i] = setStateClosed;
+						setTurnoutState[i] = setStateClosed;
 						log.error ("Unrecognized set state for Turnout " +
 										tSysName + " in Route " + sName);
 					}
                 }
                 else {
                     includeTurnout[i] = false;
-					setState[i] = setStateClosed;
+					setTurnoutState[i] = setStateClosed;
+                }
+            }
+        }
+        // set up Sensor list for this route
+        if (numSensors>0) {
+            int sState = 0;
+            for (int i=0; i<numSensors; i++) {
+                String tSysName = (String)sensorSysNameList.get(i);
+                if (g.isOutputSensorIncluded(tSysName)) {
+                    includeSensor[i] = true;
+                    sState = g.getOutputSensorSetState(tSysName);
+					if (sState==Sensor.ACTIVE) {
+						setSensorState[i] = setStateActive;
+					}
+                    else if (sState==Sensor.INACTIVE) {
+                        setSensorState[i] = setStateInactive;
+                    }
+					else if (sState==Route.TOGGLE) {
+						setSensorState[i] = setStateToggle;
+					}
+					else {
+						setSensorState[i] = setStateInactive;
+						log.error ("Unrecognized set state for Sensor " +
+										tSysName + " in Route " + sName);
+					}
+                }
+                else {
+                    includeSensor[i] = false;
+					setSensorState[i] = setStateInactive;
                 }
             }
         }
@@ -782,7 +912,7 @@ public class RouteTableAction extends AbstractTableAction {
                 return null;
             }
             if (!showAll) {
-                rx = includedPosition[r];
+                rx = includedTurnoutPosition[r];
             }
             switch (c) {
             case INCLUDE_COLUMN:
@@ -798,7 +928,7 @@ public class RouteTableAction extends AbstractTableAction {
                 return InstanceManager.turnoutManagerInstance().
                         getBySystemName((String)turnoutSysNameList.get(rx)).getUserName();
             case STATE_COLUMN:  //
-                return setState[rx];
+                return setTurnoutState[rx];
             default:
                 return null;
             }
@@ -809,7 +939,7 @@ public class RouteTableAction extends AbstractTableAction {
                 return;
             }
             if (!showAll) {
-                rx = includedPosition[r];
+                rx = includedTurnoutPosition[r];
             }
             switch (c) {
                 case INCLUDE_COLUMN:  
@@ -821,7 +951,7 @@ public class RouteTableAction extends AbstractTableAction {
                     }
                     break;
                 case STATE_COLUMN: 
-                    setState[rx] = (String)type;
+                    setTurnoutState[rx] = (String)type;
                     break;
             }
         }
@@ -834,7 +964,89 @@ public class RouteTableAction extends AbstractTableAction {
         public static final int INCLUDE_COLUMN = 2;
         public static final int STATE_COLUMN = 3;
     }
+
+    /**
+     * Set up table for selecting Sensors and Sensor State
+     */
+    public class RouteSensorModel extends AbstractTableModel
+    {
+        public String getColumnName(int c) {return routeSensorColumnNames[c];}
+        public Class getColumnClass(int c) {
+            if (c == INCLUDE_COLUMN) {
+                return Boolean.class;
+            }
+            else {
+                return String.class;
+            }
+        }
+        public int getColumnCount () {return 4;}
+        public int getRowCount () {
+            if (showAll)
+                return numSensors;
+            else
+                return numIncludedSensors;
+        }
+        public Object getValueAt (int r,int c) {
+            int rx = r;
+            if (rx > numSensors) {
+                return null;
+            }
+            if (!showAll) {
+                rx = includedSensorPosition[r];
+            }
+            switch (c) {
+            case INCLUDE_COLUMN:
+                if (includeSensor[rx]) {
+                    return Boolean.TRUE;
+                }
+                else {
+                    return Boolean.FALSE;
+                }
+            case SNAME_COLUMN:  // slot number
+                return sensorSysNameList.get(rx);
+            case UNAME_COLUMN:  //
+                return InstanceManager.sensorManagerInstance().
+                        getBySystemName((String)sensorSysNameList.get(rx)).getUserName();
+            case STATE_COLUMN:  //
+                return setSensorState[rx];
+            default:
+                return null;
+            }
+        }
+        public void setValueAt(Object type,int r,int c) {
+            int rx = r;
+            if (rx > numSensors) {
+                return;
+            }
+            if (!showAll) {
+                rx = includedSensorPosition[r];
+            }
+            switch (c) {
+                case INCLUDE_COLUMN:  
+					if (!((Boolean)type).booleanValue()) {
+                        includeSensor[rx] = false;
+                    }
+                    else {
+                        includeSensor[rx] = true;
+                    }
+                    break;
+                case STATE_COLUMN: 
+                    setSensorState[rx] = (String)type;
+                    break;
+            }
+        }
+        public boolean isCellEditable(int r,int c) {
+            return ( (c==INCLUDE_COLUMN) || (c==STATE_COLUMN) );
+        }
+		
+        public static final int SNAME_COLUMN = 0;
+        public static final int UNAME_COLUMN = 1;
+        public static final int INCLUDE_COLUMN = 2;
+        public static final int STATE_COLUMN = 3;
+    }
+
     private boolean showAll = true;   // false indicates show only included Turnouts
+
     private int numIncludedTurnouts = 0;
     private int numTurnouts = 0;
     private static final int MAX_TURNOUTS = 1000;
@@ -842,10 +1054,22 @@ public class RouteTableAction extends AbstractTableAction {
                                         "Include", "Set State"};
     private List turnoutSysNameList = null;
     private boolean[] includeTurnout = new boolean[MAX_TURNOUTS];
-    private String[] setState = new String[MAX_TURNOUTS];
-    private int[] includedPosition = new int[MAX_TURNOUTS];  // indexed by row of included turnout in included
+    private String[] setTurnoutState = new String[MAX_TURNOUTS];
+    private int[] includedTurnoutPosition = new int[MAX_TURNOUTS];  // indexed by row of included turnout in included
                                                             // Turnouts only list.  Contains position in full
                                                             // Turnout list.
+
+    private int numIncludedSensors = 0;
+    private int numSensors = 0;
+    private static final int MAX_SENSORS= 1000;
+    private String[] routeSensorColumnNames = {"System Name","User Name",
+                                        "Include", "Set State"};
+    private List sensorSysNameList = null;
+    private boolean[] includeSensor = new boolean[MAX_SENSORS];
+    private String[] setSensorState = new String[MAX_SENSORS];
+    private int[] includedSensorPosition = new int[MAX_SENSORS];  // indexed by row of included sensor in included
+                                                            // Sensors only list.  Contains position in full
+                                                            // Sensors list.
 
     static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RouteTableAction.class.getName());
 }
