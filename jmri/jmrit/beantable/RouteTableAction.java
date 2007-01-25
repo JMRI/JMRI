@@ -29,7 +29,7 @@ import com.sun.java.util.collections.List;
  * @author	Dave Duchamp    Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2007 
  *
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -213,7 +213,7 @@ public class RouteTableAction extends AbstractTableAction {
                         }
                     }
                 });
-            py.add(new JLabel("  Turnouts"));
+            py.add(new JLabel("  Turnouts and Sensors"));
             contentPane.add(py);
 
             // add turnout table
