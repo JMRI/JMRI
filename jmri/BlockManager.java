@@ -1,4 +1,4 @@
-// RouteManager.java
+// BlockManager.java
 
 package jmri;
 
@@ -12,7 +12,7 @@ package jmri;
  * of most Managers, because there are currently only one implementation for Blocks.
  *
  * @author      Bob Jacobsen Copyright (C) 2006
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class BlockManager extends AbstractManager
     implements java.beans.PropertyChangeListener {
