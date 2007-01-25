@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  * @see jmri.jmrix.SerialPortAdapter
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 abstract public class AbstractPortController implements SerialPortAdapter {
 
@@ -95,7 +95,7 @@ abstract public class AbstractPortController implements SerialPortAdapter {
      * Convert a baud rate string to a number.
      * 
      * Uses the validBaudNumber and validBaudRates methods to do this.
-     * @returns -1 if no match (configuration system should prevent this)
+     * @return -1 if no match (configuration system should prevent this)
      */
     public int currentBaudNumber(String currentBaudRate) {
         String[] rates = validBaudRates();
