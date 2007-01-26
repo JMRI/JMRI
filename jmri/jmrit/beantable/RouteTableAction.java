@@ -29,7 +29,7 @@ import com.sun.java.util.collections.List;
  * @author	Dave Duchamp    Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2007 
  *
- * @version     $Revision: 1.19 $
+ * @version     $Revision: 1.20 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -91,11 +91,16 @@ public class RouteTableAction extends AbstractTableAction {
 
     String[] sensorModes = new String[]{"On Active", "On Inactive", "Veto Active", "Veto Inactive"};
     
-    JFrame addFrame = null;
-    TableModel routeTurnoutModel = null;
-    TableModel routeSensorModel = null;
     JTextField name = new JTextField(10);
     JTextField userName = new JTextField(22);
+
+    JFrame addFrame = null;
+    RouteTurnoutModel routeTurnoutModel = null;
+    RouteSensorModel routeSensorModel = null;
+
+    JTextField soundFile = new JTextField(20);
+    JTextField scriptFile = new JTextField(20);
+
     JTextField sensor1 = new JTextField(8);
     JComboBox  sensor1mode = new JComboBox(sensorModes);
     JTextField sensor2 = new JTextField(8);
@@ -194,8 +199,8 @@ public class RouteTableAction extends AbstractTableAction {
                         // Setup for display of all Turnouts, if needed
                         if (!showAll) {
                             showAll = true;
-                            ((RouteTurnoutModel)routeTurnoutModel).
-                                                fireTableDataChanged();
+                            routeTurnoutModel.fireTableDataChanged();
+                            routeSensorModel.fireTableDataChanged();
                         }
                     }
                 });
@@ -208,8 +213,8 @@ public class RouteTableAction extends AbstractTableAction {
                         if (showAll) {
                             showAll = false;
                             initializeIncludedList();
-                            ((RouteTurnoutModel)routeTurnoutModel).
-                                                fireTableDataChanged();
+                            routeTurnoutModel.fireTableDataChanged();
+                            routeSensorModel.fireTableDataChanged();
                         }
                     }
                 });
@@ -326,7 +331,24 @@ public class RouteTableAction extends AbstractTableAction {
             contentPane.add(p2xs);
             p2xs.setVisible(true);
 
-           // add control sensor table
+            // Enter filenames for sound, script
+            
+            JPanel p25 = new JPanel();
+            p25.setLayout(new FlowLayout());
+            p25.add(new JLabel("Play sound file:"));
+            p25.add(new JButton("Set"));
+            p25.add(soundFile);
+            contentPane.add(p25);
+            
+            JPanel p26 = new JPanel();
+            p26.setLayout(new FlowLayout());
+            p26.add(new JLabel("Run script:"));
+            p26.add(new JButton("Set"));
+            p26.add(scriptFile);
+            contentPane.add(p26);
+            
+           
+            // add control sensor table
             JPanel p3 = new JPanel();
             p3.setLayout(new BoxLayout(p3, BoxLayout.Y_AXIS));
             JPanel p31 = new JPanel();
@@ -468,7 +490,8 @@ public class RouteTableAction extends AbstractTableAction {
             });
         // display the window
         addFrame.setVisible(true);
-        ((RouteTurnoutModel)routeTurnoutModel).fireTableDataChanged();
+        routeTurnoutModel.fireTableDataChanged();
+        routeSensorModel.fireTableDataChanged();
     }
 
     /**
@@ -481,6 +504,15 @@ public class RouteTableAction extends AbstractTableAction {
                 if (includeTurnout[i]) {
                     includedTurnoutPosition[numIncludedTurnouts] = i;
                     numIncludedTurnouts ++;
+                }
+            }
+        }
+        numIncludedSensors = 0;
+        if (numSensors > 0) {
+            for (int i = 0; i<numSensors; i++) {
+                if (includeSensor[i]) {
+                    includedSensorPosition[numIncludedSensors] = i;
+                    numIncludedSensors++;
                 }
             }
         }
@@ -520,6 +552,10 @@ public class RouteTableAction extends AbstractTableAction {
         int numIncludedT = setTurnoutInformation(g);
         // Set Sensor information 
         int numIncludedS = setSensorInformation(g);
+        // save script names
+        g.setOutputScriptName(scriptFile.getText());
+        g.setOutputSoundName(soundFile.getText());
+        
         // Set optional control Sensor and control Turnout information
         setControlInformation(g);
         // Provide feedback to user
@@ -753,6 +789,11 @@ public class RouteTableAction extends AbstractTableAction {
                 }
             }
         }
+        // get sound, script names
+        scriptFile.setText(g.getOutputScriptName());
+        soundFile.setText(g.getOutputSoundName());
+        
+
         // set up Sensors if there are any
         String[] temNames = new String[Route.MAX_CONTROL_SENSORS];
         int[] temModes = new int[Route.MAX_CONTROL_SENSORS];
