@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.67 2007-01-25 20:57:35 jacobsen Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.68 2007-01-26 07:12:45 jacobsen Exp $ -->
 
 <!-- This DTD is Copyright 2001-2005 JMRI.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -154,7 +154,7 @@
 <!ELEMENT routes (route*)>
   <!ATTLIST routes class		CDATA #REQUIRED>
 
-  <!ELEMENT route (routeTurnout*, routeOutputTurnout*, routeOutputSensor*, routeSensor*) >
+  <!ELEMENT route (routeTurnout*, routeOutputTurnout*, routeOutputSensor*, routeSensor*, routeSoundFile, routeScriptFile) >
     <!ATTLIST route systemName		CDATA #REQUIRED>  <!-- defines system type -->
     <!ATTLIST route userName		CDATA #IMPLIED>
     <!ATTLIST route controlTurnout	CDATA #IMPLIED>
@@ -177,7 +177,13 @@
    <!ELEMENT routeSensor EMPTY >
     <!ATTLIST routeSensor systemName	CDATA #REQUIRED>  <!-- defines control sensor -->
     <!ATTLIST routeSensor mode (onActive | onInactive | vetoActive | vetoInactive ) "onActive" >  <!-- defines control sensor -->
-
+    
+   <!ELEMENT routeSoundFile EMPTY>
+    <!ATTLIST routeSoundFile name	CDATA #REQUIRED>  <!-- defines filename-->
+   
+   <!ELEMENT routeScriptFile EMPTY>
+    <!ATTLIST routeScriptFile name	CDATA #REQUIRED>  <!-- defines filename-->
+   
 <!ELEMENT securityelements (securityelement*)>
   <!ATTLIST securityelements class		CDATA #REQUIRED>
 
