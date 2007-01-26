@@ -29,7 +29,7 @@ import com.sun.java.util.collections.List;
  * @author	Dave Duchamp    Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2007 
  *
- * @version     $Revision: 1.21 $
+ * @version     $Revision: 1.22 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -892,10 +892,16 @@ public class RouteTableAction extends AbstractTableAction {
             // user name is unique, change it
             g.setUserName(uName);     
         }
-        // clear the current Turnout information for this Route
-        g.clearRouteTurnouts();
+        // clear the current output information for this Route
+        g.clearOutputTurnouts();
+        g.clearOutputSensors();
         // add those indicated in the window
-        int numIncluded = setTurnoutInformation(g);
+        int numTurnoutIncluded = setTurnoutInformation(g);
+        int numSensorIncluded = setSensorInformation(g);
+        // set the current values of the filenames
+        g.setOutputScriptName(scriptFile.getText());
+        g.setOutputSoundName(soundFile.getText());
+
         // clear the current Sensor information for this Route
         g.clearRouteSensors();
         // add control Sensors and a control Turnout if entered in the window
@@ -904,7 +910,8 @@ public class RouteTableAction extends AbstractTableAction {
         cancelIncludedOnly();
         // Provide feedback to user
         status1.setText("Route updated: "+g.getSystemName()+", "+uName+", "+
-                                                            numIncluded+" Turnouts");
+                                                            numTurnoutIncluded+" Turnouts, "+
+                                                            numSensorIncluded+" Sensors");
         // set up buttons and notes
         status2.setText(editInst);
         status2.setVisible(true);
