@@ -5,6 +5,8 @@ package jmri.configurexml;
 import jmri.InstanceManager;
 import jmri.Route;
 import jmri.RouteManager;
+import jmri.Turnout;
+import jmri.Sensor;
 import jmri.DefaultRouteManager;
 import com.sun.java.util.collections.List;
 import org.jdom.Element;
@@ -15,7 +17,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2004
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class DefaultRouteManagerXml implements XmlAdapter {
 
@@ -50,7 +52,7 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                 if (cTurnout!=null) {
                     elem.addAttribute("controlTurnout", cTurnout);
                     int state = r.getControlTurnoutState();
-                    if (state == jmri.Turnout.THROWN) {
+                    if (state == Turnout.THROWN) {
                         elem.addAttribute("controlTurnoutState","THROWN");
                     }
                     else {
@@ -67,7 +69,7 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                     Element rElem = new Element("routeOutputTurnout")
                                     .addAttribute("systemName", rTurnout);
                     String sState = "CLOSED";
-                    if (r.getOutputTurnoutSetState(rTurnout)==jmri.Turnout.THROWN) {
+                    if (r.getOutputTurnoutSetState(rTurnout)==Turnout.THROWN) {
                         sState = "THROWN";
                     }
                     else if (r.getOutputTurnoutSetState(rTurnout)==Route.TOGGLE) {
@@ -84,7 +86,7 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                     Element rElem = new Element("routeOutputSensor")
                                     .addAttribute("systemName", rSensor);
                     String sState = "INACTIVE";
-                    if (r.getOutputSensorSetState(rSensor)==jmri.Sensor.ACTIVE) {
+                    if (r.getOutputSensorSetState(rSensor)==Sensor.ACTIVE) {
                         sState = "ACTIVE";
                     }
                     else if (r.getOutputSensorSetState(rSensor)==Route.TOGGLE) {
@@ -122,6 +124,18 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                     elem.addContent(rsElem);
                     index ++;
                 }
+                // add sound and script file elements if needed
+                if (r.getOutputSoundName()!=null && !r.getOutputSoundName().equals("")) {
+                    Element rsElem = new Element("routeSoundFile")
+                                    .addAttribute("name", r.getOutputSoundName());
+                    elem.addContent(rsElem);
+                }
+                if (r.getOutputScriptName()!=null && !r.getOutputScriptName().equals("")) {
+                    Element rsElem = new Element("routeScriptFile")
+                                    .addAttribute("name", r.getOutputScriptName());
+                    elem.addContent(rsElem);
+                }
+                
                 log.debug("store route "+sname+":"+uname);
                 routes.addContent(elem);
             }
@@ -199,10 +213,10 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                 if (cTurnout != null) {
                     r.setControlTurnout(cTurnout);
                     if ( cTurnoutState.equals("THROWN") ) {
-                        r.setControlTurnoutState(jmri.Turnout.THROWN);
+                        r.setControlTurnoutState(Turnout.THROWN);
                     }
                     else {
-                        r.setControlTurnoutState(jmri.Turnout.CLOSED);
+                        r.setControlTurnoutState(Turnout.CLOSED);
                     }
                 }
 				// set added delay
@@ -221,9 +235,9 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                                                             .getAttribute("systemName").getValue();
                         String rState = ((Element)(routeTurnoutList.get(k)))
                                                             .getAttribute("state").getValue();
-                        int tSetState = jmri.Turnout.CLOSED;
+                        int tSetState = Turnout.CLOSED;
                         if (rState.equals("THROWN")) {
-                            tSetState = jmri.Turnout.THROWN;
+                            tSetState = Turnout.THROWN;
                         }
 						else if (rState.equals("TOGGLE")) {
 							tSetState = Route.TOGGLE;
@@ -246,9 +260,9 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                                                             .getAttribute("systemName").getValue();
                         String rState = ((Element)(routeTurnoutList.get(k)))
                                                             .getAttribute("state").getValue();
-                        int tSetState = jmri.Turnout.CLOSED;
+                        int tSetState = Turnout.CLOSED;
                         if (rState.equals("THROWN")) {
-                            tSetState = jmri.Turnout.THROWN;
+                            tSetState = Turnout.THROWN;
                         }
 						else if (rState.equals("TOGGLE")) {
 							tSetState = Route.TOGGLE;
@@ -271,9 +285,9 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                                                             .getAttribute("systemName").getValue();
                         String rState = ((Element)(routeTurnoutList.get(k)))
                                                             .getAttribute("state").getValue();
-                        int tSetState = jmri.Sensor.INACTIVE;
+                        int tSetState = Sensor.INACTIVE;
                         if (rState.equals("ACTIVE")) {
-                            tSetState = jmri.Sensor.ACTIVE;
+                            tSetState = Sensor.ACTIVE;
                         }
 						else if (rState.equals("TOGGLE")) {
 							tSetState = Route.TOGGLE;
@@ -281,6 +295,15 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                         // Add turnout to route
                         r.addOutputSensor(tSysName, tSetState);
                     }
+                }
+                // load sound, script files if present
+                Element fileElement = ((Element)(routeList.get(i))).getChild("routeSoundFile");
+                if (fileElement != null) {
+                    r.setOutputSoundName(fileElement.getAttribute("name").getValue());
+                }
+                fileElement = ((Element)(routeList.get(i))).getChild("routeScriptFile");
+                if (fileElement != null) {
+                    r.setOutputScriptName(fileElement.getAttribute("name").getValue());
                 }
                 // load route control sensors, if there are any
                 List routeSensorList = ((Element)(routeList.get(i))).getChildren("routeSensor");
