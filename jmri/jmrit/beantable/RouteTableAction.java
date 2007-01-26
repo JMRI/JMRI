@@ -29,7 +29,7 @@ import com.sun.java.util.collections.List;
  * @author	Dave Duchamp    Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2007 
  *
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -61,6 +61,42 @@ public class RouteTableAction extends AbstractTableAction {
      */
     void createModel() {
         m = new BeanTableDataModel() {
+		    static public final int SETCOL = 3;
+    		public int getColumnCount( ){ return NUMCOLUMN+1;}
+
+    		public String getColumnName(int col) {
+    			if (col==VALUECOL) return "";  // no heading on "Set"
+    			if (col==SETCOL) return "";
+    			else return super.getColumnName(col);
+		    }
+    		public Class getColumnClass(int col) {
+    			if (col==SETCOL) return JButton.class;
+    			else return super.getColumnClass(col);
+		    }
+    		public int getPreferredWidth(int col) {
+    			if (col==SETCOL) return new JTextField(4).getPreferredSize().width;
+    			else return super.getPreferredWidth(col);
+		    }
+    		public boolean isCellEditable(int row, int col) {
+    			if (col==SETCOL) return true;
+    			else return super.isCellEditable(row,col);
+			}    		
+    		public Object getValueAt(int row, int col) {
+    			if (col==SETCOL) {
+    				return "Edit";
+    			}
+				else return super.getValueAt(row, col);
+			}    		
+    		public void setValueAt(Object value, int row, int col) {
+    			if (col==SETCOL) {
+                    // set up to edit
+                    addPressed(null);
+                    name.setText((String)getValueAt(row, SYSNAMECOL));
+                    editPressed(null); // don't really want to stop Route w/o user action
+    			}
+    			else super.setValueAt(value, row, col);
+    		}
+
             public Manager getManager() { return jmri.InstanceManager.routeManagerInstance(); }
             public NamedBean getBySystemName(String name) { 
                     return jmri.InstanceManager.routeManagerInstance().getBySystemName(name);
