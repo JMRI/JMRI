@@ -6,7 +6,7 @@ package jmri;
  * Class providing the basic logic of the Route interface.
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 public class DefaultRoute extends AbstractNamedBean
     implements Route, java.io.Serializable {
@@ -36,6 +36,9 @@ public class DefaultRoute extends AbstractNamedBean
     protected int mControlTurnoutState = jmri.Turnout.THROWN;
 	protected int mDelay = 0;
 
+    protected String soundFilename;
+    protected String scriptFilename;
+    
     /**
      *  Operational instance variables (not saved between runs)
      */
@@ -288,6 +291,35 @@ public class DefaultRoute extends AbstractNamedBean
 	}
 	
 	
+    /** 
+     * Set name of script file to be run when Route is fired
+     */
+    public void setOutputScriptName(String filename) {
+        scriptFilename = filename;
+    }
+    
+    /** 
+     * Get name of script file to be run when Route is fired
+     */
+    public String getOutputScriptName() {
+        return scriptFilename;
+    }
+    
+    /** 
+     * Set name of sound file to be played when Route is fired
+     */
+    public void setOutputSoundName(String filename) {
+        soundFilename = filename;
+    }
+    
+    /** 
+     * Get name of sound file to be played when Route is fired
+     */
+    public String getOutputSoundName() {
+        return soundFilename;
+    }
+    
+
     // Inputs ----------------
 
     /**
@@ -398,7 +430,11 @@ public class DefaultRoute extends AbstractNamedBean
 	 *    thread currently sending commands to this Route's turnouts.
      */
     public void setRoute() {
-        if ((mNumOutputTurnouts>0) || (mNumOutputSensors>0)) {
+        if ((mNumOutputTurnouts>0) 
+                || (mNumOutputSensors>0)
+                || (soundFilename != null)
+                || (scriptFilename != null)
+            ) {
 			if (!busy) {
 				setRouteBusy();
 				SetRouteThread thread = new SetRouteThread(this);
@@ -588,9 +624,29 @@ class SetRouteThread extends Thread
 	}
 	
 	/** 
-	 * Runs the thread - sends commands to Route Turnouts
+	 * Runs the thread - performs operations in the order:
+	 * <ul>
+	 * <li>Run script (can run in parallel)
+	 * <li>Play Sound (runs in parallel)
+	 * <li>Set Turnouts
+	 * <li>Set Sensors
+	 * </UL>
 	 */
 	public void run () {
+	
+	    // run script
+	    if ((r.getOutputScriptName() != null) && (!r.getOutputScriptName().equals(""))) {
+	        jmri.util.PythonInterp.runScript(r.getOutputScriptName());
+	    }
+	    
+	    // play sound
+	    if ((r.getOutputSoundName() != null) && (!r.getOutputSoundName().equals(""))) {
+	        jmri.jmrit.Sound snd = new jmri.jmrit.Sound(r.getOutputSoundName());
+	        snd.play();
+	    }
+	    
+	    
+	    // set turnouts
 		int delay = r.getRouteCommandDelay();			
 		for (int k = 0; k < DefaultRoute.MAX_OUTPUT_TURNOUTS_PER_ROUTE; k++) {
 			Turnout t = r.getOutputTurnout(k);
@@ -619,6 +675,8 @@ class SetRouteThread extends Thread
 				break;
 			}
 		}
+		
+		// set sensors
 		for (int k = 0; k < DefaultRoute.MAX_OUTPUT_SENSORS_PER_ROUTE; k++) {
 			Sensor t = r.getOutputSensor(k);
 			if (t!=null) {

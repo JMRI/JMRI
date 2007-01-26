@@ -20,7 +20,7 @@ package jmri;
  *
  * @author			Dave Duchamp Copyright (C) 2004
  * @author			Bob Jacobsen Copyright (C) 2007
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public interface Route extends NamedBean {
 
@@ -139,17 +139,39 @@ public interface Route extends NamedBean {
     public String getOutputSensorByIndex(int index);
 
     /**
-     * Method to get the 'k'th output Sensor of the Route.
+     * Get the 'k'th output Sensor of the Route.
      * @return null if there are less than 'k' Sensor defined
 	 */
     public Sensor getOutputSensor(int k);
 
     /**
-     * Method to get the desired state of 'k'th Sensor of the Route.
+     * Get the desired state of 'k'th Sensor of the Route.
      * @return -1 if there are less than 'k' Sensors defined
 	 */
     public int getOutputSensorState(int k);
 
+
+    /** 
+     * Set name of script file to be run when Route is fired
+     */
+    public void setOutputScriptName(String filename);
+    
+    /** 
+     * Get name of script file to be run when Route is fired
+     */
+    public String getOutputScriptName();
+    
+    /** 
+     * Set name of sound file to be played when Route is fired
+     */
+    public void setOutputSoundName(String filename);
+    
+    /** 
+     * Get name of sound file to be played when Route is fired
+     */
+    public String getOutputSoundName();
+    
+    
 
     // Interface for control inputs
     
