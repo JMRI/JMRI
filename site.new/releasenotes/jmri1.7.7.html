@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.7.7.html,v 1.1 2007-01-24 16:42:43 jacobsen Exp $ -->
+<!-- $Id: jmri1.7.7.html,v 1.2 2007-02-01 06:44:32 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -84,6 +84,7 @@ new features, particularly
 
 <h3>New warnings for this test version:</h3>
 
+<P>The Route interface has had significant changes.  New member functions have been provided for configuring the Turnouts and Sensors that are changed with the Route fires.  The old methods are deprecated. If you've written your own code that uses Routes directly, you should update it.  The deprecated methods will be removed after the next production release.
 
 <h3>Older warnings from this series of test versions:</h3>
 
@@ -126,7 +127,24 @@ new features, particularly
 
 <h3>Changes since test version 1.7.6:</h3>
 
-<P>
+<P>Routes have received a number of updates. 
+<UL>
+<LI>They can now set Sensors, in addition to changing Turnouts.
+<LI>A route can play a sound file or run a script file when it fires. This is started before the sensors and turnouts are set, and can therefore run in parallel.
+<LI>A bug that effected operation when a sensor appeared more than once in the input list has been fixed. Previously, if a sensor appeared more than once as "On Active" or "On Inactive", only the first would work.  Now if both are present, the route will fire when either transition takes place.
+<LI>Input sensors can fire the route if they change ("On Change"), in addition to if they go specifically to active or inactive ("On Active", "On Inactive").  Note that only changes to active or inactive fire; changes to an unknown or inconsistent state won't fire the route until it goes back to active or inactive.
+<LI>The control turnout can now fire the route on a change to either thrown or closed ("On Change")
+<LI>The control turnout can now act as a veto ("Veto Thrown", "Veto Closed") much like sensors can
+<LI>Routes now have an "enabled" parameter that controls whether they will fire.
+</UL>
+
+<P>The route table now has a "Edit" button next to each entry that takes you straight to a panel for editing the route.  The route is paused when it's opened. Click "Cancel" or "Update" at the bottom of that panel when done to put the route back into operation.
+
+<P>Many JUnit tests added as part of refactoring the route code
+
+<P>The "Turnout Control" window now shows the known state of turnouts, instead of the last command sent to them.  This will only be different if you're using a form of turnout feedback.
+
+<P>If a Turnout uses feedback, and is changed out on the layout, the "known state" and "commanded state" can end up being different: The known state will track the change on the layout, while the commanded state used to be unchanged by this.  Starting in this version, we consider that remote motion to really be a command (i.e. intended instead of unintended), and therefore when the feedback says that the turnout has reached the thrown or closed position, the commanded state is updated. To make a long story short, this really shouldn't effect you unless you've got custom scripts, feedback and remote operation of turnouts. In that case, you probably know how all this works anyway!
 
 
 <hr class="hide">
