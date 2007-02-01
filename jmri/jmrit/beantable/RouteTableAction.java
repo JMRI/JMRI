@@ -29,7 +29,7 @@ import com.sun.java.util.collections.List;
  * @author	Dave Duchamp    Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2007 
  *
- * @version     $Revision: 1.22 $
+ * @version     $Revision: 1.23 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -48,7 +48,9 @@ public class RouteTableAction extends AbstractTableAction {
             setEnabled(false);
         }
         
-        // check a constraint required by this implementation!
+        // check a constraint required by this implementation,
+        // because we assume that the codes are the same as the index
+        // in a JComboBox
         if ( Route.ONACTIVE != 0 || Route.ONINACTIVE != 1
             || Route.VETOACTIVE != 2 || Route.VETOINACTIVE !=3 )
             log.error("assumption invalid in RouteTable implementation");
@@ -61,29 +63,37 @@ public class RouteTableAction extends AbstractTableAction {
      */
     void createModel() {
         m = new BeanTableDataModel() {
-		    static public final int SETCOL = 3;
-    		public int getColumnCount( ){ return NUMCOLUMN+1;}
+		    static public final int ENABLECOL = 3;
+		    static public final int SETCOL = 4;
+    		public int getColumnCount( ){ return NUMCOLUMN+2;}
 
     		public String getColumnName(int col) {
     			if (col==VALUECOL) return "";  // no heading on "Set"
-    			if (col==SETCOL) return "";
+    			if (col==SETCOL) return "";    // no heading on "Edit"
+    			if (col==ENABLECOL) return "Enabled";
     			else return super.getColumnName(col);
 		    }
     		public Class getColumnClass(int col) {
     			if (col==SETCOL) return JButton.class;
+    			if (col==ENABLECOL) return Boolean.class;
     			else return super.getColumnClass(col);
 		    }
     		public int getPreferredWidth(int col) {
-    			if (col==SETCOL) return new JTextField(4).getPreferredSize().width;
+    			if (col==SETCOL) return new JTextField(6).getPreferredSize().width;
+    			if (col==ENABLECOL) return new JTextField(6).getPreferredSize().width;
     			else return super.getPreferredWidth(col);
 		    }
     		public boolean isCellEditable(int row, int col) {
     			if (col==SETCOL) return true;
+    			if (col==ENABLECOL) return true;
     			else return super.isCellEditable(row,col);
 			}    		
     		public Object getValueAt(int row, int col) {
     			if (col==SETCOL) {
     				return "Edit";
+    			}
+    			else if (col==ENABLECOL) {
+    				return new Boolean(((Route)getBySystemName((String)getValueAt(row, SYSNAMECOL))).getEnabled());
     			}
 				else return super.getValueAt(row, col);
 			}    		
@@ -94,8 +104,19 @@ public class RouteTableAction extends AbstractTableAction {
                     name.setText((String)getValueAt(row, SYSNAMECOL));
                     editPressed(null); // don't really want to stop Route w/o user action
     			}
+    			else if (col==ENABLECOL) {
+                    // alternate
+                    Route r = (Route)getBySystemName((String)getValueAt(row, SYSNAMECOL));
+                    boolean v = r.getEnabled();
+                    r.setEnabled(!v);
+    			}
     			else super.setValueAt(value, row, col);
     		}
+    		// want to update when enabled parameter changes
+            boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
+                if (e.getPropertyName().equals("Enabled")) return true;
+                else return super.matchPropertyName(e);
+            }
 
             public Manager getManager() { return jmri.InstanceManager.routeManagerInstance(); }
             public NamedBean getBySystemName(String name) { 
@@ -125,8 +146,44 @@ public class RouteTableAction extends AbstractTableAction {
 	String setStateInactive = "Set "+"Inactive";
 	String setStateToggle = "Toggle";
 
-    String[] sensorModes = new String[]{"On Active", "On Inactive", "Veto Active", "Veto Inactive"};
-    
+    String[] sensorInputModes = new String[]{"On Active", "On Inactive", "On Change", "Veto Active", "Veto Inactive"};
+    int[] sensorInputModeValues = new int[]{Route.ONACTIVE, Route.ONINACTIVE, Route.ONCHANGE, Route.VETOACTIVE, Route.VETOINACTIVE};
+        
+    String[] turnoutInputModes = new String[]{"On "+stateClosed, "On "+stateThrown, "On Change", "Veto Closed", "Veto Thrown"};
+    int[] turnoutInputModeValues = new int[]{Route.ONCLOSED, Route.ONTHROWN, Route.ONCHANGE, Route.VETOCLOSED, Route.VETOTHROWN};
+
+    int sensorModeFromBox(JComboBox box) {
+        String mode = (String)box.getSelectedItem();
+        int result = jmri.util.StringUtil.getStateFromName(mode, sensorInputModeValues, sensorInputModes);
+        
+        if (result<0) {
+            log.warn("unexpected mode string in sensorMode: "+mode);
+            throw new IllegalArgumentException();
+        }
+        return result;
+    }
+ 
+    void setSensorModeBox(int mode, JComboBox box) {
+        String result = jmri.util.StringUtil.getNameFromState(mode, sensorInputModeValues, sensorInputModes);
+        box.setSelectedItem(result);
+    }
+       
+    int turnoutModeFromBox(JComboBox box) {
+        String mode = (String)box.getSelectedItem();
+        int result = jmri.util.StringUtil.getStateFromName(mode, turnoutInputModeValues, turnoutInputModes);
+        
+        if (result<0) {
+            log.warn("unexpected mode string in turnoutMode: "+mode);
+            throw new IllegalArgumentException();
+        }
+        return result;
+    }
+ 
+    void setTurnoutModeBox(int mode, JComboBox box) {
+        String result = jmri.util.StringUtil.getNameFromState(mode, turnoutInputModeValues, turnoutInputModes);
+        box.setSelectedItem(result);
+    }
+       
     JTextField name = new JTextField(10);
     JTextField userName = new JTextField(22);
 
@@ -138,17 +195,15 @@ public class RouteTableAction extends AbstractTableAction {
     JTextField scriptFile = new JTextField(20);
 
     JTextField sensor1 = new JTextField(8);
-    JComboBox  sensor1mode = new JComboBox(sensorModes);
+    JComboBox  sensor1mode = new JComboBox(sensorInputModes);
     JTextField sensor2 = new JTextField(8);
-    JComboBox  sensor2mode = new JComboBox(sensorModes);
+    JComboBox  sensor2mode = new JComboBox(sensorInputModes);
     JTextField sensor3 = new JTextField(8);
-    JComboBox  sensor3mode = new JComboBox(sensorModes);
+    JComboBox  sensor3mode = new JComboBox(sensorInputModes);
     JTextField cTurnout = new JTextField(8);
 	JTextField timeDelay = new JTextField(5);
 
-    JComboBox cTurnoutStateBox = new JComboBox();
-    int turnoutClosedIndex = 0;
-    int turnoutThrownIndex = 1;
+    JComboBox cTurnoutStateBox = new JComboBox(turnoutInputModes);
     
     ButtonGroup selGroup = null;
     JRadioButton allButton = null;   
@@ -415,11 +470,7 @@ public class RouteTableAction extends AbstractTableAction {
             p34.add(cTurnout);
             cTurnout.setText("");
             cTurnout.setToolTipText("Enter a Turnout system name (real or phantom) for throttle control.");
-            p34.add(new JLabel("   Turnout State: "));
-            cTurnoutStateBox.addItem(stateClosed);
-            turnoutClosedIndex = 0;
-            cTurnoutStateBox.addItem(stateThrown);
-            turnoutThrownIndex = 1;
+            p34.add(new JLabel("   Condition: "));
             cTurnoutStateBox.setToolTipText("Setting control Turnout to selected state will trigger Route.");
             p34.add(cTurnoutStateBox);
             p3.add(p34);
@@ -654,75 +705,54 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * Service routine to turn a Sensor mode string into a value
-     *
-     */
-    int sensorMode(JComboBox box) {
-        String mode = (String)box.getSelectedItem();
-        if (mode.equals(sensorModes[0])) return Route.ONACTIVE;
-        else if (mode.equals(sensorModes[1])) return Route.ONINACTIVE;
-        else if (mode.equals(sensorModes[2])) return Route.VETOACTIVE;
-        else if (mode.equals(sensorModes[3])) return Route.VETOINACTIVE;
-        else {
-            log.warn("unexpected mode string in sensorMode: "+mode);
-            throw new IllegalArgumentException();
-       }
-    }
-    
-    /**
      * Sets the Sensor, Turnout, and delay control information for adding or editting if any
      */
     void setControlInformation(Route g) {
         // Get sensor control information if any
         String sensorSystemName = sensor1.getText();
-        if (sensorSystemName.length() > 2) {
+        if (sensorSystemName.length() > 0) {
             Sensor s1 = InstanceManager.sensorManagerInstance().
                             provideSensor(sensorSystemName);
-            if ( (s1==null) || (!g.addSensorToRoute(s1.getSystemName(), sensorMode(sensor1mode))) ) {
+            if ( (s1==null) || (!g.addSensorToRoute(sensorSystemName, sensorModeFromBox(sensor1mode))) ) {
                 log.error("Unexpected failure to add Sensor '"+sensorSystemName+
                                             "' to Route '"+g.getSystemName()+"'.");
             }
         }
         sensorSystemName = sensor2.getText();
-        if (sensorSystemName.length() > 2) {
+        if (sensorSystemName.length() > 0) {
             Sensor s2 = InstanceManager.sensorManagerInstance().
                             provideSensor(sensorSystemName);
-            if ( (s2==null) || (!g.addSensorToRoute(s2.getSystemName(), sensorMode(sensor2mode))) ) {
+            if ( (s2==null) || (!g.addSensorToRoute(sensorSystemName, sensorModeFromBox(sensor2mode))) ) {
                 log.error("Unexpected failure to add Sensor '"+sensorSystemName+
                                             "' to Route '"+g.getSystemName()+"'.");
             }
         }
         sensorSystemName = sensor3.getText();
-        if (sensorSystemName.length() > 2) {
+        if (sensorSystemName.length() > 0) {
             Sensor s3 = InstanceManager.sensorManagerInstance().
                             provideSensor(sensorSystemName);
-            if ( (s3==null) || (!g.addSensorToRoute(s3.getSystemName(), sensorMode(sensor3mode))) ) {
+            if ( (s3==null) || (!g.addSensorToRoute(sensorSystemName, sensorModeFromBox(sensor3mode))) ) {
                 log.error("Unexpected failure to add Sensor '"+sensorSystemName+
                                             "' to Route '"+g.getSystemName()+"'.");
             }
         }
         // Set turnout information if there is any
         String turnoutSystemName = cTurnout.getText();
-        if (turnoutSystemName.length() > 2) {
+        if (turnoutSystemName.length() > 0) {
             Turnout t = InstanceManager.turnoutManagerInstance().
                                     provideTurnout(turnoutSystemName);
             if (t!=null) {
-                g.setControlTurnout(t.getSystemName());
+                g.setControlTurnout(turnoutSystemName);
+                // set up control turnout state
+                g.setControlTurnoutState(turnoutModeFromBox(cTurnoutStateBox));
+                System.out.println("TO "+turnoutSystemName+" item "+cTurnoutStateBox.getSelectedItem()+" mode "+turnoutModeFromBox(cTurnoutStateBox));
             }
             else {
                 g.setControlTurnout("");
                 log.error("Unexpected failure to add control Turnout '"+
-                        t.getSystemName()+"' to Route '"+g.getSystemName()+"'.");
+                        turnoutSystemName+"' to Route '"+g.getSystemName()+"'.");
             }
-            // set up control turnout state
-            if ( cTurnoutStateBox.getSelectedItem().equals(stateThrown) ) {
-                g.setControlTurnoutState(jmri.Turnout.THROWN);
-            }
-            else {
-                g.setControlTurnoutState(jmri.Turnout.CLOSED);
-            }
-        }
-        else {
+        } else {
             // No control Turnout was entered
             g.setControlTurnout("");
         }
@@ -838,17 +868,19 @@ public class RouteTableAction extends AbstractTableAction {
             temModes[k] = g.getRouteSensorMode(k);
         }
         sensor1.setText(temNames[0]);
-        sensor1mode.setSelectedItem(sensorModes[temModes[0]]);
+        setSensorModeBox(temModes[0], sensor1mode);
+
         sensor2.setText(temNames[1]);
-        sensor2mode.setSelectedItem(sensorModes[temModes[1]]);
+        setSensorModeBox(temModes[1], sensor2mode);
+
         sensor3.setText(temNames[2]);
-        sensor3mode.setSelectedItem(sensorModes[temModes[2]]);
+        setSensorModeBox(temModes[2], sensor3mode);
+
         // set up control Turnout if there is one
         cTurnout.setText(g.getControlTurnout()); 
-        cTurnoutStateBox.setSelectedIndex(turnoutClosedIndex);
-        if (g.getControlTurnoutState()==Turnout.THROWN) {
-            cTurnoutStateBox.setSelectedIndex(turnoutThrownIndex);
-        }
+        
+        setTurnoutModeBox(g.getControlTurnoutState(), cTurnoutStateBox);
+        
 		// set up additional delay
 		timeDelay.setText(Integer.toString(g.getRouteCommandDelay()));
         // begin with showing all Turnouts   
@@ -970,11 +1002,9 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * Set up table for selecting Turnouts and Turnout State
+     * Base table model for selecting outputs
      */
-    public class RouteTurnoutModel extends AbstractTableModel
-    {
-        public String getColumnName(int c) {return routeTurnoutColumnNames[c];}
+    public abstract class RouteOutputModel extends AbstractTableModel {
         public Class getColumnClass(int c) {
             if (c == INCLUDE_COLUMN) {
                 return Boolean.class;
@@ -983,7 +1013,26 @@ public class RouteTableAction extends AbstractTableAction {
                 return String.class;
             }
         }
+
         public int getColumnCount () {return 4;}
+
+        public boolean isCellEditable(int r,int c) {
+            return ( (c==INCLUDE_COLUMN) || (c==STATE_COLUMN) );
+        }
+		
+        public static final int SNAME_COLUMN = 0;
+        public static final int UNAME_COLUMN = 1;
+        public static final int INCLUDE_COLUMN = 2;
+        public static final int STATE_COLUMN = 3;
+
+    }
+
+    /**
+     * Table model for selecting Turnouts and Turnout State
+     */
+    public class RouteTurnoutModel extends RouteOutputModel
+    {
+        public String getColumnName(int c) {return routeTurnoutColumnNames[c];}
         public int getRowCount () {
             if (showAll)
                 return numTurnouts;
@@ -1039,37 +1088,22 @@ public class RouteTableAction extends AbstractTableAction {
                     break;
             }
         }
-        public boolean isCellEditable(int r,int c) {
-            return ( (c==INCLUDE_COLUMN) || (c==STATE_COLUMN) );
-        }
-		
-        public static final int SNAME_COLUMN = 0;
-        public static final int UNAME_COLUMN = 1;
-        public static final int INCLUDE_COLUMN = 2;
-        public static final int STATE_COLUMN = 3;
     }
 
     /**
      * Set up table for selecting Sensors and Sensor State
      */
-    public class RouteSensorModel extends AbstractTableModel
+    public class RouteSensorModel extends RouteOutputModel
     {
         public String getColumnName(int c) {return routeSensorColumnNames[c];}
-        public Class getColumnClass(int c) {
-            if (c == INCLUDE_COLUMN) {
-                return Boolean.class;
-            }
-            else {
-                return String.class;
-            }
-        }
-        public int getColumnCount () {return 4;}
+
         public int getRowCount () {
             if (showAll)
                 return numSensors;
             else
                 return numIncludedSensors;
         }
+
         public Object getValueAt (int r,int c) {
             int rx = r;
             if (rx > numSensors) {
@@ -1097,6 +1131,7 @@ public class RouteTableAction extends AbstractTableAction {
                 return null;
             }
         }
+
         public void setValueAt(Object type,int r,int c) {
             int rx = r;
             if (rx > numSensors) {
@@ -1119,14 +1154,6 @@ public class RouteTableAction extends AbstractTableAction {
                     break;
             }
         }
-        public boolean isCellEditable(int r,int c) {
-            return ( (c==INCLUDE_COLUMN) || (c==STATE_COLUMN) );
-        }
-		
-        public static final int SNAME_COLUMN = 0;
-        public static final int UNAME_COLUMN = 1;
-        public static final int INCLUDE_COLUMN = 2;
-        public static final int STATE_COLUMN = 3;
     }
 
     private boolean showAll = true;   // false indicates show only included Turnouts
