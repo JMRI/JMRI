@@ -12,7 +12,7 @@ import javax.swing.JMenuBar;
 /**
  * Frame controlling a single turnout
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame implements java.beans.PropertyChangeListener {
 
@@ -152,7 +152,7 @@ public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame implements java.b
 
     // update state field in GUI as state of turnout changes
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (e.getPropertyName().equals("CommandedState")) {
+        if (e.getPropertyName().equals("KnownState")) {
             int now = ((Integer) e.getNewValue()).intValue();
             switch (now) {
             case Turnout.UNKNOWN:
