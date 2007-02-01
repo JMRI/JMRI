@@ -10,11 +10,29 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.util.StringUtil class.
  * @author	Bob Jacobsen  Copyright 2003
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class StringUtilTest extends TestCase {
 
 
+    public void testFindState() {
+        String[] s = new String[]{"A", "B", "C"};
+        int[] n = new int[]{20, 30, 40};
+        
+        Assert.assertEquals("A", 20, StringUtil.getStateFromName("A", n, s));
+        Assert.assertEquals("B", 30, StringUtil.getStateFromName("B", n, s));
+        Assert.assertEquals("C", 40, StringUtil.getStateFromName("C", n, s));
+    }
+
+    public void testFindName() {
+        String[] s = new String[]{"A", "B", "C"};
+        int[] n = new int[]{20, 30, 40};
+        
+        Assert.assertEquals("A", "A", StringUtil.getNameFromState(20, n, s));
+        Assert.assertEquals("B", "B", StringUtil.getNameFromState(30, n, s));
+        Assert.assertEquals("C", "C", StringUtil.getNameFromState(40, n, s));
+    }
+    
     public void testHexFromInt() {
         Assert.assertEquals("00",StringUtil.twoHexFromInt(0));
         Assert.assertEquals("01",StringUtil.twoHexFromInt(1));
