@@ -14,7 +14,7 @@ import javax.swing.JButton;
  * SignalHeadTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 
 abstract public class AbstractTableAction extends AbstractAction {
@@ -25,8 +25,8 @@ abstract public class AbstractTableAction extends AbstractAction {
 
     BeanTableDataModel m;
 
-    final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
-    final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
+    static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
 
     /**
      * Create the JTable DataModel, along with the changes
