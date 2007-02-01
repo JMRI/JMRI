@@ -26,7 +26,7 @@ import javax.swing.table.TableColumnModel;
  * Table data model for display of Digitrax SPJ files
  * @author		Bob Jacobsen   Copyright (C) 2003, 2006
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.1 $
+ * @version		$Revision: 1.2 $
  */
 public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 
@@ -191,7 +191,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         text.setFont(new Font("Monospaced", Font.PLAIN, text.getFont().getSize()));
         frame.getContentPane().add(new JScrollPane(text));
         frame.pack();
-        frame.show();
+        frame.setVisible(true);
     }
     
     /**
