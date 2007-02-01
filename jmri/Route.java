@@ -14,23 +14,40 @@ package jmri;
  * <P>
  * To allow control via fascia panel pushbuttons, Routes may optionally be 
  * invoked by one or more Sensors (up to the maximum allowed).
- *
+ * <p>
+ * A route can be enabled or not.  By default it is enabled, and
+ * will act when it's specified input conditions become satisfied.
+ * When not enabled (the enabled parameter is false), the route will
+ * not act even if the specified input conditions are satisfied.
+ * When the route transitions from disabled to enabled, it may act, 
+ * depending on the conditions: Edge triggered conditions will not be satisfied,
+ * but level-conditions may be.
+ *<P>
  * Note that this class has a large number of deprecated methods.
  * These <i>will</> eventually be removed.
  *
  * @author			Dave Duchamp Copyright (C) 2004
  * @author			Bob Jacobsen Copyright (C) 2007
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public interface Route extends NamedBean {
 
 	public static final int TOGGLE = 0x08;
     static final int MAX_CONTROL_SENSORS = 3;
 
+    /**
+     * Set enabled status
+     */
+    public void setEnabled(boolean state);
+    /**
+     * Get enabled status
+    */
+    public boolean getEnabled();
+
     // Old interface for outputs 
     
     /**
-     * @deprecated
+     * @deprecated since 1.7.6
      */
     public boolean addTurnoutToRoute(String turnoutSystemName, int turnoutState);
 
@@ -86,7 +103,7 @@ public interface Route extends NamedBean {
 
     /**
      * Method to get the Set State of an output Turnout
-     * @ return -1 if the Turnout is not found
+     * @return -1 if the Turnout is not found
      */
     public int getOutputTurnoutSetState(String systemName);
 
@@ -128,7 +145,7 @@ public interface Route extends NamedBean {
 
     /**
      * Method to get the Set State of an output Sensor
-     * @ return -1 if the Sensor is not found
+     * @return -1 if the Sensor is not found
      */
     public int getOutputSensorSetState(String systemName);
 
@@ -184,6 +201,8 @@ public interface Route extends NamedBean {
     static final int ONINACTIVE = 1;  // route fires if sensor goes inactive
     static final int VETOACTIVE = 2;  // sensor must be active for route to fire
     static final int VETOINACTIVE = 3;  // sensor must be inactive for route to fire
+    
+    static final int ONCHANGE = 32;   // route fires if turnout or sensor changes
     
     static final int ONCLOSED = 2;    // route fires if turnout goes closed
     static final int ONTHROWN = 4;  // route fires if turnout goes thrown
