@@ -17,7 +17,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2004
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class DefaultRouteManagerXml implements XmlAdapter {
 
@@ -110,6 +110,9 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                         break;
                     case Route.ONINACTIVE:
                         modeName = "onInactive";
+                        break;
+                    case Route.ONCHANGE:
+                        modeName = "onChange";
                         break;
                     case Route.VETOACTIVE:
                         modeName = "vetoActive";
@@ -322,6 +325,8 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                                 mode = Route.ONACTIVE;
                             else if (sm.equals("onInactive"))
                                 mode = Route.ONINACTIVE;
+                            else if (sm.equals("onChange"))
+                                mode = Route.ONCHANGE;
                             else if (sm.equals("vetoActive"))
                                 mode = Route.VETOACTIVE;
                             else if (sm.equals("vetoInactive"))
