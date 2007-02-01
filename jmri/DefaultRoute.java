@@ -6,7 +6,7 @@ package jmri;
  * Class providing the basic logic of the Route interface.
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 public class DefaultRoute extends AbstractNamedBean
     implements Route, java.io.Serializable {
@@ -53,6 +53,14 @@ public class DefaultRoute extends AbstractNamedBean
     protected java.beans.PropertyChangeListener mTurnoutListener = null;
 	private boolean busy = false;
      
+    private boolean _enabled = true;
+    public boolean getEnabled() { return _enabled; }
+    public void setEnabled(boolean v) { 
+        boolean old = _enabled;
+        _enabled = v;
+        if (old != v) firePropertyChange("Enabled", new Boolean(old), new Boolean(v));
+    }
+    
     /**
      * @deprecated
      */
@@ -62,8 +70,8 @@ public class DefaultRoute extends AbstractNamedBean
     
     /**
      * Add an output Turnout to this Route
-     * @param systemName The turnout system name
-     * @param state must be Turnout.CLOSED, Turnout.THROWN, or Route.TOGGLE, 
+     * @param turnoutSystemName The turnout system name
+     * @param turnoutState must be Turnout.CLOSED, Turnout.THROWN, or Route.TOGGLE, 
      *      which determines how the Turnout is to be switched when this Route is set
      */
     public boolean addOutputTurnout(String turnoutSystemName, int turnoutState) {
@@ -330,7 +338,9 @@ public class DefaultRoute extends AbstractNamedBean
     }
     
     /**
-     * Method to add a Sensor to the list of control Sensors for this Route
+     * Method to add a Sensor to the list of control Sensors for this Route.
+     * @param sensorSystemName nominally a system name, we'll try to
+     * convert this to a system name if it's not already one
      */
     public boolean addSensorToRoute(String sensorSystemName, int mode) {
         if (mNumSensors >= MAX_CONTROL_SENSORS) {
@@ -339,6 +349,7 @@ public class DefaultRoute extends AbstractNamedBean
                                                             getSystemName() );
             return false;
         }
+        if (log.isDebugEnabled()) log.debug("addSensorToRoute "+getSystemName()+" "+sensorSystemName);
         mControlSensors[mNumSensors] = sensorSystemName;
         mSensorMode[mNumSensors] = mode;
         mNumSensors ++;
@@ -357,6 +368,19 @@ public class DefaultRoute extends AbstractNamedBean
             return (null);
         }
         return (mControlSensors[index]);
+    }
+    /**
+     * Method to get the control Sensor in this Route
+     *  'index' is the index in the Sensor array of the requested 
+     *      Sensor.  
+     *  If there is no Sensor with that 'index', or if 'index'
+     *      is not in the range 0 thru MAX_SENSORS-1, null is returned.
+     */
+    public Sensor getRouteSensor(int index) {
+        if (index < 0 || index >= mNumSensors) {
+            return (null);
+        }
+        return (mSensors[index]);
     }
     /**
      * Method to get the mode associated with a control Sensor in this Route
@@ -407,11 +431,14 @@ public class DefaultRoute extends AbstractNamedBean
      * Method to set the State of control Turnout that fires this Route
      */
     public void setControlTurnoutState(int turnoutState) {
-        if ( (turnoutState == Turnout.THROWN) || 
-                                        (turnoutState == Turnout.CLOSED) ) {
+        if ( (turnoutState == Route.ONTHROWN) 
+               || (turnoutState == Route.ONCLOSED) 
+               || (turnoutState == Route.ONCHANGE) 
+               || (turnoutState == Route.VETOCLOSED) 
+               || (turnoutState == Route.VETOTHROWN) 
+            ) {
             mControlTurnoutState = turnoutState;
-        }
-        else {
+        } else {
             log.error("Attempt to set invalid control Turnout state for Route.");
         }
     }
@@ -445,25 +472,34 @@ public class DefaultRoute extends AbstractNamedBean
 
     /**
      * Handle sensor update event to see if that will set the route.
-     * Called when a "KnownState" event is received.
+     * <P>
+     * Called when a "KnownState" event is received, it assumes that
+     * only one sensor is changing right now, so can use state calls 
+     * for everything other than this sensor.
+     *<P>
+     * This will fire the route if the conditions are correct
+     * <P>
+     * Returns noting explicitly, but has the side effect of firing route
      */
-    protected void checkSensor(int state, Sensor sensor) {
+    protected void checkSensor(int newState, int oldState, Sensor sensor) {
         String name = sensor.getSystemName();
         if (log.isDebugEnabled()) log.debug("check Sensor "+name+" for "+getSystemName());
         boolean activated = false;  // need to have a sensor hitting active
         for (int i = 0; i < mNumSensors; i++) {
-            if (getRouteSensorName(i).equals(name)) {
+            if (getRouteSensor(i).equals(sensor)) {
                 // here for match, check mode & handle onActive, onInactive
                 int mode = getRouteSensorMode(i);
-                if (log.isDebugEnabled()) log.debug("match mode: "+mode+" state: "+state);
-                if (  ( (mode==ONACTIVE) && (state!=Sensor.ACTIVE) )
-                    || ( (mode==ONINACTIVE) && (state!=Sensor.INACTIVE) ) )
-                    return;
-                if (  ( (mode==ONACTIVE) && (state==Sensor.ACTIVE) )
-                    || ( (mode==ONINACTIVE) && (state==Sensor.INACTIVE) ) )
+                if (log.isDebugEnabled()) log.debug("match mode: "+mode+" new state: "+newState+" old state: "+oldState);
+
+                // if in target mode, note whether to act
+                if (  ( (mode==ONACTIVE) && (newState==Sensor.ACTIVE) )
+                    || ( (mode==ONINACTIVE) && (newState==Sensor.INACTIVE) )
+                    || ( (mode==ONCHANGE) && (newState!=oldState) )
+                    )
                    activated = true;
-                // if any other modes, just skip
-                else return;
+                   
+                // if any other modes, just skip because
+                // the sensor might be in list more than once
             }
         }
         
@@ -479,6 +515,28 @@ public class DefaultRoute extends AbstractNamedBean
     }
     
     /**
+     * Turnout has changed, check to see if this fires
+     * @return will fire route if appropriate
+     */
+     void checkTurnout(int newState, int oldState, Turnout t) {
+        if (isVetoed()) return; // skip setting route
+        switch (mControlTurnoutState) {
+        case ONCLOSED:
+            if (newState == Turnout.CLOSED) setRoute();
+            return;
+        case ONTHROWN:
+            if (newState == Turnout.THROWN) setRoute();
+            return;
+        case ONCHANGE:
+            if (newState != oldState) setRoute();
+            return;
+        default:
+            // if not a firing state, return
+            return;
+        }
+    }
+     
+    /**
      * Method to activate the Route via Sensors and control Turnout
      * Sets up for Route activation based on a list of Sensors and a control Turnout
      */
@@ -486,14 +544,15 @@ public class DefaultRoute extends AbstractNamedBean
         if (mNumSensors>0) {
             for (int k = 0;k < mNumSensors;k++) {
                 mSensors[k] = InstanceManager.sensorManagerInstance().
-                                            getBySystemName(mControlSensors[k]);
+                                            provideSensor(mControlSensors[k]);
                 if (mSensors[k]!=null) {
                     mSensors[k].addPropertyChangeListener(mSensorListener[k] =
                                                 new java.beans.PropertyChangeListener() {
                             public void propertyChange(java.beans.PropertyChangeEvent e) {
                                 if (e.getPropertyName().equals("KnownState")) {
                                     int now = ((Integer) e.getNewValue()).intValue();
-                                    checkSensor(now, (Sensor)e.getSource());
+                                    int then = ((Integer) e.getOldValue()).intValue();
+                                    checkSensor(now, then, (Sensor)e.getSource());
                                 }
                             }
                     });
@@ -514,12 +573,8 @@ public class DefaultRoute extends AbstractNamedBean
                         public void propertyChange(java.beans.PropertyChangeEvent e) {
                             if (e.getPropertyName().equals("KnownState")) {
                                 int now = ((Integer) e.getNewValue()).intValue();
-                                if (now==mControlTurnoutState) { 
-                                    // turnout OK, check for vetoes
-                                    if (isVetoed()) return; // skip setting route
-                                    // OK, passed all checks, set the route
-                                    setRoute();
-                                }
+                                int then = ((Integer) e.getOldValue()).intValue();
+                                checkTurnout(now, then, (Turnout)e.getSource());
                             }
                         }
                     });
@@ -540,6 +595,9 @@ public class DefaultRoute extends AbstractNamedBean
      */
     boolean isVetoed() {
         log.debug("check for veto");
+        // check this route not enabled
+        if (!_enabled) return true;
+        
         // check sensors
         for (int i = 0; i < mNumSensors; i++) {
             int s = mSensors[i].getKnownState();
@@ -547,6 +605,12 @@ public class DefaultRoute extends AbstractNamedBean
             if (  ( (mode==VETOACTIVE) && (s==Sensor.ACTIVE) )
                     || ( (mode==VETOINACTIVE) && (s==Sensor.INACTIVE) ) )
                  return true;  // veto set
+        }
+        // check control turnout
+        if ( mTurnout != null) {
+            int tstate = mTurnout.getKnownState();
+            if (mControlTurnoutState==Route.VETOCLOSED && tstate==Turnout.CLOSED) return true;
+            if (mControlTurnoutState==Route.VETOTHROWN && tstate==Turnout.THROWN) return true;
         }
         return false;
     }
@@ -609,6 +673,7 @@ public class DefaultRoute extends AbstractNamedBean
         log.warn("Unexpected call to setState in DefaultRoute.");
         return;
     }    
+    static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DefaultRoute.class.getName());
 }
 
 /**
@@ -651,7 +716,7 @@ class SetRouteThread extends Thread
 		for (int k = 0; k < DefaultRoute.MAX_OUTPUT_TURNOUTS_PER_ROUTE; k++) {
 			Turnout t = r.getOutputTurnout(k);
 			if (t!=null) {
-				int state = r.getRouteTurnoutState(k);
+				int state = r.getOutputTurnoutState(k);
 				if (state!=-1) {
 					if (state==Route.TOGGLE) {
 						int st = t.getKnownState();
@@ -712,7 +777,7 @@ class SetRouteThread extends Thread
 	}
 	
 	private DefaultRoute r;
-    static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DefaultRoute.class.getName());
+    static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SetRouteThread.class.getName());
 }
 
 /* @(#)DefaultRoute.java */
