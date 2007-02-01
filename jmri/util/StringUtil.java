@@ -17,12 +17,37 @@ import com.sun.java.util.collections.Iterator;
  * back to an explicit implementation when running on Java 1.1
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class StringUtil {
 
-static char[] hexChars = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' } ;
+    /**
+     * Starting with two arrays, one of names and one of corresponding
+     * numeric state values, find the state value that matches a 
+     * given name string
+     * @return -1 if not found
+     */
+    static public int getStateFromName(String name, int[] states, String[] names) {
+        for (int i = 0; i < states.length; i++)
+            if (name.equals(names[i])) return states[i];
+        return -1;
+    }
+    
+    /**
+     * Starting with two arrays, one of names and one of corresponding
+     * numeric state values, find the name string that matches a 
+     * given state value
+     * @return null if not found
+     */
+    static public String getNameFromState(int state, int[] states, String[] names) {
+        for (int i = 0; i < states.length; i++)
+            if (state == states[i]) return names[i];
+        return null;
+    }
+    
+
+    static char[] hexChars = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' } ;
 
     /**
      * Convert an int to a exactly two hexadecimal characters
