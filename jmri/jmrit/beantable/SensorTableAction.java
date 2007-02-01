@@ -23,7 +23,7 @@ import javax.swing.JTextField;
  * SensorTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 
 public class SensorTableAction extends AbstractTableAction {
@@ -72,9 +72,6 @@ public class SensorTableAction extends AbstractTableAction {
                     if (state==Sensor.INACTIVE) ((Sensor)t).setKnownState(Sensor.ACTIVE);
                     else ((Sensor)t).setKnownState(Sensor.INACTIVE);
                 } catch (JmriException e) { this.log.warn("Error setting state: "+e); }
-            }
-            public JButton configureButton() {
-                return new JButton(rbean.getString("SensorStateInactive"));
             }
 
         };

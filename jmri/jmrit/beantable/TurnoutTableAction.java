@@ -40,7 +40,7 @@ import javax.swing.JDialog;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.37 $
+ * @version     $Revision: 1.38 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -114,7 +114,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     			else return super.getColumnClass(col);
 		    }
     		public int getPreferredWidth(int col) {
-    			if (col==KNOWNCOL) return new JTextField(6).getPreferredSize().width;
+    			if (col==KNOWNCOL) return new JTextField(10).getPreferredSize().width;
     			else if (col==MODECOL) return new JTextField(10).getPreferredSize().width;
     			else if (col==SENSOR1COL) return new JTextField(5).getPreferredSize().width;
     			else if (col==SENSOR2COL) return new JTextField(5).getPreferredSize().width;
@@ -196,9 +196,6 @@ public class TurnoutTableAction extends AbstractTableAction {
                 int state = ((Turnout)t).getCommandedState();
                 if (state==Turnout.CLOSED) ((Turnout)t).setCommandedState(Turnout.THROWN);
                 else ((Turnout)t).setCommandedState(Turnout.CLOSED);
-            }
-            public JButton configureButton() {
-				return new JButton(thrownText);
             }
 
             public void configureTable(JTable table) {

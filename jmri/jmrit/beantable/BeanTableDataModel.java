@@ -25,7 +25,7 @@ import com.sun.java.util.collections.List;
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.14 $
+ * @version		$Revision: 1.15 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -141,9 +141,9 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         case SYSNAMECOL:
             return new JTextField(5).getPreferredSize().width;
         case USERNAMECOL:
-            return new JTextField(10).getPreferredSize().width;
-        case VALUECOL:
-            return new JTextField(12).getPreferredSize().width;
+            return new JTextField(15).getPreferredSize().width;
+        case VALUECOL: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
+            return new JTextField(22).getPreferredSize().width;
         default:
         	log.warn("Unexpected column in getPreferredWidth: "+col);
             return new JTextField(8).getPreferredSize().width;
@@ -193,7 +193,9 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         setColumnToHoldButton(table, VALUECOL, configureButton());
     }
 
-    abstract public JButton configureButton();
+    public JButton configureButton() {
+        return new JButton(AbstractTableAction.rbean.getString("BeanStateInconsistent"));
+    }
 
     /**
      * Service method to setup a column so that it will hold a
