@@ -2,12 +2,19 @@
 
 package jmri;
 
-
 /**
  * Abstract base for the Turnout interface.
  * <P>
- * Implements NONE feedback, where
- * the KnownState and CommandedState track each other. If you want to
+ * Implements basic feedback modes:
+ * <UL>
+ * <LI>NONE feedback, where
+ * the KnownState and CommandedState track each other. 
+ * <LI>ONESENSOR feedback where the state of a single sensor
+ * specifies THROWN vs CLOSED
+ *<LI>TWOSENSOR feedback, where one sensor specifies THROWN and another
+ * CLOSED.
+ * </UL>
+ * If you want to
  * implement some other feedback, override and modify setCommandedState()
  * here.
  * <P>
@@ -18,16 +25,16 @@ package jmri;
  *
  * Description:		Abstract class providing the basic logic of the Turnout interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean 
         implements Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
 
-    public AbstractTurnout(String systemName) {
+    protected AbstractTurnout(String systemName) {
         super(systemName);
     }
 
-    public AbstractTurnout(String systemName, String userName) {
+    protected AbstractTurnout(String systemName, String userName) {
         super(systemName, userName);
     }
 
@@ -39,7 +46,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean
      * @param s new state value
      */
     abstract protected void forwardCommandChangeToLayout(int s);
-    public void forwardCommandChangeToLayout() {
+    protected void forwardCommandChangeToLayout() {
     	forwardCommandChangeToLayout(_commandedState);
     }
 
@@ -55,7 +62,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean
      * listeners, but does NOT send the command downstream.  This is used
      * when a new commanded state is noticed from another command.
      */
-    public void newCommandedState(int s) {
+    protected void newCommandedState(int s) {
         if (_commandedState != s) {
             int oldState = _commandedState;
             _commandedState = s;
@@ -98,6 +105,11 @@ public abstract class AbstractTurnout extends AbstractNamedBean
             _knownState = s;
             firePropertyChange("KnownState", new Integer(oldState), new Integer(_knownState));
         }
+        // if known state has moved to Thrown or Closed,
+        // set the commanded state to match
+        if ( (_knownState == THROWN && _commandedState!=THROWN)
+            || (_knownState == CLOSED && _commandedState!=CLOSED) )
+            setCommandedState(_knownState);
     }
     /**
      * Show whether state is one you can safely run trains over
@@ -111,7 +123,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean
      * The name pretty much says it. Fur use by the TurnoutOperator classes.
      *
      */
-    public void setKnownStateToCommanded() {
+    void setKnownStateToCommanded() {
     	newKnownState(_commandedState);
     }
 
@@ -121,15 +133,21 @@ public abstract class AbstractTurnout extends AbstractNamedBean
      * This generally shouldn't be used by Java code; use 
      * setCommandedState instead.  The is provided to make Jython
      * script access easier to read.  
+     *<P>
+     * Note that getState() and setState(int) are not symmetric:
+     * getState is the known state, and set state modifies the commanded state.
      */
     public void setState(int s) { setCommandedState(s); }
     
     /**
-     * Implement a shorter name for getCommandedState.
+     * Implement a shorter name for getKnownState.
      *<P>
      * This generally shouldn't be used by Java code; use 
-     * getCommandedState instead.  The is provided to make Jython
+     * getKnownState instead.  The is provided to make Jython
      * script access easier to read.  
+     *<P>
+     * Note that getState() and setState(int) are not symmetric:
+     * getState is the known state, and set state modifies the commanded state.
      */
     public int getState() { return getCommandedState(); }
     
@@ -251,7 +269,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean
     }
 
     /**
-     * overridable function to allow an actual turnout class to transform private
+     * Allow an actual turnout class to transform private
      * feedback types into ones that the generic turnout operations know about
      * @return	apparent feedback mode for operation lookup
      */
