@@ -111,7 +111,7 @@ import java.util.Hashtable;
  * signal (along the track with the green signal).
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.24 $
+ * @version     $Revision: 1.25 $
  * 
  * Revisions to add facing point sensors, approach lighting, and check box
  * to limit speed. Dick Bronosn (RJB) 2006
@@ -217,7 +217,7 @@ public class BlockBossLogic extends Siglet {
         watchTurnout = InstanceManager.turnoutManagerInstance().provideTurnout(name);
         if (watchTurnout == null) log.warn("Turnout "+name+" was not found!");
     }
-
+    
     /**
      * Return the system name of the turnout being monitored
      * @return system name; null if no turnout configured
@@ -302,90 +302,90 @@ public class BlockBossLogic extends Siglet {
         return watchedSignal2Alt.getSystemName();
     }
 
-        public void setWatchedSensor1(String name) {
+    public void setWatchedSensor1(String name) {
         if (name == null || name.equals("")) {
             watchedSensor1 = null;
             return;
         }
         watchedSensor1 = InstanceManager.sensorManagerInstance().provideSensor(name);
         if (watchedSensor1 == null) log.warn("Sensor1 "+name+" was not found!");
-
+        
     }
-        /**
-         * Return the system name of the sensor being monitored
-         * @return system name; null if no sensor configured
-         */
-        public String getWatchedSensor1() {
-            if (watchedSensor1 == null) return null;
-            return watchedSensor1.getSystemName();
-        }
-
-        public void setWatchedSensor1Alt(String name) {
+    /**
+     * Return the system name of the sensor being monitored
+     * @return system name; null if no sensor configured
+     */
+    public String getWatchedSensor1() {
+        if (watchedSensor1 == null) return null;
+        return watchedSensor1.getSystemName();
+    }
+    
+    public void setWatchedSensor1Alt(String name) {
         if (name == null || name.equals("")) {
             watchedSensor1Alt = null;
             return;
         }
         watchedSensor1Alt = InstanceManager.sensorManagerInstance().provideSensor(name);
         if (watchedSensor1Alt == null) log.warn("Sensor1Alt "+name+" was not found!");
-
+        
     }
-        /**
-         * Return the system name of the sensor being monitored
-         * @return system name; null if no sensor configured
-         */
-        public String getWatchedSensor1Alt() {
-            if (watchedSensor1Alt == null) return null;
-            return watchedSensor1Alt.getSystemName();
-        }
-
-        public void setWatchedSensor2(String name) {
+    /**
+     * Return the system name of the sensor being monitored
+     * @return system name; null if no sensor configured
+     */
+    public String getWatchedSensor1Alt() {
+        if (watchedSensor1Alt == null) return null;
+        return watchedSensor1Alt.getSystemName();
+    }
+    
+    public void setWatchedSensor2(String name) {
         if (name == null || name.equals("")) {
             watchedSensor2 = null;
             return;
         }
         watchedSensor2 = InstanceManager.sensorManagerInstance().provideSensor(name);
         if (watchedSensor2 == null) log.warn("Sensor2 "+name+" was not found!");
-
+        
     }
-        /**
-         * Return the system name of the sensor being monitored
-         * @return system name; null if no sensor configured
-         */
-        public String getWatchedSensor2() {
-            if (watchedSensor2 == null) return null;
-            return watchedSensor2.getSystemName();
-        }
-
-        public void setWatchedSensor2Alt(String name) {
+    /**
+     * Return the system name of the sensor being monitored
+     * @return system name; null if no sensor configured
+     */
+    public String getWatchedSensor2() {
+        if (watchedSensor2 == null) return null;
+        return watchedSensor2.getSystemName();
+    }
+    
+    public void setWatchedSensor2Alt(String name) {
         if (name == null || name.equals("")) {
             watchedSensor2Alt = null;
             return;
         }
         watchedSensor2Alt = InstanceManager.sensorManagerInstance().provideSensor(name);
         if (watchedSensor2Alt == null) log.warn("Sensor2Alt "+name+" was not found!");
-
+        
     }
-        /**
-         * Return the system name of the sensor being monitored
-         * @return system name; null if no sensor configured
-         */
-        public String getWatchedSensor2Alt() {
-            if (watchedSensor2Alt == null) return null;
-            return watchedSensor2Alt.getSystemName();
-        }
-       public void setLimitSpeed1(boolean d) { limitSpeed1 = d; }
-       public boolean getLimitSpeed1() {
+    /**
+     * Return the system name of the sensor being monitored
+     * @return system name; null if no sensor configured
+     */
+    public String getWatchedSensor2Alt() {
+        if (watchedSensor2Alt == null) return null;
+        return watchedSensor2Alt.getSystemName();
+    }
+    public void setLimitSpeed1(boolean d) { limitSpeed1 = d; }
+    public boolean getLimitSpeed1() {
         return limitSpeed1;
     }
-       public void setLimitSpeed2(boolean d) { limitSpeed2 = d; }
-       public boolean getLimitSpeed2() {
+    public void setLimitSpeed2(boolean d) { limitSpeed2 = d; }
+    public boolean getLimitSpeed2() {
         return limitSpeed2;
     }
     
     public boolean getUseFlash() {
         return protectWithFlashing;
     }
-
+    
     public void setDistantSignal(boolean d) { distantSignal = d; }
     public boolean getDistantSignal() { return distantSignal; }
     
@@ -429,34 +429,32 @@ public class BlockBossLogic extends Siglet {
     boolean limitSpeed2 = false;
     boolean protectWithFlashing = false;
     boolean distantSignal = false;
-
-
     
-        public void setApproachSensor1(String name) {
+    public void setApproachSensor1(String name) {
         if (name == null || name.equals("")) {
             approachSensor1 = null;
             return;
         }
         approachSensor1 = InstanceManager.sensorManagerInstance().provideSensor(name);
         if (approachSensor1 == null) log.warn("Approach Sensor1 "+name+" was not found!");
-
+        
     }
-        /**
-         * Return the system name of the sensor being monitored
-         * @return system name; null if no sensor configured
-         */
-        public String getApproachSensor1() {
-            if (approachSensor1 == null) return null;
-            return approachSensor1.getSystemName();
-        }
-
+    /**
+     * Return the system name of the sensor being monitored
+     * @return system name; null if no sensor configured
+     */
+    public String getApproachSensor1() {
+        if (approachSensor1 == null) return null;
+        return approachSensor1.getSystemName();
+    }
+    
     /**
      * Define the siglet's input and output.
      */
     public void defineIO() {
         NamedBean[] tempArray = new NamedBean[10];
         int n = 0;
-
+        
         if (watchTurnout!=null ) {
             tempArray[n]= watchTurnout;
             n++;
@@ -494,8 +492,8 @@ public class BlockBossLogic extends Siglet {
             n++;
         }
         if (watchedSensor1 != null) {
-        tempArray[n]= watchedSensor1;
-        n++;
+            tempArray[n]= watchedSensor1;
+            n++;
         }
         if (watchedSensor1Alt != null) {
             tempArray[n]= watchedSensor1Alt;
@@ -518,7 +516,7 @@ public class BlockBossLogic extends Siglet {
         inputs = new NamedBean[n];
         for (int i = 0; i< inputs.length; i++)
             inputs[i] = tempArray[i];
-
+        
         outputs = new NamedBean[]{driveSignal};
         
         // also need to act if the _signal's_ "held"
@@ -527,13 +525,13 @@ public class BlockBossLogic extends Siglet {
         // avoid a loop, or avoid somebody changing appearance
         // manually and having it instantly recomputed & changed back
         driveSignal.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent e) {
-                if (e.getPropertyName().equals("Held"))
-                    setOutput();
-            }
-        });
+                public void propertyChange(java.beans.PropertyChangeEvent e) {
+                    if (e.getPropertyName().equals("Held"))
+                        setOutput();
+                }
+            });
     }
-
+    
     /**
      * Recompute new output state
      * and apply it.
@@ -541,7 +539,7 @@ public class BlockBossLogic extends Siglet {
     public void setOutput() {
         // make sure init is complete
         if ( (outputs == null) || (outputs[0]==null) ) return;
-
+        
         // if "hold" is true, must show red
         if (getHold()) {
             ((SignalHead)outputs[0]).setAppearance(SignalHead.RED);
@@ -576,7 +574,7 @@ public class BlockBossLogic extends Siglet {
         int val = result;
         if (watchedSignal1!=null) val = watchedSignal1.getAppearance();
         if (watchedSignal1!=null && watchedSignal1.getHeld()) val =  SignalHead.RED;  // if Held, act as if Red
-
+        
         int valAlt = result;
         if (watchedSignal1Alt!=null) valAlt = watchedSignal1Alt.getAppearance();
         if (watchedSignal1Alt!=null && watchedSignal1Alt.getHeld()) valAlt =  SignalHead.RED; // if Held, act as if Red
@@ -589,11 +587,11 @@ public class BlockBossLogic extends Siglet {
         // special case:  GREEN if no next signal
         if (watchedSignal2==null && watchedSignal2Alt==null ) 
             result = SignalHead.GREEN;
-
+        
         int val = result;
         if (watchedSignal2!=null) val = watchedSignal2.getAppearance();
         if (watchedSignal2!=null && watchedSignal2.getHeld()) val =  SignalHead.RED;
-
+        
         int valAlt = result;
         if (watchedSignal2Alt!=null) valAlt = watchedSignal2Alt.getAppearance();
         if (watchedSignal2Alt!=null && watchedSignal2Alt.getHeld()) valAlt =  SignalHead.RED;
@@ -826,14 +824,14 @@ public class BlockBossLogic extends Siglet {
         }            
         return;
     }
-
+    
     static Hashtable umap = null;
     static Hashtable smap = null;
-
+    
     public static Enumeration entries() {
         return smap.elements();
     }
-
+    
     private static void setup() {
         if (smap == null) {
             smap = new Hashtable();
@@ -841,7 +839,7 @@ public class BlockBossLogic extends Siglet {
             InstanceManager.configureManagerInstance().registerConfig(new BlockBossLogic());
         }
     }
-
+    
     /**
      * Ensure that this BlockBossLogic object is available for later retrieval
      */
@@ -850,7 +848,7 @@ public class BlockBossLogic extends Siglet {
         if (driveSignal.getUserName()!=null)
             umap.put(driveSignal.getUserName(), this);
     }
-
+    
     /**
      * Return the BlockBossLogic item governing a specific signal,
      * having removed it from use.
