@@ -16,7 +16,7 @@ import com.sun.java.util.collections.List;
  * at the present time.  They're just names...
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 abstract public class AbstractManager
     implements Manager, java.beans.PropertyChangeListener {
@@ -83,6 +83,22 @@ abstract public class AbstractManager
         firePropertyChange("length", null, new Integer(_tsys.size()));
         // listen for name and state changes to forward
         s.addPropertyChangeListener(this);
+    }
+
+    /**
+     * Forget a NamedBean Object created outside the manager.
+     * <P>
+     * The non-system-specific RouteManager
+     * uses this method.
+     */
+    public void deregister(NamedBean s) {
+        s.removePropertyChangeListener(this);
+        String systemName = s.getSystemName();
+        _tsys.remove(systemName);
+        String userName = s.getUserName();
+        if (userName != null) _tuser.remove(userName);
+        firePropertyChange("length", null, new Integer(_tsys.size()));
+        // listen for name and state changes to forward
     }
 
     /**
