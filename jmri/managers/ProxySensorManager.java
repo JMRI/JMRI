@@ -12,7 +12,7 @@ import jmri.Manager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class ProxySensorManager extends AbstractProxyManager
                             implements SensorManager {
@@ -60,8 +60,8 @@ public class ProxySensorManager extends AbstractProxyManager
         // did not find a manager, allow it to default to the primary, if there is one
         log.debug("Did not find manager for name "+sName+", assume it's a number");
 		if (mgrs.size()>0) {
-			return ((SensorManager)mgrs.get(0)).newSensor(
-                    ((SensorManager)mgrs.get(0)).makeSystemName(sName), null);
+			return ((SensorManager)mgrs.get(0)).provideSensor(
+                    ((SensorManager)mgrs.get(0)).makeSystemName(sName));
 		}
 		else {
 			log.debug("Did not find a primary sensor manager for name "+sName);
