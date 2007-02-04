@@ -115,6 +115,7 @@ jmri/jmrix/cmri/CMRIBundle_de.properties \
 jmri/jmrix/cmri/CMRIBundle_es.properties \
 jmri/jmrix/cmri/serial/assignment/ListBundle.properties \
 jmri/jmrix/cmri/serial/assignment/ListBundle_de.properties \
+jmri/jmrix/cmri/serial/assignment/ListBundle_es.properties \
 jmri/jmrix/cmri/serial/nodeconfig/NodeConfigBundle.properties \
 jmri/jmrix/cmri/serial/nodeconfig/NodeConfigBundle_de.properties \
 jmri/jmrix/cmri/serial/nodeconfig/NodeConfigBundle_es.properties \
@@ -134,6 +135,7 @@ jmri/jmrix/lenz/lzv100/LZV100Bundle_de.properties \
 jmri/jmrix/lenz/lzv100/LZV100Bundle_es.properties \
 jmri/jmrix/lenz/stackmon/StackMonBundle.properties \
 jmri/jmrix/lenz/stackmon/StackMonBundle_de.properties \
+jmri/jmrix/lenz/stackmon/StackMonBundle_es.properties \
 jmri/jmrix/lenz/XNetBundle.properties \
 jmri/jmrix/lenz/XNetBundle_cs.properties \
 jmri/jmrix/lenz/XNetBundle_cs_CZ.properties \
