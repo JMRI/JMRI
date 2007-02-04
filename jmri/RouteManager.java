@@ -11,7 +11,7 @@ import com.sun.java.util.collections.List;
  * separately implemented, instead of being system-specific.
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public interface RouteManager extends Manager {
 
@@ -42,6 +42,13 @@ public interface RouteManager extends Manager {
      */
     public List getSystemNameList();
 
+    /** 
+     * Delete Route by removing it from 
+     * the manager.
+     * The Route must first be deactivated so it
+     * stops processing.
+     */
+    void deleteRoute(Route r); 
 }
 
 
