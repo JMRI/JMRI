@@ -25,7 +25,7 @@ import com.sun.java.util.collections.List;
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.15 $
+ * @version		$Revision: 1.16 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -46,8 +46,12 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
     synchronized void updateNameList() {
         // first, remove listeners from the individual objects
         if (sysNameList != null) {
-            for (int i = 0; i< sysNameList.size(); i++)
-                getBySystemName((String)sysNameList.get(i)).removePropertyChangeListener(this);
+            for (int i = 0; i< sysNameList.size(); i++) {
+                // if object has been deleted, it's not here; ignore it
+                NamedBean b = getBySystemName((String)sysNameList.get(i));
+                if (b!=null)
+                    b.removePropertyChangeListener(this);
+            }
         }
         sysNameList = getManager().getSystemNameList();
         // and add them back in
