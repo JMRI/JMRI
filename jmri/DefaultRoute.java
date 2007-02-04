@@ -6,7 +6,7 @@ package jmri;
  * Class providing the basic logic of the Route interface.
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 public class DefaultRoute extends AbstractNamedBean
     implements Route, java.io.Serializable {
@@ -484,7 +484,7 @@ public class DefaultRoute extends AbstractNamedBean
     protected void checkSensor(int newState, int oldState, Sensor sensor) {
         String name = sensor.getSystemName();
         if (log.isDebugEnabled()) log.debug("check Sensor "+name+" for "+getSystemName());
-        boolean activated = false;  // need to have a sensor hitting active
+        boolean fire = false;  // dont fire unless we find something
         for (int i = 0; i < mNumSensors; i++) {
             if (getRouteSensor(i).equals(sensor)) {
                 // here for match, check mode & handle onActive, onInactive
@@ -496,7 +496,7 @@ public class DefaultRoute extends AbstractNamedBean
                     || ( (mode==ONINACTIVE) && (newState==Sensor.INACTIVE) )
                     || ( (mode==ONCHANGE) && (newState!=oldState) )
                     )
-                   activated = true;
+                   fire = true;
                    
                 // if any other modes, just skip because
                 // the sensor might be in list more than once
@@ -504,7 +504,7 @@ public class DefaultRoute extends AbstractNamedBean
         }
         
         log.debug("check activated");
-        if (!activated) return;
+        if (!fire) return;
         
         // check for veto of change
         if (isVetoed()) return; // don't fire
