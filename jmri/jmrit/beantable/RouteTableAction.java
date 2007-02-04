@@ -29,7 +29,7 @@ import com.sun.java.util.collections.List;
  * @author	Dave Duchamp    Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2007 
  *
- * @version     $Revision: 1.23 $
+ * @version     $Revision: 1.24 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -231,7 +231,7 @@ public class RouteTableAction extends AbstractTableAction {
     JPanel p2xs = null;   // Sensor list table
 
     Route curRoute = null;
-    boolean routeCreated = false;
+    boolean routeDirty = false;  // true to fire reminder to save work
     boolean editMode = false;
 
     void addPressed(ActionEvent e) {
@@ -550,7 +550,7 @@ public class RouteTableAction extends AbstractTableAction {
             update.setVisible(false);
             edit.setVisible(true);
             create.setVisible(true);
-            delete.setVisible(false);  // keep off for the time being
+            delete.setVisible(false);
             contentPane.add(pb);
             // pack and release space
             addFrame.pack();
@@ -561,11 +561,11 @@ public class RouteTableAction extends AbstractTableAction {
         addFrame.addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     // remind to save, if Route was created or edited
-                    if (routeCreated) {
+                    if (routeDirty) {
                         javax.swing.JOptionPane.showMessageDialog(addFrame,
                             "Remember to save your Route information.","Reminder",
                                     javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                        routeCreated = false;
+                        routeDirty = false;
                     }
                     // hide addFrame
                     addFrame.setVisible(false);
@@ -653,7 +653,7 @@ public class RouteTableAction extends AbstractTableAction {
         g.activateRoute();
         
         // mark as dirty so save prompt displayed
-        routeCreated = true;
+        routeDirty = true;
     }
 
     /**
@@ -745,7 +745,6 @@ public class RouteTableAction extends AbstractTableAction {
                 g.setControlTurnout(turnoutSystemName);
                 // set up control turnout state
                 g.setControlTurnoutState(turnoutModeFromBox(cTurnoutStateBox));
-                System.out.println("TO "+turnoutSystemName+" item "+cTurnoutStateBox.getSelectedItem()+" mode "+turnoutModeFromBox(cTurnoutStateBox));
             }
             else {
                 g.setControlTurnout("");
@@ -889,6 +888,7 @@ public class RouteTableAction extends AbstractTableAction {
         status1.setText(updateInst);
         status2.setText(cancelInst);
         status2.setVisible(true);
+        delete.setVisible(true);
         cancel.setVisible(true);
         update.setVisible(true);
         edit.setVisible(false);
@@ -902,7 +902,22 @@ public class RouteTableAction extends AbstractTableAction {
      * Responds to the Delete button
      */
     void deletePressed(ActionEvent e) {
-// place holder for future function    
+        // route is already deactivated, just delete it
+        InstanceManager.routeManagerInstance().deleteRoute(curRoute);
+        // switch GUI back to selection mode
+        status2.setText(editInst);
+        status2.setVisible(true);
+        delete.setVisible(false);
+        cancel.setVisible(false);
+        update.setVisible(false);
+        edit.setVisible(true);
+        create.setVisible(true);
+        fixedSystemName.setVisible(false);
+        name.setVisible(true);
+        routeDirty = true;  // remind to save
+        // get out of edit mode
+        editMode = false;
+        curRoute = null;
     }
 
     /**
@@ -947,6 +962,7 @@ public class RouteTableAction extends AbstractTableAction {
         // set up buttons and notes
         status2.setText(editInst);
         status2.setVisible(true);
+        delete.setVisible(false);
         cancel.setVisible(false);
         update.setVisible(false);
         edit.setVisible(true);
@@ -955,7 +971,7 @@ public class RouteTableAction extends AbstractTableAction {
         name.setVisible(true);
         // reactivate the Route
         curRoute.activateRoute();    
-        routeCreated = true;
+        routeDirty = true;
         // get out of edit mode
         editMode = false;
         curRoute = null;
@@ -976,6 +992,7 @@ public class RouteTableAction extends AbstractTableAction {
             status1.setText(createInst);
             status2.setText(editInst);
             status2.setVisible(true);
+            delete.setVisible(false);
             cancel.setVisible(false);
             update.setVisible(false);
             edit.setVisible(true);
