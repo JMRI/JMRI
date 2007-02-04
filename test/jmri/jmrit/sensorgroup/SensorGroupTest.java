@@ -7,11 +7,17 @@ import junit.framework.*;
 /**
  * Tests for classes in the jmri.jmrit.sensorgroup package
  * @author	Bob Jacobsen  Copyright 2003, 2007
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SensorGroupTest extends TestCase {
 
     public void testFrameCreate() {
+        new SensorGroupFrame();
+    }
+
+    public void testActionCreateAndFire() {
+        SensorGroupAction a = new SensorGroupAction("Sensor Group");
+        a.actionPerformed(null);
     }
 
 
