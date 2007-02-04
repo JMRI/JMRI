@@ -28,7 +28,7 @@ package jmri;
  *
  * @author			Dave Duchamp Copyright (C) 2004
  * @author			Bob Jacobsen Copyright (C) 2007
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public interface Route extends NamedBean {
 
@@ -269,17 +269,20 @@ public interface Route extends NamedBean {
     public void setRoute();
 
     /**
-     * Method to activate the Route via Sensors
-     * Sets up for Route activation based on a list of Sensors
+     * Activate the Route, which
+     * starts route processing by connecting to inputs, etc.
+     * A Route must be activated before it will fire.
      */
     public void activateRoute();
 
     /**
-     * Method to deactivate the Route via Sensors
-     * Deactivates Route based on a list of Sensors
+     * Deactivate the Route. This disconnects it from
+     * all other objects and stops it from processing.
+     * A Route must be deactivated before it's input
+     * and output definitions are changed.
      */
     public void deActivateRoute();
-
+  
 }
 
 /* @(#)Route.java */
