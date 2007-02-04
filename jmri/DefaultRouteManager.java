@@ -8,7 +8,7 @@ package jmri;
  * Note that this does not enforce any particular system naming convention
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class DefaultRouteManager extends AbstractManager
     implements RouteManager, java.beans.PropertyChangeListener {
@@ -44,6 +44,14 @@ public class DefaultRouteManager extends AbstractManager
         return r;
     }
 
+    /**
+     * Remove an existing route. Route must have been deactivated
+     * before invoking this.
+     */
+    public void deleteRoute(Route r) {
+        deregister(r);
+    }
+    
     /** 
      * Method to get an existing Route.  First looks up assuming that
      *      name is a User Name.  If this fails looks up assuming
