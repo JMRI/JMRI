@@ -11,7 +11,7 @@ import java.util.*;
  * Create a "Tools" menu containing the Jmri system-independent tools
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 public class ToolsMenu extends JMenu {
     public ToolsMenu(String name) {
@@ -45,6 +45,7 @@ public class ToolsMenu extends JMenu {
         add(new jmri.jmrit.beantable.MemoryTableAction(rb.getString("MenuItemMemoryTable")));
         add(new jmri.jmrit.beantable.RouteTableAction(rb.getString("MenuItemRouteTable")));
         add(new jmri.jmrit.blockboss.BlockBossAction(rb.getString("MenuItemSimpleSignal")));
+        add(new jmri.jmrit.sensorgroup.SensorGroupAction(rb.getString("MenuItemSensorGroup")));
         add(new JSeparator());
 
         JMenu throttleMenu = new JMenu(rb.getString("MenuThrottles"));
