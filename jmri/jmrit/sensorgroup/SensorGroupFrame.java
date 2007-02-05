@@ -21,7 +21,7 @@ import com.sun.java.util.collections.List;
  * immediately.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2003
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SensorGroupFrame extends javax.swing.JFrame {
 
@@ -168,7 +168,8 @@ public class SensorGroupFrame extends javax.swing.JFrame {
                         r.addOutputSensor(outSensor, mode);
                     }
                 }
-                // make it persistant
+                // make it persistant & activate
+                r.activateRoute();
                 rm.register(r);
             }
         }
