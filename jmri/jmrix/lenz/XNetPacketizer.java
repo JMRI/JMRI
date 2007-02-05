@@ -4,8 +4,6 @@
 
 package jmri.jmrix.lenz;
 
-import com.sun.java.util.collections.LinkedList;
-
 /**
  * Converts Stream-based I/O to/from XNet messages.  The "XNetInterface"
  * side sends/receives XNetMessage objects.  The connection to
@@ -23,7 +21,7 @@ import com.sun.java.util.collections.LinkedList;
  *</UL>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 2.5 $
+ * @version 		$Revision: 2.6 $
  *
  */
 public class XNetPacketizer extends XNetTrafficController {
@@ -38,12 +36,6 @@ public class XNetPacketizer extends XNetTrafficController {
 
 	public boolean status() { return (ostream != null & istream != null);
 		}
-
-	/**
-	 * Synchronized list used as a transmit queue
-	 */
-    LinkedList xmtList = new LinkedList();
-
 	/**
 	 * Forward a preformatted XNetMessage to the actual interface.
 	 *
