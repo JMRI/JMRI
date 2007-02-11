@@ -29,7 +29,7 @@ import com.sun.java.util.collections.List;
  * @author	Dave Duchamp    Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2007 
  *
- * @version     $Revision: 1.24 $
+ * @version     $Revision: 1.25 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -235,6 +235,9 @@ public class RouteTableAction extends AbstractTableAction {
     boolean editMode = false;
 
     void addPressed(ActionEvent e) {
+		if (editMode) {
+			cancelEdit();
+		}
         // Initialize the turnout list
         for (int i = 0; i<MAX_TURNOUTS ; i++ ) {
             includeTurnout[i] = false;
