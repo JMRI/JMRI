@@ -21,7 +21,7 @@ import java.util.Date;
  * Based in concept on AbstractSignalHead.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public abstract class AbstractLight extends AbstractNamedBean
     implements Light, java.io.Serializable {
@@ -67,6 +67,20 @@ public abstract class AbstractLight extends AbstractNamedBean
 	protected Timer mTimedControlTimer = null;
 	protected java.awt.event.ActionListener mTimedControlListener = null;
 	protected boolean mLightOnTimerActive = false;
+    protected boolean mEnabled = true;
+
+    /**
+     * Get enabled status
+    */
+    public boolean getEnabled() { return mEnabled; }
+    /**
+     * Set enabled status
+     */
+    public void setEnabled(boolean v) { 
+        boolean old = mEnabled;
+        mEnabled = v;
+        if (old != v) firePropertyChange("Enabled", new Boolean(old), new Boolean(v));
+    }
     
     /**
      *  Return the control type of this Light
@@ -294,6 +308,7 @@ public abstract class AbstractLight extends AbstractNamedBean
                         mControlSensor.addPropertyChangeListener(mSensorListener =
                                                 new java.beans.PropertyChangeListener() {
                                 public void propertyChange(java.beans.PropertyChangeEvent e) {
+									if (!mEnabled) return;  // ignore property change if user disabled light
                                     if (e.getPropertyName().equals("KnownState")) {
                                         int now = mControlSensor.getKnownState();
                                         if (now==Sensor.ACTIVE) { 
@@ -342,7 +357,10 @@ public abstract class AbstractLight extends AbstractNamedBean
 					mClock.addMinuteChangeListener( mTimebaseListener = 
 						new java.beans.PropertyChangeListener() {
 							public void propertyChange(java.beans.PropertyChangeEvent e) {
-								updateClockControlLight();
+								if (mEnabled) {
+									// update control if light is enabled
+									updateClockControlLight();
+								}
 							}
 						});
 					mActive = true;
@@ -378,7 +396,8 @@ public abstract class AbstractLight extends AbstractNamedBean
                         mControlTurnout.addPropertyChangeListener(mTurnoutListener =
                                                 new java.beans.PropertyChangeListener() {
                                 public void propertyChange(java.beans.PropertyChangeEvent e) {
-                                    if (e.getPropertyName().equals("KnownState")) {
+									if (!mEnabled) return;  // ignore property change if user disabled light
+									if (e.getPropertyName().equals("KnownState")) {
                                         int now = mControlTurnout.getKnownState();
                                         if (now==Turnout.CLOSED) { 
                                             if (mTurnoutState==Turnout.CLOSED) {
@@ -422,7 +441,8 @@ public abstract class AbstractLight extends AbstractNamedBean
                         mTimedControlSensor.addPropertyChangeListener(mTimedSensorListener =
                                                 new java.beans.PropertyChangeListener() {
                                 public void propertyChange(java.beans.PropertyChangeEvent e) {
-                                    if (e.getPropertyName().equals("KnownState")) {
+									if (!mEnabled) return;  // ignore property change if user disabled light
+									if (e.getPropertyName().equals("KnownState")) {
                                         int now = mTimedControlSensor.getKnownState();
 										if (!mLightOnTimerActive) {
 											if (now==Sensor.ACTIVE) { 

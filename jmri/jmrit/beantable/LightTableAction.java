@@ -32,7 +32,7 @@ import javax.swing.JOptionPane;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -62,11 +62,32 @@ public class LightTableAction extends AbstractTableAction {
      */
     void createModel() {
         m = new BeanTableDataModel() {
+		    static public final int ENABLECOL = 3;
+		    static public final int EDITCOL = 4;
+			protected String enabledString = rb.getString("ColumnHeadEnabled");
+    		public int getColumnCount( ){ return NUMCOLUMN+2;}
+    		public String getColumnName(int col) {
+    			if (col==EDITCOL) return "";    // no heading on "Edit"
+    			if (col==ENABLECOL) return enabledString;
+    			else return super.getColumnName(col);
+		    }
+    		public Class getColumnClass(int col) {
+    			if (col==EDITCOL) return JButton.class;
+    			if (col==ENABLECOL) return Boolean.class;
+    			else return super.getColumnClass(col);
+		    }
 			public int getPreferredWidth(int col) {
 				// override default value for UserName column
 				if (col==USERNAMECOL) return new JTextField(16).getPreferredSize().width;
+    			if (col==EDITCOL) return new JTextField(5).getPreferredSize().width;
+    			if (col==ENABLECOL) return new JTextField(6).getPreferredSize().width;
 				else return super.getPreferredWidth(col);
 			}
+    		public boolean isCellEditable(int row, int col) {
+    			if (col==EDITCOL) return true;
+    			if (col==ENABLECOL) return true;
+    			else return super.isCellEditable(row,col);
+			}    		
             public String getValue(String name) {
                 int val = InstanceManager.lightManagerInstance().getBySystemName(name).getState();
                 switch (val) {
@@ -75,6 +96,35 @@ public class LightTableAction extends AbstractTableAction {
                 default: return "Unexpected value: "+val;
                 }
             }
+    		public Object getValueAt(int row, int col) {
+    			if (col==EDITCOL) {
+					return rb.getString("ButtonEdit");
+    			}
+    			else if (col==ENABLECOL) {
+    				return new Boolean(((Light)getBySystemName((String)getValueAt(row, SYSNAMECOL))).getEnabled());
+    			}
+				else return super.getValueAt(row, col);
+			}    		
+    		public void setValueAt(Object value, int row, int col) {
+    			if (col==EDITCOL) {
+                    // set up to edit
+                    addPressed(null);
+                    systemName.setText((String)getValueAt(row, SYSNAMECOL));
+                    editPressed(null); // don't really want to stop Light w/o user action
+    			}
+    			else if (col==ENABLECOL) {
+                    // alternate
+                    Light l = (Light)getBySystemName((String)getValueAt(row, SYSNAMECOL));
+                    boolean v = l.getEnabled();
+                    l.setEnabled(!v);
+    			}
+    			else super.setValueAt(value, row, col);
+    		}
+            boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
+                if (e.getPropertyName().equals(enabledString)) return true;
+                else return super.matchPropertyName(e);
+            }
+
             public Manager getManager() { 
                 return InstanceManager.lightManagerInstance(); 
             }
@@ -113,6 +163,7 @@ public class LightTableAction extends AbstractTableAction {
     boolean lightCreated = false;
     boolean warnMsg = false;
     boolean noWarn = false;
+	boolean inEditMode = false;
 
     String sensorControl = rb.getString("LightSensorControl");
     String fastClockControl = rb.getString("LightFastClockControl");
@@ -156,6 +207,10 @@ public class LightTableAction extends AbstractTableAction {
     JLabel status2 = new JLabel( rb.getString("LightEditInst") );
         
     void addPressed(ActionEvent e) {
+		if (inEditMode) {
+			// cancel Edit and reactivate the editted light
+			cancelPressed(null);
+		}
         if (addFrame==null) {
             addFrame = new JFrame( rb.getString("TitleAddLight") );
             addFrame.setLocation(100,30);
@@ -527,6 +582,7 @@ public class LightTableAction extends AbstractTableAction {
         systemName.setVisible(false);
         // deactivate this light
         curLight.deactivateLight();
+		inEditMode = true;
         // get information for this Light
         userName.setText(g.getUserName());
         int ctType = g.getControlType();
@@ -617,6 +673,7 @@ public class LightTableAction extends AbstractTableAction {
         systemName.setVisible(true);
         g.activateLight();
         lightCreated = true;
+		inEditMode = false;
     }
 
     /**
@@ -874,6 +931,7 @@ public class LightTableAction extends AbstractTableAction {
         systemName.setVisible(true);
         // reactivate the light
         curLight.activateLight();
+		inEditMode = false;
     }
     static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LightTableAction.class.getName());
 }

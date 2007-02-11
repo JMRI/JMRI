@@ -18,7 +18,7 @@ package jmri;
  * Based in part on SignalHead.java
  *
  * @author			Dave Duchamp Copyright (C) 2004
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public interface Light extends NamedBean {
 
@@ -68,6 +68,16 @@ public interface Light extends NamedBean {
     public void setControlTurnoutState(int ts);         // turnout state corresponding to this Light ON
 	public void setControlTimedOnSensor(String sensorSystemName); // trigger Sensor if TIMED_ON_CONTROL
 	public void setTimedOnDuration(int duration);   // duration (milliseconds) if TIMED_ON_CONTROL
+
+    /**
+     * Set enabled status
+     */
+    public void setEnabled(boolean state);
+
+    /**
+     * Get enabled status
+    */
+    public boolean getEnabled();
     
     /**
      * Activates a light by control type.  This method tests the 
