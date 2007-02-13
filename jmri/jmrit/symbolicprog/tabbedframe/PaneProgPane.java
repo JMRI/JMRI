@@ -63,7 +63,7 @@ import com.sun.java.util.collections.List;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005, 2006
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.58 $
+ * @version   $Revision: 1.59 $
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -144,7 +144,7 @@ public class PaneProgPane extends javax.swing.JPanel
         panelList.add(p);
         bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));
 
-        // enable read buttons, if possible, and 
+        // enable read buttons, if possible, and
         // set their tool tips
         enableReadButtons();
 
@@ -260,7 +260,7 @@ public class PaneProgPane extends javax.swing.JPanel
             readAllButton.setEnabled(true);
         }
     }
-    
+
     /**
      * This remembers the variables on this pane for the Read/Write sheet
      * operation.  They are stored as a list of Integer objects, each of which
@@ -1391,7 +1391,7 @@ public class PaneProgPane extends javax.swing.JPanel
         int col2Width = w.getCharactersPerLine()/2 -3 + 5;
 
         try {
-            
+
             //Create a string of spaces the width of the first column
             String spaces = "";
             for (int i=0; i < col1Width; i++) {
@@ -1413,7 +1413,7 @@ public class PaneProgPane extends javax.swing.JPanel
             s = "\n";
             w.write(s,0,s.length());
             // if this isn't the raw CV section, write the column headings
-            if (cvList.size()== 0){ 
+            if (cvList.size()== 0){
             w.setFontStyle(Font.BOLD + Font.ITALIC);
             s = "   " + heading1 + spaces.substring(0,interval) + "   " + heading2;
             w.write(s, 0, s.length());
@@ -1506,8 +1506,12 @@ public class PaneProgPane extends javax.swing.JPanel
                   s = "\n";
                   w.write(s,0,s.length());
                 }
-                // Check for a Speed Table output and create a graphic display
-                if (originalName.equals("Speed Table")) {
+                // Check for a Speed Table output and create a graphic display.
+                // Java 1.5 has a known bug, #6328248, that prevents printing of progress
+                //  bars using old style printing classes.  It results in blank bars on Windows,
+                //  but hangs Macs. The version check is a workaround.
+                float v = Float.valueOf(java.lang.System.getProperty("java.version").substring(0, 3)).floatValue();
+                if (originalName.equals("Speed Table")& v < 1.5) {
                  // set the height of the speed table graph in lines
                  int speedFrameLineHeight = 11;
                  s = "\n";
