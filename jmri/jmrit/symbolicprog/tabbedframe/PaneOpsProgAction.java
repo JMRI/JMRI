@@ -34,17 +34,20 @@ import javax.swing.JPanel;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class PaneOpsProgAction 	extends AbstractAction {
 
     Object o1, o2, o3, o4;
     JLabel statusLabel;
 
+    static final java.util.ResourceBundle rbt 
+        = java.util.ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle");
+
     public PaneOpsProgAction(String s) {
         super(s);
 
-        statusLabel = new JLabel("idle");
+        statusLabel = new JLabel(rbt.getString("StateIdle"));
 
         // disable ourself if ops programming is not possible
         if (jmri.InstanceManager.programmerManagerInstance()==null ||
@@ -61,13 +64,14 @@ public class PaneOpsProgAction 	extends AbstractAction {
         if (log.isDebugEnabled()) log.debug("Pane programmer requested");
 
         // create the initial frame that steers
-        final JmriJFrame f = new JmriJFrame("Ops-mode Programmer Setup");
+        final JmriJFrame f = new JmriJFrame(rbt.getString("FrameOpsProgrammerSetup"));
         f.getContentPane().setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));
 
         // add the Roster menu
         JMenuBar menuBar = new JMenuBar();
         // menuBar.setBorder(new BevelBorder(BevelBorder.RAISED));
-        menuBar.add(new jmri.jmrit.roster.RosterMenu("Roster", jmri.jmrit.roster.RosterMenu.MAINMENU, f));
+        menuBar.add(new jmri.jmrit.roster.RosterMenu(rbt.getString("MenuRoster"),
+                             jmri.jmrit.roster.RosterMenu.MAINMENU, f));
         f.setJMenuBar(menuBar);
 
         // known loco on main track
@@ -76,7 +80,8 @@ public class PaneOpsProgAction 	extends AbstractAction {
 
             protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
                                                 String filename) {
-                String title = "Program "+re.getId()+" on main track";
+                String title = java.text.MessageFormat.format(rbt.getString("FrameOpsProgrammerTitle"),
+                                                        new String[]{re.getId()});
                 // find the ops-mode programmer
                 int address = Integer.parseInt(re.getDccAddress());
                 boolean longAddr = true;

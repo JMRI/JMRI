@@ -36,13 +36,16 @@ import jmri.ProgDeferredServiceModePane;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.57 $
+ * @version   $Revision: 1.58 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
 
+    static final java.util.ResourceBundle rbt 
+        = java.util.ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle");
+
     // members to contain working variable, CV values, Indexed CV values
-    JLabel              progStatus   = new JLabel("idle");
+    JLabel              progStatus   = new JLabel(rbt.getString("StateIdle"));
     CvTableModel        cvModel      = null;
     IndexedCvTableModel iCvModel     = null;
     VariableTableModel  variableModel;
@@ -67,10 +70,10 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     // GUI member declarations
     JTabbedPane tabPane = new JTabbedPane();
-    JToggleButton readChangesButton = new JToggleButton("Read changes on all sheets");
-    JToggleButton writeChangesButton = new JToggleButton("Write changes on all sheets");
-    JToggleButton readAllButton = new JToggleButton("Read all sheets");
-    JToggleButton writeAllButton = new JToggleButton("Write all sheets");
+    JToggleButton readChangesButton = new JToggleButton(rbt.getString("ButtonReadChangesAllSheets"));
+    JToggleButton writeChangesButton = new JToggleButton(rbt.getString("ButtonWriteChangesAllSheets"));
+    JToggleButton readAllButton = new JToggleButton(rbt.getString("ButtonReadAllSheets"));
+    JToggleButton writeAllButton = new JToggleButton(rbt.getString("ButtonWriteAllSheets"));
 
     ItemListener l1;
     ItemListener l2;
@@ -90,46 +93,46 @@ abstract public class PaneProgFrame extends JmriJFrame
         setJMenuBar(menuBar);
 
         // add a "File" menu
-        JMenu fileMenu = new JMenu("File");
+        JMenu fileMenu = new JMenu(rbt.getString("MenuFile"));
         menuBar.add(fileMenu);
 
         // add a "Factory Reset" menu
         if (!_opsMode) {
-            resetMenu = new JMenu("Reset");
+            resetMenu = new JMenu(rbt.getString("MenuReset"));
             menuBar.add(resetMenu);
-            resetMenu.add(new FactoryResetAction("Factory Reset ...", resetModel, this));
+            resetMenu.add(new FactoryResetAction(rbt.getString("MenuFactoryReset"), resetModel, this));
             resetMenu.setEnabled(false);
         }
         // Add a save item
-        fileMenu.add(new AbstractAction("Save...") {
+        fileMenu.add(new AbstractAction(rbt.getString("MenuSave")) {
             public void actionPerformed(ActionEvent e) {
                 storeFile();
             }
         });
 
-        JMenu printSubMenu = new JMenu("Print");
-        printSubMenu.add(new PrintAction("Print All...", this, false));
-        printSubMenu.add(new PrintCvAction("Print CVs...", cvModel, this, false));
+        JMenu printSubMenu = new JMenu(rbt.getString("MenuPrint"));
+        printSubMenu.add(new PrintAction(rbt.getString("MenuPrintAll"), this, false));
+        printSubMenu.add(new PrintCvAction(rbt.getString("MenuPrintCVs"), cvModel, this, false));
         fileMenu.add(printSubMenu);
         
-        JMenu printPreviewSubMenu = new JMenu("Print Preview");
-        printPreviewSubMenu.add(new PrintAction("Preview All...", this, true));
-        printPreviewSubMenu.add(new PrintCvAction("Preview CVs...", cvModel, this, true));
+        JMenu printPreviewSubMenu = new JMenu(rbt.getString("MenuPrintPreview"));
+        printPreviewSubMenu.add(new PrintAction(rbt.getString("MenuPrintPreviewAll"), this, true));
+        printPreviewSubMenu.add(new PrintCvAction(rbt.getString("MenuPrintPreviewCVs"), cvModel, this, true));
         fileMenu.add(printPreviewSubMenu);
 
         // add "Import" submenu; this is heirarchical because
         // some of the names are so long, and we expect more formats
-        JMenu importSubMenu = new JMenu("Import");
+        JMenu importSubMenu = new JMenu(rbt.getString("MenuImport"));
         fileMenu.add(importSubMenu);
-        importSubMenu.add(new Pr1ImportAction("PR1 file...", cvModel, this));
+        importSubMenu.add(new Pr1ImportAction(rbt.getString("MenuImportPr1"), cvModel, this));
 
         // add "Export" submenu; this is heirarchical because
         // some of the names are so long, and we expect more formats
-        JMenu exportSubMenu = new JMenu("Export");
+        JMenu exportSubMenu = new JMenu(rbt.getString("MenuExport"));
         fileMenu.add(exportSubMenu);
-        exportSubMenu.add(new CsvExportAction("CSV file...", cvModel, this));
-        exportSubMenu.add(new Pr1ExportAction("PR1DOS file...", cvModel, this));
-        exportSubMenu.add(new Pr1WinExportAction("PR1WIN file...", cvModel, this));
+        exportSubMenu.add(new CsvExportAction(rbt.getString("MenuExportCSV"), cvModel, this));
+        exportSubMenu.add(new Pr1ExportAction(rbt.getString("MenuExportPr1DOS"), cvModel, this));
+        exportSubMenu.add(new Pr1WinExportAction(rbt.getString("MenuExportPr1WIN"), cvModel, this));
 
         // to control size, we need to insert a single
         // JPanel, then have it laid out with BoxLayout
@@ -147,14 +150,14 @@ abstract public class PaneProgFrame extends JmriJFrame
             public void itemStateChanged (ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     prepGlassPane(readChangesButton);
-                    readChangesButton.setText("Stop Read changes, all sheets");
+                    readChangesButton.setText(rbt.getString("ButtonStopReadChangesAll"));
                     readChanges();
                 } else {
                     if (_programmingPane != null) {
                         _programmingPane.stopProgramming();
                     }
                     paneListIndex = paneList.size();
-                    readChangesButton.setText("Read changes on all sheets");
+                    readChangesButton.setText(rbt.getString("ButtonReadChangesAllSheets"));
                 }
             }
         });
@@ -163,48 +166,48 @@ abstract public class PaneProgFrame extends JmriJFrame
             public void itemStateChanged (ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     prepGlassPane(readAllButton);
-                    readAllButton.setText("Stop Read all sheets");
+                    readAllButton.setText(rbt.getString("ButtonStopReadAll"));
                     readAll();
                 } else {
                     if (_programmingPane != null) {
                         _programmingPane.stopProgramming();
                     }
                     paneListIndex = paneList.size();
-                    readAllButton.setText("Read all sheets");
+                    readAllButton.setText(rbt.getString("ButtonReadAllSheets"));
                 }
             }
         });
 
-        writeChangesButton.setToolTipText("Write highlighted values on all sheets to decoder");
+        writeChangesButton.setToolTipText(rbt.getString("TipWriteHighlightedValues"));
         writeChangesButton.addItemListener(l2 = new ItemListener() {
             public void itemStateChanged (ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     prepGlassPane(writeChangesButton);
-                    writeChangesButton.setText("Stop Write changes, all sheets");
+                    writeChangesButton.setText(rbt.getString("ButtonStopWriteChangesAll"));
                     writeChanges();
                 } else {
                     if (_programmingPane != null) {
                         _programmingPane.stopProgramming();
                     }
                     paneListIndex = paneList.size();
-                    writeChangesButton.setText("Write changes on all sheets");
+                    writeChangesButton.setText(rbt.getString("ButtonWriteChangesAllSheets"));
                 }
             }
         });
 
-        writeAllButton.setToolTipText("Write all values on all sheets to decoder");
+        writeAllButton.setToolTipText(rbt.getString("TipWriteAllValues"));
         writeAllButton.addItemListener(l4 = new ItemListener() {
             public void itemStateChanged (ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     prepGlassPane(writeAllButton);
-                    writeAllButton.setText("Stop Write all sheets");
+                    writeAllButton.setText(rbt.getString("ButtonStopWriteAll"));
                     writeAll();
                 } else {
                     if (_programmingPane != null) {
                         _programmingPane.stopProgramming();
                     }
                     paneListIndex = paneList.size();
-                    writeAllButton.setText("Write all sheets");
+                    writeAllButton.setText(rbt.getString("ButtonWriteAllSheets"));
                 }
             }
         });
@@ -254,16 +257,16 @@ abstract public class PaneProgFrame extends JmriJFrame
      * the attached programmer's capability.
      */
     void enableReadButtons() {
-        readChangesButton.setToolTipText("Read highlighted values on all sheets from decoder. Warning: may take a long time!");
-        readAllButton.setToolTipText("Read all values on all sheets from decoder. Warning: may take a long time!");
+        readChangesButton.setToolTipText(rbt.getString("TipReadChanges"));
+        readAllButton.setToolTipText(rbt.getString("TipReadAll"));
         // check with CVTable programmer to see if read is possible
         if (cvModel!= null && cvModel.getProgrammer()!= null
             && !cvModel.getProgrammer().getCanRead()) {
             // can't read, disable the button
             readChangesButton.setEnabled(false);
             readAllButton.setEnabled(false);
-            readChangesButton.setToolTipText("Button disabled because configured command station can't read CVs");
-            readAllButton.setToolTipText("Button disabled because configured command station can't read CVs");
+            readChangesButton.setToolTipText(rbt.getString("TipNoRead"));
+            readAllButton.setToolTipText(rbt.getString("TipNoRead"));
         } else {
             readChangesButton.setEnabled(true);
             readAllButton.setEnabled(true);
@@ -495,14 +498,16 @@ abstract public class PaneProgFrame extends JmriJFrame
         if (log.isDebugEnabled()) log.debug("Checking decoder dirty status. CV: "+cvModel.decoderDirty()+" variables:"+variableModel.decoderDirty());
         if (cvModel.decoderDirty() || variableModel.decoderDirty() ) {
             if (JOptionPane.showConfirmDialog(null,
-                                              "Some changes have not been written to the decoder. They will be lost. Close window?",
-                                              "choose one", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.CANCEL_OPTION) return;
+                                              rbt.getString("PromptCloseWindowNotWrittenDecoder"),
+                                              rbt.getString("PromptChooseOne"), 
+                                              JOptionPane.OK_CANCEL_OPTION) == JOptionPane.CANCEL_OPTION) return;
         }
         if (variableModel.fileDirty() || _rPane.guiChanged(_rosterEntry)) {
-            int option = JOptionPane.showOptionDialog(null,"Some changes have not been written to a configuration file. Close window?",
-                        "Choose one",
+            int option = JOptionPane.showOptionDialog(null,rbt.getString("PromptCloseWindowNotWrittenConfig"),
+                        rbt.getString("PromptChooseOne"),
                         JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null,
-                        new String[]{"Save and Close", "Close", "Cancel"}, "Save and Close");
+                        new String[]{rbt.getString("PromptSaveAndClose"), rbt.getString("PromptClose"), rbt.getString("PromptCancel")}, 
+                                rbt.getString("PromptSaveAndClose"));
             if (option==0) {
                 // save requested
                 if (!storeFile()) return;   // don't close if failed
@@ -512,11 +517,11 @@ abstract public class PaneProgFrame extends JmriJFrame
             }
         }
         // Check for a "<new loco>" roster entry; if found, remove it
-        List l = Roster.instance().matchingList(null, null, null, null, null, null, "<new loco>");
+        List l = Roster.instance().matchingList(null, null, null, null, null, null, rbt.getString("LabelNewDecoder"));
         if (l.size() > 0 && log.isDebugEnabled()) log.debug("Removing "+l.size()+" <new loco> entries");
         while (l.size() > 0 ) {
             Roster.instance().removeEntry((RosterEntry)l.get(0));
-            l = Roster.instance().matchingList(null, null, null, null, null, null, "<new loco>");
+            l = Roster.instance().matchingList(null, null, null, null, null, null, rbt.getString("LabelNewDecoder"));
         }
         //OK, close
         setVisible(false);
@@ -604,7 +609,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         body.add(_rPane);
 
         // add the store button
-        JButton store = new JButton("Save");
+        JButton store = new JButton(rbt.getString("ButtonSave"));
         store.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         store.addActionListener( new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -613,7 +618,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             });
 
         // add the reset button
-        JButton reset = new JButton(" Reset to defaults ");
+        JButton reset = new JButton(rbt.getString("ButtonResetDefaults"));
         reset.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         store.setPreferredSize(reset.getPreferredSize());
         reset.addActionListener( new ActionListener() {
@@ -689,7 +694,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             int index = tabPane.indexOfTab(name);
             tabPane.setEnabledAt(index, false);
             jmri.util.JTabbedPaneUtil.setToolTipTextAt(tabPane, index,
-                    "Tab disabled because there are no options in this category");
+                    rbt.getString("TipTabDisabledNoCategory"));
         } else {
             // here not showing tab at all
         }
@@ -1030,9 +1035,9 @@ abstract public class PaneProgFrame extends JmriJFrame
         _rPane.update(_rosterEntry);
 
         // id has to be set!
-        if (_rosterEntry.getId().equals("") || _rosterEntry.getId().equals("<new loco>")) {
+        if (_rosterEntry.getId().equals("") || _rosterEntry.getId().equals(rbt.getString("LabelNewDecoder"))) {
             log.debug("storeFile without a filename; issued dialog");
-            JOptionPane.showMessageDialog(this, "Please fill in the ID field first");
+            JOptionPane.showMessageDialog(this, rbt.getString("PromptFillInID"));
             return false;
         }
         // if there isn't a filename, store using the id
@@ -1050,8 +1055,9 @@ abstract public class PaneProgFrame extends JmriJFrame
         Roster.writeRosterFile();
 
         // show OK status
-        progStatus.setText("Roster file "+filename+" saved OK");
-
+        progStatus.setText(java.text.MessageFormat.format(
+                                rbt.getString("StateSaveOK"),
+                                new String[]{filename}));
         return true;
     }
 

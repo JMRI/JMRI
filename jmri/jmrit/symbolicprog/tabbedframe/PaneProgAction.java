@@ -34,13 +34,16 @@ import javax.swing.JSeparator;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.27 $
+ * @version			$Revision: 1.28 $
  */
 public class PaneProgAction 			extends AbstractAction {
 
     Object o1, o2, o3, o4;
     JLabel statusLabel;
     jmri.ProgModeSelector  modePane    = new jmri.ProgDeferredServiceModePane();
+
+    static final java.util.ResourceBundle rbt 
+        = java.util.ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle");
 
     public PaneProgAction() {
         this("DecoderPro service programmer");
@@ -49,7 +52,7 @@ public class PaneProgAction 			extends AbstractAction {
     public PaneProgAction(String s) {
         super(s);
 
-        statusLabel = new JLabel("idle");
+        statusLabel = new JLabel(rbt.getString("StateIdle"));
 
         // disable ourself if programming is not possible
         if (jmri.InstanceManager.programmerManagerInstance()==null) {
@@ -65,17 +68,17 @@ public class PaneProgAction 			extends AbstractAction {
         if (log.isDebugEnabled()) log.debug("Pane programmer requested");
 
         // create the initial frame that steers
-        final JmriJFrame f = new JmriJFrame("Service-mode Programmer Setup");
+        final JmriJFrame f = new JmriJFrame(rbt.getString("FrameServiceProgrammerSetup"));
         f.getContentPane().setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));
 
         // add the Roster menu
         JMenuBar menuBar = new JMenuBar();
         // menuBar.setBorder(new BevelBorder(BevelBorder.RAISED));
         JMenu j = new JMenu("File");
-        j.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction("Print decoder definitions...", f, false));
-        j.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction("Print Preview decoder definitions...", f, true));
+        j.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(rbt.getString("MenuPrintDecoderDefinitions"), f, false));
+        j.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(rbt.getString("MenuPrintPreviewDecoderDefinitions"), f, true));
         menuBar.add(j);
-        menuBar.add(new jmri.jmrit.roster.RosterMenu("Roster", jmri.jmrit.roster.RosterMenu.MAINMENU, f));
+        menuBar.add(new jmri.jmrit.roster.RosterMenu(rbt.getString("MenuRoster"), jmri.jmrit.roster.RosterMenu.MAINMENU, f));
         f.setJMenuBar(menuBar);
 
         // new Loco on programming track
@@ -83,8 +86,10 @@ public class PaneProgAction 			extends AbstractAction {
         JPanel pane1 = new CombinedLocoSelTreePane(statusLabel){
                 protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
                                                 String filename) {
-                    String title = "Program new decoder on service track";
-                    if (re!=null) title = "Program "+re.getId()+" on service track";
+                    String title = java.text.MessageFormat.format(rbt.getString("FrameServiceProgrammerTitle"),
+                                                        new String[]{"new decoder"});
+                    if (re!=null) title = java.text.MessageFormat.format(rbt.getString("FrameServiceProgrammerTitle"),
+                                                        new String[]{re.getId()});
                     JFrame p = new PaneServiceProgFrame(decoderFile, re,
                                                  title, "programmers"+File.separator+filename+".xml",
                                                  modePane.getProgrammer());

@@ -63,7 +63,7 @@ import com.sun.java.util.collections.List;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005, 2006
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.59 $
+ * @version   $Revision: 1.60 $
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -74,6 +74,9 @@ public class PaneProgPane extends javax.swing.JPanel
     IndexedCvTableModel _indexedCvModel;
     VariableTableModel _varModel;
     PaneProgFrame _parentFrame;
+
+    static final java.util.ResourceBundle rbt 
+        = java.util.ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle");
 
     ItemListener l1;
     ItemListener l2;
@@ -98,6 +101,7 @@ public class PaneProgPane extends javax.swing.JPanel
      */
     public PaneProgPane(PaneProgFrame parent, String name, Element pane, CvTableModel cvModel, IndexedCvTableModel icvModel, VariableTableModel varModel, Element modelElem) {
 
+            
         _parentFrame = parent;
         mName = name;
         _cvModel = cvModel;
@@ -152,7 +156,7 @@ public class PaneProgPane extends javax.swing.JPanel
         readChangesButton.addItemListener(l1 = new ItemListener() {
             public void itemStateChanged (ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    readChangesButton.setText("Stop Read changes on sheet");
+                    readChangesButton.setText(rbt.getString("ButtonStopReadChangesSheet"));
                     if (_parentFrame.isBusy() == false) {
                         prepReadPane(true);
                         prepGlassPane(readChangesButton);
@@ -161,7 +165,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     }
                 } else {
                     stopProgramming();
-                    readChangesButton.setText("Read changes on sheet");
+                    readChangesButton.setText(rbt.getString("ButtonReadChangesSheet"));
                     if (_parentFrame.isBusy()) {
                         readChangesButton.setEnabled(false);
                     }
@@ -171,7 +175,7 @@ public class PaneProgPane extends javax.swing.JPanel
         readAllButton.addItemListener(l2 = new ItemListener() {
             public void itemStateChanged (ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    readAllButton.setText("Stop Read full sheet");
+                    readAllButton.setText(rbt.getString("ButtonStopReadSheet"));
                     if (_parentFrame.isBusy() == false) {
                         prepReadPane(false);
                         prepGlassPane(readAllButton);
@@ -180,7 +184,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     }
                 } else {
                     stopProgramming();
-                    readAllButton.setText("Read full sheet");
+                    readAllButton.setText(rbt.getString("ButtonReadFullSheet"));
                     if (_parentFrame.isBusy()) {
                         readAllButton.setEnabled(false);
                     }
@@ -188,11 +192,11 @@ public class PaneProgPane extends javax.swing.JPanel
             }
         });
 
-        writeChangesButton.setToolTipText("Write highlighted values on this sheet to decoder");
+        writeChangesButton.setToolTipText(rbt.getString("TipWriteHighlightedSheet"));
         writeChangesButton.addItemListener(l3 = new ItemListener() {
             public void itemStateChanged (ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    writeChangesButton.setText("Stop Write changes on sheet");
+                    writeChangesButton.setText(rbt.getString("ButtonStopWriteChangesSheet"));
                     if (_parentFrame.isBusy() == false) {
                         prepWritePane(true);
                         prepGlassPane(writeChangesButton);
@@ -201,7 +205,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     }
                 } else {
                     stopProgramming();
-                    writeChangesButton.setText("Write changes on sheet");
+                    writeChangesButton.setText(rbt.getString("ButtonWriteChangesSheet"));
                     if (_parentFrame.isBusy()) {
                         writeChangesButton.setEnabled(false);
                     }
@@ -209,11 +213,11 @@ public class PaneProgPane extends javax.swing.JPanel
             }
         });
 
-        writeAllButton.setToolTipText("Write all values on this sheet to decoder");
+        writeAllButton.setToolTipText(rbt.getString("TipWriteAllSheet"));
         writeAllButton.addItemListener(l4 = new ItemListener() {
             public void itemStateChanged (ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    writeAllButton.setText("Stop Write full sheet");
+                    writeAllButton.setText(rbt.getString("ButtonStopWriteSheet"));
                     if (_parentFrame.isBusy() == false) {
                         prepWritePane(false);
                         prepGlassPane(writeAllButton);
@@ -222,7 +226,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     }
                 } else {
                     stopProgramming();
-                    writeAllButton.setText("Write full sheet");
+                    writeAllButton.setText(rbt.getString("ButtonWriteFullSheet"));
                     if (_parentFrame.isBusy()) {
                         writeAllButton.setEnabled(false);
                     }
@@ -245,16 +249,16 @@ public class PaneProgPane extends javax.swing.JPanel
      * the attached programmer's capability.
      */
     void enableReadButtons() {
-        readChangesButton.setToolTipText("Read highlighted values on this sheet from decoder. Warning: may take a long time!");
-        readAllButton.setToolTipText("Read all values on this sheet from decoder. Warning: may take a long time!");
+        readChangesButton.setToolTipText(rbt.getString("TipReadChangesSheet"));
+        readAllButton.setToolTipText(rbt.getString("TipReadAllSheet"));
         if (_cvModel.getProgrammer()!= null
             && !_cvModel.getProgrammer().getCanRead()) {
             // can't read, disable the buttons
             readChangesButton.setEnabled(false);
             readAllButton.setEnabled(false);
             // set tooltip to explain why
-            readChangesButton.setToolTipText("Button disabled because configured command station can't read CVs");
-            readAllButton.setToolTipText("Button disabled because configured command station can't read CVs");
+            readChangesButton.setToolTipText(rbt.getString("TipNoRead"));
+            readAllButton.setToolTipText(rbt.getString("TipNoRead"));
         } else {
             readChangesButton.setEnabled(true);
             readAllButton.setEnabled(true);
@@ -287,10 +291,10 @@ public class PaneProgPane extends javax.swing.JPanel
     List indexedCvList = new ArrayList();
     int indexedCvListIndex;
 
-    JToggleButton readChangesButton  = new JToggleButton("Read changes on sheet");
-    JToggleButton readAllButton      = new JToggleButton("Read full sheet");
-    JToggleButton writeChangesButton = new JToggleButton("Write changes on sheet");
-    JToggleButton writeAllButton     = new JToggleButton("Write full sheet");
+    JToggleButton readChangesButton  = new JToggleButton(rbt.getString("ButtonReadChangesSheet"));
+    JToggleButton readAllButton      = new JToggleButton(rbt.getString("ButtonReadFullSheet"));
+    JToggleButton writeChangesButton = new JToggleButton(rbt.getString("ButtonWriteChangesSheet"));
+    JToggleButton writeAllButton     = new JToggleButton(rbt.getString("ButtonWriteFullSheet"));
 
     /**
      * Estimate the number of CVs that will be accessed when
@@ -1398,8 +1402,8 @@ public class PaneProgPane extends javax.swing.JPanel
               spaces = spaces + " ";
             }
             // start with pane name in bold
-            String heading1 = "Field";
-            String heading2 = "Setting";
+            String heading1 = rbt.getString("PrintHeadingField");
+            String heading2 = rbt.getString("PrintHeadingSetting");
             String s;
             int interval = spaces.length()- heading1.length();
             w.setFontStyle(Font.BOLD);

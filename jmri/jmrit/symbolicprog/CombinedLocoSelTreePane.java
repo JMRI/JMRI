@@ -40,7 +40,7 @@ import com.sun.java.util.collections.List;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
 
@@ -53,6 +53,9 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
                 super();
         }
 
+    static final java.util.ResourceBundle rbt 
+        = java.util.ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle");
+
     JTree dTree;
     DefaultTreeModel dModel;
     DefaultMutableTreeNode dRoot;
@@ -64,7 +67,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
     protected JPanel layoutDecoderSelection() {
         JPanel pane1a = new JPanel();
         pane1a.setLayout(new BoxLayout(pane1a, BoxLayout.X_AXIS));
-        pane1a.add(new JLabel("Decoder installed: "));
+        pane1a.add(new JLabel(rbt.getString("LabelDecoderInstalled")));
         // create the list of manufacturers; get the list of decoders, and add elements
         dRoot = new DefaultMutableTreeNode("Root");
         dModel = new DefaultTreeModel(dRoot);
@@ -159,11 +162,11 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
                     go2.setEnabled(true);
                     go2.setRequestFocusEnabled(true);
                     go2.requestFocus();
-                    go2.setToolTipText("Click to open the programmer");
+                    go2.setToolTipText(rbt.getString("TipClickToOpen"));
                 } else {
                     // decoder not selected - require one
                     go2.setEnabled(false);
-                    go2.setToolTipText("Select a locomotive or decoder to enable");
+                    go2.setToolTipText(rbt.getString("TipSelectLoco"));
                 }
             }
         });
@@ -184,14 +187,14 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
             } );
 
         // add button
-        iddecoder= new JToggleButton("Read type from decoder");
-        iddecoder.setToolTipText("Read the decoders mfg and version, then attempt to select its type");
+        iddecoder= new JToggleButton(rbt.getString("ButtonReadType"));
+        iddecoder.setToolTipText(rbt.getString("TipSelectType"));
             if (jmri.InstanceManager.programmerManagerInstance()!= null
                     && jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer()!=null
                     && !jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer().getCanRead()) {
             // can't read, disable the button
             iddecoder.setEnabled(false);
-            iddecoder.setToolTipText("Button disabled because configured command station can't read CVs");
+            iddecoder.setToolTipText(rbt.getString("TipNoRead"));
         }
         iddecoder.addActionListener( new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
