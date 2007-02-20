@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <!--Written by JMRI version 1.7.6 on Tue Jan 23 22:54:09 PST 2007 $Id: decoderIndex.xml,v 1.95 2007-01-24 06:55:41 jacobsen Exp $-->
+  <!--Written by JMRI version 1.7.6 on Tue Jan 23 22:54:09 PST 2007 $Id: decoderIndex.xml,v 1.96 2007-02-20 01:01:34 jacobsen Exp $-->
   <decoderIndex version="118">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -21,6 +21,7 @@
       <manufacturer mfg="Computer Dialysis France" mfgID="123" />
       <manufacturer mfg="Con-Com GmbH" mfgID="204" />
       <manufacturer mfg="DCCconcepts" mfgID="36" />
+      <manufacturer mfg="DCCdevices" mfgID="39" />
       <manufacturer mfg="Dietz Modellbahntechnik" mfgID="115" />
       <manufacturer mfg="Digitrax" mfgID="129" />
       <manufacturer mfg="Doehler and Haas" mfgID="97" />
