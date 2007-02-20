@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <!--Written by JMRI version 1.7.6 on Tue Jan 23 22:54:09 PST 2007 $Id: decoderIndex.xml,v 1.96 2007-02-20 01:01:34 jacobsen Exp $-->
+  <!--Written by JMRI version 1.7.6 on Mon Feb 19 18:11:52 PST 2007 $Id: decoderIndex.xml,v 1.97 2007-02-20 02:14:25 jacobsen Exp $-->
   <decoderIndex version="118">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -281,6 +281,9 @@
           <size length="1.05" width="0.67" height="0.25" units="inches" />
         </model>
         <model model="DH163A0" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="Pad" connection="solder" />
+          <output name="2" label="Pad" connection="solder" />
+          <output name="3" label="Pad" connection="solder" />
           <output name="4" label="Pad" connection="solder" />
           <output name="5" label="Pad" connection="solder" />
           <output name="6" label="Pad" connection="solder" />
@@ -293,12 +296,16 @@
           <size length="1.05" width="0.67" height="0.25" units="inches" />
         </model>
         <model model="DH163IP" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="NMRAmedium" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <output name="3" label="Pad" connection="solder" />
           <output name="4" label="Pad" connection="solder" />
           <output name="5" label="Pad" connection="solder" />
           <output name="6" label="Pad" connection="solder" />
           <size length="1.05" width="0.67" height="0.25" units="inches" />
         </model>
         <model model="DH163K0" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="Pad" connection="solder" />
+          <output name="2" label="Pad" connection="solder" />
+          <output name="3" label="Pad" connection="solder" />
           <output name="4" label="Pad" connection="solder" />
           <output name="5" label="Pad" connection="solder" />
           <output name="6" label="Pad" connection="solder" />
@@ -312,7 +319,15 @@
           <size length="0" width="0" height="0" units="inches" />
         </model>
         <model model="DH163P" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="NMRAmedium" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
-          <output name="4" label="Pad" connection="solder" />
+          <output name="3" label="Green" connection="wire" />
+          <output name="4" label="Violet" connection="wire" />
+          <output name="5" label="Pad" connection="solder" />
+          <output name="6" label="Pad" connection="solder" />
+          <size length="1.05" width="0.67" height="0.25" units="inches" />
+        </model>
+        <model model="DH163PS" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="NMRAmedium" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <output name="3" label="Green" connection="wire" />
+          <output name="4" label="Violet" connection="wire" />
           <output name="5" label="Pad" connection="solder" />
           <output name="6" label="Pad" connection="solder" />
           <size length="1.05" width="0.67" height="0.25" units="inches" />
@@ -333,7 +348,7 @@
           <output name="8" label="Wht/Blu" connection="wire" />
           <size length="2.23" width="1.45" height="0" units="inches" />
         </model>
-        <model model="DN143" numOuts="4" numFns="8" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="DN143" numOuts="4" numFns="8" maxMotorCurrent="1.25A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="4" label="Violet" connection="wire" />
           <size length="0" width="0" height="0" units="inches" />
         </model>
@@ -343,61 +358,136 @@
           <output name="6" label="Pad" connection="solder" />
           <size length="0" width="0" height="0" units="inches" />
         </model>
-        <model model="DN163A0" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="DN163A0" numOuts="6" numFns="8" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="LED" connection="solder" />
+          <output name="2" label="LED" connection="solder" />
+          <output name="3" label="Pad" connection="solder" />
           <output name="4" label="Pad" connection="solder" />
           <output name="5" label="Pad" connection="solder" />
           <output name="6" label="Pad" connection="solder" />
           <size length="3.0015" width="0.374" height="0.157" units="inches" />
         </model>
-        <model model="DN163A1" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="DN163A1" numOuts="6" numFns="8" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="LED" connection="solder" />
+          <output name="2" label="LED" connection="solder" />
+          <output name="3" label="Pad" connection="solder" />
           <output name="4" label="Pad" connection="solder" />
           <output name="5" label="Pad" connection="solder" />
           <output name="6" label="Pad" connection="solder" />
           <size length="3.875" width="3.374" height="0.157" units="inches" />
         </model>
-        <model model="DN163I0" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="DN163A2" numOuts="6" numFns="8" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="LED" connection="solder" />
+          <output name="2" label="LED" connection="solder" />
+          <output name="3" label="Pad" connection="solder" />
+          <output name="4" label="Pad" connection="solder" />
+          <output name="5" label="Pad" connection="solder" />
+          <output name="6" label="Pad" connection="solder" />
+          <size length="3.875" width="3.374" height="0.157" units="inches" />
+        </model>
+        <model model="DN163I0" numOuts="6" numFns="8" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="LED" connection="solder" />
+          <output name="2" label="LED" connection="solder" />
+          <output name="3" label="Pad" connection="solder" />
           <output name="4" label="Pad" connection="solder" />
           <output name="5" label="Pad" connection="solder" />
           <output name="6" label="Pad" connection="solder" />
           <size length="3.0015" width="0.374" height="0.157" units="inches" />
         </model>
-        <model model="DN163K0A" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="DN163I1A" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="Pad" connection="solder" />
+          <output name="2" label="Pad" connection="solder" />
+          <output name="3" label="Pad" connection="solder" />
+          <output name="4" label="Pad" connection="solder" />
+          <output name="5" label="Pad" connection="solder" />
+          <output name="6" label="Pad" connection="solder" />
+          <size length="2.165" width="0.472" height="0.098" units="inches" />
+        </model>
+        <model model="DN163I1B" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="Pad" connection="solder" />
+          <output name="2" label="Pad" connection="solder" />
+          <output name="3" label="Pad" connection="solder" />
+          <output name="4" label="Pad" connection="solder" />
+          <output name="5" label="Pad" connection="solder" />
+          <output name="6" label="Pad" connection="solder" />
+          <size length="2.165" width="0.472" height="0.098" units="inches" />
+        </model>
+        <model model="DN163I1C" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="Pad" connection="solder" />
+          <output name="2" label="Pad" connection="solder" />
+          <output name="3" label="Pad" connection="solder" />
+          <output name="4" label="Pad" connection="solder" />
+          <output name="5" label="Pad" connection="solder" />
+          <output name="6" label="Pad" connection="solder" />
+          <size length="2.165" width="0.472" height="0.098" units="inches" />
+        </model>
+        <model model="DN163K0A" numOuts="6" numFns="8" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="LED" connection="solder" />
+          <output name="2" label="LED" connection="solder" />
+          <output name="3" label="Pad" connection="solder" />
           <output name="4" label="Pad" connection="solder" />
           <output name="5" label="Pad" connection="solder" />
           <output name="6" label="Pad" connection="solder" />
           <size length="2.2165" width="0.5485" height="0.1015" units="inches" />
         </model>
-        <model model="DN163K0B" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="DN163K0B" numOuts="6" numFns="8" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="LED" connection="solder" />
+          <output name="2" label="Pad" connection="solder" />
+          <output name="3" label="Pad" connection="solder" />
           <output name="4" label="Pad" connection="solder" />
           <output name="5" label="Pad" connection="solder" />
           <output name="6" label="Pad" connection="solder" />
           <size length="2.2165" width="0.5485" height="0.1015" units="inches" />
         </model>
-        <model model="DN163K1A" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="DN163K0D" numOuts="6" numFns="8" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="LED" connection="solder" />
+          <output name="2" label="LED" connection="solder" />
+          <output name="3" label="Pad" connection="solder" />
+          <output name="4" label="Pad" connection="solder" />
+          <output name="5" label="Pad" connection="solder" />
+          <output name="6" label="Pad" connection="solder" />
+          <size length="2.2165" width="0.5485" height="0.1015" units="inches" />
+        </model>
+        <model model="DN163K1A" numOuts="6" numFns="8" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="LED" connection="solder" />
+          <output name="2" label="LED" connection="solder" />
+          <output name="3" label="Pad" connection="solder" />
           <output name="4" label="Pad" connection="solder" />
           <output name="5" label="Pad" connection="solder" />
           <output name="6" label="Pad" connection="solder" />
           <size length="3.11" width="0.426" height="0.195" units="inches" />
         </model>
-        <model model="DN163K1B" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="DN163K1B" numOuts="6" numFns="8" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="LED" connection="solder" />
+          <output name="2" label="LED" connection="solder" />
+          <output name="3" label="Pad" connection="solder" />
           <output name="4" label="Pad" connection="solder" />
           <output name="5" label="Pad" connection="solder" />
           <output name="6" label="Pad" connection="solder" />
           <size length="3.11" width="0.426" height="0.195" units="inches" />
         </model>
-        <model model="DN163K1C" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="DN163K1C" numOuts="6" numFns="8" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="LED" connection="solder" />
+          <output name="2" label="LED" connection="solder" />
+          <output name="3" label="Pad" connection="solder" />
           <output name="4" label="Pad" connection="solder" />
           <output name="5" label="Pad" connection="solder" />
           <output name="6" label="Pad" connection="solder" />
           <size length="3.11" width="0.426" height="0.195" units="inches" />
         </model>
-        <model model="DN163K2" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="DN163K2" numOuts="6" numFns="8" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="LED" connection="solder" />
+          <output name="2" label="LED" connection="solder" />
+          <output name="3" label="Pad" connection="solder" />
           <output name="4" label="Pad" connection="solder" />
           <output name="5" label="Pad" connection="solder" />
           <output name="6" label="Pad" connection="solder" />
           <size length="3.18" width="0.354" height="0.128" units="inches" />
         </model>
-        <model model="DN163M0" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="DN163M0" numOuts="6" numFns="8" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="LED" connection="solder" />
+          <output name="2" label="Pad" connection="solder" />
+          <output name="3" label="Pad" connection="solder" />
           <output name="4" label="Pad" connection="solder" />
           <output name="5" label="Pad" connection="solder" />
           <output name="6" label="Pad" connection="solder" />
@@ -406,11 +496,11 @@
         <model model="DZ123" numOuts="2" numFns="8" lowVersionID="36" highVersionID="64" maxMotorCurrent="1A (peak=2A)" formFactor="Z" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <size length="0.57" width="0.38" height="0.13" units="inches" />
         </model>
-        <model model="DZ143" numOuts="4" numFns="8" lowVersionID="64" highVersionID="65" maxMotorCurrent="1.5A (peak=2A)" formFactor="Z" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="DZ143" numOuts="4" numFns="8" lowVersionID="64" highVersionID="65" maxMotorCurrent="1.25A (peak=2A)" formFactor="Z" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="4" label="Violet" connection="wire" />
           <size length="0.55" width="0.36" height="0.13" units="inches" />
         </model>
-        <model model="DZ143PS" numOuts="4" numFns="8" lowVersionID="64" highVersionID="65" maxMotorCurrent="1.5A (peak=2A)" formFactor="Z" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="DZ143PS" numOuts="4" numFns="8" lowVersionID="64" highVersionID="65" maxMotorCurrent="1.25A (peak=2A)" formFactor="Z" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="4" label="Violet" connection="wire" />
           <size length="0.55" width="0.36" height="0.13" units="inches" />
         </model>
@@ -907,6 +997,15 @@
       </family>
       <family name="LGB" mfg="Massoth Elektronik, GmbH" type="locomotive" file="Massoth_LGB.xml">
         <model model="LGB MTS loco decoders" lowVersionID="10" highVersionID="39" comment="includes 55021, 55022, large and small on-board decoders" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+      </family>
+      <family name="LGB" mfg="Massoth Elektronik, GmbH" type="locomotive" file="Massoth_LGB_55027.xml">
+        <model model="LGB MTS III 55027 loco decoders" lowVersionID="10" highVersionID="39" comment="includes 55027 decoders" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+      </family>
+      <family name="Massoth eMOTION" mfg="Massoth Elektronik, GmbH" type="locomotive" file="Massoth_eMOTION_XL.xml">
+        <model model="eMOTION XL" lowVersionID="10" comment="includes eMOTION XL decoders" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+      </family>
+      <family name="Massoth eMOTION" mfg="Massoth Elektronik, GmbH" type="locomotive" file="Massoth_eMOTION_XLS.xml">
+        <model model="eMOTION XLS" lowVersionID="10" comment="includes eMOTION XLS decoders" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
       <family name="Non silent drive directional Lights" mfg="North Coast Engineering" lowVersionID="21" highVersionID="21" type="locomotive" file="NCE_D102EU.xml">
         <model model="D102EU" numOuts="2" numFns="0" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
@@ -2799,6 +2898,36 @@
           <output name="6" label="Pad" connection="unspecified" />
           <output name="7" label="Pad" connection="unspecified" />
           <output name="8" label="Pad" connection="unspecified" />
+        </model>
+      </family>
+      <family name="Zimo MX65" mfg="Zimo" type="locomotive" file="Zimo_MX65.xml">
+        <model model="MX65L/N" lowVersionID="20" highVersionID="29" numOuts="2" numFns="8" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="Front head lights" connection="unspecified" />
+          <output name="2" label="Rear head lights" connection="unspecified" />
+        </model>
+        <model model="MX65S/N" lowVersionID="20" highVersionID="29" numOuts="8" numFns="8" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="Front head lights" connection="unspecified" />
+          <output name="2" label="Rear head lights" connection="unspecified" />
+          <output name="3" label="F2 pin-15, right" connection="unspecified" />
+          <output name="4" label="F3 pin-7, right" connection="unspecified" />
+          <output name="5" label="F4 pin-13, right" connection="unspecified" />
+          <output name="6" label="F5 pin-9, right" connection="unspecified" />
+          <output name="7" label="F6 pin-12, right" connection="unspecified" />
+          <output name="8" label="F7 pin-8, right" connection="unspecified" />
+        </model>
+        <model model="MX65V/N" lowVersionID="20" highVersionID="29" numOuts="12" numFns="8" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="Front head lights" connection="unspecified" />
+          <output name="2" label="Rear head lights" connection="unspecified" />
+          <output name="3" label="F2 pin-15, right" connection="unspecified" />
+          <output name="4" label="F3 pin-7, right" connection="unspecified" />
+          <output name="5" label="F4 pin-13, right" connection="unspecified" />
+          <output name="6" label="F5 pin-9, right" connection="unspecified" />
+          <output name="7" label="F6 pin-12, right" connection="unspecified" />
+          <output name="8" label="F7 pin-8, right" connection="unspecified" />
+          <output name="9" label="left-1 pin-7, left" connection="unspecified" />
+          <output name="10" label="left-2 pin-8, left" connection="unspecified" />
+          <output name="11" label="left-3 pin-9, left" connection="unspecified" />
+          <output name="12" label="left-4 pin-10, left" connection="unspecified" />
         </model>
       </family>
       <family name="Zimo Silent BEMF decoders, late model" mfg="Zimo" type="locomotive" file="Zimo_MX66-2000-11.xml">

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.7.7.html,v 1.4 2007-02-13 05:13:42 jacobsen Exp $ -->
+<!-- $Id: jmri1.7.7.html,v 1.5 2007-02-20 02:16:14 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -152,7 +152,28 @@ new features, particularly
 
 <P>Fixed bug that prevented the "level" attribute for reporter and memory icons from being reliable (thanks to Phil Klein for locating it)
 
+<P>Much more of the DecoderPro screens have been made "Internationalizable", so that they can be translated into other languages via the properties files
 
+<P>David Duchamp added an "Edit" column to the Light Table, and an "enabled" property to Lights themselves
+
+<P>Dennis Miller temporarily bypassed a problem with printing speed tables on Java 1.5 by removing printing of the graphical version of the table. Earlier versions of Java will still print a graphical speed table.
+
+<P>Added manufacturer number 39 for DCCdevices, a new equipment manufacturer
+
+<P>Jeff Schmaltz added decoder definitions for the Massoth eMOTION XL, eMOTION XLS and LGB 55027 decoders. These are intended to work with the "Custom" programmer format.
+
+<P>Jeff Schmaltz added a decoder definition for the Zimo MX65 decoder. This is intended to work with the "Zimo" programmer format.
+
+<P>Jeff Schmaltz updated the Massoth LGB decoder definition
+
+<P>Bob Blackwell made some changes to the Digitrax "3" series decoder definitions:
+  <UL>
+  <LI>DH163PS, DN163A2, DN163K0D, DN163I1A, DN163I1B and DN163I1C decoders added, 
+  <LI>corrected maxMotorCurrent for many DN series decoders,
+  <LI>added LED, Pad and wire attributes for many DN series decoders, and
+  <LI>corrected output name for some DN series decoders
+  </UL>
+  
 <hr class="hide">
 <!-- Footer -->
     <hr class="hide">
