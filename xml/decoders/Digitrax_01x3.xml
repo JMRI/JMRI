@@ -2,21 +2,23 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2002, 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Digitrax_01x3.xml,v 1.29 2007-01-08 00:39:15 jacobsen Exp $ -->
+<!-- $Id: Digitrax_01x3.xml,v 1.30 2007-02-20 02:10:52 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Simon Ginsburg" version="16" lastUpdated="20060807"/>
-		<version author="Howard G. Penny" version="15" lastUpdated="20050422"/>
+	<version author="Bob Blackwell"   version="17" lastUpdated="20070216"/>
+	<version author="Bob Blackwell"   version="16" lastUpdated="20060807"/>
+	<version author="Howard G. Penny" version="15" lastUpdated="20050422"/>
+	<version author="Simon Ginsburg"  version="13" lastUpdated="20050422"/>
 
-		<!-- Created from version 5 of the 1x2 file -->
-		<!-- V2: fix default values for CV56, 57 BEMF -->
-		<!-- V3: change to new name -->
-		<!-- V4: change to yet another name, add decoders -->
-		<!-- V5: advanced consist options and parameters added -->
-		<!-- V6: BEMF defaults updated - jake -->
-		<!-- V7: decoder lock feature - jake -->
-		<!-- V8: Function Output Map, CV's 33 to 46, defaults updated by Bob Blackwell, CV9 added -->
-		<!-- Version 9 - fix "rule 17" typos -->
-		<!-- Version 10 - remove DH123 (created new file for it), fixed decoder sizes -->
+	<!-- Created from version 5 of the 1x2 file -->
+	<!-- V2: fix default values for CV56, 57 BEMF -->
+	<!-- V3: change to new name -->
+	<!-- V4: change to yet another name, add decoders -->
+	<!-- V5: advanced consist options and parameters added -->
+	<!-- V6: BEMF defaults updated - jake -->
+	<!-- V7: decoder lock feature - jake -->
+	<!-- V8: Function Output Map, CV's 33 to 46, defaults updated by Bob Blackwell, CV9 added -->
+	<!-- Version 9 - fix "rule 17" typos -->
+	<!-- Version 10 - remove DH123 (created new file for it), fixed decoder sizes -->
     <!-- Version 10.1 - changed spelling of "behavior" (Jack Shall) -->
     <!-- Version 11 - added DZ123 (Bob Jacobsen) -->
     <!-- Version 12 - added some tooltips (Jack Shall) -->
@@ -24,6 +26,7 @@
     <!-- Version 14 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" - Bob Jacobsen -->
     <!-- Version 15 - added factory reset menu items (Howard G. Penny) -->
     <!-- Version 16 - added DN163K1C (Simon Ginsburg, Bob Blackwell) -->
+	<!-- Version 17 - added DN163A2, DN163K0D, DN163I1A, DN163I1B, DN163I1C, DH163PS; corrected maxMotorCurrent and output name for most DN series decoders ( Bob Blackwell) -->
 	
 <decoder>
 	<family name="Series 3 with FX3, silent, readback" 
@@ -46,6 +49,9 @@
 			</model>
 		<model model="DH163A0" numOuts="6" numFns="8"
 	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" >
+			<output name="1" label="Pad" connection="solder" /> 
+			<output name="2" label="Pad" connection="solder" /> 
+			<output name="3" label="Pad" connection="solder" /> 
 			<output name="4" label="Pad" connection="solder" /> 
 			<output name="5" label="Pad" connection="solder" /> 
 			<output name="6" label="Pad" connection="solder" />
@@ -62,6 +68,7 @@
 		<model model="DH163IP" numOuts="6" numFns="8"
 	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="HO"
 				connector="NMRAmedium">
+			<output name="3" label="Pad" connection="solder" /> 
 			<output name="4" label="Pad" connection="solder" /> 
 			<output name="5" label="Pad" connection="solder" /> 
 			<output name="6" label="Pad" connection="solder" />
@@ -69,6 +76,9 @@
 			</model>
 		<model model="DH163K0" numOuts="6" numFns="8"
 	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" >
+			<output name="1" label="Pad" connection="solder" /> 
+			<output name="2" label="Pad" connection="solder" /> 
+			<output name="3" label="Pad" connection="solder" /> 
 			<output name="4" label="Pad" connection="solder" /> 
 			<output name="5" label="Pad" connection="solder" /> 
 			<output name="6" label="Pad" connection="solder" />
@@ -85,7 +95,17 @@
 		<model model="DH163P" numOuts="6" numFns="8"
 	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="HO"
 				connector="NMRAmedium">
-			<output name="4" label="Pad" connection="solder" /> 
+			<output name="3" label="Green" connection="wire" /> 
+			<output name="4" label="Violet" connection="wire" /> 
+			<output name="5" label="Pad" connection="solder" /> 
+			<output name="6" label="Pad" connection="solder" />
+			<size length="1.05" width="0.67" height="0.25" units="inches" />
+			</model>
+		<model model="DH163PS" numOuts="6" numFns="8"
+	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="HO"
+				connector="NMRAmedium">
+			<output name="3" label="Green" connection="wire" /> 
+			<output name="4" label="Violet" connection="wire" /> 
 			<output name="5" label="Pad" connection="solder" /> 
 			<output name="6" label="Pad" connection="solder" />
 			<size length="1.05" width="0.67" height="0.25" units="inches" />
@@ -108,7 +128,8 @@
 			<output name="8" label="Wht/Blu" connection="wire" />
 			<size length="2.23" width="1.45" height="0" units="inches" />
 			</model>
-		<model model="DN143" numOuts="4" numFns="8">
+		<model model="DN143" numOuts="4" numFns="8"
+	    		maxMotorCurrent="1.25A (peak=2A)" formFactor="N" >
 			<output name="4" label="Violet" connection="wire" /> 
 			<size length="0" width="0" height="0" units="inches" />
 			</model>
@@ -120,72 +141,150 @@
 			<size length="0" width="0" height="0" units="inches" />
 			</model>
 		<model model="DN163A0" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="N" >
+	    		maxMotorCurrent="1.0A (peak=2A)" formFactor="N" >
+			<output name="1" label="LED" connection="solder" /> 
+			<output name="2" label="LED" connection="solder" /> 
+			<output name="3" label="Pad" connection="solder" /> 
 			<output name="4" label="Pad" connection="solder" /> 
 			<output name="5" label="Pad" connection="solder" />
 			<output name="6" label="Pad" connection="solder" />
 			<size length="3.0015" width="0.374" height="0.157" units="inches" />
 			</model>
 		<model model="DN163A1" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="N" >
+	    		maxMotorCurrent="1.0A (peak=2A)" formFactor="N" >
+			<output name="1" label="LED" connection="solder" /> 
+			<output name="2" label="LED" connection="solder" /> 
+			<output name="3" label="Pad" connection="solder" /> 
+			<output name="4" label="Pad" connection="solder" /> 
+			<output name="5" label="Pad" connection="solder" />
+			<output name="6" label="Pad" connection="solder" />
+			<size length="3.875" width="3.374" height="0.157" units="inches" />
+			</model>
+		<model model="DN163A2" numOuts="6" numFns="8"
+	    		maxMotorCurrent="1.0A (peak=2A)" formFactor="N" >
+			<output name="1" label="LED" connection="solder" /> 
+			<output name="2" label="LED" connection="solder" /> 
+			<output name="3" label="Pad" connection="solder" /> 
 			<output name="4" label="Pad" connection="solder" /> 
 			<output name="5" label="Pad" connection="solder" />
 			<output name="6" label="Pad" connection="solder" />
 			<size length="3.875" width="3.374" height="0.157" units="inches" />
 			</model>
 		<model model="DN163I0" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="N" >
+	    		maxMotorCurrent="1.0A (peak=2A)" formFactor="N" >
+			<output name="1" label="LED" connection="solder" /> 
+			<output name="2" label="LED" connection="solder" /> 
+			<output name="3" label="Pad" connection="solder" /> 
 			<output name="4" label="Pad" connection="solder" /> 
 			<output name="5" label="Pad" connection="solder" />
 			<output name="6" label="Pad" connection="solder" />
 			<size length="3.0015" width="0.374" height="0.157" units="inches" />
 			</model>
-		<model model="DN163K0A" numOuts="6" numFns="8"
+		<model model="DN163I1A" numOuts="6" numFns="8"
 	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="N" >
+			<output name="1" label="Pad" connection="solder" /> 
+			<output name="2" label="Pad" connection="solder" /> 
+			<output name="3" label="Pad" connection="solder" /> 
+			<output name="4" label="Pad" connection="solder" /> 
+			<output name="5" label="Pad" connection="solder" />
+			<output name="6" label="Pad" connection="solder" />
+			<size length="2.165" width="0.472" height="0.098" units="inches" />
+			</model>
+		<model model="DN163I1B" numOuts="6" numFns="8"
+	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="N" >
+			<output name="1" label="Pad" connection="solder" /> 
+			<output name="2" label="Pad" connection="solder" /> 
+			<output name="3" label="Pad" connection="solder" /> 
+			<output name="4" label="Pad" connection="solder" /> 
+			<output name="5" label="Pad" connection="solder" />
+			<output name="6" label="Pad" connection="solder" />
+			<size length="2.165" width="0.472" height="0.098" units="inches" />
+			</model>
+		<model model="DN163I1C" numOuts="6" numFns="8"
+	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="N" >
+			<output name="1" label="Pad" connection="solder" /> 
+			<output name="2" label="Pad" connection="solder" /> 
+			<output name="3" label="Pad" connection="solder" /> 
+			<output name="4" label="Pad" connection="solder" /> 
+			<output name="5" label="Pad" connection="solder" />
+			<output name="6" label="Pad" connection="solder" />
+			<size length="2.165" width="0.472" height="0.098" units="inches" />
+			</model>
+		<model model="DN163K0A" numOuts="6" numFns="8"
+	    		maxMotorCurrent="1.0A (peak=2A)" formFactor="N" >
+			<output name="1" label="LED" connection="solder" /> 
+			<output name="2" label="LED" connection="solder" /> 
+			<output name="3" label="Pad" connection="solder" /> 
 			<output name="4" label="Pad" connection="solder" /> 
 			<output name="5" label="Pad" connection="solder" />
 			<output name="6" label="Pad" connection="solder" />
 			<size length="2.2165" width="0.5485" height="0.1015" units="inches" />
 			</model>
 		<model model="DN163K0B" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="N" >
+	    		maxMotorCurrent="1.0A (peak=2A)" formFactor="N" >
+			<output name="1" label="LED" connection="solder" /> 
+			<output name="2" label="Pad" connection="solder" /> 
+			<output name="3" label="Pad" connection="solder" /> 
+			<output name="4" label="Pad" connection="solder" /> 
+			<output name="5" label="Pad" connection="solder" />
+			<output name="6" label="Pad" connection="solder" />
+			<size length="2.2165" width="0.5485" height="0.1015" units="inches" />
+			</model>
+		<model model="DN163K0D" numOuts="6" numFns="8"
+	    		maxMotorCurrent="1.0A (peak=2A)" formFactor="N" >
+			<output name="1" label="LED" connection="solder" /> 
+			<output name="2" label="LED" connection="solder" /> 
+			<output name="3" label="Pad" connection="solder" /> 
 			<output name="4" label="Pad" connection="solder" /> 
 			<output name="5" label="Pad" connection="solder" />
 			<output name="6" label="Pad" connection="solder" />
 			<size length="2.2165" width="0.5485" height="0.1015" units="inches" />
 			</model>
 		<model model="DN163K1A" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="N" >
+	    		maxMotorCurrent="1.0A (peak=2A)" formFactor="N" >
+			<output name="1" label="LED" connection="solder" /> 
+			<output name="2" label="LED" connection="solder" /> 
+			<output name="3" label="Pad" connection="solder" /> 
 			<output name="4" label="Pad" connection="solder" /> 
 			<output name="5" label="Pad" connection="solder" />
 			<output name="6" label="Pad" connection="solder" />
 			<size length="3.11" width="0.426" height="0.195" units="inches" />
 			</model>
 		<model model="DN163K1B" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="N" >
+	    		maxMotorCurrent="1.0A (peak=2A)" formFactor="N" >
+			<output name="1" label="LED" connection="solder" /> 
+			<output name="2" label="LED" connection="solder" /> 
+			<output name="3" label="Pad" connection="solder" /> 
 			<output name="4" label="Pad" connection="solder" /> 
 			<output name="5" label="Pad" connection="solder" />
 			<output name="6" label="Pad" connection="solder" />
 			<size length="3.11" width="0.426" height="0.195" units="inches" />
-
 			</model>
 		<model model="DN163K1C" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="N" >
+	    		maxMotorCurrent="1.0A (peak=2A)" formFactor="N" >
+			<output name="1" label="LED" connection="solder" /> 
+			<output name="2" label="LED" connection="solder" /> 
+			<output name="3" label="Pad" connection="solder" /> 
 			<output name="4" label="Pad" connection="solder" /> 
 			<output name="5" label="Pad" connection="solder" />
 			<output name="6" label="Pad" connection="solder" />
 			<size length="3.11" width="0.426" height="0.195" units="inches" />
-
 			</model>
 		<model model="DN163K2" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="N" >
+	    		maxMotorCurrent="1.0A (peak=2A)" formFactor="N" >
+			<output name="1" label="LED" connection="solder" /> 
+			<output name="2" label="LED" connection="solder" /> 
+			<output name="3" label="Pad" connection="solder" /> 
 			<output name="4" label="Pad" connection="solder" /> 
 			<output name="5" label="Pad" connection="solder" />
 			<output name="6" label="Pad" connection="solder" />
 			<size length="3.18" width="0.354" height="0.128" units="inches" />
 			</model>
 		<model model="DN163M0" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="N" >
+	    		maxMotorCurrent="1.0A (peak=1.5A)" formFactor="N" >
+			<output name="1" label="LED" connection="solder" /> 
+			<output name="2" label="Pad" connection="solder" /> 
+			<output name="3" label="Pad" connection="solder" /> 
 			<output name="4" label="Pad" connection="solder" /> 
 			<output name="5" label="Pad" connection="solder" />
 			<output name="6" label="Pad" connection="solder" />
@@ -196,12 +295,12 @@
 			<size length="0.57" width="0.38" height="0.13" units="inches" />
 			</model>
 		<model model="DZ143" numOuts="4" numFns="8" lowVersionID="64" highVersionID="65"
-	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="Z" >
+	    		maxMotorCurrent="1.25A (peak=2A)" formFactor="Z" >
 			<output name="4" label="Violet" connection="wire" /> 
 			<size length="0.55" width="0.36" height="0.13" units="inches" />
 			</model>
 		<model model="DZ143PS" numOuts="4" numFns="8" lowVersionID="64" highVersionID="65"
-	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="Z" >
+	    		maxMotorCurrent="1.25A (peak=2A)" formFactor="Z" >
 			<output name="4" label="Violet" connection="wire" /> 
 			<size length="0.55" width="0.36" height="0.13" units="inches" />
 			</model>
