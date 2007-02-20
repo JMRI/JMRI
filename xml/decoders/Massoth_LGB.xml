@@ -1,8 +1,10 @@
 <?xml version="1.0"?>
 
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Massoth_LGB.xml,v 1.1 2006-10-01 06:56:22 jacobsen Exp $ -->
+<!-- $Id: Massoth_LGB.xml,v 1.2 2007-02-20 01:49:50 jacobsen Exp $ -->
 <decoder-config>
+		<version author="Jeff Schmaltz escopetas@comcast.net"
+			version="1.1" lastUpdated="20070204" />
 		<version author="Jeff Schmaltz escopetas@comcast.net"
 			version="1.0" lastUpdated="20060923" />
 
@@ -28,8 +30,9 @@
       55022:           16
       Small on-board:  65, 73, 81, 83
       Large on-board:  129, 134
-      55027:
-      eMOTION XL: 
+      55027:           193
+      eMOTION XL:      193 (according to manual), 200
+      eMOTION XLS      202
 
       This definition was based on the LGB document "CV description for LGB onboard
       decoders, October 5, 2004" (OnboardCVs.pdf, which seems to have disappeared
@@ -57,7 +60,12 @@
 
       Version History:
 
-        1.0 - Initial release 23 Sep 06
+        1.0 - 23 Sep 06
+              Initial release 
+        1.1 - 4 Feb 07
+              Minor format changes
+              Made CV 7, 8, & 106 readOnly (works correctly with 1.7.5+)
+              Added CV numbers to tooltips
 -->
 
 
@@ -75,51 +83,49 @@
 
 		<variable label="Short Address" CV="1" 
 			item="Short Address"
-			tooltip="Sets the Primary 2 digit address - LGB 0-22 for add-on, 1-23 for onboard" >
+			tooltip="Sets the Primary 2 digit address - LGB 0-22 for add-on, 1-23 for onboard CV1" >
 			<shortAddressVal/>
             </variable>
 
 		<variable label="Starting voltage" CV="2" 
 			item="Vstart"
-			tooltip="Sets the starting voltage at throttle speed step 1 - 0: slow, 255: maximum speed">
+			tooltip="Sets the starting voltage at throttle speed step 1 - 0: slow, 255: maximum speed CV2">
 			<decVal min="0" max="255"/>
 		</variable>
 		
 		<variable label="Acceleration" CV="3"
 			item="Accel"
-			tooltip="Sets the acceleration rate - 1: rapid acceleration, 255: gradual acceleration" >
+			tooltip="Sets the acceleration rate - 1: rapid acceleration, 255: gradual acceleration CV3" >
 			<decVal min="1" max="255"/>
 		</variable>
 
 		<variable label="Braking" CV="4"
 			item="Decel"
-			tooltip="Sets the deceleration rate - 1: rapid braking, 255: gradual braking)" >
+			tooltip="Sets the deceleration rate - 1: rapid braking, 255: gradual braking) CV4" >
 			<decVal min="1" max="255"/>
 		</variable>
 		
 		<variable label="Maximum Motor Voltage" CV="5"
 			item="Vhigh"
-			tooltip="Sets the maximum voltage at full throttle - 1: slow, 255: maximum speed">
+			tooltip="Sets the maximum voltage at full throttle - 1: slow, 255: maximum speed CV5">
 			<decVal min="1" max="255"/>
 		</variable>
 
-		<!-- This CV should be ** readOnly="yes" ** but it won't display if it is -->
-		<variable label="Software Version Number" CV="7"
+		<variable label="Software Version Number" CV="7" readOnly="yes"
 			item="Decoder Version"
-			tooltip="The decoder version number (read only)" >
+			tooltip="The decoder version number (read only) CV7" >
 			<decVal/>
 		</variable>
 
-		<!-- This CV should be ** readOnly="yes" ** but it won't display if it is -->
-		<variable label="Manufacturer Code" CV="8"
+		<variable label="Manufacturer Code" CV="8" readOnly="yes"
 			item="Manufacturer"
-			tooltip="The manufacturer's ID number (read only)">
+			tooltip="The manufacturer's ID number (read only) CV8">
 			<decVal/>
 		</variable>
 
 		<variable label="Motor Frequency" CV="9"
 			item="Total PWM Period"
-			tooltip="Sets the motor drive frequency - Note: Back-EMF only works with 16 kHz">
+			tooltip="Sets the motor drive frequency - Note: Back-EMF only works with 16 kHz CV9">
 			<enumVal>
 				<enumChoice choice="16 kHz"/>
 				<enumChoice choice="1.8 kHz"/>
@@ -130,13 +136,13 @@
 
 		<variable label="Long Address" CV="17"
 			item="Extended Address"
-			tooltip="Sets the Extended 4 digit address (Range 128-10239) (not LGB MTS)" >
+			tooltip="Sets the Extended 4 digit address (Range 128-10239) (not LGB MTS) CV17-18" >
 			<longAddressVal/>
 		</variable>
 
 		<variable label="Normal direction of motion" CV="29" mask="XXXXXXXV"
 			item="Locomotive Direction"
-			tooltip="Sets the relative direction of the loco when told to move forward" >
+			tooltip="Sets the relative direction of the loco when told to move forward CV29" >
 			<enumVal>
 				<enumChoice choice="Forward"/>
 				<enumChoice choice="Reverse"/>
@@ -145,7 +151,7 @@
 
 		<variable label="Speed Steps" CV="29" mask="XXXXXXVX"
 			item="Speed Step Mode"
-			tooltip="Sets the speed step mode" >
+			tooltip="Sets the speed step mode CV29" >
 			<enumVal>
 				<enumChoice choice="14"/>
 				<enumChoice choice="28/128 (not LGB MTS)"/>
@@ -154,7 +160,7 @@
 
 		<variable label="Analog conversion mode" CV="29" mask="XXXXXVXX"
 			item="Analog (DC) Operation"
-			tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)" >
+			tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion) CV29" >
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
@@ -163,7 +169,7 @@
 
 		<variable label="Use Speed Table" CV="29" mask="XXXVXXXX"
 			item="Speed Table Definition"
-			tooltip="Determines whether loco will use manufacturer's internal or user-defined speed step table" >
+			tooltip="Determines whether loco will use manufacturer's internal or user-defined speed step table CV29" >
 			<enumVal>
 				<enumChoice choice="internal speed step table"/>
 				<enumChoice choice="user-programmed speed step table (CV's 67-94)"/>
@@ -172,7 +178,7 @@
 
 		<variable label="Addressing Mode" CV="29" mask="XXVXXXXX"
 			item="Address Format"
-			tooltip="Determines whether loco will use short or long address" >
+			tooltip="Determines whether loco will use short or long address CV29" >
 			<enumVal>
 				<enumChoice choice="address 1-127 (LGB MTS: 0-22/1-23)"/>
 				<enumChoice choice="address 128-10239 (not LGB MTS)"/>
@@ -180,17 +186,17 @@
 		</variable>
 
 		<variable label="Voltage for F1 terminal" CV="49"
-			tooltip="Voltage for F1 terminal - 1:low voltage, 5:5V light bulbs or smoke generator, 32:maximum voltage">
+			tooltip="Voltage for F1 terminal - 1:low voltage, 5:5V light bulbs or smoke generator, 32:maximum voltage CV49">
 			<decVal min="1" max="32"/>
 		</variable>
 
 		<variable label="Voltage for lighting terminals" CV="50"
-			tooltip="Voltage for front, rear and interior light - 1:low voltage, 5:5V light bulbs, 32:maximum voltage">
+			tooltip="Voltage for front, rear and interior light - 1:low voltage, 5:5V light bulbs, 32:maximum voltage CV50">
 			<decVal min="1" max="32"/>
 		</variable>
 
 		<variable label="Command for F1 terminal" CV="51"
-			tooltip="Command which triggers the F1 terminal">
+			tooltip="Command which triggers the F1 terminal CV51">
 			<enumVal>
 				<enumChoice choice="lighting button (LGB=9, others=0)" value="0"/>
 				<enumChoice choice="button 1 (parallel only)" value="1"/>
@@ -217,7 +223,7 @@
 		</variable>
 
 		<variable label="Command for front lighting terminal" CV="52"
-			tooltip="Command which triggers the front light terminal">
+			tooltip="Command which triggers the front light terminal CV52">
 			<enumVal>
 				<enumChoice choice="lighting button (LGB=9, others=0)" value="0"/>
 				<enumChoice choice="button 1 (parallel only)" value="1"/>
@@ -244,7 +250,7 @@
 		</variable>
 
 		<variable label="Command for rear lighting terminal" CV="53"
-			tooltip="Command which triggers the rear light terminal">
+			tooltip="Command which triggers the rear light terminal CV53">
 			<enumVal>
 				<enumChoice choice="lighting button (LGB=9, others=0)" value="0"/>
 				<enumChoice choice="button 1 (parallel only)" value="1"/>
@@ -331,17 +337,17 @@
 		</variable>
 
 		<variable label="Reset Register" CV="55" 
-			tooltip="Write 55 into CV 55 to reset to factory settings ">
+			tooltip="Write 55 into CV 55 to reset to factory settings CV55">
 			<decVal min="55" max="55"/>
 		</variable>
 
 		<variable label="Voltage for F2 terminal" CV="56"
-			tooltip="Voltage for F2 terminal - 1:low voltage, 5:5V light bulbs or smoke generator, 32:maximum voltage">
+			tooltip="Voltage for F2 terminal - 1:low voltage, 5:5V light bulbs or smoke generator, 32:maximum voltage CV56">
 			<decVal min="1" max="32"/>
 		</variable>
 
 		<variable label="Command for F2 terminal" CV="57"
-			tooltip="Command which triggers the F2 terminal">
+			tooltip="Command which triggers the F2 terminal CV57">
 			<enumVal>
 				<enumChoice choice="lighting button (LGB=9, others=0)" value="0"/>
 				<enumChoice choice="button 1 (parallel only)" value="1"/>
@@ -368,7 +374,7 @@
 		</variable>
 
 		<variable label="Pause Time between changes in direction" CV="58"
-			tooltip="Pause equals programmed value x 0.5 seconds">
+			tooltip="Pause equals programmed value x 0.5 seconds CV58">
 			<decVal min="0" max="255"/>
 		</variable>
 
@@ -376,8 +382,7 @@
 		<!-- Not sure how it relates to using F8 to switch half-speed mode on and off -->
 		<!-- Checked Instructions for a couple of other small diesels but no mention of CV59 -->
 		<variable label="Half-speed mode" CV="59" mask="XXXXXVXX"
-			item="Half-speed mode"
-			tooltip="May only apply to 23900 MTS-DUO switcher" >
+			tooltip="May only apply to 23900 MTS-DUO switcher CV59" >
 			<enumVal>
 				<enumChoice choice="Half-speed mode deactivated"/>
 				<enumChoice choice="Half-speed mode activated"/>
@@ -385,17 +390,17 @@
 		</variable>
 
 		<variable label="Back-EMF Maximum Adjustment Factor" CV="60"
-			tooltip="1: small steps, 255: large steps (Note: LGB recommends not changing this CV)">
+			tooltip="1: small steps, 255: large steps (Note: LGB recommends not changing this CV) CV60">
 			<decVal min="1" max="255"/>
 		</variable>
 
 		<variable label="Back-EMF Adjustment Frequency" CV="61"
-			tooltip="0: immediate adjustment, 255: maximum delay (Note: LGB recommends not changing this CV)">
+			tooltip="0: immediate adjustment, 255: maximum delay (Note: LGB recommends not changing this CV) CV61">
 			<decVal min="0" max="255"/>
 		</variable>
 
 		<variable label="Back-EMF Maximum Adjustment" CV="62"
-			tooltip="0: no adjustment, 255: maximum adjustment (Note: LGB recommends not changing this CV)">
+			tooltip="0: no adjustment, 255: maximum adjustment (Note: LGB recommends not changing this CV) CV62">
 			<decVal min="0" max="255"/>
 		</variable>
 
@@ -434,10 +439,9 @@
 
 		<!-- Do not attempt to read CV 105 on an LGB decoder -->
 
-		<!-- This CV should be ** readOnly="yes" ** but it won't display if it is -->
-		<variable label="ID for Decoder Type" CV="106"
-			item="Decoder Type"
-			tooltip="ID for Decoder Type (read only)">
+		<variable label="ID for Decoder Type" CV="106" readOnly="yes" 
+			item="Product number"
+			tooltip="ID for Decoder Type (read only) CV106">
 			<decVal/>
 		</variable>
 
@@ -460,13 +464,11 @@
 			<label label=" "/>
 			<label label=" "/>
 			<label label=" "/>
-			<label label=" "/>
-			<label label=" "/>
 			<separator/>
 			<label label=" "/>
 			<display item="Manufacturer" />
 			<display item="Decoder Version" />
-			<display item="Decoder Type" />
+			<display item="Product number" />
 		</column>
 	</pane>
 
@@ -492,24 +494,28 @@
 			<row>
 				<column>
 					<label label=" "/>
+					<display item="Speed Table Definition"
+						format="offradiobutton" label=""/>
+					<label label=" "/>
+				</column>
+			</row>
+			<row>
+				<column>
 					<display item="Vstart" />
 					<display item="Vhigh" />
-					<label label=" "/>
 				</column>
 				<column>
 					<display item="Vstart" format="hslider" label="" />
 					<display item="Vhigh" format="hslider" label="" />
 				</column>
 			</row>
-			<separator/>
 			<row>
-				<column>
-					<label label=" "/>
-					<display item="Speed Table Definition"
-						format="offradiobutton" label=""/>
-					<label label=" "/>
-				</column>
+				<label label=" "/>
 			</row>
+			<row>
+				<label label=" "/>
+			</row>
+			<separator/>
 			<row>
 				<column>
 					<display item="Speed Table Definition"
