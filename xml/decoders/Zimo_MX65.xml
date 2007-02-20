@@ -1,11 +1,13 @@
 <?xml version="1.0"?>
 
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Zimo_MX65.xml,v 1.1 2007-02-20 01:58:07 jacobsen Exp $ -->
+<!-- $Id: Zimo_MX65.xml,v 1.2 2007-02-20 02:00:57 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Jeff Schmaltz escopetas@comcast.net"
+			version="1.1" lastUpdated="20070214" />
+		<version author="Jeff Schmaltz escopetas@comcast.net"
 			version="1.0" lastUpdated="20070122" />
-		
+
 <!--
      This decoder configuration file is based largely on the Zimo_MX66M(V)_1.xml
      with 'version author="sip@euronet.nl" version="1.1" lastUpdated="20031008"'
@@ -23,10 +25,19 @@
      Deleted CV10, CV66, CV95, CV113 and up
      Modified CV112
      Changed default on CV56, CV58, CV64
+
+     Any and all feedback on this file would be appreciated.
+
+     Version History:
+
+        1.0 - 25 Jan 07
+              Initial release 
+        1.1 - 14 Feb 07
+              Changed family name to differentiate from other Zimo large scale config files
 -->
 
 <decoder>
-	<family name="Zimo Silent BEMF decoders, large scales" mfg="Zimo">
+	<family name="Zimo MX65" mfg="Zimo">
 		<model model="MX65L/N" lowVersionID="20" highVersionID="29"
 			 numOuts="2" numFns="8" >
 			<output name="1" label="Front head lights" />
