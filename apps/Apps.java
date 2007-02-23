@@ -28,7 +28,7 @@ import net.roydesign.mac.MRJAdapter;
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
  * @author  Dennis Miller  Copyright 2005
- * @version     $Revision: 1.33 $
+ * @version     $Revision: 1.34 $
  */
 public class Apps extends JPanel {
 
@@ -291,9 +291,14 @@ public class Apps extends JPanel {
         } catch (java.lang.NoSuchMethodError e2) {
             log.error("Is jh.jar available? Error starting help system: "+e2);
         }
-        JMenuItem license = new JMenuItem("License");
+
+        JMenuItem license = new JMenuItem("License ...");
         helpMenu.add(license);
         license.addActionListener(new LicenseAction());
+
+        JMenuItem directories = new JMenuItem("Locations ...");
+        helpMenu.add(directories);
+        directories.addActionListener(new jmri.jmrit.XmlFileLocationAction());
     }
 
     protected String line1() {
