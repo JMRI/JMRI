@@ -15,7 +15,7 @@ import java.awt.Color;
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class MemoryIconXml implements XmlAdapter {
 
@@ -141,7 +141,6 @@ public class MemoryIconXml implements XmlAdapter {
         l.setDisplayLevel(level);
 
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
-        l.setDisplayLevel(p.LABELS);
         p.putLabel(l);
     
         // set color if needed

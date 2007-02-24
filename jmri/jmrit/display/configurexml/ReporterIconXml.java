@@ -10,7 +10,7 @@ import org.jdom.Element;
  * Handle configuration for display.ReporterIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class ReporterIconXml implements XmlAdapter {
 
@@ -80,7 +80,6 @@ public class ReporterIconXml implements XmlAdapter {
         l.setDisplayLevel(level);
 
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
-        l.setDisplayLevel(p.LABELS);
         p.putLabel(l);
     }
 
