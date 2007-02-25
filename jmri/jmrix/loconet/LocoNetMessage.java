@@ -28,11 +28,13 @@ import java.io.Serializable;
  * <P>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  * @see             jmri.jmrix.nce.NceMessage
  *
  */
 public class LocoNetMessage implements Serializable {
+
+    static final long serialVersionUID = -7904918731667071828L;
 
     /** Create a new object, representing a specific-length message.
      * @param len Total bytes in message, including opcode and error-detection byte.
