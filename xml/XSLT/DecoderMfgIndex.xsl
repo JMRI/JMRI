@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: DecoderMfgIndex.xsl,v 1.1 2007-02-25 17:00:13 jacobsen Exp $ -->
+<!-- $Id: DecoderMfgIndex.xsl,v 1.2 2007-02-25 17:12:53 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI decoder definition index to a HTML page -->
 
@@ -28,8 +28,8 @@
 	</head>
 	
 	<body>
-		<xsl:apply-templates/>
 	<h2>NMRA manufacturer numbers, sorted by number</h2>	
+		<xsl:apply-templates/>
 	<hr/>
 	This page produced by the 
 	<A HREF="http://jmri.sf.net">JMRI project</A>.
@@ -49,14 +49,15 @@
 
 <!-- Descend into "mfgList" element -->
 <xsl:template match='mfgList'>
-   <xsl:apply-templates/>
+   <xsl:apply-templates>
+        <xsl:sort select="@mfgID" data-type="number"/>
+   </xsl:apply-templates>
 </xsl:template>
 
 <!-- List the family information. Output as H2 -->
 <xsl:template match="manufacturer">
-<xsl:value-of select="@mfg"/> &#160;
-<xsl:value-of select="@mfgID"/>
-<P>
+<xsl:value-of select="@mfgID"/> &#160; <xsl:value-of select="@mfg"/>
+<BR/>
 </xsl:template>
 
 </xsl:stylesheet>
