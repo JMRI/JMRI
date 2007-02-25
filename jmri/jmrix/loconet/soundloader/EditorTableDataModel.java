@@ -26,7 +26,7 @@ import javax.swing.table.TableColumnModel;
  * Table data model for display of Digitrax SPJ files
  * @author		Bob Jacobsen   Copyright (C) 2003, 2006
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.2 $
+ * @version		$Revision: 1.3 $
  */
 public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 
@@ -128,6 +128,10 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
                 return res.getString("ButtonPlay");
             else if (file.getHeader(row+1).isTxt())
                 return res.getString("ButtonView");
+            else if (file.getHeader(row+1).isMap())
+                return res.getString("ButtonView");
+            else if (file.getHeader(row+1).isSDF())
+                return res.getString("ButtonView");
             else return null;
         case REPLACEBUTTONCOL:
             return res.getString("ButtonReplace");
@@ -170,7 +174,13 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
                 playButtonPressed(value, row, col);
                 return;
             } else if (file.getHeader(row+1).isTxt()) {
-                viewButtonPressed(value, row, col);
+                viewTxtButtonPressed(value, row, col);
+                return;
+            } else if (file.getHeader(row+1).isMap()) {
+                viewTxtButtonPressed(value, row, col);
+                return;
+            } else if (file.getHeader(row+1).isSDF()) {
+                viewSdfButtonPressed(value, row, col);
                 return;
             } else return;            
         }
@@ -183,8 +193,22 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
     }
 
     // should probably be abstract and put in invoking GUI
-    void viewButtonPressed(Object value, int row, int col) {
+    // Also used to display the .map block
+    void viewTxtButtonPressed(Object value, int row, int col) {
         String content = new String(file.getHeader(row+1).getByteArray());
+        JFrame frame = new JFrame();
+        JTextArea text = new JTextArea(content);
+        text.setEditable(false);
+        text.setFont(new Font("Monospaced", Font.PLAIN, text.getFont().getSize()));
+        frame.getContentPane().add(new JScrollPane(text));
+        frame.pack();
+        frame.setVisible(true);
+    }
+    
+    // should probably be abstract and put in invoking GUI
+    void viewSdfButtonPressed(Object value, int row, int col) {
+        jmri.jmrix.loconet.sdf.SdfByteBuffer buff = new jmri.jmrix.loconet.sdf.SdfByteBuffer(file.getHeader(row+1).getByteArray());
+        String content = buff.toString();
         JFrame frame = new JFrame();
         JTextArea text = new JTextArea(content);
         text.setEditable(false);
