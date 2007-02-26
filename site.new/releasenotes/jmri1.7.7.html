@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.7.7.html,v 1.6 2007-02-25 07:36:38 jacobsen Exp $ -->
+<!-- $Id: jmri1.7.7.html,v 1.7 2007-02-26 08:01:14 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -164,6 +164,8 @@ new features, particularly
 
 <P>Jeff Schmaltz added a decoder definition for the Zimo MX65 decoder. This is intended to work with the "Zimo" programmer format.
 
+<P>Klaus Kongsted provided a Danish translation for the interface
+
 <P>Jeff Schmaltz updated the Massoth LGB decoder definition
 
 <P>Bob Blackwell made some changes to the Digitrax "3" series decoder definitions:
@@ -176,11 +178,13 @@ new features, particularly
   
 <P>Added a new "Locations ..." item to the Help menu to make it easy to find the preferences and program directories.
 
-<P>Added the ability to display some information from the SDF sound program definition to the Digitrax SPF sound project file editor.
+<P>Added the ability to display some information from the SDF sound program definition to the Digitrax SPF sound project file editor. Also, make it possible to display the map segment of the file.
 
 <P>Improved the terminology for selecting the service mode (programming track) and operations mode (main track) programmers.  
 
 <P>Made it possible to internationalize all the text in the symbolic programmer (DecoderPro panes)
+
+<P>If you want to change the location of your JMRI preferences directory, define the "jmri.prefsdir" system property to point to the new directory.  (Add -Djmri.prefsdir=somePathName to the startup script in use on your computer) Note that if you change this, you need to move your existing preferences and other information to the new location, or JMRI won't be able to find them. 
 
 <hr class="hide">
 <!-- Footer -->
