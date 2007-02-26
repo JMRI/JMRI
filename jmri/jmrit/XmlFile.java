@@ -19,7 +19,7 @@ import org.jdom.output.XMLOutputter;
  * Handle common aspects of XML files.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.23 $
+ * @version	$Revision: 1.24 $
  */
 public abstract class XmlFile {
 
@@ -314,7 +314,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.23 2006-02-16 06:13:56 jacobsen Exp $";
+                        +" $Id: XmlFile.java,v 1.24 2007-02-26 07:58:15 jacobsen Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }
@@ -332,6 +332,7 @@ public abstract class XmlFile {
      * ( "{user.home}" is used to represent the directory pointed to by the
      *  user.home system property):
      * <DL>
+     * <DT>If the system property jmri.prefsdir is present, it's used as a path name
      * <DT>Linux<DD>{user.home}/.jmri/
      * <DT>Windows<DD>{user.home}\JMRI
      * <DT>MacOS "Classic"<DD>{user.home}:JMRI
@@ -342,6 +343,11 @@ public abstract class XmlFile {
      * @return Pathname in local form, with a terminating separator
      */
     static public String prefsDir() {
+        // check for jmri.prefsdir
+        String jmriPrefsDir = System.getProperty("jmri.prefsdir","");
+        if (jmriPrefsDir.length()>0) return jmriPrefsDir+File.separator;
+        
+        // not present, work through other choices
         String osName       = System.getProperty("os.name","<unknown>");
         String mrjVersion   = System.getProperty("mrj.version","<unknown>");
         String userHome     = System.getProperty("user.home","");
