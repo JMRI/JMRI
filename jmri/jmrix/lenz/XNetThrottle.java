@@ -9,7 +9,7 @@ import jmri.DccLocoAddress;
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
  * @author     Paul Bender (C) 2002,2003,2004
- * @version    $Revision: 2.13 $
+ * @version    $Revision: 2.14 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -72,7 +72,10 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     protected void sendFunctionGroup1()
     {
        if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT))!=THROTTLEIDLE) 
+       {
+                log.warn("Outstanding request, Function Group 1 change ignored");
 		return;
+       }
        XNetMessage msg=new XNetMessage(6);
        msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
        msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP1);
@@ -116,7 +119,10 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     protected void sendFunctionGroup2()
     {
        if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT))!=THROTTLEIDLE) 
+       {
+                log.warn("Outstanding request, Function Group 2 change ignored");
 		return;
+       }
        XNetMessage msg=new XNetMessage(6);
         msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
         msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP2);
@@ -156,7 +162,10 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     protected void sendFunctionGroup3()
     {
        if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT))!=THROTTLEIDLE) 
+       {
+                log.warn("Outstanding request, Function Group 3 change ignored");
 		return;
+       }
        XNetMessage msg=new XNetMessage(6);
        msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
        msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP3);
@@ -195,8 +204,11 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      */
     protected void sendMomentaryFunctionGroup1()
     {
-       if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT))!=THROTTLEIDLE) 
+       if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT))!=THROTTLEIDLE)
+       {
+                log.warn("Outstanding request, Function Group 1 momentary status change ignored");
 		return;
+       }
        XNetMessage msg=new XNetMessage(6);
        msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
        msg.setElement(1,XNetConstants.LOCO_SET_FUNC_Group1);
@@ -240,7 +252,10 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     protected void sendMomentaryFunctionGroup2()
     {
        if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT))!=THROTTLEIDLE) 
+       {
+                log.warn("Outstanding request, Function Group 2 momentary status change ignored");
 		return;
+       }
        XNetMessage msg=new XNetMessage(6);
         msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
         msg.setElement(1,XNetConstants.LOCO_SET_FUNC_Group2);
@@ -280,7 +295,10 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     protected void sendMomentaryFunctionGroup3()
     {
        if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT))!=THROTTLEIDLE) 
+       {
+                log.warn("Outstanding request, Function Group 3 momentary status change ignored");
 		return;
+       }
        XNetMessage msg=new XNetMessage(6);
        msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
        msg.setElement(1,XNetConstants.LOCO_SET_FUNC_Group3);
@@ -326,9 +344,11 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	if(log.isDebugEnabled()) log.debug("set Speed to: " + speed +
 					  " Current step mode is: " + this.speedStepMode );
 
-	if(requestState!=THROTTLEIDLE) return;
-        if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT))!=THROTTLEIDLE) 
+	if(requestState!=THROTTLEIDLE)
+        {
+                log.warn("Outstanding request, Speed/Direction Setting Change ignored");
 		return;
+        }
         this.speedSetting = speed;
 	if (speed<0)
 	{
@@ -597,8 +617,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                         /* this is an unknown error */
 		     requestState=THROTTLEIDLE;                        
                      log.warn("Received unhandled response: " + l);
-              }
-
+            }
 	} else if(requestState==THROTTLESTATSENT) {
 	     if (log.isDebugEnabled()) { log.debug("Current throttle status is THROTTLESTATSENT"); }
 	     // This throttle has requested status information, so we need 
@@ -690,6 +709,15 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 		    int b3=l.getElement(2);
 		    int b4=l.getElement(3);
 	            parseFunctionMomentaryInformation(b3,b4);
+	       } else if(l.isCommErrorMessage()) {
+                     /* this is a communications error */
+                     log.error("Communications error occured - message recieved was: " + l);
+		     requestState=THROTTLEIDLE;
+                } else if(l.getElement(0)==XNetConstants.CS_INFO &&
+                        l.getElement(2)==XNetConstants.CS_NOT_SUPPORTED) {
+                     /* The Command Station does not support this command */
+                     log.error("Unsupported Command Sent to command station");
+		     requestState=THROTTLEIDLE;
 		}
                 //We've processed this request, so set the status to Idle.
 		requestState=THROTTLEIDLE;
@@ -724,25 +752,29 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	{
            if(log.isDebugEnabled()) { log.debug ("Speed Step setting 27"); }
 	   this.speedIncrement=XNetConstants.SPEED_STEP_27_INCREMENT;
-	   notifyPropertyChangeListener("SpeedSteps",
+           if(this.speedStepMode!=DccThrottle.SpeedStepMode27)
+	      notifyPropertyChangeListener("SpeedSteps",
 			 		new Integer(this.speedStepMode),
 					new Integer(this.speedStepMode=DccThrottle.SpeedStepMode27));
 	} else if((b1 & 0x02)==0x02) {
            if(log.isDebugEnabled()) { log.debug("Speed Step setting 28"); }
            this.speedIncrement=XNetConstants.SPEED_STEP_28_INCREMENT;
-	   notifyPropertyChangeListener("SpeedSteps",
+           if(this.speedStepMode!=DccThrottle.SpeedStepMode28)
+	      notifyPropertyChangeListener("SpeedSteps",
 			 		new Integer(this.speedStepMode),
 					new Integer(this.speedStepMode=DccThrottle.SpeedStepMode28));
 	} else if((b1 & 0x04)==0x04) {
            if(log.isDebugEnabled()) { log.debug("Speed Step setting 128"); }
 	   this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;;
-	   notifyPropertyChangeListener("SpeedSteps",
+           if(this.speedStepMode!=DccThrottle.SpeedStepMode128)
+	      notifyPropertyChangeListener("SpeedSteps",
 			 		new Integer(this.speedStepMode),
 					new Integer(this.speedStepMode=DccThrottle.SpeedStepMode128));
 	} else {
            if(log.isDebugEnabled()) { log.debug("Speed Step setting 14"); }
     	   this.speedIncrement=XNetConstants.SPEED_STEP_14_INCREMENT;
-	   notifyPropertyChangeListener("SpeedSteps",
+           if(this.speedStepMode!=DccThrottle.SpeedStepMode14)
+	      notifyPropertyChangeListener("SpeedSteps",
 			 		new Integer(this.speedStepMode),
 					new Integer(this.speedStepMode=DccThrottle.SpeedStepMode14));
 	}
@@ -778,7 +810,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                  // speed step mode.
                  if(speedVal>=1) { speedVal-=1; }
 			else speedVal=0;
-	   if(this.getSpeedSetting()!=((float)speedVal/(float)126)) {
+	   if(java.lang.Math.abs(
+		this.getSpeedSetting()-((float)speedVal/(float)126))>=0.0079){
 	      notifyPropertyChangeListener("SpeedSetting",
                       		            new Float(this.speedSetting),
 					    new Float(this.speedSetting = 
@@ -794,7 +827,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                  // speed step mode.
                  if(speedVal>=3) { speedVal-=3; }
 			else speedVal=0;
-	   if(this.getSpeedSetting()!=((float)speedVal/(float)28)) {
+	   if(java.lang.Math.abs(
+		this.getSpeedSetting()-((float)speedVal/(float)28))>=0.035) {
 	      notifyPropertyChangeListener("SpeedSetting",
                       		            new Float(this.speedSetting),
 					    new Float(this.speedSetting = 
@@ -810,7 +844,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                  // speed step mode.
                  if(speedVal>=3) { speedVal-=3; }
 			else speedVal=0;
-	   if(this.getSpeedSetting()!=((float)speedVal/(float)27)) {
+	   if(java.lang.Math.abs(
+		this.getSpeedSetting()-((float)speedVal/(float)27))>=0.037) {
 	      notifyPropertyChangeListener("SpeedSetting",
                       		            new Float(this.speedSetting),
 					    new Float(this.speedSetting = 
@@ -821,7 +856,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
            int speedVal=(b2 & 0x0F);
                  if(speedVal>=1) { speedVal-=1; }
 			else speedVal=0;
-	   if(this.getSpeedSetting()!=((float)speedVal/(float)14)) {
+	   if(java.lang.Math.abs(
+		this.getSpeedSetting()-((float)speedVal/(float)14))>=0.071) {
 	      notifyPropertyChangeListener("SpeedSetting",
                       		            new Float(this.speedSetting),
 					    new Float(this.speedSetting = 
@@ -1143,6 +1179,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      */
     private void stopStatusTimer() {
            if(statTimer!=null) statTimer.stop();
+//           requestState=THROTTLEIDLE;
     }
 
     public LocoAddress getLocoAddress() {
