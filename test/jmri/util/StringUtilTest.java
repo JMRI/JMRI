@@ -10,9 +10,65 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.util.StringUtil class.
  * @author	Bob Jacobsen  Copyright 2003
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class StringUtilTest extends TestCase {
+
+
+    public void testFindMatch1() {
+        String[] s = new String[]{"A", "B", "C"};
+        int[] num = new int[]{20, 30, 40};
+        int[] masks = new int[]{0xFF, 0xFF, 0xFF};
+        
+        Assert.assertEquals("A length", 1, StringUtil.getNamesFromStateMasked(20, num, masks, s).length);
+        Assert.assertEquals("A value ", "A", StringUtil.getNamesFromStateMasked(20, num, masks, s)[0]);
+
+        Assert.assertEquals("B length", 1, StringUtil.getNamesFromStateMasked(30, num, masks, s).length);
+        Assert.assertEquals("B value ", "B", StringUtil.getNamesFromStateMasked(30, num, masks, s)[0]);
+
+        Assert.assertEquals("C length", 1, StringUtil.getNamesFromStateMasked(40, num, masks, s).length);
+        Assert.assertEquals("C value ", "C", StringUtil.getNamesFromStateMasked(40, num, masks, s)[0]);
+
+        Assert.assertEquals("D null", 0, StringUtil.getNamesFromStateMasked(80, num, masks, s).length);
+
+    }
+
+    public void testFindMatch2() {
+        String[] s = new String[]{"A", "B", "C"};
+        int[] num = new int[]{0x20, 0x30, 0x40};
+        int[] masks = new int[]{0xF0, 0xF0, 0xF0};
+        
+        Assert.assertEquals("A length", 1, StringUtil.getNamesFromStateMasked(0x21, num, masks, s).length);
+        Assert.assertEquals("A value ", "A", StringUtil.getNamesFromStateMasked(0x21, num, masks, s)[0]);
+
+        Assert.assertEquals("B length", 1, StringUtil.getNamesFromStateMasked(0x34, num, masks, s).length);
+        Assert.assertEquals("B value ", "B", StringUtil.getNamesFromStateMasked(0x34, num, masks, s)[0]);
+
+        Assert.assertEquals("C length", 1, StringUtil.getNamesFromStateMasked(0x4F, num, masks, s).length);
+        Assert.assertEquals("C value ", "C", StringUtil.getNamesFromStateMasked(0x4F, num, masks, s)[0]);
+
+        Assert.assertEquals("D null", 0, StringUtil.getNamesFromStateMasked(0x80, num, masks, s).length);
+
+    }
+
+    public void testFindMatch3() {
+        String[] s = new String[]{"A", "B", "C"};
+        int[] num = new int[]{0x20, 0x30, 0x40};
+        int[] masks = new int[]{0x20, 0x30, 0x40};
+        
+        Assert.assertEquals("A length", 1, StringUtil.getNamesFromStateMasked(0x21, num, masks, s).length);
+        Assert.assertEquals("A value ", "A", StringUtil.getNamesFromStateMasked(0x21, num, masks, s)[0]);
+
+        Assert.assertEquals("B length", 2, StringUtil.getNamesFromStateMasked(0x34, num, masks, s).length);
+        Assert.assertEquals("B value 1", "A", StringUtil.getNamesFromStateMasked(0x34, num, masks, s)[0]);
+        Assert.assertEquals("B value 2", "B", StringUtil.getNamesFromStateMasked(0x34, num, masks, s)[1]);
+
+        Assert.assertEquals("C length", 1, StringUtil.getNamesFromStateMasked(0x4F, num, masks, s).length);
+        Assert.assertEquals("C value ", "C", StringUtil.getNamesFromStateMasked(0x4F, num, masks, s)[0]);
+
+        Assert.assertEquals("D null", 0, StringUtil.getNamesFromStateMasked(0x80, num, masks, s).length);
+
+    }
 
 
     public void testFindState() {

@@ -17,7 +17,7 @@ import com.sun.java.util.collections.Iterator;
  * back to an explicit implementation when running on Java 1.1
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class StringUtil {
@@ -32,6 +32,28 @@ public class StringUtil {
         for (int i = 0; i < states.length; i++)
             if (name.equals(names[i])) return states[i];
         return -1;
+    }
+    
+    /**
+     * Starting with three arrays, one of names, one of corresponding
+     * numeric state values, and one of masks for the state values, 
+     * find the name string(s) that match a 
+     * given state value
+     * @return empty array if none found
+     */
+    static public String[] getNamesFromStateMasked(int state, int[] states, int[] masks, String[] names) {
+        // first pass to count, get refs
+        int count = 0;
+        String[] temp = new String[states.length];
+        
+        for (int i = 0; i < states.length; i++)
+            if ( ((state^states[i]) & masks[i]) == 0)
+                temp[count++] = names[i];
+        // second pass to create output array
+        String[] output = new String[count];
+        for (int i = 0; i < count; i++)
+            output[i] = temp[i];
+        return output;
     }
     
     /**
