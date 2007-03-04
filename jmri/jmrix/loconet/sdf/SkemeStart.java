@@ -6,7 +6,7 @@ package jmri.jmrix.loconet.sdf;
  * Implement the SKEME_START macro from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 
 class SkemeStart extends SdfMacro {
@@ -41,7 +41,8 @@ class SkemeStart extends SdfMacro {
     }
     
     public String toString() {
-        return name()+' '+number+"; length="+length+'\n';
+        linestart = "    ";
+        return linestart+name()+' '+number+"; length="+length+'\n';
     }
 }
 

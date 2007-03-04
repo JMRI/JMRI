@@ -6,7 +6,7 @@ package jmri.jmrix.loconet.sdf;
  * Implement the LOAD_MODIFIER macro from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 
 class LoadModifier extends SdfMacro {
@@ -36,7 +36,7 @@ class LoadModifier extends SdfMacro {
     }
     
     public String toString() {
-        return name()+' '+jmri.util.StringUtil.hexStringFromBytes(bytes)+'\n';
+        return linestart+name()+' '+jmri.util.StringUtil.hexStringFromBytes(bytes)+'\n';
     }
 }
 

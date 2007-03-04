@@ -6,7 +6,7 @@ package jmri.jmrix.loconet.sdf;
  * Implement the CHANNEL_START macro from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 
 class EndSound extends SdfMacro {
@@ -30,7 +30,7 @@ class EndSound extends SdfMacro {
     }
     
     public String toString() {
-        return name()+'\n';
+        return linestart+name()+'\n';
     }
 }
 

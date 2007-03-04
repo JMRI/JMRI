@@ -6,7 +6,7 @@ package jmri.jmrix.loconet.sdf;
  * Implement the INITIATE_SOUND macro from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 
 class InitiateSound extends SdfMacro {
@@ -30,14 +30,7 @@ class InitiateSound extends SdfMacro {
     public int length() { return 2;}
     
     String premptVal() {
-        String[] names = jmri.util.StringUtil.getNamesFromStateMasked(prempt, premptCodes, premptMasks, premptNames);
-        if (names == null) return "<ERROR>"; // unexpected case, internal error, should also log?
-        else if (names.length == 0) return premptNames[premptNames.length-1];  // last name is non-of-above special case
-        else if (names.length == 1) return names[0];
-        String output = names[0];
-        for (int i=1; i<names.length; i++)
-            output+="+"+names[i];
-        return output;
+        return decodeFlags(prempt, premptCodes, premptMasks, premptNames);
     }
     
     String triggerVal() {
@@ -52,7 +45,7 @@ class InitiateSound extends SdfMacro {
     }
     
     public String toString() {
-        return name()+" "+triggerVal()+","+premptVal()+'\n';
+        return linestart+name()+" "+triggerVal()+","+premptVal()+'\n';
     }
 }
 
