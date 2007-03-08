@@ -29,7 +29,7 @@ import com.sun.java.util.collections.List;
  * @author	Dave Duchamp    Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2007 
  *
- * @version     $Revision: 1.25 $
+ * @version     $Revision: 1.26 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -430,14 +430,26 @@ public class RouteTableAction extends AbstractTableAction {
             JPanel p25 = new JPanel();
             p25.setLayout(new FlowLayout());
             p25.add(new JLabel("Play sound file:"));
-            p25.add(new JButton("Set"));
+            JButton ss = new JButton("Set");
+            ss.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setSoundPressed();
+                }
+            });
+            p25.add(ss);
             p25.add(soundFile);
             contentPane.add(p25);
             
             JPanel p26 = new JPanel();
             p26.setLayout(new FlowLayout());
             p26.add(new JLabel("Run script:"));
-            p26.add(new JButton("Set"));
+            ss = new JButton("Set");
+            ss.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setScriptPressed();
+                }
+            });
+            p26.add(ss);
             p26.add(scriptFile);
             contentPane.add(p26);
             
@@ -777,7 +789,45 @@ public class RouteTableAction extends AbstractTableAction {
 		}
 		g.setRouteCommandDelay(addDelay);		
     }
-        
+    
+    JFileChooser soundChooser = null;
+    
+    /**
+     * Set the sound file
+     */
+    void setSoundPressed() {
+        if (soundChooser == null) soundChooser = new JFileChooser(jmri.jmrit.XmlFile.prefsDir());
+        soundChooser.rescanCurrentDirectory();
+        int retVal = soundChooser.showOpenDialog(null);
+        // handle selection or cancel
+        if (retVal == JFileChooser.APPROVE_OPTION) {
+            try {
+                soundFile.setText(soundChooser.getSelectedFile().getCanonicalPath());
+            } catch (java.io.IOException e) {
+                log.error("exception setting sound file: "+e);
+            }
+        }
+    }
+    
+    JFileChooser scriptChooser = null;
+
+    /**
+     * Set the script file
+     */
+    void setScriptPressed() {
+        if (scriptChooser == null) scriptChooser = new JFileChooser(jmri.jmrit.XmlFile.prefsDir());
+        scriptChooser.rescanCurrentDirectory();
+        int retVal = scriptChooser.showOpenDialog(null);
+        // handle selection or cancel
+        if (retVal == JFileChooser.APPROVE_OPTION) {
+            try {
+                scriptFile.setText(scriptChooser.getSelectedFile().getCanonicalPath());
+            } catch (java.io.IOException e) {
+                log.error("exception setting script file: "+e);
+            }
+        }
+    }
+    
     /**
      * Responds to the Edit button
      */
