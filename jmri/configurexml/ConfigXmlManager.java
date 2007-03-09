@@ -1,5 +1,7 @@
 package jmri.configurexml;
 
+import jmri.InstanceManager;
+
 import java.io.File;
 
 import com.sun.java.util.collections.ArrayList;
@@ -14,7 +16,7 @@ import org.jdom.Element;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -311,6 +313,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             e.printStackTrace();
             return false;
         }
+		// all loaded, initialize objects as necessary
+		InstanceManager.logixManagerInstance().activateAllLogixs();
         return result;
     }
 

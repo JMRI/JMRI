@@ -12,7 +12,7 @@ package jmri;
  * non-system-specific code.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.26 $
+ * @version			$Revision: 1.27 $
  */
 public class InstanceManager {
 
@@ -44,6 +44,20 @@ public class InstanceManager {
         // This must be replaced when we start registering specific implementations
         instance().routeManager = new DefaultRouteManager();
         return instance().routeManager;
+    }
+
+    static public ConditionalManager conditionalManagerInstance()  {
+        if (instance().conditionalManager != null) return instance().conditionalManager;
+        // As a convenience, we create a default object if none was provided explicitly.
+        instance().conditionalManager = new DefaultConditionalManager();
+        return instance().conditionalManager;
+    }
+
+    static public LogixManager logixManagerInstance()  {
+        if (instance().logixManager != null) return instance().logixManager;
+        // As a convenience, we create a default object if none was provided explicitly.
+        instance().logixManager = new DefaultLogixManager();
+        return instance().logixManager;
     }
 
     static public Timebase timebaseInstance()  {
@@ -180,6 +194,26 @@ public class InstanceManager {
         if (p!=routeManager && routeManager!=null && log.isDebugEnabled()) log.debug("RouteManager instance is being replaced: "+p);
         if (p!=routeManager && routeManager==null && log.isDebugEnabled()) log.debug("RouteManager instance is being installed: "+p);
         routeManager = p;
+    }
+
+    private ConditionalManager conditionalManager = null;
+    static public void setConditionalManager(ConditionalManager p) {
+        instance().addConditionalManager(p);
+    }
+    protected void addConditionalManager(ConditionalManager p) {
+        if (p!=conditionalManager && conditionalManager!=null && log.isDebugEnabled()) log.debug("ConditionalManager instance is being replaced: "+p);
+        if (p!=conditionalManager && conditionalManager==null && log.isDebugEnabled()) log.debug("ConditionalManager instance is being installed: "+p);
+        conditionalManager = p;
+    }
+
+    private LogixManager logixManager = null;
+    static public void setLogixManager(LogixManager p) {
+        instance().addLogixManager(p);
+    }
+    protected void addLogixManager(LogixManager p) {
+        if (p!=logixManager && logixManager!=null && log.isDebugEnabled()) log.debug("LogixManager instance is being replaced: "+p);
+        if (p!=logixManager && logixManager==null && log.isDebugEnabled()) log.debug("LogixManager instance is being installed: "+p);
+        logixManager = p;
     }
 
     private Timebase timebase = null;
