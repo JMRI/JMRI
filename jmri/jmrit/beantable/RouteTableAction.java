@@ -29,7 +29,7 @@ import com.sun.java.util.collections.List;
  * @author	Dave Duchamp    Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2007 
  *
- * @version     $Revision: 1.26 $
+ * @version     $Revision: 1.27 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -847,7 +847,7 @@ public class RouteTableAction extends AbstractTableAction {
         name.setVisible(false);
         // deactivate this Route
         curRoute.deActivateRoute();
-        // get information for this Light
+        // get information for this route
         userName.setText(g.getUserName());
         // set up Turnout list for this route
         if (numTurnouts>0) {
@@ -990,7 +990,8 @@ public class RouteTableAction extends AbstractTableAction {
                 return;
             }
             // user name is unique, change it
-            g.setUserName(uName);     
+            g.setUserName(uName);
+			     
         }
         // clear the current output information for this Route
         g.clearOutputTurnouts();
