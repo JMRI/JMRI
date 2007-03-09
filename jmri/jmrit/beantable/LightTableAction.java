@@ -32,7 +32,7 @@ import javax.swing.JOptionPane;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -164,6 +164,7 @@ public class LightTableAction extends AbstractTableAction {
     boolean warnMsg = false;
     boolean noWarn = false;
 	boolean inEditMode = false;
+	boolean reminderActive = false;
 
     String sensorControl = rb.getString("LightSensorControl");
     String fastClockControl = rb.getString("LightFastClockControl");
@@ -338,20 +339,26 @@ public class LightTableAction extends AbstractTableAction {
         }
         typeBox.setSelectedIndex(0);  // force GUI status consistent
 
-        addFrame.addWindowListener(new java.awt.event.WindowAdapter() {
-                public void windowClosing(java.awt.event.WindowEvent e) {
-                    // remind to save, if Light was created or edited
-                    if (lightCreated) {
-                        javax.swing.JOptionPane.showMessageDialog(addFrame,
-                            rb.getString("Reminder1")+"\n"+rb.getString("Reminder2"),
-                                rb.getString("ReminderTitle"),
-                                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                    }
-                    addFrame.setVisible(false);
-                    addFrame.dispose();
-                }
-            });
-            
+		if (!reminderActive) {
+			addFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+					public void windowClosing(java.awt.event.WindowEvent e) {
+						// if in Edit mode, cancel the Edit and reactivate the Light
+						if (inEditMode) {
+							cancelPressed(null);
+						}
+						// remind to save, if Light was created or edited
+						if (lightCreated) {
+							javax.swing.JOptionPane.showMessageDialog(addFrame,
+								rb.getString("Reminder1")+"\n"+rb.getString("Reminder2"),
+									rb.getString("ReminderTitle"),
+										javax.swing.JOptionPane.INFORMATION_MESSAGE);
+						}
+						addFrame.setVisible(false);
+						addFrame.dispose();
+					}
+				});
+			reminderActive = true;
+		}            
         addFrame.pack();
         addFrame.setVisible(true);
     }
@@ -444,7 +451,7 @@ public class LightTableAction extends AbstractTableAction {
      * Responds to the Create button
      */
     void createPressed(ActionEvent e) {
-        String suName = systemName.getText().toUpperCase();;
+        String suName = (systemName.getText().toUpperCase()).trim();
         String uName = userName.getText();
         // Does System Name have a valid format
         if (!InstanceManager.lightManagerInstance().validSystemNameFormat(suName)) {
@@ -517,7 +524,7 @@ public class LightTableAction extends AbstractTableAction {
                     noWarn = true;
                 }
             }
-            // Light with this user name already exists
+            // Light with this system name already exists as a turnout
             status2.setText( rb.getString("LightWarn4")+" "+testSN+"." );
             warnMsg = true;
         }
@@ -550,7 +557,7 @@ public class LightTableAction extends AbstractTableAction {
         // check if a Light with this name already exists
         String suName = systemName.getText().toUpperCase();
         String sName = InstanceManager.lightManagerInstance().normalizeSystemName(suName);
-        if (sName=="") {
+        if (sName.equals("")) {
             // Entered system name has invalid format
             status1.setText( rb.getString("LightError3") );
             status2.setText( rb.getString("LightError6") );
