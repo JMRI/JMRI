@@ -16,7 +16,7 @@ import jmri.Turnout;
  *  Based in part on SerialLight.java
  *
  * @author      Dave Duchamp Copyright (C) 2006
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class LnLight extends AbstractLight {
 
@@ -98,7 +98,12 @@ public class LnLight extends AbstractLight {
 		l.setElement(1,loadr);
 		l.setElement(2,hiadr);
 		LnTrafficController.instance().sendLocoNetMessage(l);
-         mState = newState;
+		if (newState!=mState) {
+			int oldState = mState;
+			mState = newState;
+            // notify listeners, if any
+            firePropertyChange("KnownState", new Integer(oldState), new Integer(newState));
+		}
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnLight.class.getName());

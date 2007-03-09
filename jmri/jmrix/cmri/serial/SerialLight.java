@@ -14,7 +14,7 @@ import jmri.Turnout;
  *  Based in part on SerialTurnout.java
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class SerialLight extends AbstractLight {
 
@@ -91,7 +91,12 @@ public class SerialLight extends AbstractLight {
                 log.warn("illegal state requested for Light: "+getSystemName());
             }
         }
-        mState = newState;
+		if (newState!=mState) {
+			int oldState = mState;
+			mState = newState;
+            // notify listeners, if any
+            firePropertyChange("KnownState", new Integer(oldState), new Integer(newState));
+		}
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialLight.class.getName());
