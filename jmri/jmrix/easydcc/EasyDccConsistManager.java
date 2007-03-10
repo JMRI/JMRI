@@ -5,7 +5,7 @@
  *                        EasyDccConsist class for the consists it builds
  *
  * @author                Paul Bender Copyright (C) 2006
- * @version               $Revision: 1.3 $
+ * @version               $Revision: 1.4 $
  */
 
 
@@ -58,7 +58,7 @@ public class EasyDccConsistManager extends jmri.jmrix.AbstractConsistManager imp
 	private class EasyDccConsistReader implements Runnable,EasyDccListener {
 
            // Storage for addresses
-	   int _lastAddress=1;
+	   int _lastAddress=0;
            EasyDccConsist CurrentConsist = null;
 
            // Possible States
@@ -78,7 +78,7 @@ public class EasyDccConsistManager extends jmri.jmrix.AbstractConsistManager imp
            private void searchNext() {
               if(log.isDebugEnabled()) log.debug("Sending request for next consist, _lastAddress is: " + _lastAddress);
               CurrentState=SEARCHREQUESTSENT;
-	      EasyDccMessage msg=EasyDccMessage.getDisplayConsist(_lastAddress);
+	      EasyDccMessage msg=EasyDccMessage.getDisplayConsist(++_lastAddress);
               EasyDccTrafficController.instance().sendEasyDccMessage(msg,this);
            }
 
