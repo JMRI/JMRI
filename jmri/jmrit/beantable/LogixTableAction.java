@@ -44,7 +44,7 @@ import com.sun.java.util.collections.List;
  *	   BeanTableBundle.properties, accessed via rb.
  *
  * @author	Dave Duchamp    Copyright (C) 2007
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -350,7 +350,7 @@ public class LogixTableAction extends AbstractTableAction {
      */
     void createPressed(ActionEvent e) {
         String sName = systemName.getText().toUpperCase();
-        String uName = addUserName.getText();
+        String uName = addUserName.getText().trim();
         // check validity of Logix system name
         if ( (sName.equals(" ")) || (sName.length()<1) ) {
             // Entered system name is blank or too short
@@ -379,15 +379,17 @@ public class LogixTableAction extends AbstractTableAction {
             return;
         }
         // check if a Logix with the same user name exists
-        x = logixManager.getByUserName(uName);
-        if (x!=null) {
-            // Logix with this user name already exists
-            log.error("Duplicate Logix user name entered: "+uName);
-			javax.swing.JOptionPane.showMessageDialog(addLogixFrame,
-				rbx.getString("Error3")+"\n"+rbx.getString("Error4"),
-					rbx.getString("ErrorTitle"),
-						javax.swing.JOptionPane.ERROR_MESSAGE);
-            return;
+		if (uName.length() > 0) {
+			x = logixManager.getByUserName(uName);
+			if (x!=null) {
+				// Logix with this user name already exists
+				log.error("Duplicate Logix user name entered: "+uName);
+				javax.swing.JOptionPane.showMessageDialog(addLogixFrame,
+					rbx.getString("Error3")+"\n"+rbx.getString("Error4"),
+						rbx.getString("ErrorTitle"),
+							javax.swing.JOptionPane.ERROR_MESSAGE);
+				return;
+			}
         }
         // Create the new Logix
         curLogix = logixManager.createNewLogix(sName,uName);
@@ -655,49 +657,54 @@ public class LogixTableAction extends AbstractTableAction {
 	 *		active Edit Logix window.
      */
     void donePressed(ActionEvent e) {
-        Logix x = curLogix;
-        // Check if the User Name has been changed
-        String uName = editUserName.getText();
-        if ( !(uName.equals(x.getUserName())) ) {
-            // user name has changed - check if already in use
-            Logix p = logixManager.getByUserName(uName);
-            if (p!=null) {
-                // Logix with this user name already exists
-				log.error("Failure to update Logix with Duplicate User Name: "+uName);
-				javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
-					rbx.getString("Error6")+"\n"+rbx.getString("Error4"),
-						rbx.getString("ErrorTitle"),
-							javax.swing.JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            // user name is unique, change it
-            x.setUserName(uName);  
-			m.fireTableDataChanged();   
-        }
-		// complete update and activate Logix
-        x.activateLogix();
+		if (curLogix!=null) {
+			Logix x = curLogix;
+			// Check if the User Name has been changed
+			String uName = editUserName.getText();
+			if ( !(uName.equals(x.getUserName())) ) {
+				// user name has changed - check if already in use
+				Logix p = logixManager.getByUserName(uName);
+				if (p!=null) {
+					// Logix with this user name already exists
+					log.error("Failure to update Logix with Duplicate User Name: "+uName);
+					javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
+						rbx.getString("Error6")+"\n"+rbx.getString("Error4"),
+							rbx.getString("ErrorTitle"),
+								javax.swing.JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				// user name is unique, change it
+				x.setUserName(uName);  
+				m.fireTableDataChanged();   
+			}
+			// complete update and activate Logix
+			x.activateLogix();
+		}
+		else {
+			log.error("null pointer to curLogix in donePressed method");
+		}
         logixCreated = true;
 		inEditMode = false;
 		showSaveReminder();
 		editLogixFrame.setVisible(false);
 		// bring Logix Table to front
 		f.setVisible(true);
-   }
+	}
 
     /**
      * Responds to the Delete button in the Edit Logix window
      */
     void deletePressed(ActionEvent e) {
+		showSaveReminder();
         Logix x = curLogix;
 		// delete this Logix
-		curLogix = null;
 		logixManager.deleteLogix(x);
+		curLogix = null;
         logixCreated = true;
 		inEditMode = false;
-		showSaveReminder();
 		editLogixFrame.setVisible(false);
   		f.setVisible(true);
- }
+	}
 	
 	/**
 	 * Responds to the New Conditional Button in Edit Logix Window
@@ -1371,20 +1378,22 @@ public class LogixTableAction extends AbstractTableAction {
 	void updateConditionalPressed(ActionEvent e) {
         Conditional c = curConditional;
         // Check if the User Name has been changed
-        String uName = conditionalUserName.getText();
+        String uName = conditionalUserName.getText().trim();
         if ( !(uName.equals(c.getUserName())) ) {
             // user name has changed - check if already in use
-            Conditional p = conditionalManager.getByUserName(uName);
-            if (p!=null) {
-                // Conditional with this user name already exists
-				log.error("Failure to update Conditional with Duplicate User Name: "+uName);
-				javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
-					rbx.getString("Error10")+"\n"+rbx.getString("Error4"),
-						rbx.getString("ErrorTitle"),
-							javax.swing.JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            // user name is unique, change it
+			if ( (uName!=null) && (!(uName.equals(""))) ) {
+				Conditional p = conditionalManager.getByUserName(uName);
+				if (p!=null) {
+					// Conditional with this user name already exists
+					log.error("Failure to update Conditional with Duplicate User Name: "+uName);
+					javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
+						rbx.getString("Error10")+"\n"+rbx.getString("Error4"),
+							rbx.getString("ErrorTitle"),
+								javax.swing.JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+			}
+            // user name is unique or blank, change it
             c.setUserName(uName);  
 			conditionalTableModel.fireTableDataChanged();   
         }
@@ -2889,7 +2898,7 @@ public class LogixTableAction extends AbstractTableAction {
 
         public Object getValueAt (int r,int c) {
             int rx = r;
-            if (rx > numConditionals) {
+            if ( (rx > numConditionals) || (curLogix==null) ) {
                 return null;
             }
             switch (c) {
@@ -2922,7 +2931,7 @@ public class LogixTableAction extends AbstractTableAction {
 		
         public void setValueAt(Object value,int row,int col) {
             int rx = row;
-            if (rx > numConditionals) {
+            if ( (rx > numConditionals) || (curLogix==null) ) {
                 return;
             }
 			if (col == BUTTON_COLUMN) {
@@ -2943,9 +2952,12 @@ public class LogixTableAction extends AbstractTableAction {
 				} 			
 			}
 			else if (col == UNAME_COLUMN) {
-                conditionalManager.getBySystemName(
-					curLogix.getConditionalByNumberOrder(rx)).setUserName((String)value);
-				fireTableRowsUpdated(rx,rx);
+				String uName = (String)value;
+				if (curLogix!=null) {
+					conditionalManager.getBySystemName(
+						curLogix.getConditionalByNumberOrder(rx)).setUserName(uName.trim());
+					fireTableRowsUpdated(rx,rx);
+				}
 			}
         }
     } 
