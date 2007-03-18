@@ -19,7 +19,7 @@ import com.sun.java.util.collections.List;
  * is enforced when a new Conditional is created via LogixTableAction.java.
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class DefaultConditionalManager extends AbstractManager
     implements ConditionalManager, java.beans.PropertyChangeListener {
@@ -34,16 +34,24 @@ public class DefaultConditionalManager extends AbstractManager
     /**
      * Method to create a new Conditional if the Conditional does not exist
      *   Returns null if a Conditional with the same systemName or userName
-     *       already exists, or if there is trouble creating a new Conditional.
+     *       already exists, or if there is trouble creating a new Conditional
+	 *   If the parent Logix cannot be found, the userName cannot be checked, but
+	 *		the Conditional is still created. The scenario can happen when a Logix
+	 *      is loaded from a file after its Conditionals.
      */
     public Conditional createNewConditional(String systemName, String userName) {
-	        // Check that Conditional does not already exist
+		// Check that the parent Logix exists, if not can't check user Name
+		String sName = systemName.toUpperCase().trim();
+		Logix x = getParentLogix(sName);
         Conditional c;
-        if (userName!= null && !userName.equals("")) {
-            c = getByUserName(userName);
-            if (c!=null) return null;
-        }
-		String sName = systemName.toUpperCase();
+		if (x!=null) {
+			// Check that Conditional with same user name does not already exist for this Logix
+			if (userName!= null && !userName.equals("")) {
+				c = getByUserName(x,userName);
+				if (c!=null) return null;
+			}
+		}
+		// check that Conditional with same system name does not already exist
         c = getBySystemName(systemName);
 		if (c==null) getBySystemName(sName);
         if (c!=null) return null;
@@ -55,6 +63,22 @@ public class DefaultConditionalManager extends AbstractManager
         }
         return c;
     }
+	
+	/** 
+	 * Parses the Conditional system name to get the parent Logix system name, then
+	 *    gets the parent Logix, and returns it.
+	 * @param name - system name of Conditional (must be trimmed and upper case)
+	 */
+	public Logix getParentLogix(String name) {
+		if (name.length()<5) return null;
+		for (int i = name.length()-1;i>2;i--) {
+			if (name.charAt(i) == 'C') {
+				return InstanceManager.logixManagerInstance().getBySystemName(
+													name.substring(0,i-1));
+			}
+		}
+		return null;
+	}
 
     /**
      * Remove an existing Conditional. Parent Logix must have been deactivated
@@ -65,20 +89,34 @@ public class DefaultConditionalManager extends AbstractManager
     }
 
     /** 
-     * Method to get an existing Conditional.  First looks up assuming that
-     *      name is a User Name.  If this fails looks up assuming
+     * Method to get an existing Conditional.  
+	 *	First looks up assuming that name is a User Name. Note: the parent Logix
+	 *		must be passed in x for user name lookup.
+	 *	If this fails, or if x == null, looks up assuming
      *      that name is a System Name.  If both fail, returns null.
-     * @param name
+	 * @param x - parent Logix (may be null)
+     * @param name - name to look up
      * @return null if no match found
      */
-    public Conditional getConditional(String name) {
-        Conditional c = getByUserName(name);
-        if (c!=null) return c;
+    public Conditional getConditional(Logix x,String name) {
+		Conditional c = null;
+		if (x != null) {
+			c = getByUserName(x,name);
+			if (c!=null) return c;
+		}
         return getBySystemName(name);
     }
 
-    public Conditional getByUserName(String key) {
-        return (Conditional)_tuser.get(key);
+    public Conditional getByUserName(Logix x,String key) {
+		if (x == null) return null;
+		for (int i = 0;i<x.getNumConditionals();i++) {
+			Conditional c = getBySystemName(x.getConditionalByNumberOrder(i));
+			if (c!=null) {
+				String uName = c.getUserName();
+				if (key.equals(uName)) return c;
+			}
+		}	
+        return null;
     }
 
     public Conditional getBySystemName(String name) {
