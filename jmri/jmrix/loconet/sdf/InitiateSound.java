@@ -6,23 +6,19 @@ package jmri.jmrix.loconet.sdf;
  * Implement the INITIATE_SOUND macro from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 
 class InitiateSound extends SdfMacro {
 
-    public InitiateSound(byte byte1, byte byte2) {
-        bytes[0] = byte1;
-        bytes[1] = byte2;      
-        trigger = byte2&0x7f;
-        prempt = (byte1&0x7) + (byte2&0x80);
+    public InitiateSound(int trigger, int prempt) {
+        this.trigger = trigger;
+        this.prempt = prempt;
     }
     
     public String name() {
         return "INITIATE_SOUND";
     }
-    
-    byte[] bytes = new byte[2];
     
     int prempt;
     int trigger;
@@ -41,7 +37,9 @@ class InitiateSound extends SdfMacro {
     
     static public SdfMacro match(SdfByteBuffer buff) {
         if ( (buff.getAtIndex()&0xF8) != 0x90) return null;
-        return new InitiateSound(buff.getAtIndexAndInc(), buff.getAtIndexAndInc());
+        int byte1 = buff.getAtIndexAndInc();
+        int byte2 =  buff.getAtIndexAndInc();
+        return new InitiateSound(byte2&0x7f, (byte1&0x7) + (byte2&0x80));
     }
     
     public String toString() {

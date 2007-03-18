@@ -6,17 +6,14 @@ package jmri.jmrix.loconet.sdf;
  * Implement the SKEME_START macro from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 
 class SkemeStart extends SdfMacro {
 
-    public SkemeStart(byte byte1, byte byte2, byte byte3) {
-        bytes[0] = byte1;
-        bytes[1] = byte2;        
-        bytes[2] = byte3;   
-        number = byte1;
-        length = byte2*256+byte3;     
+    public SkemeStart(int number, int length) {
+        this.number = number;
+        this.length = length;     
     }
     
     int number;
@@ -26,8 +23,6 @@ class SkemeStart extends SdfMacro {
         return "SKEME_START";
     }
     
-    byte[] bytes = new byte[3];
-    
     public int length() { return 4;}
     
     static public SdfMacro match(SdfByteBuffer buff) {
@@ -35,9 +30,11 @@ class SkemeStart extends SdfMacro {
         if ( (buff.getAtIndex()&0xFF) != 0xF1) return null;
         
         buff.getAtIndexAndInc(); // skip op code
-        return new SkemeStart( buff.getAtIndexAndInc(),
-                               buff.getAtIndexAndInc(),
-                               buff.getAtIndexAndInc());
+        int byte2 = buff.getAtIndexAndInc();
+        int byte3 = buff.getAtIndexAndInc();
+        int byte4 = buff.getAtIndexAndInc();
+        
+        return new SkemeStart( byte2, byte3*256+byte4);
     }
     
     public String toString() {

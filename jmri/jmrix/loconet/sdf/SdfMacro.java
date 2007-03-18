@@ -7,7 +7,7 @@ package jmri.jmrix.loconet.sdf;
  * for their sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 
 abstract class SdfMacro {
@@ -419,6 +419,15 @@ static int MTYPE_SNDCV	    =	5; // modify under MASK SNDCV,ARG1=SNDCV#,ARG2=DATA
 static int MTYPE_WORK_IMMED  =	6; // modify WORK reg immed data
 static int MTYPE_WORK_INDIRECT = 7; // modify WORK reg indirect from SCV [selectable sound CV] or other WORK reg
 
+static int[] modControlCodes = new int[]{
+    MTYPE_TIME, MTYPE_GAIN, MTYPE_PITCH, MTYPE_BLEND,
+    MTYPE_SCATTER, MTYPE_SNDCV, MTYPE_WORK_IMMED, MTYPE_WORK_INDIRECT
+};
+static String[] modControlNames = new String[]{
+    "MTYPE_TIME", "MTYPE_GAIN", "MTYPE_PITCH", "MTYPE_BLEND",
+    "MTYPE_SCATTER", "MTYPE_SNDCV", "MTYPE_WORK_IMMED", "MTYPE_WORK_INDIRECT"
+};
+
 // ---------------
 // values for MATH functions on WORK regs
 
@@ -518,7 +527,6 @@ static int WKSB_MATH_MASK	= 0x80; // bit involved
 // SCATTER commands as arg bytes in MTYPE_SCATTER
 
 // is MODIFY SCTR command  -  1110-0100, cccc-XAAA, aaaa-aaaa, bbbb-bbbb, AAA is 1 of 8 scat tasks/chnls
-
 
 // is SCTR_PERIOD command  -  1110-0100, 0001-PAAA, Srrr-rrrr, IIIw-wwww, 
 
@@ -651,6 +659,44 @@ static int SKIP_GRTR	=	0x03;
 
 static int COMP_ALL	=	0x00; // 1 bits= do not include
 static int COMP_7LSB	=	0X80;
+
+// define fixed CV locations
+
+static int SNDCV_CONFIGA    = 0x80; // CV129= config byte
+static int SNDCV_CONFIGB    = 0x81; //CV130= config byte
+static int SCV_DCONFIG      = 0x82; // CV131= diesel config
+static int SCV_NOTCH        = 0x83; // CV132= typ DIESEL NOTCH rate byte
+static int SNDCV_STEAM      = 0x84; // CV133= typ steam CAM config byte, x80=EXT or 1-127=DRIVER dia in inches
+static int SCV_STGEAR       = 0x85; // CV134= steam gear ratio trim
+static int SCV_MUTE_VOL     = 0x86; // CV135= vol level when MUTE action is triggered, e.g. F8=ON
+static int SCV_MAIN_PITCH   = 0x87; // CV136
+static int SCV_137          = 0x88;
+static int SCV_138          = 0x89; // SCV138= 
+static int SCV_DISTANCE_RATE = 0x8A; // SCV139= mask for controlling DISTANCE rate event/trigger
+static int SCV_FREEFORM     = 0x8B; // SCV_140, here the SCV's are SDF defined
+	
+// CV133, SNDCV_STEAM /DRIVER size bit7=1 means EXTERNAL INPUT_0 generates a special CAM code as well
+
+static int STEAM_CAM_BIT = 7;
+
+// =======end of FIXED DATA assignments==============
+
+// =================
+// USER choices
+// SCAT_AIRCOMP_RATE	EQU	25		;AIR compressor about 2 mins, above 128 is SNDCV foR RATE ARG
+// SCAT_DRIER_RATE		EQU	10		;about 10 secs for DRIER
+// SCAT_WATERPUMP_RATE	EQU	100
+// SCAT_COAL_RATE		EQU	120
+
+
+// specific DFLT values to scale MAX ranges
+static int MAXG_WHISTLE	=	0x6A;
+static int MAXP_WHISTLE	=	0x07;
+static int MAXG_DIESEL	=	0x1C;
+static int MAXP_DIESEL	=	0x3E;
+static int MAXG_STEAM	=	0x1C;
+static int MAXP_STEAM	=	0x7E; // was 3E- make more explosive!
+
 
 
 }
