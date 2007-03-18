@@ -21,7 +21,7 @@ import javax.swing.table.TableColumnModel;
  *
  *
  * @author		Bob Jacobsen   Copyright (C) 2004
- * @version		$Revision: 1.4 $
+ * @version		$Revision: 1.5 $
  */
 public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -52,7 +52,9 @@ public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
             fireTableDataChanged();
         } else if (e.getPropertyName().equals("Count")) {
         	// it's a count indication, so update TURNS
-            fireTableCellUpdated( ((Integer)e.getNewValue()).intValue(), TURNSCOL);
+        	int row = ((Integer)e.getNewValue()).intValue();
+        	// length might have changed...
+            if (row<getRowCount()) fireTableCellUpdated(row, TURNSCOL);
         } else log.warn("Unexpected property named "+e.getPropertyName());
     }
 

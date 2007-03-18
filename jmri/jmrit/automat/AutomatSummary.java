@@ -10,9 +10,12 @@ import com.sun.java.util.collections.ArrayList;
  *<P>
  * It might not always be a singlet, however, so
  * for now we're going through an explicit instance() reference.
+ *<P>
+ * This can be invoked from various threads, so switches to the 
+ * Swing thread to notify it's own listeners.
  *
- * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.2 $
+ * @author	Bob Jacobsen    Copyright (C) 2004, 2007 
+ * @version     $Revision: 1.3 $
  */
 public class AutomatSummary  {
 
@@ -25,7 +28,7 @@ public class AutomatSummary  {
 		return self;
 	}
 
-	ArrayList automats = new ArrayList();
+	private ArrayList automats = new ArrayList();
 
     java.beans.PropertyChangeSupport prop = new java.beans.PropertyChangeSupport(this);
     public void removePropertyChangeListener(java.beans.PropertyChangeListener p) { prop.removePropertyChangeListener(p); }
@@ -36,10 +39,12 @@ public class AutomatSummary  {
 	 * notify interested parties of it's existance.
 	 */
 	public void register(AbstractAutomaton a) {
-		automats.add(a);
-
+	    synchronized (automats) {
+		    automats.add(a);
+        }
+        
 		//notify length changed
-		prop.firePropertyChange("Insert", null, new Integer(automats.indexOf(a)));
+		notify("Insert", null, new Integer(indexOf(a)));
 
 	}
 
@@ -48,19 +53,32 @@ public class AutomatSummary  {
 	 * notify interested parties of it's departure.
 	 */
 	public void remove(AbstractAutomaton a) {
-                int index = automats.indexOf(a);
-		automats.remove(a);
+        int index = indexOf(a);
 
+	    synchronized (automats) {
+		    automats.remove(a);
+        }
+        
 		//notify length changed
-		prop.firePropertyChange("Remove", null, new Integer(index));
+		notify("Remove", null, new Integer(index));
 	}
 
 	public int length() {
-		return automats.size();  // debugging value
+	    int length;
+	    synchronized (automats) {
+	        length = automats.size();
+	    }
+		return length;  // debugging value
 	}
 
 	public AbstractAutomaton get(int i) {
-		return (AbstractAutomaton)automats.get(i);
+	    AbstractAutomaton retval;
+	    
+	    synchronized (automats) {
+		    retval = (AbstractAutomaton)automats.get(i);
+		}
+		
+		return retval;
 	}
 
     /**
@@ -72,15 +90,21 @@ public class AutomatSummary  {
      */
 	public AbstractAutomaton get(String name) {
 	    AbstractAutomaton a;
-	    for (int i=0; i<length(); i++) {
-	        a = (AbstractAutomaton)automats.get(i);
-	        if (a.getName().equals(name)) return a;
+	    synchronized (automats) {
+            for (int i=0; i<length(); i++) {
+                a = (AbstractAutomaton)automats.get(i);
+                if (a.getName().equals(name)) return a;
+            }
         }
 		return null;
 	}
 	
 	public int indexOf(AbstractAutomaton a) {
-		return automats.indexOf(a);
+	    int retval;
+	    synchronized (automats) {
+	        retval = automats.indexOf(a);
+        }
+		return retval;
 	}
 
 	/**
@@ -89,10 +113,34 @@ public class AutomatSummary  {
 	 * handle loop again.
 	 */
 	public void loop(AbstractAutomaton a) {
-		int i = automats.indexOf(a);
-		prop.firePropertyChange("Count", null, new Integer(i));
+	    int i;
+	    synchronized (automats) {
+		    i = automats.indexOf(a);
+	    }
+		notify("Count", null, new Integer(i));
 	}
 
+    void notify(String property, Object arg1, Object arg2){
+        Runnable r = new Notifier(property, arg1, arg2);
+        javax.swing.SwingUtilities.invokeLater(r);
+    }
+    
+    class Notifier implements Runnable {
+        Notifier(String property, Object arg1, Object arg2) {
+            this.property = property;
+            this.arg1 = arg1;
+            this.arg2 = arg2;
+        }
+        Object arg1;
+        Object arg2;
+        String property;
+        
+        public void run() {
+            prop.firePropertyChange(property, arg1, arg2);
+        }
+        
+    }
+    
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AutomatSummary.class.getName());
 }
