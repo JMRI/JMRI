@@ -17,9 +17,9 @@ import javax.swing.*;
  * immediately.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2003
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
-public class SendPacketFrame extends javax.swing.JFrame {
+public class SendPacketFrame extends jmri.util.JmriJFrame {
 
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
@@ -108,6 +108,9 @@ public class SendPacketFrame extends javax.swing.JFrame {
         cs = InstanceManager.commandStationInstance();
         if (cs==null) log.error("No CommandStation object available");
 
+        // add help menu
+        addHelpMenu("package.jmri.jmrit.sendpacket.SendPacketFrame", true);
+        
         // pack to cause display
         pack();
     }

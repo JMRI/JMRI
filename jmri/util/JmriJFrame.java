@@ -3,6 +3,7 @@
 package jmri.util;
 
 import javax.swing.JFrame;
+import javax.swing.JMenuBar;
 import java.awt.*;
 
 /**
@@ -22,7 +23,7 @@ import java.awt.*;
  *
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class JmriJFrame extends JFrame {
@@ -39,6 +40,18 @@ public class JmriJFrame extends JFrame {
 	setIconImage(getToolkit().getImage("resources/jmri32x32.gif"));
     }
 
+    /**
+     * @param direct true if the help menu goes directly to the help system,
+     *        e.g. there are no items in the help menu
+     */
+    public void addHelpMenu(String ref, boolean direct) {
+        // only works if no menu present?
+        JMenuBar bar = getJMenuBar();
+        if (bar == null) bar = new JMenuBar();
+        jmri.util.HelpUtil.helpMenu(bar, this, ref, direct);
+        setJMenuBar(bar);
+    }
+    
     public Dimension getMaximumSize() {
         // adjust maximum size to full screen minus any toolbars
         try {

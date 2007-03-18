@@ -18,7 +18,7 @@ import javax.swing.border.Border;
  * Frame for user configuration of Simple Timebase
  *
  * @author	Dave Duchamp   Copyright (C) 2004
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class SimpleClockFrame extends JmriJFrame
 	implements java.beans.PropertyChangeListener {
@@ -160,6 +160,9 @@ public class SimpleClockFrame extends JmriJFrame
 
 		// update contents for current status
 		updateRunningButton();
+
+        // add help menu to window
+    	addHelpMenu("package.jmri.jmrit.simpleclock.SimpleClockFrame", true);
 
         // pack for display
         pack();

@@ -18,12 +18,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import jmri.util.JmriJFrame;
+
 /**
  * Swing action to create and register a
  * MemoryTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 
 public class MemoryTableAction extends AbstractTableAction {
@@ -100,7 +102,12 @@ public class MemoryTableAction extends AbstractTableAction {
     void setTitle() {
         f.setTitle(f.rb.getString("TitleMemoryTable"));
     }
-    JFrame addFrame = null;
+
+    String helpTarget() {
+        return "package.jmri.jmrit.beantable.MemoryTable";
+    }
+
+    JmriJFrame addFrame = null;
     JTextField sysName = new JTextField(5);
     JTextField userName = new JTextField(5);
     JLabel sysNameLabel = new JLabel(rb.getString("LabelSystemName"));
@@ -108,7 +115,8 @@ public class MemoryTableAction extends AbstractTableAction {
 
     void addPressed(ActionEvent e) {
         if (addFrame==null) {
-            addFrame = new JFrame(rb.getString("TitleAddMemory"));
+            addFrame = new JmriJFrame(rb.getString("TitleAddMemory"));
+            addFrame.addHelpMenu("package.jmri.jmrit.beantable.MemoryAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             JPanel p;
             p = new JPanel(); p.setLayout(new FlowLayout());

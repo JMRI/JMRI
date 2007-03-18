@@ -47,7 +47,7 @@ import com.sun.java.util.collections.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.59 $
+ * @version $Revision: 1.60 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -136,7 +136,9 @@ public class PanelEditor extends JmriJFrame {
         fileMenu.add(new jmri.jmrit.display.PanelEditorAction(rb.getString("MenuItemNew")));
         fileMenu.add(new jmri.configurexml.LoadXmlConfigAction(rb.getString("MenuItemLoad")));
         fileMenu.add(new jmri.configurexml.StoreXmlUserAction(rb.getString("MenuItemStore")));
+
         setJMenuBar(menuBar);
+        addHelpMenu("package.jmri.jmrit.display.PanelEditor", true);
 
 
         // allow naming the panel
@@ -975,6 +977,7 @@ public class PanelEditor extends JmriJFrame {
                 }
             });
         targetFrame.setJMenuBar(menuBar);
+        targetFrame.addHelpMenu("package.jmri.jmrit.display.PanelTarget", true);
 
         // show menubar?
         menuBar.setVisible(menuBox.isSelected());

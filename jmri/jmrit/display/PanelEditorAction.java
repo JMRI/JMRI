@@ -9,7 +9,7 @@ import javax.swing.AbstractAction;
  * Start a PanelEditor.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  * @see         jmri.jmrit.display.PanelEditorAction
  */
 public class PanelEditorAction extends AbstractAction {
@@ -26,7 +26,7 @@ public class PanelEditorAction extends AbstractAction {
         PanelEditor panel = new PanelEditor();
         JmriJFrame targetFrame = panel.makeFrame("Panel");
         targetFrame.setLocation(20,20);
-
+        
         panel.setTitle();
 
         targetFrame.pack();

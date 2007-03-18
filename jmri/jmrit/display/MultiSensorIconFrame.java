@@ -21,7 +21,7 @@ import javax.swing.*;
  * It should be.
  *
  * @author  Bob Jacobsen  Copyright (c) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class MultiSensorIconFrame extends JmriJFrame {
@@ -37,6 +37,8 @@ public class MultiSensorIconFrame extends JmriJFrame {
     MultiSensorIconFrame(PanelEditor p) {
         super("Enter MultiSensor");
         panelEditor = p;
+        
+        addHelpMenu("package.jmri.jmrit.display.MultiSensorIconFrame", true);
     }
     
     void initComponents() {

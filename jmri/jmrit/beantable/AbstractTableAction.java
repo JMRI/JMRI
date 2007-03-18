@@ -14,7 +14,7 @@ import javax.swing.JButton;
  * SignalHeadTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 
 abstract public class AbstractTableAction extends AbstractAction {
@@ -46,7 +46,7 @@ abstract public class AbstractTableAction extends AbstractAction {
         createModel();
 
         // create the frame
-        f = new BeanTableFrame(m){
+        f = new BeanTableFrame(m, helpTarget()){
             /**
              * Include an "add" button
              */
@@ -71,6 +71,13 @@ abstract public class AbstractTableAction extends AbstractAction {
      * without have to actually suclass the BeanTableDataFrame
      */
     public void addToFrame(BeanTableFrame f) {
+    }
+
+    /**
+     * Specify the JavaHelp target for this specific panel
+     */
+    String helpTarget() {
+        return "index";  // by default, go to the top
     }
 
     abstract void addPressed(ActionEvent e);

@@ -25,6 +25,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 
+import jmri.util.JmriJFrame;
+
 /**
  * Swing action to create and register a
  * LightTable GUI.
@@ -32,7 +34,7 @@ import javax.swing.JOptionPane;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -158,7 +160,11 @@ public class LightTableAction extends AbstractTableAction {
         f.setTitle(f.rb.getString("TitleLightTable"));
     }
 
-    JFrame addFrame = null;
+    String helpTarget() {
+        return "package.jmri.jmrit.beantable.LightTable";
+    }
+
+    JmriJFrame addFrame = null;
     Light curLight = null;
     boolean lightCreated = false;
     boolean warnMsg = false;
@@ -213,7 +219,8 @@ public class LightTableAction extends AbstractTableAction {
 			cancelPressed(null);
 		}
         if (addFrame==null) {
-            addFrame = new JFrame( rb.getString("TitleAddLight") );
+            addFrame = new JmriJFrame( rb.getString("TitleAddLight") );
+            addFrame.addHelpMenu("package.jmri.jmrit.beantable.LightAddEdit", true);
             addFrame.setLocation(100,30);
             Container contentPane = addFrame.getContentPane();        
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));

@@ -21,6 +21,8 @@ import javax.swing.table.*;
 
 import com.sun.java.util.collections.List;
 
+import jmri.util.JmriJFrame;
+
 /**
  * Swing action to create and register a Route Table
  
@@ -29,7 +31,7 @@ import com.sun.java.util.collections.List;
  * @author	Dave Duchamp    Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2007 
  *
- * @version     $Revision: 1.27 $
+ * @version     $Revision: 1.28 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -138,6 +140,10 @@ public class RouteTableAction extends AbstractTableAction {
         f.setTitle("Route Table");
     }
 
+    String helpTarget() {
+        return "package.jmri.jmrit.beantable.RouteTable";
+    }
+
 	String stateThrown = InstanceManager.turnoutManagerInstance().getThrownText();
 	String stateClosed = InstanceManager.turnoutManagerInstance().getClosedText();
 	String setStateClosed = "Set "+stateClosed;
@@ -187,7 +193,7 @@ public class RouteTableAction extends AbstractTableAction {
     JTextField name = new JTextField(10);
     JTextField userName = new JTextField(22);
 
-    JFrame addFrame = null;
+    JmriJFrame addFrame = null;
     RouteTurnoutModel routeTurnoutModel = null;
     RouteSensorModel routeSensorModel = null;
 
@@ -261,7 +267,8 @@ public class RouteTableAction extends AbstractTableAction {
         }
         // Set up window
         if (addFrame==null) {
-            addFrame = new JFrame("Add/Edit Route");
+            addFrame = new JmriJFrame("Add/Edit Route");
+            addFrame.addHelpMenu("package.jmri.jmrit.beantable.RouteAddEdit", true);
             addFrame.setLocation(100,30);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             Container contentPane = addFrame.getContentPane();        

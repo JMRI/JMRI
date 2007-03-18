@@ -30,7 +30,7 @@ import javax.swing.*;
  * The individual items all share data models to simplify the logic.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  *              
  *              Revisions to add facing point sensors, approach lighting,
  *              limited speed, changed layout, and tool tips.  
@@ -38,7 +38,7 @@ import javax.swing.*;
  
 */
 
-public class BlockBossFrame extends JFrame {
+public class BlockBossFrame extends jmri.util.JmriJFrame {
 
     JPanel modeSingle               = new JPanel();
     JRadioButton buttonSingle;
@@ -142,7 +142,8 @@ public class BlockBossFrame extends JFrame {
         menuBar.add(fileMenu);
         fileMenu.add(new jmri.configurexml.SaveMenu());
         setJMenuBar(menuBar);
-
+        addHelpMenu("package.jmri.jmrit.blockboss.BlockBossFrame", true);
+        
         // create GUI items
         sLimitBox  = new JCheckBox("Limited Speed");
         tmLimitBox = new JCheckBox("Limited Speed");

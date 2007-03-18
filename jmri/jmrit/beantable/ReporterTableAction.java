@@ -19,12 +19,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import jmri.util.JmriJFrame;
+
 /**
  * Swing action to create and register a
  * ReporterTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 
 public class ReporterTableAction extends AbstractTableAction {
@@ -100,7 +102,12 @@ public class ReporterTableAction extends AbstractTableAction {
     void setTitle() {
         f.setTitle(f.rb.getString("TitleReporterTable"));
     }
-    JFrame addFrame = null;
+
+    String helpTarget() {
+        return "package.jmri.jmrit.beantable.ReporterTable";
+    }
+
+    JmriJFrame addFrame = null;
     JTextField sysName = new JTextField(5);
     JTextField userName = new JTextField(5);
     JLabel sysNameLabel = new JLabel(rb.getString("LabelSystemName"));
@@ -108,7 +115,8 @@ public class ReporterTableAction extends AbstractTableAction {
 
     void addPressed(ActionEvent e) {
         if (addFrame==null) {
-            addFrame = new JFrame(rb.getString("TitleAddReporter"));
+            addFrame = new JmriJFrame(rb.getString("TitleAddReporter"));
+            addFrame.addHelpMenu("package.jmri.jmrit.beantable.ReporterAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             JPanel p;
             p = new JPanel(); p.setLayout(new FlowLayout());

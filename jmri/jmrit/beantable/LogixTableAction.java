@@ -33,6 +33,8 @@ import javax.swing.table.*;
 
 import com.sun.java.util.collections.List;
 
+import jmri.util.JmriJFrame;
+
 /**
  * Swing action to create and register a Logix Table.
  * <P>
@@ -44,7 +46,7 @@ import com.sun.java.util.collections.List;
  *	   BeanTableBundle.properties, accessed via rb.
  *
  * @author	Dave Duchamp    Copyright (C) 2007
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -155,6 +157,10 @@ public class LogixTableAction extends AbstractTableAction {
         f.setTitle(f.rb.getString("TitleLogixTable"));
     }
 	
+    String helpTarget() {
+        return "package.jmri.jmrit.beantable.LogixTable";
+    }
+
 	//  *********** variable definitions ********************
     
 	// Multi use variables 
@@ -174,14 +180,14 @@ public class LogixTableAction extends AbstractTableAction {
 	Conditional curConditional = null;
 	
 	// Add Logix Variables
-    JFrame addLogixFrame = null;
+    JmriJFrame addLogixFrame = null;
     JTextField systemName = new JTextField(10);
     JTextField addUserName = new JTextField(10);
     JButton create;
     JButton cancel;
 	
 	// Edit Logix Variables
-	JFrame editLogixFrame = null;
+	JmriJFrame editLogixFrame = null;
 	boolean inEditMode = false;
 	boolean inReorderMode = false;
 	int nextInOrder = 0;
@@ -198,7 +204,7 @@ public class LogixTableAction extends AbstractTableAction {
 	
 	// Edit Conditional Variables
 	boolean inEditConditionalMode = false;
-	JFrame editConditionalFrame = null;
+	JmriJFrame editConditionalFrame = null;
 	JLabel conditionalSystemName = new JLabel("xxxxxxxxxxx");
     JLabel conditionalSystemNameLabel = new JLabel( rbx.getString("ConditionalSystemName") );
     JTextField conditionalUserName = new JTextField(10);
@@ -274,7 +280,8 @@ public class LogixTableAction extends AbstractTableAction {
 		}
 		// make an Add Logix Frame
         if (addLogixFrame==null) {
-            addLogixFrame = new JFrame( rbx.getString("TitleAddLogix") );
+            addLogixFrame = new JmriJFrame( rbx.getString("TitleAddLogix") );
+            addLogixFrame.addHelpMenu("package.jmri.jmrit.beantable.LogixAddEdit", true);
             addLogixFrame.setLocation(50,30);
             Container contentPane = addLogixFrame.getContentPane();        
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -446,7 +453,8 @@ public class LogixTableAction extends AbstractTableAction {
 		}
 		inEditMode = true;
         if (editLogixFrame==null) {
-            editLogixFrame = new JFrame( rbx.getString("TitleEditLogix") );
+            editLogixFrame = new JmriJFrame( rbx.getString("TitleEditLogix") );
+            editLogixFrame.addHelpMenu("package.jmri.jmrit.beantable.LogixAddEdit", true);
             editLogixFrame.setLocation(100,30);
             Container contentPane = editLogixFrame.getContentPane();        
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -818,7 +826,8 @@ public class LogixTableAction extends AbstractTableAction {
 		conditionalUserName.setText(curConditional.getUserName());
 		cStatus.setText(" ");
         if (editConditionalFrame==null) {
-            editConditionalFrame = new JFrame( rbx.getString("TitleEditConditional") );
+            editConditionalFrame = new JmriJFrame( rbx.getString("TitleEditConditional") );
+            editConditionalFrame.addHelpMenu("package.jmri.jmrit.beantable.ConditionalAddEdit", true);
             editConditionalFrame.setLocation(50,40);
             Container contentPane = editConditionalFrame.getContentPane();        
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));

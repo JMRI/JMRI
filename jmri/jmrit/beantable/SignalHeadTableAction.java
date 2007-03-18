@@ -19,12 +19,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import jmri.util.JmriJFrame;
+
 /**
  * Swing action to create and register a
  * SignalHeadTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007
- * @version     $Revision: 1.19 $
+ * @version     $Revision: 1.20 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -145,7 +147,11 @@ public class SignalHeadTableAction extends AbstractTableAction {
         f.setTitle(f.rb.getString("TitleSignalTable"));
     }
 
-    JFrame addFrame = null;
+    String helpTarget() {
+        return "package.jmri.jmrit.beantable.SignalTable";
+    }
+
+    JmriJFrame addFrame = null;
     JComboBox typeBox;
     JTextField name = new JTextField(5);
     JTextField to1 = new JTextField(5);
@@ -163,7 +169,8 @@ public class SignalHeadTableAction extends AbstractTableAction {
     
     void addPressed(ActionEvent e) {
         if (addFrame==null) {
-            addFrame = new JFrame(rb.getString("TitleAddSignal"));
+            addFrame = new JmriJFrame(rb.getString("TitleAddSignal"));
+            addFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             addFrame.getContentPane().add(typeBox = new JComboBox(new String[]{
                 se8c4Aspect, tripleTurnout, doubleTurnout, virtualHead

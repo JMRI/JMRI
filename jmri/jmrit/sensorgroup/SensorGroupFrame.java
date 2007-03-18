@@ -21,9 +21,9 @@ import com.sun.java.util.collections.List;
  * immediately.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2003
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
-public class SensorGroupFrame extends javax.swing.JFrame {
+public class SensorGroupFrame extends jmri.util.JmriJFrame {
 
     public SensorGroupFrame() {
     }
@@ -40,7 +40,8 @@ public class SensorGroupFrame extends javax.swing.JFrame {
     Boolean[] includedSensors = new Boolean[MAXSENSOR];
     
     public void initComponents() throws Exception {
-
+        addHelpMenu("package.jmri.jmrit.sensorgroup.SensorGroupFrame", true);
+        
         for (int i = 0; i<MAXSENSOR; i++)
             includedSensors[i] = Boolean.FALSE;
                     

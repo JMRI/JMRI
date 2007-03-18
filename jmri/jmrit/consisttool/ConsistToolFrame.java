@@ -18,9 +18,9 @@ import com.sun.java.util.collections.ArrayList;
  * Frame object for manipulating consists.
  *
  * @author               Paul Bender Copyright (C) 2003
- * @version              $Revision: 1.16 $
+ * @version              $Revision: 1.17 $
  */
-public class ConsistToolFrame extends javax.swing.JFrame implements jmri.ConsistListener{
+public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.ConsistListener{
 
     // GUI member declarations
     javax.swing.JLabel textAdrLabel = new javax.swing.JLabel();
@@ -230,6 +230,7 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
 	statusPanel.add(_status);
 	getContentPane().add(statusPanel);
 
+    addHelpMenu("package.jmri.jmrit.consisttool.ConsistToolFrame", true);
         pack();
 
     }

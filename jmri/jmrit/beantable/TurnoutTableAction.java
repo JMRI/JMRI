@@ -35,12 +35,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 
+import jmri.util.JmriJFrame;
+
 /**
  * Swing action to create and register a
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.38 $
+ * @version     $Revision: 1.39 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -210,7 +212,12 @@ public class TurnoutTableAction extends AbstractTableAction {
     void setTitle() {
         f.setTitle(f.rb.getString("TitleTurnoutTable"));
     }
-    JFrame addFrame = null;
+
+    String helpTarget() {
+        return "package.jmri.jmrit.beantable.TurnoutTable";
+    }
+
+    JmriJFrame addFrame = null;
     JTextField sysName = new JTextField(5);
     JTextField userName = new JTextField(5);
     JLabel sysNameLabel = new JLabel(rb.getString("LabelSystemName"));
@@ -218,7 +225,8 @@ public class TurnoutTableAction extends AbstractTableAction {
 
     void addPressed(ActionEvent e) {
         if (addFrame==null) {
-            addFrame = new JFrame(rb.getString("TitleAddTurnout"));
+            addFrame = new JmriJFrame(rb.getString("TitleAddTurnout"));
+            addFrame.addHelpMenu("package.jmri.jmrit.beantable.TurnoutAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             JPanel p;
             p = new JPanel(); p.setLayout(new FlowLayout());

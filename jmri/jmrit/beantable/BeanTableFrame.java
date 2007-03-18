@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
-import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JScrollPane;
 import javax.swing.*;
@@ -24,9 +23,9 @@ import jmri.util.davidflanagan.HardcopyWriter;
  * Frame providing a table of NamedBeans.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
-public class BeanTableFrame extends javax.swing.JFrame {
+public class BeanTableFrame extends jmri.util.JmriJFrame {
 
     BeanTableDataModel		dataModel;
     JTable			dataTable;
@@ -37,7 +36,7 @@ public class BeanTableFrame extends javax.swing.JFrame {
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
 
-    public BeanTableFrame(BeanTableDataModel model) {
+    public BeanTableFrame(BeanTableDataModel model, String helpTarget) {
 
         super();
         dataModel 	= model;
@@ -67,7 +66,7 @@ public class BeanTableFrame extends javax.swing.JFrame {
         
         JMenuItem printItem = new JMenuItem(rb.getString("PrintTable"));
         fileMenu.add(printItem);
-        final JFrame tableFrame = this;
+        final jmri.util.JmriJFrame tableFrame = this;
         printItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     HardcopyWriter writer = null;
@@ -98,6 +97,8 @@ public class BeanTableFrame extends javax.swing.JFrame {
         });
 
         setJMenuBar(menuBar);
+
+        addHelpMenu(helpTarget,true);
 
         // install items in GUI
         JPanel pane1 = new JPanel();
@@ -142,7 +143,7 @@ public class BeanTableFrame extends javax.swing.JFrame {
         setVisible(false);
         dispose();
     }
-
+    
     protected Box getBottomBox() { return bottomBox; };
     /**
      * Add a component to the bottom box. Takes care of organising glue, struts etc

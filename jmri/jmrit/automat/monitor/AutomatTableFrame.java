@@ -16,9 +16,9 @@ import jmri.util.JTableUtil;
  * Frame providing a table of Automat instances
  *
  * @author	Bob Jacobsen   Copyright (C) 2004
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
-public class AutomatTableFrame extends javax.swing.JFrame {
+public class AutomatTableFrame extends jmri.util.JmriJFrame {
 
     AutomatTableDataModel	dataModel;
     JTable			dataTable;
@@ -48,6 +48,8 @@ public class AutomatTableFrame extends javax.swing.JFrame {
         pane1.setMaximumSize(pane1.getSize());
 
 		setTitle(rb.getString("TitleAutomatTable"));
+
+        addHelpMenu("package.jmri.jmrit.automat.monitor.AutomatTableFrame", true);
 
         pack();
     }
