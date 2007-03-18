@@ -47,7 +47,7 @@ import com.sun.java.util.collections.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.58 $
+ * @version $Revision: 1.59 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -103,6 +103,9 @@ public class PanelEditor extends JmriJFrame {
 
     JButton reporterAdd = new JButton("Add reporter:");
     JTextField nextReporter = new JTextField(5);
+
+    JButton multiSensorAdd = new JButton("Add multi-sensor...");
+    MultiSensorIconFrame multiSensorFrame;
 
     JButton clockAdd = new JButton("Add Fast clock:");
 
@@ -451,6 +454,21 @@ public class PanelEditor extends JmriJFrame {
             this.getContentPane().add(panel);
         }
 
+        // Add a MultiSensor indicator
+        {
+            JPanel panel = new JPanel();
+            panel.setLayout(new FlowLayout());
+            panel.add(multiSensorAdd);
+            multiSensorAdd.setEnabled(true);
+            multiSensorAdd.addActionListener( new ActionListener() {
+                    public void actionPerformed(ActionEvent a) {
+                        startMultiSensor();
+                    }
+                }
+                                           );
+            this.getContentPane().add(panel);
+        }
+        
         // add a fast clock indicator
         {
             JPanel panel = new JPanel();
@@ -460,7 +478,7 @@ public class PanelEditor extends JmriJFrame {
             clockAdd.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     addClock();
-                    clockAdd.setEnabled(false);
+                    // clockAdd.setEnabled(false);
                 }
             });
             this.getContentPane().add(panel);
@@ -614,6 +632,32 @@ public class PanelEditor extends JmriJFrame {
         putSensor(l);
     }
     public void putSensor(SensorIcon l) {
+        l.invalidate();
+        target.add(l, l.getDisplayLevel());
+        contents.add(l);
+        // reshow the panel
+        target.validate();
+    }
+
+    /**
+     * Invoke a window to allow you to add a MultiSensor indicator to the target
+     */
+    void startMultiSensor() {
+        if (multiSensorFrame == null) {
+            // create a common edit frame
+            multiSensorFrame = new MultiSensorIconFrame(this);
+            multiSensorFrame.initComponents();
+            multiSensorFrame.pack();
+        }  
+        multiSensorFrame.setVisible(true);
+    }
+    // Invoked with window has new sensor ready
+    public void addMultiSensor(MultiSensorIcon l) {
+        setNextLocation(l);
+        putMultiSensor(l);
+    }
+    // invoked to install the sensor
+    public void putMultiSensor(MultiSensorIcon l) {
         l.invalidate();
         target.add(l, l.getDisplayLevel());
         contents.add(l);
