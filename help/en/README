@@ -13,4 +13,5 @@ here don't cause confusion.
 There are several subtrees to this:
   DecoderProManual - a help version of the original manual
   html - a help-customized version of the web site
-  context - context-sensitive help, organized by Java package
+  package - package-sensitive help, organized by Java package
+  
