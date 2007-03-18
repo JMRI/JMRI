@@ -44,7 +44,7 @@ import com.sun.java.util.collections.List;
  *	   BeanTableBundle.properties, accessed via rb.
  *
  * @author	Dave Duchamp    Copyright (C) 2007
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -577,12 +577,9 @@ public class LogixTableAction extends AbstractTableAction {
 							donePressed(null);
 						}
 						else {
-						editLogixFrame.setVisible(false);
-						}
-						// remind to save, if Logix was created or edited
-						if (logixCreated) {
-							showSaveReminder();
-							logixCreated = false;
+							editLogixFrame.setVisible(false);
+							// bring Logix Table to front
+							f.setVisible(true);
 						}
 					}
 				});
@@ -1382,7 +1379,7 @@ public class LogixTableAction extends AbstractTableAction {
         if ( !(uName.equals(c.getUserName())) ) {
             // user name has changed - check if already in use
 			if ( (uName!=null) && (!(uName.equals(""))) ) {
-				Conditional p = conditionalManager.getByUserName(uName);
+				Conditional p = conditionalManager.getByUserName(curLogix,uName);
 				if (p!=null) {
 					// Conditional with this user name already exists
 					log.error("Failure to update Conditional with Duplicate User Name: "+uName);
