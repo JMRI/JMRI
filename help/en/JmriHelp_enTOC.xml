@@ -6,10 +6,10 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 1.0//EN"
 
 <toc version="1.0"> 
 
-   <tocitem text="JMRI Help" target="index"/>
+   <tocitem text="JMRI Help Main Page" target="index"/>
    <tocitem text="DecoderPro Manual">
       <tocitem text="Getting Started" target="DecoderProManual.Getting_Started"/>
-      <tocitem text="Basic Programming" target="DecoderProManual.Basic_Programming"/>
+      <tocitem text="Basic Decoder Programming" target="DecoderProManual.Basic_Programming"/>
       <tocitem text="Comprehensive Panel">
          <tocitem text="Setup and Roster Panes" target="DecoderProManual.Comp_Setup_Roster"/>
          <tocitem text="Basic Pane" target="DecoderProManual.Comp_Basic"/>
@@ -25,7 +25,28 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 1.0//EN"
          <tocitem text="Consisting Functions Pane" target="DecoderProManual.Comp_Consist"/>
          <tocitem text="Global CV Listing Pane" target="DecoderProManual.Comp_GlobalCVs"/>
       </tocitem>
-      <tocitem text="Index" target="DecoderProManual.index"/>
+      <tocitem text="More Information" target="DecoderProManual.index"/>
    </tocitem>
+   <tocitem text="Tools">
+      <tocitem text="Routes"/>
+      <tocitem text="Consist Tool" target="package.jmri.jmrit.consisttool.ConsistToolFrame"/>
+      <tocitem text="Tables">
+         <tocitem text="Turnout Table" target="package.jmri.jmrit.beantable.TurnoutTable"/>
+         <tocitem text="Sensor Table" target="package.jmri.jmrit.beantable.SensorTable"/>
+         <tocitem text="Signal Table" target="package.jmri.jmrit.beantable.SignalTable"/>
+         <tocitem text="Route Table" target="package.jmri.jmrit.beantable.RouteTable"/>
+         <tocitem text="Logix Table" target="package.jmri.jmrit.beantable.LogixTable"/>
+         <tocitem text="Light Table" target="package.jmri.jmrit.beantable.LightTable"/>
+         <tocitem text="Memory Table" target="package.jmri.jmrit.beantable.MemoryTable"/>
+         <tocitem text="Reporter Table" target="package.jmri.jmrit.beantable.ReporterTable"/>
+      </tocitem>
+      <tocitem text="Simple Signal Logic" target="package.jmri.jmrit.blockboss.BlockBossFrame"/>
+      <tocitem text="Sensor Groups" target="package.jmri.jmrit.sensorgroup.SensorGroupFrame"/>
+      <tocitem text="Send DCC Packet Tool" target="package.jmri.jmrit.sendpacket.SendPacketFrame"/>
+   </tocitem>
+   <tocitem text="Panels">
+      <tocitem text="Panel Editor" target="package.jmri.jmrit.display.PanelEditor"/>
+   </tocitem>
+   <tocitem text="Acknowledgements" target="Acknowledgements"/>
 
 </toc>
