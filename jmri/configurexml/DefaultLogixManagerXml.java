@@ -15,7 +15,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class DefaultLogixManagerXml implements XmlAdapter {
 
@@ -41,9 +41,12 @@ public class DefaultLogixManagerXml implements XmlAdapter {
                 log.debug("logix system name is "+sname);
                 Logix x = tm.getBySystemName(sname);
                 String uname = x.getUserName();
+				boolean enabled = x.getEnabled();
                 Element elem = new Element("logix")
                             .addAttribute("systemName", sname);
                 if (uname!=null) elem.addAttribute("userName", uname);
+				if (enabled) elem.addAttribute("enabled","yes");
+				else elem.addAttribute("enabled","no");
 				// save child Conditionals
 				int numConditionals = x.getNumConditionals();
 				if (numConditionals>0) {
@@ -108,13 +111,23 @@ public class DefaultLogixManagerXml implements XmlAdapter {
             }
             String sysName = ((Element)(logixList.get(i))).getAttribute("systemName").getValue();
             String userName = null;
-            if ( ((Element)(logixList.get(i))).getAttribute("userName") != null)
+			boolean enabled = true;
+			String yesno = "";
+            if ( ((Element)(logixList.get(i))).getAttribute("userName") != null) {
                 userName = ((Element)(logixList.get(i))).getAttribute("userName").getValue();
-				
+			}
+            if ( ((Element)(logixList.get(i))).getAttribute("enabled") != null) {
+				yesno = ((Element)(logixList.get(i))).getAttribute("enabled").getValue();
+			}				
 			if (log.isDebugEnabled()) log.debug("create logix: ("+sysName+")("+
 										(userName==null?"<null>":userName)+")");
             Logix x = tm.createNewLogix(sysName, userName);
             if (x!=null) {
+				// set enabled/disabled if attribute was present
+				if ( (yesno!=null) && (!yesno.equals("")) ) {
+					if (yesno.equals("yes")) x.setEnabled(true);
+					else if (yesno.equals("no")) x.setEnabled(false);
+				}
 				// load conditionals, if there are any
                 List logixConditionalList = ((Element)(logixList.get(i))).getChildren("logixConditional");
 				if (logixConditionalList.size()>0) {
