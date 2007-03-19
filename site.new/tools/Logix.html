@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Logix.html,v 1.1 2007-03-19 05:45:47 jacobsen Exp $ -->
+<!-- $Id: Logix.html,v 1.2 2007-03-19 16:20:39 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -136,7 +136,10 @@
 	the capability of being "enabled" or "disabled", however. When a Logix is 
 	disabled (not enabled), 
 	the logical expressions of its Conditionals are still evaluated,
-	but the actions specified in the Conditionals are not taken.</p>  
+	but the actions specified in the Conditionals are not taken.
+	Whether a Logix is enabled or disabled is saved when the Logix is saved to disk, 
+	so it is possible to start up with selected Logixs disabled initially.
+	</p>  
 	<p> A Logix is defined via the Logix Table that can be accessed by 
 	selecting <b>Logix Table</b> in the Tools menu. The Logix Table lists 
 	all currently defined Logix by their system name and user name.  The 
@@ -602,11 +605,20 @@
 	<p>When a Logix is created or edited, the initial state of each Conditional 
 	is true or false as shown in the Edit Logix window.  When a Logix is loaded 
 	from a configuration file, the initial state of each Conditional is UNKNOWN.
-	<p>A Logix is enabled automatically when it is created and when it is 
-	loaded from a configuration file. A Logix may be disabled/enabled by 
+	<p>A Logix is enabled automatically when it is created.  
+	A Logix may be disabled/enabled by 
 	unchecking/checking the button in the Enable column in the Logix table.  
+	For example, you might want to disable a Logix while you're creating
+	and debugging it, until you're certain that you have it set up properly.
 	A Logix may be enabled or disabled dynamically by another Logix (see allowed 
 	actions <a href="#action">above</a>).
+	<P>
+	When JMRI stores the program configuration for a file, e.g. a panel file,
+	the enabled/disabled state of the Logix is also stored.
+	When it is loaded from a configuration file, enabled or disabled 
+	is set according to what was saved in the configuration file.
+	This is done so that people can disable their Logix while debugging them,
+	yet still save and restore the configuration as needed.
 	<p><li><b>What happens when a JMRI program starts up or when a configuration 
 	file is loaded by a JMRI program?</b>
 	<p>This is a complex question that depends upon many things,
