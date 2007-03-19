@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.html,v 1.7 2005-12-21 06:24:25 jacobsen Exp $ -->
+<!-- $Id: index.html,v 1.8 2007-03-19 05:46:04 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -69,6 +69,7 @@
 		    <LI><dfn><a href="throttle/ThrottleMain.html">Throttles</a></dfn>
 		    <LI><dfn><a href="ConsistTool/ConsistTool.html">Consisting</a></dfn>
 		    <LI><dfn><a href="Routes.html">Routes</a></dfn>
+		    <LI><dfn><a href="Logix.html">Logix</a></dfn>
 		    <LI><dfn><a href="fastclock">Fast Clocks</a></dfn>
 		    <LI><dfn><a href="../apps/Speedometer/index.html">Speedometer</a></dfn>
 		    <LI><dfn><a href="../doc/scripts/index.html">Scripting</a></dfn>
@@ -126,12 +127,27 @@
 		    your DCC locomotives.
 		</dd>
 
-		<dt><h3><a href="Routes.html">Route Table</a></h3></dt>
+		<dt><h3><a href="Routes.html">Routes</a></h3></dt>
 		<dd>
-		    A better tool for driving multiple turnouts when
+		    Routes are a tool for driving multiple turnouts when
 		    something happens on the layout.  You can have a
 		    panel switch through all the turnouts in your yard throat, 
-		    etc.
+		    etc. They can also change the status of Sensors, 
+		    play sound files, and invoke scripts.  They
+		    have some simple logic capabilities for deciding when
+		    to set the route's outputs.
+		</dd>
+
+		<dt><h3><a href="Logix.html">Logix</a></h3></dt>
+		<dd>
+		    A Logix is a tool for entering powerful logical
+		    expressions that can control parts of a layout.
+		    Each one can monitor multiple inputs and logical
+		    operations through containing a number of Conditional
+		    expressions, each of which can take simple actions.
+		    For more powerful control, combine the logical
+		    reasoning of a Logix with the powerful output
+		    controls of a Route.
 		</dd>
 
         <dt><h3><a href="fastclock">Fast Clocks</a></h3></dt>
