@@ -21,7 +21,7 @@ import javax.swing.*;
  * It should be.
  *
  * @author  Bob Jacobsen  Copyright (c) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class MultiSensorIconFrame extends JmriJFrame {
@@ -57,16 +57,16 @@ public class MultiSensorIconFrame extends JmriJFrame {
         this.getContentPane().add(content);
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
         // start with two Entrys; there's no reason to have less
-        content.add(new Entry(content, this, "resources/icons/USSpanels/Plates/l-left.gif"));
-        content.add(new Entry(content, this, "resources/icons/USSpanels/Plates/l-vertical.gif"));
-        content.add(new Entry(content, this, "resources/icons/USSpanels/Plates/l-right.gif"));
+        content.add(new Entry(content, this, "resources/icons/USSpanels/Plates/lever-l.gif"));
+        content.add(new Entry(content, this, "resources/icons/USSpanels/Plates/lever-v.gif"));
+        content.add(new Entry(content, this, "resources/icons/USSpanels/Plates/lever-r.gif"));
                 
         this.getContentPane().add(new JSeparator());
         JButton b = new JButton("Add Additional Sensor to Icon"); 
         ActionListener a = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 // remove this entry
-                self.add(new Entry(self, frame, "resources/icons/USSpanels/Plates/l-vertical.gif"));
+                self.add(new Entry(self, frame, "resources/icons/USSpanels/Plates/lever-v.gif"));
                 frame.pack();
             }
             JPanel self;
@@ -83,9 +83,9 @@ public class MultiSensorIconFrame extends JmriJFrame {
         this.getContentPane().add(new JSeparator());
         b = new JButton("Set default icons ...");
         defaultIcons = new MultiIconEditor(3);
-            defaultIcons.setIcon(0, "Unknown:","resources/icons/USSpanels/Plates/l-vertical-inactive.gif");
-            defaultIcons.setIcon(1, "Inconsistent:","resources/icons/USSpanels/Plates/l-vertical-inactive.gif");
-            defaultIcons.setIcon(2, "Inactive:","resources/icons/USSpanels/Plates/l-vertical-inactive.gif");
+            defaultIcons.setIcon(0, "Unknown:","resources/icons/USSpanels/Plates/lever-v-inactive.gif");
+            defaultIcons.setIcon(1, "Inconsistent:","resources/icons/USSpanels/Plates/lever-v-inactive.gif");
+            defaultIcons.setIcon(2, "Inactive:","resources/icons/USSpanels/Plates/lever-v-inactive.gif");
             defaultIcons.complete();
         defaultsFrame = new JFrame("");
             defaultsFrame.getContentPane().add(new JLabel("  Select new file, then click on icon to change  "),BorderLayout.NORTH);
