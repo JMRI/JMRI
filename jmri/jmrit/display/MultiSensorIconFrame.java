@@ -21,7 +21,7 @@ import javax.swing.*;
  * It should be.
  *
  * @author  Bob Jacobsen  Copyright (c) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class MultiSensorIconFrame extends JmriJFrame {
@@ -81,7 +81,7 @@ public class MultiSensorIconFrame extends JmriJFrame {
         this.getContentPane().add(b);
 
         this.getContentPane().add(new JSeparator());
-        b = new JButton("Set default icons ...");
+        b = new JButton("Set icons for inactive, ...");
         defaultIcons = new MultiIconEditor(3);
             defaultIcons.setIcon(0, "Unknown:","resources/icons/USSpanels/Plates/lever-v-inactive.gif");
             defaultIcons.setIcon(1, "Inconsistent:","resources/icons/USSpanels/Plates/lever-v-inactive.gif");

@@ -14,7 +14,7 @@ import com.sun.java.util.collections.List;
  * Handle configuration for display.MultiSensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class MultiSensorIconXml implements XmlAdapter {
 
@@ -86,10 +86,11 @@ public class MultiSensorIconXml implements XmlAdapter {
         name = element.getAttribute("inconsistent").getValue();
         l.setInconsistentIcon(inconsistent = CatalogPane.getIconByName(name));
 
+        int rotation = 0;
         try {
             Attribute a = element.getAttribute("rotate");
             if (a!=null) {
-                int rotation = element.getAttribute("rotate").getIntValue();
+                rotation = element.getAttribute("rotate").getIntValue();
                 inactive.setRotation(rotation, l);
                 inconsistent.setRotation(rotation, l);
                 unknown.setRotation(rotation, l);
@@ -108,14 +109,16 @@ public class MultiSensorIconXml implements XmlAdapter {
         else
             l.setForceControlOff(false);
             
-        // get the icon pairs
+        // get the icon pairs & load
         List items = element.getChildren();
         for (int i = 0; i<items.size(); i++) {
             // get the class, hence the adapter object to do loading
             Element item = (Element)items.get(i);
             String sensor = item.getAttribute("sensor").getValue();
             String icon = item.getAttribute("icon").getValue();
-            l.addEntry(sensor, CatalogPane.getIconByName(icon));
+            NamedIcon nicon = CatalogPane.getIconByName(icon);
+            if (rotation!=0) nicon.setRotation(rotation, l);
+            l.addEntry(sensor, nicon);
         }
         
         // find coordinates
