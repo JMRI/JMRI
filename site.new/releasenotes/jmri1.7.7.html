@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.7.7.html,v 1.7 2007-02-26 08:01:14 jacobsen Exp $ -->
+<!-- $Id: jmri1.7.7.html,v 1.8 2007-03-19 01:28:17 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -185,6 +185,14 @@ new features, particularly
 <P>Made it possible to internationalize all the text in the symbolic programmer (DecoderPro panes)
 
 <P>If you want to change the location of your JMRI preferences directory, define the "jmri.prefsdir" system property to point to the new directory.  (Add -Djmri.prefsdir=somePathName to the startup script in use on your computer) Note that if you change this, you need to move your existing preferences and other information to the new location, or JMRI won't be able to find them. 
+
+<P>Some threading issues in the Thread Monitor have been resolved, with fixes occasional error messages when threads are created/destroyed on busy systems (thanks to Walter Thompson for help debugging this)
+
+<P>David Duchamp has added the "Logix" capability, which allows you to enter powerful control logic via a window instead of writing a script
+
+<P>Panels can now show a "MultiSensorIcon", which allows you to e.g. show a three-position lever that tracks three physical inputs.
+
+<P>The help system has been overhauled, and place-holder pages are in place for most tools.  We need help adding content to these!
 
 <hr class="hide">
 <!-- Footer -->
