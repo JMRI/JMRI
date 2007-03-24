@@ -42,7 +42,7 @@ public interface Conditional extends NamedBean {
 	public static final int OPERATOR_AND_NOT = 3;	
 	public static final int OPERATOR_NONE = 4;
 	// state variable types
-	public static final int NUM_STATE_VARIABLE_TYPES = 20;	
+	public static final int NUM_STATE_VARIABLE_TYPES = 19;	
 	public static final int TYPE_SENSOR_ACTIVE = 1;
 	public static final int TYPE_SENSOR_INACTIVE = 2;
 	public static final int TYPE_TURNOUT_THROWN = 3;
@@ -111,8 +111,8 @@ public interface Conditional extends NamedBean {
 	 * This method should only be called by LogixTableAction.  It assumes that all
 	 * information has been validated.
      */
-    public boolean setStateVariables(int[] opern,int[] type,String[] systemName,
-		String[] data,int[] num1,int[] num2,int numVariables);
+    public boolean setStateVariables(int[] opern,int[] type,String[] name,
+			String[] data,int[] num1,int[] num2,int numVariables);
 			
 	/**
      * Get State Variables for this Conditional. 
@@ -122,8 +122,8 @@ public interface Conditional extends NamedBean {
 	 * This method should only be called by LogixTableAction and methods to save
 	 * this conditional to disk in a panel file.  
      */
-    public void getStateVariables(int[] opern,int[] type,String[] systemName,
-		String[] data,int[] num1,int[] num2);
+    public void getStateVariables(int[] opern,int[] type,String[] name,
+			String[] data,int[] num1,int[] num2);
 
 	/**
 	 * Provide access to operator of state variable by index
@@ -138,10 +138,11 @@ public interface Conditional extends NamedBean {
 	public int getStateVariableType(int index);
 	
 	/**
-	 * Provide access to system name of state variable by index
+	 * Provide access to Name (user or system, whichever was specified) of 
+	 *    state variable by index
 	 *  Note: index ranges from 0 to numStateVariables-1
 	 */
-	public String getStateVariableSystemName(int index);
+	public String getStateVariableName(int index);
 	
 	/**
 	 * Provide access to data string of state variable by index
@@ -171,13 +172,13 @@ public interface Conditional extends NamedBean {
 	 * Set action parameters for action 1 and action 2
 	 */
 	public void setAction (int[] opt, int[] delay, int[] type,
-				String[] systemName,int[] data,String[] s);
+				String[] name,int[] data,String[] s);
 	
 	/**
 	 * Get action parameters for action 1 and action 2
 	 */
 	public void getAction (int[] opt, int[] delay, int[] type,
-				String[] systemName,int[] data,String[] s);
+				String[] name,int[] data,String[] s);
 		
     /**
 	 * Calculate this Conditional, triggering either or both actions if the user 

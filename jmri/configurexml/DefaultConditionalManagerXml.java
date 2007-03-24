@@ -15,7 +15,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class DefaultConditionalManagerXml implements XmlAdapter {
 
@@ -55,7 +55,7 @@ public class DefaultConditionalManagerXml implements XmlAdapter {
 						cElem.addAttribute("type",Integer.toString(
 								c.getStateVariableType(k)));
 						cElem.addAttribute("systemName",
-								c.getStateVariableSystemName(k));
+								c.getStateVariableName(k));
 						cElem.addAttribute("dataString",
 								c.getStateVariableDataString(k));
 						cElem.addAttribute("num1",Integer.toString(
@@ -69,17 +69,17 @@ public class DefaultConditionalManagerXml implements XmlAdapter {
 				int[] opt = {0,0};
 				int[] delay = {0,0};
 				int[] type = {0,0};
-				String[] sName = {" "," "};
+				String[] name = {" "," "};
 				int[] data = {0,0};
 				String[] dataString = {" "," "};
-				c.getAction(opt,delay,type,sName,data,dataString);
+				c.getAction(opt,delay,type,name,data,dataString);
 				Element aElem = null;
 				for (int k = 0;k<2;k++) {
 					aElem = new Element("conditionalAction");
 					aElem.addAttribute("option",Integer.toString(opt[k]));
 					aElem.addAttribute("delay",Integer.toString(delay[k]));
 					aElem.addAttribute("type",Integer.toString(type[k]));
-					aElem.addAttribute("systemName",sName[k]);
+					aElem.addAttribute("systemName",name[k]);
 					aElem.addAttribute("data",Integer.toString(data[k]));
 					aElem.addAttribute("string",dataString[k]);
 					elem.addContent(aElem);
@@ -151,7 +151,7 @@ public class DefaultConditionalManagerXml implements XmlAdapter {
 					// load state variables
 					int[] svOperator = new int[Conditional.MAX_STATE_VARIABLES];
 					int[] svType = new int[Conditional.MAX_STATE_VARIABLES];
-					String[] svSysName = new String[Conditional.MAX_STATE_VARIABLES];
+					String[] svName = new String[Conditional.MAX_STATE_VARIABLES];
 					String[] svDataString = new String[Conditional.MAX_STATE_VARIABLES];
 					int[] svNum1 = new int[Conditional.MAX_STATE_VARIABLES];
 					int[] svNum2 = new int[Conditional.MAX_STATE_VARIABLES];
@@ -171,7 +171,7 @@ public class DefaultConditionalManagerXml implements XmlAdapter {
 														.getAttribute("operator").getValue());
 						svType[n] = Integer.parseInt(((Element)(conditionalVarList.get(n)))
 														.getAttribute("type").getValue());
-                        svSysName[n] = ((Element)(conditionalVarList.get(n)))
+                        svName[n] = ((Element)(conditionalVarList.get(n)))
 														.getAttribute("systemName").getValue();
                         svDataString[n] = ((Element)(conditionalVarList.get(n)))
 														.getAttribute("dataString").getValue();
@@ -181,7 +181,7 @@ public class DefaultConditionalManagerXml implements XmlAdapter {
 														.getAttribute("num2").getValue());
 					}
 					// add state variables to conditional
-					c.setStateVariables(svOperator,svType,svSysName,svDataString,svNum1,
+					c.setStateVariables(svOperator,svType,svName,svDataString,svNum1,
 																	svNum2,numVariables);
 				}
 				// load actions - there better be some
@@ -192,7 +192,7 @@ public class DefaultConditionalManagerXml implements XmlAdapter {
 					int[] opt = {0,0};
 					int[] delay = {0,0};
 					int[] type = {Conditional.ACTION_NONE,Conditional.ACTION_NONE};
-					String[] sName = {" "," "};
+					String[] aName = {" "," "};
 					int[] data = {0,0};
 					String[] dataString = {" "," "};						
 					int num = conditionalActionList.size();
@@ -213,7 +213,7 @@ public class DefaultConditionalManagerXml implements XmlAdapter {
 														.getAttribute("delay").getValue());
 						type[n] = Integer.parseInt(((Element)(conditionalActionList.get(n)))
 														.getAttribute("type").getValue());
-						sName[n] = ((Element)(conditionalActionList.get(n)))
+						aName[n] = ((Element)(conditionalActionList.get(n)))
 														.getAttribute("systemName").getValue();
 						data[n] = Integer.parseInt(((Element)(conditionalActionList.get(n)))
 														.getAttribute("data").getValue());
@@ -221,7 +221,7 @@ public class DefaultConditionalManagerXml implements XmlAdapter {
 														.getAttribute("string").getValue();
 					}
 					// set actions in conditional
-					c.setAction(opt,delay,type,sName,data,dataString);
+					c.setAction(opt,delay,type,aName,data,dataString);
 				}
 			}	
 	    }

@@ -46,7 +46,7 @@ import jmri.util.JmriJFrame;
  *	   BeanTableBundle.properties, accessed via rb.
  *
  * @author	Dave Duchamp    Copyright (C) 2007
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -222,7 +222,7 @@ public class LogixTableAction extends AbstractTableAction {
 	JRadioButton action1OnChange;
 	ButtonGroup action1Group;
 	JComboBox action1TypeBox;
-	JTextField action1SystemNameField;
+	JTextField action1NameField;
 	JTextField action1DataField;
 	JComboBox action1TurnoutSetBox;
 	JComboBox action1SensorSetBox;
@@ -234,7 +234,7 @@ public class LogixTableAction extends AbstractTableAction {
 	JRadioButton action2OnChange;
 	ButtonGroup action2Group;
 	JComboBox action2TypeBox;
-	JTextField action2SystemNameField;
+	JTextField action2NameField;
 	JTextField action2DataField;
 	JComboBox action2TurnoutSetBox;
 	JComboBox action2SensorSetBox;
@@ -247,8 +247,8 @@ public class LogixTableAction extends AbstractTableAction {
 	private int[] variableOpern = new int[Conditional.MAX_STATE_VARIABLES];
 	private String[] variableNOT = new String[Conditional.MAX_STATE_VARIABLES];
 	private int[] variableType = new int[Conditional.MAX_STATE_VARIABLES];
-	private String[] variableSName = new String[Conditional.MAX_STATE_VARIABLES];
-	private boolean[] variableSNameEditable = new boolean[Conditional.MAX_STATE_VARIABLES];
+	private String[] variableName = new String[Conditional.MAX_STATE_VARIABLES]; 
+	private boolean[] variableNameEditable = new boolean[Conditional.MAX_STATE_VARIABLES];
 	private String[] variableData1 = new String[Conditional.MAX_STATE_VARIABLES];
 	private boolean[] variableData1Editable = new boolean[Conditional.MAX_STATE_VARIABLES];
 	private String[] variableData2 = new String[Conditional.MAX_STATE_VARIABLES];
@@ -263,7 +263,7 @@ public class LogixTableAction extends AbstractTableAction {
 									Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE};
 	private int[] actionDelay = {0,0};
 	private int[] actionType = {Conditional.ACTION_NONE,Conditional.ACTION_NONE};
-	private String[] actionSystemName = {" "," "};
+	private String[] actionName = {" "," "};
 	private int[] actionData = {0,0};
 	private String[] actionString = {" "," "};
 	
@@ -418,6 +418,15 @@ public class LogixTableAction extends AbstractTableAction {
      * Responds to the Edit button pressed in Logix table
      */
     void editPressed(String sName) {
+		if (inEditMode) {
+			// Already editing a Logix, ask for completion of that edit
+			javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
+				rbx.getString("Error32")+curLogix.getSystemName()+
+					rbx.getString("Error33"),
+					rbx.getString("ErrorTitle"),
+						javax.swing.JOptionPane.ERROR_MESSAGE);
+			return;
+		}						
         // check if a Logix with this name exists
         Logix x = logixManager.getBySystemName(sName);
         if (x==null) {
@@ -614,6 +623,7 @@ public class LogixTableAction extends AbstractTableAction {
 	 * Responds to the Reorder Button in the Edit Logix window
 	 */
 	void reorderPressed(ActionEvent e) {
+		if (checkEditConditional()) return;
 		// Check if reorder is reasonable
 		if (numConditionals<=1) {
 			javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
@@ -634,6 +644,7 @@ public class LogixTableAction extends AbstractTableAction {
 	 * Responds to the Calculate Button in the Edit Logix window
 	 */
 	void calculatePressed(ActionEvent e) {
+		if (checkEditConditional()) return;
 		// are there Conditionals to calculate?
 		if (numConditionals>0) {
 			// There are conditionals to calculate
@@ -662,6 +673,7 @@ public class LogixTableAction extends AbstractTableAction {
 	 *		active Edit Logix window.
      */
     void donePressed(ActionEvent e) {
+		if (checkEditConditional()) return;
 		if (curLogix!=null) {
 			Logix x = curLogix;
 			// Check if the User Name has been changed
@@ -700,6 +712,7 @@ public class LogixTableAction extends AbstractTableAction {
      * Responds to the Delete button in the Edit Logix window
      */
     void deletePressed(ActionEvent e) {
+		if (checkEditConditional()) return;
 		showSaveReminder();
         Logix x = curLogix;
 		// delete this Logix
@@ -715,6 +728,7 @@ public class LogixTableAction extends AbstractTableAction {
 	 * Responds to the New Conditional Button in Edit Logix Window
 	 */
 	void newConditionalPressed(ActionEvent e) {
+		if (checkEditConditional()) return;
 		// make system name for new conditional
 		int num = curLogix.getNextConditionalNumber();
 		String cName = curLogix.getSystemName()+"C"+Integer.toString(num);
@@ -739,13 +753,13 @@ public class LogixTableAction extends AbstractTableAction {
 		actionOption[0] = Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
 		actionDelay[0] = 0;
 		actionType[0] = Conditional.ACTION_NONE;
-		actionSystemName[0] = " ";
+		actionName[0] = " ";
 		actionData[0] = 0;
 		actionString[0] = " ";
 		actionOption[1] = Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
 		actionDelay[1] = 0;
 		actionType[1] = Conditional.ACTION_NONE;
-		actionSystemName[1] = " ";
+		actionName[1] = " ";
 		actionData[1] = 0;
 		actionString[1] = " ";
 		// move to edit this Conditional's information
@@ -756,6 +770,15 @@ public class LogixTableAction extends AbstractTableAction {
 	 * Responds to Edit Button in the Conditional table of the Edit Logix Window
 	 */
 	void editConditionalPressed(int rx) {
+		if (inEditConditionalMode) {
+			// Already editing a Conditional, ask for completion of that edit
+			javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
+				rbx.getString("Error34")+curConditional.getSystemName()+
+					rbx.getString("Error33"),
+					rbx.getString("ErrorTitle"),
+						javax.swing.JOptionPane.ERROR_MESSAGE);
+			return;
+		}						
 		// get Conditional to edit
 		curConditional = conditionalManager.
 			getBySystemName(curLogix.getConditionalByNumberOrder(rx));
@@ -767,10 +790,10 @@ public class LogixTableAction extends AbstractTableAction {
 		conditionalRowNumber = rx;
 		// get Conditional information and set up in display variables
 		if (numStateVariables > 0) {
-			curConditional.getStateVariables(variableOpern,variableType,
-				variableSName,variableData1,variableNum1,variableNum2);
+			curConditional.getStateVariables(variableOpern,variableType,variableName,
+						variableData1,variableNum1,variableNum2);
 			int saveType = 0;
-			String saveSName = "";
+			String saveName = "";
 			String saveData1 = "";
 			int saveNum1 = 0;
 			int saveNum2 = 0;
@@ -785,7 +808,7 @@ public class LogixTableAction extends AbstractTableAction {
 				variableData2[i] = " ";
 				// save current values for this state variable
 				saveType = variableType[i];
-				saveSName = variableSName[i];
+				saveName = variableName[i];
 				saveData1 = variableData1[i];
 				saveNum1 = variableNum1[i];
 				saveNum2 = variableNum2[i];
@@ -793,7 +816,7 @@ public class LogixTableAction extends AbstractTableAction {
 				variableType[i] = -1;
 				variableTypeChanged(i,stateVariableTypeToString(saveType));
 				// restore current values for this state variable
-				variableSName[i] = saveSName;
+				variableName[i] = saveName;
 				variableData1[i] = saveData1;
 				variableNum1[i] = saveNum1;
 				variableNum2[i] = saveNum2;
@@ -809,8 +832,25 @@ public class LogixTableAction extends AbstractTableAction {
 		}
 		// get action variables
 		curConditional.getAction(actionOption,actionDelay,actionType,
-				actionSystemName,actionData,actionString);
+				actionName,actionData,actionString);
 		makeEditConditionalWindow();
+	}
+
+	/** 
+	 * Checks if edit of a conditional is in progress
+	 *   Returns true after sending message if this is the case
+	 */
+	boolean checkEditConditional () {
+		if (inEditConditionalMode) {
+			// Already editing a Conditional, ask for completion of that edit
+			javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
+				rbx.getString("Error35")+curConditional.getSystemName()+
+					rbx.getString("Error33"),
+					rbx.getString("ErrorTitle"),
+						javax.swing.JOptionPane.ERROR_MESSAGE);
+			return true;
+		}
+		return false;
 	}
 	
 	//  *********** Methods for Edit Conditional Window ********************
@@ -864,7 +904,7 @@ public class LogixTableAction extends AbstractTableAction {
 			JTable variableTable = new JTable(variableTableModel);
             variableTable.setRowSelectionAllowed(false);
             variableTable.setPreferredScrollableViewportSize(new 
-                                                            java.awt.Dimension(660,150));
+                                                            java.awt.Dimension(720,150));
             TableColumnModel variableColumnModel = variableTable.getColumnModel();
             TableColumn andColumn = variableColumnModel.
                                                 getColumn(VariableTableModel.AND_COLUMN);
@@ -885,8 +925,8 @@ public class LogixTableAction extends AbstractTableAction {
             TableColumn sysNameColumn = variableColumnModel.
                                                 getColumn(VariableTableModel.SNAME_COLUMN);
             sysNameColumn.setResizable(true);
-            sysNameColumn.setMinWidth(95);
-            sysNameColumn.setMaxWidth(110);
+            sysNameColumn.setMinWidth(105);
+            sysNameColumn.setMaxWidth(160);
             TableColumn data1Column = variableColumnModel.
                                                 getColumn(VariableTableModel.DATA1_COLUMN);
             data1Column.setResizable(true);
@@ -988,9 +1028,9 @@ public class LogixTableAction extends AbstractTableAction {
             action1TypeBox.setToolTipText(rbx.getString("ActionTypeHint") );
 			action1Data.add(action1TypeBox);
 			action1TypeBox.setSelectedIndex(0);
-			action1SystemNameField = new JTextField(8);
-			action1Data.add(action1SystemNameField);
-			action1SystemNameField.setVisible(false);
+			action1NameField = new JTextField(8);
+			action1Data.add(action1NameField);
+			action1NameField.setVisible(false);
 			action1TurnoutSetBox = new JComboBox(new String[]{rbx.getString("TurnoutClosed"),
 												rbx.getString("TurnoutThrown")});
 			action1Data.add(action1TurnoutSetBox);
@@ -1076,9 +1116,9 @@ public class LogixTableAction extends AbstractTableAction {
             action2TypeBox.setToolTipText(rbx.getString("ActionTypeHint") );
 			action2Data.add(action2TypeBox);
 			action2TypeBox.setSelectedIndex(0);
-			action2SystemNameField = new JTextField(8);
-			action2Data.add(action2SystemNameField);
-			action2SystemNameField.setVisible(false);
+			action2NameField = new JTextField(8);
+			action2Data.add(action2NameField);
+			action2NameField.setVisible(false);
 			action2TurnoutSetBox = new JComboBox(new String[]{rbx.getString("TurnoutClosed"),
 												rbx.getString("TurnoutThrown")});
 			action2Data.add(action2TurnoutSetBox);
@@ -1203,8 +1243,8 @@ public class LogixTableAction extends AbstractTableAction {
 			action2OnChange.setSelected(true);
 		}
 		// set variables specific to action type
-		action1SystemNameField.setText(actionSystemName[0]);
-		action2SystemNameField.setText(actionSystemName[1]);
+		action1NameField.setText(actionName[0]);
+		action2NameField.setText(actionName[1]);
 		switch (actionType[0]) {
 			case Conditional.ACTION_SET_TURNOUT:
 				if (actionData[0]==Turnout.CLOSED) {
@@ -1294,15 +1334,16 @@ public class LogixTableAction extends AbstractTableAction {
 				break;
 		}
 	}
-	
+		
 	/**
 	 * Responds to the Add State Variable Button in the Edit Conditional window
 	 */
 	void addVariablePressed(ActionEvent e) {
 		variableNOT[numStateVariables] = " ";
 		variableType[numStateVariables] = 0;
-		variableSName[numStateVariables] = " ";
-		variableSNameEditable[numStateVariables] = false;
+		variableName[numStateVariables] = " ";
+		variableName[numStateVariables] = " ";
+		variableNameEditable[numStateVariables] = false;
 		variableData1[numStateVariables] = " ";
 		variableData1Editable[numStateVariables] = false;
 		variableData2[numStateVariables] = " ";
@@ -1364,8 +1405,8 @@ public class LogixTableAction extends AbstractTableAction {
 				variableOpern[i] = variableOpern[i+1];
 				variableNOT[i] = variableNOT[i+1];
 				variableType[i] = variableType[i+1];
-				variableSName[i] = variableSName[i+1];
-				variableSNameEditable[i] = variableSNameEditable[i+1];
+				variableName[i] = variableName[i+1];
+				variableNameEditable[i] = variableNameEditable[i+1];
 				variableData1[i] = variableData1[i+1];
 				variableData1Editable[i] = variableData1Editable[i+1];
 				variableData2[i] = variableData2[i+1];
@@ -1418,21 +1459,21 @@ public class LogixTableAction extends AbstractTableAction {
 			}
 		}
 		// validate and update action variables
-		if (!validateActionVariables(0,action1SystemNameField,action1DataField,
+		if (!validateActionVariables(0,action1NameField,action1DataField,
 					action1TurnoutSetBox,action1SensorSetBox,action1SignalSetBox,
 					action1LightSetBox) ) {
 			return;
 		}
-		if (!validateActionVariables(1,action2SystemNameField,action2DataField,
+		if (!validateActionVariables(1,action2NameField,action2DataField,
 					action2TurnoutSetBox,action2SensorSetBox,action2SignalSetBox,
 					action2LightSetBox) ) {
 			return;
 		}		
 		// complete update
-		curConditional.setStateVariables(variableOpern,variableType,variableSName,
-						variableData1,variableNum1,variableNum2,numStateVariables);
+		curConditional.setStateVariables(variableOpern,variableType,variableName,
+					variableData1,variableNum1,variableNum2,numStateVariables);
 		curConditional.setAction(actionOption,actionDelay,actionType,
-							actionSystemName,actionData,actionString);
+							actionName,actionData,actionString);
 		inEditConditionalMode = false;
 		editConditionalFrame.setVisible(false);	
 		editLogixFrame.setVisible(true);	
@@ -1518,7 +1559,7 @@ public class LogixTableAction extends AbstractTableAction {
 			actionType[0] = type;
 			switch (type) {
 				case Conditional.ACTION_NONE:
-					action1SystemNameField.setVisible(false);
+					action1NameField.setVisible(false);
 					action1DataField.setVisible(false);
 					action1SetButton.setVisible(false);
 					action1TurnoutSetBox.setVisible(false);
@@ -1527,119 +1568,119 @@ public class LogixTableAction extends AbstractTableAction {
 					action1LightSetBox.setVisible(false);
 					break;
 				case Conditional.ACTION_SET_TURNOUT:
-					action1SystemNameField.setVisible(true);
-					action1SystemNameField.setText("");
+					action1NameField.setVisible(true);
+					action1NameField.setText("");
 					action1DataField.setVisible(false);
 					action1SetButton.setVisible(false);
 					action1TurnoutSetBox.setVisible(true);
 					action1SensorSetBox.setVisible(false);
 					action1SignalSetBox.setVisible(false);
 					action1LightSetBox.setVisible(false);
-					action1SystemNameField.setToolTipText(rbx.getString("SysNameHintTurnout"));
+					action1NameField.setToolTipText(rbx.getString("NameHintTurnout"));
 					break;
 				case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
-					action1SystemNameField.setVisible(true);
-					action1SystemNameField.setText("");
+					action1NameField.setVisible(true);
+					action1NameField.setText("");
 					action1DataField.setVisible(false);
 					action1SetButton.setVisible(false);
 					action1TurnoutSetBox.setVisible(false);
 					action1SensorSetBox.setVisible(false);
 					action1SignalSetBox.setVisible(true);
 					action1LightSetBox.setVisible(false);			
-					action1SystemNameField.setToolTipText(rbx.getString("SysNameHintSignal"));
+					action1NameField.setToolTipText(rbx.getString("NameHintSignal"));
 					break;
 				case Conditional.ACTION_SET_SIGNAL_HELD:
-					action1SystemNameField.setVisible(true);
-					action1SystemNameField.setText("");
+					action1NameField.setVisible(true);
+					action1NameField.setText("");
 					action1DataField.setVisible(false);
 					action1SetButton.setVisible(false);
 					action1TurnoutSetBox.setVisible(false);
 					action1SensorSetBox.setVisible(false);
 					action1SignalSetBox.setVisible(false);
 					action1LightSetBox.setVisible(false);			
-					action1SystemNameField.setToolTipText(rbx.getString("SysNameHintSignal"));			
+					action1NameField.setToolTipText(rbx.getString("NameHintSignal"));			
 					break;
 				case Conditional.ACTION_CLEAR_SIGNAL_HELD:
-					action1SystemNameField.setVisible(true);
-					action1SystemNameField.setText("");
+					action1NameField.setVisible(true);
+					action1NameField.setText("");
 					action1DataField.setVisible(false);
 					action1SetButton.setVisible(false);
 					action1TurnoutSetBox.setVisible(false);
 					action1SensorSetBox.setVisible(false);
 					action1SignalSetBox.setVisible(false);
 					action1LightSetBox.setVisible(false);			
-					action1SystemNameField.setToolTipText(rbx.getString("SysNameHintSignal"));			
+					action1NameField.setToolTipText(rbx.getString("NameHintSignal"));			
 					break;
 				case Conditional.ACTION_SET_SIGNAL_DARK:
-					action1SystemNameField.setVisible(true);
-					action1SystemNameField.setText("");
+					action1NameField.setVisible(true);
+					action1NameField.setText("");
 					action1DataField.setVisible(false);
 					action1SetButton.setVisible(false);
 					action1TurnoutSetBox.setVisible(false);
 					action1SensorSetBox.setVisible(false);
 					action1SignalSetBox.setVisible(false);
 					action1LightSetBox.setVisible(false);			
-					action1SystemNameField.setToolTipText(rbx.getString("SysNameHintSignal"));			
+					action1NameField.setToolTipText(rbx.getString("NameHintSignal"));			
 					break;
 				case Conditional.ACTION_SET_SIGNAL_LIT:
-					action1SystemNameField.setVisible(true);
-					action1SystemNameField.setText("");
+					action1NameField.setVisible(true);
+					action1NameField.setText("");
 					action1DataField.setVisible(false);
 					action1SetButton.setVisible(false);
 					action1TurnoutSetBox.setVisible(false);
 					action1SensorSetBox.setVisible(false);
 					action1SignalSetBox.setVisible(false);
 					action1LightSetBox.setVisible(false);			
-					action1SystemNameField.setToolTipText(rbx.getString("SysNameHintSignal"));			
+					action1NameField.setToolTipText(rbx.getString("NameHintSignal"));			
 					break;
 				case Conditional.ACTION_TRIGGER_ROUTE:
-					action1SystemNameField.setVisible(true);
-					action1SystemNameField.setText("");
+					action1NameField.setVisible(true);
+					action1NameField.setText("");
 					action1DataField.setVisible(false);
 					action1SetButton.setVisible(false);
 					action1TurnoutSetBox.setVisible(false);
 					action1SensorSetBox.setVisible(false);
 					action1SignalSetBox.setVisible(false);
 					action1LightSetBox.setVisible(false);			
-					action1SystemNameField.setToolTipText(rbx.getString("SysNameHintRoute"));			
+					action1NameField.setToolTipText(rbx.getString("NameHintRoute"));			
 					break;
 				case Conditional.ACTION_SET_SENSOR:
-					action1SystemNameField.setVisible(true);
-					action1SystemNameField.setText("");
+					action1NameField.setVisible(true);
+					action1NameField.setText("");
 					action1DataField.setVisible(false);
 					action1SetButton.setVisible(false);
 					action1TurnoutSetBox.setVisible(false);
 					action1SensorSetBox.setVisible(true);
 					action1SignalSetBox.setVisible(false);
 					action1LightSetBox.setVisible(false);			
-					action1SystemNameField.setToolTipText(rbx.getString("SysNameHintSensor"));						
+					action1NameField.setToolTipText(rbx.getString("NameHintSensor"));						
 					break;
 				case Conditional.ACTION_DELAYED_SENSOR:
-					action1SystemNameField.setVisible(true);
-					action1SystemNameField.setText("");
+					action1NameField.setVisible(true);
+					action1NameField.setText("");
 					action1DataField.setVisible(true);
 					action1SetButton.setVisible(false);
 					action1TurnoutSetBox.setVisible(false);
 					action1SensorSetBox.setVisible(true);
 					action1SignalSetBox.setVisible(false);
 					action1LightSetBox.setVisible(false);			
-					action1SystemNameField.setToolTipText(rbx.getString("SysNameHintSensor"));						
+					action1NameField.setToolTipText(rbx.getString("NameHintSensor"));						
 					action1DataField.setToolTipText(rbx.getString("DataHintDelayedSensor"));						
 					break;
 				case Conditional.ACTION_SET_LIGHT:
-					action1SystemNameField.setVisible(true);
-					action1SystemNameField.setText("");
+					action1NameField.setVisible(true);
+					action1NameField.setText("");
 					action1DataField.setVisible(false);
 					action1SetButton.setVisible(false);
 					action1TurnoutSetBox.setVisible(false);
 					action1SensorSetBox.setVisible(false);
 					action1SignalSetBox.setVisible(false);
 					action1LightSetBox.setVisible(true);			
-					action1SystemNameField.setToolTipText(rbx.getString("SysNameHintLight"));						
+					action1NameField.setToolTipText(rbx.getString("NameHintLight"));						
 					break;
 				case Conditional.ACTION_SET_MEMORY:
-					action1SystemNameField.setVisible(true);
-					action1SystemNameField.setText("");
+					action1NameField.setVisible(true);
+					action1NameField.setText("");
 					action1DataField.setVisible(true);
 					action1DataField.setText("");
 					action1SetButton.setVisible(false);
@@ -1647,33 +1688,33 @@ public class LogixTableAction extends AbstractTableAction {
 					action1SensorSetBox.setVisible(false);
 					action1SignalSetBox.setVisible(false);
 					action1LightSetBox.setVisible(false);			
-					action1SystemNameField.setToolTipText(rbx.getString("SysNameHintMemory"));			
+					action1NameField.setToolTipText(rbx.getString("NameHintMemory"));			
 					action1DataField.setToolTipText(rbx.getString("DataHintMemory"));			
 					break;
 				case Conditional.ACTION_ENABLE_LOGIX:
-					action1SystemNameField.setVisible(true);
-					action1SystemNameField.setText("");
+					action1NameField.setVisible(true);
+					action1NameField.setText("");
 					action1DataField.setVisible(false);
 					action1SetButton.setVisible(false);
 					action1TurnoutSetBox.setVisible(false);
 					action1SensorSetBox.setVisible(false);
 					action1SignalSetBox.setVisible(false);
 					action1LightSetBox.setVisible(false);			
-					action1SystemNameField.setToolTipText(rbx.getString("SysNameHintLogix"));			
+					action1NameField.setToolTipText(rbx.getString("NameHintLogix"));			
 					break;
 				case Conditional.ACTION_DISABLE_LOGIX:
-					action1SystemNameField.setVisible(true);
-					action1SystemNameField.setText("");
+					action1NameField.setVisible(true);
+					action1NameField.setText("");
 					action1DataField.setVisible(false);
 					action1SetButton.setVisible(false);
 					action1TurnoutSetBox.setVisible(false);
 					action1SensorSetBox.setVisible(false);
 					action1SignalSetBox.setVisible(false);
 					action1LightSetBox.setVisible(false);			
-					action1SystemNameField.setToolTipText(rbx.getString("SysNameHintLogix"));			
+					action1NameField.setToolTipText(rbx.getString("NameHintLogix"));			
 					break;
 				case Conditional.ACTION_PLAY_SOUND:
-					action1SystemNameField.setVisible(false);
+					action1NameField.setVisible(false);
 					action1DataField.setVisible(true);
 					action1DataField.setText("");
 					action1SetButton.setVisible(true);
@@ -1685,7 +1726,7 @@ public class LogixTableAction extends AbstractTableAction {
 					action1SetButton.setToolTipText(rbx.getString("SetHintSound"));						
 					break;
 				case Conditional.ACTION_RUN_SCRIPT:
-					action1SystemNameField.setVisible(false);
+					action1NameField.setVisible(false);
 					action1DataField.setVisible(true);
 					action1DataField.setText("");
 					action1SetButton.setVisible(true);
@@ -1709,7 +1750,7 @@ public class LogixTableAction extends AbstractTableAction {
 			actionType[1] = type;
 			switch (type) {
 				case Conditional.ACTION_NONE:
-					action2SystemNameField.setVisible(false);
+					action2NameField.setVisible(false);
 					action2DataField.setVisible(false);
 					action2SetButton.setVisible(false);
 					action2TurnoutSetBox.setVisible(false);
@@ -1718,119 +1759,119 @@ public class LogixTableAction extends AbstractTableAction {
 					action2LightSetBox.setVisible(false);
 					break;
 				case Conditional.ACTION_SET_TURNOUT:
-					action2SystemNameField.setVisible(true);
-					action2SystemNameField.setText("");
+					action2NameField.setVisible(true);
+					action2NameField.setText("");
 					action2DataField.setVisible(false);
 					action2SetButton.setVisible(false);
 					action2TurnoutSetBox.setVisible(true);
 					action2SensorSetBox.setVisible(false);
 					action2SignalSetBox.setVisible(false);
 					action2LightSetBox.setVisible(false);
-					action2SystemNameField.setToolTipText(rbx.getString("SysNameHintTurnout"));
+					action2NameField.setToolTipText(rbx.getString("NameHintTurnout"));
 					break;
 				case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
-					action2SystemNameField.setVisible(true);
-					action2SystemNameField.setText("");
+					action2NameField.setVisible(true);
+					action2NameField.setText("");
 					action2DataField.setVisible(false);
 					action2SetButton.setVisible(false);
 					action2TurnoutSetBox.setVisible(false);
 					action2SensorSetBox.setVisible(false);
 					action2SignalSetBox.setVisible(true);
 					action2LightSetBox.setVisible(false);			
-					action2SystemNameField.setToolTipText(rbx.getString("SysNameHintSignal"));
+					action2NameField.setToolTipText(rbx.getString("NameHintSignal"));
 					break;
 				case Conditional.ACTION_SET_SIGNAL_HELD:
-					action2SystemNameField.setVisible(true);
-					action2SystemNameField.setText("");
+					action2NameField.setVisible(true);
+					action2NameField.setText("");
 					action2DataField.setVisible(false);
 					action2SetButton.setVisible(false);
 					action2TurnoutSetBox.setVisible(false);
 					action2SensorSetBox.setVisible(false);
 					action2SignalSetBox.setVisible(false);
 					action2LightSetBox.setVisible(false);			
-					action2SystemNameField.setToolTipText(rbx.getString("SysNameHintSignal"));			
+					action2NameField.setToolTipText(rbx.getString("NameHintSignal"));			
 					break;
 				case Conditional.ACTION_CLEAR_SIGNAL_HELD:
-					action2SystemNameField.setVisible(true);
-					action2SystemNameField.setText("");
+					action2NameField.setVisible(true);
+					action2NameField.setText("");
 					action2DataField.setVisible(false);
 					action2SetButton.setVisible(false);
 					action2TurnoutSetBox.setVisible(false);
 					action2SensorSetBox.setVisible(false);
 					action2SignalSetBox.setVisible(false);
 					action2LightSetBox.setVisible(false);			
-					action2SystemNameField.setToolTipText(rbx.getString("SysNameHintSignal"));			
+					action2NameField.setToolTipText(rbx.getString("NameHintSignal"));			
 					break;
 				case Conditional.ACTION_SET_SIGNAL_DARK:
-					action2SystemNameField.setVisible(true);
-					action2SystemNameField.setText("");
+					action2NameField.setVisible(true);
+					action2NameField.setText("");
 					action2DataField.setVisible(false);
 					action2SetButton.setVisible(false);
 					action2TurnoutSetBox.setVisible(false);
 					action2SensorSetBox.setVisible(false);
 					action2SignalSetBox.setVisible(false);
 					action2LightSetBox.setVisible(false);			
-					action2SystemNameField.setToolTipText(rbx.getString("SysNameHintSignal"));			
+					action2NameField.setToolTipText(rbx.getString("NameHintSignal"));			
 					break;
 				case Conditional.ACTION_SET_SIGNAL_LIT:
-					action2SystemNameField.setVisible(true);
-					action2SystemNameField.setText("");
+					action2NameField.setVisible(true);
+					action2NameField.setText("");
 					action2DataField.setVisible(false);
 					action2SetButton.setVisible(false);
 					action2TurnoutSetBox.setVisible(false);
 					action2SensorSetBox.setVisible(false);
 					action2SignalSetBox.setVisible(false);
 					action2LightSetBox.setVisible(false);			
-					action2SystemNameField.setToolTipText(rbx.getString("SysNameHintSignal"));			
+					action2NameField.setToolTipText(rbx.getString("NameHintSignal"));			
 					break;
 				case Conditional.ACTION_TRIGGER_ROUTE:
-					action2SystemNameField.setVisible(true);
-					action2SystemNameField.setText("");
+					action2NameField.setVisible(true);
+					action2NameField.setText("");
 					action2DataField.setVisible(false);
 					action2SetButton.setVisible(false);
 					action2TurnoutSetBox.setVisible(false);
 					action2SensorSetBox.setVisible(false);
 					action2SignalSetBox.setVisible(false);
 					action2LightSetBox.setVisible(false);			
-					action2SystemNameField.setToolTipText(rbx.getString("SysNameHintRoute"));			
+					action2NameField.setToolTipText(rbx.getString("NameHintRoute"));			
 					break;
 				case Conditional.ACTION_SET_SENSOR:
-					action2SystemNameField.setVisible(true);
-					action2SystemNameField.setText("");
+					action2NameField.setVisible(true);
+					action2NameField.setText("");
 					action2DataField.setVisible(false);
 					action2SetButton.setVisible(false);
 					action2TurnoutSetBox.setVisible(false);
 					action2SensorSetBox.setVisible(true);
 					action2SignalSetBox.setVisible(false);
 					action2LightSetBox.setVisible(false);			
-					action2SystemNameField.setToolTipText(rbx.getString("SysNameHintSensor"));						
+					action2NameField.setToolTipText(rbx.getString("NameHintSensor"));						
 					break;
 				case Conditional.ACTION_DELAYED_SENSOR:
-					action2SystemNameField.setVisible(true);
-					action2SystemNameField.setText("");
+					action2NameField.setVisible(true);
+					action2NameField.setText("");
 					action2DataField.setVisible(true);
 					action2SetButton.setVisible(false);
 					action2TurnoutSetBox.setVisible(false);
 					action2SensorSetBox.setVisible(true);
 					action2SignalSetBox.setVisible(false);
 					action2LightSetBox.setVisible(false);			
-					action2SystemNameField.setToolTipText(rbx.getString("SysNameHintSensor"));						
+					action2NameField.setToolTipText(rbx.getString("NameHintSensor"));						
 					action2DataField.setToolTipText(rbx.getString("DataHintDelayedSensor"));						
 					break;
 				case Conditional.ACTION_SET_LIGHT:
-					action2SystemNameField.setVisible(true);
-					action2SystemNameField.setText("");
+					action2NameField.setVisible(true);
+					action2NameField.setText("");
 					action2DataField.setVisible(false);
 					action2SetButton.setVisible(false);
 					action2TurnoutSetBox.setVisible(false);
 					action2SensorSetBox.setVisible(false);
 					action2SignalSetBox.setVisible(false);
 					action2LightSetBox.setVisible(true);			
-					action2SystemNameField.setToolTipText(rbx.getString("SysNameHintLight"));						
+					action2NameField.setToolTipText(rbx.getString("NameHintLight"));						
 					break;
 				case Conditional.ACTION_SET_MEMORY:
-					action2SystemNameField.setVisible(true);
-					action2SystemNameField.setText("");
+					action2NameField.setVisible(true);
+					action2NameField.setText("");
 					action2DataField.setVisible(true);
 					action2DataField.setText("");
 					action2SetButton.setVisible(false);
@@ -1838,33 +1879,33 @@ public class LogixTableAction extends AbstractTableAction {
 					action2SensorSetBox.setVisible(false);
 					action2SignalSetBox.setVisible(false);
 					action2LightSetBox.setVisible(false);			
-					action2SystemNameField.setToolTipText(rbx.getString("SysNameHintMemory"));			
+					action2NameField.setToolTipText(rbx.getString("NameHintMemory"));			
 					action2DataField.setToolTipText(rbx.getString("DataHintMemory"));			
 					break;
 				case Conditional.ACTION_ENABLE_LOGIX:
-					action2SystemNameField.setVisible(true);
-					action2SystemNameField.setText("");
+					action2NameField.setVisible(true);
+					action2NameField.setText("");
 					action2DataField.setVisible(false);
 					action2SetButton.setVisible(false);
 					action2TurnoutSetBox.setVisible(false);
 					action2SensorSetBox.setVisible(false);
 					action2SignalSetBox.setVisible(false);
 					action2LightSetBox.setVisible(false);			
-					action2SystemNameField.setToolTipText(rbx.getString("SysNameHintLogix"));			
+					action2NameField.setToolTipText(rbx.getString("NameHintLogix"));			
 					break;
 				case Conditional.ACTION_DISABLE_LOGIX:
-					action2SystemNameField.setVisible(true);
-					action2SystemNameField.setText("");
+					action2NameField.setVisible(true);
+					action2NameField.setText("");
 					action2DataField.setVisible(false);
 					action2SetButton.setVisible(false);
 					action2TurnoutSetBox.setVisible(false);
 					action2SensorSetBox.setVisible(false);
 					action2SignalSetBox.setVisible(false);
 					action2LightSetBox.setVisible(false);			
-					action2SystemNameField.setToolTipText(rbx.getString("SysNameHintLogix"));			
+					action2NameField.setToolTipText(rbx.getString("NameHintLogix"));			
 					break;
 				case Conditional.ACTION_PLAY_SOUND:
-					action2SystemNameField.setVisible(false);
+					action2NameField.setVisible(false);
 					action2SetButton.setVisible(true);
 					action2DataField.setVisible(true);
 					action2DataField.setText("");
@@ -1876,7 +1917,7 @@ public class LogixTableAction extends AbstractTableAction {
 					action2SetButton.setToolTipText(rbx.getString("SetHintSound"));						
 					break;
 				case Conditional.ACTION_RUN_SCRIPT:
-					action2SystemNameField.setVisible(false);
+					action2NameField.setVisible(false);
 					action2SetButton.setVisible(true);
 					action2DataField.setVisible(true);
 					action2DataField.setText("");
@@ -1904,7 +1945,7 @@ public class LogixTableAction extends AbstractTableAction {
 		int type = stringToStateVariableType(typeString);
 		if (type!=oldType) {
 			// set defaults needed by most types, specific types should override as needed
-			variableSNameEditable[r] = true;
+			variableNameEditable[r] = true;
 			variableData1[r] = rbx.getString("NotApplicableAbbreviation");
 			variableData1Editable[r] = false;
 			variableData2[r] = rbx.getString("NotApplicableAbbreviation");
@@ -1913,61 +1954,61 @@ public class LogixTableAction extends AbstractTableAction {
 			switch (type) {
 				case Conditional.TYPE_SENSOR_ACTIVE:
 					if (oldType!=Conditional.TYPE_SENSOR_INACTIVE) {
-						variableSName[r] = "";
+						variableName[r] = "";
 					}
 					cStatus.setText(rbx.getString("TypeSensorMessage"));
 					break;
 				case Conditional.TYPE_SENSOR_INACTIVE:
 					if (oldType!=Conditional.TYPE_SENSOR_ACTIVE) {
-						variableSName[r] = "";
+						variableName[r] = "";
 					}
 					cStatus.setText(rbx.getString("TypeSensorMessage"));
 					break;
 				case Conditional.TYPE_TURNOUT_THROWN:
 					if (oldType!=Conditional.TYPE_TURNOUT_CLOSED) {
-						variableSName[r] = "";
+						variableName[r] = "";
 					}
 					cStatus.setText(rbx.getString("TypeTurnoutMessage"));
 					break;
 				case Conditional.TYPE_TURNOUT_CLOSED:
 					if (oldType!=Conditional.TYPE_TURNOUT_THROWN) {
-						variableSName[r] = "";
+						variableName[r] = "";
 					}
 					cStatus.setText(rbx.getString("TypeTurnoutMessage"));
 					break;
 				case Conditional.TYPE_CONDITIONAL_TRUE:
 					if (oldType!=Conditional.TYPE_CONDITIONAL_FALSE) {
-						variableSName[r] = "";
+						variableName[r] = "";
 					}
 					cStatus.setText(rbx.getString("TypeConditionalMessage"));
 					break;
 				case Conditional.TYPE_CONDITIONAL_FALSE:
 					if (oldType!=Conditional.TYPE_CONDITIONAL_TRUE) {
-						variableSName[r] = "";
+						variableName[r] = "";
 					}
 					cStatus.setText(rbx.getString("TypeConditionalMessage"));
 					break;
 				case Conditional.TYPE_LIGHT_ON:
 					if (oldType!=Conditional.TYPE_LIGHT_OFF) {
-						variableSName[r] = "";
+						variableName[r] = "";
 					}
 					cStatus.setText(rbx.getString("TypeLightMessage"));
 					break;
 				case Conditional.TYPE_LIGHT_OFF:
 					if (oldType!=Conditional.TYPE_LIGHT_ON) {
-						variableSName[r] = "";
+						variableName[r] = "";
 					}
 					cStatus.setText(rbx.getString("TypeLightMessage"));
 					break;
 				case Conditional.TYPE_MEMORY_EQUALS:
-					variableSName[r] = "";
+					variableName[r] = "";
 					variableData1[r] = "";
 					variableData1Editable[r] = true;
 					cStatus.setText(rbx.getString("TypeMemoryMessage"));
 					break;
 				case Conditional.TYPE_FAST_CLOCK_RANGE:
-					variableSNameEditable[r] = false;
-					variableSName[r] = rbx.getString("NotApplicableAbbreviation");
+					variableNameEditable[r] = false;
+					variableName[r] = rbx.getString("NotApplicableAbbreviation");
 					variableData1[r] = "00:00";
 					variableData1Editable[r] = true;
 					variableData2[r] = "00:00";
@@ -1979,56 +2020,56 @@ public class LogixTableAction extends AbstractTableAction {
 				case Conditional.TYPE_SIGNAL_HEAD_RED:
 					if (!( (oldType>=Conditional.TYPE_SIGNAL_HEAD_RED) &&
 							(oldType<=Conditional.TYPE_SIGNAL_HEAD_HELD) ) ) {
-						variableSName[r] = "";
+						variableName[r] = "";
 					}
 					cStatus.setText(rbx.getString("TypeSignalMessage"));
 					break;
 				case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
 					if (!( (oldType>=Conditional.TYPE_SIGNAL_HEAD_RED) &&
 							(oldType<=Conditional.TYPE_SIGNAL_HEAD_HELD) ) ) {
-						variableSName[r] = "";
+						variableName[r] = "";
 					}
 					cStatus.setText(rbx.getString("TypeSignalMessage"));
 					break;
 				case Conditional.TYPE_SIGNAL_HEAD_GREEN:
 					if (!( (oldType>=Conditional.TYPE_SIGNAL_HEAD_RED) &&
 							(oldType<=Conditional.TYPE_SIGNAL_HEAD_HELD) ) ) {
-						variableSName[r] = "";
+						variableName[r] = "";
 					}
 					cStatus.setText(rbx.getString("TypeSignalMessage"));
 					break;
 				case Conditional.TYPE_SIGNAL_HEAD_DARK:
 					if (!( (oldType>=Conditional.TYPE_SIGNAL_HEAD_RED) &&
 							(oldType<=Conditional.TYPE_SIGNAL_HEAD_HELD) ) ) {
-						variableSName[r] = "";
+						variableName[r] = "";
 					}
 					cStatus.setText(rbx.getString("TypeSignalMessage"));
 					break;
 				case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
 					if (!( (oldType>=Conditional.TYPE_SIGNAL_HEAD_RED) &&
 							(oldType<=Conditional.TYPE_SIGNAL_HEAD_HELD) ) ) {
-						variableSName[r] = "";
+						variableName[r] = "";
 					}
 					cStatus.setText(rbx.getString("TypeSignalMessage"));
 					break;
 				case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
 					if (!( (oldType>=Conditional.TYPE_SIGNAL_HEAD_RED) &&
 							(oldType<=Conditional.TYPE_SIGNAL_HEAD_HELD) ) ) {
-						variableSName[r] = "";
+						variableName[r] = "";
 					}
 					cStatus.setText(rbx.getString("TypeSignalMessage"));
 					break;
 				case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
 					if (!( (oldType>=Conditional.TYPE_SIGNAL_HEAD_RED) &&
 							(oldType<=Conditional.TYPE_SIGNAL_HEAD_HELD) ) ) {
-						variableSName[r] = "";
+						variableName[r] = "";
 					}
 					cStatus.setText(rbx.getString("TypeSignalMessage"));
 					break;
 				case Conditional.TYPE_SIGNAL_HEAD_HELD:
 					if (!( (oldType>=Conditional.TYPE_SIGNAL_HEAD_RED) &&
 							(oldType<=Conditional.TYPE_SIGNAL_HEAD_HELD) ) ) {
-						variableSName[r] = "";
+						variableName[r] = "";
 					}
 					cStatus.setText(rbx.getString("TypeSignalMessage"));
 					break;
@@ -2074,9 +2115,10 @@ public class LogixTableAction extends AbstractTableAction {
 			}
 		}
 		// check according to state variable type
-		String sTemp = variableSName[index].toUpperCase();
+		String vUName = variableName[index].trim();
+		String sTemp = variableName[index].toUpperCase();
 		String vSName = sTemp.trim();
-		variableSName[index] = vSName;
+		variableName[index] = vSName;
 		Sensor sn = null;
 		Turnout t = null;
 		SignalHead h = null;
@@ -2088,76 +2130,140 @@ public class LogixTableAction extends AbstractTableAction {
 		boolean result = false;
 		switch (variableType[index]) {
 			case Conditional.TYPE_SENSOR_ACTIVE:
-				sn = InstanceManager.sensorManagerInstance().getBySystemName(vSName);
-				if (sn == null) {
-					messageInvalidSensorSystemName(vSName,true);
-					return (false);
+				sn = InstanceManager.sensorManagerInstance().getByUserName(vUName);
+				if (sn != null) {
+					variableName[index] = vUName;
 				}
+				else {
+					sn = InstanceManager.sensorManagerInstance().getBySystemName(vSName);
+					if (sn == null) {
+						variableName[index] = vUName;
+						messageInvalidSensorName(vUName,true);
+						return (false);
+					}
+				}	
 				if (sn.getState() == Sensor.ACTIVE) result = true;
 				break;
 			case Conditional.TYPE_SENSOR_INACTIVE:
-				sn = InstanceManager.sensorManagerInstance().getBySystemName(vSName);
-				if (sn == null) {
-					messageInvalidSensorSystemName(vSName,true);
-					return (false);
+				sn = InstanceManager.sensorManagerInstance().getByUserName(vUName);
+				if (sn != null) {
+					variableName[index] = vUName;
+				}
+				else {
+					sn = InstanceManager.sensorManagerInstance().getBySystemName(vSName);
+					if (sn == null) {
+						variableName[index] = vUName;
+						messageInvalidSensorName(vUName,true);
+						return (false);
+					}
 				}
 				if (sn.getState() == Sensor.INACTIVE) result = true;
 				break;
 			case Conditional.TYPE_TURNOUT_THROWN:
-				t = InstanceManager.turnoutManagerInstance().getBySystemName(vSName);
-				if (t == null) {
-					messageInvalidTurnoutSystemName(vSName,true);
-					return (false);
+				t = InstanceManager.turnoutManagerInstance().getByUserName(vUName);
+				if (t != null) {
+					variableName[index] = vUName;
+				}
+				else {
+					t = InstanceManager.turnoutManagerInstance().getBySystemName(vSName);
+					if (t == null) {
+						variableName[index] = vUName;
+						messageInvalidTurnoutName(vUName,true);
+						return (false);
+					}
 				}
 				if (t.getState() == Turnout.THROWN) result = true; 
 				break;
 			case Conditional.TYPE_TURNOUT_CLOSED:
-				t = InstanceManager.turnoutManagerInstance().getBySystemName(vSName);
-				if (t == null) {
-					messageInvalidTurnoutSystemName(vSName,true);
-					return (false);
+				t = InstanceManager.turnoutManagerInstance().getByUserName(vUName);
+				if (t != null) {
+					variableName[index] = vUName;
+				}
+				else {
+					t = InstanceManager.turnoutManagerInstance().getBySystemName(vSName);
+					if (t == null) {
+						variableName[index] = vUName;
+						messageInvalidTurnoutName(vUName,true);
+						return (false);
+					}
 				}
 				if (t.getState() == Turnout.CLOSED) result = true;
 				break;
 			case Conditional.TYPE_CONDITIONAL_TRUE:
-				c = InstanceManager.conditionalManagerInstance().getBySystemName(vSName);
-				if (c == null) {
-					messageInvalidConditionalSystemName(vSName);
-					return (false);
+				c = InstanceManager.conditionalManagerInstance().getByUserName(curLogix,vUName);
+				if (c != null) {
+					variableName[index] = vUName;
+				}
+				else {
+					c = InstanceManager.conditionalManagerInstance().getBySystemName(vSName);
+					if (c == null) {
+						variableName[index] = vUName;
+						messageInvalidConditionalName(vUName);
+						return (false);
+					}
 				}
 				if (c.getState() == Conditional.TRUE) result = true;
 				break;
 			case Conditional.TYPE_CONDITIONAL_FALSE:
-				c = InstanceManager.conditionalManagerInstance().getBySystemName(vSName);
-				if (c == null) {
-					messageInvalidConditionalSystemName(vSName);
-					return (false);
+				c = InstanceManager.conditionalManagerInstance().getByUserName(curLogix,vUName);
+				if (c != null) {
+					variableName[index] = vUName;
+				}
+				else {
+					c = InstanceManager.conditionalManagerInstance().getBySystemName(vSName);
+					if (c == null) {
+						variableName[index] = vUName;
+						messageInvalidConditionalName(vUName);
+						return (false);
+					}
 				}
 				if (c.getState() == Conditional.FALSE) result = true;
 				break;
 			case Conditional.TYPE_LIGHT_ON:
-				lgt = InstanceManager.lightManagerInstance().getBySystemName(vSName);
-				if (lgt == null) {
-					messageInvalidLightSystemName(vSName,true);
-					return (false);
+				lgt = InstanceManager.lightManagerInstance().getByUserName(vUName);
+				if (lgt != null) {
+					variableName[index] = vUName;
+				}
+				else {
+					lgt = InstanceManager.lightManagerInstance().getBySystemName(vSName);
+					if (lgt == null) {
+						variableName[index] = vUName;
+						messageInvalidLightName(vUName,true);
+						return (false);
+					}
 				}
 				if (lgt.getState() == Light.ON) result = true;
 				break;
 			case Conditional.TYPE_LIGHT_OFF:
-				lgt = InstanceManager.lightManagerInstance().getBySystemName(vSName);
-				if (lgt == null) {
-					messageInvalidLightSystemName(vSName,true);
-					return (false);
+				lgt = InstanceManager.lightManagerInstance().getByUserName(vUName);
+				if (lgt != null) {
+					variableName[index] = vUName;
+				}
+				else {
+					lgt = InstanceManager.lightManagerInstance().getBySystemName(vSName);
+					if (lgt == null) {
+						variableName[index] = vUName;
+						messageInvalidLightName(vUName,true);
+						return (false);
+					}
 				}
 				if (lgt.getState() == Light.OFF) result = true; 
 				break;
 			case Conditional.TYPE_MEMORY_EQUALS:
-				m = InstanceManager.memoryManagerInstance().getBySystemName(vSName);
-				if (m == null) {
-					messageInvalidMemorySystemName(vSName,true);
-					return (false);
+				m = InstanceManager.memoryManagerInstance().getByUserName(vUName);
+				if (m != null) {
+					variableName[index] = vUName;
+				}
+				else {
+					m = InstanceManager.memoryManagerInstance().getBySystemName(vSName);
+					if (m == null) {
+						variableName[index] = vUName;
+						messageInvalidMemoryName(vUName,true);
+						return (false);
+					}
 				}
 				String s = (String)m.getValue();
+				if (s==null) return (false);
 				if (s.equals(variableData1[index])) result = true; 
 				break;
 			case Conditional.TYPE_FAST_CLOCK_RANGE:
@@ -2189,74 +2295,137 @@ public class LogixTableAction extends AbstractTableAction {
 				}
 				break;
 			case Conditional.TYPE_SIGNAL_HEAD_RED:
-				h = InstanceManager.signalHeadManagerInstance().getBySystemName(vSName);
-				if (h == null) {
-					messageInvalidSignalHeadSystemName(vSName,true);
-					return (false);
+				h = InstanceManager.signalHeadManagerInstance().getByUserName(vUName);
+				if (h != null) {
+					variableName[index] = vUName;
+				}
+				else {
+					h = InstanceManager.signalHeadManagerInstance().getBySystemName(vSName);
+					if (h == null) {
+						variableName[index] = vUName;
+						messageInvalidSignalHeadName(vUName,true);
+						return (false);
+					}
 				}
 				if (h.getAppearance() == SignalHead.RED) result = true; 
 				break;
 			case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
-				h = InstanceManager.signalHeadManagerInstance().getBySystemName(vSName);
-				if (h == null) {
-					messageInvalidSignalHeadSystemName(vSName,true);
-					return (false);
+				h = InstanceManager.signalHeadManagerInstance().getByUserName(vUName);
+				if (h != null) {
+					variableName[index] = vUName;
+				}
+				else {
+					h = InstanceManager.signalHeadManagerInstance().getBySystemName(vSName);
+					if (h == null) {
+						variableName[index] = vUName;
+						messageInvalidSignalHeadName(vUName,true);
+						return (false);
+					}
 				}
 				if (h.getAppearance() == SignalHead.YELLOW) result = true; 
 				break;
 			case Conditional.TYPE_SIGNAL_HEAD_GREEN:
-				h = InstanceManager.signalHeadManagerInstance().getBySystemName(vSName);
-				if (h == null) {
-					messageInvalidSignalHeadSystemName(vSName,true);
-					return (false);
+				h = InstanceManager.signalHeadManagerInstance().getByUserName(vUName);
+				if (h != null) {
+					variableName[index] = vUName;
+				}
+				else {
+					h = InstanceManager.signalHeadManagerInstance().getBySystemName(vSName);
+					if (h == null) {
+						variableName[index] = vUName;
+						messageInvalidSignalHeadName(vUName,true);
+						return (false);
+					}
 				}
 				if (h.getAppearance() == SignalHead.GREEN) result = true;
 				break;
 			case Conditional.TYPE_SIGNAL_HEAD_DARK:
-				h = InstanceManager.signalHeadManagerInstance().getBySystemName(vSName);
-				if (h == null) {
-					messageInvalidSignalHeadSystemName(vSName,true);
-					return (false);
+				h = InstanceManager.signalHeadManagerInstance().getByUserName(vUName);
+				if (h != null) {
+					variableName[index] = vUName;
+				}
+				else {
+					h = InstanceManager.signalHeadManagerInstance().getBySystemName(vSName);
+					if (h == null) {
+						variableName[index] = vUName;
+						messageInvalidSignalHeadName(vUName,true);
+						return (false);
+					}
 				}
 				if (h.getAppearance() == SignalHead.DARK) result = true; 
 				break;
 			case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
-				h = InstanceManager.signalHeadManagerInstance().getBySystemName(vSName);
-				if (h == null) {
-					messageInvalidSignalHeadSystemName(vSName,true);
-					return (false);
+				h = InstanceManager.signalHeadManagerInstance().getByUserName(vUName);
+				if (h != null) {
+					variableName[index] = vUName;
+				}
+				else {
+					h = InstanceManager.signalHeadManagerInstance().getBySystemName(vSName);
+					if (h == null) {
+						variableName[index] = vUName;
+						messageInvalidSignalHeadName(vUName,true);
+						return (false);
+					}
 				}
 				if (h.getAppearance() == SignalHead.FLASHRED) result = true; 
 				break;
 			case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
-				h = InstanceManager.signalHeadManagerInstance().getBySystemName(vSName);
-				if (h == null) {
-					messageInvalidSignalHeadSystemName(vSName,true);
-					return (false);
+				h = InstanceManager.signalHeadManagerInstance().getByUserName(vUName);
+				if (h != null) {
+					variableName[index] = vUName;
+				}
+				else {
+					h = InstanceManager.signalHeadManagerInstance().getBySystemName(vSName);
+					if (h == null) {
+						variableName[index] = vUName;
+						messageInvalidSignalHeadName(vUName,true);
+						return (false);
+					}
 				}
 				if (h.getAppearance() == SignalHead.FLASHYELLOW) result = true; 
 				break;
 			case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
-				h = InstanceManager.signalHeadManagerInstance().getBySystemName(vSName);
-				if (h == null) {
-					messageInvalidSignalHeadSystemName(vSName,true);
-					return (false);
+				h = InstanceManager.signalHeadManagerInstance().getByUserName(vUName);
+				if (h != null) {
+					variableName[index] = vUName;
+				}
+				else {
+					h = InstanceManager.signalHeadManagerInstance().getBySystemName(vSName);
+					if (h == null) {
+						variableName[index] = vUName;
+						messageInvalidSignalHeadName(vUName,true);
+						return (false);
+					}
 				}
 				if (h.getAppearance() == SignalHead.FLASHGREEN) result = true;
 				break;
 			case Conditional.TYPE_SIGNAL_HEAD_LIT:
-				h = InstanceManager.signalHeadManagerInstance().getBySystemName(vSName);
-				if (h == null) {
-					messageInvalidSignalHeadSystemName(vSName,true);
-					return (false);
+				h = InstanceManager.signalHeadManagerInstance().getByUserName(vUName);
+				if (h != null) {
+					variableName[index] = vUName;
+				}
+				else {
+					h = InstanceManager.signalHeadManagerInstance().getBySystemName(vSName);
+					if (h == null) {
+						variableName[index] = vUName;
+						messageInvalidSignalHeadName(vUName,true);
+						return (false);
+					}
 				}
 				if (h.getLit()) result = true;
 				break;
 			case Conditional.TYPE_SIGNAL_HEAD_HELD:
-				h = InstanceManager.signalHeadManagerInstance().getBySystemName(vSName);
-				if (h == null) {
-					messageInvalidSignalHeadSystemName(vSName,true);
-					return (false);
+				h = InstanceManager.signalHeadManagerInstance().getByUserName(vUName);
+				if (h != null) {
+					variableName[index] = vUName;
+				}
+				else {
+					h = InstanceManager.signalHeadManagerInstance().getBySystemName(vSName);
+					if (h == null) {
+						variableName[index] = vUName;
+						messageInvalidSignalHeadName(vUName,true);
+						return (false);
+					}
 				}
 				if (h.getHeld()) result = true;
 				break;
@@ -2280,23 +2449,38 @@ public class LogixTableAction extends AbstractTableAction {
 	boolean validateActionVariables(int index,
 			JTextField systemNameField,JTextField dataField,JComboBox turnoutSetBox,
 			JComboBox sensorSetBox,JComboBox signalSetBox,JComboBox lightSetBox) {
-		// get system name and make upper case		
-		String sName = systemNameField.getText().toUpperCase();
-		actionSystemName[index] = sName;
+		// get possible user name
+		String uName = systemNameField.getText().trim();	
+		// get possible system name, make upper case, and tentatively initialize	
+		String sName = systemNameField.getText().toUpperCase().trim();
+		// initialize to system name, changing to user name later if needed
+		actionName[index] = sName;
 		systemNameField.setText(sName);
 		// validate according to action type
 		actionDelay[index] = 0;
 		switch (actionType[index]) {
 			case Conditional.ACTION_NONE:
-				actionSystemName[index] = " ";
+				actionName[index] = " ";
 				actionData[index] = 0;
 				actionString[index] = " ";
 				break;
 			case Conditional.ACTION_SET_TURNOUT:
-				// check turnout system name
-				Turnout t = InstanceManager.turnoutManagerInstance().getBySystemName(sName);
+				Turnout t = null;
+				// check if turnout user name was entered
+				if ((uName!=null) && (uName!="")) {
+					t = InstanceManager.turnoutManagerInstance().getByUserName(uName);
+					if (t != null) {
+						actionName[index] = uName;
+						systemNameField.setText(uName);
+					}
+					else {
+						// check turnout system name
+						t = InstanceManager.turnoutManagerInstance().getBySystemName(sName);
+					}
+				}
 				if (t == null) {
-					messageInvalidTurnoutSystemName(sName,false);
+					systemNameField.setText(uName);
+					messageInvalidTurnoutName(uName,false);
 					return (false);
 				}
 				if (turnoutSetBox.getSelectedIndex()==0)
@@ -2306,10 +2490,22 @@ public class LogixTableAction extends AbstractTableAction {
 				actionString[index] = " ";
 				break;
 			case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
-				// check signal head system name
-				SignalHead hx = InstanceManager.signalHeadManagerInstance().getBySystemName(sName);
+				SignalHead hx = null;
+				// check if signal head user name was entered
+				if ((uName!=null) && (uName!="")) {
+					hx = InstanceManager.signalHeadManagerInstance().getByUserName(uName);
+					if (hx != null) {
+						actionName[index] = uName;
+						systemNameField.setText(uName);
+					}
+					else {
+						// check signal head system name
+						hx = InstanceManager.signalHeadManagerInstance().getBySystemName(sName);
+					}
+				}
 				if (hx == null) {
-					messageInvalidSignalHeadSystemName(sName,false);
+					systemNameField.setText(uName);
+					messageInvalidSignalHeadName(uName,false);
 					return (false);
 				}
 				actionData[index] = signalAppearanceIndexToAppearance(signalSetBox.getSelectedIndex());
@@ -2319,29 +2515,66 @@ public class LogixTableAction extends AbstractTableAction {
 			case Conditional.ACTION_CLEAR_SIGNAL_HELD:
 			case Conditional.ACTION_SET_SIGNAL_DARK:
 			case Conditional.ACTION_SET_SIGNAL_LIT:
-				// check signal head system name
-				SignalHead h = InstanceManager.signalHeadManagerInstance().getBySystemName(sName);
+				SignalHead h = null;
+				// check if signal head user name was entered
+				if ((uName!=null) && (uName!="")) {
+					h = InstanceManager.signalHeadManagerInstance().getByUserName(uName);
+					if (h != null) {
+						actionName[index] = uName;
+						systemNameField.setText(uName);
+					}
+					else {
+						// check signal head system name
+						h = InstanceManager.signalHeadManagerInstance().getBySystemName(sName);
+					}
+				}
 				if (h == null) {
-					messageInvalidSignalHeadSystemName(sName,false);
+					systemNameField.setText(uName);
+					messageInvalidSignalHeadName(uName,false);
 					return (false);
 				}
 				actionData[index] = 0;
 				actionString[index] = " ";
 				break;
 			case Conditional.ACTION_TRIGGER_ROUTE:
-				// check route system name
-				Route r = InstanceManager.routeManagerInstance().getBySystemName(sName);
+				Route r = null;
+				// check if route user name was entered
+				if ((uName!=null) && (uName!="")) {
+					r = InstanceManager.routeManagerInstance().getByUserName(uName);
+					if (r != null) {
+						actionName[index] = uName;
+						systemNameField.setText(uName);
+					}
+					else {
+						// check route system name
+						r = InstanceManager.routeManagerInstance().getBySystemName(sName);
+					}
+				}
 				if (r == null) {
-					messageInvalidRouteSystemName(sName);
+					systemNameField.setText(uName);
+					messageInvalidRouteName(uName);
 					return (false);
 				}
 				actionData[index] = 0;
 				actionString[index] = " ";
 				break;
 			case Conditional.ACTION_SET_SENSOR:
-				Sensor sn = InstanceManager.sensorManagerInstance().getBySystemName(sName);
+				Sensor sn = null;
+				// check if sensor user name was entered
+				if ((uName!=null) && (uName!="")) {
+					sn = InstanceManager.sensorManagerInstance().getByUserName(uName);
+					if (sn != null) {
+						actionName[index] = uName;
+						systemNameField.setText(uName);
+					}
+					else {
+						// check sensor system name
+						sn = InstanceManager.sensorManagerInstance().getBySystemName(sName);
+					}
+				}
 				if (sn == null) {
-					messageInvalidSensorSystemName(sName,false);
+					systemNameField.setText(uName);
+					messageInvalidSensorName(uName,false);
 					return (false);
 				}
 				if (sensorSetBox.getSelectedIndex()==0)
@@ -2351,9 +2584,22 @@ public class LogixTableAction extends AbstractTableAction {
 				actionString[index] = " ";
 				break;
 			case Conditional.ACTION_DELAYED_SENSOR:
-				Sensor snx = InstanceManager.sensorManagerInstance().getBySystemName(sName);
+				Sensor snx = null;
+				// check if sensor user name was entered
+				if ((uName!=null) && (uName!="")) {
+					snx = InstanceManager.sensorManagerInstance().getByUserName(uName);
+					if (snx != null) {
+						actionName[index] = uName;
+						systemNameField.setText(uName);
+					}
+					else {
+						// check sensor system name
+						snx = InstanceManager.sensorManagerInstance().getBySystemName(sName);
+					}
+				}
 				if (snx == null) {
-					messageInvalidSensorSystemName(sName,false);
+					systemNameField.setText(uName);
+					messageInvalidSensorName(uName,false);
 					return (false);
 				}
 				if (sensorSetBox.getSelectedIndex()==0)
@@ -2382,9 +2628,22 @@ public class LogixTableAction extends AbstractTableAction {
 				actionString[index] = " ";
 				break;
 			case Conditional.ACTION_SET_LIGHT:
-				Light lgt = InstanceManager.lightManagerInstance().getBySystemName(sName);
+				Light lgt = null;
+				// check if light user name was entered
+				if ((uName!=null) && (uName!="")) {
+					lgt = InstanceManager.lightManagerInstance().getByUserName(uName);
+					if (lgt != null) {
+						actionName[index] = uName;
+						systemNameField.setText(uName);
+					}
+					else {
+						// check light system name
+						lgt = InstanceManager.lightManagerInstance().getBySystemName(sName);
+					}
+				}
 				if (lgt == null) {
-					messageInvalidLightSystemName(sName,false);
+					systemNameField.setText(uName);
+					messageInvalidLightName(uName,false);
 					return (false);
 				}
 				if (lightSetBox.getSelectedIndex()==0)
@@ -2394,10 +2653,22 @@ public class LogixTableAction extends AbstractTableAction {
 				actionString[index] = " ";
 				break;
 			case Conditional.ACTION_SET_MEMORY:
-				// check memory system name
-				Memory m = InstanceManager.memoryManagerInstance().getBySystemName(sName);
+				Memory m = null;
+				// check if memory user name was entered
+				if ((uName!=null) && (uName!="")) {
+					m = InstanceManager.memoryManagerInstance().getByUserName(uName);
+					if (m != null) {
+						actionName[index] = uName;
+						systemNameField.setText(uName);
+					}
+					else {
+						// check memory system name
+						m = InstanceManager.memoryManagerInstance().getBySystemName(sName);
+					}
+				}
 				if (m == null) {
-					messageInvalidMemorySystemName(sName,false);
+					systemNameField.setText(uName);
+					messageInvalidMemoryName(uName,false);
 					return (false);
 				}
 				actionData[index] = 0;
@@ -2405,22 +2676,34 @@ public class LogixTableAction extends AbstractTableAction {
 				break;
 			case Conditional.ACTION_ENABLE_LOGIX:
 			case Conditional.ACTION_DISABLE_LOGIX:
-				// check memory system name
-				Logix x = InstanceManager.logixManagerInstance().getBySystemName(sName);
+				Logix x = null;
+				// check if logix user name was entered
+				if ((uName!=null) && (uName!="")) {
+					x = InstanceManager.logixManagerInstance().getByUserName(uName);
+					if (x != null) {
+						actionName[index] = uName;
+						systemNameField.setText(uName);
+					}
+					else {
+						// check logix system name
+						x = InstanceManager.logixManagerInstance().getBySystemName(sName);
+					}
+				}
 				if (x == null) {
-					messageInvalidLogixSystemName(sName);
+					systemNameField.setText(uName);
+					messageInvalidLogixName(uName);
 					return (false);
 				}
 				actionData[index] = 0;
 				actionString[index] = " ";
 				break;
 			case Conditional.ACTION_PLAY_SOUND:
-				actionSystemName[index] = " ";
+				actionName[index] = " ";
 				actionData[index] = 0;
 				actionString[index] = dataField.getText();
 				break;
 			case Conditional.ACTION_RUN_SCRIPT:
-				actionSystemName[index] = " ";
+				actionName[index] = " ";
 				actionData[index] = 0;
 				actionString[index] = dataField.getText();
 				break;
@@ -2684,52 +2967,52 @@ public class LogixTableAction extends AbstractTableAction {
     }
 	
 	/**
-	 * Sends an invalid turnout system name error message for Edit Conditional window
+	 * Sends an invalid turnout name error message for Edit Conditional window
 	 */
-	void messageInvalidTurnoutSystemName(String systemName,boolean table) {
+	void messageInvalidTurnoutName(String name,boolean table) {
 		String s = " ";
 		if (table) s = "\n"+rbx.getString("Error21");
 		javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-			rbx.getString("Error12")+systemName+rbx.getString("Error13")+
+			rbx.getString("Error12")+name+rbx.getString("Error13")+
 				"\n"+rbx.getString("Error19")+s,
 				rbx.getString("ErrorTitle"),
 					javax.swing.JOptionPane.ERROR_MESSAGE);
 	}
 	
 	/**
-	 * Sends an invalid turnout system name error message for Edit Conditional window
+	 * Sends an invalid signal head name error message for Edit Conditional window
 	 */
-	void messageInvalidSignalHeadSystemName(String systemName,boolean table) {
+	void messageInvalidSignalHeadName(String name,boolean table) {
 		String s = " ";
 		if (table) s = "\n"+rbx.getString("Error21");
 		javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-			rbx.getString("Error12")+systemName+rbx.getString("Error14")+
+			rbx.getString("Error12")+name+rbx.getString("Error14")+
 				"\n"+rbx.getString("Error19")+s,
 				rbx.getString("ErrorTitle"),
 					javax.swing.JOptionPane.ERROR_MESSAGE);
 	}
 	
 	/**
-	 * Sends an invalid turnout system name error message for Edit Conditional window
+	 * Sends an invalid sensor name error message for Edit Conditional window
 	 */
-	void messageInvalidSensorSystemName(String systemName,boolean table) {
+	void messageInvalidSensorName(String name,boolean table) {
 		String s = " ";
 		if (table) s = "\n"+rbx.getString("Error21");
 		javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-			rbx.getString("Error12")+systemName+rbx.getString("Error15")+
+			rbx.getString("Error12")+name+rbx.getString("Error15")+
 				"\n"+rbx.getString("Error19")+s,
 				rbx.getString("ErrorTitle"),
 					javax.swing.JOptionPane.ERROR_MESSAGE);
 	}
 	
 	/**
-	 * Sends an invalid turnout system name error message for Edit Conditional window
+	 * Sends an invalid light name error message for Edit Conditional window
 	 */
-	void messageInvalidLightSystemName(String systemName,boolean table) {
+	void messageInvalidLightName(String name,boolean table) {
 		String s = " ";
 		if (table) s = "\n"+rbx.getString("Error21");
 		javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-			rbx.getString("Error12")+systemName+rbx.getString("Error16")+
+			rbx.getString("Error12")+name+rbx.getString("Error16")+
 				"\n"+rbx.getString("Error19")+s,
 				rbx.getString("ErrorTitle"),
 					javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -2738,50 +3021,60 @@ public class LogixTableAction extends AbstractTableAction {
 	/**
 	 * Sends an invalid memory system name error message for Edit Conditional window
 	 */
-	void messageInvalidMemorySystemName(String systemName,boolean table) {
+	void messageInvalidMemoryName(String name,boolean table) {
 		String s = " ";
 		if (table) s = "\n"+rbx.getString("Error21");
 		javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-			rbx.getString("Error12")+systemName+rbx.getString("Error17")+
+			rbx.getString("Error12")+name+rbx.getString("Error17")+
 				"\n"+rbx.getString("Error19")+s,
 				rbx.getString("ErrorTitle"),
 					javax.swing.JOptionPane.ERROR_MESSAGE);
 	}
 	
 	/**
-	 * Sends an invalid route system name error message for Edit Conditional window
+	 * Sends an invalid route name error message for Edit Conditional window
 	 */
-	void messageInvalidRouteSystemName(String systemName) {
+	void messageInvalidRouteName(String name) {
 		javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-			rbx.getString("Error12")+systemName+rbx.getString("Error18")+
+			rbx.getString("Error12")+name+rbx.getString("Error18")+
 				"\n"+rbx.getString("Error19"),
 				rbx.getString("ErrorTitle"),
 					javax.swing.JOptionPane.ERROR_MESSAGE);
 	}
 	
 	/**
-	 * Sends an invalid conditional system name error message for Edit Conditional window
+	 * Sends an invalid conditional name error message for Edit Conditional window
 	 */
-	void messageInvalidConditionalSystemName(String systemName) {
+	void messageInvalidConditionalName(String name) {
 		javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-			rbx.getString("Error12")+systemName+rbx.getString("Error20")+
-				"\n"+rbx.getString("Error19")+
+			rbx.getString("Error12")+name+rbx.getString("Error20")+
+				"\n"+rbx.getString("Error29")+
 				"\n"+rbx.getString("Error21"),
 				rbx.getString("ErrorTitle"),
 					javax.swing.JOptionPane.ERROR_MESSAGE);
 	}
 	
 	/**
-	 * Sends an invalid logix system name error message for Edit Conditional window
+	 * Sends an invalid logix name error message for Edit Conditional window
 	 */
-	void messageInvalidLogixSystemName(String systemName) {
+	void messageInvalidLogixName(String name) {
 		javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-			rbx.getString("Error12")+systemName+rbx.getString("Error22")+
+			rbx.getString("Error12")+name+rbx.getString("Error22")+
 				"\n"+rbx.getString("Error19"),
 				rbx.getString("ErrorTitle"),
 					javax.swing.JOptionPane.ERROR_MESSAGE);
 	}
-		
+	
+	/**
+	 * Sends a duplicate Conditional user name message for Edit Logix window
+	 */
+	void messageDuplicateConditionalUserName(String svName) {
+		javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
+			rbx.getString("Error30")+" "+svName+"."+
+				"\n"+rbx.getString("Error31"),
+				rbx.getString("ErrorTitle"),
+					javax.swing.JOptionPane.ERROR_MESSAGE);
+	}
 	
 	//  *********** Special Table Models ********************
 	
@@ -2960,9 +3253,18 @@ public class LogixTableAction extends AbstractTableAction {
 			else if (col == UNAME_COLUMN) {
 				String uName = (String)value;
 				if (curLogix!=null) {
-					conditionalManager.getBySystemName(
-						curLogix.getConditionalByNumberOrder(rx)).setUserName(uName.trim());
-					fireTableRowsUpdated(rx,rx);
+					Conditional cn = conditionalManager.getByUserName(curLogix,uName.trim());
+					if (cn==null) {
+						conditionalManager.getBySystemName(
+							curLogix.getConditionalByNumberOrder(rx)).setUserName(uName.trim());
+						fireTableRowsUpdated(rx,rx);
+					}
+					else {
+						String svName = curLogix.getConditionalByNumberOrder(rx);
+						if (cn != conditionalManager.getBySystemName(svName)) {
+							messageDuplicateConditionalUserName(cn.getSystemName());
+						}
+					}
 				}
 			}
         }
@@ -3006,7 +3308,7 @@ public class LogixTableAction extends AbstractTableAction {
 				case TYPE_COLUMN:
 					return (true);
 				case SNAME_COLUMN:
-					return (variableSNameEditable[r]);
+					return (variableNameEditable[r]);
 				case DATA1_COLUMN:
 					return (variableData1Editable[r]);
 				case DATA2_COLUMN:
@@ -3028,7 +3330,7 @@ public class LogixTableAction extends AbstractTableAction {
 				case TYPE_COLUMN:
 					return (rbx.getString("ColumnLabelVariableType"));
 				case SNAME_COLUMN:
-					return (rbx.getString("ColumnLabelSystemName"));
+					return (rbx.getString("ColumnLabelName"));
 				case DATA1_COLUMN:
 					return (rbx.getString("ColumnLabelData1"));
 				case DATA2_COLUMN:
@@ -3077,7 +3379,7 @@ public class LogixTableAction extends AbstractTableAction {
 				case TYPE_COLUMN:
 					return stateVariableTypeToString(variableType[rx]);
 				case SNAME_COLUMN:
-					return variableSName[rx];
+					return variableName[rx];
 				case DATA1_COLUMN:
 					return variableData1[rx];
 				case DATA2_COLUMN:
@@ -3103,7 +3405,7 @@ public class LogixTableAction extends AbstractTableAction {
 					variableTypeChanged(rx,(String)value);
 					break;
 				case SNAME_COLUMN:
-					variableSName[rx] = (String)value;
+					variableName[rx] = (String)value;
 					break;
 				case DATA1_COLUMN:
 					variableData1[rx] = (String)value;

@@ -14,7 +14,7 @@ import java.util.Date;
  * Class providing the basic logic of the Logix interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class DefaultLogix extends AbstractNamedBean
     implements Logix, java.io.Serializable {
@@ -46,7 +46,7 @@ public class DefaultLogix extends AbstractNamedBean
 	private int mNumListeners = 0;  // number of listeners described below
 	protected java.beans.PropertyChangeListener[] mListeners = 
 							new java.beans.PropertyChangeListener[MAX_LISTENERS];
-	protected String[] mListenerSName = new String[MAX_LISTENERS];
+	protected String[] mListenerName = new String[MAX_LISTENERS];
 	protected int[] mListenerVarType = new int[MAX_LISTENERS];
 	protected int[] mListenerType = new int[MAX_LISTENERS];
 	protected String[] mListenerProperty = new String[MAX_LISTENERS];
@@ -170,12 +170,29 @@ public class DefaultLogix extends AbstractNamedBean
 	}
 
     /**
-     * Set enabled status
+     * Set enabled status.  Enabled is a bound property
+	 *   All conditionals are set to UNKNOWN state and recalculated
+	 *		when the Logix is enabled, provided the Logix has been 
+	 *		previously activated.
      */
     public void setEnabled(boolean state) { 
         boolean old = mEnabled;
         mEnabled = state;
-        if (old != state) firePropertyChange("Enabled", new Boolean(old), new Boolean(state));
+        if (old != state) {
+			firePropertyChange("Enabled", new Boolean(old), new Boolean(state));
+			// set the state of all Conditionals to UNKNOWN
+			if ( mBusy && (mNumConditionals> 0) ) {
+				Conditional c = null;
+				for (int i = 0;i<mNumConditionals;i++) {
+					c = InstanceManager.conditionalManagerInstance().
+										getBySystemName(mConditionalSystemNames[i]);
+					if (c!=null) {
+						c.setState(Conditional.UNKNOWN);
+					}
+				}
+				calculateConditionals();
+			}
+		}
     }
 
     /**
@@ -204,7 +221,7 @@ public class DefaultLogix extends AbstractNamedBean
 		// find the Conditional to delete
 		int found = -1;
 		for (int i = 0;(i<mNumConditionals)&&(found<0);i++) {
-			if (systemName==mConditionalSystemNames[i]) {
+			if (systemName.equals(mConditionalSystemNames[i])) {
 				found = i;
 			}
 		}
@@ -377,7 +394,7 @@ public class DefaultLogix extends AbstractNamedBean
 		Conditional c = null;
 		int numVars = 0;
 		int varType = 0;
-		String varSName = "";
+		String varName = "";
 		boolean newSV = true;
 		// cycle thru Conditionals to find objects to listen to
 		for (int i = 0;i<mNumConditionals;i++) {
@@ -388,14 +405,14 @@ public class DefaultLogix extends AbstractNamedBean
 				if (numVars>0) {
 					// cycle thru state variables for this Conditional
 					for (int k = 0;k<numVars;k++) {
-						varSName = c.getStateVariableSystemName(k);
+						varName = c.getStateVariableName(k);
 						varType = c.getStateVariableType(k);
 						newSV = true;
 						if (mNumListeners>0) {
 							// check if already in list
 							for (int j = 0;(j<mNumListeners)&&newSV;j++) {
 								if (varType==mListenerVarType[j]) {
-									if (varSName.equals(mListenerSName)) 
+									if (varName.equals(mListenerName[j])) 
 										newSV = false;
 								}
 							}
@@ -405,14 +422,25 @@ public class DefaultLogix extends AbstractNamedBean
 								(varType==Conditional.TYPE_CONDITIONAL_FALSE) ) {
 							// check this logix's conditionals
 							for (int n = 0;n<mNumConditionals;n++) {
-								if (varSName.equals(mConditionalSystemNames[n])) {
+								// check for system name within this logix
+								if (varName.equals(mConditionalSystemNames[n])) {
 									newSV = false;
+								}
+								else {
+									// check for user name within this logix
+									Conditional cxx = InstanceManager.conditionalManagerInstance().
+											getBySystemName(mConditionalSystemNames[n]);
+									if (cxx!=null) {
+										if (varName.equals(cxx.getUserName())) {
+											newSV = false;
+										}
+									}
 								}
 							}
 						}
 						// add to list if new
 						if (newSV) {
-							mListenerSName[mNumListeners] = varSName;
+							mListenerName[mNumListeners] = varName;
 							mListenerVarType[mNumListeners] = varType;
 							mListenerData[mNumListeners] = "";
 							switch (varType) {
@@ -547,10 +575,10 @@ public class DefaultLogix extends AbstractNamedBean
 		switch (mListenerType[index]) {
 			case LISTENER_TYPE_SENSOR:
 				Sensor s = InstanceManager.sensorManagerInstance().
-										getBySystemName(mListenerSName[index]);
+										getSensor(mListenerName[index]);
 				if (s==null) {
-					log.error("Bad system name for sensor *"+mListenerSName[index]+
-									"when setting up Logix listener");
+					log.error("Bad name for sensor *"+mListenerName[index]+
+									"* when setting up Logix listener");
 					return;
 				}
 				// Add listener for Sensor within this Logix
@@ -559,10 +587,10 @@ public class DefaultLogix extends AbstractNamedBean
 				break;
 			case LISTENER_TYPE_TURNOUT:
 				Turnout t = InstanceManager.turnoutManagerInstance().
-										getBySystemName(mListenerSName[index]);
+										getTurnout(mListenerName[index]);
 				if (t==null) {
-					log.error("Bad system name for turnout *"+mListenerSName[index]+
-									"when setting up Logix listener");
+					log.error("Bad name for turnout *"+mListenerName[index]+
+									"* when setting up Logix listener");
 					return;
 				}
 				// Add listener for Turnout within this Logix
@@ -571,10 +599,10 @@ public class DefaultLogix extends AbstractNamedBean
 				break;
 			case LISTENER_TYPE_LIGHT:
 				Light lgt = InstanceManager.lightManagerInstance().
-										getBySystemName(mListenerSName[index]);
+										getLight(mListenerName[index]);
 				if (lgt==null) {
-					log.error("Bad system name for light *"+mListenerSName[index]+
-									"when setting up Logix listener");
+					log.error("Bad name for light *"+mListenerName[index]+
+									"* when setting up Logix listener");
 					return;
 				}
 				// Add listener for Light within this Logix
@@ -583,22 +611,22 @@ public class DefaultLogix extends AbstractNamedBean
 				break;
 			case LISTENER_TYPE_CONDITIONAL:
 				Conditional c = InstanceManager.conditionalManagerInstance().
-										getBySystemName(mListenerSName[index]);
+										getBySystemName(mListenerName[index]);
 				if (c==null) {
-					log.error("Bad system name for conditional *"+mListenerSName[index]+
-									"when setting up Logix listener");
+					log.error("Bad system name for conditional *"+mListenerName[index]+
+									"* when setting up Logix listener");
 					return;
 				}
-				// Add listener for Conditional within this Logix
+				// Add listener for Conditional in other Logix referenced within this Logix
 				mListeners[index] = new StateListener(index);
 				c.addPropertyChangeListener (mListeners[index]);
 				break;
 			case LISTENER_TYPE_SIGNAL:
 				SignalHead h = InstanceManager.signalHeadManagerInstance().
-										getBySystemName(mListenerSName[index]);
+										getSignalHead(mListenerName[index]);
 				if (h==null) {
-					log.error("Bad system name for signal head *"+mListenerSName[index]+
-									"when setting up Logix listener");
+					log.error("Bad name for signal head *"+mListenerName[index]+
+									"* when setting up Logix listener");
 					return;
 				}
 				// Add listener for Signal Heads within this Logix
@@ -607,10 +635,10 @@ public class DefaultLogix extends AbstractNamedBean
 				break;
 			case LISTENER_TYPE_MEMORY:
 				Memory m = InstanceManager.memoryManagerInstance().
-										getBySystemName(mListenerSName[index]);
+										getMemory(mListenerName[index]);
 				if (m==null) {
-					log.error("Bad system name for memory *"+mListenerSName[index]+
-									"when setting up Logix listener");
+					log.error("Bad name for memory *"+mListenerName[index]+
+									"* when setting up Logix listener");
 					return;
 				}
 				// Add listener for Memory within this Logix
@@ -652,9 +680,9 @@ public class DefaultLogix extends AbstractNamedBean
 		switch (mListenerType[index]) {
 			case LISTENER_TYPE_SENSOR:
 				Sensor s = InstanceManager.sensorManagerInstance().
-										getBySystemName(mListenerSName[index]);
+										getSensor(mListenerName[index]);
 				if (s==null) {
-					log.error("Bad system name for sensor *"+mListenerSName[index]+
+					log.error("Bad name for sensor *"+mListenerName[index]+
 									"when removing a Logix listener");
 					return;
 				}
@@ -663,57 +691,57 @@ public class DefaultLogix extends AbstractNamedBean
 				break;
 			case LISTENER_TYPE_TURNOUT:
 				Turnout t = InstanceManager.turnoutManagerInstance().
-										getBySystemName(mListenerSName[index]);
+										getTurnout(mListenerName[index]);
 				if (t==null) {
-					log.error("Bad system name for turnout *"+mListenerSName[index]+
+					log.error("Bad name for turnout *"+mListenerName[index]+
 									"when removing a Logix listener");
 					return;
 				}
-				// remove listener for this Sensor
+				// remove listener for this Turnout
 				t.removePropertyChangeListener(mListeners[index]);
 				break;
 			case LISTENER_TYPE_LIGHT:
 				Light lgt = InstanceManager.lightManagerInstance().
-										getBySystemName(mListenerSName[index]);
+										getLight(mListenerName[index]);
 				if (lgt==null) {
-					log.error("Bad system name for light *"+mListenerSName[index]+
+					log.error("Bad name for light *"+mListenerName[index]+
 									"when removing a Logix listener");
 					return;
 				}
-				// remove listener for this Sensor
+				// remove listener for this Light
 				lgt.removePropertyChangeListener(mListeners[index]);
 				break;
 			case LISTENER_TYPE_CONDITIONAL:
 				Conditional c = InstanceManager.conditionalManagerInstance().
-										getBySystemName(mListenerSName[index]);
+										getBySystemName(mListenerName[index]);
 				if (c==null) {
-					log.error("Bad system name for conditional *"+mListenerSName[index]+
+					log.error("Bad system name for conditional *"+mListenerName[index]+
 									"when removing a Logix listener");
 					return;
 				}
-				// remove listener for this Sensor
+				// remove listener for this Conditional
 				c.removePropertyChangeListener(mListeners[index]);
 				break;
 			case LISTENER_TYPE_SIGNAL:
 				SignalHead h = InstanceManager.signalHeadManagerInstance().
-										getBySystemName(mListenerSName[index]);
+										getSignalHead(mListenerName[index]);
 				if (h==null) {
-					log.error("Bad system name for signal head *"+mListenerSName[index]+
+					log.error("Bad name for signal head *"+mListenerName[index]+
 									"when removing a Logix listener");
 					return;
 				}
-				// remove listener for this Sensor
+				// remove listener for this Signal Head
 				h.removePropertyChangeListener(mListeners[index]);
 				break;
 			case LISTENER_TYPE_MEMORY:
 				Memory m = InstanceManager.memoryManagerInstance().
-										getBySystemName(mListenerSName[index]);
+										getMemory(mListenerName[index]);
 				if (m==null) {
-					log.error("Bad system name for memory *"+mListenerSName[index]+
+					log.error("Bad name for memory *"+mListenerName[index]+
 									"when removing a Logix listener");
 					return;
 				}
-				// remove listener for this Sensor
+				// remove listener for this Memory
 				m.removePropertyChangeListener(mListeners[index]);
 				break;
 		}

@@ -19,7 +19,7 @@ import com.sun.java.util.collections.List;
  * is enforced when a new Conditional is created via LogixTableAction.java.
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class DefaultConditionalManager extends AbstractManager
     implements ConditionalManager, java.beans.PropertyChangeListener {
@@ -70,11 +70,11 @@ public class DefaultConditionalManager extends AbstractManager
 	 * @param name - system name of Conditional (must be trimmed and upper case)
 	 */
 	public Logix getParentLogix(String name) {
-		if (name.length()<5) return null;
+		if (name.length()<4) return null;
 		for (int i = name.length()-1;i>2;i--) {
 			if (name.charAt(i) == 'C') {
 				return InstanceManager.logixManagerInstance().getBySystemName(
-													name.substring(0,i-1));
+													name.substring(0,i));
 			}
 		}
 		return null;

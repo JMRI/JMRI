@@ -32,6 +32,9 @@ public interface Logix extends NamedBean {
 
     /**
      * Set enabled status.  Enabled is a bound property
+	 *   All conditionals are set to UNKNOWN state and recalculated
+	 *		when the Logix is enabled, provided the Logix has been 
+	 *		previously activated.
      */
     public void setEnabled(boolean state);
 

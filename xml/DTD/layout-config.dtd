@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.70 2007-03-18 22:10:54 djduchamp Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.71 2007-03-24 16:43:57 djduchamp Exp $ -->
 
 <!-- This DTD is Copyright 2001-2005 JMRI.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -200,12 +200,12 @@
      <!ATTLIST conditionalStateVariable num2	CDATA #REQUIRED> 
 
     <!ELEMENT conditionalAction EMPTY >
-     <!ATTLIST conditionalAction option	CDATA #REQUIRED>  <!-- defines conditional -->
-     <!ATTLIST conditionalAction delay	CDATA #REQUIRED>  <!-- defines conditional order-->   
-     <!ATTLIST conditionalAction type	CDATA #REQUIRED>  <!-- defines conditional order-->   
-     <!ATTLIST conditionalAction systemName	CDATA #REQUIRED>  <!-- defines conditional order-->   
-     <!ATTLIST conditionalAction data	CDATA #REQUIRED>  <!-- defines conditional order-->   
-     <!ATTLIST conditionalAction string	CDATA #REQUIRED>  <!-- defines conditional order-->   
+     <!ATTLIST conditionalAction option	CDATA #REQUIRED>  
+     <!ATTLIST conditionalAction delay	CDATA #REQUIRED>    
+     <!ATTLIST conditionalAction type	CDATA #REQUIRED>    
+     <!ATTLIST conditionalAction systemName	CDATA #REQUIRED>    
+     <!ATTLIST conditionalAction data	CDATA #REQUIRED>     
+     <!ATTLIST conditionalAction string	CDATA #REQUIRED>     
 
 <!ELEMENT logixs (logix*)>
   <!ATTLIST logixs class		CDATA #REQUIRED>

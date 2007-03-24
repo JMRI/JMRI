@@ -9,7 +9,7 @@ import javax.swing.Timer;
  * Class providing the basic logic of the Conditional interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -28,7 +28,7 @@ public class DefaultConditional extends AbstractNamedBean
 	 // state variables in logical expression
 	 protected int[] varOperator = new int[MAX_STATE_VARIABLES];
 	 protected int[] varType = new int[MAX_STATE_VARIABLES];
-	 protected String[] varSystemName = new String[MAX_STATE_VARIABLES];
+	 protected String[] varName = new String[MAX_STATE_VARIABLES];
 	 protected String[] varDataString = new String[MAX_STATE_VARIABLES];
 	 protected int[] varNum1 = new int[MAX_STATE_VARIABLES];
 	 protected int[] varNum2 = new int[MAX_STATE_VARIABLES];
@@ -37,7 +37,7 @@ public class DefaultConditional extends AbstractNamedBean
 									ACTION_OPTION_ON_CHANGE_TO_TRUE};
 	 protected int[] actionDelay = {0,0}; // delay before action (seconds)
 	 protected int[] actionType = {ACTION_NONE,ACTION_NONE};
-	 protected String[] actionSystemName = {" "," "};
+	 protected String[] actionName = {" "," "};
 	 protected int[] actionData = {0,0};
 	 protected String[] actionString = {" "," "};
 
@@ -66,8 +66,8 @@ public class DefaultConditional extends AbstractNamedBean
 	 * This method should only be called by LogixTableAction.  It assumes that all
 	 * information has been validated.
      */
-    public boolean setStateVariables(int[] opern,int[] type,String[] systemName,
-		String[] data,int[] num1,int[] num2,int numVariables) {
+    public boolean setStateVariables(int[] opern,int[] type,String[] name,
+					String[] data,int[] num1,int[] num2,int numVariables) {
 		if (numVariables<=0) {
 			// return without doing anything - user will have been warned elsewhere
 			return (true);
@@ -81,7 +81,7 @@ public class DefaultConditional extends AbstractNamedBean
 		for (int i = 0;i<numVariables;i++) {
 			varOperator[i] = opern[i];
 			varType[i] = type[i];
-			varSystemName[i] = systemName[i];
+			varName[i] = name[i];
 			varDataString[i] = data[i];
 			varNum1[i] = num1[i];
 			varNum2[i] = num2[i];
@@ -98,8 +98,8 @@ public class DefaultConditional extends AbstractNamedBean
 	 * This method should only be called by LogixTableAction and methods to save
 	 * this conditional to disk in a panel file.  
      */
-    public void getStateVariables(int[] opern,int[] type,String[] systemName,
-		String[] data,int[] num1,int[] num2) {
+    public void getStateVariables(int[] opern,int[] type,String[] name,
+					String[] data,int[] num1,int[] num2) {
 		if (numStateVariables == 0) {
 			return;
 		}
@@ -107,7 +107,7 @@ public class DefaultConditional extends AbstractNamedBean
 		for (int i = 0;i<numStateVariables;i++) {
 			opern[i] = varOperator[i];
 			type[i] = varType[i];
-			systemName[i] = varSystemName[i];
+			name[i] = varName[i];
 			data[i] = varDataString[i];
 			num1[i] = varNum1[i];
 			num2[i] = varNum2[i];
@@ -141,15 +141,16 @@ public class DefaultConditional extends AbstractNamedBean
 	}
 	
 	/**
-	 * Provide access to System Name  of state variable by index
+	 * Provide access to Name (user or system, whichever was specified) of 
+	 *    state variable by index
 	 *  Note: index ranges from 0 to numStateVariables-1
 	 */
-	public String getStateVariableSystemName(int index) {
+	public String getStateVariableName(int index) {
 		if ( (index>=0) && (index<numStateVariables) ) {
-			return (varSystemName[index]);
+			return (varName[index]);
 		}
 		// illegal index
-		log.warn("bad index in call to getStateVariableSystemName");
+		log.warn("bad index in call to getStateVariableName");
 		return ("");
 	}
 	
@@ -162,7 +163,7 @@ public class DefaultConditional extends AbstractNamedBean
 			return (varDataString[index]);
 		}
 		// illegal index
-		log.warn("bad index in call to getStateVariableSystemName");
+		log.warn("bad index in call to getStateVariableDataString");
 		return ("");
 	}
 
@@ -175,7 +176,7 @@ public class DefaultConditional extends AbstractNamedBean
 			return (varNum1[index]);
 		}
 		// illegal index
-		log.warn("bad index in call to getStateVariableSystemName");
+		log.warn("bad index in call to getStateVariableNum1");
 		return (-1);
 	}
 
@@ -188,7 +189,7 @@ public class DefaultConditional extends AbstractNamedBean
 			return (varNum2[index]);
 		}
 		// illegal index
-		log.warn("bad index in call to getStateVariableSystemName");
+		log.warn("bad index in call to getStateVariableNum2");
 		return (-1);
 	}
 
@@ -203,12 +204,12 @@ public class DefaultConditional extends AbstractNamedBean
 	 * Set action parameters for action 1 and action 2
 	 */
 	public void setAction (int[] opt, int[] delay, int[] type,
-				String[] systemName,int[] data,String[] s) {
+				String[] name,int[] data,String[] s) {
 		for (int i = 0;i<2;i++) {
 			actionOption[i] = opt[i];
 			actionDelay[i] = delay[i];
 			actionType[i] = type[i];
-			actionSystemName[i] = systemName[i];
+			actionName[i] = name[i];
 			actionData[i] = data[i];
 			actionString[i] = s[i];
 		}
@@ -218,12 +219,12 @@ public class DefaultConditional extends AbstractNamedBean
 	 * Get action parameters for action 1 and action 2
 	 */
 	public void getAction (int[] opt, int[] delay, int[] type,
-				String[] systemName,int[] data,String[] s) {
+				String[] name,int[] data,String[] s) {
 		for (int i = 0;i<2;i++) {
 			opt[i] = actionOption[i];
 			delay[i] = actionDelay[i];
 			type[i] = actionType[i];
-			systemName[i] = actionSystemName[i];
+			name[i] = actionName[i];
 			data[i] = actionData[i];
 			s[i] = actionString[i];
 		}
@@ -273,91 +274,100 @@ public class DefaultConditional extends AbstractNamedBean
 	private boolean evaluateStateVariable(int index) {
 		// check vNOT and translate to the proper Conditional operator designation
 		boolean result = true;
-		String vSName = varSystemName[index];
+		String vName = varName[index];
 		Sensor sn = null;
 		Turnout t = null;
 		SignalHead h = null;
 		Conditional c = null;
 		Light lgt = null;
 		Memory m = null;
+		Logix x = null;
 		// evaluate according to state variable type		
 		switch (varType[index]) {
 			case TYPE_SENSOR_ACTIVE:
-				sn = InstanceManager.sensorManagerInstance().getBySystemName(vSName);
+				sn = InstanceManager.sensorManagerInstance().getSensor(vName);
 				if (sn == null) {
-					log.error("invalid sensor system name in state variable - "+vSName);
+					log.error("invalid sensor name in state variable - "+vName);
 					return (false);
 				}
 				if (sn.getState() == Sensor.ACTIVE) result = true;
 				else result = false;
 				break;
 			case TYPE_SENSOR_INACTIVE:
-				sn = InstanceManager.sensorManagerInstance().getBySystemName(vSName);
+				sn = InstanceManager.sensorManagerInstance().getSensor(vName);
 				if (sn == null) {
-					log.error("invalid sensor system name in state variable - "+vSName);
+					log.error("invalid sensor name in state variable - "+vName);
 					return (false);
 				}
 				if (sn.getState() == Sensor.INACTIVE) result = true;
 				else result = false;
 				break;
 			case TYPE_TURNOUT_THROWN:
-				t = InstanceManager.turnoutManagerInstance().getBySystemName(vSName);
+				t = InstanceManager.turnoutManagerInstance().getTurnout(vName);
 				if (t == null) {
-					log.error("invalid turnout system name in state variable - "+vSName);
+					log.error("invalid turnout name in state variable - "+vName);
 					return (false);
 				}
 				if (t.getState() == Turnout.THROWN) result = true;
 				else result = false;
 				break;
 			case TYPE_TURNOUT_CLOSED:
-				t = InstanceManager.turnoutManagerInstance().getBySystemName(vSName);
+				t = InstanceManager.turnoutManagerInstance().getTurnout(vName);
 				if (t == null) {
-					log.error("invalid turnout system name in state variable - "+vSName);
+					log.error("invalid turnout name in state variable - "+vName);
 					return (false);
 				}
 				if (t.getState() == Turnout.CLOSED) result = true;
 				else result = false;
 				break;
 			case TYPE_CONDITIONAL_TRUE:
-				c = InstanceManager.conditionalManagerInstance().getBySystemName(vSName);
+				x = InstanceManager.conditionalManagerInstance().getParentLogix(getSystemName());
+				if (x==null) {
+					log.error("cannot find parent logix for "+getSystemName());
+				}
+				c = InstanceManager.conditionalManagerInstance().getConditional(x,vName);
 				if (c == null) {
-					log.error("invalid conditional system name in state variable - "+vSName);
+					log.error("invalid conditional name in state variable - "+vName);
 					return (false);
 				}
 				if (c.getState() == TRUE) result = true;
 				else result = false;
 				break;
 			case TYPE_CONDITIONAL_FALSE:
-				c = InstanceManager.conditionalManagerInstance().getBySystemName(vSName);
+				x = InstanceManager.conditionalManagerInstance().getParentLogix(getSystemName());
+				if (x==null) {
+					log.error("cannot find parent logix for "+getSystemName());
+				}
+				c = InstanceManager.conditionalManagerInstance().getConditional(x,vName);
 				if (c == null) {
-					log.error("invalid conditional system name in state variable - "+vSName);
+					log.error("invalid conditional system name in state variable - "+vName);
 					return (false);
 				}
 				if (c.getState() == FALSE) result = true;
 				else result = false;
 				break;
 			case TYPE_LIGHT_ON:
-				lgt = InstanceManager.lightManagerInstance().getBySystemName(vSName);
+				lgt = InstanceManager.lightManagerInstance().getLight(vName);
 				if (lgt == null) {
-					log.error("invalid light system name in state variable - "+vSName);
+					log.error("invalid light name in state variable - "+vName);
 					return (false);
 				}
 				if (lgt.getState() == Light.ON) result = true;
 				else result = false;
 				break;
 			case TYPE_LIGHT_OFF:
-				lgt = InstanceManager.lightManagerInstance().getBySystemName(vSName);
+				lgt = InstanceManager.lightManagerInstance().getLight(vName);
 				if (lgt == null) {
-					log.error("invalid light system name in state variable - "+vSName);
+					log.error("invalid light name in state variable - "+vName);
 					return (false);
 				}
 				if (lgt.getState() == Light.OFF) result = true;
 				else result = false;
 				break;
 			case TYPE_MEMORY_EQUALS:
-				m = InstanceManager.memoryManagerInstance().getBySystemName(vSName);
+				m = InstanceManager.memoryManagerInstance().getMemory(vName);
 				if (m == null) {
-					log.error("invalid memory system name in state variable - "+vSName);
+					log.error("invalid memory name in state variable - "+vName);
 					return (false);
 				}
 				String str = (String)m.getValue();
@@ -385,80 +395,80 @@ public class DefaultConditional extends AbstractNamedBean
 				}
 				break;
 			case TYPE_SIGNAL_HEAD_RED:
-				h = InstanceManager.signalHeadManagerInstance().getBySystemName(vSName);
+				h = InstanceManager.signalHeadManagerInstance().getSignalHead(vName);
 				if (h == null) {
-					log.error("invalid signal head system name in state variable - "+vSName);
+					log.error("invalid signal head name in state variable - "+vName);
 					return (false);
 				}
 				if (h.getAppearance() == SignalHead.RED) result = true;
 				else result = false; 
 				break;
 			case TYPE_SIGNAL_HEAD_YELLOW:
-				h = InstanceManager.signalHeadManagerInstance().getBySystemName(vSName);
+				h = InstanceManager.signalHeadManagerInstance().getSignalHead(vName);
 				if (h == null) {
-					log.error("invalid signal head system name in state variable - "+vSName);
+					log.error("invalid signal head name in state variable - "+vName);
 					return (false);
 				}
 				if (h.getAppearance() == SignalHead.YELLOW) result = true;
 				else result = false; 
 				break;
 			case TYPE_SIGNAL_HEAD_GREEN:
-				h = InstanceManager.signalHeadManagerInstance().getBySystemName(vSName);
+				h = InstanceManager.signalHeadManagerInstance().getSignalHead(vName);
 				if (h == null) {
-					log.error("invalid signal head system name in state variable - "+vSName);
+					log.error("invalid signal head name in state variable - "+vName);
 					return (false);
 				}
 				if (h.getAppearance() == SignalHead.GREEN) result = true;
 				else result = false; 
 				break;
 			case TYPE_SIGNAL_HEAD_DARK:
-				h = InstanceManager.signalHeadManagerInstance().getBySystemName(vSName);
+				h = InstanceManager.signalHeadManagerInstance().getSignalHead(vName);
 				if (h == null) {
-					log.error("invalid signal head system name in state variable - "+vSName);
+					log.error("invalid signal head name in state variable - "+vName);
 					return (false);
 				}
 				if (h.getAppearance() == SignalHead.DARK) result = true;
 				else result = false; 
 				break;
 			case TYPE_SIGNAL_HEAD_FLASHRED:
-				h = InstanceManager.signalHeadManagerInstance().getBySystemName(vSName);
+				h = InstanceManager.signalHeadManagerInstance().getSignalHead(vName);
 				if (h == null) {
-					log.error("invalid signal head system name in state variable - "+vSName);
+					log.error("invalid signal head name in state variable - "+vName);
 					return (false);
 				}
 				if (h.getAppearance() == SignalHead.FLASHRED) result = true;
 				else result = false; 
 				break;
 			case TYPE_SIGNAL_HEAD_FLASHYELLOW:
-				h = InstanceManager.signalHeadManagerInstance().getBySystemName(vSName);
+				h = InstanceManager.signalHeadManagerInstance().getSignalHead(vName);
 				if (h == null) {
-					log.error("invalid signal head system name in state variable - "+vSName);
+					log.error("invalid signal head name in state variable - "+vName);
 					return (false);
 				}
 				if (h.getAppearance() == SignalHead.FLASHYELLOW) result = true;
 				else result = false; 
 				break;
 			case TYPE_SIGNAL_HEAD_FLASHGREEN:
-				h = InstanceManager.signalHeadManagerInstance().getBySystemName(vSName);
+				h = InstanceManager.signalHeadManagerInstance().getSignalHead(vName);
 				if (h == null) {
-					log.error("invalid signal head system name in state variable - "+vSName);
+					log.error("invalid signal head name in state variable - "+vName);
 					return (false);
 				}
 				if (h.getAppearance() == SignalHead.FLASHGREEN) result = true;
 				else result = false; 
 				break;
 			case TYPE_SIGNAL_HEAD_LIT:
-				h = InstanceManager.signalHeadManagerInstance().getBySystemName(vSName);
+				h = InstanceManager.signalHeadManagerInstance().getSignalHead(vName);
 				if (h == null) {
-					log.error("invalid signal head system name in state variable - "+vSName);
+					log.error("invalid signal head name in state variable - "+vName);
 					return (false);
 				}
 				result = h.getLit(); 
 				break;
 			case TYPE_SIGNAL_HEAD_HELD:
-				h = InstanceManager.signalHeadManagerInstance().getBySystemName(vSName);
+				h = InstanceManager.signalHeadManagerInstance().getSignalHead(vName);
 				if (h == null) {
-					log.error("invalid signal head system name in state variable - "+vSName);
+					log.error("invalid signal head name in state variable - "+vName);
 					return (false);
 				}
 				result = h.getHeld();
@@ -490,9 +500,9 @@ public class DefaultConditional extends AbstractNamedBean
 						break;
 					case Conditional.ACTION_SET_TURNOUT:
 						Turnout t = InstanceManager.turnoutManagerInstance().
-									getBySystemName(actionSystemName[i]);
+									getTurnout(actionName[i]);
 						if (t == null) {
-							log.error("invalid turnout system name in action - "+actionSystemName[i]);
+							log.error("invalid turnout name in action - "+actionName[i]);
 						}
 						else {
 							t.setCommandedState(actionData[i]);
@@ -500,9 +510,9 @@ public class DefaultConditional extends AbstractNamedBean
 						break;
 					case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
 						h = InstanceManager.signalHeadManagerInstance().
-									getBySystemName(actionSystemName[i]);
+									getSignalHead(actionName[i]);
 						if (h == null) {
-							log.error("invalid signal head system name in action - "+actionSystemName[i]);
+							log.error("invalid signal head name in action - "+actionName[i]);
 						}
 						else {
 							h.setAppearance(actionData[i]);
@@ -510,9 +520,9 @@ public class DefaultConditional extends AbstractNamedBean
 						break;
 					case Conditional.ACTION_SET_SIGNAL_HELD:
 						h = InstanceManager.signalHeadManagerInstance().
-									getBySystemName(actionSystemName[i]);
+									getSignalHead(actionName[i]);
 						if (h == null) {
-							log.error("invalid signal head system name in action - "+actionSystemName[i]);
+							log.error("invalid signal head name in action - "+actionName[i]);
 						}
 						else {
 							h.setHeld(true);
@@ -520,9 +530,9 @@ public class DefaultConditional extends AbstractNamedBean
 						break;
 					case Conditional.ACTION_CLEAR_SIGNAL_HELD:
 						h = InstanceManager.signalHeadManagerInstance().
-									getBySystemName(actionSystemName[i]);
+									getSignalHead(actionName[i]);
 						if (h == null) {
-							log.error("invalid signal head system name in action - "+actionSystemName[i]);
+							log.error("invalid signal head name in action - "+actionName[i]);
 						}
 						else {
 							h.setHeld(false);
@@ -530,9 +540,9 @@ public class DefaultConditional extends AbstractNamedBean
 						break;
 					case Conditional.ACTION_SET_SIGNAL_DARK:
 						h = InstanceManager.signalHeadManagerInstance().
-									getBySystemName(actionSystemName[i]);
+									getSignalHead(actionName[i]);
 						if (h == null) {
-							log.error("invalid signal head system name in action - "+actionSystemName[i]);
+							log.error("invalid signal head name in action - "+actionName[i]);
 						}
 						else {
 							h.setLit(false);
@@ -540,9 +550,9 @@ public class DefaultConditional extends AbstractNamedBean
 						break;
 					case Conditional.ACTION_SET_SIGNAL_LIT:
 						h = InstanceManager.signalHeadManagerInstance().
-									getBySystemName(actionSystemName[i]);
+									getSignalHead(actionName[i]);
 						if (h == null) {
-							log.error("invalid signal head system name in action - "+actionSystemName[i]);
+							log.error("invalid signal head name in action - "+actionName[i]);
 						}
 						else {
 							h.setLit(true);
@@ -550,9 +560,9 @@ public class DefaultConditional extends AbstractNamedBean
 						break;
 					case Conditional.ACTION_TRIGGER_ROUTE:
 						Route r = InstanceManager.routeManagerInstance().
-									getBySystemName(actionSystemName[i]);
+									getRoute(actionName[i]);
 						if (r == null) {
-							log.error("invalid route system name in action - "+actionSystemName[i]);
+							log.error("invalid route name in action - "+actionName[i]);
 						}
 						else {
 							r.setRoute();
@@ -560,16 +570,16 @@ public class DefaultConditional extends AbstractNamedBean
 						break;
 					case Conditional.ACTION_SET_SENSOR:
 						Sensor sn = InstanceManager.sensorManagerInstance().
-									getBySystemName(actionSystemName[i]);
+									getSensor(actionName[i]);
 						if (sn == null) {
-							log.error("invalid sensor system name in action - "+actionSystemName[i]);
+							log.error("invalid sensor name in action - "+actionName[i]);
 						}
 						else {
 							try {
 								sn.setKnownState(actionData[i]);
 							} 
 							catch (JmriException e) {
-								log.warn("Exception setting sensor "+varSystemName[i]+" in action");
+								log.warn("Exception setting sensor "+actionName[i]+" in action");
 							}
 						}
 						break;
@@ -588,15 +598,15 @@ public class DefaultConditional extends AbstractNamedBean
 							mDelayTimer[i].start();
 						}
 						else {
-							log.warn("timer already active on request to start - delayed sensor action - "+
-																				actionSystemName[i]);
+							log.warn("timer already active on request to start delayed sensor action - "+
+																				actionName[i]);
 						}
 						break;
 					case Conditional.ACTION_SET_LIGHT:
 						Light lgt = InstanceManager.lightManagerInstance().
-										getBySystemName(actionSystemName[i]);
+										getLight(actionName[i]);
 						if (lgt == null) {
-							log.error("invalid light system name in action - "+actionSystemName[i]);
+							log.error("invalid light name in action - "+actionName[i]);
 						}
 						else {
 							lgt.setState(actionData[i]);
@@ -604,27 +614,27 @@ public class DefaultConditional extends AbstractNamedBean
 						break;
 					case Conditional.ACTION_SET_MEMORY:
 						Memory m = InstanceManager.memoryManagerInstance().
-										getBySystemName(actionSystemName[i]);
+										getMemory(actionName[i]);
 						if (m == null) {
-							log.error("invalid memory system name in action - "+actionSystemName[i]);
+							log.error("invalid memory name in action - "+actionName[i]);
 						}
 						else {
 							m.setValue(actionString[i]);
 						}
 						break;
 					case Conditional.ACTION_ENABLE_LOGIX:
-						x = InstanceManager.logixManagerInstance().getBySystemName(actionSystemName[i]);
+						x = InstanceManager.logixManagerInstance().getLogix(actionName[i]);
 						if (x == null) {
-							log.error("invalid logix system name in action - "+actionSystemName[i]);
+							log.error("invalid logix name in action - "+actionName[i]);
 						}
 						else {
 							x.setEnabled(true);
 						}
 						break;
 					case Conditional.ACTION_DISABLE_LOGIX:
-						x = InstanceManager.logixManagerInstance().getBySystemName(actionSystemName[i]);
+						x = InstanceManager.logixManagerInstance().getLogix(actionName[i]);
 						if (x == null) {
-							log.error("invalid logix system name in action - "+actionSystemName[i]);
+							log.error("invalid logix name in action - "+actionName[i]);
 						}
 						else {
 							x.setEnabled(false);
@@ -682,9 +692,9 @@ public class DefaultConditional extends AbstractNamedBean
 		{
 			// set sensor state
 			Sensor sn = InstanceManager.sensorManagerInstance().
-										getBySystemName(actionSystemName[mIndex]);
+										getSensor(actionName[mIndex]);
 			if (sn==null) {
-				log.error("Invalid delayed sensor system name - "+actionSystemName[mIndex]);
+				log.error("Invalid delayed sensor name - "+actionName[mIndex]);
 			}
 			else {
 				// set the sensor
@@ -692,7 +702,7 @@ public class DefaultConditional extends AbstractNamedBean
 					sn.setKnownState(actionData[mIndex]);
 				} 
 				catch (JmriException e) {
-					log.warn("Exception setting delayed sensor "+actionSystemName[mIndex]+" in action");
+					log.warn("Exception setting delayed sensor "+actionName[mIndex]+" in action");
 				}
 			}
 			// Turn Timer OFF
