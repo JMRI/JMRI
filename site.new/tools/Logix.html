@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Logix.html,v 1.2 2007-03-19 16:20:39 jacobsen Exp $ -->
+<!-- $Id: Logix.html,v 1.3 2007-03-25 22:25:34 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -134,11 +134,13 @@
 	are met.</p>
 	<p>A Logix does not have a state as many JMRI entities do.  A Logix does have
 	the capability of being "enabled" or "disabled", however. When a Logix is 
-	disabled (not enabled), 
-	the logical expressions of its Conditionals are still evaluated,
-	but the actions specified in the Conditionals are not taken.
-	Whether a Logix is enabled or disabled is saved when the Logix is saved to disk, 
-	so it is possible to start up with selected Logixs disabled initially.
+	disabled (not enabled), the logical expressions of its Conditionals are still 
+	evaluated, but the actions specified in the Conditionals are not taken.
+	Whether each Logix is enabled or disabled is saved when the Logix is saved to 
+	disk, so a Logix that was disabled when last stored will start up
+	disabled when next loaded from the configuration file.
+	When a Logix that has been disabled is enabled, the states of all its 
+	Conditionals are set to UNKNOWN, and all Conditionals are calculated.
 	</p>  
 	<p> A Logix is defined via the Logix Table that can be accessed by 
 	selecting <b>Logix Table</b> in the Tools menu. The Logix Table lists 
@@ -174,22 +176,25 @@
 	and open the Edit Conditional window allowing the logical expression and
 	actions of the new Conditional to be defined.  An existing Conditional may be 
 	edited by clicking the <b>Edit</b> button of that Conditional in the 
-	table.  The user name of the Conditional may be changed in the table. 
+	table.  The user name of the Conditional may be changed in the table. The 
+	user name of a Conditional may be any useful text, provided it is not the
+	same as the user name of another Conditional in the same Logix.  The
+	user name may be the same as the user name of a Conditional in another Logix.
 	<i>When editing the user name (or any item in any JMRI table) please 
 	remember to move to another cell in the table so that the program is 
 	notified that you have finished your entry, otherwise the entry may not
 	take effect.</i></p>
-	<P>Clicking <b>Calculate</b> under the conditionals table causes all 
+	<P>Clicking <b>Calculate</b> under the Conditionals table causes all 
 	Conditionals of the Logix to be calculated. Resulting states are displayed in 
 	the State column of the table. When <b>Calculate</b> is clicked, or when any
 	of the monitored entities of an active Logix change state, Conditionals are 
-	calculated in order of their position in the conditionals table, starting at 
+	calculated in order of their position in the Conditionals table, starting at 
 	the top and proceeding down to the last one. For many cases, 
 	the order of calculation is not important. For some cases (for example, where 
 	one Conditional tests the state of another, or can override the results 
 	of the action taken by an earlier Conditional) the order of calculating 
 	Conditionals may change the results.  So pay attention to the order of the 
-	Conditionals in the conditionals table. 
+	Conditionals in the Conditionals table. 
 	</p>
 	<p>When Conditionals are calculated
 	via the <b>Calculate</b> button, no actions are taken.
@@ -225,6 +230,9 @@
 	The system name and user name are displayed
 	at the top of the Edit Conditional window. The user name may be 
 	entered/edited there or in the Conditionals table of the Edit Logix window.
+	The user name of a Conditional may be any useful text, provided it is not the
+	same as the user name of another Conditional in the same Logix.  The user 
+	name may be the same as the user name of a Conditional in another Logix.
 	</p>
 	<p>As mentioned above, Conditionals are statements of the form:
 	<p><ul>if (logical expression) then (action).</ul></p>
@@ -280,8 +288,10 @@
 	Conditional is pressed in the Edit Logix window.  The Edit Conditional 
 	window displays the system name and user name of the Conditional at the 
 	top. The user name may be edited by entering/modifying the text in the User 
-	Name field. Next are two sections--one for the setup of a logical expression
-	and one for set up of the two available actions.</p>
+	Name field. Any text may be used, provided it doesn't duplicate the user 
+	name of another Conditional in the same Logix. Next are two sections--one 
+	for the setup of a logical expression and one for set up of the two available 
+	actions.</p>
 	<p>The logical expression section contains a table of state variables, with 
 	two buttons below. Press the <b>Add State Variable</b> to add a state 
 	variable (a row in the state variables table). The first column in the 
@@ -289,18 +299,24 @@
 	second column contains a choice box that allows the user to select the NOT
 	operator as needed. The third column contains a scrolling choice box, 
 	allowing selection of state variable type.  Next are three 
-	columns, System Name, Data 1, and Data 2, that are used to provide needed
+	columns, Name, Data 1, and Data 2, that are used to provide needed
 	information for the selected variable type. When a variable type is 
 	selected, N/A (for Not Applicable) is displayed in data entries that are 
 	not needed to define the state variable, and a prompt message telling what
 	to enter in the remaining column(s) is displayed below the table (above the
 	two buttons). Available state variables are documented 
-	<a href="#variable">below</a>. When a system name is entered, it must 
-	correspond to an existing entity (sensor, turnout, light, etc.). It is 
-	useful to open the Sensor Table when entering sensor 
-	system names, or the Turnout Table to show available turnouts, etc. The
-	last column of the table (<b>Delete</b> buttons) is used to delete a state variable if you 
-	decide it is no longer needed.</p>
+	<a href="#variable">below</a>. When a name (either system name or user
+	name) is entered, it must correspond to an existing entity (sensor, turnout, 
+	light, etc.). It is useful to open the Sensor Table when entering sensor 
+	names, or the Turnout Table to show available turnouts, etc. The
+	last column of the table (<b>Delete</b> buttons) is used to delete a state 
+	variable if you decide it is no longer needed.</p>
+	<p><b>Caution:</b> If you use user names to specify state variables be 
+	careful when editing your user names or you may break your state variable
+	definitions. The user name specified must match, character for character, 
+	including blanks, the actual user name of the sensor, turnout, etc., for 
+	your state variables to work. If you want to be able to freely edit your 
+	user names, use system names to define your state variables.</p>
 	<p>The State column of the table shows the state (true or false) of each
 	state variable when it is evaluated. The state displayed includes the 
 	effect of the NOT operator, if NOT is selected. For the logical expression,
@@ -323,13 +339,14 @@
 	box. Otherwise select an action type in the type box, and data items needed 
 	to completely specify the action will appear to the right of the type box. 
 	If you don't know what needs to be entered in a data field, hover your 
-	cursor over it, and a hint message will appear. When a system name must be 
-	entered, the system name must correspond to an existing entity (sensor, 
-	turnout, signal head, etc.) of the proper type. Opening the Sensor Table 
-	when entering sensor system names, or the Turnout Table to see available 
-	turnouts, etc., may be useful since user names for these entities are not 
-	shown in the Edit Conditional window. Available action types are described
-	in detail <a href="#action">below</a>.</p>
+	cursor over it, and a hint message will appear. When a name must be entered,
+	the name (system name or user name) must correspond to an existing entity 
+	(sensor, turnout, signal head, etc.) of the proper type. Opening the Sensor 
+	Table when entering sensor names, or the Turnout Table to see available 
+	turnouts, etc., may be useful. Available action types are described
+	in detail <a href="#action">below</a>. If you use user names to specify 
+	your actions, the same caution noted above applies. Be very careful when
+	editing user names that are used to specify actions.</p>
 	<p>For each action, three options are available for when to trigger the
 	action: 1) On Change to True, 2) On Change to False, and 3) On Change. These
 	refer to the calculated state of the Conditional, which is equal to
@@ -339,8 +356,8 @@
 	<p>When the logical expression and actions have been specified, click 
 	<b>Update Conditional</b> at the bottom of the window. This initiates a
 	check of the logical expression (the same as done by <b>Check State 
-	Variables</b>) and a check of entered data for actions. If the user name has
-	been edited, it is also checked. If an error is found, a 
+	Variables</b>) and a check of entered data for actions. If the Conditional's
+	user name has been edited, it is also checked. If an error is found, a 
 	message box opens announcing the error, and the update is stopped to allow 
 	the user to correct the error and click <b>Update Conditional</b> again. 
 	If no error is found, the Conditional is updated
@@ -361,7 +378,7 @@
 	    <p>Follow the following steps to create a Logix and become familiar
 	    with how the Logix user interface works.
 	    <ol>
-		<li> Select <b>Logix Table</b> in the Tools menu.
+		<li> Select <b>Logix Table</b> in the <b>Tools</b> menu.
 		<li> Click the <b>Add</b> button at the bottom of the Logix Table.
 		<li> In the Create Logix window that appears, enter 6 for system name, 
 		and "test" for user name, then click <b>Create Logix</b>.
@@ -372,13 +389,13 @@
 		Type column entry to reveal a scrolling selection box. Select "Sensor
 		Active".
 		<li> Note that N/A appears in the Data 1 and Data 2 columns, and a 
-		message appears asking for entry of a sensor system name. Enter the 
-		system name of any of your existing sensors. (If you don't have an 
-		existing sensor, select <b>Sensor Table</b> in the Tools menu and 
-		create one.)
+		message appears asking for entry of a sensor name. Enter the name 
+		(either system name or user name) of any of your existing sensors. (If 
+		you don't have an existing sensor, select <b>Sensor Table</b> in the 
+		<b>Tools</b> menu and create one.)
 		<li> Click <b>New State Variable</b> to create another row in the table.
 		Note that AND appears in the first column of the new row. Again select
-		"Sensor Active" as the variable type, and enter the system name of a
+		"Sensor Active" as the variable type, and enter the name of a
 		different sensor (create it if needed). 
 		<li> Click the State column of the second row to tell the program
 		your entry is complete.  Click <b>Check State Variables</b> and 
@@ -387,12 +404,12 @@
 		selection box for NOT.  Select NOT, then click <b>Check State 
 		Variables</b> again. Note that the State of the second state variable
 		has reversed.
-		<li> For Action 1 - Type, select "Set Turnout", and enter the system
-		name of one of your turnouts.  (If you don't have any turnouts, create
-		one using the <b>Add</b> button in the Turnout Table.)  Leave the 
-		Trigger Action option at "On Change to True", and the Set Turnout 
-		option at "Closed".
-		<li> For Action 2 - again select "Set Turnout", and enter the system
+		<li> For Action 1 - Type, select "Set Turnout", and enter the name 
+		(system name or user name) of one of your turnouts. (If you don't have 
+		any turnouts, create one using the <b>Add</b> button in the Turnout 
+		Table.)  Leave the Trigger Action option at "On Change to True", and the 
+		Set Turnout option at "Closed".
+		<li> For Action 2 - again select "Set Turnout", and enter the 
 		name of the same turnout entered in Action 1. Select "On Change to 
 		False" as the Trigger Option, and "Thrown" as the Set Turnout option.
 		<li> Click <b>Update Turnout</b> to close the Edit Conditional window
@@ -426,9 +443,13 @@
 		<li><b>Turnout Closed</b>: Evaluates to true if the known state of the
 		specified turnout is closed.
 		<li><b>Conditional True</b>: Evaluates to true if the state of the
-		specified conditional is true. 
+		specified Conditional is true. Note that because Conditional user
+		names may be duplicated across different Logix, a system name must be 
+		used to specify a Conditional belonging to a different Logix.
 		<li><b>Conditional False</b>: Evaluates to true if the state of the
-		specified conditional is false. 
+		specified Conditional is false. Note that because Conditional user
+		names may be duplicated across different Logix, a system name must be 
+		used to specify a Conditional belonging to a different Logix.
 		<li><b>Light On</b>: Evaluates to true if the 
 		specified light is on. 
 		<li><b>Light Off</b>: Evaluates to true if the 
@@ -477,41 +498,44 @@
 	below along with information on each:
 	    <ul>
 		<li><b>Set Turnout</b>: Sets the specified turnout to the chosen 
-		state.  Specify the turnout to set by entering its system name.  Specify
-		the state to set by choosing Closed or Thrown in the popup menu.		
+		state.  Specify the turnout to set by entering its system name or user
+		name.  Specify the state to set by choosing Closed or Thrown in the 
+		popup menu.		
 		<li><b>Set Signal Appearance</b>: Sets the specified signal head  to 
 		the chosen appearance. Specify the signal head to set by entering its 
-		system name.  Specify the appearance to set by choosing from the popup 
-		menu.		
+		system name or user name.  Specify the appearance to set by choosing 
+		from the popup menu.		
  		<li><b>Set Signal Held</b>: Sets the specified signal head to hold.
-		Specify the signal head to hold by entering its system name.  
+		Specify the signal head to hold by entering its system name or user name.  
   		<li><b>Clear Signal Held</b>: Clears the hold on the specified signal 
-  		head. Specify the signal head by entering its system name.  
+  		head. Specify the signal head by entering its system name or user name.  
   		<li><b>Set Signal Dark</b>: Sets the specified signal head to not lit.
-		Specify the signal head by entering its system name.  
+		Specify the signal head by entering its system name or user name.  
   		<li><b>Set Signal Lit</b>: Sets the specified signal head to lit.
-		Specify the signal head by entering its system name.  
+		Specify the signal head by entering its system name or user name.  
   		<li><b>Trigger Route</b>: Triggers the specified route.
-		Specify the route by entering its system name.  
+		Specify the route by entering its system name or user name.  
 		<li><b>Set Sensor</b>: Sets the specified sensor to the chosen 
-		state.  Specify the sensor to set by entering its system name.  Specify
-		the state to set by choosing Active or Inactive in the popup menu.		
+		state.  Specify the sensor to set by entering its system name or user
+		name.  Specify the state to set by choosing Active or Inactive in the 
+		popup menu.		
 		<li><b>Delayed Set Sensor</b>: Sets the specified sensor to the chosen 
 		state after waiting for a specified number of seconds.  Specify the 
-		sensor to set by entering its system name. Specify the state to set by 
-		choosing Active or Inactive in the popup menu. Specify the number of
-		seconds to delay before setting the sensor by entering a number in 
-		the right-most field.
-		<li><b>Set Light</b>: Sets the specified light to the chosen 
-		state.  Specify the light to set by entering its system name.  Specify
-		the state to set by choosing On or Off in the popup menu.		
+		sensor to set by entering its system name or user name. Specify the 
+		state to set by choosing Active or Inactive in the popup menu. Specify 
+		the number of seconds to delay before setting the sensor by entering a 
+		number in the right-most field.
+		<li><b>Set Light</b>: Sets the specified light to the chosen state.  
+		Specify the light to set by entering its system name or user name.  
+		Specify the state to set by choosing On or Off in the popup menu.		
 		<li><b>Set Memory</b>: Sets the specified memory to the entered
-		value.  Specify the memory to set by entering its system name.  Specify
-		the value to set in the memory by entering it in the right-most field.
-  		<li><b>Enable Logix</b>: Enables the specified logix.
-		Specify the logix to enable by entering its system name.  
-  		<li><b>Disable Logix</b>: Disables the specified logix.
-		Specify the logix to disable by entering its system name.
+		value.  Specify the memory to set by entering its system name or user
+		name.  Specify the value to set in the memory by entering it in the 
+		right-most field.
+  		<li><b>Enable Logix</b>: Enables the specified Logix. Specify the Logix 
+  		to enable by entering its system name or user name.  
+  		<li><b>Disable Logix</b>: Disables the specified Logix. Specify the 
+  		Logix to disable by entering its system name or user name.
   		<li><b>Play Sound File</b>: Plays the specified sound file. Specify the 
   		sound file to play by entering its name in the field provided. Click 
   		<b>Set</b> to bring up a file selection dialog to aid in finding the
@@ -538,10 +562,10 @@
 	sensors, then choose Trigger Route as the action of the Conditional.
 	<li><p>If other actions are needed, you can simply follow the first  
 	Conditional with another Conditional using as a logical expression the 
-	calculated state of the first conditional. For  example,
+	calculated state of the first Conditional. For  example,
 	<p>if (logical expression) then (actions 1 and 2)
 	<p>if Conditional True (IX12C1) then (actions 3 and 4)
-	<p>where IX12C1 is the system name of the first conditional.
+	<p>where IX12C1 is the system name of the first Conditional.
 	</ol>	
 	<p><li><b> How can an inclusive OR be done without the OR operator?</b>
 	<p>To achieve "logical expression A"  OR  "logical expression B" without 
@@ -554,35 +578,35 @@
 	triggered by Conditional 1.  By simple extension of this idea, you can
 	achieve OR of three or more logical expressions.  
 	<p>There are also other ways of accomplishing the OR by use of multiple 
-	conditionals. The idea is that simple inclusive OR's can be accomplished 
+	Conditionals. The idea is that simple inclusive OR's can be accomplished 
 	without complicating the Logix user interface with additional operators 
 	or grouping of state variables.
-	<p><li><b>Why have a "group" of conditionals instead of just single 
-	conditionals?</b>
-	<p> A group of conditionals was chosen for several reasons, including:
+	<p><li><b>Why have a "group" of Conditionals instead of just single 
+	Conditionals?</b>
+	<p> A group of Conditionals was chosen for several reasons, including:
 	<ol>
-	<p><li>A group of expressions (conditionals), evaluated in a specific  
-	order is more powerful than a single expression (conditional). 
-	<p><li>Grouping conditionals into a Logix, and focusing the Logix on one 
+	<p><li>A group of expressions (Conditionals), evaluated in a specific  
+	order is more powerful than a single expression (Conditional). 
+	<p><li>Grouping Conditionals into a Logix, and focusing the Logix on one 
 	task should end up being much more user friendly. Think about one Logix 
-	with several conditionals controlling one three-turnout signal head.  The 
-	first conditional could check conditions for a RED appearance, and take 
-	appropriate action. The second conditional could check on another allowed 
+	with several Conditionals controlling one three-turnout signal head.  The 
+	first Conditional could check conditions for a RED appearance, and take 
+	appropriate action. The second Conditional could check on another allowed 
 	appearance which, depending upon the rules of the railroad being modeled
 	could depend upon the calculated state of the first Conditional.  Other 
-	conditionals would check for other appearances according to the rules of 
+	Conditionals would check for other appearances according to the rules of 
 	the railroad. So with only one Logix, a user should be able to set up the 
 	required logic for setting appearances for one signal head. Thus once the 
 	sensors, turnouts, and signal heads are set up, only one new system name, 
 	the system name of the Logix, need be defined and kept track of. Fairly 
 	simple for the user, isn't it.
-	<p><li>Another reason for grouping multiple conditionals is simpler 
+	<p><li>Another reason for grouping multiple Conditionals is simpler 
 	operation.  Fewer
 	behind the scene listeners are needed to accomplish the same task.  Even 
 	though, following the example above, the logic for each appearance of the 
-	signal head (each conditional) may depend upon a particular sensor (a 
+	signal head (each Conditional) may depend upon a particular sensor (a 
 	block occupancy for example), if the Conditionals are combined into a 
-	single Logix, only _one_ listener for that Sensor is required.  This is 
+	single Logix, only _one_ listener for that sensor is required.  This is 
 	simpler in implementation than having multiple listeners and not knowing  
 	which will fire first.  When multiple Conditionals are used in a  
 	related way, the order of evaluation could be important, depending upon 
@@ -591,8 +615,8 @@
 	as internal sensors, internal signal heads, and internal turnouts.  This
 	simplifies the set up of logic, especially in more complicated cases.
 	</ol>
-	<p><li><b>How is a logix started?</b>
-	<p>Start of a Logix is similar to the way a Light, a Route, or 
+	<p><li><b>How is a Logix started?</b>
+	<p>Start of a Logix is similar to the way a light, a route, or 
 	other continuously running JMRI entity starts.  Internally a Logix has an 
 	"activate" method, that is called when the Logix is created, after it  
 	is edited, or when it is loaded from a configuration file.  This  
@@ -613,12 +637,12 @@
 	A Logix may be enabled or disabled dynamically by another Logix (see allowed 
 	actions <a href="#action">above</a>).
 	<P>
-	When JMRI stores the program configuration for a file, e.g. a panel file,
-	the enabled/disabled state of the Logix is also stored.
-	When it is loaded from a configuration file, enabled or disabled 
+	When JMRI stores the layout configuration in a file, e.g. a panel file, all
+	Logix information, including the enabled/disabled state of the Logix, is 
+	stored. When a Logix is loaded from a configuration file, it's enabled or disabled status
 	is set according to what was saved in the configuration file.
 	This is done so that people can disable their Logix while debugging them,
-	yet still save and restore the configuration as needed.
+	yet still save and restore the configuration as needed. 
 	<p><li><b>What happens when a JMRI program starts up or when a configuration 
 	file is loaded by a JMRI program?</b>
 	<p>This is a complex question that depends upon many things,
@@ -632,7 +656,7 @@
 	immediately after the entire  configuration file is loaded doesn't produce
 	a clean start up either.  So when a Logix is loaded, the state of each 
 	Conditional starts as UNKNOWN. Immediately after the entire configuration 
-	file is loaded, all Logix are activated and enabled, and all Logix are 
+	file is loaded, all Logix are activated, and then all the Logix are 
 	calculated. The state of Conditionals changes from UNKNOWN to true or false. 
 	But will the calculated state of the Conditional be "correct" if one or more 
 	of the state variables is evaluated from an entity in an UNKNOWN state?  For 
