@@ -28,8 +28,12 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 1.0//EN"
       <tocitem text="More Information" target="DecoderProManual.index"/>
    </tocitem>
    <tocitem text="Tools">
-      <tocitem text="Routes"/>
       <tocitem text="Consist Tool" target="package.jmri.jmrit.consisttool.ConsistToolFrame"/>
+      <tocitem text="Logix" target="package.jmri.jmrit.beantable.LogixTable"/>
+      <tocitem text="Routes" target="package.jmri.jmrit.beantable.ReporterTable"/>
+      <tocitem text="Send DCC Packet Tool" target="package.jmri.jmrit.sendpacket.SendPacketFrame"/>
+      <tocitem text="Sensor Groups" target="package.jmri.jmrit.sensorgroup.SensorGroupFrame"/>
+      <tocitem text="Simple Signal Logic" target="package.jmri.jmrit.blockboss.BlockBossFrame"/>
       <tocitem text="Tables">
          <tocitem text="Turnout Table" target="package.jmri.jmrit.beantable.TurnoutTable"/>
          <tocitem text="Sensor Table" target="package.jmri.jmrit.beantable.SensorTable"/>
@@ -40,11 +44,8 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 1.0//EN"
          <tocitem text="Memory Table" target="package.jmri.jmrit.beantable.MemoryTable"/>
          <tocitem text="Reporter Table" target="package.jmri.jmrit.beantable.ReporterTable"/>
       </tocitem>
-      <tocitem text="Simple Signal Logic" target="package.jmri.jmrit.blockboss.BlockBossFrame"/>
-      <tocitem text="Sensor Groups" target="package.jmri.jmrit.sensorgroup.SensorGroupFrame"/>
-      <tocitem text="Send DCC Packet Tool" target="package.jmri.jmrit.sendpacket.SendPacketFrame"/>
    </tocitem>
-   <tocitem text="Panels">
+   <tocitem text="Panels" target="html.apps.PanelPro.Panels">
       <tocitem text="Panel Editor" target="package.jmri.jmrit.display.PanelEditor"/>
    </tocitem>
    <tocitem text="Acknowledgements" target="Acknowledgements"/>

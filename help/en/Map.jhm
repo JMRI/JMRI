@@ -84,6 +84,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrit.beantable.ReporterTable" url="package/jmri/jmrit/beantable/ReporterTable.html" />
 	<mapID target="DecoderProManual.Comp_Speed" url="DecoderProManual/Comp_Speed.html" />
 	<mapID target="DecoderProManual.Basic_Programming_Save Data" url="DecoderProManual/Basic_Programming.html#Save Data" />
+	<mapID target="html.apps.PanelPro.Panels" url="html/apps/PanelPro/Panels.html" />
 	<mapID target="DecoderProManual.Getting_Started_Start" url="DecoderProManual/Getting_Started.html#Start" />
 	<mapID target="DecoderProManual.Comp_Consist" url="DecoderProManual/Comp_Consist.html" />
 	<mapID target="DecoderProManual.Comp_GlobalCVs" url="DecoderProManual/Comp_GlobalCVs.html" />

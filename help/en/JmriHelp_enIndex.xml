@@ -28,7 +28,8 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 1.0//EN"
       <indexitem text="Add Memory" target="package.jmri.jmrit.beantable.MemoryAddEdit"/>
       <indexitem text="Memory Table" target="package.jmri.jmrit.beantable.MemoryTable"/>
    </indexitem>
-   <indexitem text="Panels">
+   <indexitem text="Panels" target="html.apps.PanelPro.Panels">
+      <indexitem text="Intro" target="html.apps.PanelPro.Panels"/>
       <indexitem text="Panel Controls" target="package.jmri.jmrit.display.PanelTarget"/>
       <indexitem text="Panel Editor" target="package.jmri.jmrit.display.PanelEditor"/>
    </indexitem>
