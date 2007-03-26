@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.html,v 1.4 2007-03-25 13:06:13 jacobsen Exp $ -->
+<!-- $Id: index.html,v 1.5 2007-03-26 03:38:10 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -111,18 +111,31 @@ will have more info on this as it becomes available.
 <A href="./images/SigTable.gif"><IMG SRC="./images/SigTable.gif" ALIGN=RIGHT WIDTH="170" HEIGHT="314" HSPACE="0" VSPACE="0"></A>
 All the signals that JMRI knows about can be referenced
 using the "Signal Table" tool in the Tools menu of most JMRI programs.
-<P>As the signal changes, for whatever reason, the current
-appearance will show in the table.  You can also click on the
-appearance button to cycle through red, yellow and green.
-<P>If you're interested in having your signals carry "human readable"
+There are five columns in the table:
+<UL>
+<LI>The system name is assigned to the signal when it's created, 
+and can't be changed.
+<LI>If you're interested in having your signals carry "human readable"
 names, you can click in the "user name" column and change that information
 to whatever you want.
+<LI>As the signal changes, for whatever reason, the current
+appearance will show in the table.  You can also click on the
+appearance button to cycle through the avilable appearances:
+red, yellow, green, flashing red, flashing yellow, flashing green, and dark.
+<LI>The check box in the "Lit" column lets you control whether the
+signal head on the layout is lit (checked) or stays dark (unchecked).
+<LI>The check box in the "Held" column shows the "held" property of the
+signal, and allows you to change it.  This property is used by e.g. CTC
+machine logic to say "Don't change this signal head from red, even if it 
+would be safe to do so, because I want to hold a train here".
+</UL>
 <P>To define a new signal, click on the "Add.." button.  It will
 prompt you for the type (run off turnout outputs; SE8c; etc), and
 whatever setup information is needed.
 <P> This information is saved with the configuration in an XML file, along
 with control panel setup and similar stuff.  For more information
-on creating and displaying panels, including how to show signals,
+on creating and displaying panels, including how to show signals
+on your panels,
 please see the 
 <A HREF="../PanelPro/Panels.html">Panels pages</a>
 and the pages on the 
