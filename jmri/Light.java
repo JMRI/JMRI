@@ -18,7 +18,7 @@ package jmri;
  * Based in part on SignalHead.java
  *
  * @author			Dave Duchamp Copyright (C) 2004
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public interface Light extends NamedBean {
 
@@ -49,15 +49,15 @@ public interface Light extends NamedBean {
     /**
      * Control type information, valid by control type
      */
-    public String getControlSensorSystemName(); // controlling Sensor if SENSOR_CONTROL
+    public String getControlSensorName(); // controlling Sensor if SENSOR_CONTROL
     public int getControlSensorSense();         // sense of Sensor for Light ON
     public int getFastClockOnHour();            // on Hour if FAST_CLOCK_CONTROL
     public int getFastClockOnMin();             // on Minute if FAST_CLOCK_CONTROL
     public int getFastClockOffHour();           // off Hour if FAST_CLOCK_CONTROL
     public int getFastClockOffMin();            // off Minute if FAST_CLOCK_CONTROL
-    public String getControlTurnoutSystemName(); // turnout whose status is shown if TURNOUT_STATUS_CONTROL
+    public String getControlTurnoutName(); // turnout whose status is shown if TURNOUT_STATUS_CONTROL
     public int getControlTurnoutState();        // turnout state corresponding to this Light ON
-	public String getControlTimedOnSensorSystemName(); // trigger Sensor if TIMED_ON_CONTROL
+	public String getControlTimedOnSensorName(); // trigger Sensor if TIMED_ON_CONTROL
 	public int getTimedOnDuration();            // duration (milliseconds) if TIMED_ON_CONTROL
 
     public void setControlSensor(String sensorSystemName);  // controlling Sensor if SENSOR_CONTROL

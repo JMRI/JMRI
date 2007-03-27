@@ -21,7 +21,7 @@ import java.util.Date;
  * Based in concept on AbstractSignalHead.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public abstract class AbstractLight extends AbstractNamedBean
     implements Light, java.io.Serializable {
@@ -39,14 +39,14 @@ public abstract class AbstractLight extends AbstractNamedBean
      */
     protected int mControlType = NO_CONTROL;
     protected int mControlSensorSense = Sensor.ACTIVE;
-    protected String mControlSensorSystemName = "";
+    protected String mControlSensorName = "";
     protected int mFastClockOnHour = 0;
     protected int mFastClockOnMin = 0;
     protected int mFastClockOffHour = 0;
     protected int mFastClockOffMin = 0;
-    protected String mControlTurnoutSystemName = "";
+    protected String mControlTurnoutName = "";
     protected int mTurnoutState = Turnout.CLOSED;
-    protected String mTimedSensorSystemName = "";
+    protected String mTimedSensorName = "";
 	protected int mTimeOnDuration = 0;
     
     /**
@@ -104,12 +104,12 @@ public abstract class AbstractLight extends AbstractNamedBean
     /**
      *  Return the controlling Sensor if there is one, else null
      */    
-    public String getControlSensorSystemName() { return mControlSensorSystemName; }    
+    public String getControlSensorName() { return mControlSensorName; }    
     /**
      *  Set the controlling Sensor if there is one, else null
      */    
-    public void setControlSensor(String sensorSystemName) { 
-        mControlSensorSystemName = sensorSystemName;
+    public void setControlSensor(String sensorName) { 
+        mControlSensorName = sensorName;
     }    
     
     /**
@@ -179,13 +179,13 @@ public abstract class AbstractLight extends AbstractNamedBean
     /**
      *  Return the controlling Turnout if there is one, else null.
      */    
-    public String getControlTurnoutSystemName() { return mControlTurnoutSystemName; }
+    public String getControlTurnoutName() { return mControlTurnoutName; }
     /** 
      *  Set the controlling Turnout.  This is the Turnout whose state
      *     controls the ON and OFF of this Light.
      */
-    public void setControlTurnout(String turnoutSystemName) {
-        mControlTurnoutSystemName = turnoutSystemName;
+    public void setControlTurnout(String turnoutName) {
+        mControlTurnoutName = turnoutName;
     }
     /**
      *  Return the state of the controlling Turnout that corresponds to
@@ -206,15 +206,15 @@ public abstract class AbstractLight extends AbstractNamedBean
      *  Return the trigger Sensor system name. This is the Sensor which triggers
      *     the Timed ON state of the light when it moves from inactive to active.
      */    
-	public String getControlTimedOnSensorSystemName() {
-		return mTimedSensorSystemName;
+	public String getControlTimedOnSensorName() {
+		return mTimedSensorName;
 	}
     /**
      *  Set the trigger Sensor system name. This is the Sensor which triggers
      *     the Timed ON state of the light when it moves from inactive to active.
      */    
-	public void setControlTimedOnSensor(String sensorSystemName) {
-		mTimedSensorSystemName = sensorSystemName;
+	public void setControlTimedOnSensor(String sensorName) {
+		mTimedSensorName = sensorName;
 	}
     /**
      *  Return the duration (milliseconds) light is to remain ON after
@@ -279,7 +279,7 @@ public abstract class AbstractLight extends AbstractNamedBean
             switch (mControlType) {
                 case SENSOR_CONTROL:
                     mControlSensor = InstanceManager.sensorManagerInstance().
-                                            provideSensor(mControlSensorSystemName);
+                                            provideSensor(mControlSensorName);
                     if (mControlSensor!=null) {
 						// if sensor state is currently known, set light accordingly
 						int kState = mControlSensor.getKnownState();
@@ -339,7 +339,7 @@ public abstract class AbstractLight extends AbstractNamedBean
                     else {
                         // control sensor does not exist
                         log.error("Light "+getSystemName()+" is linked to a Sensor that does not exist: "+
-                                             mControlSensorSystemName);
+                                             mControlSensorName);
                         return;
                     }
                     break;
@@ -367,7 +367,7 @@ public abstract class AbstractLight extends AbstractNamedBean
                     break;
                 case TURNOUT_STATUS_CONTROL:
                     mControlTurnout = InstanceManager.turnoutManagerInstance().
-                                            provideTurnout(mControlTurnoutSystemName);
+                                            provideTurnout(mControlTurnoutName);
                     if (mControlTurnout!=null) {
 						// set light based on current turnout state if known
 						int tState = mControlTurnout.getKnownState();
@@ -427,13 +427,13 @@ public abstract class AbstractLight extends AbstractNamedBean
                     else {
                         // control turnout does not exist
                         log.error("Light "+getSystemName()+" is linked to a Turnout that does not exist: "+
-                                             mControlSensorSystemName);
+                                             mControlSensorName);
                         return;
                     }
                     break;
                 case TIMED_ON_CONTROL:
                     mTimedControlSensor = InstanceManager.sensorManagerInstance().
-                                            provideSensor(mTimedSensorSystemName);
+                                            provideSensor(mTimedSensorName);
                     if (mTimedControlSensor!=null) {
 						// set initial state off
 						setState(OFF);
@@ -467,7 +467,7 @@ public abstract class AbstractLight extends AbstractNamedBean
                     else {
                         // timed control sensor does not exist
                         log.error("Light "+getSystemName()+" is linked to a Sensor that does not exist: "+
-                                             mTimedSensorSystemName);
+                                             mTimedSensorName);
                         return;
                     }
                     break;
