@@ -17,7 +17,7 @@ import jmri.Turnout;
  * <P>
  * Description:		Implement turnout manager for loconet
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.15 $
+ * @version         $Revision: 1.16 $
  */
 
 public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements LocoNetListener {
@@ -76,8 +76,13 @@ public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements Loc
         // reach here for loconet switch command; make sure we know about this one
         String s = "LT"+addr;
         if (getBySystemName(s) == null) {
-        	LnTurnout t = (LnTurnout) provideTurnout(s);
-	        t.message(l);
+			// no turnout with this address, is there a light
+			String sx = "LL"+addr;
+			if (jmri.InstanceManager.lightManagerInstance().getBySystemName(sx) == null) {
+				// no light, create a turnout
+				LnTurnout t = (LnTurnout) provideTurnout(s);
+				t.message(l);
+			}
 	    }
     }
 
