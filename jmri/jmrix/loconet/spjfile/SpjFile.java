@@ -9,7 +9,7 @@ import java.io.*;
  * Digitrax SPJ files
  *
  * @author		Bob Jacobsen  Copyright (C) 2006
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 
 public class SpjFile {
@@ -48,6 +48,7 @@ public class SpjFile {
      * corresponds to a particular handle number
      */
     public String getMapEntry(int i) {
+        if (log.isDebugEnabled()) log.debug("getMapEntry("+i+")");
         loadMapCache();
         String wanted = ""+i+" ";
         for (int j = 0; j<mapCache.length; j++) {
@@ -62,7 +63,9 @@ public class SpjFile {
     
     void loadMapCache() {
         if (mapCache != null) return;
+
         // find the map entries
+        log.debug("loading map cache");
         int map;
         for (map = 1; map< numHeaders(); map++) 
             if (headers[map].isMap()) break;
@@ -86,18 +89,25 @@ public class SpjFile {
         int end = 0;
         int index = 0;
         
+        // loop through the string, look for each line
+        if (log.isDebugEnabled()) log.debug("start loop over map with buffer length = "+buffer.length);
         while ( (++end) < buffer.length) {
             if (buffer[end] == 0x0D || buffer[end] == 0x0A) {
                 // sound end; make string
                 String next = new String(buffer, start, end-start);
                 // increment pointers
                 start = ++end;
+                if (log.isDebugEnabled()) log.debug("new start value is "+start);
+                if (log.isDebugEnabled()) log.debug("new end value is   "+end);
+               
                 // if another linefeed or newline is present, skip it too
-                if ( (buffer[end-1] == 0x0D || buffer[end] == 0x0A) ||
-                     (buffer[end-1] == 0x0A || buffer[end] == 0x0D) ) {
+                if ( (buffer[end-1] == 0x0D || ((end < buffer.length) && buffer[end] == 0x0A)) ||
+                     (buffer[end-1] == 0x0A || ((end < buffer.length) && buffer[end] == 0x0D)) ) {
                         start++;
                         end++;
                 }
+                // store entry
+                if (log.isDebugEnabled()) log.debug(" store entry "+index);
                 mapCache[index++] = next;
             }
         }
