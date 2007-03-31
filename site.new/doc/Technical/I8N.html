@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: I8N.html,v 1.7 2007-03-19 01:27:42 jacobsen Exp $ -->
+<!-- $Id: I8N.html,v 1.8 2007-03-31 17:51:10 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -375,6 +375,67 @@ Restart a JMRI program, and see if your changes appear in the user interface.
 If that doesn't work, please get in touch so that we can help you find the
 problem and improve the instructions.
 
+<h2>Coding for Internationalization</h2>
+<A id="code"/>
+
+Some web references on how to do this:
+<UL><A HREF="http://java.sun.com/docs/books/tutorial/i18n/index.html">Sun internationalization tutorial</a>(highly recommended)
+<LI><A HREF="http://java.sun.com/j2se/1.3/docs/guide/intl/faq.html">Sun internationalization FAQ</a>
+<LI>
+</UL>
+
+<P>
+Briefly, you create a static object in your class that handles the lookup of 
+strings:
+
+<pre><code>
+  static final java.util.ResourceBundle rbx = java.util.ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
+</code></pre>
+
+<P>
+The getBundle argument is the complete package name (not file name)
+for the properties file this class will be using.  You can have 
+more than one of these objects if you'd like to look up 
+strings in more than one properties file.
+
+<P>
+You can then retrieve particular strings like this:
+<pre><code>
+  String msg = rbx.getString("ButtonNew");
+</code></pre>
+<P>
+Some messages need to have specific information inserted into them:
+<pre><code>
+  System name LT1 is already in use
+</code></pre>
+<P>
+Here "LT1" can't be in the properties file, because it's only known
+which name to display when the program is running.  Different languages
+may put that part of the message in different places, and supporting that
+is important.  To do that, use the message formatting tools that Java provides.
+First, put a placeholder in the message definition:
+<pre><code>
+Error123 = System name {0} is already in use
+</code></pre>
+(You can have more than one insertion, called {1}, {2}, etc)
+<P>
+Next, format the final message by inserting the content into it:
+<pre><code>
+  String msg = java.text.MessageFormat.format(
+				    rbx.getString("Error123"),
+				    new String[]{badName});
+</code></pre>
+<P>
+The first argument to the "format" call is the message itself; 
+the second is an array of Strings to be inserted into the message.
+
+<P>
+Different languages may need a different number of lines to express
+a message, or may need to break it before or after a particular 
+value is inserted.  It's therefore better to use "\n" within a
+single message from the properties file to create line breaks, rather
+than providing multiple lines in the code itself.
+
 <!-- Footer -->
     <hr class="hide">
     <div id="footer">
@@ -387,7 +448,7 @@ problem and improve the instructions.
 	   <A href="/community/" title="Who is JMRI">
 	   	all who contributed</A>! </p>
 
-	<p>Copyright &copy; 1997 - 2004 JMRI Community. 
+	<p>Copyright &copy; 1997 - 2007 JMRI Community. 
 	<P>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
 	<P><A href="/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a></p>
     
