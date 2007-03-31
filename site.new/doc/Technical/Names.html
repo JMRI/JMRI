@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Names.html,v 1.14 2007-03-31 17:52:15 jacobsen Exp $ -->
+<!-- $Id: Names.html,v 1.15 2007-03-31 18:07:07 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -209,10 +209,26 @@ Note that some of these are placeholders, and have no underlying implementation.
 <LI>S SPROG
 <LI>T Lionel TMCC
 <LI>V TracTronics SECSI
-<LI>W (reserved for Wangrow, but that's currently combined with NCE still)
+<LI>W (reserved for Wangrow, but that's currently still combined with NCE)
 <LI>X XpressNet
 <LI>Z Zimo MX-1
 </ul>
+
+<h3>System-specific info</H3>
+Each different hardware system can specify the "string" that follows the system and type 
+letters.  Generally, these are small numbers, but their exact meaning is very system-specific.
+For more information, please see the specific pages for
+<UL>
+<LI><A HREF="../../hardware/CMRI.html">C/MRI</a>
+<LI><A HREF="loconet/Addressing.html">Digitrax</a>
+<LI><A HREF="../../hardware/NCE.html#names">NCE</a>
+</UL>
+
+<P>
+"Internal" objects can still be addressed and manipulated, but they don't have a strict
+correspondence with some hardware on the layout.  For example, if a signal head
+is implemented as three different outputs, LT1, LT2 and LT3, the signal head object
+might be called IH3.
 
 <H3>Device type letters</h3>
 Note that some of these are placeholders, and have no underlying implementation. Also, 
@@ -220,12 +236,14 @@ there is no guarantee that any given hardware system will ever implement all of 
 
 <ul>
 
-<LI>H Signal Head - One part of a signal (which may have multiple heads).  
+<LI>H signal Head - One part of a signal (which may have multiple heads).  
 Also interpreted to include indicators on control panels that
 are acting to display signal aspects
 
 <LI>M Memory - As yet, this has no real equivalent in the layout hardware,
 but is used as a place to store information temporarily and display it on panels, etc.
+
+<LI>L Light - another form of output, used to e.g. control lights on a layout
 
 <LI>P Power manager i.e. layout, district, subdistrict; not all systems 
 distinguish between these,
@@ -241,16 +259,44 @@ be either ACTIVE or INACTIVE. This is most commonly used for block occupancy
 detectors.
 
 <LI>T Turnout - actually a general purpose output on the layout
+
+<LI>X logiX - a set of logic equations used to control the layout
 </ul>
 
 
+<H2>Naming Conventions For Automated Use</h2>
+
+Some higher-level constructs create their own items.  For example, a
+"Sensor Group"
+is really just a collection of
+Routes
+that implements the sensor group logic; there is no specific object in the
+program that implements the sensor group. Instead, when the user
+creates sensor group "my group", a series of routes with names like:
+<code><pre>
+SENSOR GROUP:my group:LS1
+SENSOR GROUP:my group:LS2
+</pre></code>
+are created which implements the group. The sensor group tool knows to look
+for routes of this name.
+<P>
+To make this possible, two informal rules are used:
+<UL>
+<LI>Users should not use the ":" or "$" characters in system or user names.
+Automatic tools should use at least one of these to make sure they don't collide
+with user-selected names.
+<LI>Tools that use this method have their tool name at the start of any names
+they create, as "SENSOR GROUP" was used above.
+</UL>
+<P>
+The list of tools currently working this way is:
+<UL>
+<LI>SENSOR GROUPS - jmri.jmrit.sensorgroup
+<LI>USS CTC - jmri.jmrit.ussctc
+</UL>
+
 <H2>Notes</h2>
 <UL>
-<LI>
-"Internal" objects can still be addressed and manipulated, but they don't have a strict
-correspondence with some hardware on the layout.  For example, if a signal head
-is implemented as three different outputs, LT1, LT2 and LT3, the signal head object
-might be called IH3
 
 <LI>Some devices are not really named, as there's no idea of more than one yet.
 The DCC programmer is the first example, but there may be others.
@@ -265,15 +311,6 @@ than one layout.  If that's needed, we'll have to understand what
 the program is trying to do.
 </UL>
 
-<h2>System-specific info</H2>
-Each different hardware system can specify the "string" that follows the system and type 
-letters.  Generally, these are small numbers, but their exact meaning is very system-specific.
-For more information, please see the specific pages for
-<UL>
-<LI><A HREF="../../hardware/CMRI.html">C/MRI</a>
-<LI><A HREF="loconet/Addressing.html">Digitrax</a>
-<LI><A HREF="../../hardware/NCE.html#names">NCE</a>
-</UL>
 
 <!-- Footer -->
     <hr class="hide">
