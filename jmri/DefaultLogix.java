@@ -14,7 +14,7 @@ import java.util.Date;
  * Class providing the basic logic of the Logix interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class DefaultLogix extends AbstractNamedBean
     implements Logix, java.io.Serializable {
@@ -577,8 +577,8 @@ public class DefaultLogix extends AbstractNamedBean
 				Sensor s = InstanceManager.sensorManagerInstance().
 										getSensor(mListenerName[index]);
 				if (s==null) {
-					log.error("Bad name for sensor *"+mListenerName[index]+
-									"* when setting up Logix listener");
+					log.error("Bad name for sensor \""+mListenerName[index]+
+									"\" when setting up Logix listener");
 					return;
 				}
 				// Add listener for Sensor within this Logix
@@ -589,8 +589,8 @@ public class DefaultLogix extends AbstractNamedBean
 				Turnout t = InstanceManager.turnoutManagerInstance().
 										getTurnout(mListenerName[index]);
 				if (t==null) {
-					log.error("Bad name for turnout *"+mListenerName[index]+
-									"* when setting up Logix listener");
+					log.error("Bad name for turnout \""+mListenerName[index]+
+									"\" when setting up Logix listener");
 					return;
 				}
 				// Add listener for Turnout within this Logix
@@ -601,8 +601,8 @@ public class DefaultLogix extends AbstractNamedBean
 				Light lgt = InstanceManager.lightManagerInstance().
 										getLight(mListenerName[index]);
 				if (lgt==null) {
-					log.error("Bad name for light *"+mListenerName[index]+
-									"* when setting up Logix listener");
+					log.error("Bad name for light \""+mListenerName[index]+
+									"\" when setting up Logix listener");
 					return;
 				}
 				// Add listener for Light within this Logix
@@ -613,8 +613,8 @@ public class DefaultLogix extends AbstractNamedBean
 				Conditional c = InstanceManager.conditionalManagerInstance().
 										getBySystemName(mListenerName[index]);
 				if (c==null) {
-					log.error("Bad system name for conditional *"+mListenerName[index]+
-									"* when setting up Logix listener");
+					log.error("Bad system name for conditional \""+mListenerName[index]+
+									"\" when setting up Logix listener");
 					return;
 				}
 				// Add listener for Conditional in other Logix referenced within this Logix
@@ -625,8 +625,8 @@ public class DefaultLogix extends AbstractNamedBean
 				SignalHead h = InstanceManager.signalHeadManagerInstance().
 										getSignalHead(mListenerName[index]);
 				if (h==null) {
-					log.error("Bad name for signal head *"+mListenerName[index]+
-									"* when setting up Logix listener");
+					log.error("Bad name for signal head \""+mListenerName[index]+
+									"\" when setting up Logix listener");
 					return;
 				}
 				// Add listener for Signal Heads within this Logix
@@ -637,8 +637,8 @@ public class DefaultLogix extends AbstractNamedBean
 				Memory m = InstanceManager.memoryManagerInstance().
 										getMemory(mListenerName[index]);
 				if (m==null) {
-					log.error("Bad name for memory *"+mListenerName[index]+
-									"* when setting up Logix listener");
+					log.error("Bad name for memory \""+mListenerName[index]+
+									"\" when setting up Logix listener");
 					return;
 				}
 				// Add listener for Memory within this Logix
@@ -682,8 +682,8 @@ public class DefaultLogix extends AbstractNamedBean
 				Sensor s = InstanceManager.sensorManagerInstance().
 										getSensor(mListenerName[index]);
 				if (s==null) {
-					log.error("Bad name for sensor *"+mListenerName[index]+
-									"when removing a Logix listener");
+					log.error("Bad name for sensor \""+mListenerName[index]+
+									"\"when removing a Logix listener");
 					return;
 				}
 				// remove listener for this Sensor
@@ -693,8 +693,8 @@ public class DefaultLogix extends AbstractNamedBean
 				Turnout t = InstanceManager.turnoutManagerInstance().
 										getTurnout(mListenerName[index]);
 				if (t==null) {
-					log.error("Bad name for turnout *"+mListenerName[index]+
-									"when removing a Logix listener");
+					log.error("Bad name for turnout \""+mListenerName[index]+
+									"\"when removing a Logix listener");
 					return;
 				}
 				// remove listener for this Turnout
@@ -704,8 +704,8 @@ public class DefaultLogix extends AbstractNamedBean
 				Light lgt = InstanceManager.lightManagerInstance().
 										getLight(mListenerName[index]);
 				if (lgt==null) {
-					log.error("Bad name for light *"+mListenerName[index]+
-									"when removing a Logix listener");
+					log.error("Bad name for light \""+mListenerName[index]+
+									"\"when removing a Logix listener");
 					return;
 				}
 				// remove listener for this Light
@@ -715,8 +715,8 @@ public class DefaultLogix extends AbstractNamedBean
 				Conditional c = InstanceManager.conditionalManagerInstance().
 										getBySystemName(mListenerName[index]);
 				if (c==null) {
-					log.error("Bad system name for conditional *"+mListenerName[index]+
-									"when removing a Logix listener");
+					log.error("Bad system name for conditional \""+mListenerName[index]+
+									"\"when removing a Logix listener");
 					return;
 				}
 				// remove listener for this Conditional
@@ -726,8 +726,8 @@ public class DefaultLogix extends AbstractNamedBean
 				SignalHead h = InstanceManager.signalHeadManagerInstance().
 										getSignalHead(mListenerName[index]);
 				if (h==null) {
-					log.error("Bad name for signal head *"+mListenerName[index]+
-									"when removing a Logix listener");
+					log.error("Bad name for signal head \""+mListenerName[index]+
+									"\"when removing a Logix listener");
 					return;
 				}
 				// remove listener for this Signal Head
@@ -737,8 +737,8 @@ public class DefaultLogix extends AbstractNamedBean
 				Memory m = InstanceManager.memoryManagerInstance().
 										getMemory(mListenerName[index]);
 				if (m==null) {
-					log.error("Bad name for memory *"+mListenerName[index]+
-									"when removing a Logix listener");
+					log.error("Bad name for memory \""+mListenerName[index]+
+									"\"when removing a Logix listener");
 					return;
 				}
 				// remove listener for this Memory

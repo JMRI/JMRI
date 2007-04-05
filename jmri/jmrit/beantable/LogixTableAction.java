@@ -46,7 +46,7 @@ import jmri.util.JmriJFrame;
  *	   BeanTableBundle.properties, accessed via rb.
  *
  * @author	Dave Duchamp    Copyright (C) 2007
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -363,7 +363,7 @@ public class LogixTableAction extends AbstractTableAction {
             // Entered system name is blank or too short
             log.error("Logix system name is invalid: "+sName);
 			javax.swing.JOptionPane.showMessageDialog(addLogixFrame,
-				rbx.getString("Error8")+" "+rbx.getString("Error9"),
+				rbx.getString("Error8"),
 					rbx.getString("ErrorTitle"),
 						javax.swing.JOptionPane.ERROR_MESSAGE);
             return;
@@ -380,7 +380,7 @@ public class LogixTableAction extends AbstractTableAction {
             // Logix already exists
             log.error("Duplicate Logix system name entered: "+sName);
 			javax.swing.JOptionPane.showMessageDialog(addLogixFrame,
-				rbx.getString("Error1")+"\n"+rbx.getString("Error2"),
+				rbx.getString("Error1"),
 					rbx.getString("ErrorTitle"),
 						javax.swing.JOptionPane.ERROR_MESSAGE);
             return;
@@ -392,7 +392,7 @@ public class LogixTableAction extends AbstractTableAction {
 				// Logix with this user name already exists
 				log.error("Duplicate Logix user name entered: "+uName);
 				javax.swing.JOptionPane.showMessageDialog(addLogixFrame,
-					rbx.getString("Error3")+"\n"+rbx.getString("Error4"),
+					rbx.getString("Error3"),
 						rbx.getString("ErrorTitle"),
 							javax.swing.JOptionPane.ERROR_MESSAGE);
 				return;
@@ -421,8 +421,9 @@ public class LogixTableAction extends AbstractTableAction {
 		if (inEditMode) {
 			// Already editing a Logix, ask for completion of that edit
 			javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
-				rbx.getString("Error32")+curLogix.getSystemName()+
-					rbx.getString("Error33"),
+			    java.text.MessageFormat.format(
+				    rbx.getString("Error32"),
+				    new String[]{curLogix.getSystemName()}),
 					rbx.getString("ErrorTitle"),
 						javax.swing.JOptionPane.ERROR_MESSAGE);
 			return;
@@ -613,7 +614,7 @@ public class LogixTableAction extends AbstractTableAction {
 		showReminderCount ++;
 		if (showReminderCount<4) {
 			javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
-				rbx.getString("Reminder1")+"\n"+rbx.getString("Reminder2"),
+				rbx.getString("Reminder1"),
 					rbx.getString("ReminderTitle"),
 						javax.swing.JOptionPane.INFORMATION_MESSAGE);
 		}
@@ -685,7 +686,7 @@ public class LogixTableAction extends AbstractTableAction {
 					// Logix with this user name already exists
 					log.error("Failure to update Logix with Duplicate User Name: "+uName);
 					javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
-						rbx.getString("Error6")+"\n"+rbx.getString("Error4"),
+						rbx.getString("Error6"),
 							rbx.getString("ErrorTitle"),
 								javax.swing.JOptionPane.ERROR_MESSAGE);
 					return;
@@ -773,10 +774,11 @@ public class LogixTableAction extends AbstractTableAction {
 		if (inEditConditionalMode) {
 			// Already editing a Conditional, ask for completion of that edit
 			javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-				rbx.getString("Error34")+curConditional.getSystemName()+
-					rbx.getString("Error33"),
-					rbx.getString("ErrorTitle"),
-						javax.swing.JOptionPane.ERROR_MESSAGE);
+			    java.text.MessageFormat.format(
+				    rbx.getString("Error34"),
+				    new String[]{curConditional.getSystemName()}),
+				rbx.getString("ErrorTitle"),
+				javax.swing.JOptionPane.ERROR_MESSAGE);
 			return;
 		}						
 		// get Conditional to edit
@@ -844,10 +846,11 @@ public class LogixTableAction extends AbstractTableAction {
 		if (inEditConditionalMode) {
 			// Already editing a Conditional, ask for completion of that edit
 			javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-				rbx.getString("Error35")+curConditional.getSystemName()+
-					rbx.getString("Error33"),
-					rbx.getString("ErrorTitle"),
-						javax.swing.JOptionPane.ERROR_MESSAGE);
+			    java.text.MessageFormat.format(
+				    rbx.getString("Error35"),
+				    new String[]{curConditional.getSystemName()}),
+				rbx.getString("ErrorTitle"),
+				javax.swing.JOptionPane.ERROR_MESSAGE);
 			return true;
 		}
 		return false;
@@ -1393,7 +1396,7 @@ public class LogixTableAction extends AbstractTableAction {
 			if (warnStateVariables) {
 				// warning message - last State Variable deleted
 				javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-					rbx.getString("Warn3")+"\n"+rbx.getString("Warn4"),
+					rbx.getString("Warn3"),
 							rbx.getString("WarnTitle"),
 								javax.swing.JOptionPane.WARNING_MESSAGE);
 				warnStateVariables = false;				
@@ -1434,7 +1437,7 @@ public class LogixTableAction extends AbstractTableAction {
 					// Conditional with this user name already exists
 					log.error("Failure to update Conditional with Duplicate User Name: "+uName);
 					javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
-						rbx.getString("Error10")+"\n"+rbx.getString("Error4"),
+						rbx.getString("Error10"),
 							rbx.getString("ErrorTitle"),
 								javax.swing.JOptionPane.ERROR_MESSAGE);
 					return;
@@ -1446,10 +1449,11 @@ public class LogixTableAction extends AbstractTableAction {
         }
 		if (numStateVariables<=0) {
 			javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
-					rbx.getString("Warn5")+c.getSystemName()+rbx.getString("Warn6")+
-					"\n"+rbx.getString("Warn4"),
-						rbx.getString("WarnTitle"),
-							javax.swing.JOptionPane.WARNING_MESSAGE);
+			    java.text.MessageFormat.format(
+				    rbx.getString("Warn5"),
+				    new String[]{c.getSystemName()}),
+				rbx.getString("WarnTitle"),
+				javax.swing.JOptionPane.WARNING_MESSAGE);
 		}
 		else {
 			// validate and update state variables
@@ -1506,7 +1510,7 @@ public class LogixTableAction extends AbstractTableAction {
 		if (numConditionals<1) {
 			// warning message - last Conditional deleted
 			javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
-				rbx.getString("Warn1")+"\n"+rbx.getString("Warn2"),
+				rbx.getString("Warn1"),
 						rbx.getString("WarnTitle"),
 							javax.swing.JOptionPane.WARNING_MESSAGE);
 		}
@@ -2610,19 +2614,21 @@ public class LogixTableAction extends AbstractTableAction {
                     actionDelay[index] = Integer.valueOf(dataField.getText()).intValue();
                     if (actionDelay[index]<=0) {
 						javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-								rbx.getString("Error25")+dataField.getText()+
-									"\n"+rbx.getString("Error24"),
-									rbx.getString("ErrorTitle"),
-									javax.swing.JOptionPane.ERROR_MESSAGE);
+			                java.text.MessageFormat.format(
+				                rbx.getString("Error25"),
+				                new String[]{dataField.getText()}),
+							rbx.getString("ErrorTitle"),
+							javax.swing.JOptionPane.ERROR_MESSAGE);
 						return (false);
 					}
                 }
                 catch (Exception e) {
 					javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-							rbx.getString("Error23")+dataField.getText()+
-								"\n"+rbx.getString("Error24"),
-								rbx.getString("ErrorTitle"),
-								javax.swing.JOptionPane.ERROR_MESSAGE);
+			            java.text.MessageFormat.format(
+				            rbx.getString("Error23"),
+				            new String[]{dataField.getText()}),
+						rbx.getString("ErrorTitle"),
+						javax.swing.JOptionPane.ERROR_MESSAGE);
 					return (false);
                 }
 				actionString[index] = " ";
@@ -2930,10 +2936,11 @@ public class LogixTableAction extends AbstractTableAction {
 		if (error) {
 			// if unsuccessful, print error message
 			javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-				rbx.getString("Error26")+s+rbx.getString("Error27")+
-					"\n"+rbx.getString("Error28")+s,
-					rbx.getString("ErrorTitle"),
-						javax.swing.JOptionPane.ERROR_MESSAGE);
+			    java.text.MessageFormat.format(
+				    rbx.getString("Error26"),
+				    new String[]{s}),
+		        rbx.getString("ErrorTitle"),
+				javax.swing.JOptionPane.ERROR_MESSAGE);
 			return (-1);
 		}
 		// here if successful
@@ -2966,114 +2973,86 @@ public class LogixTableAction extends AbstractTableAction {
         return s;
     }
 	
+	
+	/**
+	 * Utility routine for formatting up
+	 * the various "does not match an existing" error 
+	 * messages.
+     * @param msg Index of the message string from the properties file
+     * @param name Bad/not found bean name
+     * @param table If true, display message Error21 about editing in the table
+	 */
+	void messageGeneralInvalidBean(String msg, String name, boolean table) {
+		javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
+		    java.text.MessageFormat.format(
+			    rbx.getString(msg)+(table?rbx.getString("Error21"):""),
+				new String[]{name}),
+			rbx.getString("ErrorTitle"),
+			javax.swing.JOptionPane.ERROR_MESSAGE);
+	}
+	
+	
 	/**
 	 * Sends an invalid turnout name error message for Edit Conditional window
 	 */
 	void messageInvalidTurnoutName(String name,boolean table) {
-		String s = " ";
-		if (table) s = "\n"+rbx.getString("Error21");
-		javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-			rbx.getString("Error12")+name+rbx.getString("Error13")+
-				"\n"+rbx.getString("Error19")+s,
-				rbx.getString("ErrorTitle"),
-					javax.swing.JOptionPane.ERROR_MESSAGE);
+	    messageGeneralInvalidBean("Error13", name, table);
 	}
 	
 	/**
 	 * Sends an invalid signal head name error message for Edit Conditional window
 	 */
 	void messageInvalidSignalHeadName(String name,boolean table) {
-		String s = " ";
-		if (table) s = "\n"+rbx.getString("Error21");
-		javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-			rbx.getString("Error12")+name+rbx.getString("Error14")+
-				"\n"+rbx.getString("Error19")+s,
-				rbx.getString("ErrorTitle"),
-					javax.swing.JOptionPane.ERROR_MESSAGE);
+	    messageGeneralInvalidBean("Error14", name, table);
 	}
 	
 	/**
 	 * Sends an invalid sensor name error message for Edit Conditional window
 	 */
 	void messageInvalidSensorName(String name,boolean table) {
-		String s = " ";
-		if (table) s = "\n"+rbx.getString("Error21");
-		javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-			rbx.getString("Error12")+name+rbx.getString("Error15")+
-				"\n"+rbx.getString("Error19")+s,
-				rbx.getString("ErrorTitle"),
-					javax.swing.JOptionPane.ERROR_MESSAGE);
+	    messageGeneralInvalidBean("Error15", name, table);
 	}
 	
 	/**
 	 * Sends an invalid light name error message for Edit Conditional window
 	 */
 	void messageInvalidLightName(String name,boolean table) {
-		String s = " ";
-		if (table) s = "\n"+rbx.getString("Error21");
-		javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-			rbx.getString("Error12")+name+rbx.getString("Error16")+
-				"\n"+rbx.getString("Error19")+s,
-				rbx.getString("ErrorTitle"),
-					javax.swing.JOptionPane.ERROR_MESSAGE);
+	    messageGeneralInvalidBean("Error16", name, table);
 	}
 	
 	/**
 	 * Sends an invalid memory system name error message for Edit Conditional window
 	 */
 	void messageInvalidMemoryName(String name,boolean table) {
-		String s = " ";
-		if (table) s = "\n"+rbx.getString("Error21");
-		javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-			rbx.getString("Error12")+name+rbx.getString("Error17")+
-				"\n"+rbx.getString("Error19")+s,
-				rbx.getString("ErrorTitle"),
-					javax.swing.JOptionPane.ERROR_MESSAGE);
+	    messageGeneralInvalidBean("Error17", name, table);
 	}
 	
 	/**
 	 * Sends an invalid route name error message for Edit Conditional window
 	 */
 	void messageInvalidRouteName(String name) {
-		javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-			rbx.getString("Error12")+name+rbx.getString("Error18")+
-				"\n"+rbx.getString("Error19"),
-				rbx.getString("ErrorTitle"),
-					javax.swing.JOptionPane.ERROR_MESSAGE);
+	    messageGeneralInvalidBean("Error18", name, true);
 	}
 	
 	/**
 	 * Sends an invalid conditional name error message for Edit Conditional window
 	 */
 	void messageInvalidConditionalName(String name) {
-		javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-			rbx.getString("Error12")+name+rbx.getString("Error20")+
-				"\n"+rbx.getString("Error29")+
-				"\n"+rbx.getString("Error21"),
-				rbx.getString("ErrorTitle"),
-					javax.swing.JOptionPane.ERROR_MESSAGE);
+	    messageGeneralInvalidBean("Error22", name, true);
 	}
 	
 	/**
 	 * Sends an invalid logix name error message for Edit Conditional window
 	 */
 	void messageInvalidLogixName(String name) {
-		javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-			rbx.getString("Error12")+name+rbx.getString("Error22")+
-				"\n"+rbx.getString("Error19"),
-				rbx.getString("ErrorTitle"),
-					javax.swing.JOptionPane.ERROR_MESSAGE);
+	    messageGeneralInvalidBean("Error22", name, true);
 	}
 	
 	/**
 	 * Sends a duplicate Conditional user name message for Edit Logix window
 	 */
 	void messageDuplicateConditionalUserName(String svName) {
-		javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
-			rbx.getString("Error30")+" "+svName+"."+
-				"\n"+rbx.getString("Error31"),
-				rbx.getString("ErrorTitle"),
-					javax.swing.JOptionPane.ERROR_MESSAGE);
+	    messageGeneralInvalidBean("Error30", svName, false);
 	}
 	
 	//  *********** Special Table Models ********************
