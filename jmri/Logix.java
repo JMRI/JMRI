@@ -79,7 +79,9 @@ public interface Logix extends NamedBean {
 	 * Returns true if Conditional was successfully added, returns false
 	 * if the maximum number of conditionals has been exceeded.
      * @param systemName The Conditional system name
-	 * @param order - the order this conditional should calculate
+	 * @param order - the order this conditional should calculate in
+	 *                 if order is negative, the conditional is added
+	 *				   at the end of current group of conditionals
      */
     public boolean addConditional(String systemName,int order);
 	
