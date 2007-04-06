@@ -2,12 +2,13 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2002, 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Digitrax_01x3.xml,v 1.30 2007-02-20 02:10:52 jacobsen Exp $ -->
+<!-- $Id: Digitrax_01x3.xml,v 1.31 2007-04-06 15:32:11 jacobsen Exp $ -->
 <decoder-config>
-	<version author="Bob Blackwell"   version="17" lastUpdated="20070216"/>
-	<version author="Bob Blackwell"   version="16" lastUpdated="20060807"/>
+	<version author="Bob Blackwell" version="18" lastUpdated="20070304"/>
+	<version author="Bob Blackwell" version="17" lastUpdated="20070216"/>
+	<version author="Bob Blackwell" version="16" lastUpdated="20060807"/>
 	<version author="Howard G. Penny" version="15" lastUpdated="20050422"/>
-	<version author="Simon Ginsburg"  version="13" lastUpdated="20050422"/>
+	<version author="Simon Ginsburg" version="13" lastUpdated="20050422"/>
 
 	<!-- Created from version 5 of the 1x2 file -->
 	<!-- V2: fix default values for CV56, 57 BEMF -->
@@ -19,304 +20,263 @@
 	<!-- V8: Function Output Map, CV's 33 to 46, defaults updated by Bob Blackwell, CV9 added -->
 	<!-- Version 9 - fix "rule 17" typos -->
 	<!-- Version 10 - remove DH123 (created new file for it), fixed decoder sizes -->
-    <!-- Version 10.1 - changed spelling of "behavior" (Jack Shall) -->
-    <!-- Version 11 - added DZ123 (Bob Jacobsen) -->
-    <!-- Version 12 - added some tooltips (Jack Shall) -->
-    <!-- Version 13 - added DN163K1B and DN163I0 (Simon Ginsburg) -->
-    <!-- Version 14 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" - Bob Jacobsen -->
-    <!-- Version 15 - added factory reset menu items (Howard G. Penny) -->
-    <!-- Version 16 - added DN163K1C (Simon Ginsburg, Bob Blackwell) -->
+  <!-- Version 10.1 - changed spelling of "behavior" (Jack Shall) -->
+  <!-- Version 11 - added DZ123 (Bob Jacobsen) -->
+  <!-- Version 12 - added some tooltips (Jack Shall) -->
+  <!-- Version 13 - added DN163K1B and DN163I0 (Simon Ginsburg) -->
+  <!-- Version 14 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" - Bob Jacobsen -->
+  <!-- Version 15 - added factory reset menu items (Howard G. Penny) -->
+  <!-- Version 16 - added DN163K1C (Simon Ginsburg, Bob Blackwell) -->
 	<!-- Version 17 - added DN163A2, DN163K0D, DN163I1A, DN163I1B, DN163I1C, DH163PS; corrected maxMotorCurrent and output name for most DN series decoders ( Bob Blackwell) -->
+	<!-- Version 18 - corrected errors introduced in Version 17 maxMotorCurrent. Added dimensions for DH163L0, DN143,  ( Bob Blackwell) -->
 	
 <decoder>
-	<family name="Series 3 with FX3, silent, readback" 
-			mfg="Digitrax" lowVersionID="49" highVersionID="49">
-		<model model="DH163" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="HO"
-				connector="9pin">
-			<output name="4" label="Violet" connection="wire" /> 
-			<output name="5" label="Pad" connection="solder" /> 
-			<output name="6" label="Pad" connection="solder" /> 
-			<size length="1.05" width="0.67" height="0.25" units="inches" />
+	<family name="Series 3 with FX3, silent, readback" mfg="Digitrax" lowVersionID="49" highVersionID="49">
+		<model model="DH163" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin">
+			<output name="4" label="Violet" connection="wire"/> 
+			<output name="5" label="Pad" connection="solder"/> 
+			<output name="6" label="Pad" connection="solder"/> 
+			<size length="1.05" width="0.67" height="0.25" units="inches"/>
 			</model>
-		<model model="DH163AT" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="HO"
-				connector="9pin">
-			<output name="4" label="Violet" connection="wire" /> 
-			<output name="5" label="Pad 1" connection="solder" /> 
-			<output name="6" label="Pad 2" connection="solder" />
-			<size length="1.05" width="0.67" height="0.25" units="inches" />
+		<model model="DH163AT" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin">
+			<output name="4" label="Violet" connection="wire"/> 
+			<output name="5" label="Pad 1" connection="solder"/> 
+			<output name="6" label="Pad 2" connection="solder"/>
+			<size length="1.05" width="0.67" height="0.25" units="inches"/>
 			</model>
-		<model model="DH163A0" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" >
-			<output name="1" label="Pad" connection="solder" /> 
-			<output name="2" label="Pad" connection="solder" /> 
-			<output name="3" label="Pad" connection="solder" /> 
-			<output name="4" label="Pad" connection="solder" /> 
-			<output name="5" label="Pad" connection="solder" /> 
-			<output name="6" label="Pad" connection="solder" />
-			<size length="2.877" width="0.667" height="0.173" units="inches" />
+		<model model="DH163A0" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO">
+			<output name="1" label="Pad" connection="solder"/> 
+			<output name="2" label="Pad" connection="solder"/> 
+			<output name="3" label="Pad" connection="solder"/> 
+			<output name="4" label="Pad" connection="solder"/> 
+			<output name="5" label="Pad" connection="solder"/> 
+			<output name="6" label="Pad" connection="solder"/>
+			<size length="2.877" width="0.667" height="0.173" units="inches"/>
 			</model>
-		<model model="DH163D" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="HO"
-				connector="9pin">
-			<output name="4" label="Violet" connection="wire" /> 
-			<output name="5" label="Pad" connection="solder" /> 
-			<output name="6" label="Pad" connection="solder" />
-			<size length="1.05" width="0.67" height="0.25" units="inches" />
+		<model model="DH163D" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin">
+			<output name="4" label="Violet" connection="wire"/> 
+			<output name="5" label="Pad" connection="solder"/> 
+			<output name="6" label="Pad" connection="solder"/>
+			<size length="1.05" width="0.67" height="0.25" units="inches"/>
 			</model>
-		<model model="DH163IP" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="HO"
-				connector="NMRAmedium">
-			<output name="3" label="Pad" connection="solder" /> 
-			<output name="4" label="Pad" connection="solder" /> 
-			<output name="5" label="Pad" connection="solder" /> 
-			<output name="6" label="Pad" connection="solder" />
-			<size length="1.05" width="0.67" height="0.25" units="inches" />
+		<model model="DH163IP" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="NMRAmedium">
+			<output name="3" label="Pad" connection="solder"/> 
+			<output name="4" label="Pad" connection="solder"/> 
+			<output name="5" label="Pad" connection="solder"/> 
+			<output name="6" label="Pad" connection="solder"/>
+			<size length="1.05" width="0.67" height="0.25" units="inches"/>
 			</model>
-		<model model="DH163K0" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" >
-			<output name="1" label="Pad" connection="solder" /> 
-			<output name="2" label="Pad" connection="solder" /> 
-			<output name="3" label="Pad" connection="solder" /> 
-			<output name="4" label="Pad" connection="solder" /> 
-			<output name="5" label="Pad" connection="solder" /> 
-			<output name="6" label="Pad" connection="solder" />
-			<size length="2.877" width="0.667" height="0.173" units="inches" />
+		<model model="DH163K0" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO">
+			<output name="1" label="Pad" connection="solder"/> 
+			<output name="2" label="Pad" connection="solder"/> 
+			<output name="3" label="Pad" connection="solder"/> 
+			<output name="4" label="Pad" connection="solder"/> 
+			<output name="5" label="Pad" connection="solder"/> 
+			<output name="6" label="Pad" connection="solder"/>
+			<size length="2.877" width="0.667" height="0.173" units="inches"/>
 			</model>
-		<model model="DH163L0" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" >
-			<output name="3" label="Pad" connection="solder" /> 
-			<output name="4" label="Pad" connection="solder" /> 
-			<output name="5" label="Pad" connection="solder" /> 
-			<output name="6" label="Pad" connection="solder" />
-			<size length="0" width="0" height="0" units="inches" />
+		<model model="DH163L0" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO">
+			<output name="3" label="Pad" connection="solder"/> 
+			<output name="4" label="Pad" connection="solder"/> 
+			<output name="5" label="Pad" connection="solder"/> 
+			<output name="6" label="Pad" connection="solder"/>
+			<size length="1.05" width=".67" height=".25" units="inches"/>
 			</model>
-		<model model="DH163P" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="HO"
-				connector="NMRAmedium">
-			<output name="3" label="Green" connection="wire" /> 
-			<output name="4" label="Violet" connection="wire" /> 
-			<output name="5" label="Pad" connection="solder" /> 
-			<output name="6" label="Pad" connection="solder" />
-			<size length="1.05" width="0.67" height="0.25" units="inches" />
+		<model model="DH163P" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="NMRAmedium">
+			<output name="3" label="Green" connection="wire"/> 
+			<output name="4" label="Violet" connection="wire"/> 
+			<output name="5" label="Pad" connection="solder"/> 
+			<output name="6" label="Pad" connection="solder"/>
+			<size length="1.05" width="0.67" height="0.25" units="inches"/>
 			</model>
-		<model model="DH163PS" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="HO"
-				connector="NMRAmedium">
-			<output name="3" label="Green" connection="wire" /> 
-			<output name="4" label="Violet" connection="wire" /> 
-			<output name="5" label="Pad" connection="solder" /> 
-			<output name="6" label="Pad" connection="solder" />
-			<size length="1.05" width="0.67" height="0.25" units="inches" />
+		<model model="DH163PS" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="NMRAmedium">
+			<output name="3" label="Green" connection="wire"/> 
+			<output name="4" label="Violet" connection="wire"/> 
+			<output name="5" label="Pad" connection="solder"/> 
+			<output name="6" label="Pad" connection="solder"/>
+			<size length="1.05" width="0.67" height="0.25" units="inches"/>
 			</model>
-		<model model="DG383" numOuts="8" numFns="12"
-	    		maxMotorCurrent="3A (peak=5A)" formFactor="O/G" >
-			<output name="4" label="Violet" connection="wire" /> 
-			<output name="5" label="Brown" connection="wire" />
-			<output name="6" label="Wht/Yel" connection="wire" />
-			<output name="7" label="Wht/Grn" connection="wire" />
-			<output name="8" label="Wht/Blu" connection="wire" />
-			<size length="2.23" width="1.45" height="0" units="inches" />
+		<model model="DG383" numOuts="8" numFns="12" maxMotorCurrent="3A (peak=5A)" formFactor="O/G">
+			<output name="4" label="Violet" connection="wire"/> 
+			<output name="5" label="Brown" connection="wire"/>
+			<output name="6" label="Wht/Yel" connection="wire"/>
+			<output name="7" label="Wht/Grn" connection="wire"/>
+			<output name="8" label="Wht/Blu" connection="wire"/>
+			<size length="2.23" width="1.45" height="0" units="inches"/>
 			</model>
-		<model model="DG583" numOuts="8" numFns="12"
-	    		maxMotorCurrent="5A (peak=10A)" formFactor="O/G" >
-			<output name="4" label="Violet" connection="wire" /> 
-			<output name="5" label="Brown" connection="wire" />
-			<output name="6" label="Wht/Yel" connection="wire" />
-			<output name="7" label="Wht/Grn" connection="wire" />
-			<output name="8" label="Wht/Blu" connection="wire" />
-			<size length="2.23" width="1.45" height="0" units="inches" />
+		<model model="DG583" numOuts="8" numFns="12" maxMotorCurrent="5A (peak=10A)" formFactor="O/G">
+			<output name="4" label="Violet" connection="wire"/> 
+			<output name="5" label="Brown" connection="wire"/>
+			<output name="6" label="Wht/Yel" connection="wire"/>
+			<output name="7" label="Wht/Grn" connection="wire"/>
+			<output name="8" label="Wht/Blu" connection="wire"/>
+			<size length="2.23" width="1.45" height="0" units="inches"/>
 			</model>
-		<model model="DN143" numOuts="4" numFns="8"
-	    		maxMotorCurrent="1.25A (peak=2A)" formFactor="N" >
-			<output name="4" label="Violet" connection="wire" /> 
-			<size length="0" width="0" height="0" units="inches" />
+		<model model="DN143" numOuts="4" numFns="8" maxMotorCurrent="1.25A (peak=2A)" formFactor="N">
+			<output name="4" label="Violet" connection="wire"/> 
+			<size length=".55" width=".36" height=".13" units="inches"/>
 			</model>
-		<model model="DN163" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="N" >
-			<output name="4" label="Violet" connection="wire" /> 
-			<output name="5" label="Pad" connection="solder" />
-			<output name="6" label="Pad" connection="solder" />
-			<size length="0" width="0" height="0" units="inches" />
+		<model model="DN163" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N">
+			<output name="4" label="Violet" connection="wire"/> 
+			<output name="5" label="Pad" connection="solder"/>
+			<output name="6" label="Pad" connection="solder"/>
+			<size length="0" width="0" height="0" units="inches"/>
 			</model>
-		<model model="DN163A0" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.0A (peak=2A)" formFactor="N" >
-			<output name="1" label="LED" connection="solder" /> 
-			<output name="2" label="LED" connection="solder" /> 
-			<output name="3" label="Pad" connection="solder" /> 
-			<output name="4" label="Pad" connection="solder" /> 
-			<output name="5" label="Pad" connection="solder" />
-			<output name="6" label="Pad" connection="solder" />
-			<size length="3.0015" width="0.374" height="0.157" units="inches" />
+		<model model="DN163A0" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N">
+			<output name="1" label="LED" connection="solder"/> 
+			<output name="2" label="LED" connection="solder"/> 
+			<output name="3" label="Pad" connection="solder"/> 
+			<output name="4" label="Pad" connection="solder"/> 
+			<output name="5" label="Pad" connection="solder"/>
+			<output name="6" label="Pad" connection="solder"/>
+			<size length="3.0015" width="0.374" height="0.157" units="inches"/>
 			</model>
-		<model model="DN163A1" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.0A (peak=2A)" formFactor="N" >
-			<output name="1" label="LED" connection="solder" /> 
-			<output name="2" label="LED" connection="solder" /> 
-			<output name="3" label="Pad" connection="solder" /> 
-			<output name="4" label="Pad" connection="solder" /> 
-			<output name="5" label="Pad" connection="solder" />
-			<output name="6" label="Pad" connection="solder" />
-			<size length="3.875" width="3.374" height="0.157" units="inches" />
+		<model model="DN163A1" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N">
+			<output name="1" label="LED" connection="solder"/> 
+			<output name="2" label="LED" connection="solder"/> 
+			<output name="3" label="Pad" connection="solder"/> 
+			<output name="4" label="Pad" connection="solder"/> 
+			<output name="5" label="Pad" connection="solder"/>
+			<output name="6" label="Pad" connection="solder"/>
+			<size length="3.875" width="3.374" height="0.157" units="inches"/>
 			</model>
-		<model model="DN163A2" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.0A (peak=2A)" formFactor="N" >
-			<output name="1" label="LED" connection="solder" /> 
-			<output name="2" label="LED" connection="solder" /> 
-			<output name="3" label="Pad" connection="solder" /> 
-			<output name="4" label="Pad" connection="solder" /> 
-			<output name="5" label="Pad" connection="solder" />
-			<output name="6" label="Pad" connection="solder" />
-			<size length="3.875" width="3.374" height="0.157" units="inches" />
+		<model model="DN163A2" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N">
+			<output name="1" label="LED" connection="solder"/> 
+			<output name="2" label="LED" connection="solder"/> 
+			<output name="3" label="Pad" connection="solder"/> 
+			<output name="4" label="Pad" connection="solder"/> 
+			<output name="5" label="Pad" connection="solder"/>
+			<output name="6" label="Pad" connection="solder"/>
+			<size length="3.875" width="3.374" height="0.157" units="inches"/>
 			</model>
-		<model model="DN163I0" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.0A (peak=2A)" formFactor="N" >
-			<output name="1" label="LED" connection="solder" /> 
-			<output name="2" label="LED" connection="solder" /> 
-			<output name="3" label="Pad" connection="solder" /> 
-			<output name="4" label="Pad" connection="solder" /> 
-			<output name="5" label="Pad" connection="solder" />
-			<output name="6" label="Pad" connection="solder" />
-			<size length="3.0015" width="0.374" height="0.157" units="inches" />
+		<model model="DN163I0" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N">
+			<output name="1" label="LED" connection="solder"/> 
+			<output name="2" label="LED" connection="solder"/> 
+			<output name="3" label="Pad" connection="solder"/> 
+			<output name="4" label="Pad" connection="solder"/> 
+			<output name="5" label="Pad" connection="solder"/>
+			<output name="6" label="Pad" connection="solder"/>
+			<size length="3.0015" width="0.374" height="0.157" units="inches"/>
 			</model>
-		<model model="DN163I1A" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="N" >
-			<output name="1" label="Pad" connection="solder" /> 
-			<output name="2" label="Pad" connection="solder" /> 
-			<output name="3" label="Pad" connection="solder" /> 
-			<output name="4" label="Pad" connection="solder" /> 
-			<output name="5" label="Pad" connection="solder" />
-			<output name="6" label="Pad" connection="solder" />
-			<size length="2.165" width="0.472" height="0.098" units="inches" />
+		<model model="DN163I1A" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N">
+			<output name="1" label="Pad" connection="solder"/> 
+			<output name="2" label="Pad" connection="solder"/> 
+			<output name="3" label="Pad" connection="solder"/> 
+			<output name="4" label="Pad" connection="solder"/> 
+			<output name="5" label="Pad" connection="solder"/>
+			<output name="6" label="Pad" connection="solder"/>
+			<size length="2.165" width="0.472" height="0.098" units="inches"/>
 			</model>
-		<model model="DN163I1B" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="N" >
-			<output name="1" label="Pad" connection="solder" /> 
-			<output name="2" label="Pad" connection="solder" /> 
-			<output name="3" label="Pad" connection="solder" /> 
-			<output name="4" label="Pad" connection="solder" /> 
-			<output name="5" label="Pad" connection="solder" />
-			<output name="6" label="Pad" connection="solder" />
-			<size length="2.165" width="0.472" height="0.098" units="inches" />
+		<model model="DN163I1B" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N">
+			<output name="1" label="Pad" connection="solder"/> 
+			<output name="2" label="Pad" connection="solder"/> 
+			<output name="3" label="Pad" connection="solder"/> 
+			<output name="4" label="Pad" connection="solder"/> 
+			<output name="5" label="Pad" connection="solder"/>
+			<output name="6" label="Pad" connection="solder"/>
+			<size length="2.165" width="0.472" height="0.098" units="inches"/>
 			</model>
-		<model model="DN163I1C" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="N" >
-			<output name="1" label="Pad" connection="solder" /> 
-			<output name="2" label="Pad" connection="solder" /> 
-			<output name="3" label="Pad" connection="solder" /> 
-			<output name="4" label="Pad" connection="solder" /> 
-			<output name="5" label="Pad" connection="solder" />
-			<output name="6" label="Pad" connection="solder" />
-			<size length="2.165" width="0.472" height="0.098" units="inches" />
+		<model model="DN163I1C" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N">
+			<output name="1" label="Pad" connection="solder"/> 
+			<output name="2" label="Pad" connection="solder"/> 
+			<output name="3" label="Pad" connection="solder"/> 
+			<output name="4" label="Pad" connection="solder"/> 
+			<output name="5" label="Pad" connection="solder"/>
+			<output name="6" label="Pad" connection="solder"/>
+			<size length="2.165" width="0.472" height="0.098" units="inches"/>
 			</model>
-		<model model="DN163K0A" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.0A (peak=2A)" formFactor="N" >
-			<output name="1" label="LED" connection="solder" /> 
-			<output name="2" label="LED" connection="solder" /> 
-			<output name="3" label="Pad" connection="solder" /> 
-			<output name="4" label="Pad" connection="solder" /> 
-			<output name="5" label="Pad" connection="solder" />
-			<output name="6" label="Pad" connection="solder" />
-			<size length="2.2165" width="0.5485" height="0.1015" units="inches" />
+		<model model="DN163K0A" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N">
+			<output name="1" label="LED" connection="solder"/> 
+			<output name="2" label="LED" connection="solder"/> 
+			<output name="3" label="Pad" connection="solder"/> 
+			<output name="4" label="Pad" connection="solder"/> 
+			<output name="5" label="Pad" connection="solder"/>
+			<output name="6" label="Pad" connection="solder"/>
+			<size length="2.2165" width="0.5485" height="0.1015" units="inches"/>
 			</model>
-		<model model="DN163K0B" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.0A (peak=2A)" formFactor="N" >
-			<output name="1" label="LED" connection="solder" /> 
-			<output name="2" label="Pad" connection="solder" /> 
-			<output name="3" label="Pad" connection="solder" /> 
-			<output name="4" label="Pad" connection="solder" /> 
-			<output name="5" label="Pad" connection="solder" />
-			<output name="6" label="Pad" connection="solder" />
-			<size length="2.2165" width="0.5485" height="0.1015" units="inches" />
+		<model model="DN163K0B" numOuts="6" numFns="8" maxMotorCurrent="1.0A (peak=2A)" formFactor="N">
+			<output name="1" label="LED" connection="solder"/> 
+			<output name="2" label="Pad" connection="solder"/> 
+			<output name="3" label="Pad" connection="solder"/> 
+			<output name="4" label="Pad" connection="solder"/> 
+			<output name="5" label="Pad" connection="solder"/>
+			<output name="6" label="Pad" connection="solder"/>
+			<size length="2.2165" width="0.5485" height="0.1015" units="inches"/>
 			</model>
-		<model model="DN163K0D" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.0A (peak=2A)" formFactor="N" >
-			<output name="1" label="LED" connection="solder" /> 
-			<output name="2" label="LED" connection="solder" /> 
-			<output name="3" label="Pad" connection="solder" /> 
-			<output name="4" label="Pad" connection="solder" /> 
-			<output name="5" label="Pad" connection="solder" />
-			<output name="6" label="Pad" connection="solder" />
-			<size length="2.2165" width="0.5485" height="0.1015" units="inches" />
+		<model model="DN163K0D" numOuts="6" numFns="8" maxMotorCurrent="1.0A (peak=2A)" formFactor="N">
+			<output name="1" label="LED" connection="solder"/> 
+			<output name="2" label="LED" connection="solder"/> 
+			<output name="3" label="Pad" connection="solder"/> 
+			<output name="4" label="Pad" connection="solder"/> 
+			<output name="5" label="Pad" connection="solder"/>
+			<output name="6" label="Pad" connection="solder"/>
+			<size length="2.2165" width="0.5485" height="0.1015" units="inches"/>
 			</model>
-		<model model="DN163K1A" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.0A (peak=2A)" formFactor="N" >
-			<output name="1" label="LED" connection="solder" /> 
-			<output name="2" label="LED" connection="solder" /> 
-			<output name="3" label="Pad" connection="solder" /> 
-			<output name="4" label="Pad" connection="solder" /> 
-			<output name="5" label="Pad" connection="solder" />
-			<output name="6" label="Pad" connection="solder" />
-			<size length="3.11" width="0.426" height="0.195" units="inches" />
+		<model model="DN163K1A" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N">
+			<output name="1" label="LED" connection="solder"/> 
+			<output name="2" label="LED" connection="solder"/> 
+			<output name="3" label="Pad" connection="solder"/> 
+			<output name="4" label="Pad" connection="solder"/> 
+			<output name="5" label="Pad" connection="solder"/>
+			<output name="6" label="Pad" connection="solder"/>
+			<size length="3.11" width="0.426" height="0.195" units="inches"/>
 			</model>
-		<model model="DN163K1B" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.0A (peak=2A)" formFactor="N" >
-			<output name="1" label="LED" connection="solder" /> 
-			<output name="2" label="LED" connection="solder" /> 
-			<output name="3" label="Pad" connection="solder" /> 
-			<output name="4" label="Pad" connection="solder" /> 
-			<output name="5" label="Pad" connection="solder" />
-			<output name="6" label="Pad" connection="solder" />
-			<size length="3.11" width="0.426" height="0.195" units="inches" />
+		<model model="DN163K1B" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N">
+			<output name="1" label="LED" connection="solder"/> 
+			<output name="2" label="LED" connection="solder"/> 
+			<output name="3" label="Pad" connection="solder"/> 
+			<output name="4" label="Pad" connection="solder"/> 
+			<output name="5" label="Pad" connection="solder"/>
+			<output name="6" label="Pad" connection="solder"/>
+			<size length="3.11" width="0.426" height="0.195" units="inches"/>
 			</model>
-		<model model="DN163K1C" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.0A (peak=2A)" formFactor="N" >
-			<output name="1" label="LED" connection="solder" /> 
-			<output name="2" label="LED" connection="solder" /> 
-			<output name="3" label="Pad" connection="solder" /> 
-			<output name="4" label="Pad" connection="solder" /> 
-			<output name="5" label="Pad" connection="solder" />
-			<output name="6" label="Pad" connection="solder" />
-			<size length="3.11" width="0.426" height="0.195" units="inches" />
+		<model model="DN163K1C" numOuts="6" numFns="8" maxMotorCurrent="1.0A (peak=2A)" formFactor="N">
+			<output name="1" label="LED" connection="solder"/> 
+			<output name="2" label="LED" connection="solder"/> 
+			<output name="3" label="Pad" connection="solder"/> 
+			<output name="4" label="Pad" connection="solder"/> 
+			<output name="5" label="Pad" connection="solder"/>
+			<output name="6" label="Pad" connection="solder"/>
+			<size length="3.11" width="0.426" height="0.195" units="inches"/>
 			</model>
-		<model model="DN163K2" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.0A (peak=2A)" formFactor="N" >
-			<output name="1" label="LED" connection="solder" /> 
-			<output name="2" label="LED" connection="solder" /> 
-			<output name="3" label="Pad" connection="solder" /> 
-			<output name="4" label="Pad" connection="solder" /> 
-			<output name="5" label="Pad" connection="solder" />
-			<output name="6" label="Pad" connection="solder" />
-			<size length="3.18" width="0.354" height="0.128" units="inches" />
+		<model model="DN163K2" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N">
+			<output name="1" label="LED" connection="solder"/> 
+			<output name="2" label="LED" connection="solder"/> 
+			<output name="3" label="Pad" connection="solder"/> 
+			<output name="4" label="Pad" connection="solder"/> 
+			<output name="5" label="Pad" connection="solder"/>
+			<output name="6" label="Pad" connection="solder"/>
+			<size length="3.18" width="0.354" height="0.128" units="inches"/>
 			</model>
-		<model model="DN163M0" numOuts="6" numFns="8"
-	    		maxMotorCurrent="1.0A (peak=1.5A)" formFactor="N" >
-			<output name="1" label="LED" connection="solder" /> 
-			<output name="2" label="Pad" connection="solder" /> 
-			<output name="3" label="Pad" connection="solder" /> 
-			<output name="4" label="Pad" connection="solder" /> 
-			<output name="5" label="Pad" connection="solder" />
-			<output name="6" label="Pad" connection="solder" />
-			<size length="2.158" width="0.58" height="0.135" units="inches" />
+		<model model="DN163M0" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=1.5A)" formFactor="N">
+			<output name="1" label="LED" connection="solder"/> 
+			<output name="2" label="Pad" connection="solder"/> 
+			<output name="3" label="Pad" connection="solder"/> 
+			<output name="4" label="Pad" connection="solder"/> 
+			<output name="5" label="Pad" connection="solder"/>
+			<output name="6" label="Pad" connection="solder"/>
+			<size length="2.158" width="0.58" height="0.135" units="inches"/>
 			</model>
-		<model model="DZ123" numOuts="2" numFns="8" lowVersionID="36" highVersionID="64"
-	    		maxMotorCurrent="1A (peak=2A)" formFactor="Z" >
-			<size length="0.57" width="0.38" height="0.13" units="inches" />
+		<model model="DZ123" numOuts="2" numFns="8" lowVersionID="36" highVersionID="64" maxMotorCurrent="1A (peak=2A)" formFactor="Z">
+			<size length="0.57" width="0.38" height="0.13" units="inches"/>
 			</model>
-		<model model="DZ143" numOuts="4" numFns="8" lowVersionID="64" highVersionID="65"
-	    		maxMotorCurrent="1.25A (peak=2A)" formFactor="Z" >
-			<output name="4" label="Violet" connection="wire" /> 
-			<size length="0.55" width="0.36" height="0.13" units="inches" />
+		<model model="DZ143" numOuts="4" numFns="8" lowVersionID="64" highVersionID="65" maxMotorCurrent="1.25A (peak=2A)" formFactor="Z">
+			<output name="4" label="Violet" connection="wire"/> 
+			<size length="0.55" width="0.36" height="0.13" units="inches"/>
 			</model>
-		<model model="DZ143PS" numOuts="4" numFns="8" lowVersionID="64" highVersionID="65"
-	    		maxMotorCurrent="1.25A (peak=2A)" formFactor="Z" >
-			<output name="4" label="Violet" connection="wire" /> 
-			<size length="0.55" width="0.36" height="0.13" units="inches" />
+		<model model="DZ143PS" numOuts="4" numFns="8" lowVersionID="64" highVersionID="65" maxMotorCurrent="1.25A (peak=2A)" formFactor="Z">
+			<output name="4" label="Violet" connection="wire"/> 
+			<size length="0.55" width="0.36" height="0.13" units="inches"/>
 			</model>
 	</family>
 
-	<programming direct="yes" paged="yes" 
-	                     register="yes" ops="yes"
-	                     transpRead="yes"></programming>
+	<programming direct="yes" paged="yes" register="yes" ops="yes" transpRead="yes"/>
 
 	<variables>
-		<variable label="Primary Address" CV="1" comment="Short address"
-						item="Short Address"  default="03">
+		<variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
 			<shortAddressVal/></variable>
-		<variable label="Start Volts" CV="2" item="Vstart"
-						comment="A value of 255 corresponds to 100%">
-			<decVal></decVal>
+		<variable label="Start Volts" CV="2" item="Vstart" comment="A value of 255 corresponds to 100%">
+			<decVal/>
 			</variable>
 		<variable label="Acceleration Rate" CV="3" item="Accel">
 			<decVal max="31"/>
@@ -337,8 +297,7 @@
 				<decVal/>
 			</variable>
 
-		<variable label="Motor Drive Frequency" CV="9" item="Total PWM Period" default="0"
-					comment="00 is fastest, 255 is slowest">
+		<variable label="Motor Drive Frequency" CV="9" item="Total PWM Period" default="0" comment="00 is fastest, 255 is slowest">
 				<decVal/>
 			</variable>
 
@@ -440,37 +399,32 @@
 				<enumChoice choice="reverse"/>
 				</enumVal>
 			</variable>
-		<variable label="Speed steps" CV="29" mask="XXXXXXVX" 
-				item="Speed Step Mode" default="1">
+		<variable label="Speed steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
 			<enumVal>
 				<enumChoice choice="14"/>
 				<enumChoice choice="28/128"/>
 				</enumVal>
 			</variable>
-		<variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="1"
-					 item="Analog (DC) Operation">
+		<variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
 				</enumVal>
 			</variable>
-		<variable label="Use Speed Table" CV="29" mask="XXXVXXXX"
-					item="Speed Table Definition">
+		<variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition">
 			<enumVal>
 				<enumChoice choice="Use Vstart, Vmid, Vhigh"/>
 				<enumChoice choice="Use Table"/>
 				</enumVal>
 			</variable>
-		<variable label="Addressing Mode" CV="29" mask="XXVXXXXX"
-					item="Address Format">
+		<variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
 			<enumVal>
 				<enumChoice choice="2 digit addressing"/>
 				<enumChoice choice="4 digit addressing"/>
 				</enumVal>
 			</variable>
 			
-		<variable label="Forward light F0F effect generated" CV="49" mask="XXXXVVVV"
-					item="Function F0F effect generated">
+		<variable label="Forward light F0F effect generated" CV="49" mask="XXXXVVVV" item="Function F0F effect generated">
 			<enumVal>
 				<enumChoice choice="Normal function of lead"/>
 				<enumChoice choice="Random flicker"/>
@@ -490,8 +444,7 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="Forward light F0F behavior" CV="49" mask="VVVVXXXX"
-					item="Function F0F behavior">
+		<variable label="Forward light F0F behavior" CV="49" mask="VVVVXXXX" item="Function F0F behavior">
 			<enumVal>
 				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
 				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
@@ -504,15 +457,14 @@
 				<enumChoice choice="Reserved (0x8)"/>
 				<enumChoice choice="Reserved (0x9)"/>
 				<enumChoice choice="Speed=0, non-directional, phase A, function qualifier"/>
-				<enumChoice choice="Speed>0, non-directional, phase B, function qualifier"/>
+				<enumChoice choice="Speed&gt;0, non-directional, phase B, function qualifier"/>
 				<enumChoice choice="Reserved (0xC)"/>
 				<enumChoice choice="Reserved (0xD)"/>
 				<enumChoice choice="Ditch off phase A - Alternate operation, flash with F2"/>
 				<enumChoice choice="Ditch off phase B - Alternate operation, flash with F2"/>
 				</enumVal>
 			</variable>
-		<variable label="Reverse light F0R effect generated" CV="50" mask="XXXXVVVV"
-					item="Function F0R effect generated">
+		<variable label="Reverse light F0R effect generated" CV="50" mask="XXXXVVVV" item="Function F0R effect generated">
 			<enumVal>
 				<enumChoice choice="Normal function of lead"/>
 				<enumChoice choice="Random flicker"/>
@@ -532,8 +484,7 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="Reverse light F0R behavior" CV="50" mask="VVVVXXXX"
-					item="Function F0R behavior">
+		<variable label="Reverse light F0R behavior" CV="50" mask="VVVVXXXX" item="Function F0R behavior">
 			<enumVal>
 				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
 				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
@@ -546,7 +497,7 @@
 				<enumChoice choice="Reserved (0x8)"/>
 				<enumChoice choice="Reserved (0x9)"/>
 				<enumChoice choice="Speed=0, non-directional, phase A, function qualifier"/>
-				<enumChoice choice="Speed>0, non-directional, phase B, function qualifier"/>
+				<enumChoice choice="Speed&gt;0, non-directional, phase B, function qualifier"/>
 				<enumChoice choice="Reserved (0xC)"/>
 				<enumChoice choice="Reserved (0xD)"/>
 				<enumChoice choice="Ditch off phase A - Alternate operation, flash with F2"/>
@@ -586,7 +537,7 @@
 				<enumChoice choice="Reserved (0x8)"/>
 				<enumChoice choice="Reserved (0x9)"/>
 				<enumChoice choice="Speed=0, non-directional, phase A, function qualifier"/>
-				<enumChoice choice="Speed>0, non-directional, phase B, function qualifier"/>
+				<enumChoice choice="Speed&gt;0, non-directional, phase B, function qualifier"/>
 				<enumChoice choice="Reserved (0xC)"/>
 				<enumChoice choice="Reserved (0xD)"/>
 				<enumChoice choice="Ditch off phase A - Alternate operation, flash with F2"/>
@@ -626,7 +577,7 @@
 				<enumChoice choice="Reserved (0x8)"/>
 				<enumChoice choice="Reserved (0x9)"/>
 				<enumChoice choice="Speed=0, non-directional, phase A, function qualifier"/>
-				<enumChoice choice="Speed>0, non-directional, phase B, function qualifier"/>
+				<enumChoice choice="Speed&gt;0, non-directional, phase B, function qualifier"/>
 				<enumChoice choice="Reserved (0xC)"/>
 				<enumChoice choice="Reserved (0xD)"/>
 				<enumChoice choice="Ditch off phase A - Alternate operation, flash with F2"/>
@@ -666,7 +617,7 @@
 				<enumChoice choice="Reserved (0x8)"/>
 				<enumChoice choice="Reserved (0x9)"/>
 				<enumChoice choice="Speed=0, non-directional, phase A, function qualifier"/>
-				<enumChoice choice="Speed>0, non-directional, phase B, function qualifier"/>
+				<enumChoice choice="Speed&gt;0, non-directional, phase B, function qualifier"/>
 				<enumChoice choice="Reserved (0xC)"/>
 				<enumChoice choice="Reserved (0xD)"/>
 				<enumChoice choice="Ditch off phase A - Alternate operation, flash with F2"/>
@@ -706,7 +657,7 @@
 				<enumChoice choice="Reserved (0x8)"/>
 				<enumChoice choice="Reserved (0x9)"/>
 				<enumChoice choice="Speed=0, non-directional, phase A, function qualifier"/>
-				<enumChoice choice="Speed>0, non-directional, phase B, function qualifier"/>
+				<enumChoice choice="Speed&gt;0, non-directional, phase B, function qualifier"/>
 				<enumChoice choice="Reserved (0xC)"/>
 				<enumChoice choice="Reserved (0xD)"/>
 				<enumChoice choice="Ditch off phase A - Alternate operation, flash with F2"/>
@@ -747,7 +698,7 @@
 				<enumChoice choice="Reserved (0x8)"/>
 				<enumChoice choice="Reserved (0x9)"/>
 				<enumChoice choice="Speed=0, non-directional, phase A, function qualifier"/>
-				<enumChoice choice="Speed>0, non-directional, phase B, function qualifier"/>
+				<enumChoice choice="Speed&gt;0, non-directional, phase B, function qualifier"/>
 				<enumChoice choice="Reserved (0xC)"/>
 				<enumChoice choice="Reserved (0xD)"/>
 				<enumChoice choice="Ditch off phase A - Alternate operation, flash with F2"/>
@@ -788,7 +739,7 @@
 				<enumChoice choice="Reserved (0x8)"/>
 				<enumChoice choice="Reserved (0x9)"/>
 				<enumChoice choice="Speed=0, non-directional, phase A, function qualifier"/>
-				<enumChoice choice="Speed>0, non-directional, phase B, function qualifier"/>
+				<enumChoice choice="Speed&gt;0, non-directional, phase B, function qualifier"/>
 				<enumChoice choice="Reserved (0xC)"/>
 				<enumChoice choice="Reserved (0xD)"/>
 				<enumChoice choice="Ditch off phase A - Alternate operation, flash with F2"/>
@@ -796,25 +747,16 @@
 				</enumVal>
 			</variable>
 
-		<variable label="Static compensation for speed stabilization" CV="55" default="128"
-				item="EMF Static Config"
-				comment="Factory default is 128, no effect until droop (CV57) set">
+		<variable label="Static compensation for speed stabilization" CV="55" default="128" item="EMF Static Config" comment="Factory default is 128, no effect until droop (CV57) set">
 			<decVal/>
 			</variable>
-		<variable label="Dynamic compensation for speed stabilization" CV="56" default="48"
-				item="EMF Dynamic Config"
-				comment="Factory default is 48, no effect until droop (CV57) set">
+		<variable label="Dynamic compensation for speed stabilization" CV="56" default="48" item="EMF Dynamic Config" comment="Factory default is 48, no effect until droop (CV57) set">
 			<decVal/>
 			</variable>
-		<variable label="Solo operation droop compensation for speed stabilization" 
-						CV="57" mask="XXXXVVVV" default="6"
-				item="EMF Droop Config"
-				comment="0 is compenstation off, 15 is full on, typical value is 5">
+		<variable label="Solo operation droop compensation for speed stabilization" CV="57" mask="XXXXVVVV" default="6" item="EMF Droop Config" comment="0 is compenstation off, 15 is full on, typical value is 5">
 			<decVal max="15"/>
 			</variable>
-		<variable label="Advanced consist droop compensation for speed stabilization" 
-						CV="57" mask="VVVVXXXX" default="0"
-				comment="0 is compenstation off, 15 is full on, typical value is 5">
+		<variable label="Advanced consist droop compensation for speed stabilization" CV="57" mask="VVVVXXXX" default="0" comment="0 is compenstation off, 15 is full on, typical value is 5">
 			<decVal max="15"/>
 			</variable>
 		<variable label="Speed Compensation Control" CV="61" mask="XXXVXXXX">
@@ -823,9 +765,7 @@
 				<enumChoice choice="F5 On disables speed compensation"/>
 				</enumVal>
 			</variable>
-		<variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX"
-			tooltip="Activates Digitrax Transponding"
-			item="Advanced Ack">
+		<variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX" tooltip="Activates Digitrax Transponding" item="Advanced Ack">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
@@ -849,38 +789,30 @@
 				<enumChoice choice="Disabled"/>
 				</enumVal>
 			</variable>
-		<variable label="Short-circuit protection" CV="61" mask="XVXXXXXX"
-				comment="Undocumented feature, occasionally requested by Digitrax tech support">
+		<variable label="Short-circuit protection" CV="61" mask="XVXXXXXX" comment="Undocumented feature, occasionally requested by Digitrax tech support">
 			<enumVal>
 				<enumChoice choice="Enabled"/>
 				<enumChoice choice="Disabled"/>
 				</enumVal>
 			</variable>
-		<variable label="Lamp keep-alive voltage" CV="62" mask="VVVVXXXX"
-				item="Global lighting option 1"
-				comment="0 is no keep-alive, use with LEDs">
+		<variable label="Lamp keep-alive voltage" CV="62" mask="VVVVXXXX" item="Global lighting option 1" comment="0 is no keep-alive, use with LEDs">
 				<decVal max="15"/>
 			</variable>
-		<variable label="FX rate adjust" CV="62" mask="XXXXVVVV"
-				item="Global lighting option 2"
-				comment="0 is fast, 15 is slow, 4 is recommended for start">
+		<variable label="FX rate adjust" CV="62" mask="XXXXVVVV" item="Global lighting option 2" comment="0 is fast, 15 is slow, 4 is recommended for start">
 				<decVal max="15"/>
 			</variable>
-		<variable label="Ditch light hold-over time" CV="63"
-				item="Global lighting option 3"
-				comment="0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds">
+		<variable label="Ditch light hold-over time" CV="63" item="Global lighting option 3" comment="0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds">
 				<decVal/>
 			</variable>
 			
 		
-		<variable label="Switching speed enabled by F6" CV="54" mask="XXXXXXXV" 
-			tooltip="When enabled, F6 reduces top speed">
+		<variable label="Switching speed enabled by F6" CV="54" mask="XXXXXXXV" tooltip="When enabled, F6 reduces top speed">
 			<enumVal>
 				<enumChoice choice="Disabled"/>
 				<enumChoice choice="Enabled"/>
 				</enumVal>
 			</variable>
-		<variable label="Torque compensation" CV="54" mask="XXXVXXXX" >
+		<variable label="Torque compensation" CV="54" mask="XXXVXXXX">
 			<enumVal>
 				<enumChoice choice="Enabled"/>
 				<enumChoice choice="Disabled"/>
@@ -906,12 +838,10 @@
 		<variable label="Reverse Trim" CV="95">
 			<decVal/>
 			</variable>
-		<variable label="User Private ID #1" CV="105"
-					item="User Id #1">
+		<variable label="User Private ID #1" CV="105" item="User Id #1">
 			<decVal/>
 			</variable>
-		<variable label="User Private ID #2" CV="106"
-					item="User Id #2">
+		<variable label="User Private ID #2" CV="106" item="User Id #2">
 			<decVal/>
 			</variable>
 		<variable label="Speed Table" CV="67">
@@ -1168,18 +1098,17 @@
 
 <pane name="Digitrax">
 	<column>
-		<display item="Advanced consist droop compensation for speed stabilization" />
-		<display item="Speed Compensation Control" />
-		<display item="Split field motor" />		
-		<display item="Vstart/Vmid/Vfull in 128 step mode" />
-		<display item="Short-circuit protection" />
-		<display item="Switching speed enabled by F6" />
-		<display item="Torque compensation" />
-		<display item="Decoder Lock Feature" tooltip="Activates Decoder Locking feature" />
-		<display item="Decoder Lock ID number" tooltip="Set this decoder's unique locking ID number" />
+		<display item="Advanced consist droop compensation for speed stabilization"/>
+		<display item="Speed Compensation Control"/>
+		<display item="Split field motor"/>		
+		<display item="Vstart/Vmid/Vfull in 128 step mode"/>
+		<display item="Short-circuit protection"/>
+		<display item="Switching speed enabled by F6"/>
+		<display item="Torque compensation"/>
+		<display item="Decoder Lock Feature" tooltip="Activates Decoder Locking feature"/>
+		<display item="Decoder Lock ID number" tooltip="Set this decoder's unique locking ID number"/>
 		
 	</column>
 </pane>
 
 </decoder-config>
-
