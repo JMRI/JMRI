@@ -10,10 +10,10 @@ import java.awt.event.ActionEvent;
  *  SimpleClockFrame object
  *
  * @author			Dave Duchamp    Copyright (C) 2004
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
  
- public class SimpleClockAction extends AbstractAction {
+public class SimpleClockAction extends AbstractAction {
 
  	public SimpleClockAction(String s) {
     	super(s);
@@ -21,12 +21,16 @@ import java.awt.event.ActionEvent;
      
      public void actionPerformed(ActionEvent e) {
          
-         SimpleClockFrame f = new SimpleClockFrame();
-         if ( f.initComponents() ) {
-            f.setVisible(true);
+        SimpleClockFrame f = new SimpleClockFrame();
+        try {
+            f.initComponents();
+        } catch (Exception E) {
+            log.error("Exception in Simple Clock: "+e);
         }
+        f.setVisible(true);
      }
      
- }
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SimpleClockAction.class.getName());
+}
 
 /* @(#)SimpleClockAction.java */

@@ -18,7 +18,7 @@ import javax.swing.border.Border;
  * Frame for user configuration of Simple Timebase
  *
  * @author	Dave Duchamp   Copyright (C) 2004
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class SimpleClockFrame extends JmriJFrame
 	implements java.beans.PropertyChangeListener {
@@ -54,7 +54,7 @@ public class SimpleClockFrame extends JmriJFrame
     /**
      *  Initialize the config window
      */
-    public boolean initComponents() {
+    public void initComponents() throws Exception {
         setTitle(rb.getString("SimpleClockWindowTitle"));
 
         Container contentPane = getContentPane();
@@ -67,7 +67,7 @@ public class SimpleClockFrame extends JmriJFrame
             log.error("Could not obtain a timebase instance.");
             setVisible(false);
             dispose();
-            return false;
+            throw new jmri.JmriException("Could not obtain a timebase instance");
         }
 
         // Set up time source choice
@@ -177,7 +177,7 @@ public class SimpleClockFrame extends JmriJFrame
                     }
                 });
 
-        return true;
+        return;
     }
 
     /**
@@ -333,7 +333,6 @@ public class SimpleClockFrame extends JmriJFrame
         }
         dispose();
     }
-
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SimpleClockFrame.class.getName());
 }
