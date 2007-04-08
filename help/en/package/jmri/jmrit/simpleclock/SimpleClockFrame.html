@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SimpleClockFrame.html,v 1.1 2007-03-18 22:05:12 jacobsen Exp $ -->
+<!-- $Id: SimpleClockFrame.html,v 1.2 2007-04-08 04:49:14 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -22,8 +22,35 @@
 <H2>Setup Fast Clock
 </H2>
     
-This is the help/jmri/jmrit/beantable/SimpleClockFrame help page
+The JMRI internal fast clock system consists of two parts:
+A "Timebase" provides the basic
+time information, while one or more displays show you what's going on.
+<P>
+This window (reached from "Setup Fast Clock" item in the 
+"Clocks" submenu under the "Tools" menu) is where you set up the
+internal timebase.
 
+<P>
+To configure the time base, you can:
+<UL>
+<LI>Select the timebase source to control (typically, this is the internal computer
+clock)
+<LI>Set the rate at which the clock runs
+<LI>Set the time
+<LI>Start and stop the clock
+</UL>
+
+Once you have created a timebase by configuring it in this window, you 
+can open clocks that will display on your screen. Currently, JMRI has three
+types available:
+<UL>
+<LI>Analog clock - the traditional circular clock with hands.  You can resize
+it by dragging the window edges.  There's also a pause/run button.
+<LI>Nixie clock - a digital clock that looks like the old-style Nixie tubes
+<LI>Panel clock - you can also embed a clock in a panel (instead of a separate window)
+from the panel editor.
+</UL>
+    
 </body>
 </html>
 
