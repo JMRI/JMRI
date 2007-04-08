@@ -31,7 +31,7 @@ import jmri.util.JmriJFrame;
  * @author	Dave Duchamp    Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2007 
  *
- * @version     $Revision: 1.28 $
+ * @version     $Revision: 1.29 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -875,7 +875,7 @@ public class RouteTableAction extends AbstractTableAction {
 					}
 					else {
 						setTurnoutState[i] = setStateClosed;
-						log.error ("Unrecognized set state for Turnout " +
+						log.error ("Unrecognized set state ("+tState+") for Turnout " +
 										tSysName + " in Route " + sName);
 					}
                 }
@@ -904,7 +904,7 @@ public class RouteTableAction extends AbstractTableAction {
 					}
 					else {
 						setSensorState[i] = setStateInactive;
-						log.error ("Unrecognized set state for Sensor " +
+						log.error ("Unrecognized set state for ("+sState+") Sensor " +
 										tSysName + " in Route " + sName);
 					}
                 }
