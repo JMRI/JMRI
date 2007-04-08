@@ -7,7 +7,7 @@ package jmri;
  *
  * @author	Dave Duchamp Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2006, 2007
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 public class DefaultRoute extends AbstractNamedBean
     implements Route, java.io.Serializable {
@@ -130,11 +130,16 @@ public class DefaultRoute extends AbstractNamedBean
         return isOutputTurnoutIncluded(turnoutSystemName);
     }
     /**
-     * Method to inquire if a Turnout is included in this Route
+     * Method to inquire if a Turnout is included in this Route.
+     * <P>
+     * Complicated by the fact that either the argument or the
+     * internal names might be user or system names
      */
-    public boolean isOutputTurnoutIncluded(String turnoutSystemName) {
+    public boolean isOutputTurnoutIncluded(String turnoutName) {
+        Turnout t1 = InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName);
         for (int i = 0; i<mNumOutputTurnouts; i++) {
-            if( turnoutSystemName.equals(mOutputTurnout[i]) ) {
+            Turnout t2 = InstanceManager.turnoutManagerInstance().provideTurnout(mOutputTurnout[i]);
+            if ( t1 == t2 ) {
                 // Found turnout
                 return true;
             }
@@ -151,11 +156,15 @@ public class DefaultRoute extends AbstractNamedBean
     
     /**
      * Method to get the Set State of a Turnout included in this Route
+     * <P>
+     * Noth the input and internal names can be either a user or system name
      * @return -1 if there are less than 'k' Turnouts defined
      */
-    public int getOutputTurnoutSetState(String turnoutSystemName) {
+    public int getOutputTurnoutSetState(String name) {
+        Turnout t1 = InstanceManager.turnoutManagerInstance().provideTurnout(name);
         for (int i = 0; i<mNumOutputTurnouts; i++) {
-            if( turnoutSystemName.equals(mOutputTurnout[i]) ) {
+            Turnout t2 = InstanceManager.turnoutManagerInstance().provideTurnout(mOutputTurnout[i]);
+            if( t1==t2 ) {
                 // Found turnout
                 return mOutputTurnoutState[i];
             }
@@ -179,7 +188,7 @@ public class DefaultRoute extends AbstractNamedBean
 		}
 		else {
 			return (InstanceManager.turnoutManagerInstance().
-                                            getBySystemName(mOutputTurnout[k]));
+                                            provideTurnout(mOutputTurnout[k]));
 		}
 	}
 	
@@ -261,10 +270,14 @@ public class DefaultRoute extends AbstractNamedBean
     /**
      * Method to get the Set State of a Sensor included in this Route
      *   If the Sensor is not found, -1 is returned.
+     * <P>
+     * Both the input or internal names can be either system or user names
      */
-    public int getOutputSensorSetState(String systemName) {
+    public int getOutputSensorSetState(String name) {
+        Sensor s1 = InstanceManager.sensorManagerInstance().provideSensor(name);
         for (int i = 0; i<mNumOutputSensors; i++) {
-            if( systemName.equals(mOutputSensor[i]) ) {
+            Sensor s2 = InstanceManager.sensorManagerInstance().provideSensor(mOutputSensor[i]);
+            if( s1==s2 ) {
                 // Found turnout
                 return mOutputSensorState[i];
             }
@@ -282,7 +295,7 @@ public class DefaultRoute extends AbstractNamedBean
 		}
 		else {
 			return (InstanceManager.sensorManagerInstance().
-                                            getBySystemName(mOutputSensor[k]));
+                                            provideSensor(mOutputSensor[k]));
 		}
 	}
 	
