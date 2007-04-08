@@ -23,7 +23,7 @@ import java.awt.*;
  *
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class JmriJFrame extends JFrame {
@@ -40,6 +40,13 @@ public class JmriJFrame extends JFrame {
 	setIconImage(getToolkit().getImage("resources/jmri32x32.gif"));
     }
 
+    /**
+     * By default, Swing components should be 
+     * created an installed in this method, rather than
+     * in the ctor itself.
+     */
+    public void initComponents() throws Exception {}
+    
     /**
      * @param direct true if the help menu goes directly to the help system,
      *        e.g. there are no items in the help menu
