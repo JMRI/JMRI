@@ -14,7 +14,7 @@ import java.util.Date;
  * Class providing the basic logic of the Logix interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class DefaultLogix extends AbstractNamedBean
     implements Logix, java.io.Serializable {
@@ -140,7 +140,7 @@ public class DefaultLogix extends AbstractNamedBean
 			mConditionalSystemNames[mNumConditionals] = systemName;
 			if (order>=0) {
 				// specific order entered
-// add check that order is unique and legal
+    // add check that order is unique and legal
 				mConditionalOrder[mNumConditionals] = order;
 			}
 			else {
@@ -150,9 +150,11 @@ public class DefaultLogix extends AbstractNamedBean
 			mNumConditionals ++;
 			// Get conditional number
 			int cNum=0;
-			for (int i = 2; (i<systemName.length()) && (cNum==0); i++) {
+			// find the last 'C' in the System Name
+			for (int i = systemName.length()-1; i>=2; i--) {
 				if (systemName.charAt(i) == 'C') {
 					cNum = Integer.valueOf(systemName.substring(i+1)).intValue();
+					break;
 				}
             }
 			if (cNum==0) {
@@ -575,7 +577,7 @@ public class DefaultLogix extends AbstractNamedBean
 		switch (mListenerType[index]) {
 			case LISTENER_TYPE_SENSOR:
 				Sensor s = InstanceManager.sensorManagerInstance().
-										getSensor(mListenerName[index]);
+										provideSensor(mListenerName[index]);
 				if (s==null) {
 					log.error("Bad name for sensor \""+mListenerName[index]+
 									"\" when setting up Logix listener");
@@ -587,7 +589,7 @@ public class DefaultLogix extends AbstractNamedBean
 				break;
 			case LISTENER_TYPE_TURNOUT:
 				Turnout t = InstanceManager.turnoutManagerInstance().
-										getTurnout(mListenerName[index]);
+										provideTurnout(mListenerName[index]);
 				if (t==null) {
 					log.error("Bad name for turnout \""+mListenerName[index]+
 									"\" when setting up Logix listener");
@@ -635,7 +637,7 @@ public class DefaultLogix extends AbstractNamedBean
 				break;
 			case LISTENER_TYPE_MEMORY:
 				Memory m = InstanceManager.memoryManagerInstance().
-										getMemory(mListenerName[index]);
+										provideMemory(mListenerName[index]);
 				if (m==null) {
 					log.error("Bad name for memory \""+mListenerName[index]+
 									"\" when setting up Logix listener");
@@ -680,7 +682,7 @@ public class DefaultLogix extends AbstractNamedBean
 		switch (mListenerType[index]) {
 			case LISTENER_TYPE_SENSOR:
 				Sensor s = InstanceManager.sensorManagerInstance().
-										getSensor(mListenerName[index]);
+										provideSensor(mListenerName[index]);
 				if (s==null) {
 					log.error("Bad name for sensor \""+mListenerName[index]+
 									"\"when removing a Logix listener");
@@ -691,7 +693,7 @@ public class DefaultLogix extends AbstractNamedBean
 				break;
 			case LISTENER_TYPE_TURNOUT:
 				Turnout t = InstanceManager.turnoutManagerInstance().
-										getTurnout(mListenerName[index]);
+										provideTurnout(mListenerName[index]);
 				if (t==null) {
 					log.error("Bad name for turnout \""+mListenerName[index]+
 									"\"when removing a Logix listener");
@@ -735,7 +737,7 @@ public class DefaultLogix extends AbstractNamedBean
 				break;
 			case LISTENER_TYPE_MEMORY:
 				Memory m = InstanceManager.memoryManagerInstance().
-										getMemory(mListenerName[index]);
+										provideMemory(mListenerName[index]);
 				if (m==null) {
 					log.error("Bad name for memory \""+mListenerName[index]+
 									"\"when removing a Logix listener");
