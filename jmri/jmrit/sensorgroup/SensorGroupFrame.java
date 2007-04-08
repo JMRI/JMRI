@@ -13,15 +13,13 @@ import javax.swing.table.TableColumn;
 import com.sun.java.util.collections.List;
 
 /**
- * User interface for sending DCC packets.
+ * User interface for creating and editing sensor groups.
  * <P>
- * This was originally made from jmrix.loconet.logogen, but note that
- * the logic is somewhat different here.  The LocoNet version waited for
- * the sent (LocoNet) packet to be echo'd, while this starts the timeout
- * immediately.
- * <P>
- * @author			Bob Jacobsen   Copyright (C) 2003
- * @version			$Revision: 1.3 $
+ * Sensor groups are implemented by (groups) of Routes, not by
+ * any other object.
+ *
+ * @author			Bob Jacobsen   Copyright (C) 2007
+ * @version			$Revision: 1.4 $
  */
 public class SensorGroupFrame extends jmri.util.JmriJFrame {
 

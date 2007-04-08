@@ -21,7 +21,7 @@ import javax.swing.*;
  * It should be.
  *
  * @author  Bob Jacobsen  Copyright (c) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class MultiSensorIconFrame extends JmriJFrame {
@@ -41,7 +41,7 @@ public class MultiSensorIconFrame extends JmriJFrame {
         addHelpMenu("package.jmri.jmrit.display.MultiSensorIconFrame", true);
     }
     
-    void initComponents() {
+    public void initComponents() {
         this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 
         JPanel p = new JPanel();
