@@ -108,8 +108,18 @@ public interface Conditional extends NamedBean {
 	 *<P>
 	 * Returns true if state variables were successfully set, otherwise false.
 	 *<P>
-	 * This method should only be called by LogixTableAction.  It assumes that all
+	 * This method assumes that all
 	 * information has been validated.
+	 * <P>
+	 * All the argument arrays must be of the same length, numVariables.
+	 * @param numVariables the number of variables being set, also the length
+	 *  of the parameter arrays
+	 * @param opern array of operator values, e.g. OPERATOR_NOT, OPERATOR_AND, etc
+	 * @param type array of type variables, e.g. TYPE_SENSOR_ACTIVE, etc
+	 * @param name array of system or user names for NamedBeans being referenced
+	 * @param data
+	 * @param num1
+	 * @param num2
      */
     public boolean setStateVariables(int[] opern,int[] type,String[] name,
 			String[] data,int[] num1,int[] num2,int numVariables);
