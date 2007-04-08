@@ -9,7 +9,7 @@ import javax.swing.Timer;
  * Class providing the basic logic of the Conditional interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -285,7 +285,7 @@ public class DefaultConditional extends AbstractNamedBean
 		// evaluate according to state variable type		
 		switch (varType[index]) {
 			case TYPE_SENSOR_ACTIVE:
-				sn = InstanceManager.sensorManagerInstance().getSensor(vName);
+				sn = InstanceManager.sensorManagerInstance().provideSensor(vName);
 				if (sn == null) {
 					log.error("invalid sensor name in state variable - "+vName);
 					return (false);
@@ -294,7 +294,7 @@ public class DefaultConditional extends AbstractNamedBean
 				else result = false;
 				break;
 			case TYPE_SENSOR_INACTIVE:
-				sn = InstanceManager.sensorManagerInstance().getSensor(vName);
+				sn = InstanceManager.sensorManagerInstance().provideSensor(vName);
 				if (sn == null) {
 					log.error("invalid sensor name in state variable - "+vName);
 					return (false);
@@ -303,7 +303,7 @@ public class DefaultConditional extends AbstractNamedBean
 				else result = false;
 				break;
 			case TYPE_TURNOUT_THROWN:
-				t = InstanceManager.turnoutManagerInstance().getTurnout(vName);
+				t = InstanceManager.turnoutManagerInstance().provideTurnout(vName);
 				if (t == null) {
 					log.error("invalid turnout name in state variable - "+vName);
 					return (false);
@@ -312,7 +312,7 @@ public class DefaultConditional extends AbstractNamedBean
 				else result = false;
 				break;
 			case TYPE_TURNOUT_CLOSED:
-				t = InstanceManager.turnoutManagerInstance().getTurnout(vName);
+				t = InstanceManager.turnoutManagerInstance().provideTurnout(vName);
 				if (t == null) {
 					log.error("invalid turnout name in state variable - "+vName);
 					return (false);
@@ -365,7 +365,7 @@ public class DefaultConditional extends AbstractNamedBean
 				else result = false;
 				break;
 			case TYPE_MEMORY_EQUALS:
-				m = InstanceManager.memoryManagerInstance().getMemory(vName);
+				m = InstanceManager.memoryManagerInstance().provideMemory(vName);
 				if (m == null) {
 					log.error("invalid memory name in state variable - "+vName);
 					return (false);
@@ -712,7 +712,7 @@ public class DefaultConditional extends AbstractNamedBean
 	}
 
 	
-static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DefaultLogix.class.getName());
+static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DefaultConditional.class.getName());
 }
 
 /* @(#)DefaultConditional.java */
