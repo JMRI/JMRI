@@ -2,13 +2,13 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: SoundTraxx_Tsu_Steam_2Med.xml,v 1.5 2007-04-06 16:26:06 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_Tsu_Steam_2Med.xml,v 1.6 2007-04-09 00:25:59 jacobsen Exp $ -->
 <decoder-config>
-		<!--version author="Bob Jacobsen" version="1" lastUpdated="20051101"/-->
-		<!--version author="Ken Weygandt" version="2" lastUpdated="20051203"/-->
-		<!--version author="Ron McKinnon" version="3" lastUpdated="20060412"/-->
-		<!--version author="Ron McKinnon" version="4" lastUpdated="20060419"/-->
-		<!--version author="Michael Mosher" version="5" lastUpdated="20070406"/-->
+		<version author="Bob Jacobsen" version="1" lastUpdated="20051101"/>
+		<version author="Ken Weygandt" version="2" lastUpdated="20051203"/>
+		<version author="Ron McKinnon" version="3" lastUpdated="20060412"/>
+		<version author="Ron McKinnon" version="4" lastUpdated="20060419"/>
+		<version author="Michael Mosher" version="5" lastUpdated="20070406"/>
 
 		<!-- Made from SoundTraxx_DSD_Steam.xml file by M Mosher -->
 		<!-- Some of the contents are based on info provided pre-release -->
