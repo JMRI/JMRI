@@ -9,7 +9,7 @@ import javax.swing.Timer;
  * Class providing the basic logic of the Conditional interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -390,7 +390,7 @@ public class DefaultConditional extends AbstractNamedBean
 					return (false);
 				}
 				String str = (String)m.getValue();
-				if (str.equals(varDataString[index])) result = true; 
+				if (str!=null && str.equals(varDataString[index])) result = true; 
 				else result = false;
 				break;
 			case TYPE_FAST_CLOCK_RANGE:
@@ -633,7 +633,7 @@ public class DefaultConditional extends AbstractNamedBean
 						break;
 					case Conditional.ACTION_SET_MEMORY:
 						Memory m = InstanceManager.memoryManagerInstance().
-										getMemory(actionName[i]);
+										provideMemory(actionName[i]);
 						if (m == null) {
 							log.error("invalid memory name in action - "+actionName[i]);
 						}
