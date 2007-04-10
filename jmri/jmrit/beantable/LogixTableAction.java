@@ -46,7 +46,7 @@ import jmri.util.JmriJFrame;
  *	   BeanTableBundle.properties, accessed via rb.
  *
  * @author	Dave Duchamp    Copyright (C) 2007
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -695,17 +695,21 @@ public class LogixTableAction extends AbstractTableAction {
 					if ( (numTriggersCalc[k] > 0) && (numTriggerSuppressed[k] > 0) ) {
 						// have inconsistency, synthesize a warning message
 						log.warn("Triggers calculation inconsistency - "+varName[k]);
-						String msg = rbx.getString("Warn6")+" "+varListenerProperty[k]+
-							" "+rbx.getString("Warn7")+" "+varName[k]+" ";
+
+                        String msg7 = "";
 						if (varListenerProperty[k].equals("Appearance") ) {
-							msg = msg+rbx.getString("Warn8")+" "+
-								signalAppearanceIndexToString(
-								signalAppearanceToAppearanceIndex(varAppearance[k]))+" ";
+							msg7 = java.text.MessageFormat.format(
+                                rbx.getString("Warn7"),
+                                new String[]{signalAppearanceIndexToString(
+								    signalAppearanceToAppearanceIndex(varAppearance[k]))});
 						}
-						msg = msg+rbx.getString("Warn9")+rbx.getString("Warn10");
+                        String msg6 = java.text.MessageFormat.format(
+                            rbx.getString("Warn6"),
+                            new String[]{varListenerProperty[k], varName[k], msg7});
 						javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
-							msg,rbx.getString("WarnTitle"),
-								javax.swing.JOptionPane.WARNING_MESSAGE);						
+							msg6,
+							rbx.getString("WarnTitle"),
+						    javax.swing.JOptionPane.WARNING_MESSAGE);						
 					}
 				}
 			}
