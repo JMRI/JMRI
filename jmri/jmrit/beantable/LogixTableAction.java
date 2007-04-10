@@ -46,7 +46,7 @@ import jmri.util.JmriJFrame;
  *	   BeanTableBundle.properties, accessed via rb.
  *
  * @author	Dave Duchamp    Copyright (C) 2007
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -257,6 +257,7 @@ public class LogixTableAction extends AbstractTableAction {
 	// the following are not displayed in the State Variable Table. Derived from Data1 and Data2 strings
 	private int[] variableNum1 = new int[Conditional.MAX_STATE_VARIABLES];
 	private int[] variableNum2 = new int[Conditional.MAX_STATE_VARIABLES];
+	private boolean[] variableTriggersCalculation = new boolean[Conditional.MAX_STATE_VARIABLES];
 	
 	// Current Action Information
 	private int[] actionOption = {Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
@@ -666,7 +667,7 @@ public class LogixTableAction extends AbstractTableAction {
 			conditionalTableModel.fireTableDataChanged();
 		}
 	}
-
+	
     /**
      * Responds to the Done button in the Edit Logix window
 	 *    Note: also get here if the Edit Logix window is dismissed, or
@@ -677,6 +678,37 @@ public class LogixTableAction extends AbstractTableAction {
 		if (checkEditConditional()) return;
 		if (curLogix!=null) {
 			Logix x = curLogix;
+			// Check for consistency in suppressing triggering of calculation among
+			//		state variables of this Logix.
+			String[] varName = new String[Logix.MAX_LISTENERS];
+			int[] varListenerType = new int[Logix.MAX_LISTENERS];
+			String[] varListenerProperty = new String[Logix.MAX_LISTENERS];
+			int[] varAppearance = new int[Logix.MAX_LISTENERS];
+			int[] numTriggersCalc = new int[Logix.MAX_LISTENERS];
+			int[] numTriggerSuppressed = new int[Logix.MAX_LISTENERS];
+			int numVs = x.getStateVariableList(varName, varListenerType, 
+						varListenerProperty, varAppearance, numTriggersCalc, 
+						numTriggerSuppressed, Logix.MAX_LISTENERS); 
+			if (numVs>0) {
+				// scan table testing for inconsistencies
+				for (int k=0;k<numVs;k++) {
+					if ( (numTriggersCalc[k] > 0) && (numTriggerSuppressed[k] > 0) ) {
+						// have inconsistency, synthesize a warning message
+						log.warn("Triggers calculation inconsistency - "+varName[k]);
+						String msg = rbx.getString("Warn6")+" "+varListenerProperty[k]+
+							" "+rbx.getString("Warn7")+" "+varName[k]+" ";
+						if (varListenerProperty[k].equals("Appearance") ) {
+							msg = msg+rbx.getString("Warn8")+" "+
+								signalAppearanceIndexToString(
+								signalAppearanceToAppearanceIndex(varAppearance[k]))+" ";
+						}
+						msg = msg+rbx.getString("Warn9")+rbx.getString("Warn10");
+						javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
+							msg,rbx.getString("WarnTitle"),
+								javax.swing.JOptionPane.WARNING_MESSAGE);						
+					}
+				}
+			}
 			// Check if the User Name has been changed
 			String uName = editUserName.getText();
 			if ( !(uName.equals(x.getUserName())) ) {
@@ -793,7 +825,7 @@ public class LogixTableAction extends AbstractTableAction {
 		// get Conditional information and set up in display variables
 		if (numStateVariables > 0) {
 			curConditional.getStateVariables(variableOpern,variableType,variableName,
-						variableData1,variableNum1,variableNum2);
+						variableData1,variableNum1,variableNum2,variableTriggersCalculation);
 			int saveType = 0;
 			String saveName = "";
 			String saveData1 = "";
@@ -912,8 +944,7 @@ public class LogixTableAction extends AbstractTableAction {
             TableColumn andColumn = variableColumnModel.
                                                 getColumn(VariableTableModel.AND_COLUMN);
             andColumn.setResizable(false);
-            andColumn.setMinWidth(50);
-            andColumn.setMaxWidth(60);
+			andColumn.setPreferredWidth(new JTextField(3).getPreferredSize().width);
             TableColumn notColumn = variableColumnModel.
                                                 getColumn(VariableTableModel.NOT_COLUMN);
 			notColumn.setCellEditor(new DefaultCellEditor(notCombo));
@@ -933,18 +964,22 @@ public class LogixTableAction extends AbstractTableAction {
             TableColumn data1Column = variableColumnModel.
                                                 getColumn(VariableTableModel.DATA1_COLUMN);
             data1Column.setResizable(true);
-            data1Column.setMinWidth(75);
-            data1Column.setMaxWidth(100);
+            data1Column.setMinWidth(65);
+            data1Column.setMaxWidth(90);
             TableColumn data2Column = variableColumnModel.
                                                 getColumn(VariableTableModel.DATA2_COLUMN);
             data2Column.setResizable(true);
-            data2Column.setMinWidth(75);
-            data2Column.setMaxWidth(100);
+            data2Column.setMinWidth(65);
+            data2Column.setMaxWidth(90);
             TableColumn stateColumn = variableColumnModel.
                                                 getColumn(VariableTableModel.STATE_COLUMN);
             stateColumn.setResizable(false);
-            stateColumn.setMinWidth(65);
-            stateColumn.setMaxWidth(85);
+			stateColumn.setPreferredWidth(60);
+            TableColumn triggersColumn = variableColumnModel.
+                                                getColumn(VariableTableModel.TRIGGERS_COLUMN);
+            triggersColumn.setResizable(true);
+            triggersColumn.setMinWidth(65);
+            triggersColumn.setMaxWidth(200);
             TableColumn deleteColumn = variableColumnModel.
                                                 getColumn(VariableTableModel.DELETE_COLUMN);
 			ButtonRenderer buttonRenderer = new ButtonRenderer();
@@ -1197,15 +1232,13 @@ public class LogixTableAction extends AbstractTableAction {
 			
             contentPane.add(panel5);
         }
-
-        if (!reminderActive) {
-		editLogixFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+		// setup window closing listener
+		editConditionalFrame.addWindowListener(new java.awt.event.WindowAdapter() {
 					public void windowClosing(java.awt.event.WindowEvent e) {
-						cancelConditionalPressed(null);
+						if (inEditConditionalMode)
+							cancelConditionalPressed(null);
 					}
 				});
-			reminderActive = true;
-		}
 		// initialize state variable table 
 		variableTableModel.fireTableDataChanged();
 		// initialize action variables
@@ -1352,6 +1385,7 @@ public class LogixTableAction extends AbstractTableAction {
 		variableData2[numStateVariables] = " ";
 		variableNum1[numStateVariables] = 0;
 		variableNum2[numStateVariables] = 0;
+		variableTriggersCalculation[numStateVariables] = true;
 		variableData2Editable[numStateVariables] = false;
 		variableState[numStateVariables] = rbx.getString("Unknown");
 		cStatus.setText(rbx.getString("TypeSelectMessage"));		
@@ -1417,6 +1451,7 @@ public class LogixTableAction extends AbstractTableAction {
 				variableState[i] = variableState[i+1];
 				variableNum1[i] = variableNum1[i+1];
 				variableNum2[i] = variableNum2[i+1];
+				variableTriggersCalculation[i] = variableTriggersCalculation[i+1];
 			}
 		}
 		variableTableModel.fireTableDataChanged();
@@ -1475,7 +1510,8 @@ public class LogixTableAction extends AbstractTableAction {
 		}		
 		// complete update
 		curConditional.setStateVariables(variableOpern,variableType,variableName,
-					variableData1,variableNum1,variableNum2,numStateVariables);
+					variableData1,variableNum1,variableNum2,variableTriggersCalculation,
+					numStateVariables);
 		curConditional.setAction(actionOption,actionDelay,actionType,
 							actionName,actionData,actionString);
 		inEditConditionalMode = false;
@@ -3261,17 +3297,19 @@ public class LogixTableAction extends AbstractTableAction {
 		public static final int DATA1_COLUMN = 4;
 		public static final int DATA2_COLUMN = 5;
 		public static final int STATE_COLUMN = 6;
-		public static final int DELETE_COLUMN = 7;
+		public static final int TRIGGERS_COLUMN = 7;
+		public static final int DELETE_COLUMN = 8;
 				
         public Class getColumnClass(int c) {
 			if (c == NOT_COLUMN) return JComboBox.class;
 			if (c == TYPE_COLUMN) return JComboBox.class;
+			if (c == TRIGGERS_COLUMN) return Boolean.class;
 			if (c == DELETE_COLUMN) return JButton.class;
 			return String.class;
         }
 
         public int getColumnCount () {
-			return 8;
+			return 9;
 		}
 
         public int getRowCount () {
@@ -3294,6 +3332,8 @@ public class LogixTableAction extends AbstractTableAction {
 					return (variableData2Editable[r]);
 				case STATE_COLUMN:
 					return (false);
+				case TRIGGERS_COLUMN:
+					return (true);
 				case DELETE_COLUMN:
 					return (true);
 			}
@@ -3303,9 +3343,9 @@ public class LogixTableAction extends AbstractTableAction {
         public String getColumnName(int col) {
 			switch (col) {
 				case AND_COLUMN:
-					return ("");
+					return ("  ");
 				case NOT_COLUMN:
-					return ("");
+					return ("  ");
 				case TYPE_COLUMN:
 					return (rbx.getString("ColumnLabelVariableType"));
 				case SNAME_COLUMN:
@@ -3316,8 +3356,10 @@ public class LogixTableAction extends AbstractTableAction {
 					return (rbx.getString("ColumnLabelData2"));
 				case STATE_COLUMN:
 					return (rbx.getString("ColumnLabelState"));
+				case TRIGGERS_COLUMN:
+					return (rbx.getString("ColumnLabelTriggersCalculation"));
 				case DELETE_COLUMN:
-					return ("");
+					return ("  ");
 			}
 			return "";
 		}
@@ -3338,8 +3380,10 @@ public class LogixTableAction extends AbstractTableAction {
 					return new JTextField(4).getPreferredSize().width;
 				case STATE_COLUMN:
 					return new JTextField(4).getPreferredSize().width;
+				case TRIGGERS_COLUMN:
+					return new JTextField(4).getPreferredSize().width;
 				case DELETE_COLUMN:
-					return new JTextField(3).getPreferredSize().width;
+					return new JTextField(4).getPreferredSize().width;
 			}
 			return new JTextField(5).getPreferredSize().width;
 		}
@@ -3365,6 +3409,8 @@ public class LogixTableAction extends AbstractTableAction {
 					return variableData2[rx];
 				case STATE_COLUMN:
 					return variableState[rx];
+				case TRIGGERS_COLUMN:
+					return new Boolean(variableTriggersCalculation[rx]);
 				case DELETE_COLUMN:
 					return rbx.getString("ButtonDelete");
 			}
@@ -3392,8 +3438,12 @@ public class LogixTableAction extends AbstractTableAction {
 				case DATA2_COLUMN:
 					variableData2[rx] = (String)value;
 					break;
+				case TRIGGERS_COLUMN:
+					variableTriggersCalculation[rx] = !variableTriggersCalculation[rx];
+					break;
 				case DELETE_COLUMN:
 					deleteVariablePressed(row);
+					break;
 			}
         }
     }    

@@ -121,8 +121,8 @@ public interface Conditional extends NamedBean {
 	 * @param num1
 	 * @param num2
      */
-    public boolean setStateVariables(int[] opern,int[] type,String[] name,
-			String[] data,int[] num1,int[] num2,int numVariables);
+    public boolean setStateVariables(int[] opern,int[] type,String[] name,String[] data,
+					int[] num1,int[] num2,boolean[] triggersCalc,int numVariables);
 			
 	/**
      * Get State Variables for this Conditional. 
@@ -133,7 +133,7 @@ public interface Conditional extends NamedBean {
 	 * this conditional to disk in a panel file.  
      */
     public void getStateVariables(int[] opern,int[] type,String[] name,
-			String[] data,int[] num1,int[] num2);
+			String[] data,int[] num1,int[] num2,boolean[] triggersCalc);
 
 	/**
 	 * Provide access to operator of state variable by index
@@ -171,6 +171,15 @@ public interface Conditional extends NamedBean {
 	 *  Note: index ranges from 0 to numStateVariables-1
 	 */
 	public int getStateVariableNum2(int index);
+
+	/**
+	 * Provide access to triggers option of state variable by index
+	 *  Note: returns true if Logix should listen for changes in this
+	 *		state variable to trigger calculation (default) and
+	 *		returns false if the listener should be suppressed.
+	 *  Note: index ranges from 0 to numStateVariables-1
+	 */
+	public boolean getStateVariableTriggersCalculation(int index);
 
 	/**
      * Delete all State Variables from this Conditional

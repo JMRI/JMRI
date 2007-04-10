@@ -9,7 +9,7 @@ import javax.swing.Timer;
  * Class providing the basic logic of the Conditional interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -32,6 +32,7 @@ public class DefaultConditional extends AbstractNamedBean
 	 protected String[] varDataString = new String[MAX_STATE_VARIABLES];
 	 protected int[] varNum1 = new int[MAX_STATE_VARIABLES];
 	 protected int[] varNum2 = new int[MAX_STATE_VARIABLES];
+	 protected boolean[] varTriggersCalculation = new boolean[MAX_STATE_VARIABLES];
 	 // action parameters - 2 actions allowed
 	 protected int[] actionOption = {ACTION_OPTION_ON_CHANGE_TO_TRUE,
 									ACTION_OPTION_ON_CHANGE_TO_TRUE};
@@ -66,8 +67,8 @@ public class DefaultConditional extends AbstractNamedBean
 	 * This method should only be called by LogixTableAction.  It assumes that all
 	 * information has been validated.
      */
-    public boolean setStateVariables(int[] opern,int[] type,String[] name,
-					String[] data,int[] num1,int[] num2,int numVariables) {
+    public boolean setStateVariables(int[] opern,int[] type,String[] name,String[] data,
+					int[] num1,int[] num2,boolean[] triggersCalc,int numVariables) {
 		if (numVariables<=0) {
 			// return without doing anything - user will have been warned elsewhere
 			return (true);
@@ -85,6 +86,7 @@ public class DefaultConditional extends AbstractNamedBean
 			varDataString[i] = data[i];
 			varNum1[i] = num1[i];
 			varNum2[i] = num2[i];
+			varTriggersCalculation[i] = triggersCalc[i];
 		}
 		numStateVariables = numVariables;
 		return (true);
@@ -99,7 +101,7 @@ public class DefaultConditional extends AbstractNamedBean
 	 * this conditional to disk in a panel file.  
      */
     public void getStateVariables(int[] opern,int[] type,String[] name,
-					String[] data,int[] num1,int[] num2) {
+					String[] data,int[] num1,int[] num2,boolean[] triggersCalc) {
 		if (numStateVariables == 0) {
 			return;
 		}
@@ -111,6 +113,7 @@ public class DefaultConditional extends AbstractNamedBean
 			data[i] = varDataString[i];
 			num1[i] = varNum1[i];
 			num2[i] = varNum2[i];
+			triggersCalc[i] = varTriggersCalculation[i];
 		}
 	}
 
@@ -191,6 +194,22 @@ public class DefaultConditional extends AbstractNamedBean
 		// illegal index
 		log.warn("bad index in call to getStateVariableNum2");
 		return (-1);
+	}
+
+	/**
+	 * Provide access to triggers option of state variable by index
+	 *  Note: returns true if Logix should listen for changes in this
+	 *		state variable to trigger calculation (default) and
+	 *		returns false if the listener should be suppressed.
+	 *  Note: index ranges from 0 to numStateVariables-1
+	 */
+	public boolean getStateVariableTriggersCalculation(int index) {
+		if ( (index>=0) && (index<numStateVariables) ) {
+			return (varTriggersCalculation[index]);
+		}
+		// illegal index
+		log.warn("bad index in call to getStateVariableTriggersCalculation");
+		return (true);
 	}
 
 	/**

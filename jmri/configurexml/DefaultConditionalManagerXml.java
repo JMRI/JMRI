@@ -15,7 +15,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class DefaultConditionalManagerXml implements XmlAdapter {
 
@@ -62,6 +62,10 @@ public class DefaultConditionalManagerXml implements XmlAdapter {
 								c.getStateVariableNum1(k)));
 						cElem.addAttribute("num2",Integer.toString(
 								c.getStateVariableNum2(k)));
+						if (c.getStateVariableTriggersCalculation(k)) 
+							cElem.addAttribute("triggersCalc","yes");
+						else
+							cElem.addAttribute("triggersCalc","no");						
 						elem.addContent(cElem);
 					}
 				}
@@ -155,6 +159,7 @@ public class DefaultConditionalManagerXml implements XmlAdapter {
 					String[] svDataString = new String[Conditional.MAX_STATE_VARIABLES];
 					int[] svNum1 = new int[Conditional.MAX_STATE_VARIABLES];
 					int[] svNum2 = new int[Conditional.MAX_STATE_VARIABLES];
+					boolean[] svTriggersCalc = new boolean[Conditional.MAX_STATE_VARIABLES];
 					int numVariables = conditionalVarList.size();
 					// check if number is reasonable
 					if (numVariables>Conditional.MAX_STATE_VARIABLES) {
@@ -179,10 +184,17 @@ public class DefaultConditionalManagerXml implements XmlAdapter {
 														.getAttribute("num1").getValue());
 						svNum2[n] = Integer.parseInt(((Element)(conditionalVarList.get(n)))
 														.getAttribute("num2").getValue());
+						svTriggersCalc[n] = true;
+						if (((Element)(conditionalVarList.get(n))).
+													getAttribute("triggersCalc") != null) {
+							if ("no".equals(((Element)(conditionalVarList.get(n)))
+													.getAttribute("triggersCalc").getValue()))
+								svTriggersCalc[n] = false;
+						}
 					}
 					// add state variables to conditional
 					c.setStateVariables(svOperator,svType,svName,svDataString,svNum1,
-																	svNum2,numVariables);
+															svNum2,svTriggersCalc,numVariables);
 				}
 				// load actions - there better be some
                 List conditionalActionList = ((Element)(conditionalList.get(i))).

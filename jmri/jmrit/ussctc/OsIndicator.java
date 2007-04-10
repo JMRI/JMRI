@@ -12,7 +12,7 @@ import jmri.*;
  * associated turnout has been unlocked.
  *
  * @author	Bob Jacobsen    Copyright (C) 2007
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class OsIndicator implements Constants {
 
@@ -64,7 +64,8 @@ public class OsIndicator implements Constants {
             String[] data = new String[]{"N/A","N/A"};
             int[] num1 = new int[]{0,0};
             int[] num2 = new int[]{0,0};
-            c.setStateVariables(opern, type, name, data, num1, num2, opern.length);
+			boolean[] triggersCalc = new boolean[]{true,true};
+            c.setStateVariables(opern, type, name, data, num1, num2, triggersCalc, opern.length);
         } else {
             int[] opern = new int[]{Conditional.OPERATOR_NONE};
             int[] type = new int[]{Conditional.TYPE_SENSOR_INACTIVE};
@@ -72,7 +73,8 @@ public class OsIndicator implements Constants {
             String[] data = new String[]{"N/A"};
             int[] num1 = new int[]{0};
             int[] num2 = new int[]{0};
-            c.setStateVariables(opern, type, name, data, num1, num2, opern.length);
+			boolean[] triggersCalc = new boolean[]{true};
+            c.setStateVariables(opern, type, name, data, num1, num2, triggersCalc, opern.length);
         }
                 
         // and put it back in operation
@@ -107,7 +109,8 @@ public class OsIndicator implements Constants {
         String[] data = new String[length];
         int[] num1 = new int[length];
         int[] num2 = new int[length];
-        c.getStateVariables(opern, type, name, data, num1, num2);
+		boolean[] triggersCalc = new boolean[length];
+        c.getStateVariables(opern, type, name, data, num1, num2, triggersCalc);
         
         // and load internals
         osSensor = name[0];

@@ -14,7 +14,7 @@ import java.util.Date;
  * Class providing the basic logic of the Logix interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class DefaultLogix extends AbstractNamedBean
     implements Logix, java.io.Serializable {
@@ -385,6 +385,7 @@ public class DefaultLogix extends AbstractNamedBean
 		}
 	}
 	
+		
 	/**
 	 * Assembles a list of Listeners needed to activate this Logix
 	 * Also identifies the need(s) for monitoring the fast clock
@@ -407,167 +408,382 @@ public class DefaultLogix extends AbstractNamedBean
 				if (numVars>0) {
 					// cycle thru state variables for this Conditional
 					for (int k = 0;k<numVars;k++) {
-						varName = c.getStateVariableName(k);
-						varType = c.getStateVariableType(k);
-						newSV = true;
-						if (mNumListeners>0) {
-							// check if already in list
-							for (int j = 0;(j<mNumListeners)&&newSV;j++) {
-								if (varType==mListenerVarType[j]) {
-									if (varName.equals(mListenerName[j])) 
-										newSV = false;
-								}
-							}
-						}
-						// make sure this is not one of this logix's conditionals
-						if ( (varType==Conditional.TYPE_CONDITIONAL_TRUE) ||
-								(varType==Conditional.TYPE_CONDITIONAL_FALSE) ) {
-							// check this logix's conditionals
-							for (int n = 0;n<mNumConditionals;n++) {
-								// check for system name within this logix
-								if (varName.equals(mConditionalSystemNames[n])) {
-									newSV = false;
-								}
-								else {
-									// check for user name within this logix
-									Conditional cxx = InstanceManager.conditionalManagerInstance().
-											getBySystemName(mConditionalSystemNames[n]);
-									if (cxx!=null) {
-										if (varName.equals(cxx.getUserName())) {
+						// check if listening for a change has been suppressed
+						if (c.getStateVariableTriggersCalculation(k)) {
+							// not suppressed
+							varName = c.getStateVariableName(k);
+							varType = c.getStateVariableType(k);
+							newSV = true;
+							if (mNumListeners>0) {
+								// check if already in list
+								for (int j = 0;(j<mNumListeners)&&newSV;j++) {
+									if (varType==mListenerVarType[j]) {
+										if (varName.equals(mListenerName[j])) 
 											newSV = false;
-										}
 									}
 								}
 							}
-						}
-						// add to list if new
-						if (newSV) {
-							mListenerName[mNumListeners] = varName;
-							mListenerVarType[mNumListeners] = varType;
-							mListenerData[mNumListeners] = "";
-							switch (varType) {
-								case Conditional.TYPE_SENSOR_ACTIVE:
-									mListenerType[mNumListeners] = LISTENER_TYPE_SENSOR;
-									mListenerProperty[mNumListeners] = "KnownState";
-									mListenerState[mNumListeners] = Sensor.ACTIVE;
-									break;
-								case Conditional.TYPE_SENSOR_INACTIVE:
-									mListenerType[mNumListeners] = LISTENER_TYPE_SENSOR;
-									mListenerProperty[mNumListeners] = "KnownState";
-									mListenerState[mNumListeners] = Sensor.INACTIVE;
-									break;
-								case Conditional.TYPE_TURNOUT_THROWN:
-									mListenerType[mNumListeners] = LISTENER_TYPE_TURNOUT;
-									mListenerProperty[mNumListeners] = "KnownState";
-									mListenerState[mNumListeners] = Turnout.THROWN;
-									break;
-								case Conditional.TYPE_TURNOUT_CLOSED:
-									mListenerType[mNumListeners] = LISTENER_TYPE_TURNOUT;
-									mListenerProperty[mNumListeners] = "KnownState";
-									mListenerState[mNumListeners] = Turnout.CLOSED;
-									break;
-								case Conditional.TYPE_CONDITIONAL_TRUE:
-									mListenerType[mNumListeners] = LISTENER_TYPE_CONDITIONAL;
-									mListenerProperty[mNumListeners] = "KnownState";
-									mListenerState[mNumListeners] = Conditional.TRUE;
-									break;
-								case Conditional.TYPE_CONDITIONAL_FALSE:
-									mListenerType[mNumListeners] = LISTENER_TYPE_CONDITIONAL;
-									mListenerProperty[mNumListeners] = "KnownState";
-									mListenerState[mNumListeners] = Conditional.FALSE;
-									break;
-								case Conditional.TYPE_LIGHT_ON:
-									mListenerType[mNumListeners] = LISTENER_TYPE_LIGHT;
-									mListenerProperty[mNumListeners] = "KnownState";
-									mListenerState[mNumListeners] = Light.ON;
-									break;
-								case Conditional.TYPE_LIGHT_OFF:
-									mListenerType[mNumListeners] = LISTENER_TYPE_LIGHT;
-									mListenerProperty[mNumListeners] = "KnownState";
-									mListenerState[mNumListeners] = Light.OFF;
-									break;
-								case Conditional.TYPE_MEMORY_EQUALS:
-									mListenerType[mNumListeners] = LISTENER_TYPE_MEMORY;
-									mListenerProperty[mNumListeners] = "Value";
-									mListenerData[mNumListeners] = c.getStateVariableDataString(k);
-									mListenerState[mNumListeners] = 0;
-									break;
-								case Conditional.TYPE_FAST_CLOCK_RANGE:
-									int begin = c.getStateVariableNum1(k);
-									int end = c.getStateVariableNum2(k);
-									boolean need = true;
-									if (mNumMinuteListenerTimes>0) {
-										for (int n = 0;(n<mNumMinuteListenerTimes)&&need;n++) {
-											if ( (begin==mMinuteBeginTime[mNumMinuteListenerTimes]) &&
-													(end==mMinuteEndTime[mNumMinuteListenerTimes]) ) {
-												need = false;
+							// make sure this is not one of this logix's conditionals
+							if ( (varType==Conditional.TYPE_CONDITIONAL_TRUE) ||
+									(varType==Conditional.TYPE_CONDITIONAL_FALSE) ) {
+								// check this logix's conditionals
+								for (int n = 0;n<mNumConditionals;n++) {
+									// check for system name within this logix
+									if (varName.equals(mConditionalSystemNames[n])) {
+										newSV = false;
+									}
+									else {
+										// check for user name within this logix
+										Conditional cxx = InstanceManager.conditionalManagerInstance().
+												getBySystemName(mConditionalSystemNames[n]);
+										if (cxx!=null) {
+											if (varName.equals(cxx.getUserName())) {
+												newSV = false;
 											}
 										}
 									}
-									if (need) {
-										// add listening times
-										mMinuteBeginTime[mNumMinuteListenerTimes] = begin;
-										mMinuteEndTime[mNumMinuteListenerTimes] = end;
-										mNumMinuteListenerTimes ++;
-									}
-									break;
-								case Conditional.TYPE_SIGNAL_HEAD_RED:
-									mListenerType[mNumListeners] = LISTENER_TYPE_SIGNAL;
-									mListenerProperty[mNumListeners] = "Appearance";
-									mListenerState[mNumListeners] = SignalHead.RED;
-									break;
-								case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
-									mListenerType[mNumListeners] = LISTENER_TYPE_SIGNAL;
-									mListenerProperty[mNumListeners] = "Appearance";
-									mListenerState[mNumListeners] =  SignalHead.YELLOW;
-									break;
-								case Conditional.TYPE_SIGNAL_HEAD_GREEN:
-									mListenerType[mNumListeners] = LISTENER_TYPE_SIGNAL;
-									mListenerProperty[mNumListeners] = "Appearance";
-									mListenerState[mNumListeners] = SignalHead.GREEN;
-									break;
-								case Conditional.TYPE_SIGNAL_HEAD_DARK:
-									mListenerType[mNumListeners] = LISTENER_TYPE_SIGNAL;
-									mListenerProperty[mNumListeners] = "Appearance";
-									mListenerState[mNumListeners] = SignalHead.DARK;
-									break;
-								case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
-									mListenerType[mNumListeners] = LISTENER_TYPE_SIGNAL;
-									mListenerProperty[mNumListeners] = "Appearance";
-									mListenerState[mNumListeners] = SignalHead.FLASHRED;
-									break;
-								case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
-									mListenerType[mNumListeners] = LISTENER_TYPE_SIGNAL;
-									mListenerProperty[mNumListeners] = "Appearance";
-									mListenerState[mNumListeners] = SignalHead.FLASHYELLOW;
-									break;
-								case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
-									mListenerType[mNumListeners] = LISTENER_TYPE_SIGNAL;
-									mListenerProperty[mNumListeners] = "Appearance";
-									mListenerState[mNumListeners] = SignalHead.FLASHGREEN;
-									break;
-								case Conditional.TYPE_SIGNAL_HEAD_LIT:
-									mListenerType[mNumListeners] = LISTENER_TYPE_SIGNAL;
-									mListenerProperty[mNumListeners] = "Lit";
-									mListenerState[mNumListeners] = 0;
-									break;
-								case Conditional.TYPE_SIGNAL_HEAD_HELD:
-									mListenerType[mNumListeners] = LISTENER_TYPE_SIGNAL;
-									mListenerProperty[mNumListeners] = "Held";
-									mListenerState[mNumListeners] = 0;
-									break;
+								}
 							}
-							if (varType!=Conditional.TYPE_FAST_CLOCK_RANGE)
-								mNumListeners ++;
+						
+							// add to list if new
+							if (newSV) {
+								mListenerName[mNumListeners] = varName;
+								mListenerVarType[mNumListeners] = varType;
+								mListenerData[mNumListeners] = "";
+								switch (varType) {
+									case Conditional.TYPE_SENSOR_ACTIVE:
+										mListenerType[mNumListeners] = LISTENER_TYPE_SENSOR;
+										mListenerProperty[mNumListeners] = "KnownState";
+										mListenerState[mNumListeners] = Sensor.ACTIVE;
+										break;
+									case Conditional.TYPE_SENSOR_INACTIVE:
+										mListenerType[mNumListeners] = LISTENER_TYPE_SENSOR;
+										mListenerProperty[mNumListeners] = "KnownState";
+										mListenerState[mNumListeners] = Sensor.INACTIVE;
+										break;
+									case Conditional.TYPE_TURNOUT_THROWN:
+										mListenerType[mNumListeners] = LISTENER_TYPE_TURNOUT;
+										mListenerProperty[mNumListeners] = "KnownState";
+										mListenerState[mNumListeners] = Turnout.THROWN;
+										break;
+									case Conditional.TYPE_TURNOUT_CLOSED:
+										mListenerType[mNumListeners] = LISTENER_TYPE_TURNOUT;
+										mListenerProperty[mNumListeners] = "KnownState";
+										mListenerState[mNumListeners] = Turnout.CLOSED;
+										break;
+									case Conditional.TYPE_CONDITIONAL_TRUE:
+										mListenerType[mNumListeners] = LISTENER_TYPE_CONDITIONAL;
+										mListenerProperty[mNumListeners] = "KnownState";
+										mListenerState[mNumListeners] = Conditional.TRUE;
+										break;
+									case Conditional.TYPE_CONDITIONAL_FALSE:
+										mListenerType[mNumListeners] = LISTENER_TYPE_CONDITIONAL;
+										mListenerProperty[mNumListeners] = "KnownState";
+										mListenerState[mNumListeners] = Conditional.FALSE;
+										break;
+									case Conditional.TYPE_LIGHT_ON:
+										mListenerType[mNumListeners] = LISTENER_TYPE_LIGHT;
+										mListenerProperty[mNumListeners] = "KnownState";
+										mListenerState[mNumListeners] = Light.ON;
+										break;
+									case Conditional.TYPE_LIGHT_OFF:
+										mListenerType[mNumListeners] = LISTENER_TYPE_LIGHT;
+										mListenerProperty[mNumListeners] = "KnownState";
+										mListenerState[mNumListeners] = Light.OFF;
+										break;
+									case Conditional.TYPE_MEMORY_EQUALS:
+										mListenerType[mNumListeners] = LISTENER_TYPE_MEMORY;
+										mListenerProperty[mNumListeners] = "Value";
+										mListenerData[mNumListeners] = c.getStateVariableDataString(k);
+										mListenerState[mNumListeners] = 0;
+										break;
+									case Conditional.TYPE_FAST_CLOCK_RANGE:
+										int begin = c.getStateVariableNum1(k);
+										int end = c.getStateVariableNum2(k);
+										boolean need = true;
+										if (mNumMinuteListenerTimes>0) {
+											for (int n = 0;(n<mNumMinuteListenerTimes)&&need;n++) {
+												if ( (begin==mMinuteBeginTime[mNumMinuteListenerTimes]) &&
+														(end==mMinuteEndTime[mNumMinuteListenerTimes]) ) {
+													need = false;
+												}
+											}
+										}
+										if (need) {
+											// add listening times
+											mMinuteBeginTime[mNumMinuteListenerTimes] = begin;
+											mMinuteEndTime[mNumMinuteListenerTimes] = end;
+											mNumMinuteListenerTimes ++;
+										}
+										break;
+									case Conditional.TYPE_SIGNAL_HEAD_RED:
+										mListenerType[mNumListeners] = LISTENER_TYPE_SIGNAL;
+										mListenerProperty[mNumListeners] = "Appearance";
+										mListenerState[mNumListeners] = SignalHead.RED;
+										break;
+									case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
+										mListenerType[mNumListeners] = LISTENER_TYPE_SIGNAL;
+										mListenerProperty[mNumListeners] = "Appearance";
+										mListenerState[mNumListeners] =  SignalHead.YELLOW;
+										break;
+									case Conditional.TYPE_SIGNAL_HEAD_GREEN:
+										mListenerType[mNumListeners] = LISTENER_TYPE_SIGNAL;
+										mListenerProperty[mNumListeners] = "Appearance";
+										mListenerState[mNumListeners] = SignalHead.GREEN;
+										break;
+									case Conditional.TYPE_SIGNAL_HEAD_DARK:
+										mListenerType[mNumListeners] = LISTENER_TYPE_SIGNAL;
+										mListenerProperty[mNumListeners] = "Appearance";
+										mListenerState[mNumListeners] = SignalHead.DARK;
+										break;
+									case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
+										mListenerType[mNumListeners] = LISTENER_TYPE_SIGNAL;
+										mListenerProperty[mNumListeners] = "Appearance";
+										mListenerState[mNumListeners] = SignalHead.FLASHRED;
+										break;
+									case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
+										mListenerType[mNumListeners] = LISTENER_TYPE_SIGNAL;
+										mListenerProperty[mNumListeners] = "Appearance";
+										mListenerState[mNumListeners] = SignalHead.FLASHYELLOW;
+										break;
+									case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
+										mListenerType[mNumListeners] = LISTENER_TYPE_SIGNAL;
+										mListenerProperty[mNumListeners] = "Appearance";
+										mListenerState[mNumListeners] = SignalHead.FLASHGREEN;
+										break;
+									case Conditional.TYPE_SIGNAL_HEAD_LIT:
+										mListenerType[mNumListeners] = LISTENER_TYPE_SIGNAL;
+										mListenerProperty[mNumListeners] = "Lit";
+										mListenerState[mNumListeners] = 0;
+										break;
+									case Conditional.TYPE_SIGNAL_HEAD_HELD:
+										mListenerType[mNumListeners] = LISTENER_TYPE_SIGNAL;
+										mListenerProperty[mNumListeners] = "Held";
+										mListenerState[mNumListeners] = 0;
+										break;
+								}
+								if (varType!=Conditional.TYPE_FAST_CLOCK_RANGE)
+									mNumListeners ++;
+							}
 						}
 					}
 				}
 			}
 			else {
-				log.error("invalid conditional system name in Logix activate - "+
+				log.error("invalid conditional system name in Logix assembleListenerList - "+
 															mConditionalSystemNames[i]);
 			}
 		}
+	}
+	/**
+	 * Assembles and returns a list of state variables that are used by conditionals 
+	 *   of this Logix including the number of occurances of each variable that 
+	 *   trigger a calculation, and the number of occurances where the triggering 
+	 *   has been suppressed.
+	 * The main use of this method is to return information that can be used to test 
+	 *   for inconsistency in suppressing triggering of a calculation among multiple 
+	 *   occurances of the same state variable.
+	 * Note that FastClockRange state varible type is not returned, since each 
+	 *   occurance is considered a unique state variable - there is no duplication 
+	 *   possible.
+	 * Returns the number of state variables returned.
+	 * Note that 'arrayMax' is the dimension of the arrays passed in the call.  If 
+	 *   more state variables are found than 'arrayMax', the overflow is skipped.
+	 */
+	public int getStateVariableList(String[] varName, int[] varListenerType, 
+			String[] varListenerProperty, int[] varAppearance, int[] numTriggersCalc, 
+								int[] numTriggerSuppressed, int arrayMax) {  
+		// initialize
+		int numVariables = 0;   // counts variables placed in the returned arrays
+		Conditional c = null;
+		int numVars = 0;
+		String testSystemName = "";
+		String testUserName = "";
+		String testVarName = "";
+		int testListenerType = 0;
+		int currentVar = 0;
+		String testListenerProperty = "";
+		// cycle thru Conditionals to find state variables
+		for (int i = 0;i<mNumConditionals;i++) {
+			c = InstanceManager.conditionalManagerInstance().
+										getBySystemName(mConditionalSystemNames[i]);
+			if (c!=null) {
+				numVars = c.getNumStateVariables();
+				if (numVars>0) {
+					// cycle thru state variables for this Conditional
+					for (int k = 0;k<numVars;k++) {
+						testVarName = c.getStateVariableName(k);
+						testSystemName = "";
+						testUserName = "";
+						// initialize this state variable
+						switch (c.getStateVariableType(k)) {
+							case Conditional.TYPE_SENSOR_ACTIVE:
+							case Conditional.TYPE_SENSOR_INACTIVE:
+								testListenerType = LISTENER_TYPE_SENSOR;
+								testListenerProperty = "KnownState";
+								Sensor s = InstanceManager.sensorManagerInstance().
+													getSensor(testVarName);
+								if (s!=null) {
+									testSystemName = s.getSystemName();
+									testUserName = s.getUserName();
+								}
+								break;
+							case Conditional.TYPE_TURNOUT_THROWN:
+							case Conditional.TYPE_TURNOUT_CLOSED:
+								testListenerType = LISTENER_TYPE_TURNOUT;
+								testListenerProperty = "KnownState";
+								Turnout t = InstanceManager.turnoutManagerInstance().
+													getTurnout(testVarName);
+								if (t!=null) {
+									testSystemName = t.getSystemName();
+									testUserName = t.getUserName();
+								}
+								break;
+							case Conditional.TYPE_CONDITIONAL_TRUE:
+							case Conditional.TYPE_CONDITIONAL_FALSE:
+								testListenerType = LISTENER_TYPE_CONDITIONAL;
+								testListenerProperty = "KnownState";
+								Conditional cx = InstanceManager.conditionalManagerInstance().
+													getConditional(this,testVarName);
+								if (cx==null) {
+									cx = InstanceManager.conditionalManagerInstance().
+													getBySystemName(testVarName);
+								}
+								if (cx!=null) {
+									testSystemName = cx.getSystemName();
+									testUserName = cx.getUserName();
+								}
+								break;
+							case Conditional.TYPE_LIGHT_ON:
+							case Conditional.TYPE_LIGHT_OFF:
+								testListenerType = LISTENER_TYPE_LIGHT;
+								testListenerProperty = "KnownState";
+								Light lgt = InstanceManager.lightManagerInstance().
+													getLight(testVarName);
+								if (lgt!=null) {
+									testSystemName = lgt.getSystemName();
+									testUserName = lgt.getUserName();
+								}
+								break;
+							case Conditional.TYPE_MEMORY_EQUALS:
+								testListenerType = LISTENER_TYPE_MEMORY;
+								testListenerProperty = "Value";
+								Memory m = InstanceManager.memoryManagerInstance().
+													getMemory(testVarName);
+								if (m!=null) {
+									testSystemName = m.getSystemName();
+									testUserName = m.getUserName();
+								}
+								break;
+							case Conditional.TYPE_SIGNAL_HEAD_RED:
+							case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
+							case Conditional.TYPE_SIGNAL_HEAD_GREEN:
+							case Conditional.TYPE_SIGNAL_HEAD_DARK:
+							case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
+							case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
+							case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
+								testListenerType = LISTENER_TYPE_SIGNAL;
+								testListenerProperty = "Appearance";
+								SignalHead h = InstanceManager.signalHeadManagerInstance().
+													getSignalHead(testVarName);
+								if (h!=null) {
+									testSystemName = h.getSystemName();
+									testUserName = h.getUserName();
+								}
+								break;
+							case Conditional.TYPE_SIGNAL_HEAD_LIT:
+								testListenerType = LISTENER_TYPE_SIGNAL;
+								testListenerProperty = "Lit";
+								SignalHead hx = InstanceManager.signalHeadManagerInstance().
+													getSignalHead(testVarName);
+								if (hx!=null) {
+									testSystemName = hx.getSystemName();
+									testUserName = hx.getUserName();
+								}
+								break;
+							case Conditional.TYPE_SIGNAL_HEAD_HELD:
+								testListenerType = LISTENER_TYPE_SIGNAL;
+								testListenerProperty = "Held";
+								SignalHead hy = InstanceManager.signalHeadManagerInstance().
+													getSignalHead(testVarName);
+								if (hy!=null) {
+									testSystemName = hy.getSystemName();
+									testUserName = hy.getUserName();
+								}
+								break;
+							default:
+								testSystemName = "";
+						}
+						// complete initialization for signal head appearance
+						int testAppearance = 0;
+						if (testListenerProperty.equals("Appearance")) {
+							switch (c.getStateVariableType(k)) {
+							case Conditional.TYPE_SIGNAL_HEAD_RED:
+								testAppearance = SignalHead.RED;
+								break;
+							case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
+								testAppearance = SignalHead.YELLOW;
+								break;
+							case Conditional.TYPE_SIGNAL_HEAD_GREEN:
+								testAppearance = SignalHead.GREEN;
+								break;
+							case Conditional.TYPE_SIGNAL_HEAD_DARK:
+								testAppearance = SignalHead.DARK;
+								break;
+							case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
+								testAppearance = SignalHead.FLASHRED;
+								break;
+							case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
+								testAppearance = SignalHead.FLASHYELLOW;
+								break;
+							case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
+								testAppearance = SignalHead.FLASHGREEN;
+								break;
+							}
+						}
+						// check if this state variable is already in the list to be returned
+						if (testSystemName!="") {
+							// getXXXXXX succeeded, process this state variable
+							boolean svNew = true;
+							if (numVariables>0) {
+								for (int index=0;(index<numVariables)&&svNew;index++) {
+									if ( ((varName[index].equals(testSystemName)) ||
+											(varName[index].equals(testUserName)) ) &&
+											(varAppearance[index] == testAppearance) &&
+											(varListenerType[index] == testListenerType) &&
+											(varListenerProperty[index] == testListenerProperty) ) {
+										svNew = false;
+										currentVar = index;
+									}
+								}
+							}
+							// add to list if new and if there is room
+							if ( (svNew) && (numVariables < arrayMax) ) {
+								varName[numVariables] = testVarName;
+								varListenerType[numVariables] = testListenerType;
+								varListenerProperty[numVariables] = testListenerProperty;
+								varAppearance[numVariables] = testAppearance;
+								numTriggersCalc[numVariables] = 0;
+								numTriggerSuppressed[numVariables] = 0;
+								currentVar = numVariables;
+								numVariables ++;
+							}
+							// increment the triggers/suppressed counts
+							if (c.getStateVariableTriggersCalculation(k))
+								numTriggersCalc[currentVar] ++;
+							else
+								numTriggerSuppressed[currentVar] ++;
+						}
+					}
+				}
+			}
+			else {
+				log.error("invalid conditional system name in Logix getStateVariableList - "+
+															mConditionalSystemNames[i]);
+			}
+		}
+		// Have cycled thru all state variables
+		return (numVariables);
 	}
 	
 	/**

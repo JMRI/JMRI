@@ -120,7 +120,25 @@ public interface Logix extends NamedBean {
 	 *   changed.
      */
     public void deActivateLogix();
-  
+	
+	/**
+	 * Assembles and returns a list of state variables that are used by conditionals 
+	 *   of this Logix including the number of occurances of each variable that 
+	 *   trigger a calculation, and the number of occurances where the triggering 
+	 *   has been suppressed.
+	 * The main use of this method is to return information that can be used to test 
+	 *   for inconsistency in suppressing triggering of a calculation among multiple 
+	 *   occurances of the same state variable.
+	 * Note that FastClockRange state varible type is not returned, since each 
+	 *   occurance is considered a unique state variable - there is no duplication 
+	 *   possible.
+	 * Returns the number of state variables returned.
+	 * Note that 'arrayMax' is the dimension of the arrays passed in the call.  If 
+	 *   more state variables are found than 'arrayMax', the overflow is skipped.
+	 */
+	public int getStateVariableList(String[] varName, int[] varListenerType, 
+			String[] varListenerProperty, int[] varAppearance, int[] numTriggersCalc, 
+								int[] numTriggerSuppressed, int arrayMax);  
 }
 
 /* @(#)Logix.java */
