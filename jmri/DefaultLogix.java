@@ -14,7 +14,7 @@ import java.util.Date;
  * Class providing the basic logic of the Logix interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class DefaultLogix extends AbstractNamedBean
     implements Logix, java.io.Serializable {
@@ -493,7 +493,7 @@ public class DefaultLogix extends AbstractNamedBean
 										break;
 									case Conditional.TYPE_MEMORY_EQUALS:
 										mListenerType[mNumListeners] = LISTENER_TYPE_MEMORY;
-										mListenerProperty[mNumListeners] = "Value";
+										mListenerProperty[mNumListeners] = "value";
 										mListenerData[mNumListeners] = c.getStateVariableDataString(k);
 										mListenerState[mNumListeners] = 0;
 										break;
@@ -1059,11 +1059,17 @@ public class DefaultLogix extends AbstractNamedBean
 			if (mBusy) {
 				// check for change in Memory property if Logix is active
 				String pName = event.getPropertyName();
+				if (log.isDebugEnabled())
+				    log.debug("Memory event for property "+pName+
+				        ", old value =\""+event.getOldValue()+
+				        "\", new value =\""+event.getNewValue()+"\"");
 				if (pName.equals(mListenerProperty[mIndex])) {
 					String newValue = (String) event.getNewValue();
 					String oldValue = (String) event.getOldValue();
-					if ( (newValue.equals(mListenerData[mIndex])) ||
-							(oldValue.equals(mListenerData[mIndex])) ) {
+				    if (newValue == null) return;
+				    if (oldValue == null) return;
+					if ( ( newValue!=null && newValue.equals(mListenerData[mIndex]) ) ||
+							(oldValue!=null && oldValue.equals(mListenerData[mIndex]) ) ) {
 						// property has changed to/from the watched state, calculate
 						calculateConditionals();
 					}
