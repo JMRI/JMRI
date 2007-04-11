@@ -21,7 +21,7 @@ import java.util.Date;
  * Based in concept on AbstractSignalHead.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public abstract class AbstractLight extends AbstractNamedBean
     implements Light, java.io.Serializable {
@@ -278,8 +278,10 @@ public abstract class AbstractLight extends AbstractNamedBean
             // activate according to control type
             switch (mControlType) {
                 case SENSOR_CONTROL:
-                    mControlSensor = InstanceManager.sensorManagerInstance().
-                                            provideSensor(mControlSensorName);
+                    mControlSensor = null;
+                    if (mControlSensorName.length()>0)
+                            mControlSensor= InstanceManager.sensorManagerInstance().
+                                                provideSensor(mControlSensorName);
                     if (mControlSensor!=null) {
 						// if sensor state is currently known, set light accordingly
 						int kState = mControlSensor.getKnownState();
