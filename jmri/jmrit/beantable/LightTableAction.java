@@ -13,6 +13,7 @@ import java.awt.FlowLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Dimension;
 
 import javax.swing.BoxLayout;
 import javax.swing.border.Border;
@@ -34,7 +35,7 @@ import jmri.util.JmriJFrame;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -176,6 +177,7 @@ public class LightTableAction extends AbstractTableAction {
     String fastClockControl = rb.getString("LightFastClockControl");
     String turnoutStatusControl = rb.getString("LightTurnoutStatusControl");
     String timedOnControl = rb.getString("LightTimedOnControl");
+	String noControl = rb.getString("LightNoControl");
 
     // fixed part of add frame
     JTextField systemName = new JTextField(10);
@@ -189,6 +191,7 @@ public class LightTableAction extends AbstractTableAction {
     int fastClockControlIndex;
     int turnoutStatusControlIndex;
 	int timedOnControlIndex;
+	int noControlIndex;
     JButton create;
     JButton edit;
     JButton update;
@@ -244,13 +247,14 @@ public class LightTableAction extends AbstractTableAction {
             JPanel panel31 = new JPanel();
             panel31.setLayout(new FlowLayout());
             panel31.add(typeBoxLabel);
-            panel31.add(typeBox = new JComboBox(new String[]{
+            panel31.add(typeBox = new JComboBox(new String[]{noControl,
                     sensorControl,fastClockControl,turnoutStatusControl,timedOnControl
             }));
-            sensorControlIndex = 0;
-            fastClockControlIndex = 1;
-            turnoutStatusControlIndex = 2;   // eventually should be 4
-			timedOnControlIndex = 3;
+			noControlIndex = 0;
+            sensorControlIndex = 1;
+            fastClockControlIndex = 2;
+            turnoutStatusControlIndex = 3;   
+			timedOnControlIndex = 4;
             typeBox.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e) {
                     controlTypeChanged();
@@ -375,6 +379,13 @@ public class LightTableAction extends AbstractTableAction {
      */
     void controlTypeChanged() {
         setUpControlType( (String)typeBox.getSelectedItem() );
+		// set window size - try to maintain user preferences
+		Dimension sz = addFrame.getSize();
+		addFrame.pack();
+		Dimension nsz = addFrame.getSize();
+		if (nsz.width>sz.width) sz.width = nsz.width;
+		if (nsz.height>sz.height) sz.height = nsz.height;
+		addFrame.setSize(sz);
     }
 
     /**
@@ -450,7 +461,19 @@ public class LightTableAction extends AbstractTableAction {
             field2a.setVisible(false);
             field2b.setVisible(true);
             stateBox.setVisible(false);
-        } 
+        }
+		else if (noControl.equals(ctype) ) {
+			// set up window for no control 
+            f1Label.setText( rb.getString("LightNoneSelected") );
+            f2Label.setVisible(false);
+            field1a.setVisible(false);
+            field1b.setVisible(false);
+            field1c.setVisible(false);
+            field1d.setVisible(false);
+            field2a.setVisible(false);
+            field2b.setVisible(false);
+            stateBox.setVisible(false);
+		}
         else log.error("Unexpected control type in controlTypeChanged: "+ctype);
     }
     
@@ -639,9 +662,9 @@ public class LightTableAction extends AbstractTableAction {
                 field2b.setText(Integer.toString(duration));
                 break;
             case Light.NO_CONTROL:
-                // Set up as undefined sensor control
-                setUpControlType(sensorControl);
-                typeBox.setSelectedIndex(sensorControlIndex);
+                // Set up as "None"
+                setUpControlType(noControl);
+                typeBox.setSelectedIndex(noControlIndex);
                 field1a.setText("");
                 stateBox.setSelectedIndex(sensorActiveIndex);
                 break;
@@ -706,7 +729,7 @@ public class LightTableAction extends AbstractTableAction {
 			Sensor s = null;
 			if (sensorName.length() < 1) {
 				// no sensor name entered
-				
+				g.setControlType(Light.NO_CONTROL);
 			}
 			else {
 				// name was entered, check for user name first
@@ -825,6 +848,7 @@ public class LightTableAction extends AbstractTableAction {
             String turnoutName = field1c.getText().trim();
 			if (turnoutName.length() < 1) {
 				// valid turnout system name was not entered
+				g.setControlType(Light.NO_CONTROL);
 			}
 			else {
 				// Ensure that this Turnout is not already a Light
@@ -881,6 +905,7 @@ public class LightTableAction extends AbstractTableAction {
 			String triggerSensorName = field1d.getText();
 			if (triggerSensorName.length() < 1) {
 				// Trigger sensor not entered, or invalidly entered
+				g.setControlType(Light.NO_CONTROL);
 			}
 			else {
 				// name entered, try user name first
@@ -920,6 +945,10 @@ public class LightTableAction extends AbstractTableAction {
                 return (false);
             }
         }
+        else if (noControl.equals(typeBox.getSelectedItem())) {
+            // Set type of control
+            g.setControlType(Light.NO_CONTROL);
+		}
         else {
             log.error("Unexpected control type: "+typeBox.getSelectedItem());
         }

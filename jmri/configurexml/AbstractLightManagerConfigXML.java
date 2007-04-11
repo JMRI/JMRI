@@ -22,7 +22,7 @@ import org.jdom.Element;
  * Based on AbstractSensorManagerConfigXML.java
  *
  * @author Dave Duchamp Copyright (c) 2004
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public abstract class AbstractLightManagerConfigXML implements XmlAdapter {
 
@@ -125,8 +125,15 @@ public abstract class AbstractLightManagerConfigXML implements XmlAdapter {
                 if (type==Light.SENSOR_CONTROL) {
                     lgt.setControlSensor(((Element)(lightList.get(i))).
                                             getAttribute("controlSensor").getValue() );
-                    lgt.setControlSensorSense( Integer.parseInt(((Element)(lightList.get(i))).
+					// check for valid sensor name
+					if (lgt.getControlSensorName().length()<1) {
+						lgt.setControlType(Light.NO_CONTROL);
+						log.warn ("invalid sensor name when loading light - "+sysName);
+					}
+					else {
+						lgt.setControlSensorSense( Integer.parseInt(((Element)(lightList.get(i))).
                                                     getAttribute("sensorSense").getValue()) );
+					}
                 }
                 else if (type==Light.FAST_CLOCK_CONTROL) {
                     int onHour = Integer.parseInt(((Element)(lightList.get(i))).
@@ -142,14 +149,28 @@ public abstract class AbstractLightManagerConfigXML implements XmlAdapter {
                 else if (type==Light.TURNOUT_STATUS_CONTROL) {
                     lgt.setControlTurnout(((Element)(lightList.get(i))).
                                             getAttribute("controlTurnout").getValue());
-                    lgt.setControlTurnoutState( Integer.parseInt(((Element)(lightList.get(i))).
+					// check for valid turnout name
+					if (lgt.getControlTurnoutName().length()<1) {
+						lgt.setControlType(Light.NO_CONTROL);
+						log.warn ("invalid turnout name when loading light - "+sysName);
+					}
+					else {
+						lgt.setControlTurnoutState( Integer.parseInt(((Element)(lightList.get(i))).
                                                     getAttribute("turnoutState").getValue()) );
+					}
                 }
                 else if (type==Light.TIMED_ON_CONTROL) {
                     lgt.setControlTimedOnSensor(((Element)(lightList.get(i))).
                                             getAttribute("timedControlSensor").getValue() );
-                    lgt.setTimedOnDuration( Integer.parseInt(((Element)(lightList.get(i))).
+					// check for valid sensor name
+					if (lgt.getControlTimedOnSensorName().length()<1) {
+						lgt.setControlType(Light.NO_CONTROL);
+						log.warn ("invalid timed on sensor name when loading light - "+sysName);
+					}
+					else {
+						lgt.setTimedOnDuration( Integer.parseInt(((Element)(lightList.get(i))).
                                                     getAttribute("duration").getValue()) );
+					}
                 }
 				lgt.activateLight();
             }
