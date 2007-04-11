@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ConditionalAddEdit.html,v 1.2 2007-03-24 16:25:47 djduchamp Exp $ -->
+<!-- $Id: ConditionalAddEdit.html,v 1.3 2007-04-11 00:53:04 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -59,6 +59,20 @@
 	user names without good reason can break your state variable definitions. If you 
 	want to be able to freely change your user names, specify state variables using 
 	system names, which cannot be changed.</p>
+	<p>The Triggers Calculation column contains checkboxes that normally are
+	checked, so that a change in the state variable will trigger a calculation
+	of the Logix. For those rare cases where a change in a specific entity 
+	(sensor, turnout, etc.) should not trigger a calculation, you should uncheck 
+	the checkbox by clicking on it. Unchecking the checkbox tells the program not
+	to monitor that entity for state changes. Note that if an entity occurs in 
+	more than one state variable in any Conditional of the Logix, <b>all</b>
+	state variables where the specific entity occurs must
+	be unchecked if a change in that entity's state is not to trigger a 
+	calculation. If there are inconsistencies (checked in some places, and 
+	unchecked in others) are found when the Edit Logix window is closed, a
+	warning is displayed. Inconsistencies result in Logix calculation when the
+	entity changes state, which could produce unexpected behavior.  So don't 
+	ignore the warnings; fix the inconsistencies.</p>
 	<p>The last column of the table (<b>Delete</b> buttons) is used to delete a state 
 	variable if you decide it is no longer needed. The State column of the table 
 	shows the state (true or false) of each
@@ -74,7 +88,7 @@
 	detected, checking stops for you to correct the error and click
 	<b>Check State Variables</b> again. <b>Please remember after editing 
 	name and data items to click a different cell in the table before 
-	clicking Check State Variables (or Update Conditional at 
+	clicking <b>Check State Variables</b> (or <b>Update Conditional</b> at 
 	the bottom of the window) so that the program is notified that you have 
 	finished your entry. Otherwise your entry may not take effect, and an error 
 	may be reported unnecessarily.</b></p>
@@ -131,7 +145,8 @@
 	true is given for each. If the condition is not met, the state variable
 	evaluates to false. When a Logix is active, the states of entities (sensor,
 	turnout, light, etc.) specified in state variables in its Conditionals are 
-	monitored. A calculation of all Conditionals in the Logix is triggered
+	monitored, unless the Triggers Calculation checkbox of the state variable is
+	unchecked. A calculation of all Conditionals in the Logix is triggered
 	when any monitored state changes as noted below (if not obvious).
 	    <ul>
 		<li><b>Sensor Active</b>: Evaluates to true if the state of the

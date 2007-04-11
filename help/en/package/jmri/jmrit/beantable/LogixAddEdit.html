@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LogixAddEdit.html,v 1.2 2007-03-24 16:26:57 djduchamp Exp $ -->
+<!-- $Id: LogixAddEdit.html,v 1.3 2007-04-11 00:54:22 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -71,11 +71,15 @@
 	to <b>Next</b>. Select remaining Conditionals in desired order, until
 	all buttons change back to <B>Edit</b>.
 	<p> When <b>Done</b> is clicked at the bottom of the Edit Logix window, any 
-	change in the Logix user name is checked and made, the Logix is activated, 
+	change in the Logix user name is checked and made. A check is made for
+	inconsistencies in specifying that an entity (sensor, turnout, etc.) referenced
+	in multiple state variables is not monitored as a trigger for calculation of 
+	the Logix, and a warning 
+	message appears if any inconsistencies are found. Then the Logix is activated, 
 	the Edit Logix window is dismissed, and the user is returned to the Logix
 	Table. Immediately before the Logix is activated, the state of all its 
 	Conditionals is set to UNKNOWN. Immediately after activation, all 
-	Conditionals are calculated. </p>
+	Conditionals are calculated.</p>
 	<p>The Edit Logix window also provides a way to delete a Logix if it is no 
 	longer needed. Click <b>Delete Logix</b> to delete the Logix being edited 
 	and all its Conditionals. </p>
