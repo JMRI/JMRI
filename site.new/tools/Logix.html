@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Logix.html,v 1.3 2007-03-25 22:25:34 jacobsen Exp $ -->
+<!-- $Id: Logix.html,v 1.4 2007-04-12 15:21:37 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -127,8 +127,8 @@
 	a Logix is "active", which means
 	that the entities (turnouts, sensors, lights, etc) in logical 
 	expressions of the Logix's Conditionals are being monitored. Whenever the 
-	state of any of the entities changes, <b>all</b> Conditionals for the Logix are
-	"calculated" in order.  
+	state of any of the monitored entities changes, <b>all</b> Conditionals for 
+	the Logix are "calculated" in order.  
 	When each Conditional is "calculated", its logical 
 	expression is evaluated, and the specified action taken if conditions
 	are met.</p>
@@ -205,13 +205,18 @@
 	<b>First</b>. Select the Conditional that is to be first, and it
 	is immediately moved to the top of the table. All remaining buttons change
 	to <b>Next</b>. Select remaining Conditionals in desired order, until
-	all buttons change back to <B>Edit</b>.
+	all buttons change back to <B>Edit</b>.</p>
 	<p> When <b>Done</b> is clicked at the bottom of the Edit Logix window, any 
-	change in the Logix user name is checked and made, the Logix is activated, 
+	change in the Logix user name is checked and made. A check is made for
+	inconsistencies in specifying that an entity (sensor, turnout, etc.) referenced
+	in multiple state variables is not monitored as a trigger for calculation of 
+	the Logix, and a warning 
+	message appears if any inconsistencies are found. Then the Logix is activated, 
 	the Edit Logix window is dismissed, and the user is returned to the Logix
 	Table. Immediately before the Logix is activated, the state of all its 
 	Conditionals is set to UNKNOWN. Immediately after activation, all 
-	Conditionals are calculated. The Edit Logix window also provides a way 
+	Conditionals are calculated.</p>
+	<p>The Edit Logix window also provides a way 
 	to delete a Logix if it is no longer needed. Click <b>Delete Logix</b>
 	to delete the Logix being edited and all its Conditionals. </p>
 	</dd>
@@ -321,7 +326,22 @@
 	state variable when it is evaluated. The state displayed includes the 
 	effect of the NOT operator, if NOT is selected. For the logical expression,
 	and therefore the Conditional, to calculate true, all state variables must 
-	evaluate to true. At any time during the entry 
+	evaluate to true.</p>
+	<p>The Triggers Calculation column contains checkboxes that normally are
+	checked, so that a change in the state variable will trigger a calculation
+	of the Logix. For those rare cases where a change in a specific entity 
+	(sensor, turnout, etc.) should not trigger a calculation, you should uncheck 
+	the checkbox by clicking on it. Unchecking the checkbox tells the program not
+	to monitor that entity for state changes. Note that if an entity occurs in 
+	more than one state variable in any Conditional of the Logix, <b>all</b>
+	state variables where the specific entity occurs must
+	be unchecked if a change in that entity's state is not to trigger a 
+	calculation. If there are inconsistencies (checked in some places, and 
+	unchecked in others) are found when the Edit Logix window is closed, a
+	warning is displayed. Inconsistencies result in Logix calculation when the
+	entity changes state, which could produce unexpected behavior.  So don't 
+	ignore the warnings; fix the inconsistencies.</p>
+	<p>At any time during the entry 
 	of state variable data, the <b>Check State Variables</b> button may be 
 	clicked to check the entered data and evaluate the state variables. When
 	this button is pressed, the checking and evaluation proceeds until the
@@ -431,8 +451,10 @@
 	true is given for each. If the condition is not met, the state variable
 	evaluates to false. When a Logix is active, the states of entities (sensor,
 	turnout, light, etc.) specified in state variables in its Conditionals are 
-	monitored. A calculation of all Conditionals in the Logix is triggered
-	when any monitored state changes as noted below (if not obvious).
+	monitored, unless the Triggers Calculation checkbox of the state variable is
+	unchecked (see <a href="#editconditional">above</a>). A calculation of all 
+	Conditionals in the Logix is triggered when any monitored state changes as 
+	noted below (if not obvious).
 	    <ul>
 		<li><b>Sensor Active</b>: Evaluates to true if the state of the
 		specified sensor is active. 
@@ -666,6 +688,32 @@
 	and the Logix will work fine.  You can monitor this action by watching 
 	states in the Sensor Table, the Turnout Table, etc. Conditions at start up 
 	certainly are something to keep in mind when setting up a Logix.</p>
+	<p><li><b>When should Triggers Calculation be unchecked in a state variable?</b>	
+	<p>Normally Triggers Calculation should be checked in all state variables, 
+	so a change in any of its state variable will trigger calculation of a Logix. 
+	This results in the Logix quickly reacting to changes on the layout, and 
+	maintaining the status of signals, turnouts, etc. as desired. There are 
+	situations, however, where it is desirable to test the state of an entity,
+	but not use it as a calculation trigger.  The following paragraphs 
+	describe a couple of those situations, but there are others.</p>
+	<p>Occasionally a "logic loop" can result if triggering is not 
+	suppressed. For example, if the state of a turnout is tested in a state 
+	variable, and the same turnout is set in an action of the same or another 
+	Conditional of the same Logix, continuous triggering (a logic loop) could 
+	result. The easiest way out of this dilemma is to test the turnout, without
+	using it as a triggering entity. This is done by unchecking Triggers 
+	Calculation	in <b>all</b> state variables where the turnout is specified.
+	If the turnout is used in state variables of more than one Conditional of 
+	the Logix, it must be unchecked everywhere it is used to suppress using it
+	as a trigger.</p>
+	<p>Another situation arises when Delayed Set Sensor action is used with
+	an internal sensor to trigger a second Logix after the delay time has 
+	elapsed. If the second Logix is not to be triggered before the delay time 
+	elapses, all of its state variables, except for the delayed internal sensor, 
+	should be unchecked. This scenario might occur, for example, if a Conditional
+	turns on something as its first action, and sets a Delayed Set Sensor as 
+	its second action to turn off that something after a specified time provided
+	certain conditions are met.</p>
     </dd>
 
 
@@ -700,4 +748,5 @@
 </div> <!-- closes #container -->
 </body>
 </html>
+
 
