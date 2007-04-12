@@ -25,19 +25,19 @@ package jmri;
  *
  * Description:		Abstract class providing the basic logic of the Turnout interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean 
-        implements Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
-
+    implements Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
+    
     protected AbstractTurnout(String systemName) {
         super(systemName);
     }
-
+    
     protected AbstractTurnout(String systemName, String userName) {
         super(systemName, userName);
     }
-
+    
     /**
      * Handle a request to change state, typically by
      * sending a message to the layout in some child class. Public
@@ -49,14 +49,14 @@ public abstract class AbstractTurnout extends AbstractNamedBean
     protected void forwardCommandChangeToLayout() {
     	forwardCommandChangeToLayout(_commandedState);
     }
-
+    
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call
     //		public void firePropertyChange(String propertyName,
     //					       	Object oldValue,
     //						Object newValue)
     // _once_ if anything has changed state
-
+    
     /**
      * Sets a new Commanded state, if need be notifying the
      * listeners, but does NOT send the command downstream.  This is used
@@ -70,9 +70,9 @@ public abstract class AbstractTurnout extends AbstractNamedBean
                                new Integer(_commandedState));
         }
     }
-
+    
     public int getKnownState() {return _knownState;}
-
+    
     /**
      * public access to changing turnout state. Sets the commanded state and,
      * if appropriate starts a TurnoutOperator to do its thing. If there is no
@@ -84,16 +84,16 @@ public abstract class AbstractTurnout extends AbstractNamedBean
         newCommandedState(s);
         myOperator = getTurnoutOperator();		// MUST set myOperator before starting the thread
         if (myOperator==null) {
-	        forwardCommandChangeToLayout(s);
-	        // optionally handle feedback
-	        if (_activeFeedbackType == DIRECT) newKnownState(s); 
-        } else
-        {	myOperator.start();
+            forwardCommandChangeToLayout(s);
+            // optionally handle feedback
+            if (_activeFeedbackType == DIRECT) newKnownState(s); 
+        } else {
+            myOperator.start();
         }
     }
-
+    
     public int getCommandedState() {return _commandedState;}
-
+    
     /**
      * Add a protected newKnownState() for use by implementations. Not intended for
      * general use, e.g. for users to set the KnownState, but rather for
@@ -108,7 +108,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean
         // if known state has moved to Thrown or Closed,
         // set the commanded state to match
         if ( (_knownState == THROWN && _commandedState!=THROWN)
-            || (_knownState == CLOSED && _commandedState!=CLOSED) )
+             || (_knownState == CLOSED && _commandedState!=CLOSED) )
             setCommandedState(_knownState);
     }
     /**
@@ -126,7 +126,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean
     void setKnownStateToCommanded() {
     	newKnownState(_commandedState);
     }
-
+    
     /**
      * Implement a shorter name for setCommandedState.
      *<P>
@@ -156,27 +156,32 @@ public abstract class AbstractTurnout extends AbstractNamedBean
     protected int _validFeedbackTypes = DIRECT | ONESENSOR | TWOSENSOR;
     
     protected int _activeFeedbackType   = DIRECT;
-
+    
     private int _knownState     = UNKNOWN;
     private int _commandedState = UNKNOWN;
-	
-	private int _numberOutputBits = 1;
-	/* Number of bits to control a turnout - defaults to one */
-	private int _controlType = 0;
-	/* Type of turnout control - defaults to 0 for 'steady state' */
-	
-	public int getNumberOutputBits()  {return _numberOutputBits;}
-	public void setNumberOutputBits(int num) {
-		_numberOutputBits = num;
-	}
     
-	public int getControlType() {return _controlType;}    
+    private int _numberOutputBits = 1;
+    /* Number of bits to control a turnout - defaults to one */
+    private int _controlType = 0;
+    /* Type of turnout control - defaults to 0 for 'steady state' */
+    
+    public int getNumberOutputBits()  {return _numberOutputBits;}
+    public void setNumberOutputBits(int num) {
+        _numberOutputBits = num;
+    }
+    
+    public int getControlType() {
+        return _controlType;
+    }    
+
     public void setControlType(int num) {
-		_controlType = num;
-	}    
-
-    public int getValidFeedbackTypes() {return _validFeedbackTypes;}
-
+        _controlType = num;
+    }    
+    
+    public int getValidFeedbackTypes() {
+        return _validFeedbackTypes;
+    }
+    
     public String[] getValidFeedbackNames() {
         return _validFeedbackNames;
     }
@@ -198,9 +203,9 @@ public abstract class AbstractTurnout extends AbstractNamedBean
         // set the value
         _activeFeedbackType = mode;
     }
-
+    
     public int getFeedbackMode() { return _activeFeedbackType; }
-
+    
     public String getFeedbackModeName() {
         for (int i = 0; i<_validFeedbackNames.length; i++) {
             if (_activeFeedbackType==_validFeedbackModes[i]) {
@@ -213,39 +218,39 @@ public abstract class AbstractTurnout extends AbstractNamedBean
     /*
      * Support for turnout automation (see TurnoutOperation and related classes)
      */
-
+    
     protected TurnoutOperator myOperator;
     protected TurnoutOperation myTurnoutOperation;
     protected boolean inhibitOperation = false;		// do not automate this turnout, even if globally operations are on
-
+    
     public TurnoutOperator getCurrentOperator() { return myOperator; }
-
+    
     public TurnoutOperation getTurnoutOperation() { return myTurnoutOperation; }
-
+    
     public void setTurnoutOperation(TurnoutOperation toper) {
     	TurnoutOperation oldOp = myTurnoutOperation;
     	if (myTurnoutOperation != null) {
-    		myTurnoutOperation.removePropertyChangeListener(this);
+            myTurnoutOperation.removePropertyChangeListener(this);
     	}
     	myTurnoutOperation = toper;
     	if (myTurnoutOperation != null) {
-    		myTurnoutOperation.addPropertyChangeListener(this);
+            myTurnoutOperation.addPropertyChangeListener(this);
     	}
     	firePropertyChange("TurnoutOperationState", oldOp, myTurnoutOperation);
     };
-
+    
     protected void operationPropertyChange(java.beans.PropertyChangeEvent evt) {
     	if (evt.getSource()==myTurnoutOperation) {
-    		if (((TurnoutOperation)evt.getSource()).isDeleted()) {
-    			setTurnoutOperation(null);
-    		}
+            if (((TurnoutOperation)evt.getSource()).isDeleted()) {
+                setTurnoutOperation(null);
+            }
     	}
     }
-
+    
     
     public boolean getInhibitOperation() { return inhibitOperation; }
     public void setInhibitOperation(boolean io) { inhibitOperation = io; }
-    	
+    
     /**
      * find the TurnoutOperation class for this turnout, and get an instance
      * of the corresponding operator
@@ -255,19 +260,19 @@ public abstract class AbstractTurnout extends AbstractNamedBean
     protected TurnoutOperator getTurnoutOperator() {
     	TurnoutOperator to = null;
     	if (!inhibitOperation) {
-    		if (myTurnoutOperation != null) {
-    			to = myTurnoutOperation.getOperator(this);
-    		} else {
-    			TurnoutOperation toper =
-    				TurnoutOperationManager.getInstance().getMatchingOperation(this, getFeedbackModeForOperation());
-    			if (toper != null) {
-    				to = toper.getOperator(this);
-    			}
-    		}
+            if (myTurnoutOperation != null) {
+                to = myTurnoutOperation.getOperator(this);
+            } else {
+                TurnoutOperation toper =
+                    TurnoutOperationManager.getInstance().getMatchingOperation(this, getFeedbackModeForOperation());
+                if (toper != null) {
+                    to = toper.getOperator(this);
+                }
+            }
     	}
     	return to;
     }
-
+    
     /**
      * Allow an actual turnout class to transform private
      * feedback types into ones that the generic turnout operations know about
@@ -286,7 +291,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean
         if (_firstSensor!=null) {
             _firstSensor.removePropertyChangeListener(this);
         }
-
+        
         _firstSensor = s;
         
         // if need be, set listener
@@ -294,70 +299,70 @@ public abstract class AbstractTurnout extends AbstractNamedBean
             _firstSensor.addPropertyChangeListener(this);
         }
     }
-
+    
     public void provideSecondFeedbackSensor(Sensor s) {
         // if need be, clean listener
         if (_secondSensor!=null) {
             _secondSensor.removePropertyChangeListener(this);
         }
-
+        
         _secondSensor = s;
-
+        
         // if need be, set listener
         if (_secondSensor!=null) {
             _secondSensor.addPropertyChangeListener(this);
         }
     }
-
+    
     public Sensor getFirstSensor() { return _firstSensor; }
     public Sensor getSecondSensor()  { return _secondSensor; }
     
     public void setInitialKnownStateFromFeedback() {
         if (_activeFeedbackType==ONESENSOR) {
-			// ONESENSOR feedback 
-			if (_firstSensor!=null) {
-				// set according to state of sensor
-				int sState = _firstSensor.getKnownState();
-				if (sState==Sensor.ACTIVE) 
-					newKnownState(THROWN);
-				else if (sState==Sensor.INACTIVE)
-					newKnownState(CLOSED);
-			}
-			else {
-				log.warn("expected Sensor 1 not defined - "+
-					getSystemName());
-				newKnownState(UNKNOWN);
-			}
-		}
-		else if (_activeFeedbackType==TWOSENSOR) {
-			// TWOSENSOR feedback
-			int s1State = Sensor.UNKNOWN;
-			int s2State = Sensor.UNKNOWN;
-			if (_firstSensor!=null)
-				s1State = _firstSensor.getKnownState();
-			else {
-				log.warn("expected Sensor 1 not defined - "+
-					getSystemName());
-			}
-			if (_secondSensor!=null)
-				s2State = _secondSensor.getKnownState();
-			else {
-				log.warn("expected Sensor 2 not defined - "+
-					getSystemName());
-			}
-			// set Turnout state according to sensors
-			if ((s1State==Sensor.ACTIVE) && (s2State==Sensor.INACTIVE))
-				newKnownState(THROWN);
-			else if ((s1State==Sensor.INACTIVE) && (s2State==Sensor.ACTIVE))
-				newKnownState(CLOSED);
-			else if (_knownState!=UNKNOWN)
-				newKnownState(UNKNOWN);
-		}
-		else {
-			// nothing required at this time for other modes
-		}
-	}
-
+            // ONESENSOR feedback 
+            if (_firstSensor!=null) {
+                // set according to state of sensor
+                int sState = _firstSensor.getKnownState();
+                if (sState==Sensor.ACTIVE) 
+                    newKnownState(THROWN);
+                else if (sState==Sensor.INACTIVE)
+                    newKnownState(CLOSED);
+            }
+            else {
+                log.warn("expected Sensor 1 not defined - "+
+                         getSystemName());
+                newKnownState(UNKNOWN);
+            }
+        }
+        else if (_activeFeedbackType==TWOSENSOR) {
+            // TWOSENSOR feedback
+            int s1State = Sensor.UNKNOWN;
+            int s2State = Sensor.UNKNOWN;
+            if (_firstSensor!=null)
+                s1State = _firstSensor.getKnownState();
+            else {
+                log.warn("expected Sensor 1 not defined - "+
+                         getSystemName());
+            }
+            if (_secondSensor!=null)
+                s2State = _secondSensor.getKnownState();
+            else {
+                log.warn("expected Sensor 2 not defined - "+
+                         getSystemName());
+            }
+            // set Turnout state according to sensors
+            if ((s1State==Sensor.ACTIVE) && (s2State==Sensor.INACTIVE))
+                newKnownState(THROWN);
+            else if ((s1State==Sensor.INACTIVE) && (s2State==Sensor.ACTIVE))
+                newKnownState(CLOSED);
+            else if (_knownState!=UNKNOWN)
+                newKnownState(UNKNOWN);
+        }
+        else {
+            // nothing required at this time for other modes
+        }
+    }
+    
     /**
      * React to sensor changes by changing the KnownState
      * if using an appropriate sensor mode
@@ -365,9 +370,9 @@ public abstract class AbstractTurnout extends AbstractNamedBean
     
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
     	if (evt.getSource() == myTurnoutOperation) {
-    		operationPropertyChange(evt);
+            operationPropertyChange(evt);
     	} else if (evt.getSource() == _firstSensor || evt.getSource() == _secondSensor) {
-    		sensorPropertyChange(evt);
+            sensorPropertyChange(evt);
     	}
     }
     
@@ -387,7 +392,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean
             } else {
                 // unexected mismatch
                 log.warn("expected sensor "+_firstSensor.getSystemName()
-                        +" was "+((Sensor)evt.getSource()).getSystemName());
+                         +" was "+((Sensor)evt.getSource()).getSystemName());
             }
             // end ONESENSOR block
         } else if (_activeFeedbackType == TWOSENSOR) {
@@ -401,10 +406,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean
             else if ( (mode==Sensor.ACTIVE) && (s==_firstSensor))
                 newKnownState(THROWN);
             else if (!(      ((_firstSensor.getKnownState() == Sensor.ACTIVE)
-                            &&(_secondSensor.getKnownState() == Sensor.INACTIVE))
-                        ||   ((_firstSensor.getKnownState() == Sensor.INACTIVE)
-                            &&(_secondSensor.getKnownState() == Sensor.ACTIVE))
-                      )
+                              &&(_secondSensor.getKnownState() == Sensor.INACTIVE))
+                             ||   ((_firstSensor.getKnownState() == Sensor.INACTIVE)
+                                   &&(_secondSensor.getKnownState() == Sensor.ACTIVE))
+                             )
                      ) // INCONSISTENT if sensor has transitioned to an inconsistent state
                 newKnownState(INCONSISTENT);
             // end TWOSENSOR block
@@ -424,6 +429,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean
         _secondSensor = null;
     }
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractTurnout.class.getName());
- }
+}
 
 /* @(#)AbstractTurnout.java */
