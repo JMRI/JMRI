@@ -8,7 +8,7 @@ package jmri;
  * Implements the parameter binding support.
  *
  * @author      Bob Jacobsen Copyright (C) 2001
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public abstract class AbstractNamedBean implements NamedBean, java.io.Serializable {
 
@@ -44,6 +44,14 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
     }
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
+    }
+
+    /**
+     * Number of current listeners. May return -1 if the 
+     * information is not available for some reason.
+     */
+    public synchronized int getNumPropertyChangeListeners() {
+        return pcs.getPropertyChangeListeners().length;
     }
 
     public String getSystemName() {return mSystemName;}

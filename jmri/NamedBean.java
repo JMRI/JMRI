@@ -12,7 +12,7 @@ package jmri;
  * (e.g. LocoNet, NCE, etc) and address within that system.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, 2002, 2003, 2004
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  * @see         jmri.AbstractManager
  * @see         jmri.AbstractNamedBean
  */
@@ -52,6 +52,12 @@ public interface NamedBean {
      * Remove a request for a call-back when a bound property changes.
      */
     public void removePropertyChangeListener(java.beans.PropertyChangeListener l);
+
+    /**
+     * Number of current listeners. May return -1 if the 
+     * information is not available for some reason.
+     */
+    public int getNumPropertyChangeListeners();
 
     /**
      * Remove references to and from this object, so that it can
