@@ -15,7 +15,7 @@ import com.sun.java.util.collections.List;
  * be added is the "Primary", used if a system letter is not provided.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class AbstractProxyManager implements Manager {
 
@@ -37,6 +37,22 @@ public class AbstractProxyManager implements Manager {
         for (int i = 0; i<mgrs.size(); i++)
              if ( systemLetter == ((Manager)mgrs.get(i)).systemLetter()) {
                 ((Manager)mgrs.get(i)).register(s);
+                return;
+            }
+    }
+
+    /**
+     * Forget a NamedBean Object created outside the manager.
+     * <P>
+     * Forwards the deregister request to the matching system
+     */
+    public void deregister(NamedBean s) {
+        String systemName = s.getSystemName();
+        char systemLetter = systemName.charAt(0);
+
+        for (int i = 0; i<mgrs.size(); i++)
+             if ( systemLetter == ((Manager)mgrs.get(i)).systemLetter()) {
+                ((Manager)mgrs.get(i)).deregister(s);
                 return;
             }
     }

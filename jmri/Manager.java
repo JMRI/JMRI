@@ -29,7 +29,7 @@ import com.sun.java.util.collections.List;
  * subclasses must notify of changes to the list of available NamedBeans;
  * they may have other properties that will also notify.
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public interface Manager {
 
@@ -69,8 +69,22 @@ public interface Manager {
      */
     public void removePropertyChangeListener(java.beans.PropertyChangeListener l);
     
+    /**
+     * Remember a NamedBean Object created outside the manager.
+     * <P>
+     * The non-system-specific SignalHeadManagers
+     * use this method extensively.
+     */
     public void register(NamedBean n);
+
+    /**
+     * Forget a NamedBean Object created outside the manager.
+     * <P>
+     * The non-system-specific RouteManager
+     * uses this method.
+     */
+    public void deregister(NamedBean n);
 }
 
 
-/* @(#)TurnoutManager.java */
+/* @(#)Manager.java */
