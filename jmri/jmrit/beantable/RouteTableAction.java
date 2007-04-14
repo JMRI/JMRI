@@ -31,7 +31,7 @@ import jmri.util.JmriJFrame;
  * @author	Dave Duchamp    Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2007 
  *
- * @version     $Revision: 1.29 $
+ * @version     $Revision: 1.30 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -65,8 +65,8 @@ public class RouteTableAction extends AbstractTableAction {
      */
     void createModel() {
         m = new BeanTableDataModel() {
-		    static public final int ENABLECOL = 3;
-		    static public final int SETCOL = 4;
+		    static public final int ENABLECOL = NUMCOLUMN;
+		    static public final int SETCOL = ENABLECOL+1;
     		public int getColumnCount( ){ return NUMCOLUMN+2;}
 
     		public String getColumnName(int col) {

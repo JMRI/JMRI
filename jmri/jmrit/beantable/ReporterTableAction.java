@@ -26,7 +26,7 @@ import jmri.util.JmriJFrame;
  * ReporterTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 
 public class ReporterTableAction extends AbstractTableAction {
@@ -83,10 +83,8 @@ public class ReporterTableAction extends AbstractTableAction {
     			if (col==VALUECOL) return String.class;
     			else return super.getColumnClass(col);
 		    }
-    		public void configureTable(JTable table) {
-        		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        		// no columns hold buttons, so don't make any configure buttons calls
+    		public void configValueColumn(JTable table) {
+        		// value column isn't button, so config is null
 		    }
 			boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
 			    return true;

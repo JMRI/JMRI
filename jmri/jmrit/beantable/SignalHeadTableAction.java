@@ -26,7 +26,7 @@ import jmri.util.JmriJFrame;
  * SignalHeadTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -53,8 +53,8 @@ public class SignalHeadTableAction extends AbstractTableAction {
      */
     void createModel() {
         m = new BeanTableDataModel() {
-		    static public final int LITCOL = 3;
-		    static public final int HELDCOL = 4;
+		    static public final int LITCOL = NUMCOLUMN;
+		    static public final int HELDCOL = LITCOL+1;
     		public int getColumnCount( ){ return NUMCOLUMN+2;}
     		public String getColumnName(int col) {
     			if (col==LITCOL) return "Lit";

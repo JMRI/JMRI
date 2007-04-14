@@ -42,7 +42,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.39 $
+ * @version     $Revision: 1.40 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -84,11 +84,12 @@ public class TurnoutTableAction extends AbstractTableAction {
         // create the data model object that drives the table;
         // note that this is a class creation, and very long
         m = new BeanTableDataModel() {
-		    static public final int KNOWNCOL = 3;
-		    static public final int MODECOL = 4;
-		    static public final int SENSOR1COL = 5;
-		    static public final int SENSOR2COL = 6;
-		    static public final int OPSONOFFCOL = 7;
+		    static public final int KNOWNCOL = NUMCOLUMN;
+		    static public final int MODECOL = KNOWNCOL+1;
+		    static public final int SENSOR1COL = MODECOL+1;
+		    static public final int SENSOR2COL = SENSOR1COL+1;
+		    static public final int OPSONOFFCOL = SENSOR2COL+1;
+
     		public int getColumnCount( ){ 
     		    if (showFeedback)
     		        return NUMCOLUMN+5;

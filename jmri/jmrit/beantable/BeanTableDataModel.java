@@ -25,7 +25,7 @@ import com.sun.java.util.collections.List;
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.16 $
+ * @version		$Revision: 1.17 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -33,9 +33,10 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
     static public final int SYSNAMECOL  = 0;
     static public final int USERNAMECOL = 1;
     static public final int VALUECOL = 2;
+    static public final int DELETECOL = 3;
 
 
-    static public final int NUMCOLUMN = 3;
+    static public final int NUMCOLUMN = 4;
 
     public BeanTableDataModel() {
         super();
@@ -99,6 +100,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         case SYSNAMECOL: return "System Name";
         case USERNAMECOL: return "User Name";
         case VALUECOL: return "State";
+        case DELETECOL: return "";
 
         default: return "unknown";
         }
@@ -110,6 +112,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         case USERNAMECOL:
             return String.class;
         case VALUECOL:
+        case DELETECOL:
             return JButton.class;
         default:
             return null;
@@ -120,6 +123,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         switch (col) {
         case USERNAMECOL:
         case VALUECOL:
+        case DELETECOL:
             return true;
         default:
             return false;
@@ -134,6 +138,8 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             return getBySystemName((String)sysNameList.get(row)).getUserName();
         case VALUECOL:  //
             return getValue((String)sysNameList.get(row));
+        case DELETECOL:  //
+            return AbstractTableAction.rb.getString("ButtonDelete");
         default:
             log.error("internal state inconsistent with table requst for "+row+" "+col);
             return null;
@@ -147,6 +153,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         case USERNAMECOL:
             return new JTextField(15).getPreferredSize().width;
         case VALUECOL: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
+        case DELETECOL: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
             return new JTextField(22).getPreferredSize().width;
         default:
         	log.warn("Unexpected column in getPreferredWidth: "+col);
@@ -170,9 +177,30 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             // button fired, swap state
             NamedBean t = getBySystemName((String)sysNameList.get(row));
             clickOn(t);
+        } else if (col==DELETECOL) {
+            // button fired, delete Bean
+            deleteBean(row, col);
         }
     }
 
+    void deleteBean(int row, int col) {
+        NamedBean t = getBySystemName((String)sysNameList.get(row));
+        int count = t.getNumPropertyChangeListeners();
+        if (log.isDebugEnabled()) log.debug("Delete with "+count);
+        if (count>0) {
+            // warn, since there are listeners attached
+            String msg = java.text.MessageFormat.format(
+                            AbstractTableAction.rb.getString("ReminderInUse"),
+                            new String[]{t.getSystemName(),""+count});
+
+            javax.swing.JOptionPane.showMessageDialog(null, 
+                    msg, AbstractTableAction.rb.getString("WarningTitle"), 
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+        getManager().deregister(t);
+        t.dispose();
+    }
+    
     /**
      * Configure a table to have our standard rows and columns.
      * This is optional, in that other table formats can use this table model.
@@ -193,6 +221,12 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         }
         table.sizeColumnsToFit(-1);
 
+        configValueColumn(table);
+        configDeleteColumn(table);
+        
+    }
+
+    void configValueColumn(JTable table) {
         // have the value column hold a button
         setColumnToHoldButton(table, VALUECOL, configureButton());
     }
@@ -201,6 +235,12 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         return new JButton(AbstractTableAction.rbean.getString("BeanStateInconsistent"));
     }
 
+    void configDeleteColumn(JTable table) {
+        // have the delete column hold a button
+        setColumnToHoldButton(table, DELETECOL, 
+                new JButton(AbstractTableAction.rb.getString("ButtonDelete")));
+    }
+    
     /**
      * Service method to setup a column so that it will hold a
      * button for it's values

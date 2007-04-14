@@ -46,7 +46,7 @@ import jmri.util.JmriJFrame;
  *	   BeanTableBundle.properties, accessed via rb.
  *
  * @author	Dave Duchamp    Copyright (C) 2007
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -85,8 +85,9 @@ public class LogixTableAction extends AbstractTableAction {
      */
     void createModel() {
         m = new BeanTableDataModel() {
+            // overlay the state column with the edit column
 		    static public final int ENABLECOL = 2;
-		    static public final int EDITCOL = 3;
+		    static public final int EDITCOL = NUMCOLUMN;
 			protected String enabledString = rb.getString("ColumnHeadEnabled");
     		public int getColumnCount( ){ return NUMCOLUMN+1;}
     		public String getColumnName(int col) {

@@ -35,7 +35,7 @@ import jmri.util.JmriJFrame;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.19 $
+ * @version     $Revision: 1.20 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -65,8 +65,8 @@ public class LightTableAction extends AbstractTableAction {
      */
     void createModel() {
         m = new BeanTableDataModel() {
-		    static public final int ENABLECOL = 3;
-		    static public final int EDITCOL = 4;
+		    static public final int ENABLECOL = NUMCOLUMN;
+		    static public final int EDITCOL = ENABLECOL+1;
 			protected String enabledString = rb.getString("ColumnHeadEnabled");
     		public int getColumnCount( ){ return NUMCOLUMN+2;}
     		public String getColumnName(int col) {
