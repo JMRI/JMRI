@@ -2,18 +2,22 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2006 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Lenz_Silver.xml,v 1.3 2006-08-07 08:33:38 jacobsen Exp $ -->
+<!-- $Id: Lenz_Silver.xml,v 1.4 2007-04-15 06:16:19 jacobsen Exp $ -->
 <decoder-config>
+	<version author="Bob Jacobsen rgj1927@pacbell.net"
+				version="4" lastUpdated="20070411" />
 	<version author="Mark Schutzer mark.schutzer@sbcglobal.net"
 				version="2" lastUpdated="20060114" />
 				<!-- Version 1 - created from Lenz_gold.xml "20060111"-->
 				<!-- Version 2 - removed SUSI & motor timeout CV's as they are not supported "20060114"-->
-                                <!-- Version 3 - added factory reset menu items (Paul Bender) -->
+                <!-- Version 3 - added factory reset menu items (Paul Bender) -->
+                <!-- Version 4 - high version now 75, as reported in DCC_UK group by Ken Weiss -->
+
 <!-- These are the Silver decoders, with "6th gen BEMF", "Precision Braking Control" -->
 <!-- and "Low Gear Switching Drive" -->
 
 <decoder>
-	<family name="Lenz Silver with 6th gen BEMF" mfg="Lenz" highVersionID="65" lowVersionID="65"
+	<family name="Lenz Silver with 6th gen BEMF" mfg="Lenz" highVersionID="75" lowVersionID="65"
 		comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" >
 		<model model="Silver" numOuts="4" numFns="12" lowVersionID="65"
 			maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO">
