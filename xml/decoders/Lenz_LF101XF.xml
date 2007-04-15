@@ -2,12 +2,17 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2003 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Lenz_LF101XF.xml,v 1.1 2007-04-15 06:02:45 jacobsen Exp $ -->
+<!-- $Id: Lenz_LF101XF.xml,v 1.2 2007-04-15 06:07:17 jacobsen Exp $ -->
 <decoder-config>
 		<version author="sulzerbeast@gmail.com"
-			version="1" lastUpdated="20070321" />
-
+			version="2" lastUpdated="20070323" />
+		<version author="sulzerbeast@gmail.com"
+            version="1" lastUpdated="20070321" />
+            
 		<!-- version 1 -->
+			<!-- created from LF100XF.xml -->
+		<!-- version 2 -->
+			<!-- tidied up directional headlights field, moved to Lenz pane -->
 
 <decoder>
 	<family name="Function Decoder" mfg="Lenz" lowVersionID="10">
@@ -357,14 +362,15 @@
 			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
 		</variable>
 	
-	<variable label="Directional Headlights" CV="49"
+	<variable label="Headlights reverse polarity with direction" CV="49"
+			item="Directional headlights"
 	          	comment="output A"
-               	mask="XXXXXXXV">
+               	mask="XXXXXXXV" >
 		     <enumVal>
-		         <enumChoice choice="Headlights do not reverse polarity with direction"/>
-		         <enumChoice choice="Headlights reverse polarity with direction"/>
-		         </enumVal>
-			</variable>
+		         <enumChoice choice="Yes" />
+		         <enumChoice choice="No" />
+		      </enumVal>
+	</variable>
 
 	<variable label="Output A dim intensity" CV="50" default="255"
 	          	comment="Controls how much Output B dims (0-dark to 255-max bright)">
@@ -699,7 +705,7 @@
 		<row>
 	
 			<column>
-				<label label="                 A"/>
+				<label label="                        A"/>
 				<display item="Enable output A dimming with F1" format="checkbox" label="Function 1 "/>
 				<display item="Enable output A dimming with F2" format="checkbox" label="Function 2 "/>
 				<display item="Enable output A dimming with F3" format="checkbox" label="Function 3 "/>
@@ -753,6 +759,7 @@
 				<display item="Output A dim intensity" />
 				<display item="Output B dim intensity" />
 				<label label=" "/>
+				<display item="Directional headlights" />
 			</column>
 		</row>
 	</column>
@@ -766,7 +773,7 @@
 		<row>
 	
 			<column>
-				<label label="                 A"/>
+				<label label="                        A"/>
 				<display item="Toggle effect (output A) with F1" format="checkbox" label="Function 1 "/>
 				<display item="Toggle effect (output A) with F2" format="checkbox" label="Function 2 "/>
 				<display item="Toggle effect (output A) with F3" format="checkbox" label="Function 3 "/>
@@ -824,10 +831,12 @@
 				<label label=" "/>
 	
 			</column>
-		</row>
-	</column>
 
-	
+
+
+		</row>
+
+	</column>
 </pane>
 
 <pane name="Lenz Lighting">
