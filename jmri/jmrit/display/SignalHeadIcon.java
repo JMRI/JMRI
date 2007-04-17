@@ -23,7 +23,7 @@ import javax.swing.JRadioButtonMenuItem;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -206,7 +206,8 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
                         if (flashGreen !=null) flashGreen.setRotation(flashGreen.getRotation()+1, ours);
                         if (flashRed !=null) flashRed.setRotation(flashRed.getRotation()+1, ours);
                         if (flashYellow !=null) flashYellow.setRotation(flashYellow.getRotation()+1, ours);
-                        if (dark !=null) dark.setRotation(flashYellow.getRotation()+1, ours);
+                        if (dark !=null) dark.setRotation(dark.getRotation()+1, ours);
+                        if (held !=null) held.setRotation(held.getRotation()+1, ours);
                         displayState(headState());
                     }
                 });
