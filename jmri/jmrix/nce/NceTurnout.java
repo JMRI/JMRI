@@ -6,6 +6,8 @@ import jmri.AbstractTurnout;
 import jmri.NmraPacket;
 import jmri.Turnout;
 
+
+
 /**
  * Implement a Turnout via NCE communications.
  * <P>
@@ -14,14 +16,14 @@ import jmri.Turnout;
  * more than one Turnout object pointing to a single device is not allowed.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class NceTurnout extends AbstractTurnout {
 
     final String prefix = "NT";
 
     /**
-     * NCE turnouts use the NMRA number (0-511) as their numerical identification.
+     * NCE turnouts use the NMRA number (0-2044) as their numerical identification.
      */
 
     public NceTurnout(int number) {
@@ -65,19 +67,43 @@ public class NceTurnout extends AbstractTurnout {
 
     protected void sendMessage(boolean closed) {
         // get the packet
-        byte[] bl = NmraPacket.accDecoderPkt(_number, closed);
-        if (log.isDebugEnabled()) log.debug("packet: "
+    	// dBoudreau  Added support for new accessory binary command
+ 
+    	if (NceMessage.getCommandOptions() >= NceMessage.OPTION_2006) {
+    		
+    		byte [] bl = NceCommand.accDecoderPkt(_number, closed);
+    		
+    		if (log.isDebugEnabled()) log.debug("Command: "
+                    						+Integer.toHexString(0xFF & bl[0])
+                    						+" "+Integer.toHexString(0xFF & bl[1])
+                    						+" "+Integer.toHexString(0xFF & bl[2])
+                    						+" "+Integer.toHexString(0xFF & bl[3])
+                    						+" "+Integer.toHexString(0xFF & bl[4]));
+    		
+    		NceMessage m = NceMessage.sendPacketMessage(bl);
+
+    		NceTrafficController.instance().sendNceMessage(m, null);
+
+    	
+    	} else {
+    		    	
+    		byte[] bl = NmraPacket.accDecoderPkt(_number, closed);       
+    	
+    		if (log.isDebugEnabled()) log.debug("packet: "
                                             +Integer.toHexString(0xFF & bl[0])
                                             +" "+Integer.toHexString(0xFF & bl[1])
                                             +" "+Integer.toHexString(0xFF & bl[2]));
+    	
+    		NceMessage m = NceMessage.sendPacketMessage(bl);
 
-        NceMessage m = NceMessage.sendPacketMessage(bl);
-
-        NceTrafficController.instance().sendNceMessage(m, null);
-
+    		NceTrafficController.instance().sendNceMessage(m, null);
+        
+    	}
+    	
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceTurnout.class.getName());
 }
 
 /* @(#)NceTurnout.java */
+
