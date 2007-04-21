@@ -16,7 +16,8 @@ import jmri.Turnout;
  * more than one Turnout object pointing to a single device is not allowed.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.9 $
+ * @author Daniel Boudreau (C) 2007
+ * @version	$Revision: 1.10 $
  */
 public class NceTurnout extends AbstractTurnout {
 
@@ -80,7 +81,7 @@ public class NceTurnout extends AbstractTurnout {
                     						+" "+Integer.toHexString(0xFF & bl[3])
                     						+" "+Integer.toHexString(0xFF & bl[4]));
     		
-    		NceMessage m = NceMessage.sendPacketMessage(bl);
+    		NceMessage m = NceMessage.sendCommandMessage(bl);
 
     		NceTrafficController.instance().sendNceMessage(m, null);
 
