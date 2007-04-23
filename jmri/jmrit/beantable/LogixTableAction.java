@@ -46,7 +46,7 @@ import jmri.util.JmriJFrame;
  *	   BeanTableBundle.properties, accessed via rb.
  *
  * @author	Dave Duchamp    Copyright (C) 2007
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -1411,8 +1411,12 @@ public class LogixTableAction extends AbstractTableAction {
 		}
 		// check individual state variables
 		boolean result = true;
-		for (int i = 0;(i<numStateVariables)&&result;i++) {
+		for (int i = 0;(i<numStateVariables); i++) {
 			result = checkStateVariable(i);
+			if (!result) {
+			    if (log.isDebugEnabled()) log.debug("checkStateVariable("+i+") failed, stopping");
+			    break;
+            }
 		}
 		if (result)
 			cStatus.setText(rbx.getString("VariableOKMessage"));
@@ -2184,6 +2188,7 @@ public class LogixTableAction extends AbstractTableAction {
 					if (sn == null) {
 						variableName[index] = vUName;
 						messageInvalidSensorName(vUName,true);
+						if (log.isDebugEnabled()) log.debug("checkStateVariable failed: Sensor "+vSName+" not found");
 						return (false);
 					}
 				}	
@@ -2198,6 +2203,7 @@ public class LogixTableAction extends AbstractTableAction {
 					sn = InstanceManager.sensorManagerInstance().getBySystemName(vSName);
 					if (sn == null) {
 						variableName[index] = vUName;
+						if (log.isDebugEnabled()) log.debug("checkStateVariable failed: Sensor "+vSName+" not found");
 						messageInvalidSensorName(vUName,true);
 						return (false);
 					}
@@ -2214,6 +2220,7 @@ public class LogixTableAction extends AbstractTableAction {
 					if (t == null) {
 						variableName[index] = vUName;
 						messageInvalidTurnoutName(vUName,true);
+						if (log.isDebugEnabled()) log.debug("checkStateVariable failed: Turnout "+vSName+" not found");
 						return (false);
 					}
 				}
@@ -2229,6 +2236,7 @@ public class LogixTableAction extends AbstractTableAction {
 					if (t == null) {
 						variableName[index] = vUName;
 						messageInvalidTurnoutName(vUName,true);
+						if (log.isDebugEnabled()) log.debug("checkStateVariable failed: Turnout "+vSName+" not found");
 						return (false);
 					}
 				}
@@ -2244,6 +2252,7 @@ public class LogixTableAction extends AbstractTableAction {
 					if (c == null) {
 						variableName[index] = vUName;
 						messageInvalidConditionalName(vUName);
+						if (log.isDebugEnabled()) log.debug("checkStateVariable failed: Conditional "+vSName+" not found");
 						return (false);
 					}
 				}
@@ -2259,6 +2268,7 @@ public class LogixTableAction extends AbstractTableAction {
 					if (c == null) {
 						variableName[index] = vUName;
 						messageInvalidConditionalName(vUName);
+						if (log.isDebugEnabled()) log.debug("checkStateVariable failed: Conditional "+vSName+" not found");
 						return (false);
 					}
 				}
@@ -2274,6 +2284,7 @@ public class LogixTableAction extends AbstractTableAction {
 					if (lgt == null) {
 						variableName[index] = vUName;
 						messageInvalidLightName(vUName,true);
+						if (log.isDebugEnabled()) log.debug("checkStateVariable failed: Light "+vSName+" not found");
 						return (false);
 					}
 				}
@@ -2289,6 +2300,7 @@ public class LogixTableAction extends AbstractTableAction {
 					if (lgt == null) {
 						variableName[index] = vUName;
 						messageInvalidLightName(vUName,true);
+						if (log.isDebugEnabled()) log.debug("checkStateVariable failed: Light "+vSName+" not found");
 						return (false);
 					}
 				}
@@ -2304,11 +2316,14 @@ public class LogixTableAction extends AbstractTableAction {
 					if (m == null) {
 						variableName[index] = vUName;
 						messageInvalidMemoryName(vUName,true);
+						if (log.isDebugEnabled()) log.debug("checkStateVariable failed: Memory "+vSName+" not found");
 						return (false);
 					}
 				}
 				String s = (String)m.getValue();
-				if (s==null) return (false);
+				if (s==null) {
+				    return (true);  // result is false, because null doesn't match content
+			    }
 				if (s.equals(variableData1[index])) result = true; 
 				break;
 			case Conditional.TYPE_FAST_CLOCK_RANGE:
