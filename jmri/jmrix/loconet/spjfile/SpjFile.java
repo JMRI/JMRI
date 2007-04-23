@@ -9,7 +9,7 @@ import java.io.*;
  * Digitrax SPJ files
  *
  * @author		Bob Jacobsen  Copyright (C) 2006
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 
 public class SpjFile {
@@ -114,11 +114,66 @@ public class SpjFile {
     }
     
     /**
-     * Save this file. This is not protected against 
-     * overwrite, etc.
+     * Save this file. It lays the file out again, changing the
+     * record start addresses into a sequential series
+     *
      * @throws java.io.IOException if anything goes wrong
      */
     public void save(String name) throws java.io.IOException {
+        if (name == null) {
+            throw new java.io.IOException("Null name during write");
+        }
+        OutputStream s = new java.io.BufferedOutputStream(
+                            new java.io.FileOutputStream(new java.io.File(name)));
+                            
+        // find size of output file
+        int length = Header.HEADERSIZE*h0.numHeaders();  // allow header space at start
+        for (int i = 1; i< h0.numHeaders(); i++) {
+            length += headers[i].getRecordLength();
+        }
+        byte [] buffer = new byte[length];
+        for (int i = 0; i<length; i++) buffer[i] = 0;
+        
+        // start with first header
+        int index = 0;
+        index = h0.store(buffer, index);
+
+        if (index != Header.HEADERSIZE)
+            log.error("Unexpected 1st header length: "+index);
+            
+        int datastart = index*h0.numHeaders(); //index is the length of the 1st header
+        
+        // rest of the headers
+        for (int i = 1; i< h0.numHeaders(); i++) {  // header 0 already done
+            // Update header pointers.
+            headers[i].updateStart(datastart);
+            datastart += headers[i].getRecordLength();
+            
+            // copy contents into output buffer
+            index = headers[i].store(buffer, index);
+        }
+        
+        
+        // copy the chunks; skip the first header, with no data
+        for (int i = 1; i< h0.numHeaders(); i++) {
+            int start = headers[i].getRecordStart();            
+            int count = headers[i].getRecordLength();  // stored one long
+            
+            byte[] content = headers[i].getByteArray();
+            if (count != content.length) 
+                log.error("header count "+count+" != content length "+content.length);
+            for (int j = 0; j<count; j++) {
+                buffer[start+j] = content[j];
+            }
+        }
+        
+        
+        // write out the buffer
+        s.write(buffer);
+        
+        // purge buffers
+        s.close();
+
     }
     
     /**
@@ -244,12 +299,24 @@ public class SpjFile {
      * Class representing a header record
      */
     public class Header {
+        final static int HEADERSIZE = 128; // bytes
+
         int type;
         int handle;
+        
+        // Offset in overall buffer where the complete record
+        // associated with this header is found
         int recordStart;
+        
+        // Offset in overall buffer where the data part of the 
+        // record associated with this header is found
         int dataStart;
+        
+        // Length of the data in the associated record
         int dataLength;
+        // Length of the associated record
         int recordLength;
+        
         int time;
         
         int spare1;
@@ -266,18 +333,116 @@ public class SpjFile {
         public int getHandle() {return handle; }
         
         public int getDataStart() { return dataStart; }
+        public void setDataStart(int i) { dataStart = i; }
+
         public int getDataLength() { return dataLength; }
+        private void setDataLength(int i) { dataLength = i; }
         
         public int getRecordStart() { return recordStart; }
+        public void setRecordStart(int i) { recordStart = i; }
         public int getRecordLength() { return recordLength; }
+        public void setRecordLength(int i) { recordLength = i; }
 
         public String getName() {return filename;}
+        public void setName(String name) {
+            if (name.length()>72) log.error("new filename too long: "+filename.length());
+            filename = name;
+        }
         
         byte[] bytes;
-        void setByteArray(byte[] a) {
-            bytes = a;
+
+        /**
+         * Copy new data into the local byte array
+         */
+        private void setByteArray(byte[] a) {
+            bytes = new byte[a.length];
+            for (int i = 0; i < a.length; i++) bytes[i] = a[i];
         }
+
         public byte[] getByteArray() { return bytes; }
+        
+            
+        /** 
+         * Data record associated with this header is being 
+         * being repositioned
+         */
+        void updateStart(int newRecordStart) {
+            int oldRecordStart = getRecordStart();
+            int dataStartOffset = getDataStart()-getRecordStart();
+            setRecordStart(newRecordStart);
+            setDataStart(newRecordStart+dataStartOffset);
+        }
+
+        /** 
+         * Provide new content. The data start and data length
+         * values are computed from the arguments, and stored 
+         * relative to the length.
+         *
+         * @param array New byte array; copied into header
+         * @param start data start location within array
+         * @param length   data length in bytes (not record length)
+         */
+        public void setContent(byte[] array, int start, int length) {
+            log.debug("setContent length = 0x"+Integer.toHexString(length));
+            setByteArray(array);
+            setDataStart(getRecordStart()+start);
+            setDataLength(length);
+            setRecordLength(array.length);
+        }
+        
+        int store(byte[] buffer, int index) {
+            index = copyInt4(buffer, index, type);
+            index = copyInt4(buffer, index, handle);
+            index = copyInt4(buffer, index, recordStart);
+            index = copyInt4(buffer, index, dataStart);
+            index = copyInt4(buffer, index, dataLength);
+            index = copyInt4(buffer, index, recordLength);
+            index = copyInt4(buffer, index, time);
+
+            index = copyInt4(buffer, index, 0); // spare 1
+            index = copyInt4(buffer, index, 0); // spare 2
+            index = copyInt4(buffer, index, 0); // spare 3
+            index = copyInt4(buffer, index, 0); // spare 4
+            index = copyInt4(buffer, index, 0); // spare 5
+            index = copyInt4(buffer, index, 0); // spare 6
+            index = copyInt4(buffer, index, 0); // spare 7
+            
+            // name is written in zero-filled array
+            byte [] name = filename.getBytes();
+            if (name.length > 72) log.error("Name too long: "+name.length);
+            for (int i = 0; i<name.length; i++)
+                buffer[index+i] = name[i];
+
+            return index+72;
+        }
+
+        void store(OutputStream s) throws java.io.IOException {
+            writeInt4(s, type);
+            writeInt4(s, handle);
+            writeInt4(s, recordStart);
+            writeInt4(s, dataStart);
+            writeInt4(s, dataLength);
+            writeInt4(s, recordLength);
+            writeInt4(s, time);
+            
+            writeInt4(s, 0);  // spare 1
+            writeInt4(s, 0);  // spare 2
+            writeInt4(s, 0);  // spare 3
+            writeInt4(s, 0);  // spare 4
+            writeInt4(s, 0);  // spare 5
+            writeInt4(s, 0);  // spare 6
+            writeInt4(s, 0);  // spare 7
+            
+            // name is written in zero-filled array
+            byte [] name = filename.getBytes();
+            if (name.length > 72) log.error("Name too long: "+name.length);
+            byte [] buffer = new byte[72];
+            for (int i = 0; i<72; i++)
+                buffer[i] = 0;
+            for (int i = 0; i<name.length; i++)
+                buffer[i] = name[i];
+            s.write(buffer);
+        }
         
         void load(InputStream s) throws java.io.IOException {
             type = readInt4(s);
@@ -307,8 +472,10 @@ public class SpjFile {
         }
         
         public String toString() {
-            return "type= "+typeAsString()+", handle= "+handle+", rs= "+recordStart+", ds= "
-                    +dataStart+", dl = "+dataLength+", rl= "+recordLength
+            return "type= "+typeAsString()+", handle= "+handle+", rs= "+recordStart+", ds= "+dataStart
+                    +", ds-rs = "+(dataStart-recordStart)
+                    +", dl = "+dataLength+", rl= "+recordLength
+                    +", rl-dl = "+(recordLength-dataLength)
                     +", filename= "+filename;
         }
         
@@ -337,6 +504,32 @@ public class SpjFile {
             int i3 = s.read()&0xFF;
             int i4 = s.read()&0xFF;
             return i1+(i2<<8)+(i3<<16)+(i4<<24);
+        }
+
+        /**
+         * Write a 4-byte integer, handling endian-ness of SPJ files
+         */
+        private void writeInt4(OutputStream s, int i) throws java.io.IOException {
+            byte i1 = (byte)(i&0xFF);
+            byte i2 = (byte)((i>>8)&0xFF);
+            byte i3 = (byte)((i>>16)&0xFF);
+            byte i4 = (byte)((i>>24)&0xFF);
+            
+            s.write(i1);
+            s.write(i2);
+            s.write(i3);
+            s.write(i4);
+        }
+
+        /**
+         * Copy a 4-byte integer to byte buffer, handling endian-ness of SPJ files
+         */
+        private int copyInt4(byte[] buffer, int index, int i) {
+            buffer[index++] = (byte)(i&0xFF);
+            buffer[index++] = (byte)((i>>8)&0xFF);
+            buffer[index++] = (byte)((i>>16)&0xFF);
+            buffer[index++] = (byte)((i>>24)&0xFF);
+            return index;
         }
 
         /**
