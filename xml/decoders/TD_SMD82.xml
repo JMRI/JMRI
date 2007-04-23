@@ -2,14 +2,16 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: TD_SMD82.xml,v 1.1 2007-01-08 00:42:52 jacobsen Exp $ -->
+<!-- $Id: TD_SMD82.xml,v 1.2 2007-04-23 02:46:48 jacobsen Exp $ -->
 <decoder-config showEmptyPanes="no">
-		<version author="td@teamdigital1.com" version="1.1" lastUpdated="20061008"/>
+		<version author="td@teamdigital1.com" version="1.3" lastUpdated="20070420"/>
 		<version author="td@teamdigital1.com" version="1.2" lastUpdated="20061017"/>
+		<version author="td@teamdigital1.com" version="1.1" lastUpdated="20061008"/>
 					
 		<!-- Version 1 inital release -->
 		<!-- Version 1.1 release fixed route group address - 10/8/06 -->
 		<!-- Version 1.2 release fixed pri2 & sec3 input route number - 10/17/06 -->
+		<!-- Version 1.3 release fixed output addresses - 4/20/07 -->
 		
 <decoder>
 	<family name="Stationary Decoder" mfg="Team Digital" type="stationary">
@@ -21,7 +23,7 @@
 
 	<variables>
 			
-		<variable label="Output 1 Address" CV="1" mask="XXVVVVVV"  default="1" tooltip="Range 1-2040">
+		<variable label="Output 1 Address" CV="1" mask="VVVVVVVV"  default="1" tooltip="Range 1-2040">
 			<splitVal highCV="9" upperMask="XXXXVVVV"/> </variable>
 
 		<variable label="On Time CV value" CV="2" mask="XVVVVVVV" default="31">
@@ -103,19 +105,19 @@
 				</enumVal>
 			</variable>
 			
-		<variable label="Output 2 Address" CV="14" mask="XXVVVVVV"  default="2" tooltip="Range 1-2040">
+		<variable label="Output 2 Address" CV="14" mask="VVVVVVVV"  default="2" tooltip="Range 1-2040">
 			<splitVal highCV="15" upperMask="XXXXVVVV"/> </variable>
-		<variable label="Output 3 Address" CV="16" mask="XXVVVVVV"  default="3" tooltip="Range 1-2040">
+		<variable label="Output 3 Address" CV="16" mask="VVVVVVVV"  default="3" tooltip="Range 1-2040">
 			<splitVal highCV="17" upperMask="XXXXVVVV"/> </variable>
-		<variable label="Output 4 Address" CV="18" mask="XXVVVVVV"  default="4" tooltip="Range 1-2040">
+		<variable label="Output 4 Address" CV="18" mask="VVVVVVVV"  default="4" tooltip="Range 1-2040">
 			<splitVal highCV="19" upperMask="XXXXVVVV"/> </variable>
-		<variable label="Output 5 Address" CV="20" mask="XXVVVVVV"  default="5" tooltip="Range 1-2040">
+		<variable label="Output 5 Address" CV="20" mask="VVVVVVVV"  default="5" tooltip="Range 1-2040">
 			<splitVal highCV="21" upperMask="XXXXVVVV"/> </variable>
-		<variable label="Output 6 Address" CV="22" mask="XXVVVVVV"  default="6" tooltip="Range 1-2040">
+		<variable label="Output 6 Address" CV="22" mask="VVVVVVVV"  default="6" tooltip="Range 1-2040">
 			<splitVal highCV="23" upperMask="XXXXVVVV"/> </variable>
-		<variable label="Output 7 Address" CV="24" mask="XXVVVVVV"  default="7" tooltip="Range 1-2040">
+		<variable label="Output 7 Address" CV="24" mask="VVVVVVVV"  default="7" tooltip="Range 1-2040">
 			<splitVal highCV="25" upperMask="XXXXVVVV"/> </variable>
-		<variable label="Output 8 Address" CV="26" mask="XXVVVVVV"  default="8" tooltip="Range 1-2040">
+		<variable label="Output 8 Address" CV="26" mask="VVVVVVVV"  default="8" tooltip="Range 1-2040">
 			<splitVal highCV="27" upperMask="XXXXVVVV"/> </variable>			
 			
 		<variable label="Select Power On Option" CV="29" mask="XXXXXXVV" default="00">
