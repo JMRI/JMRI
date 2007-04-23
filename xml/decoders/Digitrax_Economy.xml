@@ -2,15 +2,18 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2002, 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Digitrax_Economy.xml,v 1.4 2005-05-01 23:25:41 jacobsen Exp $ -->
+<!-- $Id: Digitrax_Economy.xml,v 1.5 2007-04-23 04:08:11 jacobsen Exp $ -->
 <decoder-config>
+		<version author="Bob Jacobsen" 
+					version="3" lastUpdated="20070422"/>
 		<version author="Michael Mosher mjmx@comcast.net" 
 					version="2" lastUpdated="20050112"/>
 
 		<!-- Created from version 10 of the 1x3 file -->
 
       <!-- Version 1.1 - changed spelling of "behavior" (Jack Shall) -->
-      <!-- Version 2 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" - Bob Jacobsen -->
+      <!-- Version 2 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" -->
+      <!-- Version 3 - added reset entries - Bob Jacobsen -->
 	
 <decoder>
 	<family name="Economy Series 3 with FX3, silent" 
@@ -766,6 +769,11 @@
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 
 	</variables>
+
+  <resets>
+  	<factReset label="Reset All CVs" CV="8" default="8"/>
+  	<factReset label="Reset All CVs except speed table" CV="8" default="9"/>
+  </resets>
 
 </decoder>
 
