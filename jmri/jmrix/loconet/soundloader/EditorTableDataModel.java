@@ -26,7 +26,7 @@ import javax.swing.table.TableColumnModel;
  * Table data model for display of Digitrax SPJ files
  * @author		Bob Jacobsen   Copyright (C) 2003, 2006
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.3 $
+ * @version		$Revision: 1.4 $
  */
 public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 
@@ -134,7 +134,9 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
                 return res.getString("ButtonView");
             else return null;
         case REPLACEBUTTONCOL:
-            return res.getString("ButtonReplace");
+            if (file.getHeader(row+1).isWAV())
+                return res.getString("ButtonReplace");
+            else return null;
         default:
             log.error("internal state inconsistent with table requst for "+row+" "+col);
             return null;
@@ -182,13 +184,41 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
             } else if (file.getHeader(row+1).isSDF()) {
                 viewSdfButtonPressed(value, row, col);
                 return;
-            } else return;            
+            } 
+        } else if (col==REPLACEBUTTONCOL) { 
+            // button fired, handle
+            if (file.getHeader(row+1).isWAV())
+                replWavButtonPressed(value, row, col);
         }
     }
 
     // should probably be abstract and put in invoking GUI
+    static JFileChooser chooser;  // shared across all uses
+    void replWavButtonPressed(Object value, int row, int col) {
+        if (chooser == null) chooser = new JFileChooser(System.getProperty("user.dir"));
+        int retVal = chooser.showOpenDialog(null);
+        if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
+        
+        // load file
+        jmri.jmrit.sound.WavBuffer buff;
+        try { 
+            buff = new jmri.jmrit.sound.WavBuffer(chooser.getSelectedFile());
+        } catch (Exception e) {
+            log.error("Exception loading file: "+e);
+            return;
+        }
+        // store to memory
+        file.getHeader(row+1).setContent(buff.getByteArray(), buff.getDataStart(), buff.getDataSize());
+        // update rest of header
+        file.getHeader(row+1).setName(chooser.getSelectedFile().getName());
+
+        // mark table changes in other rows
+        fireTableRowsUpdated(row, row);
+    }
+    
+    // should probably be abstract and put in invoking GUI
     void playButtonPressed(Object value, int row, int col) {
-        new jmri.jmrit.sound.WavBuffer(file.getHeader(row+1).getByteArray());
+        // new jmri.jmrit.sound.WavBuffer(file.getHeader(row+1).getByteArray());
         jmri.jmrit.sound.SoundUtil.playSoundBuffer(file.getHeader(row+1).getByteArray());
     }
 
