@@ -8,7 +8,7 @@ import junit.framework.*;
  * Invokes complete set of tests in the jmri.jmrit.sound tree
  *
  * @author	    Bob Jacobsen  Copyright 2001, 2003
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class SoundTest extends TestCase {
 
@@ -25,7 +25,8 @@ public class SoundTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrit.sound.SoundTest");   // no tests in this class itself
+        TestSuite suite = new TestSuite("jmri.jmrit.sound.SoundTest");
+        suite.addTest(jmri.jmrit.sound.WavBufferTest.suite());
         suite.addTest(jmri.jmrit.sound.SoundUtilTest.suite());
         return suite;
     }
