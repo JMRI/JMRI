@@ -28,7 +28,7 @@ package jmri.jmrix.nce;
  *	1 = bad accy/signal address
  *
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class NceBinaryCommand {

@@ -19,8 +19,7 @@ package jmri.jmrix.nce;
  * See the {@link #setCommandOptions(int)} method for more information.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
