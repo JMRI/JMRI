@@ -17,7 +17,7 @@ import jmri.Turnout;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class NceTurnout extends AbstractTurnout {
 
@@ -72,7 +72,7 @@ public class NceTurnout extends AbstractTurnout {
  
     	if (NceMessage.getCommandOptions() >= NceMessage.OPTION_2006) {
     		
-    		byte [] bl = NceCommand.accDecoderPkt(_number, closed);
+    		byte [] bl = NceBinaryCommand.accDecoder(_number, closed);
     		
     		if (log.isDebugEnabled()) log.debug("Command: "
                     						+Integer.toHexString(0xFF & bl[0])
@@ -81,7 +81,7 @@ public class NceTurnout extends AbstractTurnout {
                     						+" "+Integer.toHexString(0xFF & bl[3])
                     						+" "+Integer.toHexString(0xFF & bl[4]));
     		
-    		NceMessage m = NceMessage.sendCommandMessage(bl);
+    		NceMessage m = NceMessage.createBinaryMessage(bl);
 
     		NceTrafficController.instance().sendNceMessage(m, null);
 

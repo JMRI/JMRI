@@ -20,7 +20,7 @@ package jmri.jmrix.nce;
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -287,7 +287,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             return m;
         }
     }
-    static public NceMessage sendCommandMessage(byte[] bytes) {
+    static public NceMessage createBinaryMessage(byte[] bytes) {
         if (getCommandOptions() < OPTION_2004)
             log.error("Attempt to send NCE command to EPROM built before 2004");
         if (bytes.length<1 || bytes.length>20)
