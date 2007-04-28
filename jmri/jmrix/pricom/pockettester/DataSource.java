@@ -21,7 +21,7 @@ import java.io.DataInputStream;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class DataSource extends JFrame {
 
@@ -345,7 +345,7 @@ public class DataSource extends JFrame {
     DataInputStream serialStream = null;
     OutputStream ostream = null;
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MonitorFrame.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DataSource.class.getName());
 
     /**
      * Internal class to handle the separate character-receive thread
