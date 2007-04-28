@@ -1,24 +1,17 @@
-/**
- * MakePacket.java
- *
- * Description:		<describe the MakePacket class here>
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version  $Revision: 1.7 $
- */
+// MakePacket.java
+
 package jmri.jmrix.direct;
 
 /**
  * Provide utilities for coding/decoding NMRA S&RP DCC packets into
  * sequences to send through a standard serial port.
- *
- * This is strongly based (e.g. copied ) on the makepckt.c file
+ * <P>
+ * This is strongly based on the makepckt.c file
  * from the PacketScript 1.1. package of Kenneth Rice. The original header
  * comment from that file follows here.
  *
  *
- */
-
-/**
+ * <pre>
  *
  * Some Useful Background information
  *
@@ -67,10 +60,8 @@ package jmri.jmrix.direct;
  * If we ever need to generate a pattern of four '1's followed by a '0' and
  * land it on a the start of a byte boundary - Sorry - it can't be done !!
  *
- */
-
-
-/* makepckt.c
+ *
+ * makepckt.c
  *
  * Send an nmra packet out the serial port in such a way that the signal can
  * just be amplified and put on the track.
@@ -90,6 +81,11 @@ package jmri.jmrix.direct;
  * 			03/05/93	Works for all 3 byte packets. Still errors for 4 byte.
  *			07/01/93	Renamed to makepckt.c to be nice to dos users.
  *			10/23/93	Added backtracking and max length.
+ * </pre>
+ *
+ * @author	 Bob Jacobsen Copyright (C) 2001
+ * @version  $Revision: 1.8 $
+ *
  */
 
 public class MakePacket {
@@ -122,7 +118,7 @@ public class MakePacket {
 
   /**
    * function to set the Preamble Length - Default is 15 NRMA '1's
-   * Every NRMA packet decoded starts with a preamble
+   * Every NMRA packet decoded starts with a preamble
    * Service mode requires longer preambles
    * Thus this public function allowing user to define the lenght of desired
    * preamble
@@ -189,13 +185,13 @@ public class MakePacket {
   /* BitStreamToSerialBytes
    *
    * Generate the serial bytes from the bit stream.
-   *
-   * Bassically this is a depth first, prune largest tree search, always going down the subtree
+   * <P>
+   * Basically this is a depth first, prune largest tree search, always going down the subtree
    * that uses the most bits for the next byte. If we get an error, backtrack up
    * the tree until we reach a node that we have not completely traversed all the
    * subtrees for and try going down the subtree that uses the second most bits.
    * Keep going until we finish converting the packet or run out of things to try.
-   *
+   * <P>
    *
    * This is not guaranteed to find the shortest serial stream for a given
    * packet, but it is guaranteed to find a stream if one exists. Also, it
@@ -323,8 +319,9 @@ public class MakePacket {
 
   /* ReadFirstChild
    *
-   * This routine find the first largest (ie longest lenght) child
-   * at this node          *
+   * This routine find the first largest (ie longest length) child
+   * at this node          
+   *
    * BS		- (INPUT) Bit stream array
    * offset       - Offset in to buffer
    * validBits	- (INPUT) number of valid bits in the bit stream.
