@@ -6,7 +6,7 @@ package jmri;
  * Default implementation of the basic logic of the SignalHead interface.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public abstract class DefaultSignalHead extends AbstractSignalHead {
 
@@ -21,13 +21,13 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
     public void setAppearance(int newAppearance) {
         int oldAppearance = mAppearance;
         mAppearance = newAppearance;
-        if ( (newAppearance == FLASHGREEN) ||
+        if ( mLit && ((newAppearance == FLASHGREEN) ||
             (newAppearance == FLASHYELLOW) ||
-            (newAppearance == FLASHRED) )
+            (newAppearance == FLASHRED) ) )
                 startFlash();
-        if ( (newAppearance != FLASHGREEN) &&
+        if ( (!mLit) || ( (newAppearance != FLASHGREEN) &&
             (newAppearance != FLASHYELLOW) &&
-            (newAppearance != FLASHRED) )
+            (newAppearance != FLASHRED) ) )
                 stopFlash();
                 
   		if (oldAppearance != newAppearance) {
@@ -54,11 +54,17 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         
     }
     
+    /**
+     * Set the held parameter.
+     * <P>
+     * Note that this does not directly effect the output on the layout;
+     * the held parameter is a local variable which effects the aspect
+     * only via higher-level logic
+     */
     public void setHeld(boolean newHeld) {
         boolean oldHeld = mHeld;
         mHeld = newHeld;
         if (oldHeld != newHeld) {
-            updateOutput();
             // notify listeners, if any
             firePropertyChange("Held", new Boolean(oldHeld), new Boolean(newHeld));
         }
