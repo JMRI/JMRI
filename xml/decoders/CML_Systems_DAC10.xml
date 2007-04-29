@@ -1,18 +1,17 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- Copyright (C) JMRI 2007 All rights reserved -->
+<!-- Copyright (C) JMRI 2002, 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
 <decoder-config>
-                <version author="Martin Gostling ingleborough@yahoo.com" version="1" lastUpdated="20060314"/>
+                <version author="Martin Gostling ingleborough@yahoo.com" version="2" lastUpdated="20070430"/>
+                <version author="Martin Gostling ingleborough@yahoo.com" version="1" lastUpdated="20070314"/>
                 <!-- Created from version 14 of the digitrax_yDS54 file -->
 
 <decoder>
-	<family name="DAC10"
-			mfg="CML Systems"
-				comment="DAC10 is a stationary decoder, but it can be programmed in the usual way">
-                <model model="DAC10" lowVersionID="1">
+	<family name="DAC10" mfg="CML Systems" comment="DAC10 is a stationary decoder, but it can be programmed in the usual way">
+        <model model="DAC10" lowVersionID="1">
 			</model>
-	</family>
+		</family>
 
 	<programming direct="no" paged="yes"
 	                     register="no" ops="no"></programming>
@@ -964,35 +963,35 @@
 				</enumVal>
 			</variable>
 
-		<variable label="Turnout 1 cascaded turnout address" CV="40" mask="VVVVVVVV">
+		<variable label="Turnout 1 follows turnout address" CV="40" mask="VVVVVVVV">
 			<decVal min="0" max="8"/>
 			</variable>
 
-		<variable label="Turnout 2 cascaded turnout address" CV="41" mask="VVVVVVVV">
+		<variable label="Turnout 2 follows turnout address" CV="41" mask="VVVVVVVV">
 			<decVal min="0" max="8"/>
 			</variable>
 
-		<variable label="Turnout 3 cascaded turnout address" CV="42" mask="VVVVVVVV">
+		<variable label="Turnout 3 follows turnout address" CV="42" mask="VVVVVVVV">
 			<decVal min="0" max="8"/>
 			</variable>
 
-		<variable label="Turnout 4 cascaded turnout address" CV="43" mask="VVVVVVVV">
+		<variable label="Turnout 4 follows turnout address" CV="43" mask="VVVVVVVV">
 			<decVal min="0" max="8"/>
 			</variable>
 
-		<variable label="Turnout 5 cascaded turnout address" CV="44" mask="VVVVVVVV">
+		<variable label="Turnout 5 follows turnout address" CV="44" mask="VVVVVVVV">
 			<decVal min="0" max="8"/>
 			</variable>
 
-		<variable label="Turnout 6 cascaded turnout address" CV="45" mask="VVVVVVVV">
+		<variable label="Turnout 6 follows turnout address" CV="45" mask="VVVVVVVV">
 			<decVal min="0" max="8"/>
 			</variable>
 
-		<variable label="Turnout 7 cascaded turnout address" CV="46" mask="VVVVVVVV">
+		<variable label="Turnout 7 follows turnout address" CV="46" mask="VVVVVVVV">
 			<decVal min="0" max="8"/>
 			</variable>
 
-		<variable label="Turnout 8 cascaded turnout address" CV="47" mask="VVVVVVVV">
+		<variable label="Turnout 8 follows turnout address" CV="47" mask="VVVVVVVV">
 			<decVal min="0" max="8"/>
 			</variable>
 
@@ -1546,14 +1545,14 @@
 
 <pane name="DAC10 Cascaded Turnouts">
 	<column>
-		<display item="Turnout 1 cascaded turnout address" />
-		<display item="Turnout 2 cascaded turnout address" />
-		<display item="Turnout 3 cascaded turnout address" />
-		<display item="Turnout 4 cascaded turnout address" />
-		<display item="Turnout 5 cascaded turnout address" />
-		<display item="Turnout 6 cascaded turnout address" />
-		<display item="Turnout 7 cascaded turnout address" />
-		<display item="Turnout 8 cascaded turnout address" />
+		<display item="Turnout 1 follows turnout address" />
+		<display item="Turnout 2 follows turnout address" />
+		<display item="Turnout 3 follows turnout address" />
+		<display item="Turnout 4 follows turnout address" />
+		<display item="Turnout 5 follows turnout address" />
+		<display item="Turnout 6 follows turnout address" />
+		<display item="Turnout 7 follows turnout address" />
+		<display item="Turnout 8 follows turnout address" />
 	</column>
 </pane>
 
