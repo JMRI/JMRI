@@ -3,12 +3,12 @@
 package jmri.jmrix.pricom.pockettester;
 
 /**
- * Simple GUI for access to PRICOM Pocket Monitor
+ * Simple GUI for access to PRICOM Pocket Monitor.
  * <P>
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2005
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class MonitorFrame extends jmri.jmrix.AbstractMonFrame implements DataListener {
 

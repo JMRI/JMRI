@@ -6,12 +6,12 @@ import javax.swing.*;
 import com.sun.java.util.collections.Hashtable;
 
 /**
- * Simple to display DCC status from Pocket Tester
+ * Simple to display DCC status from Pocket Tester.
  * <P>
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2005
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class StatusFrame extends javax.swing.JFrame implements DataListener {
 

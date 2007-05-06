@@ -6,10 +6,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 /**
- * 
+ * Swing action to create and register a PacketTable frame.
  *
  * @author	Bob Jacobsen    Copyright (C) 2005
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 public abstract class PacketTableAction extends AbstractAction {
