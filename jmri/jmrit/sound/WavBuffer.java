@@ -10,7 +10,7 @@ import javax.sound.sampled.*;
  * Wrap a byte array to provide WAV file functionality
  *
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 
 public class WavBuffer {
@@ -48,7 +48,7 @@ public class WavBuffer {
     
     /**
      * Find a specific header in the .wav fragment
-     * @returns offset of the 1st byte of the header in the buffer
+     * @return offset of the 1st byte of the header in the buffer
      */
     public int findHeader(int i1, int i2, int i3, int i4) {
         // find chunk and set offset
