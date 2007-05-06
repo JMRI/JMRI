@@ -13,7 +13,7 @@ import java.io.OutputStream;
 import java.io.DataInputStream;
 
 /**
- * Simple GUI for controlling the PRICOM Pocket Tester
+ * Simple GUI for controlling the PRICOM Pocket Tester.
  * <P>
  * When opened, the user must first select a serial port and click "Start".
  * The rest of the GUI then appears.
@@ -21,7 +21,7 @@ import java.io.DataInputStream;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class DataSource extends JFrame {
 
