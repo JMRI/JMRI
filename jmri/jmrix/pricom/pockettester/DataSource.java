@@ -21,11 +21,30 @@ import java.io.DataInputStream;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
-public class DataSource extends JFrame {
+public class DataSource extends jmri.util.JmriJFrame {
 
-    DataSource self;
+    static DataSource existingInstance;
+    
+    /**
+     * Provide access to a defined DataSource object.
+     *<p>
+     * Note that this can be used to get the DataSource
+     * object once it's been created, even if it's not connected
+     * to the hardware yet.
+     *
+     * @returns null until a DataSource has been created.
+     */
+    static public DataSource instance() { return existingInstance; }
+    
+    void setInstance(DataSource source) {
+        if (existingInstance != null)
+            log.error("Setting instance after it has already been set");
+        else
+            existingInstance = source;
+    }
+    
     Vector portNameVector = null;
     SerialPort activeSerialPort = null;
     static java.util.ResourceBundle rb 
@@ -73,7 +92,7 @@ public class DataSource extends JFrame {
         p1.add(openPortButton);
         getContentPane().add(p1);
 
-        self = this;
+        setInstance(this);  // not done until init is basically complete
         
         // Done, get ready to display
         pack();
@@ -150,12 +169,10 @@ public class DataSource extends JFrame {
         p4.setLayout(new BoxLayout(p4, BoxLayout.X_AXIS));
         p4.add(new JLabel(rb.getString("LabelToOpen")));
         
-        self = this;
-        
         { 
             MonitorAction a = new MonitorAction() {
                 public void connect(DataListener l) {
-                    self.addListener(l);
+                    DataSource.this.addListener(l);
                 }
             };
             JButton b = new JButton((String)a.getValue(Action.NAME));
@@ -166,8 +183,8 @@ public class DataSource extends JFrame {
         {
             PacketTableAction p = new PacketTableAction() {
                 public void connect(DataListener l) {
-                    self.addListener(l);
-                    ((PacketTableFrame)l).setSource(self);
+                    DataSource.this.addListener(l);
+                    ((PacketTableFrame)l).setSource(DataSource.this);
                 }
             };
             JButton b = new JButton((String)p.getValue(Action.NAME));
@@ -178,8 +195,8 @@ public class DataSource extends JFrame {
         {
             StatusAction a = new StatusAction() {
                 public void connect(StatusFrame l) {
-                    self.addListener(l);
-                    l.setSource(self);
+                    DataSource.this.addListener(l);
+                    l.setSource(DataSource.this);
                 }
             };
             JButton b = new JButton((String)a.getValue(Action.NAME));
