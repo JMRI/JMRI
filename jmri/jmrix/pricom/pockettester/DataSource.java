@@ -21,7 +21,7 @@ import java.io.DataInputStream;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class DataSource extends jmri.util.JmriJFrame {
 
@@ -34,7 +34,7 @@ public class DataSource extends jmri.util.JmriJFrame {
      * object once it's been created, even if it's not connected
      * to the hardware yet.
      *
-     * @returns null until a DataSource has been created.
+     * @return null until a DataSource has been created.
      */
     static public DataSource instance() { return existingInstance; }
     

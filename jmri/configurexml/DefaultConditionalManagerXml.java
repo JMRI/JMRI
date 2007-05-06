@@ -15,7 +15,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class DefaultConditionalManagerXml implements XmlAdapter {
 
@@ -98,7 +98,7 @@ public class DefaultConditionalManagerXml implements XmlAdapter {
      * Subclass provides implementation to create the correct top
      * element, including the type information.
      * Default implementation is to use the local class here.
-     * @param logixs The top-level element being created
+     * @param conditionals The top-level element being created
      */
     public void setStoreElementClass(Element conditionals) {
         conditionals.addAttribute("class","jmri.configurexml.DefaultConditionalManagerXml");
@@ -124,7 +124,7 @@ public class DefaultConditionalManagerXml implements XmlAdapter {
      * Utility method to load the individual Logix objects.
      * If there's no additional info needed for a specific logix type,
      * invoke this with the parent of the set of Logix elements.
-     * @param logixs Element containing the Logix elements to load.
+     * @param conditionals Element containing the Logix elements to load.
      */
     public void loadConditionals(Element conditionals) {
 		List conditionalList = conditionals.getChildren("conditional");
