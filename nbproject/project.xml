@@ -17,6 +17,16 @@
                     <type>java</type>
                     <location>src/apps</location>
                 </source-folder>
+                <source-folder>
+                    <label>test/jmri</label>
+                    <type>java</type>
+                    <location>test/jmri</location>
+                </source-folder>
+                <source-folder>
+                    <label>test/apps</label>
+                    <type>java</type>
+                    <location>test/apps</location>
+                </source-folder>
             </folders>
             <ide-actions>
                 <action name="build">
@@ -52,6 +62,14 @@
                         <label>src/apps</label>
                         <location>src/apps</location>
                     </source-folder>
+                    <source-folder style="packages">
+                        <label>test/jmri</label>
+                        <location>test/jmri</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>test/apps</label>
+                        <location>test/apps</location>
+                    </source-folder>
                     <source-file>
                         <location>build.xml</location>
                     </source-file>
@@ -67,11 +85,25 @@
             </view>
             <subprojects/>
         </general-data>
-        <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/1">
+        <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/2">
             <compilation-unit>
                 <package-root>src/jmri</package-root>
+                <classpath mode="compile">lib/collections.jar:lib/comm.jar:lib/crimson.jar:lib/jdom-jdk11.jar:lib/jh.jar:lib/junit.jar:lib/jython.jar:lib/log4j.jar:lib/MRJAdapter.jar:lib/Serialio.jar:classes</classpath>
+                <source-level>1.3</source-level>
+            </compilation-unit>
+            <compilation-unit>
                 <package-root>src/apps</package-root>
                 <classpath mode="compile">lib/collections.jar:lib/comm.jar:lib/crimson.jar:lib/jdom-jdk11.jar:lib/jh.jar:lib/junit.jar:lib/jython.jar:lib/log4j.jar:lib/MRJAdapter.jar:lib/Serialio.jar:classes</classpath>
+                <source-level>1.3</source-level>
+            </compilation-unit>
+            <compilation-unit>
+                <package-root>test/jmri</package-root>
+                <unit-tests/>
+                <source-level>1.3</source-level>
+            </compilation-unit>
+            <compilation-unit>
+                <package-root>test/apps</package-root>
+                <unit-tests/>
                 <source-level>1.3</source-level>
             </compilation-unit>
         </java-data>
