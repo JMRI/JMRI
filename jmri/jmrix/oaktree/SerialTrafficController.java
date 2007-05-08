@@ -27,7 +27,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003, 2006
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -243,8 +243,6 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     }
 
     protected void handleTimeout(AbstractMRMessage m) {
-        // don't use super behavior, as timeout to init, transmit message is normal
-
         // inform node, and if it resets then reinitialize 
         if (nodeArray[curSerialNodeIndex] != null)      
             if (nodeArray[curSerialNodeIndex].handleTimeout(m)) 
@@ -254,9 +252,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     }
     
     protected void resetTimeout(AbstractMRMessage m) {
-        // don't use super behavior, as timeout to init, transmit message is normal
-
-        // and inform node
+        // inform node
         nodeArray[curSerialNodeIndex].resetTimeout(m);
         
     }
