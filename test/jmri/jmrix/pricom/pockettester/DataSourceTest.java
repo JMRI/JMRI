@@ -10,12 +10,16 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the DataSource class
  * @author		Bob Jacobsen  Copyright 2005
- * @version		$Revision: 1.2 $
+ * @version		$Revision: 1.3 $
  */
 public class DataSourceTest extends TestCase {
 
     public void testCreate() {
-        new DataSource();
+        Assert.assertTrue("no instance before ctor", DataSource.instance() == null);
+        DataSource d = new DataSource();
+        Assert.assertTrue("no instance after ctor", DataSource.instance() == null);
+        d.init();
+        Assert.assertTrue("valid instance after init", DataSource.instance() != null);
     }
 
 
@@ -34,7 +38,9 @@ public class DataSourceTest extends TestCase {
 
     }
 
-
+    // avoid spurious error messages
+    void setup() { DataSource.existingInstance = null; }
+    
     // from here down is testing infrastructure
     public DataSourceTest(String s) {
         super(s);
