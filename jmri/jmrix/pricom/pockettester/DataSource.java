@@ -21,7 +21,7 @@ import java.io.DataInputStream;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class DataSource extends jmri.util.JmriJFrame {
 
@@ -52,8 +52,21 @@ public class DataSource extends jmri.util.JmriJFrame {
 
     JLabel version = new JLabel("");  // hold version label when returned
     
-    // populate the GUI, invoked as part of startup
+    /**
+     * Old form of populating the GUI.
+     * <P>
+     * Use {@link #initComponents()} now.
+     * @deprecated
+     */
     protected void init() {
+        initComponents();
+    }
+    
+    /**
+     * Populate the GUI.
+     * @since 1.7.7
+     */
+    public void initComponents() {
         setTitle(rb.getString("TitleSource"));
         
         // set layout manager

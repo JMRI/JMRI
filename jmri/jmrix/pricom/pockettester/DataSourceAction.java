@@ -2,43 +2,34 @@
 
 package jmri.jmrix.pricom.pockettester;
 
-import javax.swing.AbstractAction;
-import java.awt.event.ActionEvent;
-
 /**
- * Action to create and register a
+ * JmriJFrameAction to create and register a
  * pricom.pockettester.DataSource object
  *
  * @see jmri.jmrix.pricom.pockettester.DataSource
  *
  * @author			Bob Jacobsen    Copyright (C) 2002,2005
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
-public class DataSourceAction extends AbstractAction  {
+public class DataSourceAction extends jmri.util.JmriJFrameAction  {
 
-    public DataSourceAction(String s) { super(s);}
+    public DataSourceAction(String s) { super(s);}        
     public DataSourceAction() {
+        super(""); // have to invoke a ctor that exists
         java.util.ResourceBundle rb 
             = java.util.ResourceBundle.getBundle("jmri.jmrix.pricom.pockettester.TesterBundle");
         putValue(javax.swing.Action.NAME, rb.getString("ActionSource"));
     }
-        
 
-    public void actionPerformed(ActionEvent e) {
-		// create a SerialDriverFrame
-		DataSource f = new DataSource();
-		try {
-			f.init();
-			}
-		catch (Exception ex) {
-			log.error("starting DataSource caught exception: "+ex.toString());
-			}
-		f.setVisible(true);
-	};
+     /**
+      * Method to be overridden to make this work.
+      * Provide a completely qualified class name,
+      * must be castable to JmriJFrame
+      */
+    public String getName() { return "jmri.jmrix.pricom.pockettester.DataSource"; }
 
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DataSourceAction.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DataSourceAction.class.getName());
 
 }
-
 
 /* @(#)DataSourceAction.java */
