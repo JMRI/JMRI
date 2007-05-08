@@ -1,21 +1,16 @@
 # runtime target - top level project runtime contents
 runtime -a xml lib resources help jython
+# jython target moves it from the scripts part of repository to top level
+jython -d jython scripts/jython
 
 # java-contents target - the common java parts of a build directory
 # including the minimal scripts for Ant use
-java-contents -a java1 java2 java3 java4
+java-contents -a java1 java2 java3 java4 netbeansfiles
 java1 -a java
 java2 -d java/src &jmri &apps &resources
 java3 -d java &test
 java4 -d java &lib
-
-# build a JBuilder project directory in standard form
-# Note that this does not work from JBuilder itself!
-jbuilder -a runtime jbuilderfiles java-contents
-# build the java/ directory, which contains the actual JBuilder project
-jbuilderfiles  -a jbuilder0 jbuilder1
-jbuilder0 -d java scripts jmri.jpx
-jbuilder1 -d java scripts JMRILibraries.library
+netbeansfiles -d java &nbproject
 
 # check target - The Java 1.1.8 libraries and needed build files
 # use 'all' or 'ant' target with this
@@ -24,15 +19,9 @@ check1 -d java scripts check.xml
 check2 -d java scripts synchlist.csh
 check3 -d java &lib118
 
-# netbeans target - NetBeans directory in standard form
-netbeans -a runtime java-contents netbeans1
-netbeans1 -d java &nbproject
-
 # build the java/ directory for ant, netbeans and jbuilder
-all -a runtime jbuilderfiles antfiles netbeans java-contents
+all -a runtime java-contents
 
-# jython target moves it from the scripts part of repository to top level
-jython -d jython scripts/jython
 
 # properties target; all the properties files. Maintained manually!
 properties -a \
