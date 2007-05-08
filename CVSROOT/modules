@@ -23,8 +23,12 @@ check3 -d java &lib118
 # runtime target - top level project runtime contents
 runtime -a xml lib resources help jython
 
-# ant target - Ant directory in standard form, includes jbuilder
+# ant target - Ant directory in standard form
 ant -a runtime antfiles java
+
+# netbeans target - NetBeans directory in standard form
+netbeans -a runtime antfiles java netbeans1
+netbeans1 -d java &nbproject
 
 # build the java/ directory for ant, including build.xml
 antfiles  -a ant0 ant1 ant2
@@ -32,8 +36,8 @@ ant0 -d java scripts build.xml
 ant1 -d java scripts manifest
 ant2 -d java scripts runtest.csh
 
-# build the java/ directory for both ant and jbuilder
-all -a runtime jbuilderfiles antfiles java
+# build the java/ directory for ant, netbeans and jbuilder
+all -a runtime jbuilderfiles antfiles netbeans java
 
 jython -d jython scripts/jython
 
