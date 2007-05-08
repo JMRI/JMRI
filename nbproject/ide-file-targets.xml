@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir=".." name="JMRI-IDE">
+    <!-- TODO: edit the following target according to your needs -->
+    <!-- (more info: http://www.netbeans.org/kb/55/freeform-config.html#compilesingle) -->
+    <target name="compile-selected-files-in-jmri">
+        <fail unless="files">Must set property 'files'</fail>
+        <!-- TODO decide on and define some value for ${build.classes.dir} -->
+        <mkdir dir="${build.classes.dir}"/>
+        <javac destdir="${build.classes.dir}" includes="${files}" source="1.3" srcdir="src/jmri">
+            <classpath path="lib/collections.jar:lib/comm.jar:lib/crimson.jar:lib/jdom-jdk11.jar:lib/jh.jar:lib/junit.jar:lib/jython.jar:lib/log4j.jar:lib/MRJAdapter.jar:lib/Serialio.jar:classes"/>
+        </javac>
+    </target>
+</project>
