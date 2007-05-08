@@ -47,7 +47,7 @@ import com.sun.java.util.collections.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.60 $
+ * @version $Revision: 1.61 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -63,15 +63,17 @@ public class PanelEditor extends JmriJFrame {
     final public static Integer SENSORS   = new Integer(10);
     final public static Integer CLOCK     = new Integer(10);
 
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
+
     JTextField nextX = new JTextField("20",4);
     JTextField nextY = new JTextField("30",4);
 
-    JCheckBox editableBox = new JCheckBox("Panel items popup menus active");
-    JCheckBox positionableBox = new JCheckBox("Panel items can be repositioned");
-    JCheckBox controllingBox = new JCheckBox("Panel items control layout");
-    JCheckBox menuBox = new JCheckBox("Panel has menu");
+    JCheckBox editableBox = new JCheckBox(rb.getString("CheckBoxEditable"));
+    JCheckBox positionableBox = new JCheckBox(rb.getString("CheckBoxPositionable"));
+    JCheckBox controllingBox = new JCheckBox(rb.getString("CheckBoxControlling"));
+    JCheckBox menuBox = new JCheckBox(rb.getString("CheckBoxMenuBar"));
 
-    JButton labelAdd = new JButton("Add text:");
+    JButton labelAdd = new JButton(rb.getString("ButtonAddText"));
     JTextField nextLabel = new JTextField(10);
 
     JButton iconAdd = new JButton("Add icon:");
@@ -111,7 +113,7 @@ public class PanelEditor extends JmriJFrame {
 
     JButton backgroundAddButton = new JButton("Pick background image...");
 
-    public PanelEditor() { this("Panel Editor");}
+    public PanelEditor() { this(rb.getString("Title"));}
 
     public PanelEditor(String name) {
         super(name);
@@ -129,7 +131,6 @@ public class PanelEditor extends JmriJFrame {
 
         // add menu - not using PanelMenu, because it now
         // has other stuff in it?
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
         menuBar.add(fileMenu);
@@ -149,7 +150,7 @@ public class PanelEditor extends JmriJFrame {
             b.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     // prompt for name
-                    String newName = JOptionPane.showInputDialog(target, "Enter new name:");
+                    String newName = JOptionPane.showInputDialog(target, rb.getString("PromptNewName"));
                     if (newName==null) return;  // cancelled
 
                     if (getTarget().getTopLevelAncestor()!=null) ((JFrame)getTarget().getTopLevelAncestor()).setTitle(newName);
@@ -216,7 +217,7 @@ public class PanelEditor extends JmriJFrame {
             iconFrame.getContentPane().add(iconEditor);
             iconFrame.pack();
 
-            JButton j = new JButton("Change icon...");
+            JButton j = new JButton(rb.getString("ButtonChangeIcon"));
             j.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         iconFrame.setVisible(true);
@@ -262,7 +263,7 @@ public class PanelEditor extends JmriJFrame {
             turnoutRFrame.getContentPane().add(turnoutRIconEditor);
             turnoutRFrame.pack();
 
-            JButton j = new JButton("Change icons...");
+            JButton j = new JButton(rb.getString("ButtonChangeIcon"));
             j.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         turnoutRFrame.setVisible(true);
@@ -308,7 +309,7 @@ public class PanelEditor extends JmriJFrame {
             turnoutLFrame.getContentPane().add(turnoutLIconEditor);
             turnoutLFrame.pack();
 
-            JButton j = new JButton("Change icons...");
+            JButton j = new JButton(rb.getString("ButtonChangeIcon"));
             j.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         turnoutLFrame.setVisible(true);
@@ -353,7 +354,7 @@ public class PanelEditor extends JmriJFrame {
             sensorFrame.getContentPane().add(sensorIconEditor);
             sensorFrame.pack();
 
-            JButton j = new JButton("Change icons...");
+            JButton j = new JButton(rb.getString("ButtonChangeIcon"));
             j.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         sensorFrame.setVisible(true);
@@ -402,7 +403,7 @@ public class PanelEditor extends JmriJFrame {
             signalFrame.getContentPane().add(signalIconEditor);
             signalFrame.pack();
 
-            JButton j = new JButton("Change icons...");
+            JButton j = new JButton(rb.getString("ButtonChangeIcon"));
             j.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         signalFrame.setVisible(true);
