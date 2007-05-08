@@ -1,0 +1,221 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: NetBeans.html,v 1.1 2007-05-08 06:51:57 jacobsen Exp $ -->
+<html lang="en">
+<head>
+    <TITLE>
+ 	JMRI: Building with NetBeans
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code NetBeans">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+
+    <p class="skipLink"><a href="#mainContent" accesskey="2">Skip to main content</a></p>
+
+<!-- Header -->
+    <div id="header">
+	<!-- Logo -->
+	<a href="/" title="Return to home page" accesskey="1">
+	    <img src="/images/logo-jmri.gif" width="160" height="135" alt="JMRI Logo"> </a>
+	<!-- /Logo -->
+	<ul id="mainNav"> <!-- Top tool bar -->
+	   <li><a href="/download/"  title="Get the latest software">Download</a></li>
+	   <li><a href="/apps/"      title="Learn about JMRI applications">Applications</a></li>
+	   <li><a href="/hardware/"  title="What hardware does JMRI support">Hardware</a></li>
+	   <li><a href="/doc/Manual/"   title="Trouble-shooting, and FAQs">Manual</a></li>
+	   <li><a href="/doc/Technical/" title="Developing and extending JMRI">Developers</a></li>
+	   <li><A href="/community/" title="Who is JMRI">Acknowledgements</a></li>
+	</ul>
+
+	<div id="searchform"> <!--  Search Form -->
+	  <form id="search" method="get" action="http://www.google.com/custom">
+	     <label for="q" title="Search JMRI.SourceForge.net">search JMRI: </label>
+	     <input type="hidden" name="cof" value="LW:200;LH:95;L:http://JMRI.sourceforge.net/images/logo.gif;GIMP:#cc0000;T:black;ALC:#0000ff;GFNT:grey;LC:#990000;BGC:white;AH:center;VLC:purple;GL:0;GALT:#666633;AWFID:9262c37cefe23a86;">
+	    <input type="hidden" name="domains" value="JMRI.sourceforge.net">
+	    <input type="hidden" name="sitesearch" value="JMRI.sourceforge.net">
+	    <input type="text" id="q" name="q" accesskey="s" size="30">
+	    <input type="submit" id="submit" value="go">
+	  </form>
+       </div> <!--  End #searchform -->
+    </div> <!-- closes #header-->
+<!-- /Header -->
+
+<!-- Sidebar -->
+<!-- This is the common sidebar definition for Technical (developer) pages -->
+    <hr class="hide">
+
+    <div id="mBody">
+
+	<div id="side"> <!-- Block of text on left side of page -->
+	    <div style="text-align: center">Info on JMRI:</div>
+	    <dl>
+
+		<dt>Development tools</dt>
+		<dd>
+			<ul>
+			<LI><a href="getcode.html">Getting the code via CVS</a>
+			<LI><a href="CVSFAQ.html">CVS FAQs</a>
+			<LI><a href="Ant.html">Building with Ant</a>
+			<LI><a href="NetBeans.html">Building with NetBeans</a>
+			<LI><a href="XCode.html">Building with XCode</a>
+			<LI><a href="Eclipse.html">Building with Eclipse</a>
+			<LI><a href="JBuilder.html">Building with JBuilder</a>
+			</ul>
+		</dd>
+
+		<dt>Code Structure</dt>
+		<dd>
+			<ul>
+			<LI><a href="IntroStructure.html">Introduction</a>
+			<LI><a href="AppStructure.html">Application Structure</a>
+			<LI><a href=""></a>
+			<LI><a href="../../JavaDoc/doc">JavaDocs</a><ul>
+				<LI><a href="../../JavaDoc/doc/index-all.html">Name Index</a>
+				<LI><A HREF="../../JavaDoc/doc/index.html">Packages</A>
+				<LI><A HREF="../../JavaDoc/doc/allclasses-frame.html">Class heirarchy</A>
+				</UL>
+			<LI><a href="Threads.html">Threads</a>
+			<LI><a href="XmlPersistance.html">Xml Persistance</a>
+			</ul>
+		</dd>
+
+		<dt>Techniques and Standards</dt>
+		<dd>
+			<ul>
+			<LI><a href="RP.html">Recommended Practices</a>
+			<LI><a href="I8N.html">Internationalization</a>
+			<LI><a href="Logging.html">Logging &amp; Error Handling</a>
+			<LI><a href="Java118.html">Working with Java 1.1.8</a>
+			<LI><a href="JUnit.html">Unit testing with JUnit</a>
+			<LI><a href="Help.html">Providing help with JavaHelp</a>
+			</ul>
+		</dd>
+
+		<dt>How To</dt>
+		<dd>
+			<ul>
+			<LI><a href="NewType.html">Add a New Type</a>
+			<LI><a href="plugins.html">Extend with Plugins</a>
+			</ul>
+		</dd>
+
+	    </dl>
+	</div>
+<!-- /Sidebar -->
+
+
+	<div id="mainContent">
+	    <!-- -------- -->
+	    <!--  Teaser  --> <!-- Optional -->
+	    <!-- -------- -->
+
+
+	    <H1>JMRI: Building with NetBeans</H1>
+
+    <p>NetBeans 5.5 (available at <a href="http://www.netbeans.org">www.netbeans.org</a>) 
+    makes a great platform for working with JMRI.
+    The JMRI code is setup to work with NetBeans with almost no
+    additional setup.
+    (The description below is accurate for the MacOS X version of NetBeans. 
+    NetBeans is <i>supposed</i> to be identical across platforms, but this hasn't 
+    been checked on anything else). </p>
+    <p>NetBeans is a very powerful Integrated Development Environment (IDE),
+    which can make working with the JMRI code pretty easy.  But it takes a little
+    getting used to, and reading the tutorials on the 
+    <A HREF="http://www.netbeans.org/kb/55/quickstart.html">NetBeans web site<a/>
+    will be helpful.
+    </p>
+
+    <h2>Checking out code</h2>
+    
+    The easiest way to get the initial copy of the code is to 
+    directly check it out from CVS.  Once you've done that, it's
+    easy to get NetBeans to use it.
+    <P>
+    You can download the most recent source code via CVS using:
+<PRE>
+cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri login
+cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri co all 
+</PRE>
+(If asked for a password, just hit return)
+<P>
+This will create a number of subdirectories, including one named "java"
+that we'll reference below.
+      
+    </ul>
+
+    <p>The first time you build JMRI with NetBeans, you have to
+    tell it how to find the "JMRI Project", which contains the code.
+    After that, you can just reopen the project from the "Open Recent
+    Projects" list in the File menu, or the list of projects in the 
+    Projects window pane.
+    
+    </p>
+    <ul>
+      <li>Start NetBeans</li>
+      <li>From the "File" menu, select "Open Project"</li>
+      <li>A file-selector window opens</li>
+      <li>In the "File Format:" box at the bottom, select "Project Folder"</li>
+      <li>Navigate to the "java" folder created above, which will have a slightly different icon.
+          Select it, but don't double click it to open it.</li>
+      <li>Click "Open Project Folder"</li>
+    </ul>
+
+    <P>The project is now open and available for use.</P>
+    
+    <h2>Building and running JMRI</h2>
+
+    To build and run DecoderPro, all you have to do is select
+    "Run Main Project" from the Run menu, or click the Run icon in the tool bar.
+    
+    <h2>Updating the code from CVS</h2>
+
+    <p>From time to time, you can update the code to match the current 
+    repository contents. To do this, select the "Update All Files" from the 
+    CVS menu.</p>
+
+    <!-- Footer --><hr class="hide">
+    <div id="footer">
+      <ul id="bn">
+        <li><a href="/sitemap/">Site Map</a></li>
+        <li><a href="/contact/">Contact Us</a></li>
+      </ul>
+      <p>Thanks and congratulations to <a href="/community/" title="Who is JMRI">
+      all who contributed</a>! </p>
+      <p>Copyright © 1997 - 2005 JMRI Community. </p>
+      <p>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our 
+      trademarks. </p>
+      <p><a href="/Copyright.html">Additional information on copyright, 
+      trademarks and licenses is linked here.</a></p>
+      <p><br />
+      Site hosted by: <br />
+      <a href="http://sourceforge.net">
+      <img src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo">
+      </a>
+      </div>
+      <!-- /Footer -->
+      </div>
+      <!-- closes #mainContent-->
+    </div>
+    <!-- closes #mBody-->
+
+</body>
+
+</body>
+
+</html>
