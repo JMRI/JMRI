@@ -1,0 +1,101 @@
+BODY {
+	background: #DFEFFF;
+	margin-left: .25 in;
+	margin-right: .25 in;
+	font-family:  Chicago, Helvetica, sans-serif;
+	font-size: 13 pt;
+	color: #000000;
+	}
+	
+	
+H1 {	
+	text-align: center;
+	font-family: "Times Roman", Times, serif;
+	font-size: 36 pt;
+	font-style: italic;
+	font-weight: bold;
+	}
+	
+H2 {	
+	text-align: center;
+	font-family: "Times Roman", Times, serif;
+	font-size: 30 pt;
+	font-style: italic;
+	font-weight: bold;
+	}
+	
+H3 {	
+	text-align: center;
+	font-family: "Times Roman", Times, serif;
+	font-size: 24 pt;
+	font-style: normal;
+	font-weight: bold;
+	}
+
+
+H4 {	
+	text-align: left;
+	font-family: "Times Roman", Times, serif;
+	font-size: 18 pt;
+	font-style: italic;
+	font-weight: bold;
+	margin-left: .5in;
+	margin-top: .2in;
+	}
+	
+H5 {	
+	text-align: center;
+	font-family: "Times Roman", Times, serif;
+	font-size: 12 pt;
+	font-style: normal;
+	}
+
+DIV.BOXIT	{
+	border: black .3cm double;
+	background-color: #FFFFFF;
+	color: black;
+	padding: 25px;
+	margin: .25in, .25in, .25in, .25in;
+	}
+
+	
+P.BOXIT {
+	border: black .3cm double;
+	background-color: #FFFFFF;
+	color: black;
+	padding: 25px;
+	}
+	
+HR {
+	height: 8pt;
+	width: 100%;
+	color: #0000FF;
+	background-color: #0000FF;
+	padding: 5px;
+	}
+	
+
+P {
+	text-indent: .25in;
+	margin: .25in;
+	}
+
+
+SPAN.UPDATE {
+	color: #0051a2;
+	font-style: italic;
+	font-weight: bold;
+	}
+	
+SPAN.ACCENT {
+	color: #FF0000;
+	text-weight: bold;
+	}
+
+SPAN.BOXIT {
+	border: black .3cm double;
+	background-color: #FFFFFF;
+	color: black;
+	padding: 25px;
+	}
+
