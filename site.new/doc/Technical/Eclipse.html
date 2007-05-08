@@ -1,126 +1,132 @@
-<!doctype HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Eclipse.html,v 1.9 2007-03-19 01:27:42 jacobsen Exp $ -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: Eclipse.html,v 1.10 2007-05-08 06:51:44 jacobsen Exp $ -->
 <html lang="en">
-
 <head>
-<meta http-equiv="Content-Language" content="en-us">
-<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
-<meta name="ProgId" content="FrontPage.Editor.Document">
-<title>JMRI: Building with Eclipse</title>
-<meta content="Bob Jacobsen" name="Author">
-<meta name="keywords" content="JMRI technical code Eclipse">
-<!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-<!-- are an arbitrary design pattern used by the update.pl script to -->
-<!-- easily replace the common header/footer code for all the web pages -->
-<!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-<!-- or change them to reflect your alternative logo -->
+    <TITLE>
+ 	JMRI: Building with Eclipse
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code Eclipse">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
-<body>
 
-<p class="skipLink"><a href="#mainContent" accesskey="2">Skip to main content</a></p>
+    <p class="skipLink"><a href="#mainContent" accesskey="2">Skip to main content</a></p>
+
 <!-- Header -->
-<div id="header">
-  <!-- Logo -->
-  <p><a href="/" title="Return to home page" accesskey="1">
-  <img src="/images/logo-jmri.gif" width="160" height="135" alt="JMRI Logo"> </a>
-  <!-- /Logo --></p>
-  <ul id="mainNav">
-    <!-- Top tool bar -->
-    <li><a href="/download/" title="Get the latest software">Download</a></li>
-    <li><a href="/apps/" title="Learn about JMRI applications">Applications</a></li>
-    <li><a href="/hardware/" title="What hardware does JMRI support">Hardware</a></li>
-    <li><a href="/doc/Manual/" title="Trouble-shooting, and FAQs">Manual</a></li>
-    <li><a href="/doc/Technical/" title="Developing and extending JMRI">
-    Developers</a></li>
-    <li><a href="/community/" title="Who is JMRI">Acknowledgements</a></li>
-  </ul>
-  <div id="searchform">
-    <!--  Search Form -->
-    <form id="search" method="get" action="http://www.google.com/custom">
-      <p><label for="q" title="Search JMRI.SourceForge.net">search JMRI: </label>
-      <input type="hidden" name="cof" value="LW:200;LH:95;L:http://JMRI.sourceforge.net/images/logo.gif;GIMP:#cc0000;T:black;ALC:#0000ff;GFNT:grey;LC:#990000;BGC:white;AH:center;VLC:purple;GL:0;GALT:#666633;AWFID:9262c37cefe23a86;">
-      <input type="hidden" name="domains" value="JMRI.sourceforge.net">
-      <input type="hidden" name="sitesearch" value="JMRI.sourceforge.net">
-      <input type="text" id="q" name="q" accesskey="s" size="30">
-      <input type="submit" id="submit" value="go"> </p>
-    </form>
-  </div>
-  <!--  End #searchform -->
-</div>
-<!-- closes #header-->
+    <div id="header">
+	<!-- Logo -->
+	<a href="/" title="Return to home page" accesskey="1">
+	    <img src="/images/logo-jmri.gif" width="160" height="135" alt="JMRI Logo"> </a>
+	<!-- /Logo -->
+	<ul id="mainNav"> <!-- Top tool bar -->
+	   <li><a href="/download/"  title="Get the latest software">Download</a></li>
+	   <li><a href="/apps/"      title="Learn about JMRI applications">Applications</a></li>
+	   <li><a href="/hardware/"  title="What hardware does JMRI support">Hardware</a></li>
+	   <li><a href="/doc/Manual/"   title="Trouble-shooting, and FAQs">Manual</a></li>
+	   <li><a href="/doc/Technical/" title="Developing and extending JMRI">Developers</a></li>
+	   <li><A href="/community/" title="Who is JMRI">Acknowledgements</a></li>
+	</ul>
+
+	<div id="searchform"> <!--  Search Form -->
+	  <form id="search" method="get" action="http://www.google.com/custom">
+	     <label for="q" title="Search JMRI.SourceForge.net">search JMRI: </label>
+	     <input type="hidden" name="cof" value="LW:200;LH:95;L:http://JMRI.sourceforge.net/images/logo.gif;GIMP:#cc0000;T:black;ALC:#0000ff;GFNT:grey;LC:#990000;BGC:white;AH:center;VLC:purple;GL:0;GALT:#666633;AWFID:9262c37cefe23a86;">
+	    <input type="hidden" name="domains" value="JMRI.sourceforge.net">
+	    <input type="hidden" name="sitesearch" value="JMRI.sourceforge.net">
+	    <input type="text" id="q" name="q" accesskey="s" size="30">
+	    <input type="submit" id="submit" value="go">
+	  </form>
+       </div> <!--  End #searchform -->
+    </div> <!-- closes #header-->
 <!-- /Header -->
+
 <!-- Sidebar -->
 <!-- This is the common sidebar definition for Technical (developer) pages -->
-<hr class="hide">
-<div id="mBody">
-  <div id="side">
-    <!-- Block of text on left side of page -->
-    <div style="text-align: center">
-      Info on JMRI:</div>
-    <dl>
-      <dt>Development tools</dt>
-      <dd>
-      <ul>
-        <li><a href="getcode.html">Getting the code via CVS</a> </li>
-        <li><a href="CVSFAQ.html">CVS FAQs</a> </li>
-        <li><a href="Ant.html">Building with Ant</a> </li>
-        <li><a href="JBuilder.html">Building with JBuilder</a> </li>
-        <li><a href="Eclipse.html">Building with Eclipse</a> </li>
-        <li><a href="XCode.html">Building with XCode</a> </li>
-      </ul>
-      </dd>
-      <dt>Code Structure</dt>
-      <dd>
-      <ul>
-        <li><a href="IntroStructure.html">Introduction</a> </li>
-        <li><a href="AppStructure.html">Application Structure</a> </li>
-        <li><a href></a></li>
-        <li><a href="../../JavaDoc/doc">JavaDocs</a><ul>
-          <li><a href="../../JavaDoc/doc/index-all.html">Name Index</a> </li>
-          <li><a HREF="../../JavaDoc/doc/index.html">Packages</a> </li>
-          <li><a HREF="../../JavaDoc/doc/allclasses-frame.html">Class heirarchy</a>
-          </li>
-        </ul>
-        </li>
-        <li><a href="Threads.html">Threads</a> </li>
-        <li><a href="XmlPersistance.html">Xml Persistance</a> </li>
-      </ul>
-      </dd>
-      <dt>Techniques and Standards</dt>
-      <dd>
-      <ul>
-        <li><a href="RP.html">Recommended Practices</a> </li>
-        <li><a href="I8N.html">Internationalization</a> </li>
-        <li><a href="Logging.html">Logging &amp; Error Handling</a> </li>
-        <li><a href="Java118.html">Working with Java 1.1.8</a> </li>
-        <li><a href="JUnit.html">Unit testing with JUnit</a> </li>
-		<LI><a href="Help.html">Providing help with JavaHelp</a>
-      </ul>
-      </dd>
-      <dt>How To</dt>
-      <dd>
-      <ul>
-        <li><a href="NewType.html">Add a New Type</a> </li>
-        <li><a href="plugins.html">Extend with Plugins</a> </li>
-      </ul>
-      </dd>
-    </dl>
-  </div>
-  <!-- /Sidebar -->
-  <div id="mainContent">
-    <!-- ------------- -->
-    <!-- Page Contents -->
-    <!-- Required -->
-    <!-- ------------- -->
-    <h1>JMRI: Building with Eclipse</h1>
+    <hr class="hide">
+
+    <div id="mBody">
+
+	<div id="side"> <!-- Block of text on left side of page -->
+	    <div style="text-align: center">Info on JMRI:</div>
+	    <dl>
+
+		<dt>Development tools</dt>
+		<dd>
+			<ul>
+			<LI><a href="getcode.html">Getting the code via CVS</a>
+			<LI><a href="CVSFAQ.html">CVS FAQs</a>
+			<LI><a href="Ant.html">Building with Ant</a>
+			<LI><a href="NetBeans.html">Building with NetBeans</a>
+			<LI><a href="XCode.html">Building with XCode</a>
+			<LI><a href="Eclipse.html">Building with Eclipse</a>
+			<LI><a href="JBuilder.html">Building with JBuilder</a>
+			</ul>
+		</dd>
+
+		<dt>Code Structure</dt>
+		<dd>
+			<ul>
+			<LI><a href="IntroStructure.html">Introduction</a>
+			<LI><a href="AppStructure.html">Application Structure</a>
+			<LI><a href=""></a>
+			<LI><a href="../../JavaDoc/doc">JavaDocs</a><ul>
+				<LI><a href="../../JavaDoc/doc/index-all.html">Name Index</a>
+				<LI><A HREF="../../JavaDoc/doc/index.html">Packages</A>
+				<LI><A HREF="../../JavaDoc/doc/allclasses-frame.html">Class heirarchy</A>
+				</UL>
+			<LI><a href="Threads.html">Threads</a>
+			<LI><a href="XmlPersistance.html">Xml Persistance</a>
+			</ul>
+		</dd>
+
+		<dt>Techniques and Standards</dt>
+		<dd>
+			<ul>
+			<LI><a href="RP.html">Recommended Practices</a>
+			<LI><a href="I8N.html">Internationalization</a>
+			<LI><a href="Logging.html">Logging &amp; Error Handling</a>
+			<LI><a href="Java118.html">Working with Java 1.1.8</a>
+			<LI><a href="JUnit.html">Unit testing with JUnit</a>
+			<LI><a href="Help.html">Providing help with JavaHelp</a>
+			</ul>
+		</dd>
+
+		<dt>How To</dt>
+		<dd>
+			<ul>
+			<LI><a href="NewType.html">Add a New Type</a>
+			<LI><a href="plugins.html">Extend with Plugins</a>
+			</ul>
+		</dd>
+
+	    </dl>
+	</div>
+<!-- /Sidebar -->
+
+
+	<div id="mainContent">
+	    <!-- -------- -->
+	    <!--  Teaser  --> <!-- Optional -->
+	    <!-- -------- -->
+
+
+	    <H1>JMRI: Building with Eclipse</H1>
+
     <p>Eclipse (available at <a href="http://www.eclipse.org">www.eclipse.org</a>) 
     makes a great platform for working with JMRI, but because the repository is 
     not set up as an Eclipse project there are a few wrinkles in getting it 
