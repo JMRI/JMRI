@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://www.netbeans.org/ns/project/1">
+    <type>org.netbeans.modules.ant.freeform</type>
+    <configuration>
+        <general-data xmlns="http://www.netbeans.org/ns/freeform-project/1">
+            <!-- Do not use Project Properties customizer when editing this file manually. -->
+            <name>JMRI</name>
+            <properties/>
+            <folders>
+                <source-folder>
+                    <label>src/jmri</label>
+                    <type>java</type>
+                    <location>src/jmri</location>
+                </source-folder>
+                <source-folder>
+                    <label>src/apps</label>
+                    <type>java</type>
+                    <location>src/apps</location>
+                </source-folder>
+            </folders>
+            <ide-actions>
+                <action name="build">
+                    <target>compile</target>
+                </action>
+                <action name="clean">
+                    <target>clean</target>
+                </action>
+                <action name="javadoc">
+                    <target>javadoc</target>
+                </action>
+                <action name="run">
+                    <target>decoderpro</target>
+                </action>
+                <action name="profile">
+                    <target>netbeans-profile</target>
+                </action>
+                <action name="test">
+                    <target>alltest</target>
+                </action>
+                <action name="rebuild">
+                    <target>clean</target>
+                    <target>compile</target>
+                </action>
+            </ide-actions>
+            <view>
+                <items>
+                    <source-folder style="packages">
+                        <label>src/jmri</label>
+                        <location>src/jmri</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>src/apps</label>
+                        <location>src/apps</location>
+                    </source-folder>
+                    <source-file>
+                        <location>build.xml</location>
+                    </source-file>
+                </items>
+                <context-menu>
+                    <ide-action name="build"/>
+                    <ide-action name="clean"/>
+                    <ide-action name="javadoc"/>
+                    <ide-action name="run"/>
+                    <ide-action name="test"/>
+                    <ide-action name="rebuild"/>
+                </context-menu>
+            </view>
+            <subprojects/>
+        </general-data>
+        <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/1">
+            <compilation-unit>
+                <package-root>src/jmri</package-root>
+                <package-root>src/apps</package-root>
+                <classpath mode="compile">lib/collections.jar:lib/comm.jar:lib/crimson.jar:lib/jdom-jdk11.jar:lib/jh.jar:lib/junit.jar:lib/jython.jar:lib/log4j.jar:lib/MRJAdapter.jar:lib/Serialio.jar:classes</classpath>
+                <source-level>1.3</source-level>
+            </compilation-unit>
+        </java-data>
+    </configuration>
+</project>
