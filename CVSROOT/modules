@@ -1,14 +1,15 @@
 
 # build a JBuilder project directory in standard form
 # Note that this does not work from JBuilder itself!
-jbuilder -a runtime jbuilderfiles java
+jbuilder -a runtime jbuilderfiles java-contents
+
 # build the java/ directory, which contains the actual JBuilder project
 jbuilderfiles  -a jbuilder0 jbuilder1
 jbuilder0 -d java scripts jmri.jpx
 jbuilder1 -d java scripts JMRILibraries.library
 
-# java target - the common java parts of a build directory
-java -a java1 java2 java3
+# java-contents target - the common java parts of a build directory
+java-contents -a java1 java2 java3
 java1 -d java/src &jmri &apps &resources
 java2 -d java &test
 java3 -d java &lib
@@ -24,10 +25,10 @@ check3 -d java &lib118
 runtime -a xml lib resources help jython
 
 # ant target - Ant directory in standard form
-ant -a runtime antfiles java
+ant -a runtime antfiles java-contents
 
 # netbeans target - NetBeans directory in standard form
-netbeans -a runtime antfiles java netbeans1
+netbeans -a runtime antfiles java-contents netbeans1
 netbeans1 -d java &nbproject
 
 # build the java/ directory for ant, including build.xml
@@ -37,7 +38,7 @@ ant1 -d java scripts manifest
 ant2 -d java scripts runtest.csh
 
 # build the java/ directory for ant, netbeans and jbuilder
-all -a runtime jbuilderfiles antfiles netbeans java
+all -a runtime jbuilderfiles antfiles netbeans java-contents
 
 jython -d jython scripts/jython
 
