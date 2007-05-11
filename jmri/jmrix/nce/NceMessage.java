@@ -19,7 +19,8 @@ package jmri.jmrix.nce;
  * See the {@link #setCommandOptions(int)} method for more information.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.19 $
+ * @author Daniel Boudreau Copyright (C) 2007
+ * @version     $Revision: 1.20 $
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -300,6 +301,22 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
     
+    static public NceMessage createBinaryMessage(byte[] bytes, int replyLen) {
+        if (getCommandOptions() < OPTION_2004)
+            log.error("Attempt to send NCE command to EPROM built before 2004");
+        if (bytes.length<1 || bytes.length>20)
+                log.error("NCE command message length error:"+ bytes.length);
+        
+        NceMessage m = new NceMessage(bytes.length);
+        m.setBinary(true);
+        m.setReplyLen(replyLen);
+        m.setTimeout(LONG_TIMEOUT);
+        
+        for (int j = 0; j<bytes.length; j++) {
+            m.setElement(j, bytes[j]&0xFF);
+        }
+        return m;
+    }
 
     static public NceMessage queuePacketMessage(byte[] bytes) {
         if (getCommandOptions() >= OPTION_1999) {
@@ -396,5 +413,6 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
 
 /* @(#)NceMessage.java */
+
 
 
