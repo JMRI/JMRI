@@ -3,9 +3,9 @@
 package jmri.jmrix.nce;
 
 /**
- * 
+ *
  * From NCE System notes for version March 1, 2007
- * 
+ *
  * New 0xAD command sends accessory or signal packets.
  * This command can also issue NCE macros
  * Command Format: 0xAD <addr_h> <addr_l> <op_1> <data_1>
@@ -28,36 +28,54 @@ package jmri.jmrix.nce;
  *	1 = bad accy/signal address
  *
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class NceBinaryCommand {
-	
-		
-	public static byte[] accDecoder(int number, boolean closed) {
-		
-		if (number < 1 || number>2044) {
-			log.error("invalid accessory address "+number);
-			return null;	
-		}	
-		
-		byte op_1;
-		if (closed) op_1 = 0x03; else op_1 = 0x04;
-		
-		int addr_h = number/256;
-		int addr_l = number & 0xFF;
-		
-		byte [] retVal = new byte[5];
-		retVal[0] = (byte) (0xAD); 		//acc_cmd
-		retVal[1] = (byte) (addr_h);	//high address
-		retVal[2] = (byte) (addr_l);	//low address
-		retVal[3] = (byte) (op_1);		//command
-		retVal[4] = (byte) 0; 			//zero out last byte for acc
-
-	return retVal;
-	}
-	
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceBinaryCommand.class.getName());
+    
+    public static final int ACC_CMD = 0xAD;		//NCE accessory command
+    
+    public static final int READ_CMD = 0x8F;	//NCE read 16 bytes of memory command
+    
+    public static byte[] accDecoder(int number, boolean closed) {
+        
+        if (number < 1 || number>2044) {
+            log.error("invalid NCE accessory address "+number);
+            return null;
+        }
+        
+        byte op_1;
+        if (closed) op_1 = 0x03; else op_1 = 0x04;
+        
+        int addr_h = number/256;
+        int addr_l = number & 0xFF;
+        
+        byte [] retVal = new byte[5];
+        retVal[0] = (byte) (ACC_CMD); 	//NCE accessory command
+        retVal[1] = (byte) (addr_h);	//high address
+        retVal[2] = (byte) (addr_l);	//low address
+        retVal[3] = (byte) (op_1);		//command
+        retVal[4] = (byte) 0; 			//zero out last byte for acc
+        
+        return retVal;
+    }
+    
+    public static byte[] accMemoryRead(int address){
+        
+        int addr_h = address/256;
+        int addr_l = address & 0xFF;
+        
+        byte []retVal = new byte [3];
+        retVal[0] = (byte) (READ_CMD);	//read 16 bytes command
+        retVal[1] = (byte) (addr_h);	//high address
+        retVal[2] = (byte) (addr_l);	//low address
+        
+        return retVal;
+        
+    }
+    
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceBinaryCommand.class.getName());
 }
 /* @(#)NceBinaryCommand.java */
+
 
