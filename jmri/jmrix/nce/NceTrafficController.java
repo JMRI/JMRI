@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface {
 
@@ -57,11 +57,30 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     NceSensorManager mSensorManager = null;
     public void setSensorManager(NceSensorManager m) { mSensorManager = m; }
     public NceSensorManager getSensorManager() { return mSensorManager; }
-    protected AbstractMRMessage pollMessage() {
-        return null;
+    
+    
+    /**
+     * Start NCE CS accessory memory poll Thread
+     */
+    
+      protected AbstractMRMessage pollMessage() {
+    	  
+    	// if new EPROM, read memory for turnout state.  This
+    	// check could also be in the NceTurnoutMonitor class
+		if (NceMessage.getCommandOptions() >= NceMessage.OPTION_2006 ){
+
+            if (pollHandler == null) pollHandler = new NceTurnoutMonitor();
+            
+            return pollHandler.pollMessage();
+		}
+		
+        return null;  // not polling for memory
     }
+    
+    NceTurnoutMonitor pollHandler = null;
+    
     protected AbstractMRListener pollReplyHandler() {
-        return mSensorManager;
+        return pollHandler;
     }
 
     /**
@@ -113,7 +132,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     protected boolean endOfMessage(AbstractMRReply msg) {
         // first try boolean
         if (replyBinary) {
-            if (msg.getElement(0) == 0x61) {
+            if (msg.getElement(0) == 0x61 && replyLen != 16 ) {
                 return msg.getNumDataElements() >= 3;
             } else if (msg.getNumDataElements() >= replyLen ) {
                 return true;
@@ -158,4 +177,5 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 
 
 /* @(#)NceTrafficController.java */
+
 
