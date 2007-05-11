@@ -20,7 +20,7 @@ package jmri.jmrix.nce;
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2007
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -310,7 +310,6 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         NceMessage m = new NceMessage(bytes.length);
         m.setBinary(true);
         m.setReplyLen(replyLen);
-        m.setTimeout(LONG_TIMEOUT);
         
         for (int j = 0; j<bytes.length; j++) {
             m.setElement(j, bytes[j]&0xFF);
