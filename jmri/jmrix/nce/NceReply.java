@@ -8,7 +8,8 @@ package jmri.jmrix.nce;
  * Some rudimentary support is provided for the "binary" option.
  *
  * @author		Bob Jacobsen  Copyright (C) 2001
- * @version             $Revision: 1.11 $
+ * @author Daniel Boudreau Copyright (C) 2007
+ * @version             $Revision: 1.12 $
  */
 public class NceReply extends jmri.jmrix.AbstractMRReply {
 
@@ -63,10 +64,11 @@ public class NceReply extends jmri.jmrix.AbstractMRReply {
     /**
      * Examine message to see if it is an asynchronous sensor (AIU) state report
      * @return true if message asynch sensor message
+     * dBoudreau: Add check to see if CS memory read of 16 bytes
      */
     
     public boolean isSensorMessage() {
-    	return getElement(0)==0x61 && getNumDataElements()>=3;
+    	return getElement(0)==0x61 && getNumDataElements()>=3 && getNumDataElements ()!=16;
     }
     
     public boolean isUnsolicited() {
@@ -84,4 +86,5 @@ public class NceReply extends jmri.jmrix.AbstractMRReply {
 
 
 /* @(#)NceReply.java */
+
 
