@@ -5,11 +5,12 @@ package jmri.jmrix.sprog.update;
 import jmri.jmrix.sprog.SprogListener;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
+import jmri.jmrix.sprog.SprogTrafficController;
 
 /**
- * Frame for SPROG firmware update utility
+ * Frame for SPROG firmware update utility.
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class Sprogv4UpdateFrame
     extends SprogUpdateFrame
@@ -94,7 +95,7 @@ public class Sprogv4UpdateFrame
       else {
         log.error("Bad reply to SETBOOT request");
         bootState = IDLE;
-        tc.setSprogState(tc.NORMAL);
+        tc.setSprogState(SprogTrafficController.NORMAL);
         return;
       }
     }
@@ -110,7 +111,7 @@ public class Sprogv4UpdateFrame
         if (sprogType == null) {
           sprogType = new String("SPROG");
         }
-        tc.setSprogState(tc.V4BOOTMODE);
+        tc.setSprogState(SprogTrafficController.V4BOOTMODE);
 
         // We remain in this state until program button is pushed
 
@@ -141,7 +142,7 @@ public class Sprogv4UpdateFrame
         // Houston, we have a problem
         log.error("Bad reply to write request");
         bootState = IDLE;
-        tc.setSprogState(tc.NORMAL);
+        tc.setSprogState(SprogTrafficController.NORMAL);
         return;
       }
     }
@@ -161,7 +162,7 @@ public class Sprogv4UpdateFrame
 
         bootState = IDLE;
       }
-      tc.setSprogState(tc.NORMAL);
+      tc.setSprogState(SprogTrafficController.NORMAL);
     }
     else if (bootState == V4RESET) {
       // v4 should have auto reset
@@ -181,7 +182,7 @@ public class Sprogv4UpdateFrame
 
       }
 
-      tc.setSprogState(tc.NORMAL);
+      tc.setSprogState(SprogTrafficController.NORMAL);
     }
     else {
       // Houston, we have a problem
@@ -189,7 +190,7 @@ public class Sprogv4UpdateFrame
         log.debug("Reply in unknown state");
       }
       bootState = IDLE;
-      tc.setSprogState(tc.NORMAL);
+      tc.setSprogState(SprogTrafficController.NORMAL);
       return;
     }
   }
@@ -201,7 +202,7 @@ public class Sprogv4UpdateFrame
       log.debug("Request bootloader version");
     }
     // allow parsing of bootloader replies
-    tc.setSprogState(tc.V4BOOTMODE);
+    tc.setSprogState(SprogTrafficController.V4BOOTMODE);
     bootState = VERREQSENT;
     msg = SprogMessage.getv4ExtAddr();
     tc.sendSprogMessage(msg, this);
@@ -335,14 +336,14 @@ public class Sprogv4UpdateFrame
       }
       statusBar.setText("Fatal error - unable to connect");
       bootState = IDLE;
-      tc.setSprogState(tc.NORMAL);
+      tc.setSprogState(SprogTrafficController.NORMAL);
     }
     else if (bootState == WRITESENT) {
       log.error("timeout in WRITESENT!");
       // This is fatal!
       statusBar.setText("Fatal error - unable to write");
       bootState = IDLE;
-      tc.setSprogState(tc.NORMAL);
+      tc.setSprogState(SprogTrafficController.NORMAL);
     }
     else if (bootState == NULLWRITE) {
       if (hexFile.read() > 0) {

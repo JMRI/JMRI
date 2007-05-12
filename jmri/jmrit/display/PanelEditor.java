@@ -47,7 +47,7 @@ import com.sun.java.util.collections.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.61 $
+ * @version $Revision: 1.62 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -956,8 +956,8 @@ public class PanelEditor extends JmriJFrame {
         targetPanel.setLayout(null);
 
         JScrollPane js = new JScrollPane(targetPanel);
-        js.setHorizontalScrollBarPolicy(js.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        js.setVerticalScrollBarPolicy(js.VERTICAL_SCROLLBAR_AS_NEEDED);
+        js.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
         JPanel p1 = new JPanel();
         p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));

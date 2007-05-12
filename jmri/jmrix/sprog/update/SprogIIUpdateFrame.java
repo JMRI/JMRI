@@ -5,11 +5,12 @@ package jmri.jmrix.sprog.update;
 import jmri.jmrix.sprog.SprogListener;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
+import jmri.jmrix.sprog.SprogTrafficController;
 
 /**
- * Frame for SPROG firmware update utility
+ * Frame for SPROG firmware update utility.
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SprogIIUpdateFrame
     extends SprogUpdateFrame
@@ -24,13 +25,13 @@ public class SprogIIUpdateFrame
     if ( (bootState != RESETSENT) && tc.isSIIBootMode() && !m.strip()) {
       log.error("Malformed bootloader reply");
       bootState = IDLE;
-      tc.setSprogState(tc.NORMAL);
+      tc.setSprogState(SprogTrafficController.NORMAL);
       return;
     }
     if ( (bootState != RESETSENT) && tc.isSIIBootMode() && !m.getChecksum()) {
       log.error("Bad bootloader checksum");
       bootState = IDLE;
-      tc.setSprogState(tc.NORMAL);
+      tc.setSprogState(SprogTrafficController.NORMAL);
       return;
     }
     replyString = m.toString();
@@ -127,7 +128,7 @@ public class SprogIIUpdateFrame
       else {
         log.error("Bad reply to RD_VER request");
         bootState = IDLE;
-        tc.setSprogState(tc.NORMAL);
+        tc.setSprogState(SprogTrafficController.NORMAL);
         return;
       }
     }
@@ -166,7 +167,7 @@ public class SprogIIUpdateFrame
         // Houston, we have a problem
         log.error("Bad reply to erase request");
         bootState = IDLE;
-        tc.setSprogState(tc.NORMAL);
+        tc.setSprogState(SprogTrafficController.NORMAL);
         return;
       }
     }
@@ -191,7 +192,7 @@ public class SprogIIUpdateFrame
         // Houston, we have a problem
         log.error("Bad reply to write request");
         bootState = IDLE;
-        tc.setSprogState(tc.NORMAL);
+        tc.setSprogState(SprogTrafficController.NORMAL);
         return;
       }
     }
@@ -214,7 +215,7 @@ public class SprogIIUpdateFrame
         // Houston, we have a problem
         log.error("Bad reply to SPROG Mode request");
         bootState = IDLE;
-        tc.setSprogState(tc.NORMAL);
+        tc.setSprogState(SprogTrafficController.NORMAL);
         return;
       }
     }
@@ -227,7 +228,7 @@ public class SprogIIUpdateFrame
 
       statusBar.setText("Ready");
 
-      tc.setSprogState(tc.NORMAL);
+      tc.setSprogState(SprogTrafficController.NORMAL);
       bootState = IDLE;
     }
     else {
@@ -236,7 +237,7 @@ public class SprogIIUpdateFrame
         log.debug("Reply in unknown state");
       }
       bootState = IDLE;
-      tc.setSprogState(tc.NORMAL);
+      tc.setSprogState(SprogTrafficController.NORMAL);
       return;
     }
   }
@@ -352,7 +353,7 @@ public class SprogIIUpdateFrame
 
   public synchronized void connectButtonActionPerformed(java.awt.event.
       ActionEvent e) {
-    tc.setSprogState(tc.NORMAL);
+    tc.setSprogState(SprogTrafficController.NORMAL);
     sprogType = null;
     // At this point we do not know what sort of SPROG is connected
     // nor what state it is in
@@ -441,14 +442,14 @@ public class SprogIIUpdateFrame
       }
       statusBar.setText("Fatal error - unable to connect");
       bootState = IDLE;
-      tc.setSprogState(tc.NORMAL);
+      tc.setSprogState(SprogTrafficController.NORMAL);
     }
     else if (bootState == WRITESENT) {
       log.error("timeout in WRITESENT!");
       // This is fatal!
       statusBar.setText("Fatal error - unable to write");
       bootState = IDLE;
-      tc.setSprogState(tc.NORMAL);
+      tc.setSprogState(SprogTrafficController.NORMAL);
     }
     else if (bootState == NULLWRITE) {
       if (hexFile.read() > 0) {

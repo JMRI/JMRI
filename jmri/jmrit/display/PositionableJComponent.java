@@ -19,7 +19,7 @@ import jmri.util.JmriJFrame;
  * <p> </p>
  *
  * @author  Howard G. Penny copyright (C) 2005
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 abstract class PositionableJComponent extends JComponent
                         implements MouseMotionListener, MouseListener,
@@ -153,7 +153,7 @@ abstract class PositionableJComponent extends JComponent
     }
 
     public JMenuItem newLockMenuItem(AbstractAction a) {
-      JCheckBoxMenuItem k = new JCheckBoxMenuItem((String)a.getValue(a.NAME));
+      JCheckBoxMenuItem k = new JCheckBoxMenuItem((String)a.getValue(AbstractAction.NAME));
       k.addActionListener(a);
       if (!getPositionable()) k.setSelected(true);
       return k;

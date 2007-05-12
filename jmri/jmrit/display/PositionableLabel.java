@@ -28,7 +28,7 @@ import javax.swing.JRadioButtonMenuItem;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
  */
 
 public class PositionableLabel extends JLabel
@@ -325,9 +325,9 @@ public class PositionableLabel extends JLabel
         
     public JMenuItem newStyleMenuItem(AbstractAction a, int mask) {
         // next two lines needed because JCheckBoxMenuItem(AbstractAction) not in 1.1.8
-        JCheckBoxMenuItem c = new JCheckBoxMenuItem((String)a.getValue(a.NAME));
+        JCheckBoxMenuItem c = new JCheckBoxMenuItem((String)a.getValue(AbstractAction.NAME));
         c.addActionListener(a);
-        if (log.isDebugEnabled()) log.debug("When creating style item "+((String)a.getValue(a.NAME))
+        if (log.isDebugEnabled()) log.debug("When creating style item "+((String)a.getValue(AbstractAction.NAME))
                                             +" mask was "+mask+" state was "+getFont().getStyle());
         if ( (mask & getFont().getStyle()) == mask ) c.setSelected(true);
         return c;

@@ -8,11 +8,12 @@ import jmri.jmrix.sprog.SprogReply;
 import jmri.jmrix.sprog.SprogTrafficController;
 
 import javax.swing.*;
+import jmri.jmrix.sprog.SprogTrafficController;
 
 /**
- * Frame for SPROG firmware update utility
+ * Frame for SPROG firmware update utility.
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SprogUpdateFrame
     extends JFrame
@@ -74,7 +75,7 @@ public class SprogUpdateFrame
     // connect to the TrafficManager
     tc = SprogTrafficController.instance();
     tc.addSprogListener(this);
-    tc.setSprogState(tc.NORMAL);
+    tc.setSprogState(SprogTrafficController.NORMAL);
   }
 
   public void dispose() {
