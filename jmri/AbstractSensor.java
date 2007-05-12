@@ -6,7 +6,7 @@ import jmri.Sensor;
 /**
  * Abstract class providing the basic logic of the Sensor interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.9 $
+ * @version         $Revision: 1.10 $
  */
 public abstract class AbstractSensor extends AbstractNamedBean implements Sensor, java.io.Serializable {
 
@@ -69,7 +69,6 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     public int getState() { return getKnownState(); }
 
     // internal data members
-    private String _id;
     protected int _knownState     = UNKNOWN;
 
     // since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
