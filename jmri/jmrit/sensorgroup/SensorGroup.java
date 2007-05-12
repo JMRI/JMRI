@@ -13,7 +13,7 @@ import com.sun.java.util.collections.List;
  * any other object.
  *
  * @author			Bob Jacobsen   Copyright (C) 2007
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SensorGroup {
 
@@ -32,7 +32,7 @@ public class SensorGroup {
     /**
      * Create one, looking up an existing one if present
      */
-    void SensorGroup(String name) {
+    SensorGroup(String name) {
         this.name = name;
         // find suitable 
         RouteManager rm = InstanceManager.routeManagerInstance();
