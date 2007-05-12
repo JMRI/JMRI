@@ -12,7 +12,7 @@ import java.util.Properties;
  * Implementation of the LocoNetOverTcp LbServer Server Protocol
  *
  * @author      Alex Shepherd Copyright (C) 2006
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 
 public class Server{
@@ -89,9 +89,6 @@ public class Server{
         settingsChanged = false;
       }
       catch (FileNotFoundException ex) {
-        log.warn( "Server: saveSettings exception: ", ex );
-      }
-      catch (IOException ex) {
         log.warn( "Server: saveSettings exception: ", ex );
       }
       updateServerStateListener();
