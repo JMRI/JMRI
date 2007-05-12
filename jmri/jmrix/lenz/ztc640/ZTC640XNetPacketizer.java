@@ -14,7 +14,7 @@ import jmri.jmrix.lenz.XNetPacketizer;
  * 0xFF bytes that appear prior to some messages.
  *
  * @author		Paul Bender  Copyright (C) 2006
- * @version 		$Revision: 1.5 $
+ * @version 		$Revision: 1.6 $
  *
  */
 public class ZTC640XNetPacketizer extends XNetPacketizer {
@@ -38,7 +38,7 @@ public class ZTC640XNetPacketizer extends XNetPacketizer {
     protected void loadChars(jmri.jmrix.AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
         int i;
 	if(log.isDebugEnabled()) log.debug("loading characters from port");
-        for (i = 0; i < msg.maxSize; i++) {
+        for (i = 0; i < msg.maxSize(); i++) {
             byte char1 = readByteProtected(istream);
             // This is a test for the ZTC640 device
             while((i==0) && ((char1 & 0xF0)==0xF0)) {

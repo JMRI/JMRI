@@ -26,7 +26,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.30 $
+ * @version			$Revision: 1.31 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -555,7 +555,7 @@ abstract public class AbstractMRTrafficController {
      */
     protected void loadChars(AbstractMRReply msg, DataInputStream istream) throws java.io.IOException {
         int i;
-        for (i = 0; i < msg.maxSize; i++) {
+        for (i = 0; i < msg.maxSize(); i++) {
             byte char1 = readByteProtected(istream);
             msg.setElement(i, char1);
             if (endOfMessage(msg)) {

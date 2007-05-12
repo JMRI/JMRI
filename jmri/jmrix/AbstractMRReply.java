@@ -8,7 +8,7 @@ package jmri.jmrix;
  * Handles the character manipulation.
  *
  * @author		Bob Jacobsen  Copyright (C) 2003
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 abstract public class AbstractMRReply {
     // is this logically an abstract class?
@@ -119,11 +119,12 @@ abstract public class AbstractMRReply {
         return index;
     }
 
-    static public final int maxSize = 120;
+    public int maxSize() { return DEFAULTMAXSIZE; }
+    static public final int DEFAULTMAXSIZE = 120;
 
     // contents (private)
     private int _nDataChars = 0;
-    private char _dataChars[] = new char[maxSize];
+    private char _dataChars[] = new char[DEFAULTMAXSIZE];
     private boolean unsolicited;
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractMRReply.class.getName());
