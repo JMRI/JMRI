@@ -45,7 +45,7 @@ import org.jdom.Attribute;
  *  TODO: fix speed increments (14, 28)
  *
  * @author     glen   Copyright (C) 2002
- * @version    $Revision: 1.49 $
+ * @version    $Revision: 1.50 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener,ActionListener
 {
@@ -653,7 +653,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	 *  A KeyAdapter that listens for the keys that work the control pad buttons
 	 *
 	 * @author     glen
-         * @version    $Revision: 1.49 $
+         * @version    $Revision: 1.50 $
 	 */
 	class ControlPadKeyListener extends KeyAdapter
 	{
@@ -863,9 +863,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
          */
         public void mousePressed(MouseEvent e)
         {
-            if (log.isDebugEnabled()) log.debug("pressed "+(e.getModifiers() & e.BUTTON1_MASK)+" "+e.isPopupTrigger()
-                    +" "+(e.getModifiers() & (e.ALT_MASK+ e.META_MASK+e.CTRL_MASK))
-                    +(" "+e.ALT_MASK+"/"+e.META_MASK+"/"+e.CTRL_MASK));
+            if (log.isDebugEnabled()) log.debug("pressed "+(e.getModifiers() & MouseEvent.BUTTON1_MASK)+" "+e.isPopupTrigger()
+                    +" "+(e.getModifiers() & (MouseEvent.ALT_MASK+ MouseEvent.META_MASK+MouseEvent.CTRL_MASK))
+                    +(" "+MouseEvent.ALT_MASK+"/"+MouseEvent.META_MASK+"/"+MouseEvent.CTRL_MASK));
             if (e.isPopupTrigger() && parentFrame.isSelected())
             {
 		try {
@@ -887,8 +887,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
          */
         public void mouseReleased(MouseEvent e)
         {
-            if (log.isDebugEnabled()) log.debug("released "+(e.getModifiers()   & e.BUTTON1_MASK)+" "+e.isPopupTrigger()
-                    +" "+(e.getModifiers() & (e.ALT_MASK+e.META_MASK+e.CTRL_MASK)));
+            if (log.isDebugEnabled()) log.debug("released "+(e.getModifiers() & MouseEvent.BUTTON1_MASK)+" "+e.isPopupTrigger()
+                    +" "+(e.getModifiers() & (MouseEvent.ALT_MASK+e.META_MASK+MouseEvent.CTRL_MASK)));
             if (e.isPopupTrigger())
             {
 		try {

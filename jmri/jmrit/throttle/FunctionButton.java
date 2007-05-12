@@ -190,9 +190,9 @@ public class FunctionButton extends JToggleButton implements ActionListener
          */
         public void mousePressed(MouseEvent e)
         {
-            if (log.isDebugEnabled()) log.debug("pressed "+(e.getModifiers() & e.BUTTON1_MASK)+" "+e.isPopupTrigger()
-                    +" "+(e.getModifiers() & (e.ALT_MASK+e.META_MASK+e.CTRL_MASK))
-                    +(" "+e.ALT_MASK+"/"+e.META_MASK+"/"+e.CTRL_MASK));
+            if (log.isDebugEnabled()) log.debug("pressed "+(e.getModifiers() & MouseEvent.BUTTON1_MASK)+" "+e.isPopupTrigger()
+                    +" "+(e.getModifiers() & (MouseEvent.ALT_MASK+MouseEvent.META_MASK+MouseEvent.CTRL_MASK))
+                    +(" "+MouseEvent.ALT_MASK+"/"+MouseEvent.META_MASK+"/"+MouseEvent.CTRL_MASK));
             JToggleButton button = (JToggleButton)e.getSource();
             if (e.isPopupTrigger())
             {
@@ -202,8 +202,8 @@ public class FunctionButton extends JToggleButton implements ActionListener
             /* Must check button mask since some platforms wait
             for mouse release to do popup. */
             else if (button.isEnabled()
-                     && ((e.getModifiers() & e.BUTTON1_MASK) != 0)
-                    && ((e.getModifiers() & (e.ALT_MASK+e.META_MASK+e.CTRL_MASK)) == 0)
+                     && ((e.getModifiers() & MouseEvent.BUTTON1_MASK) != 0)
+                    && ((e.getModifiers() & (MouseEvent.ALT_MASK+MouseEvent.META_MASK+MouseEvent.CTRL_MASK)) == 0)
                      && !isLockable)
             {
                 changeState(true);
@@ -221,8 +221,8 @@ public class FunctionButton extends JToggleButton implements ActionListener
          */
         public void mouseReleased(MouseEvent e)
         {
-            if (log.isDebugEnabled()) log.debug("released "+(e.getModifiers() & e.BUTTON1_MASK)+" "+e.isPopupTrigger()
-                    +" "+(e.getModifiers() & (e.ALT_MASK+e.META_MASK+e.CTRL_MASK)));
+            if (log.isDebugEnabled()) log.debug("released "+(e.getModifiers() & MouseEvent.BUTTON1_MASK)+" "+e.isPopupTrigger()
+                    +" "+(e.getModifiers() & (MouseEvent.ALT_MASK+MouseEvent.META_MASK+MouseEvent.CTRL_MASK)));
             JToggleButton button = (JToggleButton)e.getSource();
             if (e.isPopupTrigger())
             {
@@ -232,8 +232,8 @@ public class FunctionButton extends JToggleButton implements ActionListener
             // mouse events have to be unmodified; to change function, so that
             // we don't act on 1/2 of a popup request.
             else if (button.isEnabled()
-                    && ((e.getModifiers() & e.BUTTON1_MASK) != 0)
-                    && ((e.getModifiers() & (e.ALT_MASK+e.META_MASK+e.CTRL_MASK)) == 0) )
+                    && ((e.getModifiers() & MouseEvent.BUTTON1_MASK) != 0)
+                    && ((e.getModifiers() & (MouseEvent.ALT_MASK+MouseEvent.META_MASK+MouseEvent.CTRL_MASK)) == 0) )
             {
                 if (!isLockable)
                 {

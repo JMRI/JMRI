@@ -43,7 +43,7 @@ import org.jdom.Element;
  *  directed by the interface.
  *
  * @author     Glen Oberhauser
- * @version    $Revision: 1.28 $
+ * @version    $Revision: 1.29 $
  */
 /**
  * @author DSM
@@ -251,7 +251,7 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
 			{
 				public void itemStateChanged(ItemEvent e)
 				{
-					addressPanel.setVisible(e.getStateChange() == e.SELECTED);
+					addressPanel.setVisible(e.getStateChange() == ItemEvent.SELECTED);
 				}
 			});
 
@@ -262,7 +262,7 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
 			{
 				public void itemStateChanged(ItemEvent e)
 				{
-					controlPanel.setVisible(e.getStateChange() == e.SELECTED);
+					controlPanel.setVisible(e.getStateChange() == ItemEvent.SELECTED);
 				}
 			});
 		viewFunctionPanel = new JCheckBoxMenuItem("Function Panel");
@@ -272,7 +272,7 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
 			{
 				public void itemStateChanged(ItemEvent e)
 				{
-					functionPanel.setVisible(e.getStateChange() == e.SELECTED);
+					functionPanel.setVisible(e.getStateChange() == ItemEvent.SELECTED);
 				}
 			});
         
