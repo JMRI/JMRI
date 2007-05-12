@@ -5,12 +5,19 @@ jython -d jython scripts/jython
 
 # java-contents target - the common java parts of a build directory
 # including the minimal scripts for Ant use
-java-contents -a java1 java2 java3 java4 netbeansfiles
+java-contents -a java1 java2 java3 java4
 java1 -a java
 java2 -d java/src &jmri &apps &resources
 java3 -d java &test
 java4 -d java &lib
+
+# files used by NetBeans, not counting those already in the java/ subdir
 netbeansfiles -d java &nbproject
+netbeans -a runtime java-contents netbeansfiles
+
+# files used by Eclipse, not counting those already in the java/ subdir
+eclipsefiles -a .metadata
+eclipse -a runtime java-contents eclipsefiles
 
 # check target - The Java 1.1.8 libraries and needed build files
 # use 'all' or 'ant' target with this
@@ -19,8 +26,8 @@ check1 -d java scripts check.xml
 check2 -d java scripts synchlist.csh
 check3 -d java &lib118
 
-# build the java/ directory for ant, netbeans and jbuilder
-all -a runtime java-contents
+# build the java/ directory for ant, netbeans, eclipse and jbuilder
+all -a runtime java-contents netbeansfiles eclipsefiles
 
 
 # properties target; all the properties files. Maintained manually!
