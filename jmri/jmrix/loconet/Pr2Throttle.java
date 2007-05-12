@@ -14,10 +14,9 @@ import jmri.jmrix.AbstractThrottle;
  * with values from 0 to 127.
  * <P>
  * @author  Bob Jacobsen  Copyright (C) 2006
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class Pr2Throttle extends AbstractThrottle {
-    private LocoNetInterface network;
     private int addr;
     DccLocoAddress address;
     
@@ -28,7 +27,6 @@ public class Pr2Throttle extends AbstractThrottle {
         super();
         this.address = address;
         addr = address.getNumber();
-        network = LnTrafficController.instance();
         this.speedIncrement = 1;  // 128 step mode only
     }
 
