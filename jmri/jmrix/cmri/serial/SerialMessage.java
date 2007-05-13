@@ -12,12 +12,14 @@ package jmri.jmrix.cmri.serial;
  * are included. These are added during transmission.
  *
  * @author    Bob Jacobsen  Copyright (C) 2001,2003
- * @version   $Revision: 1.9 $
+ * @version   $Revision: 1.10 $
  */
 
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     // is this logically an abstract class?
 
+    final static int POLL_TIMEOUT = 250;
+    
     public SerialMessage() {
         super();
     }
@@ -71,7 +73,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         SerialMessage m = new SerialMessage(2);
         m.setElement(0, 65+UA);
         m.setElement(1, 0x50); // 'P'
-        m.setTimeout(SHORT_TIMEOUT);    // minumum reasonable timeout
+        m.setTimeout(POLL_TIMEOUT);    // minumum reasonable timeout
         return m;
     }
 
