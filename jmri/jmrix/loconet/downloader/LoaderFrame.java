@@ -15,7 +15,7 @@ import jmri.util.JmriJFrame;
  * This is just an enclosure for the LoaderPane, which does the real work.
  *
  * @author		Bob Jacobsen   Copyright (C) 2005
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class LoaderFrame extends JmriJFrame {
 
@@ -50,6 +50,10 @@ public class LoaderFrame extends JmriJFrame {
 
     // Close the window when the close box is clicked
     void thisWindowClosing(java.awt.event.WindowEvent e) {
+          // AJS - This does not seem to be called when the window closes
+        if(pane.abortButton.isEnabled())
+          pane.setOperationAborted(true);
+
         setVisible(false);
         pane.dispose();
         dispose();

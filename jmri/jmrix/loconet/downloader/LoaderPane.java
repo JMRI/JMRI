@@ -14,7 +14,7 @@ import jmri.jmrit.MemoryContents;
 /**
  * Pane for downloading .hex files
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.9 $
+ * @version	    $Revision: 1.10 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -44,6 +44,7 @@ public class LoaderPane extends javax.swing.JPanel {
     JButton readButton;
     JButton loadButton;
     JButton verifyButton;
+    JButton abortButton;
 
     JProgressBar    bar;
     JLabel          status = new JLabel("");
@@ -215,6 +216,18 @@ public class LoaderPane extends javax.swing.JPanel {
 
             add(p);
 
+            abortButton = new JButton(res.getString("ButtonAbort"));
+            abortButton.setEnabled(false);
+            abortButton.setToolTipText(res.getString("TipAbortDisabled"));
+            p.add(abortButton);
+            abortButton.addActionListener(new AbstractAction() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    setOperationAborted(true) ;
+                }
+            });
+
+            add(p);
+
             add(new JSeparator());
 
             bar = new JProgressBar();
@@ -235,7 +248,7 @@ public class LoaderPane extends javax.swing.JPanel {
     }
 
     JFileChooser chooser;
-    
+
     void selectInputFile() {
         String name = inputFileName.getText();
         if (name.equals("")) {
@@ -269,6 +282,8 @@ public class LoaderPane extends javax.swing.JPanel {
         loadButton.setToolTipText(res.getString("TipLoadDisabled"));
         verifyButton.setEnabled(false);
         verifyButton.setToolTipText(res.getString("TipVerifyDisabled"));
+        abortButton.setEnabled(false);
+        abortButton.setToolTipText(res.getString("TipAbortDisabled"));
 
         // clear the existing memory contents
         inputContent = new MemoryContents();
@@ -323,6 +338,8 @@ public class LoaderPane extends javax.swing.JPanel {
         loadButton.setToolTipText(res.getString("TipDisabledDownload"));
         verifyButton.setEnabled(false);
         verifyButton.setToolTipText(res.getString("TipDisabledDownload"));
+        abortButton.setEnabled(true);
+        abortButton.setToolTipText(res.getString("TipAbortEnabled"));
 
         // start the download itself
         operation = PXCT2SENDDATA;
@@ -337,10 +354,30 @@ public class LoaderPane extends javax.swing.JPanel {
         loadButton.setToolTipText(res.getString("TipDisabledDownload"));
         verifyButton.setEnabled(false);
         verifyButton.setToolTipText(res.getString("TipDisabledDownload"));
+        abortButton.setEnabled(true);
+        abortButton.setToolTipText(res.getString("TipAbortEnabled"));
 
         // start the download itself
         operation = PXCT2VERIFYDATA;
         sendSequence();
+    }
+
+      // boolean used to abort the threaded operation
+      // access has to be synchronized to make sure
+      // the Sender threads sees the value change from the
+      // GUI thread
+    boolean abortOperation ;
+
+    void setOperationAborted( boolean state ) {
+      synchronized(this){
+        abortOperation = state;
+      }
+    }
+
+    boolean isOperationAborted() {
+      synchronized(this){
+        return abortOperation ;
+      }
     }
 
     int operation;
@@ -367,7 +404,6 @@ public class LoaderPane extends javax.swing.JPanel {
 
         // start transmission loop
         new Thread(new Sender()).start();
-
     }
 
     void sendOne(int pxct2, int d1, int d2, int d3, int d4,
@@ -496,7 +532,7 @@ public class LoaderPane extends javax.swing.JPanel {
                 }
                 location = next;
 
-            } while (location <= endaddr);
+            } while (!isOperationAborted() && (location <= endaddr));
 
             // send end (after wait)
             doWait(location);
@@ -551,14 +587,22 @@ public class LoaderPane extends javax.swing.JPanel {
         void enableGUI() {
             if (log.isDebugEnabled()) log.debug("enableGUI");
 
-            status.setText(res.getString("StatusDone"));
+            if (isOperationAborted())
+              status.setText(res.getString("StatusAbort"));
+            else
+              status.setText(res.getString("StatusDone"));
+
+              // remove the
+            setOperationAborted(false);
+
             readButton.setEnabled(true);
             readButton.setToolTipText(res.getString("TipReadEnabled"));
             loadButton.setEnabled(true);
             loadButton.setToolTipText(res.getString("TipLoadEnabled"));
             verifyButton.setEnabled(true);
             verifyButton.setToolTipText(res.getString("TipVerifyEnabled"));
-
+            abortButton.setEnabled(false);
+            abortButton.setToolTipText(res.getString("TipAbortDisabled"));
         }
 
         /**
