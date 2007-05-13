@@ -1,15 +1,15 @@
-/**
- * LocoNetException.java
- *
- * Description:		<describe the LocoNetException class here>
- * @author			Bob Jacobsen  Copyright (C) 2001
- * @version
- */
+// LocoNetException.java
 
 package jmri.jmrix.loconet;
 
 import jmri.JmriException;
 
+/**
+ *  LocoNet-specific exception
+ *
+ * @author			Bob Jacobsen  Copyright (C) 2001
+ * @version
+ */
 public class LocoNetException extends JmriException {
 
     public LocoNetException( String m ){
