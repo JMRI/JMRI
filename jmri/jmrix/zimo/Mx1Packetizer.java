@@ -9,8 +9,9 @@ import java.io.OutputStream;
 import com.sun.java.util.collections.LinkedList;
 import com.sun.java.util.collections.NoSuchElementException;
 
-/** Zimo !!!!!!!!!!!!!!!!!!!!!!
- * Converts Stream-based I/O to/from Mx1 messages.  The "Mx1Interface"
+/** 
+ * Access to Zimo Mx1 messages
+ * via stream-based I/O.  The "Mx1Interface"
  * side sends/receives Mx1Message objects.  The connection to
  * a Mx1PortController is via a pair of *Streams, which then carry sequences
  * of characters for transmission.
@@ -26,7 +27,7 @@ import com.sun.java.util.collections.NoSuchElementException;
  *</UL>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.2 $
+ * @version 		$Revision: 1.3 $
  * 
  * Adapted by Sip Bosch for use with zimo Mx-1
  *

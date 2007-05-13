@@ -1,11 +1,4 @@
-/**
- * SprogPacketGenFrame.java
- *
- * Description:		Frame for user input of Sprog messages
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.2 $
- */
-
+// SprogPacketGenFrame.java
 
 package jmri.jmrix.sprog.packetgen;
 
@@ -16,6 +9,11 @@ import jmri.jmrix.sprog.SprogTrafficController;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
 
+/**
+ * Frame for user input of Sprog messages.
+ * @author			Bob Jacobsen   Copyright (C) 2001
+ * @version			$Revision: 1.3 $
+ */
 public class SprogPacketGenFrame extends javax.swing.JFrame implements jmri.jmrix.sprog.SprogListener {
 
 	// member declarations

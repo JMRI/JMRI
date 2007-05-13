@@ -1,14 +1,4 @@
-/**
- * ZimoPacketGenFrame.java
- *
- * Description:		Frame for user input of MX-1 messages
- * @author		Bob Jacobsen   Copyright (C) 2001,2002
- * @version		$Revision: 1.2 $
- *
- * Adapted by Sip Bosch for use with Zimo MX-1
- *
- */
-
+// ZimoPacketGenFrame.java
 
 package jmri.jmrix.zimo.packetgen;
 
@@ -18,6 +8,15 @@ import javax.swing.*;
 import jmri.jmrix.zimo.Mx1Message;
 import jmri.jmrix.zimo.Mx1TrafficController;
 
+/**
+ * Frame for user input of MX-1 messages.
+ *
+ * @author		Bob Jacobsen   Copyright (C) 2001,2002
+ * @version		$Revision: 1.3 $
+ *
+ * Adapted by Sip Bosch for use with Zimo MX-1
+ *
+ */
 public class ZimoPacketGenFrame extends javax.swing.JFrame {
 
 	// member declarations

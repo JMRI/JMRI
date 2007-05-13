@@ -1,19 +1,19 @@
-/**
- * Mx1PowerManager.java
- *
- * Description:		PowerManager implementation for controlling layout power
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.2 $
- *
- * Adapted by Sip Bosch for use with zimo Mx-1
- *
- */
+// Mx1PowerManager.java
 
 package jmri.jmrix.zimo;
 
 import jmri.JmriException;
 import jmri.PowerManager;
 
+/**
+ * PowerManager implementation for controlling layout power.
+ *
+ * @author			Bob Jacobsen Copyright (C) 2001
+ * @version			$Revision: 1.3 $
+ *
+ * Adapted by Sip Bosch for use with zimo Mx-1
+ *
+ */
 public class Mx1PowerManager implements PowerManager, Mx1Listener {
 
 	public Mx1PowerManager() {

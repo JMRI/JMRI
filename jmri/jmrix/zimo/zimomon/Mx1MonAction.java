@@ -1,15 +1,4 @@
-/**
- * Mx1MonAction.java
- *
- * Description:		Swing action to create and register a
- *       		Mx1MonFrame object
- *
- * @author		Bob Jacobsen    Copyright (C) 2002
- * @version             $Revision: 1.3 $
- *
- * Adapted by Sip Bosch for use with MX-1
- *
- */
+//  Mx1MonAction.java
 
 package jmri.jmrix.zimo.zimomon;
 
@@ -17,6 +6,16 @@ import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
 
+/**
+ * Swing action to create and register a
+ *       		Mx1MonFrame object.
+ *
+ * @author		Bob Jacobsen    Copyright (C) 2002
+ * @version             $Revision: 1.4 $
+ *
+ * Adapted by Sip Bosch for use with MX-1
+ *
+ */
 public class Mx1MonAction 			extends AbstractAction {
 
 	public Mx1MonAction(String s) { super(s);}

@@ -12,7 +12,7 @@ import java.io.Serializable;
  * actually a variable number of bytes in Unicode.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  *
  * Adapted by Sip Bosch for use with zimo MX-1
  *

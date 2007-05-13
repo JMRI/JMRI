@@ -13,7 +13,7 @@ package jmri.jmrix.zimo;
  * case.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  *
  * Adapted by Sip Bosch for use with Zimo Mx-1
  */

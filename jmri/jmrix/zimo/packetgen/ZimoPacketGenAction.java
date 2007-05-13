@@ -1,15 +1,4 @@
-/**
- * ZimoPacketGenAction.java
- *
- * Description:         Swing action to create and register a
- *       		MX-1 PacketGenFrame object
- *
- * @author		Bob Jacobsen    Copyright (C) 2001, 2002
- * @version		$Revision: 1.2 $
- *
- * Adapted for use with Zimo MX-1 by Sip Bosch
- *
- */
+// ZimoPacketGenAction.java
 
 package jmri.jmrix.zimo.packetgen;
 
@@ -18,6 +7,16 @@ import java.awt.event.ActionEvent;
 
 import jmri.jmrix.zimo.Mx1TrafficController;
 
+/**
+ * Swing action to create and register a
+ *       		MX-1 PacketGenFrame object.
+ *
+ * @author		Bob Jacobsen    Copyright (C) 2001, 2002
+ * @version		$Revision: 1.3 $
+ *
+ * Adapted for use with Zimo MX-1 by Sip Bosch
+ *
+ */
 public class ZimoPacketGenAction 			extends AbstractAction {
 
 	public ZimoPacketGenAction(String s) { super(s);}
