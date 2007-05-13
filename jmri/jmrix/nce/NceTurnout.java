@@ -17,7 +17,7 @@ import jmri.Turnout;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class NceTurnout extends AbstractTurnout {
 
@@ -66,6 +66,13 @@ public class NceTurnout extends AbstractTurnout {
     // data members
     int _number;   // turnout number
 
+    /**
+     * Provide package-local access to protected method
+     */
+    public void newKnownState(int state) {
+        super.newKnownState(state);
+    }
+    
     protected void sendMessage(boolean closed) {
         // get the packet
     	// dBoudreau  Added support for new accessory binary command
