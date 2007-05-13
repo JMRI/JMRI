@@ -27,7 +27,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003, 2006
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -137,11 +137,18 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
 
     /**
      * Add header to the outgoing byte stream.
+     *
+     * The TMCC implementation adds a TMCC NOP (0xFE, 0xFF, 0x9F)
+     * to the front of every message.  This is empirically
+     * needed to ensure that various functions work reliably.
      * @param msg  The output byte stream
      * @return next location in the stream to fill
      */
     protected int addHeaderToOutput(byte[] msg, AbstractMRMessage m) {
-        return 0;
+        msg[0] = (byte)0xFE;
+        msg[1] = (byte)0xFF;
+        msg[2] = (byte)0x9F;
+        return 3;
     }
 
     /**
@@ -156,10 +163,77 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
      * Determine how much many bytes the entire
      * message will take, including space for header and trailer
      * @param m  The message to be sent
-     * @return Number of bytes
+     * @return Number of bytes for msg (3) plus preceeding NOP (3)
      */
     protected int lengthOfByteStream(AbstractMRMessage m) {
-        return 3;
+        return 6;
+    }
+
+    /**
+     * Actually transmits the next message to the port
+     */
+     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
+        if (log.isDebugEnabled()) log.debug("forwardToPort message: ["+m+"]");
+        // remember who sent this
+        mLastSender = reply;
+
+        // forward the message to the registered recipients,
+        // which includes the communications monitor, except the sender.
+        // Schedule notification via the Swing event queue to ensure order
+        Runnable r = new XmtNotifier(m, mLastSender, this);
+        javax.swing.SwingUtilities.invokeLater(r);
+
+        // stream to port in single write, as that's needed by serial
+        byte msg[] = new byte[lengthOfByteStream(m)];
+        // add header
+        int offset = addHeaderToOutput(msg, m);
+
+        // add data content
+        int len = m.getNumDataElements();
+        for (int i=0; i< len; i++)
+            msg[i+offset] = (byte) m.getElement(i);
+
+        // add trailer
+        addTrailerToOutput(msg, len+offset, m);
+
+        // and stream the bytes
+        try {
+            if (ostream != null) {
+                if (log.isDebugEnabled()) {
+                    String f = "write message: ";
+                    for (int i = 0; i<msg.length; i++) f=f+Integer.toHexString(0xFF&msg[i])+" ";
+                    log.debug(f);
+                }
+		while(m.getRetries()>=0) {
+		  if(portReadyToSend(controller)) {                
+            for (int i=0; i< len; i++) {
+                ostream.write(msg[i]);
+                     try {
+                        synchronized(xmtRunnable) {
+                           xmtRunnable.wait(10);
+                        }
+                     } catch (InterruptedException e) { log.error("char send wait interupted"); }                
+            }
+			break;
+		  } else if(m.getRetries()>=0) {
+                     if (log.isDebugEnabled()) log.debug("Retry message: "+m.toString() +" attempts remaining: " + m.getRetries());
+		     m.setRetries(m.getRetries() - 1);
+                     try {
+                        synchronized(xmtRunnable) {
+                        xmtRunnable.wait(m.getTimeout());
+                        }
+                     } catch (InterruptedException e) { log.error("retry wait interupted"); }
+		  } else log.warn("sendMessage: port not ready for data sending: " +msg.toString());
+		}
+            }
+            else {
+                // no stream connected
+                log.warn("sendMessage: no connection established");
+            }
+        }
+        catch (Exception e) {
+            log.warn("sendMessage: Exception: "+e.toString());
+        }
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTrafficController.class.getName());
