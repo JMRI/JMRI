@@ -6,8 +6,7 @@ import com.sun.java.util.collections.List;
 
 import jmri.InstanceManager;
 import jmri.Turnout;
-import jmri.jmrix.AbstractMRReply;
-import jmri.JmriException;
+
 
 
 /**
@@ -31,7 +30,7 @@ import jmri.JmriException;
  * 
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class NceTurnoutMonitor extends Thread implements NceListener{
@@ -51,10 +50,10 @@ public class NceTurnoutMonitor extends Thread implements NceListener{
     // cached work fields
     boolean [] newTurnouts = new boolean [NUM_BLOCK];	//used to sync poll turnout memory
     boolean [] activeBlock = new boolean [NUM_BLOCK];	//When true there are active turnouts in the memory block
-    byte [] csAccMemCopy = new byte [256];		//Copy of NCE CS accessory memory
+    byte [] csAccMemCopy = new byte [256];				//Copy of NCE CS accessory memory
     
     // debug final
-    static final boolean debugTurnoutMonitor = true;	//Control verbose debug
+    static final boolean debugTurnoutMonitor = false;	//Control verbose debug
         
     public NceMessage pollMessage() {
 
@@ -78,7 +77,9 @@ public class NceTurnoutMonitor extends Thread implements NceListener{
             
             // Determine what turnouts have been defined and what blocks have active turnouts
             for (int block = 0; block < NUM_BLOCK; block++){
-                if (activeBlock[block] == false) {  // no need to scan once known to be active
+            	
+            	newTurnouts[block] = true;			// Block may be active, but new turnouts may have been loaded	
+            	if (activeBlock[block] == false) {  // no need to scan once known to be active
 
                     for (int i = 0; i < 128; i++) { // Check 128 turnouts per block 
                         int addr = 1 + i + (block*128);
@@ -86,7 +87,7 @@ public class NceTurnoutMonitor extends Thread implements NceListener{
                         if (mControlTurnout != null){
                             activeBlock[block] = true;	//turnout found, block is active forever
                             numActiveBlocks++;
-                            break; // don't check rest of block					
+                            break; 						// don't check rest of block					
                         }
                     }
                 }
@@ -136,7 +137,7 @@ public class NceTurnoutMonitor extends Thread implements NceListener{
             for (int j = 0; j < REPLY_LEN; j++) { 					// byte index
                 byte recMemByte  = (byte)r.getElement(j);			// CS memory byte
      
-                if (recMemByte != csAccMemCopy [j + currentBlock*BLOCK_LEN]){
+                if (recMemByte != csAccMemCopy [j + currentBlock*BLOCK_LEN] || newTurnouts[currentBlock] == true){
                     
                     csAccMemCopy [j + currentBlock*BLOCK_LEN] = recMemByte;	// load copy into local memory
                     for (int i = 0; i < 8; i++){ 					// search this byte for active turnouts
@@ -188,6 +189,7 @@ public class NceTurnoutMonitor extends Thread implements NceListener{
                     }
                 }
             }
+            newTurnouts[currentBlock] = false;
         }
         else log.warn("wrong number of read bytes for memory poll" );
     }
@@ -196,4 +198,5 @@ public class NceTurnoutMonitor extends Thread implements NceListener{
     
 }
 /* @(#)NceTurnoutMonitor.java */
+
 
