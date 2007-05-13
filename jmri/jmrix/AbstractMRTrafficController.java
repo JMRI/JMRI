@@ -26,7 +26,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.31 $
+ * @version			$Revision: 1.32 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -434,7 +434,7 @@ abstract public class AbstractMRTrafficController {
     }
 
     Thread xmtThread = null;
-    Runnable xmtRunnable = null;
+    protected Runnable xmtRunnable = null;
     Thread rcvThread = null;
 
     /**
@@ -688,11 +688,11 @@ abstract public class AbstractMRTrafficController {
      * Internal class to remember the Message object and destination
      * listener when a message is queued for notification.
      */
-    class XmtNotifier implements Runnable {
+    protected class XmtNotifier implements Runnable {
         AbstractMRMessage mMsg;
         AbstractMRListener mDest;
         AbstractMRTrafficController mTC;
-        XmtNotifier(AbstractMRMessage pMsg, AbstractMRListener pDest,
+        public XmtNotifier(AbstractMRMessage pMsg, AbstractMRListener pDest,
                     AbstractMRTrafficController pTC) {
             mMsg = pMsg;
             mDest = pDest;
