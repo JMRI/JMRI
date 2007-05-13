@@ -17,15 +17,17 @@ import jmri.Turnout;
 /**
  * Tests for the BlockBossLogic class
  * @author	Bob Jacobsen
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class BlockBossLogicTest extends TestCase {
 
-	void wait(int msec) {
+	synchronized void releaseThread() {
 		try {
-			super.wait(msec);
+		    Thread.sleep(10);
+			// super.wait(100);
 		}
-		catch (Exception e) {
+		catch (InterruptedException e) {
+		    Assert.fail("failed due to InterruptedException");
 		}
 	}
 	
@@ -44,15 +46,15 @@ public class BlockBossLogicTest extends TestCase {
 		Assert.assertEquals("driven signal name", "IH1", p.getDrivenSignal());
 		
 		h2.setAppearance(SignalHead.RED);
-		wait(1);  // release control
+		releaseThread();  // release control
 		Assert.assertEquals("red sets yellow", SignalHead.YELLOW, h1.getAppearance());
 		
 		h2.setAppearance(SignalHead.YELLOW);
-		wait(1);  // release control
+		releaseThread();  // release control
 		Assert.assertEquals("yellow sets green", SignalHead.GREEN, h1.getAppearance());
 		
 		h2.setAppearance(SignalHead.GREEN);
-		wait(1);  // release control
+		releaseThread();  // release control
 		Assert.assertEquals("green sets green", SignalHead.GREEN, h1.getAppearance());
 		
 		p.stop();
@@ -68,15 +70,15 @@ public class BlockBossLogicTest extends TestCase {
 		Assert.assertEquals("driven signal name", "IH1", p.getDrivenSignal());
 		
 		h2.setAppearance(SignalHead.RED);
-		wait(1);  // release control
+		releaseThread();  // release control
 		Assert.assertEquals("red sets red", SignalHead.RED, h1.getAppearance());
 		
 		h2.setAppearance(SignalHead.YELLOW);
-		wait(1);  // release control
+		releaseThread();  // release control
 		Assert.assertEquals("yellow sets yellow", SignalHead.YELLOW, h1.getAppearance());
 		
 		h2.setAppearance(SignalHead.GREEN);
-		wait(1);  // release control
+		releaseThread();  // release control
 		Assert.assertEquals("green sets green", SignalHead.GREEN, h1.getAppearance());
 		
 		p.stop();
@@ -92,15 +94,15 @@ public class BlockBossLogicTest extends TestCase {
 		p.start();
 		
 		h2.setAppearance(SignalHead.RED);
-		wait(1);  // release control
+		releaseThread();  // release control
 		Assert.assertEquals("red sets yellow", SignalHead.YELLOW, h1.getAppearance());
 		
 		h2.setAppearance(SignalHead.YELLOW);
-		wait(1);  // release control
+		releaseThread();  // release control
 		Assert.assertEquals("yellow sets yellow", SignalHead.YELLOW, h1.getAppearance());
 		
 		h2.setAppearance(SignalHead.GREEN);
-		wait(1);  // release control
+		releaseThread();  // release control
 		Assert.assertEquals("green sets yellow", SignalHead.YELLOW, h1.getAppearance());
 		
 		p.stop();
@@ -116,15 +118,15 @@ public class BlockBossLogicTest extends TestCase {
 		p.start();
 		
 		h2.setAppearance(SignalHead.RED);
-		wait(1);  // release control
+		releaseThread();  // release control
 		Assert.assertEquals("red sets red", SignalHead.RED, h1.getAppearance());
 		
 		h2.setAppearance(SignalHead.YELLOW);
-		wait(1);  // release control
+		releaseThread();  // release control
 		Assert.assertEquals("yellow sets yellow", SignalHead.YELLOW, h1.getAppearance());
 		
 		h2.setAppearance(SignalHead.GREEN);
-		wait(1);  // release control
+		releaseThread();  // release control
 		Assert.assertEquals("green sets yellow", SignalHead.YELLOW, h1.getAppearance());
 		
 		p.stop();
@@ -136,7 +138,7 @@ public class BlockBossLogicTest extends TestCase {
 		p.setMode(BlockBossLogic.SINGLEBLOCK);
 		p.start();
 		
-		wait(10);  // release control
+		releaseThread();  // release control
 		Assert.assertEquals("missing signal is green", SignalHead.GREEN, h1.getAppearance());
 		p.stop();
 	}
@@ -148,7 +150,7 @@ public class BlockBossLogicTest extends TestCase {
 		p.setLimitSpeed1(true);
 		p.start();
 		
-		wait(10);  // release control
+		releaseThread();  // release control
 		Assert.assertEquals("missing signal is green, show yellow", SignalHead.YELLOW, h1.getAppearance());
 		p.stop();
 	}
