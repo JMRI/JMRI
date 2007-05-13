@@ -30,7 +30,7 @@ import jmri.Turnout;
  * 
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 public class NceTurnoutMonitor extends Thread implements NceListener{
@@ -56,6 +56,8 @@ public class NceTurnoutMonitor extends Thread implements NceListener{
     static final boolean debugTurnoutMonitor = false;	//Control verbose debug
         
     public NceMessage pollMessage() {
+    	
+    	if (NceMessage.getCommandOptions() < NceMessage.OPTION_2006 ){return null;}
 
         // First, rescan the defined turnouts.  It's tedious to do this on every request
         // for poll, so eventually this should be handled by a listener to the TurnoutManager
@@ -143,7 +145,7 @@ public class NceTurnoutMonitor extends Thread implements NceListener{
                     for (int i = 0; i < 8; i++){ 					// search this byte for active turnouts
                         
                         int addr = 1 + i + j*8 + (currentBlock*128);
-                        Turnout rControlTurnout = InstanceManager.turnoutManagerInstance().getBySystemName("NT"+addr);
+                        NceTurnout rControlTurnout = (NceTurnout) InstanceManager.turnoutManagerInstance().getBySystemName("NT"+addr);
                         if (rControlTurnout != null){
                             
                             int tState = rControlTurnout.getKnownState();
@@ -168,7 +170,7 @@ public class NceTurnoutMonitor extends Thread implements NceListener{
                                         log.debug("turnout discrepency, need to THROW turnout NT" + addr);
                                     }
                                     // change JMRI's knowledge of the turnout state to match observed
-                                    rControlTurnout.setCommandedState(Turnout.THROWN);
+                                    rControlTurnout.newKnownState(Turnout.THROWN);
                                 }
                                 
                                 if (accThrown == 0 & tState != Turnout.CLOSED) {
@@ -176,7 +178,7 @@ public class NceTurnoutMonitor extends Thread implements NceListener{
                                         log.debug("turnout discrepency, need to CLOSE turnout NT" + addr);
                                     }	
                                    // change JMRI's knowledge of the turnout state to match observed
-                                    rControlTurnout.setCommandedState(Turnout.CLOSED);
+                                    rControlTurnout.newKnownState(Turnout.CLOSED);
                                 }	
                             }
                         }
