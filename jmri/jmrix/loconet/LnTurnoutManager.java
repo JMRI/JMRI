@@ -15,9 +15,29 @@ import jmri.Turnout;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * <P>
+ * Since LocoNet messages requesting turnout operations can arrive
+ * faster than the command station can send them on the rails, 
+ * the command station has a short queue of messages. When that gets full,
+ * it sends a LACK, indicating that the request was not forwarded on the rails.
+ * In that case, this class goes into a tight loop, resending the last 
+ * turnout message seen until it's received without a LACK reply.  Note
+ * two things about this:
+ * <UL>
+ * <LI>We provide this service for any turnout request, whether or
+ * not it came from JMRI.  (This might be a problem if more than one
+ * computer is executing this algorithm)
+ * <LI>By sending the message as fast as we can, we tie up the LocoNet during the
+ * the recovery.  This is a mixed bag; delaying can cause messages to get out
+ * of sequence on the rails.  But not delaying takes up a lot of LocoNet 
+ * bandwidth.
+ * </UL>
+ * In the end, this implementation is OK, but not great.  An improvement would
+ * be to control JMRI turnout operations centrally, so that retransmissions can
+ * controlled.
+ * <P>
  * Description:		Implement turnout manager for loconet
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.16 $
+ * @author			Bob Jacobsen Copyright (C) 2001, 2007
+ * @version         $Revision: 1.17 $
  */
 
 public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements LocoNetListener {
@@ -49,6 +69,9 @@ public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements Loc
         return t;
     }
 
+    // holds last seen turnout request for possible resend
+    LocoNetMessage lastSWREQ = null;
+    
     // listen for turnouts, creating them as needed
     public void message(LocoNetMessage l) {
         // parse message type
@@ -58,19 +81,40 @@ public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements Loc
             int sw1 = l.getElement(1);
             int sw2 = l.getElement(2);
             addr = address(sw1, sw2);
+
+            // store message in case resend is needed
+            lastSWREQ = l;
+            
             // Loconet spec says 0x10 of SW2 must be 1, but we observe 0
             if ( ((sw1&0xFC)==0x78) && ((sw2&0xCF)==0x07) ) return;  // turnout interrogate msg
             if (log.isDebugEnabled()) log.debug("SW_REQ received with address "+addr);
             break;
         }
         case LnConstants.OPC_SW_REP: {                /* page 9 of Loconet PE */
+            // clear resend message, indicating not to resend
+            lastSWREQ = null;
+            
+            // process this request
             int sw1 = l.getElement(1);
             int sw2 = l.getElement(2);
             addr = address(sw1, sw2);
             if (log.isDebugEnabled()) log.debug("SW_REP received with address "+addr);
             break;
         }
+        case LnConstants.OPC_LONG_ACK: { 
+            // might have to resend, check 2nd byte
+            if (lastSWREQ!=null && l.getElement(1)==0x30 && l.getElement(2)==0) {
+                // received LONG_ACK reject msg, resend
+                LnTrafficController.instance().sendLocoNetMessage(lastSWREQ);
+            }
+            
+            // clear so can't resend recursively (we'll see
+            // the resent message echo'd back)
+            lastSWREQ = null;
+        }
         default:  // here we didn't find an interesting command
+            // clear resend message, indicating not to resend
+            lastSWREQ = null;
             return;
         }
         // reach here for loconet switch command; make sure we know about this one
