@@ -2,6 +2,7 @@
 
 package jmri.jmrix.cmri.serial;
 
+import jmri.Sensor;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -10,11 +11,20 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialSensorManager class.
  * @author	Bob Jacobsen  Copyright 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class SerialSensorManagerTest extends TestCase {
 
     public void testSensorCreationAndRegistration() {
+        
+        // replace SerialTurnoutManager to make sure nodes start
+        // at the beginning
+        new SerialTurnoutManager(){
+            void reset() { _instance = null; }
+        }.reset();
+        
+        SerialSensorManager s = new SerialSensorManager();
+
         SerialNode n0 = new SerialNode();
         SerialNode n1 = new SerialNode(1,SerialNode.SMINI);
         SerialNode n2 = new SerialNode(2,SerialNode.USIC_SUSIC);
@@ -24,14 +34,18 @@ public class SerialSensorManagerTest extends TestCase {
         n2.setCardTypeByAddress (3,SerialNode.OUTPUT_CARD);
         n2.setCardTypeByAddress (4,SerialNode.INPUT_CARD);
         n2.setCardTypeByAddress (2,SerialNode.OUTPUT_CARD);
-        SerialSensorManager s = new SerialSensorManager();
+
         Assert.assertTrue("none expected A0", !(n0.sensorsActive()) );
         Assert.assertTrue("none expected A1", !(n1.sensorsActive()) );
         Assert.assertTrue("none expected A2", !(n2.sensorsActive()) );
-        s.provideSensor("3");
+        
+        Sensor sensor = s.provideSensor("3");
+        Assert.assertTrue("found sensor", sensor!=null);
+        Assert.assertTrue("right name", sensor.getSystemName().equals("CS3"));
         Assert.assertTrue("UA 0", n0.sensorsActive() );
         Assert.assertTrue("2nd none expected A1", !(n1.sensorsActive()) );
         Assert.assertTrue("2nd none expected A2", !(n2.sensorsActive()) );
+
         s.provideSensor("11");
         s.provideSensor("8");
         s.provideSensor("19");
@@ -40,6 +54,7 @@ public class SerialSensorManagerTest extends TestCase {
         Assert.assertTrue("2nd UA 0", n0.sensorsActive() );
         Assert.assertTrue("3rd none expected UA 1", !(n1.sensorsActive()) );
         Assert.assertTrue("UA 2", n2.sensorsActive() );
+
         s.provideSensor("15");
         s.provideSensor("1001");
         Assert.assertTrue("3rd UA 0", n0.sensorsActive() );
