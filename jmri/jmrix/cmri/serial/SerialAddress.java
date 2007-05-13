@@ -23,7 +23,7 @@ package jmri.jmrix.cmri.serial;
  *              CL11B234 (node address 11, bit234)
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004 - 2006
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class SerialAddress {
 
@@ -87,13 +87,13 @@ public class SerialAddress {
      *  Note:  Returns 'null' if illegal systemName format or if the node is not found
      */
     public static SerialNode getNodeFromSystemName(String systemName) {
-		// get the node address
-		int ua;
-		ua = getNodeAddressFromSystemName(systemName);
-		if (ua == -1) 
-			// error messages have already been issued by getNodeAddressFromSystemName
-			return null;
-
+        // get the node address
+        int ua;
+        ua = getNodeAddressFromSystemName(systemName);
+        if (ua == -1)
+            // error messages have already been issued by getNodeAddressFromSystemName
+            return null;
+        
         return (SerialTrafficController.instance().getNodeFromAddress(ua));
     }
     
