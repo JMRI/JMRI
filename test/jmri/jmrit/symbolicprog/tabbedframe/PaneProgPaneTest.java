@@ -17,7 +17,7 @@ import jmri.jmrit.roster.*;
 
 /**
  * @author	Bob Jacobsen Copyright 2001, 2002, 2003, 2004
- * @version         $Revision: 1.13 $
+ * @version         $Revision: 1.14 $
  */
 public class PaneProgPaneTest extends TestCase {
 
@@ -165,7 +165,7 @@ public class PaneProgPaneTest extends TestCase {
         if (log.isDebugEnabled()) log.debug("past loop, i="+i);
         assertTrue("busy period ends before timeout ", i<=100);
 
-        Assert.assertEquals("last cv read ", 1, p.lastReadCv());
+        Assert.assertEquals("last cv read ", 2, p.lastReadCv());
 
         if (log.isDebugEnabled()) log.debug("testPaneRead ends ok");
     }
@@ -221,7 +221,7 @@ public class PaneProgPaneTest extends TestCase {
         if (log.isDebugEnabled()) log.debug("past loop, i="+i);
         assertTrue("busy period ends before timeout ", i<=100);
 
-        Assert.assertEquals("last cv written ", 1, p.lastWriteCv());
+        Assert.assertEquals("last cv written ", 2, p.lastWriteCv());
 
         if (log.isDebugEnabled()) log.debug("testPaneWrite ends ok");
     }
