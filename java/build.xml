@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.1 $ -->
+<!-- Revision $Revision: 1.2 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -203,6 +203,30 @@
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
     </java>
+  </target>
+
+  <!-- The next target is NetBeans-specific, but is here so it -->
+  <!-- can use other info defined in this file -->
+  <target description="run test suite w debug under NetBeans" 
+            name="alltest-nb" depends="tests">
+        <nbjpdastart addressproperty="jpda.address" name="JMRI" transport="dt_socket">
+            <classpath refid="project.class.path"    />
+        </nbjpdastart>
+        <java classname="apps.tests.AllTest" dir=".." fork="yes">
+            <classpath refid="project.class.path"    />
+            <sysproperty key="java.security.policy" value="lib/security.policy"/>
+            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <jvmarg value="-Xms10m"/>
+            <!-- <jvmarg value="-Xmx60m"/> -->
+            <!-- <jvmarg value="-verbose"/> -->
+            <!-- <jvmarg value="-verbosegc"/> -->
+            <!-- <jvmarg value="-Xloggc:memory.vgc"/> -->
+            <!-- for JTune -->
+            <jvmarg value="-Xdebug"/>
+            <jvmarg value="-Xnoagent"/>
+            <jvmarg value="-Djava.compiler=none"/>
+            <jvmarg value="-Xrunjdwp:transport=dt_socket,address=${jpda.address}"/>
+        </java>
   </target>
 
   <target name="jar" depends="compile, rmic"  
