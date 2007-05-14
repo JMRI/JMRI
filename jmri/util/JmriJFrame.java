@@ -23,19 +23,21 @@ import java.awt.*;
  *
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
-public class JmriJFrame extends JFrame {
+public class JmriJFrame extends JFrame implements java.awt.event.WindowListener {
 
     public JmriJFrame() {
 	super();
+        addWindowListener(this);
 	// Set the image for use when minimized
 	setIconImage(getToolkit().getImage("resources/jmri32x32.gif"));
     }
 
     public JmriJFrame(String name) {
         super(name);
+        addWindowListener(this);
 	// Set the image for use when minimized
 	setIconImage(getToolkit().getImage("resources/jmri32x32.gif"));
     }
@@ -80,4 +82,41 @@ public class JmriJFrame extends JFrame {
         return new Dimension(width, height);
     }
 
+    // handle resizing when first shown
+    private boolean mShown = false;
+    public void addNotify() {
+        super.addNotify();
+        if (mShown)
+            return;
+        // resize frame to account for menubar
+        JMenuBar jMenuBar = getJMenuBar();
+        if (jMenuBar != null) {
+            int jMenuBarHeight = jMenuBar.getPreferredSize().height;
+            Dimension dimension = getSize();
+            dimension.height += jMenuBarHeight;
+            setSize(dimension);
+        }
+        mShown = true;
+    }
+
+    
+    public void windowOpened(java.awt.event.WindowEvent e) {}
+    
+    public void windowActivated(java.awt.event.WindowEvent e) {}
+    public void windowDeactivated(java.awt.event.WindowEvent e) {}
+    public void windowIconified(java.awt.event.WindowEvent e) {}
+    public void windowDeiconified(java.awt.event.WindowEvent e) {}
+
+   /**
+     * Close and dispose the window when the close box is clicked.
+     *<P>
+     * Subclasses should this this method via super.windowClosing
+     * after doing necessary cleanup.
+     **/
+    public void windowClosing(java.awt.event.WindowEvent e) {
+        setVisible(false);
+        dispose();	// and disconnect from the SlotManager
+    }
+    
+    public void windowClosed(java.awt.event.WindowEvent e) {}
 }
