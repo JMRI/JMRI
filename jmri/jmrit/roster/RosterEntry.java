@@ -36,7 +36,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.23 $
+ * @version   $Revision: 1.24 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -208,7 +208,7 @@ public class RosterEntry {
             } else {
                 // else guess short address
                 // These people should resave their roster, so we'll warn them
-                log.warn("Roster entry \""+_id+"\" should be saved again to store the short/long address value");
+                warnShortLong(_id);
                 _isLongAddress = false;
 
             }
@@ -222,6 +222,13 @@ public class RosterEntry {
         }
     }
 
+    /**
+     * Warn user that the roster entry needs to be resaved.
+     */
+    void warnShortLong(String id) {
+        log.warn("Roster entry \""+id+"\" should be saved again to store the short/long address value");
+    }
+    
     /**
      * Create an XML element to represent this Entry. This member has to remain synchronized with the
      * detailed DTD in roster-config.xml.
