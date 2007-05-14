@@ -11,7 +11,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialSensorManager class.
  * @author	Bob Jacobsen  Copyright 2003
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class SerialSensorManagerTest extends TestCase {
 
@@ -19,8 +19,8 @@ public class SerialSensorManagerTest extends TestCase {
         
         // replace SerialTurnoutManager to make sure nodes start
         // at the beginning
-        new SerialTurnoutManager(){
-            void reset() { _instance = null; }
+        new SerialTrafficController(){
+            void reset() {self = null; }
         }.reset();
         
         SerialSensorManager s = new SerialSensorManager();
