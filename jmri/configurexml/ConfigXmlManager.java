@@ -16,7 +16,7 @@ import org.jdom.Element;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -75,7 +75,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             } catch (java.lang.ClassNotFoundException ex) {
                 locateClassFailed(ex, adapter, o);
             } catch (java.lang.NoClassDefFoundError ex) {
-            log.error("Could not load adapter class = "+adapter+" "+ex);
+                locateClassFailed(ex, adapter, o);
             }
         // and add to list
         clist.add(o);
@@ -157,7 +157,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * Handle failure to load adapter class. Although only a
      * one-liner in this class, it is a separate member to facilitate testing.
      */
-    void locateClassFailed(java.lang.ClassNotFoundException ex, String adapterName, Object o) {
+    void locateClassFailed(Throwable ex, String adapterName, Object o) {
         log.error("could not load adapter class "+adapterName);
     }
 
