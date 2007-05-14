@@ -19,7 +19,7 @@ import junit.framework.TestSuite;
  * <P>
  * Uses the local preferences for test files.
  * @author Bob Jacobsen Copyright 2003
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class ConfigXmlManagerTest extends TestCase {
 
@@ -31,7 +31,7 @@ public class ConfigXmlManagerTest extends TestCase {
 
     public void testRegisterFail() {
         ConfigXmlManager configxmlmanager = new ConfigXmlManager(){
-                void locateClassFailed(java.lang.ClassNotFoundException ex, String adapterName, Object o) {
+                void locateClassFailed(Throwable ex, String adapterName, Object o) {
                     innerFlag=true;
                 }
             };
@@ -43,7 +43,7 @@ public class ConfigXmlManagerTest extends TestCase {
 
     public void testRegisterOK() {
         ConfigXmlManager configxmlmanager = new ConfigXmlManager(){
-                void locateFailed(java.lang.ClassNotFoundException ex, String adapterName, Object o) {
+                void locateFailed(Throwable ex, String adapterName, Object o) {
                     innerFlag=true;
                 }
             };
@@ -57,7 +57,7 @@ public class ConfigXmlManagerTest extends TestCase {
     }
     public void testFind() throws ClassNotFoundException {
         ConfigXmlManager configxmlmanager = new ConfigXmlManager(){
-                void locateFailed(java.lang.ClassNotFoundException ex, String adapterName, Object o) {
+                void locateFailed(Throwable ex, String adapterName, Object o) {
                     innerFlag=true;
                 }
             };
@@ -89,7 +89,7 @@ public class ConfigXmlManagerTest extends TestCase {
 
     public void testFindFile() throws FileNotFoundException, IOException {
         ConfigXmlManager configxmlmanager = new ConfigXmlManager(){
-            void locateClassFailed(java.lang.ClassNotFoundException ex, String adapterName, Object o) {
+            void locateClassFailed(Throwable ex, String adapterName, Object o) {
                     innerFlag=true;
                 }
             void locateFileFailed(String f) {
@@ -99,8 +99,6 @@ public class ConfigXmlManagerTest extends TestCase {
         File result;
         result = configxmlmanager.find("foo.biff");
         Assert.assertTrue("dont find foo.biff", result==null);
-        result = configxmlmanager.find("roster.xml");
-        Assert.assertTrue("should find roster.xml", result!=null);
 
         // make sure no test file exists in "layout"
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
