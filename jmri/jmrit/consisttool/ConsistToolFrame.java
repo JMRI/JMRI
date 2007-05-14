@@ -18,7 +18,7 @@ import com.sun.java.util.collections.ArrayList;
  * Frame object for manipulating consists.
  *
  * @author               Paul Bender Copyright (C) 2003
- * @version              $Revision: 1.17 $
+ * @version              $Revision: 1.18 $
  */
 public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.ConsistListener{
 
@@ -233,31 +233,6 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
     addHelpMenu("package.jmri.jmrit.consisttool.ConsistToolFrame", true);
         pack();
 
-    }
-
-    private boolean mShown = false;
-
-    public void addNotify() {
-        super.addNotify();
-
-        if (mShown)
-            return;
-
-        // resize frame to account for menubar
-        JMenuBar jMenuBar = getJMenuBar();
-        if (jMenuBar != null) {
-            int jMenuBarHeight = jMenuBar.getPreferredSize().height;
-            Dimension dimension = getSize();
-            dimension.height += jMenuBarHeight;
-            setSize(dimension);
-        }
-        mShown = true;
-    }
-
-    // Close the window when the close box is clicked
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
-        dispose();
     }
 
     private void initializeConsistBox() {

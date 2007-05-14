@@ -21,7 +21,7 @@ import jmri.util.JmriJFrame;
  * Modified by Dennis Miller for resizing Nov, 2004
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
 
@@ -168,12 +168,9 @@ public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyCh
         m2.setIcon(tubes[minutes-(minutes/10)*10]);
     }
 
-
-    // Close the window when the close box is clicked
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
+    public void dispose() {
         timer.stop();
-        dispose();
+        super.dispose();
     }
 
     /**

@@ -16,7 +16,7 @@ import javax.swing.*;
  * utility for the LV102 power station
  *
  * @author			Paul Bender  Copyright (C) 2003,2005
- * @version			$Revision: 2.6 $
+ * @version			$Revision: 2.7 $
  */
 public class LZV100Frame extends jmri.util.JmriJFrame {
 
@@ -59,12 +59,6 @@ public class LZV100Frame extends jmri.util.JmriJFrame {
     }
 
     JToggleButton closeButton = new JToggleButton("Close");
-
-    // Close the window when the close box is clicked
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
-        dispose();
-    }
 
     public void dispose() {
         // take apart the JFrame

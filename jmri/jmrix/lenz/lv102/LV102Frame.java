@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
  * The actual utility is defined in {@link LV102InternalFrame}
  *
  * @author			Paul Bender  Copyright (C) 2004,2005
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class LV102Frame extends jmri.util.JmriJFrame {
 
@@ -50,23 +50,10 @@ public class LV102Frame extends jmri.util.JmriJFrame {
                 }
             }
         );
-
-        // notice the window is closing
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                thisWindowClosing(e);
-            }
-        });
     }
 
 
     JToggleButton closeButton = new JToggleButton("Close");
-
-    // Close the window when the close box is clicked
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
-        dispose();
-    }
 
     public void dispose() {
         // take apart the JFrame

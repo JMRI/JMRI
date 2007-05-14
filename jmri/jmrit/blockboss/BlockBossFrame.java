@@ -30,7 +30,7 @@ import javax.swing.*;
  * The individual items all share data models to simplify the logic.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.19 $
+ * @version     $Revision: 1.20 $
  *              
  *              Revisions to add facing point sensors, approach lighting,
  *              limited speed, changed layout, and tool tips.  
@@ -822,8 +822,6 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         modeFacing.repaint();
     }
 
-    private boolean mShown = false;
-
     /**
      * Programmatically open the frame to edit a specific signal
      */
@@ -832,32 +830,6 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         activate();
     }
     
-    public void addNotify() {
-        super.addNotify();
-
-        if (mShown)
-            return;
-
-        // resize frame to account for menubar
-        JMenuBar jMenuBar = getJMenuBar();
-        if (jMenuBar != null) {
-            int jMenuBarHeight = jMenuBar.getPreferredSize().height;
-            Dimension dimension = getSize();
-            dimension.height += jMenuBarHeight;
-            setSize(dimension);
-        }
-        mShown = true;
-    }
-    // Close the window when the close box is clicked
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
-        dispose();
-    }
-
-    public void dispose() {
-        super.dispose();
-    }
-
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(BlockBossLogic.class.getName());
 }
 

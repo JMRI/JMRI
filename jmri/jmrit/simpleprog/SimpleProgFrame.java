@@ -12,9 +12,9 @@ import jmri.ProgListener;
 /**
  * Frame providing a simple command station programmer
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
-public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgListener {
+public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgListener {
 
     // GUI member declarations
     javax.swing.JToggleButton readButton 	= new javax.swing.JToggleButton();
@@ -189,30 +189,9 @@ public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgList
         }
     }
 
-    // handle resizing when first shown
-    private boolean mShown = false;
-    public void addNotify() {
-    	super.addNotify();
-        if (mShown)
-            return;
-        // resize frame to account for menubar
-        JMenuBar jMenuBar = getJMenuBar();
-        if (jMenuBar != null) {
-            int jMenuBarHeight = jMenuBar.getPreferredSize().height;
-            Dimension dimension = getSize();
-            dimension.height += jMenuBarHeight;
-            setSize(dimension);
-        }
-        mShown = true;
-    }
-
-    // Close the window when the close box is clicked
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
+    public void dispose() {
         modePane.dispose();
-        dispose();
-	// and disconnect from the SlotManager
-
+        super.dispose();
     }
 
 }

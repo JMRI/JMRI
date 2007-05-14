@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
  * utiliy is defined in {@link LZ100InternalFrame}
  *
  * @author			Paul Bender  Copyright (C) 2005
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class LZ100Frame extends jmri.util.JmriJFrame {
 
@@ -53,12 +53,6 @@ public class LZ100Frame extends jmri.util.JmriJFrame {
 
 
     JToggleButton closeButton = new JToggleButton("Close");
-
-    // Close the window when the close box is clicked
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
-        dispose();
-    }
 
     public void dispose() {
         // take apart the JFrame

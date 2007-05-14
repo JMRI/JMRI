@@ -22,11 +22,11 @@ import javax.swing.table.*;
 import java.lang.Integer;
 
 /**
- * Frame for running CMRI assignment list
+ * Frame for running CMRI assignment list.
  * @author	 Dave Duchamp   Copyright (C) 2006
- * @version	 $Revision: 1.2 $
+ * @version	 $Revision: 1.3 $
  */
-public class ListFrame extends javax.swing.JFrame {
+public class ListFrame extends jmri.util.JmriJFrame {
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.cmri.serial.assignment.ListBundle");
 
@@ -187,13 +187,6 @@ public class ListFrame extends javax.swing.JFrame {
 		panel3.add(printButton);
         contentPane.add(panel3);
 
-        // add window listener
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                thisWindowClosing(e);
-            }
-        });
-
 		if (numConfigNodes>0) {
 			// initialize for the first time
 			displayNodeInfo( (String)nodeSelBox.getSelectedItem() );
@@ -319,14 +312,6 @@ public class ListFrame extends javax.swing.JFrame {
 		writer.increaseLineSpacing(20);
 		// print the assignments
 		((AssignmentTableModel)assignmentListModel).printTable(writer,colWidth);
-    }
-
-    /**
-     * Close the window when the close box is clicked
-     */
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
-        dispose();
     }
 
     /**

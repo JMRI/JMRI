@@ -18,7 +18,7 @@ import javax.swing.border.Border;
  * Frame for user configuration of Simple Timebase
  *
  * @author	Dave Duchamp   Copyright (C) 2004
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class SimpleClockFrame extends JmriJFrame
 	implements java.beans.PropertyChangeListener {
@@ -150,13 +150,6 @@ public class SimpleClockFrame extends JmriJFrame
             });
         panel4.add(stopButton);
         contentPane.add(panel4);
-
-        // Listen for closing of this window
-        addWindowListener(new java.awt.event.WindowAdapter() {
-                public void windowClosing(java.awt.event.WindowEvent e) {
-                    thisWindowClosing(e);
-                }
-            });
 
 		// update contents for current status
 		updateRunningButton();
@@ -326,12 +319,12 @@ public class SimpleClockFrame extends JmriJFrame
     /**
      * Method to handle window closing event
      */
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
+    public void windowClosing(java.awt.event.WindowEvent e) {
         setVisible(false);
         if (timer!=null) {
             timer.stop();
         }
-        dispose();
+        super.windowClosing(e);
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SimpleClockFrame.class.getName());

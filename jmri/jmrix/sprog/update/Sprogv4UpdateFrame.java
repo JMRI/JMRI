@@ -10,7 +10,7 @@ import jmri.jmrix.sprog.SprogTrafficController;
 /**
  * Frame for SPROG firmware update utility.
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class Sprogv4UpdateFrame
     extends SprogUpdateFrame
@@ -274,12 +274,6 @@ public class Sprogv4UpdateFrame
 
     setCSModeButton.setVisible(false);
 
-  }
-
-  // Close the window when the close box is clicked
-  void thisWindowClosing(java.awt.event.WindowEvent e) {
-    setVisible(false);
-    dispose();
   }
 
   public synchronized void connectButtonActionPerformed(java.awt.event.

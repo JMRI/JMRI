@@ -26,9 +26,9 @@ import javax.swing.JTextField;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2004
  * @author      Adapted for metric system - S.K. Bosch
- * @version	$Revision: 1.20 $
+ * @version	$Revision: 1.21 $
  */
-public class SpeedometerFrame extends javax.swing.JFrame {
+public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
     final String blank = "       ";
     JTextField startSensor = new JTextField(5);
@@ -380,12 +380,6 @@ public class SpeedometerFrame extends javax.swing.JFrame {
             });
         stopSensorIcon2.setSensor(s.getSystemName());
 
-    }
-
-    // Close the window when the close box is clicked
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
-        // dispose();
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SpeedometerFrame.class.getName());

@@ -3,7 +3,7 @@
  *
  * Description:		Frame for configuring an XPA using a modem 
  * @author			Paul Bender Copyright (C) 2004
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 
@@ -15,7 +15,7 @@ import javax.swing.*;
 import jmri.jmrix.xpa.XpaTrafficController;
 import jmri.jmrix.xpa.XpaMessage;
 
-public class XpaConfigureFrame extends JFrame implements jmri.jmrix.xpa.XpaListener {
+public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmrix.xpa.XpaListener {
 
 	// member declarations
 
@@ -149,12 +149,6 @@ public class XpaConfigureFrame extends JFrame implements jmri.jmrix.xpa.XpaListe
         	}
         	functionBox.setSelectedIndex(0);
 
-		addWindowListener(new java.awt.event.WindowAdapter() {
-			public void windowClosing(java.awt.event.WindowEvent e) {
-				thisWindowClosing(e);
-			}
-		});
-
 		// Initilize the reset button
 		xpaReset.setText("Reset XPA");
 		xpaReset.setVisible(true);
@@ -212,29 +206,4 @@ public class XpaConfigureFrame extends JFrame implements jmri.jmrix.xpa.XpaListe
   	public void  message(XpaMessage m) {}  // ignore replies
   	public void  reply(XpaMessage r) {} // ignore replies
 
-  	private boolean mShown = false;
-
-	public void addNotify() {
-		super.addNotify();
-
-		if (mShown)
-			return;
-
-		// resize frame to account for menubar
-		JMenuBar jMenuBar = getJMenuBar();
-		if (jMenuBar != null) {
-			int jMenuBarHeight = jMenuBar.getPreferredSize().height;
-			Dimension dimension = getSize();
-			dimension.height += jMenuBarHeight;
-			setSize(dimension);
-		}
-
-		mShown = true;
-	}
-
-	// Close the window when the close box is clicked
-	void thisWindowClosing(java.awt.event.WindowEvent e) {
-		setVisible(false);
-		dispose();
-	}
 }

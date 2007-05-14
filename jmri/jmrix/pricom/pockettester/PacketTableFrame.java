@@ -22,9 +22,9 @@ import jmri.util.JTableUtil;
  * Frame providing survey of DCC contents
  *
  * @author	Bob Jacobsen   Copyright (C) 2005
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
-public class PacketTableFrame extends javax.swing.JFrame implements DataListener {
+public class PacketTableFrame extends jmri.util.JmriJFrame implements DataListener {
 
     PacketDataModel	model 	= new PacketDataModel();
     JTable				table;
@@ -57,33 +57,6 @@ public class PacketTableFrame extends javax.swing.JFrame implements DataListener
         getContentPane().add(p1);
         
         pack();
-
-    }
-
-    private boolean mShown = false;
-
-    public void addNotify() {
-        super.addNotify();
-
-        if (mShown)
-            return;
-
-        // resize frame to account for menubar
-        JMenuBar jMenuBar = getJMenuBar();
-        if (jMenuBar != null) {
-            int jMenuBarHeight = jMenuBar.getPreferredSize().height;
-            Dimension dimension = getSize();
-            dimension.height += jMenuBarHeight;
-            setSize(dimension);
-        }
-        mShown = true;
-    }
-
-    // Close the window when the close box is clicked
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
-        dispose();
-	// and disconnect from the SlotManager
 
     }
 

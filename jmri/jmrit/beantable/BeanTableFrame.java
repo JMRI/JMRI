@@ -23,7 +23,7 @@ import jmri.util.davidflanagan.HardcopyWriter;
  * Frame providing a table of NamedBeans.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 public class BeanTableFrame extends jmri.util.JmriJFrame {
 
@@ -118,32 +118,7 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
     }
 
 	void extras() {}
-	
-    private boolean mShown = false;
-
-    public void addNotify() {
-        super.addNotify();
-
-        if (mShown)
-            return;
-
-        // resize frame to account for menubar
-        JMenuBar jMenuBar = getJMenuBar();
-        if (jMenuBar != null) {
-            int jMenuBarHeight = jMenuBar.getPreferredSize().height;
-            Dimension dimension = getSize();
-            dimension.height += jMenuBarHeight;
-            setSize(dimension);
-        }
-        mShown = true;
-    }
-
-    // Close the window when the close box is clicked
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
-        dispose();
-    }
-    
+	    
     protected Box getBottomBox() { return bottomBox; };
     /**
      * Add a component to the bottom box. Takes care of organising glue, struts etc

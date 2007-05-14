@@ -12,12 +12,12 @@ import jmri.jmrix.zimo.Mx1TrafficController;
  * Frame for user input of MX-1 messages.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001,2002
- * @version		$Revision: 1.3 $
+ * @version		$Revision: 1.4 $
  *
  * Adapted by Sip Bosch for use with Zimo MX-1
  *
  */
-public class ZimoPacketGenFrame extends javax.swing.JFrame {
+public class ZimoPacketGenFrame extends jmri.util.JmriJFrame {
 
 	// member declarations
 	javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
@@ -51,11 +51,6 @@ public class ZimoPacketGenFrame extends javax.swing.JFrame {
 		sendButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				sendButtonActionPerformed(e);
-			}
-		});
-		addWindowListener(new java.awt.event.WindowAdapter() {
-			public void windowClosing(java.awt.event.WindowEvent e) {
-				thisWindowClosing(e);
 			}
 		});
 
@@ -116,39 +111,10 @@ public class ZimoPacketGenFrame extends javax.swing.JFrame {
   		return b;
   	}
 
-  	private boolean mShown = false;
-
-	public void addNotify() {
-		super.addNotify();
-
-		if (mShown)
-			return;
-
-		// resize frame to account for menubar
-		JMenuBar jMenuBar = getJMenuBar();
-		if (jMenuBar != null) {
-			int jMenuBarHeight = jMenuBar.getPreferredSize().height;
-			Dimension dimension = getSize();
-			dimension.height += jMenuBarHeight;
-			setSize(dimension);
-		}
-
-		mShown = true;
-	}
-
-	// Close the window when the close box is clicked
-	void thisWindowClosing(java.awt.event.WindowEvent e) {
-		setVisible(false);
-		dispose();
-	// disconnect from TrafficController
-		tc = null;
-	}
-
 	// connect to the TrafficController
 	public void connect(Mx1TrafficController t) {
 		tc = t;
 	}
-
 
 	// private data
 	private Mx1TrafficController tc = null;

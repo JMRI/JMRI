@@ -16,7 +16,7 @@ import jmri.util.JmriJFrame;
  *
  * <p> Time code copied from code for the Nixie clock by Bob Jacobsen</p>
  * @author                     Dennis Miller Copyright (C) 2004
- * @version                    $Revision: 1.7 $
+ * @version                    $Revision: 1.8 $
  */
 
 public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
@@ -29,9 +29,6 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
       static double minuteAngle;
       static double hourAngle;
       static String amPm;
-
-
-
 
 public AnalogClockFrame() {
 
@@ -279,13 +276,11 @@ public void paint(Graphics g){
    }
 
 
-   // Close the window when the close box is clicked
-   void thisWindowClosing(java.awt.event.WindowEvent e) {
-       setVisible(false);
+    public void dispose() {
        timer.stop();
-       dispose();
-   }
-
+       super.dispose();
+    }
+    
    /**
     * Handle a change to clock properties
     */

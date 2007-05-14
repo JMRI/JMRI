@@ -3,7 +3,7 @@ package jmri.jmrix.sprog.update;
 import java.io.*;
 import javax.swing.*;
 
-public class SprogHexFile extends JFrame {
+public class SprogHexFile extends jmri.util.JmriJFrame {
   private File file;
   private FileInputStream in;
   private BufferedInputStream buffIn;

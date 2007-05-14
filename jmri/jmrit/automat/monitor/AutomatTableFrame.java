@@ -16,7 +16,7 @@ import jmri.util.JTableUtil;
  * Frame providing a table of Automat instances
  *
  * @author	Bob Jacobsen   Copyright (C) 2004
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class AutomatTableFrame extends jmri.util.JmriJFrame {
 
@@ -52,31 +52,6 @@ public class AutomatTableFrame extends jmri.util.JmriJFrame {
         addHelpMenu("package.jmri.jmrit.automat.monitor.AutomatTableFrame", true);
 
         pack();
-    }
-
-    private boolean mShown = false;
-
-    public void addNotify() {
-        super.addNotify();
-
-        if (mShown)
-            return;
-
-        // resize frame to account for menubar
-        JMenuBar jMenuBar = getJMenuBar();
-        if (jMenuBar != null) {
-            int jMenuBarHeight = jMenuBar.getPreferredSize().height;
-            Dimension dimension = getSize();
-            dimension.height += jMenuBarHeight;
-            setSize(dimension);
-        }
-        mShown = true;
-    }
-
-    // Close the window when the close box is clicked
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
-        dispose();
     }
 
     public void dispose() {

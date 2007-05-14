@@ -19,9 +19,9 @@ import javax.swing.JSeparator;
 /**
  * Frame for user input of serial messages
  * @author	Bob Jacobsen   Copyright (C) 2002, 2003, 2006
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
-public class SerialPacketGenFrame extends javax.swing.JFrame implements jmri.jmrix.oaktree.SerialListener {
+public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.oaktree.SerialListener {
 
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
@@ -85,12 +85,6 @@ public class SerialPacketGenFrame extends javax.swing.JFrame implements jmri.jmr
             });
         pollButton.setToolTipText("Send poll request");
 
-        addWindowListener(new java.awt.event.WindowAdapter() {
-                public void windowClosing(java.awt.event.WindowEvent e) {
-                    thisWindowClosing(e);
-                }
-            });
-
         // pack for display
         pack();
     }
@@ -115,30 +109,4 @@ public class SerialPacketGenFrame extends javax.swing.JFrame implements jmri.jmr
 
     public void  message(SerialMessage m) {}  // ignore replies
     public void  reply(SerialReply r) {} // ignore replies
-
-    private boolean mShown = false;
-
-    public void addNotify() {
-        super.addNotify();
-
-        if (mShown)
-            return;
-
-        // resize frame to account for menubar
-        JMenuBar jMenuBar = getJMenuBar();
-        if (jMenuBar != null) {
-            int jMenuBarHeight = jMenuBar.getPreferredSize().height;
-            Dimension dimension = getSize();
-            dimension.height += jMenuBarHeight;
-            setSize(dimension);
-        }
-
-        mShown = true;
-    }
-
-    // Close the window when the close box is clicked
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
-        dispose();
-    }
 }

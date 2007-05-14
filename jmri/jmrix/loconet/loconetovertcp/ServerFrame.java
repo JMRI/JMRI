@@ -20,10 +20,10 @@ import javax.swing.event.ChangeEvent;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003, 2004
  * @author      Alex Shepherd Copyright (C) 2006
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 
-public class ServerFrame extends JFrame implements ServerListner {
+public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
 
   private ServerFrame() {
     super("LocoNetOverTcp Server");
@@ -93,21 +93,15 @@ public class ServerFrame extends JFrame implements ServerListner {
         }
       });
 
-    // notice the window is closing
-    addWindowListener(new java.awt.event.WindowAdapter() {
-      public void windowClosing(java.awt.event.WindowEvent e) {
-        thisWindowClosing(e);
-      }
-    });
-
     pack();
   }
 
-  void thisWindowClosing(java.awt.event.WindowEvent e) {
+  public void windowClosing(java.awt.event.WindowEvent e) {
     setVisible(false);
     self = null ;
     Server.getInstance().setStateListner(null);
     dispose();
+    super.windowClosing(e);
   }
 
   public void dispose() {

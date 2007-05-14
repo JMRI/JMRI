@@ -19,9 +19,9 @@ import java.lang.Integer;
 /**
  * Frame for running CMRI diagnostics
  * @author	 Dave Duchamp   Copyright (C) 2004
- * @version	 $Revision: 1.6 $
+ * @version	 $Revision: 1.7 $
  */
-public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cmri.serial.SerialListener {
+public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.cmri.serial.SerialListener {
 
     // member declarations
     protected boolean outTest = true;
@@ -195,13 +195,6 @@ public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cm
             }
         });
         contentPane.add(panel4);
-
-        // add window listener
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                thisWindowClosing(e);
-            }
-        });
 
         // pack for display
         pack();
@@ -746,30 +739,10 @@ public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cm
         }
     }
 
-    private boolean mShown = false;
-
-    public void addNotify() {
-        super.addNotify();
-
-        if (mShown)
-            return;
-
-        // resize frame to account for menubar
-        JMenuBar jMenuBar = getJMenuBar();
-        if (jMenuBar != null) {
-            int jMenuBarHeight = jMenuBar.getPreferredSize().height;
-            Dimension dimension = getSize();
-            dimension.height += jMenuBarHeight;
-            setSize(dimension);
-        }
-
-        mShown = true;
-    }
-
     /**
-     * Close the window when the close box is clicked
+     * Stop operation when window closing
      */
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
+    public void windowClosing(java.awt.event.WindowEvent e) {
         if (testRunning) {
             if (outTest) {
                 stopOutputTest();
@@ -778,7 +751,6 @@ public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cm
                 stopWraparoundTest();
             }
         }
-        setVisible(false);
-        dispose();
+        super.windowClosing(e);
     }
 }

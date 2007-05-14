@@ -20,7 +20,7 @@ import jmri.jmrix.lenz.*;
  * Commander or Compact)
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 2.3 $
+ * @version			$Revision: 2.4 $
  */
 public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListener {
 
@@ -72,13 +72,6 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
                 }
             }
         );
-
-        // notice the window is closing
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                thisWindowClosing(e);
-            }
-        });
        
         if (XNetTrafficController.instance()!=null)
 	    XNetTrafficController.instance().addXNetListener(~0, this);
@@ -197,12 +190,6 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
 		     }
                 else CSType.setText("<unknown>");
 	}
-
-    // Close the window when the close box is clicked
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
-        dispose();
-    }
 
     public void dispose() {
         // take apart the JFrame

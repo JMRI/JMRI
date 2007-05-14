@@ -36,7 +36,7 @@ import jmri.ProgDeferredServiceModePane;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.58 $
+ * @version   $Revision: 1.59 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -357,11 +357,6 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // ensure cleanup at end
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-                public void windowClosing(java.awt.event.WindowEvent e) {
-                    thisWindowClosing(e);
-                }
-            });
 
         pack();
 
@@ -471,29 +466,12 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     Element programmerRoot = null;
 
-    // handle resizing when first shown
-    private boolean mShown = false;
-    public void addNotify() {
-        super.addNotify();
-        if (mShown)
-            return;
-        // resize frame to account for menubar
-        JMenuBar jMenuBar = getJMenuBar();
-        if (jMenuBar != null) {
-            int jMenuBarHeight = jMenuBar.getPreferredSize().height;
-            Dimension dimension = getSize();
-            dimension.height += jMenuBarHeight;
-            setSize(dimension);
-        }
-        mShown = true;
-    }
-
     /**
      * Close box has been clicked; handle check for dirty with respect to
      * decoder or file, then close.
      * @param e Not used
      */
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
+    public void windowClosing(java.awt.event.WindowEvent e) {
         // check for various types of dirty - first table data not written back
         if (log.isDebugEnabled()) log.debug("Checking decoder dirty status. CV: "+cvModel.decoderDirty()+" variables:"+variableModel.decoderDirty());
         if (cvModel.decoderDirty() || variableModel.decoderDirty() ) {
@@ -523,9 +501,9 @@ abstract public class PaneProgFrame extends JmriJFrame
             Roster.instance().removeEntry((RosterEntry)l.get(0));
             l = Roster.instance().matchingList(null, null, null, null, null, null, rbt.getString("LabelNewDecoder"));
         }
-        //OK, close
-        setVisible(false);
-        dispose();
+        
+        // OK, continue close
+        super.windowClosing(e);
     }
 
     void readConfig(Element root, RosterEntry r) {

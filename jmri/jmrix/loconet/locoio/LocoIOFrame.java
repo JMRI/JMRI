@@ -20,9 +20,9 @@ import javax.swing.table.TableColumnModel;
  * Frame displaying and programming a LocoIO configuration.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
-public class LocoIOFrame extends JFrame {
+public class LocoIOFrame extends jmri.util.JmriJFrame {
 
     public LocoIOFrame() {
         super("LocoIO programmer");
@@ -133,13 +133,6 @@ public class LocoIOFrame extends JFrame {
         // add status
         getContentPane().add(status);
 
-        // notice the window is closing
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                thisWindowClosing(e);
-            }
-        });
-
         // and prep for display
         pack();
     }
@@ -189,12 +182,6 @@ public class LocoIOFrame extends JFrame {
     LocoIOTableModel	model;
     JTable		table;
     JScrollPane 	scroll;
-
-    // Close the window when the close box is clicked
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
-        dispose();
-    }
 
     public void dispose() {
         // dispose of the model

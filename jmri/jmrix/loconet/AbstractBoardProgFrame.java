@@ -32,19 +32,12 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author  Bob Jacobsen   Copyright (C) 2004
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
-abstract public class AbstractBoardProgFrame extends JFrame implements LocoNetListener {
+abstract public class AbstractBoardProgFrame extends jmri.util.JmriJFrame implements LocoNetListener {
 
     protected AbstractBoardProgFrame(String title) {
         super(title);
-
-        // notice the window is closing
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                thisWindowClosing(e);
-            }
-        });
 
         // listen for message traffic
         if (LnTrafficController.instance()!=null)
@@ -282,13 +275,6 @@ abstract public class AbstractBoardProgFrame extends JFrame implements LocoNetLi
             nextRequest();
             return;
         }
-    }
-
-    // Destroy the window when the close box is clicked, as there is no
-    // way to get it to show again
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
-        dispose();
     }
 
     public void dispose() {

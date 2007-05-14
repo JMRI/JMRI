@@ -19,7 +19,7 @@ import javax.swing.JPanel;
  * a .hex file, feeding the information to a LocoMonFrame (monitor) and
  * connecting to a LocoGenFrame (for sending a few commands).
  * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version                     $Revision: 1.17 $
+ * @version                     $Revision: 1.18 $
  */
 public class HexFileFrame extends JmriJFrame {
 
@@ -100,11 +100,6 @@ public class HexFileFrame extends JmriJFrame {
                     delayFieldActionPerformed(e);
                 }
             });
-        addWindowListener(new java.awt.event.WindowAdapter() {
-                public void windowClosing(java.awt.event.WindowEvent e) {
-                    thisWindowClosing(e);
-                }
-            });
 
         // set file chooser to a default
         inputFileChooser.setSelectedFile(new File("lnpacket.hex"));
@@ -118,37 +113,16 @@ public class HexFileFrame extends JmriJFrame {
 
     }
 
-    private boolean mShown = false;
-
-    public void addNotify() {
-        super.addNotify();
-
-        if (mShown)
-            return;
-
-        // resize frame to account for menubar
-        JMenuBar jMenuBar = getJMenuBar();
-        if (jMenuBar != null) {
-            int jMenuBarHeight = jMenuBar.getPreferredSize().height;
-            Dimension dimension = getSize();
-            dimension.height += jMenuBarHeight;
-            setSize(dimension);
-        }
-
-        mShown = true;
-    }
-
     boolean connected = false;
 
-    // Close the window when the close box is clicked
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
-        dispose();
+    public void dispose() {
         // disconnect from LnTrafficManager if connected
         if (connected) packets.disconnectPort(port);
         connected = false;
-    }
 
+        super.dispose();
+    }
+    
     LnPacketizer packets = null;
 
     public void openHexFileButtonActionPerformed(java.awt.event.ActionEvent e) {

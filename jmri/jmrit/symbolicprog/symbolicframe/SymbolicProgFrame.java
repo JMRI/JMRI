@@ -17,9 +17,9 @@ import org.jdom.output.*;
 /**
  * Frame providing a table-organized command station programmer from decoder definition files
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
-public class SymbolicProgFrame extends javax.swing.JFrame  {
+public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
 
     // GUI member declarations
 
@@ -135,11 +135,6 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
             });
 
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-                public void windowClosing(java.awt.event.WindowEvent e) {
-                    thisWindowClosing(e);
-                }
-            });
 
         // general GUI config
         setTitle("Symbolic Programmer");
@@ -238,25 +233,8 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
         variableModel.configDone();
     }
 
-    // handle resizing when first shown
-    private boolean mShown = false;
-    public void addNotify() {
-        super.addNotify();
-        if (mShown)
-            return;
-        // resize frame to account for menubar
-        JMenuBar jMenuBar = getJMenuBar();
-        if (jMenuBar != null) {
-            int jMenuBarHeight = jMenuBar.getPreferredSize().height;
-            Dimension dimension = getSize();
-            dimension.height += jMenuBarHeight;
-            setSize(dimension);
-        }
-        mShown = true;
-    }
-
     // Close the window when the close box is clicked
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
+    public void windowClosing(java.awt.event.WindowEvent e) {
         // check for various types of dirty - first table data not written back
         if (cvModel.decoderDirty() || variableModel.decoderDirty() ) {
             if (JOptionPane.showConfirmDialog(null,
@@ -269,10 +247,9 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
                                               "choose one", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.CANCEL_OPTION) return;
         }
 
-        //OK, close
-        setVisible(false);
         modePane.dispose();
-        dispose();
+        //OK, close
+        super.windowClosing(e);
     }
 
     void readAndParseConfigFile(File file) {

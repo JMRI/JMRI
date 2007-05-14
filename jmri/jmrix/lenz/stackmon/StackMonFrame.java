@@ -28,7 +28,7 @@ import javax.swing.BoxLayout;
  * <P>
  *
  * @author	Paul Bender   Copyright (C) 2005
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener {
 
@@ -136,16 +136,6 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
             dimension.height += jMenuBarHeight;
             setSize(dimension);
         }
-    }
-
-    // Close the window when the close box is clicked
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
-        dispose();
-    }
-
-    public void dispose() {
-        super.dispose();
     }
 
     /*

@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
  *
  * @author			Alex Shepherd   Copyright (C) 2004
  * @author			Bob Jacobsen  Copyright (C) 2006
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class CmdStnConfigFrame extends jmri.util.JmriJFrame implements LocoNetListener {
 
@@ -272,33 +272,11 @@ public class CmdStnConfigFrame extends jmri.util.JmriJFrame implements LocoNetLi
     log.debug("Config Slot Data: " + msg.toString());
   }
 
-  private boolean mShown = false;
-
-  public void addNotify() {
-    super.addNotify();
-
-    if (mShown)
-      return;
-
-    // resize frame to account for menubar
-    JMenuBar jMenuBar = getJMenuBar();
-    if (jMenuBar != null) {
-      int jMenuBarHeight = jMenuBar.getPreferredSize().height;
-      Dimension dimension = getSize();
-      dimension.height += jMenuBarHeight;
-      setSize(dimension);
-    }
-
-    mShown = true;
-  }
-
-  // Close the window when the close box is clicked
-  void thisWindowClosing(java.awt.event.WindowEvent e) {
-    setVisible(false);
-    dispose();
+  public void dispose() {
     // disconnect from LnTrafficController
     tc = null;
     tc.removeLocoNetListener(~0, this);
+    super.dispose();
   }
 
   // connect to the LnTrafficController

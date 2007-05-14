@@ -14,9 +14,9 @@ import javax.swing.*;
  * User interface for setting the LocoNet ID
  *
  * @author			Bob Jacobsen   Copyright (C) 2006
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
-public class LocoIdFrame extends javax.swing.JFrame implements LocoNetListener {
+public class LocoIdFrame extends jmri.util.JmriJFrame implements LocoNetListener {
 
     // member declarations
     javax.swing.JButton readButton;
@@ -127,34 +127,6 @@ public class LocoIdFrame extends javax.swing.JFrame implements LocoNetListener {
         m.setElement(3, data);
         m.setElement(4, 0x00);
         return m;
-    }
-
-    private boolean mShown = false;
-
-    public void addNotify() {
-        super.addNotify();
-
-        if (mShown)
-            return;
-
-        // resize frame to account for menubar
-        JMenuBar jMenuBar = getJMenuBar();
-        if (jMenuBar != null) {
-            int jMenuBarHeight = jMenuBar.getPreferredSize().height;
-            Dimension dimension = getSize();
-            dimension.height += jMenuBarHeight;
-            setSize(dimension);
-        }
-
-        mShown = true;
-    }
-
-    // Close the window when the close box is clicked
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
-        dispose();
-	// disconnect from LnTrafficController
-        tc = null;
     }
 
     // connect to the LnTrafficController

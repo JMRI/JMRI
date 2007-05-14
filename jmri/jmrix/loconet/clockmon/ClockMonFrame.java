@@ -20,9 +20,9 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2003, 2004
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
-public class ClockMonFrame extends JFrame implements SlotListener {
+public class ClockMonFrame extends jmri.util.JmriJFrame implements SlotListener {
 
     public ClockMonFrame() {
         super("LocoNet clock monitor");
@@ -81,13 +81,6 @@ public class ClockMonFrame extends JFrame implements SlotListener {
                 }
             }
         );
-
-        // notice the window is closing
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                thisWindowClosing(e);
-            }
-        });
 
         // listen for updated slot contents
         if (SlotManager.instance()!=null)
@@ -218,15 +211,6 @@ public class ClockMonFrame extends JFrame implements SlotListener {
         s.setFcRate(Integer.parseInt(rate.getText()));
         s.setFcFracMins(Integer.parseInt(frac_mins.getText()));
         LnTrafficController.instance().sendLocoNetMessage(s.writeSlot());
-    }
-
-    /**
-     * Destroy the window when the close box is clicked, as there is no
-     * way to get it to show again.
-     */
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
-        dispose();
     }
 
     public void dispose() {

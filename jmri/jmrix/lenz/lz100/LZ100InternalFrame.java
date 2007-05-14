@@ -15,7 +15,7 @@ import jmri.jmrix.lenz.*;
  * reset the command station.
  *
  * @author			Paul Bender  Copyright (C) 2005
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XNetListener {
 
@@ -282,12 +282,6 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
 	    isManualMode.setSelected(true);
 	    autoMode=false;
      }
-
-    // Close the window when the close box is clicked
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
-        dispose();
-    }
 
     public void dispose() {
         // take apart the JFrame

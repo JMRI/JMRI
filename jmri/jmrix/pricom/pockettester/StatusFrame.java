@@ -11,9 +11,9 @@ import com.sun.java.util.collections.Hashtable;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2005
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
-public class StatusFrame extends javax.swing.JFrame implements DataListener {
+public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
 
     static java.util.ResourceBundle rb 
             = java.util.ResourceBundle.getBundle("jmri.jmrix.pricom.pockettester.TesterBundle");
@@ -144,14 +144,7 @@ public class StatusFrame extends javax.swing.JFrame implements DataListener {
         source.sendBytes(prompt.getBytes());
         
     }
-        
-    // Close the window when the close box is clicked
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
-        // dispose();
-        dispose();
-    }
-
+ 
     public void setSource(DataSource s) {
         source = s;
     }

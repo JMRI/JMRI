@@ -15,7 +15,7 @@ import jmri.util.JmriJFrame;
  * This is just an enclosure for the LoaderPane, which does the real work.
  *
  * @author		Bob Jacobsen   Copyright (C) 2005
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class LoaderFrame extends JmriJFrame {
 
@@ -31,23 +31,6 @@ public class LoaderFrame extends JmriJFrame {
         // install items in GUI
         getContentPane().add(pane);
         pack();
-    }
-
-    // handle resizing when first shown
-    private boolean mShown = false;
-    public void addNotify() {
-        super.addNotify();
-        if (mShown)
-            return;
-        // resize frame to account for menubar
-        JMenuBar jMenuBar = getJMenuBar();
-        if (jMenuBar != null) {
-            int jMenuBarHeight = jMenuBar.getPreferredSize().height;
-            Dimension dimension = getSize();
-            dimension.height += jMenuBarHeight;
-            setSize(dimension);
-        }
-        mShown = true;
     }
 
     // Clean up this window

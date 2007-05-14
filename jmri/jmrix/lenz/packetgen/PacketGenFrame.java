@@ -13,7 +13,7 @@ import jmri.jmrix.lenz.XNetTrafficController;
 /**
  * Frame for user input of XpressNet messages
  * @author			Bob Jacobsen   Copyright (C) 2001,2002
- * @version			$Revision: 2.2 $
+ * @version			$Revision: 2.3 $
  */
 public class PacketGenFrame extends jmri.util.JmriJFrame {
 
@@ -51,11 +51,6 @@ public class PacketGenFrame extends jmri.util.JmriJFrame {
                     sendButtonActionPerformed(e);
                 }
             });
-        addWindowListener(new java.awt.event.WindowAdapter() {
-                public void windowClosing(java.awt.event.WindowEvent e) {
-                    thisWindowClosing(e);
-                }
-            });
         
         // pack to cause display
         pack();
@@ -72,34 +67,6 @@ public class PacketGenFrame extends jmri.util.JmriJFrame {
         XNetMessage m = new XNetMessage(b.length);
         for (int i=0; i<b.length; i++) m.setElement(i, b[i]);
         return m;
-    }
-    
-    private boolean mShown = false;
-    
-    public void addNotify() {
-        super.addNotify();
-        
-        if (mShown)
-            return;
-        
-        // resize frame to account for menubar
-        JMenuBar jMenuBar = getJMenuBar();
-        if (jMenuBar != null) {
-            int jMenuBarHeight = jMenuBar.getPreferredSize().height;
-            Dimension dimension = getSize();
-            dimension.height += jMenuBarHeight;
-            setSize(dimension);
-        }
-        
-        mShown = true;
-    }
-    
-    // Close the window when the close box is clicked
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
-        dispose();
-	// disconnect from TrafficController
-        tc = null;
     }
     
     // connect to the TrafficController

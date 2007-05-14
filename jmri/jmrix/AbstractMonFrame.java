@@ -22,7 +22,7 @@ import jmri.util.JmriJFrame;
 /**
  * Abstact base class for Frames displaying communications monitor information
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public abstract class AbstractMonFrame extends JmriJFrame  {
 
@@ -149,11 +149,6 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
                     openFileChooserButtonActionPerformed(e);
                 }
             });
-        addWindowListener(new java.awt.event.WindowAdapter() {
-                public void windowClosing(java.awt.event.WindowEvent e) {
-                    thisWindowClosing(e);
-                }
-            });
 
         // set file chooser to a default
         logFileChooser.setSelectedFile(new File("monitorLog.txt"));
@@ -165,32 +160,6 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
         pack();
         paneA.setMaximumSize(paneA.getSize());
         pack();
-    }
-
-    private boolean mShown = false;
-
-    public void addNotify() {
-        super.addNotify();
-
-        if (mShown)
-            return;
-
-        // resize frame to account for menubar
-        JMenuBar jMenuBar = getJMenuBar();
-        if (jMenuBar != null) {
-            int jMenuBarHeight = jMenuBar.getPreferredSize().height;
-            java.awt.Dimension dimension = getSize();
-            dimension.height += jMenuBarHeight;
-            setSize(dimension);
-        }
-
-        mShown = true;
-    }
-
-    // Close the window when the close box is clicked
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
-        dispose();
     }
 
     public void nextLine(String line, String raw) {

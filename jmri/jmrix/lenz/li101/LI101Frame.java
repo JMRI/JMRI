@@ -15,7 +15,7 @@ import jmri.jmrix.lenz.*;
  * port speed used to communicate with the LI101.
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 2.2 $
+ * @version			$Revision: 2.3 $
  */
 public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
 
@@ -103,13 +103,6 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
 
         // add status
         getContentPane().add(status);
-
-        // notice the window is closing
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                thisWindowClosing(e);
-            }
-        });
 
         if (XNetTrafficController.instance() != null)
 	    XNetTrafficController.instance().addXNetListener(~0, this);
@@ -225,12 +218,6 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
     void resetLI101Settings() {
 	addrBox.setSelectedIndex(30);
 	speedBox.setSelectedIndex(0);
-    }
-
-    // Close the window when the close box is clicked
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
-        dispose();
     }
 
     public void dispose() {

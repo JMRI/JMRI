@@ -18,9 +18,9 @@ import jmri.jmrix.cmri.serial.SerialSensorManager;
  * Frame for user configuration of CMRI serial nodes
  * @author	Bob Jacobsen   Copyright (C) 2004
  * @author	Dave Duchamp   Copyright (C) 2004
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
-public class NodeConfigFrame extends javax.swing.JFrame {
+public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.cmri.serial.nodeconfig.NodeConfigBundle");
 
@@ -318,12 +318,6 @@ public class NodeConfigFrame extends javax.swing.JFrame {
         cancelButton.setVisible(false);			
         contentPane.add(panel4);
 
-        addWindowListener(new java.awt.event.WindowAdapter() {
-                public void windowClosing(java.awt.event.WindowEvent e) {
-                    thisWindowClosing(e);
-                }
-            });
-
         // pack for display
         pack();
     }
@@ -599,8 +593,9 @@ public class NodeConfigFrame extends javax.swing.JFrame {
     /**
      * Method to close the window when the close box is clicked
      */
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
+    public void windowClosing(java.awt.event.WindowEvent e) {
         doneButtonActionPerformed();
+        super.windowClosing(e);
     }    
 
     /**

@@ -12,9 +12,9 @@ import javax.swing.JMenuBar;
 /**
  * Frame controlling a single turnout
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
-public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame implements java.beans.PropertyChangeListener {
+public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
 
     // GUI member declarations
     javax.swing.JLabel textAdrLabel = new javax.swing.JLabel();
@@ -79,32 +79,6 @@ public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame implements java.b
         pack();
 
     }
-
-    private boolean mShown = false;
-
-    public void addNotify() {
-        super.addNotify();
-
-        if (mShown)
-            return;
-
-        // resize frame to account for menubar
-        JMenuBar jMenuBar = getJMenuBar();
-        if (jMenuBar != null) {
-            int jMenuBarHeight = jMenuBar.getPreferredSize().height;
-            Dimension dimension = getSize();
-            dimension.height += jMenuBarHeight;
-            setSize(dimension);
-        }
-        mShown = true;
-    }
-
-    // Close the window when the close box is clicked
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
-        dispose();
-    }
-
 
     public void closeButtonActionPerformed(java.awt.event.ActionEvent e) {
         // load address from switchAddrTextField

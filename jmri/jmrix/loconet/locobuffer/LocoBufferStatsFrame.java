@@ -20,9 +20,9 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Alex Shepherd   Copyright (C) 2003
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
-public class LocoBufferStatsFrame extends JFrame implements LocoNetListener {
+public class LocoBufferStatsFrame extends jmri.util.JmriJFrame implements LocoNetListener {
 
     JPanel lb2Panel;
     JPanel rawPanel;
@@ -85,14 +85,7 @@ public class LocoBufferStatsFrame extends JFrame implements LocoNetListener {
             }
         );
 
-        // notice the window is closing
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                thisWindowClosing(e);
-            }
-        });
-
-          // listen for LocoNet messages
+        // listen for LocoNet messages
         if (LnTrafficController.instance()!=null)
             LnTrafficController.instance().addLocoNetListener(~0, this);
         else
@@ -189,15 +182,6 @@ public class LocoBufferStatsFrame extends JFrame implements LocoNetListener {
         msg.setOpCode( LnConstants.OPC_GPBUSY );
         updatePending = true ;
         LnTrafficController.instance().sendLocoNetMessage(msg);
-    }
-    
-    /**
-     * Destroy the window when the close box is clicked, as there is no
-     * way to get it to show again.
-     */
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
-        dispose();
     }
 
     public void dispose() {

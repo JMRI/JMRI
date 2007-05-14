@@ -9,9 +9,9 @@ import com.sun.java.util.collections.Vector;
 /**
  * Abstract base Frame to open and configure a SerialPortAdapter
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
-abstract public class SerialPortFrame extends javax.swing.JFrame {
+abstract public class SerialPortFrame extends jmri.util.JmriJFrame {
 
 	protected javax.swing.JButton getNamesButton = new javax.swing.JButton();
 	protected javax.swing.JComboBox portBox = new javax.swing.JComboBox();
@@ -84,30 +84,10 @@ abstract public class SerialPortFrame extends javax.swing.JFrame {
 		});
 	}
 
-  	private boolean mShown = false;
-
-	public void addNotify() {
-		super.addNotify();
-
-		if (mShown)
-			return;
-
-		// resize frame to account for menubar
-		JMenuBar jMenuBar = getJMenuBar();
-		if (jMenuBar != null) {
-			int jMenuBarHeight = jMenuBar.getPreferredSize().height;
-			Dimension dimension = getSize();
-			dimension.height += jMenuBarHeight;
-			setSize(dimension);
-		}
-
-		mShown = true;
-	}
-
-	// Close the window when the close box is clicked
+	/**
+	 * Closing this window ends the program
+	 */
 	void thisWindowClosing(java.awt.event.WindowEvent e) {
-		setVisible(false);
-		dispose();
 		System.exit(0);
 	}
 

@@ -19,7 +19,7 @@ import jmri.util.JmriJFrame;
  * This handles file read/write.
  *
  * @author		Bob Jacobsen   Copyright (C) 2006
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class EditorFrame extends JmriJFrame {
 
@@ -115,28 +115,8 @@ public class EditorFrame extends JmriJFrame {
         pane.saveFile(name);
     }
     
-    // handle resizing when first shown
-    private boolean mShown = false;
-    public void addNotify() {
-        super.addNotify();
-        if (mShown)
-            return;
-        // resize frame to account for menubar
-        JMenuBar jMenuBar = getJMenuBar();
-        if (jMenuBar != null) {
-            int jMenuBarHeight = jMenuBar.getPreferredSize().height;
-            Dimension dimension = getSize();
-            dimension.height += jMenuBarHeight;
-            setSize(dimension);
-        }
-        mShown = true;
-    }
-
-    // Close the window when the close box is clicked
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
+    public void dispose() {
         pane.dispose();
-        dispose();
-	// and disconnect from the SlotManager
+        super.dispose();
     }
 }

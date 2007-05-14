@@ -23,9 +23,9 @@ import jmri.util.StringUtil;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
-public class AlmBrowserFrame extends javax.swing.JFrame implements LocoNetListener {
+public class AlmBrowserFrame extends jmri.util.JmriJFrame implements LocoNetListener {
 
     public AlmBrowserFrame() {
         super("Configuration Browser");
@@ -205,33 +205,11 @@ public class AlmBrowserFrame extends javax.swing.JFrame implements LocoNetListen
         values[3].setText(""+(msg.getElement(13)+msg.getElement(14)*128+1));
     }
 
-    private boolean mShown = false;
-
-    public void addNotify() {
-        super.addNotify();
-
-        if (mShown)
-            return;
-
-        // resize frame to account for menubar
-        JMenuBar jMenuBar = getJMenuBar();
-        if (jMenuBar != null) {
-            int jMenuBarHeight = jMenuBar.getPreferredSize().height;
-            Dimension dimension = getSize();
-            dimension.height += jMenuBarHeight;
-            setSize(dimension);
-        }
-
-        mShown = true;
-    }
-
-    // Close the window when the close box is clicked
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
-        dispose();
-	// disconnect from LnTrafficController
+    public void dispose() {
+	    // disconnect from LnTrafficController
         tc = null;
         tc.removeLocoNetListener(~0, this);
+        super.dispose();
     }
 
     // connect to the LnTrafficController
