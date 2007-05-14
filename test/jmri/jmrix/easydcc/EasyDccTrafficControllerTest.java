@@ -38,38 +38,8 @@ public class EasyDccTrafficControllerTest extends TestCase {
 		m.setElement(1, '1');
 		m.setElement(2, '2');
 		c.sendEasyDccMessage(m, new EasyDccListenerScaffold());
-		wait(2); // relinquish control
+		waitThread();
 		
-		Assert.assertEquals("total length ", 4, tostream.available());
-		Assert.assertEquals("Char 0", '0', tostream.readByte());
-		Assert.assertEquals("Char 1", '1', tostream.readByte());
-		Assert.assertEquals("Char 2", '2', tostream.readByte());
-		Assert.assertEquals("EOM", 0x0d, tostream.readByte());
-		Assert.assertEquals("remaining ", 0, tostream.available());
-	}
-
-	public void testMonitor() throws Exception {
-		EasyDccTrafficController c = new EasyDccTrafficController();
-
-		// connect to iostream via port controller
-		EasyDccPortControllerScaffold p = new EasyDccPortControllerScaffold();
-		c.connectPort(p);
-
-		// start monitor
-		rcvdMsg = null;
-		EasyDccListenerScaffold s = new EasyDccListenerScaffold();
-		c.addEasyDccListener(s);
-
-		// send a message
-		EasyDccMessage m = new EasyDccMessage(3);
-		m.setOpCode('0');
-		m.setElement(1, '1');
-		m.setElement(2, '2');
-		c.sendEasyDccMessage(m, new EasyDccListenerScaffold());
-		synchronized (this) {wait(100);}
-		
-		// check it arrived at monitor
-		Assert.assertTrue("message not null", rcvdMsg != null);
 		Assert.assertEquals("total length ", 4, tostream.available());
 		Assert.assertEquals("Char 0", '0', tostream.readByte());
 		Assert.assertEquals("Char 1", '1', tostream.readByte());
@@ -168,14 +138,15 @@ public class EasyDccTrafficControllerTest extends TestCase {
 
 	// from here down is testing infrastructure
 
-	void wait(int msec) {
-		try {
-			super.wait(msec);
-		}
-		catch (Exception e) {
-		}
-	}
-	
+        void waitThread() {
+            synchronized(this) {
+                try {
+                    Thread.sleep(200);
+                } catch (Exception e) {
+                }
+            }
+        }
+
 	public EasyDccTrafficControllerTest(String s) {
 		super(s);
 	}
