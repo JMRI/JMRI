@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NetBeans.html,v 1.3 2007-05-13 00:30:43 jacobsen Exp $ -->
+<!-- $Id: NetBeans.html,v 1.4 2007-05-14 06:02:03 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -182,10 +182,13 @@ that we'll reference below.
 
     <P>The project is now open and available for use.</P>
     
-    <h2>Building and running JMRI</h2>
+    <h2>Building and Running JMRI</h2>
 
     To build and run DecoderPro, all you have to do is select
     "Run Main Project" from the Run menu, or click the Run icon in the tool bar.
+    <P>
+    If you want to run the program under the NetBeans debugger, 
+    select "Debug Main Project" from the "Run" menu.
     
     <h2>Updating the code from CVS</h2>
 
@@ -193,6 +196,18 @@ that we'll reference below.
     repository contents. To do this, select the "Update All Files" from the 
     CVS menu.</p>
 
+    <h2>Making a Jar File</h2>
+
+    Most of the code in a normal JMRI installation lives in a file called
+    jmri.jar.  If you want to replace this with your updated version, you
+    need to create a new jmri.jar file from your modified code.  
+    <P>
+    To do this,
+    ctrl-click (or right-click) on the name of the "java" project in the
+    "Navigator" window.  This will open a pop-up menu, on which you'll
+    find "Make Jar FIle". Select that, and a new jmri.jar file will be
+    produced in the project's main directory.
+    
     <!-- Footer --><hr class="hide">
     <div id="footer">
       <ul id="bn">
