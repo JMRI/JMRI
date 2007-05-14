@@ -21,7 +21,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2006
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.29 $
+ * @version   $Revision: 1.30 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -182,7 +182,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         if (e.getAttribute("mask") != null)
             mask = e.getAttribute("mask").getValue();
         else {
-            log.warn("Element missing mask attribute: "+name);
+            log.debug("Element missing mask attribute: "+name);
             mask ="VVVVVVVV";
         }
 
@@ -194,7 +194,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             readOnly = e.getAttribute("readOnly").getValue().equals("yes") ? true : false;
             if (log.isDebugEnabled()) log.debug("found readOnly "+e.getAttribute("readOnly").getValue());
         } else {
-            log.warn("Element missing readOnly attribute: "+name);
+            log.debug("Element missing readOnly attribute: "+name);
         }
 
         boolean infoOnly = false;
@@ -202,7 +202,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             infoOnly = e.getAttribute("infoOnly").getValue().equals("yes") ? true : false;
             if (log.isDebugEnabled()) log.debug("found readOnly "+e.getAttribute("infoOnly").getValue());
         } else {
-            log.warn("Element missing readOnly attribute: "+name);
+            log.debug("Element missing readOnly attribute: "+name);
         }
 
         boolean writeOnly = false;
@@ -210,7 +210,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             writeOnly = e.getAttribute("writeOnly").getValue().equals("yes") ? true : false;
             if (log.isDebugEnabled()) log.debug("found writeOnly "+e.getAttribute("writeOnly").getValue());
         } else {
-            log.warn("Element missing readOnly attribute: "+name);
+            log.debug("Element missing readOnly attribute: "+name);
         }
 
         boolean opsOnly = false;
@@ -218,7 +218,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             opsOnly = e.getAttribute("opsOnly").getValue().equals("yes") ? true : false;
             if (log.isDebugEnabled()) log.debug("found opsOnly "+e.getAttribute("opsOnly").getValue());
         } else {
-            log.warn("Element missing readOnly attribute: "+name);
+            log.debug("Element missing readOnly attribute: "+name);
         }
 
         JButton bw = new JButton("Write");
@@ -448,7 +448,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         if (e.getAttribute("mask") != null)
             mask = e.getAttribute("mask").getValue();
         else {
-            log.warn("Element missing mask attribute: "+name);
+            log.debug("Element missing mask attribute: "+name);
             mask ="VVVVVVVV";
         }
 
