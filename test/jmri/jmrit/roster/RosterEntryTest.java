@@ -13,7 +13,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.roster.RosterEntry class.
  * @author	Bob Jacobsen     Copyright (C) 2001, 2002
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class RosterEntryTest extends TestCase {
 
@@ -31,12 +31,19 @@ public class RosterEntryTest extends TestCase {
     public void testPartialLoad() {
         // create Element
         org.jdom.Element e = new org.jdom.Element("locomotive")
-            .addAttribute("id","our id")
+            .addAttribute("id","our id 1")
             .addAttribute("fileName","file here")
             .addAttribute("roadNumber","431")
             .addAttribute("roadName","SP")
             .addAttribute("mfg","Athearn")
             .addAttribute("dccAddress","1234")
+            .addContent(
+                    new org.jdom.Element("locoaddress").addContent(
+                        new org.jdom.Element("dcclocoaddress")
+                            .addAttribute("number","1234")
+                            .addAttribute("longaddress","yes")
+                    )
+                )
             ; // end create element
 
         RosterEntry r = new RosterEntry(e);
@@ -53,11 +60,13 @@ public class RosterEntryTest extends TestCase {
     public void testEmptyLoad() {
         // create Element
         org.jdom.Element e = new org.jdom.Element("locomotive")
-            .addAttribute("id","our id")
+            .addAttribute("id","our id 2")
             .addAttribute("fileName","file here")
             ; // end create element
 
-        RosterEntry r = new RosterEntry(e);
+        RosterEntry r = new RosterEntry(e){
+                            void warnShortLong(String s){}
+        };
         // check
         Assert.assertEquals("file name ", "file here", r.getFileName());
         Assert.assertEquals("DCC Address ", "", r.getDccAddress());
@@ -71,7 +80,7 @@ public class RosterEntryTest extends TestCase {
     public void testFullLoad() {
         // create Element
         org.jdom.Element e = new org.jdom.Element("locomotive")
-            .addAttribute("id","our id")
+            .addAttribute("id","our id 3")
             .addAttribute("fileName","file here")
             .addAttribute("roadNumber","431")
             .addAttribute("roadName","SP")
@@ -83,7 +92,10 @@ public class RosterEntryTest extends TestCase {
                         )
             ; // end create element
 
-        RosterEntry r = new RosterEntry(e);
+        RosterEntry r = new RosterEntry(e){
+                            void warnShortLong(String s){}
+        };
+        
         // check
         Assert.assertEquals("file name ", "file here", r.getFileName());
         Assert.assertEquals("DCC Address ", "1234", r.getDccAddress());
@@ -97,7 +109,7 @@ public class RosterEntryTest extends TestCase {
     public void testStore() {
         // create Element
         org.jdom.Element e = new org.jdom.Element("locomotive")
-            .addAttribute("id","our id")
+            .addAttribute("id","our id 4")
             .addAttribute("fileName","file here")
             .addAttribute("roadNumber","431")
             .addAttribute("roadName","SP")
@@ -109,7 +121,10 @@ public class RosterEntryTest extends TestCase {
                         )
             ; // end create element
 
-        RosterEntry r = new RosterEntry(e);
+        RosterEntry r = new RosterEntry(e){
+                            void warnShortLong(String s){}
+        };
+        
         org.jdom.Element o = r.store();
         // check
         Assert.assertEquals("XML Element ", e.toString(), o.toString());

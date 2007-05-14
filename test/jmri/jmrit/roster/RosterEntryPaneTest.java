@@ -5,7 +5,7 @@ import junit.framework.*;
 /**
  * Tests for the jmrit.roster.RosterEntryPane class.
  * @author	Bob Jacobsen     Copyright (C) 2001, 2002
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class RosterEntryPaneTest extends TestCase {
 
@@ -30,7 +30,9 @@ public class RosterEntryPaneTest extends TestCase {
                         )
             ; // end create element
 
-        rOld = new RosterEntry(eOld);
+        rOld = new RosterEntry(eOld){
+                            void warnShortLong(String s){}
+        };
         
         eNew = new org.jdom.Element("locomotive")
             .addAttribute("id","id info")
@@ -50,7 +52,9 @@ public class RosterEntryPaneTest extends TestCase {
                 )
             ; // end create element
 
-        rNew = new RosterEntry(eNew);
+        rNew = new RosterEntry(eNew){
+                            void warnShortLong(String s){}
+        };
     }
 
     public void testCreate() {
@@ -58,7 +62,9 @@ public class RosterEntryPaneTest extends TestCase {
         
         // copy to a new entry
         
-        RosterEntry n = new RosterEntry();
+        RosterEntry n = new RosterEntry(){
+                            void warnShortLong(String s){}
+        };
         p.update(n);
         
         // check for field text contents
