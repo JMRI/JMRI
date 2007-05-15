@@ -26,7 +26,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.32 $
+ * @version			$Revision: 1.33 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -130,7 +130,11 @@ abstract public class AbstractMRTrafficController {
     protected boolean programmerIdle() {	    
 		return true; 
     }
-	
+    
+    // Allow subclasses to add a delay after enabling the programming track
+    protected int enterProgModeDelayTime() {	    
+		return 0; 
+    }
 
     volatile protected int mCurrentState;
     public static final int IDLESTATE = 10;        // nothing happened
@@ -612,6 +616,16 @@ abstract public class AbstractMRTrafficController {
         	case WAITREPLYINPROGMODESTATE: {
         		// entering programming mode
         		mCurrentMode = PROGRAMINGMODE;
+        		
+        		// check to see if we need to delay to allow decoders to become responsive
+        		int warmUpDelay = enterProgModeDelayTime();
+        		if (warmUpDelay != 0) {
+        			try {
+        				synchronized (xmtRunnable) {
+        					xmtRunnable.wait(warmUpDelay);
+        				}
+        			} catch (InterruptedException e) { }
+        		}
         		// update state, and notify to continue
         		synchronized (xmtRunnable) {
         			mCurrentState = OKSENDMSGSTATE;
@@ -725,4 +739,5 @@ abstract public class AbstractMRTrafficController {
 
 
 /* @(#)AbstractMRTrafficController.java */
+
 

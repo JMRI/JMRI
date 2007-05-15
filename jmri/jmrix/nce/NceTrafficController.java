@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface {
 
@@ -39,6 +39,10 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         this.removeListener(l);
     }
 
+	protected int enterProgModeDelayTime() {
+		// we should to wait at least a second after enabling the programming track
+		return 1000;
+	}
 
     /**
      * Forward a NceMessage to all registered NceInterface listeners.
@@ -177,5 +181,6 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 
 
 /* @(#)NceTrafficController.java */
+
 
 
