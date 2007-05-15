@@ -20,12 +20,12 @@ package jmri.jmrix.nce;
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2007
- * @version     $Revision: 1.22 $
+ * @version     $Revision: 1.23 $
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
-    static protected int NCE_PAGED_CV_TIMEOUT=20000
-    static protected int NCE_DIRECT_CV_TIMEOUT=4000
+    static protected int NCE_PAGED_CV_TIMEOUT=20000;
+    static protected int NCE_DIRECT_CV_TIMEOUT=4000;
 
     public NceMessage() {
         super();
