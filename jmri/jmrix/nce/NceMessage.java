@@ -20,9 +20,12 @@ package jmri.jmrix.nce;
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2007
- * @version     $Revision: 1.21 $
+ * @version     $Revision: 1.22 $
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
+
+    static protected int NCE_PAGED_CV_TIMEOUT=20000
+    static protected int NCE_DIRECT_CV_TIMEOUT=4000
 
     public NceMessage() {
         super();
@@ -136,7 +139,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             m.setElement(1,(cv >> 8));
             m.setElement(2,(cv & 0x0FF));
             m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
-            m.setTimeout(LONG_TIMEOUT);
+            m.setTimeout(NCE_PAGED_CV_TIMEOUT);
             return m;
         } else {
             NceMessage m = new NceMessage(4);
@@ -144,7 +147,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             m.setOpCode('R');
             m.addIntAsThree(cv, 1);
             m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
-            m.setTimeout(LONG_TIMEOUT);
+            m.setTimeout(NCE_PAGED_CV_TIMEOUT);
             return m;
         }
     }
@@ -159,7 +162,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             m.setElement(2,cv&0xFF);
             m.setElement(3,val);
             m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
-            m.setTimeout(LONG_TIMEOUT);
+            m.setTimeout(NCE_PAGED_CV_TIMEOUT);
             return m;
         } else {
             NceMessage m = new NceMessage(8);
@@ -169,7 +172,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             m.setElement(4,' ');
             m.addIntAsThree(val, 5);
             m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
-            m.setTimeout(LONG_TIMEOUT);
+            m.setTimeout(NCE_PAGED_CV_TIMEOUT);
             return m;
         }
     }
@@ -183,7 +186,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             m.setOpCode(0xA7);
             m.setElement(1,reg);
             m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
-            m.setTimeout(LONG_TIMEOUT);
+            m.setTimeout(NCE_PAGED_CV_TIMEOUT);
             return m;
         } else {
             NceMessage m = new NceMessage(2);
@@ -192,7 +195,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             String s = ""+reg;
             m.setElement(1, s.charAt(s.length()-1));
             m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
-            m.setTimeout(LONG_TIMEOUT);
+            m.setTimeout(NCE_PAGED_CV_TIMEOUT);
             return m;
         }
     }
@@ -207,7 +210,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             m.setElement(1,reg);
             m.setElement(2,val);
             m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
-            m.setTimeout(LONG_TIMEOUT);
+            m.setTimeout(NCE_PAGED_CV_TIMEOUT);
             return m;
         } else {
             NceMessage m = new NceMessage(6);
@@ -218,7 +221,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             m.setElement(2,' ');
             m.addIntAsThree(val, 3);
             m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
-            m.setTimeout(LONG_TIMEOUT);
+            m.setTimeout(NCE_PAGED_CV_TIMEOUT);
             return m;
         }
     }
@@ -233,7 +236,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         m.setElement(1,(cv >> 8));
         m.setElement(2,(cv & 0x0FF));
         m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
-        m.setTimeout(LONG_TIMEOUT);
+        m.setTimeout(NCE_DIRECT_CV_TIMEOUT);
         return m;
     }
 
@@ -248,7 +251,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         m.setElement(2,cv&0xFF);
         m.setElement(3,val);
         m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
-        m.setTimeout(LONG_TIMEOUT);
+        m.setTimeout(NCE_DIRECT_CV_TIMEOUT);
         return m;
     }
     
@@ -412,6 +415,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
 
 /* @(#)NceMessage.java */
+
 
 
 
