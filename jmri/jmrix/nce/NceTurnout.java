@@ -17,7 +17,7 @@ import jmri.Turnout;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class NceTurnout extends AbstractTurnout {
 
@@ -65,12 +65,21 @@ public class NceTurnout extends AbstractTurnout {
 
     // data members
     int _number;   // turnout number
-
+    
     /**
-     * Provide package-local access to protected method
+     * Set the turnout known state to reflect what's been observed
+     * from the command station polling. A change there means that
+     * somebody commanded a state change (e.g. somebody holding a 
+     * throttle), and that command has already taken effect.
+     * Hence we use "newCommandedState" to indicate it's taken place,
+     * followed by "newKnownState" to indicate we're sure 
+     * it's taken place on the layout.
+     *
+     * @param state Observed state, updates knownState
      */
-    public void newKnownState(int state) {
-        super.newKnownState(state);
+    synchronized void setKnownStateFromCS(int state) {
+        newCommandedState(state);
+        newKnownState(state);
     }
     
     protected void sendMessage(boolean closed) {
