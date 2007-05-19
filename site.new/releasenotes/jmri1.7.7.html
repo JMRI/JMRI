@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.7.7.html,v 1.20 2007-05-15 05:57:34 jacobsen Exp $ -->
+<!-- $Id: jmri1.7.7.html,v 1.21 2007-05-19 05:59:25 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -77,6 +77,8 @@ that contains
 new features, particularly 
 ....
 <!-- numerous decoder updates,  -->
+<!-- much better PR2 support -->
+<!-- improvements to support for NCE new EPROM:  Send Macro tool, turnout readback -->
 <!-- improvements to signaling logic,  -->
 <!-- and greatly improved support for the Digitrax PR2 programmer and it's sound files. -->
 
@@ -240,8 +242,13 @@ It's up to you to decide how you want to use user names when filling out forms, 
 
 <P>The PRICOM PocketTester data can now be easily accessed via a script.
 
-<P>David Falkenburg updated the NCE support so that the new NCE EPROMS work better with TCS and QSI decoders.
+<P>David Falkenburg updated the NCE support so that the new NCE EPROMS work better with TCS and QSI decoders. He also improves the speed with which the program handles timeout errors for NCE command stations.
 
+<P>Daniel Boudreau updated the NCE "send packet" command so it could send binary commands
+
+<P>A large number of JMRI tool windows have been converted to JmriJFrames.  This shouldn't have any large effects, but please let us know if you see any problems with sizing, closing or reopening these windows.
+
+<P>Daniel Boudreau added a tool to the NCE menu so users can send a macro command
 
 <hr class="hide">
 <!-- Footer -->
