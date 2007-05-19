@@ -30,7 +30,7 @@ import jmri.Turnout;
  * 
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 public class NceTurnoutMonitor extends Thread implements NceListener{
@@ -170,7 +170,7 @@ public class NceTurnoutMonitor extends Thread implements NceListener{
                                         log.debug("turnout discrepency, need to THROW turnout NT" + addr);
                                     }
                                     // change JMRI's knowledge of the turnout state to match observed
-                                    rControlTurnout.newKnownState(Turnout.THROWN);
+                                    rControlTurnout.setKnownStateFromCS(Turnout.THROWN);
                                 }
                                 
                                 if (accThrown == 0 & tState != Turnout.CLOSED) {
@@ -178,7 +178,7 @@ public class NceTurnoutMonitor extends Thread implements NceListener{
                                         log.debug("turnout discrepency, need to CLOSE turnout NT" + addr);
                                     }	
                                    // change JMRI's knowledge of the turnout state to match observed
-                                    rControlTurnout.newKnownState(Turnout.CLOSED);
+                                    rControlTurnout.setKnownStateFromCS(Turnout.CLOSED);
                                 }	
                             }
                         }
