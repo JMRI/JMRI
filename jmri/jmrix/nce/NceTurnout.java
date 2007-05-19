@@ -17,7 +17,7 @@ import jmri.Turnout;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public class NceTurnout extends AbstractTurnout {
 
@@ -28,11 +28,39 @@ public class NceTurnout extends AbstractTurnout {
      */
 
     public NceTurnout(int number) {
-        super("NT"+number);
-        _number = number;
-        // At construction, register for messages
-    }
+    	super("NT"+number);
+    	_number = number;
 
+    	// At construction, register for messages
+    	
+    	numNtTurnouts++;
+
+    	// dBoudreau update feedback modes
+    	
+    	if (NceMessage.getCommandOptions() >= NceMessage.OPTION_2006) {
+
+    		if (modeNames == null) {
+
+    			if (_validFeedbackNames.length != _validFeedbackModes.length)
+    				log.error("int and string feedback arrays different length");
+    			modeNames  = new String[_validFeedbackNames.length+1];
+    			modeValues = new int[_validFeedbackNames.length+1];
+    			for (int i = 0; i<_validFeedbackNames.length; i++) {
+    				modeNames[i] = _validFeedbackNames[i];
+    				modeValues[i] = _validFeedbackModes[i];
+    			}
+    			modeNames[_validFeedbackNames.length] = "MONITORING";
+    			modeValues[_validFeedbackNames.length] = MONITORING;
+    		}
+    		_validFeedbackTypes |= MONITORING; 
+    		_validFeedbackNames = modeNames;
+    		_validFeedbackModes = modeValues;
+    	}
+    }
+    static String[] modeNames = null;
+    static int[] modeValues = null;
+    public static int numNtTurnouts = 0;
+    
     public int getNumber() { return _number; }
 
     // Handle a request to change state by sending a turnout command
@@ -118,9 +146,10 @@ public class NceTurnout extends AbstractTurnout {
     	}
     	
     }
-
+ 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceTurnout.class.getName());
 }
 
 /* @(#)NceTurnout.java */
+
 
