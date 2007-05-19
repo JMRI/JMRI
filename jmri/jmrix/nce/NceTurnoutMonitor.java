@@ -2,8 +2,6 @@
 
 package jmri.jmrix.nce;
 
-import com.sun.java.util.collections.List;
-
 import jmri.InstanceManager;
 import jmri.Turnout;
 
@@ -30,75 +28,66 @@ import jmri.Turnout;
  * 
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 
-public class NceTurnoutMonitor extends Thread implements NceListener{
+public class NceTurnoutMonitor implements NceListener{
 
     // scope constants
     private static final int CS_ACCY_MEMORY = 0xEC00; 	// Address of start of CS accessory memory 
     private static final int NUM_BLOCK = 16;            // maximum number of memory blocks
     private static final int BLOCK_LEN = 16;            // number of bytes in a block
     private static final int REPLY_LEN = BLOCK_LEN;		// number of bytes read
-
+ 
     // object state
     private int currentBlock;							// used as state in scan over active blocks
-    private int numTurnouts;							//number of turnouts loaded by JMRI
-    private int savedNumTurnouts = -1;					//current number of turnouts being polled, -1 forces init
+    private int numTurnouts = 0;						// number of NT turnouts known by NceTurnoutMonitor 
     private int numActiveBlocks = 0;
-    
+         
     // cached work fields
-    boolean [] newTurnouts = new boolean [NUM_BLOCK];	//used to sync poll turnout memory
-    boolean [] activeBlock = new boolean [NUM_BLOCK];	//When true there are active turnouts in the memory block
-    byte [] csAccMemCopy = new byte [256];				//Copy of NCE CS accessory memory
+    boolean [] newTurnouts = new boolean [NUM_BLOCK];	// used to sync poll turnout memory
+    boolean [] activeBlock = new boolean [NUM_BLOCK];	// When true there are active turnouts in the memory block
+    byte [] csAccMemCopy = new byte [256];				// Copy of NCE CS accessory memory
     
     // debug final
-    static final boolean debugTurnoutMonitor = false;	//Control verbose debug
+    static final boolean debugTurnoutMonitor = false;	// Control verbose debug
         
     public NceMessage pollMessage() {
     	
     	if (NceMessage.getCommandOptions() < NceMessage.OPTION_2006 ){return null;}
-
-        // First, rescan the defined turnouts.  It's tedious to do this on every request
-        // for poll, so eventually this should be handled by a listener to the TurnoutManager
-        // that updates only when the list of defined Turnouts changes, but for now this 
-        // works.
-                      
-        List turnoutSysNameList = InstanceManager.turnoutManagerInstance().getSystemNameList();
-        numTurnouts = turnoutSysNameList.size();
         
         // See if the number of turnouts now differs from the last scan.
-        // This is not entirely reliable in the face of turnouts being deleted, as one can come and
-        // another go leaving the total unchanged, but deleting is a recent addition known to be
-        // unreliable at runtime.
-        if (numTurnouts != savedNumTurnouts) {
+
+        if (numTurnouts != NceTurnout.numNtTurnouts) {
  
             // Skip doing this again until number changed
-            savedNumTurnouts = numTurnouts;
+            numTurnouts = NceTurnout.numNtTurnouts;
             if (numTurnouts==0) return null;  // no work!
             
             // Determine what turnouts have been defined and what blocks have active turnouts
             for (int block = 0; block < NUM_BLOCK; block++){
-            	
+
             	newTurnouts[block] = true;			// Block may be active, but new turnouts may have been loaded	
             	if (activeBlock[block] == false) {  // no need to scan once known to be active
 
-                    for (int i = 0; i < 128; i++) { // Check 128 turnouts per block 
-                        int addr = 1 + i + (block*128);
-                        Turnout mControlTurnout = InstanceManager.turnoutManagerInstance().getBySystemName("NT"+addr);
-                        if (mControlTurnout != null){
-                            activeBlock[block] = true;	//turnout found, block is active forever
-                            numActiveBlocks++;
-                            break; 						// don't check rest of block					
-                        }
-                    }
-                }
-            
+            		for (int i = 0; i < 128; i++) { // Check 128 turnouts per block 
+            			int addr = 1 + i + (block*128);
+            			Turnout mControlTurnout = InstanceManager.turnoutManagerInstance().getBySystemName("NT"+addr);
+            			if (mControlTurnout != null){
+            				int tFeedBack = mControlTurnout.getFeedbackMode();
+            				if (tFeedBack==Turnout.MONITORING) {
+            					activeBlock[block] = true;	//turnout found, block is active forever
+            					numActiveBlocks++;
+            					break; 						// don't check rest of block
+            				}
+            			}
+            		}
+            	}
+
             }
         }     
                
-        // Note that not all Turnouts are NCE Turnouts; it's possible
-        // to get here with no work if others are in use, e.g. IT1'
+        // See if there's any poll messages needed
         if (numActiveBlocks<=0) {
             return null; // to avoid immediate infinite loop
         }
@@ -108,9 +97,9 @@ public class NceTurnoutMonitor extends Thread implements NceListener{
             // move to next possible block
             currentBlock++;
             if (currentBlock >= NUM_BLOCK) currentBlock = 0;
-            
+ 
             if (activeBlock[currentBlock]){
-                if (debugTurnoutMonitor && log.isDebugEnabled()) log.debug("found turnouts block "+ currentBlock );
+                if (debugTurnoutMonitor && log.isDebugEnabled()) log.debug("found turnouts block "+ currentBlock);
 
                 // Read NCE CS memory                    
                 int nceAccAddress = CS_ACCY_MEMORY+currentBlock*BLOCK_LEN;
@@ -145,7 +134,7 @@ public class NceTurnoutMonitor extends Thread implements NceListener{
                     for (int i = 0; i < 8; i++){ 					// search this byte for active turnouts
                         
                         int addr = 1 + i + j*8 + (currentBlock*128);
-                        NceTurnout rControlTurnout = (NceTurnout) InstanceManager.turnoutManagerInstance().getBySystemName("NT"+addr);
+                        NceTurnout rControlTurnout = (NceTurnout)InstanceManager.turnoutManagerInstance().getBySystemName("NT"+addr);
                         if (rControlTurnout != null){
                             
                             int tState = rControlTurnout.getKnownState();
@@ -154,8 +143,8 @@ public class NceTurnoutMonitor extends Thread implements NceListener{
                                 log.debug("turnout exists NT"+addr+" state: " +tState + " Feed back mode: " + tFeedBack);
                             }
                             
-                            // Keep JMRI panel in sync with NCE CS only if feedback mode is DIRECT
-                            if (tFeedBack==Turnout.DIRECT) {
+                            // Keep JMRI panel in sync with NCE CS only if feedback mode is MONITORING
+                            if (tFeedBack==Turnout.MONITORING) {
                                 
                                 //	Show the byte read from NCE CS
                                 
