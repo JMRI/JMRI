@@ -9,8 +9,8 @@ import java.awt.event.ActionEvent;
  * Swing action to create and register a 
  *       			NcePacketGenFrame object
  *
- * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			
+ * @author	    Bob Jacobsen    Copyright (C) 2001
+ * @version		$Revision: 1.4 $	
  */
 
 public class NcePacketGenAction extends AbstractAction {
