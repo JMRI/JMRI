@@ -1,19 +1,19 @@
-/** 
- * NcePacketGenAction.java
- *
- * Description:		Swing action to create and register a 
- *       			NcePacketGenFrame object
- *
- * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			
- */
+// NcePacketGenAction.java
 
 package jmri.jmrix.nce.packetgen;
 
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
-public class NcePacketGenAction 			extends AbstractAction {
+/**
+ * Swing action to create and register a 
+ *       			NcePacketGenFrame object
+ *
+ * @author			Bob Jacobsen    Copyright (C) 2001
+ * @version			
+ */
+
+public class NcePacketGenAction extends AbstractAction {
 
 	public NcePacketGenAction(String s) { super(s);}
 	
