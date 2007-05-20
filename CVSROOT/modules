@@ -16,8 +16,7 @@ netbeansfiles -d java &nbproject
 netbeans -a runtime java-contents netbeansfiles
 
 # files used by Eclipse, not counting those already in the java/ subdir
-eclipsefiles -a .metadata
-eclipse -a runtime java-contents eclipsefiles
+eclipse -a runtime java-contents
 
 # check target - The Java 1.1.8 libraries and needed build files
 # use 'all' or 'ant' target with this
