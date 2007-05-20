@@ -20,8 +20,8 @@ package jmri;
  
 public interface Logix extends NamedBean {
 
-	public static final int MAX_CONDITIONALS = 20;
-	public static final int MAX_LISTENERS = 100;
+	public static final int MAX_CONDITIONALS = 50;
+	public static final int MAX_LISTENERS = 250;
 	
 	public static final int LISTENER_TYPE_SENSOR = 1;
 	public static final int LISTENER_TYPE_TURNOUT = 2;

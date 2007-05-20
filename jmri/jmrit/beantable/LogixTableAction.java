@@ -46,7 +46,7 @@ import jmri.util.JmriJFrame;
  *	   BeanTableBundle.properties, accessed via rb.
  *
  * @author	Dave Duchamp    Copyright (C) 2007
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -490,7 +490,7 @@ public class LogixTableAction extends AbstractTableAction {
             contentPane.add(pctSpace);            
             JPanel pTitle = new JPanel();
             pTitle.setLayout(new FlowLayout());
-            pTitle.add(new JLabel(rbx.getString("ConditionalTableTitle")));
+            pTitle.add(new JLabel(rbx.getString("ConditionalTableTitle")+" "+Logix.MAX_CONDITIONALS+" )"));
             contentPane.add(pTitle);
             pct = new JPanel();
 			// initialize table of conditionals
@@ -767,6 +767,16 @@ public class LogixTableAction extends AbstractTableAction {
 	 */
 	void newConditionalPressed(ActionEvent e) {
 		if (checkEditConditional()) return;
+		if (numConditionals>=Logix.MAX_CONDITIONALS) {
+			// Already have the maximum number of conditionals
+			javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
+			    java.text.MessageFormat.format(
+				    rbx.getString("Error36"),
+				    new String[]{curConditional.getSystemName()}),
+				rbx.getString("ErrorTitle"),
+				javax.swing.JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 		// make system name for new conditional
 		int num = curLogix.getNextConditionalNumber();
 		String cName = curLogix.getSystemName()+"C"+Integer.toString(num);
@@ -778,8 +788,9 @@ public class LogixTableAction extends AbstractTableAction {
         }
 		// add to Logix at the end of the calculate order
 		if (!curLogix.addConditional(cName,-1)) {
-			// too many conditionals
-// add too many conditionals message			
+			// too many conditionals - should never happen since tested above.
+            log.error("Too many Conditionals with for Logix: "+curLogix.getSystemName());
+			return;
 		}
 		// Conditional successfully added to Logix
 		curConditional = c;
@@ -927,7 +938,7 @@ public class LogixTableAction extends AbstractTableAction {
 			logicPanel.setLayout(new BoxLayout(logicPanel,BoxLayout.Y_AXIS));
             JPanel varTitle = new JPanel();
             varTitle.setLayout(new FlowLayout());
-            varTitle.add(new JLabel(rbx.getString("StateVariableTableTitle")));
+            varTitle.add(new JLabel(rbx.getString("StateVariableTableTitle")+" "+Conditional.MAX_STATE_VARIABLES+" )"));
             logicPanel.add(varTitle);
 			// set up state variables table
             vt = new JPanel();
@@ -1380,6 +1391,15 @@ public class LogixTableAction extends AbstractTableAction {
 	 * Responds to the Add State Variable Button in the Edit Conditional window
 	 */
 	void addVariablePressed(ActionEvent e) {
+		if (numStateVariables>=Conditional.MAX_STATE_VARIABLES) {
+			log.error("Attempt to exceed maximum number of state variables for conditional: "+
+													curConditional.getSystemName());
+			javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
+				rbx.getString("Error37"),
+					rbx.getString("ErrorTitle"),
+						javax.swing.JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 		variableNOT[numStateVariables] = " ";
 		variableType[numStateVariables] = 0;
 		variableName[numStateVariables] = " ";
@@ -1480,7 +1500,7 @@ public class LogixTableAction extends AbstractTableAction {
 				if (p!=null) {
 					// Conditional with this user name already exists
 					log.error("Failure to update Conditional with Duplicate User Name: "+uName);
-					javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
+					javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
 						rbx.getString("Error10"),
 							rbx.getString("ErrorTitle"),
 								javax.swing.JOptionPane.ERROR_MESSAGE);
