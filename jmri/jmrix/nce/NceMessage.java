@@ -17,16 +17,23 @@ package jmri.jmrix.nce;
  *<LI>2006 - binary needed for everything
  *</UL>
  * See the {@link #setCommandOptions(int)} method for more information.
+ *<P>
+ * Apparently the binary "exitProgrammingMode" command can crash the 
+ * command station if it's not currently in programming mode.  This
+ * class uses a static state flag ({@link #ncsProgMode}) to detect
+ * whether a command to enter program mode has been generated, and
+ * presumably sent, when using the later EPROMS.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2007
- * @version     $Revision: 1.24 $
+ * @version     $Revision: 1.25 $
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
     static protected int NCE_PAGED_CV_TIMEOUT=20000;
     static protected int NCE_DIRECT_CV_TIMEOUT=4000;
-
+    static protected boolean ncsProgMode = false;				// Do not use exit program mode unless active
+    
     public NceMessage() {
         super();
     }
@@ -105,6 +112,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     static public NceMessage getProgMode() {
         NceMessage m = new NceMessage(1);
         if (getCommandOptions() >= OPTION_2006) {
+        	ncsProgMode = true;
             m.setBinary(true);
             m.setReplyLen(1);
             m.setOpCode(0x9E);
@@ -119,6 +127,12 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     static public NceMessage getExitProgMode() {
         NceMessage m = new NceMessage(1);
         if (getCommandOptions() >= OPTION_2006) {
+        	// Sending exit programing mode binary can crash pre 2006 EPROMs
+        	// assumption is that program mode hasn't been entered, so exit without 
+        	// sending command
+            if (ncsProgMode == false)
+            	return null;
+            ncsProgMode = false;
             m.setBinary(true);
             m.setReplyLen(1);
             m.setOpCode(0x9F);
@@ -417,6 +431,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
 
 /* @(#)NceMessage.java */
+
 
 
 
