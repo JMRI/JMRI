@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Eclipse.html,v 1.10 2007-05-08 06:51:44 jacobsen Exp $ -->
+<!-- $Id: Eclipse.html,v 1.11 2007-05-20 23:41:45 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -130,7 +130,7 @@
     <p>Eclipse (available at <a href="http://www.eclipse.org">www.eclipse.org</a>) 
     makes a great platform for working with JMRI, but because the repository is 
     not set up as an Eclipse project there are a few wrinkles in getting it 
-    work. (The description below is accurate for the Windows version of Eclipse. 
+    work. (The description below is accurate for version Eclipse 3.2.2 for MacOS X. 
     Eclipse is <i>supposed</i> to be identical across platforms, but this hasn't 
     been checked on anything else). </p>
     <p>Eclipse is a complex environment to work with. If you're already familiar 
@@ -138,6 +138,97 @@
     but it is definitely worth buying a textbook (e.g.
     <a href="http://www.amazon.com/exec/obidos/tg/detail/-/0321305027/qid=1124158635">
     The Java Developer's Guide to Eclipse</a>).</p>
+
+    <h2>Setting up Eclipse for building JMRI</h2>
+    <P>
+    Unfortunately, we don't know how to properly put the Eclipse configuration
+    information directly into CVS, so there are a number of manual setup steps
+    you'll have to take.
+    
+    <OL>
+    <LI>Create an empty directory, which will be your Eclipse workspace for JMRI.
+    <LI>Open Eclipse.  When it asks for a workspace, select the empty
+        directory you just created.
+    <LI>From the "Window" menu, select "Show View", then "Other..."
+    <LI>In the "Show View" window that just opened, expand the "CVS" folder
+        select "CVS Repositories", and click OK.
+    <LI>A "CVS Repositories" pane will open.  If you have any defined already,
+        they'll show.  Right click (or CTRL-Click with a one-button mouse)
+        on an empty part of the window, then in the pop-up menu select
+        "New..", then "Repository Location".
+    <LI>Fill out the form that shows up:
+        <UL>
+        <LI>Host is "jmri.cvs.sourceforge.net"
+        <LI>Repository path is "/cvsroot/jmri"
+        <LI>User is "anonymous" (if you're a JMRI developer authorized to change CVS, put your 
+            sourceforge ID here)
+        <LI>Leave password blank
+        <LI>Leave the rest of the form at defaults (unless you're a JMRI
+            developer, in which case select "ext" as the connection type)
+        <LI>Click "Finish"
+        </UL>
+    <LI>If all is well, an entry should show up in the "CVS Repositories" tab.
+        You can close that tab now if you'd like.
+    <LI>From the file menu, select "Import.." In the resulting "Import" window
+        expand the CVS folder and select "Projects from CVS". Click "Next"
+    <LI>Select "Use existing repository location", and highlight the 
+        repository entry you just created that refers to JMRI. Click "Next"
+    <LI>Select "Use specified module name" and enter "eclipse" (all lower case).
+        Click "Finish"
+    <LI>If all is well, you'll see a "Checking out..." window while the files
+        are pulled from CVS.  This will take a while. When it's done,
+        you'll have all the JMRI code in your workspace directory,
+        and just have to configure Eclipse to run it.
+        
+    <LI>From the "Window" menu, select "Show View ..." then "Navigator".
+        You'll get a multi-pane window that shows various views of the
+        JMRI code.
+    <LI>From the "Run" menu, select "Run..."  We'll use the window
+        that opens to configure which program(s) to run.
+        
+    <LI>On the left side, highlight "Java Application", then press 
+        the "New" icon above it. The icon looks like a document
+        with a plus sign on the upper-right.
+    
+    <LI>You should now have a new "Main" tab highlighted.  Above that,
+        replace "New_configuration" with "DecoderPro". Below it, 
+        enter "java" (lower case important) for "Project:" and
+        "apps.DecoderPro.DecoderPro" for "Main class:".
+    
+    <LI>Select the "Arguments" tab, and under VM argments enter
+    <BR>
+<PRE>
+-Djava.security.policy=lib/security.policy -Dpple.laf.useScreenMenuBar=true -Xms10m
+</PRE>
+    <BR>
+        (You should probably cut and paste that).  Under working directory,
+        select "Other:" and enter "${workspace_loc}"
+        
+    <LI>Select the "Common" tab, the section on "Display in favorites menu",
+        check the boxes next to "Run" and "Debug"
+    
+    <LI>If you'd like to create targets to make it easy to 
+        run PanelPro and AllTests, repeat the above steps
+        to create a new "Java Application"
+        except specifying "apps.PanelPro.PanelPro" and
+        "apps.tests.AllTest" respectively.        
+        
+    <LI>Click "Apply", then "Close"  (You could click "Run" at this point, but
+        we've got a little more to do)
+        
+    <LI>You should now be back to the usual Eclipse navigator view, 
+        where most development work is done. To see some particular
+        java file, expand the "java" folder at the left, then
+        the "src" folder, navigating down to the file you want. 
+        
+    <LI>To run DecoderPro, select it under "Run History" from the "Run"
+        menu.  Once you've done that once, you can just click the "Run"
+        icon on the toolbar to rerun the last program.
+        
+    </ol>
+    
+
+    <h1>Older version of instructions</h1>
     <h2>Checking out code</h2>
     <ul>
       <li>Start Eclipse - it will ask you for a workspace name. You can make up 
