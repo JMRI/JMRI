@@ -6,8 +6,6 @@ import jmri.AbstractTurnout;
 import jmri.NmraPacket;
 import jmri.Turnout;
 
-
-
 /**
  * Implement a Turnout via NCE communications.
  * <P>
@@ -17,7 +15,7 @@ import jmri.Turnout;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 public class NceTurnout extends AbstractTurnout {
 
@@ -99,15 +97,23 @@ public class NceTurnout extends AbstractTurnout {
      * from the command station polling. A change there means that
      * somebody commanded a state change (e.g. somebody holding a 
      * throttle), and that command has already taken effect.
-     * Hence we use "newCommandedState" to indicate it's taken place,
-     * followed by "newKnownState" to indicate we're sure 
-     * it's taken place on the layout.
+     * Hence we use "newCommandedState" to indicate it's taken place.
+     * <P>
+     * If the feedback mode is DIRECT or MONITORING, a change also
+     * results in the known state changing via
+     * "newKnownState" to indicate we're sure 
+     * the change has taken place on the layout.
      *
-     * @param state Observed state, updates knownState
+     * @param state Observed state, updated state from command station
      */
     synchronized void setKnownStateFromCS(int state) {
         newCommandedState(state);
-        newKnownState(state);
+        
+        // known state is only changed if in DIRECT or MONITORING mode
+        if (  (getFeedbackMode() == MONITORING) ||
+              (getFeedbackMode() == DIRECT) ) {
+            newKnownState(state);
+        }
     }
     
     protected void sendMessage(boolean closed) {

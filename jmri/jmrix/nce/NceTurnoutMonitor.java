@@ -5,8 +5,6 @@ package jmri.jmrix.nce;
 import jmri.InstanceManager;
 import jmri.Turnout;
 
-
-
 /**
  * 
  * Polls NCE Command Station for turnout discrepancies
@@ -28,7 +26,7 @@ import jmri.Turnout;
  * 
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 
 public class NceTurnoutMonitor implements NceListener{
@@ -136,40 +134,36 @@ public class NceTurnoutMonitor implements NceListener{
                         int addr = 1 + i + j*8 + (currentBlock*128);
                         NceTurnout rControlTurnout = (NceTurnout)InstanceManager.turnoutManagerInstance().getBySystemName("NT"+addr);
                         if (rControlTurnout != null){
-                            
+
                             int tState = rControlTurnout.getKnownState();
-                            int tFeedBack = rControlTurnout.getFeedbackMode();
+
                             if (debugTurnoutMonitor && log.isDebugEnabled()) {
-                                log.debug("turnout exists NT"+addr+" state: " +tState + " Feed back mode: " + tFeedBack);
+                                log.debug("turnout exists NT"+addr+" state: " +tState + " Feed back mode: " + rControlTurnout.getFeedbackMode());
+                            }
+                                                            
+                            //	Show the byte read from NCE CS
+                            
+                            if (debugTurnoutMonitor && log.isDebugEnabled()) {
+                                log.debug("memory byte: " + Integer.toHexString(recMemByte & 0xFF));
+                            }	
+                            
+                            // test for closed or thrown
+                            int accThrown = (recMemByte >> i) & 0x01;
+                            if (accThrown > 0 & tState != Turnout.THROWN){
+                                if (log.isDebugEnabled()) {
+                                    log.debug("turnout discrepency, need to THROW turnout NT" + addr);
+                                }
+                                // change JMRI's knowledge of the turnout state to match observed
+                                rControlTurnout.setKnownStateFromCS(Turnout.THROWN);
                             }
                             
-                            // Keep JMRI panel in sync with NCE CS only if feedback mode is MONITORING
-                            if (tFeedBack==Turnout.MONITORING) {
-                                
-                                //	Show the byte read from NCE CS
-                                
-                                if (debugTurnoutMonitor && log.isDebugEnabled()) {
-                                    log.debug("memory byte: " + Integer.toHexString(recMemByte & 0xFF));
+                            if (accThrown == 0 & tState != Turnout.CLOSED) {
+                                if (log.isDebugEnabled()) {
+                                    log.debug("turnout discrepency, need to CLOSE turnout NT" + addr);
                                 }	
-                                
-                                // test for closed or thrown
-                                int accThrown = (recMemByte >> i) & 0x01;
-                                if (accThrown > 0 & tState != Turnout.THROWN){
-                                    if (log.isDebugEnabled()) {
-                                        log.debug("turnout discrepency, need to THROW turnout NT" + addr);
-                                    }
-                                    // change JMRI's knowledge of the turnout state to match observed
-                                    rControlTurnout.setKnownStateFromCS(Turnout.THROWN);
-                                }
-                                
-                                if (accThrown == 0 & tState != Turnout.CLOSED) {
-                                    if (log.isDebugEnabled()) {
-                                        log.debug("turnout discrepency, need to CLOSE turnout NT" + addr);
-                                    }	
-                                   // change JMRI's knowledge of the turnout state to match observed
-                                    rControlTurnout.setKnownStateFromCS(Turnout.CLOSED);
-                                }	
-                            }
+                               // change JMRI's knowledge of the turnout state to match observed
+                                rControlTurnout.setKnownStateFromCS(Turnout.CLOSED);
+                            }	
                         }
                         
                         else {
