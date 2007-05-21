@@ -19,14 +19,14 @@ package jmri.jmrix.nce;
  * See the {@link #setCommandOptions(int)} method for more information.
  *<P>
  * Apparently the binary "exitProgrammingMode" command can crash the 
- * command station if it's not currently in programming mode.  This
+ * command station if the EPROM was built before 2006.  This
  * class uses a static state flag ({@link #ncsProgMode}) to detect
  * whether a command to enter program mode has been generated, and
  * presumably sent, when using the later EPROMS.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2007
- * @version     $Revision: 1.25 $
+ * @version     $Revision: 1.26 $
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -312,7 +312,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         NceMessage m = new NceMessage(bytes.length);
         m.setBinary(true);
         m.setReplyLen(1);
-        m.setTimeout(LONG_TIMEOUT);
+        m.setTimeout(SHORT_TIMEOUT);
         for (int j = 0; j<bytes.length; j++) {
             m.setElement(j, bytes[j]&0xFF);
         }
@@ -328,7 +328,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         NceMessage m = new NceMessage(bytes.length);
         m.setBinary(true);
         m.setReplyLen(replyLen);
-        m.setTimeout(LONG_TIMEOUT);
+        m.setTimeout(NCE_PAGED_CV_TIMEOUT);
         
         for (int j = 0; j<bytes.length; j++) {
             m.setElement(j, bytes[j]&0xFF);
