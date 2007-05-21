@@ -12,7 +12,7 @@ import javax.swing.JMenuBar;
 /**
  * Frame controlling a single turnout
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
 
@@ -25,11 +25,14 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
 
     javax.swing.JLabel textStateLabel = new javax.swing.JLabel();
     javax.swing.JLabel nowStateLabel = new javax.swing.JLabel();
+    
+    javax.swing.JLabel textFeedbackLabel = new javax.swing.JLabel();
+    javax.swing.JLabel nowFeedbackLabel = new javax.swing.JLabel();
 
     public SimpleTurnoutCtrlFrame() {
 
         // configure items for GUI
-        textAdrLabel.setText("turnout:");
+        textAdrLabel.setText(" turnout:");
         textAdrLabel.setVisible(true);
 
         adrTextField.setText("");
@@ -56,11 +59,17 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
                 }
             });
 
-        textStateLabel.setText("current state: ");
+        textStateLabel.setText(" current state: ");
         textStateLabel.setVisible(true);
 
         nowStateLabel.setText("<unknown>");
         nowStateLabel.setVisible(true);
+        
+        textFeedbackLabel.setText(" feedback: ");
+        textFeedbackLabel.setVisible(true);
+
+        nowFeedbackLabel.setText("<unknown>");
+        nowFeedbackLabel.setVisible(true);
 
         // general GUI config
         setTitle("Turnout Control");
@@ -72,6 +81,9 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
 
         getContentPane().add(textStateLabel);
         getContentPane().add(nowStateLabel);
+        
+        getContentPane().add(textFeedbackLabel);
+        getContentPane().add(nowFeedbackLabel);
 
         getContentPane().add(throwButton);
         getContentPane().add(closeButton);
@@ -86,6 +98,9 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
             if (turnout != null) turnout.removePropertyChangeListener(this);
             turnout = InstanceManager.turnoutManagerInstance().
                 provideTurnout(adrTextField.getText());
+            // Update feedback mode
+            nowFeedbackLabel.setText (turnout.getFeedbackModeName());
+            
 			if (turnout==null) {
 				log.error("Turnout "+adrTextField.getText()+" is not available");
 			} else {
@@ -97,6 +112,8 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
         }
         catch (Exception ex) {
             log.error("closeButtonActionPerformed, exception: "+ex.toString());
+            nowStateLabel.setText("ERROR");
+            nowFeedbackLabel.setText ("<unknown>");
             return;
         }
         return;
@@ -108,6 +125,9 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
             if (turnout != null) turnout.removePropertyChangeListener(this);
             turnout = InstanceManager.turnoutManagerInstance().
                 provideTurnout(adrTextField.getText());
+            // Update feedback mode
+              nowFeedbackLabel.setText (turnout.getFeedbackModeName());
+            
 			if (turnout==null) {
 				log.error("Turnout "+adrTextField.getText()+" is not available");
 			} else {
@@ -119,6 +139,8 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
         }
         catch (Exception ex) {
             log.error("throwButtonActionPerformed, exception: "+ex.toString());
+            nowStateLabel.setText("ERROR");
+            nowFeedbackLabel.setText ("<unknown>");
             return;
         }
         return;
@@ -143,7 +165,7 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
                 return;
             }
         }
-    }
+     }
 
     Turnout turnout = null;
 
@@ -151,3 +173,4 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
 
     String newState = "";
 }
+
