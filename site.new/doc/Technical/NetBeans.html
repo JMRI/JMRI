@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NetBeans.html,v 1.4 2007-05-14 06:02:03 jacobsen Exp $ -->
+<!-- $Id: NetBeans.html,v 1.5 2007-05-22 23:57:04 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -208,6 +208,34 @@ that we'll reference below.
     find "Make Jar FIle". Select that, and a new jmri.jar file will be
     produced in the project's main directory.
     
+    <A ID="patch"/>
+    <h2>Making a Patch File</h2>
+    
+    A "diff patch file" is an easy way to gather up all your changes, even
+    if they span multiple files, into one file that you can then send to us.
+    It's also easy to merge in with the rest of the code, so we greatly 
+    prefer that you use this.
+    
+    <P>
+    To create the file:
+    <UL>
+    <LI>Start NetBeans and open your project
+    <LI>In the code navigation tree to the left, select
+        the top level "JMRI" project folder
+    <LI>From the "CVS" menu, select "Export "JMRI" Diff Patch ..."
+    <LI>A file select directory will open; enter a new file name
+        in your preferred location and hit "Save" or "Open", 
+        depending on what the dialog shows. 
+        <P>
+        (Note:  On some 
+        Java versions, there's a bug that only allows you to
+        select <em>existing files</em> whose name ends in ".diff".
+        If that happens, cancel the save dialog, use an editor to 
+        create an empty file of that name, and try again)
+    <LI>After a little while, the file you selected will contain
+        the patches, along with an information header.
+    </UL>
+
     <!-- Footer --><hr class="hide">
     <div id="footer">
       <ul id="bn">
