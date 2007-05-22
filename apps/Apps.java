@@ -28,7 +28,7 @@ import net.roydesign.mac.MRJAdapter;
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
  * @author  Dennis Miller  Copyright 2005
- * @version     $Revision: 1.36 $
+ * @version     $Revision: 1.37 $
  */
 public class Apps extends JPanel {
 
@@ -302,7 +302,7 @@ public class Apps extends JPanel {
 
         JMenuItem context = new JMenuItem("Context ...");
         helpMenu.add(context);
-        context.addActionListener(new jmri.jmrit.ReportContextAction());
+        context.addActionListener(new apps.ReportContextAction());
     }
 
     protected String line1() {
