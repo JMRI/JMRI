@@ -35,7 +35,7 @@ import jmri.util.StringUtil;
  * used with permission.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2003
- * @version			$Revision: 1.37 $
+ * @version			$Revision: 1.38 $
  */
 public class Llnmon {
 
@@ -56,6 +56,7 @@ public class Llnmon {
     private int      msgNumber       = 1;      /* message number                                   */
     private boolean  showDecimal     = false;  /* flag that determines if we print decimal values  */
     private boolean  showHex         = false;  /* flag that determines if we print hex values      */
+    private boolean  showOpCode      = true;   /* flag that determines if we print loconet opcodes */
     private boolean  showDiscards    = false;  /* TRUE if the user wants to display discarded data */
     private boolean  showTrackStatus = true;   /* if TRUE, show track status on every slot read    */
     private int      trackStatus     = -1;     /* most recent track status value                   */
@@ -106,6 +107,7 @@ public class Llnmon {
         forceHex = false;
         String s = format(l);
         if (forceHex) s += "contents: "+l.toString()+"\n";
+        if (showOpCode) s = LnConstants.OPC_NAME(l.getOpCode()) + ": " + s;
         return s;
     }
     /**
@@ -952,30 +954,30 @@ public class Llnmon {
 
                     if (showStatus) {
                         logString = mode
-                            +" Fast Clock: (Data is "
-                            +((clk_cntrl & 0x20) != 0 ? "Valid" : "Invalid - ignore")
-                            +")\n\t"
-                            +(clk_rate != 0 ? "Running" : "Frozen")
-                            +", rate is "+clk_rate
-                            +":1. Day "+days+", "+hours+":"+minutes+"."+frac_mins
-                            +". Last set by ID "+idString(id1, id2)
+                            +" Fast Clock: "
+                            +((clk_cntrl & 0x20) != 0 ? "" : "(Data is Invalid - ignore)")
+                            +"\n\t"
+                                +(clk_rate != 0 ? "Running" : "Frozen")
+                                +", rate is "+clk_rate
+                                +":1. Day "+days+", "+hours+":"+minutes+"."+frac_mins
+                                +". Last set by ID "+idString(id1, id2)
                             +"\n\tMaster controller "
-                            +((track_stat & LnConstants.GTRK_MLOK1)!=0 ? "implements LocoNet 1.1" : "is a DT-200")
+                                +((track_stat & LnConstants.GTRK_MLOK1)!=0 ? "implements LocoNet 1.1" : "is a DT-200")
                             +",\n\tTrack Status is "
-                            +((track_stat & LnConstants.GTRK_POWER)!=0  ? " On," : " Off,")
-                            +((track_stat & LnConstants.GTRK_IDLE)!=0  ? " Paused " : " Running ")
+                                +((track_stat & LnConstants.GTRK_POWER)!=0  ? " On," : " Off,")
+                                +((track_stat & LnConstants.GTRK_IDLE)!=0  ? " Paused " : " Running ")
                             +",\n\tProgramming Track is "
-                            +((track_stat & LnConstants.GTRK_PROG_BUSY)!=0 ? "Busy" : "Available")
+                                +((track_stat & LnConstants.GTRK_PROG_BUSY)!=0 ? "Busy" : "Available")
                             +"\n";
                     } else {
                         logString = mode
-                            +" Fast Clock: (Data is "
-                            +((clk_cntrl & 0x20) != 0 ? "Valid" : "Invalid - ignore")
-                            +")\n\t"
-                            +(clk_rate != 0 ? "Frozen" : "Running")
-                            +", rate is "+clk_rate
-                            +":1. Day "+days+", "+hours+":"+minutes
-                            +". Last set by ID "+idString(id1, id2)+"\n";
+                            +" Fast Clock: "
+                            +((clk_cntrl & 0x20) != 0 ? "" : "(Data is Invalid - ignore)")
+                            +"\n\t"
+                                +(clk_rate != 0 ? "Frozen" : "Running")
+                                +", rate is "+clk_rate
+                                +":1. Day "+days+", "+hours+":"+minutes
+                                +". Last set by ID "+idString(id1, id2)+"\n";
                     }
                     // end fast clock block
 
@@ -1499,6 +1501,24 @@ public class Llnmon {
         return "0x"+Integer.toHexString( (id2&0x7F)*128+(id1&0x7F))
             +" ("+((id2/4&0)&0x3f)+")";
     }
+    /*
+     * Take an int and convert it to a dotted version number
+     * as used by the LocoIO protocol
+     * Example:  123 => 1.2.3
+     */
+    private String dotme(int val) {
+        int dit;
+        int x = val;
+        StringBuffer ret = new StringBuffer();
+        if (val == 0) return "0";
+        while (x != 0) {
+            dit = x % 10;
+            ret.insert(0,Integer.toString(dit));
+            x = x / 10;
+            if (x != 0) ret.insert(0, ".");
+        }
+        return ret.toString();
+    }
 
     String peerToPeerMessage(LocoNetMessage l) {
         /***********************************************************************************
@@ -1519,15 +1539,52 @@ public class Llnmon {
          *                         ;   <PXCT2>=<0,XC5,XC4,XC3 - D8.7,D7.7,D6.7,D5.7>        *
          *                         ;        XC3-XC5=data type CODE- 0=ANSI TEXT string,     *
          *                         ;           balance RESERVED                             *
+         ************************************************************************************
+         * SV programming format 1                                                          *
+         *    This is the message format as implemented by the certain existing devices.    *
+         *    New designs should not use this format.                                       *
+         *    The message bytes are assigned as follows:                                    *
+         *                         ; <0xE5> <0x10> <SRC> <DST> <0x01> <PXCT1>               *
+         *                         ;        <D1>   <D2>  <D3>  <D4>   <PXCT2>               *
+         *                         ;        <D5>   <D6>  <D7>  <D8>   <CHK>                 *
+         *                         ; The upper nibble of PXCT1 must be 0, and               *
+         *                         ; the upper nibble of PXCT2 must be 1.                   *
+         *                         ; The meanings of the remaining bytes are as defined in  *
+         *                         ; the LocoNet Personal Edition specification.            *
+         ************************************************************************************
+         * SV programming format 2                                                          *
+         *    This is the recommended format for new designs.                               *
+         *    The message bytes as assigned as follows:                                     *
+         *                         ; <0xE5> <0x10>  <SRC>   <SV_CMD>  <SV_TYPE> <SVX1>      *
+         *                         ;        <DST_L> <DST_H> <SV_ADRL> <SV_ADRH> <SVX2>      *
+         *                         ;        <D1>    <D2>    <D3>      <D4>      <CHK>       * 
+         *                         ; The upper nibble of both SVX1 (PXCT1) and SVX2 (PXCT2) *
+         *                         ; must be 1.                                             *
          ***********************************************************************************/
 
         int src 	= l.getElement(2);            	// source of transfer
         int dst_l 	= l.getElement(3);          	// ls 7 bits of destination
         int dst_h 	= l.getElement(4);          	// ms 7 bits of destination
+        int dst         = dst_h * 128 + dst_l;
         int pxct1 	= l.getElement(5);
         int pxct2	= l.getElement(10);
 
         int d[] = l.getPeerXfrData();
+        
+        String generic =  "Peer to Peer transfer: SRC=0x"+Integer.toHexString(src)
+                    +", DSTL=0x"+Integer.toHexString(dst_l)
+                    +", DSTH=0x"+Integer.toHexString(dst_h)
+                    +", PXCT1=0x"+Integer.toHexString(pxct1)
+                    +", PXCT2=0x"+Integer.toHexString(pxct2);
+        String data = "Data [0x"+Integer.toHexString(d[0])
+                          +" 0x"+Integer.toHexString(d[1])
+                          +" 0x"+Integer.toHexString(d[2])
+                          +" 0x"+Integer.toHexString(d[3])
+                          +",0x"+Integer.toHexString(d[4])
+                          +" 0x"+Integer.toHexString(d[5])
+                          +" 0x"+Integer.toHexString(d[6])
+                          +" 0x"+Integer.toHexString(d[7])
+                          +"]\n";
 
         // check for a specific type - download message
         if ( (src == 0x7F) && (dst_l == 0x7F) && (dst_h == 0x7F)
@@ -1550,25 +1607,50 @@ public class Llnmon {
                 default:    // everything else isn't understood, go to default
             }
         }
+        // check for a specific type - packets from LocoBuffer
+        if (src == 0x50) {
+                String dst_subaddrx = (dst_h != 0x01? "" : ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : ""));
+                if (dst_h == 0x01 && ((pxct1 & 0xF0) == 0x00) && ((pxct2 & 0xF0) == 0x10)) {
+                    // LocoBuffer to LocoIO
+                    return "LocoBuffer => LocoIO@"
+                    + ((dst_l == 0) ? "broadcast"
+                                    : Integer.toHexString(dst_l) + dst_subaddrx) 
+                    + " "
+                    + (d[0] == 2 ? "Read SV"+d[1] : "Write SV"+d[1]+"=0x" + Integer.toHexString(d[3]))
+                    + ((d[2] != 0) ?  " Firmware rev " + dotme(d[2]) : "")
+                    + "\n"
+                    ;
+                }
+        }
+        // check for a specific type - SV Programming messages format 1 (Jabour/Deloof LocoIO)
+        if (dst_h == 0x01 && ((pxct1 & 0xF0) == 0x00) && ((pxct2 & 0xF0) == 0x00)) {
+            String src_subaddrx = ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : "");
+            String dst_subaddrx = (dst_h != 0x01? "" : ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : ""));
+            return ((src == 0x50) ? "Locobuffer"
+                                  : "LocoIO@" + "0x" + Integer.toHexString(src) + src_subaddrx)
+                    + "=> "
+                    + (((dst_h == 0x01) && (dst_l == 0x50))
+                        ? "LocoBuffer "
+                        : (((dst_h == 0x01) && (dst_l == 0x0)) ? "broadcast" : "LocoIO@0x" + Integer.toHexString(dst_l) + dst_subaddrx))
+                    + " "
+                    + ((dst_h == 0x01) ? ((d[0] == 2 ? "Read" : "Write") + " SV"+d[1]):"")
+                    + ((src == 0x50) ? (d[0] != 2 ? ("=0x" + Integer.toHexString(d[3])) : "")
+                                     : " = " + ((d[0] == 2)
+                             ? ((d[2] != 0) ? (d[5] < 10) ? "" + d[5] : d[5] + " (0x" + Integer.toHexString(d[5]) + ")" 
+                                            : (d[7] < 10) ? "" + d[7] : d[7] + " (0x" + Integer.toHexString(d[7]) + ")")
+                             : (d[7] < 10) ? "" + d[7] : d[7] + " (0x" + Integer.toHexString(d[7]) + ")"
+                           ))
+                    + ((d[2] != 0) ?  " Firmware rev " + dotme(d[2]) : "")
+                    + "\n"
+                    ;            
+        }
+        // check for a specific type - SV Programming messages format 2 (New Designs)
+        if ( ((pxct1 & 0xF0) == 0x10) && ((pxct2 & 0xF0) == 0x10)) {
+            return "SV Programming Protocol v2: " + generic + "\n\t" + data;
+        }
         
-        
-        // no specific type, return generic format
-        String generic =  "Peer to Peer transfer: SRC=0x"+Integer.toHexString(src)
-                    +", DSTL=0x"+Integer.toHexString(dst_l)
-                    +", DSTH=0x"+Integer.toHexString(dst_h)
-                    +", PXCT1=0x"+Integer.toHexString(pxct1)
-                    +", PXCT2=0x"+Integer.toHexString(pxct2)+"\n"
-                    +"\tD1=0x"+Integer.toHexString(d[0])
-                    +", D2=0x"+Integer.toHexString(d[1])
-                    +", D3=0x"+Integer.toHexString(d[2])
-                    +", D4=0x"+Integer.toHexString(d[3])
-                    +", D5=0x"+Integer.toHexString(d[4])
-                    +", D6=0x"+Integer.toHexString(d[5])
-                    +", D7=0x"+Integer.toHexString(d[6])
-                    +", D8=0x"+Integer.toHexString(d[7])
-                    +"\n";
-                    
-        return generic;
+        // no specific type, return generic format          
+        return "generic: " + generic + "\n\t" + data;
     }
     
 }  // end of class

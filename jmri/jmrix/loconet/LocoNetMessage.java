@@ -28,7 +28,7 @@ import java.io.Serializable;
  * <P>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.21 $
+ * @version			$Revision: 1.22 $
  * @see             jmri.jmrix.nce.NceMessage
  *
  */
@@ -224,8 +224,8 @@ public class LocoNetMessage implements Serializable {
         int pxct2 = 0;
 
         // install the "CODE" in pxct1, pxct2
-        pxct1 |= (code&0x7)*0x10;
-        pxct2 |= ( (code&0x38)/8)*0x10;
+        pxct1 |= (code&0x7)*0x10;       // lower 3 bits
+        pxct2 |= ( (code&0x38)/8)*0x10; // next 4 bits
 
         // store the addresses
         msg.setElement(2,src&0x7F); //src
@@ -233,23 +233,15 @@ public class LocoNetMessage implements Serializable {
         msg.setElement(4,highByte(dst)&0x7F); //dsth
 
         // store the data bytes
-        msg.setElement(6, d[0]&0x7F);
-        if (highBit(d[0])) pxct1 |= 0x01;
-        msg.setElement(7, d[1]&0x7F);
-        if (highBit(d[1])) pxct1 |= 0x02;
-        msg.setElement(8, d[2]&0x7F);
-        if (highBit(d[2])) pxct1 |= 0x04;
-        msg.setElement(9, d[3]&0x7F);
-        if (highBit(d[3])) pxct1 |= 0x08;
+        msg.setElement(6, d[0]&0x7F);        if (highBit(d[0])) pxct1 |= 0x01;
+        msg.setElement(7, d[1]&0x7F);        if (highBit(d[1])) pxct1 |= 0x02;
+        msg.setElement(8, d[2]&0x7F);        if (highBit(d[2])) pxct1 |= 0x04;
+        msg.setElement(9, d[3]&0x7F);        if (highBit(d[3])) pxct1 |= 0x08;
 
-        msg.setElement(11, d[4]&0x7F);
-        if (highBit(d[4])) pxct2 |= 0x01;
-        msg.setElement(12, d[5]&0x7F);
-        if (highBit(d[5])) pxct2 |= 0x02;
-        msg.setElement(13, d[6]&0x7F);
-        if (highBit(d[6])) pxct2 |= 0x04;
-        msg.setElement(14, d[7]&0x7F);
-        if (highBit(d[7])) pxct2 |= 0x08;
+        msg.setElement(11, d[4]&0x7F);       if (highBit(d[4])) pxct2 |= 0x01;
+        msg.setElement(12, d[5]&0x7F);       if (highBit(d[5])) pxct2 |= 0x02;
+        msg.setElement(13, d[6]&0x7F);       if (highBit(d[6])) pxct2 |= 0x04;
+        msg.setElement(14, d[7]&0x7F);       if (highBit(d[7])) pxct2 |= 0x08;
 
         // store the pxct1,2 values
         msg.setElement( 5, pxct1);

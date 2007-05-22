@@ -7,7 +7,7 @@ package jmri.jmrix.loconet;
  *
  * Description:		Constants to represent values seen in LocoNet traffic
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
 
  * Note that the values in this class have been taken from the llnmom C program of
  * Ron W. Auld, which included some work of John Kabat.  The symbol names
@@ -285,6 +285,37 @@ public final static int OPC_IMM_PACKET_2  = 0xee;
 public final static int OPC_WR_SL_DATA    = 0xef;
 public final static int OPC_WR_SL_DATA_EXP = 0xee;
 public final static int OPC_MASK          = 0x7f;  /* mask for acknowledge opcodes */
+public final static String OPC_NAME(int opcode) { // encode LocoNet Opcode as a string
+       return   (opcode == OPC_GPBUSY)      ? "OPC_GPBUSY" :
+                (opcode == OPC_GPOFF)       ? "OPC_GPOFF" :
+                (opcode == OPC_GPON)        ? "OPC_GPON"  :
+	        (opcode == OPC_IDLE)        ? "OPC_IDLE"  :
+		(opcode == OPC_LOCO_SPD)    ? "OPC_LOCO_SPD"  :
+		(opcode == OPC_LOCO_DIRF)   ? "OPC_LOCO_DIRF"  :
+		(opcode == OPC_LOCO_SND)    ? "OPC_LOCO_SND"  :
+		(opcode == OPC_SW_REQ)      ? "OPC_SW_REQ"  :
+		(opcode == OPC_SW_REP)      ? "OPC_SW_REP"  :
+		(opcode == OPC_INPUT_REP)   ? "OPC_INPUT_REP"  :
+		(opcode == OPC_UNKNOWN)     ? "OPC_UNKNOWN"  :
+		(opcode == OPC_LONG_ACK)    ? "OPC_LONG_ACK"  :
+		(opcode == OPC_SLOT_STAT1)  ? "OPC_SLOT_STAT1"  :
+		(opcode == OPC_CONSIST_FUNC)? "OPC_CONSIST_FUNC"  :
+		(opcode == OPC_UNLINK_SLOTS)? "OPC_UNLINK_SLOTS"  :
+		(opcode == OPC_LINK_SLOTS)  ? "OPC_LINK_SLOTS"  :
+		(opcode == OPC_MOVE_SLOTS)  ? "OPC_MOVE_SLOTS"  :
+		(opcode == OPC_RQ_SL_DATA)  ? "OPC_RQ_SL_DATA"  :
+		(opcode == OPC_SW_STATE)    ? "OPC_SW_STATE"  :
+		(opcode == OPC_SW_ACK)      ? "OPC_SW_ACK"  :
+		(opcode == OPC_LOCO_ADR)    ? "OPC_LOCO_ADR"  :
+		(opcode == OPC_MULTI_SENSE) ? "OPC_MULTI_SENSE"  :
+		(opcode == OPC_PEER_XFER)   ? "OPC_PEER_XFER"  :
+		(opcode == OPC_SL_RD_DATA)  ? "OPC_SL_RD_DATA"  :
+		(opcode == OPC_IMM_PACKET)  ? "OPC_IMM_PACKET"  :
+		(opcode == OPC_IMM_PACKET_2)? "OPC_IMM_PACKET_2"  :
+		(opcode == OPC_WR_SL_DATA)  ? "OPC_WR_SL_DATA"  :
+		(opcode == OPC_WR_SL_DATA_EXP)	? "OPC_WR_SL_DATA_EXP"  :
+                           "<unknown>";
+       }
 
 // start of values not from llnmon.c
 
