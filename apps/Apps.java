@@ -28,7 +28,7 @@ import net.roydesign.mac.MRJAdapter;
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
  * @author  Dennis Miller  Copyright 2005
- * @version     $Revision: 1.35 $
+ * @version     $Revision: 1.36 $
  */
 public class Apps extends JPanel {
 
@@ -375,10 +375,21 @@ public class Apps extends JPanel {
     }
     static JComponent _buttonSpace = null;
 
-    protected JFrame prefsFrame = null;
-    protected ResourceBundle rb;
-    protected AppConfigPanel prefs;
+    static protected JFrame prefsFrame = null;
+    static protected ResourceBundle rb;
 
+    static protected AppConfigPanel prefs;
+    static public AppConfigPanel getPrefs() { return prefs; }
+    
+    static public String getConnection1() {
+            return MessageFormat.format(rb.getString("ConnectionCredit"),
+                                new String[]{prefs.getConnection1(), prefs.getPort1()});
+    }
+    static public String getConnection2() {
+            return MessageFormat.format(rb.getString("ConnectionCredit"),
+                                new String[]{prefs.getConnection2(), prefs.getPort2()});
+    }
+    
     static SplashWindow sp = null;
     static protected void splash(boolean show) {
         if (sp==null) sp = new SplashWindow();
