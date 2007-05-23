@@ -19,12 +19,14 @@ import javax.comm.SerialPort;
 import javax.comm.SerialPortEvent;
 import javax.comm.SerialPortEventListener;
 
+import jmri.util.SerialUtil;
+
 /**
  * Provide access to XPressNet via a ZTC640 connected via an FTDI virtual 
  *              comm port. Normally controlled by the lenz.ztc640.ZTC640Frame 
  *              class.
  * @author			Bob Jacobsen   Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003-2006
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 
 public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
@@ -264,7 +266,10 @@ public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.Seri
 		for (int i = 0; i<validSpeeds.length; i++ )
 			if (validSpeeds[i].equals(mBaudRate))
 				baud = validSpeedValues[i];
-		activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+                SerialUtil.setSerialPortParams(activeSerialPort, baud,
+                                                SerialPort.DATABITS_8,
+                                                SerialPort.STOPBITS_1,
+                                                SerialPort.PARITY_NONE);
 
 		// set RTS high, DTR high - done early, so flow control can be configured after
 		activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
@@ -308,7 +313,7 @@ public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.Seri
 	protected String [] validOption1 = new String[]{"no flow control (recommended)","hardware flow control "};
 
 	// meanings are assigned to these above, so make sure the order is consistent
-	protected String [] validOption2 = new String[]{"yes (recommended)", "no"};
+	protected String [] validOption2 = new String[]{"yes", "no"};
 
 	private boolean opened = false;
 	InputStream serialStream = null;

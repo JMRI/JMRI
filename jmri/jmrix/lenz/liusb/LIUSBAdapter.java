@@ -19,11 +19,13 @@ import javax.comm.SerialPort;
 import javax.comm.SerialPortEvent;
 import javax.comm.SerialPortEventListener;
 
+import jmri.util.SerialUtil;
+
 /**
  * Provide access to XPressNet via a LIUSB on an FTDI Virtual Comm Port.
  *		Normally controlled by the lenz.liusb.LIUSBFrame class.
  * @author			Paul Bender Copyright (C) 2005, Portions
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 
 public class LIUSBAdapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
@@ -263,7 +265,10 @@ public class LIUSBAdapter extends XNetPortController implements jmri.jmrix.Seria
 		for (int i = 0; i<validSpeeds.length; i++ )
 			if (validSpeeds[i].equals(mBaudRate))
 				baud = validSpeedValues[i];
-		activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+                SerialUtil.setSerialPortParams(activeSerialPort, baud,
+                                                SerialPort.DATABITS_8,
+                                                SerialPort.STOPBITS_1,
+                                                SerialPort.PARITY_NONE);
 
 		// set RTS high, DTR high - done early, so flow control can be configured after
 		activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
@@ -307,7 +312,7 @@ public class LIUSBAdapter extends XNetPortController implements jmri.jmrix.Seria
 	protected String [] validOption1 = new String[]{"hardware flow control (recommended)", "no flow control"};
 
 	// meanings are assigned to these above, so make sure the order is consistent
-	protected String [] validOption2 = new String[]{"yes (recommended)", "no"};
+	protected String [] validOption2 = new String[]{"yes", "no"};
 
 	private boolean opened = false;
 	InputStream serialStream = null;
