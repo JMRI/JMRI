@@ -1,6 +1,6 @@
 // LocoIOAction.java
 
-package jmrix.loconet.locoio;
+package jmri.jmrix.loconet.locoio;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
@@ -8,15 +8,15 @@ import javax.swing.AbstractAction;
 
 /**
  * LocoIOAction.java
- * 
+ *
  * Description:		Swing action to create and register a
  *       			LocoIOFrame object
- * 
- * 
+ *
+ *
  * @author John Plocher    Copyright (C) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
-public class LocoIOAction 
+public class LocoIOAction
        extends AbstractAction {
 
     public LocoIOAction(String s) { super(s);}

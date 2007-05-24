@@ -1,6 +1,6 @@
 // LocoIOTableModel.java
 
-package jmrix.loconet.locoio;
+package jmri.jmrix.loconet.locoio;
 
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LnTrafficController;
@@ -21,7 +21,7 @@ import java.beans.*;
  * this is different from earlier versions where the user was expected to
  * do the derivation manually.  This derivation is complicated by the fact
  * that the "mode" SV[port.0] in the LocoIO doesn't fully specify the operation
- * being done - additional bits in "v2" SV[port.2] are also used.  
+ * being done - additional bits in "v2" SV[port.2] are also used.
  * For example, 0x80 is both turnout closed and turnout high.
  * We read and write the mode SV _last_ to handle this.
  * <P>
@@ -36,10 +36,10 @@ import java.beans.*;
  * though there are significant modifications.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 
-public class LocoIOTableModel 
+public class LocoIOTableModel
         extends javax.swing.table.AbstractTableModel
         implements java.beans.PropertyChangeListener
 {
@@ -78,7 +78,7 @@ public class LocoIOTableModel
      */
     private JLabel     firmware = null;
     private JLabel     locobuffer = null;
-    
+
 
     /**
      * Primary constructor.  Initializes all the arrays.
@@ -96,7 +96,7 @@ public class LocoIOTableModel
         //org.apache.log4j.Category.getRoot().setPriority(org.apache.log4j.Priority.DEBUG);
         log.setPriority(org.apache.log4j.Priority.DEBUG);
     }
-    
+
     public void propertyChange(PropertyChangeEvent evt) {
         // String s = "LocoIOTableModel: " + evt.getPropertyName() + " := " + evt.getNewValue() + " from " + evt.getSource();
         if (evt.getPropertyName().equals("PortChange")) {
@@ -108,7 +108,7 @@ public class LocoIOTableModel
             // System.out.println(s);
         }
     }
-    
+
     // basic methods for AbstractTableModel implementation
     public int getRowCount() { return _numRows; }
 
@@ -174,8 +174,8 @@ public class LocoIOTableModel
             case PINCOLUMN:         return new JLabel(" 16 ").getPreferredSize().width;
             case MODECOLUMN:        return new JLabel("1234567890123456789012345678901234567890").getPreferredSize().width;
             case ADDRCOLUMN:        return new JLabel(getColumnName(ADDRCOLUMN)).getPreferredSize().width;
-            case SV0COLUMN:         
-            case SV1COLUMN:        
+            case SV0COLUMN:
+            case SV1COLUMN:
             case SV2COLUMN:         return new JLabel(" 0xFF ").getPreferredSize().width;
             case CAPTURECOLUMN:     return new JButton(" Capture ").getPreferredSize().width;
             case READCOLUMN:        return new JButton(" Read ").getPreferredSize().width;
@@ -195,8 +195,8 @@ public class LocoIOTableModel
                     liodata.setV1(row, l, liodata.getAddr(row));
                     liodata.setV2(row, l, liodata.getAddr(row));
 
-                    msg[row] = "Packet: " + LnConstants.OPC_NAME(l.getOpcode())+ " " + 
-                                            Integer.toHexString(liodata.getV1(row)) + " " + 
+                    msg[row] = "Packet: " + LnConstants.OPC_NAME(l.getOpcode())+ " " +
+                                            Integer.toHexString(liodata.getV1(row)) + " " +
                                             Integer.toHexString(liodata.getV2(row)) + " <CHK>";
                     if (status!=null) status.setText(msg[row]);
                     fireTableRowsUpdated(row,row);
@@ -209,14 +209,14 @@ public class LocoIOTableModel
             } else {
                 a = Integer.valueOf((String)value, 10).intValue();
             }
-            if (a < 1)    { a = 1; } 
+            if (a < 1)    { a = 1; }
             if (a > 0xFFF) { a = 0xFFF; }
             liodata.setAddr(row, a);
             if (!("<none>".equals(liodata.getMode(row)))) {
                 LocoIOMode l = liodata.getLIM(row);
                 liodata.setV1(row, l, a);
                 liodata.setV2(row, l, a);
-                
+
                 int opcode = (l == null) ? 0 : l.getOpcode();
                 msg[row] = "Packet: " + LnConstants.OPC_NAME(opcode) +
                            " "        + Integer.toHexString(liodata.getV1(row)) +

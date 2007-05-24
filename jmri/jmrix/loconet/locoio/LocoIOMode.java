@@ -6,14 +6,14 @@
  * Created by John Plocher
  */
 
-package jmrix.loconet.locoio;
+package jmri.jmrix.loconet.locoio;
 
 /**
  *
  * @author John Plocher
  */
 public class LocoIOMode {
-    
+
     /**
      * Creates a new instance of LocoIOMode
      */
@@ -35,5 +35,5 @@ public class LocoIOMode {
     public int    getOutput()   { return isOutput; }
     public int    getOpcode()   { return opcode; }
     public int    getSV()       { return sv0; }
-    public int    getV2()       { return sv2; } 
+    public int    getV2()       { return sv2; }
 }

@@ -6,7 +6,7 @@
  * Data associated with a LocoIO device
  */
 
-package jmrix.loconet.locoio;
+package jmri.jmrix.loconet.locoio;
 
 import java.beans.*;
 import jmri.jmrix.loconet.LnConstants;
@@ -20,17 +20,17 @@ import jmri.jmrix.loconet.LocoNetMessage;
  */
 public class LocoIOData
         implements LocoNetListener, java.beans.PropertyChangeListener {
-    
+
     private int sv0;
     private int unitAddress;
     private int unitSubAddress;
-    
+
     /*
      * This data model is shared between several views; each
      * needs to know when the data changes out from under it.
      */
     private PropertyChangeSupport dataListeners = new PropertyChangeSupport(this);
-    
+
     /**
      * Define the number of rows in the table, which is also
      * the number of "channels" in a signel LocoIO unit
@@ -53,7 +53,7 @@ public class LocoIOData
     private int[] v2      = new int[_numRows];
     private int[] readState  = new int[_numRows];
     private int[] writeState = new int[_numRows];
-    
+
     /**
      * Record whether this pin is looking to capture a value
      * from the LocoNet
@@ -61,16 +61,16 @@ public class LocoIOData
 
     private boolean[] capture    = new boolean[_numRows];
     private String[] mode = new String[_numRows];
-    
+
     private LocoIOModeList validmodes;
-    
+
     /** Creates a new instance of LocoIOData */
     public LocoIOData(int unitAddr, int unitSubAddr) {
         timeoutcounter = 0;
         unitAddress    = unitAddr;
         unitSubAddress = unitSubAddr;
         validmodes = new LocoIOModeList();
-        
+
         for (int i=0; i<_numRows; i++) {
             setMode(i, "<none>");
             lim[i] = null;
@@ -83,7 +83,7 @@ public class LocoIOData
             capture[i]    = false;
         }
         // addPropertyChangeListener(this);
-                
+
         // for now, we're always listening to LocoNet
         if (LnTrafficController.instance() != null) {
             LnTrafficController.instance().addLocoNetListener(~0, this);
@@ -91,23 +91,23 @@ public class LocoIOData
             log.error("No LocoNet interface available");
         }
     }
-    
+
     public void addPropertyChangeListener(PropertyChangeListener pcl) {
         dataListeners.addPropertyChangeListener(pcl);
     }
-    
+
     public void removePropertyChangeListener(PropertyChangeListener pcl) {
         dataListeners.removePropertyChangeListener(pcl);
     }
-    
+
     public void propertyChange(PropertyChangeEvent evt) {
-        String s = "LocoIOData: " + evt.getPropertyName() + 
-                   " := "   + evt.getNewValue() + 
+        String s = "LocoIOData: " + evt.getPropertyName() +
+                   " := "   + evt.getNewValue() +
                    " from " + evt.getSource();
         System.out.println(s);
     }
-    
-    
+
+
     /**
      * Address and SubAddress of this device
      *<p>
@@ -126,7 +126,7 @@ public class LocoIOData
         setUnitAddress(unit);
         setUnitSubAddress(unitSub);
     }
-    
+
     public void setUnitAddress(int unit) {
         dataListeners.firePropertyChange("UnitAddress", new Integer(unitAddress), new Integer(0x0100 | (unit&0x07F)));
         unitAddress    = 0x0100 | (unit&0x07F);  // protect against high bits set
@@ -141,7 +141,7 @@ public class LocoIOData
     public int getUnitSubAddress() {
         return unitSubAddress & 0x07F;
     }
-    
+
     /**
      * TODO: LocoIO Board level configuration
      *<p>
@@ -178,7 +178,7 @@ public class LocoIOData
     public String getLIOVersion() {
         return locoBufferVersion;
     }
-    
+
     public void setStatus(String msg) {
         status = msg;
         dataListeners.firePropertyChange("StatusChange", new String(""), status);
@@ -186,7 +186,7 @@ public class LocoIOData
     public String getStatus() {
         return status;
     }
-    
+
     public void setSV(int channel, int value) {
         sv[channel] = value & 0xFF;
         dataListeners.firePropertyChange("PortChange", new Integer(-1), new Integer(channel));
@@ -214,7 +214,7 @@ public class LocoIOData
     public int getV2(int channel) {
         return v2[channel] & 0xFF;
     }
-    
+
     /**
      * The addr field (for the address info used in each LocoIO channel)
      *
@@ -228,7 +228,7 @@ public class LocoIOData
     public int getAddr(int channel) {
         return addr[channel] & 0x7FF;
     }
-    
+
     public void setMode(int channel, String m) {
         mode[channel] = m;
         dataListeners.firePropertyChange("PortChange", new Integer(-1), new Integer(channel));
@@ -236,7 +236,7 @@ public class LocoIOData
     public String getMode(int channel) {
         return mode[channel];
     }
-    
+
     public void setLIM(int channel, String s) {
         if (validmodes != null) {
             setLIM(channel, validmodes.getLocoIOModeFor(s));
@@ -265,8 +265,8 @@ public class LocoIOData
         writeState[channel] = WRITE;
         issueNextOperation();
     }
-    
-    
+
+
     /**
      * Start reading all rows back
      */
@@ -291,7 +291,7 @@ public class LocoIOData
     public LocoIOModeList getLocoIOModeList() {
         return validmodes;
     }
-    
+
     /**
      * Code for read activity needed.  See states
      * NONE, READMODE, READINGMODE,
@@ -331,7 +331,7 @@ public class LocoIOData
     private int lastOpCv = -1;
     private boolean reading = false;  // false means write in progress
     private boolean writing = false;
-    
+
     protected int highPart(int value) { // generally value 1
         return value/256;
     }
@@ -339,7 +339,7 @@ public class LocoIOData
     protected int lowPart(int value) { // generally value 2
         return value-256*highPart(value);
     }
-    
+
     private String dotme(int val) {
         int dit;
         int x = val;
@@ -379,7 +379,7 @@ public class LocoIOData
             int src = m.getElement(2);
             int dst = m.getElement(3)+m.getElement(4)*256;
             int[] packet = m.getPeerXfrData();
-            
+
             if ( src == lowPart(LocoBufferAddress)) {
                 String lbv = ((packet[2] != 0) ?  dotme(packet[2]) : "1.0");
                 setLBVersion(lbv);
@@ -410,7 +410,7 @@ public class LocoIOData
                         log.debug("... updating port "+channel
                                                       +" SV" + type
                                                       + "("
-                                                      + (type == 1 ? "value1" 
+                                                      + (type == 1 ? "value1"
                                                       :  type == 2 ? "value2"
                                                       :  type == 0 ? "mode"
                                                       :              "unknown")
@@ -621,7 +621,7 @@ public class LocoIOData
         currentPin = 0;
     }
 
-    /** 
+    /**
      * Timer Management
      * Protect against communication failures,
      * addressing mixups and the like.
@@ -690,7 +690,7 @@ public class LocoIOData
      * @param locoIOSubAddress
      * @param cv
      */
-    
+
     void sendReadCommand(int locoIOAddress, int locoIOSubAddress, int cv) {
         // remember current op is read
         reading = true;
@@ -715,18 +715,18 @@ public class LocoIOData
         // remember current op is write
         reading = false;
         writing = true;
-        
+
         LnTrafficController.instance().sendLocoNetMessage(
                 LocoIO.writeCV(locoIOAddress, locoIOSubAddress, cv, data));
         startTimer();        // and set timeout on reply
     }
-    
+
     public void dispose() {
         if (log.isDebugEnabled()) log.debug("dispose");
         // disconnect from future events
         stopTimer();
         LnTrafficController.instance().removeLocoNetListener(~0, this);
-        
+
         // null references, so that they can be gc'd even if this isn't.
         addr = null;
         mode = null;

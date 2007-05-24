@@ -1,6 +1,6 @@
 // LocoIOFrame.java
 
-package jmrix.loconet.locoio;
+package jmri.jmrix.loconet.locoio;
 
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -21,14 +21,14 @@ import java.beans.*;
  * Frame displaying and programming a LocoIO configuration.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 
 public class LocoIOFrame extends jmri.util.JmriJFrame
         implements java.beans.PropertyChangeListener {
-    
+
         public LocoIOFrame() {
-            
+
         super("LocoIO programmer");
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
@@ -38,12 +38,12 @@ public class LocoIOFrame extends jmri.util.JmriJFrame
         model       = new LocoIOTableModel(data);
         table       = new JTable(model);
         scroll      = new JScrollPane(table);
-        
+
         data.addPropertyChangeListener(this);
 
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         // table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        
+
         table.setShowHorizontalLines(true);
         table.setAutoCreateColumnsFromModel(true);
 
@@ -59,7 +59,7 @@ public class LocoIOFrame extends jmri.util.JmriJFrame
         tcm.getColumn(LocoIOTableModel.READCOLUMN).setCellRenderer(buttonRenderer);
         tcm.getColumn(LocoIOTableModel.WRITECOLUMN).setCellRenderer(buttonRenderer);
         tcm.getColumn(LocoIOTableModel.CAPTURECOLUMN).setCellRenderer(buttonRenderer);
-        
+
         TableCellEditor buttonEditor = new ButtonEditor(new JButton());
         tcm.getColumn(LocoIOTableModel.READCOLUMN).setCellEditor(buttonEditor);
         tcm.getColumn(LocoIOTableModel.WRITECOLUMN).setCellEditor(buttonEditor);
@@ -98,7 +98,7 @@ public class LocoIOFrame extends jmri.util.JmriJFrame
             });
         p1.add(readAllButton);
         writeAllButton = new JButton("Write All");
-        writeAllButton.addActionListener( 
+        writeAllButton.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent a) { data.writeAll();}
             });
@@ -111,7 +111,7 @@ public class LocoIOFrame extends jmri.util.JmriJFrame
                 public void actionPerformed(ActionEvent a) { addrSet(); }
             });
         p1.add(Box.createGlue());  // -------------------
-        
+
         /*
         openButton = new JButton("Load...");
         openButton.setEnabled(false);
@@ -121,7 +121,7 @@ public class LocoIOFrame extends jmri.util.JmriJFrame
         saveButton.setEnabled(false);
         p1.add(saveButton);
          */
-        
+
         JPanel p2 = new JPanel();
         p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
         p2.add(new JLabel("Locobuffer rev: "));
@@ -132,12 +132,12 @@ public class LocoIOFrame extends jmri.util.JmriJFrame
         p2.add(Box.createGlue());  // -------------------
         p2.add(new JLabel("LocoIO Firmware rev: "));
         p2.add(firmware);
-        
+
         JPanel p3 = new JPanel();
         p3.setLayout(new BoxLayout(p3, BoxLayout.Y_AXIS));
         p3.add(p1);
         p3.add(table);
-        
+
 
         getContentPane().add(p3);
         getContentPane().add(p2);
@@ -167,7 +167,7 @@ public class LocoIOFrame extends jmri.util.JmriJFrame
                 }
             }
         };
-            
+
         addrField.addActionListener(al4UnitAddress);
         subAddrField.addActionListener(al4UnitAddress);
         addrField.addFocusListener(fl4UnitAddress);
@@ -179,7 +179,7 @@ public class LocoIOFrame extends jmri.util.JmriJFrame
                 thisWindowClosing(e);
             }
         });
-        
+
         try {
             data.setUnitAddress(0x51,0x00);
         } catch (NullPointerException e) {
@@ -189,7 +189,7 @@ public class LocoIOFrame extends jmri.util.JmriJFrame
         // and prep for display
         pack();
     }
-        
+
     // Close the window when the close box is clicked
     void thisWindowClosing(java.awt.event.WindowEvent e) {
         setVisible(false);
@@ -202,7 +202,7 @@ public class LocoIOFrame extends jmri.util.JmriJFrame
      * LocoIO board on the LocoNet, it needs to be used
      * with caution.
      */
-    
+
     protected int cautionAddrSet() {
         log.info("Caution: Set locoio address is a broadcast operation");
         return JOptionPane.showOptionDialog(this,
@@ -222,7 +222,7 @@ public class LocoIOFrame extends jmri.util.JmriJFrame
         int subAddress = Integer.valueOf(subAddrField.getText(),16).intValue();
         LocoIO.programLocoIOAddress(address, subAddress);
     }
-    
+
     public void propertyChange(PropertyChangeEvent evt) {
         // String s = "LocoIOFrame: " + evt.getPropertyName() + " := " + evt.getNewValue() + " from " + evt.getSource();
         // System.out.println(s);
@@ -252,7 +252,7 @@ public class LocoIOFrame extends jmri.util.JmriJFrame
             status.setText(v + " ");
         }
     }
-    
+
     JTextField addrField    = new JTextField("00");
     JTextField subAddrField = new JTextField("00");
     JLabel     status       = new JLabel("<unknown>");
