@@ -28,7 +28,7 @@ import net.roydesign.mac.MRJAdapter;
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
  * @author  Dennis Miller  Copyright 2005
- * @version     $Revision: 1.37 $
+ * @version     $Revision: 1.38 $
  */
 public class Apps extends JPanel {
 
@@ -391,12 +391,32 @@ public class Apps extends JPanel {
     }
     
     static SplashWindow sp = null;
+	static java.awt.event.AWTEventListener debugListener = null;
+	static boolean debugFired = false;
     static protected void splash(boolean show) {
+		if (debugListener == null) {
+			// set a global listener for debug options
+			debugFired = false;
+			java.awt.Toolkit.getDefaultToolkit().addAWTEventListener(
+				debugListener = new java.awt.event.AWTEventListener() {
+						public void eventDispatched(java.awt.AWTEvent e) {
+							if (!debugFired) {
+								InstanceManager.logixManagerInstance().setLoadDisabled(true);
+								log.debug("Requested load Logixs diabled.");
+								debugFired = true;
+							}
+						}
+					},
+					java.awt.AWTEvent.KEY_EVENT_MASK
+				);
+		}
+		// bring up splash window for startup
         if (sp==null) sp = new SplashWindow();
         sp.setVisible(show);
         if (!show) {
             sp.dispose();
-            sp = null;
+			java.awt.Toolkit.getDefaultToolkit().removeAWTEventListener(debugListener);            
+			sp = null;
         }
     }
 
