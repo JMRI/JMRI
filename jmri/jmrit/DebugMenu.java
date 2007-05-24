@@ -10,7 +10,7 @@ import java.util.*;
  * debugging tools.
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class DebugMenu extends JMenu {
     public DebugMenu(String name, JPanel panel) {
@@ -36,6 +36,7 @@ public class DebugMenu extends JMenu {
         add(new jmri.jmrit.decoderdefn.NameCheckAction(rb.getString("MenuItemCheckDecoderNames"), panel));
         add(new jmri.jmrit.symbolicprog.tabbedframe.ProgCheckAction(rb.getString("MenuItemCheckProgrammerNames"), panel));
         add(new JSeparator());
+		add(new jmri.jmrit.LogixLoadAction(rb.getString("MenuItemLogixDisabled"), panel));
         add(new jmri.jmrit.log.LogAction(rb.getString("MenuItemLogAction")));
 
     }

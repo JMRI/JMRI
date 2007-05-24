@@ -11,7 +11,7 @@ import com.sun.java.util.collections.List;
  * separately implemented, instead of being system-specific.
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public interface LogixManager extends Manager {
 
@@ -55,6 +55,11 @@ public interface LogixManager extends Manager {
      *     stops processing.
      */
     void deleteLogix(Logix x); 
+
+	/** 
+	 * Support for loading Logixs in a disabled state to debug loops
+	 */
+	public void setLoadDisabled(boolean s);
 }
 
 
