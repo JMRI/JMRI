@@ -26,7 +26,7 @@ check2 -d java scripts synchlist.csh
 check3 -d java &lib118
 
 # build the java/ directory for ant, netbeans, eclipse and jbuilder
-all -a runtime java-contents netbeansfiles eclipsefiles
+all -a runtime java-contents netbeansfiles
 
 
 # properties target; all the properties files. Maintained manually!
