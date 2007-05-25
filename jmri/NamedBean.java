@@ -12,7 +12,7 @@ package jmri;
  * (e.g. LocoNet, NCE, etc) and address within that system.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, 2002, 2003, 2004
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  * @see         jmri.AbstractManager
  * @see         jmri.AbstractNamedBean
  */
@@ -60,8 +60,23 @@ public interface NamedBean {
     public int getNumPropertyChangeListeners();
 
     /**
-     * Remove references to and from this object, so that it can
-     * eventually be garbage-collected.
+     * Deactivate this object, so that it releases as many
+     * resources as possible and no longer effects others.
+     *<P>
+     * For example, if this object has listeners, after
+     * a call to this method it should no longer notify
+     * those listeners.  Any native or system-wide resources
+     * it maintains should be released, including threads, files, etc.
+     * <P>
+     * It is an error to invoke any other methods on this 
+     * object once dispose() has been called.  Note, however,
+     * that there is no guarantee about behavior in that case.
+     * <P>
+     * Afterwards, references to this object may still exist
+     * elsewhere, preventing its garbage collection.  But it's formally
+     * dead, and shouldn't be keeping any other objects alive.
+     * Therefore, this method should null out any references to
+     * other objects that this NamedBean contained.
      */
     public void dispose();  // remove _all_ connections!
    
