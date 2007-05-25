@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
  *
  * @author			Alex Shepherd   Copyright (C) 2004
  * @author			Bob Jacobsen  Copyright (C) 2006
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class CmdStnConfigFrame extends jmri.util.JmriJFrame implements LocoNetListener {
 
@@ -60,7 +60,7 @@ public class CmdStnConfigFrame extends jmri.util.JmriJFrame implements LocoNetLi
         log.debug("match /"+name+"/");
         rb = ResourceBundle.getBundle("jmri.jmrix.loconet.cmdstnconfig."+name+"options");
     } catch (Exception e) {
-        log.error("Failed to find properties for /"+name+"/ command station type");
+        log.warn("Failed to find properties for /"+name+"/ command station type");
         rb = ResourceBundle.getBundle("jmri.jmrix.loconet.cmdstnconfig.Defaultoptions");
     }
 
@@ -274,7 +274,6 @@ public class CmdStnConfigFrame extends jmri.util.JmriJFrame implements LocoNetLi
 
   public void dispose() {
     // disconnect from LnTrafficController
-    tc = null;
     tc.removeLocoNetListener(~0, this);
     super.dispose();
   }
