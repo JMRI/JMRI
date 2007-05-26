@@ -31,7 +31,7 @@ import jmri.util.JmriJFrame;
  * @author	Dave Duchamp    Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2007 
  *
- * @version     $Revision: 1.30 $
+ * @version     $Revision: 1.31 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -112,6 +112,16 @@ public class RouteTableAction extends AbstractTableAction {
                     boolean v = r.getEnabled();
                     r.setEnabled(!v);
     			}
+				else if (col==DELETECOL) {
+					Route g = (Route)getBySystemName((String)getValueAt(row, SYSNAMECOL));
+					// verify deletion if desired
+					if ( verifyDeletion(g) ) {
+						// user wants to delete this Logix, deactivate it
+						g.deActivateRoute();
+						// delete the Route
+						super.setValueAt(value, row, col);
+					}
+				}
     			else super.setValueAt(value, row, col);
     		}
     		// want to update when enabled parameter changes
@@ -143,6 +153,30 @@ public class RouteTableAction extends AbstractTableAction {
     String helpTarget() {
         return "package.jmri.jmrit.beantable.RouteTable";
     }
+	
+	/**
+	 * Issue a delete verification prompt
+	 *    Returns true if the Logix should be deleted, else returns false
+	 */
+	protected boolean verifyDeletion(Route o) {
+		// First verify with the user that this is really wanted
+		if (!noWarnDelete) {
+			int selectedValue = JOptionPane.showOptionDialog(f,
+					"Are you sure you want to delete this Route? "+
+					"All your work in defining it will be lost.","Warning",
+					JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,
+					new Object[]{"Delete","Cancel Delete","Delete - Stop Warnings"},
+					"Cancel Delete");
+			if (selectedValue == 1) return(false);   // return without deleting if "No" response
+			if (selectedValue == 2) {
+				// Suppress future warnings, and continue
+				noWarnDelete = true;
+			}
+		}
+		return (true);
+	}
+	
+	boolean noWarnDelete = false;
 
 	String stateThrown = InstanceManager.turnoutManagerInstance().getThrownText();
 	String stateClosed = InstanceManager.turnoutManagerInstance().getClosedText();
