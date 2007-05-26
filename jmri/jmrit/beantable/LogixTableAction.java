@@ -46,7 +46,7 @@ import jmri.util.JmriJFrame;
  *	   BeanTableBundle.properties, accessed via rb.
  *
  * @author	Dave Duchamp    Copyright (C) 2007
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -768,8 +768,19 @@ public class LogixTableAction extends AbstractTableAction {
 			// check for possible loop situation
 			if (x.checkLoopCondition()) {
 				// loop condition is present - warn user and give options 
+				int response = JOptionPane.showOptionDialog(editLogixFrame,
+					rbx.getString("Warn9")+x.getLoopGremlins(),rbx.getString("WarnTitle"),
+					JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,
+					new Object[]{rbx.getString("ButtonDisabled"),rbx.getString("ButtonEnabled")},
+					rbx.getString("ButtonDisabled"));
+				if (response == 0) {
+					// user elected to disable the Logix
+					x.setEnabled(false);
+					JOptionPane.showMessageDialog(editLogixFrame,rbx.getString("Logix")+" "+
+					x.getSystemName()+"( "+x.getUserName()+" ) "+rbx.getString("Warn10"),					
+					 "", JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
-				
 			// complete update and activate Logix
 			x.activateLogix();
 		}

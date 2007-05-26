@@ -14,7 +14,7 @@ import java.util.Date;
  * Class providing the basic logic of the Logix interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class DefaultLogix extends AbstractNamedBean
     implements Logix, java.io.Serializable {
@@ -384,7 +384,6 @@ public class DefaultLogix extends AbstractNamedBean
 			calculateConditionals();
 		}
 	}
-	
 		
 	/**
 	 * Assembles a list of Listeners needed to activate this Logix
@@ -575,6 +574,7 @@ public class DefaultLogix extends AbstractNamedBean
 			}
 		}
 	}
+	
 	/**
 	 * Assembles and returns a list of state variables that are used by conditionals 
 	 *   of this Logix including the number of occurances of each variable that 
@@ -969,21 +969,174 @@ public class DefaultLogix extends AbstractNamedBean
 	 * Assembles a list of state variables that both trigger the Logix, and are
 	 *   changed by it.  Returns true if any such variables were found.  Returns false
 	 *   otherwise.
+	 * Note: This method can only work if the Logix is not activated.  If the Logix
+	 *   is activated, no testing is done, and false is returned.
 	 */
 	public boolean checkLoopCondition() {
+		if (!mBusy) {
+			// Clear the string of possible offenders
+			loopGremlins = "";
+			numGremlins = 0;
+			// Prepare a list of all listeners that will result on activation
+			assembleListenerList();
+			if (mNumListeners>0) {
+				// listeners were found, initialize
+				boolean[] conflictFound = new boolean[MAX_LISTENERS];
+				for (int k = 0; k<mNumListeners; k++) {
+					conflictFound[k] = false;
+				}
+				// check conditional action items
+				Conditional c = null;
+				int[] opt = {0,0};
+				int[] delay = {0,0};
+				int[] type = {0,0};
+				String[] name = {" "," "};
+				int[] data = {0,0};
+				String[] dataString = {" "," "};
+				for (int i = 0;i<mNumConditionals;i++) {
+					// get next conditional
+					c = InstanceManager.conditionalManagerInstance().
+										getBySystemName(mConditionalSystemNames[i]);
+					if (c!=null) {
+						c.getAction(opt,delay,type,name,data,dataString);
+						for (int j = 0; j<2; j++) {
+							String sName = "";
+							String uName = "";
+							switch (type[j]) {
+								case Conditional.ACTION_NONE:
+									break;
+								case Conditional.ACTION_SET_TURNOUT:
+									Turnout t = InstanceManager.turnoutManagerInstance().
+												provideTurnout(name[j]);
+									if (t!=null) {
+										sName = t.getSystemName();
+										uName = t.getUserName();
+										// check for listener on the same turnout
+										for (int k = 0; k<mNumListeners; k++) {
+											if ( (!conflictFound[k]) && 
+												(mListenerType[k] == LISTENER_TYPE_TURNOUT) ) {
+												if ( (mListenerName[k].equals(sName)) ||
+														(mListenerName[k].equals(uName)) ) {
+													// possible conflict found
+													addGremlin(sName,uName);
+													conflictFound[k] = true;
+												}
+											}
+										}
+									}
+									break;
+								case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
+								case Conditional.ACTION_SET_SIGNAL_HELD:
+								case Conditional.ACTION_CLEAR_SIGNAL_HELD:
+								case Conditional.ACTION_SET_SIGNAL_DARK:
+								case Conditional.ACTION_SET_SIGNAL_LIT:
+									SignalHead h = InstanceManager.signalHeadManagerInstance().
+													getSignalHead(name[j]);
+									if (h!=null) {
+										sName = h.getSystemName();
+										uName = h.getUserName();
+										// check for listener on the same signal head
+										for (int k = 0; k<mNumListeners; k++) {
+											if ( (!conflictFound[k]) && 
+												(mListenerType[k] == LISTENER_TYPE_SIGNAL) ) {
+												if ( (mListenerName[k].equals(sName)) ||
+														(mListenerName[k].equals(uName)) ) {
+													// possible conflict found
+													addGremlin(sName,uName);
+													conflictFound[k] = true;
+												}
+											}
+										}
+									}
+									break;
+								case Conditional.ACTION_SET_SENSOR:
+								case Conditional.ACTION_DELAYED_SENSOR:
+									Sensor s = InstanceManager.sensorManagerInstance().
+												provideSensor(name[j]);
+									if (s!=null) {
+										sName = s.getSystemName();
+										uName = s.getUserName();
+										// check for listener on the same sensor
+										for (int k = 0; k<mNumListeners; k++) {
+											if ( (!conflictFound[k]) && 
+												(mListenerType[k] == LISTENER_TYPE_SENSOR) ) {
+												if ( (mListenerName[k].equals(sName)) ||
+														(mListenerName[k].equals(uName)) ) {
+													// possible conflict found
+													addGremlin(sName,uName);
+													conflictFound[k] = true;
+												}
+											}
+										}
+									}
+									break;
+								case Conditional.ACTION_SET_LIGHT:
+									Light lgt = InstanceManager.lightManagerInstance().
+													getLight(name[j]);
+									if (lgt!=null) {
+										sName = lgt.getSystemName();
+										uName = lgt.getUserName();
+										// check for listener on the same light
+										for (int k = 0; k<mNumListeners; k++) {
+											if ( (!conflictFound[k]) && 
+												(mListenerType[k] == LISTENER_TYPE_LIGHT) ) {
+												if ( (mListenerName[k].equals(sName)) ||
+														(mListenerName[k].equals(uName)) ) {
+													// possible conflict found
+													addGremlin(sName,uName);
+													conflictFound[k] = true;
+												}
+											}
+										}
+									}
+									break;
+								case Conditional.ACTION_SET_MEMORY:
+									Memory m = InstanceManager.memoryManagerInstance().
+												provideMemory(name[j]);
+									if (m!=null) {
+										sName = m.getSystemName();
+										uName = m.getUserName();
+										// check for listener on the same memory
+										for (int k = 0; k<mNumListeners; k++) {
+											if ( (!conflictFound[k]) && 
+												(mListenerType[k] == LISTENER_TYPE_MEMORY) ) {
+												if ( (mListenerName[k].equals(sName)) ||
+														(mListenerName[k].equals(uName)) ) {
+													// possible conflict found
+													addGremlin(sName,uName);
+													conflictFound[k] = true;
+												}
+											}
+										}
+									}
+									break;
+								default:
+									break;
+							}							
+						}
+					}
+				}
+				if (numGremlins>0) return (true);
+			}
+		}
 		// work in progress
 		return (false);
 	}
+	private void addGremlin(String sName, String uName) {
+		numGremlins ++;
+		if (numGremlins>1) loopGremlins = loopGremlins+" ,";
+		loopGremlins = loopGremlins+" "+sName+"( "+uName+" )";
+	}
+	
+	int numGremlins = 0;
+	String loopGremlins = "";
 	 
 	/** 
-	 * Assembles a string listing state variables that might result in a loop.
+	 * Returns a string listing state variables that might result in a loop.
 	 *    Returns an empty string if there are none, probably because 
 	 *    "checkLoopCondition" was not invoked before the call, or returned false.
 	 */
-	public String getLoopGremlins() {
-		// work in progress
-		return ("");
-	}
+	public String getLoopGremlins() {return(loopGremlins);}
 
     /**
      * Not needed for Logixs - included to complete implementation of the NamedBean interface.
