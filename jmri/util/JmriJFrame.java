@@ -19,11 +19,17 @@ import java.awt.*;
  * <ul>
  * <LI>Size limited to the maximum available on the screen, after
  * removing any menu bars (Mac) and taskbars (Windows)
+ * <LI>Cleanup upon closing the frame: When the
+ * frame is closed (WindowClosing event), the 
+ * dispose() method is invoked to do cleanup. This is
+ * inherited from JFrame itself, so super.dispose() needs
+ * to be invoked in the over-loading methods.
+ *
  * </ul>
  *
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class JmriJFrame extends JFrame implements java.awt.event.WindowListener {
