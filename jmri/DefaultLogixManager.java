@@ -14,7 +14,7 @@ package jmri;
  * Logix's system name, then there is a capital C and a number.  
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class DefaultLogixManager extends AbstractManager
     implements LogixManager, java.beans.PropertyChangeListener {
@@ -69,6 +69,7 @@ public class DefaultLogixManager extends AbstractManager
 		}
 		// delete the Logix				
         deregister(x);
+		x.dispose();
     }
 	
 	/**

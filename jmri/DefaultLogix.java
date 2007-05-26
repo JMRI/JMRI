@@ -14,7 +14,7 @@ import java.util.Date;
  * Class providing the basic logic of the Logix interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class DefaultLogix extends AbstractNamedBean
     implements Logix, java.io.Serializable {
@@ -963,6 +963,26 @@ public class DefaultLogix extends AbstractNamedBean
 				m.removePropertyChangeListener(mListeners[index]);
 				break;
 		}
+	}
+	
+	/** 
+	 * Assembles a list of state variables that both trigger the Logix, and are
+	 *   changed by it.  Returns true if any such variables were found.  Returns false
+	 *   otherwise.
+	 */
+	public boolean checkLoopCondition() {
+		// work in progress
+		return (false);
+	}
+	 
+	/** 
+	 * Assembles a string listing state variables that might result in a loop.
+	 *    Returns an empty string if there are none, probably because 
+	 *    "checkLoopCondition" was not invoked before the call, or returned false.
+	 */
+	public String getLoopGremlins() {
+		// work in progress
+		return ("");
 	}
 
     /**

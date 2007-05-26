@@ -121,6 +121,20 @@ public interface Logix extends NamedBean {
      */
     public void deActivateLogix();
 	
+	/** 
+	 * Assembles a list of state variables that both trigger the Logix, and are
+	 *   changed by it.  Returns true if any such variables were found.  Returns false
+	 *   otherwise.
+	 */
+	public boolean checkLoopCondition();
+	 
+	/** 
+	 * Assembles a string listing state variables that might result in a loop.
+	 *    Returns an empty string if there are none, probably because 
+	 *    "checkLoopCondition" was not invoked before the call, or returned false.
+	 */
+	public String getLoopGremlins();
+	
 	/**
 	 * Assembles and returns a list of state variables that are used by conditionals 
 	 *   of this Logix including the number of occurances of each variable that 
