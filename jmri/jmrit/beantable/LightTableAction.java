@@ -35,7 +35,7 @@ import jmri.util.JmriJFrame;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -121,6 +121,13 @@ public class LightTableAction extends AbstractTableAction {
                     boolean v = l.getEnabled();
                     l.setEnabled(!v);
     			}
+				else if (col==DELETECOL) {
+					Light g = (Light)getBySystemName((String)getValueAt(row, SYSNAMECOL));
+					// deactivate this light
+					g.deactivateLight();
+					// continue using generic deletion code	
+					super.setValueAt(value, row, col);
+				}
     			else super.setValueAt(value, row, col);
     		}
             boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
