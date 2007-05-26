@@ -1,128 +1,32 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- $Id: BlockBossFrame.html,v 1.2 2007-04-08 04:49:14 jacobsen Exp $ --><title>JMRI: SSL Documentation</title>
+<html lang="en"><head><!-- $Id: BlockBossFrame.html,v 1.3 2007-05-26 15:16:29 jacobsen Exp $ --><title>JMRI: SSL Documentation</title>
 
 
 
  
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-    <meta content="Dick Bronson" name="Author">
-    <meta name="keywords" content="java model railroad JMRI SSL"><!-- Style -->
+<h2> 
+JMRI: Simple Signal Logic Documentation
+</h2>
 
+<dl>
+<dt class="left"><a name="contents"><h3>Contents</h3></a></dt>
+<dd class="top">
+<p>The documentation below describes Signaling with JMRI, and discusses how to set 
+up the basic signal situations. The documentation is divided into sections; click below for 
+easy access to a listed section. If you prefer to try before reading much,
+read <a href="#intro">Introduction to SSL</a>, 
+then click <a href="#start">Getting Started</a>
+and follow those instructions. Return here to read about what you did.
+</p><ul>
+<li><a href="#terms">Basic Vocabulary</a></li>
+<li><a href="#intro">Introduction to SSL</a>
+</li><li><a href="#SSL">SSL</a>
+</li><li><a href="#start">Getting Started</a>
+</li></ul>
+</dd>
 
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="file:///images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="file:///"><!-- /Style --></head><body>
-<div id="container">
-  <p class="skipLink"><a href="#mainContent" accesskey="2">Skip to main content</a></p>
-<!-- Header -->
-    <div id="header">
-	<!-- Logo -->
-	<a href="file:///" title="Return to home page" accesskey="1">
-	    <img src="/images/logo-jmri.gif" alt="JMRI Logo" height="135" width="160"> </a>
-	<!-- /Logo -->
-	<ul id="mainNav"> <!-- Top tool bar -->
-	   <li><a href="file:///download/" title="Get the latest software">Download</a></li>
-	   <li><a href="file:///apps/" title="Learn about JMRI applications">Applications</a></li>
-	   <li><a href="file:///hardware/" title="What hardware does JMRI support">Hardware</a></li>
-	   <li><a href="file:///doc/Manual/" title="Trouble-shooting, and FAQs">Manual</a></li>
-	   <li><a href="file:///doc/Technical/" title="Developing and extending JMRI">Developers</a></li>
-	   <li><a href="file:///community/" title="Who is JMRI">Acknowledgments</a></li>
-	</ul>
-
-	<div id="searchform"> <!--  Search Form -->
-	  <form id="search" method="get" action="http://www.google.com/custom">
-	     <label for="q" title="Search JMRI.SourceForge.net">search JMRI: </label>
-	     <input name="cof" value="LW:200;LH:95;L:http://JMRI.sourceforge.net/images/logo.gif;GIMP:#cc0000;T:black;ALC:#0000ff;GFNT:grey;LC:#990000;BGC:white;AH:center;VLC:purple;GL:0;GALT:#666633;AWFID:9262c37cefe23a86;" type="hidden">
-	    <input name="domains" value="JMRI.sourceforge.net" type="hidden">
-	    <input name="sitesearch" value="JMRI.sourceforge.net" type="hidden">
-	    <input id="q" name="q" accesskey="s" size="30" type="text">
-	    <input id="submit" value="go" type="submit">
-	  </form>
-       </div> <!--  End #searchform -->
-    </div> <!-- closes #header-->
-<!-- /Header -->
-
-
-
-
-
-  <hr class="hide">
-
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
-      <h2> 
-      JMRI: Signaling   Documentation
-      </h2>
-    
-    <dd>
-	<p>Modeling railroad signaling on a layout can be done many different ways, ranging from "stoplights" to complete emulation of a particular prototype's signaling logic.
-
-JMRI provides several different things that can help with this:
-<OL>
-<LI>The JMRI 
-<A HREF="#table">"Signal Table"</A>
-tool lets you control the appearance
-of individual signals on your layout.  This can be useful for
-debugging, for example.
-<LI>The JMRI 
-<A HREF="#logic">"Simple Signal Logic"</A>
-tool can provide simple versions
-of block and interlocking signaling.
-<LI>The JMRI 
-<A HREF="#automat">Automation classes</A>
-makes it easy to code your own signal
-logic into the program.  This is how Nick Kulp's Cornwall Railroad 
-was signalled.
-<LI>JMRI scripting provides a comprehensive programming capability.
-<LI>JMRI provides a 
-<A HREF="#widgets">complete toolkit</A>
-
-to make it easy to
-do any kind of automation on your layout by writing a new program
-of your own.
-</OL>
-<BR>
-
-There's more information on each of these below.
-As you move down that list, the task becomes more and more technical, 
-but you have more freedom to model exactly what you want.  
-
-<P>
-In addition, there are people working on more advanced signaling
-logic within the JMRI project.  Although it's too early to talk
-in detail, the idea is to provide ways of driving semi-prototypical
-signaling logic, including CTC dispatching and interlocking, 
-without requiring the user to write any Java code.  The 
-<a href="http://groups.yahoo.com/group/jmriusers/">jmriusers discussion group</A>
-will have more info on this as it becomes available.
-
-	</p>  
-	</dd>
-
-	<dl>
-	<dt class="left"><a name="contents"><h3>Contents</h3></a></dt>
-	<dd class="top">
-	<p>The documentation below describes Signaling with JMRI, and discusses how to set 
-	up the basic signal situations. The documentation is divided into sections; click below for 
-	easy access to a listed section. If you prefer to try before reading much,
-	read <a href="#intro">Introduction to SSL</a>, 
-	then click <a href="#start">Getting Started</a>
-	and follow those instructions. Return here to read about what you did.
-	</p><ul>
-	<li><a href="#terms">Basic Vocabulary</a></li>
-	<li><a href="#intro">Introduction to SSL</a>
-	</li><li><a href="#SSL">SSL</a>
-	</li><li><a href="#start">Getting Started</a>
-	</li><li><a href="#variable">Available State Variables</a>
-	</li><li><a href="#action">Available Actions</a>
-	</li><li><a href="#notes">Additional Notes</a>
-	</li></ul>
-	</dd>
-
-	<dt class="left"><a name="terms"><h3>Vocabulary</h3></a></dt>
-	<dd class="top">
+<dt class="left"><a name="terms"><h3>Vocabulary</h3></a></dt>
+<dd class="top">
 <p><b>Some basic signal terms:</b><br>
 <ul>
 <li><b>Signal Arm</b> or <b>Signal Head</b> Each individual signal unit.</li>
@@ -300,142 +204,6 @@ to be taken.</p>
 		simple as that. It took 
     	you more time to read this tutorial than to create the SSL entry.</p>	    
 	</dd>
-
-	<dt class="left"><a name="variable"><h3>Available Signal State Variables in Logix</h3></a></dt>
-	<dd>
-	<p>State variables related to signals that are currently available for use in Logix Conditionals
-	are listed below, along with information on each. State variables
-	must always evaluate to either true or false. The condition resulting in 
-	true is given for each. If the condition is not met, the state variable
-	evaluates to false. When a Logix is active, the states of entities (sensor,
-	turnout, signal red, etc.) specified in state variables in its Conditionals are 
-	monitored. A calculation of all Conditionals in the Logix is triggered
-	when any monitored state changes as noted below (if not obvious). <i>Note:</i> 
-	Not all possible Logix conditionals are listed here.
-	    </p><ul>
-		<li><b>Sensor Active</b>: Evaluates to true if the state of the
-		specified sensor is active. 
-		</li><li><b>Sensor Inactive</b>: Evaluates to true if the state of the
-		specified sensor is inactive. 
-		</li><li><b>Turnout Thrown</b>: Evaluates to true if the known state of the
-		specified turnout is thrown. 
-		</li><li><b>Turnout Closed</b>: Evaluates to true if the known state of the
-		specified turnout is closed.
-		</li><li><b>Conditional True</b>: Evaluates to true if the state of the
-		specified conditional is true. Note that because Conditional user
-		names may be duplicated across different Logixs, a system name must be 
-		used to specify a conditional belonging to a different Logix.
-		</li><li><b>Conditional False</b>: Evaluates to true if the state of the
-		specified conditional is false. Note that because Conditional user
-		names may be duplicated across different Logixs, a system name must be 
-		used to specify a conditional belonging to a different Logix.
-		</li><li><b>Signal Red</b>: Evaluates to true if the appearance of the 
-		specified signal head is red. Calculation is 
-		triggered when the appearance change to or from red.
-		</li><li><b>Signal Yellow</b>: Evaluates to true if the appearance of the 
-		specified signal head is yellow. Calculation is 
-		triggered when the appearance change to or from yellow.
-		</li><li><b>Signal Green</b>: Evaluates to true if the appearance of the 
-		specified signal head is green. Calculation is 
-		triggered when the appearance change to or from green.
-		</li><li><b>Signal Dark</b>: Evaluates to true if the appearance of the 
-		specified signal head is dark. Calculation is 
-		triggered when the appearance change to or from dark.
-		</li><li><b>Signal Flashing Red</b>: Evaluates to true if the appearance of 
-		the specified signal head is flashing red. Calculation 
-		is triggered when the appearance change to or from flashing red.
-		</li><li><b>Signal Flashing Yellow</b>: Evaluates to true if the appearance of 
-		the specified signal head is flashing yellow. Calculation 
-		is triggered when the appearance change to or from flashing yellow.
-		</li><li><b>Signal Flashing Green</b>: Evaluates to true if the appearance of 
-		the specified signal head is flashing green. Calculation 
-		is triggered when the appearance change to or from flashing green.
-		</li><li><b>Signal Lit</b>: Evaluates to true if the specified signal head is 
-		lit. 
-		</li><li><b>Signal Held</b>: Evaluates to true if the specified signal head 
-		is being held. 
-    	</li></ul>
-	</dd>    
-    
-	<dt class="left"><a name="action"><h3>Available Signal Actions in Logix</h3></a></dt>
-	<dd>
-	<p>Actions related to signals that are currently available for use in Logix Conditionals are listed 
-	below along with information on each. <i>Note:</i> 
-	Not all possible Logix actions are included here.
-	    </p><ul>
-		<li><b>Set Turnout</b>: Sets the specified turnout to the chosen 
-		state.  Specify the turnout to set by entering its system name or user
-		name.  Specify the state to set by choosing Closed or Thrown in the 
-		popup menu.		
-		</li><li><b>Set Signal Appearance</b>: Sets the specified signal head  to 
-		the chosen appearance. Specify the signal head to set by entering its 
-		system name or user name.  Specify the appearance to set by choosing 
-		from the popup menu.		
- 		</li><li><b>Set Signal Held</b>: Sets the specified signal head to hold.
-		Specify the signal head to hold by entering its system name or user name.  
-  		</li><li><b>Clear Signal Held</b>: Clears the hold on the specified signal 
-  		head. Specify the signal head by entering its system name or user name.  
-  		</li><li><b>Set Signal Dark</b>: Sets the specified signal head to not lit.
-		Specify the signal head by entering its system name or user name.  
-  		</li><li><b>Set Signal Lit</b>: Sets the specified signal head to lit.
-		Specify the signal head by entering its system name or user name.  
-  		</li><li><b>Trigger Route</b>: Triggers the specified route.
-		Specify the route by entering its system name or user name.  
-		</li><li><b>Set Sensor</b>: Sets the specified sensor to the chosen 
-		state.  Specify the sensor to set by entering its system name or user
-		name.  Specify the state to set by choosing Active or Inactive in the 
-		popup menu.		
-		</li><li><b>Delayed Set Sensor</b>: Sets the specified sensor to the chosen 
-		state after waiting for a specified number of seconds.  Specify the 
-		sensor to set by entering its system name or user name. Specify the 
-		state to set by choosing Active or Inactive in the popup menu. Specify 
-		the number of seconds to delay before setting the sensor by entering a 
-		number in the right-most field.
-		</li><li><b>Play Sound File</b>: Plays the specified sound file. (for 
-		example CTC relay clicks) Specify the 
-  		sound file to play by entering its name in the field provided. Click 
-  		<b>Set</b> to bring up a file selection dialog to aid in finding the
-		file. Navigate to your sound file, then click your sound file's name 
-		in the dialog to copy it (including its path) to the field.
-  		</li><li><b>Run Script</b>: Starts the specified script.
-		Specify the script to start by entering its name in the field provided.
-		Click <b>Set</b> to bring up a file selection dialog for finding the
-		file. Navigate to your script file, then click your script file's name 
-		in the dialog to copy it (including its path) to the field.
-		</li></ul>
-	</dd>    
-	<dt class="left"><a name="notes"><h3>Additional Notes:</h3></a></dt>
-	<dd>
-	</p>
     
 
-
-      <hr class="hide">
-<!-- Footer -->
-    <hr class="hide">
-    <div id="footer">
-	<ul id="bn">
-	<li><a href="file:///sitemap/">Site Map</a></li>
-	<li><a href="file:///contact/">Contact Us</a></li>
-	</ul>
-
-	<p>Thanks and congratulations to
-	   <a href="file:///community/" title="Who is JMRI">
-	   	all who contributed</a>! </p>
-
-	<p>Copyright © 1997 - 2007 JMRI Community. 
-	</p><p>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
-	</p><p><a href="file:///Copyright.html">Additional information on copyright, trademarks and 
-	licenses is linked here.</a></p>
-    
-       <br>Site hosted by: <br>
-        <a href="http://sourceforge.net/"> 
-        <img src="Logix_files/sflogo.png" alt="SourceForge Logo" border="0" height="31" width="88"> </a> 
-
-
-    </div>
-<!-- /Footer -->
-   </li></ul></dd></dl></div><!-- closes #mainContent-->
-  </div> <!-- closes #mBody-->
-</div> <!-- closes #container -->
 </body></html>
