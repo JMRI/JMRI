@@ -47,7 +47,7 @@ import com.sun.java.util.collections.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.62 $
+ * @version $Revision: 1.63 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -784,10 +784,16 @@ public class PanelEditor extends JmriJFrame {
      * Get the frame containing the resulting panel (not the editor)
      */
     public JFrame getFrame() { return frame; }
+
+    /**
+     * Set the frame containing the resulting panel (not the editor).
+     * This should only be invoked once; there is no support
+     * for attaching an editor to a different frame once it's established.
+     */
     public void setFrame(JFrame f) {
+        if (frame != null) log.error("setFrame when frame already set");
         frame = f;
         // handle target window closes
-        frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     targetWindowClosing(e);
@@ -817,12 +823,23 @@ public class PanelEditor extends JmriJFrame {
         super.dispose();
     }
 
+   /**
+     * Handle close of editor window.
+     * <P>
+     * Overload/override method in JmriJFrame parent, 
+     * which by default is permanently closing the window.
+     * Here, we just want to make it invisible, so we
+     * don't dispose it (yet).
+     **/
+    public void windowClosing(java.awt.event.WindowEvent e) {
+        setVisible(false);
+    }
+
     /**
      * The target window has been requested to close, so clean up
      */
     void targetWindowClosing(java.awt.event.WindowEvent e) {
-        frame.setVisible(false);  // removes the target window
-        this.setVisible(false);        // doesn't remove the editor!
+        this.setVisible(false);   // doesn't remove the editor!
 
         dispose();
     }
