@@ -19,6 +19,8 @@ import jmri.Turnout;
  * 
  * byte 255, bit 0 = ACCY 2041, bit 3 = ACCY 2044 (last valid addr)
  * 
+ * ACCY bit = 0 turnout thrown, 1 = turnout closed
+ * 
  * Block reads (16 bytes) of the NCE CS memory are performed to 
  * minimize impact to the NCE CS.  Data from the CS is then compared 
  * to the JMRI turnout (accessory) state and if a discrepancy is discovered,
@@ -26,7 +28,7 @@ import jmri.Turnout;
  * 
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 
 public class NceTurnoutMonitor implements NceListener{
@@ -36,6 +38,8 @@ public class NceTurnoutMonitor implements NceListener{
     private static final int NUM_BLOCK = 16;            // maximum number of memory blocks
     private static final int BLOCK_LEN = 16;            // number of bytes in a block
     private static final int REPLY_LEN = BLOCK_LEN;		// number of bytes read
+    private static final int NCE_ACCY_THROWN = 0;		// NCE internal accessory "REV"
+    private static final int NCE_ACCY_CLOSE = 1;		// NCE internal accessory "NORM"
  
     // object state
     private int currentBlock;							// used as state in scan over active blocks
@@ -132,45 +136,18 @@ public class NceTurnoutMonitor implements NceListener{
                     for (int i = 0; i < 8; i++){ 					// search this byte for active turnouts
                         
                         int addr = 1 + i + j*8 + (currentBlock*128);
-                        NceTurnout rControlTurnout = (NceTurnout)InstanceManager.turnoutManagerInstance().getBySystemName("NT"+addr);
-                        if (rControlTurnout != null){
-
-                            int tState = rControlTurnout.getKnownState();
-
-                            if (debugTurnoutMonitor && log.isDebugEnabled()) {
-                                log.debug("turnout exists NT"+addr+" state: " +tState + " Feed back mode: " + rControlTurnout.getFeedbackMode());
-                            }
-                                                            
-                            //	Show the byte read from NCE CS
-                            
-                            if (debugTurnoutMonitor && log.isDebugEnabled()) {
-                                log.debug("memory byte: " + Integer.toHexString(recMemByte & 0xFF));
-                            }	
-                            
-                            // test for closed or thrown
-                            int accThrown = (recMemByte >> i) & 0x01;
-                            if (accThrown > 0 & tState != Turnout.THROWN){
-                                if (log.isDebugEnabled()) {
-                                    log.debug("turnout discrepency, need to THROW turnout NT" + addr);
-                                }
-                                // change JMRI's knowledge of the turnout state to match observed
-                                rControlTurnout.setKnownStateFromCS(Turnout.THROWN);
-                            }
-                            
-                            if (accThrown == 0 & tState != Turnout.CLOSED) {
-                                if (log.isDebugEnabled()) {
-                                    log.debug("turnout discrepency, need to CLOSE turnout NT" + addr);
-                                }	
-                               // change JMRI's knowledge of the turnout state to match observed
-                                rControlTurnout.setKnownStateFromCS(Turnout.CLOSED);
-                            }	
+                        // Nasty bug in March 2007 EPROM, accessory bit 3 is shared by two accessories and 7 MSB isn't used
+                        // and the bit map is skewed by one bit, ie accy addr 2 is in bit 0, should have been in bit 1.    
+                        if (NceEpromChecker.nceEpromMarch2007){
+                         	if (i == 3){
+                        		monitorAction(addr-3, recMemByte, i); 	// bit 3 is shared by two accessories!!!!
+                        	}
+                           	addr++; 									// bug fix for this version of NCE EPROM
+                           	if (i == 7)break;							// bit 7 is not used!!!
                         }
+                        monitorAction(addr, recMemByte, i);	
                         
-                        else {
-                            //
-                            //if (log.isDebugEnabled()) log.debug("turnout does not exist NT"+addr);
-                            //
-                        }
+                        
                     }
                 }
             }
@@ -178,10 +155,53 @@ public class NceTurnoutMonitor implements NceListener{
         }
         else log.warn("wrong number of read bytes for memory poll" );
     }
+    
+    private void monitorAction(int addr, int recMemByte, int bit) {
+
+		NceTurnout rControlTurnout = (NceTurnout) InstanceManager
+				.turnoutManagerInstance().getBySystemName("NT" + addr);
+		if (rControlTurnout == null)
+			return;
+
+		int tState = rControlTurnout.getKnownState();
+
+		if (debugTurnoutMonitor && log.isDebugEnabled()) {
+			log.debug("turnout exists NT" + addr + " state: " + tState
+					+ " Feed back mode: " + rControlTurnout.getFeedbackMode());
+		}
+
+		// Show the byte read from NCE CS
+		if (debugTurnoutMonitor && log.isDebugEnabled()) {
+			log.debug("memory byte: " + Integer.toHexString(recMemByte & 0xFF));
+		}
+
+		// test for closed or thrown, 0 = closed, 1 = thrown
+		int NceAccState = (recMemByte >> bit) & 0x01;
+		if (NceAccState == NCE_ACCY_THROWN && tState != Turnout.THROWN) {
+			if (log.isDebugEnabled()) {
+				log.debug("turnout discrepency, need to THROW turnout NT"
+						+ addr);
+			}
+			// change JMRI's knowledge of the turnout state to match observed
+			rControlTurnout.setKnownStateFromCS(Turnout.THROWN);
+		}
+
+		if (NceAccState == NCE_ACCY_CLOSE && tState != Turnout.CLOSED) {
+			if (log.isDebugEnabled()) {
+				log.debug("turnout discrepency, need to CLOSE turnout NT"
+						+ addr);
+			}
+			// change JMRI's knowledge of the turnout state to match observed
+			rControlTurnout.setKnownStateFromCS(Turnout.CLOSED);
+		}
+	}
+ 
+
         
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceTurnoutMonitor.class.getName());	
     
 }
 /* @(#)NceTurnoutMonitor.java */
+
 
 
