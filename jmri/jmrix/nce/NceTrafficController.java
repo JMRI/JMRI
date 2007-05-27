@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface {
 
@@ -64,40 +64,35 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     
     
     /**
-     * Start NCE CS accessory memory poll 
-     */
-         
-      protected AbstractMRMessage pollMessage() {
-    	  
-    	// if new EPROM selected by user, confirm correct  
-    	  
-	if (NceMessage.getCommandOptions() >= NceMessage.OPTION_2006 ){
+	 * Check NCE EPROM and start NCE CS accessory memory poll
+	 */
+	protected AbstractMRMessage pollMessage() {
 
-            // Have we checked the EPROM version yet?
-            if (pollEprom == null){
-                // No, do it this time
-                // after the 1st time through, don't repeat checking the EPROM
-            	pollEprom = new NceEpromChecker ();
-            	return pollEprom.NceEpromPoll();
-            }
-			
-            if (pollHandler == null) pollHandler = new NceTurnoutMonitor();
-            
-            // minimize impact to NCE CS
-            mWaitBeforePoll = 200;  // default = 25
-            
-            return pollHandler.pollMessage();
+		// Have we checked the EPROM revision yet?
+		if (pollEprom == null) {
+			// No, do it this time
+			// after the 1st time through, don't repeat checking the EPROM
+			pollEprom = new NceEpromChecker();
+			return pollEprom.NceEpromPoll();
+		}
+
+		// Start NCE memory poll for accessory states
+		if (pollHandler == null)
+			pollHandler = new NceTurnoutMonitor();
+
+		// minimize impact to NCE CS
+		mWaitBeforePoll = NceTurnoutMonitor.POLL_TIME; // default = 25
+
+		return pollHandler.pollMessage();
+
 	}
-		
-        return null;  // not polling for memory
-    }
-    
-      NceEpromChecker pollEprom = null;
-      NceTurnoutMonitor pollHandler = null;
+
+	NceEpromChecker pollEprom = null;
+	NceTurnoutMonitor pollHandler = null;
     
  
     protected AbstractMRListener pollReplyHandler() {
-        // First time through, handle reply by checking eprom version
+        // First time through, handle reply by checking EPROM revision
     	if (pollHandler == null) return pollEprom;
     	else return pollHandler;
     }
@@ -196,6 +191,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 
 
 /* @(#)NceTrafficController.java */
+
 
 
 
