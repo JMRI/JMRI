@@ -12,7 +12,7 @@ import javax.swing.JMenuBar;
 /**
  * Frame controlling a single turnout
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
 
@@ -98,12 +98,15 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
             if (turnout != null) turnout.removePropertyChangeListener(this);
             turnout = InstanceManager.turnoutManagerInstance().
                 provideTurnout(adrTextField.getText());
-            // Update feedback mode
-            nowFeedbackLabel.setText (turnout.getFeedbackModeName());
             
 			if (turnout==null) {
 				log.error("Turnout "+adrTextField.getText()+" is not available");
 			} else {
+		        // Update feedback mode & turnout state
+	            nowFeedbackLabel.setText (turnout.getFeedbackModeName());
+	            if (turnout.getCommandedState() != Turnout.CLOSED)
+	            	nowStateLabel.setText("Waiting");
+	 
 				turnout.addPropertyChangeListener(this);
 				if (log.isDebugEnabled()) log.debug("about to command CLOSED");
 				// and set commanded state to CLOSED
@@ -125,12 +128,14 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
             if (turnout != null) turnout.removePropertyChangeListener(this);
             turnout = InstanceManager.turnoutManagerInstance().
                 provideTurnout(adrTextField.getText());
-            // Update feedback mode
-              nowFeedbackLabel.setText (turnout.getFeedbackModeName());
-            
+             
 			if (turnout==null) {
 				log.error("Turnout "+adrTextField.getText()+" is not available");
 			} else {
+				// Update feedback mode & turnout state
+	            nowFeedbackLabel.setText (turnout.getFeedbackModeName());
+	            if (turnout.getCommandedState() != Turnout.THROWN)
+	            	nowStateLabel.setText("Waiting");
 				turnout.addPropertyChangeListener(this);
 				if (log.isDebugEnabled()) log.debug("about to command THROWN");
 				// and set commanded state to THROWN
@@ -149,6 +154,8 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
     // update state field in GUI as state of turnout changes
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("KnownState")) {
+        	// Update feedback mode in case changed by turnout table
+        	nowFeedbackLabel.setText (turnout.getFeedbackModeName());
             int now = ((Integer) e.getNewValue()).intValue();
             switch (now) {
             case Turnout.UNKNOWN:
@@ -173,4 +180,5 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
 
     String newState = "";
 }
+
 
