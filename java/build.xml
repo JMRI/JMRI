@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.2 $ -->
+<!-- Revision $Revision: 1.3 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -156,6 +156,25 @@
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
     </java>
  </target>
+
+  <!-- Force false language/country to check I8N -->
+  <target name="locale" depends="compile" description="check DecoderPro I8N">
+    <java classname="apps.DecoderPro.DecoderPro"
+          dir=".." 
+	  fork="yes" >
+       <classpath refid="project.class.path"    />
+       <sysproperty key="java.security.policy" value="lib/security.policy"/> 
+       <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
+       <sysproperty key="user.language" value="tlh"/>  <!-- klingon -->
+       <sysproperty key="user.country" value="001"/> 
+       <arg line="LocaleTestConfig2.xml"/>
+       <jvmarg value="-Xms10m"/>
+       <!-- <jvmarg value="-Xmx60m"/> -->
+       <!-- <jvmarg value="-verbose"/> -->
+       <!-- <jvmarg value="-verbosegc"/> -->
+       <!-- <jvmarg value="-Xloggc:memory.vgc"/> --> <!-- for JTune -->
+    </java>
+  </target>
 
   <target name="local" depends="compile" description="build and run decoderpro from local config file">
     <java classname="apps.DecoderPro.DecoderPro"
