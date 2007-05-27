@@ -26,7 +26,7 @@ package jmri.jmrix.nce;
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2007
- * @version     $Revision: 1.26 $
+ * @version     $Revision: 1.27 $
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -397,7 +397,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     
     static int commandOptions = OPTION_2004;
     
-    static boolean commandOptionSet = false;
+    static public boolean commandOptionSet = false;
     
     /** 
      * Control which command format should be used for various
@@ -431,6 +431,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
 
 /* @(#)NceMessage.java */
+
 
 
 

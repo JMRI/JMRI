@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface {
 
@@ -67,6 +67,12 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 	 * Check NCE EPROM and start NCE CS accessory memory poll
 	 */
 	protected AbstractMRMessage pollMessage() {
+		
+		// Check to see if command options are valid
+		if (NceMessage.commandOptionSet == false){
+			if (log.isDebugEnabled())log.debug("Command options are not valid yet!!");
+			return null;
+		}
 
 		// Have we checked the EPROM revision yet?
 		if (pollEprom == null) {
