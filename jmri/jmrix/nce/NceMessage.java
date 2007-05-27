@@ -26,7 +26,7 @@ package jmri.jmrix.nce;
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2007
- * @version     $Revision: 1.27 $
+ * @version     $Revision: 1.28 $
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -397,7 +397,8 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     
     static int commandOptions = OPTION_2004;
     
-    static public boolean commandOptionSet = false;
+    // package-level access so NceTrafficController can see it
+    static boolean commandOptionSet = false;
     
     /** 
      * Control which command format should be used for various
