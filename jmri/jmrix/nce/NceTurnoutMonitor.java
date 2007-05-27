@@ -28,7 +28,7 @@ import jmri.Turnout;
  * 
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 
 public class NceTurnoutMonitor implements NceListener{
@@ -40,11 +40,13 @@ public class NceTurnoutMonitor implements NceListener{
     private static final int REPLY_LEN = BLOCK_LEN;		// number of bytes read
     private static final int NCE_ACCY_THROWN = 0;		// NCE internal accessory "REV"
     private static final int NCE_ACCY_CLOSE = 1;		// NCE internal accessory "NORM"
+    public static final int POLL_TIME = 100;			// Poll NCE memory every 100 msec
  
     // object state
     private int currentBlock;							// used as state in scan over active blocks
     private int numTurnouts = 0;						// number of NT turnouts known by NceTurnoutMonitor 
     private int numActiveBlocks = 0;
+    private int rescanCount = 0;						// periodically rescan all NT turnouts for feedback changes
          
     // cached work fields
     boolean [] newTurnouts = new boolean [NUM_BLOCK];	// used to sync poll turnout memory
@@ -56,15 +58,23 @@ public class NceTurnoutMonitor implements NceListener{
         
     public NceMessage pollMessage() {
     	
-    	if (NceMessage.getCommandOptions() < NceMessage.OPTION_2006 ){return null;}
+    	if (NceMessage.getCommandOptions() < NceMessage.OPTION_2006 )return null;	//Only 2007 CS EPROMs support polling
+    	if (NceEpromChecker.nceUSBdetected)return null;								//Can't poll USB!
+    	if (NceTurnout.numNtTurnouts == 0)return null;								//No work!
+    	
+    	// User could have created a turnout using turnout tool and then changed
+		// feedback to MONITORING, therefore we need to rescan.
+		// pollMessage is called once every POLL_TIME msec, so we'll rescan every 10
+		// sec.
+		rescanCount++;
+		if (rescanCount > 10000/POLL_TIME) {
+			numTurnouts = -1;			//force rescan
+			rescanCount = 0;
+		}
         
-        // See if the number of turnouts now differs from the last scan.
-
+        // See if the number of turnouts now differs from the last scan
         if (numTurnouts != NceTurnout.numNtTurnouts) {
- 
-            // Skip doing this again until number changed
-            numTurnouts = NceTurnout.numNtTurnouts;
-            if (numTurnouts==0) return null;  // no work!
+            numTurnouts = NceTurnout.numNtTurnouts;	
             
             // Determine what turnouts have been defined and what blocks have active turnouts
             for (int block = 0; block < NUM_BLOCK; block++){
@@ -78,7 +88,7 @@ public class NceTurnoutMonitor implements NceListener{
             			if (mControlTurnout != null){
             				int tFeedBack = mControlTurnout.getFeedbackMode();
             				if (tFeedBack==Turnout.MONITORING) {
-            					activeBlock[block] = true;	//turnout found, block is active forever
+            					activeBlock[block] = true;	// turnout found, block is active forever
             					numActiveBlocks++;
             					break; 						// don't check rest of block
             				}
