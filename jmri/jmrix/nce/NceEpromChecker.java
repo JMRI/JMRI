@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
  * Also checks for March 2007 EPROM and warns user about Monitoring feedback.
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  * 
  */
 
@@ -87,19 +87,20 @@ public class NceEpromChecker implements NceListener{
         				+ Integer.toHexString(VV & 0xFF)+"."
         				+ Integer.toHexString(MM & 0xFF)+"."
         				+ Integer.toHexString(mm & 0xFF)+") of the NCE Command Station EPROM selected in Preferences");
-        		JOptionPane.showMessageDialog(null, "Wrong revision of Command Station EPROM selected in Preferences",
+        		JOptionPane.showMessageDialog(null, "Wrong revision of Command Station EPROM selected in Preferences \n" +
+        				"Change the Command Station EPROM selection to \"2004 or earlier\"",
         				"Error", JOptionPane.ERROR_MESSAGE);
         	}
          	
          	// Confirm that user selected correct revision of EPROM, check for new EPROM installed, old EPROM preferences
-         	boolean eprom2007orNewer = false;
-         	if ((VV == VV_2007)&&(MM >= MM_2007)) eprom2007orNewer = true;
-        	if (((VV > VV_2007)|| eprom2007orNewer  ) & (NceMessage.getCommandOptions() < NceMessage.OPTION_2006)){
+         	boolean eprom2007orNewer = ((VV == VV_2007)&&(MM >= MM_2007));
+           	if (((VV > VV_2007)|| eprom2007orNewer  ) & (NceMessage.getCommandOptions() < NceMessage.OPTION_2006)){
         		log.error("Wrong revision (" 
         				+ Integer.toHexString(VV & 0xFF)+"."
         				+ Integer.toHexString(MM & 0xFF)+"."
         				+ Integer.toHexString(mm & 0xFF)+") of the NCE Command Station EPROM selected in Preferences");
-        		JOptionPane.showMessageDialog(null, "Wrong revision of Command Station EPROM selected in Preferences",
+        		JOptionPane.showMessageDialog(null, "Wrong revision of Command Station EPROM selected in Preferences \n" +
+        				"Change the Command Station EPROM selection to \"2006 or later\"",
         				"Error", JOptionPane.ERROR_MESSAGE);
         	}
          	
