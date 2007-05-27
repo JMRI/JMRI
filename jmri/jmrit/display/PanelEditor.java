@@ -47,7 +47,7 @@ import com.sun.java.util.collections.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.63 $
+ * @version $Revision: 1.64 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -64,6 +64,7 @@ public class PanelEditor extends JmriJFrame {
     final public static Integer CLOCK     = new Integer(10);
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
+    static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
     JTextField nextX = new JTextField("20",4);
     JTextField nextY = new JTextField("30",4);
@@ -76,42 +77,42 @@ public class PanelEditor extends JmriJFrame {
     JButton labelAdd = new JButton(rb.getString("ButtonAddText"));
     JTextField nextLabel = new JTextField(10);
 
-    JButton iconAdd = new JButton("Add icon:");
+    JButton iconAdd = new JButton(rb.getString("ButtonAddIcon"));
     MultiIconEditor iconEditor;
     JFrame iconFrame;
 
-    JButton turnoutAddR = new JButton("Add right-hand turnout:");
+    JButton turnoutAddR = new JButton(rb.getString("ButtonAddRHTurnout"));
     JTextField nextTurnoutR = new JTextField(5);
     MultiIconEditor turnoutRIconEditor;
     JFrame turnoutRFrame;
 
-    JButton turnoutAddL = new JButton("Add left-hand turnout:");
+    JButton turnoutAddL = new JButton(rb.getString("ButtonAddLHTurnout"));
     JTextField nextTurnoutL = new JTextField(5);
     MultiIconEditor turnoutLIconEditor;
     JFrame turnoutLFrame;
 
-    JButton sensorAdd = new JButton("Add sensor:");
+    JButton sensorAdd = new JButton(rb.getString("ButtonAddSensor"));
     JTextField nextSensor = new JTextField(5);
     MultiIconEditor sensorIconEditor;
     JFrame sensorFrame;
 
-    JButton signalAdd = new JButton("Add signal:");
+    JButton signalAdd = new JButton(rb.getString("ButtonAddSignal"));
     JTextField nextSignalHead = new JTextField(5);
     MultiIconEditor signalIconEditor;
     JFrame signalFrame;
 
-    JButton memoryAdd = new JButton("Add memory:");
+    JButton memoryAdd = new JButton(rb.getString("ButtonAddMemory"));
     JTextField nextMemory = new JTextField(5);
 
-    JButton reporterAdd = new JButton("Add reporter:");
+    JButton reporterAdd = new JButton(rb.getString("ButtonAddReporter"));
     JTextField nextReporter = new JTextField(5);
 
-    JButton multiSensorAdd = new JButton("Add multi-sensor...");
+    JButton multiSensorAdd = new JButton(rb.getString("ButtonAddMultiSensor"));
     MultiSensorIconFrame multiSensorFrame;
 
     JButton clockAdd = new JButton("Add Fast clock:");
 
-    JButton backgroundAddButton = new JButton("Pick background image...");
+    JButton backgroundAddButton = new JButton(rb.getString("ButtonAddBkg"));
 
     public PanelEditor() { this(rb.getString("Title"));}
 
@@ -171,7 +172,7 @@ public class PanelEditor extends JmriJFrame {
                         addBackground();
                     }
                 }
-                                                   );
+            );
             this.getContentPane().add(panel);
         }
 
@@ -212,8 +213,8 @@ public class PanelEditor extends JmriJFrame {
             iconEditor = new MultiIconEditor(1);
             iconEditor.setIcon(0, "","resources/icons/smallschematics/tracksegments/block.gif");
             iconEditor.complete();
-            iconFrame = new JFrame("Change icon");
-            iconFrame.getContentPane().add(new JLabel("  Select new file, then click on icon to change  "),BorderLayout.NORTH);
+            iconFrame = new JFrame(rb.getString("TitleChangeIcon"));
+            iconFrame.getContentPane().add(new JLabel(rb.getString("LabelSelectFile")),BorderLayout.NORTH);
             iconFrame.getContentPane().add(iconEditor);
             iconFrame.pack();
 
@@ -241,7 +242,7 @@ public class PanelEditor extends JmriJFrame {
                         addTurnoutR();
                     }
                 }
-                                           );
+            );
             nextTurnoutR.addKeyListener(new KeyAdapter() {
                     public void keyReleased(KeyEvent a){
                         if (nextTurnoutR.getText().equals("")) turnoutAddR.setEnabled(false);
@@ -255,11 +256,11 @@ public class PanelEditor extends JmriJFrame {
 				"resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif");
             turnoutRIconEditor.setIcon(1,InstanceManager.turnoutManagerInstance().getThrownText()+":", 
 				"resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif");
-            turnoutRIconEditor.setIcon(2, "Inconsistent:", "resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif");
-            turnoutRIconEditor.setIcon(3, "Unknown:","resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif");
+            turnoutRIconEditor.setIcon(2, rbean.getString("BeanStateInconsistent")+":", "resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif");
+            turnoutRIconEditor.setIcon(3, rbean.getString("BeanStateUnknown")+":","resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif");
             turnoutRIconEditor.complete();
             turnoutRFrame = new JFrame("Change RH turnout icons");
-            turnoutRFrame.getContentPane().add(new JLabel("  Select new file, then click on icon to change  "),BorderLayout.NORTH);
+            turnoutRFrame.getContentPane().add(new JLabel(rb.getString("LabelSelectFile")),BorderLayout.NORTH);
             turnoutRFrame.getContentPane().add(turnoutRIconEditor);
             turnoutRFrame.pack();
 
@@ -287,7 +288,7 @@ public class PanelEditor extends JmriJFrame {
                         addTurnoutL();
                     }
                 }
-                                           );
+            );
             nextTurnoutL.addKeyListener(new KeyAdapter() {
                     public void keyReleased(KeyEvent a){
                          if (nextTurnoutL.getText().equals("")) turnoutAddL.setEnabled(false);
@@ -301,11 +302,11 @@ public class PanelEditor extends JmriJFrame {
 				"resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif");
             turnoutLIconEditor.setIcon(1,InstanceManager.turnoutManagerInstance().getThrownText()+":", 
 				"resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif");
-            turnoutLIconEditor.setIcon(2, "Inconsistent:", "resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif");
-            turnoutLIconEditor.setIcon(3, "Unknown:","resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif");
+            turnoutLIconEditor.setIcon(2, rbean.getString("BeanStateInconsistent")+":", "resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif");
+            turnoutLIconEditor.setIcon(3, rbean.getString("BeanStateUnknown")+":","resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif");
             turnoutLIconEditor.complete();
             turnoutLFrame = new JFrame("Change LH turnout icons");
-            turnoutLFrame.getContentPane().add(new JLabel("  Select new file, then click on icon to change  "),BorderLayout.NORTH);
+            turnoutLFrame.getContentPane().add(new JLabel(rb.getString("LabelSelectFile")),BorderLayout.NORTH);
             turnoutLFrame.getContentPane().add(turnoutLIconEditor);
             turnoutLFrame.pack();
 
@@ -315,7 +316,7 @@ public class PanelEditor extends JmriJFrame {
                         turnoutLFrame.setVisible(true);
                     }
                 }
-                                           );
+            );
             panel.add(j);
 
             this.getContentPane().add(panel);
@@ -333,7 +334,7 @@ public class PanelEditor extends JmriJFrame {
                         addSensor();
                     }
                 }
-                                           );
+            );
 
             nextSensor.addKeyListener(new KeyAdapter() {
                 public void keyReleased(KeyEvent a){
@@ -344,13 +345,13 @@ public class PanelEditor extends JmriJFrame {
 
 
             sensorIconEditor = new MultiIconEditor(4);
-            sensorIconEditor.setIcon(0, "Active:","resources/icons/smallschematics/tracksegments/circuit-occupied.gif");
-            sensorIconEditor.setIcon(1, "Inactive", "resources/icons/smallschematics/tracksegments/circuit-empty.gif");
-            sensorIconEditor.setIcon(2, "Inconsistent:", "resources/icons/smallschematics/tracksegments/circuit-error.gif");
-            sensorIconEditor.setIcon(3, "Unknown:","resources/icons/smallschematics/tracksegments/circuit-error.gif");
+            sensorIconEditor.setIcon(0, rbean.getString("SensorStateActive")+":","resources/icons/smallschematics/tracksegments/circuit-occupied.gif");
+            sensorIconEditor.setIcon(1, rbean.getString("SensorStateInactive")+"", "resources/icons/smallschematics/tracksegments/circuit-empty.gif");
+            sensorIconEditor.setIcon(2, rbean.getString("BeanStateInconsistent")+":", "resources/icons/smallschematics/tracksegments/circuit-error.gif");
+            sensorIconEditor.setIcon(3, rbean.getString("BeanStateUnknown")+":","resources/icons/smallschematics/tracksegments/circuit-error.gif");
             sensorIconEditor.complete();
             sensorFrame = new JFrame("Change sensor icons");
-            sensorFrame.getContentPane().add(new JLabel("  Select new file, then click on icon to change  "),BorderLayout.NORTH);
+            sensorFrame.getContentPane().add(new JLabel(rb.getString("LabelSelectFile")),BorderLayout.NORTH);
             sensorFrame.getContentPane().add(sensorIconEditor);
             sensorFrame.pack();
 
@@ -360,7 +361,7 @@ public class PanelEditor extends JmriJFrame {
                         sensorFrame.setVisible(true);
                     }
                 }
-                                           );
+            );
             panel.add(j);
 
             this.getContentPane().add(panel);
@@ -378,7 +379,7 @@ public class PanelEditor extends JmriJFrame {
                         addSignalHead();
                     }
                 }
-                                           );
+            );
 
             nextSignalHead.addKeyListener(new KeyAdapter() {
                 public void keyReleased(KeyEvent a){
@@ -389,17 +390,17 @@ public class PanelEditor extends JmriJFrame {
 
 
             signalIconEditor = new MultiIconEditor(8);
-            signalIconEditor.setIcon(0, "Red:","resources/icons/smallschematics/searchlights/left-red-marker.gif");
-            signalIconEditor.setIcon(1, "Flash red:", "resources/icons/smallschematics/searchlights/left-flashred-marker.gif");
-            signalIconEditor.setIcon(2, "Yellow:", "resources/icons/smallschematics/searchlights/left-yellow-marker.gif");
-            signalIconEditor.setIcon(3, "Flash yellow:", "resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif");
-            signalIconEditor.setIcon(4, "Green:","resources/icons/smallschematics/searchlights/left-green-marker.gif");
-            signalIconEditor.setIcon(5, "Flash green:","resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif");
-            signalIconEditor.setIcon(6, "Dark:","resources/icons/smallschematics/searchlights/left-dark-marker.gif");
-            signalIconEditor.setIcon(7, "Held:","resources/icons/smallschematics/searchlights/left-held-marker.gif");
+            signalIconEditor.setIcon(0, rbean.getString("SignalHeadStateRed")+":","resources/icons/smallschematics/searchlights/left-red-marker.gif");
+            signalIconEditor.setIcon(1, rbean.getString("SignalHeadStateFlashingRed")+":", "resources/icons/smallschematics/searchlights/left-flashred-marker.gif");
+            signalIconEditor.setIcon(2, rbean.getString("SignalHeadStateYellow")+":", "resources/icons/smallschematics/searchlights/left-yellow-marker.gif");
+            signalIconEditor.setIcon(3, rbean.getString("SignalHeadStateFlashingYellow")+":", "resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif");
+            signalIconEditor.setIcon(4, rbean.getString("SignalHeadStateGreen")+":","resources/icons/smallschematics/searchlights/left-green-marker.gif");
+            signalIconEditor.setIcon(5, rbean.getString("SignalHeadStateFlashingGreen")+":","resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif");
+            signalIconEditor.setIcon(6, rbean.getString("SignalHeadStateDark")+":","resources/icons/smallschematics/searchlights/left-dark-marker.gif");
+            signalIconEditor.setIcon(7, rbean.getString("SIgnalHeadStateHeld")+":","resources/icons/smallschematics/searchlights/left-held-marker.gif");
             signalIconEditor.complete();
             signalFrame = new JFrame("Change signal icons");
-            signalFrame.getContentPane().add(new JLabel("  Select new file, then click on icon to change  "),BorderLayout.NORTH);
+            signalFrame.getContentPane().add(new JLabel(rb.getString("LabelSelectFile")),BorderLayout.NORTH);
             signalFrame.getContentPane().add(signalIconEditor);
             signalFrame.pack();
 
@@ -614,7 +615,7 @@ public class PanelEditor extends JmriJFrame {
                 + "User Names must be predefined using " + type + " Table tool.\n";
         }
         if (errorFlag != 0) {
-            JOptionPane.showMessageDialog(this, errorMessage, "Input Error",
+            JOptionPane.showMessageDialog(this, errorMessage, rb.getString("LabelInputError"),
                                           JOptionPane.ERROR_MESSAGE);
         }
         return errorFlag;
@@ -847,7 +848,7 @@ public class PanelEditor extends JmriJFrame {
         String name = "";
         if (getTarget().getTopLevelAncestor()!=null) name=((JFrame)getTarget().getTopLevelAncestor()).getTitle();
         if (name==null || name.equals("")) super.setTitle("Editor");
-        super.setTitle(name+" Editor");
+        super.setTitle(name+" "+rb.getString("LabelEditor"));
     }
 
     /**
