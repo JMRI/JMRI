@@ -25,7 +25,7 @@ import com.sun.java.util.collections.List;
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.17 $
+ * @version		$Revision: 1.18 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -258,7 +258,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         // ensure the table rows, columns have enough room for buttons
         table.setRowHeight(sample.getPreferredSize().height);
         table.getColumnModel().getColumn(column)
-			.setPreferredWidth(sample.getPreferredSize().width);
+			.setPreferredWidth((sample.getPreferredSize().width)+4);
     }
 
     synchronized public void dispose() {
