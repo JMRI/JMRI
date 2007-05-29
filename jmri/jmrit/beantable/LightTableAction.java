@@ -35,7 +35,7 @@ import jmri.util.JmriJFrame;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.21 $
+ * @version     $Revision: 1.22 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -82,7 +82,7 @@ public class LightTableAction extends AbstractTableAction {
 			public int getPreferredWidth(int col) {
 				// override default value for UserName column
 				if (col==USERNAMECOL) return new JTextField(16).getPreferredSize().width;
-    			if (col==EDITCOL) return new JTextField(5).getPreferredSize().width;
+    			if (col==EDITCOL) return new JTextField(6).getPreferredSize().width;
     			if (col==ENABLECOL) return new JTextField(6).getPreferredSize().width;
 				else return super.getPreferredWidth(col);
 			}

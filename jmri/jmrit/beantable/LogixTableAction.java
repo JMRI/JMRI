@@ -46,7 +46,7 @@ import jmri.util.JmriJFrame;
  *	   BeanTableBundle.properties, accessed via rb.
  *
  * @author	Dave Duchamp    Copyright (C) 2007
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -104,7 +104,7 @@ public class LogixTableAction extends AbstractTableAction {
 				// override default value for SystemName and UserName columns
 				if (col==SYSNAMECOL) return new JTextField(8).getPreferredSize().width;
 				if (col==USERNAMECOL) return new JTextField(17).getPreferredSize().width;
-    			if (col==EDITCOL) return new JTextField(5).getPreferredSize().width;
+    			if (col==EDITCOL) return new JTextField(6).getPreferredSize().width;
     			if (col==ENABLECOL) return new JTextField(5).getPreferredSize().width;
 				else return super.getPreferredWidth(col);
 			}
