@@ -35,7 +35,7 @@ import jmri.util.StringUtil;
  * used with permission.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2003
- * @version			$Revision: 1.38 $
+ * @version			$Revision: 1.39 $
  */
 public class Llnmon {
 
@@ -443,14 +443,16 @@ public class Llnmon {
             String ds = " (DS54 switch "+SENSOR_ADR(in1,in2)
                 +((in2 & LnConstants.OPC_INPUT_REP_SW)!=0 ? " Sw  input)" : " Aux input)");
 
+            int sechannel =  (in1+(in2&0xF)*128)/8+ch;
+            int senum = (sechannel-1)/8+1;
+            String se = " (SE8c "+senum+" input "+sechannel+") ";
+            
             return "General sensor input report: contact "+
                 ((SENSOR_ADR(in1, in2)-1)*2+((in2 & LnConstants.OPC_INPUT_REP_SW)!=0?2:1))
-                +ds+
-                bdl+
+                +((in2 & LnConstants.OPC_INPUT_REP_CB)!=0 ? bdl+ds : se)+
                 " is "+
-                ((in2 & LnConstants.OPC_INPUT_REP_HI)!=0 ? "Hi" : "Lo")+" "+
-                ((in2 & LnConstants.OPC_INPUT_REP_CB)==0 ? "\n\t(Unexpected 0 value of reserved control bit)" : "")+
-                "\n";
+                ((in2 & LnConstants.OPC_INPUT_REP_HI)!=0 ? "Hi" : "Lo")
+                +"\n";
 
 
             /***************************************************************************************
