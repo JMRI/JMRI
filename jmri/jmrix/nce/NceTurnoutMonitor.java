@@ -28,7 +28,7 @@ import jmri.Turnout;
  * 
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 
 public class NceTurnoutMonitor implements NceListener{
@@ -46,7 +46,7 @@ public class NceTurnoutMonitor implements NceListener{
     private int currentBlock;							// used as state in scan over active blocks
     private int numTurnouts = 0;						// number of NT turnouts known by NceTurnoutMonitor 
     private int numActiveBlocks = 0;
-    private int rescanCount = 0;						// periodically rescan all NT turnouts for feedback changes
+    private int savedFeedbackChanges = 0;				// number of feedback changes known by NceTurnoutMonitor
          
     // cached work fields
     boolean [] newTurnouts = new boolean [NUM_BLOCK];	// used to sync poll turnout memory
@@ -62,17 +62,14 @@ public class NceTurnoutMonitor implements NceListener{
     	if (NceEpromChecker.nceUSBdetected)return null;								//Can't poll USB!
     	if (NceTurnout.numNtTurnouts == 0)return null;								//No work!
     	
-    	// User could have created a turnout using turnout tool and then changed
-		// feedback to MONITORING, therefore we need to rescan.
-		// pollMessage is called once every POLL_TIME msec, so we'll rescan every 10
-		// sec.
-		rescanCount++;
-		if (rescanCount > 10000/POLL_TIME) {
-			numTurnouts = -1;			//force rescan
-			rescanCount = 0;
+    	// User can change a turnout's feedback to MONITORING, therefore we need to rescan
+    	// This doesn't occur very often, so we'll assume the change was to MONITORING
+		if (savedFeedbackChanges != NceTurnout.numFeedbackChanges) {
+			savedFeedbackChanges = NceTurnout.numFeedbackChanges;
+			numTurnouts = -1; // force rescan
 		}
-        
-        // See if the number of turnouts now differs from the last scan
+ 
+    	// See if the number of turnouts now differs from the last scan
         if (numTurnouts != NceTurnout.numNtTurnouts) {
             numTurnouts = NceTurnout.numNtTurnouts;	
             
@@ -212,6 +209,7 @@ public class NceTurnoutMonitor implements NceListener{
     
 }
 /* @(#)NceTurnoutMonitor.java */
+
 
 
 
