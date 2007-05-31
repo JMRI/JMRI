@@ -25,7 +25,7 @@ package jmri;
  *
  * Description:		Abstract class providing the basic logic of the Turnout interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.23 $
+ * @version			$Revision: 1.24 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean 
     implements Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
@@ -62,7 +62,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean
      * listeners, but does NOT send the command downstream.  This is used
      * when a new commanded state is noticed from another command.
      */
-    protected synchronized void newCommandedState(int s) {
+    protected void newCommandedState(int s) {
         if (_commandedState != s) {
             int oldState = _commandedState;
             _commandedState = s;
@@ -79,7 +79,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean
      * TurnoutOperator (not required or nothing suitable) then just tell the layout
      * and hope for the best.
      */
-    public synchronized void setCommandedState(int s) {
+    public void setCommandedState(int s) {
     	log.debug("set commanded state for turnout "+getSystemName()+" to "+s);
         newCommandedState(s);
         myOperator = getTurnoutOperator();		// MUST set myOperator before starting the thread
@@ -111,7 +111,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean
      * general use, e.g. for users to set the KnownState.
      * @param s New state value
      */
-    protected synchronized void newKnownState(int s) {
+    protected void newKnownState(int s) {
         if (_knownState != s) {
             int oldState = _knownState;
             _knownState = s;
@@ -133,7 +133,9 @@ public abstract class AbstractTurnout extends AbstractNamedBean
     }
     
     /**
-     * The name pretty much says it. Fur use by the TurnoutOperator classes.
+     * The name pretty much says it. 
+     *<P>
+     * Triggers all listeners, etc. For use by the TurnoutOperator classes.
      */
     void setKnownStateToCommanded() {
     	newKnownState(_commandedState);
