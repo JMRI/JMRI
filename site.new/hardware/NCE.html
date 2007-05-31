@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NCE.html,v 1.10 2007-05-29 01:09:50 jacobsen Exp $ -->
+<!-- $Id: NCE.html,v 1.11 2007-05-31 15:11:51 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -103,32 +103,40 @@
 	  <ol>
 	  <li>To connect your computer to an NCE system, you can usually
 	  just connect the command station to the computer's serial port
-	  using a 9-pin serial cable.</p>
+	  using a 9-pin serial cable.
 
 	  <li>Then go to the preferences panel of a JMRI-based program.
 	  This opens automatically the first time a program is run, or you
-	  can select it from the "Edit" menu.</p>
+	  can select it from the "Edit" menu.
 
 	  <li>Select "NCE" from the top selection box. You can then select
-	  the proper serial port in the second selection box.</p>
+	  the proper serial port in the second selection box.
 
-	  <li>The baud rate selection box will be fixed at 9600 baud.</p>
+	  <li>If given the option to select a baud rate, 19,200 is 
+	  probably your best bet.  If that selection is fixed (due
+	  to using an older EPROM), don't worry.
 
+      <LI>Now set the baud rate in the NCE command station to be the
+      same.  Use a ProCab to select "Set Cmd Sta" by pressing the 
+      Prog/Esc button 5 times.  Then press the Enter button 15 times
+      to select baud rates. Finally, select a baud rate (#2 is 19,200
+      baud), and press esc to exit.
+      
 	  <li>The series of radio buttons labelled "GUI style" allows you
 	  to select how the program will look. "Metal" is the native Java
 	  look available on all types. Other choices will vary with your
 	  computer type. "Motif", "Windows", "MacOS" and "MacOS Adaptive"
 	  look native on Linux, Windows, MacOS "Classic" and MacOS X
-	  respectively.</p>
+	  respectively.
 
 	  <li>In the bottom selection box, you can pick the default
 	  programmer format. You can override this each time you open the
-	  programmer, so this is here just for convenience.</p>
+	  programmer, so this is here just for convenience.
 
 	  <li>Click "Save". You'll be asked if it's OK for the program to
-	  quit, click "Yes".</p>
+	  quit, click "Yes".
 
-	  <li>Restart the program. You should be up and running.</p>
+	  <li>Restart the program. You should be up and running.
 	  </ol>
 
     <A id="names"/><h3>AIU Numbering</H3>
