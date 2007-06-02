@@ -10,7 +10,7 @@ import jmri.jmrix.cmri.serial.SerialTrafficController;
 /**
  * Frame displaying (and logging) CMRI serial command messages
  * @author	    Bob Jacobsen   Copyright (C) 2001
- * @version         $Revision: 1.8 $
+ * @version         $Revision: 1.9 $
  */
 
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
@@ -68,7 +68,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         } else if (l.isRcv()) {
             String s = "Receive ua="+l.getUA()+" IB=";
             for (int i=2; i<l.getNumDataElements(); i++)
-                s+=Integer.toHexString(l.getElement(i))+" ";
+                s = jmri.util.StringUtil.appendTwoHexFromInt(l.getElement(i), s)+" ";
             nextLine(s+"\n", l.toString());
         } else
             nextLine("unrecognized rep: \""+l.toString()+"\"\n", "");
