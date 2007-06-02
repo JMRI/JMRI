@@ -26,7 +26,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.33 $
+ * @version			$Revision: 1.34 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -600,6 +600,7 @@ abstract public class AbstractMRTrafficController {
             javax.swing.SwingUtilities.invokeAndWait(r);
         } catch (Exception e) {
             log.error("Unexpected exception in invokeAndWait:" +e);
+            e.printStackTrace();
         }
         
         if (!msg.isUnsolicited()) {
