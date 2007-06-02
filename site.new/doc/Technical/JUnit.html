@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: JUnit.html,v 1.6 2007-05-08 06:52:26 jacobsen Exp $ -->
+<!-- $Id: JUnit.html,v 1.7 2007-06-02 17:04:15 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -123,11 +123,45 @@
 
 	    <H1>JMRI: Unit testing with JUnit</H1>
 
-
-Some of the classes have JUnit tests available.  For more information on JUnit, see
+JUnit is a system for building "unit tests" of software.  
+Unit tests are small tests that make sure that individual
+parts of the software do what they're supposed to do.
+In a distributed project like JMRI, where there are lots
+of developers in only loose communication with each other,
+unit tests are a good way to make sure that the code hasn't 
+been broken by a change.
+<P>
+For more information on JUnit, see
 <A HREF="http://www.junit.org">the JUnit home page</A>.
 A very interesting example of test-based development is available from 
 <A HREF="http://www.objectmentor.com/publications/xpepisode.htm">Robert Martin</a>'s new book.
+<P>
+Some of the classes have JUnit tests available. It's good
+to add JUnit tests as you make changes (test your new functionality
+to make sure that it is working, and keeps working),
+when you have to figure out what somebodys code does
+(the test documents exactly what should happen!),
+and when you track down a bug (make sure it doesn't come back).
+<P>
+To run the existing tests, say
+<CODE>
+<PRE>
+   ant alltest
+</PRE>
+</CODE>
+This will compile the test code, which lives in the "test"
+subdirectory of the "java" directory in our usual code distributions,
+and then run the tests under a GUI.  If you know the name
+of your test class, or the test class for your package, you 
+can run that directly with the "runtest" script:
+<CODE>
+<PRE>
+   ant tests
+   ./runtest.csh jmri.jmrit.powerpanel.PowerPanelTest
+</PRE>
+</CODE>
+The first line compiles all the test code, and the second
+runs a specific test.
 
 <!-- Footer -->
     <hr class="hide">
