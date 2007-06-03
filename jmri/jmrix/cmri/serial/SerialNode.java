@@ -25,7 +25,7 @@ import jmri.jmrix.AbstractMRMessage;
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.20 $
+ * @version	$Revision: 1.21 $
  */
 public class SerialNode {
 
@@ -693,27 +693,26 @@ public class SerialNode {
     public void markChanges(SerialReply l) {
         try {
             for (int i=0; i<=lastUsedSensor; i++) {
+                if (sensorArray[i] == null) continue; // skip ones that don't exist
                 int loc = i/8;
                 int bit = i%8;
-                int value = (l.getElement(loc+2)>>bit)&0x01;  // byte 2 is first of data
+                boolean value = (((l.getElement(loc+2)>>bit)&0x01) == 1) ^ sensorArray[i].getInverted();  // byte 2 is first of data
                 // if (log.isDebugEnabled()) log.debug("markChanges loc="+loc+" bit="+bit+" is "+value);
-                if ( value == 1) {
-                    // bit set, considered ACTIVE
-                    if ( sensorArray[i]!=null &&
-                            ( (sensorTempSetting[i] == Sensor.ACTIVE) || 
+                if ( value ) {
+                    // considered ACTIVE
+                    if (   ( (sensorTempSetting[i] == Sensor.ACTIVE) || 
                                 (sensorTempSetting[i] == Sensor.UNKNOWN) ) &&
-                            ( sensorLastSetting[i] != Sensor.ACTIVE) ) {
+                           ( sensorLastSetting[i] != Sensor.ACTIVE) ) {
                         sensorLastSetting[i] = Sensor.ACTIVE;
                         sensorArray[i].setKnownState(Sensor.ACTIVE);
                     }
                     // save for next time
                     sensorTempSetting[i] = Sensor.ACTIVE;
                 } else {
-                    // bit reset, considered INACTIVE
-                    if ( sensorArray[i]!=null &&
-                            ( (sensorTempSetting[i] == Sensor.INACTIVE)  || 
+                    // considered INACTIVE
+                    if (  ( (sensorTempSetting[i] == Sensor.INACTIVE)  || 
                                 (sensorTempSetting[i] == Sensor.UNKNOWN) ) &&
-                            ( sensorLastSetting[i] != Sensor.INACTIVE) ) {
+                          ( sensorLastSetting[i] != Sensor.INACTIVE) ) {
                         sensorLastSetting[i] = Sensor.INACTIVE;
                         sensorArray[i].setKnownState(Sensor.INACTIVE);
                     }

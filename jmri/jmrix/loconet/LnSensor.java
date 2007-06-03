@@ -15,7 +15,7 @@ import jmri.Sensor;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.11 $
+ * @version         $Revision: 1.12 $
  */
 public class LnSensor extends AbstractSensor implements LocoNetListener {
 
@@ -93,14 +93,14 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
                 int sw2 = l.getElement(2);
                 if (a.matchAddress(sw1, sw2)) {
                     // save the state
-                    int state = sw2 & 0x10;
+                    boolean state = ((sw2 & 0x10) != 0) ^ _inverted;
                     if (log.isDebugEnabled())
                         log.debug("INPUT_REP received with valid address, old state "
                                     +getKnownState()+" new packet "+state);
-                    if ( state !=0 && getKnownState() != Sensor.ACTIVE) {
+                    if ( state && getKnownState() != Sensor.ACTIVE) {
                         if (log.isDebugEnabled()) log.debug("Set ACTIVE");
                         setOwnState(Sensor.ACTIVE);
-                    } else if ( state ==0 && getKnownState() != Sensor.INACTIVE) {
+                    } else if ( (!state) && getKnownState() != Sensor.INACTIVE) {
                         if (log.isDebugEnabled()) log.debug("Set INACTIVE");
                         setOwnState(Sensor.INACTIVE);
                     }

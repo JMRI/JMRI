@@ -19,7 +19,7 @@ import jmri.Sensor;
  * that AIU is polled.
  *
  * @author			Bob Jacobsen Copyright (C) 2003, 2005
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class NceAIU {
 
@@ -46,10 +46,13 @@ public class NceAIU {
             }
             lastAIUValue = bits;
             for (int i=0; i<14; i++) {
-                if ( (bits&1) ==0 ) {
-                    sensorChange(i, Sensor.ACTIVE);
-                } else {
-                    sensorChange(i, Sensor.INACTIVE);
+                if (sensorArray[i]!=null) {
+                    boolean value = ((bits&1) == 0) ^ sensorArray[i].getInverted();
+                    if ( value ) {
+                        sensorChange(i, Sensor.ACTIVE);
+                    } else {
+                        sensorChange(i, Sensor.INACTIVE);
+                    }
                 }
                 bits = bits/2;
             } 
