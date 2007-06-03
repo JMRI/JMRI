@@ -7,7 +7,7 @@ package jmri;
  * types of sensors.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public interface Sensor extends NamedBean {
 
@@ -34,6 +34,21 @@ public interface Sensor extends NamedBean {
      */
     public void requestUpdateFromLayout();
 
+    /**
+     * Control whether the actual sensor input is
+     * considered to be inverted, e.g. the normal
+     * electrical signal that results in an ACTIVE state
+     * now results in an INACTIVE state.
+     */
+    public void setInverted(boolean inverted);
+    
+    /**
+     * Get the inverted state.  If true, the 
+     * electrical signal that results in an ACTIVE state
+     * now results in an INACTIVE state.
+     */
+    public boolean getInverted();
+    
     /**
      * Request a call-back when the bound KnownState property changes.
      */

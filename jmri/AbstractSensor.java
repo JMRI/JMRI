@@ -6,7 +6,7 @@ import jmri.Sensor;
 /**
  * Abstract class providing the basic logic of the Sensor interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.10 $
+ * @version         $Revision: 1.11 $
  */
 public abstract class AbstractSensor extends AbstractNamedBean implements Sensor, java.io.Serializable {
 
@@ -68,6 +68,32 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
      */
     public int getState() { return getKnownState(); }
 
+    /**
+     * Control whether the actual sensor input is
+     * considered to be inverted, e.g. the normal
+     * electrical signal that results in an ACTIVE state
+     * now results in an INACTIVE state.
+     */
+    public void setInverted(boolean inverted) {
+        boolean oldInverted = _inverted;
+        _inverted = inverted;
+        if (oldInverted != _inverted)
+            firePropertyChange("inverted", new Boolean(oldInverted), new Boolean(_inverted));
+    }
+    
+    /**
+     * Get the inverted state.  If true, the 
+     * electrical signal that results in an ACTIVE state
+     * now results in an INACTIVE state.
+     * <P>
+     * Used in polling loops in system-specific code, 
+     * so made final to allow optimization.
+     */
+    final public boolean getInverted() { return _inverted; }
+
+
+    protected boolean _inverted = false;
+    
     // internal data members
     protected int _knownState     = UNKNOWN;
 
