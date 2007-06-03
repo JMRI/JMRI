@@ -25,7 +25,7 @@ import jmri.util.JmriJFrame;
  * SensorTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 
 public class SensorTableAction extends AbstractTableAction {
@@ -56,6 +56,8 @@ public class SensorTableAction extends AbstractTableAction {
      */
     void createModel() {
         m = new BeanTableDataModel() {
+		    static public final int INVERTCOL = NUMCOLUMN;
+		    
             public String getValue(String name) {
                 int val = InstanceManager.sensorManagerInstance().getBySystemName(name).getKnownState();
                 switch (val) {
@@ -76,6 +78,47 @@ public class SensorTableAction extends AbstractTableAction {
                 } catch (JmriException e) { this.log.warn("Error setting state: "+e); }
             }
 
+    		public int getColumnCount( ){ 
+    		    return NUMCOLUMN+1;
+     		}
+
+    		public String getColumnName(int col) {
+    			if (col==INVERTCOL) return "Inverted";
+    			else return super.getColumnName(col);
+		    }
+    		public Class getColumnClass(int col) {
+    			if (col==INVERTCOL) return Boolean.class;
+    			else return super.getColumnClass(col);
+		    }
+    		public int getPreferredWidth(int col) {
+    			if (col==INVERTCOL) return new JTextField(4).getPreferredSize().width;
+    			else return super.getPreferredWidth(col);
+		    }
+    		public boolean isCellEditable(int row, int col) {
+    			if (col==INVERTCOL) return true;
+    			else return super.isCellEditable(row,col);
+			}    		
+
+    		public Object getValueAt(int row, int col) {
+    			if (col==INVERTCOL) {
+    				String name = (String)sysNameList.get(row);
+    				boolean val = InstanceManager.sensorManagerInstance().getBySystemName(name).getInverted();
+					return new Boolean(val);
+    			} else return super.getValueAt(row, col);
+			}    		
+			
+    		public void setValueAt(Object value, int row, int col) {
+    			if (col==INVERTCOL) {
+    				String name = (String)sysNameList.get(row);
+    				boolean b = ((Boolean)value).booleanValue();
+    				InstanceManager.sensorManagerInstance().getBySystemName(name).setInverted(b);
+    			} else super.setValueAt(value, row, col);
+    		}
+    		
+            boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
+                if (e.getPropertyName().indexOf("inverted")>=0) return true;
+                else return super.matchPropertyName(e);
+            }
         };
     }
 
