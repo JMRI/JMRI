@@ -18,7 +18,7 @@ import jmri.Timebase;
  * current fast time when the clock was paused.
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SimpleTimebase implements Timebase {
 
@@ -149,7 +149,7 @@ public class SimpleTimebase implements Timebase {
         // and notify the others
         int minutes = date.getMinutes();
     	if (minutes!=oldMinutes) 
-    	    pcMinutes.firePropertyChange("minutes", new Double(minutes), new Double(oldMinutes));
+    	    pcMinutes.firePropertyChange("minutes", new Double(oldMinutes), new Double(minutes));
 
         oldMinutes = minutes;
 
