@@ -2,6 +2,7 @@ package jmri.configurexml;
 
 import jmri.InstanceManager;
 import jmri.SensorManager;
+import jmri.Sensor;
 import com.sun.java.util.collections.List;
 import org.jdom.Element;
 
@@ -17,7 +18,7 @@ import org.jdom.Element;
  * specific Sensor or AbstractSensor subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public abstract class AbstractSensorManagerConfigXML implements XmlAdapter {
 
@@ -43,8 +44,10 @@ public abstract class AbstractSensorManagerConfigXML implements XmlAdapter {
                 if (sname==null) log.error("System name null during store");
                 log.debug("system name is "+sname);
                 String uname = tm.getBySystemName(sname).getUserName();
+                String inverted = tm.getBySystemName(sname).getInverted() ? "true" : "false";
                 Element elem = new Element("sensor")
-                            .addAttribute("systemName", sname);
+                            .addAttribute("systemName", sname)
+                            .addAttribute("inverted", inverted);
                 if (uname!=null) elem.addAttribute("userName", uname);
                 log.debug("store sensor "+sname+":"+uname);
                 sensors.addContent(elem);
@@ -87,10 +90,18 @@ public abstract class AbstractSensorManagerConfigXML implements XmlAdapter {
             }
             String sysName = ((Element)(sensorList.get(i))).getAttribute("systemName").getValue();
             String userName = null;
+            boolean inverted = false;
+            
             if ( ((Element)(sensorList.get(i))).getAttribute("userName") != null)
-            userName = ((Element)(sensorList.get(i))).getAttribute("userName").getValue();
+                userName = ((Element)(sensorList.get(i))).getAttribute("userName").getValue();
+
+            if ( ((Element)(sensorList.get(i))).getAttribute("inverted") != null)
+                if (((Element)(sensorList.get(i))).getAttribute("inverted").getValue().equals("true"))
+                    inverted = true;
+
             if (log.isDebugEnabled()) log.debug("create sensor: ("+sysName+")("+(userName==null?"<null>":userName)+")");
-            tm.newSensor(sysName, userName);
+            Sensor s = tm.newSensor(sysName, userName);
+            s.setInverted(inverted);
         }
     }
 
