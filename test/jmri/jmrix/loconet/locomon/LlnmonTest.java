@@ -16,9 +16,41 @@ import jmri.util.StringUtil;
 /**
  * Tests for the jmri.jmrix.loconet.locomon.Llnmon class.
  * @author	    Bob Jacobsen Copyright (C) 2002, 2007
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class LlnmonTest extends TestCase {
+
+    public void testTransponding() {
+        LocoNetMessage l;
+        Llnmon f = new Llnmon();
+        
+        l = new LocoNetMessage(new int[]{0xD0, 0x01, 0x20, 0x08, 0x20, 0x26});
+        assertEquals("out A", "Transponder absent in section 18 zone A decoder address 1056 (long) \n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x20, 0x08, 0x20, 0x04});
+        assertEquals(" in A", "Transponder present in section 18 zone A decoder address 1056 (long) \n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x22, 0x08, 0x20, 0x24});
+        assertEquals(" in B", "Transponder present in section 18 zone B decoder address 1056 (long) \n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x24, 0x08, 0x20, 0x04});
+        assertEquals(" in C", "Transponder present in section 18 zone C decoder address 1056 (long) \n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x26, 0x08, 0x20, 0x04});
+        assertEquals(" in D", "Transponder present in section 18 zone D decoder address 1056 (long) \n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x28, 0x08, 0x20, 0x04});
+        assertEquals(" in E", "Transponder present in section 18 zone E decoder address 1056 (long) \n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x2A, 0x08, 0x20, 0x04});
+        assertEquals(" in F", "Transponder present in section 18 zone F decoder address 1056 (long) \n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x2C, 0x08, 0x20, 0x04});
+        assertEquals(" in G", "Transponder present in section 18 zone G decoder address 1056 (long) \n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x2E, 0x08, 0x20, 0x04});
+        assertEquals(" in H", "Transponder present in section 18 zone H decoder address 1056 (long) \n", f.displayMessage(l));
+    }
 
     public void testLissy1() {
         LocoNetMessage l = new LocoNetMessage(new int[]{0xE4,0x08,0x00,0x60,0x01,0x42,0x35,0x05});
