@@ -35,7 +35,7 @@ import jmri.util.StringUtil;
  * used with permission.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2003
- * @version			$Revision: 1.39 $
+ * @version			$Revision: 1.40 $
  */
 public class Llnmon {
 
@@ -56,7 +56,7 @@ public class Llnmon {
     private int      msgNumber       = 1;      /* message number                                   */
     private boolean  showDecimal     = false;  /* flag that determines if we print decimal values  */
     private boolean  showHex         = false;  /* flag that determines if we print hex values      */
-    private boolean  showOpCode      = true;   /* flag that determines if we print loconet opcodes */
+    private boolean  showOpCode      = false;   /* flag that determines if we print loconet opcodes */
     private boolean  showDiscards    = false;  /* TRUE if the user wants to display discarded data */
     private boolean  showTrackStatus = true;   /* if TRUE, show track status on every slot read    */
     private int      trackStatus     = -1;     /* most recent track status value                   */
@@ -649,11 +649,18 @@ public class Llnmon {
             String m;
 
             String zone;
-            if      ((l.getElement(2)&0x0F) == 0x00) zone = "A";
-            else if ((l.getElement(2)&0x0F) == 0x02) zone = "B";
-            else if ((l.getElement(2)&0x0F) == 0x04) zone = "C";
-            else if ((l.getElement(2)&0x0F) == 0x06) zone = "D";
-            else zone="<unknown "+(l.getElement(2)&0x0F)+">";
+            switch (l.getElement(2)&0x0F) {
+                case 0x00: zone = "A"; break;
+                case 0x02: zone = "B"; break;
+                case 0x04: zone = "C"; break;
+                case 0x06: zone = "D"; break;
+                case 0x08: zone = "E"; break;
+                case 0x0A: zone = "F"; break;
+                case 0x0C: zone = "G"; break;
+                case 0x0E: zone = "H"; break;
+                default: zone="<unknown "+(l.getElement(2)&0x0F)+">"; break;
+            }
+
 			int section = (l.getElement(2)/16)+(l.getElement(1)&0x1F)*16;
 
             switch (type) {
