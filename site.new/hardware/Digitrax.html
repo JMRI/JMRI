@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Digitrax.html,v 1.14 2007-01-22 04:42:09 jacobsen Exp $ -->
+<!-- $Id: Digitrax.html,v 1.15 2007-06-05 06:36:10 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -151,7 +151,17 @@
 
 	  <li> Restart the program. You should be up and running.</li>
 	  </ol>
-
+    <P>
+    If you are going to control turnouts, signals or other devices
+    on your layout from JMRI or another program, we recommend
+    that you set the command station's "Meter Switch Commands"
+    option off.  When on, this option greatly reduces the number 
+    of commands the LocoNet can handle each second, which can cause
+    significant delays when you're controlling signals, etc. To turn
+    it off, you can use the "Configure Command Station" tool in the LocoNet
+    menu to set Option Switch 31 to "T" (thrown), or set it
+    directly in the command station using a Digitrax throttle.
+    
     <h2>Network Connections</h2>
     There are several methods available to connect multiple 
     computers to a single LocoNet.  These communicate
