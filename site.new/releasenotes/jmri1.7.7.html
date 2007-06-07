@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.7.7.html,v 1.24 2007-05-26 15:10:54 jacobsen Exp $ -->
+<!-- $Id: jmri1.7.7.html,v 1.25 2007-06-07 04:31:49 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -241,6 +241,8 @@ It's up to you to decide how you want to use user names when filling out forms, 
 
 <P>More improvements to JavaDocs and unit tests...
 
+<P>If a LocoNet system reports that it couldn't forward a turnout command to the layout, the program now retries it
+
 <P>The PRICOM PocketTester data can now be easily accessed via a script.
 
 <P>David Falkenburg updated the NCE support so that the new NCE EPROMS work better with TCS and QSI decoders. He also improves the speed with which the program handles timeout errors for NCE command stations.
@@ -253,6 +255,8 @@ It's up to you to decide how you want to use user names when filling out forms, 
 
 <P>Synchonization (in the Java technical sense) for Turnouts and AbstractTurnouts was improved.
 
+<P>TMCC (Lionel) systems seem to have a problem with dropping turnout commands.  Some of the timing has been adjusted to reduce the size of this problem, but it's still present at a low level.  The automatic retries (available via the Turnout Table) can be configured to handle it.
+
 <P>A new "Context ..." choice in the main help menu will give the user some of the context info needed for a bug report.
 
 <P>John Plocher wrote a new LocoIO programmer that's MUCH better than the old one, along with general support for "SV" programming. It now works for LocoIO and HDL based loconet IO boards using the Jabour or Hand Deloof firmware.
@@ -264,6 +268,16 @@ It's up to you to decide how you want to use user names when filling out forms, 
 <P>The default value for the "Check buffer on sending" option for Lenz connections has changed to "yes".
 
 <P>John Plocher reorganized the "Tools" menu to make it more usable.
+
+<P>The LocoNet Monitor can now tell sensor messages from the SE8c from messages from BDL and DS54 units (courtesy Phil Klein)
+
+<P>Format of the info in the CMRI monitor improved
+
+<P>Sensors can how be set to be "inverted", in which case the ACTIVE/INACTIVE meaning of the external input is reversed. 
+
+<P>The LocoNet monitor now properly displays transponding messages from a second RX4 on BDL168
+
+<P>The AlarmClock.py sample script puts out a pulse every "fast minute", for e.g. driving an external clock mechanism.
 
 <hr class="hide">
 <!-- Footer -->
