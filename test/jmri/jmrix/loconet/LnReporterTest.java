@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.LnReporter class.
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class LnReporterTest extends TestCase {
 
@@ -18,32 +18,39 @@ public class LnReporterTest extends TestCase {
         LnReporter a1 = new LnReporter(1);
     }
 
-    public void testTranspond3Enter() {
+    public void testTranspond3Enter146() {
         LnReporter a = new LnReporter(146);
         LocoNetMessage l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x11, 0x7D, 0x03, 0x00});
         a.message(l);
-        assertEquals("Transponding 3 enter", "3 enter", a.getLastReport().toString());
+        assertEquals("Transponding 3 enter 146", "3 enter", a.getLastReport().toString());
     }
 
-    public void testTranspond257Enter() {
+    public void testTranspond257Enter146() {
         LnReporter a = new LnReporter(146);
         LocoNetMessage l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x11, 0x02, 0x01, 0x00});
         a.message(l);
-        assertEquals("Transponding 257 enter", "257 enter", a.getLastReport().toString());
+        assertEquals("Transponding 257 enter 146", "257 enter", a.getLastReport().toString());
     }
 
-    public void testTranspond257Exit() {
+    public void testTranspond257Exit146() {
         LnReporter a = new LnReporter(146);
         LocoNetMessage l = new LocoNetMessage(new int[]{0xD0, 0x01, 0x11, 0x02, 0x01, 0x00});
         a.message(l);
-        assertEquals("Transponding 257 exits", "257 exits", a.getLastReport().toString());
+        assertEquals("Transponding 257 exits 146", "257 exits", a.getLastReport().toString());
     }
 
-    public void testTranspond3Exits() {
+    public void testTranspond3Exits146() {
         LnReporter a = new LnReporter(146);
         LocoNetMessage l = new LocoNetMessage(new int[]{0xD0, 0x01, 0x11, 0x7D, 0x03, 0x00});
         a.message(l);
-        assertEquals("Transponding 3 exits", "3 exits", a.getLastReport().toString());
+        assertEquals("Transponding 3 exits 146", "3 exits", a.getLastReport().toString());
+    }
+
+    public void testTranspond1056Enter175() {
+        LnReporter a = new LnReporter(175);
+        LocoNetMessage l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x2E, 0x08, 0x20, 0x04});
+        a.message(l);
+        assertEquals("Transponding 1056 enter 175", "1056 enter", a.getLastReport().toString());
     }
 
     public void testLnReporterLissy1() {
