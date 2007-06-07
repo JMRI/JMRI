@@ -12,7 +12,7 @@ import jmri.*;
  * associated turnout has been unlocked.
  *
  * @author	Bob Jacobsen    Copyright (C) 2007
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class OsIndicator implements Constants {
 
@@ -34,6 +34,14 @@ public class OsIndicator implements Constants {
         this.osSensor = osSensor;
         this.output = output;
     }
+
+    // Variables to load actions
+	private static final int[] actionOption = {Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
+									Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE};
+	private static final int[] actionDelay = {0,0};
+	private static final int[] actionType = {Conditional.ACTION_SET_TURNOUT,Conditional.ACTION_SET_TURNOUT};
+	private static final int[] actionData = {Turnout.CLOSED, Turnout.THROWN};
+	private static final String[] actionString = {" "," "};
 
     /**
      * Create the underlying objects that implement this
@@ -66,6 +74,9 @@ public class OsIndicator implements Constants {
             int[] num2 = new int[]{0,0};
 			boolean[] triggersCalc = new boolean[]{true,true};
             c.setStateVariables(opern, type, name, data, num1, num2, triggersCalc, opern.length);
+            String[] actionName = {output,output};
+		    c.setAction(actionOption,actionDelay,actionType,
+							actionName,actionData,actionString);
         } else {
             int[] opern = new int[]{Conditional.OPERATOR_NONE};
             int[] type = new int[]{Conditional.TYPE_SENSOR_INACTIVE};
@@ -75,6 +86,9 @@ public class OsIndicator implements Constants {
             int[] num2 = new int[]{0};
 			boolean[] triggersCalc = new boolean[]{true};
             c.setStateVariables(opern, type, name, data, num1, num2, triggersCalc, opern.length);
+            String[] actionName = {output,output};
+		    c.setAction(actionOption,actionDelay,actionType,
+							actionName,actionData,actionString);
         }
                 
         // and put it back in operation
