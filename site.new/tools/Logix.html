@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Logix.html,v 1.5 2007-05-21 13:48:26 jacobsen Exp $ -->
+<!-- $Id: Logix.html,v 1.6 2007-06-07 15:57:38 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -714,6 +714,62 @@
 	turns on something as its first action, and sets a Delayed Set Sensor as 
 	its second action to turn off that something after a specified time provided
 	certain conditions are met.</p>
+<p><li><b>What is a "logic loop" and how can it be avoided?</b>
+
+<p>A "logic loop" results when the program appears to slow down significantly or 
+lock up as multiple Logixs are continuously triggered by changing references to 
+each other.  The best way to avoid a "logic loop" is to be aware of situations 
+that can lead to a loop, and plan your logic to avoid such situations. </p>
+<p>A "logic loop" can result within a single Logix when a state variable (sensor, 
+turnout, etc.) that triggers the Logix is also changed by that same Logix.  The 
+Logix editor will detect some situations that could result in a loop, and will 
+issue a warning when you close the Logix. <b>Heed these warnings!</b> A warning 
+doesn't mean that a loop definitely will result if you continue. The warning 
+message is a "wake up call" that you should study carefully what you're doing 
+to make sure a loop won't result. </p> 
+<p>A more complicated situation involving two or more Logixs can also result in 
+a "logic loop".  For example, if Logix 1 is triggered by sensor A, and has an 
+action that changes turnout B, and Logix 2 is triggered by turnout B and changes 
+sensor A, the potential for a loop exists as these Logixs trigger each other.  
+You can easily extend this idea to triggering chains (loops) involving three or 
+more Logixs, and even to interactions between Logixs and Routes. There is no 
+test in the program to warn about loops involving multiple Logixs. (To develop 
+such a test would be very difficult.)</p>
+
+<p><li><b>What should I do if I think I have a "logic loop"?</b>
+
+<p>When they do occur, "logic loops" can be a bit scary to trouble shoot. Your 
+computer may appear to be locked up, or slowed to a crawl as the loop uses up 
+most of the available computer time. Fortunately JMRI provides tools to help in 
+design and debugging. Unchecking "Triggers Calculation" for a state variable 
+(discussed above), can help you design around loops when you have identified the 
+Logix causing the looping problem. To get around the lock up or slow down 
+problem, start with all your Logixs disabled, (see below) then enable them one 
+by one until you discover the loop.</p>
+<p>If the panel file containing Logixs loads automatically when
+the program starts up, press and release the shift key a few times rapidly as
+soon as you see the small JMRI splash screen (the first thing you see during 
+start up). Your panel file will be loaded with all Logixs disabled.</p>
+<p>If you load your panel file manually using the Panels menu, before loading
+your file, go to the <b>Debug</b> menu and select <b>Load Logixs Disabled</b>. 
+After responding OK to the message, load your panel file as you normally  would. 
+Your panel file will be loaded with all Logixs disabled.</p>
+<p>After loading your panel file, open the Logix Table and verify that all
+Logixs are disabled. If you know which Logix is causing the trouble, you
+can then fix it or delete it, re-enable the other Logixs, and save your panel
+file. If you don't know which Logix is causing the problem, you can enable 
+your Logixs, one by one, until the loop occurs. When the loop starts, 
+you know that the last Logix you enabled is at least partly responsible for
+the problem. At this point you should restart the program with all Logixs 
+disabled, and fix or delete the Logix you identified.</p>
+<p><b>CAUTION:</b> <b>It's wise to save your panel file frequently when entering 
+Logixs.</b> If a logic loop occurs, it may be difficult, if not 
+impossible, to save your panel file before shutting down the program. 
+Remember that a Logix is activated as soon as you click <b>Done</b> in
+the Edit Logix window. Also, remember that hitting an <b>Edit</b> button
+in the Logix Table deactivates the selected Logix before opening it for editing,
+offering a possible way to break into a logic loop without restarting the
+program.</p>
     </dd>
 
 
@@ -748,5 +804,6 @@
 </div> <!-- closes #container -->
 </body>
 </html>
+
 
 
