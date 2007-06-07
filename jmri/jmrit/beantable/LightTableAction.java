@@ -35,7 +35,7 @@ import jmri.util.JmriJFrame;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.22 $
+ * @version     $Revision: 1.23 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -121,15 +121,19 @@ public class LightTableAction extends AbstractTableAction {
                     boolean v = l.getEnabled();
                     l.setEnabled(!v);
     			}
-				else if (col==DELETECOL) {
-					Light g = (Light)getBySystemName((String)getValueAt(row, SYSNAMECOL));
-					// deactivate this light
-					g.deactivateLight();
-					// continue using generic deletion code	
-					super.setValueAt(value, row, col);
-				}
     			else super.setValueAt(value, row, col);
     		}
+    		
+            /**
+             * Delete the bean after all the checking has been done.
+             * <P>
+             * Deactivate the light, then use the superclass to delete it.
+             */
+            void doDelete(NamedBean bean) {
+                ((Light)bean).deactivateLight();
+                super.doDelete(bean);
+            }
+
             boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
                 if (e.getPropertyName().equals(enabledString)) return true;
                 else return super.matchPropertyName(e);

@@ -46,7 +46,7 @@ import jmri.util.JmriJFrame;
  *	   BeanTableBundle.properties, accessed via rb.
  *
  * @author	Dave Duchamp    Copyright (C) 2007
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -134,18 +134,21 @@ public class LogixTableAction extends AbstractTableAction {
                     boolean v = x.getEnabled();
                     x.setEnabled(!v);
     			}
-				else if (col==DELETECOL) {
-					Logix g = (Logix)getBySystemName((String)getValueAt(row, SYSNAMECOL));
-					// verify deletion if desired
-					if ( verifyDeletion(g) ) {
-						// user wants to delete this Logix, deactivate it
-						g.deActivateLogix();
-						// delete the Logix and all its Conditionals
-						logixManager.deleteLogix(g);
-					}
-				}
     			else super.setValueAt(value, row, col);
     		}
+
+            /**
+             * Delete the bean after all the checking has been done.
+             * <P>
+             * Deactivate the Logix and remove it's conditionals
+             */
+            void doDelete(NamedBean bean) {
+                Logix l = (Logix)bean;
+                l.deActivateLogix();
+                // delete the Logix and all its Conditionals
+			    logixManager.deleteLogix(l);
+            }
+
             boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
                 if (e.getPropertyName().equals(enabledString)) return true;
                 else return super.matchPropertyName(e);
@@ -172,29 +175,6 @@ public class LogixTableAction extends AbstractTableAction {
         return "package.jmri.jmrit.beantable.LogixTable";
     }
 	
-	/**
-	 * Issue a delete verification prompt
-	 *    Returns true if the Logix should be deleted, else returns false
-	 */
-	protected boolean verifyDeletion(Logix o) {
-		// First verify with the user that this is really wanted
-		if (!noWarnDelete) {
-			int selectedValue = JOptionPane.showOptionDialog(f,
-					rbx.getString("Warn8"),rbx.getString("WarnTitle"),
-					JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,
-					new Object[]{rbx.getString("ButtonYes"),rbx.getString("ButtonNo"),
-					rbx.getString("ButtonYesPlus")},rbx.getString("ButtonNo"));
-			if (selectedValue == 1) return(false);   // return without deleting if "No" response
-			if (selectedValue == 2) {
-				// Suppress future warnings, and continue
-				noWarnDelete = true;
-			}
-		}
-		return (true);
-	}
-	
-	boolean noWarnDelete = false;
-
 	//  *********** variable definitions ********************
     
 	// Multi use variables 

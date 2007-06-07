@@ -25,7 +25,7 @@ import com.sun.java.util.collections.List;
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.18 $
+ * @version		$Revision: 1.19 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -185,20 +185,48 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
 
     void deleteBean(int row, int col) {
         NamedBean t = getBySystemName((String)sysNameList.get(row));
-        int count = t.getNumPropertyChangeListeners();
+        int count = t.getNumPropertyChangeListeners()-1; // one is this table
         if (log.isDebugEnabled()) log.debug("Delete with "+count);
-        if (count>0) {
-            // warn, since there are listeners attached
-            String msg = java.text.MessageFormat.format(
-                            AbstractTableAction.rb.getString("ReminderInUse"),
-                            new String[]{t.getSystemName(),""+count});
-
-            javax.swing.JOptionPane.showMessageDialog(null, 
+        if (!noWarnDelete) {
+            String msg;
+            if (count>0) { // warn of listeners attached before delete
+                msg = java.text.MessageFormat.format(
+                        AbstractTableAction.rb.getString("DeletePrompt")+"\n"
+                        +AbstractTableAction.rb.getString("ReminderInUse"),
+                        new String[]{t.getSystemName(),""+count});
+            } else {
+                msg = java.text.MessageFormat.format(
+                        AbstractTableAction.rb.getString("DeletePrompt"),
+                        new String[]{t.getSystemName()});
+            }
+        
+            // verify deletion
+            int val = javax.swing.JOptionPane.showOptionDialog(null, 
                     msg, AbstractTableAction.rb.getString("WarningTitle"), 
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    javax.swing.JOptionPane.YES_NO_CANCEL_OPTION, javax.swing.JOptionPane.QUESTION_MESSAGE, null,
+                    new Object[]{AbstractTableAction.rb.getString("ButtonYes"),
+                                 AbstractTableAction.rb.getString("ButtonYesPlus"),
+                                 AbstractTableAction.rb.getString("ButtonNo")},
+                    AbstractTableAction.rb.getString("ButtonNo"));
+            if (val == 2) return;  // return without deleting
+            if (val == 1) { // suppress future warnings
+                noWarnDelete = true;
+            }
         }
-        getManager().deregister(t);
-        t.dispose();
+        // finally OK, do the actual delete
+        doDelete(t);
+    }
+    	
+	boolean noWarnDelete = false;
+
+    /**
+     * Delete the bean after all the checking has been done.
+     * <P>
+     * Separate so that it can be easily subclassed if other functionality is needed.
+     */
+    void doDelete(NamedBean bean) {
+        getManager().deregister(bean);
+        bean.dispose();
     }
     
     /**
