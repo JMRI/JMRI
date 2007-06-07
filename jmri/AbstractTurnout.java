@@ -25,7 +25,7 @@ package jmri;
  *
  * Description:		Abstract class providing the basic logic of the Turnout interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.24 $
+ * @version			$Revision: 1.25 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean 
     implements Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
@@ -445,6 +445,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean
             _secondSensor.removePropertyChangeListener(this);
         }
         _secondSensor = null;
+        super.dispose();
     }
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractTurnout.class.getName());
 }
