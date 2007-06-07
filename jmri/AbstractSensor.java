@@ -6,7 +6,7 @@ import jmri.Sensor;
 /**
  * Abstract class providing the basic logic of the Sensor interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.11 $
+ * @version         $Revision: 1.12 $
  */
 public abstract class AbstractSensor extends AbstractNamedBean implements Sensor, java.io.Serializable {
 
@@ -96,17 +96,6 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     
     // internal data members
     protected int _knownState     = UNKNOWN;
-
-    // since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
-    // reflect to it
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-    public void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
 
 }
 
