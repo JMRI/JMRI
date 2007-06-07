@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.13 $ -->
+<!-- Revision $Revision: 1.14 $ -->
 
 <project name="JMRI" basedir="." default="none">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -46,12 +46,12 @@
     <antcall target="x-rel-create-windows" />
     <antcall target="x-rel-create-osx" />
     <antcall target="x-rel-create-linux" />
-    <antcall target="x-rel-1.1.8-build" />
-    <antcall target="x-rel-create-classic" />
-    <antcall target="x-rel-create-os2" />
+    <!-- <antcall target="x-rel-1.1.8-build" />  -->
+    <!-- <antcall target="x-rel-create-classic" />  -->
+    <!-- <antcall target="x-rel-create-os2" />  -->
     <antcall target="x-rel-installer-osx" />
     <antcall target="x-rel-installer-linux" />
-    <antcall target="x-rel-installer-os2" />
+    <!-- <antcall target="x-rel-installer-os2" />  -->
 	<echo message="build the Windows .exe now"/>
 	<echo message="end of part 1; do part 2 after MacOSX, Linux, OS2 uploads completely built"/>
 </target>
@@ -271,9 +271,9 @@
  
  <target name="release2" depends=""
  					description="part 2 of build a release; useage is ant -Drelease=R1.2.3 -Dnumber=1.2.3 release2">
-    <exec executable="open">
-    	<arg line="-a DropStuff.app MacClassic/JMRI"/>
-    </exec>
+<!--    <exec executable="open">  -->
+<!--    	<arg line="-a DropStuff.app MacClassic/JMRI"/>  -->
+<!--    </exec>  -->
     <move file="Linux/JMRI.tgz" tofile="JMRI.${number}.tgz" />
     <move file="OS2/JMRI.zip" tofile="JMRI.${number}.zip" />
 	<echo message="end of part 2; do part 3 after MacClassic upload completely built"/>
@@ -310,12 +310,12 @@
  					description="part 4 of build a release; usage is ant -Drelease=R1.2.3 -Dnumber=1.2.3 release4">
 	<echo message="upload file Windows .exe file"/>
 	<echo message="if you get an error, upload manually, then ant uploadjavadoc"/>
-    <ftp server="upload.sourceforge.net"
-         userid="ftp" password="jake@physics.berkeley.edu"
-         action="put"
-         verbose="yes" remotedir="incoming" >
-      <fileset dir="." includes="JMRI.${number}.exe" />
-    </ftp>
+    <!-- <ftp server="upload.sourceforge.net"  -->
+    <!--      userid="ftp" password="jake@physics.berkeley.edu"  -->
+    <!--      action="put"  -->
+    <!--      verbose="yes" remotedir="incoming" >  -->
+    <!--   <fileset dir="." includes="JMRI.${number}.exe" />  -->
+    <!-- </ftp>  -->
  
  	<echo message="upload javadocs"/>
     <ant antfile="build.xml" dir="${release}/java" target="uploadjavadoc" />
