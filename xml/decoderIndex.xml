@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <!--Written by JMRI version 1.7.6 on Mon Feb 19 18:11:52 PST 2007 $Id: decoderIndex.xml,v 1.98 2007-02-25 07:16:38 jacobsen Exp $-->
+  <!--Written by JMRI version 1.7.7 on Thu Jun 07 23:46:42 PDT 2007 $Id: decoderIndex.xml,v 1.99 2007-06-08 06:48:26 jacobsen Exp $-->
   <decoderIndex version="118">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
       <manufacturer mfg="AMW" mfgID="19" />
       <manufacturer mfg="Advanced IC Engineering, Inc." mfgID="17" />
-      <manufacturer mfg="Arnold" mfgID="173" />
       <manufacturer mfg="Aristo-Craft Trains" mfgID="34" />
+      <manufacturer mfg="Arnold" mfgID="173" />
       <manufacturer mfg="Atlas" mfgID="127" />
       <manufacturer mfg="AuroTrains" mfgID="170" />
       <manufacturer mfg="BRAWA Modellspielwaren GmbH" mfgID="186" />
@@ -114,6 +114,9 @@
       </family>
       <family name="Bachmann 4-function decoders" mfg="Bachmann Trains" type="locomotive" file="Bachmann_EZDCC_4fn.xml">
         <model model="Bachmann 4-function decoders" numOuts="4" numFns="8" lowVersionID="46" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+      </family>
+      <family name="DAC10" mfg="CML Systems" comment="DAC10 is a stationary decoder, but it can be programmed in the usual way" type="locomotive" file="CML_Systems_DAC10.xml">
+        <model model="DAC10" lowVersionID="1" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
       <family name="Function Decoder" mfg="CT Elektronik" type="locomotive" file="CT_Elektronik_DCX_30_V.xml">
         <model model="DCX30" numOuts="8" numFns="6" maxMotorCurrent="0.8 Amp per group" maxTotalCurrent="1.6 Amp" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
@@ -318,7 +321,7 @@
           <output name="4" label="Pad" connection="solder" />
           <output name="5" label="Pad" connection="solder" />
           <output name="6" label="Pad" connection="solder" />
-          <size length="0" width="0" height="0" units="inches" />
+          <size length="1.05" width=".67" height=".25" units="inches" />
         </model>
         <model model="DH163P" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="NMRAmedium" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <output name="3" label="Green" connection="wire" />
@@ -352,7 +355,7 @@
         </model>
         <model model="DN143" numOuts="4" numFns="8" maxMotorCurrent="1.25A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="4" label="Violet" connection="wire" />
-          <size length="0" width="0" height="0" units="inches" />
+          <size length=".55" width=".36" height=".13" units="inches" />
         </model>
         <model model="DN163" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="4" label="Violet" connection="wire" />
@@ -360,7 +363,7 @@
           <output name="6" label="Pad" connection="solder" />
           <size length="0" width="0" height="0" units="inches" />
         </model>
-        <model model="DN163A0" numOuts="6" numFns="8" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="DN163A0" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="1" label="LED" connection="solder" />
           <output name="2" label="LED" connection="solder" />
           <output name="3" label="Pad" connection="solder" />
@@ -369,7 +372,7 @@
           <output name="6" label="Pad" connection="solder" />
           <size length="3.0015" width="0.374" height="0.157" units="inches" />
         </model>
-        <model model="DN163A1" numOuts="6" numFns="8" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="DN163A1" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="1" label="LED" connection="solder" />
           <output name="2" label="LED" connection="solder" />
           <output name="3" label="Pad" connection="solder" />
@@ -378,7 +381,7 @@
           <output name="6" label="Pad" connection="solder" />
           <size length="3.875" width="3.374" height="0.157" units="inches" />
         </model>
-        <model model="DN163A2" numOuts="6" numFns="8" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="DN163A2" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="1" label="LED" connection="solder" />
           <output name="2" label="LED" connection="solder" />
           <output name="3" label="Pad" connection="solder" />
@@ -387,7 +390,7 @@
           <output name="6" label="Pad" connection="solder" />
           <size length="3.875" width="3.374" height="0.157" units="inches" />
         </model>
-        <model model="DN163I0" numOuts="6" numFns="8" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="DN163I0" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="1" label="LED" connection="solder" />
           <output name="2" label="LED" connection="solder" />
           <output name="3" label="Pad" connection="solder" />
@@ -423,7 +426,7 @@
           <output name="6" label="Pad" connection="solder" />
           <size length="2.165" width="0.472" height="0.098" units="inches" />
         </model>
-        <model model="DN163K0A" numOuts="6" numFns="8" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="DN163K0A" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="1" label="LED" connection="solder" />
           <output name="2" label="LED" connection="solder" />
           <output name="3" label="Pad" connection="solder" />
@@ -450,7 +453,7 @@
           <output name="6" label="Pad" connection="solder" />
           <size length="2.2165" width="0.5485" height="0.1015" units="inches" />
         </model>
-        <model model="DN163K1A" numOuts="6" numFns="8" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="DN163K1A" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="1" label="LED" connection="solder" />
           <output name="2" label="LED" connection="solder" />
           <output name="3" label="Pad" connection="solder" />
@@ -459,7 +462,7 @@
           <output name="6" label="Pad" connection="solder" />
           <size length="3.11" width="0.426" height="0.195" units="inches" />
         </model>
-        <model model="DN163K1B" numOuts="6" numFns="8" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="DN163K1B" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="1" label="LED" connection="solder" />
           <output name="2" label="LED" connection="solder" />
           <output name="3" label="Pad" connection="solder" />
@@ -477,7 +480,7 @@
           <output name="6" label="Pad" connection="solder" />
           <size length="3.11" width="0.426" height="0.195" units="inches" />
         </model>
-        <model model="DN163K2" numOuts="6" numFns="8" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="DN163K2" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="1" label="LED" connection="solder" />
           <output name="2" label="LED" connection="solder" />
           <output name="3" label="Pad" connection="solder" />
@@ -486,7 +489,7 @@
           <output name="6" label="Pad" connection="solder" />
           <size length="3.18" width="0.354" height="0.128" units="inches" />
         </model>
-        <model model="DN163M0" numOuts="6" numFns="8" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="DN163M0" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=1.5A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="1" label="LED" connection="solder" />
           <output name="2" label="Pad" connection="solder" />
           <output name="3" label="Pad" connection="solder" />
@@ -879,12 +882,28 @@
           <output name="4" label="D - Violet" connection="unspecified" />
         </model>
       </family>
-      <family name="Lenz Silver with 6th gen BEMF" mfg="Lenz" highVersionID="65" lowVersionID="65" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" type="locomotive" file="Lenz_Silver.xml">
+      <family name="Function Decoder" mfg="Lenz" lowVersionID="10" type="locomotive" file="Lenz_LF101XF.xml">
+        <model model="LF101XF" numOuts="6" numFns="12" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="A - White" connection="unspecified" />
+          <output name="2" label="B - Yellow" connection="unspecified" />
+          <output name="3" label="C - Green" connection="unspecified" />
+          <output name="4" label="D - Violet" connection="unspecified" />
+          <output name="5" label="E - Brown" connection="unspecified" />
+          <output name="6" label="F - Pink" connection="unspecified" />
+        </model>
+      </family>
+      <family name="Lenz Silver with 6th gen BEMF" mfg="Lenz" highVersionID="75" lowVersionID="65" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" type="locomotive" file="Lenz_Silver.xml">
         <model model="Silver" numOuts="4" numFns="12" lowVersionID="65" maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="1" label="A - White" connection="unspecified" />
           <output name="2" label="B - Yellow" connection="unspecified" />
           <output name="3" label="C - Green" connection="unspecified" />
           <output name="4" label="D - Violet" connection="unspecified" />
+        </model>
+      </family>
+      <family name="Lenz Silver with 6th gen BEMF" mfg="Lenz" highVersionID="0" lowVersionID="0" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" type="locomotive" file="Lenz_Silver_Mini.xml">
+        <model model="Silver Mini" numOuts="2" numFns="8" lowVersionID="0" maxMotorCurrent="0.5A (peak=0.8A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="A - White" connection="unspecified" />
+          <output name="2" label="B - Yellow" connection="unspecified" />
         </model>
       </family>
       <family name="Lenz Ultra-Drive decoders" mfg="Lenz" lowVersionID="1" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" type="locomotive" file="Lenz_UltraDrive.xml">
@@ -981,6 +1000,12 @@
         <model model="Synch Diesel Sound 1636" numOuts="2" numFns="12" maxTotalCurrent="0.75A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <!-- note only F0 to F12 are NMRA compatible -->
           <size length="70" width="9.2" height="5.8" units="mm" />
+        </model>
+      </family>
+      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_1645.xml">
+        <model model="Synch Diesel Sound 1645" numOuts="2" numFns="12" maxTotalCurrent="0.75A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <!-- note only F0 to F12 are NMRA compatible -->
+          <size length="90" width="14" height="4.2" units="mm" />
         </model>
       </family>
       <family name="MRC AD370 Sound decoders" mfg="MRC" comment="MRC Sound Decoders" lowVersionID="32" type="locomotive" file="MRC_AD370.xml">
@@ -2252,6 +2277,22 @@
           <output name="RPM-" connection="unspecified" />
           <output name="Dim" connection="unspecified" />
           <output name="Mute" connection="unspecified" />
+        </model>
+      </family>
+      <family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_Tsu_Bachmann.xml">
+        <model model="Tsunami Bachmann OEM" numOuts="2" numFns="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <versionCV lowVersionID="80" />
+          <output name="Whistle" connection="unspecified" />
+          <output name="Bell" connection="unspecified" />
+          <output name="Dynamo" connection="unspecified" />
+          <output name="Short-Whistle" connection="unspecified" />
+          <output name="Steam-Release" connection="unspecified" />
+          <output name="Water-Stop" connection="unspecified" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Mute" connection="unspecified" />
+          <output name="Injector" connection="unspecified" />
+          <output name="Brake-Squeal" connection="unspecified" />
+          <output name="Coupler" connection="unspecified" />
         </model>
       </family>
       <family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_Tsu_Steam.xml">
