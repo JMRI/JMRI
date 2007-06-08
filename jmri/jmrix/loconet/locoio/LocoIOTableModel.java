@@ -36,7 +36,7 @@ import java.beans.*;
  * though there are significant modifications.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
 
 public class LocoIOTableModel
@@ -82,8 +82,6 @@ public class LocoIOTableModel
 
     /**
      * Primary constructor.  Initializes all the arrays.
-     * @param unitAddr Address for this LocoIO unit.  Provided here,
-     * but may also be changed later with setUnitAddress.
      */
     public LocoIOTableModel(LocoIOData ldata) {
         super();
