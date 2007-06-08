@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.14 $ -->
+<!-- Revision $Revision: 1.15 $ -->
 
 <project name="JMRI" basedir="." default="none">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -63,8 +63,8 @@
     <delete dir="${release}" />
     <mkdir dir="${release}"/>
     <echo message="cvs checkout" />
-    <cvs package="ant" quiet="true" dest="${release}" tag="${release}"/>
-    <cvs package="check" quiet="true" dest="${release}" tag="${release}"/>
+    <cvs package="all" quiet="true" dest="${release}" tag="${release}"/>
+    <!-- <cvs package="check" quiet="true" dest="${release}" tag="${release}"/> -->
 
     <echo message="test" />
     <ant antfile="build.xml" dir="${release}/java" target="alltest" />
@@ -275,7 +275,7 @@
 <!--    	<arg line="-a DropStuff.app MacClassic/JMRI"/>  -->
 <!--    </exec>  -->
     <move file="Linux/JMRI.tgz" tofile="JMRI.${number}.tgz" />
-    <move file="OS2/JMRI.zip" tofile="JMRI.${number}.zip" />
+<!--    <move file="OS2/JMRI.zip" tofile="JMRI.${number}.zip" />  -->
 	<echo message="end of part 2; do part 3 after MacClassic upload completely built"/>
  </target>
 
@@ -283,7 +283,7 @@
  					description="part 3 of build a release; useage is ant -Drelease=R1.2.3 -Dnumber=1.2.3 release3">
 
 
-    <move file="MacClassic/JMRI.hqx" tofile="JMRI.${number}.Classic.hqx" />
+<!--    <move file="MacClassic/JMRI.hqx" tofile="JMRI.${number}.Classic.hqx" />  -->
 	<echo message="upload Mac (2), OS2, Linux files"/>
 	<echo message="JMRI.${number}.hqx, JMRI.${number}.tgz, JMRI.${number}.Classic.hqx, JMRI.${number}.zip"/>
     <echo message="if you get an error here, upload manually and move to step 4"/>

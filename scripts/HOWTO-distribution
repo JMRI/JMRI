@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.47 $)
+distribution.  ($Revision: 1.48 $)
 
 Start with a directory, typically called "Distributions", that
 contains:
@@ -102,7 +102,7 @@ To actually create the distribution:
    
     hdiutil create -size 20MB -fs HFS+ -volname "JMRI 1.2.3" temp.dmg
     open temp.dmg
-    (copy JMRI folder using finder)
+    (copy MacOSX/JMRI folder to DMG using finder)
     cd /Volumes/JMRI(tab) 
     ln -s /Applications .
     cd (back to Distributions)
@@ -115,7 +115,9 @@ To actually create the distribution:
 	This will launch one more StuffIt process (for MacClassic)
 	Wait for it to complete.
 	
-( ) Once the 4th StuffIt process is done, start uploading via
+( ) (Do the next step manually for now!!)
+
+    Once the 4th StuffIt process is done, start uploading via
 	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release3
 	
 	If this fails due to ant not knowing about ftp:
