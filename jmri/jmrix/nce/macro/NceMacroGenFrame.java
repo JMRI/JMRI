@@ -11,7 +11,7 @@ import javax.swing.*;
  * Frame for user input of Nce macros
  * @author	Bob Jacobsen   Copyright (C) 2001
  * @author Dan Boudreau 	Copyright (C) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  **/
 
 public class NceMacroGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -113,9 +113,12 @@ public class NceMacroGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix
 		if (macroNum < 1 | macroNum > 255)
 			return null;
 
-		NceMessage m = new NceMessage(2);
-		m.setElement(0, 0x9C); 		// Macro cmd
-		m.setElement(1, macroNum);	// Macro #
+		NceMessage m = new NceMessage(5);
+		m.setElement(0, 0xAD); 		// Macro cmd
+		m.setElement(1, 0x00); 		// addr_h
+		m.setElement(2, 0x01); 		// addr_l
+		m.setElement(3, 0x01); 		// Macro cmd
+		m.setElement(4, macroNum);	// Macro #
 		m.setBinary(true);
 		m.setReplyLen(REPLY_LEN);
 		return m;
