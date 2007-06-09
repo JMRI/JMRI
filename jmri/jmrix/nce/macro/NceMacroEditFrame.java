@@ -56,7 +56,7 @@ import javax.swing.*;
  * FF10 = link macro 16 
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -334,6 +334,11 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
  
     // Previous, Next, Get, and Save buttons
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
+    	
+		// if we're searching ignore user 
+		if (macroSearchInc || macroSearchDec)
+			return;
+		
     	if (ae.getSource() == backUpButton){
     		JOptionPane.showMessageDialog(NceMacroEditFrame.this,
 					"This function has not been implemented in this release", "NCE Macro",
@@ -363,6 +368,7 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
 		} else {
 			
 			setSaveButton(false);		// Turn off save button
+		
 			if (ae.getSource() == previousButton) {
 				macroCount = 0; // used to determine if all 256 macros have been
 				// read
@@ -389,6 +395,11 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
 
 	// One of the ten Command buttons pressed
 	public void buttonActionCmdPerformed(java.awt.event.ActionEvent ae) {
+		
+		// if we're searching ignore user 
+		if (macroSearchInc || macroSearchDec)
+			return;
+		
 		if (ae.getSource() == cmdButton1) {
 			updateAccyCmdPerformed(accyTextField1, cmdButton1, textAccy1,
 					deleteButton1);
@@ -433,6 +444,11 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
 
 	// One of ten Delete buttons pressed
 	public void buttonActionDeletePerformed(java.awt.event.ActionEvent ae) {
+		
+		// if we're searching ignore user 
+		if (macroSearchInc || macroSearchDec)
+			return;
+		
 		if (ae.getSource() == deleteButton1) {
 			updateAccyDelPerformed(accyTextField1, cmdButton1, textAccy1,
 					deleteButton1);
