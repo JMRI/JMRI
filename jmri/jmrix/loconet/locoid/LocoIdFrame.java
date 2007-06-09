@@ -14,7 +14,7 @@ import javax.swing.*;
  * User interface for setting the LocoNet ID
  *
  * @author			Bob Jacobsen   Copyright (C) 2006
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class LocoIdFrame extends jmri.util.JmriJFrame implements LocoNetListener {
 
@@ -38,23 +38,23 @@ public class LocoIdFrame extends jmri.util.JmriJFrame implements LocoNetListener
         setButton = new javax.swing.JButton(rb.getString("ButtonSet"));
         readButton = new javax.swing.JButton(rb.getString("ButtonRead"));
         value = new javax.swing.JTextField(2);
-        
+
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         JPanel p = new JPanel();
         p.setLayout(new java.awt.FlowLayout());
         p.add(readButton);
         p.add(setButton);
-        
+
         getContentPane().add(p);
 
         p = new JPanel();
         p.setLayout(new java.awt.FlowLayout());
         p.add(new JLabel(rb.getString("LabelValue")));
         p.add(value);
-        
+
         getContentPane().add(p);
-        
+
         setButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     setButtonActionPerformed();
@@ -68,10 +68,10 @@ public class LocoIdFrame extends jmri.util.JmriJFrame implements LocoNetListener
 
         // pack to format display
         pack();
-        
+
         // connect to the LnTrafficController
         connect(LnTrafficController.instance());
-        
+
         // prompt for an update
         readButtonActionPerformed();
     }
@@ -90,7 +90,7 @@ public class LocoIdFrame extends jmri.util.JmriJFrame implements LocoNetListener
     public void message(LocoNetMessage m) {
         if (m.getNumDataElements() != 6) return;
         if ( (m.getElement(0)&0xFF) != 0xD7) return;
-        if ( (m.getElement(1)&0xFF) != 0x1F) return;
+        if ( ((m.getElement(1)&0xFF) != 0x1F) && ((m.getElement(1)&0xFF) != 0x17)) return;
         if ( (m.getElement(2)&0xFF) != 0x00) return;
         value.setText(""+m.getElement(3));
     }
@@ -138,7 +138,7 @@ public class LocoIdFrame extends jmri.util.JmriJFrame implements LocoNetListener
     public void dispose() {
         tc.removeLocoNetListener(~0, this);
     }
-    
+
     // private data
     private LnTrafficController tc = null;
 
