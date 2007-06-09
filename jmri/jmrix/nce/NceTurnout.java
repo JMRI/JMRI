@@ -15,7 +15,7 @@ import jmri.Turnout;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
 public class NceTurnout extends AbstractTurnout {
 
@@ -57,7 +57,7 @@ public class NceTurnout extends AbstractTurnout {
     }
     static String[] modeNames = null;
     static int[] modeValues = null;
-    public static int numNtTurnouts = 0;
+    static int numNtTurnouts = 0;
     
     public int getNumber() { return _number; }
 
