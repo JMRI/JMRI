@@ -20,14 +20,14 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Alex Shepherd   Copyright (C) 2003
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class LocoBufferStatsFrame extends jmri.util.JmriJFrame implements LocoNetListener {
 
     JPanel lb2Panel;
     JPanel rawPanel;
     JPanel pr2Panel;
-    
+
     public LocoBufferStatsFrame() {
         super("LocoNet Stats Monitor");
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -44,14 +44,16 @@ public class LocoBufferStatsFrame extends jmri.util.JmriJFrame implements LocoNe
         rawPanel.add(r6);
         rawPanel.add(r7);
         rawPanel.add(r8);
-        
+
         lb2Panel = new JPanel();
         lb2Panel.setLayout(new BoxLayout(lb2Panel, BoxLayout.X_AXIS));
         lb2Panel.add(new JLabel(" Version:"));
         lb2Panel.add(version);
         lb2Panel.add(new JLabel(" Breaks:"));
+        breaks.setPreferredSize(version.getPreferredSize());
         lb2Panel.add(breaks);
         lb2Panel.add(new JLabel(" Errors:"));
+        errors.setPreferredSize(version.getPreferredSize());
         lb2Panel.add(errors);
 
         pr2Panel = new JPanel();
@@ -66,8 +68,8 @@ public class LocoBufferStatsFrame extends jmri.util.JmriJFrame implements LocoNe
         pr2Panel.add(hardware);
         pr2Panel.add(new JLabel(" Software Version:"));
         pr2Panel.add(software);
-        
-       
+
+
         getContentPane().add(rawPanel);
         getContentPane().add(lb2Panel);
         getContentPane().add(pr2Panel);
@@ -96,16 +98,16 @@ public class LocoBufferStatsFrame extends jmri.util.JmriJFrame implements LocoNe
         lb2Panel.setVisible(false);
         rawPanel.setVisible(false);
         pr2Panel.setVisible(false);
-        
+
         // finally, request data
         requestUpdate();
-  
+
     }
 
     void report(String msg) {
         log.error(msg);
     }
-    
+
     public void message(LocoNetMessage msg){
       if( updatePending &&
           ( msg.getOpCode() == LnConstants.OPC_PEER_XFER ) &&
@@ -117,11 +119,11 @@ public class LocoBufferStatsFrame extends jmri.util.JmriJFrame implements LocoNe
           ( ( msg.getElement( 10 ) & 0xF0 ) == 0x0 ) ) {
             // LocoBuffer II form
             int[] data = msg.getPeerXfrData() ;
-        
+
             version.setText( StringUtil.twoHexFromInt( data[0]) + StringUtil.twoHexFromInt(data[4] ) );
             breaks.setText( Integer.toString( (data[5] << 16) + (data[6] << 8) + data[7] ) );
             errors.setText( Integer.toString( (data[1] << 16) + (data[2] << 8) + data[3] ) );
-        
+
             lb2Panel.setVisible(true);
             rawPanel.setVisible(false);
             pr2Panel.setVisible(false);
@@ -134,7 +136,7 @@ public class LocoBufferStatsFrame extends jmri.util.JmriJFrame implements LocoNe
               ( msg.getElement( 1 ) == 0x10 ) &&
               ( msg.getElement( 2 ) == 0x22 ) &&
               ( msg.getElement( 3 ) == 0x22 ) &&
-              ( msg.getElement( 4 ) == 0x01 ) ) 
+              ( msg.getElement( 4 ) == 0x01 ) )
             {  // PR2 form
             int[] data = msg.getPeerXfrData() ;
             serial.setText(Integer.toString(data[1]*256+data[0]));
@@ -162,12 +164,12 @@ public class LocoBufferStatsFrame extends jmri.util.JmriJFrame implements LocoNe
                 r6.setText(StringUtil.twoHexFromInt(data[5]));
                 r7.setText(StringUtil.twoHexFromInt(data[6]));
                 r8.setText(StringUtil.twoHexFromInt(data[7]));
-    
+
                 lb2Panel.setVisible(false);
                 rawPanel.setVisible(true);
                 pr2Panel.setVisible(false);
                 pack();
-    
+
                 updatePending = false ;
             } catch ( Exception e ) {
                 log.error("Error parsing update: "+msg);
@@ -200,19 +202,19 @@ public class LocoBufferStatsFrame extends jmri.util.JmriJFrame implements LocoNe
     JTextField r6 = new JTextField(3);
     JTextField r7 = new JTextField(3);
     JTextField r8 = new JTextField(3);
-    
+
     JTextField serial = new JTextField(6);
     JTextField status = new JTextField(5);
     JTextField current = new JTextField(4);
     JTextField hardware = new JTextField(2);
     JTextField software = new JTextField(3);
 
-    JTextField version = new JTextField("  XXXX");
-    public JTextField breaks = new JTextField("     0");
-    public JTextField errors = new JTextField("     0");
+    JTextField version = new JTextField("   XXXX");
+    public JTextField breaks = new JTextField("0");
+    public JTextField errors = new JTextField("0");
     boolean updatePending = false ;
 
-    
+
     JButton updateButton = new JButton("Update");
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoBufferStatsFrame.class.getName());
