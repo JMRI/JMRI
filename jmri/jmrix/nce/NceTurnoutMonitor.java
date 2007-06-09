@@ -28,7 +28,7 @@ import jmri.Turnout;
  * 
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 
 public class NceTurnoutMonitor implements NceListener{
@@ -40,7 +40,7 @@ public class NceTurnoutMonitor implements NceListener{
     private static final int REPLY_LEN = BLOCK_LEN;		// number of bytes read
     private static final int NCE_ACCY_THROWN = 0;		// NCE internal accessory "REV"
     private static final int NCE_ACCY_CLOSE = 1;		// NCE internal accessory "NORM"
-    public static final int POLL_TIME = 100;			// Poll NCE memory every 100 msec
+    static final int POLL_TIME = 100;			// Poll NCE memory every 100 msec
  
     // object state
     private int currentBlock;							// used as state in scan over active blocks
