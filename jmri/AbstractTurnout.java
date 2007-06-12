@@ -25,7 +25,7 @@ package jmri;
  *
  * Description:		Abstract class providing the basic logic of the Turnout interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.25 $
+ * @version			$Revision: 1.26 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean 
     implements Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
@@ -172,7 +172,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean
     protected int _activeFeedbackType   = DIRECT;
     
     // Temporary expedient, see jmri.jmrit.nce.NceTurnoutMonitor
-    public static int numFeedbackChanges = 0;
+    private static int numFeedbackChanges = 0;
+    public static int getNumFeedbackChanges() {return numFeedbackChanges;};
     
     private int _knownState     = UNKNOWN;
     private int _commandedState = UNKNOWN;
