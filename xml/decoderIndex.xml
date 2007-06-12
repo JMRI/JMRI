@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <!--Written by JMRI version 1.7.7 on Thu Jun 07 23:46:42 PDT 2007 $Id: decoderIndex.xml,v 1.100 2007-06-08 07:06:38 jacobsen Exp $-->
-  <decoderIndex version="120">
+  <!--Written by JMRI version 1.7.7 on Tue Jun 12 08:37:09 PDT 2007 $Id: decoderIndex.xml,v 1.101 2007-06-12 15:38:48 jacobsen Exp $-->
+  <decoderIndex version="121">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -2698,6 +2698,9 @@
       </family>
       <family name="SRC8" mfg="Team Digital" type="stationary" comment="SRC8 is not stationary decoder, but it can be programmed in the usual way" file="TD_SRC8.xml">
         <model model="SRC8" lowVersionID="12" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+      </family>
+      <family name="Version 1" mfg="Trix Modelleisenbahn" highVersionID="65" lowVersionID="65" comment="Trx Selectrix &amp; DCC decoder" type="locomotive" file="Trix_Modelleisenbahn_version_1.xml">
+        <model model="Version 1" numOuts="0" numFns="0" lowVersionID="65" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
       <family name="Mini-Multiprotocoll Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="8" highVersionID="8" type="locomotive" file="Uhlenbrock_73500.xml">
         <model model="73500" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
