@@ -28,7 +28,7 @@ import jmri.Turnout;
  * 
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 
 public class NceTurnoutMonitor implements NceListener{
@@ -60,18 +60,18 @@ public class NceTurnoutMonitor implements NceListener{
     	
     	if (NceMessage.getCommandOptions() < NceMessage.OPTION_2006 )return null;	//Only 2007 CS EPROMs support polling
     	if (NceEpromChecker.nceUSBdetected)return null;								//Can't poll USB!
-    	if (NceTurnout.numNtTurnouts == 0)return null;								//No work!
+    	if (NceTurnout.getNumNtTurnouts() == 0)return null;								//No work!
     	
     	// User can change a turnout's feedback to MONITORING, therefore we need to rescan
     	// This doesn't occur very often, so we'll assume the change was to MONITORING
-		if (savedFeedbackChanges != NceTurnout.numFeedbackChanges) {
-			savedFeedbackChanges = NceTurnout.numFeedbackChanges;
+		if (savedFeedbackChanges != NceTurnout.getNumFeedbackChanges()) {
+			savedFeedbackChanges = NceTurnout.getNumFeedbackChanges();
 			numTurnouts = -1; // force rescan
 		}
  
     	// See if the number of turnouts now differs from the last scan
-        if (numTurnouts != NceTurnout.numNtTurnouts) {
-            numTurnouts = NceTurnout.numNtTurnouts;	
+        if (numTurnouts != NceTurnout.getNumNtTurnouts()) {
+            numTurnouts = NceTurnout.getNumNtTurnouts();	
             
             // Determine what turnouts have been defined and what blocks have active turnouts
             for (int block = 0; block < NUM_BLOCK; block++){
