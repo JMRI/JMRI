@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <!--Written by JMRI version 1.7.7 on Tue Jun 12 08:37:09 PDT 2007 $Id: decoderIndex.xml,v 1.101 2007-06-12 15:38:48 jacobsen Exp $-->
+  <!--Written by JMRI version 1.7.7 on Tue Jun 12 08:37:09 PDT 2007 $Id: decoderIndex.xml,v 1.102 2007-06-13 20:02:23 jacobsen Exp $-->
   <decoderIndex version="121">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -24,6 +24,7 @@
       <manufacturer mfg="DCCconcepts" mfgID="36" />
       <manufacturer mfg="DCCdevices" mfgID="39" />
       <manufacturer mfg="Dietz Modellbahntechnik" mfgID="115" />
+      <manufacturer mfg="Digirails" mfgID="42" />
       <manufacturer mfg="Digitrax" mfgID="129" />
       <manufacturer mfg="Doehler and Haas" mfgID="97" />
       <manufacturer mfg="ECCO GmbH" mfgID="121" />
@@ -55,6 +56,7 @@
       <manufacturer mfg="Nagasue System Design Office" mfgID="103" />
       <manufacturer mfg="New Your Byano Limited" mfgID="71" />
       <manufacturer mfg="North Coast Engineering" mfgID="11" />
+      <manufacturer mfg="Passmann" mfgID="41" />
       <manufacturer mfg="PSI-Dynatrol" mfgID="14" />
       <manufacturer mfg="Praecipuus" mfgID="33" />
       <manufacturer mfg="ProfiLok Modellbahntechnik GmbH" mfgID="125" />
