@@ -8,6 +8,9 @@ import jmri.jmrix.nce.*;
 import java.awt.*;
 import javax.swing.*;
 
+import java.io.*;
+
+
 
 /**
  * Frame for user edit of NCE macros
@@ -21,8 +24,8 @@ import javax.swing.*;
  * 1	xC814
  * 2	xC828
  * 3	xC83C
- * .
- * .
+ * .      .
+ * .      .
  * 255	xDBEC
  * 
  * Each macro can close or throw up to ten accessories.  Macros can also be linked
@@ -56,29 +59,29 @@ import javax.swing.*;
  * FF10 = link macro 16 
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
 
-	private final int CS_MACRO_MEM = 0xC800;	// Start of NCE CS Macro memory 
-	private final int MAX_MACRO = 255;			// 
-	private int macroNum = 0;					// Macro being worked
-	private final int REPLY_1 = 1;				// reply length of 1 byte expected
-	private final int REPLY_16 = 16;			// reply length of 16 bytes expected
-	private int replyLen = 0;					// expected byte length
-	private boolean waiting = false;			// to catch responses not intended for this module
+	private static final int CS_MACRO_MEM = 0xC800;	// start of NCE CS Macro memory 
+	private static final int MAX_MACRO = 255;		// there are 255 possible macros
+	private int macroNum = 0;						// macro being worked
+	private static final int REPLY_1 = 1;			// reply length of 1 byte expected
+	private static final int REPLY_16 = 16;			// reply length of 16 bytes expected
+	private int replyLen = 0;						// expected byte length
+	private int waiting = 0;						// to catch responses not intended for this module
 	
-	private final String QUESTION = "  ??  ";	// The three possible states for a turnout
-	private final String CLOSED = "Closed ";
-	private final String THROWN = "Thrown";	
+	private static final String QUESTION = "  ??  ";// The three possible states for a turnout
+	private static final String CLOSED = "Closed ";
+	private static final String THROWN = "Thrown";	
 	
-	private final String DELETE = "Delete";
+	private static final String DELETE = "Delete";
 	
-	private final String EMPTY = "empty";		// One of two accessory states
-	private final String ACCESSORY = "accessory";
+	private static final String EMPTY = "empty";	// One of two accessory states
+	private static final String ACCESSORY = "accessory";
 	
-	private final String LINK = "Link macro";	// Line 10 alternative to Delete
+	private static final String LINK = "Link macro";// Line 10 alternative to Delete
 
 	private boolean macroSearchInc = false;		// next search
 	private boolean macroSearchDec = false;		// previous search
@@ -181,6 +184,7 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
     
     public NceMacroEditFrame() {
     }
+ 
 
     public void initComponents() throws Exception {
         // the following code sets the frame's initial state
@@ -332,24 +336,12 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
         this.setSize (400,400);
     }
  
-    // Previous, Next, Get, and Save buttons
+    // Previous, Next, Get, Save, Restore & Backup buttons
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
     	
 		// if we're searching ignore user 
 		if (macroSearchInc || macroSearchDec)
 			return;
-		
-    	if (ae.getSource() == backUpButton){
-    		JOptionPane.showMessageDialog(NceMacroEditFrame.this,
-					"This function has not been implemented in this release", "NCE Macro",
-					JOptionPane.WARNING_MESSAGE);
-    	}
-    		
-    	if (ae.getSource() == restoreButton){
-    		JOptionPane.showMessageDialog(NceMacroEditFrame.this,
-					"This function has not been implemented in this release", "NCE Macro",
-					JOptionPane.WARNING_MESSAGE);
-    	}
 
 		if (ae.getSource() == saveButton) {
 			boolean status = saveMacro();
@@ -390,10 +382,23 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
 				// Get Macro
 				macroNum = getMacro();
 			}
+			
+	    	if (ae.getSource() == backUpButton){
+	    		
+	            Thread mb = new NceMacroBackup();
+	            mb.setName("Macro Backup");
+	            mb.start ();
+	    	}
+	   		
+	    	if (ae.getSource() == restoreButton){
+	            Thread mr = new NceMacroRestore();
+	            mr.setName("Macro Restore");
+	            mr.start ();
+	    	}
 		}
 	}
 
-	// One of the ten Command buttons pressed
+	// One of the ten accessory command buttons pressed
 	public void buttonActionCmdPerformed(java.awt.event.ActionEvent ae) {
 		
 		// if we're searching ignore user 
@@ -485,8 +490,10 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
 			updateAccyDelPerformed(accyTextField9, cmdButton9, textAccy9,
 					deleteButton9);
 		}
-		// row ten delete button behaves differently 
+		// row ten delete button behaves differently
+		// could be link button
 		if (ae.getSource() == deleteButton10) {
+			
 			// is the user trying to link a macro?
 			if (deleteButton10.getText() == LINK){
 				if (macroValid == false) { // Error user input incorrect
@@ -508,6 +515,7 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
 				cmdButton10.setVisible(false);
 				deleteButton10.setText(DELETE);
 				deleteButton10.setToolTipText("Remove macro link");
+				
 			// user wants to delete a accessory address or a link	
 			}else{
 			updateAccyDelPerformed(accyTextField10, cmdButton10, textAccy10,
@@ -706,11 +714,11 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
     
     // response from save, get, next or previous
 	public void reply(NceReply r) {
-		if (!waiting) {
+		if (waiting <= 0) {
 			log.error("unexpected response");
 			return;
 		}
-		waiting = false;
+		waiting--;
 		if (r.getNumDataElements() != replyLen) {
 			macroReply.setText("error");
 			return;
@@ -988,7 +996,7 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
     		nceMacroAddr = nceMacroAddr + 16;	//adjust for second memory read
     	}
     	replyLen = REPLY_16;			// Expect 16 byte response
-    	waiting = true;
+    	waiting++;
 		byte[] bl = NceBinaryCommand.accMemoryRead(nceMacroAddr);
 		NceMessage m = NceMessage.createBinaryMessage(bl, REPLY_16);
 		return m;
@@ -998,12 +1006,12 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
 	private NceMessage writeMacroMemory(int macroNum, byte[] b, boolean second) {
 		int nceMacroAddr = (macroNum * 20) + CS_MACRO_MEM;
 		replyLen = REPLY_1; // Expect 1 byte response
-		waiting = true;
+		waiting++;
 		byte[] bl;
 
 		// write 4 bytes
 		if (second) {
-			nceMacroAddr = nceMacroAddr + 16; // adjust for second memory
+			nceMacroAddr += 16; 	// adjust for second memory
 			// write
 			bl = NceBinaryCommand.accMemoryWriteN(nceMacroAddr, 4);
 			int j = bl.length-16;
