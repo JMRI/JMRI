@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <!--Written by JMRI version 1.7.7 on Tue Jun 12 08:37:09 PDT 2007 $Id: decoderIndex.xml,v 1.102 2007-06-13 20:02:23 jacobsen Exp $-->
+  <!--Written by JMRI version 1.7.7 on Wed Jun 13 22:41:42 PDT 2007 $Id: decoderIndex.xml,v 1.103 2007-06-14 05:42:51 jacobsen Exp $-->
   <decoderIndex version="121">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -56,8 +56,8 @@
       <manufacturer mfg="Nagasue System Design Office" mfgID="103" />
       <manufacturer mfg="New Your Byano Limited" mfgID="71" />
       <manufacturer mfg="North Coast Engineering" mfgID="11" />
-      <manufacturer mfg="Passmann" mfgID="41" />
       <manufacturer mfg="PSI-Dynatrol" mfgID="14" />
+      <manufacturer mfg="Passmann" mfgID="41" />
       <manufacturer mfg="Praecipuus" mfgID="33" />
       <manufacturer mfg="ProfiLok Modellbahntechnik GmbH" mfgID="125" />
       <manufacturer mfg="Public-domain and DIY" mfgID="13" />
@@ -1678,7 +1678,7 @@
           <output name="3" label="" connection="other" />
           <output name="4" label="" connection="other" />
         </model>
-        <model model="BLI F7" numFns="14" numOuts="14" productID="143" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="BLI F7 w/ Dynamics" numFns="14" numOuts="14" productID="143" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="1" label="" connection="other" />
           <output name="2" label="" connection="other" />
           <output name="3" label="" connection="other" />
