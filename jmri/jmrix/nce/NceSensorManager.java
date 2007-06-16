@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractMRReply;
  * see nextAiuPoll()
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class NceSensorManager extends jmri.AbstractSensorManager
                             implements NceListener {
@@ -79,10 +79,10 @@ public class NceSensorManager extends jmri.AbstractSensorManager
     
     // polling parameters and variables
     
-    private final int shortCycleInterval = 100;
+    private final int shortCycleInterval = 200;
     private final int longCycleInterval = 10000;		// when we know async messages are flowing
     private final long maxSilentInterval = 30000;		// max slow poll time without hearing an async message
-    private final int pollTimeout = 5000;				// in case of lost response
+    private final int pollTimeout = 20000;				// in case of lost response
     private int aiuCycleCount;
     private long lastMessageReceived;					// time of last async message
     private NceAIU currentAIU;
@@ -157,6 +157,7 @@ public class NceSensorManager extends jmri.AbstractSensorManager
         m.setReplyLen(4);
         m.setElement(0, 0x8A);
         m.setElement(1, aiuNo);
+        m.setTimeout(pollTimeout);
         return m;
     }
 
