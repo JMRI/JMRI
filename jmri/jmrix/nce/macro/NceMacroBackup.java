@@ -5,6 +5,7 @@ package jmri.jmrix.nce.macro;
 import javax.swing.*;
 
 import java.io.*;
+
 import jmri.util.StringUtil;
 
 import jmri.jmrix.nce.NceBinaryCommand;
@@ -57,7 +58,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * This backup routine uses the same macro data format as NCE.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 
@@ -78,12 +79,25 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 
 		// get file to write to
 		JFileChooser fc = new JFileChooser(jmri.jmrit.XmlFile.prefsDir());
+		fc.addChoosableFileFilter(new textFilter());
+		
+		File fs = new File ("NCE macro backup.txt");
+		fc.setSelectedFile(fs);
+		
 		int retVal = fc.showSaveDialog(null);
 		if (retVal != JFileChooser.APPROVE_OPTION)
 			return; // cancelled
 		if (fc.getSelectedFile() == null)
 			return; // cancelled
+
 		File f = fc.getSelectedFile();
+		if (f.exists()) {
+			if(JOptionPane.showConfirmDialog(null, "File "
+					+ f.getName() + " already exists, overwrite it?",
+					"Overwrite file?", JOptionPane.OK_CANCEL_OPTION)!= JOptionPane.OK_OPTION) {
+				return;
+			}
+		}
 		PrintWriter fileOut;
 
 		try {
@@ -93,11 +107,9 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 			return;
 		}
 		
-		if (JOptionPane
-				.showConfirmDialog(
-						null,
-						"Backup can take over a minute, continue?",
-						"NCE Macro", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+		if (JOptionPane.showConfirmDialog(null,
+				"Backup can take over a minute, continue?", "NCE Macro",
+				JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 			return;
 		}
 
@@ -111,7 +123,7 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 
 			getNceMacro(macroNum);
 
-			// wait 30 sec for each read pair to complete
+			// wait up to 30 sec for each read pair to complete
 			int waitcount = 300;
 			while (waiting > 0) {
 				try {
@@ -121,7 +133,7 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 				if (waitcount-- < 0) {
 					log.error("read timeout");
 					fileValid = false;		// need to quit
-					macroNum = NUM_MACRO;	// exit for loop
+					macroNum = NUM_MACRO;	// exit "for loop"
 					break;
 				}
 			}
@@ -213,6 +225,23 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 		}
 		secondRead = true; // next read is the next 4 bytes of macro
 		waiting--;
+	}
+	
+	private class textFilter extends javax.swing.filechooser.FileFilter {
+		
+		public boolean accept(File f){
+			if (f.isDirectory())
+			return true;
+			String name = f.getName();
+			if (name.matches(".*\\.txt"))
+				return true;
+			else
+				return false;
+		}
+		
+		public String getDescription() {
+			return "Text Documents (*.txt)";
+		}
 	}
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category
