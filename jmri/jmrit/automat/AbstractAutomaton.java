@@ -73,7 +73,7 @@ import javax.swing.JTextArea;
  * so that Jython code can easily use some of the methods.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.31 $
+ * @version     $Revision: 1.32 $
  */
 public class AbstractAutomaton implements Runnable {
 
@@ -487,7 +487,11 @@ public class AbstractAutomaton implements Runnable {
      *
      * @param mInputs Array of NamedBeans to watch
      */
-    public synchronized void waitChange(NamedBean[] mInputs){
+    // dboudreau, removed synchronized from the method below.
+    // The synchronized can cause thread lockup when a one thread
+    // is held at the inner synchronized (self)
+    
+    public void waitChange(NamedBean[] mInputs){
         if (!inThread) log.warn("waitChange invoked from invalid context");
         if (log.isDebugEnabled()) log.debug("waitChange[] starts");
 
