@@ -11,7 +11,7 @@ import javax.swing.*;
  * Frame for user input of Nce macros
  * @author	Bob Jacobsen   Copyright (C) 2001
  * @author Dan Boudreau 	Copyright (C) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  **/
 
 public class NceMacroGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -82,7 +82,11 @@ public class NceMacroGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix
 		}
 		macroReply.setText("waiting");
 		NceTrafficController.instance().sendNceMessage(m, this);
-
+		
+		// Unfortunately, the new command doesn't tell us if the macro is empty
+		// so we send old command for status
+		NceMessage m2 = createOldMacroCmd(packetTextField.getText());
+		NceTrafficController.instance().sendNceMessage(m2, this);
 	}
 
     public void  message(NceMessage m) {}  // ignore replies
@@ -98,11 +102,50 @@ public class NceMacroGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix
 		} else {
 			macroReply.setText("error");
 		}
-        
     } 
 
+    
     NceMessage createMacroCmd(String s) {
-		// gather bytes in result
+
+		int macroNum = 0;
+		try {
+			macroNum = Integer.parseInt(s);
+		} catch (NumberFormatException e) {
+			return null;
+		}
+
+		if (macroNum < 1 | macroNum > 255)
+			return null;
+		
+		if (NceMessage.getCommandOptions() >= NceMessage.OPTION_2006) {
+
+			// NCE always responds with okay (!) if macro number is in range.
+			// We need to send this version of macro command to cause turnout
+			// state to change in NCE CS
+			NceMessage m = new NceMessage(5);
+			m.setElement(0, 0xAD); 		// Macro cmd
+			m.setElement(1, 0x00); 		// addr_h
+			m.setElement(2, 0x01); 		// addr_l
+			m.setElement(3, 0x01); 		// Macro cmd
+			m.setElement(4, macroNum); 	// Macro #
+			m.setBinary(true);
+			m.setReplyLen(REPLY_LEN);
+			return m;
+
+		} else {
+			
+			// NCE responds with okay (!) if macro exist, (0) if not
+			NceMessage m = new NceMessage(2);
+			m.setElement(0, 0x9C); 		// Macro cmd
+			m.setElement(1, macroNum); 	// Macro #
+			m.setBinary(true);
+			m.setReplyLen(REPLY_LEN);
+			return m;
+		}
+	}
+
+	NceMessage createOldMacroCmd(String s) {
+
 		int macroNum = 0;
 		try {
 			macroNum = Integer.parseInt(s);
@@ -113,15 +156,14 @@ public class NceMacroGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix
 		if (macroNum < 1 | macroNum > 255)
 			return null;
 
-		NceMessage m = new NceMessage(5);
-		m.setElement(0, 0xAD); 		// Macro cmd
-		m.setElement(1, 0x00); 		// addr_h
-		m.setElement(2, 0x01); 		// addr_l
-		m.setElement(3, 0x01); 		// Macro cmd
-		m.setElement(4, macroNum);	// Macro #
+		// NCE responds with okay (!) if macro exist, (0) if not
+		NceMessage m = new NceMessage(2);
+		m.setElement(0, 0x9C); // Macro cmd
+		m.setElement(1, macroNum); // Macro #
 		m.setBinary(true);
 		m.setReplyLen(REPLY_LEN);
 		return m;
-    }
+	}
 }
+
 
