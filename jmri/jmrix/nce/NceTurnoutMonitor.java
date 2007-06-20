@@ -28,7 +28,7 @@ import jmri.Turnout;
  * 
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 
 public class NceTurnoutMonitor implements NceListener{
@@ -40,7 +40,7 @@ public class NceTurnoutMonitor implements NceListener{
     private static final int REPLY_LEN = BLOCK_LEN;		// number of bytes read
     private static final int NCE_ACCY_THROWN = 0;		// NCE internal accessory "REV"
     private static final int NCE_ACCY_CLOSE = 1;		// NCE internal accessory "NORM"
-    static final int POLL_TIME = 100;			// Poll NCE memory every 100 msec
+    static final int POLL_TIME = 100;					// Poll NCE memory every 100 msec plus xmt time (~70 msec)
  
     // object state
     private int currentBlock;							// used as state in scan over active blocks
@@ -51,7 +51,14 @@ public class NceTurnoutMonitor implements NceListener{
     // cached work fields
     boolean [] newTurnouts = new boolean [NUM_BLOCK];	// used to sync poll turnout memory
     boolean [] activeBlock = new boolean [NUM_BLOCK];	// When true there are active turnouts in the memory block
-    byte [] csAccMemCopy = new byte [256];				// Copy of NCE CS accessory memory
+    boolean [] validBlock = new boolean [NUM_BLOCK];	// When true received block from CS
+    byte [] csAccMemCopy = new byte [NUM_BLOCK*BLOCK_LEN];	// Copy of NCE CS accessory memory
+    byte [] dataBuffer = new byte [NUM_BLOCK*BLOCK_LEN];	// place to store reply messages
+    
+    private boolean recData = false;					// when true, valid recieve data
+    
+    Thread NceTurnoutMonitorThread;
+    boolean turnoutUpdateValid = true;					// keep the thread running
     
     // debug final
     static final boolean debugTurnoutMonitor = false;	// Control verbose debug
@@ -60,7 +67,7 @@ public class NceTurnoutMonitor implements NceListener{
     	
     	if (NceMessage.getCommandOptions() < NceMessage.OPTION_2006 )return null;	//Only 2007 CS EPROMs support polling
     	if (NceEpromChecker.nceUSBdetected)return null;								//Can't poll USB!
-    	if (NceTurnout.getNumNtTurnouts() == 0)return null;								//No work!
+    	if (NceTurnout.getNumNtTurnouts() == 0)return null;							//No work!
     	
     	// User can change a turnout's feedback to MONITORING, therefore we need to rescan
     	// This doesn't occur very often, so we'll assume the change was to MONITORING
@@ -80,8 +87,8 @@ public class NceTurnoutMonitor implements NceListener{
             	if (activeBlock[block] == false) {  // no need to scan once known to be active
 
             		for (int i = 0; i < 128; i++) { // Check 128 turnouts per block 
-            			int addr = 1 + i + (block*128);
-            			Turnout mControlTurnout = InstanceManager.turnoutManagerInstance().getBySystemName("NT"+addr);
+            			int NTnum = 1 + i + (block*128);
+            			Turnout mControlTurnout = InstanceManager.turnoutManagerInstance().getBySystemName("NT"+ NTnum);
             			if (mControlTurnout != null){
             				int tFeedBack = mControlTurnout.getFeedbackMode();
             				if (tFeedBack==Turnout.MONITORING) {
@@ -100,24 +107,38 @@ public class NceTurnoutMonitor implements NceListener{
         if (numActiveBlocks<=0) {
             return null; // to avoid immediate infinite loop
         }
+         	
+    	// Set up a separate thread to notify state changes in turnouts
+		// This protects pollMessage (xmt) and reply threads if there's lockup!
+		if (NceTurnoutMonitorThread == null) {
+			NceTurnoutMonitorThread = new Thread(new Runnable() {
+				public void run() {
+					turnoutUpdate();
+				}
+			});
+			NceTurnoutMonitorThread.setName("NCE Turnout Monitor");
+			NceTurnoutMonitorThread.setPriority(Thread.MIN_PRIORITY);
+			NceTurnoutMonitorThread.start();
+		}
         
         // now try to build a poll message if there are any defined turnouts to scan
         while (true) { // will break out when next block to poll is found
-            // move to next possible block
-            currentBlock++;
-            if (currentBlock >= NUM_BLOCK) currentBlock = 0;
- 
-            if (activeBlock[currentBlock]){
-                if (debugTurnoutMonitor && log.isDebugEnabled()) log.debug("found turnouts block "+ currentBlock);
+			currentBlock++;
+			if (currentBlock >= NUM_BLOCK)
+				currentBlock = 0;
 
-                // Read NCE CS memory                    
-                int nceAccAddress = CS_ACCY_MEMORY+currentBlock*BLOCK_LEN;
-                byte [] bl = NceBinaryCommand.accMemoryRead(nceAccAddress);
-                NceMessage m = NceMessage.createBinaryMessage(bl, REPLY_LEN);
-                return m;
-            }
-        }
-    }
+			if (activeBlock[currentBlock]) {
+				if (debugTurnoutMonitor && log.isDebugEnabled())
+					log.debug("found turnouts block " + currentBlock);
+
+				// Read NCE CS memory
+				int nceAccAddress = CS_ACCY_MEMORY + currentBlock * BLOCK_LEN;
+				byte[] bl = NceBinaryCommand.accMemoryRead(nceAccAddress);
+				NceMessage m = NceMessage.createBinaryMessage(bl, REPLY_LEN);
+				return m;
+			}
+		}
+	}
     
     public void message(NceMessage m){
         if (log.isDebugEnabled()) {
@@ -126,54 +147,93 @@ public class NceTurnoutMonitor implements NceListener{
     }
     
     public void reply(NceReply r) {
-        if (r.getNumDataElements()== REPLY_LEN) {
-            
-            if (log.isDebugEnabled() & debugTurnoutMonitor == true ) {
-                log.debug("memory poll reply received for memory block " + currentBlock + ": " + r.toString());
-            }
-            
-            // Compare NCE CS memory to local copy, change state if necessary
-            // 128 turnouts checked per NCE CS memory read
-            for (int j = 0; j < REPLY_LEN; j++) { 					// byte index
-                byte recMemByte  = (byte)r.getElement(j);			// CS memory byte
-     
-                if (recMemByte != csAccMemCopy [j + currentBlock*BLOCK_LEN] || newTurnouts[currentBlock] == true){
-                    
-                    csAccMemCopy [j + currentBlock*BLOCK_LEN] = recMemByte;	// load copy into local memory
-                    for (int i = 0; i < 8; i++){ 					// search this byte for active turnouts
-                        
-                        int addr = 1 + i + j*8 + (currentBlock*128);
-                        // Nasty bug in March 2007 EPROM, accessory bit 3 is shared by two accessories and 7 MSB isn't used
-                        // and the bit map is skewed by one bit, ie accy addr 2 is in bit 0, should have been in bit 1.    
-                        if (NceEpromChecker.nceEpromMarch2007){
-                         	if (i == 3){
-                        		monitorAction(addr-3, recMemByte, i); 	// bit 3 is shared by two accessories!!!!
-                        	}
-                           	addr++; 									// bug fix for this version of NCE EPROM
-                           	if (i == 7)break;							// bit 7 is not used!!!
-                        }
-                        monitorAction(addr, recMemByte, i);	
-                        
-                        
-                    }
-                }
-            }
-            newTurnouts[currentBlock] = false;
-        }
-        else log.warn("wrong number of read bytes for memory poll" );
-    }
+		if (r.getNumDataElements() == REPLY_LEN) {
+
+			if (log.isDebugEnabled() & debugTurnoutMonitor == true) {
+				log.debug("memory poll reply received for memory block "
+						+ currentBlock + ": " + r.toString());
+			}
+			// Copy recieve data into buffer and process later
+			for (int i = 0; i < REPLY_LEN; i++){
+				dataBuffer[i + currentBlock * BLOCK_LEN] = (byte)r.getElement(i);
+			}
+			validBlock [currentBlock] = true;
+			recData = true;
+		}else{
+				log.warn("wrong number of read bytes for memory poll");
+		}
+        
+    } 
     
-    private void monitorAction(int addr, int recMemByte, int bit) {
+    // Thread to process turnout changes, protects receive and xmt threads
+    // from hanging by the method setKnownStateFromCS
+    private void turnoutUpdate() {
+		while (turnoutUpdateValid) {
+			// if nothing to do, sleep
+			if (!recData) {
+				synchronized (this) {
+					try {
+						wait(POLL_TIME);
+					} catch (InterruptedException e) {};
+				}
+				// process rcv buffer and update turnouts
+			} else {
+				recData = false;
+				// scan all valid replys from CS
+				for (int block = 0; block < NUM_BLOCK; block++) {
+					if (validBlock[block]) {
+						// Compare NCE CS memory to local copy, change state if
+						// necessary
+						// 128 turnouts checked per NCE CS memory read (block)
+						for (int byteIndex = 0; byteIndex < REPLY_LEN; byteIndex++) { 
+							// CS memory byte
+							byte recMemByte = dataBuffer[byteIndex + block * BLOCK_LEN]; 
+							if (recMemByte != csAccMemCopy[byteIndex + block * BLOCK_LEN] || newTurnouts[block] == true) {
+
+								// load copy into local memory
+								csAccMemCopy[byteIndex + block * BLOCK_LEN] = recMemByte;
+
+								// search this byte for active turnouts
+								for (int i = 0; i < 8; i++) {
+									int NTnum = 1 + i + byteIndex * 8 + (block * 128);
+									
+									// Nasty bug in March 2007 EPROM, accessory
+									// bit 3 is shared by two accessories and 7
+									// MSB isn't used and the bit map is skewed by
+									// one bit, ie accy num 2 is in bit 0, should
+									// have been in bit 1.
+									if (NceEpromChecker.nceEpromMarch2007) {
+										// bit 3 is shared by two accessories!!!!
+										if (i == 3)
+											monitorAction(NTnum - 3, recMemByte,	i);
+										
+										NTnum++; // skew fix 
+										if (i == 7)
+											break; // bit 7 is not used!!!
+									}
+									monitorAction(NTnum, recMemByte, i);
+								}
+							}
+						}
+						newTurnouts[block] = false;
+					}
+				}
+			}
+		}
+	}
+
+    
+    private void monitorAction(int NTnum, int recMemByte, int bit) {
 
 		NceTurnout rControlTurnout = (NceTurnout) InstanceManager
-				.turnoutManagerInstance().getBySystemName("NT" + addr);
+				.turnoutManagerInstance().getBySystemName("NT" + NTnum);
 		if (rControlTurnout == null)
 			return;
 
 		int tState = rControlTurnout.getKnownState();
 
 		if (debugTurnoutMonitor && log.isDebugEnabled()) {
-			log.debug("turnout exists NT" + addr + " state: " + tState
+			log.debug("turnout exists NT" + NTnum + " state: " + tState
 					+ " Feed back mode: " + rControlTurnout.getFeedbackMode());
 		}
 
@@ -187,7 +247,7 @@ public class NceTurnoutMonitor implements NceListener{
 		if (NceAccState == NCE_ACCY_THROWN && tState != Turnout.THROWN) {
 			if (log.isDebugEnabled()) {
 				log.debug("turnout discrepency, need to THROW turnout NT"
-						+ addr);
+						+ NTnum);
 			}
 			// change JMRI's knowledge of the turnout state to match observed
 			rControlTurnout.setKnownStateFromCS(Turnout.THROWN);
@@ -196,14 +256,13 @@ public class NceTurnoutMonitor implements NceListener{
 		if (NceAccState == NCE_ACCY_CLOSE && tState != Turnout.CLOSED) {
 			if (log.isDebugEnabled()) {
 				log.debug("turnout discrepency, need to CLOSE turnout NT"
-						+ addr);
+						+ NTnum);
 			}
 			// change JMRI's knowledge of the turnout state to match observed
 			rControlTurnout.setKnownStateFromCS(Turnout.CLOSED);
 		}
 	}
  
-
         
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceTurnoutMonitor.class.getName());	
     
