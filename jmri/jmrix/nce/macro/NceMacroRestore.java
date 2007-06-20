@@ -57,7 +57,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * The restore routine checks that each line of the file begins with the appropriate macro address.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 
@@ -74,6 +74,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
 
 		// Get file to read from
 		JFileChooser fc = new JFileChooser(jmri.jmrit.XmlFile.prefsDir());
+		fc.addChoosableFileFilter(new textFilter());
 		int retVal = fc.showOpenDialog(null);
 		if (retVal != JFileChooser.APPROVE_OPTION)
 			return; // cancelled
@@ -238,6 +239,23 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
 			int recChar = r.getElement(0);
 			if (recChar != '!')
 				log.error("reply incorrect");
+		}
+	}
+	
+	private class textFilter extends javax.swing.filechooser.FileFilter {
+		
+		public boolean accept(File f){
+			if (f.isDirectory())
+			return true;
+			String name = f.getName();
+			if (name.matches(".*\\.txt"))
+				return true;
+			else
+				return false;
+		}
+		
+		public String getDescription() {
+			return "Text Documents (*.txt)";
 		}
 	}
 
