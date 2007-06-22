@@ -28,7 +28,7 @@ import jmri.Turnout;
  * 
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 
 public class NceTurnoutMonitor implements NceListener{
@@ -250,7 +250,7 @@ public class NceTurnoutMonitor implements NceListener{
 		int NceAccState = (recMemByte >> bit) & 0x01;
 		if (NceAccState == NCE_ACCY_THROWN && tState != Turnout.THROWN) {
 			if (log.isDebugEnabled()) {
-				log.debug("turnout discrepency, need to THROW turnout NT"
+				log.debug("turnout discrepancy, need to THROW turnout NT"
 						+ NTnum);
 			}
 			// change JMRI's knowledge of the turnout state to match observed
@@ -259,7 +259,7 @@ public class NceTurnoutMonitor implements NceListener{
 
 		if (NceAccState == NCE_ACCY_CLOSE && tState != Turnout.CLOSED) {
 			if (log.isDebugEnabled()) {
-				log.debug("turnout discrepency, need to CLOSE turnout NT"
+				log.debug("turnout discrepancy, need to CLOSE turnout NT"
 						+ NTnum);
 			}
 			// change JMRI's knowledge of the turnout state to match observed
