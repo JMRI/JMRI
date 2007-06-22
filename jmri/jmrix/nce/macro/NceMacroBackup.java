@@ -58,7 +58,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * This backup routine uses the same macro data format as NCE.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 
@@ -124,11 +124,13 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 			getNceMacro(macroNum);
 
 			// wait up to 30 sec for each read pair to complete
-			int waitcount = 300;
+			int waitcount = 30;
 			while (waiting > 0) {
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
+				synchronized (this) {
+					try {
+						wait(1000);
+					} catch (InterruptedException e) {
+					}
 				}
 				if (waitcount-- < 0) {
 					log.error("read timeout");
@@ -223,8 +225,15 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 		for (int i = 0; i < numBytes; i++) {
 			nceMacroData[i + offset] = (byte) r.getElement(i);
 		}
-		secondRead = true; // next read is the next 4 bytes of macro
 		waiting--;
+		// wake up backup thread
+		if (secondRead) {
+			synchronized (this) {
+				notify();
+			}
+		}
+		secondRead = true; // next read is the next 4 bytes of macro
+		
 	}
 	
 	private class textFilter extends javax.swing.filechooser.FileFilter {
