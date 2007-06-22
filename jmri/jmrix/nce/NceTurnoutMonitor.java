@@ -28,7 +28,7 @@ import jmri.Turnout;
  * 
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 
 public class NceTurnoutMonitor implements NceListener{
@@ -159,6 +159,10 @@ public class NceTurnoutMonitor implements NceListener{
 			}
 			validBlock [currentBlock] = true;
 			recData = true;
+			//wake up turnout monitor thread
+			synchronized (this) {
+				notify();
+			}
 		}else{
 				log.warn("wrong number of read bytes for memory poll");
 		}
@@ -173,7 +177,7 @@ public class NceTurnoutMonitor implements NceListener{
 			if (!recData) {
 				synchronized (this) {
 					try {
-						wait(POLL_TIME);
+						wait(POLL_TIME*5);
 					} catch (InterruptedException e) {};
 				}
 				// process rcv buffer and update turnouts
