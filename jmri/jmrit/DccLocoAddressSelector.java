@@ -31,7 +31,7 @@ import java.awt.event.ComponentEvent;
  * where you might be configuring a loco to run somewhere else.
  *
  * @author     Bob Jacobsen   Copyright (C) 2005
- * @version    $Revision: 1.3 $
+ * @version    $Revision: 1.4 $
  */
 public class DccLocoAddressSelector extends JPanel
 {
@@ -209,12 +209,16 @@ public class DccLocoAddressSelector extends JPanel
      */
     public JTextField getTextField() { 
         if (textUsed) {
-            log.error("getTextField invoked after text already requested");
+            reportError("getTextField invoked after text already requested");
             return null;
         }
         textUsed = true;
         return text;
     }     
+    
+    void reportError(String msg) {
+        log.error(msg, new Exception("traceback"));
+    }
     
     /*
      * Get the selector box for picking long/short as a separate
