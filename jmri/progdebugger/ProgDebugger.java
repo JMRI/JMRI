@@ -11,9 +11,13 @@ import jmri.Programmer;
 import jmri.ProgrammerException;
 
 /**
- * Debugging implementation of Programmer interface
+ * Debugging implementation of Programmer interface.
+ *<P>
+ * Remembers writes, and returns the last written value
+ * when a read to the same CV is made.
+ *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.19 $
+ * @version         $Revision: 1.20 $
  */
 public class ProgDebugger implements Programmer  {
 
@@ -23,6 +27,30 @@ public class ProgDebugger implements Programmer  {
     public int lastWrite() { return _lastWriteVal; }
     public int lastWriteCv() { return _lastWriteCv; }
 
+    /**
+     * Reset the CV to a value so one
+     * can detect if it's been written.
+     * <p>
+     * Does not change the "lastWrite" and "lastWriteCv" results.
+     */
+    public void resetCv(int cv, int val) {
+        mValues.put(new Integer(cv), new Integer(val));
+    }
+    
+    /**
+     * Get the CV value directly, without going through
+     * the usual indirect protocol. Used for e.g. testing.
+     * <p>
+     * Does not change the "lastRead" and "lastReadCv" results.
+     */
+    public int getCvVal(int cv) {
+        // try to get something from hash table
+        Integer saw = ((Integer)mValues.get(new Integer(cv)));
+        if (saw!=null) return saw.intValue();
+        log.warn("CV "+cv+" has no defined value");
+        return -1;
+    }
+    
     // write CV values are remembered for later reads
     Hashtable mValues = new Hashtable();
 
@@ -48,7 +76,7 @@ public class ProgDebugger implements Programmer  {
                     log.debug("write CV reply");
                     if (l!=null) l.programmingOpReply(-1, 0); }  // 0 is OK status
             };
-        javax.swing.SwingUtilities.invokeLater(r);
+        sendReturn(r);
     }
 
     // read CV values
@@ -74,7 +102,7 @@ public class ProgDebugger implements Programmer  {
                     else l.programmingOpReply(_nextRead, ProgListener.ConfirmFailed);
                 }
             };
-        javax.swing.SwingUtilities.invokeLater(r);
+        sendReturn(r);
 
     }
 
@@ -97,7 +125,7 @@ public class ProgDebugger implements Programmer  {
                     log.debug("read CV reply");
                     l.programmingOpReply(_nextRead, 0); }  // 0 is OK status
             };
-        javax.swing.SwingUtilities.invokeLater(r);
+        sendReturn(r);
 
     }
 
@@ -150,6 +178,34 @@ public class ProgDebugger implements Programmer  {
         }
     }
 
+    static final boolean IMMEDIATERETURN = true;
+    
+    /**
+     * Arrange for the return to be invoked on the Swing thread.
+     */
+    void sendReturn(Runnable run) {
+        if (IMMEDIATERETURN) {
+            javax.swing.SwingUtilities.invokeLater(run);
+        } else {
+            javax.swing.Timer timer = new javax.swing.Timer(2, null);
+            java.awt.event.ActionListener l = new java.awt.event.ActionListener(){
+                javax.swing.Timer timer;
+                Runnable run;
+                java.awt.event.ActionListener init(javax.swing.Timer t, Runnable r) {
+                    this.timer = t;
+                    this.run = r;
+                    return this;
+                }
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    this.timer.stop();
+                    javax.swing.SwingUtilities.invokeLater(run);
+                }
+            }.init(timer, run);
+            timer.addActionListener(l);
+            timer.start();
+        }
+    }
+    
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ProgDebugger.class.getName());
 }
 
