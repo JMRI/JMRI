@@ -16,7 +16,7 @@ import javax.swing.*;
  * Test simple functioning of DccLocoAddressSelector
  *
  * @author			Bob Jacobsen Copyright (C) 2005
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 public class DccLocoAddressSelectorTest extends TestCase {
@@ -35,12 +35,20 @@ public class DccLocoAddressSelectorTest extends TestCase {
 	}
     
     // you can ask for the text field once, and only once
-	public void testReqNumByField() {
+    String reportedError;
+  	public void testReqNumByField() {
 	    setThrottleManager();
-        DccLocoAddressSelector sel = new DccLocoAddressSelector();
+	    reportedError = null;
+        DccLocoAddressSelector sel = new DccLocoAddressSelector(){
+            void reportError(String msg) {
+                reportedError = msg;
+            }
+        };
         JTextField f = sel.getTextField();
         Assert.assertTrue("1st OK", f!=null);
+        Assert.assertTrue("no msg from 1st", reportedError == null);
         Assert.assertTrue("2nd null", sel.getTextField() == null);
+        Assert.assertTrue("msg from 2nd", reportedError != null);
 	}
     
         
