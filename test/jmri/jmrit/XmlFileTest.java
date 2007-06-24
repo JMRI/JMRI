@@ -21,7 +21,7 @@ import java.io.InputStream;
  * Uses (creates, modifies, destroys) files in the local preferences directory
  *
  * @author	    Bob Jacobsen  Copyright 2001
- * @version         $Revision: 1.7 $
+ * @version         $Revision: 1.8 $
  */
 public class XmlFileTest extends TestCase {
 
@@ -92,16 +92,16 @@ public class XmlFileTest extends TestCase {
         testFlag = false;
         XmlFile x = new XmlFile() {
            protected void reportError1(File file, Exception e) {
-                System.out.println("invoked");
+                log.debug("invoked");
                 testFlag = true;
             }
             protected Element getRootViaURI(boolean verify, InputStream stream) throws org.jdom.JDOMException, java.io.FileNotFoundException {
-                System.out.println("getRootViaURI dummy");
+                log.debug("getRootViaURI dummy");
                 throw new org.jdom.JDOMException("test dummy");
             }
         };
         Element e = x.rootFromName(XmlFile.prefsDir()+File.separator+"temp"+File.separator+"test.xml");
-        System.out.println("returns "+testFlag);
+        log.debug("returns "+testFlag);
         Assert.assertTrue("Error handler invoked OK", testFlag);
     }
     boolean testFlag = false;
@@ -124,6 +124,7 @@ public class XmlFileTest extends TestCase {
         return suite;
     }
 
-    // static private org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XmlFileTest.class.getName());
+    // protected access for subclass
+    static protected org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XmlFileTest.class.getName());
 
 }
