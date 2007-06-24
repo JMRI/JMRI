@@ -17,7 +17,7 @@ import jmri.jmrit.roster.*;
 
 /**
  * @author	Bob Jacobsen Copyright 2001, 2002, 2003, 2004
- * @version         $Revision: 1.14 $
+ * @version         $Revision: 1.15 $
  */
 public class PaneProgPaneTest extends TestCase {
 
@@ -140,18 +140,21 @@ public class PaneProgPaneTest extends TestCase {
             .addAttribute("label","Start voltage")
             .addContent( new Element("decVal"));
         Element el1 = new Element("variable")
-            .addAttribute("CV","1")
+            .addAttribute("CV","3")
             .addAttribute("readOnly","no")
             .addAttribute("mask","VVVVVVVV")
             .addAttribute("label","Primary Address")
             .addContent( new Element("decVal"));
-        varModel.setRow(0, el1);
-        varModel.setRow(1, el0);
+        varModel.setRow(0, el0);
+        varModel.setRow(1, el1);
 
         PaneProgPane progPane = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null);
 
+        p.resetCv(2, 20);
+        p.resetCv(3, 30);
+
         // test by invoking
-        progPane.readPaneAll();
+        progPane.readAllButton.setSelected(true);
 
         // wait for reply (normally, done by callback; will check that later)
         if (log.isDebugEnabled()) log.debug("Start to wait for reply");
@@ -165,7 +168,8 @@ public class PaneProgPaneTest extends TestCase {
         if (log.isDebugEnabled()) log.debug("past loop, i="+i);
         assertTrue("busy period ends before timeout ", i<=100);
 
-        Assert.assertEquals("last cv read ", 2, p.lastReadCv());
+        Assert.assertEquals("CV 2 value ", "20", varModel.getValString(0));
+        Assert.assertEquals("CV 3 value ", "30", varModel.getValString(1));
 
         if (log.isDebugEnabled()) log.debug("testPaneRead ends ok");
     }
@@ -191,23 +195,28 @@ public class PaneProgPaneTest extends TestCase {
             .addAttribute("CV","2")
             .addAttribute("readOnly","no")
             .addAttribute("mask","VVVVVVVV")
+            .addAttribute("default","20")
             .addAttribute("label","Start voltage")
             .addContent( new Element("decVal"));
         Element el1 = new Element("variable")
-            .addAttribute("CV","1")
+            .addAttribute("CV","3")
             .addAttribute("readOnly","no")
             .addAttribute("mask","VVVVVVVV")
+            .addAttribute("default","30")
             .addAttribute("label","Primary Address")
             .addContent( new Element("decVal"));
-        varModel.setRow(0, el1);
-        varModel.setRow(1, el0);
+        varModel.setRow(0, el0);
+        varModel.setRow(1, el1);
         if (log.isDebugEnabled()) log.debug("Two elements loaded");
 
 //        PaneProgPane progPane = new PaneProgPane("name", pane1, cvModel, varModel, null);
         PaneProgPane progPane = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null);
 
+        p.resetCv(2, -1);
+        p.resetCv(3, -1);
+        
         // test by invoking
-        progPane.writePaneAll();
+        progPane.writeAllButton.setSelected(true);
 
         // wait for reply (normally, done by callback; will check that later)
         if (log.isDebugEnabled()) log.debug("Start to wait for reply");
@@ -221,7 +230,8 @@ public class PaneProgPaneTest extends TestCase {
         if (log.isDebugEnabled()) log.debug("past loop, i="+i);
         assertTrue("busy period ends before timeout ", i<=100);
 
-        Assert.assertEquals("last cv written ", 2, p.lastWriteCv());
+        Assert.assertEquals("CV 2 value ", 20, p.getCvVal(2));
+        Assert.assertEquals("CV 3 value ", 30, p.getCvVal(3));
 
         if (log.isDebugEnabled()) log.debug("testPaneWrite ends ok");
     }
