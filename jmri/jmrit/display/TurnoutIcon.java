@@ -22,7 +22,7 @@ import javax.swing.JPopupMenu;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -121,17 +121,38 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         if (turnout != null) return turnout.getKnownState();
         else return Turnout.UNKNOWN;
     }
-
+    
+    private boolean useUnknownIcon = true; 		// allow panel to display unknown icon 
+    
     // update icon as state of turnout changes
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (log.isDebugEnabled()) log.debug("property change: "
-                                            +e.getPropertyName()
-                                            +" is now "+e.getNewValue());
-	if (e.getPropertyName().equals("KnownState")) {
-            int now = ((Integer) e.getNewValue()).intValue();
-            displayState(now);
-        }
-    }
+		if (log.isDebugEnabled())
+			log.debug("property change: " + e.getPropertyName() + " is now "
+					+ e.getNewValue());
+
+		// if there's feedback, we always know the state of the turnout
+		// so we reusing the unknown state icon for the transistion state
+		// between turnout command given and turnout response received
+		if (useUnknownIcon & (turnout.getFeedbackMode() != Turnout.DIRECT)) {
+			if (e.getPropertyName().equals("CommandedState")) {
+				if (turnout.getCommandedState() != turnout.getKnownState()) {
+					int now = Turnout.UNKNOWN;
+					displayState(now);
+				}
+				// this takes care of the quick double click 
+				if (turnout.getCommandedState() == turnout.getKnownState()) {
+					int now = ((Integer) e.getNewValue()).intValue();
+					displayState(now);
+				}
+			}
+		}
+		
+		
+		if (e.getPropertyName().equals("KnownState")) {
+			int now = ((Integer) e.getNewValue()).intValue();
+			displayState(now);
+		}
+	}
 
     public void setProperToolTip() {
         setToolTipText(getNameString());
