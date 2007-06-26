@@ -15,7 +15,7 @@ import jmri.Turnout;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.18 $
+ * @version	$Revision: 1.19 $
  */
 public class NceTurnout extends AbstractTurnout {
 
@@ -102,22 +102,38 @@ public class NceTurnout extends AbstractTurnout {
      * throttle), and that command has already taken effect.
      * Hence we use "newCommandedState" to indicate it's taken place.
      * <P>
-     * If the feedback mode is DIRECT or MONITORING, a change also
-     * results in the known state changing via
-     * "newKnownState" to indicate we're sure 
-     * the change has taken place on the layout.
+     * We after a slight delay to create some panel animation we update the
+     * "newKnownState" to indicate the change that has taken place on the layout.
      *
      * @param state Observed state, updated state from command station
      */
     synchronized void setKnownStateFromCS(int state) {
-        newCommandedState(state);
-        
-        // known state is only changed if in DIRECT or MONITORING mode
-        if (  (getFeedbackMode() == MONITORING) ||
-              (getFeedbackMode() == DIRECT) ) {
-            newKnownState(state);
-        }
-    }
+		if ((getFeedbackMode() != MONITORING))
+			return;
+		
+		// are we here because the user changed a turnout using a throttle?
+		if (getCommandedState() != state) {
+			// Yes, we are!
+			// provide a delay between commanded and known states
+			// so the panel animation looks nice
+			int waitTime = 200;
+			// don't bother with delay if initializing
+			if (getCommandedState() == UNKNOWN)
+				waitTime = 0;
+			
+			newCommandedState(state);
+
+			// give the panel the illusion that commanded occured first
+			if (waitTime > 0) {
+				try {
+					wait(waitTime);
+				} catch (Exception e) {}
+			}
+		}
+		// now update the known state
+		newKnownState(state);
+
+	}
     
     protected void sendMessage(boolean closed) {
         // get the packet
