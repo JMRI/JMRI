@@ -15,7 +15,7 @@ import jmri.Turnout;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  */
 public class NceTurnout extends AbstractTurnout {
 
@@ -101,38 +101,32 @@ public class NceTurnout extends AbstractTurnout {
      * somebody commanded a state change (e.g. somebody holding a 
      * throttle), and that command has already taken effect.
      * Hence we use "newCommandedState" to indicate it's taken place.
-     * <P>
-     * We after a slight delay to create some panel animation we update the
-     * "newKnownState" to indicate the change that has taken place on the layout.
+     * Must be followed by "newKnownState" to complete the turnout
+     * action. 
      *
+     * @param state Observed state, updated state from command station
+     */
+    synchronized void setCommandedStateFromCS(int state) {
+		if ((getFeedbackMode() != MONITORING))
+			return;
+		
+		newCommandedState(state);
+	}
+    
+    /**
+     * Set the turnout known state to reflect what's been observed
+     * from the command station polling. A change there means that
+     * somebody commanded a state change (e.g. somebody holding a 
+     * throttle), and that command has already taken effect.
+     * Hence we use "newKnownState" to indicate it's taken place.
+     * <P>
      * @param state Observed state, updated state from command station
      */
     synchronized void setKnownStateFromCS(int state) {
 		if ((getFeedbackMode() != MONITORING))
 			return;
-		
-		// are we here because the user changed a turnout using a throttle?
-		if (getCommandedState() != state) {
-			// Yes, we are!
-			// provide a delay between commanded and known states
-			// so the panel animation looks nice
-			int waitTime = 200;
-			// don't bother with delay if initializing
-			if (getCommandedState() == UNKNOWN)
-				waitTime = 0;
-			
-			newCommandedState(state);
-
-			// give the panel the illusion that commanded occured first
-			if (waitTime > 0) {
-				try {
-					wait(waitTime);
-				} catch (Exception e) {}
-			}
-		}
-		// now update the known state
+	
 		newKnownState(state);
-
 	}
     
     protected void sendMessage(boolean closed) {
