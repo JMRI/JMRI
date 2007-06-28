@@ -22,7 +22,7 @@ import javax.swing.JPopupMenu;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -122,32 +122,28 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         else return Turnout.UNKNOWN;
     }
     
-    private boolean useUnknownIcon = true; 		// allow panel to display unknown icon 
-    
     // update icon as state of turnout changes
     public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (log.isDebugEnabled())
 			log.debug("property change: " + e.getPropertyName() + " is now "
 					+ e.getNewValue());
 
-		// if there's feedback, we always know the state of the turnout
-		// so we reusing the unknown state icon for the transistion state
-		// between turnout command given and turnout response received
-		if (useUnknownIcon & (turnout.getFeedbackMode() != Turnout.DIRECT)) {
-			if (e.getPropertyName().equals("CommandedState")) {
-				if (turnout.getCommandedState() != turnout.getKnownState()) {
-					int now = Turnout.UNKNOWN;
-					displayState(now);
-				}
-				// this takes care of the quick double click 
-				if (turnout.getCommandedState() == turnout.getKnownState()) {
-					int now = ((Integer) e.getNewValue()).intValue();
-					displayState(now);
-				}
+		// when there's feedback, transition through inconsistent icon for better
+		// animation
+		if (super.getTristate()
+				&& (turnout.getFeedbackMode() != Turnout.DIRECT)
+				&& (e.getPropertyName().equals("CommandedState"))) {
+			if (turnout.getCommandedState() != turnout.getKnownState()) {
+				int now = Turnout.INCONSISTENT;
+				displayState(now);
+			}
+			// this takes care of the quick double click
+			if (turnout.getCommandedState() == turnout.getKnownState()) {
+				int now = ((Integer) e.getNewValue()).intValue();
+				displayState(now);
 			}
 		}
-		
-		
+
 		if (e.getPropertyName().equals("KnownState")) {
 			int now = ((Integer) e.getNewValue()).intValue();
 			displayState(now);
@@ -173,39 +169,46 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
      * Pop-up displays the turnout name, allows you to rotate the icons
      */
     protected void showPopUp(MouseEvent e) {
-        if (!getEditable()) return;
-        ours = this;
-        if (popup==null) {
-            popup = new JPopupMenu();
-            popup.add(new JMenuItem(getNameString()));
-            if (icon) popup.add(new AbstractAction("Rotate") {
-                    public void actionPerformed(ActionEvent e) {
-                        closed.setRotation(closed.getRotation()+1, ours);
-                        thrown.setRotation(thrown.getRotation()+1, ours);
-                        unknown.setRotation(unknown.getRotation()+1, ours);
-                        inconsistent.setRotation(inconsistent.getRotation()+1, ours);
-                        displayState(turnoutState());
-                    }
-                });
+		if (!getEditable())
+			return;
+		ours = this;
+// create popup each time called, tristate added if turnout has feedback
+		popup = new JPopupMenu();
+		popup.add(new JMenuItem(getNameString()));
+		if (icon)
+			popup.add(new AbstractAction("Rotate") {
+				public void actionPerformed(ActionEvent e) {
+					closed.setRotation(closed.getRotation() + 1, ours);
+					thrown.setRotation(thrown.getRotation() + 1, ours);
+					unknown.setRotation(unknown.getRotation() + 1, ours);
+					inconsistent.setRotation(inconsistent.getRotation() + 1,
+							ours);
+					displayState(turnoutState());
+				}
+			});
 
-            addDisableMenuEntry(popup);
-            
-            popup.add(new AbstractAction("Remove") {
-                public void actionPerformed(ActionEvent e) {
-                    remove();
-                    dispose();
-                }
-            });
+		addDisableMenuEntry(popup);
 
-        } // end creation of pop-up menu
+		// add tristate option if turnout has feedback
+		if (turnout.getFeedbackMode() != Turnout.DIRECT) {
+			addTristateEntry(popup);
+		}
 
-        popup.show(e.getComponent(), e.getX(), e.getY());
-    }
+		popup.add(new AbstractAction("Remove") {
+			public void actionPerformed(ActionEvent e) {
+				remove();
+				dispose();
+			}
+		});
+
+		// end creation of pop-up menu
+
+		popup.show(e.getComponent(), e.getX(), e.getY());
+	}
 
     /**
-     * Drive the current state of the display from the state of the
-     * turnout.
-     */
+	 * Drive the current state of the display from the state of the turnout.
+	 */
     void displayState(int state) {
         log.debug("displayState "+state);
         updateSize();

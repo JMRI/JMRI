@@ -28,7 +28,7 @@ import javax.swing.JRadioButtonMenuItem;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.30 $
+ * @version $Revision: 1.31 $
  */
 
 public class PositionableLabel extends JLabel
@@ -322,6 +322,18 @@ public class PositionableLabel extends JLabel
             }
         });
     }
+    
+    JCheckBoxMenuItem tristateItem = null;
+    void addTristateEntry(JPopupMenu popup) {
+    	tristateItem = new JCheckBoxMenuItem("Tristate");
+    	tristateItem.setSelected(getTristate());
+        popup.add(tristateItem);
+        tristateItem.addActionListener(new ActionListener(){
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                setTristate(tristateItem.isSelected());
+            }
+        });
+    }
         
     public JMenuItem newStyleMenuItem(AbstractAction a, int mask) {
         // next two lines needed because JCheckBoxMenuItem(AbstractAction) not in 1.1.8
@@ -378,6 +390,13 @@ public class PositionableLabel extends JLabel
     }
     public boolean getForceControlOff() { return forceControlOff; }
     private boolean forceControlOff = false;
+    
+    public void setTristate(boolean set) {
+    	Tristate = set;
+    }
+    
+    public boolean getTristate() { return Tristate; }
+    private boolean Tristate = true;
 
     public void setShowTooltip(boolean set) {
         if (set)
