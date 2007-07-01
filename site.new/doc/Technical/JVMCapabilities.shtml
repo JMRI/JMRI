@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: JVMCapabilities.shtml,v 1.1 2007-07-01 03:55:38 jacobsen Exp $ -->
+<html lang="en">
+<head>
+    <TITLE>
+ 	JMRI: Java Version-Specific Features
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code road map">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+
+    <p class="skipLink"><a href="#mainContent" accesskey="2">Skip to main content</a></p>
+
+<!--#include virtual="Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+
+	    <H1>JMRI: Java Version-Specific Features</H1>
+
+
+This page summarizes technical data regarding the
+Java features useful or desired for JMRI development, and
+which Java version they first appeared in.
+
+<h2>Capabilities</h2>
+<table border="1">
+<tr><th>Feature</th>        <th>JDK</th>    <th>JRE</th></tr>
+<tr><td>Collections</td>    <td>1.3</td>    <td>1.3</td></tr>
+<tr><td>Java2D</td>         <td>1.3</td>    <td>1.3</td></tr>
+<tr><td>Printing update</td><td>1.3</td>    <td>1.3</td></tr>
+
+<tr><td>Java3D</td>         <td>1.4</td>    <td>1.4</td></tr>
+<tr><td>JavaHelp update</td><td>1.4</td>    <td>1.4</td></tr>
+<tr><td>Drag and Drop</td>  <td>1.4 (additional <br>improvements in 1.6)</td><td>1.4, 1.6</td></tr>
+
+<tr><td>Annotations</td>    <td>1.5</td>    <td>1.3</td></tr>
+<tr><td>JavaMail</td>       <td>1.5</td>    <td>1.3</td></tr>
+<tr><td>SwingWorker</td>    <td>1.5</td>    <td>1.5 (*1.4)</td></tr>
+<tr><td>JSpinner</td>       <td>1.5</td>    <td>1.5</td></tr>
+<tr><td>Enums</td>          <td>1.5</td>    <td>1.5</td></tr>
+<tr><td>printf, Formatter</td><td>1.5</td>  <td>1.5</td></tr>
+<tr><td>generics</td>       <td>1.5</td>    <td>1.5</td></tr>
+
+<tr><td>XML catalog resolver</td><td>?</td><td>?</td></tr>
+</table>
+(* indicates that a compatibility library is used in the early version)
+
+<h2>JRE availability</h2>
+<table border="1">
+<tr><th>OS and platform</th><th>Last JRE</th></tr>
+<tr><td>Windows Vista</td><td>1.6</td></tr>
+<tr><td>Windows XP</td><td>1.6</td></tr>
+<tr><td>MacOS X 10.3 and later</td><td>1.5</td></tr>
+<tr><td>Windows 98 (2nd Ed)</td><td>1.5-11</td></tr>
+<tr><td>Windows 98</td><td>1.4.2_14</td></tr>
+<tr><td>Windows 95</td><td>1.3.1_20</td></tr>
+<tr><td>OS/2</td><td>1.3</td></tr>
+<tr><td>MacOS "Classic"</td><td>1.1.8</td></tr>
+</table>
+
+See the 
+<A HREF="http://java.sun.com/getjava">Sun Java site</a>
+for additional information.
+<!--#include virtual="Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+

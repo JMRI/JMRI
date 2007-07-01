@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: WebSite.shtml,v 1.1 2007-07-01 03:55:38 jacobsen Exp $ -->
+<html lang="en">
+<head>
+    <TITLE>
+ 	JMRI: Web Site
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code web site">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+
+    <p class="skipLink"><a href="#mainContent" accesskey="2">Skip to main content</a></p>
+
+<!--#include virtual="Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+	    <H1>JMRI: Web Site</H1>
+
+
+<H2>Local Web Site: MacOS X</H2>
+
+If you want to host a copy of the JMRI web site on your local
+MacOS X machine, follow these instructions to first configure
+the Apache server to do server-side includes, and then make
+a copy of the web site files available to the server.
+
+<OL>
+<LI>You need to edit the /etc/httpd/httpd.conf file using your favorite
+editor (You'll need to authenticate with the administrator password to 
+edit this file):
+    <ul>
+    <LI>
+    To turn on server-side includes, find the section that 
+    looks like
+<PRE>
+# This may also be "None", "All", or any combination of "Indexes",
+# "Includes", "FollowSymLinks", "ExecCGI", or "MultiViews".
+#
+# Note that "MultiViews" must be named *explicitly* --- "Options All"
+# doesn't give it to you.
+#
+    Options Indexes FollowSymLinks MultiViews
+</PRE>
+Add the word "Includes" to the last line so it looks like
+<PRE>
+    Options Includes Indexes FollowSymLinks MultiViews
+</PRE>
+    
+    <li>Now, configure the server to handle files with ".shtml" 
+    extensions.  Find the section that looks like:
+<PRE>
+    #
+    # To use server-parsed HTML files
+    #
+    #AddType text/html .shtml
+    #AddHandler server-parsed .shtml
+</PRE>
+    and un-comment the last two lines so that it looks like
+<PRE>
+    #
+    # To use server-parsed HTML files
+    #
+    AddType text/html .shtml
+    AddHandler server-parsed .shtml
+</PRE>
+    </ul>
+
+<LI>To check out a copy of the files:
+    <UL>
+    <LI>Change to the web server directory
+<PRE>
+cd /Library/WebServer/Documents
+</PRE>
+    <LI>Check out the relevant files
+<PRE>
+cvs co site.new
+mv site.new/* .
+mv site.new/.cvsignore .
+rmdir site.new
+cvs co xml
+cvs co jython
+cvs co resources
+</PRE>
+The "mv" commands move the files from the CVS "site.new" module
+to the root level of the webservers file space, so that 
+they're accessible as simple URLs.
+    </UL>
+<LI>Restart your computer to reinitialize the web server.
+<LI>Test it by trying to display the URL
+<A HREF="http://localhost/">http://localhost/</a>, 
+which should get you a JMRI index page.
+</OL>
+
+<!--#include virtual="Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+
