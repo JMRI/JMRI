@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.1 2007-07-01 04:47:48 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.2 2007-07-01 05:06:23 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -42,10 +42,44 @@
 	specific purposes. General tools:
 	    <dl>
 
+		<dt><h3><a href="Sensors.shtml">Sensors</a></h3></dt>
+		<dd>
+		    A Sensor is JMRI's way of representing an input from the layout.
+		</dd>
+
+		<dt><h3><a href="Turnouts.shtml">Turnouts</a></h3></dt>
+		<dd>
+		    JMRI calls just about any output to the layout a "Turnout". 
+		</dd>
+
 		<dt><h3><a href="throttle/ThrottleMain.html">Throttles</a></h3></dt>
 		<dd>
 		    You can open multiple software throttles to run
 		    your DCC locomotives.
+		</dd>
+
+		<dt><h3><a href="ConsistTool/ConsistTool.html">Consisting</a></h3></dt>
+		<dd>
+		    JMRI provides tools for managing locomotive consists.
+		</dd>
+
+		<dt><h3><a href="Signals.shtml">Signals</a></h3></dt>
+		<dd>
+		    Signals (or more formally SignalHeads) are how JMRI represents
+		    and controls signal heads on a layout. 
+		    They are a specific kind of output device that can be set to various 
+		    colors: Red, Yellow, Green, Flashing Yellow, etc.
+		</dd>
+
+		<dt><h3><a href="Lights.html">Lights</a></h3></dt>
+		<dd>
+		    Lights are digital output bits that function as on/off switches. 
+		    Lights were created to provide easy control for fascia panel
+		    lights and scenery lighting. 
+		    Lights can also be used for any purpose that requires an 
+		    on/off switch. A light can be used, for example, to activate 
+		    an electromagnetic decoupler for a pre-determined time in 
+		    response to a fascia panel button.
 		</dd>
 
 		<dt><h3><a href="Routes.html">Routes</a></h3></dt>
