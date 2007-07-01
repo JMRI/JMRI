@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: WebSite.shtml,v 1.1 2007-07-01 03:55:38 jacobsen Exp $ -->
+<!-- $Id: WebSite.shtml,v 1.2 2007-07-01 04:34:14 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -33,6 +33,18 @@
 	<div id="mainContent">
 	    <H1>JMRI: Web Site</H1>
 
+This page discusses technical aspects of the JMRI web site.
+
+<P>
+Formatting is done using CSS, originally set up by John Plocher.
+
+<P>
+We are moving toward using
+<A HREF="http://httpd.apache.org/docs/1.3/howto/ssi.html">server-side includes</a>
+to provide consistent headers, sidebars and footers.
+This will also allow us to share HTML
+content between the web and the JavaHelp system
+used by the program itself.
 
 <H2>Local Web Site: MacOS X</H2>
 
@@ -94,9 +106,10 @@ cvs co site.new
 mv site.new/* .
 mv site.new/.cvsignore .
 rmdir site.new
-cvs co xml
+cvs co help
 cvs co jython
 cvs co resources
+cvs co xml
 </PRE>
 The "mv" commands move the files from the CVS "site.new" module
 to the root level of the webservers file space, so that 
