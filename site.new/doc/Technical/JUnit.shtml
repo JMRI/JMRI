@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: JUnit.shtml,v 1.1 2007-07-01 03:58:42 jacobsen Exp $ -->
+<!-- $Id: JUnit.shtml,v 1.2 2007-07-01 04:33:41 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -53,7 +53,9 @@ to make sure that it is working, and keeps working),
 when you have to figure out what somebodys code does
 (the test documents exactly what should happen!),
 and when you track down a bug (make sure it doesn't come back).
-<P>
+
+<A ID="run"/>
+<h2>Running the Tests</h2>
 To run the existing tests, say
 <CODE>
 <PRE>
@@ -73,6 +75,26 @@ can run that directly with the "runtest" script:
 </CODE>
 The first line compiles all the test code, and the second
 runs a specific test.
+
+<A ID="write"/>
+<h2>Writing Tests</h2>
+
+By convention, we have a "test" class shadowing 
+each real class.  
+The "test" directory contains a tree of package
+directories parallel to the "src" tree.
+
+<P>
+There are additional classes which are used to 
+group the test classes for a particular package
+into JUnit test suites.
+
+<h3>Writing Additional Tests</h3>
+
+<h3>Writing Tests for a New Class</h3>
+
+<h3>Writing Tests for a New Package</h3>
+
 
 <!--#include virtual="Footer" -->
 
