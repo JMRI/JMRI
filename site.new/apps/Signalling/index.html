@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.html,v 1.5 2007-03-26 03:38:10 jacobsen Exp $ -->
+<!-- $Id: index.html,v 1.6 2007-07-01 05:53:17 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -106,85 +106,290 @@ without requiring the user to write any Java code.  The
 <a href="http://groups.yahoo.com/group/jmriusers/">jmriusers discussion group</A>
 will have more info on this as it becomes available.
 
+<a name="contents"><h3>Contents</h3></a>
 
-<A id="table"><h3>Signal Table</h3></a>
-<A href="./images/SigTable.gif"><IMG SRC="./images/SigTable.gif" ALIGN=RIGHT WIDTH="170" HEIGHT="314" HSPACE="0" VSPACE="0"></A>
+
+	<p>The documentation below describes Signaling with JMRI, and discusses how to set 
+	up the basic signal situations. The documentation is divided into sections; click below for 
+	easy access to a listed section. If you prefer to try before reading much,
+	read <a href="#intro">Introduction to SSL</a>, 
+	then click <a href="#start">Getting Started</a>
+	and follow those instructions. Return here to read about what you did.
+	</p><ul>
+	<li><a href="#terms">Basic Vocabulary</a></li>
+	<li><a href="#intro">Introduction to SSL</a>
+	</li><li><a href="#SSL">SSL</a>
+	</li><li><a href="#start">Getting Started</a>
+	</li><li><a href="#variable">Available State Variables</a>
+	</li><li><a href="#action">Available Actions</a>
+	</li><li><a href="#notes">Additional Notes</a>
+	</li></ul>
+
+<a name="terms"><h3>Vocabulary</h3></a></dt>
+
+<p><b>Some basic signal terms:</b><br>
+<ul>
+<li><b>Signal Arm</b> or <b>Signal Head</b> Each individual signal unit.</li>
+<li><b>Aspect</b> The speed or route indication given by one or more signal heads or arms.<br>
+</li>
+<li><b>Marker</b> A signal head or arm that does not change color or position.</li>
+<li>
+<b>Light</b> The individual lamp in a signal. A light may indicate multiple aspects
+if it changes color like  in a searchlight signal, or it may take multiple lights
+to indicate a single aspect, for example in position light signals.</li>
+<li>
+<b>Mast</b> The pole that mounts one or more signal arms that (usually) control each
+individual track.</li>
+<li><b>Distant Signal</b> The signal you are controlling shows the same or 
+more restrictive aspect as the next signal in the direction and route of travel.</li></ul>
+	
+<p><b>Some JMRI specific SSL and Signal terms:</b><br>
+<ul><li><b>Signal Table</b> The list of signals in JMRI. Signals must first be added into 
+the Signal Table before they may be included in a SSL entry or Logix.</li>
+<li><b>Triple Turnout</b> A signal head that has each aspect of the signal directly driven 
+from an individual output (called a turnout) line. Each aspect change requires that three turnout commands be sent.</li>
+<li>
+<b>Double Turnout</b> A signal head that uses just two output lines to indicate 4 signal aspects.
+Usually these aspects will be Clear, Approach, Stop, and Dark. The output coding is such that 
+one turnout thrown (on) controls the stop and the other thrown (on) controls the clear. 
+Both outputs thrown (on) controls the
+approach, and both closed (off) are dark. Each aspect change requires that two turnout commands be sent.</li>
+<li>
+<b>SE8c</b> A signal head controlled by a single turnout command per aspect change. One turnout command changes between 
+stop and clear, and the second turnout command changes between approach and dark.</li>
+<li> <b>Virtual</b> Virtual signals are JMRI internal signals with no actual hardware attached. Before the advent of Logix,
+Virtual Signals were required to solve more complex operations than can be done with with a single SSL alone.</li>
+<li><b>Protected Sensor</b> The next block sensor/s following the signal you are controlling in the 
+direction and route of travel. The "protection" is to prevent a train from entering an occupied block without warning.</li>
+<li><b>Protected Signal</b> The next signal after the one you are controlling in the 
+direction and route of travel. The "protection" is to prevent a train from approaching a stop signal without sufficient warning to allow it to be stopped short of reaching the "protected" signal.</li>
+</li>
+<li><b>System Name</b> The internal JMRI representation for the actual hardware being used
+to control the signal. This will vary depending on your hardware, and must match your system.
+</ul>
+
+
+<h3>Signal Table</h3></a>
+
+<A href="./images/SigTable.gif"><IMG SRC="./images/SigTable.gif" ALIGN=RIGHT WIDTH="296" HEIGHT="355" HSPACE="0" VSPACE="0"></A>
 All the signals that JMRI knows about can be referenced
 using the "Signal Table" tool in the Tools menu of most JMRI programs.
 There are five columns in the table:
 <UL>
-<LI>The system name is assigned to the signal when it's created, 
+<LI>The <b>system name</b> is assigned to the signal when it's created, 
 and can't be changed.
 <LI>If you're interested in having your signals carry "human readable"
-names, you can click in the "user name" column and change that information
+names, you can click in the <b>User Name</b> column and change that information
 to whatever you want.
 <LI>As the signal changes, for whatever reason, the current
-appearance will show in the table.  You can also click on the
+appearance will show in the <b>State</b> column of the table.  You can also click on the
 appearance button to cycle through the avilable appearances:
-red, yellow, green, flashing red, flashing yellow, flashing green, and dark.
-<LI>The check box in the "Lit" column lets you control whether the
-signal head on the layout is lit (checked) or stays dark (unchecked).
-<LI>The check box in the "Held" column shows the "held" property of the
-signal, and allows you to change it.  This property is used by e.g. CTC
-machine logic to say "Don't change this signal head from red, even if it 
+red, yellow, green, flashing red, flashing yellow, flashing green, and dark. The 
+system hardware will follow these changes.
+
+<LI>The check box in the <b>Lit</b> column lets you see whether the
+signal head on the layout is lit (checked) or stays dark (unchecked). This may 
+also be controlled automatically with the SSL "approach" lighting option or 
+from Logix. <i>Note:</i> This only affects the actual layout hardware, not any 
+panel indications nor signal state logic.
+ <LI>The check box in the <b>Held</b> column shows the "held" property of the
+signal, and allows you to change it.  This property may be used by CTC
+machine logic or Logix to say "Don't change this signal head from red, even if it 
 would be safe to do so, because I want to hold a train here".
 </UL>
-<P>To define a new signal, click on the "Add.." button.  It will
-prompt you for the type (run off turnout outputs; SE8c; etc), and
-whatever setup information is needed.
+<A href="./images/SigAdd.gif"><IMG SRC="./images/SigAdd.gif" ALIGN=RIGHT WIDTH="181" HEIGHT="218" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
+<P>To define a new signal, click on the <b>Add New Signal</b> button.  It will
+prompt you for the signal type (controlled by turnout outputs; SE8c; etc), and
+whatever setup information is needed for your choice.
 <P> This information is saved with the configuration in an XML file, along
-with control panel setup and similar stuff.  For more information
+with control panel setup, Logix, Routes, and similar stuff.  For more information
 on creating and displaying panels, including how to show signals
-on your panels,
-please see the 
+on your panels, please see the 
 <A HREF="../PanelPro/Panels.html">Panels pages</a>
 and the pages on the 
-<A HREF="../PanelPro/Panels-Cornwall/Cornwall.html">Cornwall Railroad control panel</a>.
+<A HREF="../PanelPro/Panels-Cornwall/Cornwall.html">Cornwall Railroad control panel</a>.	
 
-<A id="logic"><h3>Simple Signal Logic</h3></a>
-<A href="./images/SigAdd.gif"><IMG SRC="./images/SigAdd.gif" ALIGN=RIGHT WIDTH="220" HEIGHT="132" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
+<a name="intro"><h3>Introduction to Simple Signal Logic</h3></a></dt>
 
-Much of basic signaling can be boiled down to "a signal goes red when a train
-can't safely enter the block it protects; it goes yellow when the following 
-block can't be entered". Although that's a simplication, it can serve
-as a powerful starting point for signaling logic.
+Simple Signal Logic (SSL)
+is a JMRI tool to enable the rapid setup of basic ABS style signaling. 
+	The SSL user interface is designed to be user friendly to
+	all users with basic familiarity with JMRI. SSL provides a means
+	for setting up basic signals in an intuitive manner, without the 
+	user having to be familiar with all of the logic necessary to 
+	account for the different aspects.
+	For more complex operations beyond the capability of SSL refer to the section on 
+	<A HREF="../../tools/Logix.html">Logix</a>.
+	
+
+<A href="./images/SSLLogic.gif"><IMG SRC="./images/SSLLogic.gif" ALIGN=RIGHT WIDTH="354" HEIGHT="364" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
+
+Much of basic ABS signaling can be boiled down to "a signal goes red when a train
+can't safely enter the block it protects; it goes yellow when the block following 
+the protected block can't be entered". Although that's a simplication, it can serve
+as a powerful starting point for understanding signaling logic.
 <P>
+
 The Simple Signal Logic tool allows you to configure JMRI to 
-use that type of logic to set the appearance of a signal. 
+use this basic ABS type of logic to set the appearance of a signal. 
 Using the panel, you enter information on:
 <UL>
-<LI>The signal being driven
-<LI>Which sensor (occupancy detector) covers the block
-past the signal; when that sensor shows "active" the 
-signal will be set to red
-<LI>If the block contains a trailing point turnout, 
-configure the turnout name and whether you're entering
-the closed or thrown leg; the signal will be set red
-when the turnout is set against this track
-<LI>And the next signal that the train will reach;
-the signal will be set yellow if the next signal is
-red.  If the checkbox is checked, the signal will be set
-flashing yellow (not all types can show that!) if the
-next signal is yellow, thereby giving four-block signaling.
-</ul>
-The case of a facing point switch which can lead 
-to two different "next signals" is also yet covered
-although the figure doesn't show it.
-<P>
-<A HREF="SimpleSignalExample.html">A worked-out example</a> is available on 
-a separate page.
-<P>
-It's clear that this won't cover the most complicated interlockings
-nor will it cover the speed-signaling
-seen on some prototypes.  But for simple block and route 
-signaling, it will do pretty well.
+<li><b>Signal Named</b> The signal being driven.</li><li><b>Protects Sensor/s</b> Which sensors (occupancy detectors) cover the block
+immediately past the signal. When any of these sensors show "active" the 
+signal will be set to red.</li>
+<li><b>Red When Turnout</b> If the block contains a turnout, 
+configure the turnout name and use the selection button to choose whether you're entering
+the closed or thrown leg. The signal will be set to red
+whenever the turnout is set against this track.</li>
+<li><b>Protects Signal</b> The next signal that the train will reach;
+this signal will be set yellow if the next signal is
+red.</li>  
+<li><b>With Flashing Yellow</b> If the checkbox is checked, the signal will be set
+flashing yellow (JMRI will alternate between dark and yellow) if the
+next protected signal is yellow, thereby giving four-block signaling.</li>
+<li><b>Limited Speed</b> If the checkbox is checked, this signal will be set
+to yellow as the least restrictive aspect.</li>
+<li><b>Is Distant Signal</b> If the checkbox is checked, this signal will be set
+to the most restrictive aspect of this signal or the next protected signal.</li>
+<li><b>Approach Lighting Sensor</b> The sensor that controls the lighting of this signal. Only the
+actual hardware signal will go dark. Panel indicators will show the normal signal aspect. 
+Leave this entry blank to always show lit.</li>
+<li><b>Facing Point Turnout</b> The signal located on the single track line, 
+facing a choice of two or more tracks in the direction of travel.</li>
+<li><b>Trailing Point Turnout</b> The signals located on the double track line, 
+facing a single track in the direction of travel.</li></ul><p>
+
+The case of a facing point turnout which leads to two different "Protected Signals" is also covered although the above figure doesn't show it.
+
+If a single signal head is used to control both branches, then choose "On Facing-Point
+Turnout". If a different head will control each route, then simply choose "Main"
+or "Diverging" leg of turnout, as required for each one.
+<p>Pause your mouse over any entry or item in the SSL creation window for a brief "tooltip" help 
+reminder.</p>
+
+<p>It's clear that this won't cover complicated interlockings nor will it 
+cover the speed-signaling seen on some prototypes. For those situations use a 
+combination of Logix and Routes. Logix cover the conditions, and Routes control the actions
+to be taken.</p>
 
 <P>
-When combined with the logic capabilities of JMRI
-<A HREF="../../Tools/Routes.html">Routes</a>,
-it can even be used 
+However, when combined with the logic capabilities of JMRI
+<A HREF="../../Tools/Routes.html">Routes</a>
+and 
+<A HREF="../../Tools/Logix.html">Logix</a> units,
+SSL can be used 
 to create a CTC panel, as Bob Bucklew shows on
 <A HREF="http://www.quaker-valley.com/CTC/QV_CTCnew.html">his web site</a>.
+
+<a name="start"><h3>Getting Started with Simple Signal Logic</h3></a>
+
+	    <p>Follow the following steps to create a signal and become familiar
+	    with how the SSL user interface works.
+	    </p><ol>
+		<li> Select <b>Turnout Table</b> in the <b>Tools</b> menu.
+		</li><li> Check to be sure that the output lines (turnouts) that will control your signal are in the table. If not, click the <b>Add</b> button at the bottom of the Turnout Table.
+		</li><li> In the Add New Turnout window that appears, enter a system name, (E.g. LT1)
+		and "test" for user name, then click <b>OK</b>. <i>Note:</i> System names must start 
+		with CT, IT, LT, NT, XT, etc. and be followed by the actual hardware number of the turnout.
+		</li> <li> Clicking on the correct <b>Closed/Thrown</b> entries in the Turnout Table should now cause your signal to change.
+		</li><li> Next select <b>Signal Table</b> in the <b>Tools</b> menu.
+		</li><li> In the Signal Table window that appears, click <b>Add</b> to begin defining a new signal head.
+		</li><li> In the Add New Signal window that appears choose the correct signal type to 
+		match your hardware. The required item boxes will appear.
+		</li><li> Enter a system name. For example LH152. <i>Note:</i> System names must start 
+		with CH, IH, LH, NH, XH, etc. and be followed by the number of this head.
+		</li><li> Next enter one or more turnout numbers that will control this signal. <i>Note:</i> In the case of
+		SE8c style signals just enter the first turnout number of each pair. The second is automatically known. 
+		</li><li> Click <b>OK</b> to enter this head into the Signal Table.  
+		</li><li> Enter all the signal heads that you will be using for this test.
+		<li> Now select <b>Simple Signal Logic</b> in the <b>Tools</b> menu.
+		</li>
+		<li> Fill in the various entries to match your signals requirements as 
+		previously shown in the <a href="#intro">SSL</a> section.
+		</li><li> Click <b>Apply</b> to make this entry active.</li>
+		<li> Be sure to save your work.
+		</ol>
+    	<p>You have just created an SSL entry to control a signal head. It's as 
+		simple as that. It took 
+    	you more time to read this tutorial than to create the SSL entry.</p>	    
+
+<P>
+A
+<A HREF="SimpleSignalExample.html">worked-out example</a>
+is also available.
+
+<A id="logix"><h3>Signal Support in Logix</h3></a>
+
+A JMRI
+<A HREF="../../Tools/Logix.html">Logix</a>
+provides logic and control capabilities for JMRI objects, including
+signals. A user defines "Conditional" logic and the "Actions"
+that take place depending on the state of the logic.  
+The following sub-sections talk about how Logix
+can examine and control signals.
+
+	<a name="variable"><h3>Available Signal State Variables in Logix</h3></a></dt>
+
+	<p>State variables related to signals that are currently available for use 
+	in Logix Conditionals
+	are listed below, along with information on each. State variables
+	must always evaluate to either true or false. The condition resulting in 
+	true is given for each. If the condition is not met, the state variable
+	evaluates to false. When a Logix is active, the states of entities (sensor,
+	turnout, signal red, etc.) specified in state variables in its Conditionals are 
+	monitored. A calculation of all Conditionals in the Logix is triggered
+	when any monitored state changes as noted below (if not obvious). <i>Note:</i> 
+	Not all possible Logix conditionals are listed here.
+	    </p><ul>
+		</li><li><b>Signal Red</b>: Evaluates to true if the appearance of the 
+		specified signal head is red. Calculation is 
+		triggered when the appearance change to or from red.
+		</li><li><b>Signal Yellow</b>: Evaluates to true if the appearance of the 
+		specified signal head is yellow. Calculation is 
+		triggered when the appearance change to or from yellow.
+		</li><li><b>Signal Green</b>: Evaluates to true if the appearance of the 
+		specified signal head is green. Calculation is 
+		triggered when the appearance change to or from green.
+		</li><li><b>Signal Dark</b>: Evaluates to true if the appearance of the 
+		specified signal head is dark. Calculation is 
+		triggered when the appearance change to or from dark.
+		</li><li><b>Signal Flashing Red</b>: Evaluates to true if the appearance of 
+		the specified signal head is flashing red. Calculation 
+		is triggered when the appearance change to or from flashing red.
+		</li><li><b>Signal Flashing Yellow</b>: Evaluates to true if the appearance of 
+		the specified signal head is flashing yellow. Calculation 
+		is triggered when the appearance change to or from flashing yellow.
+		</li><li><b>Signal Flashing Green</b>: Evaluates to true if the appearance of 
+		the specified signal head is flashing green. Calculation 
+		is triggered when the appearance change to or from flashing green.
+		</li><li><b>Signal Lit</b>: Evaluates to true if the specified signal head is 
+		lit. 
+		</li><li><b>Signal Held</b>: Evaluates to true if the specified signal head 
+		is being held. 
+    	</li></ul>  
+    
+	<a name="action"><h4>Available Signal Actions in Logix</h4></a></dt>
+
+	<p>Actions related to signals that are currently available for use in Logix Conditionals are listed 
+	below along with information on each. <i>Note:</i> 
+	Not all possible Logix actions are included here.
+	    </p><ul>
+		</li><li><b>Set Signal Appearance</b>: Sets the specified signal head  to 
+		the chosen appearance. Specify the signal head to set by entering its 
+		system name or user name.  Specify the appearance to set by choosing 
+		from the popup menu.		
+ 		</li><li><b>Set Signal Held</b>: Sets the specified signal head to hold.
+		Specify the signal head to hold by entering its system name or user name.  
+  		</li><li><b>Clear Signal Held</b>: Clears the hold on the specified signal 
+  		head. Specify the signal head by entering its system name or user name.  
+  		</li><li><b>Set Signal Dark</b>: Sets the specified signal head to not lit.
+		Specify the signal head by entering its system name or user name.  
+  		</li><li><b>Set Signal Lit</b>: Sets the specified signal head to lit.
+		Specify the signal head by entering its system name or user name.  
+		</li><li><b>Play Sound File</b>: Plays the specified sound file. (for 
+		example CTC relay clicks) 
+  		</li><li><b>Run Script</b>: Starts the specified script.
+		</li></ul>
 
 <A id="automat"><h3>Automation classes</h3></a>
 
