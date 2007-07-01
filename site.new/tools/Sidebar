@@ -9,8 +9,11 @@
 		<dd>JMRI provides powerful tools for working with your
 		layout.
 		    <UL>
+		    <LI><dfn><a href="Sensors.shtml">Sensors</a></dfn>
+		    <LI><dfn><a href="Turnouts.shtml">Turnouts</a></dfn>
 		    <LI><dfn><a href="throttle/ThrottleMain.html">Throttles</a></dfn>
 		    <LI><dfn><a href="ConsistTool/ConsistTool.html">Consisting</a></dfn>
+		    <LI><dfn><a href="Signals.shtml">Signals</a></dfn>
 		    <LI><dfn><a href="Lights.html">Lights</a></dfn>
 		    <LI><dfn><a href="Routes.html">Routes</a></dfn>
 		    <LI><dfn><a href="Logix.html">Logix</a></dfn>
