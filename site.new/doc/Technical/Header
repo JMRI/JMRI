@@ -1,4 +1,6 @@
 <!-- Header -->
+    <p class="skipLink"><a href="#mainContent" accesskey="2">Skip to main content</a></p>
+
     <div id="header">
 	<!-- Logo -->
 	<a href="/" title="Return to home page" accesskey="1">
