@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: index.shtml,v 1.1 2007-07-01 04:47:48 jacobsen Exp $ -->
+<html lang="en">
+<head>
+  <TITLE>
+ 	JMRI: Tools
+  </TITLE>
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+
+  <META content="Bob Jacobsen" name=Author>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <meta name="keywords"
+        content="hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+  <div id="container">
+    <p class="skipLink"><a href="#mainContent" accesskey="2">Skip to main content</a></p>
+
+<!--#include virtual="Header" -->
+<!--#include virtual="Sidebar" -->
+
+    <hr class="hide">
+
+      <div id="mainContent">
+      <!-- Page Body -->
+        <H2>
+		JMRI: General Tools
+        </H2>
+
+	<P>
+	JMRI provides several tools that are optimized for 
+	specific purposes. General tools:
+	    <dl>
+
+		<dt><h3><a href="throttle/ThrottleMain.html">Throttles</a></h3></dt>
+		<dd>
+		    You can open multiple software throttles to run
+		    your DCC locomotives.
+		</dd>
+
+		<dt><h3><a href="Routes.html">Routes</a></h3></dt>
+		<dd>
+		    Routes are a tool for driving multiple turnouts when
+		    something happens on the layout.  You can have a
+		    panel switch through all the turnouts in your yard throat, 
+		    etc. They can also change the status of Sensors, 
+		    play sound files, and invoke scripts.  They
+		    have some simple logic capabilities for deciding when
+		    to set the route's outputs.
+		</dd>
+
+		<dt><h3><a href="Logix.html">Logix</a></h3></dt>
+		<dd>
+		    A Logix is a tool for entering powerful logical
+		    expressions that can control parts of a layout.
+		    Each one can monitor multiple inputs and logical
+		    operations through containing a number of Conditional
+		    expressions, each of which can take simple actions.
+		    For more powerful control, combine the logical
+		    reasoning of a Logix with the powerful output
+		    controls of a Route.
+		</dd>
+
+        <dt><h3><a href="fastclock">Fast Clocks</a></h3></dt>
+        <DD>
+            JMRI can both provide various types of fast clocks
+            on the computer screen, and also work with the
+            fast clocks already installed on your layout.
+        </dd>
+
+   		<dt><h3><a href="../apps/Speedometer/index.html">Speedometer</a></h3></dt>
+		<dd>
+		    A tool for determining the scale speed of your
+		    locomotives.  You can use this while setting them up,
+		    to catch speeders, or for whatever you'd like.
+		</dd>
+
+
+	<h2><a href="../apps/LocoTools/index.html">LocoNet-specific Tools</a></h2>
+	A set of Digitrax LocoNet-specific tools:
+		    <UL>
+		    <LI><dfn>LocoNet monitor</dfn>
+		    <LI><dfn>Slot monitor</dfn>
+		    <LI><dfn>Packet source</dfn>
+		    <LI><dfn>PM4 programmer</dfn>
+		    <LI><dfn>BDL16 programmer</dfn>
+		    <LI><dfn>SE8C programmer</dfn>
+		    <LI><dfn>LocoIO programmer</dfn>
+		    </UL>
+
+   	<h2><a href="../doc/scripts/index.html">Scripting</a></h2>
+    If there isn't a preprogrammed tool to do what you want,
+    you can almost certainly write a script that does exactly what's needed.
+    <P>
+    Instead of defining our own language, 
+    <A HREF="../doc/scripts/index.html">JMRI scripting</a>
+    uses the
+    "Python" language that's commonly used in web development.  Although it
+    will take you a little time to get used to it, in the end it provides
+    a lot of power to control your layout anyway you'd like.
+
+<!--#include virtual="Footer" -->
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
+  </div> <!-- closes #container -->
+</body>
+</html>
+
