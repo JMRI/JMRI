@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: Ant.shtml,v 1.1 2007-07-01 03:53:47 jacobsen Exp $ -->
+<html lang="en">
+<head>
+    <TITLE>
+ 	JMRI: Building JMRI with Ant
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code ant">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+
+    <p class="skipLink"><a href="#mainContent" accesskey="2">Skip to main content</a></p>
+
+<!--#include virtual="Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+
+	    <H1>Building JMRI with Ant</H1>
+
+Those of you who prefer a command line approach might want to investigate "ant", a
+better make-like utility for Java projects.  Ant is available for 
+download at
+<A HREF="http://jakarta.apache.org/ant/index.html">http://jakarta.apache.org/ant/index.html/</a>. 
+Install it, then:
+<UL>
+<LI>Create a "project" directory.
+<LI>In the project directory, do a CVS checkout of the "ant" 
+module from our repository. This will create a "java" subdirectory 
+where Ant will run, and load it with source, tests and resources.
+It will also create and populate directories for xml and libraries in the 
+project directory.
+<LI>Change to the newly created java subdirectory. To compile, type "ant compile"; 
+to create a .jar file, type "ant dist". Note that you don't have to create the
+.jar file to run the program.
+<LI>To run the program, type "ant decoderpro" or "ant jmridemo", and sit back to watch it go.
+<LI>To run the test suite, type "ant alltest".
+<LI>To build a jmri.jar file, type "ant dist".
+</ul>
+
+<!--#include virtual="Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+
