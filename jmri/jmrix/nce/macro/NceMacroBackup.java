@@ -58,7 +58,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * This backup routine uses the same macro data format as NCE.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 
@@ -74,6 +74,9 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 	private static boolean fileValid = false;		// used to flag backup status messages
 	
 	private static byte[] nceMacroData = new byte [MACRO_LNTH];
+	
+	javax.swing.JLabel textMacro = new javax.swing.JLabel();
+	javax.swing.JLabel macroNumber = new javax.swing.JLabel();
 	
 	public void run() {
 
@@ -108,18 +111,37 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 		}
 		
 		if (JOptionPane.showConfirmDialog(null,
-				"Backup can take over a minute, continue?", "NCE Macro",
+				"Backup can take over a minute, continue?", "NCE Macro Backup",
 				JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 			return;
 		}
+		
+		// create a status frame
+	   	JPanel ps = new JPanel();
+	   	jmri.util.JmriJFrame fstatus = new jmri.util.JmriJFrame("Macro Backup");
+	   	fstatus.setLocationRelativeTo(null);
+	   	fstatus.setSize (200,100);
+	   	fstatus.add (ps);
+	   	
+	   	ps.add (textMacro);
+	   	ps.add(macroNumber);
+	   	
+		textMacro.setText("Macro number:");
+        textMacro.setVisible(true);
+        macroNumber.setVisible(true);
+        
 
 		// now read NCE CS macro memory and write to file
 		
 		waiting = 0;			// reset in case there was a previous error
-		fileValid = true;		// assume we're going to suceed
+		fileValid = true;		// assume we're going to succeed
 		String line;			// output string to file
 
+
 		for (int macroNum = 0; macroNum < NUM_MACRO; macroNum++) {
+			
+			macroNumber.setText(Integer.toString(macroNum));
+			fstatus.setVisible (true);
 
 			getNceMacro(macroNum);
 
@@ -164,6 +186,9 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 		// Write to disk and close file
 		fileOut.flush();
 		fileOut.close();
+		
+		// kill status panel
+		fstatus.setVisible (false);
 
 		if (fileValid) {
 			JOptionPane.showMessageDialog(null, "Successful Backup!",
