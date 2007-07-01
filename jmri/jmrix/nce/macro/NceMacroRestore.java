@@ -57,7 +57,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * The restore routine checks that each line of the file begins with the appropriate macro address.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 
@@ -69,6 +69,9 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
 	private static int replyLen = 0;				// expected byte length
 	private static int waiting = 0;					// to catch responses not intended for this module
 	private static boolean fileValid = false;		// used to flag status messages
+	
+	javax.swing.JLabel textMacro = new javax.swing.JLabel();
+	javax.swing.JLabel macroNumber = new javax.swing.JLabel();
 	
 	public void run() {
 
@@ -87,10 +90,25 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
 		} catch (FileNotFoundException e) {
 			return;
 		}
+		
+		// create a status frame
+	   	JPanel ps = new JPanel();
+	   	jmri.util.JmriJFrame fstatus = new jmri.util.JmriJFrame("Macro Restore");
+	   	fstatus.setLocationRelativeTo(null);
+	   	fstatus.setSize (200,100);
+	   	fstatus.add (ps);
+	   	
+	   	ps.add (textMacro);
+	   	ps.add(macroNumber);
+	   	
+		textMacro.setText("Macro number:");
+        textMacro.setVisible(true);
+        macroNumber.setVisible(true);
 
 		// Now read the file and check the macro address
 		waiting = 0;
 		fileValid = false;					// in case we break out early
+		int macroNum = 0;					// for user status messages
 		int curMacro = CS_MACRO_MEM;		// load the start address of the NCE macro memory
 		byte[] macroAccy = new byte[20]; 	// NCE Macro data
 		String line = " ";
@@ -101,6 +119,8 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
 			} catch (IOException e) {
 				break;
 			}
+			
+			macroNumber.setText(Integer.toString(macroNum++));
 			
 			if (line == null){				// while loop does not break out quick enough
 				log.error("NCE macro file terminator :0000 not found");
@@ -132,10 +152,12 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
 						.showConfirmDialog(
 								null,
 								"Restore file found!  Restore can take over a minute, continue?",
-								"NCE Macro", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+								"NCE Macro Restore", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 					break;
 				}
 			}
+			
+			fstatus.setVisible (true);
 
 			// now read the entire line from the file and create NCE messages
 			for (int i = 0; i < 10; i++) {
@@ -154,12 +176,19 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
 
 			curMacro += MACRO_LNTH;
 
-			// pace the number of messages queued
-			if (waiting > 32) {
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
+			// wait for writes to NCE CS to complete
+			if (waiting > 0) {
+				synchronized (this) {
+					try {
+						wait(20000);
+					} catch (InterruptedException e) {
+					}
 				}
+			}
+			// failed
+			if (waiting > 0){
+				log.error("timeout waiting for reply");
+				break;
 			}
 		}
 		try {
@@ -167,19 +196,8 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
 		} catch (IOException e) {
 		}
 
-		// wait until all writes complete
-		int waitcount = 30;
-		while (waiting > 0) {
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-			}
-			if (waitcount-- < 0) {
-				log.error("write timeout to NCE macro memory");
-				fileValid = false;
-				break;
-			}
-		}
+		// kill status panel
+		fstatus.setVisible (false);
 
 		if (fileValid) {
 			JOptionPane.showMessageDialog(null, "Successful Restore!",
@@ -200,8 +218,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
 
 		// write 4 bytes
 		if (second) {
-			curMacro += 16; // adjust for second memory
-			// write
+			curMacro += 16; // adjust for second memory write
 			bl = NceBinaryCommand.accMemoryWriteN(curMacro, 4);
 			int j = bl.length - 16;
 			for (int i = 0; i < 4; i++, j++)
@@ -239,6 +256,13 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
 			int recChar = r.getElement(0);
 			if (recChar != '!')
 				log.error("reply incorrect");
+		}
+		
+		// wake up restore thread
+		if (waiting == 0) {
+			synchronized (this) {
+				notify();
+			}
 		}
 	}
 	
