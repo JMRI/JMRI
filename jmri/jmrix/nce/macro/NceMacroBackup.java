@@ -58,7 +58,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * This backup routine uses the same macro data format as NCE.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 
@@ -121,7 +121,7 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 	   	jmri.util.JmriJFrame fstatus = new jmri.util.JmriJFrame("Macro Backup");
 	   	fstatus.setLocationRelativeTo(null);
 	   	fstatus.setSize (200,100);
-	   	fstatus.add (ps);
+	   	fstatus.getContentPane().add (ps);
 	   	
 	   	ps.add (textMacro);
 	   	ps.add(macroNumber);

@@ -57,7 +57,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * The restore routine checks that each line of the file begins with the appropriate macro address.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 
@@ -96,7 +96,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
 	   	jmri.util.JmriJFrame fstatus = new jmri.util.JmriJFrame("Macro Restore");
 	   	fstatus.setLocationRelativeTo(null);
 	   	fstatus.setSize (200,100);
-	   	fstatus.add (ps);
+	   	fstatus.getContentPane().add (ps);
 	   	
 	   	ps.add (textMacro);
 	   	ps.add(macroNumber);
