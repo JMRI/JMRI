@@ -22,7 +22,7 @@ public abstract class AbstractTurnoutMgrTest extends TestCase {
 
 	// implementing classes must provide these abstract members:
 	//
-	abstract public void setUp();    	// load t with actual object; create scaffolds as needed
+	abstract protected void setUp();    	// load t with actual object; create scaffolds as needed
 	abstract public String getSystemName(int i);
 
 	public AbstractTurnoutMgrTest(String s) {

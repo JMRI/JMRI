@@ -18,7 +18,7 @@ import junit.framework.TestSuite;
  * Test PaneProgFrame
  *
  * @author			Bob Jacobsen
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class PaneProgFrameTest extends TestCase {
 
@@ -144,7 +144,7 @@ public class PaneProgFrameTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {PaneProgFrameTest.class.getName()};
+        String[] testCaseName = {"-noloading", PaneProgFrameTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
@@ -156,8 +156,7 @@ public class PaneProgFrameTest extends TestCase {
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PaneProgFrameTest.class.getName());
     // The minimal setup for log4J
-    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
-    protected void setUp() { log4jfixtureInst.setUp(); }
-    protected void tearDown() { log4jfixtureInst.tearDown(); }
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 }

@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Set of tests for the jmri.jmrix package
  * @author	Bob Jacobsen  Copyright 2003
- * @version         $Revision: 1.11 $
+ * @version         $Revision: 1.12 $
  */
 public class JmrixTest extends TestCase {
 
@@ -21,7 +21,7 @@ public class JmrixTest extends TestCase {
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {JmrixTest.class.getName()};
+		String[] testCaseName = {"-noloading", JmrixTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 
@@ -44,8 +44,7 @@ public class JmrixTest extends TestCase {
 	}
 
     // The minimal setup for log4J
-    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
-    protected void setUp() { log4jfixtureInst.setUp(); }
-    protected void tearDown() { log4jfixtureInst.tearDown(); }
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 }

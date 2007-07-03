@@ -21,7 +21,7 @@ import junit.framework.TestSuite;
  * Test CompositeVariableValue class.
  *
  * @author	Bob Jacobsen Copyright 2006
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class CompositeVariableValueTest extends VariableValueTest {
 
@@ -300,7 +300,7 @@ public class CompositeVariableValueTest extends VariableValueTest {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = { CompositeVariableValueTest.class.getName()};
+        String[] testCaseName = {"-noloading", CompositeVariableValueTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
@@ -313,9 +313,8 @@ public class CompositeVariableValueTest extends VariableValueTest {
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance( CompositeVariableValueTest.class.getName());
 
     // The minimal setup for log4J
-    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
-    protected void setUp() { log4jfixtureInst.setUp(); }
-    protected void tearDown() { log4jfixtureInst.tearDown(); }
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 }
 

@@ -22,7 +22,7 @@ public abstract class AbstractTurnoutTest extends TestCase {
 
 	// implementing classes must provide these abstract members:
 	//
-	abstract public void setUp();    	// load t with actual object; create scaffolds as needed
+	abstract protected void setUp();    	// load t with actual object; create scaffolds as needed
 	abstract public int numListeners();	// return number of listeners registered with the TrafficController
 	abstract public void checkThrownMsgSent();
 	abstract public void checkClosedMsgSent();

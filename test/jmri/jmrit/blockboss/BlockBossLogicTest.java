@@ -17,7 +17,7 @@ import jmri.Turnout;
 /**
  * Tests for the BlockBossLogic class
  * @author	Bob Jacobsen
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class BlockBossLogicTest extends TestCase {
 
@@ -158,7 +158,6 @@ public class BlockBossLogicTest extends TestCase {
 	// from here down is testing infrastructure
 
     // Ensure minimal setup for log4J
-    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
 
     Turnout t1, t2, t3;
     Sensor s1, s2, s3, s4, s5;
@@ -171,7 +170,7 @@ public class BlockBossLogicTest extends TestCase {
     * as common background for testing
     */
     protected void setUp() {
-        log4jfixtureInst.setUp();
+        apps.tests.Log4JFixture.setUp();
         
         // create a new instance manager
         InstanceManager i = new InstanceManager(){
@@ -204,23 +203,13 @@ public class BlockBossLogicTest extends TestCase {
         InstanceManager.signalHeadManagerInstance().register(h4);
     }
 
-    /**
-     * Test-by-test clean up.
-     * Removes the managers for sensors, etc, so they
-     * don't interfere with later tests
-     */
-    protected void tearDown() { 
-        log4jfixtureInst.tearDown();
-    }
-
-
 	public BlockBossLogicTest(String s) {
 		super(s);
 	}
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {BlockBossLogicTest.class.getName()};
+		String[] testCaseName = {"-noloading", BlockBossLogicTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 
@@ -230,4 +219,6 @@ public class BlockBossLogicTest extends TestCase {
 		return suite;
 	}
 
+    // The minimal setup for log4J
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 }

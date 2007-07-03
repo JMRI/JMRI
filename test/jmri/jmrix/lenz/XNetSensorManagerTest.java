@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.lenz.XNetSensorManager class.
  * @author	Paul Bender Copyright (c) 2003
- * @version     $Revision: 2.1 $
+ * @version     $Revision: 2.2 $
  */
 public class XNetSensorManagerTest extends TestCase  {
 
@@ -107,7 +107,7 @@ public class XNetSensorManagerTest extends TestCase  {
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {XNetSensorManagerTest.class.getName()};
+		String[] testCaseName = {"-noloading", XNetSensorManagerTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 
@@ -120,8 +120,7 @@ public class XNetSensorManagerTest extends TestCase  {
 	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetSensorManagerTest.class.getName());
 
     // The minimal setup for log4J
-    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
-    protected void setUp() { log4jfixtureInst.setUp(); }
-    protected void tearDown() { log4jfixtureInst.tearDown(); }
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 }

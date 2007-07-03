@@ -11,14 +11,9 @@ import junit.framework.TestSuite;
  *
  * Description:
  * @author			Bob Jacobsen
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class PositionableLabelTest extends TestCase {
-
-    // The minimal setup is for log4J
-    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
-    protected void setUp() { log4jfixtureInst.setUp(); }
-    protected void tearDown() { log4jfixtureInst.tearDown(); }
 
     JLabel to = null;
 
@@ -59,7 +54,7 @@ public class PositionableLabelTest extends TestCase {
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {PositionableLabelTest.class.getName()};
+		String[] testCaseName = {"-noloading", PositionableLabelTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 
@@ -68,6 +63,10 @@ public class PositionableLabelTest extends TestCase {
 		TestSuite suite = new TestSuite(PositionableLabelTest.class);
 		return suite;
 	}
+
+    // The minimal setup for log4J
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 	// static private org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TurnoutIconTest.class.getName());
 

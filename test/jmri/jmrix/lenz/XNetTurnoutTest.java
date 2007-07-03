@@ -9,17 +9,9 @@ import junit.framework.TestSuite;
 /**
  * Tests for the {@link jmri.jmrix.lenz.XNetTurnout} class.
  * @author	    Bob Jacobsen
- * @version         $Revision: 2.1 $
+ * @version         $Revision: 2.2 $
  */
 public class XNetTurnoutTest extends jmri.AbstractTurnoutTest {
-
-	public void setUp() {
-        log4jfixtureInst.setUp();
-		// prepare an interface
-		lnis = new XNetInterfaceScaffold(new LenzCommandStation());
-
-		t = new XNetTurnout(21);
-	}
 
 	public int numListeners() {
 		return lnis.numListeners();
@@ -88,7 +80,7 @@ public class XNetTurnoutTest extends jmri.AbstractTurnoutTest {
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {XNetTurnoutTest.class.getName()};
+		String[] testCaseName = {"-noloading", XNetTurnoutTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 
@@ -99,8 +91,15 @@ public class XNetTurnoutTest extends jmri.AbstractTurnoutTest {
 	}
 
     // The minimal setup for log4J
-    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
-    protected void tearDown() { log4jfixtureInst.tearDown(); }
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetTurnoutTest.class.getName());
+    protected void setUp() { 
+        apps.tests.Log4JFixture.setUp();
+		// prepare an interface
+		lnis = new XNetInterfaceScaffold(new LenzCommandStation());
+
+		t = new XNetTurnout(21);
+    }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+
+	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetTurnoutTest.class.getName());
 
 }

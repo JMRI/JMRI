@@ -6,7 +6,7 @@ import javax.swing.*;
 import jmri.*;
 import junit.framework.*;
 
-// Revision: $Revision: 1.8 $
+// Revision: $Revision: 1.9 $
 
 public class CombinedLocoSelListPaneTest extends TestCase {
 
@@ -41,7 +41,7 @@ public class CombinedLocoSelListPaneTest extends TestCase {
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {VariableTableModelTest.class.getName()};
+		String[] testCaseName = {"-noloading", VariableTableModelTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 
@@ -50,8 +50,9 @@ public class CombinedLocoSelListPaneTest extends TestCase {
 		TestSuite suite = new TestSuite(CombinedLocoSelListPaneTest.class);
 		return suite;
 	}
+
     // The minimal setup for log4J
-    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
-    protected void setUp() { log4jfixtureInst.setUp(); }
-    protected void tearDown() { log4jfixtureInst.tearDown(); }
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+
 }

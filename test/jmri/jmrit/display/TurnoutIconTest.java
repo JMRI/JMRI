@@ -11,16 +11,11 @@ import java.beans.PropertyChangeEvent;
  *
  * Description:
  * @author			Bob Jacobsen
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class TurnoutIconTest extends TestCase {
 
     TurnoutIcon to = null;
-
-    // The minimal setup is for log4J
-    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
-    protected void setUp() { log4jfixtureInst.setUp(); }
-    protected void tearDown() { log4jfixtureInst.tearDown(); }
 
 	public void testShow() {
         JFrame jf = new JFrame();
@@ -94,7 +89,7 @@ public class TurnoutIconTest extends TestCase {
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {TurnoutIconTest.class.getName()};
+		String[] testCaseName = {"-noloading", TurnoutIconTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 
@@ -103,6 +98,10 @@ public class TurnoutIconTest extends TestCase {
 		TestSuite suite = new TestSuite(TurnoutIconTest.class);
 		return suite;
 	}
+
+    // The minimal setup for log4J
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 	// static private org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TurnoutIconTest.class.getName());
 

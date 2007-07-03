@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the SerialNode class
  * @author		Bob Jacobsen  Copyright 2003
  * @author		Dave Duchamp  multi-node extensions 2003
- * @version		$Revision: 1.9 $
+ * @version		$Revision: 1.10 $
  */
 public class SerialNodeTest extends TestCase {
 		
@@ -213,7 +213,7 @@ public class SerialNodeTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {SerialNodeTest.class.getName()};
+        String[] testCaseName = {"-noloading", SerialNodeTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
@@ -224,8 +224,7 @@ public class SerialNodeTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
-    protected void setUp() { log4jfixtureInst.setUp(); }
-    protected void tearDown() { log4jfixtureInst.tearDown(); }
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 }

@@ -2,8 +2,9 @@
 package jmri.jmrix.loconet;
 
 import junit.framework.Assert;
+import junit.framework.Test;
 import junit.framework.TestCase;
-
+import junit.framework.TestSuite;
 
 public class Se8AlmImplementationTest extends TestCase {
 
@@ -18,14 +19,26 @@ public class Se8AlmImplementationTest extends TestCase {
         
     }
     
-    // The minimal setup for log4J
-    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
     LocoNetInterfaceScaffold lnis;
-    protected void setUp() {
+
+	// Main entry point
+	static public void main(String[] args) {
+		String[] testCaseName = {"-noloading", Se8AlmImplementationTest.class.getName()};
+		junit.swingui.TestRunner.main(testCaseName);
+	}
+
+	// test suite from all defined tests
+	public static Test suite() {
+		TestSuite suite = new TestSuite(Se8AlmImplementationTest.class);
+		return suite;
+	}
+
+    // The minimal setup for log4J
+    protected void setUp() { 
+        apps.tests.Log4JFixture.setUp();
         // prepare an interface
         lnis = new LocoNetInterfaceScaffold();
-        log4jfixtureInst.setUp();
     }
-    protected void tearDown() { log4jfixtureInst.tearDown(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 }

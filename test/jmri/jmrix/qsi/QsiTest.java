@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.qsi package
  * @author			Bob Jacobsen
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class QsiTest extends TestCase {
 
@@ -19,11 +19,6 @@ public class QsiTest extends TestCase {
 		super(s);
 	}
 
-    // The minimal setup is for log4J
-    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
-    protected void setUp() { log4jfixtureInst.setUp(); }
-    protected void tearDown() { log4jfixtureInst.tearDown(); }
-
 	// a dummy test to avoid JUnit warning
 	public void testDemo() {
 		assertTrue(true);
@@ -31,7 +26,7 @@ public class QsiTest extends TestCase {
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {QsiTest.class.getName()};
+		String[] testCaseName = {"-noloading", QsiTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 
@@ -47,4 +42,7 @@ public class QsiTest extends TestCase {
 		return suite;
 	}
 
+    // The minimal setup for log4J
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 }

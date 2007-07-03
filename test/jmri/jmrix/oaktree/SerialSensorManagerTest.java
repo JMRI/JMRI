@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialSensorManager class.
  * @author	Bob Jacobsen  Copyright 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SerialSensorManagerTest extends TestCase {
 
@@ -54,7 +54,7 @@ public class SerialSensorManagerTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {SerialSensorManagerTest.class.getName()};
+        String[] testCaseName = {"-noloading", SerialSensorManagerTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
@@ -65,8 +65,7 @@ public class SerialSensorManagerTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
-    protected void setUp() { log4jfixtureInst.setUp(); }
-    protected void tearDown() { log4jfixtureInst.tearDown(); }
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 }

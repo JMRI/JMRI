@@ -189,13 +189,12 @@ public class SlotManagerTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
     LocoNetInterfaceScaffold lnis;
     protected void setUp() {
         // prepare an interface
         lnis = new LocoNetInterfaceScaffold();
-        log4jfixtureInst.setUp();
+        apps.tests.Log4JFixture.setUp(); 
     }
-    protected void tearDown() { log4jfixtureInst.tearDown(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 }

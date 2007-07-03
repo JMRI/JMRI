@@ -15,7 +15,7 @@ import com.sun.java.util.collections.Vector;
  * Test CvValue class
  *
  * @author			Bob Jacobsen Copyright 2004, 2006
- * @version         $Revision: 1.10 $
+ * @version         $Revision: 1.11 $
  */
 public class CvValueTest extends TestCase {
 
@@ -160,7 +160,7 @@ public class CvValueTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {CvValueTest.class.getName()};
+        String[] testCaseName = {"-noloading", CvValueTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
@@ -171,9 +171,9 @@ public class CvValueTest extends TestCase {
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CvValueTest.class.getName());
+
     // The minimal setup for log4J
-    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
-    protected void setUp() { log4jfixtureInst.setUp(); }
-    protected void tearDown() { log4jfixtureInst.tearDown(); }
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 }

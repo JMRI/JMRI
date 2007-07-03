@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Invoke complete set of tests for the Jmri package
  * @author	Bob Jacobsen, Copyright (C) 2001, 2002
- * @version         $Revision: 1.10 $
+ * @version         $Revision: 1.11 $
  */
 public class JmriTest extends TestCase {
 
@@ -21,13 +21,12 @@ public class JmriTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {JmriTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+		String[] testCaseName = {"-noloading", JmriTest.class.getName()};
+		junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.JmriTest");  // no tests in this class itself
 		suite.addTest(jmri.BlockTest.suite());
 		suite.addTest(jmri.RouteTest.suite());
@@ -43,5 +42,9 @@ public class JmriTest extends TestCase {
         suite.addTest(jmri.jmrix.JmrixTest.suite());  // last due to threading issues?
         return suite;
     }
+
+    // The minimal setup for log4J
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 }

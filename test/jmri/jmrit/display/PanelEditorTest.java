@@ -14,16 +14,11 @@ import junit.framework.TestSuite;
  *
  * Description:
  * @author			Bob Jacobsen
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class PanelEditorTest extends TestCase {
 
     TurnoutIcon to = null;
-
-    // The minimal setup is for log4J
-    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
-    protected void setUp() { log4jfixtureInst.setUp(); }
-    protected void tearDown() { log4jfixtureInst.tearDown(); }
 
 	public void testShow() throws java.io.IOException {
 	    // create a test file
@@ -47,7 +42,7 @@ public class PanelEditorTest extends TestCase {
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {PanelEditorTest.class.getName()};
+		String[] testCaseName = {"-noloading", PanelEditorTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 
@@ -56,6 +51,10 @@ public class PanelEditorTest extends TestCase {
 		TestSuite suite = new TestSuite(PanelEditorTest.class);
 		return suite;
 	}
+
+    // The minimal setup for log4J
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 String layerTestData = 
 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+

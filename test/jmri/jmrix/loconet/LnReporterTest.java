@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.LnReporter class.
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class LnReporterTest extends TestCase {
 
@@ -75,7 +75,7 @@ public class LnReporterTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-    	String[] testCaseName = {LnReporterTest.class.getName()};
+    	String[] testCaseName = {"-noloading", LnReporterTest.class.getName()};
     	junit.swingui.TestRunner.main(testCaseName);
     }
 
@@ -86,9 +86,9 @@ public class LnReporterTest extends TestCase {
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnReporterTest.class.getName());
+
     // The minimal setup for log4J
-    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
-    protected void setUp() { log4jfixtureInst.setUp(); }
-    protected void tearDown() { log4jfixtureInst.tearDown(); }
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 }

@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.LnSensorManagerTurnout class.
  * @author	Bob Jacobsen  Copyright 2001
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class LnSensorManagerTest extends TestCase  {
 
@@ -105,7 +105,7 @@ public class LnSensorManagerTest extends TestCase  {
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {LnSensorManagerTest.class.getName()};
+		String[] testCaseName = {"-noloading", LnSensorManagerTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 
@@ -118,8 +118,7 @@ public class LnSensorManagerTest extends TestCase  {
 	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnSensorManagerTest.class.getName());
 
     // The minimal setup for log4J
-    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
-    protected void setUp() { log4jfixtureInst.setUp(); }
-    protected void tearDown() { log4jfixtureInst.tearDown(); }
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 }

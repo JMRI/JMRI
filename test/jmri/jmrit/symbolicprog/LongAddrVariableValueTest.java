@@ -20,7 +20,7 @@ import junit.framework.TestSuite;
  *
  * @todo need a check of the MIXED state model for long address
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class LongAddrVariableValueTest extends VariableValueTest {
 
@@ -215,7 +215,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = { LongAddrVariableValueTest.class.getName()};
+        String[] testCaseName = { "-noloading", LongAddrVariableValueTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
@@ -228,9 +228,8 @@ public class LongAddrVariableValueTest extends VariableValueTest {
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance( LongAddrVariableValueTest.class.getName());
 
     // The minimal setup for log4J
-    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
-    protected void setUp() { log4jfixtureInst.setUp(); }
-    protected void tearDown() { log4jfixtureInst.tearDown(); }
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 }
 

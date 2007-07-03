@@ -19,7 +19,7 @@ import com.sun.java.util.collections.Vector;
  * Tests for Pr1Importer class.
  *
  * @author	Bob Jacobsen Copyright 2003
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class Pr1ImporterTest extends TestCase {
 
@@ -101,7 +101,7 @@ public class Pr1ImporterTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = { Pr1ImporterTest.class.getName()};
+        String[] testCaseName = {"-noloading", Pr1ImporterTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
@@ -114,9 +114,8 @@ public class Pr1ImporterTest extends TestCase {
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance( Pr1ImporterTest.class.getName());
 
     // The minimal setup for log4J
-    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
-    protected void setUp() { log4jfixtureInst.setUp(); }
-    protected void tearDown() { log4jfixtureInst.tearDown(); }
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 }
 

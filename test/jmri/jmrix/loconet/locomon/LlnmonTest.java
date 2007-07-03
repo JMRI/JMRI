@@ -16,7 +16,7 @@ import jmri.util.StringUtil;
 /**
  * Tests for the jmri.jmrix.loconet.locomon.Llnmon class.
  * @author	    Bob Jacobsen Copyright (C) 2002, 2007
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class LlnmonTest extends TestCase {
 
@@ -74,7 +74,7 @@ public class LlnmonTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {LlnmonTest.class.getName()};
+        String[] testCaseName = {"-noloading", LlnmonTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
@@ -84,15 +84,9 @@ public class LlnmonTest extends TestCase {
         return suite;
     }
 
-    Log4JFixture log4jfixtureInst = new Log4JFixture(this);
-
-    protected void setUp() {
-    	log4jfixtureInst.setUp();
-    }
-
-    protected void tearDown() {
-    	log4jfixtureInst.tearDown();
-    }
+    // The minimal setup for log4J
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LlnmonTest.class.getName());
 

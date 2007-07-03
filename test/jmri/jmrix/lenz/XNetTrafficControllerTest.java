@@ -10,7 +10,7 @@ import junit.framework.*;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 2.1 $
+ * @version $Revision: 2.2 $
  */
 public class XNetTrafficControllerTest extends TestCase {
 
@@ -21,8 +21,7 @@ public class XNetTrafficControllerTest extends TestCase {
   public void testDummy() {}
 
     // The minimal setup for log4J
-    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
-    protected void setUp() { log4jfixtureInst.setUp(); }
-    protected void tearDown() { log4jfixtureInst.tearDown(); }
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 }

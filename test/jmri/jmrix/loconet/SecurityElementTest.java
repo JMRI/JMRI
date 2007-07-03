@@ -13,7 +13,7 @@ import jmri.*;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class SecurityElementTest extends TestCase {
 
@@ -203,15 +203,13 @@ public class SecurityElementTest extends TestCase {
     SecurityElement testSE19;
     SecurityElement testSE20;
 
-    Log4JFixture log4jfixtureInst = new Log4JFixture(this);
-
     public SecurityElementTest(String s) {
         super(s);
     }
 
 	LocoNetInterfaceScaffold controller;  // holds dummy for testing
     protected void setUp() {
-        log4jfixtureInst.setUp();
+        apps.tests.Log4JFixture.setUp();
         controller = new LocoNetInterfaceScaffold();
         testSE10 = new SecurityElement(10);
         testSE11 = new SecurityElement(11);
@@ -228,7 +226,7 @@ public class SecurityElementTest extends TestCase {
     }
 
     protected void tearDown() {
-        log4jfixtureInst.tearDown();
+        apps.tests.Log4JFixture.tearDown();
     }
 
 }

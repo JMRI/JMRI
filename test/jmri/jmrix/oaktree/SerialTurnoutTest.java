@@ -8,7 +8,7 @@ import junit.framework.*;
 /**
  * Tests for the jmri.jmrix.oaktree.SerialTurnout class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SerialTurnoutTest extends AbstractTurnoutTest {
 
@@ -19,7 +19,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTest {
 		// prepare an interface
 		tcis = new SerialTrafficControlScaffold();
 
-		t = new SerialTurnout("CT4","t4");
+		t = new SerialTurnout("OT4","t4");
 	}
 
 	public int numListeners() { return tcis.numListeners(); }

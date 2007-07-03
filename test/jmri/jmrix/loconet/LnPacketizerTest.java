@@ -12,23 +12,17 @@ import apps.tests.*;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Id: LnPacketizerTest.java,v 1.1 2002-03-18 02:11:27 jacobsen Exp $
+ * @version $Id: LnPacketizerTest.java,v 1.2 2007-07-03 07:03:28 jacobsen Exp $
  */
 public class LnPacketizerTest extends TestCase {
-  Log4JFixture log4jfixtureInst = new Log4JFixture(this);
 
   public LnPacketizerTest(String s) {
     super(s);
   }
 
-  protected void setUp() {
-    log4jfixtureInst.setUp();
-  }
-
-  protected void tearDown() {
-    log4jfixtureInst.tearDown();
-  }
-
   public void testDummy() {}
 
+    // The minimal setup for log4J
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 }

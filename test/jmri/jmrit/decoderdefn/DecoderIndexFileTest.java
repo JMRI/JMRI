@@ -14,7 +14,7 @@ import com.sun.java.util.collections.List;
  * Tests for DecoderIndexFile class
  *
  * @author			Bob Jacobsen, Copyright (c) 2001, 2002
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class DecoderIndexFileTest extends TestCase {
 
@@ -245,7 +245,7 @@ public class DecoderIndexFileTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {DecoderIndexFileTest.class.getName()};
+        String[] testCaseName = {"-noloading", DecoderIndexFileTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
@@ -256,9 +256,9 @@ public class DecoderIndexFileTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
-    protected void setUp() { log4jfixtureInst.setUp(); }
-    protected void tearDown() { log4jfixtureInst.tearDown(); }
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+
     // static private org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DecoderIndexFileTest.class.getName());
 
 }

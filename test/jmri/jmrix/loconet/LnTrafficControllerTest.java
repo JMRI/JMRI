@@ -12,23 +12,32 @@ import apps.tests.*;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Id: LnTrafficControllerTest.java,v 1.1 2002-03-18 02:11:27 jacobsen Exp $
+ * @version $Id: LnTrafficControllerTest.java,v 1.2 2007-07-03 07:03:28 jacobsen Exp $
  */
 public class LnTrafficControllerTest extends TestCase {
-  Log4JFixture log4jfixtureInst = new Log4JFixture(this);
 
   public LnTrafficControllerTest(String s) {
     super(s);
   }
 
-  protected void setUp() {
-    log4jfixtureInst.setUp();
-  }
+    public void testNull() {
+        // just to make JUnit feel better
+    }
+    
+	// Main entry point
+	static public void main(String[] args) {
+		String[] testCaseName = {"-noloading", LnTrafficControllerTest.class.getName()};
+		junit.swingui.TestRunner.main(testCaseName);
+	}
 
-  protected void tearDown() {
-    log4jfixtureInst.tearDown();
-  }
+	// test suite from all defined tests
+	public static Test suite() {
+		TestSuite suite = new TestSuite(LnTrafficControllerTest.class);
+		return suite;
+	}
 
-  public void testDummy() {}
+    // The minimal setup for log4J
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 }

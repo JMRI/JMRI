@@ -14,7 +14,7 @@ import junit.framework.TestSuite;
 /**
  Tests for the jmri.jmrix.lenz.XNetTurnoutManager class.
  * @author			Bob Jacobsen
- * @version         $Revision: 2.0 $
+ * @version         $Revision: 2.1 $
  */
 public class XNetTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 
@@ -23,15 +23,6 @@ public class XNetTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
     }
 
     XNetInterfaceScaffold lnis;
-
-    public void setUp() {
-        log4jfixtureInst.setUp();
-        // prepare an interface, register
-        lnis = new XNetInterfaceScaffold(new LenzCommandStation());
-        // create and register the manager object
-        l = new XNetTurnoutManager();
-        jmri.InstanceManager.setTurnoutManager(l);
-    }
 
     public void testArraySort() {
         String[] str = new String[]{"8567", "8456"};
@@ -110,7 +101,7 @@ public class XNetTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {XNetTurnoutManager.class.getName()};
+        String[] testCaseName = {"-noloading", XNetTurnoutManager.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
@@ -121,8 +112,16 @@ public class XNetTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
     }
 
     // The minimal setup for log4J
-    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
-    protected void tearDown() { log4jfixtureInst.tearDown(); }
+    protected void setUp() { 
+        apps.tests.Log4JFixture.setUp(); 
+        // prepare an interface, register
+        lnis = new XNetInterfaceScaffold(new LenzCommandStation());
+        // create and register the manager object
+        l = new XNetTurnoutManager();
+        jmri.InstanceManager.setTurnoutManager(l);
+    }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetTurnoutManagerTest.class.getName());
 
 }

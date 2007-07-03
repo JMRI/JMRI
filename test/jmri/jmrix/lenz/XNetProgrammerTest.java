@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the XNetProgrammer class
  * @author			Bob Jacobsen
- * @version         $Revision: 2.1 $
+ * @version         $Revision: 2.2 $
  */
 
 package jmri.jmrix.lenz;
@@ -119,7 +119,7 @@ public class XNetProgrammerTest extends TestCase {
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {XNetProgrammerTest.class.getName()};
+		String[] testCaseName = {"-noloading", XNetProgrammerTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 
@@ -130,9 +130,8 @@ public class XNetProgrammerTest extends TestCase {
 	}
 
     // The minimal setup is for log4J
-    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
-    protected void setUp() { log4jfixtureInst.setUp(); }
-    protected void tearDown() { log4jfixtureInst.tearDown(); }
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetProgrammerTest.class.getName());
 

@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  * Invoke all the JMRI project JUnit tests via a GUI interface.
  *
  * @author	Bob Jacobsen
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class AllTest extends TestCase  {
     public AllTest(String s) {
@@ -24,16 +24,12 @@ public class AllTest extends TestCase  {
 
     // Main entry point
     static public void main(String[] args) {
-        System.out.println("AllTest starts");
-        String[] testCaseName = {AllTest.class.getName()};
-        log = org.apache.log4j.Category.getInstance("jmri");
-        // initialize junit
+		String[] testCaseName = {"-noloading", AllTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite
     public static Test suite() {
-        initLogging();
         // all tests from here down in heirarchy
         TestSuite suite = new TestSuite("AllTest");  // no tests in this class itself
         // all tests from other classes
@@ -42,25 +38,12 @@ public class AllTest extends TestCase  {
         return suite;
     }
 
-    static boolean log4jinit = true;
-    public static void initLogging() {
-        if (log4jinit) {
-            log4jinit = false;
-            // initialize log4j - from logging control file (lcf) if you can find it
-            String logFile = "default.lcf";
-            if (new java.io.File(logFile).canRead()) {
-                System.out.println(logFile+" configures logging");
-                org.apache.log4j.PropertyConfigurator.configure("default.lcf");
-            } else {
-                System.out.println(logFile+" not found, using default logging");
-                org.apache.log4j.BasicConfigurator.configure();
-                // only log warnings and above
-                org.apache.log4j.Category.getRoot().setPriority(org.apache.log4j.Priority.INFO);
-                org.apache.log4j.Category.getRoot().setPriority(org.apache.log4j.Priority.ERROR);
-            }
-        }
+    public static void initLogging(){
+        apps.tests.Log4JFixture.initLogging();
     }
-
-    static org.apache.log4j.Category log = null;
+    
+    // The minimal setup for log4J
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 }

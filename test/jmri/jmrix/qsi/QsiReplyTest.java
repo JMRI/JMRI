@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the QsiReplyclass
  * @author			Bob Jacobsen
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 
 package jmri.jmrix.qsi;
@@ -99,7 +99,7 @@ public class QsiReplyTest extends TestCase {
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {QsiReplyTest.class.getName()};
+		String[] testCaseName = {"-noloading", QsiReplyTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 
@@ -109,14 +109,8 @@ public class QsiReplyTest extends TestCase {
 		return suite;
 	}
 
-	Log4JFixture log4jfixtureInst = new Log4JFixture(this);
-
-    protected void setUp() {
-    	log4jfixtureInst.setUp();
-    }
-
-    protected void tearDown() {
-    	log4jfixtureInst.tearDown();
-    }
+    // The minimal setup for log4J
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 }
