@@ -29,7 +29,15 @@ public class Log4JFixture extends java.lang.Object {
     			org.apache.log4j.PropertyConfigurator.configure(logFile);
             } else {
                 System.out.println(logFile+" not found, using default logging");
-                org.apache.log4j.BasicConfigurator.configure();
+                
+                // create an appender, and load it with a default pattern
+                jmri.util.JUnitAppender a = new jmri.util.JUnitAppender();
+                a.setLayout(new org.apache.log4j.PatternLayout(org.apache.log4j.PatternLayout.TTCC_CONVERSION_PATTERN));
+                a.activateOptions();
+                
+                // configure Log4J using that appender
+                org.apache.log4j.BasicConfigurator.configure(a);
+                
                 // only log warnings and above
                 org.apache.log4j.Category.getRoot().setPriority(org.apache.log4j.Priority.WARN);
             }
