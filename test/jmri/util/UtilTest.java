@@ -8,7 +8,7 @@ import junit.framework.*;
  * Invokes complete set of tests in the jmri.util tree
  *
  * @author	    Bob Jacobsen  Copyright 2003
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class UtilTest extends TestCase {
 
@@ -19,7 +19,7 @@ public class UtilTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {UtilTest.class.getName()};
+        String[] testCaseName = {"-noloading", UtilTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
@@ -27,6 +27,7 @@ public class UtilTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.util.UtilTest");   // no tests in this class itself
         suite.addTest(jmri.util.FileUtilTest.suite());
+        suite.addTest(jmri.util.JUnitAppenderTest.suite());
         suite.addTest(jmri.util.JSpinnerUtilTest.suite());
         suite.addTest(jmri.util.VectorUtilTest.suite());
         suite.addTest(jmri.util.StringUtilTest.suite());
@@ -35,8 +36,7 @@ public class UtilTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
-    protected void setUp() { log4jfixtureInst.setUp(); }
-    protected void tearDown() { log4jfixtureInst.tearDown(); }
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 }
