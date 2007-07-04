@@ -28,7 +28,7 @@ package jmri.jmrix.nce;
  *	1 = bad accy/signal address
  *
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 
 public class NceBinaryCommand {
@@ -97,7 +97,7 @@ public class NceBinaryCommand {
 		int addr_l = address & 0xFF;
 
 		byte[] retVal = new byte[3+8];
-		retVal[0] = (byte) (WRITE8_CMD);// write 4 bytes command
+		retVal[0] = (byte) (WRITE8_CMD);// write 8 bytes command
 		retVal[1] = (byte) (addr_h); 	// high address
 		retVal[2] = (byte) (addr_l); 	// low address
 
