@@ -28,7 +28,7 @@ package jmri.jmrix.nce;
  *	1 = bad accy/signal address
  *
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 public class NceBinaryCommand {
@@ -36,6 +36,7 @@ public class NceBinaryCommand {
     public static final int ACC_CMD = 0xAD;		//NCE accessory command
     public static final int READ_CMD = 0x8F;	//NCE read 16 bytes of memory command
     public static final int WRITEn_CMD = 0x8E;	//NCE write up to 16 bytes of memory command
+    public static final int WRITE8_CMD = 0x9A;	//NCE write 8 bytes of memory command
     public static final int WRITE4_CMD = 0x99;	//NCE write 4 bytes of memory command
     
     public static byte[] accDecoder(int number, boolean closed) {
@@ -84,11 +85,25 @@ public class NceBinaryCommand {
 		retVal[0] = (byte) (WRITEn_CMD);// write n bytes command
 		retVal[1] = (byte) (addr_h); 	// high address
 		retVal[2] = (byte) (addr_l); 	// low address
-		retVal[3] = (byte) num;		// number of bytes to write
+		retVal[3] = (byte) num;			// number of bytes to write
 
 		return retVal;
 
 	}
+	
+	public static byte[] accMemoryWrite8(int address) {
+
+		int addr_h = address / 256;
+		int addr_l = address & 0xFF;
+
+		byte[] retVal = new byte[3+8];
+		retVal[0] = (byte) (WRITE8_CMD);// write 4 bytes command
+		retVal[1] = (byte) (addr_h); 	// high address
+		retVal[2] = (byte) (addr_l); 	// low address
+
+		return retVal;
+    
+}
 
 	public static byte[] accMemoryWrite4(int address) {
 
