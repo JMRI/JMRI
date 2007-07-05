@@ -11,22 +11,40 @@
 #   Compile all from scratch using the clean/init/tests targets
 #   Run JUnit tests in jmri.HeadLessTest
 #
-# Errors, warnings and failures are reported via email if the -mail
-# option is present as the 1st argument. Absent that, the
-# errors are reported to stderr
+# Errors, warnings and failures are reported via email 
+# to the jmri-builds@lists.sourceforge.net list.
 #
-# TODO: Get the log mail vs log display working; right now, the log
-#       file is just left behind.
 #
 
 rm -f nightlybuildlog.txt
 
-if (`( cvs -q update -d && ant clean && ant init tests && ./runtest.csh jmri.HeadLessTest) >& nightlybuildlog.txt`) then
+if ( { (cvs -q update -d >& nightlybuildlog.txt) } ) then
 # probably OK
-echo OK
+
+else
+# did not terminate OK, mail the log
+echo Error in CVS checkout
+cat nightlybuildlog.txt | mail -s "Error in CVS checkout" jmri-builds@lists.sourceforge.net
+exit
+endif
+
+if ( { ((ant clean && ant init tests) >>& nightlybuildlog.txt) } ) then
+# probably OK
+
+else
+# did not terminate OK, mail the log
+echo Did not build successfully
+cat nightlybuildlog.txt | mail -s "Did not build successfully" jmri-builds@lists.sourceforge.net
+exit
+endif
+
+if ( { (./runtest.csh jmri.HeadLessTest >>& nightlybuildlog.txt) } ) then
+# probably OK
+
 else
 # did not terminate OK, mail the log
 echo Did not run successfully
+cat nightlybuildlog.txt | mail -s "Did not run successfully" jmri-builds@lists.sourceforge.net
 exit
 endif
 
@@ -34,4 +52,5 @@ endif
 if (`grep ERROR nightlybuildlog.txt >/dev/null || grep WARN nightlybuildlog.txt >/dev/null`) then
 # errors found, mail the log
 echo Errors found in log
+cat nightlybuildlog.txt | mail -s "Errors found in log" jmri-builds@lists.sourceforge.net
 endif
