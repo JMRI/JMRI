@@ -28,7 +28,7 @@ import javax.swing.JRadioButtonMenuItem;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  */
 
 public class PositionableLabel extends JLabel
@@ -392,11 +392,11 @@ public class PositionableLabel extends JLabel
     private boolean forceControlOff = false;
     
     public void setTristate(boolean set) {
-    	Tristate = set;
+    	tristate = set;
     }
     
-    public boolean getTristate() { return Tristate; }
-    private boolean Tristate = true;
+    public boolean getTristate() { return tristate; }
+    private boolean tristate = true;
 
     public void setShowTooltip(boolean set) {
         if (set)
