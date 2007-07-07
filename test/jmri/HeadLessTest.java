@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Invoke complete set of tests for the jmri package
  * @author	Bob Jacobsen, Copyright (C) 2001, 2002, 2007
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class HeadLessTest extends TestCase {
 
@@ -51,7 +51,7 @@ public class HeadLessTest extends TestCase {
 		//suite.addTest(jmri.jmrix.lenz.XNetTest.suite());
 		//suite.addTest(jmri.jmrix.loconet.LocoNetTest.suite());
 		//suite.addTest(jmri.jmrix.nce.NceTest.suite());
-		suite.addTest(jmri.jmrix.pricom.PricomTest.suite());
+		//suite.addTest(jmri.jmrix.pricom.PricomTest.suite());
 		//suite.addTest(jmri.jmrix.tmcc.SerialTest.suite());
 		//suite.addTest(jmri.jmrix.oaktree.SerialTest.suite());
 		//suite.addTest(jmri.jmrix.qsi.QsiTest.suite());
