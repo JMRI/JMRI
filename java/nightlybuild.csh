@@ -17,8 +17,9 @@
 #
 
 rm -f nightlybuildlog.txt
+date > nightlybuildlog.txt
 
-if ( { (cvs -q update -d >& nightlybuildlog.txt) } ) then
+if ( { (cvs -q update -d >>& nightlybuildlog.txt) } ) then
 # probably OK
 
 else
