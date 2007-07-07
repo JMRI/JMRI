@@ -15,7 +15,7 @@ import com.sun.java.util.collections.Vector;
  * Test CvValue class
  *
  * @author			Bob Jacobsen Copyright 2004, 2006
- * @version         $Revision: 1.11 $
+ * @version         $Revision: 1.12 $
  */
 public class CvValueTest extends TestCase {
 
@@ -48,7 +48,6 @@ public class CvValueTest extends TestCase {
             }
         }
         if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+cv.getValue()+" state="+cv.getState());
-        if (i==0) log.warn("textCvValRead saw an immediate return from isBusy");
 
         Assert.assertTrue(i<100);
         Assert.assertTrue(cv.getValue() == 123);
