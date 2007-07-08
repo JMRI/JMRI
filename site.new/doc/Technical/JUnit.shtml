@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: JUnit.shtml,v 1.3 2007-07-01 05:19:08 jacobsen Exp $ -->
+<!-- $Id: JUnit.shtml,v 1.4 2007-07-08 23:28:45 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -73,6 +73,29 @@ can run that directly with the "runtest" script:
 The first line compiles all the test code, and the second
 runs a specific test.
 
+<h2>Nightly Builds</h2>
+
+Every night about 1:45AM Pacific time, the "nightlybuild.csh" script from a 
+normal checkout is run.  This
+
+<OL>
+<LI>updates from the developer CVS
+<LI>cleans out any existing compilations, etc
+<LI>rebuilds from scratch with the debug target
+<LI>runs the jmri.HeadLessTest app, which in turn runs a large subset of the JUnit tests.
+</ol>
+<P>
+If any of these steps fail, including logging any warning or error messages, 
+the log is emailed to the "jmri-builds" list at SourceForge.  
+You can 
+<A HREF="https://lists.sourceforge.net/lists/listinfo/jmri-builds">subscribe to this list</a>
+to get the bad news as quickly as possible, or 
+<A HREF="http://sourceforge.net/mailarchive/forum.php?forum_name=jmri-builds">view the archives</a>
+to see past logs.
+
+<P>
+(When the build succeeds, nothing is mailed, to cut down on traffic)
+
 <A ID="write"/>
 <h2>Writing Tests</h2>
 
@@ -80,6 +103,12 @@ By convention, we have a "test" class shadowing
 each real class.  
 The "test" directory contains a tree of package
 directories parallel to the "src" tree.
+Each test class has the same name
+as the class to be tested, except with "Test" appended, and
+will appear in the "test" source tree. 
+For example, 
+the "jmri.Version" class's source code is in "src/jmri/Version.java", 
+and it's test class is "jmri.VersionTest" found in "test/jmri/VersionTest.java".
 
 <P>
 There are additional classes which are used to 
@@ -88,9 +117,76 @@ into JUnit test suites.
 
 <h3>Writing Additional Tests</h3>
 
+To write additional tests for a class with existing tests,
+first locate the test class. (If one doesn't exist, see the 
+section below about writing tests for a new class)
+<P>
+To that test class, add one or more test methods using the 
+JUnit conventions.  Basically, each method needs a name that starts with 
+"test", e.g. "testFirst", and has to have a "public void" signature.
+JUnit will handle everything after that.
+<P>
+In general, test methods should be small, testing just one piece of the 
+classes operation.  That's why they're called "unit" tests.
+
 <h3>Writing Tests for a New Class</h3>
 
+(Needs info here: basically, copy some other package, and
+don't forget to put an entry in the enclosing package's test suite)
+
 <h3>Writing Tests for a New Package</h3>
+
+(Needs info here: basically, copy some other package, and
+don't forget to put an entry in the enclosing package's test suite)
+
+<h3>Handling Log4J Output Form Tests</h3>
+
+JMRI uses 
+<A HREF="http://logging.apache.org/log4j/docs/index.html">Log4j</a>
+to 
+<A HREF=""Logging.html">handle logging of various conditions</a>, 
+including error messages and 
+debugging information. Tests are intended to run without error or warning
+output, so that it's immediately apparent from an empty standard log that
+they ran cleanly.
+<P>
+Log4j usage in the test classes themselves has two aspects:
+<OL>
+<LI>It's perfectly OK to use log.debug(...) statements to make it
+easy to debug problems in test statements.  log.info(...) can be used
+sparingly to indicate normal progress, because it's normally turned off when 
+running the tests.
+<LI>In general, log.warn or log.error should only be used when the test 
+then goes on to trigger a JUnit assertion or exception, because the fact that
+an error is being logged does not show up directly in the JUnit summary of results.
+</OL>
+<p>
+On the other hand, you might want o deliberately provoke errors in the
+code being tested to make sure that the conditions are being handled properly.
+This will often produce log.error(...) or log.warn(...) messages, which must 
+be intercepted and checked.
+<P>
+To allow this, JMRI runs it's using tests with a special log4j appender, which
+stores messages so that the JUnit tests can look at them before they are forwarded
+to the log.  There are two aspects to making this work:
+<OL>
+<LI>All the test classes should include common code in their setup()
+and teardown() code to ensure that log4j is properly initiated, and that
+the custom appender is told when a test is beginning and ending.
+<LI>When a test is deliberately invoking a message, it should then
+use the check to see that the message was created.  
+For example, if the class under test is expected to do
+<BR><CODE><PRE>
+    log.warn("Provoked message");
+</PRE></CODE>
+the invoking test case should follow that with the line:
+<BR><CODE><PRE>
+    JUnitAppender.assertWarnMessage("Provoked message");
+</PRE></CODE>
+<P>
+It will be a JUnit error if a log.warn(...) or log.error(...) message is
+produced that isn't matched to a JUnitAppender.assertWarnMessage(...) call.
+</OL>
 
 
 <!--#include virtual="Footer" -->
