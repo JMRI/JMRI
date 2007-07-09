@@ -14,7 +14,7 @@ import jmri.Turnout;
  *
  * Description:		extend jmri.AbstractTurnout for TMCC serial layouts
  * @author			Bob Jacobsen Copyright (C) 2003, 2006
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SerialTurnout extends AbstractTurnout {
 
@@ -38,11 +38,11 @@ public class SerialTurnout extends AbstractTurnout {
                 return;
             } else {
                 // send a CLOSED command
-                sendMessage(true);
+                sendMessage(true^getInverted());
             }
         } else {
             // send a THROWN command
-            sendMessage(false);
+            sendMessage(false^getInverted());
         }
     }
 

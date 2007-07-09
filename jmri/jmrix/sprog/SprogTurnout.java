@@ -16,7 +16,7 @@ import jmri.Turnout;
  * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2005
  * @author J.M. (Mark) Knox Copyright (C) 2005
  *
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class SprogTurnout extends AbstractTurnout {
 
@@ -41,11 +41,11 @@ public class SprogTurnout extends AbstractTurnout {
                 return;
             } else {
                 // send a CLOSED command
-                sendMessage(true);
+                sendMessage(true^getInverted());
             }
         } else {
             // send a THROWN command
-            sendMessage(false);
+            sendMessage(false^getInverted());
         }
     }
 
