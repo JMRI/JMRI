@@ -24,7 +24,7 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  * @see         jmri.AbstractTurnout
  * @see         jmri.TurnoutManager
  * @see         jmri.InstanceManager
@@ -248,7 +248,28 @@ public interface Turnout extends NamedBean {
      * Currently must be either 0 for steady state, or n 
 	 *    for pulse for n time units.
 	*/
-    public void setControlType(int num);    
+    public void setControlType(int num);
+    
+    /**
+     * Get turnout inverted
+     *<P>
+     * If true commands are reversed to layout
+     */
+    public boolean getInverted();
+    
+    /**
+     * Set turnout inverted
+     *<P>
+     * If true commands are reversed to layout
+     */
+    public void setInverted(boolean inverted);
+    
+    /**
+     * Determine if turnout can be inverted
+     *<P>
+     * If true turnouts can be inverted
+     */
+    public boolean canInvert();
     
 }
 

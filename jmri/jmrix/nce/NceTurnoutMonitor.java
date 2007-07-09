@@ -28,7 +28,7 @@ import jmri.Turnout;
  * 
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 
 public class NceTurnoutMonitor implements NceListener{
@@ -39,7 +39,7 @@ public class NceTurnoutMonitor implements NceListener{
     private static final int BLOCK_LEN = 16;            // number of bytes in a block
     private static final int REPLY_LEN = BLOCK_LEN;		// number of bytes read
     private static final int NCE_ACCY_THROWN = 0;		// NCE internal accessory "REV"
-    private static final int NCE_ACCY_CLOSE = 1;		// NCE internal accessory "NORM"
+    private static final int NCE_ACCY_CLOSED = 1;		// NCE internal accessory "NORM"
     static final int POLL_TIME = 100;					// Poll NCE memory every 100 msec plus xmt time (~70 msec)
  
     // object state
@@ -275,6 +275,13 @@ public class NceTurnoutMonitor implements NceListener{
 			return;
 
 		int tState = rControlTurnout.getCommandedState();
+		
+		int nceAccyThrown = NCE_ACCY_THROWN;
+		int nceAccyClosed = NCE_ACCY_CLOSED;
+		if (rControlTurnout.getInverted()){
+			nceAccyThrown = NCE_ACCY_CLOSED;
+			nceAccyClosed = NCE_ACCY_THROWN;
+		}
 
 		if (debugTurnoutMonitor && log.isDebugEnabled()) {
 			log.debug("turnout exists NT" + NTnum + " state: " + tState
@@ -286,9 +293,9 @@ public class NceTurnoutMonitor implements NceListener{
 			log.debug("memory byte: " + Integer.toHexString(recMemByte & 0xFF));
 		}
 
-		// test for closed or thrown, 0 = closed, 1 = thrown
-		int NceAccState = (recMemByte >> bit) & 0x01;
-		if (NceAccState == NCE_ACCY_THROWN && tState != Turnout.THROWN) {
+		// test for closed or thrown, normally 0 = closed, 1 = thrown
+		int nceAccState = (recMemByte >> bit) & 0x01;
+		if (nceAccState == nceAccyThrown && tState != Turnout.THROWN) {
 			if (log.isDebugEnabled()) {
 				log.debug("turnout discrepancy, NT"+ NTnum+" CommandedState is now THROWN");
 			}
@@ -296,7 +303,7 @@ public class NceTurnoutMonitor implements NceListener{
 			rControlTurnout.setCommandedStateFromCS(Turnout.THROWN);
 		}
 
-		if (NceAccState == NCE_ACCY_CLOSE && tState != Turnout.CLOSED) {
+		if (nceAccState == nceAccyClosed && tState != Turnout.CLOSED) {
 			if (log.isDebugEnabled()) {
 				log.debug("turnout discrepancy, NT"+ NTnum+" CommandedState is now CLOSED");
 			}
@@ -314,6 +321,13 @@ public class NceTurnoutMonitor implements NceListener{
 			return;
 
 		int tState = rControlTurnout.getKnownState();
+		
+		int nceAccyThrown = NCE_ACCY_THROWN;
+		int nceAccyClosed = NCE_ACCY_CLOSED;
+		if (rControlTurnout.getInverted()){
+			nceAccyThrown = NCE_ACCY_CLOSED;
+			nceAccyClosed = NCE_ACCY_THROWN;
+		}
 
 		if (debugTurnoutMonitor && log.isDebugEnabled()) {
 			log.debug("turnout exists NT" + NTnum + " state: " + tState
@@ -325,9 +339,9 @@ public class NceTurnoutMonitor implements NceListener{
 			log.debug("memory byte: " + Integer.toHexString(recMemByte & 0xFF));
 		}
 
-		// test for closed or thrown, 0 = closed, 1 = thrown
-		int NceAccState = (recMemByte >> bit) & 0x01;
-		if (NceAccState == NCE_ACCY_THROWN && tState != Turnout.THROWN) {
+		// test for closed or thrown, normally 0 = closed, 1 = thrown
+		int nceAccState = (recMemByte >> bit) & 0x01;
+		if (nceAccState == nceAccyThrown && tState != Turnout.THROWN) {
 			if (log.isDebugEnabled()) {
 				log.debug("turnout discrepancy, NT"+ NTnum+" KnownState is now THROWN");
 			}
@@ -335,7 +349,7 @@ public class NceTurnoutMonitor implements NceListener{
 			rControlTurnout.setKnownStateFromCS(Turnout.THROWN);
 		}
 
-		if (NceAccState == NCE_ACCY_CLOSE && tState != Turnout.CLOSED) {
+		if (nceAccState == nceAccyClosed && tState != Turnout.CLOSED) {
 			if (log.isDebugEnabled()) {
 				log.debug("turnout discrepancy, NT"+ NTnum+" KnownState is now CLOSED");
 			}

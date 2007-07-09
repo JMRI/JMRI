@@ -25,7 +25,7 @@ package jmri;
  *
  * Description:		Abstract class providing the basic logic of the Turnout interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.26 $
+ * @version			$Revision: 1.27 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean 
     implements Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
@@ -233,6 +233,34 @@ public abstract class AbstractTurnout extends AbstractNamedBean
         }
         throw new IllegalArgumentException("Unexpected internal mode: "+_activeFeedbackType);
     }
+    
+    public void setInverted(boolean inverted) {
+        boolean oldInverted = _inverted;
+        _inverted = inverted;
+        if (oldInverted != _inverted)
+            firePropertyChange("inverted", new Boolean(oldInverted), new Boolean(_inverted));
+    }
+    
+    /**
+     * Get the turnout inverted state.  If true, commands 
+     * sent to the layout are reversed.  Thrown becomes Closed,
+     * and Closed becomes Thrown.
+     * <P>
+     * Used in polling loops in system-specific code, 
+     * so made final to allow optimization.
+     */
+    final public boolean getInverted() { return _inverted;}
+
+    protected boolean _inverted = false;
+    
+    /**
+     * Determine if the turnouts can be inverted.  If true 
+     * inverted turnouts supported 
+     */
+    
+    public boolean canInvert(){return _invEnabled;}
+    
+    protected boolean _invEnabled = false;
     
     /*
      * Support for turnout automation (see TurnoutOperation and related classes)

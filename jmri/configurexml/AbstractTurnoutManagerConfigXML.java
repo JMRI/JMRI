@@ -24,7 +24,7 @@ import org.jdom.Attribute;
  * specific Turnout or AbstractTurnout subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
 
@@ -66,6 +66,9 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
                 if (s!=null) elem.addAttribute("sensor1", s.getSystemName());
                 s = t.getSecondSensor();
                 if (s!=null) elem.addAttribute("sensor2", s.getSystemName());
+                
+                // include turnout inverted
+                elem.addAttribute("inverted", t.getInverted()?"true":"false");
 				
 				// include number of control bits, if different from one
 				int iNum = t.getNumberOutputBits();
@@ -165,6 +168,12 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
             if (a!=null) { 
                 Sensor s = InstanceManager.sensorManagerInstance().provideSensor(a.getValue());
                 t.provideSecondFeedbackSensor(s);
+            }
+            
+            // check for turnout inverted
+            a = ((Element)(turnoutList.get(i))).getAttribute("inverted");
+            if (a!=null) { 
+            	t.setInverted(a.getValue().equals("true"));
             }
 			
 			// number of bits, if present - if not, defaults to 1

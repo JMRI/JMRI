@@ -42,7 +42,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.40 $
+ * @version     $Revision: 1.41 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -84,7 +84,8 @@ public class TurnoutTableAction extends AbstractTableAction {
         // create the data model object that drives the table;
         // note that this is a class creation, and very long
         m = new BeanTableDataModel() {
-		    static public final int KNOWNCOL = NUMCOLUMN;
+        	static public final int INVERTCOL = NUMCOLUMN;
+		    static public final int KNOWNCOL = INVERTCOL+1;
 		    static public final int MODECOL = KNOWNCOL+1;
 		    static public final int SENSOR1COL = MODECOL+1;
 		    static public final int SENSOR2COL = SENSOR1COL+1;
@@ -92,13 +93,14 @@ public class TurnoutTableAction extends AbstractTableAction {
 
     		public int getColumnCount( ){ 
     		    if (showFeedback)
-    		        return NUMCOLUMN+5;
+    		        return OPSONOFFCOL+1;
     		    else
-    		        return NUMCOLUMN;
+    		        return INVERTCOL+1;
      		}
     		
     		public String getColumnName(int col) {
-    			if (col==KNOWNCOL) return "Feedback";
+    			if (col==INVERTCOL) return "Inverted";
+    			else if (col==KNOWNCOL) return "Feedback";
     			else if (col==MODECOL) return "Mode";
     			else if (col==SENSOR1COL) return "Sensor 1";
     			else if (col==SENSOR2COL) return "Sensor 2";
@@ -109,7 +111,8 @@ public class TurnoutTableAction extends AbstractTableAction {
     			else return super.getColumnName(col);
 		    }
     		public Class getColumnClass(int col) {
-    			if (col==KNOWNCOL) return String.class;
+    			if (col==INVERTCOL) return Boolean.class;
+    			else if (col==KNOWNCOL) return String.class;
     			else if (col==MODECOL) return JComboBox.class;
     			else if (col==SENSOR1COL) return String.class;
     			else if (col==SENSOR2COL) return String.class;
@@ -117,7 +120,8 @@ public class TurnoutTableAction extends AbstractTableAction {
     			else return super.getColumnClass(col);
 		    }
     		public int getPreferredWidth(int col) {
-    			if (col==KNOWNCOL) return new JTextField(10).getPreferredSize().width;
+    			if (col==INVERTCOL) return new JTextField(4).getPreferredSize().width;
+    			else if (col==KNOWNCOL) return new JTextField(10).getPreferredSize().width;
     			else if (col==MODECOL) return new JTextField(10).getPreferredSize().width;
     			else if (col==SENSOR1COL) return new JTextField(5).getPreferredSize().width;
     			else if (col==SENSOR2COL) return new JTextField(5).getPreferredSize().width;
@@ -125,7 +129,8 @@ public class TurnoutTableAction extends AbstractTableAction {
     			else return super.getPreferredWidth(col);
 		    }
     		public boolean isCellEditable(int row, int col) {
-    			if (col==KNOWNCOL) return false;
+    			if (col==INVERTCOL) return true;
+    			else if (col==KNOWNCOL) return false;
     			else if (col==MODECOL) return true;
     			else if (col==SENSOR1COL) return true;
     			else if (col==SENSOR2COL) return true;
@@ -137,7 +142,10 @@ public class TurnoutTableAction extends AbstractTableAction {
 				String name = (String)sysNameList.get(row);
 				TurnoutManager manager = InstanceManager.turnoutManagerInstance();
 				Turnout t = manager.getBySystemName(name);
-    			if (col==KNOWNCOL) {
+	   			if (col==INVERTCOL) {
+    				boolean val = t.getInverted();
+					return new Boolean(val);
+	   			} else if (col==KNOWNCOL) {
                     if (t.getKnownState()==Turnout.CLOSED) return closedText;
                     if (t.getKnownState()==Turnout.THROWN) return thrownText;
                     if (t.getKnownState()==Turnout.INCONSISTENT) return "Inconsistent";
@@ -163,7 +171,18 @@ public class TurnoutTableAction extends AbstractTableAction {
 				String name = (String)sysNameList.get(row);
 				TurnoutManager manager = InstanceManager.turnoutManagerInstance();
 				Turnout t = manager.getBySystemName(name);
-    			if (col==MODECOL) {
+	   			if (col == INVERTCOL) {
+					if (t.canInvert()) {
+						boolean b = ((Boolean) value).booleanValue();
+						t.setInverted(b);
+					} else {
+						JOptionPane.showMessageDialog(
+										null,
+										"This type of turnout does not currently support inverted",
+										"Turnout feature",
+										JOptionPane.ERROR_MESSAGE);
+					}
+	   			} else if (col==MODECOL) {
                     String modeName = (String)((JComboBox)value).getSelectedItem();
     				t.setFeedbackMode(modeName);
     			} else if (col==SENSOR1COL) {
