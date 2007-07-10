@@ -11,13 +11,20 @@
 		<dt>Development tools</dt>
 		<dd>
 			<ul>
-			<LI><a href="getcode.html">Getting the code via CVS</a>
+			<LI><a href="getcode.shtml">Getting the code via CVS</a>
 			<LI><a href="CVSFAQ.html">CVS FAQs</a>
-			<LI><a href="Ant.html">Building with Ant</a>
-			<LI><a href="NetBeans.html">Building with NetBeans</a>
-			<LI><a href="XCode.html">Building with XCode</a>
-			<LI><a href="Eclipse.html">Building with Eclipse</a>
-			<LI><a href="JBuilder.html">Building with JBuilder</a>
+			<LI><a href="Ant.shtml">Building with Ant</a>
+			<LI><a href="NetBeans.shtml">Building with NetBeans</a>
+			<LI><a href="XCode.shtml">Building with XCode</a>
+			<LI><a href="Eclipse.shtml">Building with Eclipse</a>
+			<LI><a href="JBuilder.shtml">Building with JBuilder</a>
+			</ul>
+		</dd>
+
+		<dt>Functional Info</dt>
+		<dd>
+			<ul>
+			<LI><a href="TurnoutFeedback.shtml">Turnout Feedback</a>
 			</ul>
 		</dd>
 
@@ -25,15 +32,15 @@
 		<dd>
 			<ul>
 			<LI><a href="IntroStructure.html">Introduction</a>
-			<LI><a href="AppStructure.html">Application Structure</a>
+			<LI><a href="AppStructure.shtml">Application Structure</a>
 			<LI><a href=""></a>
 			<LI><a href="../../JavaDoc/doc">JavaDocs</a><ul>
 				<LI><a href="../../JavaDoc/doc/index-all.html">Name Index</a>
 				<LI><A HREF="../../JavaDoc/doc/index.html">Packages</A>
 				<LI><A HREF="../../JavaDoc/doc/allclasses-frame.html">Class heirarchy</A>
 				</UL>
-			<LI><a href="Threads.html">Threads</a>
-			<LI><a href="XmlPersistance.html">Xml Persistance</a>
+			<LI><a href="Threads.shtml">Threads</a>
+			<LI><a href="XmlPersistance.shtml">Xml Persistance</a>
 			<LI><a href="WebSite.shtml">Web Site</a>
 			</ul>
 		</dd>
@@ -41,20 +48,20 @@
 		<dt>Techniques and Standards</dt>
 		<dd>
 			<ul>
-			<LI><a href="RP.html">Recommended Practices</a>
+			<LI><a href="RP.shtml">Recommended Practices</a>
 			<LI><a href="I8N.html">Internationalization</a>
 			<LI><a href="Logging.html">Logging &amp; Error Handling</a>
 			<LI><a href="Java118.html">Working with Java 1.1.8</a>
-			<LI><a href="JUnit.html">Unit testing with JUnit</a>
-			<LI><a href="Help.html">Providing help with JavaHelp</a>
+			<LI><a href="JUnit.shtml">Unit testing with JUnit</a>
+			<LI><a href="Help.shtml">Providing help with JavaHelp</a>
 			</ul>
 		</dd>
 
 		<dt>How To</dt>
 		<dd>
 			<ul>
-			<LI><a href="NewType.html">Add a New Type</a>
-			<LI><a href="plugins.html">Extend with Plugins</a>
+			<LI><a href="NewType.shtml">Add a New Type</a>
+			<LI><a href="plugins.shtml">Extend with Plugins</a>
 			</ul>
 		</dd>
 

@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: RP.shtml,v 1.1 2007-07-10 07:00:03 jacobsen Exp $ -->
+<html lang="en">
+<head>
+    <TITLE>
+ 	JMRI: Recommended Practices
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code standards recommendation Swing">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+
+    <p class="skipLink"><a href="#mainContent" accesskey="2">Skip to main content</a></p>
+
+<!--#include virtual="Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+
+	    <H1>JMRI: Recommended Practices</H1>
+
+
+<h2>Libraries to use</h2>
+
+<ul>
+
+<LI>
+We use Java Swing for our GUI development.  It's a lot more powerful
+than the original AWT, and the price is right. In particular, we
+try to use the "Bean format" of setting and getting members, call-backs to
+notify of changes, etc, to make it easier to build applications from JMRI components.
+
+<LI>The Java communications toolbox (javax.comm) has worked fine on 
+Macintosh, OS/2 and Linux for serial I/O. We hope it works fine on other platforms. 
+For Windows, we had to move to 
+the Serialio package from
+<A HREF="http://Serialio.com">Serialio.com</a>
+to be able to use the MS100 baud rate.  To do this, the 
+jmri.jmrix.loconet.ms100.MS100Adapter class was converted to use
+Java reflection to decide which whether the Serialio package is
+available; on other systems, it uses javax.comm.
+Note that our license for Serialio limits it to this use only;
+we are not permitted to distribute the libraries for other purposes.
+
+<LI>The Java collections (List, etc) are available in JMRI, because
+we need them for various other packages.  Use them if you'd like; there 
+are often better approaches than to make everything a Vector.
+To ensure compatibility with Java 1.1.8, we use the 
+older form of class names, e.g. "com.sun.java.util.collections.List".
+For more info on compatibility, see
+the
+<A HREF="Java118.html">Java 1.1.8 compatibility</a> 
+page.
+
+</UL>
+
+<h2>Code Format</h2>
+The 
+<A HREF="http://java.sun.com/docs/codeconv/">Java recommendations</A>
+for names, formatting, etc are really useful.
+If you find that you can't read a piece of code, these will help
+make it better.
+
+<!--#include virtual="Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+

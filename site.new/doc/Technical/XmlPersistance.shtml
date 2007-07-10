@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: XmlPersistance.shtml,v 1.1 2007-07-10 07:00:04 jacobsen Exp $ -->
+<html lang="en">
+<head>
+    <TITLE>
+ 	JMRI: Xml Persistance
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code xml persistance">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+
+    <p class="skipLink"><a href="#mainContent" accesskey="2">Skip to main content</a></p>
+
+<!--#include virtual="Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+
+	    <H1>JMRI: Xml Persistance</H1>
+
+
+<P>
+JMRI uses XML for persisting internal structures, especially when storing
+the preferences and panel files.
+
+<P>
+XML persistance is done via some explicitly written code. Basically, certain classes 
+register themselves with a instance of the "ConfigureManager".  The only implementation 
+of one of those we have is the one for loading and storing XML files: jmri.configurexml. 
+ConfigXmlManager   When it's time to store, the ConfigureXmlManager is told to do it.  
+It goes through the registered objects and finds the persisting class responsible for 
+storing the object.  E.g. class a.b.Foo will have the class a.b.configurexml.FooXml 
+located.  If that class is found, it's told to store the Foo object, and it adds Xml 
+content to a JDOM document to do that.  If it's not located, an error message is issued.
+
+On load, an XML file is read by the manager.  Each element is examined for 
+a "class" attribute.  If found, that class is loaded and handed the element to 
+process.  Etc.
+
+It's quite hackish, and not very cleanly factored. There's a fair amount of 
+code duplication, but that might be because it comes from a C++ background and 
+the developer keeps wishing 
+for templates and mixin classes.  But it works!
+
+<!--#include virtual="Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+
