@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: WebSite.shtml,v 1.3 2007-07-01 05:19:08 jacobsen Exp $ -->
+<!-- $Id: WebSite.shtml,v 1.4 2007-07-10 06:32:32 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -42,7 +42,37 @@ We are moving toward using
 to provide consistent headers, sidebars and footers.
 This will also allow us to share HTML
 content between the web and the JavaHelp system
-used by the program itself.
+used by the program itself. Each page will contain just content,
+plus includes for files named "Header", "Sidebar" and "Footer"
+which contain the navigation information.
+
+<h2>Organization</h2>
+
+The web site contains several separate areas, which translate to different 
+CVS modules:
+<UL>
+<LI>jython, resources, xml - these are taken directly from the
+CVS modules of the same name. They are only occasionally referenced
+directly.
+<LI>help - from the CVS module and JavaHelp system, this has the internal
+structure described below and on our
+<A HREF="Help.shtml">JavaHelp</a>
+page.
+<P>
+The rest are from the site.local CVS module, and are checked out at 
+the root of the web server.
+<P>
+<LI>apps - 
+<LI>releasenotes - 
+<LI>install - 
+<LI>community - 
+<li>doc - 
+<LI>tools - 
+<LI>hardware - 
+<li>images - 
+<li>contact - 
+<li>sitemap - 
+</ul>
 
 <H2>Local Web Site: MacOS X</H2>
 
