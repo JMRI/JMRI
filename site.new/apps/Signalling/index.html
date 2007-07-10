@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.html,v 1.6 2007-07-01 05:53:17 jacobsen Exp $ -->
+<!-- $Id: index.html,v 1.7 2007-07-10 07:45:07 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -80,6 +80,13 @@ debugging, for example.
 <A HREF="#logic">"Simple Signal Logic"</A>
 tool can provide simple versions
 of block and interlocking signaling.
+<li>The JMRI 
+<A HREF="#logix">"Logix"</a>
+tools are basic logical building blocks for 
+controlling parts of the layout.  
+They can be used
+to configure custom signaling logic
+by filling out forms, without writing any code.
 <LI>The JMRI 
 <A HREF="#automat">Automation classes</A>
 makes it easy to code your own signal
@@ -117,12 +124,13 @@ will have more info on this as it becomes available.
 	and follow those instructions. Return here to read about what you did.
 	</p><ul>
 	<li><a href="#terms">Basic Vocabulary</a></li>
-	<li><a href="#intro">Introduction to SSL</a>
-	</li><li><a href="#SSL">SSL</a>
-	</li><li><a href="#start">Getting Started</a>
-	</li><li><a href="#variable">Available State Variables</a>
-	</li><li><a href="#action">Available Actions</a>
-	</li><li><a href="#notes">Additional Notes</a>
+	<li><a href="#table">The Signal Table</a></li>
+	<li><a href="#intro">Introduction to Simple Signal Logic Tools</a>
+	</li><li><a href="#start">Getting Started with Simple Signal Logic</a>
+	</li><li><a href="#logix">Introduction to Logix Use</a>
+	</li><li><a href="#variable">Available Logix State Variables</a>
+	</li><li><a href="#action">Available Logix Actions</a>
+	</li><li><a href="#automat">The Automation Classes</a>
 	</li></ul>
 
 <a name="terms"><h3>Vocabulary</h3></a></dt>
@@ -168,7 +176,7 @@ direction and route of travel. The "protection" is to prevent a train from appro
 to control the signal. This will vary depending on your hardware, and must match your system.
 </ul>
 
-
+<A ID="table"/>
 <h3>Signal Table</h3></a>
 
 <A href="./images/SigTable.gif"><IMG SRC="./images/SigTable.gif" ALIGN=RIGHT WIDTH="296" HEIGHT="355" HSPACE="0" VSPACE="0"></A>
@@ -208,7 +216,7 @@ on your panels, please see the
 <A HREF="../PanelPro/Panels.html">Panels pages</a>
 and the pages on the 
 <A HREF="../PanelPro/Panels-Cornwall/Cornwall.html">Cornwall Railroad control panel</a>.	
-
+<A ID="logic"/>
 <a name="intro"><h3>Introduction to Simple Signal Logic</h3></a></dt>
 
 Simple Signal Logic (SSL)
