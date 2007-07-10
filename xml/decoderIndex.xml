@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <!--Written by JMRI version 1.7.7 on Wed Jun 13 22:41:42 PDT 2007 $Id: decoderIndex.xml,v 1.103 2007-06-14 05:42:51 jacobsen Exp $-->
+  <!--Written by JMRI version 1.7.7 on Wed Jun 13 22:41:42 PDT 2007 $Id: decoderIndex.xml,v 1.104 2007-07-10 06:04:44 jacobsen Exp $-->
   <decoderIndex version="121">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -54,7 +54,7 @@
       <manufacturer mfg="NAC Services, Inc" mfgID="37" />
       <manufacturer mfg="NMRA Reserved" mfgID="238" />
       <manufacturer mfg="Nagasue System Design Office" mfgID="103" />
-      <manufacturer mfg="New Your Byano Limited" mfgID="71" />
+      <manufacturer mfg="New York Byano Limited" mfgID="71" />
       <manufacturer mfg="North Coast Engineering" mfgID="11" />
       <manufacturer mfg="PSI-Dynatrol" mfgID="14" />
       <manufacturer mfg="Passmann" mfgID="41" />
