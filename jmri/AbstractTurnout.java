@@ -25,7 +25,7 @@ package jmri;
  *
  * Description:		Abstract class providing the basic logic of the Turnout interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.27 $
+ * @version			$Revision: 1.28 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean 
     implements Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
@@ -258,10 +258,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean
      * inverted turnouts supported 
      */
     
-    public boolean canInvert(){return _invEnabled;}
-    
-    protected boolean _invEnabled = false;
-    
+    public boolean canInvert(){return false;}
+     
     /*
      * Support for turnout automation (see TurnoutOperation and related classes)
      */

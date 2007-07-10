@@ -15,7 +15,7 @@ import jmri.Turnout;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.21 $
+ * @version	$Revision: 1.22 $
  */
 public class NceTurnout extends AbstractTurnout {
 
@@ -132,9 +132,7 @@ public class NceTurnout extends AbstractTurnout {
     /**
      * NCE turnouts can be inverted
      */
-    public boolean canInvert(){return _InvEnabled;}
-    
-    protected boolean _InvEnabled = true;
+    public boolean canInvert(){return true;}
     
     protected void sendMessage(boolean closed) {
         // get the packet
