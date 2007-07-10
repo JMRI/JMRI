@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: Help.shtml,v 1.1 2007-07-10 06:32:15 jacobsen Exp $ -->
+<html lang="en">
+<head>
+    <TITLE>
+ 	JMRI: Use of JavaHelp
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code Java Help JavaHelp ">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+
+    <p class="skipLink"><a href="#mainContent" accesskey="2">Skip to main content</a></p>
+
+<!--#include virtual="Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+
+		    <H1>JMRI: Use of JavaHelp</H1>
+
+This page talks about technical aspects of how JMRI provides help
+information using JavaHelp and JHelpDev.
+
+
+<h2>Organization of the help files</h2>
+
+The help files are located in the "help" directory
+within the JMRI distribution directory.
+<P>
+Within that, all the English-language files are located
+within the "en" subdirectory.  Eventually, this will
+let us internationalize the help pages.
+<P>
+Within that, there are several file trees:
+<UL>
+<LI>package - organized like the source package tree,
+this contains code-specific help files for e.g. a particular
+window or component.
+<LI>html - general descriptions, organized in a similar way to the
+main web site. Note that because of limitations to the JavaHelp 
+HTML, you can't just take pages directly from the main web site.
+<LI>DecoderProManual - a version of the DecoderPro manual reformatted for 
+use in the help system.
+</UL>
+
+<h2>Access in the code</h2>
+
+Within the JMRI code, access the help system comes
+via the jmri.util.HelpUtil class.
+(For historical reasons, there's a little bit of code
+in apps.Apps, but you should ignore that).
+<P>
+The easiest way to add a help menu to a 
+frame is to have it be a JmriJFrame (which you 
+should do anyway), and call addHelpMenu(...)
+after you've built any other menus.
+
+<h2>Creating the control files with JHelpDev</h2>
+
+JavaHelp uses various XML files to 
+control how the table of contents and index are displayed.
+We create those with
+<A HREF="http://jhelpdev.sourceforge.net/">JHelpDev</a>.
+Please don't edit them manually.
+
+<!--#include virtual="Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
