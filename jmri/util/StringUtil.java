@@ -17,7 +17,7 @@ import com.sun.java.util.collections.Iterator;
  * back to an explicit implementation when running on Java 1.1
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 public class StringUtil {
@@ -59,7 +59,7 @@ public class StringUtil {
     /**
      * Starting with two arrays, one of names and one of corresponding
      * numeric state values, find the name string that matches a 
-     * given state value
+     * given state value. Only one may be returned.
      * @return null if not found
      */
     static public String getNameFromState(int state, int[] states, String[] names) {
