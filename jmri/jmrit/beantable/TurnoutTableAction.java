@@ -42,7 +42,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.43 $
+ * @version     $Revision: 1.44 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -178,14 +178,6 @@ public class TurnoutTableAction extends AbstractTableAction {
 					if (t.canInvert()) {
 						boolean b = ((Boolean) value).booleanValue();
 						t.setInverted(b);
-					} else {
-	// Note, isCellEditable disables the checkbox, but doesn't gray out the checkbox
-	// we might want to use this warning message instead of disabling the checkbox					
-	//					JOptionPane.showMessageDialog(
-	//									null,
-	//									"This type of turnout does not currently support inverted",
-	//									"Turnout feature",
-	//									JOptionPane.ERROR_MESSAGE);
 					}
 	   			} else if (col==MODECOL) {
                     String modeName = (String)((JComboBox)value).getSelectedItem();
