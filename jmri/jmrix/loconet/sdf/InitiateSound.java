@@ -6,7 +6,7 @@ package jmri.jmrix.loconet.sdf;
  * Implement the INITIATE_SOUND macro from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 
 class InitiateSound extends SdfMacro {
@@ -43,7 +43,9 @@ class InitiateSound extends SdfMacro {
     }
     
     public String toString() {
-        return linestart+name()+" "+triggerVal()+","+premptVal()+'\n';
+        String retval = linestart+name()+" "+triggerVal()+","+premptVal()+'\n';
+        linestart = "        ";
+        return retval;
     }
 }
 
