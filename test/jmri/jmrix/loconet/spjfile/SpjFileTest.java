@@ -9,7 +9,7 @@ import jmri.jmrit.Sound;
 /**
  * Tests for the jmri.jmrix.loconet.spjfile package
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class SpjFileTest extends TestCase {
 
@@ -25,10 +25,13 @@ public class SpjFileTest extends TestCase {
         }
     }
 
+    // The following is commented out; usually used to split
+    // out a file into several subparts
 /*     public void testWriteSubFile() throws java.io.IOException { */
-/*         loadFile(); */
 /*          */
 /*         // and write */
+/*         testFile = new SpjFile("java/test/jmri/jmrix/loconet/spjfile/test.spj"); */
+/*         testFile.read(); */
 /*         testFile.writeSubFiles(); */
 /*     } */
 
