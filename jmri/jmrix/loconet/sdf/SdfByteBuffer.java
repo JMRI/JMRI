@@ -2,12 +2,14 @@
 
 package jmri.jmrix.loconet.sdf;
 
+import java.io.*;
+
 /**
  * Provide tools for reading, writing and accessing
  * Digitrax SPJ files
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 
 public class SdfByteBuffer {
@@ -18,6 +20,21 @@ public class SdfByteBuffer {
         this.buffer = buffer;
     }
     
+    public SdfByteBuffer(String name) throws IOException {
+        File file = new File(name);
+        int length = (int)file.length();
+        
+        InputStream s = new java.io.BufferedInputStream(new java.io.FileInputStream(file));
+        
+        // Assume we can get all this in memory
+        buffer = new byte[length];
+        
+        for (int i=0; i<length; i++) {
+            buffer[i] = (byte)(s.read()&0xFF);
+        }
+    }
+
+
     byte[] buffer;
     
     
