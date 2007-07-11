@@ -42,7 +42,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.42 $
+ * @version     $Revision: 1.43 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -226,6 +226,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             }
 
             public void configureTable(JTable table) {
+                table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
                 table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
                 table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
                 super.configureTable(table);
