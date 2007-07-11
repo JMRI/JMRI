@@ -19,7 +19,7 @@ import jmri.util.com.sun.TableSorter;
 /**
  * Pane for editing Digitrax SPJ files
  * @author	    Bob Jacobsen   Copyright (C) 2006
- * @version	    $Revision: 1.1 $
+ * @version	    $Revision: 1.2 $
  */
 public class EditorPane extends javax.swing.JPanel {
 
@@ -27,6 +27,7 @@ public class EditorPane extends javax.swing.JPanel {
     static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.loconet.soundloader.Editor");
     
     SpjFile file;
+    EditorTableDataModel dataModel;
     
     public EditorPane(String name) {
         // open and save file
@@ -43,7 +44,7 @@ public class EditorPane extends javax.swing.JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // create and include table
-        EditorTableDataModel dataModel = new EditorTableDataModel(file);
+        dataModel = new EditorTableDataModel(file);
         
         JTable dataTable	= JTableUtil.sortableDataModel(dataModel);
         JScrollPane dataScroll	= new JScrollPane(dataTable);
