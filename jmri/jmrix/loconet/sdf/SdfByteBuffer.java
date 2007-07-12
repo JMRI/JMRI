@@ -4,12 +4,15 @@ package jmri.jmrix.loconet.sdf;
 
 import java.io.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Provide tools for reading, writing and accessing
  * Digitrax SPJ files
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 
 public class SdfByteBuffer {
@@ -18,6 +21,7 @@ public class SdfByteBuffer {
     
     public SdfByteBuffer(byte[] buffer) {
         this.buffer = buffer;
+        loadArray();
     }
     
     public SdfByteBuffer(String name) throws IOException {
@@ -32,6 +36,7 @@ public class SdfByteBuffer {
         for (int i=0; i<length; i++) {
             buffer[i] = (byte)(s.read()&0xFF);
         }
+        loadArray();
     }
 
 
@@ -43,48 +48,35 @@ public class SdfByteBuffer {
     public void resetIndex() { index = 0; }
     public byte getAtIndex() { return buffer[index]; }
     public byte getAtIndexAndInc() { return buffer[index++]; }
+    public boolean moreData() { return index<buffer.length; }
+    public int getIndex() { return index; }
+    public void restoreIndex(int i) { index = i; }
     
     public String toString() {
-        resetIndex();
         String out ="";
-        while (index<buffer.length) {
-            SdfMacro m;
+        for (int i = 0; i<ops.size(); i++) {
+            SdfMacro m = (SdfMacro)ops.get(i);
 
-            // full 1st byte decoder
-            if ( (m=ChannelStart.match(this)) != null) ; else
-            if ( (m=SdlVersion.match(this)) != null) ; else
-            if ( (m=SkemeStart.match(this)) != null) ; else
-            if ( (m=GenerateTrigger.match(this)) != null) ; else
-            if ( (m=EndSound.match(this)) != null) ; else
-
-            // 7 bit decode
-            if ( (m=DelaySound.match(this)) != null) ; else
-                            
-            // 6 bit decode
-            if ( (m=SkipOnTrigger.match(this)) != null) ; else
-            
-            // 5 bit decode
-            if ( (m=InitiateSound.match(this)) != null) ; else
-            if ( (m=MaskCompare.match(this)) != null) ; else
-            
-            // 4 bit decode
-            if ( (m=LoadModifier.match(this)) != null) ; else
-            if ( (m=BranchTo.match(this)) != null) ; else
-
-            // 2 bit decode
-            if ( (m=Play.match(this)) != null) ; else
-            
-            // generics
-            if ( (m=FourByteMacro.match(this)) != null) ; else
-            if ( (m=TwoByteMacro.match(this)) != null) ; else
-            
-            // bail
-            if (m==null) System.out.println("PANIC");
             out += m.toString();
         }
         return out;
     }
-        
+    
+    public List getArray() { return ops; }
+    
+    void loadArray() {
+        resetIndex();
+        ops = new ArrayList();
+        while (moreData()) {
+            System.out.println("loop");
+            SdfMacro m = SdfMacro.decodeInstruction(this);
+            ops.add(m);
+        }
+        System.out.println("read size "+ops.size());
+    }
+    
+    ArrayList ops;
+    
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SdfByteBuffer.class.getName());
 
 }

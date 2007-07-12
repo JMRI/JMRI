@@ -2,15 +2,18 @@
 
 package jmri.jmrix.loconet.sdf;
 
+import java.util.List;
+import java.util.ArrayList;
+
 /**
  * Common base for all the SDF macros defined by Digitrax
  * for their sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 
-abstract class SdfMacro {
+public abstract class SdfMacro {
 
     /**
      * Name used by the macro in the SDF definition
@@ -28,7 +31,61 @@ abstract class SdfMacro {
      */
     abstract public String toString();
 
+    /**
+     * Access child (nested) instructions.
+     * <P>
+     * Returns null except in case of nesting.
+     */
+    public List getChildren() { return children; }
+    ArrayList children = null;  // not changed unless there are some!
+    
+    /**
+     * Return the next macro in a buffer.
+     * <P>
+     * Note this uses the index contained in the 
+     * SdfByteBuffer implementation, and has
+     * the side-effect of bumping that forward.
+     */
+    static public SdfMacro decodeInstruction(SdfByteBuffer buff) {
+            SdfMacro m;
 
+            // full 1st byte decoder
+            if ( (m=ChannelStart.match(buff)) != null) return m; else
+            if ( (m=SdlVersion.match(buff)) != null) return m; else
+            if ( (m=SkemeStart.match(buff)) != null) return m; else
+            if ( (m=GenerateTrigger.match(buff)) != null) return m; else
+            if ( (m=EndSound.match(buff)) != null) return m; else
+
+            // 7 bit decode
+            if ( (m=DelaySound.match(buff)) != null) return m; else
+                            
+            // 6 bit decode
+            if ( (m=SkipOnTrigger.match(buff)) != null) return m; else
+            
+            // 5 bit decode
+            if ( (m=InitiateSound.match(buff)) != null) return m; else
+            if ( (m=MaskCompare.match(buff)) != null) return m; else
+            
+            // 4 bit decode
+            if ( (m=LoadModifier.match(buff)) != null) return m; else
+            if ( (m=BranchTo.match(buff)) != null) return m; else
+
+            // 2 bit decode
+            if ( (m=Play.match(buff)) != null) return m; else
+            
+            // generics
+            if ( (m=FourByteMacro.match(buff)) != null) return m; else
+            if ( (m=TwoByteMacro.match(buff)) != null) return m;
+            
+            // bail
+            if (m==null) {
+                log.error("PANIC");
+                return null;
+            }
+            log.warn("dropped through");
+            return null;
+    }
+    
     /**
      * Service method to unpack various bit-coded values
      * for display, using a mask array.
@@ -824,7 +881,7 @@ final static String[] maxGNames = new String[] {
     "MAXG_WHISTLE", "MAXG_DIESEL", "MAXG_STEAM"
 };
 
-
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SdfMacro.class.getName());
 
 }
 /* @(#)SdfMacro.java */
