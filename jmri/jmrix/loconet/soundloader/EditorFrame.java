@@ -1,4 +1,4 @@
-// LoaderFrame.java
+// EditorFrame.java
 
 package jmri.jmrix.loconet.soundloader;
 
@@ -19,7 +19,7 @@ import jmri.util.JmriJFrame;
  * This handles file read/write.
  *
  * @author		Bob Jacobsen   Copyright (C) 2006
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class EditorFrame extends JmriJFrame {
 
