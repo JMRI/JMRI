@@ -19,7 +19,7 @@ import jmri.util.JmriJFrame;
  * This handles file read/write.
  *
  * @author		Bob Jacobsen   Copyright (C) 2006
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class EditorFrame extends JmriJFrame {
 
@@ -116,7 +116,7 @@ public class EditorFrame extends JmriJFrame {
     }
     
     public void dispose() {
-        pane.dispose();
+        if (pane!=null) pane.dispose();
         super.dispose();
     }
 }
