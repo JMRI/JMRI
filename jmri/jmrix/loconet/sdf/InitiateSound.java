@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Implement the INITIATE_SOUND macro from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 
 class InitiateSound extends SdfMacro {
@@ -36,10 +36,6 @@ class InitiateSound extends SdfMacro {
         if (trigName!=null) return trigName;
         return "(trigger = 0x"+jmri.util.StringUtil.twoHexFromInt(trigger)+")";
     }
-    
-    static SkemeStart dummySkemeStart = new SkemeStart(0,0); // to get name
-    static ChannelStart dummyChannelStart = new ChannelStart(0); // to get name
-    static EndSound dummyEndSound = new EndSound(); // to get name
 
     static public SdfMacro match(SdfByteBuffer buff) {
         if ( (buff.getAtIndex()&0xF8) != 0x90) return null;
@@ -47,28 +43,27 @@ class InitiateSound extends SdfMacro {
         int byte2 =  buff.getAtIndexAndInc();
         InitiateSound result = new InitiateSound(byte2&0x7f, (byte1&0x7) + (byte2&0x80));
 
-        SdfMacro next = null;
+        // gather leaves underneath
+        SdfMacro next;
         while (buff.moreData()) {
-            // beware of recursion in this part of the code
-            int i = buff.getIndex();
-            next=decodeInstruction(buff);
-
-            // check for end of channel
-            // Since multiple InitiateSounds can appear before a EndSound,
-            // we don't check for those
-            if (result.name().equals(dummyEndSound.name())
-                || result.name().equals(dummySkemeStart.name())
-                || result.name().equals(dummyChannelStart.name())) {
-                // time to start the next one; 
-                // decrement index to rescan this, and 
-                // return via break
-                buff.restoreIndex(i);
+            // look ahead at next instruction
+            int peek = buff.getAtIndex()&0xFF;
+            
+            // if SKEME_START, CHANNEL_START, done
+            // Note that INITIATE_SOUND can be nested, so isn't here
+            if (peek == 0xF1
+                || peek == 0x81) {
                 break;
             }
+            
+            // next is leaf, keep it
+            next=decodeInstruction(buff);
             if (result.children==null) result.children = new ArrayList(); // make sure it's initialized
             result.children.add(next);
+            
+            // if this was an END_SOUND, we're done now that we've included it
+            if (peek == 0x00) break;
         }
-        
         return result;
     }
     

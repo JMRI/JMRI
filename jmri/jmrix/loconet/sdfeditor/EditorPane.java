@@ -22,7 +22,7 @@ import java.util.List;
  * a larger detailed view.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2007
- * @version	    $Revision: 1.1 $
+ * @version	    $Revision: 1.2 $
  */
 public class EditorPane extends javax.swing.JPanel {
 
@@ -98,11 +98,21 @@ public class EditorPane extends javax.swing.JPanel {
     
         // make the top elements at the top
         List ops = buff.getArray();
-        System.out.println("size "+ops.size());
         for (int i=0; i<ops.size(); i++) {
-            newNode = new DefaultMutableTreeNode(ops.get(i));
-            topNode.add(newNode);
-            System.out.println("item 1"+((SdfMacro)ops.get(i)).name());
+            nestNodes(topNode, (SdfMacro)ops.get(i));
+        }
+    }
+
+    void nestNodes(DefaultMutableTreeNode parent, SdfMacro macro) {
+        // put in the new topmost node
+        DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(macro);
+        parent.add(newNode);
+        
+        // recurse for kids
+        List children = macro.getChildren();
+        if (children == null) return;
+        for (int i=0; i<children.size(); i++) {
+            nestNodes(newNode, (SdfMacro)children.get(i));
         }
     }
     

@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * This nests until the next SKEME_START.
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 
 class SkemeStart extends SdfMacro {
@@ -40,23 +40,22 @@ class SkemeStart extends SdfMacro {
         
         SkemeStart result = new SkemeStart( byte2, byte3*256+byte4);
         
-        System.out.println("SK s");
+        // gather leaves underneath
         SdfMacro next;
         while (buff.moreData()) {
-            // beware of recursion in this part of the code
-            int i = buff.getIndex();
-            next=decodeInstruction(buff);
-            if (next.name().equals(result.name())) {
-                // time to start the next one; 
-                // decrement index to rescan this, and 
-                // return via break
-                buff.restoreIndex(i);
-                return result;
+            // look ahead at next instruction
+            int peek = buff.getAtIndex()&0xFF;
+            
+            // if SKEME_START, done
+            if (peek == 0xF1) {
+                break;
             }
+            
+            // next is leaf, keep it
+            next=decodeInstruction(buff);
             if (result.children==null) result.children = new ArrayList(); // make sure it's initialized
             result.children.add(next);
         }
-        System.out.println("SK e");
         return result;
     }
     

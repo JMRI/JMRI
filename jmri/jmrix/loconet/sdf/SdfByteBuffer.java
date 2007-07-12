@@ -12,7 +12,7 @@ import java.util.List;
  * Digitrax SPJ files
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 
 public class SdfByteBuffer {
@@ -49,8 +49,6 @@ public class SdfByteBuffer {
     public byte getAtIndex() { return buffer[index]; }
     public byte getAtIndexAndInc() { return buffer[index++]; }
     public boolean moreData() { return index<buffer.length; }
-    public int getIndex() { return index; }
-    public void restoreIndex(int i) { index = i; }
     
     public String toString() {
         String out ="";
@@ -68,11 +66,9 @@ public class SdfByteBuffer {
         resetIndex();
         ops = new ArrayList();
         while (moreData()) {
-            System.out.println("loop");
             SdfMacro m = SdfMacro.decodeInstruction(this);
             ops.add(m);
         }
-        System.out.println("read size "+ops.size());
     }
     
     ArrayList ops;

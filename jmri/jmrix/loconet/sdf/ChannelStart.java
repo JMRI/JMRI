@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Implement the CHANNEL_START macro from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 
 class ChannelStart extends SdfMacro {
@@ -32,25 +32,23 @@ class ChannelStart extends SdfMacro {
         buff.getAtIndexAndInc(); // drop opcode
         ChannelStart result = new ChannelStart(buff.getAtIndexAndInc());
 
+        // gather leaves underneath
         SdfMacro next;
         while (buff.moreData()) {
-            // beware of recursion in this part of the code
-            int i = buff.getIndex();
-            next=decodeInstruction(buff);
-
-            // check for end of channel
-            if (result.name().equals(next.name())
-                || result.name().equals(dummySkemeStart.name())) {
-                // time to start the next one; 
-                // decrement index to rescan this, and 
-                // return via break
-                buff.restoreIndex(i);
+            // look ahead at next instruction
+            int peek = buff.getAtIndex()&0xFF;
+            
+            // if SKEME_START or CHANNEL_START, done
+            if (peek == 0xF1
+                || peek == 0x81) {
                 break;
             }
+            
+            // next is leaf, keep it
+            next=decodeInstruction(buff);
             if (result.children==null) result.children = new ArrayList(); // make sure it's initialized
             result.children.add(next);
         }
-        
         return result;
     }
     
