@@ -6,7 +6,7 @@ package jmri.jmrix.loconet.sdf;
  * Implement the SDL_VERSION macro from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 
 class SdlVersion extends SdfMacro {
@@ -30,7 +30,13 @@ class SdlVersion extends SdfMacro {
     }
     
     public String toString() {
-        return linestart+name()+' '+(version==0x10 ? "VERSION_1": "Unknown code "+version)+'\n';
+        return name()+' '+(version==0x10 ? "VERSION_1": "Unknown code "+version)+'\n';
+    }
+    public String oneInstructionString() {
+        return name()+' '+(version==0x10 ? "VERSION_1": "Unknown code "+version)+'\n';
+    }
+    public String allInstructionString(String indent) {
+        return indent+oneInstructionString();
     }
 }
 

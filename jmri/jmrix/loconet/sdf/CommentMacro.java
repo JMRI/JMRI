@@ -6,7 +6,7 @@ package jmri.jmrix.loconet.sdf;
  * An SdfMacro for carrying a comment
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 
 class CommentMacro extends SdfMacro {
@@ -29,7 +29,13 @@ class CommentMacro extends SdfMacro {
     }
     
     public String toString() {
-        return linestart+";"+comment+'\n';
+        return ";"+comment+'\n';
+    }
+    public String oneInstructionString() {
+        return ";"+comment+'\n';
+    }
+    public String allInstructionString(String indent) {
+        return indent+oneInstructionString();
     }
 }
 

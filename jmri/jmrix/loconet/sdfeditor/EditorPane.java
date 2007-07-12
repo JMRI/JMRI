@@ -22,7 +22,7 @@ import java.util.List;
  * a larger detailed view.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2007
- * @version	    $Revision: 1.2 $
+ * @version	    $Revision: 1.3 $
  */
 public class EditorPane extends javax.swing.JPanel {
 
@@ -47,7 +47,7 @@ public class EditorPane extends javax.swing.JPanel {
         tree = new JTree(topNode);
         tree.setMinimumSize(new Dimension(250,600));
         tree.setPreferredSize(new Dimension(250,600));
-
+        
         JScrollPane treeView = new JScrollPane(tree);
         return treeView;
     }
@@ -101,6 +101,12 @@ public class EditorPane extends javax.swing.JPanel {
         for (int i=0; i<ops.size(); i++) {
             nestNodes(topNode, (SdfMacro)ops.get(i));
         }
+
+        // don't show the top (single) node, 
+        // do show all the ones right under that.
+        tree.expandPath(new TreePath(topNode));
+        tree.setRootVisible(false);
+
     }
 
     void nestNodes(DefaultMutableTreeNode parent, SdfMacro macro) {

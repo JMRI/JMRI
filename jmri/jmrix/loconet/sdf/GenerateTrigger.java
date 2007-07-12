@@ -6,7 +6,7 @@ package jmri.jmrix.loconet.sdf;
  * Implement the GENERATE_TRIGGER macro from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 
 class GenerateTrigger extends SdfMacro {
@@ -36,7 +36,13 @@ class GenerateTrigger extends SdfMacro {
     }
 
     public String toString() {
-        return linestart+name()+' '+triggerVal()+'\n';
+        return name()+' '+triggerVal()+'\n';
+    }
+    public String oneInstructionString() {
+        return name()+' '+triggerVal()+'\n';
+    }
+    public String allInstructionString(String indent) {
+        return indent+oneInstructionString();
     }
 }
 

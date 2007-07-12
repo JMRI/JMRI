@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * for their sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 
 public abstract class SdfMacro {
@@ -26,10 +26,23 @@ public abstract class SdfMacro {
     abstract public int length();
     
     /**
-     * Provide a single-line representation,
-     * including the trailing newline
+     * Provide a single-line simplified representation,
+     * including the trailing newline.
      */
     abstract public String toString();
+
+    /**
+     * Provide single instruction in MPASM format,
+     * including the trailing newline.
+     */
+    abstract public String oneInstructionString();
+
+    /**
+     * Provide instructions in MPASM format,
+     * including the trailing newline and all nested
+     * instructions.
+     */
+    abstract public String allInstructionString(String indent);
 
     /**
      * Access child (nested) instructions.
@@ -101,11 +114,6 @@ public abstract class SdfMacro {
         return output;
     }
      
-    /**
-     * Insert this as the spacing at the front of ecah line in toString.
-     * Used to do nested indention.
-     */
-    static String linestart = "    ";
     
 /* **********************
 * Constants

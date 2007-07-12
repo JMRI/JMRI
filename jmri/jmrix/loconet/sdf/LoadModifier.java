@@ -14,7 +14,7 @@ import jmri.util.StringUtil;
  *
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 
 class LoadModifier extends SdfMacro {
@@ -62,6 +62,9 @@ class LoadModifier extends SdfMacro {
     
 
     public String toString() {
+        return name()+' '+modTypeVal()+'\n';
+    }
+    public String oneInstructionString() {
         String args;
         String arg1Val;
         String arg2Val;
@@ -71,7 +74,7 @@ class LoadModifier extends SdfMacro {
         switch (modType) {
         case MTYPE_TIME:
             args = argVal();
-            return linestart+name()+' '+modTypeVal()+","+args+'\n';
+            return name()+' '+modTypeVal()+","+args+'\n';
             
         case MTYPE_GAIN:
             // arg1 is IMMED_GAIN_MODIFY or ANALOG_GAIN_MODIFY
@@ -96,7 +99,7 @@ class LoadModifier extends SdfMacro {
             if (arg2Val == null) arg2Val = "0x"+StringUtil.twoHexFromInt(arg2);
             arg3Val = decodeFlags(arg3,arg3ModCodes,arg3ModMasks,arg3ModNames);
             if (arg3Val == null) arg3Val = "0x"+StringUtil.twoHexFromInt(arg3);
-            return linestart+name()+' '+modTypeVal()+","+arg1Val+","+arg2Val+","+arg3Val+'\n';
+            return name()+' '+modTypeVal()+","+arg1Val+","+arg2Val+","+arg3Val+'\n';
             
         case MTYPE_PITCH:
             // arg1 is CV_PITCH_MODIFY or ANALOG_PITCH_MODIFY
@@ -121,7 +124,7 @@ class LoadModifier extends SdfMacro {
             if (arg2Val == null) arg2Val = "0x"+StringUtil.twoHexFromInt(arg2);
             arg3Val = StringUtil.getNameFromState(arg3,ditherPCodes,ditherPNames);
             if (arg3Val == null) arg3Val = "0x"+StringUtil.twoHexFromInt(arg3);
-            return linestart+name()+' '+modTypeVal()+","+arg1Val+","+arg2Val+","+arg3Val+'\n';
+            return name()+' '+modTypeVal()+","+arg1Val+","+arg2Val+","+arg3Val+'\n';
             
         case MTYPE_BLEND:
             arg1Val = decodeFlags(arg1,blendArg1Codes,blendArg1Masks,blendArg1Names);
@@ -132,7 +135,7 @@ class LoadModifier extends SdfMacro {
             arg3Val = StringUtil.getNameFromState(arg3,blendArg3Codes,blendArg3Names);
             if (arg3Val == null) arg3Val = "0x"+StringUtil.twoHexFromInt(arg3);
                 
-            return linestart+name()+' '+modTypeVal()+","+arg1Val+","+arg2Val+","+arg3Val+'\n';
+            return name()+' '+modTypeVal()+","+arg1Val+","+arg2Val+","+arg3Val+'\n';
             
         case MTYPE_SCATTER:
             arg1Val = StringUtil.getNameFromState(arg1&0x38,scatCommandCodes,scatCommandNames)
@@ -144,14 +147,14 @@ class LoadModifier extends SdfMacro {
             arg3Val = StringUtil.getNameFromState(arg3,sintenCodes,sintenNames);
             if (arg3Val == null) arg3Val = "0x"+StringUtil.twoHexFromInt(arg3);
                 
-            return linestart+name()+' '+modTypeVal()+","+arg1Val+","+arg2Val+","+arg3Val+'\n';
+            return name()+' '+modTypeVal()+","+arg1Val+","+arg2Val+","+arg3Val+'\n';
             
         case MTYPE_SNDCV:
             arg1Val = StringUtil.getNameFromState(arg1,fixedCVCodes,fixedCVNames);
             if (arg1Val == null) arg1Val = "0x"+StringUtil.twoHexFromInt(arg1);
             arg2Val = ""+arg2;
             arg3Val = ""+arg3;
-            return linestart+name()+' '+modTypeVal()+","+arg1Val+","+arg2Val+","+arg3Val+'\n';
+            return name()+' '+modTypeVal()+","+arg1Val+","+arg2Val+","+arg3Val+'\n';
             
         case MTYPE_WORK_IMMED:
             // math operations w immediate operands
@@ -178,7 +181,7 @@ class LoadModifier extends SdfMacro {
                 arg2Val = decodeFlags(arg2,workStatusBitCodes,workStatusBitCodes,workStatusBitNames);
             if ((arg1&0x1F) == WORK_GLBL_GAIN && arg2 == DEFAULT_GLBL_GAIN)
                 arg2Val = "DEFAULT_GLBL_GAIN";
-            return linestart+name()+' '+modTypeVal()+","+arg1Val+","+arg2Val+","+arg3Val+'\n';
+            return name()+' '+modTypeVal()+","+arg1Val+","+arg2Val+","+arg3Val+'\n';
             
         case MTYPE_WORK_INDIRECT:
             // math operations from one reg to another
@@ -199,9 +202,12 @@ class LoadModifier extends SdfMacro {
             // occasionally see MERGE_ALL_MASK in arg3, but that's zero
             arg3Val = ""+arg3;
 
-            return linestart+name()+' '+modTypeVal()+","+arg1Val+","+arg2Val+","+arg3Val+'\n';
+            return name()+' '+modTypeVal()+","+arg1Val+","+arg2Val+","+arg3Val+'\n';
         }
         return "<could not parse, should not happen>";
+    }
+    public String allInstructionString(String indent) {
+        return indent+oneInstructionString();
     }
 }
 

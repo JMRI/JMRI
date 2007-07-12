@@ -6,16 +6,16 @@ package jmri.jmrix.loconet.sdf;
  * Implement generic four-byte macros from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 
 class FourByteMacro extends SdfMacro {
 
-    public FourByteMacro(byte byte1, byte byte2, byte byte3, byte byte4) {
-        bytes[0] = byte1;
-        bytes[1] = byte2;        
-        bytes[2] = byte3;        
-        bytes[3] = byte4;        
+    public FourByteMacro(int byte1, int byte2, int byte3, int byte4) {
+        bytes[0] = (byte)(byte1&0xFF);
+        bytes[1] = (byte)(byte2&0xFF);        
+        bytes[2] = (byte)(byte3&0xFF);        
+        bytes[3] = (byte)(byte4&0xFF);        
     }
     
     public String name() {
@@ -36,7 +36,13 @@ class FourByteMacro extends SdfMacro {
     }
     
     public String toString() {
-        return linestart+name()+' '+jmri.util.StringUtil.hexStringFromBytes(bytes)+'\n';
+        return name()+' '+jmri.util.StringUtil.hexStringFromBytes(bytes)+'\n';
+    }
+    public String oneInstructionString() {
+        return name()+' '+jmri.util.StringUtil.hexStringFromBytes(bytes)+'\n';
+    }
+    public String allInstructionString(String indent) {
+        return indent+oneInstructionString();
     }
 }
 

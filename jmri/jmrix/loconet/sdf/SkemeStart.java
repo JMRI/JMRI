@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * This nests until the next SKEME_START.
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 
 class SkemeStart extends SdfMacro {
@@ -60,12 +60,18 @@ class SkemeStart extends SdfMacro {
     }
     
     public String toString() {
+        return name()+' '+number+"; length="+length+'\n';
+    }
+    public String oneInstructionString() {
+        return name()+' '+number+"; length="+length+'\n';
+    }
+    public String allInstructionString(String indent) {
         String output;
-        linestart = "    ";
-        output = linestart+name()+' '+number+"; length="+length+'\n';
+        output = indent+oneInstructionString();
+        
         if (children==null) return output;
         for (int i = 0; i<children.size(); i++) {
-            output+= ((SdfMacro)children.get(i)).toString();
+            output+= ((SdfMacro)children.get(i)).allInstructionString(indent+"  ");
         }
         return output;
     }
