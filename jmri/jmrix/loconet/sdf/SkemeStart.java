@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * This nests until the next SKEME_START.
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 
 class SkemeStart extends SdfMacro {
@@ -60,7 +60,7 @@ class SkemeStart extends SdfMacro {
     }
     
     public String toString() {
-        return name()+' '+number+"; length="+length+'\n';
+        return "Scheme "+number;
     }
     public String oneInstructionString() {
         return name()+' '+number+"; length="+length+'\n';

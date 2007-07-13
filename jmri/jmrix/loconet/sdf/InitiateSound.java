@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Implement the INITIATE_SOUND macro from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.9 $
+ * @version             $Revision: 1.10 $
  */
 
 class InitiateSound extends SdfMacro {
@@ -77,7 +77,7 @@ class InitiateSound extends SdfMacro {
     }
     
     public String toString() {
-        return name()+" "+triggerVal()+","+premptVal()+'\n';
+        return "Initiate Sound "+triggerVal()+","+premptVal()+'\n';
     }
     public String oneInstructionString() {
         return name()+" "+triggerVal()+","+premptVal()+'\n';

@@ -6,7 +6,7 @@ package jmri.jmrix.loconet.sdf;
  * Implement the SKIP_ON_TRIGGER macro from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 
 class SkipOnTrigger extends SdfMacro {
@@ -43,7 +43,7 @@ class SkipOnTrigger extends SdfMacro {
     }
     
     public String toString() {
-        return name()+' '+logicVal()+", "+triggerVal()+'\n';
+        return "Skip on Trigger\n";
     }
     public String oneInstructionString() {
         return name()+' '+logicVal()+", "+triggerVal()+'\n';

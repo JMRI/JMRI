@@ -6,7 +6,7 @@ package jmri.jmrix.loconet.sdf;
  * Implement the DELAY_SOUND macro from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 
 class DelaySound extends SdfMacro {
@@ -35,7 +35,7 @@ class DelaySound extends SdfMacro {
     }
     
     public String toString() {
-        return name()+'\n';
+        return "Delay Sound";
     }
     public String oneInstructionString() {
         String modeVal = (DELAY_THIS == mode) ? "DELAY_THIS" : "DELAY_CV";

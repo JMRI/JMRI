@@ -8,7 +8,7 @@ package jmri.jmrix.loconet.sdf;
  * This carries no additional information.
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 
 class EndSound extends SdfMacro {
@@ -30,7 +30,7 @@ class EndSound extends SdfMacro {
     }
     
     public String toString() {
-        return name()+'\n';
+        return "End sound\n";
     }
     public String oneInstructionString() {
         return name()+'\n';
