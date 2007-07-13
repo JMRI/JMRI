@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: getcode.shtml,v 1.1 2007-07-10 07:00:04 jacobsen Exp $ -->
+<!-- $Id: getcode.shtml,v 1.2 2007-07-13 04:55:23 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -27,7 +27,7 @@
 
     <p class="skipLink"><a href="#mainContent" accesskey="2">Skip to main content</a></p>
 
-<!--#include virtual="Header" -->
+<!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
@@ -103,7 +103,7 @@ advantages; with the appropriate permissions and commands, you can merge your
 changes back into the common source automagically.  Contact us when you're ready to
 do that or see the <A HREF="index.html#contributing">info on contributing</a>.
 
-<!--#include virtual="Footer" -->
+<!--#include virtual="/Footer" -->
 
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->

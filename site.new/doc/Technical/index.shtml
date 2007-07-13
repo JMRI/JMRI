@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.1 2007-07-10 07:00:05 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.2 2007-07-13 04:55:23 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -27,7 +27,7 @@
 
     <p class="skipLink"><a href="#mainContent" accesskey="2">Skip to main content</a></p>
 
-<!--#include virtual="Header" -->
+<!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
@@ -176,7 +176,7 @@ If you have any questions about this, please
 <A HREF="mailto:jmri@pacbell.net">contact us</a>
 directly.
 
-<!--#include virtual="Footer" -->
+<!--#include virtual="/Footer" -->
 
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->

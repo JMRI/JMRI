@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.3 2007-07-01 05:22:49 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.4 2007-07-13 04:56:09 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -25,7 +25,7 @@
 <body>
   <div id="container">
 
-<!--#include virtual="Header" -->
+<!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
     <hr class="hide">
@@ -142,7 +142,7 @@
     will take you a little time to get used to it, in the end it provides
     a lot of power to control your layout anyway you'd like.
 
-<!--#include virtual="Footer" -->
+<!--#include virtual="/Footer" -->
 
       </div><!-- closes #mainContent-->
     </div> <!-- closes #mBody-->

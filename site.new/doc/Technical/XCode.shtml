@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XCode.shtml,v 1.1 2007-07-10 07:00:04 jacobsen Exp $ -->
+<!-- $Id: XCode.shtml,v 1.2 2007-07-13 04:55:23 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -27,7 +27,7 @@
 
     <p class="skipLink"><a href="#mainContent" accesskey="2">Skip to main content</a></p>
 
-<!--#include virtual="Header" -->
+<!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
@@ -78,7 +78,7 @@ Unfortunately I did not find any way to save the entries in Jar
 Builder so you will need to redo everything anytime you start it.....
 </PRE>
 
-<!--#include virtual="Footer" -->
+<!--#include virtual="/Footer" -->
 
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
