@@ -8,10 +8,10 @@ import java.util.ArrayList;
  * Implement the CHANNEL_START macro from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 
-class ChannelStart extends SdfMacro {
+public class ChannelStart extends SdfMacro {
 
     public ChannelStart(int number) {
         this.number = number;      
@@ -27,7 +27,7 @@ class ChannelStart extends SdfMacro {
     
     static SkemeStart dummySkemeStart = new SkemeStart(0,0); // to get name
     
-    static public SdfMacro match(SdfByteBuffer buff) {
+    static public SdfMacro match(SdfBuffer buff) {
         if ( (buff.getAtIndex()&0xFF) != 0x81) return null;
         buff.getAtIndexAndInc(); // drop opcode
         ChannelStart result = new ChannelStart(buff.getAtIndexAndInc());

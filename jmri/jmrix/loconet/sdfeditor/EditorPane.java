@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.tree.*;
+import javax.swing.event.*;
 import java.util.ResourceBundle;
 
 import jmri.jmrix.loconet.sdf.*;
@@ -22,9 +23,9 @@ import java.util.List;
  * a larger detailed view.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2007
- * @version	    $Revision: 1.3 $
+ * @version	    $Revision: 1.4 $
  */
-public class EditorPane extends javax.swing.JPanel {
+public class EditorPane extends javax.swing.JPanel implements TreeSelectionListener {
 
     // GUI member declarations
     static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.loconet.sdfeditor.Editor");
@@ -47,11 +48,30 @@ public class EditorPane extends javax.swing.JPanel {
         tree = new JTree(topNode);
         tree.setMinimumSize(new Dimension(250,600));
         tree.setPreferredSize(new Dimension(250,600));
+        tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);        
+
+        // Listen for when the selection changes.
+        tree.addTreeSelectionListener(this);
         
+        // install in scroll area
         JScrollPane treeView = new JScrollPane(tree);
         return treeView;
     }
             
+    /**
+     * Handle tree selection
+     */
+    public void valueChanged(TreeSelectionEvent e) {
+        DefaultMutableTreeNode node = (DefaultMutableTreeNode)
+                           tree.getLastSelectedPathComponent();
+    
+        if (node == null) return;
+    
+        SdfMacroEditor nodeInfo = (SdfMacroEditor)node.getUserObject();
+        status.setText(nodeInfo.oneInstructionString());
+
+    }
+    
     JPanel newEditPane() {
         JPanel p = new JPanel();
         p.setMinimumSize(new Dimension(600,400));
@@ -72,13 +92,10 @@ public class EditorPane extends javax.swing.JPanel {
         return p;
     }
     
-    JPanel newInstructionPane() {
-        JPanel p = new JPanel();
-        
-        p.setLayout(new FlowLayout());
-        p.add(new JLabel("Instruction: "));
-        
-        return p;
+    MonitoringLabel status = new MonitoringLabel();
+    
+    JComponent newInstructionPane() {
+        return status;
     }
     
     JPanel newDetailPane() {
@@ -93,7 +110,7 @@ public class EditorPane extends javax.swing.JPanel {
     /**
      * Add the instructions to the tree
      */
-    void addSdf(SdfByteBuffer buff) {
+    void addSdf(SdfBuffer buff) {
         DefaultMutableTreeNode newNode = null;
     
         // make the top elements at the top
@@ -111,7 +128,9 @@ public class EditorPane extends javax.swing.JPanel {
 
     void nestNodes(DefaultMutableTreeNode parent, SdfMacro macro) {
         // put in the new topmost node
-        DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(macro);
+        DefaultMutableTreeNode newNode 
+                = new DefaultMutableTreeNode(
+                                    SdfMacroEditor.attachEditor(macro));
         parent.add(newNode);
         
         // recurse for kids

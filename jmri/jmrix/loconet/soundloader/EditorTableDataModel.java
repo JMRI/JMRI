@@ -26,7 +26,7 @@ import javax.swing.table.TableColumnModel;
  * Table data model for display of Digitrax SPJ files
  * @author		Bob Jacobsen   Copyright (C) 2003, 2006
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.4 $
+ * @version		$Revision: 1.5 $
  */
 public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 
@@ -237,7 +237,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
     
     // should probably be abstract and put in invoking GUI
     void viewSdfButtonPressed(Object value, int row, int col) {
-        jmri.jmrix.loconet.sdf.SdfByteBuffer buff = new jmri.jmrix.loconet.sdf.SdfByteBuffer(file.getHeader(row+1).getByteArray());
+        jmri.jmrix.loconet.sdf.SdfBuffer buff = new jmri.jmrix.loconet.sdf.SdfBuffer(file.getHeader(row+1).getByteArray());
         String content = buff.toString();
         JFrame frame = new JFrame();
         JTextArea text = new JTextArea(content);

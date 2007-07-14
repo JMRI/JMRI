@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * for their sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 
 public abstract class SdfMacro {
@@ -56,10 +56,10 @@ public abstract class SdfMacro {
      * Return the next macro in a buffer.
      * <P>
      * Note this uses the index contained in the 
-     * SdfByteBuffer implementation, and has
+     * SdfBuffer implementation, and has
      * the side-effect of bumping that forward.
      */
-    static public SdfMacro decodeInstruction(SdfByteBuffer buff) {
+    static public SdfMacro decodeInstruction(SdfBuffer buff) {
             SdfMacro m;
 
             // full 1st byte decoder

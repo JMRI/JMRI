@@ -1,4 +1,4 @@
-// SdfByteBufferTest.java
+// SdfBufferTest.java
 
 package jmri.jmrix.loconet.sdf;
 
@@ -10,15 +10,16 @@ import junit.framework.TestSuite;
 import java.io.*;
 
 /**
- * Tests for the jmri.jmrix.loconet.sdf.SdfByteBuffer class.
- * @author	Bob Jacobsen  Copyright 2007
- * @version	$Revision: 1.1 $
+ * Tests for the jmri.jmrix.loconet.sdf.SdfBuffer class.
+ * 
+ * @author Bob Jacobsen  Copyright 2007
+ * @version $Revision: 1.1 $
  */
-public class SdfByteBufferTest extends TestCase {
+public class SdfBufferTest extends TestCase {
 
 
     public void testFileCtor() throws java.io.IOException {
-        SdfByteBuffer b = new SdfByteBuffer("java/test/jmri/jmrix/loconet/sdf/test2.sdf");
+        SdfBuffer b = new SdfBuffer("java/test/jmri/jmrix/loconet/sdf/test2.sdf");
         
         String result = b.toString();
                 
@@ -49,22 +50,22 @@ public class SdfByteBufferTest extends TestCase {
 
 	// from here down is testing infrastructure
 
-	public SdfByteBufferTest(String s) {
+	public SdfBufferTest(String s) {
 		super(s);
 	}
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {SdfByteBufferTest.class.getName()};
+		String[] testCaseName = {SdfBufferTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 
 	// test suite from all defined tests
 	public static Test suite() {
-		TestSuite suite = new TestSuite(SdfByteBufferTest.class);
+		TestSuite suite = new TestSuite(SdfBufferTest.class);
 		return suite;
 	}
 
-	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SdfByteBufferTest.class.getName());
+	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SdfBufferTest.class.getName());
 
 }

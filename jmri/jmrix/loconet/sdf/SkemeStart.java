@@ -10,10 +10,10 @@ import java.util.ArrayList;
  * This nests until the next SKEME_START.
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.8 $
+ * @version             $Revision: 1.9 $
  */
 
-class SkemeStart extends SdfMacro {
+public class SkemeStart extends SdfMacro {
 
     public SkemeStart(int number, int length) {
         this.number = number;
@@ -29,7 +29,7 @@ class SkemeStart extends SdfMacro {
     
     public int length() { return 4;}
     
-    static public SdfMacro match(SdfByteBuffer buff) {
+    static public SdfMacro match(SdfBuffer buff) {
         // course match
         if ( (buff.getAtIndex()&0xFF) != 0xF1) return null;
         

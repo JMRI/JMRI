@@ -6,10 +6,10 @@ package jmri.jmrix.loconet.sdf;
  * Implement the SDL_VERSION macro from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 
-class SdlVersion extends SdfMacro {
+public class SdlVersion extends SdfMacro {
 
     public SdlVersion(int version) {
         this.version = version;        
@@ -23,7 +23,7 @@ class SdlVersion extends SdfMacro {
     
     public int length() { return 2;}
     
-    static public SdfMacro match(SdfByteBuffer buff) {
+    static public SdfMacro match(SdfBuffer buff) {
         if ( (buff.getAtIndex()&0xFF) != 0x82) return null;
         buff.getAtIndexAndInc(); // drop op code
         return new SdlVersion(buff.getAtIndexAndInc());

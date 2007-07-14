@@ -6,10 +6,10 @@ package jmri.jmrix.loconet.sdf;
  * An SdfMacro for carrying a comment
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 
-class CommentMacro extends SdfMacro {
+public class CommentMacro extends SdfMacro {
 
     public CommentMacro(String comment) {
         this.comment = comment;        
@@ -23,7 +23,7 @@ class CommentMacro extends SdfMacro {
     
     public int length() { return 0;}
     
-    static public SdfMacro match(SdfByteBuffer buff) {
+    static public SdfMacro match(SdfBuffer buff) {
         // never match, because this doesn't occur in byte stream
         return null;
     }

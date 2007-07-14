@@ -6,10 +6,10 @@ package jmri.jmrix.loconet.sdf;
  * Implement the BRANCH_TO macro from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 
-class BranchTo extends SdfMacro {
+public class BranchTo extends SdfMacro {
 
     public BranchTo(int addr, int skemebase) {
         this.addr = addr;
@@ -25,7 +25,7 @@ class BranchTo extends SdfMacro {
     int addr;
     int skemebase;
     
-    static public SdfMacro match(SdfByteBuffer buff) {
+    static public SdfMacro match(SdfBuffer buff) {
         if ( (buff.getAtIndex()&0xF0) != 0xC0) return null;
         int taddr = (buff.getAtIndexAndInc()&0x0F)*256+(buff.getAtIndexAndInc()&0xFF);
         int toffset =0;

@@ -8,10 +8,10 @@ import java.util.ArrayList;
  * Implement the INITIATE_SOUND macro from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.10 $
+ * @version             $Revision: 1.11 $
  */
 
-class InitiateSound extends SdfMacro {
+public class InitiateSound extends SdfMacro {
 
     public InitiateSound(int trigger, int prempt) {
         this.trigger = trigger;
@@ -37,7 +37,7 @@ class InitiateSound extends SdfMacro {
         return "(trigger = 0x"+jmri.util.StringUtil.twoHexFromInt(trigger)+")";
     }
 
-    static public SdfMacro match(SdfByteBuffer buff) {
+    static public SdfMacro match(SdfBuffer buff) {
         if ( (buff.getAtIndex()&0xF8) != 0x90) return null;
         int byte1 = buff.getAtIndexAndInc();
         int byte2 =  buff.getAtIndexAndInc();

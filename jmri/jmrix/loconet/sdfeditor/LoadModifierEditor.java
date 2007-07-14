@@ -4,7 +4,7 @@ package jmri.jmrix.loconet.sdfeditor;
 
 import jmri.util.StringUtil;
 
-import jmri.jmrix.loconet.sdf.SdfByteBuffer;
+import jmri.jmrix.loconet.sdf.SdfMacro;
 
 /**
  * Editor panel for the LOAD_MODIFIER macro from the Digitrax sound definition language
@@ -16,12 +16,13 @@ import jmri.jmrix.loconet.sdf.SdfByteBuffer;
  *
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 
 class LoadModifierEditor extends SdfMacroEditor {
 
-    public LoadModifierEditor() {
+    public LoadModifierEditor(SdfMacro inst) {
+        super(inst);
     }
 }
 

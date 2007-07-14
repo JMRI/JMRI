@@ -9,7 +9,7 @@ import java.awt.*;
 
 import jmri.util.JmriJFrame;
 
-import jmri.jmrix.loconet.sdf.SdfByteBuffer;
+import jmri.jmrix.loconet.sdf.SdfBuffer;
 
 /**
  * Frame for editing Digitrax SDF files.
@@ -19,7 +19,7 @@ import jmri.jmrix.loconet.sdf.SdfByteBuffer;
  * This handles file read/write.
  *
  * @author		Bob Jacobsen   Copyright (C) 2007
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class EditorFrame extends JmriJFrame {
 
@@ -28,7 +28,7 @@ public class EditorFrame extends JmriJFrame {
 
     ResourceBundle res;
     
-    public EditorFrame(SdfByteBuffer buff) {
+    public EditorFrame(SdfBuffer buff) {
         super(ResourceBundle.getBundle("jmri.jmrix.loconet.sdfeditor.Editor").getString("TitleEditor"));
         
         // Its unfortunate that we have to read that bundle twice, but it's due to Java init order

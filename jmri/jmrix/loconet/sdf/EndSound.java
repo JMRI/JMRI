@@ -8,10 +8,10 @@ package jmri.jmrix.loconet.sdf;
  * This carries no additional information.
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 
-class EndSound extends SdfMacro {
+public class EndSound extends SdfMacro {
 
     public EndSound() {
     }
@@ -22,7 +22,7 @@ class EndSound extends SdfMacro {
     
     public int length() { return 2;}
     
-    static public SdfMacro match(SdfByteBuffer buff) {
+    static public SdfMacro match(SdfBuffer buff) {
         if ( (buff.getAtIndex()&0xFF) != 0x00) return null;
         buff.getAtIndexAndInc();
         buff.getAtIndexAndInc(); // skip bytes

@@ -1,4 +1,4 @@
-// SdfByteBuffer.java
+// SdfBuffer.java
 
 package jmri.jmrix.loconet.sdf;
 
@@ -12,19 +12,19 @@ import java.util.List;
  * Digitrax SPJ files
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.1 $
  */
 
-public class SdfByteBuffer {
+public class SdfBuffer {
 
     // jmri.util.StringUtil.hexStringFromBytes
     
-    public SdfByteBuffer(byte[] buffer) {
+    public SdfBuffer(byte[] buffer) {
         this.buffer = buffer;
         loadArray();
     }
     
-    public SdfByteBuffer(String name) throws IOException {
+    public SdfBuffer(String name) throws IOException {
         File file = new File(name);
         int length = (int)file.length();
         
@@ -73,8 +73,8 @@ public class SdfByteBuffer {
     
     ArrayList ops;
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SdfByteBuffer.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SdfBuffer.class.getName());
 
 }
 
-/* @(#)SdfByteBuffer.java */
+/* @(#)SdfBuffer.java */

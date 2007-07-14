@@ -6,19 +6,19 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import jmri.jmrix.loconet.sdf.SdfByteBuffer;
+import jmri.jmrix.loconet.sdf.SdfBuffer;
 
 
 /**
  * Tests for the jmri.jmrix.loconet.sdfeditor.EditorPane class.
  *
  * @author			Bob Jacobsen  Copyright 2007
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class EditorPaneTest extends TestCase {
 
     public void testShowPane() throws java.io.IOException {
-        SdfByteBuffer buff = new SdfByteBuffer("java/test/jmri/jmrix/loconet/sdf/test2.sdf");
+        SdfBuffer buff = new SdfBuffer("java/test/jmri/jmrix/loconet/sdf/test2.sdf");
         new EditorFrame(buff).setVisible(true);
     }
 

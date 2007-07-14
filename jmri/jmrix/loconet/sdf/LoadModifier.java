@@ -14,10 +14,10 @@ import jmri.util.StringUtil;
  *
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 
-class LoadModifier extends SdfMacro {
+public class LoadModifier extends SdfMacro {
 
     public LoadModifier(int modType, int arg1, int arg2, int arg3) {
         this.modType = modType;
@@ -35,7 +35,7 @@ class LoadModifier extends SdfMacro {
         
     public int length() { return 4;}
     
-    static public SdfMacro match(SdfByteBuffer buff) {
+    static public SdfMacro match(SdfBuffer buff) {
         // course match
         if ( (buff.getAtIndex()&0xF0) != 0xE0) return null;
         int byte1 = buff.getAtIndexAndInc()&0xFF;

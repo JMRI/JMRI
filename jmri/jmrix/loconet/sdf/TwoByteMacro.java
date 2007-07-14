@@ -6,10 +6,10 @@ package jmri.jmrix.loconet.sdf;
  * Implement generic two-byte macros from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 
-class TwoByteMacro extends SdfMacro {
+public class TwoByteMacro extends SdfMacro {
 
     public TwoByteMacro(int byte1, int byte2) {
         bytes[0] = (byte)(byte1&0xFF);
@@ -24,7 +24,7 @@ class TwoByteMacro extends SdfMacro {
     
     public int length() { return 2;}
     
-    static public SdfMacro match(SdfByteBuffer buff) {
+    static public SdfMacro match(SdfBuffer buff) {
         // always match
         return new TwoByteMacro(buff.getAtIndexAndInc(), buff.getAtIndexAndInc());
     }

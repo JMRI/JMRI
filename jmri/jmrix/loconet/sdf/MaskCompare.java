@@ -6,10 +6,10 @@ package jmri.jmrix.loconet.sdf;
  * Implement the MASK_COMPARE macro from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 
-class MaskCompare extends SdfMacro {
+public class MaskCompare extends SdfMacro {
 
     public MaskCompare(int byte1, int byte2, int byte3, int byte4) {
         bytes[0] = (byte)(byte1&0xFF);
@@ -59,7 +59,7 @@ class MaskCompare extends SdfMacro {
         return "(skip = "+skip+")";
     }
     
-    static public SdfMacro match(SdfByteBuffer buff) {
+    static public SdfMacro match(SdfBuffer buff) {
         // course match
         if ( (buff.getAtIndex()&0xF8) != 0xF8) return null;
         return new MaskCompare(buff.getAtIndexAndInc(), 

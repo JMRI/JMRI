@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.sdf package.
  * @author	Bob Jacobsen Copyright 2007
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class SdfTest extends TestCase {
 
@@ -27,7 +27,7 @@ public class SdfTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.loconet.sdf.SdfTest");  // no tests in this class itself
         suite.addTest(InitiateSoundTest.suite());
-        suite.addTest(SdfByteBufferTest.suite());
+        suite.addTest(SdfBufferTest.suite());
         return suite;
     }
 
