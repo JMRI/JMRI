@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.7.8.shtml,v 1.1 2007-07-15 04:45:26 jacobsen Exp $ -->
+<!-- $Id: jmri1.7.8.shtml,v 1.2 2007-07-15 06:01:06 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -46,11 +46,11 @@
 that contains 
 many new features, including:
 <UL>
-<LI>numerous decoder updates, 
-<LI>improvements to support for the new NCE EPROM, including a send macro tool and turnout readback,
-<LI>improvements to signaling logic,  Routes and the new Logix capability,
-<LI>a complete revamp of help system (including help information for most windows)
-<LI>greatly improved support for the Digitrax PR2 programmer and it's sound files,
+<!-- <LI>numerous decoder updates,  -->
+<!-- <LI>improvements to support for the new NCE EPROM, including a send macro tool and turnout readback, -->
+<!-- <LI>improvements to signaling logic,  Routes and the new Logix capability, -->
+<!-- <LI>a complete revamp of help system (including help information for most windows) -->
+<!-- <LI>greatly improved support for the Digitrax PR2 programmer and it's sound files, -->
 </UL>
 along with lots of other changes.  See the complete list below.
 
