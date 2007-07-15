@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TechRoadMap.shtml,v 1.3 2007-07-13 04:55:23 jacobsen Exp $ -->
+<!-- $Id: TechRoadMap.shtml,v 1.4 2007-07-15 06:56:48 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -32,21 +32,28 @@
 
 	    <H1>JMRI: Technology Road Map</H1>
 
+This page is a <EM>draft</em> road map for JMRI's future use of 
+Java technologies.  Nothing here is definite (as of July 2007), and
+discussion is continuing on the jmri-developers mailing list.
 
-The 
-<A HREF="Poll2007.shtml">2007 user poll</a>
-seems to indicate that there are very
-few people using Windows 95 or Macintosh "Classic" any more.
-This is important because there only Java 
-1.1.8 is available for the Macintosh operating system, and only
-Java 1.3 is available for Windows 95.
+<h3>JMRI Releases</h3>
 
-<P>
-See the page on
-<A HREF="JVMCapabilities.html">Java Capabilities</a>
-for more info on what features are available starting in 
-which versions of the Java Runtime (JRE) and Java Development
-(JDK) environments.
+<UL>
+<LI>1.8 - production version, culmination of 1.7.* series
+<LI>1.9 - development series. Move forward to Java 1.X, remove Java 1.1.8 compatibility code.
+<LI>2.0 - production version, culmination of 1.9.* series (target date: ....)
+<LI>2.1 - development series. 
+</UL>
+
+<h3>Java Release and Operating System Support</h3>
+
+<table border="1">
+<tr><th>Java Version</th>        <th>JDK supported<br>through</th>    <th>JRE supported<br>through</th></tr>
+<tr><td>1.3</td>    <td></td>    <td>Mmm DD,YYYY</td></tr>
+<tr><td>1.4</td>    <td>Mmm DD,YYYY</td>    <td>Mmm DD,YYYY</td></tr>
+<tr><td>1.5</td>    <td>Mmm DD,YYYY</td>    <td>Mmm DD,YYYY</td></tr>
+</table>
+
 
 <!--#include virtual="/Footer" -->
 
