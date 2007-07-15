@@ -23,12 +23,12 @@ import javax.swing.JRadioButtonMenuItem;
 /**
  * PositionableLabel is a JLabel that can be dragged around the
  * inside of the enclosing Container using a right-drag.
- * 
+ * <P>
  * The positionable parameter is a global, set from outside.
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.32 $
+ * @version $Revision: 1.33 $
  */
 
 public class PositionableLabel extends JLabel
@@ -396,7 +396,7 @@ public class PositionableLabel extends JLabel
     }
     
     public boolean getTristate() { return tristate; }
-    private boolean tristate = true;
+    private boolean tristate = false;
 
     public void setShowTooltip(boolean set) {
         if (set)
