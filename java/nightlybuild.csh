@@ -19,6 +19,7 @@
 rm -f nightlybuildlog.txt
 date > nightlybuildlog.txt
 
+setenv CVS_RSH ssh
 if ( { (cvs -q update -d >>& nightlybuildlog.txt) } ) then
 # probably OK
 
