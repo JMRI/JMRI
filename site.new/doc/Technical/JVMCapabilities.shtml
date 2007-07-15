@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: JVMCapabilities.shtml,v 1.3 2007-07-13 04:55:23 jacobsen Exp $ -->
+<!-- $Id: JVMCapabilities.shtml,v 1.4 2007-07-15 05:34:04 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -31,12 +31,25 @@
 
 	    <H1>JMRI: Java Version-Specific Features</H1>
 
-
-This page summarizes technical data regarding the
-Java features useful or desired for JMRI development, and
-which Java version they first appeared in.
+JMRI currently builds to Java 1.1.8, with some
+minor extensions and compatibility hacks; we have a 
+<A HREF="Java118.html">separate page</a>
+describing those.
+<P>
+If we move JMRI's reference Java version forward to a more
+recent one, new features of Java will become available to
+JMRI developers.
+This page contains information to help make the decision about
+when and how to do that.
 
 <h2>Capabilities</h2>
+
+This section lists new Java capabilities, and which Java
+version they first appeared in.  The "JDK" column shows the first
+Java Development Kit that could compile the featuer; the "JRE"
+column lists the first runtime environment that could run the feature,
+including the needed JVM and library support.
+<P>
 <table border="1">
 <tr><th>Feature</th>        <th>JDK</th>    <th>JRE</th></tr>
 <tr><td>Collections</td>    <td>1.3</td>    <td>1.3</td></tr>
@@ -46,6 +59,7 @@ which Java version they first appeared in.
 <tr><td>Java3D</td>         <td>1.4</td>    <td>1.4</td></tr>
 <tr><td>JavaHelp update</td><td>1.4</td>    <td>1.4</td></tr>
 <tr><td>Drag and Drop</td>  <td>1.4 (additional <br>improvements in 1.6)</td><td>1.4, 1.6</td></tr>
+<tr><td>XML catalog resolver</td><td>1.4?</td><td>1.4?</td></tr>
 
 <tr><td>Annotations</td>    <td>1.5</td>    <td>1.3</td></tr>
 <tr><td>JavaMail</td>       <td>1.5</td>    <td>1.3</td></tr>
@@ -55,26 +69,33 @@ which Java version they first appeared in.
 <tr><td>printf, Formatter</td><td>1.5</td>  <td>1.5</td></tr>
 <tr><td>generics</td>       <td>1.5</td>    <td>1.5</td></tr>
 
-<tr><td>XML catalog resolver</td><td>?</td><td>?</td></tr>
 </table>
 (* indicates that a compatibility library is used in the early version)
 
 <h2>JRE availability</h2>
+
+This section lists the most recent Java Runtime version available
+for various operating system versions.  Please note that not all
+users of that operating system will have updated to this Java version;
+many will be using an older one.
+<P>
 <table border="1">
 <tr><th>OS and platform</th><th>Last JRE</th></tr>
 <tr><td>Windows Vista</td><td>1.6</td></tr>
 <tr><td>Windows XP</td><td>1.6</td></tr>
 <tr><td>MacOS X 10.3 and later</td><td>1.5</td></tr>
+<tr><td>Linux</td><td>1.5</td></tr>
 <tr><td>Windows 98 (2nd Ed)</td><td>1.5-11</td></tr>
 <tr><td>Windows 98</td><td>1.4.2_14</td></tr>
 <tr><td>Windows 95</td><td>1.3.1_20</td></tr>
 <tr><td>OS/2</td><td>1.3</td></tr>
 <tr><td>MacOS "Classic"</td><td>1.1.8</td></tr>
 </table>
-
+<P>
 See the 
 <A HREF="http://java.sun.com/getjava">Sun Java site</a>
 for additional information.
+
 <!--#include virtual="/Footer" -->
 
 	  </div><!-- closes #mainContent-->
