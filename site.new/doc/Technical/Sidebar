@@ -12,7 +12,7 @@
 		<dd>
 			<ul>
 			<LI><a href="getcode.shtml">Getting the code via CVS</a>
-			<LI><a href="CVSFAQ.html">CVS FAQs</a>
+			<LI><a href="CVSFAQ.shtml">CVS FAQs</a>
 			<LI><a href="Ant.shtml">Building with Ant</a>
 			<LI><a href="NetBeans.shtml">Building with NetBeans</a>
 			<LI><a href="XCode.shtml">Building with XCode</a>
@@ -31,7 +31,7 @@
 		<dt>Code Structure</dt>
 		<dd>
 			<ul>
-			<LI><a href="IntroStructure.html">Introduction</a>
+			<LI><a href="IntroStructure.shtml">Introduction</a>
 			<LI><a href="AppStructure.shtml">Application Structure</a>
 			<LI><a href=""></a>
 			<LI><a href="../../JavaDoc/doc">JavaDocs</a><ul>
@@ -49,8 +49,8 @@
 		<dd>
 			<ul>
 			<LI><a href="RP.shtml">Recommended Practices</a>
-			<LI><a href="I8N.html">Internationalization</a>
-			<LI><a href="Logging.html">Logging &amp; Error Handling</a>
+			<LI><a href="I8N.shtml">Internationalization</a>
+			<LI><a href="Logging.shtml">Logging &amp; Error Handling</a>
 			<LI><a href="Java118.html">Working with Java 1.1.8</a>
 			<LI><a href="JUnit.shtml">Unit testing with JUnit</a>
 			<LI><a href="Help.shtml">Providing help with JavaHelp</a>

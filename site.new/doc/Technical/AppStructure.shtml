@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: AppStructure.shtml,v 1.3 2007-07-13 04:55:22 jacobsen Exp $ -->
+<!-- $Id: AppStructure.shtml,v 1.4 2007-07-15 04:47:06 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -48,7 +48,7 @@ lots of different layout types, jmri.InstanceManager satisfies these requests.
 <P>
 More information on how things (e.g. objects representing items on the layout)
 are named 
-<A HREF="Names.html">is available on a separate page</a>.
+<A HREF="Names.shtml">is available on a separate page</a>.
 
 <!--#include virtual="/Footer" -->
 

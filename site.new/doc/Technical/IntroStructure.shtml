@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: IntroStructure.shtml,v 1.1 2007-07-15 04:47:06 jacobsen Exp $ -->
+<html lang="en">
+<head>
+    <TITLE>
+ 	JMRI: Introduction to JMRI Library Structure
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code ">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+
+	    <H1>JMRI: Introduction to JMRI Library Structure</H1>
+
+<P>
+Because we expect to have different interfaces in the jmrix package, the JMRI tools
+don't directly create the interface objects they need.  Rather, they ask for instances
+of interfaces. For interfaces in the jmri package, which might be implemented by
+lots of different layout types, jmri.InstanceManager satisfies these requests.
+
+<P>
+More information on how things (e.g. objects representing items on the layout)
+are named 
+<A HREF="Names.shtml">is available on a separate page</a>.
+
+
+<PRE>
+More specifically:
+
+  jmri contains interfaces and abstract implementations. It
+  depends on no other JMRI code, though it may depends on
+  externals (log4j, etc)
+
+  jmrit contains commonly useful tools and extensions. It
+  can depend on jmri.* and externals. In particular, some
+  jmri.* implementations do live here.
+
+  jmrix contains code that is specific to a particular
+  external system.  This includes implementations of jmri
+  interfaces that are specific to a system, plus system-specific
+  tools (in the long run, those could certainly be separated)
+  jmrix can depend on jmri and externals, but not jmrit.
+
+  apps contains application bases that can use jmri, jrmix, and
+  jrmix classes.  By having this here, we break the dependency
+  between jmrix and jmrit classes (somebody has to create the
+  general and system-specific tool objects for an application;
+  that dependency is from the apps package)
+
+
+  Basically:
+
+
+      apps   ->   jmri
+
+                  A  A
+                 /    \
+                /      \
+              jmrix     jmrit
+
+
+(This should show apps using jmrit and jmrix also, but that's too hard to draw in ASCII)
+</PRE>
+
+
+<P>
+Extensive use of Factory pattern via objects we call "Manager" objects.
+
+<P>
+<h3>Example: a Turnout</h3>
+Turnouts involve:
+<UL>
+<LI>Turnout - the basic interface. This is what you should expect to deal with
+ 				when writing your layout automation code; its what you get 
+ 				when you make a request from the TurnoutManager, etc.
+<LI>AbstractTurnout - provided for convenience when implementing the Turnout interface
+				for specific hardware, this provides the basic implementation.
+<LI>LnTurnout - a specific implementation for LocoNet-connected turnouts.
+</UL>
+
+<P>
+To get a specific Turnout instance that represents something on the layout, you
+make a request of a TurnoutManager.  This is also an interface, with a similar
+implementation pattern.
+
+
+<!-- Footer -->
+    <hr class="hide">
+    <div id="footer">
+	<ul id="bn">
+	<li><a href="/sitemap/">Site Map</a></li>
+	<li><a href="/contact/">Contact Us</a></li>
+	</ul>
+
+	<p>Thanks and congratulations to
+	   <A href="/community/" title="Who is JMRI">
+	   	all who contributed</A>! </p>
+
+	<p>Copyright &copy; 1997 - 2004 JMRI Community. 
+	<P>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
+	<P><A href="/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a></p>
+    
+       <BR/>Site hosted by: <BR/>
+        <A href="http://sourceforge.net"> 
+        <IMG src="http://sourceforge.net/sflogo.php?group_id=26788&amp;type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A> 
+
+
+    </div>
+<!-- /Footer -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+

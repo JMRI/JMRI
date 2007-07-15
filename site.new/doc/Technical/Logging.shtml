@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: Logging.shtml,v 1.1 2007-07-15 04:47:06 jacobsen Exp $ -->
+<html lang="en">
+<head>
+    <TITLE>
+ 	JMRI: How to Use the Logging Facilities
+    </TITLE>
+   <meta name="Author" content="Bob Jacobsen">
+    <meta name="keywords" content="JMRI log4j logging log">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+
+	    <!-- ------------- -->
+	    <!-- Page Contents --> <!-- Required -->
+	    <!-- ------------- -->
+
+	    <H1>JMRI: How to Use the Logging Facilities</H1>
+
+
+This page provides a little information on how 
+JMRI logs error, status and debugging information.
+
+<P>
+For other details on JMRI internals, please see the
+<A HREF="../Technical/index.html" NAME="technical pages">technical pages</A>.
+
+<P>
+JMRI uses the Jakarta
+<A HREF="http://jakarta.apache.org/log4j/docs/index.html">Log4J</a>
+package to handle logging during program operation.
+<P>
+Log4J provides several levels of messages:
+<UL>
+<LI>Error
+<LI>Warning
+<LI>Info - summary information during normal operation
+<LI>Debug - information on the internal operation of the program.  
+There is a lot of this, and turning it all on can slow the 
+program down significantly.
+</UL>
+<P>
+By convention, JMRI applications will attempt to initialize
+Log4J using a "default.lcf" file.  The JMRI distributions
+contain a version of this file with
+extensive comments.
+
+<P>
+If you change the line:
+<PRE>
+ log4j.rootCategory=DEBUG, A1
+</PRE>
+to 
+<PRE>
+ log4j.rootCategory=DEBUG, A1, R
+</PRE>
+log entries will be written to both the "console"
+by "A1", and a file by "R". 
+<P>
+To log messages
+from a class named MyClass, add this to the bottom of the class file:
+<code>
+<PRE>
+	static org.apache.log4j.Category log 
+	        = org.apache.log4j.Category.getInstance(MyClass.class.getName());
+</PRE>
+</code>
+Then for each message to log insert a line like:
+
+<code>
+<PRE>
+	log.debug("message");
+</PRE>
+</code>
+
+<P>
+If the message is not just an explicit string, you should use
+this form instead:
+<code>
+<PRE>
+	if (log.isInfoDebug()) log.debug("Found "+numberEntrie());
+</PRE>
+</code>
+so the program doesn't waste time forming the message string (in this
+case, calling numberEntries() and concatenating the strings) if
+the log.debug call isn't going to store it anyway.
+
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+

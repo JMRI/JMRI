@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NewType.shtml,v 1.2 2007-07-13 04:55:23 jacobsen Exp $ -->
+<!-- $Id: NewType.shtml,v 1.3 2007-07-15 04:47:06 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -83,7 +83,7 @@
 
 		    <P>At this point, make sure you can compile.</P>
 
-		    <dt>doc/Technical/Names.html</dt>
+		    <dt>doc/Technical/Names.shtml</dt>
 		    <dd>
 			<p>Update the discussion of naming to include the
 			type-letter for your new type.  While you're
@@ -157,7 +157,7 @@
 			<p>Add a new variable to give easy access to the new manager.</p>
 		    </dd>
 
-		    <dt>doc/Technical/Jython.html </dt>
+		    <dt>doc/Technical/Jython.shtml </dt>
 		    <dd>
 			<p>Update this to refer to the new Jython variable 
 			(There may be other web pages too!)</p>

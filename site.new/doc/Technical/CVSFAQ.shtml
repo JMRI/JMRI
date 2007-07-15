@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: CVSFAQ.shtml,v 1.1 2007-07-15 04:47:06 jacobsen Exp $ -->
+<html lang="en">
+<head>
+    <TITLE>
+ 	JMRI: CVS FAQ
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code CVS FAQ">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+    <p class="skipLink"><a href="#mainContent" accesskey="2">Skip to main content</a></p>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+
+	    <H1>JMRI: CVS FAQ</H1>
+This is a list of Frequently Asked Questions for CVS, particularly regarding how
+we use it with JMRI.
+
+<P>
+See also the 
+<A HREF="index.html">Technical index</a>
+for more information on maintaining JMRI code.
+
+
+<h3>How do I get a copy of CVS?</h3>
+<A id="cvstool"/>
+Many computers come with CVS installed, including Linux and MacOS X.
+If you're using Windows, you will need to install a CVS "client" program like
+<A HREF="http://sourceforge.net/project/showfiles.php?group_id=10072&release_id=24467">WinCVS</a>.
+A recent version can be downloaded from: 
+<a href="http://prdownloads.sourceforge.net/cvsgui/WinCvs120.zip">http://prdownloads.sourceforge.net/cvsgui/WinCvs120.zip</a>.
+
+<h3>How can I get my own copy of the JMRI code?</h3>
+<A id="jmrisource"/>
+To get a copy of the source for your own use, you can use "anonymous checkout".
+For a command line cvs client, make a new directory for the project,
+change to it, and tell CVS you exist with
+<PRE>
+cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri login
+</PRE>
+This "login" line
+is only needed once; after that, it is remembered on your local machine.  You may
+be asked for a password. If so, just hit return, as the empty password will be accepted.
+You can then get a copy of the code with
+<PRE>
+cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri co all
+</PRE>
+<P>
+If you're using a GUI-based client like WinCVS, pull down the "admin"
+menu and select "command line" to get a place to type these commands.
+On other computers, you can type them directly on the command line.
+
+<P>
+For more information, see the page on 
+<A HREF="getcode.html">getting your own copy of the source code</a>.
+
+<h3>What are those lines like <i>$Revision: 1.1 $</i> and <i>$Id: CVSFAQ.shtml,v 1.1 2007-07-15 04:47:06 jacobsen Exp $</i>?</h3>
+<A id="refid"/>
+
+Those are automatically updated by CVS every time a new version of the 
+file is checked-in to the repository.  Please don't edit them!!!
+If you contribute your changes to the project, those line have to be
+intact in the contributed file.
+
+<h3>How do I update an existing copy of the source to the current version?</h3>
+<A id="update"/>
+As the common code changes, you might want to update your copy to contain the 
+lastest version.  To do that, use:
+<PRE>
+cvs -q update
+</PRE>
+Any changes will be merged into the files on your disk, and you should then be up-to-date
+with your own changes still present.  
+
+<P>
+The "-q" option removes a lot of
+informational messages as CVS enters the various directories in the 
+project; the command still works if you omit it, but it will be harder to
+see any real error messages.
+
+<h3>What are these messages about .DS_Store files?</h3>
+<A id="ds_store"/>
+If you're using MacOS X, CVS may give you messages about ".DS_Store" files. These
+are used to keep track of window layouts, etc.  To suppress these messages,
+just create a file in your home directory called ".cvsignore" and add a line 
+of ".DS_Store" to it (no quotes). CVS will then ignore all .DS_Store files in 
+all of your checked-out directory trees.
+
+<h3>What is the convention for tag names?</h3>
+<A id="tags"/>
+Typically, three types of tag names are used:
+<OL>
+<LI>"Release-1-5-4" - the tag defining a specific released version of the code.
+These are created during the release builds, and should not be changed.
+<LI>"Release-1-5-4-branch" - this is the branch-tag defining a "patch branch"
+for a specific release.  This is the only use we make of CVS branches; please
+note that we do not use branches for normal development.
+<LI>"rgj20050603a" - of the form "initials" "date" "some letter", these 
+can be used by individual developers to keep track of what they're doing.  All
+we ask is that you start a tag with your initials.
+</OL>
+
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+
