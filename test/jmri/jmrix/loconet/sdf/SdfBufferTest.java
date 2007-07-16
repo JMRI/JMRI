@@ -13,7 +13,7 @@ import java.io.*;
  * Tests for the jmri.jmrix.loconet.sdf.SdfBuffer class.
  * 
  * @author Bob Jacobsen  Copyright 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SdfBufferTest extends TestCase {
 
@@ -47,6 +47,47 @@ public class SdfBufferTest extends TestCase {
         
         Assert.assertEquals("output as string", g, result);
     }
+    
+    public void testModify() throws java.io.IOException {
+        // get original file
+        SdfBuffer original = new SdfBuffer("java/test/jmri/jmrix/loconet/sdf/test2.sdf");
+        byte[] oarray = original.getByteArray();
+         
+        // and a version to modify
+        SdfBuffer b = new SdfBuffer("java/test/jmri/jmrix/loconet/sdf/test2.sdf");
+        Assert.assertEquals("original lengths", oarray.length, b.getByteArray().length);
+
+        // modify the 1st SDF     
+        SkemeStart first = (SkemeStart)b.getMacroList().get(0);
+        int startlength = first.getNumber();
+        first.setNumber(23);
+        
+        // recreate buffer; expect same length, different contents in the 1st byte
+        b.loadByteArray();
+        
+        byte barray[];
+        
+        barray = b.getByteArray();
+        Assert.assertEquals("updated lengths", oarray.length, barray.length);
+        Assert.assertTrue("modified 1st byte same", oarray[0]==barray[0]);
+        Assert.assertTrue("modified 2nd byte differ", oarray[1]!=barray[1]);
+        for (int i = 2; i < barray.length; i++) 
+            if (oarray[i]!= barray[i]) 
+                Assert.fail("modified failed to match at index "+i);
+        
+        // set it back, and make sure length and content is the same
+        first.setNumber(startlength);
+        b.loadByteArray();
+
+        barray = b.getByteArray();
+        Assert.assertEquals("last lengths", oarray.length, barray.length);
+        Assert.assertTrue("last 1st byte same", oarray[0]==barray[0]);
+        Assert.assertTrue("last 2nd byte same", oarray[1]==barray[1]);
+        for (int i = 2; i < barray.length; i++) 
+            if (oarray[i]!= barray[i]) 
+                Assert.fail("last failed to match at index "+i);
+        
+    }
 
 	// from here down is testing infrastructure
 
@@ -66,6 +107,10 @@ public class SdfBufferTest extends TestCase {
 		return suite;
 	}
 
-	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SdfBufferTest.class.getName());
+    // The minimal setup for log4J
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+
+	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SdfBufferTest.class.getName());
 
 }
