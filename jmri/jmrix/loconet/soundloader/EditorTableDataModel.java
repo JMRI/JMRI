@@ -26,7 +26,7 @@ import javax.swing.table.TableColumnModel;
  * Table data model for display of Digitrax SPJ files
  * @author		Bob Jacobsen   Copyright (C) 2003, 2006
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.5 $
+ * @version		$Revision: 1.6 $
  */
 public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 
@@ -136,6 +136,8 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         case REPLACEBUTTONCOL:
             if (file.getHeader(row+1).isWAV())
                 return res.getString("ButtonReplace");
+            if (file.getHeader(row+1).isSDF())
+                return res.getString("ButtonEdit");
             else return null;
         default:
             log.error("internal state inconsistent with table requst for "+row+" "+col);
@@ -187,8 +189,12 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
             } 
         } else if (col==REPLACEBUTTONCOL) { 
             // button fired, handle
-            if (file.getHeader(row+1).isWAV())
+            if (file.getHeader(row+1).isWAV()) {
                 replWavButtonPressed(value, row, col);
+            } else if (file.getHeader(row+1).isSDF()) {
+                editSdfButtonPressed(value, row, col);
+                return;
+            }
         }
     }
 
@@ -246,6 +252,13 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         frame.getContentPane().add(new JScrollPane(text));
         frame.pack();
         frame.setVisible(true);
+    }
+    
+    // should probably be abstract and put in invoking GUI
+    void editSdfButtonPressed(Object value, int row, int col) {
+        jmri.jmrix.loconet.sdfeditor.EditorFrame sdfEditor 
+            = new jmri.jmrix.loconet.sdfeditor.EditorFrame(file.getHeader(row+1).getSdfBuffer());
+        sdfEditor.setVisible(true);
     }
     
     /**

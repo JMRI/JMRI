@@ -4,12 +4,14 @@ package jmri.jmrix.loconet.spjfile;
 
 import java.io.*;
 
+import jmri.jmrix.loconet.sdf.SdfBuffer;
+
 /**
  * Provide tools for reading, writing and accessing
  * Digitrax SPJ files
  *
  * @author		Bob Jacobsen  Copyright (C) 2006
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 
 public class SpjFile {
@@ -340,7 +342,24 @@ public class SpjFile {
         
         public int getRecordStart() { return recordStart; }
         public void setRecordStart(int i) { recordStart = i; }
-        public int getRecordLength() { return recordLength; }
+        
+        /**
+         * This method, in addition to returning
+         * the needed record size, will also 
+         * pull a SdfBuffer back into the record if one 
+         * exists
+         */
+        public int getRecordLength() {
+            if (sdfBuffer != null) {
+                sdfBuffer.loadByteArray();
+                byte[] a = sdfBuffer.getByteArray();
+                setByteArray(a);
+                dataLength = bytes.length;
+                recordLength = bytes.length;
+            }
+            return recordLength;
+        }
+        
         public void setRecordLength(int i) { recordLength = i; }
 
         public String getName() {return filename;}
@@ -361,7 +380,19 @@ public class SpjFile {
 
         public byte[] getByteArray() { return bytes; }
         
-            
+        
+        /**
+         * Get as a SDF buffer.  This buffer then 
+         * becomes associated, and a later write will use
+         * the buffer's contents
+         */
+        public SdfBuffer getSdfBuffer() {
+            sdfBuffer = new SdfBuffer(getByteArray());
+            return sdfBuffer;
+        }
+        
+        SdfBuffer sdfBuffer = null;
+        
         /** 
          * Data record associated with this header is being 
          * being repositioned
