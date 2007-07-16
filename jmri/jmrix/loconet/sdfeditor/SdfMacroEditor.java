@@ -5,26 +5,45 @@ package jmri.jmrix.loconet.sdfeditor;
 import java.util.List;
 import java.util.ArrayList;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
+import javax.swing.*;
 
 import jmri.jmrix.loconet.sdf.*;
+import javax.swing.tree.*;
 
 /**
  * Common base for all the SDF macro editors.
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 
 public abstract class SdfMacroEditor extends JPanel {
 
     public SdfMacroEditor(SdfMacro inst) {
         this.inst = inst;
-        add(new JLabel("test default"));
+        
+        // add a default behavior
+        add(new JLabel("No editor defined for this instruction yet"));
     }
     
     SdfMacro inst;
+    
+    /**
+     * Update editor when it's reshown
+     */
+    public void update() {}
+    
+    SdfMacro getMacro() { return inst; }
+    
+    /**
+     * Notify that something has changed
+     */
+    public void updated() {
+        if (treenode != null) {
+            treenode.setUserObject(this);
+        }
+        if (editor != null) editor.updateSummary();
+    }
     
     public String toString() {
         return inst.toString();
@@ -36,6 +55,13 @@ public abstract class SdfMacroEditor extends JPanel {
     
     public String allInstructionString(String indent) {
         return inst.allInstructionString(indent);
+    }
+    
+    DefaultMutableTreeNode treenode = null;
+    EditorPane editor = null;
+    public void setNotify(DefaultMutableTreeNode node, EditorPane pane) {
+        treenode = node;
+        editor = pane;
     }
     
     /**
