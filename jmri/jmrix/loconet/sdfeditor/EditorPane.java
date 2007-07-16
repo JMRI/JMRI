@@ -16,19 +16,23 @@ import java.util.List;
 
 /**
  * Pane for editing Digitrax SDF files.
- *
+ *<P>
  * The GUI consists of a tree of instructions on the left, 
  * and on the right an edit panel. The edit panel 
  * has a small detailed view of the instruction over
  * a larger detailed view.
+ *<P>
+ * Class works with {@see EditorModel}, which maintains the 
+ * data model for the underlying data.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2007
- * @version	    $Revision: 1.4 $
+ * @version	    $Revision: 1.5 $
  */
 public class EditorPane extends javax.swing.JPanel implements TreeSelectionListener {
 
     // GUI member declarations
     static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.loconet.sdfeditor.Editor");
+    static ResourceBundle exp = ResourceBundle.getBundle("jmri.jmrix.loconet.sdfeditor.Explanations");
         
     public EditorPane() {
         // start to configure GUI
@@ -57,7 +61,9 @@ public class EditorPane extends javax.swing.JPanel implements TreeSelectionListe
         JScrollPane treeView = new JScrollPane(tree);
         return treeView;
     }
-            
+    
+    SdfMacroEditor lastEditor = null;
+    
     /**
      * Handle tree selection
      */
@@ -67,9 +73,24 @@ public class EditorPane extends javax.swing.JPanel implements TreeSelectionListe
     
         if (node == null) return;
     
+        // get an editor
         SdfMacroEditor nodeInfo = (SdfMacroEditor)node.getUserObject();
-        status.setText(nodeInfo.oneInstructionString());
-
+        
+        // use that editor to show the instruction
+        instruction.setText(nodeInfo.oneInstructionString());
+        
+        // show the explanation text
+        explanation.setText(exp.getString(nodeInfo.getMacro().name()));
+        
+        // make the correct editor visible
+        if (lastEditor != null) lastEditor.setVisible(false);
+        lastEditor = nodeInfo;
+        nodeInfo.update();
+        nodeInfo.setVisible(true);
+    }
+    
+    public void updateSummary() {
+        if (lastEditor != null) instruction.setText(lastEditor.oneInstructionString());
     }
     
     JPanel newEditPane() {
@@ -86,25 +107,43 @@ public class EditorPane extends javax.swing.JPanel implements TreeSelectionListe
         
         p.add(new JSeparator());
         
+        p.add(explanation);
+        explanation.setMinimumSize(new Dimension(600,200));
+        explanation.setPreferredSize(new Dimension(600,200));
+        explanation.setMaximumSize(new Dimension(600,200));
+        explanation.setBackground(instruction.getBackground());
+        explanation.setEditable(false);
+        explanation.setLineWrap(true);
+        explanation.setWrapStyleWord(true);
+        
+        p.add(new JSeparator());
+        
         // lower part of right window
         p.add(newDetailPane());
         
         return p;
     }
     
-    MonitoringLabel status = new MonitoringLabel();
+    MonitoringLabel instruction = new MonitoringLabel();
+    JTextArea explanation = new JTextArea();
     
     JComponent newInstructionPane() {
-        return status;
+        JPanel p = new JPanel();
+        p.setLayout(new BorderLayout());
+        instruction.setText("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
+        p.add(instruction, BorderLayout.WEST);
+        p.setMaximumSize(instruction.getPreferredSize());
+        instruction.setText("Select an instruction in the tree to the left");
+        return p;
     }
     
+    JPanel detailed = new JPanel(); // panel that contains the specific editors
+
     JPanel newDetailPane() {
-        JPanel p = new JPanel();
         
-        p.setLayout(new FlowLayout());
-        p.add(new JLabel("Details: "));
+        detailed.setLayout(new FlowLayout());
         
-        return p;
+        return detailed;
     }
     
     /**
@@ -114,7 +153,7 @@ public class EditorPane extends javax.swing.JPanel implements TreeSelectionListe
         DefaultMutableTreeNode newNode = null;
     
         // make the top elements at the top
-        List ops = buff.getArray();
+        List ops = buff.getMacroList();
         for (int i=0; i<ops.size(); i++) {
             nestNodes(topNode, (SdfMacro)ops.get(i));
         }
@@ -128,9 +167,12 @@ public class EditorPane extends javax.swing.JPanel implements TreeSelectionListe
 
     void nestNodes(DefaultMutableTreeNode parent, SdfMacro macro) {
         // put in the new topmost node
+        SdfMacroEditor e = SdfMacroEditor.attachEditor(macro);
+        detailed.add(e);
+        e.setVisible(false);
         DefaultMutableTreeNode newNode 
-                = new DefaultMutableTreeNode(
-                                    SdfMacroEditor.attachEditor(macro));
+                = new DefaultMutableTreeNode(e);
+        e.setNotify(newNode, this);
         parent.add(newNode);
         
         // recurse for kids

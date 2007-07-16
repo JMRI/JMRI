@@ -13,13 +13,13 @@ import jmri.jmrix.loconet.sdf.SdfBuffer;
 
 /**
  * Frame for editing Digitrax SDF files.
- *
+ *<P>
  * This is just an enclosure for the EditorPane, which does the real work.
- * 
+ * <P>
  * This handles file read/write.
  *
  * @author		Bob Jacobsen   Copyright (C) 2007
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class EditorFrame extends JmriJFrame {
 
