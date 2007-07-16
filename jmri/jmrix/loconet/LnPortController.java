@@ -8,7 +8,7 @@ import java.io.DataOutputStream;
 /**
  * Base for classes representing a LocoNet communications port
  * @author		Bob Jacobsen    Copyright (C) 2001, 2002
- * @version             $Revision: 1.12 $
+ * @version             $Revision: 1.13 $
  */
 public abstract class LnPortController extends jmri.jmrix.AbstractPortController {
     // base class. Implementations will provide InputStream and OutputStream
@@ -48,7 +48,8 @@ public abstract class LnPortController extends jmri.jmrix.AbstractPortController
                                     "DCS200",
                                     "DCS50 (Zephyr)",
                                     "DB150 (Empire Builder)",
-                                    "Intellibox"};
+                                    "Intellibox",
+                                    "LocoBuffer (PS)"};
                                     
     /**
      * Set config info from the command station type name.
