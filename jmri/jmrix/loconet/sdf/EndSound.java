@@ -8,13 +8,15 @@ package jmri.jmrix.loconet.sdf;
  * This carries no additional information.
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 
 public class EndSound extends SdfMacro {
 
-    public EndSound() {
+    public EndSound(int byte1, int byte2) {
     }
+    
+    int byte1, byte2;
     
     public String name() {
         return "END_SOUND";
@@ -24,11 +26,23 @@ public class EndSound extends SdfMacro {
     
     static public SdfMacro match(SdfBuffer buff) {
         if ( (buff.getAtIndex()&0xFF) != 0x00) return null;
-        buff.getAtIndexAndInc();
-        buff.getAtIndexAndInc(); // skip bytes
-        return new EndSound();
+        int byte1 = buff.getAtIndexAndInc();
+        int byte2 = buff.getAtIndexAndInc(); // skip bytes
+        return new EndSound(byte1, byte2);
     }
     
+    /**
+     * Store into a buffer.
+     */
+    public void loadByteArray(SdfBuffer buffer){
+        // data
+        buffer.setAtIndexAndInc(byte1);
+        buffer.setAtIndexAndInc(byte2);
+
+        // store children
+        super.loadByteArray(buffer);
+    }
+
     public String toString() {
         return "End sound\n";
     }

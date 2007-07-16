@@ -8,14 +8,16 @@ import java.util.ArrayList;
  * Implement the INITIATE_SOUND macro from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.11 $
+ * @version             $Revision: 1.12 $
  */
 
 public class InitiateSound extends SdfMacro {
 
-    public InitiateSound(int trigger, int prempt) {
-        this.trigger = trigger;
-        this.prempt = prempt;
+    public InitiateSound(int byte1, int byte2) {
+        this.byte1 = byte1;
+        this.byte2 = byte2;
+        this.trigger = byte2&0x7f;
+        this.prempt = (byte1&0x7) + (byte2&0x80);
     }
     
     public String name() {
@@ -24,6 +26,20 @@ public class InitiateSound extends SdfMacro {
     
     int prempt;
     int trigger;
+    int byte1, byte2;
+    
+    public int getTrigger() { return trigger; }
+    public void setTrigger(int t) { 
+        trigger = t&0x7f; 
+        byte2 = (byte2&0x80)|(t&0x7f);
+    }
+    
+    public int getPrempt() { return prempt; }
+    public void setPrempt(int prempt) { 
+        byte1 = (byte1&0xF8)|(prempt&0x7);
+        byte2 = (byte2&0x7F)|(prempt&0x80);
+        this.prempt = (byte1&0x7) + (byte2&0x80);
+    }
     
     public int length() { return 2;}
     
@@ -41,7 +57,7 @@ public class InitiateSound extends SdfMacro {
         if ( (buff.getAtIndex()&0xF8) != 0x90) return null;
         int byte1 = buff.getAtIndexAndInc();
         int byte2 =  buff.getAtIndexAndInc();
-        InitiateSound result = new InitiateSound(byte2&0x7f, (byte1&0x7) + (byte2&0x80));
+        InitiateSound result = new InitiateSound(byte1, byte2);
 
         // gather leaves underneath
         SdfMacro next;
@@ -61,8 +77,8 @@ public class InitiateSound extends SdfMacro {
             if ((peek&0xF8) == 0x90) {
                 // manually create next
                 byte1 = buff.getAtIndexAndInc();
-                byte2 =  buff.getAtIndexAndInc();
-                next = new InitiateSound(byte2&0x7f, (byte1&0x7) + (byte2&0x80));
+                byte2 = buff.getAtIndexAndInc();
+                next = new InitiateSound(byte1, byte2);
             } else {
                 // next is leaf, keep it
                 next=decodeInstruction(buff);
@@ -76,6 +92,18 @@ public class InitiateSound extends SdfMacro {
         return result;
     }
     
+    /**
+     * Store into a buffer.
+     */
+    public void loadByteArray(SdfBuffer buffer){
+        // data
+        buffer.setAtIndexAndInc(byte1);
+        buffer.setAtIndexAndInc(byte2);
+
+        // store children
+        super.loadByteArray(buffer);
+    }
+
     public String toString() {
         return "Initiate Sound "+triggerVal()+","+premptVal()+'\n';
     }

@@ -6,7 +6,7 @@ package jmri.jmrix.loconet.sdf;
  * An SdfMacro for carrying a comment
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 
 public class LabelMacro extends SdfMacro {
@@ -28,6 +28,14 @@ public class LabelMacro extends SdfMacro {
         return null;
     }
     
+    /**
+     * Store into a buffer.
+     */
+    public void loadByteArray(SdfBuffer buffer){
+        // store children
+        super.loadByteArray(buffer);
+    }
+
     public String toString() {
         return label+'\n';
     }

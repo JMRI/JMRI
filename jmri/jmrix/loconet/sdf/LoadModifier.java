@@ -14,13 +14,14 @@ import jmri.util.StringUtil;
  *
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 
 public class LoadModifier extends SdfMacro {
 
-    public LoadModifier(int modType, int arg1, int arg2, int arg3) {
-        this.modType = modType;
+    public LoadModifier(int byte0, int arg1, int arg2, int arg3) {
+        this.modType = byte0&0x0F;
+        this.byte0 = byte0;
         this.arg1 = arg1;
         this.arg2 = arg2;
         this.arg3 = arg3;
@@ -30,6 +31,7 @@ public class LoadModifier extends SdfMacro {
         return "LOAD_MODIFIER";
     }
     
+    int byte0;
     int modType;
     int arg1, arg2, arg3;
         
@@ -42,7 +44,7 @@ public class LoadModifier extends SdfMacro {
         int byte2 = buff.getAtIndexAndInc()&0xFF;
         int byte3 = buff.getAtIndexAndInc()&0xFF;
         int byte4 = buff.getAtIndexAndInc()&0xFF;
-        return new LoadModifier(byte1&0x0F,byte2, byte3, byte4);
+        return new LoadModifier(byte1, byte2, byte3, byte4);
     }
     
     String modTypeVal() {
@@ -60,6 +62,19 @@ public class LoadModifier extends SdfMacro {
         return arg1Val+","+arg2Val+","+arg3Val;
     }
     
+    /**
+     * Store into a buffer.
+     */
+    public void loadByteArray(SdfBuffer buffer){
+        // data
+        buffer.setAtIndexAndInc(byte0);
+        buffer.setAtIndexAndInc(arg1);
+        buffer.setAtIndexAndInc(arg2);
+        buffer.setAtIndexAndInc(arg3);
+
+        // store children
+        super.loadByteArray(buffer);
+    }
 
     public String toString() {
         return "Set Modifier "+modTypeVal()+'\n';

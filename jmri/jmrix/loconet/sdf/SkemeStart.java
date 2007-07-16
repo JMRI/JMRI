@@ -10,18 +10,31 @@ import java.util.ArrayList;
  * This nests until the next SKEME_START.
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.9 $
+ * @version             $Revision: 1.10 $
  */
 
 public class SkemeStart extends SdfMacro {
 
-    public SkemeStart(int number, int length) {
-        this.number = number;
-        this.length = length;     
+    public SkemeStart(int byte1, int byte2, int byte3, int byte4) {
+        this.byte1 = byte1;
+        this.byte2 = byte2;
+        this.byte3 = byte3;
+        this.byte4 = byte4;
+        
+        this.number = byte2;
+        this.length = byte3*256+byte4;     
     }
+    
+    int byte1, byte2, byte3, byte4;
     
     int number;
     int length;
+    
+    public int getNumber() { return number; }
+    public void setNumber(int num) { 
+        number = num;
+        byte2 = num;
+    }
     
     public String name() {
         return "SKEME_START";
@@ -33,12 +46,12 @@ public class SkemeStart extends SdfMacro {
         // course match
         if ( (buff.getAtIndex()&0xFF) != 0xF1) return null;
         
-        buff.getAtIndexAndInc(); // skip op code
+        int byte1 = buff.getAtIndexAndInc(); // skip op code
         int byte2 = buff.getAtIndexAndInc();
         int byte3 = buff.getAtIndexAndInc();
         int byte4 = buff.getAtIndexAndInc();
         
-        SkemeStart result = new SkemeStart( byte2, byte3*256+byte4);
+        SkemeStart result = new SkemeStart(byte1, byte2, byte3, byte4);
         
         // gather leaves underneath
         SdfMacro next;
@@ -59,6 +72,20 @@ public class SkemeStart extends SdfMacro {
         return result;
     }
     
+    /**
+     * Store into a buffer.
+     */
+    public void loadByteArray(SdfBuffer buffer){
+        // data
+        buffer.setAtIndexAndInc(byte1);
+        buffer.setAtIndexAndInc(byte2);
+        buffer.setAtIndexAndInc(byte3);
+        buffer.setAtIndexAndInc(byte4);
+
+        // store children
+        super.loadByteArray(buffer);
+    }
+
     public String toString() {
         return "Scheme "+number;
     }
