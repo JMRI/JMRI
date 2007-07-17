@@ -1,3 +1,5 @@
+// SignalHeadIcon.java
+
 package jmri.jmrit.display;
 
 import jmri.InstanceManager;
@@ -23,7 +25,7 @@ import javax.swing.JRadioButtonMenuItem;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -141,6 +143,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         max = Math.max((flashRed!=null) ? flashRed.getIconHeight() : 0, max);
         max = Math.max((flashYellow!=null) ? flashYellow.getIconHeight() : 0, max);
         max = Math.max((flashGreen!=null) ? flashGreen.getIconHeight() : 0, max);
+        max = Math.max((held!=null) ? held.getIconHeight() : 0, max);
         max = Math.max((dark!=null) ? dark.getIconHeight() : 0, max);
         return max;
     }
@@ -152,6 +155,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         max = Math.max((flashRed!=null) ? flashRed.getIconWidth() : 0, max);
         max = Math.max((flashYellow!=null) ? flashYellow.getIconWidth() : 0, max);
         max = Math.max((flashGreen!=null) ? flashGreen.getIconWidth() : 0, max);
+        max = Math.max((held!=null) ? held.getIconWidth() : 0, max);
         max = Math.max((dark!=null) ? dark.getIconWidth() : 0, max);
         return max;
     }

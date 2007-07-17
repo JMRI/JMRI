@@ -1,3 +1,5 @@
+// SignalHeadIconXml.java
+
 package jmri.jmrit.display.configurexml;
 
 import jmri.configurexml.XmlAdapter;
@@ -12,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public class SignalHeadIconXml implements XmlAdapter {
 
@@ -37,6 +39,7 @@ public class SignalHeadIconXml implements XmlAdapter {
         element.addAttribute("x", ""+p.getX());
         element.addAttribute("y", ""+p.getY());
         element.addAttribute("level", String.valueOf(p.getDisplayLevel()));
+        element.addAttribute("held", p.getHeldIcon().getName());
         element.addAttribute("dark", p.getDarkIcon().getName());
         element.addAttribute("red", p.getRedIcon().getName());
         element.addAttribute("yellow", p.getYellowIcon().getName());
@@ -91,6 +94,11 @@ public class SignalHeadIconXml implements XmlAdapter {
         l.setGreenIcon(green = CatalogPane.getIconByName(name));
 
         Attribute a; 
+
+        NamedIcon held = null;
+        a = element.getAttribute("held");
+        if (a!=null) 
+            l.setHeldIcon(held = CatalogPane.getIconByName(a.getValue()));
 
         NamedIcon dark = null;
         a = element.getAttribute("dark");
