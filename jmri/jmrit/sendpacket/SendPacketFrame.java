@@ -17,7 +17,7 @@ import javax.swing.*;
  * immediately.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2003
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class SendPacketFrame extends jmri.util.JmriJFrame {
 
@@ -80,7 +80,7 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
         pane2.add(new JLabel(""));
         pane2.add(new JLabel("Send"));
         pane2.add(new JLabel("packet"));
-        pane2.add(new JLabel("wait"));
+        pane2.add(new JLabel("wait (msec)"));
         for (int i=0;i<MAXSEQUENCE; i++) {
             pane2.add(new JLabel(Integer.toString(i+1)));
             mUseField[i]=new JCheckBox();
@@ -162,7 +162,7 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
     void startSequenceDelay() {
         // at the start, mNextSequenceElement contains index we're
         // working on
-        int delay = 10;   // default delay if non specified, or format bad
+        int delay = 500;   // default delay if non specified, or format bad
         try {
         	delay = Integer.parseInt(mDelayField[mNextSequenceElement].getText());
         } catch (NumberFormatException e) {}
@@ -191,7 +191,10 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
             byte[] m = createPacket(mPacketField[mNextSequenceElement].getText());
             // send it
             mNextEcho = m;
-            cs.sendPacket(m, 1);
+            if (m != null) 
+                cs.sendPacket(m, 1);
+            else
+                log.warn("Message invalid: "+mPacketField[mNextSequenceElement].getText());
             // and queue the rest of the sequence if we're continuing
             if (mRunButton.isSelected()) startSequenceDelay();
         } else {
@@ -213,6 +216,15 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
         return b;
     }
 
+    /**
+     * When the window closes, 
+     * stop any sequences running
+     */
+    public void dispose() {
+        mRunButton.setSelected(false);
+        super.dispose();
+    }
+    
     // private data
     private CommandStation cs = null;
 

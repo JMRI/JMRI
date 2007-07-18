@@ -22,7 +22,7 @@ import javax.swing.*;
  * <LI>When the timer trips, repeat if buttons still down.
  * </UL>
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class LocoGenFrame extends jmri.util.JmriJFrame implements LocoNetListener {
 
@@ -85,7 +85,7 @@ public class LocoGenFrame extends jmri.util.JmriJFrame implements LocoNetListene
         pane2.add(new JLabel(""));
         pane2.add(new JLabel("Send"));
         pane2.add(new JLabel("packet"));
-        pane2.add(new JLabel("wait"));
+        pane2.add(new JLabel("wait (msec)"));
         for (int i=0;i<MAXSEQUENCE; i++) {
             pane2.add(new JLabel(Integer.toString(i+1)));
             mUseField[i]=new JCheckBox();
@@ -227,6 +227,15 @@ public class LocoGenFrame extends jmri.util.JmriJFrame implements LocoNetListene
     }
 
 
+    /**
+     * When the window closes, 
+     * stop any sequences running
+     */
+    public void dispose() {
+        mRunButton.setSelected(false);
+        super.dispose();
+    }
+    
     // private data
     private LnTrafficController tc = null;
 
