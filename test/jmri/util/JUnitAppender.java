@@ -12,7 +12,7 @@ import junit.framework.Assert;
  * Log4J Appender that just publishes what it sees
  *
  * @author	Bob Jacobsen - Copyright 2007
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
  
 public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
@@ -93,8 +93,12 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
             return;
         }
         LoggingEvent evt = (LoggingEvent) list.remove(0);
-        if ( (evt.priority!=Priority.ERROR) || !evt.getMessage().equals(msg) )
-            Assert.fail("Unexpected message: "+evt.getMessage());
+        if (evt.priority!=Priority.ERROR) 
+            Assert.fail("Level mismatch when looking for ERROR message: \""+msg+"\"");
+            
+        if (!((String)evt.getMessage()).equals(msg) ) {
+            Assert.fail("Looking for ERROR message \""+msg+"\" got \""+evt.getMessage()+"\"");
+        }
     }
     
     /**
@@ -109,8 +113,12 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
             return;
         }
         LoggingEvent evt = (LoggingEvent) list.remove(0);
-        if ( (evt.priority!=Priority.WARN) || !evt.getMessage().equals(msg) )
-            Assert.fail("Unexpected message: "+evt.getMessage());
+        if (evt.priority!=Priority.WARN) 
+            Assert.fail("Level mismatch when looking for WARN message: \""+msg+"\"");
+            
+        if (!((String)evt.getMessage()).equals(msg) ) {
+            Assert.fail("Looking for WARN message \""+msg+"\" got \""+evt.getMessage()+"\"");
+        }
     }
     
     public static JUnitAppender instance() {
