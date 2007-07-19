@@ -11,9 +11,13 @@ import jmri.Sensor;
  * <P>
  * Sensors are numbered from 1.
  * <P>
- * @author			Bob Jacobsen Copyright (C) 2003
+ * This is a SerialListener to handle the replies to poll messages.
+ * Those are forwarded to the specific SerialNode object corresponding
+ * to their origin for processing of the data.
+ * <P>
+ * @author			Bob Jacobsen Copyright (C) 2003, 2007
  * @author                      Dave Duchamp, multi node extensions, 2004
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class SerialSensorManager extends jmri.AbstractSensorManager
                             implements SerialListener {
