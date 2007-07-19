@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the SerialNode class
  * @author		Bob Jacobsen  Copyright 2003
  * @author		Dave Duchamp  multi-node extensions 2003
- * @version		$Revision: 1.10 $
+ * @version		$Revision: 1.11 $
  */
 public class SerialNodeTest extends TestCase {
 		
@@ -189,7 +189,7 @@ public class SerialNodeTest extends TestCase {
         Assert.assertEquals("out byte 6", 129, (m.getElement(7) & 0xff));      
     }
 	
-    public void testMarkChanges() {
+    public void testMarkChangesInitial() {
         SerialSensor s1 = new SerialSensor("CS1","a");
         Assert.assertEquals("check bit number",1,SerialAddress.getBitFromSystemName("CS1"));
         SerialSensor s2 = new SerialSensor("CS2","ab");
@@ -198,12 +198,65 @@ public class SerialNodeTest extends TestCase {
         b.registerSensor(s2, 1);
         b.registerSensor(s3, 2);
         Assert.assertTrue("check sensors active", b.sensorsActive());
+        // from UNKNOWN, 1st poll goes to new state
         SerialReply r = new SerialReply();
         r.setElement(2, '2');
         b.markChanges(r);
         Assert.assertEquals("check s1", Sensor.INACTIVE, s1.getKnownState());
         Assert.assertEquals("check s2", Sensor.ACTIVE, s2.getKnownState());
         Assert.assertEquals("check s3", Sensor.INACTIVE, s3.getKnownState());
+    }
+
+    public void testMarkChangesDebounce() {
+        SerialSensor s1 = new SerialSensor("CS1","a");
+        SerialSensor s2 = new SerialSensor("CS2","ab");
+        SerialSensor s3 = new SerialSensor("CS3","abc");
+        SerialSensor s4 = new SerialSensor("CS4","abcd");
+        b.registerSensor(s1, 0);
+        b.registerSensor(s2, 1);
+        b.registerSensor(s3, 2);
+        b.registerSensor(s4, 3);
+        // from UNKNOWN, 1st poll goes to new state
+        SerialReply r;
+        r = new SerialReply();
+        r.setElement(2, '5');  
+        b.markChanges(r);
+        Assert.assertEquals("poll0 s1", Sensor.ACTIVE, s1.getKnownState());
+        Assert.assertEquals("poll0 s2", Sensor.INACTIVE, s2.getKnownState());
+        Assert.assertEquals("poll0 s3", Sensor.ACTIVE, s3.getKnownState());
+        Assert.assertEquals("poll0 s4", Sensor.INACTIVE, s4.getKnownState());
+        // stabilize startup
+        b.markChanges(r);
+        b.markChanges(r);
+        b.markChanges(r);
+        Assert.assertEquals("poll1 s1", Sensor.ACTIVE, s1.getKnownState());
+        Assert.assertEquals("poll1 s2", Sensor.INACTIVE, s2.getKnownState());
+        Assert.assertEquals("poll1 s3", Sensor.ACTIVE, s3.getKnownState());
+        Assert.assertEquals("poll1 s4", Sensor.INACTIVE, s4.getKnownState());
+        // single poll shouldn't change
+        r = new SerialReply();
+        r.setElement(2, '0'+10);  
+        b.markChanges(r);
+        Assert.assertEquals("poll2 s1", Sensor.ACTIVE, s1.getKnownState());
+        Assert.assertEquals("poll2 s2", Sensor.INACTIVE, s2.getKnownState());
+        Assert.assertEquals("poll2 s3", Sensor.ACTIVE, s3.getKnownState());
+        Assert.assertEquals("poll2 s4", Sensor.INACTIVE, s4.getKnownState());
+        // 2nd poll should, but only if same
+        r = new SerialReply();
+        r.setElement(2, '6');  
+        b.markChanges(r);
+        Assert.assertEquals("poll3 s1", Sensor.INACTIVE, s1.getKnownState());
+        Assert.assertEquals("poll3 s2", Sensor.ACTIVE, s2.getKnownState());
+        Assert.assertEquals("poll3 s3", Sensor.ACTIVE, s3.getKnownState());
+        Assert.assertEquals("poll3 s4", Sensor.INACTIVE, s4.getKnownState());
+        // 3rd poll changes last two
+        r = new SerialReply();
+        r.setElement(2, '5');  
+        b.markChanges(r);
+        Assert.assertEquals("poll4 s1", Sensor.INACTIVE, s1.getKnownState());
+        Assert.assertEquals("poll4 s2", Sensor.ACTIVE, s2.getKnownState());
+        Assert.assertEquals("poll4 s3", Sensor.ACTIVE, s3.getKnownState());
+        Assert.assertEquals("poll4 s4", Sensor.INACTIVE, s4.getKnownState());
     }
 
     // from here down is testing infrastructure
