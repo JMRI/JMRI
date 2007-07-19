@@ -8,7 +8,7 @@ import junit.framework.*;
 /**
  * Tests for the jmri.jmrix.cmri.serial.SerialTurnout class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SerialTurnoutTest extends AbstractTurnoutTest {
 
@@ -45,7 +45,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTest {
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {SerialTurnoutTest.class.getName()};
+		String[] testCaseName = {"-noloading", SerialTurnoutTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 

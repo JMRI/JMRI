@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.cmri.serial package.
  * @author      Bob Jacobsen  Copyright 2003
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 public class SerialTest extends TestCase {
 
@@ -27,7 +27,7 @@ public class SerialTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {SerialTest.class.getName()};
+        String[] testCaseName = {"-noloading", SerialTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 

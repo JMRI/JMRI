@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialMessage class.
  * @author	Bob Jacobsen Copyright 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class SerialMessageTest extends TestCase {
 
@@ -57,7 +57,7 @@ public class SerialMessageTest extends TestCase {
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {SerialMessageTest.class.getName()};
+		String[] testCaseName = {"-noloading", SerialMessageTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 

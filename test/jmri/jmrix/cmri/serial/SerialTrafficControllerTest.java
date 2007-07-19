@@ -14,10 +14,12 @@ import junit.framework.TestSuite;
 
 import com.sun.java.util.collections.Vector;
 
+import jmri.util.JUnitAppender;
+
 /**
  * Description:	    JUnit tests for the SerialTrafficController class
  * @author			Bob Jacobsen Copyright 2006
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class SerialTrafficControllerTest extends TestCase {
 
@@ -41,12 +43,17 @@ public class SerialTrafficControllerTest extends TestCase {
         Assert.assertEquals("node with address 6", e, c.getNodeFromAddress(6) );
         Assert.assertEquals("3rd Node again", d, c.getSerialNode(2) );
         Assert.assertEquals("no node with address 0", null, c.getNodeFromAddress(0) );
+
         c.deleteSerialNode(6);
+
         Assert.assertEquals("1st Node after del", b, c.getSerialNode(0) );
         Assert.assertEquals("2nd Node after del", f, c.getSerialNode(1) );
         Assert.assertEquals("3rd Node after del", d, c.getSerialNode(2) );
         Assert.assertEquals("no more Nodes after del", null, c.getSerialNode(3) );
+
         c.deleteSerialNode(1);
+        JUnitAppender.assertWarnMessage("Deleting the serial node active in the polling loop");
+
         Assert.assertEquals("1st Node after del2", f, c.getSerialNode(0) );
         Assert.assertEquals("2nd Node after del2", d, c.getSerialNode(1) );
         Assert.assertEquals("no more Nodes after del2", null, c.getSerialNode(2) );        
@@ -148,7 +155,7 @@ public class SerialTrafficControllerTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {SerialTrafficControllerTest.class.getName()};
+        String[] testCaseName = {"-noloading", SerialTrafficControllerTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
@@ -157,6 +164,10 @@ public class SerialTrafficControllerTest extends TestCase {
         TestSuite suite = new TestSuite(SerialTrafficControllerTest.class);
         return suite;
     }
+
+    // The minimal setup for log4J
+	public void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTrafficControllerTest.class.getName());
 

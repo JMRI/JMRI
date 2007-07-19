@@ -7,13 +7,19 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import jmri.util.JUnitAppender;
+
 /**
  * JUnit tests for the SerialAddress utility class.
  * @author	Dave Duchamp Copyright 2004
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SerialAddressTest extends TestCase {
+
+
 	public void setUp() {
+		// log4j
+		apps.tests.Log4JFixture.setUp(); 
 		// create and register the manager objects
 		jmri.TurnoutManager l = new SerialTurnoutManager() {
 			public void notifyTurnoutCreationError(String conflict,int bitNum) {}
@@ -30,33 +36,65 @@ public class SerialAddressTest extends TestCase {
 
 	}
 
+    // The minimal setup for log4J
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+
 	public void testValidateSystemNameFormat() {
             Assert.assertTrue("valid format - CL2", SerialAddress.validSystemNameFormat("CL2",'L') );
             Assert.assertTrue("valid format - CL0B2", SerialAddress.validSystemNameFormat("CL0B2",'L') );
+
             Assert.assertTrue("invalid format - CL", !SerialAddress.validSystemNameFormat("CL",'L') );
+            JUnitAppender.assertErrorMessage("illegal character in number field of CMRI system name: CL");
+
             Assert.assertTrue("invalid format - CLB2", !SerialAddress.validSystemNameFormat("CLB2",'L') );
+            JUnitAppender.assertErrorMessage("no node address before 'B' in CMRI system name: CLB2");
+
             Assert.assertTrue("valid format - CL2005", SerialAddress.validSystemNameFormat("CL2005",'L') );
             Assert.assertTrue("valid format - CL2B5", SerialAddress.validSystemNameFormat("CL2B5",'L') );
             Assert.assertTrue("valid format - CT2005", SerialAddress.validSystemNameFormat("CT2005",'T') );
             Assert.assertTrue("valid format - CT2B5", SerialAddress.validSystemNameFormat("CT2B5",'T') );
             Assert.assertTrue("valid format - CS2005", SerialAddress.validSystemNameFormat("CS2005",'S') );
             Assert.assertTrue("valid format - CS2B5", SerialAddress.validSystemNameFormat("CS2B5",'S') );
+
             Assert.assertTrue("invalid format - CY2005", !SerialAddress.validSystemNameFormat("CY2005",'L') );
+            JUnitAppender.assertErrorMessage("illegal character in header field of CMRI system name: CY2005");
+
             Assert.assertTrue("invalid format - CY2B5", !SerialAddress.validSystemNameFormat("CY2B5",'L') );
+            JUnitAppender.assertErrorMessage("illegal character in header field of CMRI system name: CY2B5");
+
             Assert.assertTrue("valid format - CL22001", SerialAddress.validSystemNameFormat("CL22001",'L') );
             Assert.assertTrue("valid format - CL22B1", SerialAddress.validSystemNameFormat("CL22B1",'L') );
+
             Assert.assertTrue("invalid format - CL22000", !SerialAddress.validSystemNameFormat("CL22000",'L') );
+            JUnitAppender.assertErrorMessage("bit number not in range 1 - 999 in CMRI system name: CL22000");
+
             Assert.assertTrue("invalid format - CL22B0", !SerialAddress.validSystemNameFormat("CL22B0",'L') );
+            JUnitAppender.assertErrorMessage("bit number field out of range in CMRI system name: CL22B0");
+
             Assert.assertTrue("valid format - CL2999", SerialAddress.validSystemNameFormat("CL2999",'L') );
             Assert.assertTrue("valid format - CL2B2048", SerialAddress.validSystemNameFormat("CL2B2048",'L') );
+
             Assert.assertTrue("invalid format - CL2B2049", !SerialAddress.validSystemNameFormat("CL2B2049",'L') );
+            JUnitAppender.assertErrorMessage("bit number field out of range in CMRI system name: CL2B2049");
+
             Assert.assertTrue("valid format - CL127999", SerialAddress.validSystemNameFormat("CL127999",'L') );
+
             Assert.assertTrue("invalid format - CL128000", !SerialAddress.validSystemNameFormat("CL128000",'L') );
+            JUnitAppender.assertErrorMessage("number field out of range in CMRI system name: CL128000");
+ 
             Assert.assertTrue("valid format - CL127B7", SerialAddress.validSystemNameFormat("CL127B7",'L') );
+
             Assert.assertTrue("invalid format - CL128B7", !SerialAddress.validSystemNameFormat("CL128B7",'L') );
+            JUnitAppender.assertErrorMessage("node address field out of range in CMRI system name: CL128B7");
+
             Assert.assertTrue("invalid format - CL2oo5", !SerialAddress.validSystemNameFormat("CL2oo5",'L') );
+            JUnitAppender.assertErrorMessage("illegal character in number field of CMRI system name: CL2oo5");
+ 
             Assert.assertTrue("invalid format - CL2aB5", !SerialAddress.validSystemNameFormat("CL2aB5",'L') );
+            JUnitAppender.assertErrorMessage("illegal character in node address field of CMRI system name: CL2aB5");
+
             Assert.assertTrue("invalid format - CL2B5x", !SerialAddress.validSystemNameFormat("CL2B5x",'L') );
+            JUnitAppender.assertErrorMessage("illegal character in bit number field of CMRI system name: CL2B5x");
 	}
 
 	public void testGetBitFromSystemName() {
@@ -66,7 +104,10 @@ public class SerialAddressTest extends TestCase {
             Assert.assertEquals("CL2001", 1, SerialAddress.getBitFromSystemName("CL2001") );
             Assert.assertEquals("CL999", 999, SerialAddress.getBitFromSystemName("CL999") );
             Assert.assertEquals("CL2999", 999, SerialAddress.getBitFromSystemName("CL2999") );
+
             Assert.assertEquals("CL29O9", 0, SerialAddress.getBitFromSystemName("CL29O9") );
+            JUnitAppender.assertErrorMessage("illegal character in number field of system name: CL29O9");
+
             Assert.assertEquals("CL0B7", 7, SerialAddress.getBitFromSystemName("CL0B7") );
             Assert.assertEquals("CL2B7", 7, SerialAddress.getBitFromSystemName("CL2B7") );
             Assert.assertEquals("CL0B1", 1, SerialAddress.getBitFromSystemName("CL0B1") );
@@ -100,8 +141,12 @@ public class SerialAddressTest extends TestCase {
 			Assert.assertEquals("CL127B7", 127, SerialAddress.getNodeAddressFromSystemName("CL127B7") );
 			Assert.assertEquals("CL0B7", 0, SerialAddress.getNodeAddressFromSystemName("CL0B7") );
 			Assert.assertEquals("CL7", 0, SerialAddress.getNodeAddressFromSystemName("CL7") );
+
 			Assert.assertEquals("CLB7", -1, SerialAddress.getNodeAddressFromSystemName("CLB7") );
+            JUnitAppender.assertErrorMessage("no node address before 'B' in CMRI system name: CLB7");
+
 			Assert.assertEquals("CR7", -1, SerialAddress.getNodeAddressFromSystemName("CR7") );
+            JUnitAppender.assertErrorMessage("illegal character in header field of system name: CR7");
 		}
 
 	public void testValidSystemNameConfig() {
@@ -146,7 +191,9 @@ public class SerialAddressTest extends TestCase {
             Assert.assertEquals("convert CL0B7", "CL7", SerialAddress.convertSystemNameToAlternate("CL0B7") );
             Assert.assertEquals("convert CS4B7", "CS4007", SerialAddress.convertSystemNameToAlternate("CS4B7") );
             Assert.assertEquals("convert CL14B8", "CL14008", SerialAddress.convertSystemNameToAlternate("CL14B8") );
+
             Assert.assertEquals("convert CL128B7", "", SerialAddress.convertSystemNameToAlternate("CL128B7") );
+            JUnitAppender.assertErrorMessage("node address field out of range in CMRI system name: CL128B7");
         }
         
 	public void testNormalizeSystemName() {
@@ -157,15 +204,24 @@ public class SerialAddressTest extends TestCase {
             Assert.assertEquals("normalize CL0B7", "CL0B7", SerialAddress.normalizeSystemName("CL0B7") );
             Assert.assertEquals("normalize CL004B7", "CL4B7", SerialAddress.normalizeSystemName("CL004B7") );
             Assert.assertEquals("normalize CL014B0008", "CL14B8", SerialAddress.normalizeSystemName("CL014B0008") );
+
             Assert.assertEquals("normalize CL128B7", "", SerialAddress.normalizeSystemName("CL128B7") );
+            JUnitAppender.assertErrorMessage("node address field out of range in CMRI system name: CL128B7");
         }
 		
 	public void testConstructSystemName() {
             Assert.assertEquals("make CL14007", "CL14007", SerialAddress.makeSystemName("L",14,7) );
             Assert.assertEquals("make CT7", "CT7", SerialAddress.makeSystemName("T",0,7) );
+
             Assert.assertEquals("make illegal 1", "", SerialAddress.makeSystemName("L",0,0) );
+            JUnitAppender.assertErrorMessage("illegal bit number proposed for system name");
+
             Assert.assertEquals("make illegal 2", "", SerialAddress.makeSystemName("L",128,7) );
+            JUnitAppender.assertErrorMessage("illegal node adddress proposed for system name");
+
             Assert.assertEquals("make illegal 3", "", SerialAddress.makeSystemName("R",120,7) );
+            JUnitAppender.assertErrorMessage("illegal type character proposed for system name");
+
             Assert.assertEquals("make CL0B1770", "CL0B1770", SerialAddress.makeSystemName("L",0,1770) );
             Assert.assertEquals("make CS127999", "CS127999", SerialAddress.makeSystemName("S",127,999) );
             Assert.assertEquals("make CS14B1000", "CS14B1000", SerialAddress.makeSystemName("S",14,1000) );
@@ -203,8 +259,16 @@ public class SerialAddressTest extends TestCase {
             Assert.assertEquals("test bit 38", "", SerialAddress.isOutputBitFree(18,38) );
             Assert.assertEquals("test bit 39", "", SerialAddress.isOutputBitFree(18,39) );			
             Assert.assertEquals("test bit 2000", "", SerialAddress.isOutputBitFree(18,2000) );			
+
             Assert.assertEquals("test bit bad bit", "", SerialAddress.isOutputBitFree(18,0) );
+            JUnitAppender.assertWarnMessage("Turnout 'CT18034' refers to an undefined Serial Node.");
+            JUnitAppender.assertWarnMessage("Turnout 'CT18032' refers to an undefined Serial Node.");
+            JUnitAppender.assertWarnMessage("Light system Name does not refer to configured hardware: CL18036");
+            JUnitAppender.assertWarnMessage("Light system Name does not refer to configured hardware: CL18037");
+            JUnitAppender.assertErrorMessage("illegal bit number in free bit test");
+
             Assert.assertEquals("test bit bad node address", "", SerialAddress.isOutputBitFree(129,34) );			
+            JUnitAppender.assertErrorMessage("illegal node adddress in free bit test");
 		}
 
 	public void testIsInputBitFree() {
@@ -229,8 +293,16 @@ public class SerialAddressTest extends TestCase {
             Assert.assertEquals("test bit 16", "CS18016", SerialAddress.isInputBitFree(18,16) );
             Assert.assertEquals("test bit 17", "CS18017", SerialAddress.isInputBitFree(18,17) );
             Assert.assertEquals("test bit 18", "", SerialAddress.isInputBitFree(18,18) );
+
             Assert.assertEquals("test bit bad bit", "", SerialAddress.isInputBitFree(18,0) );
+            JUnitAppender.assertWarnMessage("Sensor CS18016 refers to an undefined Serial Node.");
+            JUnitAppender.assertWarnMessage("Sensor CS18014 refers to an undefined Serial Node.");
+            JUnitAppender.assertWarnMessage("Sensor CS18017 refers to an undefined Serial Node.");
+            JUnitAppender.assertWarnMessage("Sensor CS18012 refers to an undefined Serial Node.");
+            JUnitAppender.assertErrorMessage("illegal bit number in free bit test");
+
             Assert.assertEquals("test bit bad node address", "", SerialAddress.isInputBitFree(129,34) );			
+            JUnitAppender.assertErrorMessage("illegal node adddress in free bit test");
 		}
 
 	public void testGetUserNameFromSystemName() {
@@ -254,7 +326,7 @@ public class SerialAddressTest extends TestCase {
 
 	// Main entry point
 	static public void main(String[] args) {
-            String[] testCaseName = {SerialAddressTest.class.getName()};
+            String[] testCaseName = {"-noloading", SerialAddressTest.class.getName()};
             junit.swingui.TestRunner.main(testCaseName);
 	}
 

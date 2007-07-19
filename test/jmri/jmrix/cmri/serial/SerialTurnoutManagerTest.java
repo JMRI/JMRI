@@ -12,7 +12,7 @@ import jmri.*;
  *
  * Description:	    tests for the jmri.jmrix.cmri.SerialTurnoutManager class
  * @author			Bob Jacobsen
- * @version  $Revision: 1.5 $
+ * @version  $Revision: 1.6 $
  */
 public class SerialTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 
@@ -62,7 +62,7 @@ public class SerialTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {SerialTurnoutManagerTest.class.getName()};
+		String[] testCaseName = {"-noloading", SerialTurnoutManagerTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 
