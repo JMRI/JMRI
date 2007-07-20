@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Names.shtml,v 1.1 2007-07-15 04:47:06 jacobsen Exp $ -->
+<!-- $Id: Names.shtml,v 1.2 2007-07-20 18:23:56 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -114,6 +114,7 @@ Note that some of these are placeholders, and have no underlying implementation.
 <LI>E EasyDCC
 <LI>I Internal, e.g. objects with no associated hardware
 <LI>L LocoNet
+<LI>M MRRLCB
 <LI>N NCE (also Wangrow currently)
 <LI>O Oak Tree Systems
 <LI>Q QSI programmer interface
