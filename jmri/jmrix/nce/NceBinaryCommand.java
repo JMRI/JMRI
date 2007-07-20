@@ -28,7 +28,7 @@ package jmri.jmrix.nce;
  *	1 = bad accy/signal address
  *
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 
 public class NceBinaryCommand {
@@ -38,6 +38,11 @@ public class NceBinaryCommand {
     public static final int WRITEn_CMD = 0x8E;	//NCE write up to 16 bytes of memory command
     public static final int WRITE8_CMD = 0x9A;	//NCE write 8 bytes of memory command
     public static final int WRITE4_CMD = 0x99;	//NCE write 4 bytes of memory command
+    public static final int STOP_CLOCK_CMD = 0x83;	//NCE stop clock command
+    public static final int START_CLOCK_CMD = 0x84;	//NCE start clock command
+    public static final int SET_CLOCK_CMD = 0x85;	//NCE set clock command
+    public static final int CLOCK_1224_CMD = 0x86;	//NCE change clock 12/24 command
+    public static final int CLOCK_RATIO_CMD = 0x87;	//NCE set clock ratio command
     
     public static byte[] accDecoder(int number, boolean closed) {
         
@@ -116,8 +121,57 @@ public class NceBinaryCommand {
 		retVal[2] = (byte) (addr_l); 	// low address
 
 		return retVal;
-    
-}
+	}
+
+	public static byte[] accStopClock() {
+
+		byte[] retVal = new byte[1];
+		retVal[0] = (byte) (STOP_CLOCK_CMD);// stop clock command
+
+		return retVal;
+	}
+
+	public static byte[] accStartClock() {
+
+		byte[] retVal = new byte[1];
+		retVal[0] = (byte) (START_CLOCK_CMD);// start clock command
+
+		return retVal;
+	}
+
+	public static byte[] accSetClock(int hours, int minutes) {
+
+		byte[] retVal = new byte[3];
+		retVal[0] = (byte) (SET_CLOCK_CMD);// set clock command
+		retVal[1] = (byte) (hours); 	// hours
+		retVal[2] = (byte) (minutes);	// minutes
+
+		return retVal;
+	}
+
+	public static byte[] accSetClock1224(boolean flag) {
+
+		int bit = 0;
+		if (flag) {
+			bit = 1;
+		} else {
+			bit = 0;
+		}
+		byte[] retVal = new byte[2];
+		retVal[0] = (byte) (CLOCK_1224_CMD);	// set clock 12/24 command
+		retVal[1] = (byte) (bit);			// 12 - 0, 24 - 1
+
+		return retVal;
+	}
+
+	public static byte[] accSetClockRatio(int ratio) {
+
+		byte[] retVal = new byte[2];
+		retVal[0] = (byte) (CLOCK_RATIO_CMD);// set clock command
+		retVal[1] = (byte) (ratio); 	// fast clock ratio
+
+		return retVal;
+	}
     
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceBinaryCommand.class.getName());
 }
