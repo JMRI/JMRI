@@ -27,7 +27,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003, 2006
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -54,7 +54,6 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         return null;
     }
     protected AbstractMRMessage enterNormalMode() {
-        log.warn("enterNormalMode doesnt make sense for TMCC serial");
         return null;
     }
 
