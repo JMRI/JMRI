@@ -2,9 +2,10 @@
 <!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
 
 <programmer-config>
-<!-- $Id: Comprehensive.xml,v 1.15 2006-03-29 19:05:56 jacobsen Exp $ -->
+<!-- $Id: Comprehensive.xml,v 1.16 2007-07-21 15:56:29 jacobsen Exp $ -->
 		<version author="Howard G. Penny"
 					version="11" lastUpdated="20050713"/>
+		<version author="Michael Mosher" version="12" lastUpdated="20070717"/>
 
       <!-- Version 4 - add consist control for functions (Simon Ginsburg) -->
       <!-- Version 4.1 - changed spelling of "behavior" (Jack Shall) -->
@@ -14,6 +15,7 @@
       <!-- Version 8 - added manufacturer speed table selection to Speed Control pane -->
       <!-- Version 9 - added Analog pane wsthompson@earthlink.net -->
       <!-- Version 11 - updated tooltip for Decoder Version -->
+      <!-- Version 12 - added sound group 3  -->
 
 <programmer decoderFilePanes="yes" showEmptyPanes="default">
 
@@ -527,6 +529,55 @@
 			<display item="Sound Group 2 Option 7" />
 			<display item="Sound Group 2 Option 8" />
 		</column>
+		<column>
+			<row>
+			    <display item="Sound Group 3 Option 1" layout="above" label=""/>
+				<label label=" "/>
+			    <display item="Sound Group 3 Option 1" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+			    <display item="Sound Group 3 Option 2" layout="above" label=""/>
+				<label label=" "/>
+ 		        <display item="Sound Group 3 Option 2" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+			    <display item="Sound Group 3 Option 3" layout="above" label=""/>
+				<label label=" "/>
+			    <display item="Sound Group 3 Option 3" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+			    <display item="Sound Group 3 Option 4" layout="above" label=""/>
+				<label label=" "/>
+			    <display item="Sound Group 3 Option 4" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+			    <display item="Sound Group 3 Option 5" layout="above" label=""/>
+				<label label=" "/>
+			    <display item="Sound Group 3 Option 5" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+			    <display item="Sound Group 3 Option 6" layout="above" label=""/>
+				<label label=" "/>
+			    <display item="Sound Group 3 Option 6" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+			    <display item="Sound Group 3 Option 7" layout="above" label=""/>
+				<label label=" "/>
+			    <display item="Sound Group 3 Option 7" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+			    <display item="Sound Group 3 Option 8" layout="above" label=""/>
+				<label label=" "/>
+			    <display item="Sound Group 3 Option 8" layout="above" format="hslider"/>
+			</row>
+		</column>
 	</pane>
 
 	<pane name="Sound Levels">
@@ -686,6 +737,36 @@
 				<display item="Sound Setting 25" layout="above" label=""/>
 				<label label=" "/>
 				<display item="Sound Setting 25" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Sound Setting 26" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Sound Setting 26" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Sound Setting 27" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Sound Setting 27" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Sound Setting 28" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Sound Setting 28" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Sound Setting 29" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Sound Setting 29" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<row>
+				<display item="Sound Setting 30" layout="above" label=""/>
+				<label label=" "/>
+				<display item="Sound Setting 30" layout="above" format="hslider"/>
 			</row>
 		</column>
       </row>
