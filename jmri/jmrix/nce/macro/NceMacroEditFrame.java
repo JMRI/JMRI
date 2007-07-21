@@ -59,7 +59,7 @@ import java.io.*;
  * FF10 = link macro 16 
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -216,7 +216,8 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
 				.getMaximumSize().width, macroTextField.getPreferredSize().height));
         
         saveButton.setText("Save");
-        saveButton.setVisible(false);
+        saveButton.setVisible(true);
+        saveButton.setEnabled (false);
         saveButton.setToolTipText("Update macro in NCE CS");
         
         backUpButton.setText("Backup");
@@ -581,7 +582,7 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
 			textAccy.setText(ACCESSORY);
 			deleteButton.setText(DELETE);
 			deleteButton.setToolTipText("Remove this accessory from the macro");
-			deleteButton.setVisible(true);
+			deleteButton.setEnabled(true);
 		}
     }
     
@@ -591,7 +592,7 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
 		textAccy.setText(EMPTY);
 		accyTextField.setText("");
 		cmdButton.setText(QUESTION);
-		deleteButton.setVisible(false);
+		deleteButton.setEnabled(false);
 	}
     
     // Updates all 20 bytes in NCE CS memory as long as there are no user input errors
@@ -705,9 +706,9 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
     // display save button
     private void setSaveButton(boolean display) {
 		macroModified = display;
-		saveButton.setVisible(display);
-		backUpButton.setVisible(!display);
-		restoreButton.setVisible(!display);
+		saveButton.setEnabled(display);
+		backUpButton.setEnabled(!display);
+		restoreButton.setEnabled(!display);
 	}
     
     public void  message(NceMessage m) {}  // ignore replies
@@ -951,7 +952,7 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
 			JTextField accyTextField, JButton cmdButton, JButton deleteButton) {
 		textAccy.setText(ACCESSORY);
 		accyTextField.setText(Integer.toString(accyAddr));
-		deleteButton.setVisible(true);
+		deleteButton.setEnabled(true);
 		cmdButton.setText(getAccyCmd(row, r));
 	}
     
@@ -1093,7 +1094,8 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
 		cmdButton.setVisible(true);
 		cmdButton.setToolTipText("Set accessory command to closed or thrown");
 		deleteButton.setText(DELETE);
-		deleteButton.setVisible(false);
+		deleteButton.setVisible(true);
+		deleteButton.setEnabled(false);
 		deleteButton.setToolTipText("Remove this accessory from the macro");
 		accyTextField.setText("");
 		accyTextField.setToolTipText("Enter accessory address 1 to 2044");
@@ -1107,7 +1109,7 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
     private void initAccyRow10 (){
 		cmdButton10.setVisible(true);
 		deleteButton10.setText(LINK);
-		deleteButton10.setVisible(true);
+		deleteButton10.setEnabled(true);
 		deleteButton10.setToolTipText("Link another macro to this one");
 		accyTextField10.setToolTipText("Enter accessory address 1 to 2044 or link macro address 1 to 255");
     }
