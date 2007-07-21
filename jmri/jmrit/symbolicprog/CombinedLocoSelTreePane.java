@@ -40,7 +40,7 @@ import com.sun.java.util.collections.List;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
 
@@ -222,20 +222,49 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
             return;
         }
         dTree.clearSelection();
-        String item = ((DecoderFile)pList.get(0)).getModel();
+        DecoderFile f = (DecoderFile)pList.get(0);
+        String findMfg = f.getMfg();
+        String findFamily = f.getFamily();
+        String findModel = f.getModel();
+        
         // if this is a family listing plus one specific decoder, take the decoder
-        if (pList.size()==2 && item.equals(((DecoderFile)pList.get(0)).getFamily()) )
-            item = ((DecoderFile)pList.get(1)).getModel();
+        if (pList.size()==2 && findFamily.equals(((DecoderFile)pList.get(0)).getFamily()) ) {
+            f = (DecoderFile)pList.get(1);
+            findMfg = f.getMfg();
+            findFamily = f.getFamily();
+            findModel = f.getModel();
+        }
+
         dTree.clearSelection();
         Enumeration e = dRoot.breadthFirstEnumeration();
         while (e.hasMoreElements()) {
             DefaultMutableTreeNode node = (DefaultMutableTreeNode)e.nextElement();
-            if (node.toString().equals(item)) {
-                TreePath path = new TreePath(node.getPath());
-                dTree.expandPath(path);
-                dTree.addSelectionPath(path);
-                dTree.scrollPathToVisible(path);
-                break;
+            
+            // convert path to comparison string
+            TreeNode[] list = node.getPath();           
+            if (list.length == 3) {
+                // check for match to mfg, model, model
+                if (list[1].toString().equals(findMfg)
+                    && list[2].toString().equals(findModel))
+                        {
+                            TreePath path = new TreePath(node.getPath());
+                            dTree.expandPath(path);
+                            dTree.addSelectionPath(path);
+                            dTree.scrollPathToVisible(path);
+                            break;
+                        }
+            } else if (list.length == 4 ) {
+                // check for match to mfg, family, model
+                if (list[1].toString().equals(findMfg)
+                    && list[2].toString().equals(findFamily)
+                    && list[3].toString().equals(findModel))
+                        {
+                            TreePath path = new TreePath(node.getPath());
+                            dTree.expandPath(path);
+                            dTree.addSelectionPath(path);
+                            dTree.scrollPathToVisible(path);
+                            break;
+                        }
             }
         }
     }
