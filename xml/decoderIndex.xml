@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <!--Written by JMRI version 1.7.7 on Wed Jun 13 22:41:42 PDT 2007 $Id: decoderIndex.xml,v 1.104 2007-07-10 06:04:44 jacobsen Exp $-->
-  <decoderIndex version="121">
+  <!--Written by JMRI version 1.8 on Sat Jul 21 09:50:29 PDT 2007 $Id: decoderIndex.xml,v 1.105 2007-07-21 16:52:03 jacobsen Exp $-->
+  <decoderIndex version="124">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -110,6 +110,46 @@
       </family>
       <family name="Atlas N-Scale" mfg="Atlas" lowVersionID="46" highVersionID="46" type="locomotive" file="Atlas_VO1000.xml">
         <model model="VO1000 (Part #500099)" numOuts="2" numFns="0" lowVersionID="46" highVersionID="46" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+      </family>
+      <family name="Blueline" mfg="Broadway Limited Imports, LLC" type="locomotive" file="BLI_Blueline_diesel.xml">
+        <model model="Diesel" numOuts="3" numFns="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <versionCV lowVersionID="4" />
+          <output name="1" label="headlight" connection="unspecified" />
+          <output name="2" label="rearlight" connection="unspecified" />
+          <output name="Horn1" connection="unspecified" />
+          <output name="Horn2" connection="unspecified" />
+          <output name="Bell" connection="unspecified" />
+          <output name="Coupler" connection="unspecified" />
+          <output name="Blower/Comp" connection="unspecified" />
+          <output name="Rev Up" connection="unspecified" />
+          <output name="Rev Down" connection="unspecified" />
+          <output name="3" label="L1" connection="unspecified" />
+          <output name="Volume" connection="unspecified" />
+          <output name="Start/Shut" connection="unspecified" />
+          <output name="Rad Fan" connection="unspecified" />
+          <output name="Air" connection="unspecified" />
+          <output name="Brakes" connection="unspecified" />
+        </model>
+      </family>
+      <family name="Blueline" mfg="Broadway Limited Imports, LLC" type="locomotive" file="BLI_Blueline_steam.xml">
+        <model model="Steam" numOuts="3" numFns="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <versionCV lowVersionID="32" />
+          <output name="1" label="headlight" connection="unspecified" />
+          <output name="2" label="rearlight" connection="unspecified" />
+          <output name="Whistle" connection="unspecified" />
+          <output name="Horn" connection="unspecified" />
+          <output name="Bell" connection="unspecified" />
+          <output name="Coupler" connection="unspecified" />
+          <output name="Air Pump" connection="unspecified" />
+          <output name="Blow/Chuff+" connection="unspecified" />
+          <output name="Water/Chuff-" connection="unspecified" />
+          <output name="3" label="L1" connection="unspecified" />
+          <output name="Volume" connection="unspecified" />
+          <output name="Start/Shut" connection="unspecified" />
+          <output name="Coal" connection="unspecified" />
+          <output name="Injector" connection="unspecified" />
+          <output name="Brakes" connection="unspecified" />
+        </model>
       </family>
       <family name="Bachmann E-Z Command decoders" mfg="Bachmann Trains" type="locomotive" file="Bachmann_EZDCC.xml">
         <model model="E-Z Command Locomotives" numOuts="2" numFns="0" lowVersionID="46" nmraWarrant="yes" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified" />
@@ -1319,6 +1359,9 @@
           <output name="9" label="Pad 9" connection="solder" maxcurrent="500 mA" />
           <size length="2.3" width="1.2" height="0.375" units="inches" />
         </model>
+      </family>
+      <family name="NYB Dual Mode Decoder" mfg="New York Byano Limited" type="locomotive" file="NYB_dualmode.xml">
+        <model model="NYB Dual Mode Decoder" numOuts="2" numFns="0" lowVersionID="46" nmraWarrant="yes" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
       </family>
       <family name="QSI Articulated Steam" mfg="QSIndustries" lowVersionID="2" highVersionID="5" type="locomotive" file="QSI_Articulated_Steam.xml">
         <model model="BLI AC5 Cab Forward 4-8-8-2" lowVersionID="5" numFns="14" numOuts="14" productID="403" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
