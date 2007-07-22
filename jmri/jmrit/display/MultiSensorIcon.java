@@ -24,7 +24,7 @@ import com.sun.java.util.collections.ArrayList;
  * not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -76,13 +76,13 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     }
     
     // display icons
-    String inactiveName = "resources/icons/smallschematics/tracksegments/circuit-empty.gif";
+    String inactiveName = "resources/icons/USS/plate/levers/l-inactive.gif";
     NamedIcon inactive = new NamedIcon(inactiveName, inactiveName);
 
-    String inconsistentName = "resources/icons/smallschematics/tracksegments/circuit-error.gif";
+    String inconsistentName = "resources/icons/USS/plate/levers/l-unknown.gif";
     NamedIcon inconsistent = new NamedIcon(inconsistentName, inconsistentName);
 
-    String unknownName = "resources/icons/smallschematics/tracksegments/circuit-error.gif";
+    String unknownName = "resources/icons/USS/plate/levers/l-inconsistent.gif";
     NamedIcon unknown = new NamedIcon(unknownName, unknownName);
 
     public NamedIcon getInactiveIcon() { return inactive; }

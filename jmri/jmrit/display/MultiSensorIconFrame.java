@@ -21,7 +21,7 @@ import javax.swing.*;
  * It should be.
  *
  * @author  Bob Jacobsen  Copyright (c) 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class MultiSensorIconFrame extends JmriJFrame {
@@ -56,10 +56,10 @@ public class MultiSensorIconFrame extends JmriJFrame {
         
         this.getContentPane().add(content);
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
-        // start with two Entrys; there's no reason to have less
-        content.add(new Entry(content, this, "resources/icons/USSpanels/Plates/lever-l.gif"));
-        content.add(new Entry(content, this, "resources/icons/USSpanels/Plates/lever-v.gif"));
-        content.add(new Entry(content, this, "resources/icons/USSpanels/Plates/lever-r.gif"));
+        // start with three Entrys; there's no reason to have less
+        content.add(new Entry(content, this, "resources/icons/USS/plate/levers/l-left.gif"));
+        content.add(new Entry(content, this, "resources/icons/USS/plate/levers/l-vertical.gif"));
+        content.add(new Entry(content, this, "resources/icons/USS/plate/levers/l-right.gif"));
                 
         this.getContentPane().add(new JSeparator());
         JButton b = new JButton("Add Additional Sensor to Icon"); 
@@ -83,9 +83,9 @@ public class MultiSensorIconFrame extends JmriJFrame {
         this.getContentPane().add(new JSeparator());
         b = new JButton("Set icons for inactive, ...");
         defaultIcons = new MultiIconEditor(3);
-            defaultIcons.setIcon(0, "Unknown:","resources/icons/USSpanels/Plates/lever-v-inactive.gif");
-            defaultIcons.setIcon(1, "Inconsistent:","resources/icons/USSpanels/Plates/lever-v-inactive.gif");
-            defaultIcons.setIcon(2, "Inactive:","resources/icons/USSpanels/Plates/lever-v-inactive.gif");
+            defaultIcons.setIcon(0, "Unknown:","resources/icons/USS/plate/levers/l-inactive.gif");
+            defaultIcons.setIcon(1, "Inconsistent:","resources/icons/USS/plate/levers/l-unknown.gif");
+            defaultIcons.setIcon(2, "Inactive:","resources/icons/USS/plate/levers/l-inconsistent.gif");
             defaultIcons.complete();
         defaultsFrame = new JFrame("");
             defaultsFrame.getContentPane().add(new JLabel("  Select new file, then click on icon to change  "),BorderLayout.NORTH);
