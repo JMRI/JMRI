@@ -26,7 +26,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.35 $
+ * @version			$Revision: 1.34 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -671,10 +671,9 @@ abstract public class AbstractMRTrafficController {
                   forwardToPort(modeMsg, null);
                   // wait for reply
                   try {
-                    if (xmtRunnable!=null)
-                        synchronized(xmtRunnable) {
-                            if (modeMsg!=null) xmtRunnable.wait(modeMsg.getTimeout());
-                        }
+                    synchronized(xmtRunnable) {
+                    xmtRunnable.wait(modeMsg.getTimeout());
+                    }
                   } catch (InterruptedException e) { log.error("transmit interrupted"); }
 	       }
 	    }
