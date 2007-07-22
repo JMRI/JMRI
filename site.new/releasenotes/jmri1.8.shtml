@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.8.shtml,v 1.1 2007-07-22 18:29:22 jacobsen Exp $ -->
+<!-- $Id: jmri1.8.shtml,v 1.2 2007-07-22 22:02:16 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -33,32 +33,37 @@
       Release Notes for JMRI 1.8 production release
       </H2>
 
-	<p>Date: Mmm nn, 2007</p>
+	<p>Date: July 22, 2007</p>
 	<p>From: Bob Jacobsen</p>
-	<p>Subject: Test version 1.8 of JMRI/DecoderPro is available for download.
-    <!-- <br><b>This is a draft release note only; the download links do not yet work</b>  -->
+	<p>Subject: Production version 1.8 of JMRI/DecoderPro is available for download.
+    <br><b>This is a draft release note only; the download links do not yet work</b> 
 
 <h3>Notes:</h3>
 
-<P>This is a test release.  Please post a note if you encounter any new or old bugs!  And please back up your JMRI files before installing this, in case you want to go back to an earlier version.
+<!-- <P>This is a test release.  Please post a note if you encounter any new or old bugs!  And please back up your JMRI files before installing this, in case you want to go back to an earlier version. -->
 
-<P>This is the next in a series of test versions
-that contains 
-many new features, including:
-<UL>
+<!-- <P>This is the next in a series of test versions. -->
+<!-- It contains  -->
+<!-- many new features, including: -->
+<!-- <UL> -->
 <!-- <LI>numerous decoder updates,  -->
 <!-- <LI>improvements to support for the new NCE EPROM, including a send macro tool and turnout readback, -->
 <!-- <LI>improvements to signaling logic,  Routes and the new Logix capability, -->
 <!-- <LI>a complete revamp of help system (including help information for most windows) -->
 <!-- <LI>greatly improved support for the Digitrax PR2 programmer and it's sound files, -->
-</UL>
-along with lots of other changes.  See the complete list below.
+<!-- </UL> -->
+<!-- along with lots of other changes.  See the complete list below. -->
+<!--  -->
+<!--  -->
+<!-- <P>Some of the changes involved are quite extensive. -->
+<!-- They may require a certain amount of experience before they are working well.   -->
+<!-- Therefore, this test version should be considered experimental. -->
 
-<P>Some of the changes involved are quite extensive, and may require a certain amount of experience before they are working well.  Therefore, this test version should be considered experimental.
+<P>We are very pleased to announce that the 1.7 series of JMRI test releases has resulted in a 
+version that's good enough to be recommended for general use, including by new users. 
+We're therefore making that version, "Production version 1.8" available for download today.
 
-<h3>New warnings for this test version:</h3>
-
-<P>The Route interface has had significant changes.  New member functions have been provided for configuring the Turnouts and Sensors that are changed with the Route fires.  The old methods are deprecated. If you've written your own code that uses Routes directly, you should update it.  The deprecated methods will be removed after the next production release.
+<h3>New warnings for this version:</h3>
 
 <P>On using system vs user names:  System names are fixed when they are created, and refer to a specific item such as an input pin, output device, etc.  You can also attach a user name to any of these, and change it after the fact.  By convention, when you put a name in a form, we try to remember that name for the next time you reload that configuration. You can provide either a system name or a user name.  If you don't change the user name once you've set it, it doesn't matter which you provide.  But changing user names can have both good and bad effects:
 <UL>
@@ -67,24 +72,40 @@ along with lots of other changes.  See the complete list below.
 </UL>
 It's up to you to decide how you want to use user names when filling out forms, and whether you might be better off using system names. 
 
-<h3>Older warnings from this series of test versions:</h3>
+<P>The "LocoNet Hexfile" protocol name in the preferences has always been a poor name. 
+This has been changed to "LocoNet Simulator" to better reflect it's purpose.  
+Some documentation may still contain the old name.
 
-<P>The "LocoNet Hexfile" protocol name in the preferences has always been a poor name. This is changed to "LocoNet Simulator" in release 1.7.3 to better reflect it's purpose.  Some documentation may still contain the old name.
+<P>For Lenz users: There are now separate choices for each of the serial-based Lenz Computer Interfaces 
+(i.e. the LI100,LI100F,LI101F). Since release 1.7.3, to aid in backwards compatibility, all the interfaces 
+currently have the same options as far as port speed is concerned. 
+Eventually, the port speeds which are not supported by each interface WILL be removed. 
+If you're using one of the interfaces listed above with this release, please check your configuration 
+and select the correct device-specific option. There is no impact for LIUSB users with this change.
 
-<P>On Mac OS X, JMRI 1.7.3 and later uses Java 1.4 if it's available.  This may result in some small cosmetic changes, but should resolve several bugs in the user interface. Also, Mac OS X is now being distributed as a disk image (DMG) file. To install it, double click on the file to mount it, and then drag the resulting JMRI folder to the Applications folder.
-
-<P>For Lenz users: There are now separate choices for each of the serial-based Lenz Computer Interfaces (i.e. the LI100,LI100F,LI101F). Since release 1.7.3, to aid in backwards compatibility, all the interfaces currently have the same options as far as port speed is concerned. Eventually, the port speeds which are not supported by each interface WILL be removed. If you're using one of the interfaces listed above with this release, please check your configuration and select the correct device-specific option. There is no impact for LIUSB users with this change.
-
-<P>We have added additional information to the roster files in this version to help properly handle short/long addressing in systems that allow low addresses (e.g. 65) to be either short or long addresses. The only current system we support that has this capability is NCE.  If you have an NCE system, and you have locomotives with addresses of 127 or less, you should open their roster entries in DecoderPro, check that the proper short or long address is selected,  and save them again.
+<P>We have added additional information to the roster files in this version to help properly handle short/long addressing 
+in systems that allow low addresses (e.g. 65) to be either short or long addresses. 
+The only current system we support that has this capability is NCE.
+If you have an NCE system, and you have locomotives with addresses of 127 or less,
+you should open their roster entries in DecoderPro, check that the proper short or long address is selected, and save them again.
 
 <P>Indexed CVs will not be included in any printouts for this release.
  
 <P>QSI CV 56.129 Engine ID Access is not supported in this release.
   
-<P>While programming QSI decoders in Ops mode, it is necessary to disable CV 62 QSI Control (Verbal Acknowledgement), otherwise the writes will fail.
+<P>While programming QSI decoders in Ops mode, it is necessary to disable CV 62 QSI Control (Verbal Acknowledgement), 
+otherwise the writes will fail.
  
 <P>QSI CV 64 CV Numeric Verbal Readout currently does not work for indexed CVs.
  
+<P>The Route interface has had significant changes.  New member functions have been provided for configuring the Turnouts and Sensors that are changed with the Route fires.  The old methods are deprecated. If you've written your own code that uses Routes directly, you should update it.  The deprecated methods will be removed after the next production release.
+
+<P>On Mac OS X, JMRI 1.7.3 and later uses Java 1.4 if it's available.  
+This may result in some small cosmetic changes, but should resolve several bugs in the user interface. 
+Also, Mac OS X is now being distributed as a disk image (DMG) file. 
+To install it, double click on the file to mount it, and then drag the resulting JMRI folder to the Applications folder.
+
+
 <h3>Download links:</h3>
 
 <P>Please use these links for downloading, including the "?download" at the end. That adds to SourceForge's advertising statistics, which makes them happy to host our stuff.
@@ -98,7 +119,7 @@ It's up to you to decide how you want to use user names when filling out forms, 
 <P>Linux:
      <A HREF="http://downloads.sourceforge.net/jmri/JMRI.1.8.tgz?download">http://downloads.sourceforge.net/jmri/JMRI.1.8.tgz?download</a>
 
-<P>For technical reasons, it's unlikely that there will be a MacOS 8/9 "Classic" version for this release.
+<P>For technical reasons, it's unlikely that there will be a MacOS 8/9 "Classic" or OS/2 version for this release.
 <!-- <P>MacOS 8/9 "Classic": -->
 <!--      <A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.1.7.7.Classic.hqx?download">http://prdownloads.sourceforge.net/jmri/JMRI.1.7.7.Classic.hqx?download</a> -->
 
@@ -128,6 +149,20 @@ It's up to you to decide how you want to use user names when filling out forms, 
 <P>Dan Boudreu contributed some new track segment icons
 
 <P>Dick Bronson contributed new code-button icons to the USS/plate/levers icon directory
+
+<h3>Previous changes</h3>
+
+There have been hundreds of changes and improvements since the last production version, 1.6.
+These are all listed in the individual change notes:
+<UL>
+<LI><A HREF="jmri1.7.1.html">Test Version 1.7.1</a>
+<LI><A HREF="jmri1.7.2.html">Test Version 1.7.2</a>
+<LI><A HREF="jmri1.7.3.html">Test Version 1.7.3</a>
+<LI><A HREF="jmri1.7.4.html">Test Version 1.7.4</a>
+<LI><A HREF="jmri1.7.5.html">Test Version 1.7.5</a>
+<LI><A HREF="jmri1.7.6.html">Test Version 1.7.6</a>
+<LI><A HREF="jmri1.7.7.html">Test Version 1.7.7</a>
+<ul>
 
 <hr class="hide">
 
