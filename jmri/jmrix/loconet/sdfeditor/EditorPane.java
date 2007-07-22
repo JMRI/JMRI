@@ -21,12 +21,9 @@ import java.util.List;
  * and on the right an edit panel. The edit panel 
  * has a small detailed view of the instruction over
  * a larger detailed view.
- *<P>
- * Class works with {@see EditorModel}, which maintains the 
- * data model for the underlying data.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2007
- * @version	    $Revision: 1.5 $
+ * @version	    $Revision: 1.6 $
  */
 public class EditorPane extends javax.swing.JPanel implements TreeSelectionListener {
 
