@@ -16,11 +16,11 @@ import java.io.*;
  * Frame for user edit of NCE macros
  * 
  * NCE macros are stored in Command Station (CS) memory starting at address
- * xC800. Each macro consists of 20 bytes. Macro 0 which is located at address
- * xC800 is not used, therefore the first macro (macro 1) is at address xC814.
- * The last macro 255 is at address xDBEC.
+ * xC800. Each macro consists of 20 bytes. The last macro 255 is at address
+ * xDBEC.
  * 
  * Macro addr
+ * 0	xC800
  * 1	xC814
  * 2	xC828
  * 3	xC83C
@@ -59,13 +59,13 @@ import java.io.*;
  * FF10 = link macro 16 
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
 
 	private static final int CS_MACRO_MEM = 0xC800;	// start of NCE CS Macro memory 
-	private static final int MAX_MACRO = 255;		// there are 255 possible macros
+	private static final int MAX_MACRO = 255;		// there are 256 possible macros
 	private int macroNum = 0;						// macro being worked
 	private static final int REPLY_1 = 1;			// reply length of 1 byte expected
 	private static final int REPLY_16 = 16;			// reply length of 16 bytes expected
@@ -211,7 +211,7 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
         getButton.setToolTipText("Read macro from NCE CS");
         
         macroTextField.setText("");
-		macroTextField.setToolTipText("Enter macro 1 to 255");
+		macroTextField.setToolTipText("Enter macro 0 to 255");
 		macroTextField.setMaximumSize(new Dimension(macroTextField
 				.getMaximumSize().width, macroTextField.getPreferredSize().height));
         
@@ -532,7 +532,7 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
 		if (mN == -1) {
 			macroReply.setText("error");
 			JOptionPane.showMessageDialog(NceMacroEditFrame.this,
-					"Enter macro number 1 to 255", "NCE Macro",
+					"Enter macro number 0 to 255", "NCE Macro",
 					JOptionPane.ERROR_MESSAGE);
 			macroValid = false;
 			return mN;
@@ -554,7 +554,7 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
     private void updateAccyCmdPerformed (JTextField accyTextField, JButton cmdButton, JLabel textAccy, JButton deleteButton){
     	if (macroValid == false) { // Error user input incorrect
 			JOptionPane.showMessageDialog(NceMacroEditFrame.this,
-					"Get macro number 1 to 255", "NCE Macro",
+					"Get macro number 0 to 255", "NCE Macro",
 					JOptionPane.ERROR_MESSAGE);
 		} else {
 			String accyText = accyTextField.getText();
@@ -786,11 +786,11 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
 				if (macroSearchInc) {
 					macroNum++;
 					if (macroNum == MAX_MACRO + 1)
-						macroNum = 1;
+						macroNum = 0;
 				}
 				if (macroSearchDec) {
 					macroNum--;
-					if (macroNum == 0)
+					if (macroNum == -1)
 						macroNum = MAX_MACRO;
 				}
 				if (macroSearchInc || macroSearchDec) {
@@ -978,7 +978,7 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
 		} catch (NumberFormatException e) {
 			return -1;
 		}
-		if (mN < 1 | mN > MAX_MACRO)
+		if (mN < 0 | mN > MAX_MACRO)
 			return -1;
 		else
 			return mN;
