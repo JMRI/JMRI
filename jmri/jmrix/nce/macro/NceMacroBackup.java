@@ -58,7 +58,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * This backup routine uses the same macro data format as NCE.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 
@@ -70,7 +70,7 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 	private static final int REPLY_16 = 16;			// reply length of 16 byte expected
 	private static int replyLen = 0;				// expected byte length
 	private static int waiting = 0;					// to catch responses not intended for this module
-	private boolean secondRead = false;				// when true, another 16 byte read expected
+	private static boolean secondRead = false;		// when true, another 16 byte read expected
 	private static boolean fileValid = false;		// used to flag backup status messages
 	
 	private static byte[] nceMacroData = new byte [MACRO_LNTH];
@@ -144,23 +144,9 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 			fstatus.setVisible (true);
 
 			getNceMacro(macroNum);
-
-			// wait up to 30 sec for each read pair to complete
-			int waitcount = 30;
-			while (waiting > 0) {
-				synchronized (this) {
-					try {
-						wait(1000);
-					} catch (InterruptedException e) {
-					}
-				}
-				if (waitcount-- < 0) {
-					log.error("read timeout");
-					fileValid = false;		// need to quit
-					macroNum = NUM_MACRO;	// exit "for loop"
-					break;
-				}
-			}
+			
+			if (!fileValid)
+				macroNum = NUM_MACRO;  // break out of for loop
 
 			if (fileValid) {
 				line = ":" + Integer.toHexString(CS_MACRO_MEM + (macroNum * MACRO_LNTH));
@@ -204,15 +190,37 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 
 		NceMessage m = readMacroMemory(mN, false);
 		NceTrafficController.instance().sendNceMessage(m, this);
+		// wait for read to complete, flag determines if 1st or 2nd read
+		if (!readWait())
+			return;
+
 		NceMessage m2 = readMacroMemory(mN, true);
 		NceTrafficController.instance().sendNceMessage(m2, this);
-
+		readWait();
+	}
+	
+	// wait up to 30 sec per read
+	private boolean readWait() {
+		int waitcount = 30;
+		while (waiting > 0) {
+			synchronized (this) {
+				try {
+					wait(1000);
+				} catch (InterruptedException e) {
+				}
+			}
+			if (waitcount-- < 0) {
+				log.error("read timeout");
+				fileValid = false; // need to quit
+				return false;
+			}
+		}
+		return true;
 	}
 
 	// Reads 16 bytes of NCE macro memory, and adjusts for second read 
 	private NceMessage readMacroMemory(int macroNum, boolean second) {
-		if (!second)
-			secondRead = second; 		// set flag for 1st receive
+		secondRead = second; 		// set flag for receive
 		int nceMacroAddr = (macroNum * MACRO_LNTH) + CS_MACRO_MEM;
 		if (second) {
 			nceMacroAddr += REPLY_16; 	// adjust for second memory read
@@ -251,14 +259,11 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 			nceMacroData[i + offset] = (byte) r.getElement(i);
 		}
 		waiting--;
-		// wake up backup thread
-		if (secondRead) {
-			synchronized (this) {
-				notify();
-			}
-		}
-		secondRead = true; // next read is the next 4 bytes of macro
 		
+		// wake up backup thread
+		synchronized (this) {
+			notify();
+		}
 	}
 	
 	private class textFilter extends javax.swing.filechooser.FileFilter {
