@@ -11,7 +11,7 @@ import javax.swing.*;
  * Frame for user input of Nce macros
  * @author	Bob Jacobsen   Copyright (C) 2001
  * @author Dan Boudreau 	Copyright (C) 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  **/
 
 public class NceMacroGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -45,7 +45,7 @@ public class NceMacroGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix
         sendButton.setToolTipText("Execute NCE macro");
 
         packetTextField.setText("");
-		packetTextField.setToolTipText("Enter macro 1 to 255");
+		packetTextField.setToolTipText("Enter macro 0 to 255");
 		packetTextField.setMaximumSize(new Dimension(packetTextField
 				.getMaximumSize().width, packetTextField.getPreferredSize().height));
 
@@ -77,7 +77,7 @@ public class NceMacroGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix
 		if (m == null) {
 			macroReply.setText("error");
 			JOptionPane.showMessageDialog(NceMacroGenFrame.this,
-					"Enter 1 to 255", "NCE Macro", JOptionPane.ERROR_MESSAGE);
+					"Enter 0 to 255", "NCE Macro", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		macroReply.setText("waiting");
@@ -114,7 +114,7 @@ public class NceMacroGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix
 			return null;
 		}
 
-		if (macroNum < 1 | macroNum > 255)
+		if (macroNum < 0 | macroNum > 255)
 			return null;
 		
 		if (NceMessage.getCommandOptions() >= NceMessage.OPTION_2006) {
@@ -153,7 +153,7 @@ public class NceMacroGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix
 			return null;
 		}
 
-		if (macroNum < 1 | macroNum > 255)
+		if (macroNum < 0 | macroNum > 255)
 			return null;
 
 		// NCE responds with okay (!) if macro exist, (0) if not
