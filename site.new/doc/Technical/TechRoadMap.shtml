@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TechRoadMap.shtml,v 1.5 2007-07-27 13:36:37 jacobsen Exp $ -->
+<!-- $Id: TechRoadMap.shtml,v 1.6 2007-07-29 01:49:01 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -44,7 +44,7 @@ plans for JMRI releases in the future.
 
 <table border="1">
 <tr><th>Release</th><th>Description</th><th>Date</th><td>JRE</td><td>JDK</td></tr>
-<tr><td>1.8</td><td>Production version, culmination of 1.7.* series </td><td>July 2007</td>  <td></td><td></td></tr>
+<tr><td>1.8</td><td>Production version, culmination of 1.7.* series </td><td>July 2007 <b>(done)</b></td>  <td></td><td></td></tr>
 <tr><td>1.9.*</td><td>Development series </td><td></td>                           <td>1.3</td><td>1.4</td></tr>
 <tr><td>2.0</td><td>Production version, culmination of 1.9.* series </td><td>December 2007</td>     <td>1.3</td><td>1.4</td></tr>
 <tr><td>2.1.*</td><td>Development series </td><td></td>                           <td>1.4</td><td>1.5</td></tr>
