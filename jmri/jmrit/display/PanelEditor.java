@@ -47,7 +47,7 @@ import com.sun.java.util.collections.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.64 $
+ * @version $Revision: 1.65 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -182,6 +182,7 @@ public class PanelEditor extends JmriJFrame {
             panel.setLayout(new FlowLayout());
             panel.add(labelAdd);
             labelAdd.setEnabled(false);
+            labelAdd.setToolTipText(rb.getString("ToolTipWillActivate"));
             panel.add(nextLabel);
             labelAdd.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
@@ -191,8 +192,14 @@ public class PanelEditor extends JmriJFrame {
                                         );
             nextLabel.addKeyListener(new KeyAdapter() {
                       public void keyReleased(KeyEvent a){
-                          if (nextLabel.getText().equals("")) labelAdd.setEnabled(false);
-                          else labelAdd.setEnabled(true);
+                          if (nextLabel.getText().equals("")) {
+                            labelAdd.setEnabled(false);
+                            labelAdd.setToolTipText(rb.getString("ToolTipWillActivate"));
+                          }
+                          else {
+                            labelAdd.setEnabled(true);
+                            labelAdd.setToolTipText(null);
+                          }
                       }
                   });
             this.getContentPane().add(panel);
@@ -236,6 +243,7 @@ public class PanelEditor extends JmriJFrame {
             panel.setLayout(new FlowLayout());
             panel.add(turnoutAddR);
             turnoutAddR.setEnabled(false);
+            turnoutAddR.setToolTipText(rb.getString("ToolTipWillActivate"));
             panel.add(nextTurnoutR);
             turnoutAddR.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
@@ -245,8 +253,13 @@ public class PanelEditor extends JmriJFrame {
             );
             nextTurnoutR.addKeyListener(new KeyAdapter() {
                     public void keyReleased(KeyEvent a){
-                        if (nextTurnoutR.getText().equals("")) turnoutAddR.setEnabled(false);
-                        else turnoutAddR.setEnabled(true);
+                        if (nextTurnoutR.getText().equals("")) {
+                            turnoutAddR.setEnabled(false);
+                            turnoutAddR.setToolTipText(rb.getString("ToolTipWillActivate"));
+                        } else {
+                            turnoutAddR.setEnabled(true);
+                            turnoutAddR.setToolTipText(null);
+                        }
                     }
                 });
 
@@ -282,6 +295,7 @@ public class PanelEditor extends JmriJFrame {
             panel.setLayout(new FlowLayout());
             panel.add(turnoutAddL);
             turnoutAddL.setEnabled(false);
+            turnoutAddL.setToolTipText(rb.getString("ToolTipWillActivate"));
             panel.add(nextTurnoutL);
             turnoutAddL.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
@@ -291,8 +305,13 @@ public class PanelEditor extends JmriJFrame {
             );
             nextTurnoutL.addKeyListener(new KeyAdapter() {
                     public void keyReleased(KeyEvent a){
-                         if (nextTurnoutL.getText().equals("")) turnoutAddL.setEnabled(false);
-                         else turnoutAddL.setEnabled(true);
+                         if (nextTurnoutL.getText().equals("")) {
+                            turnoutAddL.setEnabled(false);
+                            turnoutAddL.setToolTipText(rb.getString("ToolTipWillActivate"));
+                         } else {
+                            turnoutAddL.setEnabled(true);
+                            turnoutAddL.setToolTipText(null);
+                         }
                     }
             });
 
@@ -328,6 +347,7 @@ public class PanelEditor extends JmriJFrame {
             panel.setLayout(new FlowLayout());
             panel.add(sensorAdd);
             sensorAdd.setEnabled(false);
+            sensorAdd.setToolTipText(rb.getString("ToolTipWillActivate"));
             panel.add(nextSensor);
             sensorAdd.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
@@ -338,8 +358,13 @@ public class PanelEditor extends JmriJFrame {
 
             nextSensor.addKeyListener(new KeyAdapter() {
                 public void keyReleased(KeyEvent a){
-                    if (nextSensor.getText().equals("")) sensorAdd.setEnabled(false);
-                    else sensorAdd.setEnabled(true);
+                    if (nextSensor.getText().equals("")) {
+                        sensorAdd.setEnabled(false);
+                        sensorAdd.setToolTipText(rb.getString("ToolTipWillActivate"));
+                    } else {
+                        sensorAdd.setEnabled(true);
+                        sensorAdd.setToolTipText(null);
+                    }
                 }
             });
 
@@ -373,6 +398,7 @@ public class PanelEditor extends JmriJFrame {
             panel.setLayout(new FlowLayout());
             panel.add(signalAdd);
             signalAdd.setEnabled(false);
+            signalAdd.setToolTipText(rb.getString("ToolTipWillActivate"));
             panel.add(nextSignalHead);
             signalAdd.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
@@ -383,8 +409,13 @@ public class PanelEditor extends JmriJFrame {
 
             nextSignalHead.addKeyListener(new KeyAdapter() {
                 public void keyReleased(KeyEvent a){
-                    if (nextSignalHead.getText().equals("")) signalAdd.setEnabled(false);
-                    else signalAdd.setEnabled(true);
+                    if (nextSignalHead.getText().equals("")) {
+                        signalAdd.setEnabled(false);
+                        signalAdd.setToolTipText(rb.getString("ToolTipWillActivate"));
+                    } else {
+                        signalAdd.setEnabled(true);
+                        signalAdd.setToolTipText(null);
+                    }
                 }
             });
 
@@ -421,6 +452,7 @@ public class PanelEditor extends JmriJFrame {
             JPanel panel = new JPanel();
             panel.setLayout(new FlowLayout());
             memoryAdd.setEnabled(false);
+            memoryAdd.setToolTipText(rb.getString("ToolTipWillActivate"));
             panel.add(memoryAdd);
             panel.add(nextMemory);
             memoryAdd.addActionListener( new ActionListener() {
@@ -430,8 +462,13 @@ public class PanelEditor extends JmriJFrame {
             });
             nextMemory.addKeyListener(new KeyAdapter() {
                     public void keyReleased(KeyEvent a){
-                        if (nextMemory.getText().equals("")) memoryAdd.setEnabled(false);
-                        else memoryAdd.setEnabled(true);
+                        if (nextMemory.getText().equals("")) {
+                            memoryAdd.setEnabled(false);
+                            memoryAdd.setToolTipText(rb.getString("ToolTipWillActivate"));
+                        } else {
+                            memoryAdd.setEnabled(true);
+                            memoryAdd.setToolTipText(null);
+                        }
                     }
                 });
             this.getContentPane().add(panel);
@@ -442,6 +479,7 @@ public class PanelEditor extends JmriJFrame {
             JPanel panel = new JPanel();
             panel.setLayout(new FlowLayout());
             reporterAdd.setEnabled(false);
+            reporterAdd.setToolTipText(rb.getString("ToolTipWillActivate"));
             panel.add(reporterAdd);
             panel.add(nextReporter);
             reporterAdd.addActionListener( new ActionListener() {
@@ -451,8 +489,13 @@ public class PanelEditor extends JmriJFrame {
             });
             nextReporter.addKeyListener(new KeyAdapter() {
                     public void keyReleased(KeyEvent a){
-                        if (nextReporter.getText().equals("")) reporterAdd.setEnabled(false);
-                        else reporterAdd.setEnabled(true);
+                        if (nextReporter.getText().equals("")) {
+                            reporterAdd.setEnabled(false);
+                            reporterAdd.setToolTipText(rb.getString("ToolTipWillActivate"));
+                        } else {
+                            reporterAdd.setEnabled(true);
+                            reporterAdd.setToolTipText(null);
+                        }
                     }
                 });
             this.getContentPane().add(panel);
