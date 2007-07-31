@@ -102,7 +102,7 @@ public class LocoIO {
 
     public static void programLocoIOAddress(int address, int subAddress) {
         LocoNetMessage msg;
-        msg = LocoIO.writeCV(0x0100, 0, 1, address);
+        msg = LocoIO.writeCV(0x0100, 0, 1, address&0xFF);
         LnTrafficController.instance().sendLocoNetMessage(msg);
         if (subAddress != 0) {
             msg = LocoIO.writeCV(0x0100, 0, 2, subAddress);
