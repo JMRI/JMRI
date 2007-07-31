@@ -18,7 +18,7 @@ import jmri.util.StringUtil;
 /**
  * Tests for the jmri.jmrix.loconet.locoio.LocoIOTableModel class.
  * @author	    Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.16 $
+ * @version         $Revision: 1.17 $
  */
 public class LocoIOTableModelTest extends TestCase {
 
@@ -498,7 +498,5 @@ public class LocoIOTableModelTest extends TestCase {
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
-
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoIOTableModelTest.class.getName());
 
 }

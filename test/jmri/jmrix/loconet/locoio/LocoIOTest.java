@@ -8,7 +8,7 @@ import junit.framework.*;
 /**
  * Tests for the jmri.jmrix.loconet.locoio package
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class LocoIOTest extends TestCase {
 
@@ -35,6 +35,4 @@ public class LocoIOTest extends TestCase {
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
-
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoIOTest.class.getName());
 }
