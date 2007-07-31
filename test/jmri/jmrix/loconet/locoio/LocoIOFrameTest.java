@@ -13,7 +13,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.locoio.LocoIOFrame class
  * @author	    Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.9 $
+ * @version         $Revision: 1.10 $
  */
 public class LocoIOFrameTest extends TestCase {
 
@@ -67,7 +67,7 @@ public class LocoIOFrameTest extends TestCase {
         LocoNetMessage msg = (LocoNetMessage)lnis.outbound.elementAt(0);
         Assert.assertEquals("message length", 16, msg.getNumDataElements());
         Assert.assertEquals("message opCode", 0xE5, msg.getOpCode());
-        Assert.assertEquals("message bytes", "E5 10 50 34 12 00 02 04 00 00 10 00 00 00 00 00", msg.toString());
+        Assert.assertEquals("message bytes", "E5 10 50 34 01 00 02 04 00 00 10 00 00 00 00 00", msg.toString());
 
         // dispose and end operation
         f.dispose();
@@ -92,7 +92,7 @@ public class LocoIOFrameTest extends TestCase {
         LocoNetMessage msg = (LocoNetMessage)lnis.outbound.elementAt(0);
         Assert.assertEquals("message length", 16, msg.getNumDataElements());
         Assert.assertEquals("message opCode", 0xE5, msg.getOpCode());
-        Assert.assertEquals("message bytes", "E5 10 50 00 10 00 01 01 00 34 10 00 00 00 00 00", msg.toString());
+        Assert.assertEquals("message bytes", "E5 10 50 00 01 00 01 01 00 34 10 00 00 00 00 00", msg.toString());
 
         // dispose and end operation
         f.dispose();
@@ -115,8 +115,6 @@ public class LocoIOFrameTest extends TestCase {
         TestSuite suite = new TestSuite(LocoIOFrameTest.class);
         return suite;
     }
-
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoIOFrameTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
