@@ -36,7 +36,7 @@ import java.beans.*;
  * though there are significant modifications.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 
 public class LocoIOTableModel
@@ -90,9 +90,6 @@ public class LocoIOTableModel
         // references to external resources
         liodata        = ldata;
         ldata.addPropertyChangeListener(this);
-
-        //org.apache.log4j.Category.getRoot().setPriority(org.apache.log4j.Priority.DEBUG);
-        log.setPriority(org.apache.log4j.Priority.DEBUG);
     }
 
     public void propertyChange(PropertyChangeEvent evt) {
@@ -243,5 +240,5 @@ public class LocoIOTableModel
         if (log.isDebugEnabled()) log.debug("dispose");
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoIOTableModel.class.getName());
+    static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoIOTableModel.class.getName());
 }
