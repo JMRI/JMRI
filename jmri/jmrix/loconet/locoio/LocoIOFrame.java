@@ -21,7 +21,7 @@ import java.beans.*;
  * Frame displaying and programming a LocoIO configuration.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
 
 public class LocoIOFrame extends jmri.util.JmriJFrame
@@ -217,39 +217,46 @@ public class LocoIOFrame extends jmri.util.JmriJFrame
         int retval = cautionAddrSet();
         if (retval != 1 ) return; // user cancelled
         int address = Integer.valueOf(addrField.getText(),16).intValue();
+        int subAddress = Integer.valueOf(subAddrField.getText(),16).intValue();
+
         if ((address&0x7F00) != 0x0100) log.warn("High part of address should be 0x01, was "
                                             +(address&0x7F00)/256);
-        int subAddress = Integer.valueOf(subAddrField.getText(),16).intValue();
+        if ((address&0x7F00) == 0x0180) log.warn("Only a LocoBuffer can use address 0x80");
+
+        if (subAddress > 126) log.warn("subAddress must be [1..126]" +
+			", was " + subAddress);
+	    address    = 0x0100 | (address&0x07F);  // range is [1..79, 81..127]
+	    subAddress = subAddress & 0x07F;	// range is [1..126]
         LocoIO.programLocoIOAddress(address, subAddress);
     }
 
     public void propertyChange(PropertyChangeEvent evt) {
-        // String s = "LocoIOFrame: " + evt.getPropertyName() + " := " + evt.getNewValue() + " from " + evt.getSource();
-        // System.out.println(s);
+        // these messages can arrive without a complete
+        // GUI, in which case we just ignore them
         if (evt.getPropertyName().equals("UnitAddress")) {
             Integer i = (Integer)evt.getNewValue();
             int v = i.intValue();
             v = v & 0xFF;
-            addrField.setText(Integer.toHexString(v));
-            firmware.setText("unknown  ");
+            if (addrField!=null) addrField.setText(Integer.toHexString(v));
+            if (firmware!=null) firmware.setText("unknown  ");
         }
         if (evt.getPropertyName().equals("UnitSubAddress")) {
             Integer i = (Integer)evt.getNewValue();
             int v = i.intValue();
-            subAddrField.setText(Integer.toHexString(v));
-            firmware.setText("unknown  ");
+            if (subAddrField!=null) subAddrField.setText(Integer.toHexString(v));
+            if (firmware!=null) firmware.setText("unknown  ");
         }
         if (evt.getPropertyName().equals("LBVersionChange")) {
             String v = (String)evt.getNewValue();
-            locobuffer.setText(" " + v);
+            if (locobuffer!=null) locobuffer.setText(" " + v);
         }
         if (evt.getPropertyName().equals("LIOVersionChange")) {
             String v = (String)evt.getNewValue();
-            firmware.setText(v + "    ");
+            if (firmware!=null) firmware.setText(v + "    ");
         }
         if (evt.getPropertyName().equals("StatusChange")) {
             String v = (String)evt.getNewValue();
-            status.setText(v + " ");
+            if (status!=null) status.setText(v + " ");
         }
     }
 
