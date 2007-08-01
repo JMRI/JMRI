@@ -4,6 +4,7 @@
 <!-- See the COPYING file for more information on licensing and appropriate use -->
 <!-- $Id: TCS_X.xml,v 1.6+ 2006/07/28 SG -->
 <decoder-config>
+    <version author="Michael Mosher" version="9" lastUpdated="20070730"/>
     <version author="Michael Mosher" version="8" lastUpdated="20061204"/>
     <version author="Michael Mosher" version="7" lastUpdated="20060921"/>
     <version author="Michael Mosher" version="6" lastUpdated="20060728"/>
@@ -18,6 +19,7 @@
 		<!-- Version 7 - added T1, M1, M1P-15, M1P-UK as they are full X series now -->
 						<!-- also added factory reset feature  -->
 		<!-- Version 8 - High ver to 40 -->
+		<!-- Version 9 - Added CV 23&24, & auto mars to light fx & re-itemize for better layout -->
 
 
 <decoder>
@@ -348,6 +350,16 @@
 				<enumChoice choice="Respond to Consist Address"/>
 				</enumVal></variable>
 				
+		<variable label="Consist Acceleration Adjustment" CV="23" 
+				tooltip="Values above 128 increase adjustment, below 128 decrease adjustment" >
+			<decVal max="255"/>
+			</variable>
+			
+		<variable label="Consist Deceleration Adjustment" CV="24" 
+				tooltip="Values above 128 increase adjustment, below 128 decrease adjustment" >
+			<decVal max="255"/>
+			</variable>
+
 		<variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
 			<enumVal>
 				<enumChoice choice="forward"/>
@@ -481,7 +493,7 @@
 				<enumChoice choice="Ditch light A"/>
 				<enumChoice choice="Ditch light B"/>
 				<enumChoice choice="Constant dim"/>
-				<enumChoice choice="Reserved (0x0D)"/>
+				<enumChoice choice="Auto Mars"/>
 				<enumChoice choice="Reserved (0x0E)"/>
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
@@ -511,7 +523,7 @@
 				<enumChoice choice="Ditch light A"/>
 				<enumChoice choice="Ditch light B"/>
 				<enumChoice choice="Constant dim"/>
-				<enumChoice choice="Reserved (0x0D)"/>
+				<enumChoice choice="Auto Mars"/>
 				<enumChoice choice="Reserved (0x0E)"/>
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
@@ -542,7 +554,7 @@
 				<enumChoice choice="Ditch light A"/>
 				<enumChoice choice="Ditch light B"/>
 				<enumChoice choice="Constant dim"/>
-				<enumChoice choice="Reserved (0x0D)"/>
+				<enumChoice choice="Auto Mars"/>
 				<enumChoice choice="Reserved (0x0E)"/>
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
@@ -572,7 +584,7 @@
 				<enumChoice choice="Ditch light A"/>
 				<enumChoice choice="Ditch light B"/>
 				<enumChoice choice="Constant dim"/>
-				<enumChoice choice="Reserved (0x0D)"/>
+				<enumChoice choice="Auto Mars"/>
 				<enumChoice choice="Reserved (0x0E)"/>
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
@@ -602,7 +614,7 @@
 				<enumChoice choice="Ditch light A"/>
 				<enumChoice choice="Ditch light B"/>
 				<enumChoice choice="Constant dim"/>
-				<enumChoice choice="Reserved (0x0D)"/>
+				<enumChoice choice="Auto Mars"/>
 				<enumChoice choice="Reserved (0x0E)"/>
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
@@ -632,7 +644,7 @@
 				<enumChoice choice="Ditch light A"/>
 				<enumChoice choice="Ditch light B"/>
 				<enumChoice choice="Constant dim"/>
-				<enumChoice choice="Reserved (0x0D)"/>
+				<enumChoice choice="Auto Mars"/>
 				<enumChoice choice="Reserved (0x0E)"/>
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
@@ -659,7 +671,7 @@
 		<variable label="Headlight Dim When Stopped" CV="61" mask="XXXVXXXX"
 				item="Directional Headlights" >
 			<enumVal>
-				<enumChoice choice="Not used"/>
+				<enumChoice choice="Disabled"/>
 				<enumChoice choice="Enabled"/>
 				</enumVal>
 			</variable>
@@ -667,7 +679,7 @@
 		<variable label="Opposite Headlight Dim" CV="61" mask="XXVXXXXX"
 				item="Global lighting option 1" >
 			<enumVal>
-				<enumChoice choice="Not used"/>
+				<enumChoice choice="Disabled"/>
 				<enumChoice choice="Enabled"/>
 				</enumVal>
 			</variable>
@@ -675,7 +687,7 @@
 		<variable label="Button Control" CV="61" mask="XVXXXXXX"
 				item="EMF Static Config" >
 			<enumVal>
-				<enumChoice choice="Not used"/>
+				<enumChoice choice="Disabled"/>
 				<enumChoice choice="Button control of motor"/>
 				</enumVal>
 			</variable>
@@ -689,12 +701,12 @@
 			</variable>
 			
 		<variable label="Momentary Pulse" CV="62" default="60"
-				item="Function 2 effect generated" tooltip="1 second = 60 to 4 seconds = 255" >
+				item="Function 3 effect generated" tooltip="1 second = 60 to 4 seconds = 255" >
 			<decVal/>
 			</variable>
 
 		<variable label="Ditch Light Blink Holdover Time" CV="63" default="10" 
-				item="Global lighting option 3" tooltip="1 second = about 12" >
+				item="Function 2 effect generated" tooltip="1 second = about 12" >
 			<decVal/>
 			</variable>
 			
@@ -722,12 +734,12 @@
 			</variable>
 
 		<variable label="Mars/Gyra Max Bright Time" CV="113" default="9" 
-				item="Function F0R effect generated" >
+				item="Function F0F option 2" >
 			<decVal />
 			</variable>
 
 		<variable label="Mars/Gyra Total Cycle Time" CV="114" default="1" 
-				item="Function F0R behavior" >
+				item="Function F0F option 3" >
 			<decVal />
 			</variable>
 
@@ -742,7 +754,7 @@
 			</variable>
 
 		<variable label="Ditch Light Blink Rate" CV="117" default="5" mask="XXXXVVVV"
-				item="Global lighting option 4" >
+				item="Function 2 behavior" >
 			<enumVal>
 				<enumChoice choice="Reserved"/>
 				<enumChoice choice="1 slowest"/>
@@ -764,27 +776,27 @@
 			</variable>
 			
 		<variable label="Beacon Min Brightness" CV="118" default="2" 
-				item="Function 1 effect generated" >
+				item="Function F0R effect generated" >
 			<decVal min="1" max="5"/>
 			</variable>
 
 		<variable label="Beacon Max Bright Time" CV="119" default="2" 
-				item="Function 2 effect generated" >
+				item="Function F0R option 2" >
 			<decVal />
 			</variable>
 
 		<variable label="Beacon Total Cycle Time" CV="120" default="3" 
-				item="Function 2 behavior" >
+				item="Function F0R option 3" >
 			<decVal />
 			</variable>
 
 		<variable label="Beacon Mid Brightness" CV="121" default="4" 
-				item="Function 1 behavior" >
+				item="Function F0R behavior" >
 			<decVal min="2" max="26"/>
 			</variable>
 
 		<variable label="Beacon Max Brightness" CV="122" default="8" 
-				item="Function 1 options" >
+				item="Function F0R options" >
 			<decVal min="4" max="28"/>
 			</variable>
 			
