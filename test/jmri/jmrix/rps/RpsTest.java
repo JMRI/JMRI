@@ -1,0 +1,55 @@
+// RpsTest.java
+
+package jmri.jmrix.rps;
+
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+/**
+ * Tests for the jmri.jmrix.rps package.
+ * @author      Bob Jacobsen  Copyright 2006
+ * @version   $Revision: 1.1 $
+ */
+public class RpsTest extends TestCase {
+
+    // from here down is testing infrastructure
+
+    public RpsTest(String s) {
+        super(s);
+    }
+
+    // Main entry point
+    static public void main(String[] args) {
+        String[] testCaseName = {RpsTest.class.getName()};
+        junit.swingui.TestRunner.main(testCaseName);
+    }
+
+    // test suite from all defined tests
+    public static Test suite() {
+        apps.tests.AllTest.initLogging();
+        TestSuite suite = new TestSuite("jmri.jmrix.rps.RpsTest");
+        suite.addTest(MeasurementTest.suite());
+        suite.addTest(jmri.jmrix.rps.reversealign.AlignmentPanelTest.suite());
+        suite.addTest(DataSourceTest.suite());
+        suite.addTest(PositionFileTest.suite());
+        suite.addTest(ReadingTest.suite());
+        suite.addTest(RpsPositionIconTest.suite());
+        suite.addTest(InitialAlgorithmTest.suite());
+        suite.addTest(Ash1_0AlgorithmTest.suite());
+        suite.addTest(Ash1_1AlgorithmTest.suite());
+        suite.addTest(Ash2_0AlgorithmTest.suite());
+        suite.addTest(Ash2_1AlgorithmTest.suite());
+        suite.addTest(jmri.jmrix.rps.rpsmon.RpsMonTest.suite());
+        suite.addTest(jmri.jmrix.rps.RpsSensorManagerTest.suite());
+        suite.addTest(jmri.jmrix.rps.RpsSensorTest.suite());
+        suite.addTest(jmri.jmrix.rps.RegionTest.suite());
+        suite.addTest(jmri.jmrix.rps.TransformTest.suite());
+        suite.addTest(jmri.jmrix.rps.display.DisplayTest.suite()); // do 2nd to display in front
+        suite.addTest(jmri.jmrix.rps.csvinput.CsvTest.suite()); // do 3rd to display in front
+        suite.addTest(jmri.jmrix.rps.trackingpanel.RpsTrackingPanelTest.suite()); // do 4th to display in front
+        return suite;
+    }
+
+}
