@@ -6,7 +6,7 @@ import jmri.jmrix.loconet.AspectGenerator;
 import jmri.jmrix.loconet.LnSecurityElementManager;
 import jmri.jmrix.loconet.SecurityElement;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 import org.jdom.Attribute;
 import org.jdom.Element;
 
@@ -15,7 +15,7 @@ import org.jdom.Element;
  * configuring LnSecurityElementManager.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class LnSecurityElementManagerXml implements XmlAdapter {
 
@@ -25,30 +25,30 @@ public class LnSecurityElementManagerXml implements XmlAdapter {
 
     public Element store(Object o) {
         Element elements = new Element("securityelements");
-        elements.addAttribute("class","jmri.jmrix.loconet.configurexml.LnSecurityElementManagerXml");
+        elements.setAttribute("class","jmri.jmrix.loconet.configurexml.LnSecurityElementManagerXml");
         LnSecurityElementManager sem = (LnSecurityElementManager) o;
         if (sem!=null) {
-            com.sun.java.util.collections.Iterator iter =
+            java.util.Iterator iter =
                                     sem.getSecurityElementList().iterator();
 
             while (iter.hasNext()) {
                 SecurityElement se = (SecurityElement)iter.next();
                 // we do a brute force store here eventually
                 Element elem = new Element("securityelement");
-                elem.addAttribute("number", String.valueOf(se.mNumber));     // own SE number
+                elem.setAttribute("number", String.valueOf(se.mNumber));     // own SE number
 
-                elem.addAttribute("calculates", (se.calculates ? "yes" : "no" ));
+                elem.setAttribute("calculates", (se.calculates ? "yes" : "no" ));
 
-                elem.addAttribute("dsSensor", String.valueOf(se.dsSensor));
-                elem.addAttribute("turnout", String.valueOf(se.turnout));
-                elem.addAttribute("auxInput", String.valueOf(se.auxInput));
+                elem.setAttribute("dsSensor", String.valueOf(se.dsSensor));
+                elem.setAttribute("turnout", String.valueOf(se.turnout));
+                elem.setAttribute("auxInput", String.valueOf(se.auxInput));
 
                 String makeReservation = "";
                 if (se.makeAReservation) makeReservation+="A";
                 if (se.makeBReservation) makeReservation+="B";
                 if (se.makeCReservation) makeReservation+="C";
                 if (makeReservation.equals("")) makeReservation = "none";
-                elem.addAttribute("makeReservation", makeReservation);
+                elem.setAttribute("makeReservation", makeReservation);
                 String onAXReservation;
                 if (se.onAXReservation == SecurityElement.STOPOPPOSITE)
                     onAXReservation = "stopOpposite";
@@ -56,7 +56,7 @@ public class LnSecurityElementManagerXml implements XmlAdapter {
                     onAXReservation = "stopUnreserved";
                 else
                     onAXReservation = "none";
-                elem.addAttribute("onAXReservation", onAXReservation);
+                elem.setAttribute("onAXReservation", onAXReservation);
                 String onXAReservation;
                 if (se.onXAReservation == SecurityElement.STOPOPPOSITE)
                     onXAReservation = "stopOpposite";
@@ -64,26 +64,26 @@ public class LnSecurityElementManagerXml implements XmlAdapter {
                     onXAReservation = "stopUnreserved";
                 else
                     onXAReservation = "none";
-                elem.addAttribute("onXAReservation", onXAReservation);
+                elem.setAttribute("onXAReservation", onXAReservation);
 
-                elem.addAttribute("attachAnum", String.valueOf(se.attachAnum));
-                elem.addAttribute("attachAleg", String.valueOf(se.attachAleg));
+                elem.setAttribute("attachAnum", String.valueOf(se.attachAnum));
+                elem.setAttribute("attachAleg", String.valueOf(se.attachAleg));
 
-                elem.addAttribute("attachBnum", String.valueOf(se.attachBnum));
-                elem.addAttribute("attachBleg", String.valueOf(se.attachBleg));
+                elem.setAttribute("attachBnum", String.valueOf(se.attachBnum));
+                elem.setAttribute("attachBleg", String.valueOf(se.attachBleg));
 
-                elem.addAttribute("attachCnum", String.valueOf(se.attachCnum));
-                elem.addAttribute("attachCleg", String.valueOf(se.attachCleg));
+                elem.setAttribute("attachCnum", String.valueOf(se.attachCnum));
+                elem.setAttribute("attachCleg", String.valueOf(se.attachCleg));
 
-                elem.addAttribute("maxSpeedAC", String.valueOf(se.maxSpeedAC));
-                elem.addAttribute("maxSpeedCA", String.valueOf(se.maxSpeedCA));
-                elem.addAttribute("maxSpeedAB", String.valueOf(se.maxSpeedAB));
-                elem.addAttribute("maxSpeedBA", String.valueOf(se.maxSpeedBA));
+                elem.setAttribute("maxSpeedAC", String.valueOf(se.maxSpeedAC));
+                elem.setAttribute("maxSpeedCA", String.valueOf(se.maxSpeedCA));
+                elem.setAttribute("maxSpeedAB", String.valueOf(se.maxSpeedAB));
+                elem.setAttribute("maxSpeedBA", String.valueOf(se.maxSpeedBA));
 
-                elem.addAttribute("maxBrakingAC", String.valueOf(se.maxBrakingAC));
-                elem.addAttribute("maxBrakingCA", String.valueOf(se.maxBrakingCA));
-                elem.addAttribute("maxBrakingAB", String.valueOf(se.maxBrakingAB));
-                elem.addAttribute("maxBrakingBA", String.valueOf(se.maxBrakingBA));
+                elem.setAttribute("maxBrakingAC", String.valueOf(se.maxBrakingAC));
+                elem.setAttribute("maxBrakingCA", String.valueOf(se.maxBrakingCA));
+                elem.setAttribute("maxBrakingAB", String.valueOf(se.maxBrakingAB));
+                elem.setAttribute("maxBrakingBA", String.valueOf(se.maxBrakingBA));
 
                 elements.addContent(elem);
             }
