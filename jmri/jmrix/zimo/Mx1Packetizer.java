@@ -6,13 +6,12 @@ package jmri.jmrix.zimo;
 
 import java.io.DataInputStream;
 import java.io.OutputStream;
-import com.sun.java.util.collections.LinkedList;
-import com.sun.java.util.collections.NoSuchElementException;
-
+import java.util.LinkedList;
+import java.util.NoSuchElementException;
+  
 /** 
  * Access to Zimo Mx1 messages
- * via stream-based I/O.  The "Mx1Interface"
- * side sends/receives Mx1Message objects.  The connection to
+ * via stream-based I/O.  The "Mx1Interface" * side sends/receives Mx1Message objects.  The connection to
  * a Mx1PortController is via a pair of *Streams, which then carry sequences
  * of characters for transmission.
  *<P>
@@ -27,7 +26,7 @@ import com.sun.java.util.collections.NoSuchElementException;
  *</UL>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.3 $
+ * @version 		$Revision: 1.4 $
  * 
  * Adapted by Sip Bosch for use with zimo Mx-1
  *

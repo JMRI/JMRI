@@ -4,10 +4,10 @@ package jmri.jmrix.xpa;
 
 import java.io.DataInputStream;
 import java.io.OutputStream;
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
-import com.sun.java.util.collections.LinkedList;
-import com.sun.java.util.collections.NoSuchElementException;
+import java.util.LinkedList;
+import java.util.NoSuchElementException;
 
 /**
  * Converts Stream-based I/O to/from Xpa messages.  The "XpaInterface"
@@ -17,7 +17,7 @@ import com.sun.java.util.collections.NoSuchElementException;
  * is handled in an independent thread.
  *
  * @author			Paul Bender  Copyright (C) 2004
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class XpaTrafficController implements XpaInterface, Runnable {
 
