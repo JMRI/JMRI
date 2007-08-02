@@ -21,7 +21,7 @@ import java.io.InputStream;
  * Uses (creates, modifies, destroys) files in the local preferences directory
  *
  * @author	    Bob Jacobsen  Copyright 2001
- * @version         $Revision: 1.8 $
+ * @version         $Revision: 1.9 $
  */
 public class XmlFileTest extends TestCase {
 
@@ -39,7 +39,7 @@ public class XmlFileTest extends TestCase {
         Assert.assertTrue("non-existing file ", !x.checkFile("dummy file not expected to exist"));
     }
 
-    public void testNotVoid() throws org.jdom.JDOMException, java.io.FileNotFoundException {
+    public void testNotVoid() throws org.jdom.JDOMException, java.io.IOException {
         // XmlFile is abstract, so can't check ctor directly; use local class
         XmlFile x = new XmlFile() {
             };

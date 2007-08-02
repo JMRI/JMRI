@@ -10,7 +10,7 @@ import org.jdom.Element;
  * Handle XML persistance of PerformScriptModel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  * @see apps.PerformScriptPanel
  */
 public class PerformScriptModelXml implements XmlAdapter {
@@ -27,9 +27,9 @@ public class PerformScriptModelXml implements XmlAdapter {
         Element e = new Element("perform");
         PerformScriptModel g = (PerformScriptModel) o;
 
-        e.addAttribute("name", g.getFileName());
-        e.addAttribute("type", "ScriptFile");
-        e.addAttribute("class", this.getClass().getName());
+        e.setAttribute("name", g.getFileName());
+        e.setAttribute("type", "ScriptFile");
+        e.setAttribute("class", this.getClass().getName());
         return e;
     }
 

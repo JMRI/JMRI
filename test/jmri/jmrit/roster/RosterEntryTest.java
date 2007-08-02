@@ -13,7 +13,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.roster.RosterEntry class.
  * @author	Bob Jacobsen     Copyright (C) 2001, 2002
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class RosterEntryTest extends TestCase {
 
@@ -31,17 +31,17 @@ public class RosterEntryTest extends TestCase {
     public void testPartialLoad() {
         // create Element
         org.jdom.Element e = new org.jdom.Element("locomotive")
-            .addAttribute("id","our id 1")
-            .addAttribute("fileName","file here")
-            .addAttribute("roadNumber","431")
-            .addAttribute("roadName","SP")
-            .addAttribute("mfg","Athearn")
-            .addAttribute("dccAddress","1234")
+            .setAttribute("id","our id 1")
+            .setAttribute("fileName","file here")
+            .setAttribute("roadNumber","431")
+            .setAttribute("roadName","SP")
+            .setAttribute("mfg","Athearn")
+            .setAttribute("dccAddress","1234")
             .addContent(
                     new org.jdom.Element("locoaddress").addContent(
                         new org.jdom.Element("dcclocoaddress")
-                            .addAttribute("number","1234")
-                            .addAttribute("longaddress","yes")
+                            .setAttribute("number","1234")
+                            .setAttribute("longaddress","yes")
                     )
                 )
             ; // end create element
@@ -60,8 +60,8 @@ public class RosterEntryTest extends TestCase {
     public void testEmptyLoad() {
         // create Element
         org.jdom.Element e = new org.jdom.Element("locomotive")
-            .addAttribute("id","our id 2")
-            .addAttribute("fileName","file here")
+            .setAttribute("id","our id 2")
+            .setAttribute("fileName","file here")
             ; // end create element
 
         RosterEntry r = new RosterEntry(e){
@@ -80,15 +80,15 @@ public class RosterEntryTest extends TestCase {
     public void testFullLoad() {
         // create Element
         org.jdom.Element e = new org.jdom.Element("locomotive")
-            .addAttribute("id","our id 3")
-            .addAttribute("fileName","file here")
-            .addAttribute("roadNumber","431")
-            .addAttribute("roadName","SP")
-            .addAttribute("mfg","Athearn")
-            .addAttribute("dccAddress","1234")
+            .setAttribute("id","our id 3")
+            .setAttribute("fileName","file here")
+            .setAttribute("roadNumber","431")
+            .setAttribute("roadName","SP")
+            .setAttribute("mfg","Athearn")
+            .setAttribute("dccAddress","1234")
             .addContent(new org.jdom.Element("decoder")
-                        .addAttribute("family","91")
-                        .addAttribute("model","33")
+                        .setAttribute("family","91")
+                        .setAttribute("model","33")
                         )
             ; // end create element
 
@@ -109,15 +109,15 @@ public class RosterEntryTest extends TestCase {
     public void testStore() {
         // create Element
         org.jdom.Element e = new org.jdom.Element("locomotive")
-            .addAttribute("id","our id 4")
-            .addAttribute("fileName","file here")
-            .addAttribute("roadNumber","431")
-            .addAttribute("roadName","SP")
-            .addAttribute("mfg","Athearn")
-            .addAttribute("dccAddress","1234")
+            .setAttribute("id","our id 4")
+            .setAttribute("fileName","file here")
+            .setAttribute("roadNumber","431")
+            .setAttribute("roadName","SP")
+            .setAttribute("mfg","Athearn")
+            .setAttribute("dccAddress","1234")
             .addContent(new org.jdom.Element("decoder")
-                        .addAttribute("family","91")
-                        .addAttribute("model","33")
+                        .setAttribute("family","91")
+                        .setAttribute("model","33")
                         )
             ; // end create element
 

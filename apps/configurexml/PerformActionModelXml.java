@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Handle XML persistance of PerformActionModel objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  * @see apps.PerformActionPanel
  */
 public class PerformActionModelXml implements XmlAdapter {
@@ -30,9 +30,9 @@ public class PerformActionModelXml implements XmlAdapter {
         Element e = new Element("perform");
         PerformActionModel g = (PerformActionModel) o;
 
-        e.addAttribute("name", g.getClassName());
-        e.addAttribute("type", "Action");
-        e.addAttribute("class", this.getClass().getName());
+        e.setAttribute("name", g.getClassName());
+        e.setAttribute("type", "Action");
+        e.setAttribute("class", this.getClass().getName());
         return e;
     }
 
