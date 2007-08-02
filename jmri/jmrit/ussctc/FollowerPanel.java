@@ -10,14 +10,14 @@ import javax.swing.*;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableColumn;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 
 /**
  * User interface frame for creating and editing "Follower" logic
  * on USS CTC machines.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2007
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class FollowerPanel extends BasePanel {
 

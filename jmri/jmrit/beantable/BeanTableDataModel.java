@@ -19,13 +19,13 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.JComboBox;
 import java.awt.Font;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 
 /**
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.19 $
+ * @version		$Revision: 1.20 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {

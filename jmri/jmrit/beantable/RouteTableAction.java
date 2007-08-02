@@ -19,7 +19,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.*;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 
 import jmri.util.JmriJFrame;
 
@@ -31,7 +31,7 @@ import jmri.util.JmriJFrame;
  * @author	Dave Duchamp    Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2007 
  *
- * @version     $Revision: 1.32 $
+ * @version     $Revision: 1.33 $
  */
 
 public class RouteTableAction extends AbstractTableAction {

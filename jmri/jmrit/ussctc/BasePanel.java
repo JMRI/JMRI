@@ -10,13 +10,13 @@ import javax.swing.*;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableColumn;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 
 /**
  * Refactored common routines and data for the GUI panels in this package.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2007
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class BasePanel extends JPanel implements Constants {
 

@@ -31,7 +31,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.*;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 
 import jmri.util.JmriJFrame;
 
@@ -46,7 +46,7 @@ import jmri.util.JmriJFrame;
  *	   BeanTableBundle.properties, accessed via rb.
  *
  * @author	Dave Duchamp    Copyright (C) 2007
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 
 public class LogixTableAction extends AbstractTableAction {

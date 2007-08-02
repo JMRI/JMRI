@@ -8,14 +8,14 @@ import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 import org.jdom.Element;
 
 /**
  *  Load throttles from XML
  *
  * @author     Glen Oberhauser
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 public class LoadXmlThrottleAction extends AbstractAction
 {
@@ -87,7 +87,7 @@ public class LoadXmlThrottleAction extends AbstractAction
                 ThrottlePrefs prefs = new ThrottlePrefs();
                 Element root = prefs.rootFromFile(f);
                 List throttles = root.getChildren("ThrottleFrame");
-                for (com.sun.java.util.collections.Iterator i = throttles.iterator(); i.hasNext(); )
+                for (java.util.Iterator i = throttles.iterator(); i.hasNext(); )
                     {
                         ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
                         tf.setXml((Element) i.next());
@@ -99,7 +99,7 @@ public class LoadXmlThrottleAction extends AbstractAction
             {
                 log.warn("Loading Throttles exception:"+ex);
             }
-        catch (FileNotFoundException ex)
+        catch (java.io.IOException ex)
             {
                 log.warn("Loading Throttles exception:"+ex);
             }
@@ -111,7 +111,7 @@ public class LoadXmlThrottleAction extends AbstractAction
      *  An extension of the abstract XmlFile. No changes made to that class.
      *
      * @author     glen
-     * @version    $Revision: 1.12 $
+     * @version    $Revision: 1.13 $
      */
     class ThrottlePrefs extends XmlFile
     {

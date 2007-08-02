@@ -2,7 +2,7 @@
 
 package jmri.jmrit.automat;
 
-import com.sun.java.util.collections.ArrayList;
+import java.util.ArrayList;
 
 /**
  * A singlet providing access to information about
@@ -15,7 +15,7 @@ import com.sun.java.util.collections.ArrayList;
  * Swing thread to notify it's own listeners.
  *
  * @author	Bob Jacobsen    Copyright (C) 2004, 2007 
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class AutomatSummary  {
 

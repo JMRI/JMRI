@@ -8,14 +8,14 @@ import java.io.*;
 
 import javax.swing.*;
 
-import com.sun.java.util.collections.*;
+import java.util.*;
 import org.jdom.*;
 
 /**
  * Check the names in an XML decoder file against the names.xml definitions
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  * @see         jmri.jmrit.XmlFile
  */
 public class NameCheckAction extends AbstractAction {
@@ -93,7 +93,7 @@ public class NameCheckAction extends AbstractAction {
     /**
      * Ask SAX to read and verify a file
      */
-    Element readFile(File file) throws org.jdom.JDOMException, java.io.FileNotFoundException {
+    Element readFile(File file) throws org.jdom.JDOMException, java.io.IOException {
         XmlFile xf = new XmlFile(){};   // odd syntax is due to XmlFile being abstract
         
         return xf.rootFromFile(file);

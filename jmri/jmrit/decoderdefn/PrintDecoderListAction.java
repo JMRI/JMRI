@@ -9,7 +9,7 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 
 
 /**
@@ -20,7 +20,7 @@ import com.sun.java.util.collections.List;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class PrintDecoderListAction  extends AbstractAction {
 
