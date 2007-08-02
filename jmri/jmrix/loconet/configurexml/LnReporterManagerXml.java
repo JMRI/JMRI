@@ -11,7 +11,7 @@ import jmri.jmrix.loconet.LnReporterManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class LnReporterManagerXml extends jmri.configurexml.AbstractReporterManagerConfigXML {
 
@@ -20,7 +20,7 @@ public class LnReporterManagerXml extends jmri.configurexml.AbstractReporterMana
     }
 
     public void setStoreElementClass(Element reporters) {
-        reporters.addAttribute("class","jmri.jmrix.loconet.configurexml.LnReporterManagerXml");
+        reporters.setAttribute("class","jmri.jmrix.loconet.configurexml.LnReporterManagerXml");
     }
 
     public void load(Element element, Object o) {

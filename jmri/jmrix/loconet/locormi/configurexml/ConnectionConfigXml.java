@@ -20,7 +20,7 @@ import org.jdom.Element;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -37,9 +37,9 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         jmri.jmrix.loconet.locormi.ConnectionConfig c = (jmri.jmrix.loconet.locormi.ConnectionConfig)o;
         Element e = new Element("connection");
 
-        e.addAttribute("port", c.host.getText());
+        e.setAttribute("port", c.host.getText());
 
-        e.addAttribute("class", this.getClass().getName());
+        e.setAttribute("class", this.getClass().getName());
 
         return e;
     }

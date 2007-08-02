@@ -12,7 +12,7 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class LnSensorManagerXml extends jmri.configurexml.AbstractSensorManagerConfigXML {
 
@@ -21,7 +21,7 @@ public class LnSensorManagerXml extends jmri.configurexml.AbstractSensorManagerC
     }
 
     public void setStoreElementClass(Element sensors) {
-        sensors.addAttribute("class",this.getClass().getName());
+        sensors.setAttribute("class",this.getClass().getName());
     }
 
     public void load(Element element, Object o) {
