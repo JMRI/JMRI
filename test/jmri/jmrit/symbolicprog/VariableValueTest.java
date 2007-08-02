@@ -8,14 +8,12 @@ import java.awt.Component;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
-import com.sun.java.util.collections.Vector;
-
 import jmri.progdebugger.*;
 
 /**
  * Base for tests of classes inheriting from VariableValue abstract class
  * @author	Bob Jacobsen, Copyright 2002
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 public abstract class VariableValueTest extends TestCase {
 

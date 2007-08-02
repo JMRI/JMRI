@@ -2,12 +2,9 @@
 
 package jmri.jmrit.symbolicprog;
 
-import com.sun.java.util.collections.Vector;
-
 import javax.swing.*;
 
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.List;
+import java.util.*;
 import jmri.progdebugger.*;
 import junit.framework.*;
 
@@ -16,7 +13,7 @@ import junit.framework.*;
  *
  * @todo need a check of the MIXED state model for long address
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 
@@ -290,7 +287,7 @@ public class SplitVariableValueTest extends VariableValueTest {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = { SplitVariableValueTest.class.getName()};
+        String[] testCaseName = {"-noloading", SplitVariableValueTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 

@@ -9,13 +9,13 @@ import junit.framework.Assert;
 
 import jmri.progdebugger.*;
 
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 /**
  * Test CvValue class
  *
  * @author			Bob Jacobsen Copyright 2004, 2006
- * @version         $Revision: 1.12 $
+ * @version         $Revision: 1.13 $
  */
 public class CvValueTest extends TestCase {
 

@@ -7,9 +7,7 @@ import jmri.progdebugger.ProgDebugger;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.List;
-import com.sun.java.util.collections.Vector;
+import java.util.*;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -20,7 +18,7 @@ import junit.framework.TestSuite;
  *
  * @todo need a check of the MIXED state model for long address
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public class LongAddrVariableValueTest extends VariableValueTest {
 

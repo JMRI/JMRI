@@ -8,7 +8,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.framework.Assert;
 
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 /**
  * @author			Bob Jacobsen Copyright 2003, 2006

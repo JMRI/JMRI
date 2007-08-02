@@ -11,7 +11,7 @@ import junit.framework.Assert;
 
 import jmri.progdebugger.*;
 
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 /**
  * ComboRadioButtonsTest.java

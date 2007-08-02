@@ -13,13 +13,13 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 /**
  * Tests for Pr1Importer class.
  *
  * @author	Bob Jacobsen Copyright 2003
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class Pr1ImporterTest extends TestCase {
 
