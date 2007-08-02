@@ -4,7 +4,7 @@ import jmri.InstanceManager;
 import jmri.TurnoutManager;
 import java.io.File;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 import org.jdom.Document;
 import org.jdom.Element;
 
@@ -14,7 +14,7 @@ import org.jdom.Element;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class LayoutConfigXML extends jmri.jmrit.XmlFile {
 
@@ -39,15 +39,15 @@ public class LayoutConfigXML extends jmri.jmrit.XmlFile {
             // get the turnouts and store
             TurnoutManager tm = InstanceManager.turnoutManagerInstance();
             if (tm!=null) {
-                com.sun.java.util.collections.Iterator iter =
+                java.util.Iterator iter =
                     tm.getSystemNameList().iterator();
 
                 while (iter.hasNext()) {
                     String sname = (String)iter.next();
                     String uname = tm.getBySystemName(sname).getUserName();
                     Element elem = new Element("turnout")
-                        .addAttribute("systemName", sname);
-                    if (uname!=null) elem.addAttribute("userName", uname);
+                        .setAttribute("systemName", sname);
+                    if (uname!=null) elem.setAttribute("userName", uname);
                     log.debug("store turnout "+sname+":"+uname);
                     turnouts.addContent(elem);
 

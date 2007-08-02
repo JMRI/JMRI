@@ -8,7 +8,7 @@ import jmri.RouteManager;
 import jmri.Turnout;
 import jmri.Sensor;
 import jmri.DefaultRouteManager;
-import com.sun.java.util.collections.List;
+import java.util.List;
 import org.jdom.Element;
 
 /**
@@ -17,7 +17,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2004
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class DefaultRouteManagerXml implements XmlAdapter {
 
@@ -35,7 +35,7 @@ public class DefaultRouteManagerXml implements XmlAdapter {
         setStoreElementClass(routes);
         RouteManager tm = (RouteManager) o;
         if (tm!=null) {
-            com.sun.java.util.collections.Iterator iter =
+            java.util.Iterator iter =
                                     tm.getSystemNameList().iterator();
 
             while (iter.hasNext()) {
@@ -47,27 +47,27 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                 String cTurnout = r.getControlTurnout();
 				int addedDelay = r.getRouteCommandDelay();
                 Element elem = new Element("route")
-                            .addAttribute("systemName", sname);
-                if (uname!=null) elem.addAttribute("userName", uname);
+                            .setAttribute("systemName", sname);
+                if (uname!=null) elem.setAttribute("userName", uname);
                 if (cTurnout!=null) {
-                    elem.addAttribute("controlTurnout", cTurnout);
+                    elem.setAttribute("controlTurnout", cTurnout);
                     int state = r.getControlTurnoutState();
                     if (state == Turnout.THROWN) {
-                        elem.addAttribute("controlTurnoutState","THROWN");
+                        elem.setAttribute("controlTurnoutState","THROWN");
                     }
                     else {
-                        elem.addAttribute("controlTurnoutState","CLOSED");
+                        elem.setAttribute("controlTurnoutState","CLOSED");
                     }
                 }
 				if (addedDelay>0) {
-					elem.addAttribute("addedDelay",Integer.toString(addedDelay));
+					elem.setAttribute("addedDelay",Integer.toString(addedDelay));
 				}
                 // add route output Turnouts, if any
                 int index = 0;
                 String rTurnout = null;
                 while ( (rTurnout = r.getOutputTurnoutByIndex(index)) != null) {
                     Element rElem = new Element("routeOutputTurnout")
-                                    .addAttribute("systemName", rTurnout);
+                                    .setAttribute("systemName", rTurnout);
                     String sState = "CLOSED";
                     if (r.getOutputTurnoutSetState(rTurnout)==Turnout.THROWN) {
                         sState = "THROWN";
@@ -75,7 +75,7 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                     else if (r.getOutputTurnoutSetState(rTurnout)==Route.TOGGLE) {
                         sState = "TOGGLE";
                     }
-                   rElem.addAttribute("state", sState);
+                   rElem.setAttribute("state", sState);
                     elem.addContent(rElem);
                     index ++;
                 }
@@ -84,7 +84,7 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                 String rSensor = null;
                 while ( (rSensor = r.getOutputSensorByIndex(index)) != null) {
                     Element rElem = new Element("routeOutputSensor")
-                                    .addAttribute("systemName", rSensor);
+                                    .setAttribute("systemName", rSensor);
                     String sState = "INACTIVE";
                     if (r.getOutputSensorSetState(rSensor)==Sensor.ACTIVE) {
                         sState = "ACTIVE";
@@ -92,7 +92,7 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                     else if (r.getOutputSensorSetState(rSensor)==Route.TOGGLE) {
                         sState = "TOGGLE";
                     }
-                    rElem.addAttribute("state", sState);
+                    rElem.setAttribute("state", sState);
                     elem.addContent(rElem);
                     index ++;
                 }
@@ -101,7 +101,7 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                 rSensor = null;
                 while ( (rSensor = r.getRouteSensorName(index)) != null) {
                     Element rsElem = new Element("routeSensor")
-                                    .addAttribute("systemName", rSensor);
+                                    .setAttribute("systemName", rSensor);
                     int mode = r.getRouteSensorMode(index);
                     String modeName;
                     switch (mode) {
@@ -123,19 +123,19 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                     default:
                         modeName = null;
                     }
-                    if (modeName!=null) rsElem.addAttribute("mode", modeName);
+                    if (modeName!=null) rsElem.setAttribute("mode", modeName);
                     elem.addContent(rsElem);
                     index ++;
                 }
                 // add sound and script file elements if needed
                 if (r.getOutputSoundName()!=null && !r.getOutputSoundName().equals("")) {
                     Element rsElem = new Element("routeSoundFile")
-                                    .addAttribute("name", r.getOutputSoundName());
+                                    .setAttribute("name", r.getOutputSoundName());
                     elem.addContent(rsElem);
                 }
                 if (r.getOutputScriptName()!=null && !r.getOutputScriptName().equals("")) {
                     Element rsElem = new Element("routeScriptFile")
-                                    .addAttribute("name", r.getOutputScriptName());
+                                    .setAttribute("name", r.getOutputScriptName());
                     elem.addContent(rsElem);
                 }
                 
@@ -153,7 +153,7 @@ public class DefaultRouteManagerXml implements XmlAdapter {
      * @param routes The top-level element being created
      */
     public void setStoreElementClass(Element routes) {
-        routes.addAttribute("class","jmri.configurexml.DefaultRouteManagerXml");
+        routes.setAttribute("class","jmri.configurexml.DefaultRouteManagerXml");
     }
 
     public void load(Element element, Object o) {

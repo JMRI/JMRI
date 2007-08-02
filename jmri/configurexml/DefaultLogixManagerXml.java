@@ -6,7 +6,7 @@ import jmri.InstanceManager;
 import jmri.Logix;
 import jmri.LogixManager;
 import jmri.DefaultLogixManager;
-import com.sun.java.util.collections.List;
+import java.util.List;
 import org.jdom.Element;
 
 /**
@@ -15,7 +15,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class DefaultLogixManagerXml implements XmlAdapter {
 
@@ -33,7 +33,7 @@ public class DefaultLogixManagerXml implements XmlAdapter {
         setStoreElementClass(logixs);
         LogixManager tm = (LogixManager) o;
         if (tm!=null) {
-            com.sun.java.util.collections.Iterator iter =
+            java.util.Iterator iter =
                                     tm.getSystemNameList().iterator();
             while (iter.hasNext()) {
                 String sname = (String)iter.next();
@@ -43,10 +43,10 @@ public class DefaultLogixManagerXml implements XmlAdapter {
                 String uname = x.getUserName();
 				boolean enabled = x.getEnabled();
                 Element elem = new Element("logix")
-                            .addAttribute("systemName", sname);
-                if (uname!=null) elem.addAttribute("userName", uname);
-				if (enabled) elem.addAttribute("enabled","yes");
-				else elem.addAttribute("enabled","no");
+                            .setAttribute("systemName", sname);
+                if (uname!=null) elem.setAttribute("userName", uname);
+				if (enabled) elem.setAttribute("enabled","yes");
+				else elem.setAttribute("enabled","no");
 				// save child Conditionals
 				int numConditionals = x.getNumConditionals();
 				if (numConditionals>0) {
@@ -55,8 +55,8 @@ public class DefaultLogixManagerXml implements XmlAdapter {
 					for (int k = 0;k<numConditionals;k++) {
 						cSysName = x.getConditionalByNumberOrder(k);
 						cElem = new Element("logixConditional");
-						cElem.addAttribute("systemName",cSysName);
-						cElem.addAttribute("order",Integer.toString(k));
+						cElem.setAttribute("systemName",cSysName);
+						cElem.setAttribute("order",Integer.toString(k));
 						elem.addContent(cElem);
 					}
 				}
@@ -73,7 +73,7 @@ public class DefaultLogixManagerXml implements XmlAdapter {
      * @param logixs The top-level element being created
      */
     public void setStoreElementClass(Element logixs) {
-        logixs.addAttribute("class","jmri.configurexml.DefaultLogixManagerXml");
+        logixs.setAttribute("class","jmri.configurexml.DefaultLogixManagerXml");
     }
 
     public void load(Element element, Object o) {

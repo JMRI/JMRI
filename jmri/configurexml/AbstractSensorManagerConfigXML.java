@@ -3,7 +3,8 @@ package jmri.configurexml;
 import jmri.InstanceManager;
 import jmri.SensorManager;
 import jmri.Sensor;
-import com.sun.java.util.collections.List;
+
+import java.util.List;
 import org.jdom.Element;
 
 /**
@@ -18,7 +19,7 @@ import org.jdom.Element;
  * specific Sensor or AbstractSensor subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public abstract class AbstractSensorManagerConfigXML implements XmlAdapter {
 
@@ -36,7 +37,7 @@ public abstract class AbstractSensorManagerConfigXML implements XmlAdapter {
         setStoreElementClass(sensors);
         SensorManager tm = (SensorManager) o;
         if (tm!=null) {
-            com.sun.java.util.collections.Iterator iter =
+            java.util.Iterator iter =
                                     tm.getSystemNameList().iterator();
 
             while (iter.hasNext()) {
@@ -46,9 +47,9 @@ public abstract class AbstractSensorManagerConfigXML implements XmlAdapter {
                 String uname = tm.getBySystemName(sname).getUserName();
                 String inverted = tm.getBySystemName(sname).getInverted() ? "true" : "false";
                 Element elem = new Element("sensor")
-                            .addAttribute("systemName", sname)
-                            .addAttribute("inverted", inverted);
-                if (uname!=null) elem.addAttribute("userName", uname);
+                            .setAttribute("systemName", sname)
+                            .setAttribute("inverted", inverted);
+                if (uname!=null) elem.setAttribute("userName", uname);
                 log.debug("store sensor "+sname+":"+uname);
                 sensors.addContent(elem);
 

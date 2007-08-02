@@ -3,7 +3,7 @@ package jmri.configurexml;
 import jmri.AbstractSignalHeadManager;
 import jmri.InstanceManager;
 import jmri.SignalHeadManager;
-import com.sun.java.util.collections.List;
+import java.util.List;
 import org.jdom.Element;
 
 /**
@@ -20,7 +20,7 @@ import org.jdom.Element;
  * Based on AbstractTurnoutManagerConfigXML
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class AbstractSignalHeadManagerXml implements XmlAdapter {
 
@@ -38,7 +38,7 @@ public class AbstractSignalHeadManagerXml implements XmlAdapter {
         setStoreElementClass(signalheads);
         SignalHeadManager sm = (SignalHeadManager) o;
         if (sm!=null) {
-            com.sun.java.util.collections.Iterator iter =
+            java.util.Iterator iter =
                                     sm.getSystemNameList().iterator();
 
             while (iter.hasNext()) {
@@ -65,7 +65,7 @@ public class AbstractSignalHeadManagerXml implements XmlAdapter {
      * @param turnouts The top-level element being created
      */
     public void setStoreElementClass(Element turnouts) {
-        turnouts.addAttribute("class","jmri.configurexml.AbstractSignalHeadManagerXml");
+        turnouts.setAttribute("class","jmri.configurexml.AbstractSignalHeadManagerXml");
     }
 
     /**

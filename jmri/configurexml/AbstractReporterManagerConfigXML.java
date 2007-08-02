@@ -2,7 +2,7 @@ package jmri.configurexml;
 
 import jmri.InstanceManager;
 import jmri.ReporterManager;
-import com.sun.java.util.collections.List;
+import java.util.List;
 import org.jdom.Element;
 
 /**
@@ -17,7 +17,7 @@ import org.jdom.Element;
  * specific Reporter or AbstractReporter subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public abstract class AbstractReporterManagerConfigXML implements XmlAdapter {
 
@@ -35,7 +35,7 @@ public abstract class AbstractReporterManagerConfigXML implements XmlAdapter {
         setStoreElementClass(reporters);
         ReporterManager tm = (ReporterManager) o;
         if (tm!=null) {
-            com.sun.java.util.collections.Iterator iter =
+            java.util.Iterator iter =
                                     tm.getSystemNameList().iterator();
 
             while (iter.hasNext()) {
@@ -44,8 +44,8 @@ public abstract class AbstractReporterManagerConfigXML implements XmlAdapter {
                 log.debug("system name is "+sname);
                 String uname = tm.getBySystemName(sname).getUserName();
                 Element elem = new Element("reporter")
-                            .addAttribute("systemName", sname);
-                if (uname!=null) elem.addAttribute("userName", uname);
+                            .setAttribute("systemName", sname);
+                if (uname!=null) elem.setAttribute("userName", uname);
                 log.debug("store Reporter "+sname+":"+uname);
                 reporters.addContent(elem);
 

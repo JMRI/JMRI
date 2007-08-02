@@ -6,7 +6,7 @@ import jmri.InstanceManager;
 import jmri.Conditional;
 import jmri.ConditionalManager;
 import jmri.DefaultConditionalManager;
-import com.sun.java.util.collections.List;
+import java.util.List;
 import org.jdom.Element;
 
 /**
@@ -15,7 +15,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class DefaultConditionalManagerXml implements XmlAdapter {
 
@@ -33,7 +33,7 @@ public class DefaultConditionalManagerXml implements XmlAdapter {
         setStoreElementClass(conditionals);
         ConditionalManager tm = (ConditionalManager) o;
         if (tm!=null) {
-            com.sun.java.util.collections.Iterator iter =
+            java.util.Iterator iter =
                                     tm.getSystemNameList().iterator();
             while (iter.hasNext()) {
                 String sname = (String)iter.next();
@@ -42,30 +42,30 @@ public class DefaultConditionalManagerXml implements XmlAdapter {
                 Conditional c = tm.getBySystemName(sname);
                 String uname = c.getUserName();
                 Element elem = new Element("conditional")
-                            .addAttribute("systemName", sname);
-                if (uname!=null) elem.addAttribute("userName", uname);
+                            .setAttribute("systemName", sname);
+                if (uname!=null) elem.setAttribute("userName", uname);
 				// save child state variables
 				int numStateVariables = c.getNumStateVariables();
 				if (numStateVariables>0) {
 					Element cElem = null;
 					for (int k = 0;k<numStateVariables;k++) {
 						cElem = new Element("conditionalStateVariable");
-						cElem.addAttribute("operator",Integer.toString(
+						cElem.setAttribute("operator",Integer.toString(
 								c.getStateVariableOperator(k)));
-						cElem.addAttribute("type",Integer.toString(
+						cElem.setAttribute("type",Integer.toString(
 								c.getStateVariableType(k)));
-						cElem.addAttribute("systemName",
+						cElem.setAttribute("systemName",
 								c.getStateVariableName(k));
-						cElem.addAttribute("dataString",
+						cElem.setAttribute("dataString",
 								c.getStateVariableDataString(k));
-						cElem.addAttribute("num1",Integer.toString(
+						cElem.setAttribute("num1",Integer.toString(
 								c.getStateVariableNum1(k)));
-						cElem.addAttribute("num2",Integer.toString(
+						cElem.setAttribute("num2",Integer.toString(
 								c.getStateVariableNum2(k)));
 						if (c.getStateVariableTriggersCalculation(k)) 
-							cElem.addAttribute("triggersCalc","yes");
+							cElem.setAttribute("triggersCalc","yes");
 						else
-							cElem.addAttribute("triggersCalc","no");						
+							cElem.setAttribute("triggersCalc","no");						
 						elem.addContent(cElem);
 					}
 				}
@@ -80,12 +80,12 @@ public class DefaultConditionalManagerXml implements XmlAdapter {
 				Element aElem = null;
 				for (int k = 0;k<2;k++) {
 					aElem = new Element("conditionalAction");
-					aElem.addAttribute("option",Integer.toString(opt[k]));
-					aElem.addAttribute("delay",Integer.toString(delay[k]));
-					aElem.addAttribute("type",Integer.toString(type[k]));
-					aElem.addAttribute("systemName",name[k]);
-					aElem.addAttribute("data",Integer.toString(data[k]));
-					aElem.addAttribute("string",dataString[k]);
+					aElem.setAttribute("option",Integer.toString(opt[k]));
+					aElem.setAttribute("delay",Integer.toString(delay[k]));
+					aElem.setAttribute("type",Integer.toString(type[k]));
+					aElem.setAttribute("systemName",name[k]);
+					aElem.setAttribute("data",Integer.toString(data[k]));
+					aElem.setAttribute("string",dataString[k]);
 					elem.addContent(aElem);
 				}
 				conditionals.addContent(elem);
@@ -101,7 +101,7 @@ public class DefaultConditionalManagerXml implements XmlAdapter {
      * @param conditionals The top-level element being created
      */
     public void setStoreElementClass(Element conditionals) {
-        conditionals.addAttribute("class","jmri.configurexml.DefaultConditionalManagerXml");
+        conditionals.setAttribute("class","jmri.configurexml.DefaultConditionalManagerXml");
     }
 
     public void load(Element element, Object o) {

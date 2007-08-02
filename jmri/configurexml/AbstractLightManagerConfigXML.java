@@ -5,7 +5,7 @@ package jmri.configurexml;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;
-import com.sun.java.util.collections.List;
+import java.util.List;
 import org.jdom.Element;
 
 /**
@@ -22,7 +22,7 @@ import org.jdom.Element;
  * Based on AbstractSensorManagerConfigXML.java
  *
  * @author Dave Duchamp Copyright (c) 2004
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public abstract class AbstractLightManagerConfigXML implements XmlAdapter {
 
@@ -40,7 +40,7 @@ public abstract class AbstractLightManagerConfigXML implements XmlAdapter {
         setStoreElementClass(lights);
         LightManager tm = (LightManager) o;
         if (tm!=null) {
-            com.sun.java.util.collections.Iterator iter =
+            java.util.Iterator iter =
                                     tm.getSystemNameList().iterator();
 
             while (iter.hasNext()) {
@@ -50,27 +50,27 @@ public abstract class AbstractLightManagerConfigXML implements XmlAdapter {
                 Light lgt = tm.getBySystemName(sname);
                 String uname = lgt.getUserName();
                 Element elem = new Element("light")
-                            .addAttribute("systemName", sname);
-                if (uname!=null) elem.addAttribute("userName", uname);
+                            .setAttribute("systemName", sname);
+                if (uname!=null) elem.setAttribute("userName", uname);
                 int type = lgt.getControlType();
-                elem.addAttribute("controlType", ""+type);
+                elem.setAttribute("controlType", ""+type);
                 if (type==Light.SENSOR_CONTROL) {
-                    elem.addAttribute("controlSensor", lgt.getControlSensorName() );
-                    elem.addAttribute("sensorSense", ""+lgt.getControlSensorSense() );
+                    elem.setAttribute("controlSensor", lgt.getControlSensorName() );
+                    elem.setAttribute("sensorSense", ""+lgt.getControlSensorSense() );
                 }
                 else if (type==Light.FAST_CLOCK_CONTROL) {
-                    elem.addAttribute("fastClockOnHour", ""+lgt.getFastClockOnHour() );
-                    elem.addAttribute("fastClockOnMin", ""+lgt.getFastClockOnMin() );
-                    elem.addAttribute("fastClockOffHour", ""+lgt.getFastClockOffHour() );
-                    elem.addAttribute("fastClockOffMin", ""+lgt.getFastClockOffMin() );
+                    elem.setAttribute("fastClockOnHour", ""+lgt.getFastClockOnHour() );
+                    elem.setAttribute("fastClockOnMin", ""+lgt.getFastClockOnMin() );
+                    elem.setAttribute("fastClockOffHour", ""+lgt.getFastClockOffHour() );
+                    elem.setAttribute("fastClockOffMin", ""+lgt.getFastClockOffMin() );
                 }
                 else if (type==Light.TURNOUT_STATUS_CONTROL) {
-                    elem.addAttribute("controlTurnout", lgt.getControlTurnoutName() );
-                    elem.addAttribute("turnoutState", ""+lgt.getControlTurnoutState() );
+                    elem.setAttribute("controlTurnout", lgt.getControlTurnoutName() );
+                    elem.setAttribute("turnoutState", ""+lgt.getControlTurnoutState() );
                 }
                 else if (type==Light.TIMED_ON_CONTROL) {
-                    elem.addAttribute("timedControlSensor", lgt.getControlTimedOnSensorName() );
-                    elem.addAttribute("duration", ""+lgt.getTimedOnDuration() );
+                    elem.setAttribute("timedControlSensor", lgt.getControlTimedOnSensorName() );
+                    elem.setAttribute("duration", ""+lgt.getTimedOnDuration() );
                 }
                 log.debug("store light "+sname+":"+uname);
                 lights.addContent(elem);

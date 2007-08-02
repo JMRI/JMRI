@@ -4,7 +4,7 @@ import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.TripleTurnoutSignalHead;
 import jmri.Turnout;
-import com.sun.java.util.collections.List;
+import java.util.List;
 import org.jdom.Attribute;
 import org.jdom.Element;
 
@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle XML configuration for TripleTurnoutSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class TripleTurnoutSignalHeadXml implements XmlAdapter {
 
@@ -28,11 +28,11 @@ public class TripleTurnoutSignalHeadXml implements XmlAdapter {
         TripleTurnoutSignalHead p = (TripleTurnoutSignalHead)o;
 
         Element element = new Element("signalhead");
-        element.addAttribute("class", this.getClass().getName());
+        element.setAttribute("class", this.getClass().getName());
 
         // include contents
-        element.addAttribute("systemName", p.getSystemName());
-        if (p.getUserName() != null) element.addAttribute("userName", p.getUserName());
+        element.setAttribute("systemName", p.getSystemName());
+        if (p.getUserName() != null) element.setAttribute("userName", p.getUserName());
 
         element.addContent(addTurnoutElement(p.getGreen()));
         element.addContent(addTurnoutElement(p.getYellow()));
@@ -46,8 +46,8 @@ public class TripleTurnoutSignalHeadXml implements XmlAdapter {
         String sys = to.getSystemName();
 
         Element el = new Element("turnout");
-        el.addAttribute("systemName", sys);
-        if (user!=null) el.addAttribute("userName", user);
+        el.setAttribute("systemName", sys);
+        if (user!=null) el.setAttribute("userName", user);
 
         return el;
     }
