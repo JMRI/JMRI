@@ -11,9 +11,9 @@ import javax.swing.JComboBox;
 import org.jdom.Attribute;
 import org.jdom.Document;
 import org.jdom.Element;
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.Hashtable;
-import com.sun.java.util.collections.List;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
 
 // try to limit the JDOM to this class, so that others can manipulate...
 
@@ -31,7 +31,7 @@ import com.sun.java.util.collections.List;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.25 $
+ * @version			$Revision: 1.26 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -175,7 +175,7 @@ public class DecoderIndexFile extends XmlFile {
      * @throws JDOMException
      * @throws FileNotFoundException
      */
-    static boolean updateIndexIfNeeded(String name) throws org.jdom.JDOMException, java.io.FileNotFoundException {
+    static boolean updateIndexIfNeeded(String name) throws org.jdom.JDOMException, java.io.IOException {
         // get version from master index; if not found, give up
         String masterVersion = null;
         DecoderIndexFile masterXmlFile = new DecoderIndexFile();
@@ -285,7 +285,7 @@ public class DecoderIndexFile extends XmlFile {
      * Read the contents of a decoderIndex XML file into this object. Note that this does not
      * clear any existing entries; reset the instance to do that.
      */
-    void readFile(String name) throws org.jdom.JDOMException, java.io.FileNotFoundException {
+    void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
         if (log.isDebugEnabled()) log.debug("readFile "+name);
 
         // read file, find root
@@ -408,15 +408,15 @@ public class DecoderIndexFile extends XmlFile {
         // add top-level elements
         Element index;
         root.addContent(index = new Element("decoderIndex"));
-        index.addAttribute("version", Integer.toString(fileVersion));
+        index.setAttribute("version", Integer.toString(fileVersion));
         log.debug("version written to file as "+fileVersion);
 
         // add mfg list from existing DecoderIndexFile item
         Element mfgList = new Element("mfgList");
         // We treat "NMRA" special...
         Element mfg = new Element("manufacturer");
-        mfg.addAttribute("mfg","NMRA");
-        mfg.addAttribute("mfgID","999");
+        mfg.setAttribute("mfg","NMRA");
+        mfg.setAttribute("mfgID","999");
         mfgList.addContent(mfg);
         // start working on the rest of the entries
         Enumeration keys = oldIndex._mfgIdFromNameHash.keys();
@@ -431,8 +431,8 @@ public class DecoderIndexFile extends XmlFile {
             String mfgName = (String)s[i];
             if (!mfgName.equals("NMRA")){
                 mfg = new Element("manufacturer");
-                mfg.addAttribute("mfg",mfgName);
-                mfg.addAttribute("mfgID",(String)oldIndex._mfgIdFromNameHash.get(mfgName));
+                mfg.setAttribute("mfg",mfgName);
+                mfg.setAttribute("mfgID",(String)oldIndex._mfgIdFromNameHash.get(mfgName));
                 mfgList.addContent(mfg);
             }
         }
@@ -443,8 +443,9 @@ public class DecoderIndexFile extends XmlFile {
             DecoderFile d = new DecoderFile();
             try {
                 Element droot = d.rootFromName(DecoderFile.fileLocation+files[i]);
-                Element family = droot.getChild("decoder").getChild("family").getCopy("family");
-                family.addAttribute("file",files[i]);
+                // following line ended in getCopy("family")
+                Element family = droot.getChild("decoder").getChild("family").getChild("family");
+                family.setAttribute("file",files[i]);
                 familyList.addContent(family);
             }
             catch (org.jdom.JDOMException exj) {log.error("could not parse "+files[i]+": "+exj.getMessage());}

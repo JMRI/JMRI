@@ -10,14 +10,14 @@ import java.io.*;
 
 import javax.swing.*;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 import org.jdom.*;
 import org.jdom.output.*;
 
 /**
  * Frame providing a table-organized command station programmer from decoder definition files
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
 
@@ -392,15 +392,15 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
             // add top-level elements
             Element values;
             root.addContent(new Element("locomotive")		// locomotive values are first item
-                            .addAttribute("roadNumber",locoRoadNumber.getText())
-                            .addAttribute("roadName",locoRoadName.getText())
-                            .addAttribute("mfg",locoMfg.getText())
-                            .addAttribute("model",locoModel.getText())
+                            .setAttribute("roadNumber",locoRoadNumber.getText())
+                            .setAttribute("roadName",locoRoadName.getText())
+                            .setAttribute("mfg",locoMfg.getText())
+                            .setAttribute("model",locoModel.getText())
                             .addContent(new Element("decoder")
-                                        .addAttribute("model",decoderModel.getText())
-                                        .addAttribute("mfg",decoderMfg.getText())
-                                        .addAttribute("versionID","")
-                                        .addAttribute("mfgID","")
+                                        .setAttribute("model",decoderModel.getText())
+                                        .setAttribute("mfg",decoderMfg.getText())
+                                        .setAttribute("versionID","")
+                                        .setAttribute("mfgID","")
                                         )
                             .addContent(values = new Element("values"))
                             )
@@ -412,23 +412,23 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
             // add the variable values to the decoderDef Element
             for (int i = 0; i < variableModel.getRowCount(); i++) {
                 decoderDef.addContent(new Element("varValue")
-                                      .addAttribute("item", variableModel.getLabel(i))
-                                      .addAttribute("value", variableModel.getValString(i))
+                                      .setAttribute("item", variableModel.getLabel(i))
+                                      .setAttribute("value", variableModel.getValString(i))
                                       );
             }
             // add the CV values to the values Element
             for (int i = 0; i < cvModel.getRowCount(); i++) {
                 values.addContent(new Element("CVvalue")
-                                  .addAttribute("name", cvModel.getName(i))
-                                  .addAttribute("value", cvModel.getValString(i))
+                                  .setAttribute("name", cvModel.getName(i))
+                                  .setAttribute("value", cvModel.getValString(i))
                                   );
             }
 
             // write the result to selected file
             java.io.FileOutputStream o = new java.io.FileOutputStream(file);
             XMLOutputter fmt = new XMLOutputter();
-            fmt.setNewlines(true);   // pretty printing
-            fmt.setIndent(true);
+            // fmt.setNewlines(true);   // pretty printing
+            // fmt.setIndent(true);
             fmt.output(doc, o);
             o.close();
 

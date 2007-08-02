@@ -3,7 +3,7 @@
 package jmri.jmrit.decoderdefn;
 
 import java.io.*;
-import com.sun.java.util.collections.List;
+import java.util.List;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.jmrit.symbolicprog.ResetTableModel;
@@ -20,7 +20,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.10 $
+ * @version   $Revision: 1.11 $
  * @see       jmri.jmrit.decoderdefn.DecoderIndexFile
  */
 public class DecoderFile extends XmlFile {
@@ -94,7 +94,7 @@ public class DecoderFile extends XmlFile {
     public int getNumOutputs()   { return _numOuts; }
 
     public String getModelComment() { return _element.getAttributeValue("comment"); }
-    public String getFamilyComment() { return _element.getParent().getAttributeValue("comment"); }
+    public String getFamilyComment() { return ((Element)_element.getParent()).getAttributeValue("comment"); }
     public String getProductID() {
        _productID = _element.getAttributeValue("productID");
        return _productID;
