@@ -11,7 +11,7 @@ import javax.swing.*;
  * Make sure an XML file is readable, and validates OK
  *
  * @author	Bob Jacobsen   Copyright (C) 2005
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  * @see         jmri.jmrit.XmlFile
  * @see         jmri.jmrit.XmlFileCheckAction
  */
@@ -56,7 +56,7 @@ public class XmlFileValidateAction extends AbstractAction {
     /**
      * Ask SAX to read and verify a file
      */
-    void readFile(File file) throws org.jdom.JDOMException, java.io.FileNotFoundException {
+    void readFile(File file) throws org.jdom.JDOMException, java.io.IOException {
         XmlFile xf = new XmlFile(){};   // odd syntax is due to XmlFile being abstract
 
         xf.rootFromFile(file);

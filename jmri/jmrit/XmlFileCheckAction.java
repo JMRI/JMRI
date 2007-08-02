@@ -11,7 +11,7 @@ import javax.swing.*;
  * Make sure an XML file is readable, without doing a DTD validation.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2005
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  * @see         jmri.jmrit.XmlFile
  * @see         jmri.jmrit.XmlFileValidateAction
  */
@@ -56,7 +56,7 @@ public class XmlFileCheckAction extends AbstractAction {
     /**
      * Ask SAX to read and verify a file
      */
-    void readFile(File file) throws org.jdom.JDOMException, java.io.FileNotFoundException {
+    void readFile(File file) throws org.jdom.JDOMException, java.io.IOException {
         XmlFile xf = new XmlFile(){};   // odd syntax is due to XmlFile being abstract
 
         xf.rootFromFile(file);

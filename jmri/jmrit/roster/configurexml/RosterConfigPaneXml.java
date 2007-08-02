@@ -15,7 +15,7 @@ import org.jdom.Element;
  * roster.Roster class.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class RosterConfigPaneXml implements XmlAdapter {
 
@@ -31,9 +31,9 @@ public class RosterConfigPaneXml implements XmlAdapter {
         RosterConfigPane p = (RosterConfigPane) o;
         if (p.getSelectedItem()==null) return null;  // nothing to write!
         Element roster = new Element("roster");
-        roster.addAttribute("directory", p.getSelectedItem());
-        roster.addAttribute("class", this.getClass().getName());
-        roster.addAttribute("ownerDefault", p.getDefaultOwner());
+        roster.setAttribute("directory", p.getSelectedItem());
+        roster.setAttribute("class", this.getClass().getName());
+        roster.setAttribute("ownerDefault", p.getDefaultOwner());
         return roster;
     }
 
