@@ -15,7 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 
 /**
  * Provide GUI controls to select a known loco via the Roster.
@@ -26,7 +26,7 @@ import com.sun.java.util.collections.List;
  * you're interested in.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class KnownLocoSelPane extends LocoSelPane  {
 

@@ -21,13 +21,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 
 /**
  * Display and edit a RosterEntry.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001; Dennis Miller Copyright 2004, 2005
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class RosterEntryPane extends javax.swing.JPanel  {
 

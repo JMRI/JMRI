@@ -6,7 +6,7 @@ import java.util.*;
 
 import javax.swing.*;
 
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 /**
  * Representation of a short address (CV1).
@@ -16,7 +16,7 @@ import com.sun.java.util.collections.Vector;
  * stored in two arrays for simplicity.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2006
- * @version             $Revision: 1.11 $
+ * @version             $Revision: 1.12 $
  *
  */
 public class ShortAddrVariableValue extends DecVariableValue {

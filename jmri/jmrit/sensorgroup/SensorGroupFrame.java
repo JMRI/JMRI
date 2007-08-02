@@ -10,7 +10,7 @@ import javax.swing.*;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableColumn;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 
 /**
  * User interface for creating and editing sensor groups.
@@ -19,7 +19,7 @@ import com.sun.java.util.collections.List;
  * any other object.
  *
  * @author			Bob Jacobsen   Copyright (C) 2007
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SensorGroupFrame extends jmri.util.JmriJFrame {
 

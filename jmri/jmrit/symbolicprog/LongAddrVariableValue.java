@@ -6,7 +6,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.*;
 import java.beans.PropertyChangeListener;
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.text.Document;
@@ -14,7 +14,7 @@ import javax.swing.text.Document;
 /**
  * Extends VariableValue to represent a NMRA long address
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  *
  */
 public class LongAddrVariableValue extends VariableValue

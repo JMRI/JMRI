@@ -19,8 +19,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.List;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Provide GUI controls to select a known loco and/or new decoder.
@@ -36,7 +36,7 @@ import com.sun.java.util.collections.List;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class CombinedLocoSelListPane extends CombinedLocoSelPane  {
 

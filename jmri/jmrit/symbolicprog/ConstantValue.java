@@ -3,19 +3,19 @@
 package jmri.jmrit.symbolicprog;
 
 import java.awt.Component;
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 import javax.swing.*;
 import java.awt.Color;
 
-import com.sun.java.util.collections.List;
-import com.sun.java.util.collections.ArrayList;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Extends VariableValue to represent a constant enum-like-thing
  * Note that there's no CV associated with this.
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
- * @version   $Revision: 1.14 $
+ * @version   $Revision: 1.15 $
  *
  */
 public class ConstantValue extends VariableValue {

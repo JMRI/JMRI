@@ -6,7 +6,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.*;
 import java.beans.PropertyChangeListener;
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.text.Document;
@@ -26,7 +26,7 @@ import javax.swing.text.Document;
  *</PRE>
  * decoders.
  * @author			Bob Jacobsen   Copyright (C) 2002, 2003, 2004
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  *
  */
 public class SplitVariableValue extends VariableValue
@@ -360,7 +360,7 @@ public class SplitVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.18 $
+     * @version     $Revision: 1.19 $
      */
     public class VarTextField extends JTextField {
 

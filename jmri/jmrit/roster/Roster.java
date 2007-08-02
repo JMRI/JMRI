@@ -7,8 +7,8 @@ import java.io.File;
 
 import javax.swing.*;
 
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.List;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -39,7 +39,7 @@ import org.jdom.Element;
  * sort is done manually each time an entry is added.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001;  Dennis Miller Copyright 2004
- * @version	$Revision: 1.29 $
+ * @version	$Revision: 1.30 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -317,7 +317,7 @@ public class Roster extends XmlFile {
      * Read the contents of a roster XML file into this object. Note that this does not
      * clear any existing entries.
      */
-    void readFile(String name) throws org.jdom.JDOMException, java.io.FileNotFoundException {
+    void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
         // find root
         Element root = rootFromName(name);
         if (root==null) {

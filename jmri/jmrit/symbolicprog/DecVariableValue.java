@@ -9,20 +9,20 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.beans.PropertyChangeListener;
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.text.Document;
 
-import com.sun.java.util.collections.ArrayList;
+import java.util.ArrayList;
 
 /**
  * Decimal representation of a value.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.21 $
+ * @version             $Revision: 1.22 $
  *
  */
 public class DecVariableValue extends VariableValue

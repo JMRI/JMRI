@@ -8,15 +8,15 @@ import java.beans.*;
 
 import javax.swing.*;
 
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.List;
-import com.sun.java.util.collections.Vector;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 /**
  * Extends VariableValue to represent a enumerated variable.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.21 $
+ * @version	$Revision: 1.22 $
  *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
@@ -310,7 +310,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * model between this object and the real JComboBox value.
      *
      * @author			Bob Jacobsen   Copyright (C) 2001
-     * @version         $Revision: 1.21 $
+     * @version         $Revision: 1.22 $
      */
     public class VarComboBox extends JComboBox {
 

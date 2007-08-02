@@ -3,7 +3,7 @@
 package jmri.jmrit;
 
 import java.io.*;
-import com.sun.java.util.collections.ArrayList;
+import java.util.ArrayList;
 
 
 /**
@@ -14,7 +14,7 @@ import com.sun.java.util.collections.ArrayList;
  * in which case a sparse implementation (e.g. 16 bit pages) will be needed.
  *
  * @author	    Bob Jacobsen    Copyright (C) 2005
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class MemoryContents {
 

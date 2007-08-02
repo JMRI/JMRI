@@ -3,8 +3,8 @@
 package jmri.jmrit.sensorgroup;
 
 import jmri.*;
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.List;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Object for representing, creating and editing sensor groups.
@@ -13,7 +13,7 @@ import com.sun.java.util.collections.List;
  * any other object.
  *
  * @author			Bob Jacobsen   Copyright (C) 2007
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SensorGroup {
 

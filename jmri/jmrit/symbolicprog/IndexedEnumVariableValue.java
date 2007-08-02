@@ -5,18 +5,18 @@ package jmri.jmrit.symbolicprog;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.*;
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 import javax.swing.*;
 
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.List;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Extends VariableValue to represent a enumerated indexed variable.
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.6 $
+ * @version   $Revision: 1.7 $
  *
  */
 public class IndexedEnumVariableValue extends VariableValue
@@ -368,7 +368,7 @@ public class IndexedEnumVariableValue extends VariableValue
      * model between this object and the real JComboBox value.
      *
      * @author  Bob Jacobsen   Copyright (C) 2001
-     * @version $Revision: 1.6 $
+     * @version $Revision: 1.7 $
      */
     public class iVarComboBox extends JComboBox {
 

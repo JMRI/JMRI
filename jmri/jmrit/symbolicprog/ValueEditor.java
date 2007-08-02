@@ -6,7 +6,7 @@ import java.awt.Component;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.EventObject;
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -30,7 +30,7 @@ import javax.swing.table.TableCellEditor;
  * </UL>
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.11 $
+ * @version             $Revision: 1.12 $
  */
 public class ValueEditor extends JComboBox implements TableCellEditor, FocusListener {
     

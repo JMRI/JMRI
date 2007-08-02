@@ -2,7 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 import java.awt.Component;
 import javax.swing.*;
 
@@ -15,7 +15,7 @@ import javax.swing.*;
  *
  * @author   Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2004, 2005
  * @author   Howard G. Penny Copyright (C) 2005
- * @version  $Revision: 1.27 $
+ * @version  $Revision: 1.28 $
  */
 public abstract class VariableValue extends AbstractValue implements java.beans.PropertyChangeListener {
 

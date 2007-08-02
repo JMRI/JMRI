@@ -5,14 +5,14 @@ package jmri.jmrit.symbolicprog;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.*;
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 import javax.swing.*;
 
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.Hashtable;
-import com.sun.java.util.collections.HashSet;
-import com.sun.java.util.collections.Iterator;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.HashSet;
+import java.util.Iterator;
 
 /**
  * Extends EnumVariableValue to represent a composition of variable values.
@@ -48,7 +48,7 @@ import com.sun.java.util.collections.Iterator;
  *</ol>
  * <P>
  * @author	Bob Jacobsen   Copyright (C) 2001, 2005
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  *
  */
 public class CompositeVariableValue extends EnumVariableValue implements ActionListener, PropertyChangeListener {

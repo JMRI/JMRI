@@ -12,13 +12,13 @@ import java.awt.*;
 
 import javax.swing.*;
 
-import com.sun.java.util.collections.ArrayList;
+import java.util.ArrayList;
 
 /**
  * Frame object for manipulating consists.
  *
  * @author               Paul Bender Copyright (C) 2003
- * @version              $Revision: 1.18 $
+ * @version              $Revision: 1.19 $
  */
 public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.ConsistListener{
 

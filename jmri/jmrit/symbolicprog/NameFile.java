@@ -3,9 +3,9 @@
 package jmri.jmrit.symbolicprog;
 
 import jmri.jmrit.XmlFile;
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.Hashtable;
-import com.sun.java.util.collections.List;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
 import org.jdom.Element;
 
 // try to limit the JDOM to this class, so that others can manipulate...
@@ -20,7 +20,7 @@ import org.jdom.Element;
  * locate the one associated with the "xml/names.xml" file.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class NameFile extends XmlFile {
 
@@ -64,7 +64,7 @@ public class NameFile extends XmlFile {
 	 * Read the contents of a NameFile XML file into this object. Note that this does not
 	 * clear any existing entries.
 	 */
-	void readFile(String name) throws org.jdom.JDOMException, java.io.FileNotFoundException {
+	void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
 		if (log.isDebugEnabled()) log.debug("readFile "+name);
 
 		// read file, find root

@@ -25,7 +25,7 @@ import javax.swing.tree.TreePath;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseAdapter;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 
 /**
  * Provide GUI controls to select a known loco and/or new decoder.
@@ -40,7 +40,7 @@ import com.sun.java.util.collections.List;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
 

@@ -16,7 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 
 /**
  * Provide GUI controls to select a decoder for a new loco and/or copy an existing config.
@@ -30,7 +30,7 @@ import com.sun.java.util.collections.List;
  *
  * @author  Bob Jacobsen   Copyright (C) 2001, 2002
  * @author  Howard G. Penny Copyright (C) 2005
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  * @see     jmri.jmrit.decoderdefn.IdentifyDecoder
  * @see     jmri.jmrit.roster.IdentifyLoco
  */

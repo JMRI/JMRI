@@ -3,14 +3,14 @@
 package jmri.jmrit.symbolicprog;
 
 import java.awt.event.ActionEvent;
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 import javax.swing.JLabel;
 
 /**
  * LIke DecVariableValue, except that the string representation is in hexadecimal
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class HexVariableValue extends DecVariableValue {
 

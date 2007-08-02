@@ -2,12 +2,12 @@
 
 package jmri.jmrit.symbolicprog;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -21,7 +21,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2006
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.30 $
+ * @version   $Revision: 1.31 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 

@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 
 /**
  * Provide GUI controls to select a known loco and/or new decoder.
@@ -50,7 +50,7 @@ import com.sun.java.util.collections.List;
  * for further information.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.24 $
+ * @version			$Revision: 1.25 $
  */
 public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeListener {
 
