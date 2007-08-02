@@ -4,7 +4,7 @@ package jmri.jmrix.easydcc;
 
 import jmri.*;
 
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

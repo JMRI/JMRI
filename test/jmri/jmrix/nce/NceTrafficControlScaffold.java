@@ -1,15 +1,14 @@
-/** 
- * NceInterfaceScaffold.java
- *
- * Description:	    Stands in for the NceTrafficController class
- * @author			Bob Jacobsen
- * @version			$Revision: 1.4 $
- */
+// NceInterfaceScaffold.java
 
 package jmri.jmrix.nce;
 
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
+/** 
+ * Stands in for the NceTrafficController class
+ * @author			Bob Jacobsen
+ * @version			$Revision: 1.5 $
+ */
 public class NceTrafficControlScaffold extends NceTrafficController {
 	public NceTrafficControlScaffold() {
 		if (log.isDebugEnabled()) log.debug("setting instance: "+this);

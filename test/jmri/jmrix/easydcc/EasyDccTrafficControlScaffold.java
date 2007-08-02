@@ -2,11 +2,10 @@
 
 package jmri.jmrix.easydcc;
 
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 /** 
- *
- * Description:	    Stands in for the EasyDccTrafficController class
+ * Stands in for the EasyDccTrafficController class
  * @author			Bob Jacobsen Copyright 2006
  * @version			
  */

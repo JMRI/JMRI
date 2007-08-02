@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the NceTrafficController class
  * @author			Bob Jacobsen
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 package jmri.jmrix.nce;
@@ -168,7 +168,7 @@ public class NceTrafficControllerTest extends TestCase {
 
 	// internal class to simulate a NcePortController
 	class NcePortControllerScaffold extends NcePortController {
-            public com.sun.java.util.collections.Vector getPortNames() { return null; }
+            public java.util.Vector getPortNames() { return null; }
 	    public String openPort(String portName, String appName) { return null; }
 	    public void configure() {}
 	    public String[] validBaudRates() { return null; }

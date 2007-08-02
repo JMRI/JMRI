@@ -12,11 +12,11 @@ import java.io.PipedOutputStream;
  *
  * Description:	    test implementation of XNetPortController
  * @author			Bob Jacobsen Copyright (C) 2006
- * @version         $Revision: 2.1 $
+ * @version         $Revision: 2.2 $
  */
 class XNetPortControllerScaffold extends XNetPortController {
 
-    public com.sun.java.util.collections.Vector getPortNames() { return null; }
+    public java.util.Vector getPortNames() { return null; }
     public String openPort(String portName, String appName) { return null; }
     public void configure() {}
     public String[] validBaudRates() { return null; }

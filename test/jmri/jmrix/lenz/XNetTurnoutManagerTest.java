@@ -5,16 +5,16 @@ package jmri.jmrix.lenz;
 import jmri.Turnout;
 import jmri.TurnoutAddress;
 import jmri.TurnoutManager;
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.List;
+import java.util.ArrayList;
+import java.util.List;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
  Tests for the jmri.jmrix.lenz.XNetTurnoutManager class.
- * @author			Bob Jacobsen
- * @version         $Revision: 2.1 $
+ * @author			Bob Jacobsen Copyright 2004
+ * @version         $Revision: 2.2 $
  */
 public class XNetTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 

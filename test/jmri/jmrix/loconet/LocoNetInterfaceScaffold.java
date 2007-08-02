@@ -5,7 +5,7 @@ package jmri.jmrix.loconet;
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetMessage;
 
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 /**
  *

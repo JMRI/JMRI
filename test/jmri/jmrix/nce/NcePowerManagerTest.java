@@ -5,7 +5,7 @@ package jmri.jmrix.nce;
 import jmri.JmriException;
 import jmri.jmrix.AbstractPowerManagerTest;
 
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -14,7 +14,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the NcePowerManager class.
  *
  * @author	Bob Jacobsen
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class NcePowerManagerTest extends AbstractPowerManagerTest {
 

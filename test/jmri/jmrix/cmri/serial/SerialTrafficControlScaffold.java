@@ -2,12 +2,12 @@
 
 package jmri.jmrix.cmri.serial;
 
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 /**
  * Description:	    Stands in for the SerialTrafficController class
  * @author			Bob Jacobsen Copyright 2006
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SerialTrafficControlScaffold extends SerialTrafficController {
 	public SerialTrafficControlScaffold() {

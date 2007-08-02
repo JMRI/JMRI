@@ -12,14 +12,14 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 import jmri.util.JUnitAppender;
 
 /**
  * Description:	    JUnit tests for the SerialTrafficController class
  * @author			Bob Jacobsen Copyright 2006
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class SerialTrafficControllerTest extends TestCase {
 

@@ -2,7 +2,7 @@
 
 package jmri.jmrix.qsi;
 
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 /** 
  *

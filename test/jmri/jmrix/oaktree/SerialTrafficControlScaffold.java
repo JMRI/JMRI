@@ -3,12 +3,12 @@
  *
  * Description:	    Stands in for the SerialTrafficController class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 
 package jmri.jmrix.oaktree;
 
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 public class SerialTrafficControlScaffold extends SerialTrafficController {
 	public SerialTrafficControlScaffold() {

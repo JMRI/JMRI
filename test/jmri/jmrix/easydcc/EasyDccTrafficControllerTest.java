@@ -12,7 +12,7 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 /**
  * Description:	    JUnit tests for the EasyDccTrafficController class

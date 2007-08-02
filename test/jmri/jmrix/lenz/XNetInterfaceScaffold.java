@@ -2,14 +2,14 @@
 
 package jmri.jmrix.lenz;
 
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 /**
  * XNetInterfaceScaffold.java
  *
  * Description:	 	Test scaffold implementation of XNetInterface
  * @author			Bob Jacobsen Copyright (C) 2002, 2006
- * @version			$Revision: 2.2 $
+ * @version			$Revision: 2.3 $
  *
  * Use an object of this type as a XNetTrafficController in tests
  */
@@ -54,6 +54,18 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
 	public int numListeners() {
 		return cmdListeners.size();
 	}
+
+    /**
+     * Avoid error message, normal in parent
+     */
+    protected void connectionWarn() {
+    }
+
+    /**
+     * Avoid error message, normal in parent
+     */
+	void portWarn(Exception e) {
+    }
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetInterfaceScaffold.class.getName());
 
