@@ -8,13 +8,13 @@ import jmri.jmrit.display.MultiSensorIcon;
 import org.jdom.Attribute;
 import org.jdom.Element;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 
 /**
  * Handle configuration for display.MultiSensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class MultiSensorIconXml implements XmlAdapter {
 
@@ -35,22 +35,22 @@ public class MultiSensorIconXml implements XmlAdapter {
         Element element = new Element("multisensoricon");
 
         // include contents
-        element.addAttribute("x", ""+p.getX());
-        element.addAttribute("y", ""+p.getY());
-        element.addAttribute("level", String.valueOf(p.getDisplayLevel()));
-        element.addAttribute("inactive", p.getInactiveIcon().getName());
-        element.addAttribute("unknown", p.getUnknownIcon().getName());
-        element.addAttribute("inconsistent", p.getInconsistentIcon().getName());
-        element.addAttribute("rotate", String.valueOf(p.getUnknownIcon().getRotation()));
-        element.addAttribute("updown", p.getUpDown()?"true":"false");
-        element.addAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
+        element.setAttribute("x", ""+p.getX());
+        element.setAttribute("y", ""+p.getY());
+        element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
+        element.setAttribute("inactive", p.getInactiveIcon().getName());
+        element.setAttribute("unknown", p.getUnknownIcon().getName());
+        element.setAttribute("inconsistent", p.getInconsistentIcon().getName());
+        element.setAttribute("rotate", String.valueOf(p.getUnknownIcon().getRotation()));
+        element.setAttribute("updown", p.getUpDown()?"true":"false");
+        element.setAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
 
-        element.addAttribute("class", "jmri.jmrit.display.configurexml.MultiSensorIconXml");
+        element.setAttribute("class", "jmri.jmrit.display.configurexml.MultiSensorIconXml");
 
         for (int i = 0; i < p.getNumEntries(); i++) {
             Element e = new Element("multisensoriconentry");
-            e.addAttribute("sensor", p.getSensorName(i));
-            e.addAttribute("icon", p.getSensorIcon(i).getName());
+            e.setAttribute("sensor", p.getSensorName(i));
+            e.setAttribute("icon", p.getSensorIcon(i).getName());
             element.addContent(e);
         }
         
