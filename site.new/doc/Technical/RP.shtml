@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: RP.shtml,v 1.2 2007-07-13 04:55:23 jacobsen Exp $ -->
+<!-- $Id: RP.shtml,v 1.3 2007-08-02 15:49:43 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -60,13 +60,18 @@ we are not permitted to distribute the libraries for other purposes.
 <LI>The Java collections (List, etc) are available in JMRI, because
 we need them for various other packages.  Use them if you'd like; there 
 are often better approaches than to make everything a Vector.
-To ensure compatibility with Java 1.1.8, we use the 
-older form of class names, e.g. "com.sun.java.util.collections.List".
-For more info on compatibility, see
-the
-<A HREF="Java118.html">Java 1.1.8 compatibility</a> 
-page.
+Originally we used the Java 1.1 version of this, but that restriction
+no longer applies; use the complete API if you'd like.
 
+<LI>
+If you need to use comma-separated variable (CSV) files, 
+please use the
+<A HREF="http://javacsv.sourceforge.net/">javacsv API<a/>
+if possible.  We are already using that in a number of places,
+and will probably use it in more.  If that doesn't provide
+enough functionality, we might eventually move to the
+<A HREF="http://opencsv.sourceforge.net/api/au/com/bytecode/opencsv/">opencsv API</a>, but since we only want to use one,
+the conversion will be a lot of work.
 </UL>
 
 <h2>Code Format</h2>
