@@ -115,8 +115,8 @@ public class TurnoutOperationFrame extends JDialog {
 				namedOperations.addElement(operations[i]);
 			}
 		}
-    	jmri.util.VectorUtil.sort(definitiveOperations);
-    	jmri.util.VectorUtil.sort(namedOperations);
+    	java.util.Collections.sort(definitiveOperations);
+    	java.util.Collections.sort(namedOperations);
     	TurnoutOperationConfig pane;
     	TurnoutOperation op;
 		for (int j=0; j<definitiveOperations.size(); ++j) {

@@ -42,7 +42,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.45 $
+ * @version     $Revision: 1.46 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -326,8 +326,8 @@ public class TurnoutTableAction extends AbstractTableAction {
     			defStrings.addElement(ops[i].getName());
     		}
     	}
-    	jmri.util.VectorUtil.sort(strings);
-    	jmri.util.VectorUtil.sort(defStrings);
+    	java.util.Collections.sort(strings);
+    	java.util.Collections.sort(defStrings);
     	strings.insertElementAt(new String("Off"),0);
     	strings.insertElementAt(new String("Use Global Default"),1);
     	strings.insertElementAt(new String("Edit..."),2);
