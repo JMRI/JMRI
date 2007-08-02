@@ -21,7 +21,7 @@ import java.io.IOException;
 
 import javax.swing.*;
 import java.util.StringTokenizer;
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 import java.awt.Color;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
@@ -29,10 +29,10 @@ import java.awt.event.ItemEvent;
 
 import org.jdom.Attribute;
 import org.jdom.Element;
-import com.sun.java.util.collections.Set;
-import com.sun.java.util.collections.HashSet;
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.List;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Provides the individual panes for the TabbedPaneProgrammer.
@@ -63,7 +63,7 @@ import com.sun.java.util.collections.List;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005, 2006
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.60 $
+ * @version   $Revision: 1.61 $
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
