@@ -8,13 +8,13 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.framework.Assert;
 import org.jdom.*;
-import com.sun.java.util.collections.List;
+import java.util.List;
 
 /**
  * Tests for DecoderIndexFile class
  *
  * @author			Bob Jacobsen, Copyright (c) 2001, 2002
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class DecoderIndexFileTest extends TestCase {
 
@@ -189,44 +189,44 @@ public class DecoderIndexFileTest extends TestCase {
         root.addContent(decoderIndexElement = new Element("decoderIndex")
                         .addContent(new Element("mfgList")
                                     .addContent(new Element("manufacturer")
-                                                .addAttribute("mfg", "NMRA")
+                                                .setAttribute("mfg", "NMRA")
                                     )
                                     .addContent(new Element("manufacturer")
-                                                .addAttribute("mfg", "Digitrax")
-                                                .addAttribute("mfgID", "129")
+                                                .setAttribute("mfg", "Digitrax")
+                                                .setAttribute("mfgID", "129")
                                     )
                         )
                         .addContent(new Element("familyList")
                                     .addContent(family1 = new Element("family")
-                                                .addAttribute("mfg", "NMRA")
-                                                .addAttribute("name", "NMRA S&RP definitions")
-                                                .addAttribute("file", "NMRA.xml")
+                                                .setAttribute("mfg", "NMRA")
+                                                .setAttribute("name", "NMRA S&RP definitions")
+                                                .setAttribute("file", "NMRA.xml")
                                                 .addContent(new Element("model")
-            .addAttribute("model", "full set")
-            .addAttribute("comment", "all CVs in RP 9.2.1")
+            .setAttribute("model", "full set")
+            .setAttribute("comment", "all CVs in RP 9.2.1")
                                                 )
                                                 .addContent(new Element("model")
-            .addAttribute("model", "required set")
-            .addAttribute("comment", "required CVs in RP 9.2.1")
+            .setAttribute("model", "required set")
+            .setAttribute("comment", "required CVs in RP 9.2.1")
                                                 )
                                     )
                                     .addContent(family2 = new Element("family")
-                                                .addAttribute("mfg", "Digitrax")
-                                                .addAttribute("name", "FX2 family")
-                                                .addAttribute("file", "DH142.xml")
+                                                .setAttribute("mfg", "Digitrax")
+                                                .setAttribute("name", "FX2 family")
+                                                .setAttribute("file", "DH142.xml")
                                                 .addContent(new Element("model")
-            .addAttribute("model", "DH142")
-            .addAttribute("numFns", "4")
-            .addAttribute("numOuts", "2")
-            .addAttribute("lowVersionID", "21")
+            .setAttribute("model", "DH142")
+            .setAttribute("numFns", "4")
+            .setAttribute("numOuts", "2")
+            .setAttribute("lowVersionID", "21")
                                                 )
                                                 .addContent(new Element("model")
-            .addAttribute("model", "DN142")
-            .addAttribute("numFns", "5")
-            .addAttribute("numOuts", "1")
+            .setAttribute("model", "DN142")
+            .setAttribute("numFns", "5")
+            .setAttribute("numOuts", "1")
             .addContent(new Element("versionCV")
-                        .addAttribute("lowVersionID", "22")
-                        .addAttribute("highVersionID", "24")
+                        .setAttribute("lowVersionID", "22")
+                        .setAttribute("highVersionID", "24")
             )
                                                 )
                                     )

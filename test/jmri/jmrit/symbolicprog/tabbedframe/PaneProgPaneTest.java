@@ -3,7 +3,7 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.awt.*;
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 import javax.swing.*;
 import junit.framework.Test;
 import junit.framework.Assert;
@@ -17,7 +17,7 @@ import jmri.jmrit.roster.*;
 
 /**
  * @author	Bob Jacobsen Copyright 2001, 2002, 2003, 2004
- * @version         $Revision: 1.16 $
+ * @version         $Revision: 1.17 $
  */
 public class PaneProgPaneTest extends TestCase {
 
@@ -89,19 +89,19 @@ public class PaneProgPaneTest extends TestCase {
         if (log.isDebugEnabled()) log.debug("VariableTableModel ctor complete");
         // have to add a couple of defined variables
         Element el0 = new Element("variable")
-            .addAttribute("CV","17")
-            .addAttribute("readOnly","no")
-            .addAttribute("mask","VVVVVVVV")
-            .addAttribute("label","Start voltage")
+            .setAttribute("CV","17")
+            .setAttribute("readOnly","no")
+            .setAttribute("mask","VVVVVVVV")
+            .setAttribute("label","Start voltage")
             .addContent( new Element("longAddressVal"));
         if (log.isDebugEnabled()) log.debug("First element created");
         varModel.setRow(0, el0);
         if (log.isDebugEnabled()) log.debug("First element loaded");
         Element el1 = new Element("variable")
-            .addAttribute("CV","17")
-            .addAttribute("readOnly","no")
-            .addAttribute("mask","VVVVVVVV")
-            .addAttribute("label","Primary Address")
+            .setAttribute("CV","17")
+            .setAttribute("readOnly","no")
+            .setAttribute("mask","VVVVVVVV")
+            .setAttribute("label","Primary Address")
             .addContent( new Element("decVal"));
         if (log.isDebugEnabled()) log.debug("Second element created");
         varModel.setRow(1, el1);
@@ -134,16 +134,16 @@ public class PaneProgPaneTest extends TestCase {
         if (log.isDebugEnabled()) log.debug("VariableTableModel ctor complete");
         // have to add a couple of defined variables
         Element el0 = new Element("variable")
-            .addAttribute("CV","2")
-            .addAttribute("readOnly","no")
-            .addAttribute("mask","VVVVVVVV")
-            .addAttribute("label","Start voltage")
+            .setAttribute("CV","2")
+            .setAttribute("readOnly","no")
+            .setAttribute("mask","VVVVVVVV")
+            .setAttribute("label","Start voltage")
             .addContent( new Element("decVal"));
         Element el1 = new Element("variable")
-            .addAttribute("CV","3")
-            .addAttribute("readOnly","no")
-            .addAttribute("mask","VVVVVVVV")
-            .addAttribute("label","Primary Address")
+            .setAttribute("CV","3")
+            .setAttribute("readOnly","no")
+            .setAttribute("mask","VVVVVVVV")
+            .setAttribute("label","Primary Address")
             .addContent( new Element("decVal"));
         varModel.setRow(0, el0);
         varModel.setRow(1, el1);
@@ -192,18 +192,18 @@ public class PaneProgPaneTest extends TestCase {
         if (log.isDebugEnabled()) log.debug("VariableTableModel ctor complete");
         // have to add a couple of defined variables
         Element el0 = new Element("variable")
-            .addAttribute("CV","2")
-            .addAttribute("readOnly","no")
-            .addAttribute("mask","VVVVVVVV")
-            .addAttribute("default","20")
-            .addAttribute("label","Start voltage")
+           .setAttribute("CV","2")
+            .setAttribute("readOnly","no")
+            .setAttribute("mask","VVVVVVVV")
+            .setAttribute("default","20")
+            .setAttribute("label","Start voltage")
             .addContent( new Element("decVal"));
         Element el1 = new Element("variable")
-            .addAttribute("CV","3")
-            .addAttribute("readOnly","no")
-            .addAttribute("mask","VVVVVVVV")
-            .addAttribute("default","30")
-            .addAttribute("label","Primary Address")
+            .setAttribute("CV","3")
+            .setAttribute("readOnly","no")
+            .setAttribute("mask","VVVVVVVV")
+            .setAttribute("default","30")
+            .setAttribute("label","Primary Address")
             .addContent( new Element("decVal"));
         varModel.setRow(0, el0);
         varModel.setRow(1, el1);
@@ -258,34 +258,34 @@ public class PaneProgPaneTest extends TestCase {
 
         // note these +have+ to be on this pane, e.g. named in setupDoc
         Element el0 = new Element("variable")
-            .addAttribute("CV","1")
-            .addAttribute("readOnly","no")
-            .addAttribute("mask","VVVVVVVV")
-            .addAttribute("label","Start voltage")
+            .setAttribute("CV","1")
+            .setAttribute("readOnly","no")
+            .setAttribute("mask","VVVVVVVV")
+            .setAttribute("label","Start voltage")
             .addContent( new Element("decVal"));
         varModel.setRow(row++, el0);
 
         Element el1 = new Element("variable")
-            .addAttribute("CV","1")
-            .addAttribute("readOnly","no")
-            .addAttribute("mask","VVVVVVVV")
-            .addAttribute("label","Primary Address")
+            .setAttribute("CV","1")
+            .setAttribute("readOnly","no")
+            .setAttribute("mask","VVVVVVVV")
+            .setAttribute("label","Primary Address")
             .addContent( new Element("decVal"));
         varModel.setRow(row++, el1);
 
         Element el2 = new Element("variable")
-            .addAttribute("CV","67")
-            .addAttribute("label","Normal direction of motion")
-            .addAttribute("readOnly","no")
-            .addAttribute("mask","VVVVVVVV")
+            .setAttribute("CV","67")
+            .setAttribute("label","Normal direction of motion")
+            .setAttribute("readOnly","no")
+            .setAttribute("mask","VVVVVVVV")
             .addContent( new Element("speedTableVal"));
         varModel.setRow(row++, el2);
 
         Element el3 = new Element("variable")
-            .addAttribute("CV","68")
-            .addAttribute("readOnly","no")
-            .addAttribute("mask","VVVVVVVV")
-            .addAttribute("label","Address")
+            .setAttribute("CV","68")
+            .setAttribute("readOnly","no")
+            .setAttribute("mask","VVVVVVVV")
+            .setAttribute("label","Address")
             .addContent( new Element("decVal"));
         varModel.setRow(row++, el3);
 
@@ -341,49 +341,49 @@ public class PaneProgPaneTest extends TestCase {
         // add some elements
         root.addContent(new Element("programmer")
             .addContent(pane1 = new Element("pane")
-                .addAttribute("name","Basic")
+                .setAttribute("name","Basic")
                 .addContent(new Element("column")
                     .addContent(new Element("display")
-                        .addAttribute("item", "Primary Address")
+                        .setAttribute("item", "Primary Address")
                         )
                     .addContent(new Element("display")
-                        .addAttribute("item", "Start voltage")
+                        .setAttribute("item", "Start voltage")
                         )
                     .addContent(new Element("display")
-                        .addAttribute("item", "Normal direction of motion")
+                        .setAttribute("item", "Normal direction of motion")
                         )
                     )
                 .addContent(new Element("column")
                     .addContent(new Element("display")
-                        .addAttribute("item", "Address")
+                        .setAttribute("item", "Address")
                         )
                     .addContent(new Element("display")
-                        .addAttribute("item", "Normal direction of motion")
+                        .setAttribute("item", "Normal direction of motion")
                         )
                     .addContent(new Element("display")
-                        .addAttribute("item", "Normal direction of motion")
-                        .addAttribute("format","checkbox")
+                        .setAttribute("item", "Normal direction of motion")
+                        .setAttribute("format","checkbox")
                         )
                     .addContent(new Element("display")
-                        .addAttribute("item", "Normal direction of motion")
-                        .addAttribute("format","radiobuttons")
+                        .setAttribute("item", "Normal direction of motion")
+                        .setAttribute("format","radiobuttons")
                         )
                     )
                 )
             .addContent(pane2 = new Element("pane")
-                .addAttribute("name", "CV")
+                .setAttribute("name", "CV")
                 .addContent(new Element("column")
                     .addContent(new Element("cvtable"))
                     )
                 )
             .addContent(pane3 = new Element("pane")
-                .addAttribute("name", "Other")
+                .setAttribute("name", "Other")
                 .addContent(new Element("column")
                     .addContent(new Element("display")
-                        .addAttribute("item", "Address")
+                        .setAttribute("item", "Address")
                         )
                     .addContent(new Element("display")
-                        .addAttribute("item", "Normal direction of motion")
+                        .setAttribute("item", "Normal direction of motion")
                         )
                     )
                 )

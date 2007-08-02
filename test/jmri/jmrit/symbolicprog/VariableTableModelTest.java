@@ -8,14 +8,14 @@ import jmri.progdebugger.*;
 import junit.framework.*;
 import org.jdom.*;
 
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 /**
  * VariableTableModelTest.java
  *
  * Description:
  * @author			Bob Jacobsen Copyright 2005
- * @version    $Revision: 1.8 $
+ * @version    $Revision: 1.9 $
  */
 public class VariableTableModelTest extends TestCase {
 
@@ -61,24 +61,24 @@ public class VariableTableModelTest extends TestCase {
         root.addContent(new Element("decoder")		// the sites information here lists all relevant
             .addContent(new Element("variables")
                 .addContent(el0 = new Element("variable")
-                    .addAttribute("CV","1")
-                    .addAttribute("label","one")
-                    .addAttribute("mask","VVVVVVVV")
-                    .addAttribute("item", "really two")
-                    .addAttribute("readOnly","no")
+                    .setAttribute("CV","1")
+                    .setAttribute("label","one")
+                    .setAttribute("mask","VVVVVVVV")
+                    .setAttribute("item", "really two")
+                    .setAttribute("readOnly","no")
                     .addContent( new Element("decVal")
-                        .addAttribute("max","31")
-                        .addAttribute("min","1")
+                        .setAttribute("max","31")
+                        .setAttribute("min","1")
                         )
                     )
                 .addContent(el1 = new Element("variable")
-                    .addAttribute("CV","4")
-                    .addAttribute("readOnly","no")
-                    .addAttribute("mask","XXXVVVVX")
-                    .addAttribute("label","two")
+                    .setAttribute("CV","4")
+                    .setAttribute("readOnly","no")
+                    .setAttribute("mask","XXXVVVVX")
+                    .setAttribute("label","two")
                     .addContent( new Element("decVal")
-                        .addAttribute("max","31")
-                        .addAttribute("min","1")
+                        .setAttribute("max","31")
+                        .setAttribute("min","1")
                         )
                     )
                 )	// variables element
@@ -130,10 +130,10 @@ public class VariableTableModelTest extends TestCase {
         root.addContent(new Element("decoder")		// the sites information here lists all relevant
             .addContent(new Element("variables")
                 .addContent(el0 = new Element("variable")
-                    .addAttribute("CV","17")
-                    .addAttribute("readOnly","no")
-                    .addAttribute("mask","VVVVVVVV")
-                    .addAttribute("label","long")
+                    .setAttribute("CV","17")
+                    .setAttribute("readOnly","no")
+                    .setAttribute("mask","VVVVVVVV")
+                    .setAttribute("label","long")
                     .addContent( new Element("longAddressVal")
                         )
                     )
@@ -174,10 +174,10 @@ public class VariableTableModelTest extends TestCase {
         root.addContent(new Element("decoder")		// the sites information here lists all relevant
             .addContent(new Element("variables")
                 .addContent(el0 = new Element("variable")
-                    .addAttribute("CV","67")
-                    .addAttribute("label","Speed Table")
-                    .addAttribute("mask","VVVVVVVV")
-                    .addAttribute("readOnly", "")
+                    .setAttribute("CV","67")
+                    .setAttribute("label","Speed Table")
+                    .setAttribute("mask","VVVVVVVV")
+                    .setAttribute("readOnly", "")
                     .addContent( new Element("speedTableVal")
                         )
                     )
@@ -213,10 +213,10 @@ public class VariableTableModelTest extends TestCase {
         root.addContent(new Element("decoder")		// the sites information here lists all relevant
             .addContent(new Element("variables")
                 .addContent(el0 = new Element("variable")
-                    .addAttribute("CV","17")
-                    .addAttribute("mask","VVVVVVVV")
-                    .addAttribute("readOnly","no")
-                    .addAttribute("label","long")
+                    .setAttribute("CV","17")
+                    .setAttribute("mask","VVVVVVVV")
+                    .setAttribute("readOnly","no")
+                    .setAttribute("label","long")
                     .addContent( new Element("bogusVal")
                         )
                     )
