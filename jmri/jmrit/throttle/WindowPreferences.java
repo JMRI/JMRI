@@ -23,11 +23,11 @@ public class WindowPreferences
     public Element getPreferences(Container c)
     {
         Element window = new Element("window");
-        window.addAttribute("x", String.valueOf(c.getLocation().x));
-        window.addAttribute("y", String.valueOf(c.getLocation().y));
+        window.setAttribute("x", String.valueOf(c.getLocation().x));
+        window.setAttribute("y", String.valueOf(c.getLocation().y));
         Dimension size = c.getSize();
-        window.addAttribute("width", String.valueOf(size.width));
-        window.addAttribute("height", String.valueOf(size.height));
+        window.setAttribute("width", String.valueOf(size.width));
+        window.setAttribute("height", String.valueOf(size.height));
         return window;
     }
 

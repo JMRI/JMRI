@@ -262,11 +262,11 @@ public class FunctionButton extends JToggleButton implements ActionListener
     public Element getXml()
     {
         Element me = new Element("FunctionButton");
-        me.addAttribute("id", String.valueOf(this.getIdentity()));
-        me.addAttribute("text", this.getText());
-        me.addAttribute("isLockable", String.valueOf(this.getIsLockable()));
-        me.addAttribute("isVisible", String.valueOf(this.isVisible()));
-        me.addAttribute("fontSize", String.valueOf(this.getFont().getSize()));
+        me.setAttribute("id", String.valueOf(this.getIdentity()));
+        me.setAttribute("text", this.getText());
+        me.setAttribute("isLockable", String.valueOf(this.getIsLockable()));
+        me.setAttribute("isVisible", String.valueOf(this.isVisible()));
+        me.setAttribute("fontSize", String.valueOf(this.getFont().getSize()));
         return me;
     }
 
