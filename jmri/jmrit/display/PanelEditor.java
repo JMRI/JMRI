@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.*;
 
-import com.sun.java.util.collections.ArrayList;
+import java.util.ArrayList;
 
 /**
  * Provides a simple editor for adding jmri.jmrit.display items
@@ -47,7 +47,7 @@ import com.sun.java.util.collections.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.65 $
+ * @version $Revision: 1.66 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -107,7 +107,10 @@ public class PanelEditor extends JmriJFrame {
     JButton reporterAdd = new JButton(rb.getString("ButtonAddReporter"));
     JTextField nextReporter = new JTextField(5);
 
+    JButton rpsAdd = new JButton("Add RPS reporter:");
+
     JButton multiSensorAdd = new JButton(rb.getString("ButtonAddMultiSensor"));
+
     MultiSensorIconFrame multiSensorFrame;
 
     JButton clockAdd = new JButton("Add Fast clock:");
@@ -501,6 +504,19 @@ public class PanelEditor extends JmriJFrame {
             this.getContentPane().add(panel);
         }
 
+        // add an RPS reporter
+        {
+            JPanel panel = new JPanel();
+            panel.setLayout(new FlowLayout());
+            panel.add(rpsAdd);
+            rpsAdd.addActionListener( new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                    addRpsReporter();
+                }
+            });
+            this.getContentPane().add(panel);
+        }
+
         // Add a MultiSensor indicator
         {
             JPanel panel = new JPanel();
@@ -791,6 +807,14 @@ public class PanelEditor extends JmriJFrame {
         setNextLocation(l);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(REPORTERS);
+        putLabel(l);
+    }
+    
+    void addRpsReporter() {
+        RpsPositionIcon l = new RpsPositionIcon();
+        setNextLocation(l);
+        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
+        l.setDisplayLevel(SENSORS);
         putLabel(l);
     }
     
