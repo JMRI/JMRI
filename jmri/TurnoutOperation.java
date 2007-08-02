@@ -3,9 +3,8 @@
  */
 package jmri;
 
-import com.sun.java.util.collections.List;
-import com.sun.java.util.collections.Iterator;
-import com.sun.java.util.collections.Comparable;
+import java.util.List;
+import java.util.Iterator;
 
 /**
  * Framework for automating reliable turnout operation. This interface allows

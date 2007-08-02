@@ -1,6 +1,6 @@
 package jmri;
 
-import com.sun.java.util.collections.ArrayList;
+import java.util.ArrayList;
 
 /**
  * Represents a particular piece of track, more informally a "Block".
@@ -45,7 +45,7 @@ import com.sun.java.util.collections.ArrayList;
  * to take care of a particular section of track.
  *<P>
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class Block extends jmri.AbstractNamedBean {
 

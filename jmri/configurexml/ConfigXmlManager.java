@@ -4,8 +4,9 @@ import jmri.InstanceManager;
 
 import java.io.File;
 
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.List;
+import java.util.ArrayList;
+import java.util.List;
+
 //import org.jdom.DocType;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -16,7 +17,7 @@ import org.jdom.Element;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {

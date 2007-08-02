@@ -4,8 +4,8 @@ package jmri.managers;
 
 import jmri.Manager;
 import jmri.NamedBean;
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.List;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Implementation of a Manager that can serves as a proxy
@@ -15,7 +15,7 @@ import com.sun.java.util.collections.List;
  * be added is the "Primary", used if a system letter is not provided.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class AbstractProxyManager implements Manager {
 

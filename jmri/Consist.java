@@ -4,12 +4,12 @@
  * Description:         Interface for a Consist Object
  *
  * @author              Paul Bender Copyright (C) 2003
- * @version             $Revision: 1.8 $
+ * @version             $Revision: 1.9 $
  */
 
 package jmri;
 
-import com.sun.java.util.collections.ArrayList;
+import java.util.ArrayList;
 
 /*
  * This is the interface for consist classes.

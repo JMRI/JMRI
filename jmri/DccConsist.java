@@ -5,10 +5,10 @@ package jmri;
 import jmri.ConsistListener;
 
 import java.util.Enumeration;
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
-import com.sun.java.util.collections.Hashtable;
-import com.sun.java.util.collections.ArrayList;
+import java.util.Hashtable;
+import java.util.ArrayList;
 
 
 /**
