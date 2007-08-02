@@ -9,8 +9,8 @@ import jmri.jmrit.symbolicprog.CvValue;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import java.io.File;
 
-import com.sun.java.util.collections.List;
-import com.sun.java.util.collections.Vector;
+import java.util.List;
+import java.util.Vector;
 import org.jdom.Document;
 import org.jdom.Element;
 
@@ -24,7 +24,7 @@ import org.jdom.Element;
  * @author    Bob Jacobsen     Copyright (C) 2001, 2002
  * @author    Dennis Miller    Copyright (C) 2004
  * @author    Howard G. Penny  Copyright (C) 2005
- * @version   $Revision: 1.19 $
+ * @version   $Revision: 1.20 $
  * @see       jmri.jmrit.roster.RosterEntry
  * @see       jmri.jmrit.roster.Roster
  */
@@ -178,17 +178,17 @@ class LocoFile extends XmlFile {
             // add top-level elements
             Element values;
             root.addContent(new Element("locomotive")		// locomotive values are first item
-                            .addAttribute("id", r.getId())
-                            .addAttribute("roadNumber",r.getRoadNumber())
-                            .addAttribute("roadName",r.getRoadName())
-                            .addAttribute("mfg",r.getMfg())
-                            .addAttribute("model",r.getModel())
-                            .addAttribute("dccAddress",r.getDccAddress())
-                            .addAttribute("comment",xmlComment)
+                            .setAttribute("id", r.getId())
+                            .setAttribute("roadNumber",r.getRoadNumber())
+                            .setAttribute("roadName",r.getRoadName())
+                            .setAttribute("mfg",r.getMfg())
+                            .setAttribute("model",r.getModel())
+                            .setAttribute("dccAddress",r.getDccAddress())
+                            .setAttribute("comment",xmlComment)
                             .addContent(new Element("decoder")
-                                        .addAttribute("model",r.getDecoderModel())
-                                        .addAttribute("family",r.getDecoderFamily())
-                                        .addAttribute("comment",xmlDecoderComment)
+                                        .setAttribute("model",r.getDecoderModel())
+                                        .setAttribute("family",r.getDecoderFamily())
+                                        .setAttribute("comment",xmlDecoderComment)
                                         )
                             .addContent(values = new Element("values"))
                 );
@@ -199,27 +199,27 @@ class LocoFile extends XmlFile {
             // add the variable values to the decoderDef Element
             for (int i = 0; i < variableModel.getRowCount(); i++) {
                 decoderDef.addContent(new Element("varValue")
-                                      .addAttribute("item", variableModel.getLabel(i))
-                                      .addAttribute("value", variableModel.getValString(i))
+                                      .setAttribute("item", variableModel.getLabel(i))
+                                      .setAttribute("value", variableModel.getValString(i))
                     );
             }
             // add the CV values to the values Element
             for (int i = 0; i < cvModel.getRowCount(); i++) {
                 values.addContent(new Element("CVvalue")
-                                  .addAttribute("name", cvModel.getName(i))
-                                  .addAttribute("value", cvModel.getValString(i))
+                                  .setAttribute("name", cvModel.getName(i))
+                                  .setAttribute("value", cvModel.getValString(i))
                     );
             }
             // add the Indexed CV values to the
             for (int i = 0; i < iCvModel.getRowCount(); i++) {
                 values.addContent(new Element("indexedCVvalue")
-                                  .addAttribute("name", iCvModel.getName(i))
-                                  .addAttribute("piCv", ""+((CvValue)iCvModel.getCvByRow(i)).piCv())
-                                  .addAttribute("piVal", ""+((CvValue)iCvModel.getCvByRow(i)).piVal())
-                                  .addAttribute("siCv", ""+((CvValue)iCvModel.getCvByRow(i)).siCv())
-                                  .addAttribute("siVal", ""+((CvValue)iCvModel.getCvByRow(i)).siVal())
-                                  .addAttribute("iCv", ""+((CvValue)iCvModel.getCvByRow(i)).iCv())
-                                  .addAttribute("value", iCvModel.getValString(i))
+                                  .setAttribute("name", iCvModel.getName(i))
+                                  .setAttribute("piCv", ""+((CvValue)iCvModel.getCvByRow(i)).piCv())
+                                  .setAttribute("piVal", ""+((CvValue)iCvModel.getCvByRow(i)).piVal())
+                                  .setAttribute("siCv", ""+((CvValue)iCvModel.getCvByRow(i)).siCv())
+                                  .setAttribute("siVal", ""+((CvValue)iCvModel.getCvByRow(i)).siVal())
+                                  .setAttribute("iCv", ""+((CvValue)iCvModel.getCvByRow(i)).iCv())
+                                  .setAttribute("value", iCvModel.getValString(i))
                     );
             }
 

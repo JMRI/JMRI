@@ -207,7 +207,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
 	 *  A KeyAdapter that listens for the keys that work the function buttons
 	 *
 	 * @author     glen
-          * @version    $Revision: 1.27 $
+          * @version    $Revision: 1.28 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter
 	{
@@ -355,14 +355,14 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
         Element me = new Element("FunctionPanel");
         Element window = new Element("window");
         WindowPreferences wp = new WindowPreferences();
-        com.sun.java.util.collections.ArrayList children =
-                new com.sun.java.util.collections.ArrayList(1);
+        java.util.ArrayList children =
+                new java.util.ArrayList(1);
         children.add(wp.getPreferences(this));
         for (int i=0; i<this.NUM_FUNCTION_BUTTONS; i++)
         {
             children.add(functionButton[i].getXml());
         }
-        me.setChildren(children);
+        me.setContent(children);
         return me;
     }
 
@@ -380,11 +380,11 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
         WindowPreferences wp = new WindowPreferences();
         wp.setPreferences(this, window);
 
-        com.sun.java.util.collections.List buttonElements =
+        java.util.List buttonElements =
                 e.getChildren("FunctionButton");
 
         int i = 0;
-        for (com.sun.java.util.collections.Iterator iter =
+        for (java.util.Iterator iter =
              buttonElements.iterator(); iter.hasNext();)
         {
             Element buttonElement = (Element)iter.next();

@@ -4,14 +4,14 @@ import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.blockboss.BlockBossLogic;
 import java.util.Enumeration;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 import org.jdom.Element;
 
 /**
  * Handle XML persistance of Simple Signal Logic objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2005
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  * 
  * Revisions to add facing point sensors, approach lighting, 
  * and limited speed.                 Dick Bronson (RJB) 2006
@@ -38,16 +38,16 @@ public class BlockBossLogicXml implements XmlAdapter {
         Enumeration e = BlockBossLogic.entries();
         if (!e.hasMoreElements()) return null;  // nothing to write!
         Element blocks = new Element("blocks");
-        blocks.addAttribute("class", this.getClass().getName());
+        blocks.setAttribute("class", this.getClass().getName());
 
         while ( e.hasMoreElements()) {
             BlockBossLogic p = (BlockBossLogic) e.nextElement();
             Element block = new Element("block");
-            block.addAttribute("signal", p.getDrivenSignal());
-            block.addAttribute("mode", ""+p.getMode());
+            block.setAttribute("signal", p.getDrivenSignal());
+            block.setAttribute("mode", ""+p.getMode());
 
             if (p.getApproachSensor1()!=null) {
-                block.addAttribute("approachsensor1", p.getApproachSensor1());
+                block.setAttribute("approachsensor1", p.getApproachSensor1());
             }
 
             if (p.getSensor1()!=null) block.addContent(storeSensor(p.getSensor1()));
@@ -56,37 +56,37 @@ public class BlockBossLogicXml implements XmlAdapter {
             if (p.getSensor4()!=null) block.addContent(storeSensor(p.getSensor4()));
 
             if (p.getTurnout()!=null) {
-                block.addAttribute("watchedturnout", p.getTurnout());
+                block.setAttribute("watchedturnout", p.getTurnout());
             }
             if (p.getWatchedSignal1()!=null) {
-                block.addAttribute("watchedsignal1", p.getWatchedSignal1());
+                block.setAttribute("watchedsignal1", p.getWatchedSignal1());
             }
             if (p.getWatchedSignal1Alt()!=null) {
-                block.addAttribute("watchedsignal1alt", p.getWatchedSignal1Alt());
+                block.setAttribute("watchedsignal1alt", p.getWatchedSignal1Alt());
             }
             if (p.getWatchedSignal2()!=null) {
-                block.addAttribute("watchedsignal2", p.getWatchedSignal2());
+                block.setAttribute("watchedsignal2", p.getWatchedSignal2());
             }
             if (p.getWatchedSignal2Alt()!=null) {
-                block.addAttribute("watchedsignal2alt", p.getWatchedSignal2Alt());
+                block.setAttribute("watchedsignal2alt", p.getWatchedSignal2Alt());
             }
             if (p.getWatchedSensor1()!=null) {
-                block.addAttribute("watchedsensor1", p.getWatchedSensor1());
+                block.setAttribute("watchedsensor1", p.getWatchedSensor1());
             }
             if (p.getWatchedSensor1Alt()!=null) {
-                block.addAttribute("watchedsensor1alt", p.getWatchedSensor1Alt());
+                block.setAttribute("watchedsensor1alt", p.getWatchedSensor1Alt());
             }
             if (p.getWatchedSensor2()!=null) {
-                block.addAttribute("watchedsensor2", p.getWatchedSensor2());
+                block.setAttribute("watchedsensor2", p.getWatchedSensor2());
             }
             if (p.getWatchedSensor2Alt()!=null) {
-                block.addAttribute("watchedsensor2alt", p.getWatchedSensor2Alt());
+                block.setAttribute("watchedsensor2alt", p.getWatchedSensor2Alt());
             }
   
-            block.addAttribute("limitspeed1", ""+p.getLimitSpeed1());
-            block.addAttribute("limitspeed2", ""+p.getLimitSpeed2());
-            block.addAttribute("useflashyellow", ""+p.getUseFlash());
-            block.addAttribute("distantsignal", ""+p.getDistantSignal());
+            block.setAttribute("limitspeed1", ""+p.getLimitSpeed1());
+            block.setAttribute("limitspeed2", ""+p.getLimitSpeed2());
+            block.setAttribute("useflashyellow", ""+p.getUseFlash());
+            block.setAttribute("distantsignal", ""+p.getDistantSignal());
             blocks.addContent(block);
 
         }
@@ -97,7 +97,7 @@ public class BlockBossLogicXml implements XmlAdapter {
     Element storeSensor(String name) {
         Element e = new Element("sensor");
         jmri.Sensor s = jmri.InstanceManager.sensorManagerInstance().getSensor(name);
-        e.addAttribute("systemName", s.getSystemName());
+        e.setAttribute("systemName", s.getSystemName());
         return e;
     }
 

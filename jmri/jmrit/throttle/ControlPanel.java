@@ -45,7 +45,7 @@ import org.jdom.Attribute;
  *  TODO: fix speed increments (14, 28)
  *
  * @author     glen   Copyright (C) 2002
- * @version    $Revision: 1.50 $
+ * @version    $Revision: 1.51 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener,ActionListener
 {
@@ -258,7 +258,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 		speedSlider.setMaximum(MAX_SPEED);
 		speedSlider.setValue((int)(oldSpeed * MAX_SPEED));
 		speedSlider.setMajorTickSpacing(MAX_SPEED/2);
-		com.sun.java.util.collections.Hashtable labelTable = new com.sun.java.util.collections.Hashtable();
+		java.util.Hashtable labelTable = new java.util.Hashtable();
 		labelTable.put(new Integer(MAX_SPEED/2), new JLabel("50%"));
 		labelTable.put(new Integer(MAX_SPEED), new JLabel("100%"));
                 labelTable.put(new Integer(0), new JLabel("Stop"));
@@ -399,7 +399,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 		speedControlPanel.add(sliderPanel);
 		speedSlider.setOrientation(JSlider.VERTICAL);
 		speedSlider.setMajorTickSpacing(MAX_SPEED/2);
-		com.sun.java.util.collections.Hashtable labelTable = new com.sun.java.util.collections.Hashtable();
+		java.util.Hashtable labelTable = new java.util.Hashtable();
 		labelTable.put(new Integer(MAX_SPEED/2), new JLabel("50%"));
 		labelTable.put(new Integer(MAX_SPEED), new JLabel("100%"));
                 labelTable.put(new Integer(0), new JLabel("Stop"));
@@ -653,7 +653,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	 *  A KeyAdapter that listens for the keys that work the control pad buttons
 	 *
 	 * @author     glen
-         * @version    $Revision: 1.50 $
+         * @version    $Revision: 1.51 $
 	 */
 	class ControlPadKeyListener extends KeyAdapter
 	{
@@ -915,16 +915,16 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	public Element getXml()
 	{
 		Element me = new Element("ControlPanel");
-		me.addAttribute("displaySpeedSlider",String.valueOf(this._displaySlider));		
-		me.addAttribute("speedMode",String.valueOf(this._speedStepMode));
-        me.addAttribute("trackSlider", String.valueOf(this.trackSlider));
-        me.addAttribute("trackSliderMinInterval", String.valueOf(this.trackSliderMinInterval));
+		me.setAttribute("displaySpeedSlider",String.valueOf(this._displaySlider));		
+		me.setAttribute("speedMode",String.valueOf(this._speedStepMode));
+        me.setAttribute("trackSlider", String.valueOf(this.trackSlider));
+        me.setAttribute("trackSliderMinInterval", String.valueOf(this.trackSliderMinInterval));
 		Element window = new Element("window");
 		WindowPreferences wp = new WindowPreferences();
-		com.sun.java.util.collections.ArrayList children =
-				new com.sun.java.util.collections.ArrayList(1);
+		java.util.ArrayList children =
+				new java.util.ArrayList(1);
 		children.add(wp.getPreferences(this));
-		me.setChildren(children);
+		me.setContent(children);
 		return me;
 	}
 

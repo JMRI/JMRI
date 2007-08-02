@@ -6,7 +6,7 @@ import java.io.*;
 
 import javax.swing.*;
 
-import com.sun.java.util.collections.*;
+import java.util.*;
 import org.jdom.*;
 import org.jdom.output.*;
 
@@ -14,7 +14,7 @@ import org.jdom.output.*;
  * Save throttles to XML
  *
  * @author			Glen Oberhauser
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class StoreXmlThrottleAction extends AbstractAction {
 
@@ -49,20 +49,20 @@ public class StoreXmlThrottleAction extends AbstractAction {
             Element root = new Element("throttle-config");
             Document doc = XmlFile.newDocument(root, "throttle-config.dtd");
 
-            com.sun.java.util.collections.ArrayList children =
-                    new com.sun.java.util.collections.ArrayList(5);
+            java.util.ArrayList children =
+                    new java.util.ArrayList(5);
             for (Iterator i = ThrottleFrameManager.instance().getThrottleFrames(); i.hasNext(); )
             {
                 ThrottleFrame f = (ThrottleFrame)i.next();
                 Element throttleElement = f.getXml();
                 children.add(throttleElement);
             }
-            root.setChildren(children);
+            root.setContent(children);
 
             FileOutputStream o = new java.io.FileOutputStream(fileChooser.getSelectedFile());
             XMLOutputter fmt = new XMLOutputter();
-            fmt.setNewlines(true);   // pretty printing
-            fmt.setIndent(true);
+            // fmt.setNewlines(true);   // pretty printing
+            // fmt.setIndent(true);
             fmt.output(doc, o);
             o.close();
 

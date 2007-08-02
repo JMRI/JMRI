@@ -3,7 +3,7 @@ package jmri.jmrit.throttle;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import com.sun.java.util.collections.*;
+import java.util.*;
 
 import jmri.DccThrottle;
 import jmri.DccLocoAddress;
@@ -18,7 +18,7 @@ import org.jdom.Element;
  * notifies them when the user enters a new address.
  *
  * @author     glen   Copyright (C) 2002
- * @version    $Revision: 1.26 $
+ * @version    $Revision: 1.27 $
  */
 public class AddressPanel extends JInternalFrame
 {
@@ -274,11 +274,11 @@ public class AddressPanel extends JInternalFrame
          Element me = new Element("AddressPanel");
          Element window = new Element("window");
          WindowPreferences wp = new WindowPreferences();
-         com.sun.java.util.collections.ArrayList children =
-                 new com.sun.java.util.collections.ArrayList(1);
+         java.util.ArrayList children =
+                 new java.util.ArrayList(1);
          children.add(wp.getPreferences(this));
          children.add((new jmri.configurexml.LocoAddressXml()).store(addrSelector.getAddress()));
-         me.setChildren(children);
+         me.setContent(children);
          return me;
      }
 

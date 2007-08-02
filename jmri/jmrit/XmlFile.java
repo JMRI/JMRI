@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 import org.jdom.Comment;
 import org.jdom.Document;
 import org.jdom.DocType;
@@ -19,7 +19,7 @@ import org.jdom.output.XMLOutputter;
  * Handle common aspects of XML files.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.24 $
+ * @version	$Revision: 1.25 $
  */
 public abstract class XmlFile {
 
@@ -33,7 +33,7 @@ public abstract class XmlFile {
      * @throws java.io.FileNotFoundException
      * @return null if not found, else root element of located file
      */
-    public Element rootFromName(String name) throws org.jdom.JDOMException, java.io.FileNotFoundException {
+    public Element rootFromName(String name) throws org.jdom.JDOMException, java.io.IOException {
 
         File fp = findFile(name);
         if (fp != null) {
@@ -58,7 +58,7 @@ public abstract class XmlFile {
      * @return root element from the file. This should never be null, as an
      *          exception should be thrown if anything goes wrong.
      */
-    public Element rootFromFile(File file) throws org.jdom.JDOMException, java.io.FileNotFoundException {
+    public Element rootFromFile(File file) throws org.jdom.JDOMException, java.io.IOException {
         Element e;
         try {
             InputStream stream = new BufferedInputStream(new FileInputStream(file));
@@ -106,7 +106,7 @@ public abstract class XmlFile {
      * Find the DTD via a relative path and get the root element.
      * 
      */
-    protected Element getRootViaRelative(boolean verify, InputStream stream) throws org.jdom.JDOMException, java.io.FileNotFoundException {
+    protected Element getRootViaRelative(boolean verify, InputStream stream) throws org.jdom.JDOMException, java.io.IOException {
         // Invoke a utility service routine to provide the URL for DTDs
         String dtdUrl = "file:xml"+File.separator+"DTD";
 
@@ -124,7 +124,7 @@ public abstract class XmlFile {
      * Find the DTD via a URL and get the root element.
      * 
      */
-    protected Element getRootViaURL(boolean verify, InputStream stream) throws org.jdom.JDOMException, java.io.FileNotFoundException {
+    protected Element getRootViaURL(boolean verify, InputStream stream) throws org.jdom.JDOMException, java.io.IOException {
         // Invoke a utility service routine to provide the URL for DTDs
         String dtdpath = "xml"+File.separator+"DTD"+File.separator;
         File dtdFile = new File(dtdpath);
@@ -144,7 +144,7 @@ public abstract class XmlFile {
      * Find the DTD via a URI and get the root element.
      * 
      */
-    protected Element getRootViaURI(boolean verify, InputStream stream) throws org.jdom.JDOMException, java.io.FileNotFoundException {
+    protected Element getRootViaURI(boolean verify, InputStream stream) throws org.jdom.JDOMException, java.io.IOException {
         // Invoke a utility service routine to provide the URL for DTDs
         String dtdpath = "xml"+File.separator+"DTD"+File.separator;
         File dtdFile = new File(dtdpath);
@@ -171,8 +171,11 @@ public abstract class XmlFile {
         // write the result to selected file
         java.io.FileOutputStream o = new java.io.FileOutputStream(file);
         XMLOutputter fmt = new XMLOutputter();
-        fmt.setNewlines(true); // pretty printing
-        fmt.setIndent(true);
+        
+        // fmt.setNewlines(true); // pretty printing
+        // fmt.setIndent(true);
+        fmt.setFormat(org.jdom.output.Format.getPrettyFormat());
+        
         fmt.output(doc, o);
         o.close();
     }
@@ -314,7 +317,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.24 2007-02-26 07:58:15 jacobsen Exp $";
+                        +" $Id: XmlFile.java,v 1.25 2007-08-02 01:56:47 jacobsen Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }

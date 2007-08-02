@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.StringTokenizer;
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 import jmri.util.davidflanagan.HardcopyWriter;
 
 
@@ -36,7 +36,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.24 $
+ * @version   $Revision: 1.25 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -236,20 +236,20 @@ public class RosterEntry {
      */
     org.jdom.Element store() {
         org.jdom.Element e = new org.jdom.Element("locomotive");
-        e.addAttribute("id", getId());
-        e.addAttribute("fileName", getFileName());
-        e.addAttribute("roadNumber",getRoadNumber());
-        e.addAttribute("roadName",getRoadName());
-        e.addAttribute("mfg",getMfg());
-        e.addAttribute("owner",getOwner());
-        e.addAttribute("model",getModel());
-        e.addAttribute("dccAddress",getDccAddress());
-        e.addAttribute("comment",getComment());
+        e.setAttribute("id", getId());
+        e.setAttribute("fileName", getFileName());
+        e.setAttribute("roadNumber",getRoadNumber());
+        e.setAttribute("roadName",getRoadName());
+        e.setAttribute("mfg",getMfg());
+        e.setAttribute("owner",getOwner());
+        e.setAttribute("model",getModel());
+        e.setAttribute("dccAddress",getDccAddress());
+        e.setAttribute("comment",getComment());
 
         org.jdom.Element d = new org.jdom.Element("decoder");
-        d.addAttribute("model",getDecoderModel());
-        d.addAttribute("family",getDecoderFamily());
-        d.addAttribute("comment",getDecoderComment());
+        d.setAttribute("model",getDecoderModel());
+        d.setAttribute("family",getDecoderFamily());
+        d.setAttribute("comment",getDecoderComment());
 
         e.addContent(d);
 

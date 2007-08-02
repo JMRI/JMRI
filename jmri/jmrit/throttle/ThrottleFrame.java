@@ -43,7 +43,7 @@ import org.jdom.Element;
  *  directed by the interface.
  *
  * @author     Glen Oberhauser
- * @version    $Revision: 1.29 $
+ * @version    $Revision: 1.30 $
  */
 /**
  * @author DSM
@@ -539,16 +539,16 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
 	public Element getXml()
 	{
 		Element me = new Element("ThrottleFrame");
-		me.addAttribute("title", this.getTitle());
-		com.sun.java.util.collections.ArrayList children =
-				new com.sun.java.util.collections.ArrayList(1);
+		me.setAttribute("title", this.getTitle());
+		java.util.ArrayList children =
+				new java.util.ArrayList(1);
 		WindowPreferences wp = new WindowPreferences();
 
 		children.add(wp.getPreferences(this));
 		children.add(controlPanel.getXml());
 		children.add(functionPanel.getXml());
 		children.add(addressPanel.getXml());
-		me.setChildren(children);
+		me.setContent(children);
 		return me;
 	}
 
