@@ -4,9 +4,9 @@ package jmri.jmrix;
 
 import java.io.DataInputStream;
 import java.io.OutputStream;
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
-import com.sun.java.util.collections.LinkedList;
+import java.util.LinkedList;
 
 /**
  * Abstract base for TrafficControllers in a Message/Reply protocol.
@@ -26,7 +26,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.35 $
+ * @version			$Revision: 1.36 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -422,14 +422,23 @@ abstract public class AbstractMRTrafficController {
             }
             else {
                 // no stream connected
-                log.warn("sendMessage: no connection established");
+                connectionWarn();
             }
         }
         catch (Exception e) {
-            log.warn("sendMessage: Exception: "+e.toString());
+            portWarn(e);
         }
     }
 
+    protected void connectionWarn() {
+        log.warn("sendMessage: no connection established");
+        new Exception().printStackTrace();
+    }
+
+    void portWarn(Exception e) {
+        log.warn("sendMessage: Exception: "+e.toString());
+    }
+    
     // methods to connect/disconnect to a source of data in a AbstractPortController
     public AbstractPortController controller = null;
 
@@ -698,7 +707,7 @@ abstract public class AbstractMRTrafficController {
             log.debug("Delayed rcv notify starts");
             mTC.notifyReply(mMsg, mDest);
         }
-    }
+    } // end RcvNotifier
    
     /**
      * Internal class to remember the Message object and destination
@@ -718,7 +727,7 @@ abstract public class AbstractMRTrafficController {
             log.debug("Delayed xmt notify starts");
             mTC.notifyMessage(mMsg, mDest);
         }
-    }
+    }  // end XmtNotifier
 
     /**
      * Internal class to handle traffic controller cleanup.
@@ -734,7 +743,7 @@ abstract public class AbstractMRTrafficController {
         public void run() {
 	    mTC.finalize();
         }
-    }
+    } // end cleanUpHook
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractMRTrafficController.class.getName());
 }
