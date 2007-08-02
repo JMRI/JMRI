@@ -18,7 +18,7 @@ import org.jdom.Element;
  * and the default Locale.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  * @see jmri.GuiLafConfigPane
  */
 public class GuiLafConfigPaneXml implements XmlAdapter {
@@ -36,13 +36,13 @@ public class GuiLafConfigPaneXml implements XmlAdapter {
         GuiLafConfigPane g = (GuiLafConfigPane) o;
         String lafClassName = g.getClassName();
 
-        e.addAttribute("LAFclass", lafClassName);
-        e.addAttribute("class", this.getClass().getName());
+        e.setAttribute("LAFclass", lafClassName);
+        e.setAttribute("class", this.getClass().getName());
 
         Locale l = g.getLocale();
-        e.addAttribute("LocaleLanguage",l.getLanguage());
-        e.addAttribute("LocaleCountry",l.getCountry());
-        e.addAttribute("LocaleVariant",l.getVariant());
+        e.setAttribute("LocaleLanguage",l.getLanguage());
+        e.setAttribute("LocaleCountry",l.getCountry());
+        e.setAttribute("LocaleVariant",l.getVariant());
         return e;
     }
 

@@ -5,10 +5,8 @@ package jmri.configurexml;
 
 import org.jdom.Element;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 
-//import jmri.InstanceManager;
-//import jmri.TurnoutManager;
 import jmri.TurnoutOperation;
 import jmri.TurnoutOperationManager;
 import jmri.configurexml.XmlAdapter;
@@ -24,7 +22,7 @@ public class TurnoutOperationManagerXml implements XmlAdapter {
     }
 
     public void setStoreElementClass(Element elem) {
-        elem.addAttribute("class",getClass().getName());
+        elem.setAttribute("class",getClass().getName());
     }
 
     public void load(Element element, Object o) {
@@ -49,7 +47,7 @@ public class TurnoutOperationManagerXml implements XmlAdapter {
     	Element elem = new Element("operations");
     	if (o instanceof TurnoutOperationManager) {
     		TurnoutOperationManager manager = (TurnoutOperationManager)o;
-    		elem.addAttribute("automate", String.valueOf(manager.getDoOperations()));
+    		elem.setAttribute("automate", String.valueOf(manager.getDoOperations()));
     		TurnoutOperation[] operations = manager.getTurnoutOperations();
     		for (int i=0; i<operations.length; ++i) {
     			TurnoutOperation op = operations[i];

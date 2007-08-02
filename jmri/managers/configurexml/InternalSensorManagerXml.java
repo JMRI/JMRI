@@ -10,7 +10,7 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2006
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class InternalSensorManagerXml extends jmri.configurexml.AbstractSensorManagerConfigXML {
 
@@ -19,7 +19,7 @@ public class InternalSensorManagerXml extends jmri.configurexml.AbstractSensorMa
     }
 
     public void setStoreElementClass(Element sensors) {
-        sensors.addAttribute("class",this.getClass().getName());
+        sensors.setAttribute("class",this.getClass().getName());
     }
 
     public void load(Element element, Object o) {

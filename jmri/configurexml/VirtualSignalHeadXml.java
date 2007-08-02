@@ -10,7 +10,7 @@ import org.jdom.Element;
  * Handle XML configuration for VirtualSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2005
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class VirtualSignalHeadXml implements XmlAdapter {
 
@@ -26,11 +26,11 @@ public class VirtualSignalHeadXml implements XmlAdapter {
         VirtualSignalHead p = (VirtualSignalHead)o;
 
         Element element = new Element("signalhead");
-        element.addAttribute("class", this.getClass().getName());
+        element.setAttribute("class", this.getClass().getName());
 
         // include contents
-        element.addAttribute("systemName", p.getSystemName());
-        if (p.getUserName() != null) element.addAttribute("userName", p.getUserName());
+        element.setAttribute("systemName", p.getSystemName());
+        if (p.getUserName() != null) element.setAttribute("userName", p.getUserName());
 
         return element;
     }

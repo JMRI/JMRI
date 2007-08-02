@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle XML persistance of SimpleTimebase objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class SimpleTimebaseXml implements XmlAdapter {
 
@@ -32,11 +32,11 @@ public class SimpleTimebaseXml implements XmlAdapter {
         Timebase clock = InstanceManager.timebaseInstance();
         
         Element elem = new Element("timebase");
-        elem.addAttribute("class", this.getClass().getName());
+        elem.setAttribute("class", this.getClass().getName());
 
-        elem.addAttribute("time", clock.getTime().toString());
-        elem.addAttribute("rate", ""+clock.getRate());
-        elem.addAttribute("run", (clock.getRun()?"yes":"no"));
+        elem.setAttribute("time", clock.getTime().toString());
+        elem.setAttribute("rate", ""+clock.getRate());
+        elem.setAttribute("run", (clock.getRun()?"yes":"no"));
         
         return elem;
     }

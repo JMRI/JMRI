@@ -9,7 +9,7 @@ import org.jdom.Element;
  * <P>The state of memory objects is not persisted, just their existance.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class DefaultMemoryManagerXml extends AbstractMemoryManagerConfigXML {
 
@@ -23,7 +23,7 @@ public class DefaultMemoryManagerXml extends AbstractMemoryManagerConfigXML {
      * @param memories The top-level element being created
      */
     public void setStoreElementClass(Element memories) {
-        memories.addAttribute("class","jmri.configurexml.DefaultMemoryManagerXml");
+        memories.setAttribute("class","jmri.configurexml.DefaultMemoryManagerXml");
     }
 
     /**

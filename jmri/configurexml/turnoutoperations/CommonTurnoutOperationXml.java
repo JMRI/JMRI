@@ -23,8 +23,8 @@ public abstract class CommonTurnoutOperationXml extends TurnoutOperationXml {
 	public Element store(Object op) {
 		CommonTurnoutOperation myOp = (CommonTurnoutOperation)op;
 		Element elem = super.store(op);
-		elem.addAttribute("interval", String.valueOf(myOp.getInterval()));
-		elem.addAttribute("maxtries", String.valueOf(myOp.getMaxTries()));
+		elem.setAttribute("interval", String.valueOf(myOp.getInterval()));
+		elem.setAttribute("maxtries", String.valueOf(myOp.getMaxTries()));
 		return elem;
 	}
 	

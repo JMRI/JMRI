@@ -9,7 +9,7 @@ import org.jdom.Element;
  * Handle XML configuration for DccLocoAddress objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2005
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class DccLocoAddressXml implements XmlAdapter {
 
@@ -28,12 +28,12 @@ public class DccLocoAddressXml implements XmlAdapter {
 
         // include contents
         if (p!=null) {
-            element.addAttribute("number", ""+p.getNumber());
-            if (p.isLongAddress()) element.addAttribute("longaddress", "yes");
-            else element.addAttribute("longaddress", "no");
+            element.setAttribute("number", ""+p.getNumber());
+            if (p.isLongAddress()) element.setAttribute("longaddress", "yes");
+            else element.setAttribute("longaddress", "no");
         } else {
-            element.addAttribute("number", "");
-            element.addAttribute("longaddress", "no");
+            element.setAttribute("number", "");
+            element.setAttribute("longaddress", "no");
         }
         return element;
     }

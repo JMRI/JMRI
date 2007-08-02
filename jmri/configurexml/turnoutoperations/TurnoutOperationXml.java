@@ -7,11 +7,8 @@ package jmri.configurexml.turnoutoperations;
 
 import org.jdom.Element;
 
-//import jmri.NoFeedbackTurnoutOperation;
 import jmri.TurnoutOperation;
 import jmri.configurexml.XmlAdapter;
-//import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
-//import jmri.jmrix.nce.configurexml.NceTurnoutManagerXml;
 import jmri.util.StringUtil;
 
 /**
@@ -72,8 +69,8 @@ public abstract class TurnoutOperationXml implements XmlAdapter {
     public Element store(Object o) {
     	TurnoutOperation myOp = (TurnoutOperation)o;
     	Element elem = new Element("operation");
-    	elem.addAttribute("name", myOp.getName());
-    	elem.addAttribute("class", this.getClass().getName());
+    	elem.setAttribute("name", myOp.getName());
+    	elem.setAttribute("class", this.getClass().getName());
     	return elem;
     }
 
