@@ -2,15 +2,15 @@
 
 package apps;
 
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.List;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A PerformScriptModel object runs a script
  * when the program is started.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @see PerformScriptPanel
  */
 public class PerformScriptModel {

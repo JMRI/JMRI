@@ -2,8 +2,8 @@
 
 package apps;
 
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.List;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Invokes a Swing Action
@@ -17,7 +17,7 @@ import com.sun.java.util.collections.List;
  * systems realize the type of data being stored.
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  * @see PerformActionPanel
  */
 public class PerformActionModel extends AbstractActionModel {

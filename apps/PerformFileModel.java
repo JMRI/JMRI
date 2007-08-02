@@ -2,15 +2,15 @@
 
 package apps;
 
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.List;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A PerformFileModel object loads an xml file
  * when the program is started.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  * @see PerformFilePanel
  */
 public class PerformFileModel {

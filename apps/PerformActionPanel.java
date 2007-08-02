@@ -2,7 +2,7 @@
 
 package apps;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 
 /**
  * Provide a GUI for configuring PerformActionModel objects.
@@ -13,7 +13,7 @@ import com.sun.java.util.collections.List;
  *
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  * @see apps.PerformActionModel
  */
 public class PerformActionPanel extends AbstractActionPanel {

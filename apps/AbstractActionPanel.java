@@ -15,7 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 
 /**
  * Provide an abstract GUI for configuring use of Actions.
@@ -31,7 +31,7 @@ import com.sun.java.util.collections.List;
  *
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 abstract public class AbstractActionPanel extends JPanel {
 

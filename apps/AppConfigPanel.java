@@ -16,13 +16,13 @@ import java.util.ResourceBundle;
 
 import javax.swing.*;
 
-import com.sun.java.util.collections.ArrayList;
+import java.util.ArrayList;
 
 /**
  * Basic configuration GUI infrastructure.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 public class AppConfigPanel extends JPanel {
 

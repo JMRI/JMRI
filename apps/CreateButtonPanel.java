@@ -2,7 +2,7 @@
 
 package apps;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 
 /**
  * Provide a GUI for configuring start-up actions.
@@ -12,7 +12,7 @@ import com.sun.java.util.collections.List;
  *
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  * @see apps.CreateButtonModel
  */
 public class CreateButtonPanel extends AbstractActionPanel {
