@@ -6,14 +6,14 @@ import jmri.jmrit.display.PanelEditor;
 import java.awt.Dimension;
 import java.awt.Point;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 import org.jdom.*;
 
 /**
  * Handle configuration for {@link PanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 public class PanelEditorXml implements XmlAdapter {
 
@@ -32,17 +32,17 @@ public class PanelEditorXml implements XmlAdapter {
         Dimension size = p.getFrame().getSize();
         Point posn = p.getFrame().getLocation();
 
-        panel.addAttribute("class", "jmri.jmrit.display.configurexml.PanelEditorXml");
-        panel.addAttribute("name", ""+p.getFrame().getTitle());
-        panel.addAttribute("x", ""+posn.x);
-        panel.addAttribute("y", ""+posn.y);
-        panel.addAttribute("height", ""+size.height);
-        panel.addAttribute("width", ""+size.width);
-        panel.addAttribute("editable", ""+(p.isEditable()?"yes":"no"));
-        panel.addAttribute("positionable", ""+(p.isPositionable()?"yes":"no"));
-        panel.addAttribute("controlling", ""+(p.isControlling()?"yes":"no"));
-        panel.addAttribute("hide", p.isVisible()?"no":"yes");
-        panel.addAttribute("panelmenu", p.hasPanelMenu()?"yes":"no");
+        panel.setAttribute("class", "jmri.jmrit.display.configurexml.PanelEditorXml");
+        panel.setAttribute("name", ""+p.getFrame().getTitle());
+        panel.setAttribute("x", ""+posn.x);
+        panel.setAttribute("y", ""+posn.y);
+        panel.setAttribute("height", ""+size.height);
+        panel.setAttribute("width", ""+size.width);
+        panel.setAttribute("editable", ""+(p.isEditable()?"yes":"no"));
+        panel.setAttribute("positionable", ""+(p.isPositionable()?"yes":"no"));
+        panel.setAttribute("controlling", ""+(p.isControlling()?"yes":"no"));
+        panel.setAttribute("hide", p.isVisible()?"no":"yes");
+        panel.setAttribute("panelmenu", p.hasPanelMenu()?"yes":"no");
 
         // include contents
 

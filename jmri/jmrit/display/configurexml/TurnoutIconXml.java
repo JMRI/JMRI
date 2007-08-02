@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle configuration for display.TurnoutIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class TurnoutIconXml implements XmlAdapter {
 
@@ -33,20 +33,19 @@ public class TurnoutIconXml implements XmlAdapter {
         Element element = new Element("turnouticon");
 
         // include contents
-        element.addAttribute("turnout", p.getTurnout().getSystemName());
-        element.addAttribute("x", ""+p.getX());
-        element.addAttribute("y", ""+p.getY());
-        element.addAttribute("level", String.valueOf(p.getDisplayLevel()));
-        element.addAttribute("closed", p.getClosedIcon().getName());
-        element.addAttribute("thrown", p.getThrownIcon().getName());
-        element.addAttribute("unknown", p.getUnknownIcon().getName());
-        element.addAttribute("inconsistent", p.getInconsistentIcon().getName());
-        element.addAttribute("rotate", String.valueOf(p.getClosedIcon().getRotation()));
-        element.addAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
-        element.addAttribute("tristate", p.getTristate()?"true":"false");
+        element.setAttribute("turnout", p.getTurnout().getSystemName());
+        element.setAttribute("x", ""+p.getX());
+        element.setAttribute("y", ""+p.getY());
+        element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
+        element.setAttribute("closed", p.getClosedIcon().getName());
+        element.setAttribute("thrown", p.getThrownIcon().getName());
+        element.setAttribute("unknown", p.getUnknownIcon().getName());
+        element.setAttribute("inconsistent", p.getInconsistentIcon().getName());
+        element.setAttribute("rotate", String.valueOf(p.getClosedIcon().getRotation()));
+        element.setAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
+        element.setAttribute("tristate", p.getTristate()?"true":"false");
         
-
-        element.addAttribute("class", "jmri.jmrit.display.configurexml.TurnoutIconXml");
+        element.setAttribute("class", "jmri.jmrit.display.configurexml.TurnoutIconXml");
 
         return element;
     }

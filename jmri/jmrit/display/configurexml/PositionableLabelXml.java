@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class PositionableLabelXml implements XmlAdapter {
 
@@ -34,29 +34,29 @@ public class PositionableLabelXml implements XmlAdapter {
         if (!p.isActive()) return null;  // if flagged as inactive, don't store
 
         Element element = new Element("positionablelabel");
-        element.addAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
-        element.addAttribute("fixed", p.getFixed()?"true":"false");
-        element.addAttribute("showtooltip", p.getShowTooltip()?"true":"false");
-        element.addAttribute("class", "jmri.jmrit.display.configurexml.PositionableLabelXml");
+        element.setAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
+        element.setAttribute("fixed", p.getFixed()?"true":"false");
+        element.setAttribute("showtooltip", p.getShowTooltip()?"true":"false");
+        element.setAttribute("class", "jmri.jmrit.display.configurexml.PositionableLabelXml");
 
         // include contents
-        element.addAttribute("x", String.valueOf(p.getX()));
-        element.addAttribute("y", String.valueOf(p.getY()));
-        element.addAttribute("level", String.valueOf(p.getDisplayLevel()));
+        element.setAttribute("x", String.valueOf(p.getX()));
+        element.setAttribute("y", String.valueOf(p.getY()));
+        element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
         if (p.isText() && p.getText()!=null) {
-            element.addAttribute("text", p.getText());
-            element.addAttribute("size", ""+p.getFont().getSize());
-            element.addAttribute("style", ""+p.getFont().getStyle());
+            element.setAttribute("text", p.getText());
+            element.setAttribute("size", ""+p.getFont().getSize());
+            element.setAttribute("style", ""+p.getFont().getStyle());
             if (!p.getForeground().equals(Color.black)) {
-                element.addAttribute("red", ""+p.getForeground().getRed());
-                element.addAttribute("green", ""+p.getForeground().getGreen());
-                element.addAttribute("blue", ""+p.getForeground().getBlue());
+                element.setAttribute("red", ""+p.getForeground().getRed());
+                element.setAttribute("green", ""+p.getForeground().getGreen());
+                element.setAttribute("blue", ""+p.getForeground().getBlue());
             }
         }
         if (p.isIcon() && p.getIcon()!=null) {
             NamedIcon icon = (NamedIcon)p.getIcon();
-            element.addAttribute("icon", icon.getName());
-            element.addAttribute("rotate", String.valueOf(icon.getRotation()));
+            element.setAttribute("icon", icon.getName());
+            element.setAttribute("rotate", String.valueOf(icon.getRotation()));
         }
 
         return element;

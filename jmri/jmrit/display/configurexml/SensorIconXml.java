@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public class SensorIconXml implements XmlAdapter {
 
@@ -33,19 +33,19 @@ public class SensorIconXml implements XmlAdapter {
         Element element = new Element("sensoricon");
 
         // include contents
-        element.addAttribute("sensor", p.getSensor().getSystemName());
-        element.addAttribute("x", ""+p.getX());
-        element.addAttribute("y", ""+p.getY());
-        element.addAttribute("level", String.valueOf(p.getDisplayLevel()));
-        element.addAttribute("active", p.getActiveIcon().getName());
-        element.addAttribute("inactive", p.getInactiveIcon().getName());
-        element.addAttribute("unknown", p.getUnknownIcon().getName());
-        element.addAttribute("inconsistent", p.getInconsistentIcon().getName());
-        element.addAttribute("rotate", String.valueOf(p.getActiveIcon().getRotation()));
-        element.addAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
-        element.addAttribute("momentary", p.getMomentary()?"true":"false");
+        element.setAttribute("sensor", p.getSensor().getSystemName());
+        element.setAttribute("x", ""+p.getX());
+        element.setAttribute("y", ""+p.getY());
+        element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
+        element.setAttribute("active", p.getActiveIcon().getName());
+        element.setAttribute("inactive", p.getInactiveIcon().getName());
+        element.setAttribute("unknown", p.getUnknownIcon().getName());
+        element.setAttribute("inconsistent", p.getInconsistentIcon().getName());
+        element.setAttribute("rotate", String.valueOf(p.getActiveIcon().getRotation()));
+        element.setAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
+        element.setAttribute("momentary", p.getMomentary()?"true":"false");
 
-        element.addAttribute("class", "jmri.jmrit.display.configurexml.SensorIconXml");
+        element.setAttribute("class", "jmri.jmrit.display.configurexml.SensorIconXml");
 
         return element;
     }

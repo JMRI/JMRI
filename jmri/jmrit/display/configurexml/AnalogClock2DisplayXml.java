@@ -10,7 +10,7 @@ import jmri.jmrit.display.*;
  * Handle configuration for display.AnalogClock2Display objects.
  *
  * @author  Howard G. Penny  Copyright (c) 2005
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class AnalogClock2DisplayXml
     implements XmlAdapter {
@@ -34,10 +34,10 @@ public class AnalogClock2DisplayXml
         Element element = new Element("fastclock");
 
         // include contents
-        element.addAttribute("x", "" + p.getX());
-        element.addAttribute("y", "" + p.getY());
+        element.setAttribute("x", "" + p.getX());
+        element.setAttribute("y", "" + p.getY());
 
-        element.addAttribute("class",
+        element.setAttribute("class",
             "jmri.jmrit.display.configurexml.AnalogClock2DisplayXml");
 
         return element;

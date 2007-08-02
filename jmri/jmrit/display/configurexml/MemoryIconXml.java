@@ -8,14 +8,14 @@ import jmri.jmrit.display.MemoryIcon;
 import org.jdom.Attribute;
 import org.jdom.DataConversionException;
 import org.jdom.Element;
-import com.sun.java.util.collections.List;
+import java.util.List;
 import java.awt.Color;
 
 /**
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class MemoryIconXml implements XmlAdapter {
 
@@ -35,35 +35,35 @@ public class MemoryIconXml implements XmlAdapter {
         Element element = new Element("memoryicon");
 
         // include attributes
-        element.addAttribute("memory", p.getMemory().getSystemName());
-        element.addAttribute("x", ""+p.getX());
-        element.addAttribute("y", ""+p.getY());
-        element.addAttribute("level", String.valueOf(p.getDisplayLevel()));
+        element.setAttribute("memory", p.getMemory().getSystemName());
+        element.setAttribute("x", ""+p.getX());
+        element.setAttribute("y", ""+p.getY());
+        element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
         if (p.isText() && p.getText()!=null) {
-            element.addAttribute("size", ""+p.getFont().getSize());
-            element.addAttribute("style", ""+p.getFont().getStyle());
+            element.setAttribute("size", ""+p.getFont().getSize());
+            element.setAttribute("style", ""+p.getFont().getStyle());
             if (!p.getForeground().equals(Color.black)) {
-                element.addAttribute("red", ""+p.getForeground().getRed());
-                element.addAttribute("green", ""+p.getForeground().getGreen());
-                element.addAttribute("blue", ""+p.getForeground().getBlue());
+                element.setAttribute("red", ""+p.getForeground().getRed());
+                element.setAttribute("green", ""+p.getForeground().getGreen());
+                element.setAttribute("blue", ""+p.getForeground().getBlue());
             }
         }
-        element.addAttribute("selectable", (p.isSelectable()?"yes":"no"));
+        element.setAttribute("selectable", (p.isSelectable()?"yes":"no"));
 
-        element.addAttribute("class", "jmri.jmrit.display.configurexml.MemoryIconXml");
+        element.setAttribute("class", "jmri.jmrit.display.configurexml.MemoryIconXml");
         if (p.getDefaultIcon()!=null)
-            element.addAttribute("defaulticon", p.getDefaultIcon().getName());
+            element.setAttribute("defaulticon", p.getDefaultIcon().getName());
 
 		// include contents
-		com.sun.java.util.collections.HashMap map = p.getMap();
+		java.util.HashMap map = p.getMap();
 		if (map!=null) {
-		    com.sun.java.util.collections.Iterator iterator = map.keySet().iterator();
+		    java.util.Iterator iterator = map.keySet().iterator();
     	    while (iterator.hasNext()) {
     		    String key = iterator.next().toString();
     		    String value = ((NamedIcon)map.get(key)).getName();
     		    Element e2 = new Element("memorystate");
-    		    e2.addAttribute("value", key);
-    		    e2.addAttribute("icon", value);
+    		    e2.setAttribute("value", key);
+    		    e2.setAttribute("icon", value);
     		    element.addContent(e2);
     	    }
         }

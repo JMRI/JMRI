@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public class SignalHeadIconXml implements XmlAdapter {
 
@@ -35,24 +35,24 @@ public class SignalHeadIconXml implements XmlAdapter {
         Element element = new Element("signalheadicon");
 
         // include contents
-        element.addAttribute("signalhead", ""+p.getSignalHead().getSystemName());
-        element.addAttribute("x", ""+p.getX());
-        element.addAttribute("y", ""+p.getY());
-        element.addAttribute("level", String.valueOf(p.getDisplayLevel()));
-        element.addAttribute("held", p.getHeldIcon().getName());
-        element.addAttribute("dark", p.getDarkIcon().getName());
-        element.addAttribute("red", p.getRedIcon().getName());
-        element.addAttribute("yellow", p.getYellowIcon().getName());
-        element.addAttribute("flashyellow", p.getFlashYellowIcon().getName());
-        element.addAttribute("green", p.getGreenIcon().getName());
-        element.addAttribute("flashred", p.getFlashRedIcon().getName());
-        element.addAttribute("flashgreen", p.getFlashGreenIcon().getName());
-        element.addAttribute("rotate", String.valueOf(p.getGreenIcon().getRotation()));
-        element.addAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
-        element.addAttribute("clickmode", ""+p.getClickMode());
-        element.addAttribute("litmode", ""+p.getLitMode());
+        element.setAttribute("signalhead", ""+p.getSignalHead().getSystemName());
+        element.setAttribute("x", ""+p.getX());
+        element.setAttribute("y", ""+p.getY());
+        element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
+        element.setAttribute("held", p.getHeldIcon().getName());
+        element.setAttribute("dark", p.getDarkIcon().getName());
+        element.setAttribute("red", p.getRedIcon().getName());
+        element.setAttribute("yellow", p.getYellowIcon().getName());
+        element.setAttribute("flashyellow", p.getFlashYellowIcon().getName());
+        element.setAttribute("green", p.getGreenIcon().getName());
+        element.setAttribute("flashred", p.getFlashRedIcon().getName());
+        element.setAttribute("flashgreen", p.getFlashGreenIcon().getName());
+        element.setAttribute("rotate", String.valueOf(p.getGreenIcon().getRotation()));
+        element.setAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
+        element.setAttribute("clickmode", ""+p.getClickMode());
+        element.setAttribute("litmode", ""+p.getLitMode());
 
-        element.addAttribute("class", "jmri.jmrit.display.configurexml.SignalHeadIconXml");
+        element.setAttribute("class", "jmri.jmrit.display.configurexml.SignalHeadIconXml");
 
         return element;
     }
