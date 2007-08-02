@@ -1,15 +1,14 @@
-/**
- * SerialInterfaceScaffold.java
- *
- * Description:	    Stands in for the SerialTrafficController class
- * @author			Bob Jacobsen
- * @version			$Revision: 1.3 $
- */
+// SerialInterfaceScaffold.java
 
 package jmri.jmrix.tmcc;
 
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
+/**
+ * Stands in for the SerialTrafficController class
+ * @author			Bob Jacobsen Copyright 2005
+ * @version			$Revision: 1.4 $
+ */
 public class SerialTrafficControlScaffold extends SerialTrafficController {
 	public SerialTrafficControlScaffold() {
 		if (log.isDebugEnabled()) log.debug("setting instance: "+this);
