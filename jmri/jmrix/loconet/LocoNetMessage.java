@@ -28,7 +28,7 @@ import java.io.Serializable;
  * <P>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.22 $
+ * @version			$Revision: 1.23 $
  * @see             jmri.jmrix.nce.NceMessage
  *
  */
@@ -60,6 +60,10 @@ public class LocoNetMessage implements Serializable {
     public LocoNetMessage(byte[] contents) {
         this(contents.length);
         for (int i=0; i<contents.length; i++) this.setElement(i, contents[i]&0xFF);
+    }
+
+    public LocoNetMessage(LocoNetMessage original) {
+        this(original._dataBytes);
     }
 
     public void setOpCode(int i) { _dataBytes[0]=i;}
@@ -258,8 +262,10 @@ public class LocoNetMessage implements Serializable {
      * @return True if the argument has the high bit set
      */
     static protected boolean highBit(int val) {
-        if ((val&(~0xFF)) != 0) log.error("highBit called with too large value: "
+        if ((val&(~0xFF)) != 0) {
+            log.error("highBit called with too large value: 0x"
                                           +Integer.toHexString(val));
+        }
         return (0!=(val&0x80));
     }
 
