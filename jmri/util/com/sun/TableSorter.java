@@ -3,7 +3,7 @@
 
 package jmri.util.com.sun;
 
-import jmri.util.com.sun.Comparator;
+import java.util.Comparator;
 
 import java.awt.*;
 import java.awt.event.*;

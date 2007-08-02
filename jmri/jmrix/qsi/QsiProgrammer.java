@@ -7,13 +7,13 @@ import jmri.jmrix.AbstractProgrammer;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 /**
  * Implements the jmri.Programmer interface via commands for the QSI programmer.
  *
  * @author      Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
 

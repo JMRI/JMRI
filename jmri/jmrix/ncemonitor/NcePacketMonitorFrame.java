@@ -8,7 +8,7 @@ import javax.comm.SerialPort;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Enumeration;
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 import java.io.OutputStream;
 import java.io.DataInputStream;
 
@@ -19,7 +19,7 @@ import java.io.DataInputStream;
  * The rest of the GUI then appears.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
 

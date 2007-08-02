@@ -11,12 +11,12 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 /**
  * Table data model for display of DCC packet contents
  * @author		Bob Jacobsen   Copyright (C) 2005
- * @version		$Revision: 1.6 $
+ * @version		$Revision: 1.7 $
  */
 public class PacketDataModel extends javax.swing.table.AbstractTableModel  {
 

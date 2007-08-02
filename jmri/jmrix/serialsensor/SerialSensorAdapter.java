@@ -11,7 +11,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.util.Enumeration;
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 import javax.comm.CommPortIdentifier;
 import javax.comm.PortInUseException;
@@ -24,7 +24,7 @@ import javax.comm.SerialPortEventListener;
  * serial port.  Sensor "1" will be via DCD, and sensor "2" via DSR
  *
  * @author			Bob Jacobsen   Copyright (C) 2003
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class SerialSensorAdapter extends AbstractPortController
                 implements jmri.jmrix.SerialPortAdapter  {

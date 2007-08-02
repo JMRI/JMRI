@@ -9,13 +9,13 @@ package jmri.jmrix;
  *<P>
  * To configure for operation, a
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  * @see         jmri.jmrix.SerialConfigException
  */
 public interface SerialPortAdapter  {
 
 	/** Provide a vector of valid port names, each a String. */
-	public com.sun.java.util.collections.Vector getPortNames();
+	public java.util.Vector getPortNames();
 
 	/** Open a specified port.  The appname argument is to be provided to the
 	 * underlying OS during startup so that it can show on status displays, etc

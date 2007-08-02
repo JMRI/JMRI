@@ -7,7 +7,7 @@ import jmri.jmrix.loconet.LnPortController;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 /**
  * Implements SerialPortAdapter for the LocoNetOverTcp system network connection.
@@ -17,7 +17,7 @@ import com.sun.java.util.collections.Vector;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
  * @author      Alex Shepherd Copyright (C) 2003, 2006
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 
 public class LnTcpDriverAdapter extends LnPortController {

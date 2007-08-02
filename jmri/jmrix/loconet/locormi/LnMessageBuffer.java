@@ -5,10 +5,10 @@ package jmri.jmrix.loconet.locormi;
  * Description:
  * Copyright:    Copyright (c) 2002
  * @author   Alex Shepherd
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
-import com.sun.java.util.collections.LinkedList;
+import java.util.LinkedList;
 import java.rmi.server.UnicastRemoteObject;
 import java.rmi.RemoteException ;
 import jmri.jmrix.loconet.*;

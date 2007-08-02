@@ -4,7 +4,7 @@ package jmri.jmrix.sprog;
 
 import java.io.DataInputStream;
 import java.io.OutputStream;
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 import jmri.jmrix.sprog.serialdriver.SerialDriverAdapter;
 
 import javax.comm.SerialPort;
@@ -17,7 +17,7 @@ import javax.comm.SerialPort;
  * handled in an independent thread.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class SprogTrafficController implements SprogInterface, Runnable {
 

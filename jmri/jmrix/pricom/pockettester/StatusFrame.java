@@ -3,7 +3,7 @@
 package jmri.jmrix.pricom.pockettester;
 
 import javax.swing.*;
-import com.sun.java.util.collections.Hashtable;
+import java.util.Hashtable;
 
 /**
  * Simple to display DCC status from Pocket Tester.
@@ -11,7 +11,7 @@ import com.sun.java.util.collections.Hashtable;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2005
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
 

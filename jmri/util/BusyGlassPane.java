@@ -8,7 +8,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 
 /**
  * Used to intercept inputs and to display a busy
@@ -17,7 +17,7 @@ import com.sun.java.util.collections.List;
  * Based in part on code from the Java Tutorial for glass panes (java.sun.com).
  *
  * @author  Howard G. Penny   Copyright (C) 2005
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class BusyGlassPane extends JComponent {
 

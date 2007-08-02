@@ -12,7 +12,7 @@ import jmri.jmrix.nce.NceTrafficController;
 
 import java.io.*;
 import java.net.*;
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 /**
  * Implements SerialPortAdapter for the NCE system network connection.
@@ -21,7 +21,7 @@ import com.sun.java.util.collections.Vector;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class NetworkDriverAdapter extends NcePortController {
 

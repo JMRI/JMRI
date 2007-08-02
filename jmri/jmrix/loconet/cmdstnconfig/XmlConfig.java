@@ -2,7 +2,7 @@ package jmri.jmrix.loconet.cmdstnconfig;
 
 import java.io.*;
 import org.jdom.*;
-import com.sun.java.util.collections.*;
+import java.util.*;
 
 import jmri.jmrit.XmlFile;
 
@@ -61,7 +61,7 @@ public class XmlConfig extends XmlFile
       root = xmlconfig1.rootFromName("digitrax-cs-config.xml");
       dumpNodes( root );
     }
-    catch (FileNotFoundException ex) {
+    catch (IOException ex) {
       log.warn( "Command Station Config XML File Not Found", ex );
     }
     catch (JDOMException ex) {

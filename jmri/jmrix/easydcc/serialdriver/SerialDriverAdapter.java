@@ -11,7 +11,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.util.Enumeration;
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 import javax.comm.CommPortIdentifier;
 import javax.comm.PortInUseException;
@@ -26,7 +26,7 @@ import javax.comm.SerialPort;
  * not use any other options at configuration time.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.17 $
+ * @version	$Revision: 1.18 $
  */
 public class SerialDriverAdapter extends EasyDccPortController  implements jmri.jmrix.SerialPortAdapter {
 

@@ -12,7 +12,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JCheckBoxMenuItem;
 
-import com.sun.java.util.collections.ArrayList;
+import java.util.ArrayList;
 
 /**
  * An icon to display a status of set of Sensors.
@@ -24,7 +24,7 @@ import com.sun.java.util.collections.ArrayList;
  * not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {

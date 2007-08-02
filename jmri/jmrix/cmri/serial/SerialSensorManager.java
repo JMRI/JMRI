@@ -17,7 +17,7 @@ import jmri.Sensor;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2007
  * @author                      Dave Duchamp, multi node extensions, 2004
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class SerialSensorManager extends jmri.AbstractSensorManager
                             implements SerialListener {
@@ -121,7 +121,7 @@ public class SerialSensorManager extends jmri.AbstractSensorManager
      */
     public void registerSensorsForNode(SerialNode node) {
         // get list containing all Sensors
-        com.sun.java.util.collections.Iterator iter =
+        java.util.Iterator iter =
                                     getSystemNameList().iterator();
         // Iterate through the sensors
         SerialNode tNode = null;

@@ -10,7 +10,7 @@ import jmri.jmrix.AbstractProgrammer;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Hashtable;
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 /**
  * Controls a collection of slots, acting as the
@@ -33,7 +33,7 @@ import com.sun.java.util.collections.Vector;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.38 $
+ * @version     $Revision: 1.39 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 

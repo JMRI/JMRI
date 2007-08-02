@@ -2,7 +2,7 @@
 
 package jmri.jmrix.loconet.Intellibox;
 
-import com.sun.java.util.collections.NoSuchElementException;
+import java.util.NoSuchElementException;
 
 import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LocoNetMessage;
@@ -31,7 +31,7 @@ import jmri.jmrix.loconet.LocoNetMessageException;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.2 $
+ * @version 		$Revision: 1.3 $
  *
  */
 public class IBLnPacketizer extends LnPacketizer {

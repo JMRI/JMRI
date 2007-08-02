@@ -2,7 +2,7 @@
 
 package jmri.jmrix.loconet;
 
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 /**
  * Represents the contents of a single slot in the LocoNet command station.
@@ -17,7 +17,7 @@ import com.sun.java.util.collections.Vector;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.14 $
+ * @version         $Revision: 1.15 $
  */
 public class LocoNetSlot {
 

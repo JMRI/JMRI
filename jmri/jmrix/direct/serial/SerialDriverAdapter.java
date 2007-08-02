@@ -10,7 +10,7 @@ import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 import javax.comm.CommPortIdentifier;
 import javax.comm.PortInUseException;
@@ -31,7 +31,7 @@ import Serialio.SerialPortLocal;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002, 2004
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SerialDriverAdapter extends PortController  implements jmri.jmrix.SerialPortAdapter {
 

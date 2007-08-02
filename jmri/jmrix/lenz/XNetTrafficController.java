@@ -7,7 +7,7 @@ import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRListener;
 
-import com.sun.java.util.collections.Hashtable;
+import java.util.Hashtable;
 
 /**
  * Abstract base class for implementations of XNetInterface.
@@ -17,7 +17,7 @@ import com.sun.java.util.collections.Hashtable;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2004,2005
- * @version 		$Revision: 2.11 $
+ * @version 		$Revision: 2.12 $
  *
  */
 public abstract class XNetTrafficController extends AbstractMRTrafficController implements XNetInterface {
@@ -204,7 +204,6 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
             }
         }
     }
-
 
     /** Reference to the command station in communication here */
     LenzCommandStation mCommandStation;

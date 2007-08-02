@@ -2,7 +2,7 @@
 
 package jmri.jmrix.loconet;
 
-import com.sun.java.util.collections.*;
+import java.util.*;
 import jmri.*;
 import java.util.Enumeration;
 
@@ -12,7 +12,7 @@ import java.util.Enumeration;
  * objects (for now).
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class LnSecurityElementManager {
 

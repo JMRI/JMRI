@@ -5,7 +5,7 @@ import jmri.ThrottleManager;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 
-import com.sun.java.util.collections.HashMap;
+import java.util.HashMap;
 
 import jmri.jmrix.AbstractThrottleManager;
 
@@ -19,7 +19,7 @@ import jmri.jmrix.AbstractThrottleManager;
  *
  * @see AbstractThrottleManager
  * @author		Bob Jacobsen  Copyright (C) 2001, 2006
- * @version 		$Revision: 1.2 $
+ * @version 		$Revision: 1.3 $
  */
 public class LnPr2ThrottleManager extends AbstractThrottleManager {
 

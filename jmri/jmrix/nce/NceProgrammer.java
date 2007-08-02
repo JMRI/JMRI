@@ -7,7 +7,7 @@ import jmri.jmrix.AbstractProgrammer;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 /**
  * Convert the jmri.Programmer interface into commands for the NCE powerstation.
@@ -15,7 +15,7 @@ import com.sun.java.util.collections.Vector;
  * This has two states:  NOTPROGRAMMING, and COMMANDSENT.  The transistions
  * to and from programming mode are now handled in the TrafficController code.
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 public class NceProgrammer extends AbstractProgrammer implements NceListener {
 

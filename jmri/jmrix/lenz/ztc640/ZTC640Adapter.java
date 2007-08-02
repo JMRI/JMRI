@@ -11,7 +11,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.util.Enumeration;
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 import javax.comm.CommPortIdentifier;
 import javax.comm.PortInUseException;
@@ -26,7 +26,7 @@ import jmri.util.SerialUtil;
  *              comm port. Normally controlled by the lenz.ztc640.ZTC640Frame 
  *              class.
  * @author			Bob Jacobsen   Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003-2006
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 
 public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {

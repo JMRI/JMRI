@@ -1,6 +1,6 @@
 package jmri.util;
 
-import jmri.util.com.sun.Comparator;
+import java.util.Comparator;
 
 /**
  * Comparator for JMRI System Names.  
@@ -10,7 +10,7 @@ import jmri.util.com.sun.Comparator;
  *
  * @author	Bob Jacobsen   Copyright (C) 2004
  * @author  Howard Penny
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 
 public class SystemNameComparator implements Comparator {

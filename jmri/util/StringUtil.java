@@ -2,8 +2,8 @@
 
 package jmri.util;
 
-import com.sun.java.util.collections.Collection;
-import com.sun.java.util.collections.Iterator;
+import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * Common utility methods for working with Strings.
@@ -17,7 +17,7 @@ import com.sun.java.util.collections.Iterator;
  * back to an explicit implementation when running on Java 1.1
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class StringUtil {

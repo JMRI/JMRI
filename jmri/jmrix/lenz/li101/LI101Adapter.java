@@ -12,7 +12,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.util.Enumeration;
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 
 import javax.comm.CommPortIdentifier;
 import javax.comm.PortInUseException;
@@ -26,7 +26,7 @@ import jmri.util.SerialUtil;
  * Provide access to XPressNet via a LI101 on an attached serial comm port.
  *					Normally controlled by the lenz.li101.LI101Frame class.
  * @author			Bob Jacobsen   Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003
- * @version			$Revision: 2.5 $
+ * @version			$Revision: 2.6 $
  */
 
 public class LI101Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
