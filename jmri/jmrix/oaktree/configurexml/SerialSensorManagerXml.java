@@ -11,7 +11,7 @@ import jmri.jmrix.oaktree.*;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2006
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class SerialSensorManagerXml extends jmri.configurexml.AbstractSensorManagerConfigXML {
 
@@ -20,7 +20,7 @@ public class SerialSensorManagerXml extends jmri.configurexml.AbstractSensorMana
     }
 
     public void setStoreElementClass(Element sensors) {
-        sensors.addAttribute("class","jmri.jmrix.oaktree.configurexml.SerialSensorManagerXml");
+        sensors.setAttribute("class","jmri.jmrix.oaktree.configurexml.SerialSensorManagerXml");
     }
 
     public void load(Element element, Object o) {

@@ -5,7 +5,7 @@ import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
 import jmri.jmrix.oaktree.serialdriver.ConnectionConfig;
 import jmri.jmrix.oaktree.serialdriver.SerialDriverAdapter;
 import jmri.jmrix.oaktree.*;
-import com.sun.java.util.collections.List;
+import java.util.List;
 import org.jdom.*;
 
 /**
@@ -19,7 +19,7 @@ import org.jdom.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2006
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -37,7 +37,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         while (node != null) {
             // add node as an element
             Element n = new Element("node");
-            n.addAttribute("name",""+node.getNodeAddress());
+            n.setAttribute("name",""+node.getNodeAddress());
             e.addContent(n);
             // add parameters to the node as needed
             n.addContent(makeParameter("nodetype", ""+node.getNodeType()));
@@ -50,7 +50,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
 	protected Element makeParameter(String name, String value) {
     	Element p = new Element("parameter");
-       	p.addAttribute("name",name);
+       	p.setAttribute("name",name);
         p.addContent(value);
         return p;
 	}

@@ -11,7 +11,7 @@ import jmri.jmrix.oaktree.*;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2006
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class SerialTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -20,7 +20,7 @@ public class SerialTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutMa
     }
 
     public void setStoreElementClass(Element turnouts) {
-        turnouts.addAttribute("class","jmri.jmrix.oaktree.configurexml.SerialTurnoutManagerXml");
+        turnouts.setAttribute("class","jmri.jmrix.oaktree.configurexml.SerialTurnoutManagerXml");
     }
 
     public void load(Element element, Object o) {

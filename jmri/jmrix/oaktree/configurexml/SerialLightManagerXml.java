@@ -15,7 +15,7 @@ import jmri.jmrix.oaktree.*;
  * Based on SerialTurnoutManagerXml.java
  *
  * @author Dave Duchamp Copyright (c) 2004
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class SerialLightManagerXml extends jmri.configurexml.AbstractLightManagerConfigXML {
 
@@ -24,7 +24,7 @@ public class SerialLightManagerXml extends jmri.configurexml.AbstractLightManage
     }
 
     public void setStoreElementClass(Element lights) {
-        lights.addAttribute("class","jmri.jmrix.oaktree.configurexml.SerialLightManagerXml");
+        lights.setAttribute("class","jmri.jmrix.oaktree.configurexml.SerialLightManagerXml");
     }
 
     public void load(Element element, Object o) {
