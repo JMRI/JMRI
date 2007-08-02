@@ -21,7 +21,7 @@ import javax.swing.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -38,11 +38,11 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         ConnectionConfig c = (ConnectionConfig)o;
         Element e = new Element("connection");
 
-        e.addAttribute("port", c.host.getText());
-        e.addAttribute("option1", c.port.getText());
-        e.addAttribute("option2", c.getMode());
+        e.setAttribute("port", c.host.getText());
+        e.setAttribute("option1", c.port.getText());
+        e.setAttribute("option2", c.getMode());
 
-        e.addAttribute("class", this.getClass().getName());
+        e.setAttribute("class", this.getClass().getName());
 
         return e;
     }

@@ -11,7 +11,7 @@ import jmri.jmrix.nce.NceTurnoutManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class NceTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -20,7 +20,7 @@ public class NceTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManag
     }
 
     public void setStoreElementClass(Element turnouts) {
-        turnouts.addAttribute("class","jmri.jmrix.nce.configurexml.NceTurnoutManagerXml");
+        turnouts.setAttribute("class","jmri.jmrix.nce.configurexml.NceTurnoutManagerXml");
     }
 
     public void load(Element element, Object o) {

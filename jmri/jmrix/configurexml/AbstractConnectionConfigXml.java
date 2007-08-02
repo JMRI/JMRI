@@ -4,13 +4,14 @@ import jmri.configurexml.XmlAdapter;
 import jmri.jmrix.SerialPortAdapter;
 
 import org.jdom.Element;
+import org.jdom.Attribute;
 
 /**
  * Abstract base (and partial implementation) for
  * classes persisting the status of serial port adapters.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 abstract public class AbstractConnectionConfigXml implements XmlAdapter {
 
@@ -35,22 +36,22 @@ abstract public class AbstractConnectionConfigXml implements XmlAdapter {
         // invocation of the program can then continue.
 
         if (adapter.getCurrentPortName()!=null)
-            e.addAttribute("port", adapter.getCurrentPortName());
-        else e.addAttribute("port", "(None selected)");
+            e.setAttribute("port", adapter.getCurrentPortName());
+        else e.setAttribute("port", "(None selected)");
 
         if (adapter.getCurrentBaudRate()!=null)
-            e.addAttribute("speed", adapter.getCurrentBaudRate());
-        else e.addAttribute("speed", "(None selected)");
+            e.setAttribute("speed", adapter.getCurrentBaudRate());
+        else e.setAttribute("speed", "(None selected)");
 
         if (adapter.getCurrentOption1Setting()!=null)
-            e.addAttribute("option1", adapter.getCurrentOption1Setting());
-        else e.addAttribute("option1", "(None selected)");
+            e.setAttribute("option1", adapter.getCurrentOption1Setting());
+        else e.setAttribute("option1", "(None selected)");
 
         if (adapter.getCurrentOption2Setting()!=null)
-            e.addAttribute("option2", adapter.getCurrentOption2Setting());
-        else e.addAttribute("option2", "(None selected)");
+            e.setAttribute("option2", adapter.getCurrentOption2Setting());
+        else e.setAttribute("option2", "(None selected)");
 
-        e.addAttribute("class", this.getClass().getName());
+        e.setAttribute("class", this.getClass().getName());
 
         extendElement(e);
 
