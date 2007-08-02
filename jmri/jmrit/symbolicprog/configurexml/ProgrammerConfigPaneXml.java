@@ -22,7 +22,7 @@ import org.jdom.Element;
  * CombinedLocoSelPane object.  It is <b>not</b> known why this works!
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class ProgrammerConfigPaneXml implements XmlAdapter {
 
@@ -38,10 +38,10 @@ public class ProgrammerConfigPaneXml implements XmlAdapter {
         ProgrammerConfigPane p = (ProgrammerConfigPane) o;
         if (p.getSelectedItem()==null) return null;  // nothing to write!
         Element programmer = new Element("programmer");
-        programmer.addAttribute("defaultFile", p.getSelectedItem());
-        programmer.addAttribute("verifyBeforeWrite", "no");
-        if (!p.getShowEmptyTabs()) programmer.addAttribute("showEmptyPanes", "no");
-        programmer.addAttribute("class", this.getClass().getName());
+        programmer.setAttribute("defaultFile", p.getSelectedItem());
+        programmer.setAttribute("verifyBeforeWrite", "no");
+        if (!p.getShowEmptyTabs()) programmer.setAttribute("showEmptyPanes", "no");
+        programmer.setAttribute("class", this.getClass().getName());
         return programmer;
     }
 
