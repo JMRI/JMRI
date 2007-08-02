@@ -5,8 +5,8 @@ import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.ThrottleListener;
 import jmri.ThrottleManager;
-import com.sun.java.util.collections.HashMap;
-import com.sun.java.util.collections.ArrayList;
+import java.util.HashMap;
+import java.util.ArrayList;
 
 /**
  * Abstract implementation of a ThrottleManager.
@@ -14,7 +14,7 @@ import com.sun.java.util.collections.ArrayList;
  * Based on Glen Oberhauser's original LnThrottleManager implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 abstract public class AbstractThrottleManager implements ThrottleManager {
 	
@@ -56,14 +56,18 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
 		// get the corresponding list to check length
 		ArrayList a = (ArrayList)throttleListeners.get(la);
 		
+		if (log.isDebugEnabled()) log.debug("After request in ATM: "+a.size());
 		// check length
         if (singleUse() && (a.size()>0)) {
             throttleFree= false;
+            if (log.isDebugEnabled()) log.debug("case 1");
         } else if (a.size() == 0) {
         	a.add(l);
+            if (log.isDebugEnabled()) log.debug("case 2: "+la+";"+a);
             requestThrottleSetup(la);
         } else {
         	a.add(l);
+            if (log.isDebugEnabled()) log.debug("case 3");
         }
         return throttleFree;
     }
@@ -134,6 +138,10 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     public void notifyThrottleKnown(DccThrottle throttle, LocoAddress addr) {
         log.debug("notifyThrottleKnown for "+addr);
 		ArrayList a = (ArrayList)throttleListeners.get(addr);
+		if (a==null) {
+		    log.warn("notifyThrottleKnown with zero-length listeners: "+addr);
+		    return;
+		}
 		for (int i = 0; i<a.size(); i++) {
       	 	ThrottleListener l = (ThrottleListener)a.get(i);
             log.debug("Notify listener");
