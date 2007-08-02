@@ -5,7 +5,7 @@ package jmri.progdebugger;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Hashtable;
-import com.sun.java.util.collections.Vector;
+import java.util.Vector;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
@@ -17,7 +17,7 @@ import jmri.ProgrammerException;
  * when a read to the same CV is made.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.20 $
+ * @version         $Revision: 1.21 $
  */
 public class ProgDebugger implements Programmer  {
 

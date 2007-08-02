@@ -2,15 +2,15 @@ package jmri.jmrit.throttle;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.Iterator;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *  Interface for allocating and deallocating throttles frames. Not to be
  *  confused with ThrottleManager
  *
  * @author     Glen Oberhauser
- * @version    $Revision: 1.11 $
+ * @version    $Revision: 1.12 $
  */
 public class ThrottleFrameManager
 {

@@ -2,7 +2,7 @@
 
 package jmri;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 
 /**
  * Interface for obtaining Logixs
@@ -11,7 +11,7 @@ import com.sun.java.util.collections.List;
  * separately implemented, instead of being system-specific.
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public interface LogixManager extends Manager {
 

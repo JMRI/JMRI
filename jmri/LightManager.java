@@ -2,7 +2,7 @@
 
 package jmri;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 
 /**
  * Interface for obtaining Lights.
@@ -13,7 +13,7 @@ import com.sun.java.util.collections.List;
  * Based on SignalHeadManager.java
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public interface LightManager extends Manager {
 

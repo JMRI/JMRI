@@ -2,7 +2,7 @@
 
 package jmri;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 
 /**
  * Locate a Reporter object representing some specific device on the layout.
@@ -23,7 +23,7 @@ import com.sun.java.util.collections.List;
  * can form the basis for a system-specific implementation.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  * @see             jmri.Reporter
  * @see             jmri.AbstractReporterManager
  * @see             jmri.InstanceManager

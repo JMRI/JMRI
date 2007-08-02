@@ -2,7 +2,7 @@
 
 package jmri;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 
 /**
  * Interface for obtaining signal heads.
@@ -11,7 +11,7 @@ import com.sun.java.util.collections.List;
  * are separately implemented, instead of being system-specific.
  *
  * @author      Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public interface SignalHeadManager extends Manager {
 

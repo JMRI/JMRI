@@ -14,7 +14,7 @@ package jmri;
  * Logix's system name, then there is a capital C and a number.  
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class DefaultLogixManager extends AbstractManager
     implements LogixManager, java.beans.PropertyChangeListener {
@@ -78,7 +78,7 @@ public class DefaultLogixManager extends AbstractManager
 	 */
 	public void activateAllLogixs() {
 		// iterate thru all Logixs that exist
-		com.sun.java.util.collections.Iterator iter =
+		java.util.Iterator iter =
                                     getSystemNameList().iterator();
 		while (iter.hasNext()) {
 			// get the next Logix

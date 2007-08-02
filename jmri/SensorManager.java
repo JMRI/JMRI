@@ -2,12 +2,12 @@
 
 package jmri;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 
 /**
  * Interface for controlling sensors.
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public interface SensorManager extends Manager {
 

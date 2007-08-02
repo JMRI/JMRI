@@ -4,13 +4,13 @@
  * Description:         Interface for a Consist Manager Object
  *
  * @author              Paul Bender Copyright (C) 2003
- * @version             $Revision: 1.4 $      
+ * @version             $Revision: 1.5 $      
  */
 
 
 package jmri;
 
-import com.sun.java.util.collections.ArrayList;
+import java.util.ArrayList;
 
 public interface  ConsistManager {
 	

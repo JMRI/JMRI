@@ -2,7 +2,7 @@
 
 package jmri;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 
 /**
  * Locate a Memory object representing some specific information.
@@ -25,7 +25,7 @@ import com.sun.java.util.collections.List;
  * can form the basis for a system-specific implementation.
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  * @see             jmri.Memory
  * @see             jmri.AbstractMemoryManager
  * @see             jmri.InstanceManager

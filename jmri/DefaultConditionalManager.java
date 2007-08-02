@@ -2,7 +2,7 @@
 
 package jmri;
 
-import com.sun.java.util.collections.List;
+import java.util.List;
 
 /**
  * Basic Implementation of a ConditionalManager.
@@ -19,7 +19,7 @@ import com.sun.java.util.collections.List;
  * is enforced when a new Conditional is created via LogixTableAction.java.
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class DefaultConditionalManager extends AbstractManager
     implements ConditionalManager, java.beans.PropertyChangeListener {

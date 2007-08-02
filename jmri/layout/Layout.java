@@ -1,10 +1,10 @@
 package jmri.layout;
 
-import com.sun.java.util.collections.TreeMap;
+import java.util.TreeMap;
 
 /**
  * @author Alex Shepherd  Copyright (c) 2002
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class Layout implements LayoutEventListener, LayoutEventInterface

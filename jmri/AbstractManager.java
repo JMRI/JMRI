@@ -4,9 +4,9 @@ package jmri;
 
 import java.util.Enumeration;
 
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.Hashtable;
-import com.sun.java.util.collections.List;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
 
 
 /**
@@ -16,7 +16,7 @@ import com.sun.java.util.collections.List;
  * at the present time.  They're just names...
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 abstract public class AbstractManager
     implements Manager, java.beans.PropertyChangeListener {
