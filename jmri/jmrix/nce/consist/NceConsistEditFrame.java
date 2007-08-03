@@ -39,7 +39,7 @@ import java.io.*;
  * :0000
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -58,13 +58,14 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 	
 	private static final String DELETE = "Delete";
 	private static final String ADD = " Add ";
+	private static final String QUESTION = "  ??  ";
 	private static final String FWD = "Forward";
 	private static final String REV = "Reverse";
 	
 	
 	private boolean consistSearchInc = false;		// next search
 	private boolean consistSearchDec = false;		// previous search
-	private int consistCount;						// search count not to exceed CONSIST_MAX
+	private int consistCount = 0;						// search count not to exceed CONSIST_MAX
 	private boolean secondRead = false;				// when true, another 16 byte read expected
 	private boolean consistValid = false;			// when true, NCE CS has responed to consist read
 	private boolean consistModified = false;		// when true, consist has been modified by user
@@ -87,6 +88,11 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
   
     // consist text field
     javax.swing.JTextField consistTextField = new javax.swing.JTextField(4);
+    
+    // labels
+    javax.swing.JLabel textEngine = new javax.swing.JLabel();
+    javax.swing.JLabel textAddress = new javax.swing.JLabel();
+    javax.swing.JLabel textDirection = new javax.swing.JLabel();
     
     // for padding out panel
     javax.swing.JLabel space1 = new javax.swing.JLabel();
@@ -167,7 +173,16 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 		consistTextField.setMaximumSize(new Dimension(consistTextField
 				.getMaximumSize().width, consistTextField.getPreferredSize().height));
         
-        saveButton.setText("Save");
+		textEngine.setText("Engine");
+		textEngine.setVisible(true);
+		textAddress.setText("Address");
+		textAddress.setVisible(true);
+		textDirection.setText("Direction");
+		textDirection.setVisible(true);
+		
+		
+		
+		saveButton.setText("Save");
         saveButton.setVisible(true);
         saveButton.setEnabled (false);
         saveButton.setToolTipText("Update consist in NCE CS");
@@ -212,7 +227,11 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
         // row 3 padding for looks
         addItem(space1, 1,3);
         
-        // row 4 RFU
+        // row 4 labels
+        
+        addItem(textEngine, 1,4);
+        addItem(textAddress, 2,4);
+        addItem(textDirection, 3,4);
         
         // row 5 Lead Engine
         addEngRow (num1, textEng1, engTextField1, dirButton1, cmdButton1,  5);
@@ -265,7 +284,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
         addButtonCmdAction(cmdButton6);
         
         // set frame size for display
-        this.setSize (400,400);
+        this.setSize (400,350);
     }
  
     // Previous, Next, Get, Save, Restore & Backup buttons
@@ -294,8 +313,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 			setSaveButton(false);		// Turn off save button
 		
 			if (ae.getSource() == previousButton) {
-				consistCount = 0; // used to determine if all 256 macros have been
-				// read
+				consistCount = 0; // used to determine if all 128 consist have been read
 				consistSearchDec = true;
 				consistNum = getConsist();	// check for valid and kick off read process
 				if (consistNum == -1) 	// Error user input incorrect
@@ -448,30 +466,55 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 		}
 		// Consist memory read
 		if (replyLen == REPLY_16) {
-			int recChar = r.getElement(0);
-			recChar = recChar << 8;
-			recChar = recChar + r.getElement(1);
+			String recChar = getChar(r, 0);
 
 			// load lead engine
 			if (engineNum == 0) {
 
-				engTextField1.setText(Integer.toString(recChar));
+				engTextField1.setText(recChar);
 
-			// load rear engine	
+				// are we searching?
+				if (consistSearchInc || consistSearchDec) {
+					
+					consistTextField.setText(Integer.toString(consistNum));
+					
+					if (checkBoxEmpty.isSelected()) {
+						if (recChar == "Empty") {
+							if (consistCount > 0) {
+								consistSearchInc = false;
+								consistSearchDec = false;
+							}
+						}
+
+					} else {
+						if (recChar != "Empty") {
+							if (consistCount > 0) {
+								consistSearchInc = false;
+								consistSearchDec = false;
+							}
+						}
+					}
+					if (consistCount++ > CONSIST_MAX) {
+						consistSearchInc = false;
+						consistSearchDec = false;
+					}
+				}
+
+				// load rear engine
 			} else if (engineNum == 1) {
 
-				engTextField2.setText(Integer.toString(recChar));
+				engTextField2.setText(recChar);
 
-			// load mid engines	
+				// load mid engines
 			} else {
 
-				engTextField3.setText(Integer.toString(recChar));
-				recChar = getNext (r,2);
-				engTextField4.setText(Integer.toString(recChar));
-				recChar = getNext (r,4);
-				engTextField5.setText(Integer.toString(recChar));
-				recChar = getNext (r,6);
-				engTextField6.setText(Integer.toString(recChar));
+				engTextField3.setText(recChar);
+				recChar = getChar(r, 2);
+				engTextField4.setText(recChar);
+				recChar = getChar(r, 4);
+				engTextField5.setText(recChar);
+				recChar = getChar(r, 6);
+				engTextField6.setText(recChar);
 				consistReply.setText("okay");
 			}
 
@@ -481,16 +524,43 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 
 				NceMessage m = readConsistMemory(consistNum, engineNum);
 				NceTrafficController.instance().sendNceMessage(m, this);
+			
+			// done reading current consist
+			}else {
+
+				if (!consistSearchInc && !consistSearchDec)
+					return;
+			
+				
+				if (consistSearchInc) {
+					consistNum--;
+					if (consistNum < CONSIST_MIN)
+						consistNum = CONSIST_MAX;
+				}
+
+				if (consistSearchDec) {
+					consistNum++;
+					if (consistNum > CONSIST_MAX)
+						consistNum = CONSIST_MIN;
+				}
+
+				NceMessage m = readConsistMemory(consistNum, 0);
+				NceTrafficController.instance().sendNceMessage(m, this);
+
 			}
 		}
 
 	}
 
-	private int getNext(NceReply r, int i){
+	private String getChar(NceReply r, int i){
 		
-		int recChar = r.getElement(i++);
-		recChar = recChar << 8;
-		recChar = recChar + r.getElement(i);
+		int rC = r.getElement(i++);
+		rC = rC << 8;
+		rC = rC + r.getElement(i);
+		String recChar = "Empty";
+		if (rC != 0){
+			recChar = Integer.toString (rC);
+		}
 		return recChar;
 	}
  
@@ -562,12 +632,13 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 		textEng.setText(s);
 		textEng.setVisible(true);
 		
-		dirButton.setText(FWD);
+		dirButton.setText(QUESTION);
 		dirButton.setVisible(true);
+		dirButton.setEnabled(false);
 		dirButton.setToolTipText("Press to change engine direction");
 		
 		cmdButton.setText(ADD);
-		cmdButton.setVisible(true);
+		cmdButton.setVisible(false);
 		cmdButton.setToolTipText("");
 
 		engTextField.setText("");
