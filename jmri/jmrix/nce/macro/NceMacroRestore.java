@@ -57,7 +57,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * The restore routine checks that each line of the file begins with the appropriate macro address.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 
@@ -204,7 +204,8 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
 					"NCE Macro", JOptionPane.INFORMATION_MESSAGE);
 		} else {
 			JOptionPane.showMessageDialog(null,
-					"Restore failed. If operating at 19,200 baud, try 9600 baud",
+					"Restore failed. Check console for error messages. \r\n" +
+					"If operating at 19,200 baud, try 9600 baud.",
 					"NCE Macro", JOptionPane.ERROR_MESSAGE);
 		}
 	}
