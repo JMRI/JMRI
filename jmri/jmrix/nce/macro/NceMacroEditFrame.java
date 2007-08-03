@@ -59,7 +59,7 @@ import java.io.*;
  * FF10 = link macro 16 
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -75,6 +75,8 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
 	private static final String QUESTION = "  ??  ";// The three possible states for a turnout
 	private static final String CLOSED = "Closed ";
 	private static final String THROWN = "Thrown";	
+	private static final String CLOSED_NCE = "Normal ";
+	private static final String THROWN_NCE = "Reverse";	
 	
 	private static final String DELETE = "Delete";
 	
@@ -103,7 +105,9 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
     javax.swing.JButton backUpButton = new javax.swing.JButton();
     javax.swing.JButton restoreButton = new javax.swing.JButton();
     
+    // check boxes
     javax.swing.JCheckBox checkBoxEmpty = new javax.swing.JCheckBox ();
+    javax.swing.JCheckBox checkBoxNce = new javax.swing.JCheckBox ();
     
     // macro text field
     javax.swing.JTextField macroTextField = new javax.swing.JTextField(4);
@@ -232,6 +236,10 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
         checkBoxEmpty.setVisible(true);
         checkBoxEmpty.setToolTipText("Check to search for empty macros");
         
+        checkBoxNce.setText("NCE Turnout");
+        checkBoxNce.setVisible(true);
+        checkBoxNce.setToolTipText("Use NCE terminology for turnout states");
+        
         space1.setText("            ");
         space1.setVisible(true);
         space2.setText(" ");
@@ -256,6 +264,7 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
         addItem(textReply, 0,2);
         addItem(macroReply, 1,2);
         addItem(getButton, 2,2);
+        addItem(checkBoxNce, 4,2);
         
         // row 3 padding for looks
         addItem(space1, 1,3);
@@ -331,7 +340,9 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
         addButtonDelAction(deleteButton8);
         addButtonDelAction(deleteButton9);
         addButtonDelAction(deleteButton10);
-  
+        
+        // NCE checkbox
+        addCheckBoxAction(checkBoxNce);
 
         // set frame size for display
         this.setSize (400,400);
@@ -524,7 +535,11 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
 			initAccyRow10 ();
 			}
 		}
-	}	
+	}
+	
+	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
+		getMacro();
+	}
     
     // gets the user supplied macro number and then reads NCE CS memory
     private int getMacro (){
@@ -573,10 +588,22 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
 			}
 
 			String accyCmd = cmdButton.getText();
-			if (accyCmd != THROWN)
-				cmdButton.setText(THROWN);
-			if (accyCmd != CLOSED)
-				cmdButton.setText(CLOSED);
+			
+			// Use JMRI or NCE turnout terminology
+			if (checkBoxNce.isSelected()) {
+
+				if (accyCmd != THROWN_NCE)
+					cmdButton.setText(THROWN_NCE);
+				if (accyCmd != CLOSED_NCE)
+					cmdButton.setText(CLOSED_NCE);
+
+			} else {
+
+				if (accyCmd != THROWN)
+					cmdButton.setText(THROWN);
+				if (accyCmd != CLOSED)
+					cmdButton.setText(CLOSED);
+			}
 			
 			setSaveButton(true);
 			textAccy.setText(ACCESSORY);
@@ -674,6 +701,8 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
         	int lowerByteL = ((accyNum & 0x3)<<1);       	// 2 LSB
         	int lowerByte = (lowerByteH + lowerByteL + 0x88);
         	if (cmdButton.getText() == CLOSED)				// adjust for turnout command	
+        		lowerByte++;
+        	if (cmdButton.getText() == CLOSED_NCE)			// adjust for turnout command	
         		lowerByte++;
          	b[i+1] = (byte)(lowerByte);
         }
@@ -961,11 +990,15 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
 		int b = (row - 1) << 1;
 		int accyCmd = r.getElement(b+1);
 		String s = THROWN;
+		if (checkBoxNce.isSelected())
+			s = THROWN_NCE;
 		accyCmd = accyCmd & 0x01;
 		if (accyCmd == 0){
 			return s;
 		}else{
 			s = CLOSED;
+			if (checkBoxNce.isSelected())
+				s = CLOSED_NCE;
 		}
 		return s;
     }
@@ -1067,6 +1100,14 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
 		b.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				buttonActionDeletePerformed(e);
+			}
+		});
+    } 
+    
+    private void addCheckBoxAction (JCheckBox cb){
+		cb.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				checkBoxActionPerformed(e);
 			}
 		});
     } 
