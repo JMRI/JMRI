@@ -16,27 +16,30 @@
 #
 #
 
+# Place to send email.  Change this when debugging!
+set error_destination = jmri-builds@lists.sourceforge.net
+
 rm -f nightlybuildlog.txt
 date > nightlybuildlog.txt
 
 setenv CVS_RSH ssh
-if ( { (cvs -q update -d >>& nightlybuildlog.txt) } ) then
+if ( { (cd ..; cvs -q update -d >>& nightlybuildlog.txt) } ) then
 # probably OK
 
 else
 # did not terminate OK, mail the log
 echo Error in CVS checkout
-cat nightlybuildlog.txt | mail -s "Error in CVS checkout" jmri-builds@lists.sourceforge.net
+cat nightlybuildlog.txt | mail -s "Error in CVS checkout" ${error_destination}
 exit
 endif
 
-if ( { ((ant clean && ant init tests) >>& nightlybuildlog.txt) } ) then
+if ( { ((ant init clean && ant init tests) >>& nightlybuildlog.txt) } ) then
 # probably OK
 
 else
 # did not terminate OK, mail the log
 echo Did not build successfully
-cat nightlybuildlog.txt | mail -s "Did not build successfully" jmri-builds@lists.sourceforge.net
+cat nightlybuildlog.txt | mail -s "Did not build successfully" ${error_destination}
 exit
 endif
 
@@ -46,13 +49,13 @@ if ( { (./runtest.csh jmri.HeadLessTest >>& nightlybuildlog.txt) } ) then
 else
 # did not terminate OK, mail the log
 echo Did not run successfully
-cat nightlybuildlog.txt | mail -s "Did not run successfully" jmri-builds@lists.sourceforge.net
+cat nightlybuildlog.txt | mail -s "Did not run successfully" ${error_destination}
 exit
 endif
 
 # check the log for error messages (searches cvs, build log too, but those shouldn't trip the comparison
-if (`grep ERROR nightlybuildlog.txt >/dev/null || grep WARN nightlybuildlog.txt >/dev/null`) then
+if ( { grep ERROR nightlybuildlog.txt >/dev/null || grep WARN nightlybuildlog.txt >/dev/null } ) then
 # errors found, mail the log
 echo Errors found in log
-cat nightlybuildlog.txt | mail -s "Errors found in log" jmri-builds@lists.sourceforge.net
+cat nightlybuildlog.txt | mail -s "Errors found in log" ${error_destination}
 endif
