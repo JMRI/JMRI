@@ -2,8 +2,9 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: QSI_Diesel_Ver7.xml,v 1.3 2007-06-14 05:35:37 jacobsen Exp $ -->
+<!-- $Id: QSI_Diesel_Ver7.xml,v 1.4 2007-08-07 04:01:11 jacobsen Exp $ -->
 <decoder-config>
+  <version author="Michael Mosher" version="4" lastUpdated="20070802"/>
   <version author="Michael Mosher" version="3" lastUpdated="20070613"/>
   <version author="Michael Mosher" version="2" lastUpdated="20061127"/>
   <version author="Michael Mosher" version="1" lastUpdated="20061009"/>
@@ -12,12 +13,20 @@
 <!--   Added CV55, CV56.5, CV56.18-21, changed CV53  -->
 <!-- version 2 - Added horn/whislte type to differentiate the Atlas SD35 prod ID's -->
 <!-- version 3 - Added dynamic brake type to differentiate the BLI F7 prod ID's -->
+<!-- version 4 - Added new models & better slider layout -->
 
 <decoder>
  
   <family name="QSI Diesel Ver. 7" mfg="QSIndustries" lowVersionID="7">
     <model model="Atlas B23-7" 
            numFns="14" numOuts="14" productID="127" >
+      <output name="1" label="" connection="other" />
+      <output name="2" label="" connection="other" />
+      <output name="3" label="" connection="other" />
+      <output name="4" label="" connection="other" />
+    </model>
+    <model model="Atlas C-420" 
+           numFns="14" numOuts="14" productID="154" >
       <output name="1" label="" connection="other" />
       <output name="2" label="" connection="other" />
       <output name="3" label="" connection="other" />
@@ -205,6 +214,13 @@
       <output name="3" label="" connection="other" />
       <output name="4" label="" connection="other" />
     </model>
+    <model model="BLI SW7/NW2 (Reed Switch)" 
+           numFns="14" numOuts="14" productID="155" >
+      <output name="1" label="" connection="other" />
+      <output name="2" label="" connection="other" />
+      <output name="3" label="" connection="other" />
+      <output name="4" label="" connection="other" />
+    </model>
     <model model="CHC C-Liner"
            numFns="14" numOuts="14" productID="114" >
       <output name="1" label="" connection="other" />
@@ -282,6 +298,27 @@
       <output name="3" label="" connection="other" />
       <output name="4" label="" connection="other" />
     </model>
+    <model model="P2k F7A w/Mars" 
+           numFns="14" numOuts="14" productID="158" >
+      <output name="1" label="" connection="other" />
+      <output name="2" label="" connection="other" />
+      <output name="3" label="" connection="other" />
+      <output name="4" label="" connection="other" />
+    </model>
+    <model model="P2k F7A" 
+           numFns="14" numOuts="14" productID="159" >
+      <output name="1" label="" connection="other" />
+      <output name="2" label="" connection="other" />
+      <output name="3" label="" connection="other" />
+      <output name="4" label="" connection="other" />
+    </model>
+    <model model="P2k F7B" 
+           numFns="14" numOuts="14" productID="160" >
+      <output name="1" label="" connection="other" />
+      <output name="2" label="" connection="other" />
+      <output name="3" label="" connection="other" />
+      <output name="4" label="" connection="other" />
+    </model>
     <model model="P2k GP7 w/Mars" 
            numFns="14" numOuts="14" productID="144" >
       <output name="1" label="" connection="other" />
@@ -333,6 +370,13 @@
     </model>
     <model model="P2k U28B/30B" 
            numFns="14" numOuts="14" productID="124" >
+      <output name="1" label="" connection="other" />
+      <output name="2" label="" connection="other" />
+      <output name="3" label="" connection="other" />
+      <output name="4" label="" connection="other" />
+    </model>
+    <model model="Tenshodo DD-51" 
+           numFns="14" numOuts="14" productID="163" >
       <output name="1" label="" connection="other" />
       <output name="2" label="" connection="other" />
       <output name="3" label="" connection="other" />
@@ -519,7 +563,7 @@
         <enumChoice choice="28/128 speed step format"/>
       </enumVal></variable>
     <variable label="Power Source Conversion" CV="29" mask="XXXXXVXX"
-              item="Analog (DC) Operation" >
+              item="Analog (DC) Operation" default="1" >
       <enumVal>
         <enumChoice choice="NMRA Digital only"/>
         <enumChoice choice="DC conversion enabled"/>
@@ -847,7 +891,7 @@
     <ivariable label="Motor" CVname="52.10" CV="52" PI="10" default="11" comment="QSI" item="CV52.10">
       <indexedVal max="15"/> </ivariable>
     <ivariable label="Turbo" CVname="52.14" CV="52" PI="14" default="11" comment="QSI" item="CV52.14"
-    	include="102,103,111,124,126,128,131,132,134,140,149,150">
+    	include="102,103,111,124,126,128,130,131,132,134,140,149,150,154,163">
       <indexedVal max="15"/> </ivariable>
     <ivariable label="Air Pump" CVname="52.16" CV="52" PI="16" default="11" comment="QSI" item="CV52.16">
       <indexedVal max="15"/> </ivariable>
@@ -859,8 +903,11 @@
       <indexedVal max="15"/> </ivariable>
     <ivariable label="Squealing Brakes" CVname="52.24" CV="52" PI="24" default="11" comment="QSI" item="CV52.24">
       <indexedVal max="15"/> </ivariable>
+    <ivariable label="Generator" CVname="52.26" CV="52" PI="26" default="11" comment="QSI" item="CV52.26"
+    	include="100,101,104,107,108,110,112,115,116,117,118,119,120,121,122,133,135,136,143,144,145,151,155,158,159,160">
+      <indexedVal max="15"/> </ivariable>
     <ivariable label="Dynamic Brakes" CVname="52.28" CV="52" PI="28" default="11" comment="QSI" item="CV52.28"
-    	include="100,102,103,105,106,107,108,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,130,131,132,134,135,136,137,140,143,144,149,150,151,152">
+    	include="100,102,103,104,105,106,107,108,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,130,131,132,134,135,136,137,140,143,144,145,149,150,151,152,154,158,159,160,163">
       <indexedVal max="15"/> </ivariable>
     <ivariable label="Coupler Sounds" CVname="52.34" CV="52" PI="34" default="11" comment="QSI" item="CV52.34">
       <indexedVal max="15"/> </ivariable>
@@ -890,13 +937,13 @@
         <ienumChoice choice="Reverse Light" value="74"/>
         <ienumChoice choice="Dim Reverse Light" value="75"/>
         <ienumChoice choice="Automatic Mars Light" value="76"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Mars Light" value="77"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Dim Mars Light" value="78"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Strobe Mars Light" value="79"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Automatic Ditch Light" value="84"
         	include="103,126,131,132"/>
         <ienumChoice choice="Ditch Light" value="85"
@@ -906,21 +953,25 @@
         <ienumChoice choice="Strobe Ditch Light" value="87"
         	include="103,126,131,132"/>
         <ienumChoice choice="Automatic Front Number Board Lights" value="100"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Front Number Board Lights" value="101"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Automatic Front Marker Lights" value="104"
-        	include="128"/>
+        	include="128,163"/>
         <ienumChoice choice="Front Marker Lights Lights" value="105"
-        	include="128"/>
+        	include="128,163"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106"
+        	include="163"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"
+        	include="163"/>
         <ienumChoice choice="Automatic Front Cab Lights" value="116"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Front Cab Lights" value="117"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144.163"/>
         <ienumChoice choice="Automatic Rear Cab Lights" value="118"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Rear Cab Lights Lights" value="119"
-        	include="101,129"/>
+        	include="101,129.155"/>
         <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
         <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
         <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
@@ -951,13 +1002,13 @@
         <ienumChoice choice="Reverse Light" value="74"/>
         <ienumChoice choice="Dim Reverse Light" value="75"/>
         <ienumChoice choice="Automatic Mars Light" value="76"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Mars Light" value="77"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Dim Mars Light" value="78"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Strobe Mars Light" value="79"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Automatic Ditch Light" value="84"
         	include="103,126,131,132"/>
         <ienumChoice choice="Ditch Light" value="85"
@@ -967,21 +1018,25 @@
         <ienumChoice choice="Strobe Ditch Light" value="87"
         	include="103,126,131,132"/>
         <ienumChoice choice="Automatic Front Number Board Lights" value="100"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Front Number Board Lights" value="101"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Automatic Front Marker Lights" value="104"
-        	include="128"/>
+        	include="128,163"/>
         <ienumChoice choice="Front Marker Lights Lights" value="105"
-        	include="128"/>
+        	include="128,163"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106"
+        	include="163"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"
+        	include="163"/>
         <ienumChoice choice="Automatic Front Cab Lights" value="116"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Front Cab Lights" value="117"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Automatic Rear Cab Lights" value="118"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Rear Cab Lights Lights" value="119"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
         <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
         <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
@@ -1014,13 +1069,13 @@
         <ienumChoice choice="Reverse Light" value="74"/>
         <ienumChoice choice="Dim Reverse Light" value="75"/>
         <ienumChoice choice="Automatic Mars Light" value="76"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Mars Light" value="77"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Dim Mars Light" value="78"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Strobe Mars Light" value="79"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Automatic Ditch Light" value="84"
         	include="103,126,131,132"/>
         <ienumChoice choice="Ditch Light" value="85"
@@ -1030,21 +1085,25 @@
         <ienumChoice choice="Strobe Ditch Light" value="87"
         	include="103,126,131,132"/>
         <ienumChoice choice="Automatic Front Number Board Lights" value="100"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Front Number Board Lights" value="101"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Automatic Front Marker Lights" value="104"
-        	include="128"/>
+        	include="128,163"/>
         <ienumChoice choice="Front Marker Lights Lights" value="105"
-        	include="128"/>
+        	include="128,163"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106"
+        	include="163"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"
+        	include="163"/>
         <ienumChoice choice="Automatic Front Cab Lights" value="116"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Front Cab Lights" value="117"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144.163"/>
         <ienumChoice choice="Automatic Rear Cab Lights" value="118"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Rear Cab Lights Lights" value="119"
-        	include="101,129"/>
+        	include="101,129.155"/>
         <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
         <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
         <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
@@ -1075,13 +1134,13 @@
         <ienumChoice choice="Reverse Light" value="74"/>
         <ienumChoice choice="Dim Reverse Light" value="75"/>
         <ienumChoice choice="Automatic Mars Light" value="76"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Mars Light" value="77"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Dim Mars Light" value="78"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Strobe Mars Light" value="79"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Automatic Ditch Light" value="84"
         	include="103,126,131,132"/>
         <ienumChoice choice="Ditch Light" value="85"
@@ -1091,21 +1150,25 @@
         <ienumChoice choice="Strobe Ditch Light" value="87"
         	include="103,126,131,132"/>
         <ienumChoice choice="Automatic Front Number Board Lights" value="100"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Front Number Board Lights" value="101"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Automatic Front Marker Lights" value="104"
-        	include="128"/>
+        	include="128,163"/>
         <ienumChoice choice="Front Marker Lights Lights" value="105"
-        	include="128"/>
+        	include="128,163"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106"
+        	include="163"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"
+        	include="163"/>
         <ienumChoice choice="Automatic Front Cab Lights" value="116"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Front Cab Lights" value="117"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Automatic Rear Cab Lights" value="118"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Rear Cab Lights Lights" value="119"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
         <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
         <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
@@ -1138,13 +1201,13 @@
         <ienumChoice choice="Reverse Light" value="74"/>
         <ienumChoice choice="Dim Reverse Light" value="75"/>
         <ienumChoice choice="Automatic Mars Light" value="76"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Mars Light" value="77"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Dim Mars Light" value="78"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Strobe Mars Light" value="79"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Automatic Ditch Light" value="84"
         	include="103,126,131,132"/>
         <ienumChoice choice="Ditch Light" value="85"
@@ -1154,21 +1217,25 @@
         <ienumChoice choice="Strobe Ditch Light" value="87"
         	include="103,126,131,132"/>
         <ienumChoice choice="Automatic Front Number Board Lights" value="100"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Front Number Board Lights" value="101"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Automatic Front Marker Lights" value="104"
-        	include="128"/>
+        	include="128,163"/>
         <ienumChoice choice="Front Marker Lights Lights" value="105"
-        	include="128"/>
+        	include="128,163"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106"
+        	include="163"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"
+        	include="163"/>
         <ienumChoice choice="Automatic Front Cab Lights" value="116"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Front Cab Lights" value="117"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144.163"/>
         <ienumChoice choice="Automatic Rear Cab Lights" value="118"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Rear Cab Lights Lights" value="119"
-        	include="101,129"/>
+        	include="101,129.155"/>
         <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
         <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
         <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
@@ -1199,13 +1266,13 @@
         <ienumChoice choice="Reverse Light" value="74"/>
         <ienumChoice choice="Dim Reverse Light" value="75"/>
         <ienumChoice choice="Automatic Mars Light" value="76"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Mars Light" value="77"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Dim Mars Light" value="78"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Strobe Mars Light" value="79"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Automatic Ditch Light" value="84"
         	include="103,126,131,132"/>
         <ienumChoice choice="Ditch Light" value="85"
@@ -1215,21 +1282,25 @@
         <ienumChoice choice="Strobe Ditch Light" value="87"
         	include="103,126,131,132"/>
         <ienumChoice choice="Automatic Front Number Board Lights" value="100"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Front Number Board Lights" value="101"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Automatic Front Marker Lights" value="104"
-        	include="128"/>
+        	include="128,163"/>
         <ienumChoice choice="Front Marker Lights Lights" value="105"
-        	include="128"/>
+        	include="128,163"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106"
+        	include="163"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"
+        	include="163"/>
         <ienumChoice choice="Automatic Front Cab Lights" value="116"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Front Cab Lights" value="117"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Automatic Rear Cab Lights" value="118"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Rear Cab Lights Lights" value="119"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
         <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
         <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
@@ -1262,13 +1333,13 @@
         <ienumChoice choice="Reverse Light" value="74"/>
         <ienumChoice choice="Dim Reverse Light" value="75"/>
         <ienumChoice choice="Automatic Mars Light" value="76"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Mars Light" value="77"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Dim Mars Light" value="78"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Strobe Mars Light" value="79"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Automatic Ditch Light" value="84"
         	include="103,126,131,132"/>
         <ienumChoice choice="Ditch Light" value="85"
@@ -1278,21 +1349,25 @@
         <ienumChoice choice="Strobe Ditch Light" value="87"
         	include="103,126,131,132"/>
         <ienumChoice choice="Automatic Front Number Board Lights" value="100"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Front Number Board Lights" value="101"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Automatic Front Marker Lights" value="104"
-        	include="128"/>
+        	include="128,163"/>
         <ienumChoice choice="Front Marker Lights Lights" value="105"
-        	include="128"/>
+        	include="128,163"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106"
+        	include="163"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"
+        	include="163"/>
         <ienumChoice choice="Automatic Front Cab Lights" value="116"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Front Cab Lights" value="117"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144.163"/>
         <ienumChoice choice="Automatic Rear Cab Lights" value="118"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Rear Cab Lights Lights" value="119"
-        	include="101,129"/>
+        	include="101,129.155"/>
         <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
         <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
         <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
@@ -1323,13 +1398,13 @@
         <ienumChoice choice="Reverse Light" value="74"/>
         <ienumChoice choice="Dim Reverse Light" value="75"/>
         <ienumChoice choice="Automatic Mars Light" value="76"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Mars Light" value="77"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Dim Mars Light" value="78"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Strobe Mars Light" value="79"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Automatic Ditch Light" value="84"
         	include="103,126,131,132"/>
         <ienumChoice choice="Ditch Light" value="85"
@@ -1339,21 +1414,25 @@
         <ienumChoice choice="Strobe Ditch Light" value="87"
         	include="103,126,131,132"/>
         <ienumChoice choice="Automatic Front Number Board Lights" value="100"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Front Number Board Lights" value="101"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Automatic Front Marker Lights" value="104"
-        	include="128"/>
+        	include="128,163"/>
         <ienumChoice choice="Front Marker Lights Lights" value="105"
-        	include="128"/>
+        	include="128,163"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106"
+        	include="163"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"
+        	include="163"/>
         <ienumChoice choice="Automatic Front Cab Lights" value="116"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Front Cab Lights" value="117"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Automatic Rear Cab Lights" value="118"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Rear Cab Lights Lights" value="119"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
         <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
         <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
@@ -1386,13 +1465,13 @@
         <ienumChoice choice="Reverse Light" value="74"/>
         <ienumChoice choice="Dim Reverse Light" value="75"/>
         <ienumChoice choice="Automatic Mars Light" value="76"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Mars Light" value="77"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Dim Mars Light" value="78"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Strobe Mars Light" value="79"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Automatic Ditch Light" value="84"
         	include="103,126,131,132"/>
         <ienumChoice choice="Ditch Light" value="85"
@@ -1402,21 +1481,25 @@
         <ienumChoice choice="Strobe Ditch Light" value="87"
         	include="103,126,131,132"/>
         <ienumChoice choice="Automatic Front Number Board Lights" value="100"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Front Number Board Lights" value="101"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Automatic Front Marker Lights" value="104"
-        	include="128"/>
+        	include="128,163"/>
         <ienumChoice choice="Front Marker Lights Lights" value="105"
-        	include="128"/>
+        	include="128,163"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106"
+        	include="163"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"
+        	include="163"/>
         <ienumChoice choice="Automatic Front Cab Lights" value="116"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Front Cab Lights" value="117"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144.163"/>
         <ienumChoice choice="Automatic Rear Cab Lights" value="118"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Rear Cab Lights Lights" value="119"
-        	include="101,129"/>
+        	include="101,129.155"/>
         <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
         <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
         <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
@@ -1447,13 +1530,13 @@
         <ienumChoice choice="Reverse Light" value="74"/>
         <ienumChoice choice="Dim Reverse Light" value="75"/>
         <ienumChoice choice="Automatic Mars Light" value="76"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Mars Light" value="77"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Dim Mars Light" value="78"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Strobe Mars Light" value="79"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Automatic Ditch Light" value="84"
         	include="103,126,131,132"/>
         <ienumChoice choice="Ditch Light" value="85"
@@ -1463,21 +1546,25 @@
         <ienumChoice choice="Strobe Ditch Light" value="87"
         	include="103,126,131,132"/>
         <ienumChoice choice="Automatic Front Number Board Lights" value="100"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Front Number Board Lights" value="101"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Automatic Front Marker Lights" value="104"
-        	include="128"/>
+        	include="128,163"/>
         <ienumChoice choice="Front Marker Lights Lights" value="105"
-        	include="128"/>
+        	include="128,163"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106"
+        	include="163"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"
+        	include="163"/>
         <ienumChoice choice="Automatic Front Cab Lights" value="116"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Front Cab Lights" value="117"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Automatic Rear Cab Lights" value="118"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Rear Cab Lights Lights" value="119"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
         <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
         <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
@@ -1510,13 +1597,13 @@
         <ienumChoice choice="Reverse Light" value="74"/>
         <ienumChoice choice="Dim Reverse Light" value="75"/>
         <ienumChoice choice="Automatic Mars Light" value="76"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Mars Light" value="77"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Dim Mars Light" value="78"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Strobe Mars Light" value="79"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Automatic Ditch Light" value="84"
         	include="103,126,131,132"/>
         <ienumChoice choice="Ditch Light" value="85"
@@ -1526,21 +1613,25 @@
         <ienumChoice choice="Strobe Ditch Light" value="87"
         	include="103,126,131,132"/>
         <ienumChoice choice="Automatic Front Number Board Lights" value="100"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Front Number Board Lights" value="101"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Automatic Front Marker Lights" value="104"
-        	include="128"/>
+        	include="128,163"/>
         <ienumChoice choice="Front Marker Lights Lights" value="105"
-        	include="128"/>
+        	include="128,163"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106"
+        	include="163"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"
+        	include="163"/>
         <ienumChoice choice="Automatic Front Cab Lights" value="116"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Front Cab Lights" value="117"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144.163"/>
         <ienumChoice choice="Automatic Rear Cab Lights" value="118"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Rear Cab Lights Lights" value="119"
-        	include="101,129"/>
+        	include="101,129.155"/>
         <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
         <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
         <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
@@ -1571,13 +1662,13 @@
         <ienumChoice choice="Reverse Light" value="74"/>
         <ienumChoice choice="Dim Reverse Light" value="75"/>
         <ienumChoice choice="Automatic Mars Light" value="76"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Mars Light" value="77"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Dim Mars Light" value="78"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Strobe Mars Light" value="79"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Automatic Ditch Light" value="84"
         	include="103,126,131,132"/>
         <ienumChoice choice="Ditch Light" value="85"
@@ -1587,21 +1678,25 @@
         <ienumChoice choice="Strobe Ditch Light" value="87"
         	include="103,126,131,132"/>
         <ienumChoice choice="Automatic Front Number Board Lights" value="100"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Front Number Board Lights" value="101"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Automatic Front Marker Lights" value="104"
-        	include="128"/>
+        	include="128,163"/>
         <ienumChoice choice="Front Marker Lights Lights" value="105"
-        	include="128"/>
+        	include="128,163"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106"
+        	include="163"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"
+        	include="163"/>
         <ienumChoice choice="Automatic Front Cab Lights" value="116"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Front Cab Lights" value="117"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Automatic Rear Cab Lights" value="118"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Rear Cab Lights Lights" value="119"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
         <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
         <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
@@ -1634,13 +1729,13 @@
         <ienumChoice choice="Reverse Light" value="74"/>
         <ienumChoice choice="Dim Reverse Light" value="75"/>
         <ienumChoice choice="Automatic Mars Light" value="76"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Mars Light" value="77"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Dim Mars Light" value="78"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Strobe Mars Light" value="79"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Automatic Ditch Light" value="84"
         	include="103,126,131,132"/>
         <ienumChoice choice="Ditch Light" value="85"
@@ -1650,21 +1745,25 @@
         <ienumChoice choice="Strobe Ditch Light" value="87"
         	include="103,126,131,132"/>
         <ienumChoice choice="Automatic Front Number Board Lights" value="100"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Front Number Board Lights" value="101"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Automatic Front Marker Lights" value="104"
-        	include="128"/>
+        	include="128,163"/>
         <ienumChoice choice="Front Marker Lights Lights" value="105"
-        	include="128"/>
+        	include="128,163"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106"
+        	include="163"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"
+        	include="163"/>
         <ienumChoice choice="Automatic Front Cab Lights" value="116"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Front Cab Lights" value="117"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144.163"/>
         <ienumChoice choice="Automatic Rear Cab Lights" value="118"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Rear Cab Lights Lights" value="119"
-        	include="101,129"/>
+        	include="101,129.155"/>
         <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
         <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
         <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
@@ -1695,13 +1794,13 @@
         <ienumChoice choice="Reverse Light" value="74"/>
         <ienumChoice choice="Dim Reverse Light" value="75"/>
         <ienumChoice choice="Automatic Mars Light" value="76"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Mars Light" value="77"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Dim Mars Light" value="78"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Strobe Mars Light" value="79"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Automatic Ditch Light" value="84"
         	include="103,126,131,132"/>
         <ienumChoice choice="Ditch Light" value="85"
@@ -1711,21 +1810,25 @@
         <ienumChoice choice="Strobe Ditch Light" value="87"
         	include="103,126,131,132"/>
         <ienumChoice choice="Automatic Front Number Board Lights" value="100"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Front Number Board Lights" value="101"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Automatic Front Marker Lights" value="104"
-        	include="128"/>
+        	include="128,163"/>
         <ienumChoice choice="Front Marker Lights Lights" value="105"
-        	include="128"/>
+        	include="128,163"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106"
+        	include="163"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"
+        	include="163"/>
         <ienumChoice choice="Automatic Front Cab Lights" value="116"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Front Cab Lights" value="117"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Automatic Rear Cab Lights" value="118"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Rear Cab Lights Lights" value="119"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
         <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
         <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
@@ -1758,13 +1861,13 @@
         <ienumChoice choice="Reverse Light" value="74"/>
         <ienumChoice choice="Dim Reverse Light" value="75"/>
         <ienumChoice choice="Automatic Mars Light" value="76"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Mars Light" value="77"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Dim Mars Light" value="78"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Strobe Mars Light" value="79"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Automatic Ditch Light" value="84"
         	include="103,126,131,132"/>
         <ienumChoice choice="Ditch Light" value="85"
@@ -1774,21 +1877,25 @@
         <ienumChoice choice="Strobe Ditch Light" value="87"
         	include="103,126,131,132"/>
         <ienumChoice choice="Automatic Front Number Board Lights" value="100"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Front Number Board Lights" value="101"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Automatic Front Marker Lights" value="104"
-        	include="128"/>
+        	include="128,163"/>
         <ienumChoice choice="Front Marker Lights Lights" value="105"
-        	include="128"/>
+        	include="128,163"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106"
+        	include="163"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"
+        	include="163"/>
         <ienumChoice choice="Automatic Front Cab Lights" value="116"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Front Cab Lights" value="117"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144.163"/>
         <ienumChoice choice="Automatic Rear Cab Lights" value="118"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Rear Cab Lights Lights" value="119"
-        	include="101,129"/>
+        	include="101,129.155"/>
         <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
         <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
         <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
@@ -1819,13 +1926,13 @@
         <ienumChoice choice="Reverse Light" value="74"/>
         <ienumChoice choice="Dim Reverse Light" value="75"/>
         <ienumChoice choice="Automatic Mars Light" value="76"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Mars Light" value="77"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Dim Mars Light" value="78"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Strobe Mars Light" value="79"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Automatic Ditch Light" value="84"
         	include="103,126,131,132"/>
         <ienumChoice choice="Ditch Light" value="85"
@@ -1835,21 +1942,25 @@
         <ienumChoice choice="Strobe Ditch Light" value="87"
         	include="103,126,131,132"/>
         <ienumChoice choice="Automatic Front Number Board Lights" value="100"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Front Number Board Lights" value="101"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Automatic Front Marker Lights" value="104"
-        	include="128"/>
+        	include="128,163"/>
         <ienumChoice choice="Front Marker Lights Lights" value="105"
-        	include="128"/>
+        	include="128,163"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106"
+        	include="163"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"
+        	include="163"/>
         <ienumChoice choice="Automatic Front Cab Lights" value="116"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Front Cab Lights" value="117"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Automatic Rear Cab Lights" value="118"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Rear Cab Lights Lights" value="119"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
         <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
         <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
@@ -1882,13 +1993,13 @@
         <ienumChoice choice="Reverse Light" value="74"/>
         <ienumChoice choice="Dim Reverse Light" value="75"/>
         <ienumChoice choice="Automatic Mars Light" value="76"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Mars Light" value="77"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Dim Mars Light" value="78"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Strobe Mars Light" value="79"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Automatic Ditch Light" value="84"
         	include="103,126,131,132"/>
         <ienumChoice choice="Ditch Light" value="85"
@@ -1898,21 +2009,25 @@
         <ienumChoice choice="Strobe Ditch Light" value="87"
         	include="103,126,131,132"/>
         <ienumChoice choice="Automatic Front Number Board Lights" value="100"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Front Number Board Lights" value="101"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Automatic Front Marker Lights" value="104"
-        	include="128"/>
+        	include="128,163"/>
         <ienumChoice choice="Front Marker Lights Lights" value="105"
-        	include="128"/>
+        	include="128,163"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106"
+        	include="163"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"
+        	include="163"/>
         <ienumChoice choice="Automatic Front Cab Lights" value="116"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Front Cab Lights" value="117"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144.163"/>
         <ienumChoice choice="Automatic Rear Cab Lights" value="118"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Rear Cab Lights Lights" value="119"
-        	include="101,129"/>
+        	include="101,129.155"/>
         <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
         <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
         <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
@@ -1943,13 +2058,13 @@
         <ienumChoice choice="Reverse Light" value="74"/>
         <ienumChoice choice="Dim Reverse Light" value="75"/>
         <ienumChoice choice="Automatic Mars Light" value="76"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Mars Light" value="77"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Dim Mars Light" value="78"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Strobe Mars Light" value="79"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Automatic Ditch Light" value="84"
         	include="103,126,131,132"/>
         <ienumChoice choice="Ditch Light" value="85"
@@ -1959,21 +2074,25 @@
         <ienumChoice choice="Strobe Ditch Light" value="87"
         	include="103,126,131,132"/>
         <ienumChoice choice="Automatic Front Number Board Lights" value="100"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Front Number Board Lights" value="101"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Automatic Front Marker Lights" value="104"
-        	include="128"/>
+        	include="128,163"/>
         <ienumChoice choice="Front Marker Lights Lights" value="105"
-        	include="128"/>
+        	include="128,163"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106"
+        	include="163"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"
+        	include="163"/>
         <ienumChoice choice="Automatic Front Cab Lights" value="116"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Front Cab Lights" value="117"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Automatic Rear Cab Lights" value="118"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Rear Cab Lights Lights" value="119"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
         <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
         <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
@@ -2006,13 +2125,13 @@
         <ienumChoice choice="Reverse Light" value="74"/>
         <ienumChoice choice="Dim Reverse Light" value="75"/>
         <ienumChoice choice="Automatic Mars Light" value="76"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Mars Light" value="77"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Dim Mars Light" value="78"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Strobe Mars Light" value="79"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Automatic Ditch Light" value="84"
         	include="103,126,131,132"/>
         <ienumChoice choice="Ditch Light" value="85"
@@ -2022,21 +2141,25 @@
         <ienumChoice choice="Strobe Ditch Light" value="87"
         	include="103,126,131,132"/>
         <ienumChoice choice="Automatic Front Number Board Lights" value="100"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Front Number Board Lights" value="101"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Automatic Front Marker Lights" value="104"
-        	include="128"/>
+        	include="128,163"/>
         <ienumChoice choice="Front Marker Lights Lights" value="105"
-        	include="128"/>
+        	include="128,163"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106"
+        	include="163"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"
+        	include="163"/>
         <ienumChoice choice="Automatic Front Cab Lights" value="116"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Front Cab Lights" value="117"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144.163"/>
         <ienumChoice choice="Automatic Rear Cab Lights" value="118"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Rear Cab Lights Lights" value="119"
-        	include="101,129"/>
+        	include="101,129.155"/>
         <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
         <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
         <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
@@ -2067,13 +2190,13 @@
         <ienumChoice choice="Reverse Light" value="74"/>
         <ienumChoice choice="Dim Reverse Light" value="75"/>
         <ienumChoice choice="Automatic Mars Light" value="76"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Mars Light" value="77"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Dim Mars Light" value="78"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Strobe Mars Light" value="79"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Automatic Ditch Light" value="84"
         	include="103,126,131,132"/>
         <ienumChoice choice="Ditch Light" value="85"
@@ -2083,21 +2206,25 @@
         <ienumChoice choice="Strobe Ditch Light" value="87"
         	include="103,126,131,132"/>
         <ienumChoice choice="Automatic Front Number Board Lights" value="100"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Front Number Board Lights" value="101"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Automatic Front Marker Lights" value="104"
-        	include="128"/>
+        	include="128,163"/>
         <ienumChoice choice="Front Marker Lights Lights" value="105"
-        	include="128"/>
+        	include="128,163"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106"
+        	include="163"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"
+        	include="163"/>
         <ienumChoice choice="Automatic Front Cab Lights" value="116"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Front Cab Lights" value="117"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Automatic Rear Cab Lights" value="118"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Rear Cab Lights Lights" value="119"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
         <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
         <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
@@ -2130,13 +2257,13 @@
         <ienumChoice choice="Reverse Light" value="74"/>
         <ienumChoice choice="Dim Reverse Light" value="75"/>
         <ienumChoice choice="Automatic Mars Light" value="76"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Mars Light" value="77"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Dim Mars Light" value="78"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Strobe Mars Light" value="79"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Automatic Ditch Light" value="84"
         	include="103,126,131,132"/>
         <ienumChoice choice="Ditch Light" value="85"
@@ -2146,21 +2273,25 @@
         <ienumChoice choice="Strobe Ditch Light" value="87"
         	include="103,126,131,132"/>
         <ienumChoice choice="Automatic Front Number Board Lights" value="100"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Front Number Board Lights" value="101"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Automatic Front Marker Lights" value="104"
-        	include="128"/>
+        	include="128,163"/>
         <ienumChoice choice="Front Marker Lights Lights" value="105"
-        	include="128"/>
+        	include="128,163"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106"
+        	include="163"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"
+        	include="163"/>
         <ienumChoice choice="Automatic Front Cab Lights" value="116"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Front Cab Lights" value="117"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144.163"/>
         <ienumChoice choice="Automatic Rear Cab Lights" value="118"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Rear Cab Lights Lights" value="119"
-        	include="101,129"/>
+        	include="101,129.155"/>
         <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
         <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
         <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
@@ -2191,13 +2322,13 @@
         <ienumChoice choice="Reverse Light" value="74"/>
         <ienumChoice choice="Dim Reverse Light" value="75"/>
         <ienumChoice choice="Automatic Mars Light" value="76"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Mars Light" value="77"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Dim Mars Light" value="78"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Strobe Mars Light" value="79"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Automatic Ditch Light" value="84"
         	include="103,126,131,132"/>
         <ienumChoice choice="Ditch Light" value="85"
@@ -2207,21 +2338,25 @@
         <ienumChoice choice="Strobe Ditch Light" value="87"
         	include="103,126,131,132"/>
         <ienumChoice choice="Automatic Front Number Board Lights" value="100"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Front Number Board Lights" value="101"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Automatic Front Marker Lights" value="104"
-        	include="128"/>
+        	include="128,163"/>
         <ienumChoice choice="Front Marker Lights Lights" value="105"
-        	include="128"/>
+        	include="128,163"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106"
+        	include="163"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"
+        	include="163"/>
         <ienumChoice choice="Automatic Front Cab Lights" value="116"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Front Cab Lights" value="117"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Automatic Rear Cab Lights" value="118"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Rear Cab Lights Lights" value="119"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
         <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
         <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
@@ -2254,13 +2389,13 @@
         <ienumChoice choice="Reverse Light" value="74"/>
         <ienumChoice choice="Dim Reverse Light" value="75"/>
         <ienumChoice choice="Automatic Mars Light" value="76"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Mars Light" value="77"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Dim Mars Light" value="78"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Strobe Mars Light" value="79"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Automatic Ditch Light" value="84"
         	include="103,126,131,132"/>
         <ienumChoice choice="Ditch Light" value="85"
@@ -2270,21 +2405,25 @@
         <ienumChoice choice="Strobe Ditch Light" value="87"
         	include="103,126,131,132"/>
         <ienumChoice choice="Automatic Front Number Board Lights" value="100"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Front Number Board Lights" value="101"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Automatic Front Marker Lights" value="104"
-        	include="128"/>
+        	include="128,163"/>
         <ienumChoice choice="Front Marker Lights Lights" value="105"
-        	include="128"/>
+        	include="128,163"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106"
+        	include="163"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"
+        	include="163"/>
         <ienumChoice choice="Automatic Front Cab Lights" value="116"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Front Cab Lights" value="117"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144.163"/>
         <ienumChoice choice="Automatic Rear Cab Lights" value="118"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Rear Cab Lights Lights" value="119"
-        	include="101,129"/>
+        	include="101,129.155"/>
         <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
         <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
         <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
@@ -2315,13 +2454,13 @@
         <ienumChoice choice="Reverse Light" value="74"/>
         <ienumChoice choice="Dim Reverse Light" value="75"/>
         <ienumChoice choice="Automatic Mars Light" value="76"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Mars Light" value="77"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Dim Mars Light" value="78"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Strobe Mars Light" value="79"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Automatic Ditch Light" value="84"
         	include="103,126,131,132"/>
         <ienumChoice choice="Ditch Light" value="85"
@@ -2331,21 +2470,25 @@
         <ienumChoice choice="Strobe Ditch Light" value="87"
         	include="103,126,131,132"/>
         <ienumChoice choice="Automatic Front Number Board Lights" value="100"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Front Number Board Lights" value="101"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Automatic Front Marker Lights" value="104"
-        	include="128"/>
+        	include="128,163"/>
         <ienumChoice choice="Front Marker Lights Lights" value="105"
-        	include="128"/>
+        	include="128,163"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106"
+        	include="163"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"
+        	include="163"/>
         <ienumChoice choice="Automatic Front Cab Lights" value="116"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Front Cab Lights" value="117"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Automatic Rear Cab Lights" value="118"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Rear Cab Lights Lights" value="119"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
         <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
         <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
@@ -2378,13 +2521,13 @@
         <ienumChoice choice="Reverse Light" value="74"/>
         <ienumChoice choice="Dim Reverse Light" value="75"/>
         <ienumChoice choice="Automatic Mars Light" value="76"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Mars Light" value="77"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Dim Mars Light" value="78"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Strobe Mars Light" value="79"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Automatic Ditch Light" value="84"
         	include="103,126,131,132"/>
         <ienumChoice choice="Ditch Light" value="85"
@@ -2394,21 +2537,25 @@
         <ienumChoice choice="Strobe Ditch Light" value="87"
         	include="103,126,131,132"/>
         <ienumChoice choice="Automatic Front Number Board Lights" value="100"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Front Number Board Lights" value="101"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Automatic Front Marker Lights" value="104"
-        	include="128"/>
+        	include="128,163"/>
         <ienumChoice choice="Front Marker Lights Lights" value="105"
-        	include="128"/>
+        	include="128,163"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106"
+        	include="163"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"
+        	include="163"/>
         <ienumChoice choice="Automatic Front Cab Lights" value="116"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Front Cab Lights" value="117"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144.163"/>
         <ienumChoice choice="Automatic Rear Cab Lights" value="118"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Rear Cab Lights Lights" value="119"
-        	include="101,129"/>
+        	include="101,129.155"/>
         <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
         <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
         <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
@@ -2439,13 +2586,13 @@
         <ienumChoice choice="Reverse Light" value="74"/>
         <ienumChoice choice="Dim Reverse Light" value="75"/>
         <ienumChoice choice="Automatic Mars Light" value="76"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Mars Light" value="77"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Dim Mars Light" value="78"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Strobe Mars Light" value="79"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Automatic Ditch Light" value="84"
         	include="103,126,131,132"/>
         <ienumChoice choice="Ditch Light" value="85"
@@ -2455,21 +2602,25 @@
         <ienumChoice choice="Strobe Ditch Light" value="87"
         	include="103,126,131,132"/>
         <ienumChoice choice="Automatic Front Number Board Lights" value="100"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Front Number Board Lights" value="101"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Automatic Front Marker Lights" value="104"
-        	include="128"/>
+        	include="128,163"/>
         <ienumChoice choice="Front Marker Lights Lights" value="105"
-        	include="128"/>
+        	include="128,163"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106"
+        	include="163"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"
+        	include="163"/>
         <ienumChoice choice="Automatic Front Cab Lights" value="116"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Front Cab Lights" value="117"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Automatic Rear Cab Lights" value="118"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Rear Cab Lights Lights" value="119"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
         <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
         <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
@@ -2502,13 +2653,13 @@
         <ienumChoice choice="Reverse Light" value="74"/>
         <ienumChoice choice="Dim Reverse Light" value="75"/>
         <ienumChoice choice="Automatic Mars Light" value="76"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Mars Light" value="77"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Dim Mars Light" value="78"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Strobe Mars Light" value="79"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Automatic Ditch Light" value="84"
         	include="103,126,131,132"/>
         <ienumChoice choice="Ditch Light" value="85"
@@ -2518,21 +2669,25 @@
         <ienumChoice choice="Strobe Ditch Light" value="87"
         	include="103,126,131,132"/>
         <ienumChoice choice="Automatic Front Number Board Lights" value="100"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Front Number Board Lights" value="101"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Automatic Front Marker Lights" value="104"
-        	include="128"/>
+        	include="128,163"/>
         <ienumChoice choice="Front Marker Lights Lights" value="105"
-        	include="128"/>
+        	include="128,163"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106"
+        	include="163"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"
+        	include="163"/>
         <ienumChoice choice="Automatic Front Cab Lights" value="116"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Front Cab Lights" value="117"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144.163"/>
         <ienumChoice choice="Automatic Rear Cab Lights" value="118"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Rear Cab Lights Lights" value="119"
-        	include="101,129"/>
+        	include="101,129.155"/>
         <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
         <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
         <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
@@ -2563,13 +2718,13 @@
         <ienumChoice choice="Reverse Light" value="74"/>
         <ienumChoice choice="Dim Reverse Light" value="75"/>
         <ienumChoice choice="Automatic Mars Light" value="76"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Mars Light" value="77"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Dim Mars Light" value="78"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Strobe Mars Light" value="79"
-        	include="100,104,105,107,110,115,117,119,121,135,143,144,151"/>
+        	include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160"/>
         <ienumChoice choice="Automatic Ditch Light" value="84"
         	include="103,126,131,132"/>
         <ienumChoice choice="Ditch Light" value="85"
@@ -2579,21 +2734,25 @@
         <ienumChoice choice="Strobe Ditch Light" value="87"
         	include="103,126,131,132"/>
         <ienumChoice choice="Automatic Front Number Board Lights" value="100"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Front Number Board Lights" value="101"
-        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136"/>
+        	include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160"/>
         <ienumChoice choice="Automatic Front Marker Lights" value="104"
-        	include="128"/>
+        	include="128,163"/>
         <ienumChoice choice="Front Marker Lights Lights" value="105"
-        	include="128"/>
+        	include="128,163"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106"
+        	include="163"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"
+        	include="163"/>
         <ienumChoice choice="Automatic Front Cab Lights" value="116"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Front Cab Lights" value="117"
-        	include="102,104,134,139,143,144"/>
+        	include="102,104,134,139,143,144,163"/>
         <ienumChoice choice="Automatic Rear Cab Lights" value="118"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Rear Cab Lights Lights" value="119"
-        	include="101,129"/>
+        	include="101,129,155"/>
         <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
         <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
         <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
@@ -2605,7 +2764,7 @@
         <ienumChoice choice="Air Pump" value="217"/>
       </ienumVal>
     </ivariable>
-
+<!-- CV 55.3.0 not implemented --> 
     <ivariable label="Bell Select" CVname="55.3.1" CV="55" PI="3" SI="1"
               default="1" item="CV55.3.0">
 		<indexedVal/>	               
@@ -2659,7 +2818,7 @@
 
     <ivariable label="Headlight Dim Intensity" CVname="55.70.10" CV="55" PI="70" SI="10"
               default="64" item="CV55.70.10"
-              include="101,102,103,106,108,111,112,113,114,116,117,118,120,122,123,124,125,126,127,128,129,130,131,132,133,134,136,137,139,140,145,149,150,152">
+              include="101,102,103,106,108,111,112,113,114,116,118,120,122,123,124,125,126,127,128,129,130,131,132,133,134,136,137,139,140,145,149,150,152,154,155,159,163">
 		<indexedVal/>	               
     </ivariable>
     
@@ -2711,7 +2870,7 @@
 
     <ivariable label="Mars Light Initial State" CVname="55.76.0" CV="55" PI="76" SI="0"
                default="1" item="CV55.76.0" 
-               include="100,104,105,107,110,115,117,119,121,135,143,144,151">
+               include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160">
       <ienumVal>
         <ienumChoice choice="Off" value="0"/>
         <ienumChoice choice="Automatic" value="1"/>
@@ -2723,7 +2882,7 @@
 
     <ivariable label="Auto Mars Light Config FWD" CVname="55.76.1" CV="55" PI="76" SI="1"
                default="3" item="CV55.76.1" 
-               include="100,104,105,107,110,115,117,119,121,135,143,144,151">
+               include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160">
       <ienumVal>
         <ienumChoice choice="Off" />
         <ienumChoice choice="Dim" />
@@ -2734,7 +2893,7 @@
 
     <ivariable label="Auto Mars Light Config NFF" CVname="55.76.2" CV="55" PI="76" SI="2"
                default="1" item="CV55.76.2" 
-               include="100,104,105,107,110,115,117,119,121,135,143,144,151">
+               include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160">
       <ienumVal>
         <ienumChoice choice="Off" />
         <ienumChoice choice="Dim" />
@@ -2745,7 +2904,7 @@
 
     <ivariable label="Auto Mars Light Config REV" CVname="55.76.3" CV="55" PI="76" SI="3"
                default="1" item="CV55.76.3" 
-               include="100,104,105,107,110,115,117,119,121,135,143,144,151">
+               include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160">
       <ienumVal>
         <ienumChoice choice="Off" />
         <ienumChoice choice="Dim" />
@@ -2756,7 +2915,7 @@
 
     <ivariable label="Auto Mars Light Config NFR" CVname="55.76.4" CV="55" PI="76" SI="4"
                default="1" item="CV55.76.4" 
-               include="100,104,105,107,110,115,117,119,121,135,143,144,151">
+               include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160">
       <ienumVal>
         <ienumChoice choice="Off" />
         <ienumChoice choice="Dim" />
@@ -2767,7 +2926,7 @@
 
     <ivariable label="Mars Light Dim Intensity" CVname="55.76.10" CV="55" PI="76" SI="10"
               default="0" item="CV55.76.10"
-               include="100,104,105,143,144,151">
+               include="100,104,105,107,110,115,117,119,121,135,143,144,151,158,160">
 		<indexedVal/>	               
     </ivariable>
     
@@ -2880,7 +3039,7 @@
     
     <ivariable label="Front Number Board Lights Initial State" CVname="55.100.0" CV="55" PI="100" SI="0"
                default="1" item="CV55.100.0" mask="XXXXXXVV"
-               include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136">
+               include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160">
       <ienumVal>
         <ienumChoice choice="Off" value="0"/>
         <ienumChoice choice="Automatic" value="1"/>
@@ -2890,7 +3049,7 @@
 
     <ivariable label="Auto Front Number Board Lights Config FWD" CVname="55.100.1" CV="55" PI="100" SI="1"
                default="1" item="CV55.100.1 FWD" mask="XXXXXXXV"
-               include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136">
+               include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160">
       <ienumVal>
         <ienumChoice choice="Off" />
         <ienumChoice choice="On" />
@@ -2899,7 +3058,7 @@
 
     <ivariable label="Auto Front Number Board Lights Config NFF" CVname="55.100.1" CV="55" PI="100" SI="1"
                default="1" item="CV55.100.1 NFF" mask="XXXXXVXX"
-               include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136">
+               include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160">
       <ienumVal>
         <ienumChoice choice="Off" />
         <ienumChoice choice="On" />
@@ -2908,7 +3067,7 @@
 
     <ivariable label="Auto Front Number Board Lights Config REV" CVname="55.100.1" CV="55" PI="100" SI="1"
                default="1" item="CV55.100.1 REV" mask="XXXVXXXX"
-               include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136">
+               include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160">
       <ienumVal>
         <ienumChoice choice="Off" />
         <ienumChoice choice="On" />
@@ -2917,7 +3076,7 @@
 
     <ivariable label="Auto Front Number Board Lights Config NFR" CVname="55.100.1" CV="55" PI="100" SI="1"
                default="1" item="CV55.100.1 NFR" mask="XVXXXXXX"
-               include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136">
+               include="100,104,106,107,108,110,115,116,117,118,119,120,121,122,131,135,136,143,144,151,152,158,159,160">
       <ienumVal>
         <ienumChoice choice="Off" />
         <ienumChoice choice="On" />
@@ -2926,7 +3085,7 @@
 
     <ivariable label="Front Marker Lights Initial State" CVname="55.104.0" CV="55" PI="104" SI="0"
                default="1" item="CV55.104.0" mask="XXXXXXVV"
-               include="128">
+               include="128,163">
       <ienumVal>
         <ienumChoice choice="Off" value="0"/>
         <ienumChoice choice="Automatic" value="1"/>
@@ -2936,7 +3095,7 @@
 
     <ivariable label="Auto Front Marker Lights Config FWD" CVname="55.104.1" CV="55" PI="104" SI="1"
                default="1" item="CV55.104.1 FWD" mask="XXXXXXXV"
-               include="128">
+               include="128,163">
       <ienumVal>
         <ienumChoice choice="Off" />
         <ienumChoice choice="On" />
@@ -2945,7 +3104,7 @@
 
     <ivariable label="Auto Front Marker Lights Config NFF" CVname="55.104.1" CV="55" PI="104" SI="1"
                default="1" item="CV55.104.1 NFF" mask="XXXXXVXX"
-               include="128">
+               include="128,163">
       <ienumVal>
         <ienumChoice choice="Off" />
         <ienumChoice choice="On" />
@@ -2954,7 +3113,7 @@
 
     <ivariable label="Auto Front Marker Lights Config REV" CVname="55.104.1" CV="55" PI="104" SI="1"
                default="1" item="CV55.104.1 REV" mask="XXXVXXXX"
-               include="128">
+               include="128,163">
       <ienumVal>
         <ienumChoice choice="Off" />
         <ienumChoice choice="On" />
@@ -2963,7 +3122,53 @@
 
     <ivariable label="Auto Front Marker Lights Config NFR" CVname="55.104.1" CV="55" PI="104" SI="1"
                default="1" item="CV55.104.1 NFR" mask="XVXXXXXX"
-               include="128">
+               include="128,163">
+      <ienumVal>
+        <ienumChoice choice="Off" />
+        <ienumChoice choice="On" />
+      </ienumVal>
+    </ivariable>
+
+    <ivariable label="Rear Marker Lights Initial State" CVname="55.106.0" CV="55" PI="104" SI="0"
+               default="1" item="CV55.106.0" mask="XXXXXXVV"
+               include="128,163">
+      <ienumVal>
+        <ienumChoice choice="Off" value="0"/>
+        <ienumChoice choice="Automatic" value="1"/>
+        <ienumChoice choice="On" value="2"/>
+      </ienumVal>
+    </ivariable>
+
+    <ivariable label="Auto Rear Marker Lights Config FWD" CVname="55.106.1" CV="55" PI="104" SI="1"
+               default="1" item="CV55.106.1 FWD" mask="XXXXXXXV"
+               include="128,163">
+      <ienumVal>
+        <ienumChoice choice="Off" />
+        <ienumChoice choice="On" />
+      </ienumVal>
+    </ivariable>
+
+    <ivariable label="Auto Rear Marker Lights Config NFF" CVname="55.106.1" CV="55" PI="104" SI="1"
+               default="1" item="CV55.106.1 NFF" mask="XXXXXVXX"
+               include="128,163">
+      <ienumVal>
+        <ienumChoice choice="Off" />
+        <ienumChoice choice="On" />
+      </ienumVal>
+    </ivariable>
+
+    <ivariable label="Auto Rear Marker Lights Config REV" CVname="55.106.1" CV="55" PI="104" SI="1"
+               default="1" item="CV55.106.1 REV" mask="XXXVXXXX"
+               include="128,163">
+      <ienumVal>
+        <ienumChoice choice="Off" />
+        <ienumChoice choice="On" />
+      </ienumVal>
+    </ivariable>
+
+    <ivariable label="Auto Rear Marker Lights Config NFR" CVname="55.106.1" CV="55" PI="104" SI="1"
+               default="1" item="CV55.106.1 NFR" mask="XVXXXXXX"
+               include="128,163">
       <ienumVal>
         <ienumChoice choice="Off" />
         <ienumChoice choice="On" />
@@ -2972,7 +3177,7 @@
 
     <ivariable label="Front Cab Lights Initial State" CVname="55.116.0" CV="55" PI="116" SI="0"
                default="1" item="CV55.116.0" mask="XXXXXXVV"
-               include="102,104,134,139,143,144">
+               include="102,104,134,139,143,144,163">
       <ienumVal>
         <ienumChoice choice="Off" value="0"/>
         <ienumChoice choice="Automatic" value="1"/>
@@ -2982,7 +3187,7 @@
 
     <ivariable label="Auto Front Cab Lights Config FWD" CVname="55.116.1" CV="55" PI="116" SI="1"
                default="1" item="CV55.116.1 FWD" mask="XXXXXXXV"
-               include="102,104,134,139,143,144">
+               include="102,104,134,139,143,144,163">
       <ienumVal>
         <ienumChoice choice="Off" />
         <ienumChoice choice="On" />
@@ -2991,7 +3196,7 @@
 
     <ivariable label="Auto Front Cab Lights Config NFF" CVname="55.116.1" CV="55" PI="116" SI="1"
                default="1" item="CV55.116.1 NFF" mask="XXXXXVXX"
-               include="102,104,134,139,143,144">
+               include="102,104,134,139,143,144,163">
       <ienumVal>
         <ienumChoice choice="Off" />
         <ienumChoice choice="On" />
@@ -3000,7 +3205,7 @@
 
     <ivariable label="Auto Front Cab Lights Config REV" CVname="55.116.1" CV="55" PI="116" SI="1"
                default="1" item="CV55.116.1 REV" mask="XXXVXXXX"
-               include="102,104,134,139,143,144">
+               include="102,104,134,139,143,144,163">
       <ienumVal>
         <ienumChoice choice="Off" />
         <ienumChoice choice="On" />
@@ -3009,7 +3214,7 @@
 
     <ivariable label="Auto Front Cab Lights Config NFR" CVname="55.116.1" CV="55" PI="116" SI="1"
                default="1" item="CV55.116.1 NFR" mask="XVXXXXXX"
-               include="102,104,134,139,143,144">
+               include="102,104,134,139,143,144,163">
       <ienumVal>
         <ienumChoice choice="Off" />
         <ienumChoice choice="On" />
@@ -3018,7 +3223,7 @@
 
     <ivariable label="Rear Cab Lights Initial State" CVname="55.118.0" CV="55" PI="118" SI="0"
                default="1" item="CV55.118.0" mask="XXXXXXVV"
-               include="101,129">
+               include="101,129,155">
       <ienumVal>
         <ienumChoice choice="Off" value="0"/>
         <ienumChoice choice="Automatic" value="1"/>
@@ -3028,7 +3233,7 @@
 
     <ivariable label="Auto Rear Cab Lights Config FWD" CVname="55.118.1" CV="55" PI="118" SI="1"
                default="1" item="CV55.118.1 FWD" mask="XXXXXXXV"
-               include="101,129">
+               include="101,129,155">
       <ienumVal>
         <ienumChoice choice="Off" />
         <ienumChoice choice="On" />
@@ -3037,7 +3242,7 @@
 
     <ivariable label="Auto Rear Cab Lights Config NFF" CVname="55.118.1" CV="55" PI="118" SI="1"
                default="1" item="CV55.118.1 NFF" mask="XXXXXVXX"
-               include="101,129">
+               include="101,129,155">
       <ienumVal>
         <ienumChoice choice="Off" />
         <ienumChoice choice="On" />
@@ -3046,7 +3251,7 @@
 
     <ivariable label="Auto Rear Cab Lights Config REV" CVname="55.118.1" CV="55" PI="118" SI="1"
                default="1" item="CV55.118.1 REV" mask="XXXVXXXX"
-               include="101,129">
+               include="101,129,155">
       <ienumVal>
         <ienumChoice choice="Off" />
         <ienumChoice choice="On" />
@@ -3055,7 +3260,7 @@
 
     <ivariable label="Auto Rear Cab Lights Config NFR" CVname="55.118.1" CV="55" PI="118" SI="1"
                default="1" item="CV55.118.1 NFR" mask="XVXXXXXX"
-               include="101,129">
+               include="101,129,155">
       <ienumVal>
         <ienumChoice choice="Off" />
         <ienumChoice choice="On" />
@@ -3530,13 +3735,18 @@
   <column>
     <row>
       <column>
-        <label label=" "/>
         <label label="If nothing shows up in this tab, upgrade to JMRI 1.7.1"/>
         <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
         <label label=" "/>
-        <display item="CV51.0" format="hslider" tooltip="Sets CV 51.0 (0 - 127)"/>
+        <row>
+        	<display item="CV51.0" layout="above" label="" />
+        	<display item="CV51.0" layout="above" format="hslider" tooltip="Sets CV 51.0 (0 - 127)"/>
+        </row>
         <label label=" "/>
-        <display item="CV51.1" format="hslider"/>
+        <row>
+        	<display item="CV51.1" layout="above" label="" />
+        	<display item="CV51.1" layout="above" format="hslider"/>
+        </row>
         <label label=" "/>
       </column>
       <column>
@@ -3546,57 +3756,98 @@
         <display item="CV51.2 Cocks2" format="checkbox"/>
         <display item="CV55.3.1" />
 	    <display item="CV56.0 Power" />
-        <display item="CV56.12" format="hslider"/>
+        <row>
+	        <display item="CV56.12" layout="above" label="" />
+	        <display item="CV56.12" layout="above" format="hslider"/>
+        </row>
         <label label=" "/>
       </column>
     </row>
     <separator/>
     <row>
       <column>
-        <label label=" "/>
         <label label="Individual Sound Volumes "/>
-        <label label=" "/>
-        <label label="Note: If a Read or Write for a sound fails, "/>
-        <label label="this particular model does not support it. "/>
-        <label label=" "/>
       </column>
     </row>
     <row>
       <column>
-        <display item="CV52.0" format="hslider"/>
-        <label label=" "/>
-        <display item="CV52.8" format="hslider"/>
-        <label label=" "/>
-        <display item="CV52.10" format="hslider"/>
-        <label label=" "/>
-        <display item="CV52.14" format="hslider"/>
-        <label label=" "/>
-        <display item="CV52.16" format="hslider"/>
+        <row>
+	        <display item="CV52.0" layout="above" label="" />
+	        <display item="CV52.0" layout="above" format="hslider"/>
+        </row>
+	    <label label=" "/>
+        <row>
+	        <display item="CV52.8" layout="above" label="" />
+	        <display item="CV52.8" layout="above" format="hslider"/>
+        </row>
+	    <label label=" "/>
+        <row>
+	        <display item="CV52.10" layout="above" label="" />
+	        <display item="CV52.10" layout="above" format="hslider"/>
+        </row>
+	    <label label=" "/>
+        <row>
+	        <display item="CV52.14" layout="above" label="" />
+	        <display item="CV52.14" layout="above" format="hslider"/>
+        </row>
+	    <label label=" "/>
+        <row>
+	        <display item="CV52.16" layout="above" label="" />
+	        <display item="CV52.16" layout="above" format="hslider"/>
+        </row>
       </column>
       <column>
         <label label="        "/>
       </column>
       <column>
-        <display item="CV52.19" format="hslider"/>
-        <label label=" "/>
-        <display item="CV52.21" format="hslider"/>
-        <label label=" "/>
-        <display item="CV52.22" format="hslider"/>
-        <label label=" "/>
-        <display item="CV52.24" format="hslider"/>
-        <label label=" "/>
+        <row>
+    	    <display item="CV52.19" layout="above" label="" />
+    	    <display item="CV52.19" layout="above" format="hslider"/>
+        </row>
+	    <label label=" "/>
+        <row>
+    	    <display item="CV52.21" layout="above" label="" />
+    	    <display item="CV52.21" layout="above" format="hslider"/>
+        </row>
+	    <label label=" "/>
+        <row>
+    	    <display item="CV52.22" layout="above" label="" />
+    	    <display item="CV52.22" layout="above" format="hslider"/>
+        </row>
+	    <label label=" "/>
+        <row>
+    	    <display item="CV52.24" layout="above" label="" />
+    	    <display item="CV52.24" layout="above" format="hslider"/>
+        </row>
+	    <label label=" "/>
+        <row>
+    	    <display item="CV52.26" layout="above" label="" />
+    	    <display item="CV52.26" layout="above" format="hslider"/>
+        </row>
       </column>
       <column>
         <label label="        "/>
       </column>
       <column>
-        <display item="CV52.28" format="hslider"/>
-        <label label=" "/>
-        <display item="CV52.34" format="hslider"/>
-        <label label=" "/>
-        <display item="CV52.37" format="hslider"/>
-        <label label=" "/>
-        <display item="CV52.40" format="hslider"/>
+        <row>
+        	<display item="CV52.28" layout="above" label="" />
+        	<display item="CV52.28" layout="above" format="hslider"/>
+        </row>
+	    <label label=" "/>
+        <row>
+        	<display item="CV52.34" layout="above" label="" />
+        	<display item="CV52.34" layout="above" format="hslider"/>
+        </row>
+	    <label label=" "/>
+        <row>
+        	<display item="CV52.37" layout="above" label="" />
+        	<display item="CV52.37" layout="above" format="hslider"/>
+        </row>
+	    <label label=" "/>
+        <row>
+        	<display item="CV52.40" layout="above" label="" />
+        	<display item="CV52.40" layout="above" format="hslider"/>
+        </row>
       </column>
     </row>
     <label label=" "/>
@@ -3680,7 +3931,11 @@
         <display item="CV55.70.1 NFF"/>
         <display item="CV55.70.1 REV"/>
         <display item="CV55.70.1 NFR"/>
-        <display item="CV55.70.10" format="hslider"/>
+        <label label=" "/>
+        <row>
+	        <display item="CV55.70.10" layout="above" label="" />
+	        <display item="CV55.70.10" layout="above" format="hslider"/>
+        </row>
       </column>
         
       <column>
@@ -3689,7 +3944,11 @@
         <display item="CV55.73.1 NFF"/>
         <display item="CV55.73.1 REV"/>
         <display item="CV55.73.1 NFR"/>
-        <display item="CV55.73.10" format="hslider" />
+        <label label=" "/>
+        <row>
+	        <display item="CV55.73.10" layout="above" label="" />
+	        <display item="CV55.73.10" layout="above" format="hslider"/>
+        </row>
       </column>
     </row>
     <row>
@@ -3699,7 +3958,11 @@
         <display item="CV55.76.2"/>
         <display item="CV55.76.3"/>
         <display item="CV55.76.4"/>
-        <display item="CV55.76.10" format="hslider"/>
+        <label label=" "/>
+        <row>
+	        <display item="CV55.76.10" layout="above" label="" />
+	        <display item="CV55.76.10" layout="above" format="hslider"/>
+        </row>
       </column>
       
       <column>
@@ -3708,7 +3971,11 @@
         <display item="CV55.84.2"/>
         <display item="CV55.84.3"/>
         <display item="CV55.84.4"/>
-        <display item="CV55.84.5" format="hslider"/>
+        <label label=" "/>
+        <row>
+	        <display item="CV55.84.5" layout="above" label="" />
+	        <display item="CV55.84.5" layout="above" format="hslider"/>
+        </row>
   	  </column>
   	  
       <column>
@@ -3717,6 +3984,8 @@
         <display item="CV55.84.2 Horn" format="checkbox"/>
         <display item="CV55.84.3 Horn" format="checkbox"/>
         <display item="CV55.84.4 Horn" format="checkbox"/>
+        <label label=" "/>
+        <label label=" "/>
         <label label=" "/>
         <label label=" "/>
         <label label=" "/>
@@ -3848,31 +4117,59 @@
         <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
         <label label=" "/>
       </column>
+      <label label="        "/>
+      <column>
+        <row>
+        	<display item="CV56.5" layout="above" label=""/>
+        	<display item="CV56.5" layout="above" format="hslider" />
+        </row>
+      <label label=" "/>
+      </column>
     </row>
     <row>
       <column>
-        <display item="CV56.18.0" />
-        <display item="CV56.18.0" format="hslider" label=""/>
-        <display item="CV56.18.2" />
-        <display item="CV56.18.2" format="hslider" label=""/>
+        <row>
+        	<display item="CV56.18.0" layout="above" label="" />
+        	<display item="CV56.18.0" layout="above" format="hslider" />
+        </row>
         <label label=" "/>
-        <display item="CV56.19.0" />
-        <display item="CV56.19.0" format="hslider" label=""/>
-        <display item="CV56.19.2" />
-        <display item="CV56.19.2" format="hslider" label=""/>
+        <row>
+       		<display item="CV56.18.2" layout="above" label="" />
+       		<display item="CV56.18.2" layout="above" format="hslider" />
+        </row>
         <label label=" "/>
-        <display item="CV56.20.0" />
-        <display item="CV56.20.0" format="hslider" label=""/>
-        <display item="CV56.20.2" />
-        <display item="CV56.20.2" format="hslider" label=""/>
+        <row>
+        	<display item="CV56.19.0" layout="above" label="" />
+        	<display item="CV56.19.0" layout="above" format="hslider" />
+        </row>
         <label label=" "/>
-        <display item="CV56.21.0" />
-        <display item="CV56.21.0" format="hslider" label=""/>
-        <display item="CV56.21.2" />
-        <display item="CV56.21.2" format="hslider" label=""/>
+        <row>
+        	<display item="CV56.19.2" layout="above" label="" />
+        	<display item="CV56.19.2" layout="above" format="hslider" />
+        </row>
+      </column>
+      <label label="        "/>
+      <column>
+        <row>
+        	<display item="CV56.20.0" layout="above" label="" />
+        	<display item="CV56.20.0" layout="above" format="hslider" />
+        </row>
         <label label=" "/>
-        <display item="CV56.5" />
-        <display item="CV56.5" format="hslider" label=""/>
+        <row>
+        	<display item="CV56.20.2" layout="above" label="" />
+        	<display item="CV56.20.2" layout="above" format="hslider" />
+        <label label=" "/>
+        </row>
+        <label label=" "/>
+        <row>
+        	<display item="CV56.21.0" layout="above" label="" />
+        	<display item="CV56.21.0" layout="above" format="hslider" />
+        </row>
+        <label label=" "/>
+        <row>
+        	<display item="CV56.21.2" layout="above" label=""/>
+        	<display item="CV56.21.2" layout="above" format="hslider" />
+        </row>
       </column>
   	</row>
   </column>

@@ -2,12 +2,14 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: QSI_Gas_Turbine_Ver7.xml,v 1.1 2006-10-19 15:08:54 jacobsen Exp $ -->
+<!-- $Id: QSI_Gas_Turbine_Ver7.xml,v 1.2 2007-08-07 04:01:11 jacobsen Exp $ -->
 <decoder-config>
+  <version author="Michael Mosher" version="2" lastUpdated="20070802"/>
   <version author="Michael Mosher" version="1" lastUpdated="20061009"/>
 
 <!-- version 1 - Created from Ver 6 file -->
 <!--   Added CV55, CV56.5, CV56.18-21, changed CV53  -->
+<!-- version 2 - Added better slider layout & fixed defaults -->
 
 <decoder>
  
@@ -1942,7 +1944,7 @@
     </ivariable>
 
     <ivariable label="Sounds on Power Up" CVname="56.0" CV="56" PI="0" 
-               default="0" item="CV56.0 Power" mask="XXXXXXXV">
+               default="1" item="CV56.0 Power" mask="XXXXXXXV">
       <ienumVal>
         <ienumChoice choice="When a valid DCC ops packet to locomotive address received" />
         <ienumChoice choice="When any valid DCC ops packet received" />
@@ -1967,14 +1969,9 @@
       </ienumVal>
     </ivariable>
         
-    <ivariable label="RTC Minimum BEMF" CVname="56.5" CV="56" PI="5" default="3"
+    <ivariable label="RTC Minimum BEMF" CVname="56.5" CV="56" PI="5" default="1"
                item="CV56.5">
       <indexedVal max="7"/> 
-    </ivariable>
-
-    <ivariable label="Chuff Interval Scale Factor" CVname="56.12" CV="56" PI="12" default="32"
-               item="CV56.12">
-      <indexedVal max="128"/> 
     </ivariable>
 
     <ivariable label="Very Low Speed Proportional Gain" CVname="56.18.0" CV="56" PI="18" SI="0"
@@ -2003,17 +2000,17 @@
     </ivariable>
 
     <ivariable label="Medium Speed Differential Gain" CVname="56.20.2" CV="56" PI="20" SI="2"
-    	 default="5" item="CV56.20.2">
+    	 default="20" item="CV56.20.2">
       <indexedVal /> 
     </ivariable>
 
     <ivariable label="High Speed Proportional Gain" CVname="56.21.0" CV="56" PI="21" SI="0"
-    	default="7" item="CV56.21.0" >
+    	default="10" item="CV56.21.0" >
       <indexedVal /> 
     </ivariable>
 
     <ivariable label="High Speed Differential Gain" CVname="56.21.2" CV="56" PI="21" SI="2"
-    	 default="3" item="CV56.21.2">
+    	 default="20" item="CV56.21.2">
       <indexedVal /> 
     </ivariable>
 
@@ -2106,9 +2103,15 @@
         <label label="If nothing shows up in this tab, upgrade to JMRI 1.7.1"/>
         <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
         <label label=" "/>
-        <display item="CV51.0" format="hslider" tooltip="Sets CV 51.0 (0 - 127)"/>
+        <row>
+        	<display item="CV51.0" layout="above" label="" />
+        	<display item="CV51.0" layout="above" format="hslider" tooltip="Sets CV 51.0 (0 - 127)"/>
+        </row>
         <label label=" "/>
-        <display item="CV51.1" format="hslider"/>
+        <row>
+        	<display item="CV51.1" layout="above" label="" />
+        	<display item="CV51.1" layout="above" format="hslider"/>
+        </row>
         <label label=" "/>
       </column>
       <column>
@@ -2118,57 +2121,93 @@
         <display item="CV51.2 Cocks2" format="checkbox"/>
         <display item="CV55.3.1" />
 	    <display item="CV56.0 Power" />
-        <display item="CV56.12" format="hslider"/>
+        <row>
+	        <display item="CV56.12" layout="above" label="" />
+	        <display item="CV56.12" layout="above" format="hslider"/>
+        </row>
         <label label=" "/>
       </column>
     </row>
     <separator/>
     <row>
       <column>
-        <label label=" "/>
         <label label="Individual Sound Volumes "/>
-        <label label=" "/>
-        <label label="Note: If a Read or Write for a sound fails, "/>
-        <label label="this particular model does not support it. "/>
-        <label label=" "/>
       </column>
     </row>
     <row>
       <column>
-        <display item="CV52.0" format="hslider"/>
-        <label label=" "/>
-        <display item="CV52.8" format="hslider"/>
-        <label label=" "/>
-        <display item="CV52.10" format="hslider"/>
-        <label label=" "/>
-        <display item="CV52.13" format="hslider"/>
-        <label label=" "/>
-        <display item="CV52.15" format="hslider"/>
+        <row>
+	        <display item="CV52.0" layout="above" label="" />
+	        <display item="CV52.0" layout="above" format="hslider"/>
+        </row>
+	    <label label=" "/>
+        <row>
+	        <display item="CV52.8" layout="above" label="" />
+	        <display item="CV52.8" layout="above" format="hslider"/>
+        </row>
+	    <label label=" "/>
+        <row>
+	        <display item="CV52.10" layout="above" label="" />
+	        <display item="CV52.10" layout="above" format="hslider"/>
+        </row>
+	    <label label=" "/>
+        <row>
+	        <display item="CV52.13" layout="above" label="" />
+	        <display item="CV52.13" layout="above" format="hslider"/>
+        </row>
+	    <label label=" "/>
+        <row>
+	        <display item="CV52.15" layout="above" label="" />
+	        <display item="CV52.15" layout="above" format="hslider"/>
+        </row>
       </column>
       <column>
         <label label="        "/>
       </column>
       <column>
-        <display item="CV52.16" format="hslider"/>
-        <label label=" "/>
-        <display item="CV52.19" format="hslider"/>
-        <label label=" "/>
-        <display item="CV52.21" format="hslider"/>
-        <label label=" "/>
-        <display item="CV52.22" format="hslider"/>
-        <label label=" "/>
+        <row>
+	        <display item="CV52.16" layout="above" label="" />
+	        <display item="CV52.16" layout="above" format="hslider"/>
+        </row>
+	    <label label=" "/>
+        <row>
+    	    <display item="CV52.19" layout="above" label="" />
+    	    <display item="CV52.19" layout="above" format="hslider"/>
+        </row>
+	    <label label=" "/>
+        <row>
+    	    <display item="CV52.21" layout="above" label="" />
+    	    <display item="CV52.21" layout="above" format="hslider"/>
+        </row>
+	    <label label=" "/>
+        <row>
+    	    <display item="CV52.22" layout="above" label="" />
+    	    <display item="CV52.22" layout="above" format="hslider"/>
+        </row>
       </column>
       <column>
         <label label="        "/>
       </column>
       <column>
-        <display item="CV52.24" format="hslider"/>
-        <label label=" "/>
-        <display item="CV52.28" format="hslider"/>
-        <label label=" "/>
-        <display item="CV52.34" format="hslider"/>
-        <label label=" "/>
-        <display item="CV52.37" format="hslider"/>
+        <row>
+    	    <display item="CV52.24" layout="above" label="" />
+    	    <display item="CV52.24" layout="above" format="hslider"/>
+        </row>
+	    <label label=" "/>
+        <row>
+        	<display item="CV52.28" layout="above" label="" />
+        	<display item="CV52.28" layout="above" format="hslider"/>
+        </row>
+	    <label label=" "/>
+        <row>
+        	<display item="CV52.34" layout="above" label="" />
+        	<display item="CV52.34" layout="above" format="hslider"/>
+        </row>
+	    <label label=" "/>
+        <row>
+        	<display item="CV52.37" layout="above" label="" />
+        	<display item="CV52.37" layout="above" format="hslider"/>
+        </row>
       </column>
     </row>
     <label label=" "/>
@@ -2252,7 +2291,11 @@
         <display item="CV55.70.1 NFF"/>
         <display item="CV55.70.1 REV"/>
         <display item="CV55.70.1 NFR"/>
-        <display item="CV55.70.10" format="hslider"/>
+        <label label=" "/>
+        <row>
+	        <display item="CV55.70.10" layout="above" label="" />
+	        <display item="CV55.70.10" layout="above" format="hslider"/>
+        </row>
       </column>
         
       <column>
@@ -2261,7 +2304,11 @@
         <display item="CV55.73.1 NFF"/>
         <display item="CV55.73.1 REV"/>
         <display item="CV55.73.1 NFR"/>
-        <display item="CV55.73.10" format="hslider" />
+        <label label=" "/>
+        <row>
+	        <display item="CV55.73.10" layout="above" label="" />
+	        <display item="CV55.73.10" layout="above" format="hslider"/>
+        </row>
       </column>
     </row>
     <row>
@@ -2271,7 +2318,11 @@
         <display item="CV55.76.2"/>
         <display item="CV55.76.3"/>
         <display item="CV55.76.4"/>
-        <display item="CV55.76.10" format="hslider"/>
+        <label label=" "/>
+        <row>
+	        <display item="CV55.76.10" layout="above" label="" />
+	        <display item="CV55.76.10" layout="above" format="hslider"/>
+        </row>
       </column>
       
       <column>
@@ -2280,7 +2331,11 @@
         <display item="CV55.84.2"/>
         <display item="CV55.84.3"/>
         <display item="CV55.84.4"/>
-        <display item="CV55.84.5" format="hslider"/>
+        <label label=" "/>
+        <row>
+	        <display item="CV55.84.5" layout="above" label="" />
+	        <display item="CV55.84.5" layout="above" format="hslider"/>
+        </row>
   	  </column>
   	  
       <column>
@@ -2289,6 +2344,8 @@
         <display item="CV55.84.2 Horn" format="checkbox"/>
         <display item="CV55.84.3 Horn" format="checkbox"/>
         <display item="CV55.84.4 Horn" format="checkbox"/>
+        <label label=" "/>
+        <label label=" "/>
         <label label=" "/>
         <label label=" "/>
         <label label=" "/>
@@ -2420,43 +2477,61 @@
         <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
         <label label=" "/>
       </column>
-    </row>
-    <row>
+      <label label="        "/>
       <column>
-        <display item="CV56.18.0" />
-        <display item="CV56.18.0" format="hslider" label=""/>
-        <display item="CV56.18.2" />
-        <display item="CV56.18.2" format="hslider" label=""/>
-        <label label=" "/>
-        <display item="CV56.19.0" />
-        <display item="CV56.19.0" format="hslider" label=""/>
-        <display item="CV56.19.2" />
-        <display item="CV56.19.2" format="hslider" label=""/>
-        <label label=" "/>
-        <display item="CV56.20.0" />
-        <display item="CV56.20.0" format="hslider" label=""/>
-        <display item="CV56.20.2" />
-        <display item="CV56.20.2" format="hslider" label=""/>
-        <label label=" "/>
-        <display item="CV56.21.0" />
-        <display item="CV56.21.0" format="hslider" label=""/>
-        <display item="CV56.21.2" />
-        <display item="CV56.21.2" format="hslider" label=""/>
-        <label label=" "/>
-        <display item="CV56.5" />
-        <display item="CV56.5" format="hslider" label=""/>
+        <row>
+        	<display item="CV56.5" layout="above" label=""/>
+        	<display item="CV56.5" layout="above" format="hslider" />
+        </row>
+      <label label=" "/>
       </column>
     </row>
     <row>
       <column>
+        <row>
+        	<display item="CV56.18.0" layout="above" label="" />
+        	<display item="CV56.18.0" layout="above" format="hslider" />
+        </row>
         <label label=" "/>
-        <display item="CV56.10" />
+        <row>
+       		<display item="CV56.18.2" layout="above" label="" />
+       		<display item="CV56.18.2" layout="above" format="hslider" />
+        </row>
+        <label label=" "/>
+        <row>
+        	<display item="CV56.19.0" layout="above" label="" />
+        	<display item="CV56.19.0" layout="above" format="hslider" />
+        </row>
+        <label label=" "/>
+        <row>
+        	<display item="CV56.19.2" layout="above" label="" />
+        	<display item="CV56.19.2" layout="above" format="hslider" />
+        </row>
       </column>
+      <label label="        "/>
       <column>
+        <row>
+        	<display item="CV56.20.0" layout="above" label="" />
+        	<display item="CV56.20.0" layout="above" format="hslider" />
+        </row>
         <label label=" "/>
-        <display item="CV56.10" format="hslider" label=""/>
+        <row>
+        	<display item="CV56.20.2" layout="above" label="" />
+        	<display item="CV56.20.2" layout="above" format="hslider" />
+        <label label=" "/>
+        </row>
+        <label label=" "/>
+        <row>
+        	<display item="CV56.21.0" layout="above" label="" />
+        	<display item="CV56.21.0" layout="above" format="hslider" />
+        </row>
+        <label label=" "/>
+        <row>
+        	<display item="CV56.21.2" layout="above" label=""/>
+        	<display item="CV56.21.2" layout="above" format="hslider" />
+        </row>
       </column>
-    </row>
+  	</row>
   </column>
 </pane>
 
