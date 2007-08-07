@@ -2,13 +2,15 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2002, 2005, 2006 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Digitrax_0SFX.xml,v 1.3 2006-10-01 06:16:59 jacobsen Exp $ -->
+<!-- $Id: Digitrax_0SFX.xml,v 1.4 2007-08-07 04:02:27 jacobsen Exp $ -->
 <decoder-config>
+		<version author="Bob Blackwell" version="3" lastUpdated="20070805"/>
 		<version author="Michael Mosher" version="2" lastUpdated="20060918"/>
-        <version author="Bob Jacobsen" version="1" lastUpdated="20060221"/>
+    <version author="Bob Jacobsen" version="1" lastUpdated="20060221"/>
 
 		<!-- Created from version 15 of the Digitrax_01x3 file -->
 		<!-- Ver 2, add CV152,3,5 & AC4400, SD38-2, F40PH decoders  -->
+		<!-- Ver 3, add CV11 for AC4400, SD38-2, F40PH decoders  -->
 	
 <decoder>
 	<family name="SFX Sound Decoders" 
@@ -956,7 +958,7 @@
 		<variable label="Compressor On Time" CV="149" item="Sound Setting 12">
 			<decVal/>
 			</variable>
-        
+    
 		<variable label="Horn Selector" CV="150" item="Sound Option 1">
 			<enumVal>
 				<enumChoice choice="Standard Horn"/>
@@ -987,6 +989,13 @@
 				<enumChoice choice="Manual"/>
 			</enumVal>
 			</variable>
+			
+		<variable label="Sound Time Out" CV="11" tooltip="Sound stays on after loco is de-selected" item="Sound Option 4" default="6">
+			<enumVal>
+				<enumChoice choice="Yes" value="0"/>
+				<enumChoice choice="No" value="6"/>
+			</enumVal>
+			</variable>	
         
 	</variables>
 
