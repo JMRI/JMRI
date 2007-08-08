@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
-<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 <!-- Copyright (C) JMRI 2002, 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Digitrax_01x3.xml,v 1.31 2007-04-06 15:32:11 jacobsen Exp $ -->
+<!-- $Id: Digitrax_01x3.xml,v 1.32 2007-08-08 23:57:24 jacobsen Exp $ -->
 <decoder-config>
 	<version author="Bob Blackwell" version="18" lastUpdated="20070304"/>
 	<version author="Bob Blackwell" version="17" lastUpdated="20070216"/>
