@@ -6,10 +6,17 @@
         
     <!-- display family info -->
     <xsl:for-each select="decoder-config/decoder/family">
-    Family: <xsl:value-of select="@name"/>
+    Family: <xsl:value-of select="@name"/><br/>
     Manufacturer: <xsl:value-of select="@mfg"/>
-    
     </xsl:for-each>
+
+    <!-- display copyright comments -->
+    <p>
+    <xsl:for-each select="comment()">
+        <br/>
+        <xsl:value-of select="."/>
+    </xsl:for-each>
+    </p>
 
     <!-- display author info -->
     <xsl:for-each select="decoder-config/version">
