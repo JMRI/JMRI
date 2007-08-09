@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- Edited with XML Spy v2007 (http://www.altova.com) -->
+<!-- Copyright (C) Bob Jacobsen 2007 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<!-- $Id: decoder.xsl,v 1.3 2007-08-09 00:18:08 jacobsen Exp $ -->
+
+<!-- This XSLT transform is used when a JMRI decoder definition -->
+<!-- file is displayed by a web browser -->
+
 <html xsl:version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml">
   <body style="font-family:Arial,helvetica,sans-serif;font-size:12pt;
         background-color:#EEEEEE">
