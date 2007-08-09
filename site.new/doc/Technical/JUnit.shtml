@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: JUnit.shtml,v 1.5 2007-07-13 04:55:23 jacobsen Exp $ -->
+<!-- $Id: JUnit.shtml,v 1.6 2007-08-09 15:30:27 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -161,7 +161,7 @@ then goes on to trigger a JUnit assertion or exception, because the fact that
 an error is being logged does not show up directly in the JUnit summary of results.
 </OL>
 <p>
-On the other hand, you might want o deliberately provoke errors in the
+On the other hand, you might want to deliberately provoke errors in the
 code being tested to make sure that the conditions are being handled properly.
 This will often produce log.error(...) or log.warn(...) messages, which must 
 be intercepted and checked.
@@ -173,6 +173,11 @@ to the log.  There are two aspects to making this work:
 <LI>All the test classes should include common code in their setup()
 and teardown() code to ensure that log4j is properly initiated, and that
 the custom appender is told when a test is beginning and ending.
+<CODE><PRE>
+    // The minimal setup for log4J
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+</PRE></code>
 <LI>When a test is deliberately invoking a message, it should then
 use the check to see that the message was created.  
 For example, if the class under test is expected to do
