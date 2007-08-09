@@ -1,0 +1,38 @@
+ <div id="side">
+
+    <h2><A HREF="../index.html">Introduction</a></h2>
+    <UL>
+    <LI><A HREF="../index.html">Quick Overview</a>
+    <LI><A HREF="../news.html">Articles By Others</a>
+    </UL>
+
+    <h2>Support JMRI</h2>
+    <UL>
+    <LI><A HREF="../donations.html">Donations</a>
+    <LI><A HREF="../priorart.html">Helping</a>
+    </UL>
+    
+    <h2>Documents</h2>
+	<ul>
+	<li><A href="../correspondence/index.html">Correspondence with Katzer and His Lawyers</a>
+	<li><A href="../docket/index.html">Court Papers (Docket)</a>
+    </UL>
+    
+    <H2><a href="../updates.html#last">Recent Updates</a></H2>
+	<ul>
+	<li><A href="../updates.html#2006-12-04">December 4, 2006</a><BR>Activity on motions and copyright
+	<li><A href="../updates.html#2007-01-19">January 19, 2007</a><BR>January 2007 Hearing
+	<li><A href="../updates.html#2007-04-14">April 14, 2007</a><BR>Patent Update
+	<li><A href="../updates.html#2007-08-06">August 6, 2007</a><BR>DecoderPro.com decision
+	    
+	<LI><a href="../updates.html">All updates</a>
+<!-- 	<LI><a href="updates.html#next">Next Hearing Dates</a> -->
+	</ul>
+
+    <H2>Background</H2>
+    <ul>
+    <LI><A HREF="../copycomparison.html">Evidence of Copyright Violations</a>
+    <LI><A HREF="../UDRP/index.shtml">Recovering DecoderPro.com via UDRP</a>
+    </UL>
+
+ </div> <!-- closes #side --> 
