@@ -9,7 +9,7 @@ import jmri.jmrix.loconet.LnConstants;
 /**
  * Tests for the LocoBufferStatsFrame class
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class LocoBufferStatsFrameTest extends TestCase {
 
@@ -22,7 +22,7 @@ public class LocoBufferStatsFrameTest extends TestCase {
             void report(String m) {}  // suppress messages
         };
         f.setTitle("Default LocoBuffer Stats Window");
-        f.show();
+        f.setVisible(true);
     }
     
     public void testLocoBufferFormat() {
@@ -33,7 +33,7 @@ public class LocoBufferStatsFrameTest extends TestCase {
             void report(String m) {}  // suppress messages
         };
         f.setTitle("LocoBuffer Stats Window");
-        f.show();
+        f.setVisible(true);
         f.requestUpdate();
         f.message(new LocoNetMessage(
             new int[]{LnConstants.OPC_PEER_XFER, 0x10, 0x50, 0x50, 0x01, 0x0,
@@ -49,7 +49,7 @@ public class LocoBufferStatsFrameTest extends TestCase {
             void report(String m) {}  // suppress messages
         };
         f.setTitle("PR2 Stats Window");
-        f.show();
+        f.setVisible(true);
         f.requestUpdate();
         f.message(new LocoNetMessage(
             new int[]{LnConstants.OPC_PEER_XFER, 0x10, 0x22, 0x22, 0x01, 0x0,

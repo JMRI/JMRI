@@ -13,12 +13,12 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * Tests for the jmri.jmrix.loconet.soundloader.EditorPane class.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2006
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class EditorPaneTest extends TestCase {
 
     public void testShowPane() {
-        new EditorFrame().show();
+        new EditorFrame().setVisible(true);
     }
 
     // from here down is testing infrastructure
