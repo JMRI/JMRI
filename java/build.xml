@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.6 $ -->
+<!-- Revision $Revision: 1.7 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -15,7 +15,7 @@
   <!-- but please change them back before commiting this file -->
   
     <!-- should compiler warn of use of deprecated APIs? (yes/no) -->
-    <property name="deprecation" value="yes" />
+    <property name="deprecation" value="no" />
   
     <!-- SDK version (currently 1.4) -->
     <property name="sdk_version" value="1.4" />
