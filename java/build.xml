@@ -1,24 +1,37 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.5 $ -->
+<!-- Revision $Revision: 1.6 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
 <!-- in the project.  We expect that lib et al will be present in -->
 <!-- .. from there -->
 
-<!-- Note that this file controls builds for JVM 1.3 and later. -->
-<!-- All of the builds for JVM 1.1.8 are done via the check.xml file -->
-
   <description>
   Provides build services for JMRI libraries and applications
   </description>
 
+  <!-- options you might want to change during development,   -->
+  <!-- but please change them back before commiting this file -->
+  
+    <!-- should compiler warn of use of deprecated APIs? (yes/no) -->
+    <property name="deprecation" value="yes" />
+  
+    <!-- SDK version (currently 1.4) -->
+    <property name="sdk_version" value="1.4" />
+  
+    <!-- source code version (currently 1.3) -->
+    <property name="source_version" value="1.3" />
+  
+    <!-- JRE version (currently 1.3) -->
+    <property name="jre_version" value="1.3" />
+    
   <!-- set global properties for this build -->
   <property name="source" value="src"/>
   <property name="test" value="test"/>
   <property name="target" value="classes"/>
   <property name="jartarget" value=".."/>
+  <property name="doctarget" value=".."/>
   
   <path id="project.class.path">
     <pathelement location="../lib/crimson.jar" />
@@ -32,7 +45,7 @@
     <pathelement location="../lib/javacsv.jar" />
     <pathelement location="../lib/MRJAdapter.jar" />
     <pathelement location="../lib/vecmath.jar" />
-    <pathelement location="classes/" />
+    <pathelement location="${target}/" />  <!-- last to check for name collisions -->
   </path>
 
   <target name="init" description="create needed directories">
@@ -44,8 +57,9 @@
   </target>
 
   <target name="clean" description="remove compilation results to force rebuild">
+    <mkdir dir="${target}"/>
     <delete includeEmptyDirs="true">
-      <fileset dir="classes"/>
+      <fileset dir="${target}"/>
     </delete>
   </target>
 
@@ -66,8 +80,9 @@
     <!-- Compile the java code from ${source} into ${target} -->
     <javac srcdir="${source}" 
            destdir="${target}"
-           source="1.3" 
-           target="1.3" 
+           source="${source_version}" 
+           target="${jre_version}" 
+           deprecation="${deprecation}"
            debug="no" >
        <classpath refid="project.class.path"    />
     </javac>
@@ -77,8 +92,9 @@
     <!-- Compile the java code from ${source} into ${target} -->
     <javac srcdir="${source}" 
            destdir="${target}" 
-           source="1.3"
-           target="1.3" 
+           source="${source_version}" 
+           target="${jre_version}" 
+           deprecation="${deprecation}"
            debug="yes" >
        <classpath refid="project.class.path"    />
     </javac>
@@ -87,7 +103,8 @@
   <target name="rmic" depends="compile" description="build RMI stubs and compile">
     <!-- Run rmic on specified classes -->
     <rmic includes="**/LnMessageBuffer.class, **/LnMessageServer.class"
-           base="${target}" stubversion="1.1">
+           base="${target}" 
+           stubversion="compat">
        <classpath refid="project.class.path"    />
     </rmic>
   </target>
@@ -96,8 +113,9 @@
     <!-- Compile the test java code from ${source} into ${target} -->
     <javac srcdir="${test}" 
            destdir="${target}"
-           source="1.3"
-           target="1.3" 
+           source="${source_version}" 
+           target="${jre_version}" 
+           deprecation="${deprecation}"
            debug="yes" >
        <classpath refid="project.class.path"    />
     </javac>
@@ -265,10 +283,10 @@
 
   <target name="javadoc" depends="init" description="create JavaDocs">
     <javadoc packagenames="jmri.*, apps.*"
-           sourcepath="src"
+           sourcepath="${source}"
            overview="src/jmri/overview.html"
            defaultexcludes="yes"
-           destdir="doc"
+           destdir="${doctarget}"
            additionalparam="-breakiterator"
            author="false"
            version="false"
@@ -297,7 +315,7 @@
   <target name="uploadjavadoc" depends="javadoc" description="create and upload JavaDocs">
     <exec executable="scp">
       <arg value="-r"/>
-      <arg value="doc"/>
+      <arg value="${doctarget}"/>
       <arg value="jacobsen@jmri.sf.net:htdocs/JavaDoc/"/>
     </exec>
   </target>
