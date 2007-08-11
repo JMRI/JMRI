@@ -1,5 +1,9 @@
 /* ================================================================
 
+Note: JMRI no longer supports the Java 1.1 that's assumed in this
+script.  Also, some of the library names have been changed, 
+and vecmath.jar is required for running in some cases.
+
    Start Java application after optionally extending CLASSPATH.
 
    Author: Rob Hamerling (email r.hamerling@planet.nl)
