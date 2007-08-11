@@ -21,7 +21,7 @@ import java.io.DataInputStream;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class DataSource extends jmri.util.JmriJFrame {
 
@@ -51,16 +51,6 @@ public class DataSource extends jmri.util.JmriJFrame {
             = java.util.ResourceBundle.getBundle("jmri.jmrix.pricom.pockettester.TesterBundle");
 
     JLabel version = new JLabel("");  // hold version label when returned
-    
-    /**
-     * Old form of populating the GUI.
-     * <P>
-     * Use {@link #initComponents()} now.
-     * @deprecated
-     */
-    protected void init() {
-        initComponents();
-    }
     
     /**
      * Populate the GUI.
