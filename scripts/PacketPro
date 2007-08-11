@@ -6,9 +6,9 @@
 #
 # There must be a local jython interpreter and JMRI libraries available
 #
-# $Revision: 1.1 $ (CVS maintains this line, do not edit please)
+# $Revision: 1.2 $ (CVS maintains this line, do not edit please)
 #
-setenv CLASSPATH .:classes:jmriplugins.jar:lib/jmriplugins.jar:jmri.jar:lib/log4j.jar:lib/collections.jar:lib/jh.jar:lib/crimson.jar:lib/jdom-jdk11.jar:lib/MRJAdapter.jar
+setenv CLASSPATH .:java/classes:jmriplugins.jar:lib/jmriplugins.jar:jmri.jar:lib/log4j.jar:lib/jhall.jar:lib/crimson.jar:lib/jdom.jar:lib/jython.jar:lib/javacsv.jar:lib/MRJAdapter.jar:lib/vecmath.jar
      
 /usr/bin/env jython -i $argv jython/PacketPro.py
 
