@@ -1,8 +1,8 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.50 $)
+distribution.  ($Revision: 1.51 $)
 
 Start with a directory, typically called "Distributions", that
-contains:
+contains "scripts" and "java" (from CVS) as subdirectories, and:
 
   scripts
   ln -s scripts/build.xml build.xml
@@ -10,11 +10,7 @@ contains:
 
   Linux
   	JMRI (the most recent distribution)
-  MacClassic
-  	JMRI (the most recent distribution)
   MacOSX
-  	JMRI (the most recent distribution)
-  OS2
   	JMRI (the most recent distribution)
 
   (Windows is separate, and involves a shared disk with VPC, but
@@ -37,17 +33,24 @@ Make sure everything is up-to-date:
     cd JMRI/jhelp/help/en
     (launch JHelpDev, e.g. "open jhelpdev.jar")
     (navigate to JHelpDev.xml & open it)
+    (click "generate all")
     
 ( ) Check that the Version.java file has been updated and committed
 
+( ) Edit the "manifest" file in this directory, and make sure that the
+    version number is correct in four places
+    
 ( ) To ensure that you've got the HEAD of CVS, in your test area do:
 
-    cvs -q update -dA help jython lib lib118 resources xml
+    cvs -q update -dA help jython lib resources xml
     cd java
-    cvs -q update -dA build.xml check.xml jmri.jpx JMRILibraries.library lib manifest src test
+    cvs -q update -dA build.xml check.xml manifest src test
 
     
     cd Distributions/scripts
+    cvs -q update -dA
+    
+    cd Distributions/java
     cvs -q update -dA
     
 To actually create the distribution:
