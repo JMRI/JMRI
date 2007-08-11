@@ -37,7 +37,7 @@ import jmri.AbstractTurnout;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */public class LnTurnout extends AbstractTurnout implements LocoNetListener {
 
     public LnTurnout(int number) {  // a human-readable turnout number must be specified!
@@ -102,10 +102,18 @@ import jmri.AbstractTurnout;
          // load On/Off with on
          hiadr |= 0x10;
 
+
          // store and send
          l.setElement(1,loadr);
          l.setElement(2,hiadr);
          LnTrafficController.instance().sendLocoNetMessage(l);
+         
+         // now send same as off message,
+         // required in practice by some hardware
+         l = new LocoNetMessage(l);
+         l.setElement(2,hiadr&0xEF);
+         LnTrafficController.instance().sendLocoNetMessage(l);
+         
      }
 
      // implementing classes will typically have a function/listener to get
