@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.4 $ -->
+<!-- Revision $Revision: 1.5 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -31,6 +31,7 @@
     <pathelement location="../lib/jython.jar" />
     <pathelement location="../lib/javacsv.jar" />
     <pathelement location="../lib/MRJAdapter.jar" />
+    <pathelement location="../lib/vecmath.jar" />
     <pathelement location="classes/" />
   </path>
 
@@ -254,10 +255,12 @@
          basedir="${target}"
          manifest="manifest" 
          compress="true" />   <!-- compress="true" is default -->
-    <!-- create the index, using the information in the manifest -->
-    <exec executable="jar" dir="${jartarget}">
-    	<arg line="i jmri.jar"/>
-    </exec>
+    <!-- Starting with JMRI 1.9, building the JAR index crashes.  -->
+    <!-- This appears to be due to a problem with compression in  -->
+    <!-- one of the referenced jar files, but we don't know which -->
+    <!-- <exec executable="jar" dir="${jartarget}"> -->
+    <!--	<arg line="i jmri.jar"/>                -->
+    <!-- </exec>                                    -->
   </target>
 
   <target name="javadoc" depends="init" description="create JavaDocs">
