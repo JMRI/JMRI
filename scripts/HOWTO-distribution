@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.49 $)
+distribution.  ($Revision: 1.50 $)
 
 Start with a directory, typically called "Distributions", that
 contains:
@@ -76,7 +76,7 @@ To actually create the distribution:
 	Ant will launch a StuffIt (DropTar) process for Linux; click
 	to proceed, and wait for it to be running.
 	
-( ) Once they launch, you can start building the Windows installer
+( ) Once the StuffIt processes launches, you can start building the Windows installer
 	in parallel.
 	
 	Using VPC, make sure you have the Z disk available and that it
