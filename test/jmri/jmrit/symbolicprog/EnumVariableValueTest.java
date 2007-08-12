@@ -15,7 +15,7 @@ import java.util.Vector;
  * Test EnumVariableValue
  *
  * @author		Bob Jacobsen  Copyright 2003
- * @version             $Revision: 1.8 $
+ * @version             $Revision: 1.9 $
  */
 
 public class EnumVariableValueTest extends VariableValueTest {
@@ -167,8 +167,7 @@ public class EnumVariableValueTest extends VariableValueTest {
 
     // Main entry point
     static public void main(String[] args) {
-        apps.tests.AllTest.initLogging();
-        String[] testCaseName = { EnumVariableValueTest.class.getName()};
+        String[] testCaseName = { "-noloading", EnumVariableValueTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 

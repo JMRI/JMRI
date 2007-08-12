@@ -16,7 +16,7 @@ import javax.swing.*;
  * Test simple functioning of DccLocoAddressSelector
  *
  * @author			Bob Jacobsen Copyright (C) 2005
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 public class DccLocoAddressSelectorTest extends TestCase {
@@ -141,13 +141,12 @@ public class DccLocoAddressSelectorTest extends TestCase {
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {DccLocoAddressSelectorTest.class.getName()};
+		String[] testCaseName = {"-noloading", DccLocoAddressSelectorTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 
 	// test suite from all defined tests
 	public static Test suite() {
-		apps.tests.AllTest.initLogging();
 		TestSuite suite = new TestSuite(DccLocoAddressSelectorTest.class);
 		return suite;
 	}

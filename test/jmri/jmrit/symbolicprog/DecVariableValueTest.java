@@ -53,8 +53,7 @@ public class DecVariableValueTest extends VariableValueTest {
 
     // Main entry point
     static public void main(String[] args) {
-        apps.tests.AllTest.initLogging();
-        String[] testCaseName = { DecVariableValueTest.class.getName()};
+        String[] testCaseName = { "-noloading", DecVariableValueTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
