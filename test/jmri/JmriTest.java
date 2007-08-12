@@ -8,8 +8,8 @@ import junit.framework.TestSuite;
 
 /**
  * Invoke complete set of tests for the Jmri package
- * @author	Bob Jacobsen, Copyright (C) 2001, 2002
- * @version         $Revision: 1.12 $
+ * @author	Bob Jacobsen, Copyright (C) 2001, 2002, 2007
+ * @version         $Revision: 1.13 $
  */
 public class JmriTest extends TestCase {
 
