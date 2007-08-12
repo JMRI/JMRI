@@ -8,8 +8,8 @@ import junit.framework.TestSuite;
 
 /**
  * Set of tests for the jmri.jmrix package
- * @author	Bob Jacobsen  Copyright 2003
- * @version         $Revision: 1.13 $
+ * @author	Bob Jacobsen  Copyright 2003, 2007
+ * @version         $Revision: 1.14 $
  */
 public class JmrixTest extends TestCase {
 
@@ -27,7 +27,6 @@ public class JmrixTest extends TestCase {
 
 	// test suite from all defined tests
 	public static Test suite() {
-		apps.tests.AllTest.initLogging();
 		TestSuite suite = new TestSuite("jmri.jmrix.JmrixTest");
 
 		suite.addTest(jmri.jmrix.AbstractProgrammerTest.suite());
