@@ -26,7 +26,7 @@ import java.util.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.36 $
+ * @version			$Revision: 1.37 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -431,7 +431,7 @@ abstract public class AbstractMRTrafficController {
     }
 
     protected void connectionWarn() {
-        log.warn("sendMessage: no connection established");
+        log.warn("sendMessage: no connection established for "+this.getClass().getName());
         new Exception().printStackTrace();
     }
 
@@ -671,6 +671,7 @@ abstract public class AbstractMRTrafficController {
     // Override the finalize method for this class
     protected void finalize() {
             if(log.isDebugEnabled()) log.debug("Cleanup Starts");
+            if (ostream == null) return;    // no connection established
             AbstractMRMessage modeMsg=enterNormalMode();
 	    if(modeMsg!=null) {
 	       modeMsg.setRetries(100); // set the number of retries  
