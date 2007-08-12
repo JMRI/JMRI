@@ -8,7 +8,7 @@ import junit.framework.*;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 2.4 $
+ * @version $Revision: 2.5 $
  */
 public class XNetTrafficRouterTest extends TestCase {
 
@@ -21,7 +21,10 @@ public class XNetTrafficRouterTest extends TestCase {
         XNetInterfaceScaffold upstream = new XNetInterfaceScaffold(new LenzCommandStation());
 
         // create object
-        XNetTrafficRouter router = new XNetTrafficRouter(new LenzCommandStation());
+        XNetTrafficRouter router = new XNetTrafficRouter(new LenzCommandStation())
+        {
+            protected void connectionWarn() {}
+        };
         Assert.assertEquals("router is instance", XNetTrafficController.instance(), router);
 
         // connect
@@ -44,7 +47,10 @@ public class XNetTrafficRouterTest extends TestCase {
 
     public void testReceiveAndForward() {
         // create object
-        XNetTrafficRouter router = new XNetTrafficRouter(new LenzCommandStation());
+        XNetTrafficRouter router = new XNetTrafficRouter(new LenzCommandStation())
+        {
+            protected void connectionWarn() {}
+        };
         Assert.assertEquals("router is instance", XNetTrafficController.instance(), router);
 
         count = 0;
@@ -70,7 +76,10 @@ public class XNetTrafficRouterTest extends TestCase {
 
     public void testConnectAndDisconnect() {
         // scaffold for upstream
-        XNetInterfaceScaffold upstream = new XNetInterfaceScaffold(new LenzCommandStation());
+        XNetInterfaceScaffold upstream = new XNetInterfaceScaffold(new LenzCommandStation())
+        {
+            protected void connectionWarn() {}
+        };
 
         // create object
         XNetTrafficRouter router = new XNetTrafficRouter(new LenzCommandStation());
