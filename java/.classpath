@@ -3,16 +3,17 @@
 	<classpathentry excluding="**/.cvsignore|**/COPYING" kind="src" output="classes" path="src"/>
 	<classpathentry excluding="**/.cvsignore|**/COPYING" kind="src" path="test"/>
 	<classpathentry kind="var" path="JRE_LIB" sourcepath="JRE_SRC"/>
-	<classpathentry kind="lib" path="lib/collections.jar"/>
+	<classpathentry kind="lib" path="lib/javacsv.jar"/>
 	<classpathentry kind="lib" path="lib/crimson.jar"/>
 	<classpathentry kind="lib" path="lib/comm.jar"/>
-	<classpathentry kind="lib" path="lib/jdom-jdk11.jar"/>
+	<classpathentry kind="lib" path="lib/jdom.jar"/>
 	<classpathentry kind="lib" path="lib/log4j.jar"/>
-	<classpathentry kind="lib" path="lib/jh.jar"/>
+	<classpathentry kind="lib" path="lib/jhall.jar"/>
 	<classpathentry kind="lib" path="lib/junit.jar"/>
 	<classpathentry kind="lib" path="lib/jython.jar"/>
 	<classpathentry kind="lib" path="lib/MRJAdapter.jar"/>
-    <classpathentry kind="lib" path="lib/Serialio.jar"/>
+ 	<classpathentry kind="lib" path="lib/Serialio.jar"/>
+	<classpathentry kind="lib" path="lib/vecmath.jar"/>
 	<classpathentry kind="con" path="java/classes"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
