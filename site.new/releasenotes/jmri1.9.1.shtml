@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.9.1.shtml,v 1.1 2007-07-29 03:34:23 jacobsen Exp $ -->
+<!-- $Id: jmri1.9.1.shtml,v 1.2 2007-08-13 03:56:40 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -127,7 +127,26 @@ To install it, double click on the file to mount it, and then drag the resulting
 <P>Dan Boudreau updated the NCE macro editor so that it could
 handle macro 0, and made other improvements.
 
+<P>
+Bob Jacobsen added tooltips to the Panel Editor to explain that the "Add" buttons are disabled until information is entered in the text boxes
 
+<P>
+Micheal Mosher added a definition for the TCS "BEMF" decoders, and updated the definition for the TCS X decoders to contain CV23, 24 and auto mars light
+
+<P>
+Dan Boudreau added tools to backup, restore and edit NCE macros.
+
+<P>
+Michael Mosher updated the QSI decoder definitions, adding many new models and features to the "Version 7" definitions.
+
+<P>
+Bob Blackwell updated the Digitrax SFX decoder definition to include a selection for CV11 on the Sound Pane. The added value is name "Sound Time Out". 
+
+<P>
+Solve a long-standing problem with SwitchIt accessory decoders on LocoNet systems by sending a "turnout off" command after each "turnout on" command. Real LocoNet throttles send "on" when you push the button and "off" when you release it.  Before this change, JMRI sent only the "message", which seemed to work fine.  However, when configured in certain ways, SwitchIt accessory decoders needed to see the "off" message to trigger.  With this change, the "off" message is sent whenever turnout is directly triggered (note "on" and "off" are complete separate from the "closed" and "thrown" directions).
+
+<P>
+Dennis Miller fixed a long-standing problem with the appearance of the startup image.
 
 <hr class="hide">
 
