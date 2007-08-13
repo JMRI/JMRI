@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TechRoadMap.shtml,v 1.6 2007-07-29 01:49:01 jacobsen Exp $ -->
+<!-- $Id: TechRoadMap.shtml,v 1.7 2007-08-13 04:16:34 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -91,6 +91,7 @@ The JMRI 2.1 development series moves forward to JRE 1.4, JDK 1.5.  This permits
 <LI>Drag and Drop
 <LI>Annotations (we'll have to develop conventions for these)
 <LI>JavaMail
+<LI>Java regular expressions (java.util.regexp)
 </UL>
 
 <P>
