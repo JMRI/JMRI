@@ -2,8 +2,9 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: NCE_D13SR_TC.xml,v 1.8 2006-10-01 06:28:26 jacobsen Exp $ -->
+<!-- $Id: NCE_D13SR_TC.xml,v 1.9 2007-08-14 14:56:29 jacobsen Exp $ -->
 <decoder-config>
+      <version author="Michael Mosher" version="7" lastUpdated="20070813"/>
       <version author="Michael Mosher" version="6" lastUpdated="20060918"/>
       <version author="Michael Mosher" version="5" lastUpdated="20060912"/>
       <!-- version 1 created by modifing NCE_SR.xml ver 7 removed CV9, 23, 24, 65, 119 
@@ -16,11 +17,12 @@
       <!-- Version 5 - added ATL-O, BachDsl, N12A2, NAVO, NMP 
       			plus D13SR & D13SRP now have 4 functions (Michael Mosher) -->
 	  <!-- Version 6 - use factory reset feature -->
+	  <!-- Version 7 - high Ver ID 36 -->
       
 <decoder>
   <family name="Silent Running w/ Torque Compensation" mfg="North Coast Engineering" 
-  			lowVersionID="35" highVersionID="35"
-			comment="These are the version 3.5 decoders released after September 2003">
+  			lowVersionID="35" highVersionID="36"
+			comment="These are the version 3.5 decoders released after September 2003, 3.6 released July 2007">
     <model model="D12IP"  numOuts="2" numFns="5" connector="NMRAmedium"
     		maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
 			<output name="1" label="White" connection="plug" maxcurrent="40 mA" /> 
