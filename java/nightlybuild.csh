@@ -23,7 +23,7 @@ rm -f nightlybuildlog.txt
 date > nightlybuildlog.txt
 
 setenv CVS_RSH ssh
-if ( { (cd ..; cvs -q update -d >>& nightlybuildlog.txt) } ) then
+if ( { (cd ..; cvs -q update -d >>& java/nightlybuildlog.txt) } ) then
 # probably OK
 
 else
