@@ -1,13 +1,16 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- Copyright (C) JMRI 2007 All rights reserved -->
+<!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
 <decoder-config>
-        <version author="Michael Mosher" version="1" lastUpdated="20070511"/>
+        <version author="Michael Mosher" version="3" lastUpdated="20070805"/>
         <version author="Michael Mosher" version="2" lastUpdated="20070716"/>
+        <version author="Michael Mosher" version="1" lastUpdated="20070511"/>
         
         <!-- Version 1 New file -->
         <!-- Version 2 Added factory reset & Bug Fix -->
+        <!-- Version 3 Removed paged mode programming -->
+        
         
 <decoder>
     <family name="Blueline" mfg="Broadway Limited Imports, LLC">
@@ -31,7 +34,7 @@
             </model>                                           
     </family>                                                   
                                                                
-    <programming direct="yes" paged="yes" 
+    <programming direct="yes" paged="no" 
                          register="yes" ops="yes"></programming>
 
     <variables>
