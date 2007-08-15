@@ -47,7 +47,7 @@ import java.util.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.66 $
+ * @version $Revision: 1.67 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -254,6 +254,7 @@ public class PanelEditor extends JmriJFrame {
                     }
                 }
             );
+            nextTurnoutR.setToolTipText(rb.getString("ToolTipTurnout"));
             nextTurnoutR.addKeyListener(new KeyAdapter() {
                     public void keyReleased(KeyEvent a){
                         if (nextTurnoutR.getText().equals("")) {
@@ -306,6 +307,7 @@ public class PanelEditor extends JmriJFrame {
                     }
                 }
             );
+            nextTurnoutL.setToolTipText(rb.getString("ToolTipTurnout"));
             nextTurnoutL.addKeyListener(new KeyAdapter() {
                     public void keyReleased(KeyEvent a){
                          if (nextTurnoutL.getText().equals("")) {
@@ -410,6 +412,7 @@ public class PanelEditor extends JmriJFrame {
                 }
             );
 
+            nextSignalHead.setToolTipText(rb.getString("ToolTipSignalHead"));
             nextSignalHead.addKeyListener(new KeyAdapter() {
                 public void keyReleased(KeyEvent a){
                     if (nextSignalHead.getText().equals("")) {
