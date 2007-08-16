@@ -31,7 +31,7 @@ import java.util.List;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.26 $
+ * @version			$Revision: 1.27 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -443,8 +443,7 @@ public class DecoderIndexFile extends XmlFile {
             DecoderFile d = new DecoderFile();
             try {
                 Element droot = d.rootFromName(DecoderFile.fileLocation+files[i]);
-                // following line ended in getCopy("family")
-                Element family = droot.getChild("decoder").getChild("family").getChild("family");
+                Element family = (Element)droot.getChild("decoder").getChild("family").clone();
                 family.setAttribute("file",files[i]);
                 familyList.addContent(family);
             }
