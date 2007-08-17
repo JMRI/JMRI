@@ -27,13 +27,51 @@ package jmri.jmrix.nce;
  *	Returns: ! = success
  *	1 = bad accy/signal address
  *
+ * 0xA2 sends speed or function packets to a locomotive.
+ *
+ * Command Format: 0xA2 <addr_h> <addr_l> <op_1> <data_1>
+ * Addr_h and Addr_l are the loco address in DCC format.
+ * If a long address is in use, bits 6 and 7 of the high byte are set.
+ * Example: Long address 3 = 0xc0 0x03
+ * Short address 3 = 0x00 0x03
+ * 
+ * op_1 data_1 		Operation description
+ *  01  0-7f 		Reverse 28 speed command
+ *  02  0-7f 		Forward 28 speed command
+ *  03  0-7f 		Reverse 128 speed command
+ *  04  0-7f 		Forward 128 speed command
+ *  05  0 			Estop reverse command
+ *  06  0 			Estop forward command
+ *  07  0-1f 		Function group 1 (same format as DCC packet for FG1
+ *  08  0-0f 		Function group 2 (same format as DCC packet for FG2
+ *  09  0-0f 		Function group 3 (same format as DCC packet for FG3
+ *  0a  0-7f 		Set reverse consist address for lead loco
+ *  0b  0-7f 		Set forward consist address for lead loco
+ *  0c  0-7f 		Set reverse consist address for rear loco
+ *  0d  0-7f 		Set forward consist address for rear loco
+ *  0e  0-7f 		Set reverse consist address for additional loco
+ *  0f  0-7f 		Set forward consist address for additional loco
+ *  10  0 			Del loco from consist
+ *  11  0 			Kill consist
+ *  12  0-9 		Set momentum
+ *  13  0-7f 		No action, always returns success
+ *  14  0-7f 		No action, always returns success
+ *  15  0-ff 		Functions 13-20 control (bit 0=F13, bit 7=F20)
+ *  16  0-ff 		Functions 21-28 control (bit 0=F21, bit 7=F28)
+ *  17  0-3f 		Assign this loco to cab number in data_1
+ *  18-7f 			reserved reserved
+ * 
+ *  Returns: ! = success
+ *  1 = bad loco address
+ *
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 
 public class NceBinaryCommand {
     
     public static final int ACC_CMD = 0xAD;		//NCE accessory command
+    public static final int LOC_CMD = 0xA2;		//NCE Loco control command 
     public static final int READ_CMD = 0x8F;	//NCE read 16 bytes of memory command
     public static final int WRITEn_CMD = 0x8E;	//NCE write up to 16 bytes of memory command
     public static final int WRITE8_CMD = 0x9A;	//NCE write 8 bytes of memory command
@@ -46,7 +84,7 @@ public class NceBinaryCommand {
     
     public static byte[] accDecoder(int number, boolean closed) {
         
-        if (number < 1 || number>2044) {
+        if (number < 1 || number > 2044) {
             log.error("invalid NCE accessory address "+number);
             return null;
         }
@@ -170,6 +208,37 @@ public class NceBinaryCommand {
 		retVal[0] = (byte) (CLOCK_RATIO_CMD);// set clock command
 		retVal[1] = (byte) (ratio); 	// fast clock ratio
 
+		return retVal;
+	}
+	
+	// NCE Command 0xA2 sends speed or function packets to a locomotive
+	// 0xA2 sub commands
+	public static final int LOC_CMD_REV_CONSIST_LEAD = 0x0A;		//reverse consist address for lead loco
+	public static final int LOC_CMD_FWD_CONSIST_LEAD = 0x0B;		//forward consist address for lead loco 
+	public static final int LOC_CMD_REV_CONSIST_REAR = 0x0C;		//reverse consist address for rear loco 
+	public static final int LOC_CMD_FWD_CONSIST_REAR = 0x0D;		//forward consist address for rear loco
+	public static final int LOC_CMD_REV_CONSIST_MID = 0x0E;			//reverse consist address for additional loco 
+	public static final int LOC_CMD_FWD_CONSIST_MID = 0x0F;			//forward consist address for additional loco 
+	public static final int LOC_CMD_DELETE_LOC_CONSIST = 0x10;		//Delete loco from consist
+	public static final int LOC_CMD_KILL_CONSIST = 0x10;			//Kill consist
+	
+	public static byte[] nceLocoCmd (int locoAddr, byte locoCmd, byte locoData){
+		
+        if (locoCmd < 1 || locoCmd > 0x17) {
+            log.error("invalid NCE loco command "+locoCmd);
+            return null;
+        }
+		
+		int locoAddr_h = locoAddr/256;
+        int locoAddr_l = locoAddr & 0xFF;
+		
+		byte[] retVal = new byte[5];
+        retVal[0] = (byte) (LOC_CMD); 		//NCE Loco command
+        retVal[1] = (byte) (locoAddr_h);	//loco high address
+        retVal[2] = (byte) (locoAddr_l);	//loco low address
+        retVal[3] = (byte) (locoCmd);		//sub command
+        retVal[4] = (byte) (locoData); 		//sub data
+		
 		return retVal;
 	}
     
