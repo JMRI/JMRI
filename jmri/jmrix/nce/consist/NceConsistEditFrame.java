@@ -19,7 +19,9 @@ import java.io.*;
  * xF500 and ending xFAFF.  NCE supports up to 128 consists, numbered 0 to 127.
  * They track the lead engine, rear engine, and four mid engines in the consist file.
  * NCE cabs start at consist 127 when building and reviewing consists, so we also
- * start with 127.
+ * start with 127.  Consist lead engines are stored in memory locations xF500 through 
+ * xF5FF.  Consist rear engines are stored in memory locations xF600 through xF6FF.
+ * Mid consist engines (four max) are stored in memory locations xF700 through xFAFF.
  * 
  *   NCE file format:
  * 
@@ -28,10 +30,12 @@ import java.io.*;
  *   .
  *   .
  * :F5F0 (con 120 lead engine) ..... (con 127 lead engine)
+ * 
  * :F600 (con 0 rear engine) (con 1 rear engine) ....... (con 7 rear engine)
  *   .
  *   .
  * :F6F0 (con 120 rear engine) ..... (con 127 rear engine)
+ * 
  * :F700 (con 0 mid eng1) (con 0 mid eng2) (con 0 mid eng3) (con 0 mid eng4)     
  *   .
  *   .
@@ -39,7 +43,7 @@ import java.io.*;
  * :0000
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -515,7 +519,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 				engTextField5.setText(recChar);
 				recChar = getChar(r, 6);
 				engTextField6.setText(recChar);
-				consistReply.setText("okay");
+				
 			}
 
 			// read the next consist engine number
@@ -528,9 +532,10 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 			// done reading current consist
 			}else {
 
-				if (!consistSearchInc && !consistSearchDec)
+				if (!consistSearchInc && !consistSearchDec){
+					consistReply.setText("okay");
 					return;
-			
+				}
 				
 				if (consistSearchInc) {
 					consistNum--;
