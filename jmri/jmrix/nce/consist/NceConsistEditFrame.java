@@ -43,7 +43,7 @@ import java.io.*;
  * :0000
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -560,8 +560,10 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 	private String getChar(NceReply r, int i){
 		
 		int rC = r.getElement(i++);
-		rC = rC << 8;
-		rC = rC + r.getElement(i);
+		rC = (rC << 8)&0x3F00;
+		int rC_l = r.getElement(i);
+		rC_l = rC_l&0xFF;
+		rC = rC + rC_l;
 		String recChar = "Empty";
 		if (rC != 0){
 			recChar = Integer.toString (rC);
