@@ -2,7 +2,7 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2006 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Lenz_Silver.xml,v 1.4 2007-04-15 06:16:19 jacobsen Exp $ -->
+<!-- $Id: Lenz_Silver.xml,v 1.5 2007-08-19 20:33:11 pbender Exp $ -->
 <decoder-config>
 	<version author="Bob Jacobsen rgj1927@pacbell.net"
 				version="4" lastUpdated="20070411" />
@@ -12,15 +12,28 @@
 				<!-- Version 2 - removed SUSI & motor timeout CV's as they are not supported "20060114"-->
                 <!-- Version 3 - added factory reset menu items (Paul Bender) -->
                 <!-- Version 4 - high version now 75, as reported in DCC_UK group by Ken Weiss -->
+                <!-- Version 5 - Add Silver Direct to decoder family.  
+                     Change high version for family to 78. (Paul Bender -->
 
 <!-- These are the Silver decoders, with "6th gen BEMF", "Precision Braking Control" -->
 <!-- and "Low Gear Switching Drive" -->
 
 <decoder>
-	<family name="Lenz Silver with 6th gen BEMF" mfg="Lenz" highVersionID="75" lowVersionID="65"
+	<family name="Lenz Silver with 6th gen BEMF" mfg="Lenz" highVersionID="78" lowVersionID="65"
 		comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" >
-		<model model="Silver" numOuts="4" numFns="12" lowVersionID="65"
+		<model model="Silver" numOuts="4" numFns="12" 
+                        lowVersionID="65"
+                        highVersion="75"
 			maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO">
+			<output name="1" label="A - White" />
+			<output name="2" label="B - Yellow" />
+			<output name="3" label="C - Green" />
+			<output name="4" label="D - Violet" />
+		</model>
+		<model model="Silver Direct" numOuts="4" numFns="12" 
+                        lowVersionID="78"
+                        highVersionID="78" 
+			maxMotorCurrent="1.1A (peak=1.8A)" formFactor="HO">
 			<output name="1" label="A - White" />
 			<output name="2" label="B - Yellow" />
 			<output name="3" label="C - Green" />
