@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!-- Copyright (C) Bob Jacobsen 2007 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: decoder.xsl,v 1.4 2007-08-19 13:56:04 jacobsen Exp $ -->
+<!-- $Id: decoder.xsl,v 1.5 2007-08-19 14:09:45 jacobsen Exp $ -->
 
 <!-- This XSLT transform is used when a JMRI decoder definition -->
 <!-- file is displayed by a web browser -->
@@ -148,7 +148,7 @@ change the form and hit the "Enter" button at the bottom.
             <xsl:text> </xsl:text>
 
               <xsl:element name="select">
-                <xsl:attribute name="name"><xsl:value-of select="@model"/>-units</xsl:attribute>
+                <xsl:attribute name="name"><xsl:value-of select="../@model"/>-units</xsl:attribute>
                 <xsl:element name="option">
                 <xsl:if test="@units = 'inches'">
                     <xsl:attribute name="selected"/>
