@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class SignalHeadIconXml implements XmlAdapter {
 
@@ -131,6 +131,7 @@ public class SignalHeadIconXml implements XmlAdapter {
                 if (flashyellow!=null) flashyellow.setRotation(rotation, l);
                 if (flashgreen!=null) flashgreen.setRotation(rotation, l);
                 if (dark!=null) dark.setRotation(rotation, l);
+                if (held!=null) held.setRotation(rotation, l);
             }
         } catch (org.jdom.DataConversionException e) {}
 
