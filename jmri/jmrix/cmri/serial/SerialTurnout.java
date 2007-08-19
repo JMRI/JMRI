@@ -20,7 +20,7 @@ import jmri.Turnout;
  *
  * Description:		extend jmri.AbstractTurnout for C/MRI serial layouts
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class SerialTurnout extends AbstractTurnout {
 
@@ -106,7 +106,7 @@ public class SerialTurnout extends AbstractTurnout {
 								tNode.setOutputBit(tBit, false);
 								// start a timer to finish setting this turnout
 								if (mPulseClosedTimer==null) {
-									mPulseClosedTimer = new javax.swing.Timer(1000, new 
+									mPulseClosedTimer = new javax.swing.Timer(tNode.getPulseWidth(), new 
 											java.awt.event.ActionListener() {
 										public void actionPerformed(java.awt.event.ActionEvent e) {
 											tNode.setOutputBit(tBit, true);
@@ -127,7 +127,7 @@ public class SerialTurnout extends AbstractTurnout {
 								tNode.setOutputBit(tBit, true);
 								// start a timer to finish setting this turnout
 								if (mPulseThrownTimer==null) {
-									mPulseThrownTimer = new javax.swing.Timer(1000, new 
+									mPulseThrownTimer = new javax.swing.Timer(tNode.getPulseWidth(), new 
 											java.awt.event.ActionListener() {
 										public void actionPerformed(java.awt.event.ActionEvent e) {
 											tNode.setOutputBit(tBit, false);
@@ -144,7 +144,7 @@ public class SerialTurnout extends AbstractTurnout {
 				}
 				else {
 					// Pulse control
-					int iTime = 1000*getControlType();
+					int iTime = tNode.getPulseWidth();
 					// Get current known state of turnout
 					int kState = getKnownState();
 					if ( (closed && ((kState & Turnout.THROWN) > 0)) ||
@@ -177,7 +177,7 @@ public class SerialTurnout extends AbstractTurnout {
 				}
 				else {
 					// Pulse control
-					int iTime = 1000*getControlType();
+					int iTime = tNode.getPulseWidth();
 					// Get current known state of turnout
 					int kState = getKnownState();
 					if (closed && ((kState & Turnout.THROWN) > 0)) {

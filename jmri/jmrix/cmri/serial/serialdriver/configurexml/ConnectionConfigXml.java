@@ -19,7 +19,7 @@ import org.jdom.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -44,6 +44,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
             n.addContent(makeParameter("bitspercard", ""+node.getNumBitsPerCard()));
             n.addContent(makeParameter("transmissiondelay", ""+node.getTransmissionDelay()));
             n.addContent(makeParameter("num2lsearchlights", ""+node.getNum2LSearchLights()));
+            n.addContent(makeParameter("pulsewidth", ""+node.getPulseWidth()));
             String value = "";
             for (int i=0; i<node.getLocSearchLightBits().length; i++) {
             	value = value + Integer.toHexString(node.getLocSearchLightBits()[i]&0xF);
@@ -85,6 +86,10 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
             int bpc = Integer.parseInt(findParmValue(n,"bitspercard"));
             int delay = Integer.parseInt(findParmValue(n,"transmissiondelay"));
             int num2l = Integer.parseInt(findParmValue(n,"num2lsearchlights"));
+			int pulseWidth = 500;
+			if ((findParmValue(n,"pulsewidth")) != null) {
+				pulseWidth = Integer.parseInt(findParmValue(n,"pulsewidth"));
+			}
             
             String slb = findParmValue(n,"locsearchlightbits");
             String ctl = findParmValue(n,"cardtypelocation");
@@ -95,6 +100,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
             node.setNumBitsPerCard(bpc);
             node.setTransmissionDelay(delay);
             node.setNum2LSearchLights(num2l);
+			node.setPulseWidth(pulseWidth);
             
             for (int j = 0; j<slb.length(); j++) {
             	node.setLocSearchLightBits(j, (slb.charAt(j)-'0') );

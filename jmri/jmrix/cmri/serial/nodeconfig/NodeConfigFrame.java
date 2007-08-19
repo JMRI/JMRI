@@ -18,7 +18,7 @@ import jmri.jmrix.cmri.serial.SerialSensorManager;
  * Frame for user configuration of CMRI serial nodes
  * @author	Bob Jacobsen   Copyright (C) 2004
  * @author	Dave Duchamp   Copyright (C) 2004
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -28,6 +28,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     protected javax.swing.JLabel nodeAddrStatic = new javax.swing.JLabel("000");
     protected javax.swing.JComboBox nodeTypeBox; 
     protected javax.swing.JTextField receiveDelayField = new javax.swing.JTextField(3);
+    protected javax.swing.JTextField pulseWidthField = new javax.swing.JTextField(4);
     protected javax.swing.JComboBox cardSizeBox; 
     protected javax.swing.JLabel cardSizeText = new javax.swing.JLabel("   "+rb.getString("LabelCardSize"));
     
@@ -53,6 +54,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     protected int nodeType = SerialNode.SMINI; // Node type
     protected int bitsPerCard = 24;         // number of bits per card
     protected int receiveDelay = 0;         // transmission delay
+	protected int pulseWidth = 500;			// pulse width for turnout control (milliseconds)
     protected int num2LSearchLights = 0;    // number of 2-lead oscillating searchlights
 
     protected int numCards = 0;             //set by consistency check routine
@@ -161,9 +163,17 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         cardSizeBox.setToolTipText(rb.getString("TipCardSize"));
         cardSizeText.setVisible(false);
         cardSizeBox.setVisible(false);
+        JPanel panel13 = new JPanel();
+        panel13.setLayout(new FlowLayout());
+        panel13.add(new JLabel(rb.getString("LabelPulseWidth")+" "));
+        panel13.add(pulseWidthField);
+        pulseWidthField.setToolTipText(rb.getString("TipPulseWidth"));
+        pulseWidthField.setText("500");
+        panel13.add(new JLabel(rb.getString("LabelMilliseconds")));
 			
         panel1.add(panel11);
         panel1.add(panel12);
+		panel1.add(panel13);
         contentPane.add(panel1);			
 
         // Set up USIC/SUSIC card type configuration table
@@ -341,6 +351,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         }
         // get node information from window
         if ( !readReceiveDelay() ) return;
+		if ( !readPulseWidth() ) return;
         // check consistency of node information
         if ( !checkConsistency() ) return;
         // all ready, create the new node
@@ -428,6 +439,9 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         // set up receive delay
         receiveDelay = curNode.getTransmissionDelay();
         receiveDelayField.setText(Integer.toString(receiveDelay));
+		// set up pulse width
+        pulseWidth = curNode.getPulseWidth();
+        pulseWidthField.setText(Integer.toString(pulseWidth));
         // set up card types
         for (int i=0;i<64;i++) {
             if (curNode.isOutputCard(i)) {
@@ -536,6 +550,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     public void updateButtonActionPerformed() {
         // get node information from window
         if ( !readReceiveDelay() ) return;
+		if ( !readPulseWidth() ) return;
         // check consistency of node information
         if ( !checkConsistency() ) return;
         // update node information
@@ -606,6 +621,8 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     void setNodeParameters() {
         // receive delay is common for all node types
         curNode.setTransmissionDelay(receiveDelay);
+        // pulse width is common for all node types
+        curNode.setPulseWidth(pulseWidth);
         // continue in a node specific way
         switch (nodeType) {
             case SerialNode.SMINI:
@@ -773,6 +790,49 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             statusText1.setText(rb.getString("Error9"));
             statusText1.setVisible(true);
             receiveDelay = 0;
+            errorInStatus1 = true;
+            resetNotes2();
+            return (false);
+        }
+        // successful
+        return true;
+    }
+    
+    /**
+     * Read pulse width from window
+     *    Returns 'true' if successful, 'false' if an error was detected.
+     *    If an error is detected, a suitable error message is placed in the
+     *        Notes area
+     */
+    protected boolean readPulseWidth() {
+        // get the pulse width
+        try 
+        {
+            pulseWidth = Integer.parseInt(pulseWidthField.getText());
+        }
+        catch (Exception e)
+        {
+            statusText1.setText(rb.getString("Error18"));
+            statusText1.setVisible(true);
+            pulseWidth = 500;
+            errorInStatus1 = true;
+            resetNotes2();
+            return (false);
+        }
+        if (pulseWidth < 100) {
+            statusText1.setText(rb.getString("Error16"));
+            statusText1.setVisible(true);
+            pulseWidth = 100;
+			pulseWidthField.setText(Integer.toString(pulseWidth));
+            errorInStatus1 = true;
+            resetNotes2();
+            return (false);
+        }
+        if (pulseWidth > 10000) {
+            statusText1.setText(rb.getString("Error17"));
+            statusText1.setVisible(true);
+            pulseWidth = 500;
+			pulseWidthField.setText(Integer.toString(pulseWidth));
             errorInStatus1 = true;
             resetNotes2();
             return (false);

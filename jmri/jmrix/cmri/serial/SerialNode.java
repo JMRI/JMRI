@@ -25,7 +25,7 @@ import jmri.jmrix.AbstractMRMessage;
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.22 $
+ * @version	$Revision: 1.23 $
  */
 public class SerialNode {
 
@@ -54,6 +54,7 @@ public class SerialNode {
     protected int nodeType = SMINI;             // See above
     protected int bitsPerCard = 24;             // 24 for SMINI and USIC, 24 or 32 for SUSIC
     protected int transmissionDelay = 0;        // DL, delay between bytes on Receive (units of 10 microsec.)
+	protected int pulseWidth = 500;				// Pulse width for pulsed turnout control (milliseconds)
     protected int num2LSearchLights = 0;        // SMINI only, 'NS' number of two lead bicolor signals
     protected byte[] locSearchLightBits = new byte[MAXSEARCHLIGHTBYTES]; // SMINI only, 0 = not searchlight LED,
                                                 //   1 = searchlight LED, 2*NS bits must be set to 1
@@ -352,10 +353,34 @@ public class SerialNode {
         if ( (delay < 0) || (delay > 65535) ) {
             log.warn("transmission delay out of 0-65535 range: "+
                                             Integer.toString(delay));
-            if (delay < 0) transmissionDelay = 0;
-            if (delay > 65535) transmissionDelay = 65535;
+            if (delay < 0) delay = 0;
+            if (delay > 65535) delay = 65535;
         }
         transmissionDelay = delay;
+    }
+
+    /**
+     * Public method to return pulse width.
+	 *    Used with pulsed turnout control.
+     */
+    public int getPulseWidth() {
+        return (pulseWidth);
+    }
+
+    /**
+     * Public method to set pulse width.
+     *   width - width of pulse used for pulse controlled turnout control (millisec.)
+     *   Note: Pulse width must be between 100 and 10000 milliseconds.  If width
+     *          is out of range, it is restricted to the allowable range
+     */
+    public void setPulseWidth(int width) {
+        if ( (width < 100) || (width > 10000) ) {
+            log.warn("pulse width out of 100 - 10000 range: "+
+                                            Integer.toString(width));
+            if (width < 100) width = 100;
+            if (width > 10000) width = 10000;
+        }
+        pulseWidth = width;
     }
 
     /**
