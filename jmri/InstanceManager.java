@@ -2,6 +2,8 @@
 
 package jmri;
 
+import jmri.jmrit.display.LayoutBlockManager;
+
 /**
  * Provides static members for locating various interface implementations.
  * These are the base of how JMRI objects are located.
@@ -12,7 +14,7 @@ package jmri;
  * non-system-specific code.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.27 $
+ * @version			$Revision: 1.28 $
  */
 public class InstanceManager {
 
@@ -44,6 +46,13 @@ public class InstanceManager {
         // This must be replaced when we start registering specific implementations
         instance().routeManager = new DefaultRouteManager();
         return instance().routeManager;
+    }
+
+    static public LayoutBlockManager layoutBlockManagerInstance()  {
+        if (instance().layoutBlockManager != null) return instance().layoutBlockManager;
+        // As a convenience, we create a default object if none was provided explicitly.
+        instance().layoutBlockManager = new LayoutBlockManager();
+        return instance().layoutBlockManager;
     }
 
     static public ConditionalManager conditionalManagerInstance()  {
@@ -194,6 +203,16 @@ public class InstanceManager {
         if (p!=routeManager && routeManager!=null && log.isDebugEnabled()) log.debug("RouteManager instance is being replaced: "+p);
         if (p!=routeManager && routeManager==null && log.isDebugEnabled()) log.debug("RouteManager instance is being installed: "+p);
         routeManager = p;
+    }
+
+    private LayoutBlockManager layoutBlockManager = null;
+    static public void setLayoutBlockManager(LayoutBlockManager p) {
+        instance().addLayoutBlockManager(p);
+    }
+    protected void addLayoutBlockManager(LayoutBlockManager p) {
+        if (p!=layoutBlockManager && layoutBlockManager!=null && log.isDebugEnabled()) log.debug("LayoutBlockManager instance is being replaced: "+p);
+        if (p!=layoutBlockManager && layoutBlockManager==null && log.isDebugEnabled()) log.debug("LayoutBlockManager instance is being installed: "+p);
+        layoutBlockManager = p;
     }
 
     private ConditionalManager conditionalManager = null;
