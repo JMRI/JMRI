@@ -47,7 +47,7 @@ import java.util.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.67 $
+ * @version $Revision: 1.68 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -138,13 +138,20 @@ public class PanelEditor extends JmriJFrame {
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
         menuBar.add(fileMenu);
-        fileMenu.add(new jmri.jmrit.display.PanelEditorAction(rb.getString("MenuItemNew")));
-        fileMenu.add(new jmri.configurexml.LoadXmlConfigAction(rb.getString("MenuItemLoad")));
+        fileMenu.add(new jmri.jmrit.display.NewPanelAction(rb.getString("MenuItemNew")));
+//        fileMenu.add(new jmri.configurexml.LoadXmlConfigAction(rb.getString("MenuItemLoad")));
         fileMenu.add(new jmri.configurexml.StoreXmlUserAction(rb.getString("MenuItemStore")));
+        fileMenu.addSeparator();
+        JMenuItem deleteItem = new JMenuItem(rb.getString("DeletePanel"));
+        fileMenu.add(deleteItem);
+        deleteItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+					deletePanel();
+                }
+            });
 
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.display.PanelEditor", true);
-
 
         // allow naming the panel
         {
@@ -159,6 +166,7 @@ public class PanelEditor extends JmriJFrame {
 
                     if (getTarget().getTopLevelAncestor()!=null) ((JFrame)getTarget().getTopLevelAncestor()).setTitle(newName);
                     setTitle();
+					jmri.jmrit.display.PanelMenu.instance().renamePanelEditorPanel(self);
                 }
             });
             namep.add(b);
@@ -602,7 +610,7 @@ public class PanelEditor extends JmriJFrame {
 
         // when this window closes, set contents of target uneditable
         addWindowListener(new java.awt.event.WindowAdapter() {
-                public void windowClosing(java.awt.event.WindowEvent e) {
+				public void windowClosing(java.awt.event.WindowEvent e) {
                     setAllPositionable(false);
                 }
             });
@@ -876,14 +884,34 @@ public class PanelEditor extends JmriJFrame {
     PanelEditor self;
 
     public ArrayList contents = new ArrayList();
-
+	
+	/** 
+	 * Invoked by DeletePanel menu item
+	 *     Validate user intent before deleting
+	 */
+	public void deletePanel() {
+		// verify deletion
+		int selectedValue = JOptionPane.showOptionDialog(frame,
+				rb.getString("QuestionA")+"\n"+rb.getString("QuestionB"),
+				rb.getString("DeleteVerifyTitle"),JOptionPane.YES_NO_OPTION,
+				JOptionPane.QUESTION_MESSAGE,null,
+				new Object[]{rb.getString("ButtonYesDelete"),rb.getString("ButtonNoCancel")},
+				rb.getString("ButtonNoCancel"));
+		if (selectedValue == 1) return;   // return without deleting if "No" response
+		
+		// delete panel 
+		dispose();
+	}
+	
     /**
      * Clean up when its time to make it all go away
      */
     public void dispose() {
         // register the result for later configuration
         InstanceManager.configureManagerInstance().deregister(this);
-
+		jmri.jmrit.display.PanelMenu.instance().deletePanel((Object)self);
+		setVisible(false);
+		frame.setVisible(false);		
         // clean up local links to push GC
         contents.clear();
         target = null;
@@ -907,13 +935,14 @@ public class PanelEditor extends JmriJFrame {
     }
 
     /**
-     * The target window has been requested to close, so clean up
+     * The target window has been requested to close, don't delete it at this
+	 *   time.  Deletion must be accomplished via the Delete this panel menu item.
      */
     void targetWindowClosing(java.awt.event.WindowEvent e) {
         this.setVisible(false);   // doesn't remove the editor!
-
-        dispose();
+		jmri.jmrit.display.PanelMenu.instance().updatePanelEditorPanel(self);
     }
+
     public void setTitle() {
         String name = "";
         if (getTarget().getTopLevelAncestor()!=null) name=((JFrame)getTarget().getTopLevelAncestor()).getTitle();
@@ -1060,9 +1089,15 @@ public class PanelEditor extends JmriJFrame {
         JMenuBar menuBar = new JMenuBar();
         JMenu editMenu = new JMenu(rb.getString("MenuEdit"));
         menuBar.add(editMenu);
-        editMenu.add(new AbstractAction("Open editor"){
+        editMenu.add(new AbstractAction(rb.getString("OpenEditor")) {
                 public void actionPerformed(ActionEvent e) {
                     self.setVisible(true);
+                }
+            });
+		editMenu.addSeparator();
+        editMenu.add(new AbstractAction(rb.getString("DeletePanel")){
+                public void actionPerformed(ActionEvent e) {
+                    self.deletePanel();
                 }
             });
         targetFrame.setJMenuBar(menuBar);

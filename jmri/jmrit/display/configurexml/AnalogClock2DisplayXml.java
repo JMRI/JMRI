@@ -10,7 +10,7 @@ import jmri.jmrit.display.*;
  * Handle configuration for display.AnalogClock2Display objects.
  *
  * @author  Howard G. Penny  Copyright (c) 2005
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class AnalogClock2DisplayXml
     implements XmlAdapter {
@@ -50,13 +50,27 @@ public class AnalogClock2DisplayXml
     /**
      * Create an AnalogClock2Display, then add to a target JLayeredPane
      * @param element Top level Element to unpack.
-     * @param o  PanelEditor as an Object
+     * @param o  PanelEditor or LayoutEditor as an Object
      */
     public void load(Element element, Object o) {
-        // create the objects
-        PanelEditor p = (PanelEditor) o;
-
-        AnalogClock2Display l = new AnalogClock2Display(p);
+		// get object class and create the clock object
+		String className = o.getClass().getName();
+		int lastDot = className.lastIndexOf(".");
+		PanelEditor pe = null;
+		LayoutEditor le = null;
+		AnalogClock2Display l = null;
+		String shortClass = className.substring(lastDot+1,className.length());
+		if (shortClass.equals("PanelEditor")) {
+			pe = (PanelEditor) o;
+			l = new AnalogClock2Display(pe);		
+		}
+		else if (shortClass.equals("LayoutEditor")) {
+			le = (LayoutEditor) o;
+			l = new AnalogClock2Display(le);		
+		}
+		else {
+			log.error("Unrecognizable class - "+className);
+		}
 
         // find coordinates
         int x = 0;
@@ -68,13 +82,21 @@ public class AnalogClock2DisplayXml
         catch (org.jdom.DataConversionException e) {
             log.error("failed to convert positional attribute");
         }
-        int level = PanelEditor.CLOCK.intValue();
         l.setOpaque(false);
         l.update();
-        l.setDisplayLevel(level);
         l.setLocation(x, y);
-
-        p.putClock(l);
+		
+		// add the clock to the panel
+		if (pe!=null) {
+			int level = PanelEditor.CLOCK.intValue();
+			l.setDisplayLevel(level);
+			pe.putClock(l);
+		}
+		else if (le!=null) {
+			int level = LayoutEditor.CLOCK.intValue();
+			l.setDisplayLevel(level);
+			le.putClock(l);
+		}
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.

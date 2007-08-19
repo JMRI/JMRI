@@ -21,15 +21,15 @@ import javax.swing.*;
  * It should be.
  *
  * @author  Bob Jacobsen  Copyright (c) 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class MultiSensorIconFrame extends JmriJFrame {
     JPanel content = new JPanel();
     JFrame defaultsFrame;
     MultiIconEditor defaultIcons;
-    PanelEditor panelEditor;
-    
+    PanelEditor panelEditor = null;
+	LayoutEditor layoutEditor = null;
     JRadioButton updown = new JRadioButton("Up - Down");
     JRadioButton rightleft = new JRadioButton("Right - Left");
     ButtonGroup group = new ButtonGroup();
@@ -37,6 +37,13 @@ public class MultiSensorIconFrame extends JmriJFrame {
     MultiSensorIconFrame(PanelEditor p) {
         super("Enter MultiSensor");
         panelEditor = p;
+        
+        addHelpMenu("package.jmri.jmrit.display.MultiSensorIconFrame", true);
+    }
+
+    MultiSensorIconFrame(LayoutEditor p) {
+        super("Enter MultiSensor");
+        layoutEditor = p;
         
         addHelpMenu("package.jmri.jmrit.display.MultiSensorIconFrame", true);
     }
@@ -129,7 +136,10 @@ public class MultiSensorIconFrame extends JmriJFrame {
         m.setUpDown(updown.isSelected());
 
         // add it to the panel
-        panelEditor.addMultiSensor(m);
+		if (panelEditor!=null)
+			panelEditor.addMultiSensor(m);
+		else if (layoutEditor!=null)
+			layoutEditor.addMultiSensor(m);
     }
     
     class Entry extends JPanel {

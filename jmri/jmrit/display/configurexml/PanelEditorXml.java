@@ -13,7 +13,7 @@ import org.jdom.*;
  * Handle configuration for {@link PanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 public class PanelEditorXml implements XmlAdapter {
 
@@ -92,6 +92,7 @@ public class PanelEditorXml implements XmlAdapter {
         // create the objects
         PanelEditor panel = new PanelEditor();
         panel.makeFrame(name);
+		jmri.jmrit.display.PanelMenu.instance().addPanelEditorPanel(panel);
         panel.getFrame().setLocation(x,y);
         panel.getFrame().setSize(width,height);
         

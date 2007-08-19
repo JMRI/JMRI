@@ -4,6 +4,7 @@ import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.catalog.CatalogPane;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
+import jmri.jmrit.display.LayoutEditor;
 import jmri.jmrit.display.MultiSensorIcon;
 import org.jdom.Attribute;
 import org.jdom.Element;
@@ -14,7 +15,7 @@ import java.util.List;
  * Handle configuration for display.MultiSensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class MultiSensorIconXml implements XmlAdapter {
 
@@ -65,11 +66,25 @@ public class MultiSensorIconXml implements XmlAdapter {
     /**
      * Create a PositionableLabel, then add to a target JLayeredPane
      * @param element Top level Element to unpack.
-     * @param o  PanelEditor as an Object
+     * @param o  PanelEditor or LayoutEditor as an Object
      */
     public void load(Element element, Object o) {
+		// get object class and determine editor being used
+		String className = o.getClass().getName();
+		int lastDot = className.lastIndexOf(".");
+		PanelEditor pe = null;
+		LayoutEditor le = null;
+		String shortClass = className.substring(lastDot+1,className.length());
+		if (shortClass.equals("PanelEditor")) {
+			pe = (PanelEditor) o;
+		}
+		else if (shortClass.equals("LayoutEditor")) {
+			le = (LayoutEditor) o;
+		}
+		else {
+			log.error("Unrecognizable class - "+className);
+		}
         // create the objects
-        PanelEditor p = (PanelEditor)o;
         String name;
 
         MultiSensorIcon l = new MultiSensorIcon();
@@ -133,7 +148,11 @@ public class MultiSensorIconXml implements XmlAdapter {
         l.setLocation(x,y);
 
         // find display level
-        int level = PanelEditor.SENSORS.intValue();
+		int level = 0;
+		if (pe!=null)
+			level = PanelEditor.SENSORS.intValue();
+		else if (le!=null)
+			level = LayoutEditor.SENSORS.intValue();
         try {
             level = element.getAttribute("level").getIntValue();
         } catch ( org.jdom.DataConversionException e) {
@@ -141,8 +160,12 @@ public class MultiSensorIconXml implements XmlAdapter {
         } catch ( NullPointerException e) {  // considered normal if the attribute not present
         }
         l.setDisplayLevel(level);
-
-        p.putMultiSensor(l);
+		
+		// add multi-sensor to the panel
+		if (pe!=null)
+			pe.putMultiSensor(l);
+		else if (le!=null)
+			le.putMultiSensor(l);
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MultiSensorIconXml.class.getName());
