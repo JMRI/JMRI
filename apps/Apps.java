@@ -28,7 +28,7 @@ import net.roydesign.mac.MRJAdapter;
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
  * @author  Dennis Miller  Copyright 2005
- * @version     $Revision: 1.39 $
+ * @version     $Revision: 1.40 $
  */
 public class Apps extends JPanel {
 
@@ -193,9 +193,9 @@ public class Apps extends JPanel {
     protected void rosterMenu(JMenuBar menuBar, JFrame frame) {
         menuBar.add(new jmri.jmrit.roster.RosterMenu(rb.getString("MenuRoster"), jmri.jmrit.roster.RosterMenu.MAINMENU, this));
     }
-
+	
     protected void panelMenu(JMenuBar menuBar, JFrame frame) {
-        menuBar.add(new jmri.jmrit.display.PanelMenu());
+        menuBar.add(jmri.jmrit.display.PanelMenu.instance());
     }
 
     /**
