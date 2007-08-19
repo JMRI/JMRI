@@ -65,7 +65,7 @@ package jmri.jmrix.nce;
  *  1 = bad loco address
  *
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 
 public class NceBinaryCommand {
@@ -213,14 +213,14 @@ public class NceBinaryCommand {
 	
 	// NCE Command 0xA2 sends speed or function packets to a locomotive
 	// 0xA2 sub commands
-	public static final int LOC_CMD_REV_CONSIST_LEAD = 0x0A;		//reverse consist address for lead loco
-	public static final int LOC_CMD_FWD_CONSIST_LEAD = 0x0B;		//forward consist address for lead loco 
-	public static final int LOC_CMD_REV_CONSIST_REAR = 0x0C;		//reverse consist address for rear loco 
-	public static final int LOC_CMD_FWD_CONSIST_REAR = 0x0D;		//forward consist address for rear loco
-	public static final int LOC_CMD_REV_CONSIST_MID = 0x0E;			//reverse consist address for additional loco 
-	public static final int LOC_CMD_FWD_CONSIST_MID = 0x0F;			//forward consist address for additional loco 
-	public static final int LOC_CMD_DELETE_LOC_CONSIST = 0x10;		//Delete loco from consist
-	public static final int LOC_CMD_KILL_CONSIST = 0x10;			//Kill consist
+	public static final byte LOC_CMD_REV_CONSIST_LEAD = 0x0A;		//reverse consist address for lead loco
+	public static final byte LOC_CMD_FWD_CONSIST_LEAD = 0x0B;		//forward consist address for lead loco 
+	public static final byte LOC_CMD_REV_CONSIST_REAR = 0x0C;		//reverse consist address for rear loco 
+	public static final byte LOC_CMD_FWD_CONSIST_REAR = 0x0D;		//forward consist address for rear loco
+	public static final byte LOC_CMD_REV_CONSIST_MID = 0x0E;			//reverse consist address for additional loco 
+	public static final byte LOC_CMD_FWD_CONSIST_MID = 0x0F;			//forward consist address for additional loco 
+	public static final byte LOC_CMD_DELETE_LOC_CONSIST = 0x10;		//Delete loco from consist
+	public static final byte LOC_CMD_KILL_CONSIST = 0x11;			//Kill consist
 	
 	public static byte[] nceLocoCmd (int locoAddr, byte locoCmd, byte locoData){
 		
