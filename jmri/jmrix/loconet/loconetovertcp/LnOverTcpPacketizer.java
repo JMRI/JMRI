@@ -31,7 +31,7 @@ import java.util.StringTokenizer ;
  * contact Digitrax Inc for separate permission.
  * @author		Bob Jacobsen  Copyright (C) 2001
  * @author              Alex Shepherd Copyright (C) 2003, 2006
- * @version 		$Revision: 1.6 $
+ * @version 		$Revision: 1.7 $
  *
  */
 public class LnOverTcpPacketizer extends LnPacketizer {
@@ -68,6 +68,11 @@ public class LnOverTcpPacketizer extends LnPacketizer {
         try {
           // start by looking for a complete line
           rxLine = istream.readLine();
+          if( rxLine == null ){
+            log.warn("run: input stream returned null, exiting loop");
+            return;
+          }
+        	  
           if (debug)
             log.debug("Received: " + rxLine);
 
