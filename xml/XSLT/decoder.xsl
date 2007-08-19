@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!-- Copyright (C) Bob Jacobsen 2007 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: decoder.xsl,v 1.3 2007-08-09 00:18:08 jacobsen Exp $ -->
+<!-- $Id: decoder.xsl,v 1.4 2007-08-19 13:56:04 jacobsen Exp $ -->
 
 <!-- This XSLT transform is used when a JMRI decoder definition -->
 <!-- file is displayed by a web browser -->
@@ -36,38 +36,217 @@
       </div>
     </xsl:for-each>
 
+<p>
+If you want to submit an update to any of this information,
+change the form and hit the "Enter" button at the bottom.
+</p>
+
+    <form method="post" action="/cgi-bin/updateDecoder.cgi">
+
+    <!-- store the family name for later retrieval -->
+    <xsl:for-each select="decoder-config/decoder/family"><!-- unique -->
+    <xsl:element name="input">
+        <xsl:attribute name="type">hidden</xsl:attribute>
+        <xsl:attribute name="name">Family</xsl:attribute>
+        <xsl:attribute name="value"><xsl:value-of select="@name"/></xsl:attribute>
+      </xsl:element>
+    </xsl:for-each>
+
     <!-- display model info -->
     <xsl:for-each select="decoder-config/decoder/family/model">
-        <p>
-          Model: <xsl:value-of select="@model"/>
-                <br/>
-            <xsl:value-of select="@numOuts"/> outputs, <xsl:value-of select="@numFns"/> functions
-            <br/>
-            <xsl:value-of select="@formFactor"/> form factor (manufacturer's labeling)
-            <br/>
-            <xsl:value-of select="@connector"/> connector
-            <br/>
-            Max motor current: <xsl:value-of select="@maxMotorCurrent"/>
-            <br/>
+    <p>
+      Model: <xsl:value-of select="@model"/><br/>
 
-            <xsl:for-each select="size">
-                Length: <xsl:value-of select="@length"/>
-                Width: <xsl:value-of select="@width"/>
-                Height: <xsl:value-of select="@height"/>
-                <xsl:text> </xsl:text>
-                <xsl:value-of select="@units"/>
-            </xsl:for-each>
-            <xsl:for-each select="output">
-                <br/>
-                Output <xsl:value-of select="@name"/>
-                labeled <xsl:value-of select="@label"/>
-                connection: <xsl:value-of select="@connection"/>
-                <xsl:text> </xsl:text>
-                <xsl:value-of select="@units"/>
-            </xsl:for-each>
-        </p>          
+      <xsl:element name="input">
+        <xsl:attribute name="type">int</xsl:attribute>
+        <xsl:attribute name="name"><xsl:value-of select="@model"/>-Outs</xsl:attribute>
+        <xsl:attribute name="size">3</xsl:attribute>
+        <xsl:attribute name="value"><xsl:value-of select="@numOuts"/></xsl:attribute>
+      </xsl:element>
+      outputs,
+      <xsl:element name="input">
+        <xsl:attribute name="type">int</xsl:attribute>
+        <xsl:attribute name="name"><xsl:value-of select="@model"/>-Fns</xsl:attribute>
+        <xsl:attribute name="size">3</xsl:attribute>
+        <xsl:attribute name="value"><xsl:value-of select="@numFns"/></xsl:attribute>
+      </xsl:element>
+      functions<br/>
+      
+      <xsl:element name="input">
+        <xsl:attribute name="type">text</xsl:attribute>
+        <xsl:attribute name="name"><xsl:value-of select="@model"/>-formFactor</xsl:attribute>
+        <xsl:attribute name="size">3</xsl:attribute>
+        <xsl:attribute name="value"><xsl:value-of select="@formFactor"/></xsl:attribute>
+      </xsl:element>
+      form factor (manufacturer's labeling)
+      <br/>
+      
+      <xsl:element name="select">
+        <xsl:attribute name="name"><xsl:value-of select="@model"/>-connector</xsl:attribute>
+        <xsl:element name="option">
+        <xsl:if test="@connector = '9pin'">
+            <xsl:attribute name="selected"/>
+        </xsl:if>
+        9pin
+        </xsl:element>
+        <xsl:element name="option">
+        <xsl:if test="@connector = 'NMRAsmall'">
+            <xsl:attribute name="selected"/>
+        </xsl:if>
+        NMRAsmall
+        </xsl:element>
+        <xsl:element name="option">
+        <xsl:if test="@connector = 'NMRAmedium'">
+            <xsl:attribute name="selected"/>
+        </xsl:if>
+        NMRAmedium
+        </xsl:element>
+        <xsl:element name="option">
+        <xsl:if test="@connector = 'NMRAlarge'">
+            <xsl:attribute name="selected"/>
+        </xsl:if>
+        NMRAlarge
+        </xsl:element>
+        <xsl:element name="option">
+        <xsl:if test="@connector = 'other'">
+            <xsl:attribute name="selected"/>
+        </xsl:if>
+        other
+        </xsl:element>
+        <xsl:element name="option">
+        <xsl:if test="@connector = 'unspecified'">
+            <xsl:attribute name="selected"/>
+        </xsl:if>
+        unspecified
+        </xsl:element>
+      </xsl:element>
+      connector
+      <br/>
+
+        <xsl:for-each select="size">
+            Length:
+              <xsl:element name="input">
+                <xsl:attribute name="type">float</xsl:attribute>
+                <xsl:attribute name="name"><xsl:value-of select="../@model"/>-length</xsl:attribute>
+                <xsl:attribute name="size">10</xsl:attribute>
+                <xsl:attribute name="value"><xsl:value-of select="@length"/></xsl:attribute>
+              </xsl:element>
+            Width:
+              <xsl:element name="input">
+                <xsl:attribute name="type">float</xsl:attribute>
+                <xsl:attribute name="name"><xsl:value-of select="../@model"/>-width</xsl:attribute>
+                <xsl:attribute name="size">10</xsl:attribute>
+                <xsl:attribute name="value"><xsl:value-of select="@width"/></xsl:attribute>
+              </xsl:element>
+            Height: 
+              <xsl:element name="input">
+                <xsl:attribute name="type">float</xsl:attribute>
+                <xsl:attribute name="name"><xsl:value-of select="../@model"/>-height</xsl:attribute>
+                <xsl:attribute name="size">10</xsl:attribute>
+                <xsl:attribute name="value"><xsl:value-of select="@height"/></xsl:attribute>
+              </xsl:element>
+            <xsl:text> </xsl:text>
+
+              <xsl:element name="select">
+                <xsl:attribute name="name"><xsl:value-of select="@model"/>-units</xsl:attribute>
+                <xsl:element name="option">
+                <xsl:if test="@units = 'inches'">
+                    <xsl:attribute name="selected"/>
+                </xsl:if>
+                inches
+                </xsl:element>
+                <xsl:element name="option">
+                <xsl:if test="@units = 'cm'">
+                    <xsl:attribute name="selected"/>
+                </xsl:if>
+                cm
+                </xsl:element>
+                <xsl:element name="option">
+                <xsl:if test="@units = 'mm'">
+                    <xsl:attribute name="selected"/>
+                </xsl:if>
+                mm
+                </xsl:element>
+            </xsl:element>
+                
+        </xsl:for-each>
+        <br/>
+
+      Max input voltage:
+      <xsl:element name="input">
+        <xsl:attribute name="type">text</xsl:attribute>
+        <xsl:attribute name="name"><xsl:value-of select="@model"/>-maxInputVolts</xsl:attribute>
+        <xsl:attribute name="size">15</xsl:attribute>
+        <xsl:attribute name="value"><xsl:value-of select="@maxInputVolts"/></xsl:attribute>
+      </xsl:element>
+      <br/>
+
+      Max motor current:
+      <xsl:element name="input">
+        <xsl:attribute name="type">text</xsl:attribute>
+        <xsl:attribute name="name"><xsl:value-of select="@model"/>-maxMotorCurrent</xsl:attribute>
+        <xsl:attribute name="size">15</xsl:attribute>
+        <xsl:attribute name="value"><xsl:value-of select="@maxMotorCurrent"/></xsl:attribute>
+      </xsl:element>
+      <br/>
+
+      Max total current:
+      <xsl:element name="input">
+        <xsl:attribute name="type">text</xsl:attribute>
+        <xsl:attribute name="name"><xsl:value-of select="@model"/>-maxTotalCurrent</xsl:attribute>
+        <xsl:attribute name="size">15</xsl:attribute>
+        <xsl:attribute name="value"><xsl:value-of select="@maxTotalCurrent"/></xsl:attribute>
+      </xsl:element>
+      <br/>
+
+      NMRA warrant
+      <xsl:element name="input">
+        <xsl:attribute name="type">checkbox</xsl:attribute>
+        <xsl:attribute name="name"><xsl:value-of select="@model"/>-nmraWarrant</xsl:attribute>
+        <xsl:if test="@nmraWarrant = 'true'">
+            <xsl:attribute name="checked">checked</xsl:attribute>
+        </xsl:if>
+      </xsl:element>
+      expires:
+      <xsl:element name="input">
+        <xsl:attribute name="type">date</xsl:attribute>
+        <xsl:attribute name="name"><xsl:value-of select="@model"/>-nmraWarrantEnd</xsl:attribute>
+        <xsl:attribute name="value"><xsl:value-of select="@nmraWarrantEnd"/></xsl:attribute>
+      </xsl:element>
+      <br/>
+
+        <xsl:for-each select="output">
+            Output <xsl:value-of select="@name"/>
+            labeled
+              <xsl:element name="input">
+                <xsl:attribute name="type">text</xsl:attribute>
+                <xsl:attribute name="name"><xsl:value-of select="../@model"/>-<xsl:value-of select="@name"/>-output-label</xsl:attribute>
+                <xsl:attribute name="size">10</xsl:attribute>
+                <xsl:attribute name="value"><xsl:value-of select="@label"/></xsl:attribute>
+              </xsl:element>
+            connection:
+              <xsl:element name="input">
+                <xsl:attribute name="type">text</xsl:attribute>
+                <xsl:attribute name="name"><xsl:value-of select="../@model"/>-<xsl:value-of select="@name"/>-output-connection</xsl:attribute>
+                <xsl:attribute name="size">10</xsl:attribute>
+                <xsl:attribute name="value"><xsl:value-of select="@connection"/></xsl:attribute>
+              </xsl:element>
+            max current:
+              <xsl:element name="input">
+                <xsl:attribute name="type">text</xsl:attribute>
+                <xsl:attribute name="name"><xsl:value-of select="../@model"/>-<xsl:value-of select="@name"/>-output-maxcurrent</xsl:attribute>
+                <xsl:attribute name="size">10</xsl:attribute>
+                <xsl:attribute name="value"><xsl:value-of select="@maxcurrent"/></xsl:attribute>
+              </xsl:element>
+            <br/>
+        </xsl:for-each>
+    </p>
 
     </xsl:for-each>
+
+    <input type="submit" value="Enter"/>
     
+    </form>
+
   </body>
 </html>
