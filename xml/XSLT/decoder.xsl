@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!-- Copyright (C) Bob Jacobsen 2007 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: decoder.xsl,v 1.5 2007-08-19 14:09:45 jacobsen Exp $ -->
+<!-- $Id: decoder.xsl,v 1.6 2007-08-20 21:00:00 jacobsen Exp $ -->
 
 <!-- This XSLT transform is used when a JMRI decoder definition -->
 <!-- file is displayed by a web browser -->
@@ -52,11 +52,44 @@ change the form and hit the "Enter" button at the bottom.
       </xsl:element>
     </xsl:for-each>
 
+    <!-- display version number -->
+    Family version number low:
+      <xsl:element name="input">
+        <xsl:attribute name="type">int</xsl:attribute>
+        <xsl:attribute name="name">family-version-low</xsl:attribute>
+        <xsl:attribute name="size">3</xsl:attribute>
+        <xsl:attribute name="value"><xsl:value-of select="decoder-config/decoder/family[last()]/@lowVersionID"/></xsl:attribute>
+      </xsl:element>
+    high:
+      <xsl:element name="input">
+        <xsl:attribute name="type">int</xsl:attribute>
+        <xsl:attribute name="name">family-version-high</xsl:attribute>
+        <xsl:attribute name="size">3</xsl:attribute>
+        <xsl:attribute name="value"><xsl:value-of select="decoder-config/decoder/family[last()]/@highVersionID"/></xsl:attribute>
+      </xsl:element>
+      
     <!-- display model info -->
     <xsl:for-each select="decoder-config/decoder/family/model">
+
+    <xsl:element name="hr"></xsl:element>
     <p>
       Model: <xsl:value-of select="@model"/><br/>
+      Version number low:
+      <xsl:element name="input">
+        <xsl:attribute name="type">int</xsl:attribute>
+        <xsl:attribute name="name"><xsl:value-of select="@model"/>-version-low</xsl:attribute>
+        <xsl:attribute name="size">3</xsl:attribute>
+        <xsl:attribute name="value"><xsl:value-of select="@lowVersionID"/></xsl:attribute>
+      </xsl:element>
+        high:
+      <xsl:element name="input">
+        <xsl:attribute name="type">int</xsl:attribute>
+        <xsl:attribute name="name"><xsl:value-of select="@model"/>-version-high</xsl:attribute>
+        <xsl:attribute name="size">3</xsl:attribute>
+        <xsl:attribute name="value"><xsl:value-of select="@highVersionID"/></xsl:attribute>
+      </xsl:element>
 
+    <br/>
       <xsl:element name="input">
         <xsl:attribute name="type">int</xsl:attribute>
         <xsl:attribute name="name"><xsl:value-of select="@model"/>-Outs</xsl:attribute>
@@ -123,53 +156,51 @@ change the form and hit the "Enter" button at the bottom.
       connector
       <br/>
 
-        <xsl:for-each select="size">
             Length:
               <xsl:element name="input">
                 <xsl:attribute name="type">float</xsl:attribute>
-                <xsl:attribute name="name"><xsl:value-of select="../@model"/>-length</xsl:attribute>
+                <xsl:attribute name="name"><xsl:value-of select="@model"/>-length</xsl:attribute>
                 <xsl:attribute name="size">10</xsl:attribute>
-                <xsl:attribute name="value"><xsl:value-of select="@length"/></xsl:attribute>
+                <xsl:attribute name="value"><xsl:value-of select="size[last()]/@length"/></xsl:attribute>
               </xsl:element>
             Width:
               <xsl:element name="input">
                 <xsl:attribute name="type">float</xsl:attribute>
-                <xsl:attribute name="name"><xsl:value-of select="../@model"/>-width</xsl:attribute>
+                <xsl:attribute name="name"><xsl:value-of select="@model"/>-width</xsl:attribute>
                 <xsl:attribute name="size">10</xsl:attribute>
-                <xsl:attribute name="value"><xsl:value-of select="@width"/></xsl:attribute>
+                <xsl:attribute name="value"><xsl:value-of select="size[last()]/@width"/></xsl:attribute>
               </xsl:element>
             Height: 
               <xsl:element name="input">
                 <xsl:attribute name="type">float</xsl:attribute>
-                <xsl:attribute name="name"><xsl:value-of select="../@model"/>-height</xsl:attribute>
+                <xsl:attribute name="name"><xsl:value-of select="@model"/>-height</xsl:attribute>
                 <xsl:attribute name="size">10</xsl:attribute>
-                <xsl:attribute name="value"><xsl:value-of select="@height"/></xsl:attribute>
+                <xsl:attribute name="value"><xsl:value-of select="size[last()]/@height"/></xsl:attribute>
               </xsl:element>
             <xsl:text> </xsl:text>
 
               <xsl:element name="select">
-                <xsl:attribute name="name"><xsl:value-of select="../@model"/>-units</xsl:attribute>
+                <xsl:attribute name="name"><xsl:value-of select="@model"/>-units</xsl:attribute>
                 <xsl:element name="option">
-                <xsl:if test="@units = 'inches'">
+                <xsl:if test="size[last()]/@units = 'inches'">
                     <xsl:attribute name="selected"/>
                 </xsl:if>
                 inches
                 </xsl:element>
                 <xsl:element name="option">
-                <xsl:if test="@units = 'cm'">
+                <xsl:if test="size[last()]/@units = 'cm'">
                     <xsl:attribute name="selected"/>
                 </xsl:if>
                 cm
                 </xsl:element>
                 <xsl:element name="option">
-                <xsl:if test="@units = 'mm'">
+                <xsl:if test="size[last()]/@units = 'mm'">
                     <xsl:attribute name="selected"/>
                 </xsl:if>
                 mm
                 </xsl:element>
             </xsl:element>
                 
-        </xsl:for-each>
         <br/>
 
       Max input voltage:
@@ -242,7 +273,12 @@ change the form and hit the "Enter" button at the bottom.
         </xsl:for-each>
     </p>
 
+    <!-- manually add entries for new model -->
+    
+
     </xsl:for-each>
+
+    <xsl:element name="hr"></xsl:element>
 
     <input type="submit" value="Enter"/>
     
