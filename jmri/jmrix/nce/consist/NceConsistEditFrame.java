@@ -22,6 +22,9 @@ import java.io.*;
  * start with 127.  Consist lead engines are stored in memory locations xF500 through 
  * xF5FF.  Consist rear engines are stored in memory locations xF600 through xF6FF.
  * Mid consist engines (four max) are stored in memory locations xF700 through xFAFF.
+ * If a long address is in use, bits 6 and 7 of the high byte are set.
+ * Example: Long address 3 = 0xc0 0x03
+ * Short address 3 = 0x00 0x03
  * 
  *   NCE file format:
  * 
@@ -43,7 +46,7 @@ import java.io.*;
  * :0000
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -51,8 +54,10 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 	private static final int CS_CONSIST_MEM = 0xF500;	// start of NCE CS Consist memory 
 	private static final int CS_CON_MEM_REAR = 0xF600;	// start of rear consist engines
 	private static final int CS_CON_MEM_MID = 0xF700;	// start of mid consist engines
-	private static final int CONSIST_MIN = 0;
+	private static final int CONSIST_MIN = 1;
 	private static final int CONSIST_MAX = 127;
+	private static final int LOC_ADR_MIN = 1;
+	private static final int LOC_ADR_MAX = 9999;
 	private int consistNum = 127;					// consist being worked
 	private int engineNum = 0; 						// which engine 
 	private static final int REPLY_1 = 1;			// reply length of 1 byte expected
@@ -65,14 +70,19 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 	private static final String QUESTION = "  ??  ";
 	private static final String FWD = "Forward";
 	private static final String REV = "Reverse";
+	private static final String LONG = "Long";
+	private static final String SHORT = "Short";
+	private static final String EMPTY = "";
 	
 	
 	private boolean consistSearchInc = false;		// next search
 	private boolean consistSearchDec = false;		// previous search
-	private int consistCount = 0;						// search count not to exceed CONSIST_MAX
+	private int consistCount = 0;					// search count not to exceed CONSIST_MAX
 	private boolean secondRead = false;				// when true, another 16 byte read expected
 	private boolean consistValid = false;			// when true, NCE CS has responed to consist read
 	private boolean consistModified = false;		// when true, consist has been modified by user
+	
+	private boolean refresh = false;				// when true, refresh loco address from CS
 	
 	// member declarations
     javax.swing.JLabel textConsist = new javax.swing.JLabel();
@@ -83,6 +93,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
     javax.swing.JButton previousButton = new javax.swing.JButton();
     javax.swing.JButton nextButton = new javax.swing.JButton();
     javax.swing.JButton getButton = new javax.swing.JButton();
+    javax.swing.JButton clearButton = new javax.swing.JButton();
     javax.swing.JButton saveButton = new javax.swing.JButton();
     javax.swing.JButton backUpButton = new javax.swing.JButton();
     javax.swing.JButton restoreButton = new javax.swing.JButton();
@@ -96,6 +107,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
     // labels
     javax.swing.JLabel textEngine = new javax.swing.JLabel();
     javax.swing.JLabel textAddress = new javax.swing.JLabel();
+    javax.swing.JLabel textAddrType = new javax.swing.JLabel();
     javax.swing.JLabel textDirection = new javax.swing.JLabel();
     
     // for padding out panel
@@ -103,44 +115,44 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
     javax.swing.JLabel space2 = new javax.swing.JLabel();
     
     // lead engine
-    javax.swing.JLabel num1 = new javax.swing.JLabel();
     javax.swing.JLabel textEng1 = new javax.swing.JLabel();
     javax.swing.JTextField engTextField1 = new javax.swing.JTextField(4);
+    javax.swing.JButton adrButton1 = new javax.swing.JButton();
     javax.swing.JButton cmdButton1 = new javax.swing.JButton();
     javax.swing.JButton dirButton1 = new javax.swing.JButton();
     
     //  rear engine
-    javax.swing.JLabel num2 = new javax.swing.JLabel();
     javax.swing.JLabel textEng2 = new javax.swing.JLabel();
     javax.swing.JTextField engTextField2 = new javax.swing.JTextField(4);
+    javax.swing.JButton adrButton2 = new javax.swing.JButton();
     javax.swing.JButton cmdButton2 = new javax.swing.JButton();
     javax.swing.JButton dirButton2 = new javax.swing.JButton();
     
     //  mid engine
-    javax.swing.JLabel num3 = new javax.swing.JLabel();
     javax.swing.JLabel textEng3 = new javax.swing.JLabel();
     javax.swing.JTextField engTextField3 = new javax.swing.JTextField(4);
+    javax.swing.JButton adrButton3 = new javax.swing.JButton();
     javax.swing.JButton cmdButton3 = new javax.swing.JButton();
     javax.swing.JButton dirButton3 = new javax.swing.JButton();
     
     //  mid engine
-    javax.swing.JLabel num4 = new javax.swing.JLabel();
     javax.swing.JLabel textEng4 = new javax.swing.JLabel();
     javax.swing.JTextField engTextField4 = new javax.swing.JTextField(4);
+    javax.swing.JButton adrButton4 = new javax.swing.JButton();
     javax.swing.JButton cmdButton4 = new javax.swing.JButton();
     javax.swing.JButton dirButton4 = new javax.swing.JButton();
     
     //  mid engine
-    javax.swing.JLabel num5 = new javax.swing.JLabel();
     javax.swing.JLabel textEng5 = new javax.swing.JLabel();
     javax.swing.JTextField engTextField5 = new javax.swing.JTextField(4);
+    javax.swing.JButton adrButton5 = new javax.swing.JButton();
     javax.swing.JButton cmdButton5 = new javax.swing.JButton();
     javax.swing.JButton dirButton5 = new javax.swing.JButton();
     
     //  mid engine
-    javax.swing.JLabel num6 = new javax.swing.JLabel();
     javax.swing.JLabel textEng6 = new javax.swing.JLabel();
     javax.swing.JTextField engTextField6 = new javax.swing.JTextField(4);
+    javax.swing.JButton adrButton6 = new javax.swing.JButton();
     javax.swing.JButton cmdButton6 = new javax.swing.JButton();
     javax.swing.JButton dirButton6 = new javax.swing.JButton();
     
@@ -173,7 +185,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
         getButton.setToolTipText("Read consist from NCE CS");
         
         consistTextField.setText(Integer.toString(consistNum));
-		consistTextField.setToolTipText("Enter consist 0 to 127");
+		consistTextField.setToolTipText("Enter consist 1 to 127");
 		consistTextField.setMaximumSize(new Dimension(consistTextField
 				.getMaximumSize().width, consistTextField.getPreferredSize().height));
         
@@ -181,17 +193,22 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 		textEngine.setVisible(true);
 		textAddress.setText("Address");
 		textAddress.setVisible(true);
+		textAddrType.setText("Type");
+		textAddrType.setVisible(true);
 		textDirection.setText("Direction");
 		textDirection.setVisible(true);
 		
-		
+		clearButton.setText("Clear");
+        clearButton.setVisible(true);
+        clearButton.setEnabled (false);
+        clearButton.setToolTipText("Clear consist in NCE CS");
 		
 		saveButton.setText("Save");
-        saveButton.setVisible(true);
+        saveButton.setVisible(false);
         saveButton.setEnabled (false);
         saveButton.setToolTipText("Update consist in NCE CS");
         
-        backUpButton.setText("Backup");
+        backUpButton.setText(" Backup ");
         backUpButton.setVisible(true);
         backUpButton.setToolTipText("Save all consists to a file");
    	   
@@ -233,32 +250,34 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
         
         // row 4 labels
         
-        addItem(textEngine, 1,4);
-        addItem(textAddress, 2,4);
+        addItem(textEngine, 0,4);
+        addItem(textAddress, 1,4);
+        addItem(textAddrType, 2,4);
         addItem(textDirection, 3,4);
         
         // row 5 Lead Engine
-        addEngRow (num1, textEng1, engTextField1, dirButton1, cmdButton1,  5);
+        addEngRow (textEng1, engTextField1, adrButton1, dirButton1, cmdButton1,  5);
           
         // row 6 Rear Engine
-        addEngRow (num2, textEng2, engTextField2, dirButton2, cmdButton2,  6);
+        addEngRow (textEng2, engTextField2, adrButton2, dirButton2, cmdButton2,  6);
         
         // row 7 Mid Engine
-        addEngRow (num3, textEng3, engTextField3, dirButton3, cmdButton3,  7);
+        addEngRow (textEng3, engTextField3, adrButton3, dirButton3, cmdButton3,  7);
         
         // row 8 Mid Engine
-        addEngRow (num4, textEng4, engTextField4, dirButton4, cmdButton4,  8);
+        addEngRow (textEng4, engTextField4, adrButton4, dirButton4, cmdButton4,  8);
         
         // row 9 Mid Engine
-        addEngRow (num5, textEng5, engTextField5, dirButton5, cmdButton5,  9);
+        addEngRow (textEng5, engTextField5, adrButton5, dirButton5, cmdButton5,  9);
         
         // row 10 Mid Engine
-        addEngRow (num6, textEng6, engTextField6, dirButton6, cmdButton6,  10);
+        addEngRow (textEng6, engTextField6, adrButton6, dirButton6, cmdButton6,  10);
         
         // row 15 padding for looks
         addItem(space2, 2,15);
         
         // row 16
+        addItem(clearButton, 1,16);
         addItem(saveButton, 2,16);
         addItem(backUpButton, 3,16);
         addItem(restoreButton, 4,16);
@@ -267,9 +286,18 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
         addButtonAction(previousButton);
         addButtonAction(nextButton);
         addButtonAction(getButton);
+        addButtonAction(clearButton);
         addButtonAction(saveButton);
         addButtonAction(backUpButton);
         addButtonAction(restoreButton);
+        
+        // engine address length buttons
+        addButtonAdrAction(adrButton1);
+        addButtonAdrAction(adrButton2);
+        addButtonAdrAction(adrButton3);
+        addButtonAdrAction(adrButton4);
+        addButtonAdrAction(adrButton5);
+        addButtonAdrAction(adrButton6);
         
         // engine direction buttons
         addButtonDirAction(dirButton1);
@@ -291,16 +319,28 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
         this.setSize (400,350);
     }
  
-    // Previous, Next, Get, Save, Restore & Backup buttons
+    // Previous, Next, Get, Clear, Save, Restore & Backup buttons
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
-    	
-		// if we're searching ignore user 
+
+		// if we're searching ignore user
 		if (consistSearchInc || consistSearchDec)
 			return;
 
+		if (ae.getSource() == clearButton) {
+			int locoAddr = Integer.parseInt(engTextField1.getText());
+			if (adrButton1.getText() == LONG) {
+				locoAddr += 0xC000;
+			}
+			byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr,
+					NceBinaryCommand.LOC_CMD_KILL_CONSIST, (byte) 0);
+			sendNceMessage(bl,REPLY_1);
+
+			// now refresh to update panel
+			getConsist();
+		}
+		
+		// save button not currently activated or used RFU
 		if (ae.getSource() == saveButton) {
-//			boolean status = saveConsist();
-//			if (status) // was save successful?
 				setSaveButton(false); // yes, clear save button
 			return;
 		}
@@ -317,15 +357,14 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 			setSaveButton(false);		// Turn off save button
 		
 			if (ae.getSource() == previousButton) {
-				consistCount = 0; // used to determine if all 128 consist have been read
+				consistCount = 0; // used to determine if all 127 consist have been read
 				consistSearchDec = true;
 				consistNum = getConsist();	// check for valid and kick off read process
 				if (consistNum == -1) 	// Error user input incorrect
 					consistSearchDec = false;
 			}
 			if (ae.getSource() == nextButton) {
-				consistCount = 0; // used to determine if all 256 macros have been
-				// read
+				consistCount = 0; // used to determine if all 127 consist have been read
 				consistSearchInc = true;
 				consistNum = getConsist();	// check for valid and kick off read process
 				if (consistNum == -1) 	// Error user input incorrect
@@ -352,29 +391,153 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 		}
 	}
 
-	
+	// One of six loco command buttons, add or delete
 	public void buttonActionCmdPerformed(java.awt.event.ActionEvent ae) {
+
+		// if we're searching ignore user
+		if (consistSearchInc || consistSearchDec)
+			return;
+
+		if (ae.getSource() == cmdButton1) {
+			modifyLocoFields(engTextField1, adrButton1, dirButton1, cmdButton1);
+		}
+		if (ae.getSource() == cmdButton2) {
+			modifyLocoFields(engTextField2, adrButton2, dirButton2, cmdButton2);
+		}
+		if (ae.getSource() == cmdButton3) {
+			modifyLocoFields(engTextField3, adrButton3, dirButton3, cmdButton3);
+		}
+		if (ae.getSource() == cmdButton4) {
+			modifyLocoFields(engTextField4, adrButton4, dirButton4, cmdButton4);
+		}
+		if (ae.getSource() == cmdButton5) {
+			modifyLocoFields(engTextField5, adrButton5, dirButton5, cmdButton5);
+		}
+		if (ae.getSource() == cmdButton6) {
+			modifyLocoFields(engTextField6, adrButton6, dirButton6, cmdButton6);
+		}
+		// set reflesh flag to update panel
+		refresh = true;
+	}
+	
+	// one of six loco address type buttons
+	public void buttonActionAdrPerformed(java.awt.event.ActionEvent ae) {
 		
 		// if we're searching ignore user 
 		if (consistSearchInc || consistSearchDec)
 			return;
 		
+		if (ae.getSource() == adrButton1) {
+			toggleAdrButton (engTextField1, adrButton1);
+			
+		}
+		if (ae.getSource() == adrButton2) {
+			toggleAdrButton (engTextField2, adrButton2);
+			
+		}
+		if (ae.getSource() == adrButton3) {
+			toggleAdrButton (engTextField3, adrButton3);
+			
+		}
+		if (ae.getSource() == adrButton4) {
+			toggleAdrButton (engTextField4, adrButton4);
+			
+		}
+		if (ae.getSource() == adrButton5) {
+			toggleAdrButton (engTextField5, adrButton5);
+			
+		}
+		if (ae.getSource() == adrButton6) {
+			toggleAdrButton (engTextField6, adrButton6);
+			
+		}
 
 	}
 	
-	public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
+	private void toggleAdrButton(JTextField engTextField, JButton adrButton) {
+		
+		if (validLocoAdr(engTextField.getText())<0)
+			return;
+		
+		if (engTextField.getText().equals (EMPTY)) {
+			
+			JOptionPane.showMessageDialog(NceConsistEditFrame.this,
+					"Enter loco address before changing address type", "NCE Consist",
+					JOptionPane.ERROR_MESSAGE);
+			return;
+
+		} else {
+
+			if (adrButton.getText() == LONG) {
+				if (Integer.parseInt(engTextField.getText()) < 128) {
+					adrButton.setText(SHORT);
+				}
+
+			} else {
+				adrButton.setText(LONG);
+			}
+		}
+	}
+
+// one of six loco direction buttons
+public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 		
 		// if we're searching ignore user 
 		if (consistSearchInc || consistSearchDec)
 			return;
 		
+		if (ae.getSource() == dirButton1) {
+			toggleDirButton (engTextField1, dirButton1, cmdButton1);
+			
+		}
+		if (ae.getSource() == dirButton2) {
+			toggleDirButton (engTextField2, dirButton2, cmdButton2);
+			
+		}
+		if (ae.getSource() == dirButton3) {
+			toggleDirButton (engTextField3, dirButton3, cmdButton3);
+			
+		}
+		if (ae.getSource() == dirButton4) {
+			toggleDirButton (engTextField4, dirButton4, cmdButton4);
+			
+		}
+		if (ae.getSource() == dirButton5) {
+			toggleDirButton (engTextField5, dirButton5, cmdButton5);
+			
+		}
+		if (ae.getSource() == dirButton6) {
+			toggleDirButton (engTextField6, dirButton6, cmdButton6);
+			
+		}
 
 	}
-
-
 	
+	private void toggleDirButton(JTextField engTextField, JButton dirButton, JButton cmdButton) {
+
+		if (validLocoAdr(engTextField.getText())<0)
+			return;
+		
+		if (engTextField.getText().equals(EMPTY)) {
+
+			JOptionPane.showMessageDialog(NceConsistEditFrame.this,
+					"Enter loco address before changing loco direction",
+					"NCE Consist", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
+		cmdButton.setEnabled (true);
+
+		if (dirButton.getText() == FWD) {
+			dirButton.setText(REV);
+		
+		} else {
+			dirButton.setText(FWD);
+		}
+	}
+
+	//RFU
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
-		getConsist();
 	}
     
     // gets the user supplied consist number and then reads NCE CS memory
@@ -383,7 +546,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 		if (cN == -1) {
 			consistReply.setText("error");
 			JOptionPane.showMessageDialog(NceConsistEditFrame.this,
-					"Enter consist number 0 to 127", "NCE Consist",
+					"Enter consist number 1 to 127", "NCE Consist",
 					JOptionPane.ERROR_MESSAGE);
 			consistValid = false;
 			return cN;
@@ -394,8 +557,8 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 			consistReply.setText("waiting");
 		}
 		
-		NceMessage m1 = readConsistMemory (cN, 0);
-		NceTrafficController.instance().sendNceMessage(m1, this);
+		byte[] bl = readConsistMemory (cN, 0);
+		sendNceMessage(bl, REPLY_16);
 		
 		return cN;
     }
@@ -415,9 +578,28 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 			return cN;
     }
     
+//  Check for valid consist number, return number if valid, -1 if not.
+    private int validLocoAdr (String s){
+    	int lA;
+		try {
+			lA = Integer.parseInt(s);
+		} catch (NumberFormatException e) {
+			lA = -1;
+		}
+		if (lA < LOC_ADR_MIN | lA > LOC_ADR_MAX){
+			
+			JOptionPane.showMessageDialog(NceConsistEditFrame.this,
+					"Enter loco address 1 to 9999",
+					"NCE Consist", JOptionPane.ERROR_MESSAGE);
+			return -1;
+		}
+		else
+			return lA;
+    }
+    
     // Reads 16 bytes of NCE consist memory based on consist number and 
     // engine number 0=lead 1=rear 2=mid 
-    private NceMessage readConsistMemory(int consistNum, int eNum) {
+    private byte[] readConsistMemory(int consistNum, int eNum) {
     	
     	engineNum = eNum;
     	
@@ -430,11 +612,8 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
     		nceMacroAddr = (consistNum * 8) + nceConsistBaseMemory;
     	}
  
-    	replyLen = REPLY_16;			// Expect 16 byte response
-    	waiting++;
-		byte[] bl = NceBinaryCommand.accMemoryRead(nceMacroAddr);
-		NceMessage m = NceMessage.createBinaryMessage(bl, REPLY_16);
-		return m;
+ 		byte[] bl = NceBinaryCommand.accMemoryRead(nceMacroAddr);
+		return bl;
     }
  
     
@@ -448,34 +627,49 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
     
     public void  message(NceMessage m) {}  // ignore replies
     
-    // response from save, get, next or previous
+    // NCE CS response from add, delete, save, get, next or previous
 	public void reply(NceReply r) {
 		if (waiting <= 0) {
 			log.error("unexpected response");
 			return;
 		}
+		
 		waiting--;
+
 		if (r.getNumDataElements() != replyLen) {
 			consistReply.setText("error");
+			log.error("reply length error, expecting: "+replyLen+" got: "+r.getNumDataElements());
 			return;
 		}
-		// Consist command
+
+		// response to commands
 		if (replyLen == REPLY_1) {
 			// Looking for proper response
 			int recChar = r.getElement(0);
-			if (recChar == '!')
+			if (recChar == '!'){
 				consistReply.setText("okay");
+				if (refresh){
+					refresh = false;
+					// update panel
+					byte[] bl = readConsistMemory(consistNum, 0);
+					sendNceMessage(bl, REPLY_16);
+				}
+			}
 			if (recChar == '0')
 				consistReply.setText("empty");
+			return;
 		}
+		
 		// Consist memory read
 		if (replyLen == REPLY_16) {
-			String recChar = getChar(r, 0);
-
+			
 			// load lead engine
 			if (engineNum == 0) {
 
-				engTextField1.setText(recChar);
+				boolean eng1exists = updateLocoFields (r, 0, engTextField1, adrButton1, dirButton1, cmdButton1);
+
+				clearButton.setEnabled (eng1exists);
+				
 
 				// are we searching?
 				if (consistSearchInc || consistSearchDec) {
@@ -483,7 +677,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 					consistTextField.setText(Integer.toString(consistNum));
 					
 					if (checkBoxEmpty.isSelected()) {
-						if (recChar == "Empty") {
+						if (!eng1exists) {
 							if (consistCount > 0) {
 								consistSearchInc = false;
 								consistSearchDec = false;
@@ -491,14 +685,14 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 						}
 
 					} else {
-						if (recChar != "Empty") {
+						if (eng1exists) {
 							if (consistCount > 0) {
 								consistSearchInc = false;
 								consistSearchDec = false;
 							}
 						}
 					}
-					if (consistCount++ > CONSIST_MAX) {
+					if (++consistCount > CONSIST_MAX) {
 						consistSearchInc = false;
 						consistSearchDec = false;
 					}
@@ -507,18 +701,15 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 				// load rear engine
 			} else if (engineNum == 1) {
 
-				engTextField2.setText(recChar);
+				updateLocoFields (r, 0, engTextField2, adrButton2, dirButton2, cmdButton2);
 
 				// load mid engines
 			} else {
 
-				engTextField3.setText(recChar);
-				recChar = getChar(r, 2);
-				engTextField4.setText(recChar);
-				recChar = getChar(r, 4);
-				engTextField5.setText(recChar);
-				recChar = getChar(r, 6);
-				engTextField6.setText(recChar);
+				updateLocoFields (r, 0, engTextField3, adrButton3, dirButton3, cmdButton3);
+				updateLocoFields (r, 2, engTextField4, adrButton4, dirButton4, cmdButton4);
+				updateLocoFields (r, 4, engTextField5, adrButton5, dirButton5, cmdButton5);
+				updateLocoFields (r, 6, engTextField6, adrButton6, dirButton6, cmdButton6);
 				
 			}
 
@@ -526,8 +717,8 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 			if (engineNum == 0 || engineNum == 1) {
 				engineNum++;
 
-				NceMessage m = readConsistMemory(consistNum, engineNum);
-				NceTrafficController.instance().sendNceMessage(m, this);
+				byte[] bl = readConsistMemory(consistNum, engineNum);
+				sendNceMessage(bl, REPLY_16);
 			
 			// done reading current consist
 			}else {
@@ -549,26 +740,179 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 						consistNum = CONSIST_MIN;
 				}
 
-				NceMessage m = readConsistMemory(consistNum, 0);
-				NceTrafficController.instance().sendNceMessage(m, this);
+				byte[] bl = readConsistMemory(consistNum, 0);
+				sendNceMessage(bl, REPLY_16);
 
 			}
 		}
+	}
+	
+	// update loco fields, returns false if loco address is null
+	private boolean updateLocoFields (NceReply r, int i, JTextField engTextField, JButton adrButton, JButton dirButton, JButton cmdButton ){
+		
+		String locoAddr = getLocoAddr(r, i);
+		boolean locoType = getLocoType (r, i); 
+		
+		engTextField.setText(locoAddr);
+		
+		
+		if (locoAddr == EMPTY){
+			
+			engTextField.setEnabled(true);
+			
+			cmdButton.setText(ADD);
+			cmdButton.setVisible(true);
+			cmdButton.setEnabled(false);
+			cmdButton.setToolTipText("Press to add engine to consist");
+			
+			dirButton.setText(QUESTION);
+			dirButton.setEnabled(true);
+			
+			adrButton.setText(LONG);
+			adrButton.setEnabled(true);
+			
+			return false;
+			
+		}else{
+			
+			engTextField.setEnabled(false);
+			
+			// can not delete lead or rear locos
+			if (engTextField == engTextField1 || engTextField == engTextField2){
+				
+				cmdButton.setVisible(false);
+				
+			} else {
 
+				cmdButton.setText(DELETE);
+				cmdButton.setEnabled(true);
+				cmdButton.setToolTipText("Press to delete this engine from consist");
+
+			}
+				
+			dirButton.setText(QUESTION);
+			dirButton.setEnabled(false);
+			
+			adrButton.setText((locoType) ? LONG : SHORT);
+			adrButton.setEnabled(false);
+			
+			return true;
+		}
+	}
+	
+	// modify loco fields
+	private void modifyLocoFields(JTextField engTextField, JButton adrButton,
+			JButton dirButton, JButton cmdButton) {
+		
+		byte[] bl;
+		byte cN = (byte) Integer.parseInt(consistTextField.getText());
+
+		int locoAddr = Integer.parseInt(engTextField.getText());
+		if (adrButton.getText() == LONG) 
+			locoAddr += 0xC000;
+		
+
+		if (cmdButton.getText() == DELETE) {
+
+			bl = NceBinaryCommand.nceLocoCmd(locoAddr,
+					NceBinaryCommand.LOC_CMD_DELETE_LOC_CONSIST, (byte) 0);
+			sendNceMessage(bl, REPLY_1);
+
+		} else {
+			
+			// ADD button has been pressed
+			if (dirButton.getText() == QUESTION){
+				
+				JOptionPane.showMessageDialog(NceConsistEditFrame.this,
+						"Set loco direction before adding to consist", "NCE Consist",
+						JOptionPane.ERROR_MESSAGE);
+				
+				return;
+			}
+			
+			// now we need to determine if lead, rear, or mid loco
+			
+			// lead loco?
+			if (engTextField == engTextField1){
+				
+				if (dirButton.getText() == FWD) {
+					bl = NceBinaryCommand.nceLocoCmd(locoAddr,
+							NceBinaryCommand.LOC_CMD_FWD_CONSIST_LEAD, cN);
+					sendNceMessage(bl, REPLY_1);
+				}
+				if (dirButton.getText() == REV) {
+
+					bl = NceBinaryCommand.nceLocoCmd(locoAddr,
+							NceBinaryCommand.LOC_CMD_REV_CONSIST_LEAD, cN);
+					sendNceMessage(bl, REPLY_1);
+				}
+			
+			// rear loco?
+			}else if (engTextField == engTextField2){
+				
+				if (dirButton.getText() == FWD) {
+					bl = NceBinaryCommand.nceLocoCmd(locoAddr,
+							NceBinaryCommand.LOC_CMD_FWD_CONSIST_REAR, cN);
+					sendNceMessage(bl, REPLY_1);
+				}
+				if (dirButton.getText() == REV) {
+
+					bl = NceBinaryCommand.nceLocoCmd(locoAddr,
+							NceBinaryCommand.LOC_CMD_REV_CONSIST_REAR, cN);
+					sendNceMessage(bl, REPLY_1);
+				}
+			
+			// must be mid loco
+			} else {
+
+				if (dirButton.getText() == FWD) {
+					bl = NceBinaryCommand.nceLocoCmd(locoAddr,
+							NceBinaryCommand.LOC_CMD_FWD_CONSIST_MID, cN);
+					sendNceMessage(bl, REPLY_1);
+				}
+				if (dirButton.getText() == REV) {
+
+					bl = NceBinaryCommand.nceLocoCmd(locoAddr,
+							NceBinaryCommand.LOC_CMD_REV_CONSIST_MID, cN);
+					sendNceMessage(bl, REPLY_1);
+				}
+			}
+		}
+	}
+	
+	private void sendNceMessage (byte[] b, int replyLength){
+		NceMessage m = NceMessage.createBinaryMessage(b, replyLength);
+		int testcount = 0;
+		waiting++;
+		replyLen = replyLength;			// Expect 1 byte response
+
+		NceTrafficController.instance().sendNceMessage(m, this);
+		
+	}
+	
+	// get loco address type, returns true if long
+	private boolean getLocoType (NceReply r, int i){
+		int rC = r.getElement(i);
+		rC = rC&0xC0;		// long address if 2 msb are set
+		if (rC == 0xC0){
+			return true;
+		}else{
+			return false;
+		}
 	}
 
-	private String getChar(NceReply r, int i){
+	private String getLocoAddr(NceReply r, int i){
 		
 		int rC = r.getElement(i++);
 		rC = (rC << 8)&0x3F00;
 		int rC_l = r.getElement(i);
 		rC_l = rC_l&0xFF;
 		rC = rC + rC_l;
-		String recChar = "Empty";
+		String locoAddr = EMPTY;
 		if (rC != 0){
-			recChar = Integer.toString (rC);
+			locoAddr = Integer.toString (rC);
 		}
-		return recChar;
+		return locoAddr;
 	}
  
     
@@ -596,6 +940,14 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 			}
 		});
 	}
+    
+	private void addButtonAdrAction(JButton b) {
+		b.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				buttonActionAdrPerformed(e);
+			}
+		});
+	}  
 
 	private void addButtonDirAction(JButton b) {
 		b.addActionListener(new java.awt.event.ActionListener() {
@@ -624,20 +976,24 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
     
     //  initialize engine fields
     private void initEngFields() {
-    	initEngRow(1, "Lead", num1, textEng1, engTextField1, dirButton1, cmdButton1);
-    	initEngRow(2, "Rear", num2, textEng2, engTextField2, dirButton2, cmdButton2);
-    	initEngRow(3, "Mid 1", num3, textEng3, engTextField3, dirButton3, cmdButton3);
-    	initEngRow(4, "Mid 2", num4, textEng4, engTextField4, dirButton4, cmdButton4);
-    	initEngRow(5, "Mid 3", num5, textEng5, engTextField5, dirButton5, cmdButton5);
-    	initEngRow(6, "Mid 4", num6, textEng6, engTextField6, dirButton6, cmdButton6);
+    	initEngRow(1, "Lead", textEng1, engTextField1, adrButton1, dirButton1, cmdButton1);
+    	initEngRow(2, "Rear", textEng2, engTextField2, adrButton2, dirButton2, cmdButton2);
+    	initEngRow(3, "Mid 1", textEng3, engTextField3, adrButton3, dirButton3, cmdButton3);
+    	initEngRow(4, "Mid 2", textEng4, engTextField4, adrButton4, dirButton4, cmdButton4);
+    	initEngRow(5, "Mid 3", textEng5, engTextField5, adrButton5, dirButton5, cmdButton5);
+    	initEngRow(6, "Mid 4", textEng6, engTextField6, adrButton6, dirButton6, cmdButton6);
 	}
     
-    private void initEngRow(int row, String s, JLabel num, JLabel textEng, JTextField engTextField, JButton dirButton, JButton cmdButton) {
-		num.setText(Integer.toString(row));
-		num.setVisible(true);
+    private void initEngRow(int row, String s, JLabel textEng, JTextField engTextField, JButton adrButton, JButton dirButton, JButton cmdButton) {
 		
 		textEng.setText(s);
 		textEng.setVisible(true);
+		
+		
+		adrButton.setText(LONG);
+		adrButton.setVisible(true);
+		adrButton.setEnabled(false);
+		adrButton.setToolTipText("Press to change address type");
 		
 		dirButton.setText(QUESTION);
 		dirButton.setVisible(true);
@@ -645,10 +1001,11 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 		dirButton.setToolTipText("Press to change engine direction");
 		
 		cmdButton.setText(ADD);
-		cmdButton.setVisible(false);
-		cmdButton.setToolTipText("");
+		cmdButton.setVisible(true);
+		cmdButton.setEnabled(false);
+		cmdButton.setToolTipText("Press to add engine to consist");
 
-		engTextField.setText("");
+		engTextField.setText(EMPTY);
 		engTextField.setToolTipText("Enter engine address");
 		engTextField.setMaximumSize(new Dimension(engTextField
 				.getMaximumSize().width,
