@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!-- Copyright (C) Bob Jacobsen 2007 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: decoder.xsl,v 1.8 2007-08-21 07:49:43 jacobsen Exp $ -->
+<!-- $Id: decoder.xsl,v 1.9 2007-08-21 09:51:17 jacobsen Exp $ -->
 <!-- This XSLT transform is used when a JMRI decoder definition -->
 <!-- file is displayed by a web browser -->
 <html xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml" xsl:version="1.0">
@@ -30,11 +30,18 @@
     <p>
 If you want to submit an update to any of this information,
 change the form and hit the "Enter" button at the bottom.
+<br/>
+You can also add a new model in the spaces at the bottom.
 </p>
     <form method="post" action="/cgi-bin/updateDecoder.cgi">
-    <!-- store the family name for later retrieval -->
+    <!-- store the mfg andfamily name for later retrieval -->
     <xsl:for-each select="decoder-config/decoder/family"><!-- unique -->
     
+      <xsl:element name="input">
+          <xsl:attribute name="type">hidden</xsl:attribute>
+          <xsl:attribute name="name">Manufacturer</xsl:attribute>
+          <xsl:attribute name="value"><xsl:value-of select="@mfg"/></xsl:attribute>
+      </xsl:element>
       <xsl:element name="input">
           <xsl:attribute name="type">hidden</xsl:attribute>
           <xsl:attribute name="name">Family</xsl:attribute>
@@ -100,8 +107,7 @@ change the form and hit the "Enter" button at the bottom.
       <xsl:element name="input">
         <xsl:attribute name="type">text</xsl:attribute>
         <xsl:attribute name="name"><xsl:value-of select="@model"/>-formFactor</xsl:attribute>
-        <xsl:attribute name="size">3</xsl:attribute><xsl:attribute name="value">
-        <xsl:value-of select="@formFactor"/></xsl:attribute>
+        <xsl:attribute name="size">3</xsl:attribute><xsl:attribute name="value"><xsl:value-of select="@formFactor"/></xsl:attribute>
       </xsl:element>
       form factor (manufacturer's labeling)
       
@@ -219,6 +225,136 @@ change the form and hit the "Enter" button at the bottom.
     </xsl:for-each> <!-- end processing each model element-->
     
     <!-- manually add entries for new model -->
+    <p><hr/><hr/>
+      Add New Model: 
+      <xsl:element name="input">
+        <xsl:attribute name="type">test</xsl:attribute>
+        <xsl:attribute name="name">new-model-name</xsl:attribute>
+        <xsl:attribute name="size">25</xsl:attribute>
+      </xsl:element>
+      
+      <br/>
+      
+      Version number low:
+      <xsl:element name="input">
+        <xsl:attribute name="type">int</xsl:attribute>
+        <xsl:attribute name="name">new-version-low</xsl:attribute>
+        <xsl:attribute name="size">3</xsl:attribute>
+      </xsl:element>
+      high:
+      <xsl:element name="input"><xsl:attribute name="type">int</xsl:attribute>
+        <xsl:attribute name="name">new-version-high</xsl:attribute>
+        <xsl:attribute name="size">3</xsl:attribute>
+      </xsl:element>
+
+      <br/>
+      
+      <xsl:element name="input">
+        <xsl:attribute name="type">int</xsl:attribute>
+        <xsl:attribute name="name">new-Outs</xsl:attribute>
+        <xsl:attribute name="size">3</xsl:attribute>
+      </xsl:element>
+      outputs,
+      <xsl:element name="input">
+        <xsl:attribute name="type">int</xsl:attribute>
+        <xsl:attribute name="name">new-Fns</xsl:attribute>
+        <xsl:attribute name="size">3</xsl:attribute>
+      </xsl:element>
+      functions
+      
+      <br/>
+      
+      <xsl:element name="input">
+        <xsl:attribute name="type">text</xsl:attribute>
+        <xsl:attribute name="name">new-formFactor</xsl:attribute>
+      </xsl:element>
+      form factor (manufacturer's labeling)
+      
+      <br/>
+      
+      <xsl:element name="select">
+        <xsl:attribute name="name">new-connector</xsl:attribute>
+        <xsl:element name="option">9pin</xsl:element>
+        <xsl:element name="option">NMRAsmall</xsl:element>
+        <xsl:element name="option">NMRAmedium</xsl:element>
+        <xsl:element name="option">NMRAlarge</xsl:element>
+        <xsl:element name="option">other</xsl:element>
+        <xsl:element name="option">unspecified</xsl:element>
+      </xsl:element>
+      connector
+      
+      <br/>
+
+      Length:
+      <xsl:element name="input">
+        <xsl:attribute name="type">float</xsl:attribute>
+        <xsl:attribute name="name">new-length</xsl:attribute>
+        <xsl:attribute name="size">10</xsl:attribute>
+      </xsl:element>
+      Width:
+      <xsl:element name="input">
+        <xsl:attribute name="type">float</xsl:attribute>
+        <xsl:attribute name="name">new-width</xsl:attribute>
+        <xsl:attribute name="size">10</xsl:attribute>
+      </xsl:element>
+      Height: 
+      <xsl:element name="input">
+        <xsl:attribute name="type">float</xsl:attribute>
+        <xsl:attribute name="name">new-height</xsl:attribute>
+        <xsl:attribute name="size">10</xsl:attribute>
+      </xsl:element>
+      <xsl:text> </xsl:text>
+      <xsl:element name="select">
+        <xsl:attribute name="name">new-units</xsl:attribute>
+        <xsl:element name="option">inches</xsl:element>
+        <xsl:element name="option">cm</xsl:element>
+        <xsl:element name="option">mm</xsl:element>
+      </xsl:element>
+        
+      <br/>
+
+      Max input voltage:
+      <xsl:element name="input">
+        <xsl:attribute name="type">text</xsl:attribute>
+        <xsl:attribute name="name">new-maxInputVolts</xsl:attribute>
+        <xsl:attribute name="size">15</xsl:attribute>
+      </xsl:element>
+      
+      <br/>
+
+      Max motor current:
+      <xsl:element name="input">
+        <xsl:attribute name="type">text</xsl:attribute>
+        <xsl:attribute name="name">new-maxMotorCurrent</xsl:attribute>
+        <xsl:attribute name="size">15</xsl:attribute>
+      </xsl:element>
+      
+      <br/>
+
+      Max total current:
+      <xsl:element name="input">
+        <xsl:attribute name="type">text</xsl:attribute>
+        <xsl:attribute name="name">new-maxTotalCurrent</xsl:attribute>
+        <xsl:attribute name="size">15</xsl:attribute>
+      </xsl:element>
+      
+      <br/>
+
+      NMRA warrant
+      <xsl:element name="input">
+        <xsl:attribute name="type">checkbox</xsl:attribute>
+        <xsl:attribute name="name">new-nmraWarrant</xsl:attribute>
+      </xsl:element>
+      
+      expires:
+      <xsl:element name="input">
+        <xsl:attribute name="type">date</xsl:attribute>
+        <xsl:attribute name="name">end-nmraWarrantEnd</xsl:attribute>
+      </xsl:element>
+      <br/>
+
+
+    </p>
     
     <xsl:element name="hr"/>
     <input type="submit" value="Enter"/>
