@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: TCS_Tx.xml,v 1.14 2005-05-01 23:25:42 jacobsen Exp $ -->
+<!-- $Id: TCS_Tx.xml,v 1.15 2007-08-21 10:22:00 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
 					version="5.1" lastUpdated="20031008"/>
