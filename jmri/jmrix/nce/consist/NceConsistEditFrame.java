@@ -46,7 +46,7 @@ import java.io.*;
  * :0000
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -331,12 +331,14 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 			if (adrButton1.getText() == LONG) {
 				locoAddr += 0xC000;
 			}
+
+			//set refresh flag to update panel
+			refresh = true;
+			
 			byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr,
 					NceBinaryCommand.LOC_CMD_KILL_CONSIST, (byte) 0);
 			sendNceMessage(bl,REPLY_1);
 
-			// now refresh to update panel
-			getConsist();
 		}
 		
 		// save button not currently activated or used RFU
@@ -397,6 +399,9 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 		// if we're searching ignore user
 		if (consistSearchInc || consistSearchDec)
 			return;
+		
+		// set reflesh flag to update panel
+		refresh = true;
 
 		if (ae.getSource() == cmdButton1) {
 			modifyLocoFields(engTextField1, adrButton1, dirButton1, cmdButton1);
@@ -416,8 +421,6 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 		if (ae.getSource() == cmdButton6) {
 			modifyLocoFields(engTextField6, adrButton6, dirButton6, cmdButton6);
 		}
-		// set reflesh flag to update panel
-		refresh = true;
 	}
 	
 	// one of six loco address type buttons
