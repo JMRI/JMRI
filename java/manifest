@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Main-Class: apps.JmriDemo.JMRIdemo
-Class-Path: java/classes jmriplugins.jar lib/jmriplugins.jar jmri.jar lib/log4j.jar lib/jhall.jar lib/crimson.jar lib/jdom.jar lib/jython.jar lib/javacsv.jar lib/MRJAdapter.jar lib/vecmath.jar
+Class-Path: java/classes jmriplugins.jar lib/jmriplugins.jar jmri.jar lib/log4j.jar lib/jhall.jar lib/crimson.jar lib/jdom.jar lib/jython.jar lib/javacsv.jar lib/MRJAdapter.jar lib/jakarta-regexp-1.5.jar lib/vecmath.jar
 
 Name: jmri
 Specification-Title: “Java Model Railroad Interface Classes”
