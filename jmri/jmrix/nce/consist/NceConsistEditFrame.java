@@ -46,7 +46,7 @@ import java.io.*;
  * :0000
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -67,12 +67,15 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 	
 	private static final String DELETE = "Delete";
 	private static final String ADD = " Add ";
+	private static final String REPLACE = "Replace";
 	private static final String QUESTION = "  ??  ";
 	private static final String FWD = "Forward";
 	private static final String REV = "Reverse";
 	private static final String LONG = "Long";
 	private static final String SHORT = "Short";
 	private static final String EMPTY = "";
+	
+	private static final String ToolTipAdd = "Press to add engine to consist";
 	
 	
 	private boolean consistSearchInc = false;		// next search
@@ -393,7 +396,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 		}
 	}
 
-	// One of six loco command buttons, add or delete
+	// One of six loco command buttons, add, replace or delete
 	public void buttonActionCmdPerformed(java.awt.event.ActionEvent ae) {
 
 		// if we're searching ignore user
@@ -766,7 +769,7 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 			cmdButton.setText(ADD);
 			cmdButton.setVisible(true);
 			cmdButton.setEnabled(false);
-			cmdButton.setToolTipText("Press to add engine to consist");
+			cmdButton.setToolTipText(ToolTipAdd);
 			
 			dirButton.setText(QUESTION);
 			dirButton.setEnabled(true);
@@ -780,10 +783,12 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 			
 			engTextField.setEnabled(false);
 			
-			// can not delete lead or rear locos
+			// can not delete lead or rear locos, but can replace
 			if (engTextField == engTextField1 || engTextField == engTextField2){
 				
-				cmdButton.setVisible(false);
+				cmdButton.setText(REPLACE);
+				cmdButton.setEnabled(true);
+				cmdButton.setToolTipText("Press to delete and replace this engine");
 				
 			} else {
 
@@ -807,6 +812,14 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 	private void modifyLocoFields(JTextField engTextField, JButton adrButton,
 			JButton dirButton, JButton cmdButton) {
 		
+		if (engTextField.getText().equals (EMPTY)) {
+			
+			JOptionPane.showMessageDialog(NceConsistEditFrame.this,
+					"Enter loco address before pressing add", "NCE Consist",
+					JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
 		byte[] bl;
 		byte cN = (byte) Integer.parseInt(consistTextField.getText());
 
@@ -820,6 +833,43 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 			bl = NceBinaryCommand.nceLocoCmd(locoAddr,
 					NceBinaryCommand.LOC_CMD_DELETE_LOC_CONSIST, (byte) 0);
 			sendNceMessage(bl, REPLY_1);
+
+		}else if (cmdButton.getText() == REPLACE){
+			
+			//Kill refresh flag, no update when replacing loco 
+			refresh = false;
+			
+			bl = NceBinaryCommand.nceLocoCmd(locoAddr,
+					NceBinaryCommand.LOC_CMD_DELETE_LOC_CONSIST, (byte) 0);
+			sendNceMessage(bl, REPLY_1);
+			
+			//now allow user to add loco to lead or rear consist
+	
+			engTextField.setText(EMPTY);
+			engTextField.setEnabled (true);
+			adrButton.setEnabled (true);
+			dirButton.setEnabled(true);
+			cmdButton.setText(ADD);
+			cmdButton.setToolTipText(ToolTipAdd);
+			
+			// now update CS memory in case user doesn't use the Add button
+			
+			if (engTextField == engTextField1) {
+
+				bl = NceBinaryCommand.nceLocoCmd(0,
+						NceBinaryCommand.LOC_CMD_FWD_CONSIST_LEAD, cN);
+				sendNceMessage(bl, REPLY_1);
+				
+				// no lead loco so we can't kill the consist
+				clearButton.setEnabled (false);
+				
+			}else{
+				
+				bl = NceBinaryCommand.nceLocoCmd(0,
+						NceBinaryCommand.LOC_CMD_FWD_CONSIST_REAR, cN);
+				sendNceMessage(bl, REPLY_1);
+				
+			}
 
 		} else {
 			
@@ -1006,7 +1056,7 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 		cmdButton.setText(ADD);
 		cmdButton.setVisible(true);
 		cmdButton.setEnabled(false);
-		cmdButton.setToolTipText("Press to add engine to consist");
+		cmdButton.setToolTipText(ToolTipAdd);
 
 		engTextField.setText(EMPTY);
 		engTextField.setToolTipText("Enter engine address");
