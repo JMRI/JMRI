@@ -46,7 +46,7 @@ import java.io.*;
  * :0000
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -76,7 +76,6 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 	private static final String EMPTY = "";
 	
 	private static final String ToolTipAdd = "Press to add engine to consist";
-	
 	
 	private boolean consistSearchInc = false;		// next search
 	private boolean consistSearchDec = false;		// previous search
@@ -204,7 +203,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 		clearButton.setText("Clear");
         clearButton.setVisible(true);
         clearButton.setEnabled (false);
-        clearButton.setToolTipText("Clear consist in NCE CS");
+        clearButton.setToolTipText("Clear this consist");
 		
 		saveButton.setText("Save");
         saveButton.setVisible(false);
@@ -252,7 +251,6 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
         addItem(space1, 1,3);
         
         // row 4 labels
-        
         addItem(textEngine, 0,4);
         addItem(textAddress, 1,4);
         addItem(textAddrType, 2,4);
@@ -402,9 +400,6 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 		// if we're searching ignore user
 		if (consistSearchInc || consistSearchDec)
 			return;
-		
-		// set reflesh flag to update panel
-		refresh = true;
 
 		if (ae.getSource() == cmdButton1) {
 			modifyLocoFields(engTextField1, adrButton1, dirButton1, cmdButton1);
@@ -457,7 +452,6 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 			toggleAdrButton (engTextField6, adrButton6);
 			
 		}
-
 	}
 	
 	private void toggleAdrButton(JTextField engTextField, JButton adrButton) {
@@ -516,7 +510,6 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 			toggleDirButton (engTextField6, dirButton6, cmdButton6);
 			
 		}
-
 	}
 	
 	private void toggleDirButton(JTextField engTextField, JButton dirButton, JButton cmdButton) {
@@ -633,7 +626,7 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
     
     public void  message(NceMessage m) {}  // ignore replies
     
-    // NCE CS response from add, delete, save, get, next or previous
+    // NCE CS response from add, delete, save, get, next, previous, etc
 	public void reply(NceReply r) {
 		if (waiting <= 0) {
 			log.error("unexpected response");
@@ -812,6 +805,9 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 	private void modifyLocoFields(JTextField engTextField, JButton adrButton,
 			JButton dirButton, JButton cmdButton) {
 		
+		if (validLocoAdr(engTextField.getText())<0)
+			return;
+		
 		if (engTextField.getText().equals (EMPTY)) {
 			
 			JOptionPane.showMessageDialog(NceConsistEditFrame.this,
@@ -820,6 +816,9 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 			return;
 		}
 		
+		// set reflesh flag to update panel
+		refresh = true;
+		
 		byte[] bl;
 		byte cN = (byte) Integer.parseInt(consistTextField.getText());
 
@@ -827,17 +826,19 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 		if (adrButton.getText() == LONG) 
 			locoAddr += 0xC000;
 		
-
 		if (cmdButton.getText() == DELETE) {
-
+			
 			bl = NceBinaryCommand.nceLocoCmd(locoAddr,
 					NceBinaryCommand.LOC_CMD_DELETE_LOC_CONSIST, (byte) 0);
 			sendNceMessage(bl, REPLY_1);
+
 
 		}else if (cmdButton.getText() == REPLACE){
 			
 			//Kill refresh flag, no update when replacing loco 
 			refresh = false;
+			
+			// delete lead or rear loco 
 			
 			bl = NceBinaryCommand.nceLocoCmd(locoAddr,
 					NceBinaryCommand.LOC_CMD_DELETE_LOC_CONSIST, (byte) 0);
@@ -880,8 +881,18 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 						"Set loco direction before adding to consist", "NCE Consist",
 						JOptionPane.ERROR_MESSAGE);
 				
+				//kill refresh flag, no update if Add button is enabled
+				// and loco direction isn't known (lead, rear, replacement) 
+				refresh = false;
+				
 				return;
 			}
+			
+			// delete loco from any existing consists
+
+			bl = NceBinaryCommand.nceLocoCmd(locoAddr,
+					NceBinaryCommand.LOC_CMD_DELETE_LOC_CONSIST, (byte) 0);
+			sendNceMessage(bl, REPLY_1);
 			
 			// now we need to determine if lead, rear, or mid loco
 			
@@ -940,7 +951,6 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 		replyLen = replyLength;			// Expect 1 byte response
 
 		NceTrafficController.instance().sendNceMessage(m, this);
-		
 	}
 	
 	// get loco address type, returns true if long
@@ -1042,7 +1052,6 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 		textEng.setText(s);
 		textEng.setVisible(true);
 		
-		
 		adrButton.setText(LONG);
 		adrButton.setVisible(true);
 		adrButton.setEnabled(false);
@@ -1064,8 +1073,6 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 				.getMaximumSize().width,
 				engTextField.getPreferredSize().height));
     }
-    
-   
    
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceConsistEditFrame.class.getName());	
 }
