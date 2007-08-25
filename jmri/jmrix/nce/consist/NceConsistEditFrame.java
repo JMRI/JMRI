@@ -46,7 +46,7 @@ import java.io.*;
  * :0000
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -647,7 +647,7 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 			int recChar = r.getElement(0);
 			if (recChar == '!'){
 				consistReply.setText("okay");
-				if (refresh){
+				if (refresh && waiting == 0){
 					refresh = false;
 					// update panel
 					byte[] bl = readConsistMemory(consistNum, 0);
