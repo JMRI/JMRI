@@ -17,14 +17,17 @@ package jmri.jmrit.display;
  *
  * <p>Copyright: Bob Jacobsen Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public interface Positionable {
     public void setPositionable(boolean enabled);
     public boolean getPositionable();
-
+    
     public void setEditable(boolean enabled);
     public boolean getEditable();
+
+    public void setViewCoordinates(boolean enabled);
+    public boolean getViewCoordinates();
 
     public void setControlling(boolean enabled);
     public boolean getControlling();

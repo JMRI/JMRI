@@ -16,7 +16,7 @@ import javax.swing.JCheckBoxMenuItem;
  * An icon to display a status of a Sensor.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -133,9 +133,16 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     protected void showPopUp(MouseEvent e) {
         if (!getEditable()) return;
         ours = this;
-        if (popup==null) {
+ //       if (popup==null) {
             popup = new JPopupMenu();
+            
             popup.add(new JMenuItem(getNameString()));
+            
+			if (getViewCoordinates()) {
+				popup.add("x= " + this.getX());
+				popup.add("y= " + this.getY());
+			}
+ 
             if (icon) popup.add(new AbstractAction("Rotate") {
                     public void actionPerformed(ActionEvent e) {
                         active.setRotation(active.getRotation()+1, ours);
@@ -162,7 +169,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                         dispose();
                     }
                 });
-        }  // end creation of popup menu
+  //      }  // end creation of popup menu
 
         popup.show(e.getComponent(), e.getX(), e.getY());
     }

@@ -28,7 +28,7 @@ import javax.swing.JRadioButtonMenuItem;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  */
 
 public class PositionableLabel extends JLabel
@@ -154,8 +154,15 @@ public class PositionableLabel extends JLabel
     protected void showPopUp(MouseEvent e) {
         if (!getEditable()) return;
         ours = this;
-        if (icon && popup == null ) {
+        if (icon) {
             popup = new JPopupMenu();
+            
+            // add x and y coordinates
+			if (getViewCoordinates()) {
+				popup.add("x= " + this.getX());
+				popup.add("y= " + this.getY());
+			}
+             
             popup.add(new AbstractAction("Rotate") {
                 public void actionPerformed(ActionEvent e) {
                     namedIcon.setRotation(namedIcon.getRotation()+1, ours);
@@ -173,8 +180,14 @@ public class PositionableLabel extends JLabel
                     dispose();
                 }
             });
-        } else if (text && popup == null) {
+        } else if (text) {
             popup = new JPopupMenu();
+            
+            // add x and y coordinates
+			if (getViewCoordinates()) {
+				popup.add("x= " + this.getX());
+				popup.add("y= " + this.getY());
+			}
             popup.add(makeFontSizeMenu());
 
             popup.add(makeFontStyleMenu());
@@ -368,6 +381,10 @@ public class PositionableLabel extends JLabel
     public void setPositionable(boolean enabled) { positionable = enabled; }
     public boolean getPositionable() { return positionable; }
     private boolean positionable = true;
+    
+    public void setViewCoordinates(boolean enabled) { viewCoordinates = enabled; }
+    public boolean getViewCoordinates() { return viewCoordinates; }
+    private boolean viewCoordinates = false;
 
     public void setEditable(boolean enabled) {editable = enabled;}
     public boolean getEditable() { return editable; }

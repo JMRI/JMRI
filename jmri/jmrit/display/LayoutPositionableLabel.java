@@ -36,7 +36,7 @@ import java.util.ResourceBundle;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class LayoutPositionableLabel extends JLabel
@@ -372,6 +372,10 @@ public class LayoutPositionableLabel extends JLabel
     public void setPositionable(boolean enabled) { positionable = enabled; }
     public boolean getPositionable() { return positionable; }
     private boolean positionable = true;
+    
+    public void setViewCoordinates(boolean enabled) { viewCoordinates = enabled; }
+    public boolean getViewCoordinates() { return viewCoordinates; }
+    private boolean viewCoordinates = false;
 
     public void setEditable(boolean enabled) {editable = enabled;}
     public boolean getEditable() { return editable; }

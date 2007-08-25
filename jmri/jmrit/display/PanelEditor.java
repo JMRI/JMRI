@@ -47,7 +47,7 @@ import java.util.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.68 $
+ * @version $Revision: 1.69 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -71,6 +71,7 @@ public class PanelEditor extends JmriJFrame {
 
     JCheckBox editableBox = new JCheckBox(rb.getString("CheckBoxEditable"));
     JCheckBox positionableBox = new JCheckBox(rb.getString("CheckBoxPositionable"));
+    JCheckBox showCoordinatesBox = new JCheckBox(rb.getString("CheckBoxShowCoordinates"));
     JCheckBox controllingBox = new JCheckBox(rb.getString("CheckBoxControlling"));
     JCheckBox menuBox = new JCheckBox(rb.getString("CheckBoxMenuBar"));
 
@@ -580,6 +581,16 @@ public class PanelEditor extends JmriJFrame {
                     setAllPositionable(positionableBox.isSelected());
                 }
             });
+            
+            this.getContentPane().add(p = new JPanel());
+            p.setLayout(new FlowLayout());
+            p.add(showCoordinatesBox);
+            showCoordinatesBox.setSelected(false);
+            showCoordinatesBox.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                	setShowCoordinates(showCoordinatesBox.isSelected());
+                }
+            });
 
             this.getContentPane().add(p = new JPanel());
             p.setLayout(new FlowLayout());
@@ -832,6 +843,7 @@ public class PanelEditor extends JmriJFrame {
     /**
      * Add an icon to the target
      */
+    
     void addIcon() {
         PositionableLabel l = new PositionableLabel(iconEditor.getIcon(0) );
         setNextLocation(l);
@@ -976,6 +988,18 @@ public class PanelEditor extends JmriJFrame {
             ((Positionable)contents.get(i)).setEditable(state);
         }
     }
+    
+    /**
+     *  Control whether target panel items will show their
+     *  coordinates in their popup memu. 
+     * @param state true for show coodinates.
+     */
+    public void setShowCoordinates(boolean state) {
+        if (showCoordinatesBox.isSelected()!=state) showCoordinatesBox.setSelected(state);
+        for (int i = 0; i<contents.size(); i++) {
+            ((Positionable)contents.get(i)).setViewCoordinates(state);
+        }  
+    }
 
     /**
      *  Control whether target panel items are controlling layout items.
@@ -1006,6 +1030,9 @@ public class PanelEditor extends JmriJFrame {
     }
     public boolean isPositionable() {
         return positionableBox.isSelected();
+    }
+    public boolean showCoordinates() {
+        return showCoordinatesBox.isSelected();
     }
     public boolean isControlling() {
         return controllingBox.isSelected();

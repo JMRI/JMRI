@@ -29,7 +29,7 @@ import javax.swing.JSeparator;
  * if you move this.
  *
  * @author Bob Jacobsen Copyright 2002
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class SecurityElementIcon extends JPanel
@@ -558,6 +558,10 @@ public class SecurityElementIcon extends JPanel
     public void setPositionable(boolean enabled) {positionable = enabled;}
     public boolean getPositionable() { return positionable; }
     private boolean positionable = true;
+    
+    public void setViewCoordinates(boolean enabled) { viewCoordinates = enabled; }
+    public boolean getViewCoordinates() { return viewCoordinates; }
+    private boolean viewCoordinates = false;
 
     public void setEditable(boolean enabled) {editable = enabled;}
     public boolean getEditable() { return editable; }

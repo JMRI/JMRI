@@ -21,7 +21,7 @@ import javax.swing.JCheckBoxMenuItem;
  *   loading a saved panel.
  *
  * @author David J. Duchamp Copyright (C) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
  *  (Copied with only name changes from SensorIcon.java)
  */
@@ -140,8 +140,13 @@ public class LayoutSensorIcon extends PositionableLabel implements java.beans.Pr
     protected void showPopUp(MouseEvent e) {
         if (!getEditable()) return;
         ours = this;
-        if (popup==null) {
+//        if (popup==null) {
             popup = new JPopupMenu();
+            
+			if (getViewCoordinates()) {
+				popup.add("x= " + this.getX());
+				popup.add("y= " + this.getY());
+			}
             popup.add(new JMenuItem(getNameString()));
             if (icon) popup.add(new AbstractAction("Rotate") {
                     public void actionPerformed(ActionEvent e) {
@@ -169,7 +174,7 @@ public class LayoutSensorIcon extends PositionableLabel implements java.beans.Pr
                         dispose();
                     }
                 });
-        }  // end creation of popup menu
+ //       }  // end creation of popup menu
 
         popup.show(e.getComponent(), e.getX(), e.getY());
     }

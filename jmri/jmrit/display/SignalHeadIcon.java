@@ -25,7 +25,7 @@ import javax.swing.JRadioButtonMenuItem;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -199,9 +199,14 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
     protected void showPopUp(MouseEvent e) {
         if (!getEditable()) return;
         ours = this;
-        if (popup==null) {
+ //       if (popup==null) {
             popup = new JPopupMenu();
             popup.add(new JMenuItem(getNameString()));
+            
+			if (getViewCoordinates()) {
+				popup.add("x= " + this.getX());
+				popup.add("y= " + this.getY());
+			}
             if (icon) popup.add(new AbstractAction("Rotate") {
                     public void actionPerformed(ActionEvent e) {
                         green.setRotation(green.getRotation()+1, ours);
@@ -296,7 +301,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
                     f.setVisible(true);
                 }
             });
-        } // end creation of pop-up menu
+ //       } // end creation of pop-up menu
 
         popup.show(e.getComponent(), e.getX(), e.getY());
     }

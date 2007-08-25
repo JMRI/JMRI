@@ -19,7 +19,7 @@ import jmri.util.JmriJFrame;
  * <p> </p>
  *
  * @author  Howard G. Penny copyright (C) 2005
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 abstract class PositionableJComponent extends JComponent
                         implements MouseMotionListener, MouseListener,
@@ -171,6 +171,10 @@ abstract class PositionableJComponent extends JComponent
     public void setEditable(boolean enabled) {editable = enabled;}
     public boolean getEditable() { return editable; }
     private boolean editable = true;
+     
+    public void setViewCoordinates(boolean enabled) { viewCoordinates = enabled; }
+    public boolean getViewCoordinates() { return viewCoordinates; }
+    private boolean viewCoordinates = false;
 
     public void setControlling(boolean enabled) {controlling = enabled;}
     public boolean getControlling() { return controlling; }
