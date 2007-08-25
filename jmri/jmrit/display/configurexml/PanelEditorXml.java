@@ -13,7 +13,7 @@ import org.jdom.*;
  * Handle configuration for {@link PanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 public class PanelEditorXml implements XmlAdapter {
 
@@ -40,6 +40,7 @@ public class PanelEditorXml implements XmlAdapter {
         panel.setAttribute("width", ""+size.width);
         panel.setAttribute("editable", ""+(p.isEditable()?"yes":"no"));
         panel.setAttribute("positionable", ""+(p.isPositionable()?"yes":"no"));
+        panel.setAttribute("showcoordinates", ""+(p.showCoordinates()?"yes":"no"));
         panel.setAttribute("controlling", ""+(p.isControlling()?"yes":"no"));
         panel.setAttribute("hide", p.isVisible()?"no":"yes");
         panel.setAttribute("panelmenu", p.hasPanelMenu()?"yes":"no");
@@ -126,6 +127,11 @@ public class PanelEditorXml implements XmlAdapter {
         if ((a = element.getAttribute("positionable"))!=null && a.getValue().equals("no"))
             value = false;
         panel.setAllPositionable(value);
+        
+        value = false;
+        if ((a = element.getAttribute("showcoordinates"))!=null && a.getValue().equals("yes"))
+            value = true;
+        panel.setShowCoordinates(value);
 
         value = true;
         if ((a = element.getAttribute("controlling"))!=null && a.getValue().equals("no"))
