@@ -156,8 +156,9 @@
 			<output name="Motor" />
 			</model>
 		<model model="T1"  numOuts="2" numFns="8" 
-    		maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
-			<size length="1.010" width="0.665" height="0.250" units="inches" />
+    		maxMotorCurrent="1.3A (peak=2A)" maxTotalCurrent="1.3A continuous"
+    		formFactor="HO">
+			<size length="0.956" width="0.665" height="0.207" units="inches" />
 			<output name="1" label="White"  connection="wire" maxcurrent="100 mA" />
 			<output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
 			<output name="Dim" />
