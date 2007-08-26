@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
-<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- Copyright (C) JMRI 2002, 2005 All rights reserved -->
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
+<!-- Copyright (C) JMRI 2002, 2005, 2007 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Digitrax_Economy.xml,v 1.5 2007-04-23 04:08:11 jacobsen Exp $ -->
+<!-- $Id: Digitrax_Economy.xml,v 1.6 2007-08-26 15:50:32 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen" 
 					version="3" lastUpdated="20070422"/>

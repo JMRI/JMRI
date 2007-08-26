@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
-<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- Copyright (C) JMRI 2005 All rights reserved -->
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
+<!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
 <decoder-config>
         <version author="Michael Mosher" version="3" lastUpdated="20070805"/>

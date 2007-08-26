@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
-<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- Copyright (C) JMRI 2003, 2005 All rights reserved -->
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
+<!-- Copyright (C) JMRI 2003, 2005, 2007 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Digitrax_1x2.xml,v 1.26 2005-05-01 23:25:41 jacobsen Exp $ -->
+<!-- $Id: Digitrax_1x2.xml,v 1.27 2007-08-26 15:50:32 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
 					version="10" lastUpdated="20050112"/>
