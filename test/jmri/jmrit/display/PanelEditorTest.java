@@ -14,7 +14,7 @@ import junit.framework.TestSuite;
  *
  * Description:
  * @author			Bob Jacobsen
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class PanelEditorTest extends TestCase {
 
@@ -31,6 +31,12 @@ public class PanelEditorTest extends TestCase {
 	    
 	    // load and display
 	    (new jmri.configurexml.ConfigXmlManager()).load(f);
+
+        jmri.util.JUnitAppender.assertErrorMessage("Turnout 'IT1' not available, icon won't see changes");
+        jmri.util.JUnitAppender.assertErrorMessage("Sensor 'IS1' not available, icon won't see changes");
+        jmri.util.JUnitAppender.assertErrorMessage("Turnout 'IT1' not available, icon won't see changes");
+        jmri.util.JUnitAppender.assertErrorMessage("Sensor 'IS1' not available, icon won't see changes");
+
 	}
 
 
