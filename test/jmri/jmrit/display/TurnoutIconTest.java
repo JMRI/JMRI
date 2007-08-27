@@ -11,7 +11,7 @@ import java.beans.PropertyChangeEvent;
  *
  * Description:
  * @author			Bob Jacobsen
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class TurnoutIconTest extends TestCase {
 
@@ -23,6 +23,15 @@ public class TurnoutIconTest extends TestCase {
 
         to = new TurnoutIcon();
         jf.getContentPane().add(to);
+        
+        jmri.InstanceManager i = new jmri.InstanceManager(){
+            protected void init() {
+                super.init();
+                root = this;
+                addTurnoutManager(new jmri.managers.InternalTurnoutManager());
+            }
+        };
+        to.setTurnout("IT1");
 
         // test buttons
         JButton throwButton = new JButton("throw");
@@ -62,22 +71,22 @@ public class TurnoutIconTest extends TestCase {
     // animate the visible frame
     public void throwButtonPushed() {
         java.beans.PropertyChangeEvent e = new PropertyChangeEvent(this,
-            "CommandedState", null, new Integer(jmri.Turnout.THROWN));
+            "KnownState", null, new Integer(jmri.Turnout.THROWN));
         to.propertyChange(e);
     }
     public void closeButtonPushed() {
         java.beans.PropertyChangeEvent e = new PropertyChangeEvent(this,
-            "CommandedState", null, new Integer(jmri.Turnout.CLOSED));
+            "KnownState", null, new Integer(jmri.Turnout.CLOSED));
         to.propertyChange(e);
     }
     public void unknownButtonPushed() {
         java.beans.PropertyChangeEvent e = new PropertyChangeEvent(this,
-            "CommandedState", null, new Integer(jmri.Turnout.UNKNOWN));
+            "KnownState", null, new Integer(jmri.Turnout.UNKNOWN));
         to.propertyChange(e);
     }
     public void inconsistentButtonPushed() {
         java.beans.PropertyChangeEvent e = new PropertyChangeEvent(this,
-            "CommandedState", null, new Integer(23));
+            "KnownState", null, new Integer(23));
         to.propertyChange(e);
     }
 
