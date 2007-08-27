@@ -47,7 +47,7 @@ import java.util.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.69 $
+ * @version $Revision: 1.70 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -680,6 +680,7 @@ public class PanelEditor extends JmriJFrame {
     public void putTurnout(TurnoutIcon l) {
         l.invalidate();
         target.add(l, l.getDisplayLevel());
+        configureItem(l);
         contents.add(l);
         // reshow the panel
         target.validate();
@@ -719,6 +720,7 @@ public class PanelEditor extends JmriJFrame {
     public void putSensor(SensorIcon l) {
         l.invalidate();
         target.add(l, l.getDisplayLevel());
+        configureItem(l);
         contents.add(l);
         // reshow the panel
         target.validate();
@@ -745,6 +747,7 @@ public class PanelEditor extends JmriJFrame {
     public void putMultiSensor(MultiSensorIcon l) {
         l.invalidate();
         target.add(l, l.getDisplayLevel());
+        configureItem(l);
         contents.add(l);
         // reshow the panel
         target.validate();
@@ -770,6 +773,7 @@ public class PanelEditor extends JmriJFrame {
     public void putSignal(SignalHeadIcon l) {
         l.invalidate();
         target.add(l, l.getDisplayLevel());
+        configureItem(l);
         contents.add(l);
         // reshow the panel
         target.validate();
@@ -789,6 +793,7 @@ public class PanelEditor extends JmriJFrame {
     public void putClock(AnalogClock2Display c) {
         c.invalidate();
         target.add(c, c.getDisplayLevel());
+        configureItem(c);
         contents.add(c);
         // reshow the panel
         target.validate();
@@ -810,6 +815,7 @@ public class PanelEditor extends JmriJFrame {
     public void putLabel(PositionableLabel l) {
         l.invalidate();
         target.add(l, l.getDisplayLevel());
+        configureItem(l);
         contents.add(l);
         target.validate();
     }
@@ -1025,13 +1031,30 @@ public class PanelEditor extends JmriJFrame {
         }
     }
 
+    /** 
+     * Set properties of an item from GUI
+     * <ul>
+     * <li>positionable
+     * <li>editable
+     * <li>viewCoordinates
+     * <li>controlling
+     * </ul>
+     * Usually used when a new object is being created
+     */
+    void configureItem(Positionable item) {
+        item.setPositionable(this.isPositionable());
+        item.setEditable(this.isEditable());
+        item.setViewCoordinates(this.isShowCoordinates());
+        item.setControlling(this.isControlling());
+    }
+    
     public boolean isEditable() {
         return editableBox.isSelected();
     }
     public boolean isPositionable() {
         return positionableBox.isSelected();
     }
-    public boolean showCoordinates() {
+    public boolean isShowCoordinates() {
         return showCoordinatesBox.isSelected();
     }
     public boolean isControlling() {
