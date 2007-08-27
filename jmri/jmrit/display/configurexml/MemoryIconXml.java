@@ -15,9 +15,9 @@ import java.awt.Color;
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
-public class MemoryIconXml implements XmlAdapter {
+public class MemoryIconXml extends PositionableLabelXml {
 
     public MemoryIconXml() {
     }
@@ -39,15 +39,9 @@ public class MemoryIconXml implements XmlAdapter {
         element.setAttribute("x", ""+p.getX());
         element.setAttribute("y", ""+p.getY());
         element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
-        if (p.isText() && p.getText()!=null) {
-            element.setAttribute("size", ""+p.getFont().getSize());
-            element.setAttribute("style", ""+p.getFont().getStyle());
-            if (!p.getForeground().equals(Color.black)) {
-                element.setAttribute("red", ""+p.getForeground().getRed());
-                element.setAttribute("green", ""+p.getForeground().getGreen());
-                element.setAttribute("blue", ""+p.getForeground().getBlue());
-            }
-        }
+
+        storeTextInfo(p, element);
+        
         element.setAttribute("selectable", (p.isSelectable()?"yes":"no"));
 
         element.setAttribute("class", "jmri.jmrit.display.configurexml.MemoryIconXml");
@@ -96,18 +90,7 @@ public class MemoryIconXml implements XmlAdapter {
         if (a!=null && a.getValue().equals("yes")) l.setSelectable(true);
         else l.setSelectable(false);
         
-        a = element.getAttribute("size");
-        try {
-            if (a!=null) l.setFontSize(a.getFloatValue());
-        } catch (DataConversionException ex) {
-            log.warn("invalid size attribute value");
-        }
-        a = element.getAttribute("style");
-        try {
-            if (a!=null) l.setFontStyle(a.getIntValue(), 0);  // label is created plain, so don't need to drop
-        } catch (DataConversionException ex) {
-            log.warn("invalid style attribute value");
-        }
+        loadTextInfo(l, element);
         
         // get the icon pairs
         List items = element.getChildren();
@@ -142,18 +125,7 @@ public class MemoryIconXml implements XmlAdapter {
 
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         p.putLabel(l);
-    
-        // set color if needed
-        try {
-            int red = element.getAttribute("red").getIntValue();
-            int blue = element.getAttribute("blue").getIntValue();
-            int green = element.getAttribute("green").getIntValue();
-            l.setForeground(new Color(red, green, blue));
-        } catch ( org.jdom.DataConversionException e) {
-            log.warn("Could not parse color attributes!");
-        } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-        }
-        
+            
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MemoryIconXml.class.getName());

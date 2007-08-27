@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class PositionableLabelXml implements XmlAdapter {
 
@@ -43,16 +43,9 @@ public class PositionableLabelXml implements XmlAdapter {
         element.setAttribute("x", String.valueOf(p.getX()));
         element.setAttribute("y", String.valueOf(p.getY()));
         element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
-        if (p.isText() && p.getText()!=null) {
-            element.setAttribute("text", p.getText());
-            element.setAttribute("size", ""+p.getFont().getSize());
-            element.setAttribute("style", ""+p.getFont().getStyle());
-            if (!p.getForeground().equals(Color.black)) {
-                element.setAttribute("red", ""+p.getForeground().getRed());
-                element.setAttribute("green", ""+p.getForeground().getGreen());
-                element.setAttribute("blue", ""+p.getForeground().getBlue());
-            }
-        }
+
+        storeTextInfo(p, element);
+        
         if (p.isIcon() && p.getIcon()!=null) {
             NamedIcon icon = (NamedIcon)p.getIcon();
             element.setAttribute("icon", icon.getName());
@@ -63,6 +56,19 @@ public class PositionableLabelXml implements XmlAdapter {
     }
 
 
+    protected void storeTextInfo(PositionableLabel p, Element element) {
+        if (p.isText() && p.getText()!=null) {
+            element.setAttribute("text", p.getText());
+            element.setAttribute("size", ""+p.getFont().getSize());
+            element.setAttribute("style", ""+p.getFont().getStyle());
+            if (!p.getForeground().equals(Color.black)) {
+                element.setAttribute("red", ""+p.getForeground().getRed());
+                element.setAttribute("green", ""+p.getForeground().getGreen());
+                element.setAttribute("blue", ""+p.getForeground().getBlue());
+            }
+        }
+    }
+    
     public void load(Element element) {
         log.error("Invalid method called");
     }
@@ -78,19 +84,9 @@ public class PositionableLabelXml implements XmlAdapter {
         PositionableLabel l = null;
         if (element.getAttribute("text")!=null) {
             l = new PositionableLabel(element.getAttribute("text").getValue());
-            Attribute a = element.getAttribute("size");
-            try {
-                if (a!=null) l.setFontSize(a.getFloatValue());
-            } catch (DataConversionException ex) {
-                log.warn("invalid size attribute value");
-            }
-            a = element.getAttribute("style");
-            try {
-                if (a!=null) l.setFontStyle(a.getIntValue(), 0);  // label is created plain, so don't need to drop
-            } catch (DataConversionException ex) {
-                log.warn("invalid style attribute value");
-            }
 
+            loadTextInfo(l, element);
+        
         } else if (element.getAttribute("icon")!=null) {
             String name = element.getAttribute("icon").getValue();
             NamedIcon icon = CatalogPane.getIconByName(name);
@@ -144,6 +140,26 @@ public class PositionableLabelXml implements XmlAdapter {
         }
         l.setDisplayLevel(level);
 
+        // and activate the result
+        l.setLocation(x,y);
+        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
+        p.putLabel(l);
+    }
+
+    protected void loadTextInfo(PositionableLabel l, Element element) {
+        Attribute a = element.getAttribute("size");
+        try {
+            if (a!=null) l.setFontSize(a.getFloatValue());
+        } catch (DataConversionException ex) {
+            log.warn("invalid size attribute value");
+        }
+        a = element.getAttribute("style");
+        try {
+            if (a!=null) l.setFontStyle(a.getIntValue(), 0);  // label is created plain, so don't need to drop
+        } catch (DataConversionException ex) {
+            log.warn("invalid style attribute value");
+        }
+
         // set color if needed
         try {
             int red = element.getAttribute("red").getIntValue();
@@ -154,13 +170,9 @@ public class PositionableLabelXml implements XmlAdapter {
             log.warn("Could not parse color attributes!");
         } catch ( NullPointerException e) {  // considered normal if the attributes are not present
         }
-
-        // and activate the result
-        l.setLocation(x,y);
-        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
-        p.putLabel(l);
+    
     }
-
+    
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PanelEditorXml.class.getName());
 
 }

@@ -10,9 +10,9 @@ import org.jdom.Element;
  * Handle configuration for display.ReporterIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
-public class ReporterIconXml implements XmlAdapter {
+public class ReporterIconXml extends PositionableLabelXml {
 
     public ReporterIconXml() {
     }
@@ -35,6 +35,8 @@ public class ReporterIconXml implements XmlAdapter {
         element.setAttribute("y", ""+p.getY());
         element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
 
+        storeTextInfo(p, element);
+        
         element.setAttribute("class", "jmri.jmrit.display.configurexml.ReporterIconXml");
 
         return element;
@@ -55,6 +57,8 @@ public class ReporterIconXml implements XmlAdapter {
         PanelEditor p = (PanelEditor)o;
         String name;
         ReporterIcon l = new ReporterIcon();
+
+        loadTextInfo(l, element);
 
         l.setReporter(element.getAttribute("reporter").getValue());
 
