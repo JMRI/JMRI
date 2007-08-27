@@ -11,7 +11,7 @@ import java.beans.PropertyChangeEvent;
  *
  * Description:
  * @author			Bob Jacobsen  Copyright 2007
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class ReporterIconTest extends TestCase {
 
@@ -36,6 +36,8 @@ public class ReporterIconTest extends TestCase {
 
         jf.pack();
         jf.setVisible(true);
+        jmri.util.JUnitAppender.assertErrorMessage("No layout connection, Reporter manager can't function");
+        jmri.util.JUnitAppender.assertWarnMessage("No LocoNet connection, Reporter won't update");
 
 	}
 
