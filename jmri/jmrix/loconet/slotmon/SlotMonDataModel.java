@@ -21,7 +21,7 @@ import javax.swing.table.TableColumnModel;
 /**
  * Table data model for display of slot manager contents
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version		$Revision: 1.16 $
+ * @version		$Revision: 1.17 $
  */
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener  {
 
@@ -70,11 +70,11 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             if (_systemSlots)
                 return 128;
             else
-                return 119;  // skip 0, and 120 through 127
+                return 120;  // skip 0, and 120 through 127
         }
         int n = 0;
         int nMin = 1;
-        int nMax = 119;
+        int nMax = 120;
         if (_systemSlots) {
             nMin = 0;
             nMax = 128;
