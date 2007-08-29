@@ -47,7 +47,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -575,7 +575,7 @@ public class LayoutEditor extends JmriJFrame {
                 }
             });
 		// add background image
-        JMenuItem backgroundItem = new JMenuItem(rb.getString("AddBackground"));
+        JMenuItem backgroundItem = new JMenuItem(rb.getString("AddBackground")+"...");
         optionMenu.add(backgroundItem);
         backgroundItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
@@ -1013,6 +1013,7 @@ public class LayoutEditor extends JmriJFrame {
 		Point pt = getLocationOnScreen();
 		upperLeftX = pt.x;
 		upperLeftY = pt.y;
+		log.debug("Position - "+upperLeftX+","+upperLeftY+" Size - "+panelWidth+","+panelHeight);		
 		panelChanged = true;
 	}
 
@@ -2261,19 +2262,21 @@ public class LayoutEditor extends JmriJFrame {
      * Add a sensor indicator to the Draw Panel
      */
     void addSensor() {
+		if ((nextSensor.getText()).length()<=0) {
+			JOptionPane.showMessageDialog(targetPanel,rb.getString("Error10"),
+						rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+			return;
+		}
         LayoutSensorIcon l = new LayoutSensorIcon();
         l.setActiveIcon(sensorIconEditor.getIcon(0));
         l.setInactiveIcon(sensorIconEditor.getIcon(1));
         l.setInconsistentIcon(sensorIconEditor.getIcon(2));
         l.setUnknownIcon(sensorIconEditor.getIcon(3));
-		if ((nextSensor.getText()).length()>0) {
-			l.setSensor(nextSensor.getText());
-			Sensor xSensor = l.getSensor();
-			if (xSensor != null) {
-				if ( !(xSensor.getUserName().equals(nextSensor.getText())) ) {
-					nextSensor.setText(xSensor.getSystemName());
-				}
-			}
+		l.setSensor(nextSensor.getText());
+		Sensor xSensor = l.getSensor();
+		if (xSensor != null) {
+			if ( (xSensor.getUserName()==null) || (!(xSensor.getUserName().equals(nextSensor.getText()))) ) 
+				nextSensor.setText(xSensor.getSystemName());
 		}
         setNextLocation(l);
 		panelChanged = true;
@@ -2291,6 +2294,25 @@ public class LayoutEditor extends JmriJFrame {
      * Add a signal head to the Panel
      */
     void addSignalHead() {
+		// check for valid signal head entry
+		String tName = nextSignalHead.getText();
+        SignalHead mHead = null;
+		if ( (tName!=null) && (tName!="") ) {
+			mHead = InstanceManager.signalHeadManagerInstance().getBySystemName(tName.toUpperCase());
+			if (mHead == null) 
+				mHead = InstanceManager.signalHeadManagerInstance().getByUserName(tName);
+			else 
+				nextSignalHead.setText(mHead.getSystemName());
+		}
+        if (mHead == null) {
+			// There is no signal head corresponding to this name
+			JOptionPane.showMessageDialog(thisPanel,
+					java.text.MessageFormat.format(rb.getString("Error9"),
+					new String[]{tName}),
+					rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		// create and set up signal icon	
         LayoutSignalHeadIcon l = new LayoutSignalHeadIcon();
         l.setRedIcon(signalIconEditor.getIcon(0));
         l.setYellowIcon(signalIconEditor.getIcon(1));
@@ -2343,11 +2365,17 @@ public class LayoutEditor extends JmriJFrame {
      * Add a memory label to the Draw Panel
      */
     void addMemory() {
+		if ((textMemory.getText()).length()<=0) {
+			JOptionPane.showMessageDialog(targetPanel,rb.getString("Error11"),
+						rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+			return;
+		}
         LayoutMemoryIcon l = new LayoutMemoryIcon();
         l.setMemory(textMemory.getText());
 		Memory xMemory = l.getMemory();
 		if (xMemory != null) {
-			if ( !(xMemory.getUserName().equals(textMemory.getText())) ) {
+			if ( (xMemory.getUserName() == null) || (!(xMemory.getUserName().equals(textMemory.getText())))  ) {
+				// put the system name in the memory field
 				textMemory.setText(xMemory.getSystemName());
 			}
 		}
@@ -2533,12 +2561,13 @@ public class LayoutEditor extends JmriJFrame {
 	public String getLayoutName() {return layoutName;}
 	public boolean getShowHelpBar() {return showHelpBar;}
 	public void setLayoutDimensions(int w, int h, int x, int y) {
-		panelWidth = w;
-		panelHeight = h;
-		targetPanel.setSize(w-18,h-60);
 		upperLeftX = x;
 		upperLeftY = y;
 		setLocation(x,y);
+		panelWidth = w;
+		panelHeight = h;
+		targetPanel.setSize(w-18,h-60);
+		log.debug("Position - "+upperLeftX+","+upperLeftY+" SetSize - "+panelWidth+","+panelHeight);		
 	}
 	public void setMainlineTrackWidth(int w) {mainlineTrackWidth = w;}
 	public void setSideTrackWidth(int w) {sideTrackWidth = w;}
@@ -2697,9 +2726,14 @@ public class LayoutEditor extends JmriJFrame {
             g2.setColor(defaultTrackColor);			
 			main = false;
             g2.setStroke(new BasicStroke(sideTrackWidth,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND));
-            drawTrack(g2);
+            drawHiddenTrack(g2);
+			drawDashedTrack(g2,false);
+			drawDashedTrack(g2,true);
+			drawSolidTrack(g2,false);
+			drawSolidTrack(g2,true);
             drawTurnouts(g2);
 			drawXings(g2);
+			drawTrackInProgress(g2);
             g2.setStroke(new BasicStroke(1.0F,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND));
 			drawPoints(g2);
 			if (editMode) {
@@ -2971,31 +3005,43 @@ public class LayoutEditor extends JmriJFrame {
 		// loop over all defined level crossings
 		for (int i = 0; i<xingList.size();i++) {
 			LevelXing x = (LevelXing)xingList.get(i);
-			// set color - check for an AC block
-			LayoutBlock b = x.getLayoutBlockAC();
-			if (b!=null) {
-				g2.setColor(b.getBlockColor());
+			if ( x.isMainlineBD() && (!x.isMainlineAC()) ) {
+				drawXingAC(g2,x);
+				drawXingBD(g2,x);
 			}
 			else {
-				g2.setColor(defaultTrackColor);
-			}
-			// set track width for AC block
-			setTrackStrokeWidth(g2,x.isMainlineAC());
-			// draw AC segment	
-			g2.draw(new Line2D.Double(x.getCoordsA(),x.getCoordsC()));
-			// set color - check for an BD block
-			b = x.getLayoutBlockBD();
-			if (b!=null) {
-				g2.setColor(b.getBlockColor());
-			}
-			else {
-				g2.setColor(defaultTrackColor);
-			}
-			// set track width for BD block
-			setTrackStrokeWidth(g2,x.isMainlineBD());
-			// draw BD segment	
-			g2.draw(new Line2D.Double(x.getCoordsB(),x.getCoordsD()));
+				drawXingBD(g2,x);
+				drawXingAC(g2,x);
+			}				
 		}
+	}
+	private void drawXingAC(Graphics2D g2,LevelXing x) {
+		// set color - check for an AC block
+		LayoutBlock b = x.getLayoutBlockAC();
+		if (b!=null) {
+			g2.setColor(b.getBlockColor());
+		}
+		else {
+			g2.setColor(defaultTrackColor);
+		}
+		// set track width for AC block
+		setTrackStrokeWidth(g2,x.isMainlineAC());
+		// draw AC segment	
+		g2.draw(new Line2D.Double(x.getCoordsA(),x.getCoordsC()));
+	}
+	private void drawXingBD(Graphics2D g2,LevelXing x) {
+		// set color - check for an BD block
+		LayoutBlock b = x.getLayoutBlockBD();
+		if (b!=null) {
+			g2.setColor(b.getBlockColor());
+		}
+		else {
+			g2.setColor(defaultTrackColor);
+		}
+		// set track width for BD block
+		setTrackStrokeWidth(g2,x.isMainlineBD());
+		// draw BD segment	
+		g2.draw(new Line2D.Double(x.getCoordsB(),x.getCoordsD()));
 	}
 	
 	private void drawTurnoutRects(Graphics2D g2)
@@ -3096,57 +3142,68 @@ public class LayoutEditor extends JmriJFrame {
 		}
 	}
 	
-	private void drawTrack(Graphics2D g2)
+	private void drawHiddenTrack(Graphics2D g2)
 	{
-		// draw track segments
 		for (int i = 0; i<trackList.size();i++) {
 			TrackSegment t = (TrackSegment)trackList.get(i);
-			// set color - check for a block
-			LayoutBlock b = t.getLayoutBlock();
-			if (b!=null) g2.setColor(b.getBlockColor());
-			else g2.setColor(defaultTrackColor);
-			// check for hidden track segment
-			if (!t.getHidden()) {
-				// not hidden, set track width
-				setTrackStrokeWidth(g2,t.getMainline());
-				// draw line			
-				if (!t.getDashed()) {
-					// draw as solid line
-					g2.draw(new Line2D.Double(getCoords(t.getConnect1(),t.getType1()),
-										getCoords(t.getConnect2(),t.getType2())));
-				}
-				else {
-					// draw as dashed line
-					Point2D end1 = getCoords(t.getConnect1(),t.getType1());
-					Point2D end2 = getCoords(t.getConnect2(),t.getType2());
-					double delX = end1.getX() - end2.getX();
-					double delY = end1.getY() - end2.getY();
-					double cLength = Math.sqrt( (delX*delX) + (delY*delY) );
-					// note: The preferred dimension of a dash (solid + blank space) is 
-					//         5 * the track width - about 60% solid and 40% blank.
-					int nDashes = (int)( cLength / (((double)trackWidth)*5.0) );
-					if (nDashes < 3) nDashes = 3;
-					double delXDash = -delX/( ((double)nDashes) - 0.5 );
-					double delYDash = -delY/( ((double)nDashes) - 0.5 );
-					double begX = end1.getX();
-					double begY = end1.getY();
-					for (int k = 0; k<nDashes; k++) {
-						g2.draw(new Line2D.Double(new Point2D.Double(begX,begY),
-							new Point2D.Double((begX+(delXDash*0.5)),(begY+(delYDash*0.5)))));
-						begX += delXDash;
-						begY += delYDash;
-					}
-				}
-			}
-			else if (editMode) {
-				// hidden track - only draw if in Edit Mode
+			if (editMode && t.getHidden()) {
+				LayoutBlock b = t.getLayoutBlock();
+				if (b!=null) g2.setColor(b.getBlockColor());
+				else g2.setColor(defaultTrackColor);
 				g2.setStroke(new BasicStroke(1.0F,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND));
 				g2.draw(new Line2D.Double(getCoords(t.getConnect1(),t.getType1()),
 										getCoords(t.getConnect2(),t.getType2())));
 				setTrackStrokeWidth(g2,!main);
-				
 			}
 		}
+	}
+	private void drawDashedTrack(Graphics2D g2, boolean mainline)
+	{
+		for (int i = 0; i<trackList.size();i++) {
+			TrackSegment t = (TrackSegment)trackList.get(i);
+			if ( (!t.getHidden()) && t.getDashed() && (mainline == t.getMainline()) ) {		
+				LayoutBlock b = t.getLayoutBlock();
+				if (b!=null) g2.setColor(b.getBlockColor());
+				else g2.setColor(defaultTrackColor);
+				setTrackStrokeWidth(g2,mainline);
+				Point2D end1 = getCoords(t.getConnect1(),t.getType1());
+				Point2D end2 = getCoords(t.getConnect2(),t.getType2());
+				double delX = end1.getX() - end2.getX();
+				double delY = end1.getY() - end2.getY();
+				double cLength = Math.sqrt( (delX*delX) + (delY*delY) );
+				// note: The preferred dimension of a dash (solid + blank space) is 
+				//         5 * the track width - about 60% solid and 40% blank.
+				int nDashes = (int)( cLength / (((double)trackWidth)*5.0) );
+				if (nDashes < 3) nDashes = 3;
+				double delXDash = -delX/( ((double)nDashes) - 0.5 );
+				double delYDash = -delY/( ((double)nDashes) - 0.5 );
+				double begX = end1.getX();
+				double begY = end1.getY();
+				for (int k = 0; k<nDashes; k++) {
+					g2.draw(new Line2D.Double(new Point2D.Double(begX,begY),
+						new Point2D.Double((begX+(delXDash*0.5)),(begY+(delYDash*0.5)))));
+					begX += delXDash;
+					begY += delYDash;
+				}
+			}
+		}
+	}
+	private void drawSolidTrack(Graphics2D g2, boolean mainline)
+	{
+		for (int i = 0; i<trackList.size();i++) {
+			TrackSegment t = (TrackSegment)trackList.get(i);
+			if ( (!t.getHidden()) && (!t.getDashed()) && (mainline == t.getMainline()) ) {		
+				LayoutBlock b = t.getLayoutBlock();
+				if (b!=null) g2.setColor(b.getBlockColor());
+				else g2.setColor(defaultTrackColor);
+				setTrackStrokeWidth(g2,mainline);
+				g2.draw(new Line2D.Double(getCoords(t.getConnect1(),t.getType1()),
+										getCoords(t.getConnect2(),t.getType2())));
+			}
+		}
+	}	
+	private void drawTrackInProgress(Graphics2D g2)
+	{
 		// check for segment in progress
 		if ( editMode && (beginObject!=null) && trackBox.isSelected() ) {
 			g2.setColor(defaultTrackColor);
