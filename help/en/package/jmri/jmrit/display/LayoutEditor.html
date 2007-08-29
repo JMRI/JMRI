@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LayoutEditor.html,v 1.1 2007-08-19 19:04:41 djduchamp Exp $ -->
+<!-- $Id: LayoutEditor.html,v 1.2 2007-08-29 11:51:35 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -7,7 +7,7 @@
  </TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Layout Editor">
+    <META name="keywords" content="JMRI help Panel Editor">
 
 <!-- Style -->
   <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
@@ -21,8 +21,411 @@
 <body>
 <H2>The Layout Editor
 </H2>
-    
-This is the help/jmri/jmrit/display/LayoutEditor help page
+
+<H3> Introduction to Layout Editor Panels
+</H3>
+<P>
+<b>Layout Editor</b> supports the construction and display of PanelPro panels.
+<b>Layout Editor</b> is similar to the traditional PanelPro <b>Panel Editor</b>, 
+except it supports a drawn track diagram instead of an icon-based track
+diagram.  Because of the way it works, <b>Layout Editor</b> captures the
+full connectivity of your layout as you draw it. </P>
+<P>
+<b>Layout Editor</b> is implemented using a tool bar at the top of your panel.  
+This tool bar may be switched on and off using the "<b>Edit Mode</b>" item in 
+your panel's <b>Options</b> menu. When you create a new Layout Editor panel, your 
+new panel appears with the Edit Mode tool bar displayed at the top of your
+panel, and with a system-specific help bar displayed at the bottom of the panel.
+The help bar describes how to use the <b>Layout Editor</b> user interface. The 
+help bar probably should be turned off (using the Options menu) once you are
+familiar with the user interface.</P>
+<P>
+<b>Layout Editor</b> supports several options that you may elect to use or not
+when you draw your track diagram. Sections of track may be designated as 
+<i>mainline track</i> to differentiate it from <i>side track</i> (the default). 
+Mainline track and side track may be drawn with different width lines. You may 
+divide your layout into <i>blocks</i>, with each block having an occupancy 
+sensor and each drawn with different track colors for occupied and unoccupied 
+states, allowing the track in a block to change color as a train enters
+and leaves that block. Normally track segments are drawn as solid lines, but you
+can designate chosen segments as <i>dashed</i> to show tunnels or tracks crossing 
+at different grades. You can also designate a track segment as 
+<i>hidden</i> so it is displayed only when edit mode is active. These options may
+be set up as you draw your panel, or you may add them later.</P>
+
+<H3> Getting Started with Layout Editor
+</H3>
+<P>
+To get familiar with the Layout Editor user interface, try the following:</P>
+<P>
+1. Select <b>New panel...</b> in the Panels menu, and click the <b>Layout Editor</b>
+button in the dialog that is displayed.  You should see a blank panel window with
+a tool bar at the top, and a help bar at the bottom. </P>
+<P>
+2. Move the cursor around inside the blank panel. Note that as you move, coordinates
+are displayed at the upper left of the tool bar--<i>x</i> (horizontal) and <i>y</i> 
+(vertical). (This is to aid in aligning items as you draw them.) Move the cursor over
+the check boxes and entry fields in the tool bar, noting that each has a tool tip.</P>
+<P>
+3. To add a right-handed turnout, first, check RH for Turnout Type in the top row of 
+the tool bar. Then, while depressing the shift key, click the mouse (left click on 
+a two-button mouse) on a point about one third down and one third across from the upper 
+left of your panel. A right-handed turnout should appear. The three red squares at the 
+ends of the throat and the continuing and diverging legs of the turnout are connection 
+points for <b>Track Segments</b>. The round circle at the center of the turnout is 
+where you should point to get the turnout's popup menu.</P>
+<P>
+4. To add a left-handed turnout, first, check LH for turnout type. (Note that the
+check is automatically turned off at RH.)  Type "180" in the Rotation box at the 
+upper right of the tool bar, to rotate the new turnout. While pressing the shift
+key, click the mouse on a point at the same height as the other turnout, but to 
+the right about two or three inches. A left-handed turnout should appear with its
+throat facing away from the right-handed turnout.</P>
+<P>
+5. To add track segments to connect the two turnouts, check Track Segment on the 
+second row of the tool bar. While holding the shift key down the whole time, depress
+the mouse button on the diverging connection point of one turnout, and drag to the 
+diverging connection point of the other turnout, and release the mouse button when 
+the cursor changes shape. You should see a track segment connecting the two turnouts, 
+and both connection points should change color to green, indicating they are 
+<i>full</i>, that is they have the maximum number of connections allowed. Similarly 
+press and drag with shift pressed to add a track segment connecting the continuing 
+legs of the two turnouts. You've drawn a passing siding.</P>
+<P>
+6. To add a turnout for an industry siding, check LH for a left-handed turnout and
+enter 0 in Rotation. Then with shift pressed, click on a point a couple of inches 
+below and slightly to the right of the turnout on your left.</P>
+<P>
+7. To connect this turnout with the upper passing track and form a simple oval track
+diagram, check Anchor Point on the third row of the tool bar. (An <b>Anchor Point</b>
+is a node in a track diagram that can accept two connecting track segments; it's used 
+to place connected track segments so that they look reasonably nice (and also to divide
+blocks). While holding shift down, click on a point exactly to the left of the turnout 
+on your upper left, and again on a point directly below this one, but exactly to the
+left of the lower turnout. Next click on a point about 1/2 inch to the left and 1/2
+inch below the upper anchor point, and again on a point 1/2 inch to the left and 
+1/2 inch above the lower anchor point.  You should now have four anchor points 
+outlining the left side of the oval.  Connect these four points and the turnout 
+throat connection points with track segments--check Track Segment, then with shift 
+pressed, click and drag to create each of the five track segments needed.  Note that 
+the anchor point rectangle will change from red to green when it has two connections.
+Similarly repeat this procedure to draw the right side of the oval.</P>
+<P>
+8. Turnout positions and anchor point positions may be adjusted to make the track 
+diagram look nice by holding down the meta key (check the help bar to see which key
+is the meta key), and dragging each anchor point or turnout. To adjust the position 
+of a turnout, drag the center point of the turnout with the meta key pressed.</P>
+<P>
+9. Next complete the industry siding. The diverging connection point of the lower 
+turnout should be the only box needing a connection (colored red). Check End Bumper 
+in the tool bar. (An <b>End Bumper</b> is a node in a track diagram that can accept 
+only one connection.) With shift pressed, click on a point exactly to the right of 
+the diverging connection point of the lower turnout. Connect your end bumper to the 
+diverging connection point by holding shift pressed, while pressing the mouse 
+button on the diverging connection point and dragging to the end bumper. Your track
+diagram should look like the following:</P>
+<p>
+<A href="./images/OvalLayoutEditMode.gif"><IMG SRC="./images/OvalLayoutEditMode.gif" 
+ALIGN=CENTER WIDTH="563" HEIGHT="169" HSPACE="0" VSPACE="0"></A>
+<P>
+10. Select the "Edit Mode" item in the Options menu to hide the tool bar (and the 
+help bar) and see how your track diagram of a simple oval layout would look in a 
+final panel. You should see connection points and edit circles disappear.</P>
+<P>
+The above steps demonstrated the basic steps needed to draw a track diagram. You can
+clear this demonstration panel by selecting "Delete this panel..." in the panel's
+File menu, and begin to construct a track diagram of your layout. Read the items
+below to learn more about how to add content to track diagram items and how to add
+icon items to your panel.</P>
+
+<h3>Using the  Layout Editor Tool Bar
+</h3>
+<p>
+The tool bar is used to add items to a panel, and to provide information for the items
+added. The item to be added is selected using one of the following checkboxes in the tool bar:
+</p>
+<p><ul>
+	<li><b>RH</b> - selects a right-handed turnout</li>
+	<li><b>LH</b> - selects a left-handed turnout</li>
+	<li><b>WYE</b> - selects a wye turnout</li>
+	<li><b>Double Xover</b> - selects a double crossover turnout</li>
+	<li><b>Level Crossing</b> - selects a level crossing track (a  diamond)</li>
+	<li><b>Track Segment</b> - selects a piece of straight track</li>
+	<li><b>End Bumper</b> - selects a connection point at the end of a track</li>
+	<li><b>Anchor Point</b> - selects a connection point between two track segments</li>
+	<li><b>Text Label</b> - selects a label showing the content of the entry field </li>
+	<li><b>Memory Label</b> - selects a label showing the contents of the memory whose name is 
+	entered on the right</li>
+	<li><b>Multi-sensor</b> - selects a multisensor--A dialog is displayed allowing the 
+	multi-sensor to be defined.</li>
+	<li><b>Sensor Icon</b> - selects a sensor icon showing the sensor whose name is entered on
+	 the right</li>
+	<li><b>Signal Icon</b> - selects a signal head icon showing the signal head whose name is 
+	entered on the right</li>
+	<li><b>Icon Label</b> - selects a general purpose icon</li>
+</ul></p>
+<p>
+(The top eight items are used to create a track diagram, and are new with Layout Editor.
+The remaining six items are similar to corresponding icon items in Panel Editor.)
+</p>
+<p>
+To add all items except Track Segment:
+</p>
+<p><ol>
+	<li>Select its check box (check boxes of the other items will automatically be 
+	deselected).</li>
+	<li>Enter any other information needed (see below).</li>
+	<li>Move the mouse cursor to the point on the panel where you would like the item to 
+	appear.</li>
+	<li>Hold down the shift key.</li>
+	<li>Click the mouse (left-click).</li>
+	<li>Release the mouse, and then release the shift key.</li>
+</ol></p>
+<p>
+A Track Segment is a piece of straight track connecting two connection points (red 
+squares on a turnout, anchor point, end bumper, or level crossing.  Before you can
+add a Track Segment, two red connection points must be visible on the panel. To add 
+a Track Segment connecting two connection points:
+</p>
+<p><ol>
+	<li>Select the Track Segment check box in the tool bar.</li>
+	<li>Enter any other information--all optional (see below).</li>
+	<li>Hold down the shift key.</li>
+	<li>Press and hold down the mouse on either of the connection points.</li>
+	<li>Drag the mouse to the other connection point. The cursor shape changes 
+	when you're there.</li>
+	<li>Release the mouse, and then release the shift key.</li>
+</ol></p>
+<p>
+Check boxes and fields on the tool bar other than the fourteen enumerated above 
+are for entering information that will be applied to created items as they are
+created. Some information is required, and some is optional. Optional things may 
+be added or changed later using an item's popup menu, but it's sometimes easier 
+to add them as items are created. Required items are tightly linked to created 
+items and may not be changed later without removing and recreating the item. Each 
+information entry has a tool tip that explains what it does; hover the mouse 
+cursor over a field or check box to see its tooltip. Information entries are 
+described below, along with which created items they apply to and whether they 
+are optional or required.
+</p>
+<p><ul>
+	<li><b>Turnout: Name</b> (field) - applies to RH, LH, WYE, Double Xover - 
+	Entry is optional. If a name is entered, it must correspond to a turnout in 
+	the Turnout Table.</li>
+	<li><b>Rotation</b> (field) - applies to RH, LH, WYE, Double Xover - Entry is 
+	optional. If there is no entry, the turnout is not rotated when it is created.</li>
+	<li><b>Block: Name</b> (field) - applies to RH, LH, WYE, Double Xover, 
+	Track Segment, Level Crossing - Entry is optional. If a name is entered, the 
+	created item is assigned to the named block. If a name is entered and that block 
+	does not exist, a new block with that name is created. A block name may be any 
+	alphabetic or numeric characters that identify the block.</li>
+	<li><b>Occupancy Sensor</b> (field) - applies to the block named in the above 
+	entry - Entry is optional. An entry must correspond to a sensor in the Sensor 
+	Table. If the named block already has an occupancy sensor, this sensor replaces
+	the previous occupancy sensor.</li>
+	<li><b>Dashed</b> (check box) - applies to Track Segment - A Track Segment may
+	be drawn as a solid line or a dashed line. Solid is the default if Dashed is 
+	not checked. Dashed is useful for tunnels or tracks crossing at different
+	grade levels.</li>
+	<li><b>Mainline</b> (check box) - applies to Track Segment - A Track Segment
+	may be either <i>mainline track</i> or <i>side track</i>. Side track is the 
+	default if Mainline is not checked. Designating some of your track as 
+	<i>mainline track</i> is optional.</li>
+	<li><b>Text Label</b> (field) - applies to Text Label - Entry is required if 
+	anything is to be displayed in the new Text Label.</li>
+	<li><b>Memory Label</b> (field) - applies to Memory Label - Entry is required.  
+	If the entered name doesn't correspond to a memory variable in the Memory Table, 
+	a new memory variable will be created, using the entered name as the JMRI 
+	system name (with IM prefixed if needed).</li>
+	<li><b>Sensor Icon</b> (field) - applies to Sensor Icon - Entry is required. 
+	If a sensor with the entered name does not exist, it will be created using the 
+	entered name as the JMRI system name (with a suitable prefix if needed).</li>
+	<li><b>Signal Icon</b> (field) - applies to Signal Icon - Entry is required.
+	If a signal head with the entered name is not in the Signal Table, an error 
+	message results, and the Signal Icon is not created.</li>
+</ul></p>
+<p>
+When pressed, the <b>Change Icons...</b> button on the tool bar brings up an icon 
+editor for either sensor icons, signal icons, or general purpose icons, depending 
+upon whether <b>Sensor Icon</b>, <b>Signal Icon</b>, or <b>Icon Label</b> is 
+checked. If none of these items is checked, the button press is ignored.
+</p>
+<h3>Using the Layout Editor Options Menu</h3>
+<p>
+The Options menu is used to set options, add items to the panel, and perform
+operations that do not happen very often during panel creation. Each Option menu 
+selection is described below.
+</p>
+<p><ul>
+	<li><b>Edit Mode</b> - When this item is checked, the tool bar is displayed 
+	at the top of the panel, and the track diagram displays connection points and
+	edit circles. Uncheck Edit Mode to hide the tool bar and the help bar if it 
+	is displayed.</li>
+	<li><b>Allow Repositioning</b> - When this item is checked, items on the panel
+	can be repositioned by dragging on the item with the meta key pressed. Track
+	diagram items can only be repositioned when Edit Mode is checked, but icon-
+	based items can be repositioned any time this item is checked.</li>
+	<li><b>Allow Layout Control</b> - When this item is checked, clicking on 
+	active turnout items in the track diagram or on active icon items, such as
+	sensor icons, and signal icons, will toggle the state of the represented 
+	item </li>
+	<li><b>Show Help Bar in Edit Mode</b> - If this item is checked, the help 
+	bar is displayed when the tool bar is displayed.</li>
+	<li><b>New Title...</b> - Selecting this item brings up a small window that 
+	allows a new panel window title to be entered.</li>
+	<li><b>Add Background Image...</b> - Selecting this item shows a dialog
+	that allows a background image to be added to the panel.</li>
+	<li><b>Add Fast Clock</b> - Selecting this item adds an analog fast clock 
+	at the upper left. You can then drag it with the meta key pressed to any 
+	location on the panel.</li>
+	<li><b>Save Location and Size</b> - When this item is selected, the current 
+	panel window size and location replace the default size and location of the 
+	panel window. If the panel is saved to disk after this item is selected, when 
+	the panel is reloaded its window will have the size and location saved when 
+	this item was selected, provided the computer operating system permits a 
+	window with that size and location.</li>
+	<li><b>Set Track Width...</b> - Selecting this item brings up a dialog that 
+	allows entry of a width for mainline track and a width for side track. All 
+	mainline track and all side track in the track diagram will use the new 
+	values. (See below for more information on types of track.)</li>
+	<li><b>Scale/Translate Track Diagram...</b> - Selecting this item brings up 
+	a dialog that allows scaling and translation of the track diagram. (For more 
+	information on this item, see the help page for that dialog.)</li>
+	<li><b>Set Default Track Color</b> - This item's submenu allows one of 
+	thirteen colors to be selected as the default track color. If a part of the 
+	track is in a block, the color set by the block is used instead of the default
+	track color when drawing that track.</li>
+</ul></p>
+<H3> Turnouts
+</H3>
+<P>
+Layout Editor supports four different types of turnouts (track switches): right-
+handed (<b>RH</b>), left-handed (<b>LH</b>), wye (<b>WYE</b>), and double 
+crossover (<b>Double Xover</b>). The
+other two types of turnouts sometimes used on model railroad layouts, double slip
+and three-way, can be drawn using two LH or RH turnouts. Double slip turnouts, 
+for example, are easily represented by two LH and/or RH turnouts drawn with their 
+throats connected by a short track segment. Once a turnout has been created, its 
+type cannot be changed. Changing the type of a turnout requires removing and 
+recreating the turnout.</P>
+<P>
+Turnout drawnings on a panel are drawn using solid lines for both 
+continuing and diverging legs until the turnout drawings are linked to
+turnouts in the Turnout Table. Once linked to actual turnouts, turnout 
+drawings show the "known states" of the turnouts they represent. After linking,
+you can toggle each turnout on your layout by clicking on the center point of its
+drawing (provided <b>Allow Layout Control</b> is checked in the 
+Options menu, and your DCC system supports computer control of turnouts).</P>
+<P>
+You can link each turnout drawing with a physical turnout in the Turnout Table 
+as turnout drawings are created, by entering its Turnout Table name (either 
+system name or user name) in the <b>Turnout: Name</b> field (top row of the 
+tool bar) before clicking to create that turnout.  Alternatively, you can create
+your turnout drawings first, then select <b>Edit...</b> in each turnout's popup 
+menu to open an <b>Edit Turnout</b> dialog that allows entry of the turnout name.
+</P>
+<P>
+Optionally, you can designate which <b>Block</b> a turnout is in either by 
+entering a block name in the <b>Block: Name</b> field of the tool bar prior to 
+creating each turnout, or by entering a block name in the Edit Turnout 
+dialog at a later time. The Edit Turnout dialog also allows an Edit Block dialog 
+to be requested, where information for the turnout's block may be entered or 
+changed. Blocks are discussed more fully below.</P>
+<p>
+When a side track branches from a mainline track at an RH or LH turnout, the 
+mainline normally continues through the turnout by following the straight-through 
+(closed) track leg. Sometimes, however, the mainline follows the diverging (thrown)
+leg. To allow entry of this information, the Edit Turnout dialog contains an 
+entry called <b>Continuing Route Turnout State</b>. Continuing Route Turnout State 
+defaults to Closed when a turnout drawing is created. You should change it to 
+Thrown if the mainline track follows the diverging leg (the thrown path) through 
+the turnout. For a WYE turnout, you should always check to see if its Continuing 
+Route Turnout State is set correctly to reflect the path of the mainline. To 
+test if Continuing Route Turnout State is correctly set, check the state of the 
+turnout in the Turnout Table when the turnout is set to clear the mainline. The
+Turnout Table state should match the Continuing Route Turnout State chosen in the 
+Edit Turnout dialog.</p>
+<p>
+Double crossover turnouts differ from other turnouts in several important ways. 
+Like other turnouts, double crossovers have two states--crossed and straight. To
+change a double crossover's state, however, requires four track switches to 
+change in unison. This may be accomplished using one, two, or four switch 
+machines. Normally a double crossover is assigned a single turnout entry in the 
+turnout table, but it may have several if its switch machines are controlled by
+different stationary decoders. (You can use two JMRI Routes controlled by the 
+same phantom turnout to make multiple switch machines work together. In this 
+case, enter the phantom turnout as the turnout linked to the double crossover
+turnout drawing.) With double crossovers, the crossover tracks are always 
+considered side track, and any mainline track entering the turnout, leaves on 
+the same straight as it entered. So there is no Continuing Route Turnout State 
+entry in a double crossover's Edit dialog.</p> 
+<p>
+If you are defining blocks through double crossovers, note that double crossovers 
+have four connecting points, each of which may be connected to a different track 
+block. So parts of a double crossover may be in one, two, three, or four separate 
+blocks. The Edit Turnout dialog for a double crossover allows the entry of up to 
+four blocks, each linked to one of the four connection points. The first block 
+entered must be the <b>Block: Name</b> field; this block is linked to upper left 
+connection point (if the turnout has not been rotated), and serves as the 
+default block for the double crossover. If any of <b>Block 2</b>, <b>Block 3</b>, 
+or <b>Block 4</b> entries are blank, the default block is used. Block connection 
+points are numbered 1, 2, 3 and 4, proceeding from the upper left connection 
+point in a clockwise direction.</p>
+
+<h3>Track Segments and Connection Points
+</h3>
+<P>
+A <b>Track Segment</b> is a piece of straight track stretching between two
+connection points. Connection points are drawn as small red or green squares.
+Connection points are found on turnouts, anchor points, end bumpers, and 
+level crossings. Each turnout has three or four connection points, 
+each accepting one connection. Each anchor point has one connection point that 
+can accept two connections. An end bumper is similar, but only accepts one
+connection. Level crossings have four connection points, each accepting one
+connection. A connection point that can accept a connecting track segment is 
+drawn red.  When a connection point has its capacity of connections, its color 
+is changed to green. When all connection points are green, a track diagram is
+complete, with all connections provided for.</P>
+<P>
+Track segments are normally drawn as solid lines. but you can designate that a
+track segment be drawn <i>dashed</i> to show tunnels or tracks crossing 
+at different grades. You can request a dashed line for a track segment by 
+checking <b>Dashed</b> in the tool bar before the track segment is created, 
+or you can change a track segment to <b>Dashed</b> in the Edit Track Segment
+dialog. (More anchor points can be added to get the dashed part of your
+track to cover the exact area desired.) You can also designate a track segment 
+as <i>hidden</i> so it's displayed only when edit mode is active. <i>Hidden</i> 
+track segments are useful for track diagrams drawn as multiple rows where the 
+end of one row connects to the beginning of another row. To make a track segment 
+hidden, check <b>Hide Track</b> in the Edit Track Segment dialog.</P>
+<p>
+Track segments are also used to designate <i>mainline track</i> or <i>side 
+track</i>. The legs of turnouts and level crossings are set to <i>mainline 
+track</i> or <i>side track</i> according to the designations of track segments 
+that are connected to them. See the discussion of continuing routes in the 
+above section on turnouts for information on how a mainline is tracked 
+through a turnout.</p>
+<p>
+If <b>Mainline</b> is checked in the tool bar when a 
+track segment is created, that track segment is designated as <i>mainline track</i>,
+otherwise it is considered <i>side track</i>. You can change from mainline
+track to side track, or vice versa, in the Edit Track dialog. Mainline track and 
+side track may be drawn with different width lines. Track widths for each are set 
+using the <b>Set Track Width...</b> item in the Options menu.</p>
+<p>
+Optionally, you can designate which <b>Block</b> a track segment is in--either by 
+entering a block name in the <b>Block: Name</b> field of the tool bar prior to 
+creating each track segment, or by entering a block name in the Edit Track Segment 
+dialog at a later time. The Edit Track Segment dialog also allows an Edit Block 
+dialog to be requested, so information for the track segment's block may be 
+entered or changed. Blocks are discussed more fully below.</p>
+
+<h3>Blocks</h3>
+<p>
+This section is not written yet.
+</p>
+
+
 
 </body>
 </html>
