@@ -46,7 +46,7 @@ import java.io.*;
  * :0000
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -837,14 +837,8 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 			
 			//Kill refresh flag, no update when replacing loco 
 			refresh = false;
-			
-			// delete lead or rear loco 
-			
-			bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-					NceBinaryCommand.LOC_CMD_DELETE_LOC_CONSIST, (byte) 0);
-			sendNceMessage(bl, REPLY_1);
-			
-			//now allow user to add loco to lead or rear consist
+	
+			//allow user to add loco to lead or rear consist
 	
 			engTextField.setText(EMPTY);
 			engTextField.setEnabled (true);
@@ -854,6 +848,7 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 			cmdButton.setToolTipText(ToolTipAdd);
 			
 			// now update CS memory in case user doesn't use the Add button
+			// this will also allow us to delete the loco from the layout
 			
 			if (engTextField == engTextField1) {
 
@@ -871,6 +866,11 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 				sendNceMessage(bl, REPLY_1);
 				
 			}
+			// now delete lead or rear loco from layout
+			
+			bl = NceBinaryCommand.nceLocoCmd(locoAddr,
+					NceBinaryCommand.LOC_CMD_DELETE_LOC_CONSIST, (byte) 0);
+			sendNceMessage(bl, REPLY_1);
 
 		} else {
 			
