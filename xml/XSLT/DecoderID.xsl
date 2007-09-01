@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: DecoderID.xsl,v 1.2 2003-12-29 03:13:32 jacobsen Exp $ -->
+<!-- $Id: DecoderID.xsl,v 1.3 2007-09-01 04:57:36 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI decoder definition index and -->
 <!-- definition files into an HTML page on decoder ID -->
+
+<!-- Used by default when the decoder index file is displayed in a web browser-->
 
 <xsl:stylesheet	version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
