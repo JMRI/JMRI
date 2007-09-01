@@ -40,7 +40,7 @@ import java.util.List;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
 
@@ -155,7 +155,9 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
             public void valueChanged(TreeSelectionEvent e) {
                 if (!dTree.isSelectionEmpty() && dTree.getSelectionPath()!=null &&
                         // can't be just a mfg, has to be at least a family
-                        dTree.getSelectionPath().getPathCount()>2) {
+                        dTree.getSelectionPath().getPathCount()>2 &&
+                        // can't be a multiple decoder selection
+                        dTree.getSelectionCount()<2) {
                     // decoder selected - reset and disable loco selection
                     log.debug("Selection event with "+dTree.getSelectionPath().toString());
                     locoBox.setSelectedIndex(0);
@@ -174,6 +176,10 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
 //      Mouselistener for doubleclick activation of proprammer   
         dTree.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent me){
+             // Clear any status messages and ensure the tree is in single path select mode
+             _statusLabel.setText(rbt.getString("StateIdle"));
+             dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
+            	
              /* check for both double click and that it's a decoder 
              that is being clicked on.  If it's just a Family, the programmer
              button is enabled by the TreeSelectionListener, but we don't
@@ -222,51 +228,63 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
             return;
         }
         dTree.clearSelection();
-        DecoderFile f = (DecoderFile)pList.get(0);
-        String findMfg = f.getMfg();
-        String findFamily = f.getFamily();
-        String findModel = f.getModel();
+        // If there are multiple matches change tree to allow multiple selections by the program
+        // and issue a warning instruction in the status bar
+        if (pList.size()>1) {
+        	dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.DISCONTIGUOUS_TREE_SELECTION);
+        	_statusLabel.setText(rbt.getString("StateMultipleMatch"));
+        }
+        else dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
+        // Select the decoder(s) in the tree
+        for (int i=0; i < pList.size(); i++) {
+        	
+        	DecoderFile f = (DecoderFile)pList.get(i);
+        	String findMfg = f.getMfg();
+        	String findFamily = f.getFamily();
+        	String findModel = f.getModel();
         
-        // if this is a family listing plus one specific decoder, take the decoder
-        if (pList.size()==2 && findFamily.equals(((DecoderFile)pList.get(0)).getFamily()) ) {
-            f = (DecoderFile)pList.get(1);
-            findMfg = f.getMfg();
-            findFamily = f.getFamily();
-            findModel = f.getModel();
-        }
-
-        dTree.clearSelection();
-        Enumeration e = dRoot.breadthFirstEnumeration();
-        while (e.hasMoreElements()) {
-            DefaultMutableTreeNode node = (DefaultMutableTreeNode)e.nextElement();
-            
-            // convert path to comparison string
-            TreeNode[] list = node.getPath();           
-            if (list.length == 3) {
-                // check for match to mfg, model, model
-                if (list[1].toString().equals(findMfg)
-                    && list[2].toString().equals(findModel))
-                        {
-                            TreePath path = new TreePath(node.getPath());
-                            dTree.expandPath(path);
-                            dTree.addSelectionPath(path);
-                            dTree.scrollPathToVisible(path);
-                            break;
-                        }
-            } else if (list.length == 4 ) {
-                // check for match to mfg, family, model
-                if (list[1].toString().equals(findMfg)
-                    && list[2].toString().equals(findFamily)
-                    && list[3].toString().equals(findModel))
-                        {
-                            TreePath path = new TreePath(node.getPath());
-                            dTree.expandPath(path);
-                            dTree.addSelectionPath(path);
-                            dTree.scrollPathToVisible(path);
-                            break;
-                        }
-            }
-        }
+/*	        // if this is a family listing plus one specific decoder, take the decoder
+	        if (pList.size()==2 && findFamily.equals(((DecoderFile)pList.get(0)).getFamily()) ) {
+	            f = (DecoderFile)pList.get(1);
+	            findMfg = f.getMfg();
+	            findFamily = f.getFamily();
+	            findModel = f.getModel();
+	        }
+	
+	        dTree.clearSelection();
+*/
+	        Enumeration e = dRoot.breadthFirstEnumeration();
+	        while (e.hasMoreElements()) {
+	            DefaultMutableTreeNode node = (DefaultMutableTreeNode)e.nextElement();
+	            
+	            // convert path to comparison string
+	            TreeNode[] list = node.getPath();           
+	            if (list.length == 3) {
+	                // check for match to mfg, model, model
+	                if (list[1].toString().equals(findMfg)
+	                    && list[2].toString().equals(findModel))
+	                        {
+	                            TreePath path = new TreePath(node.getPath());
+	                            dTree.expandPath(path);
+	                            dTree.addSelectionPath(path);
+	                            dTree.scrollPathToVisible(path);
+	                            break;
+	                        }
+	            } else if (list.length == 4 ) {
+	                // check for match to mfg, family, model
+	                if (list[1].toString().equals(findMfg)
+	                    && list[2].toString().equals(findFamily)
+	                    && list[3].toString().equals(findModel))
+	                        {
+	                            TreePath path = new TreePath(node.getPath());
+	                            dTree.expandPath(path);
+	                            dTree.addSelectionPath(path);
+	                            dTree.scrollPathToVisible(path);
+	                            break;
+	                        }
+	            }
+	        }
+    	}
     }
 
     /**

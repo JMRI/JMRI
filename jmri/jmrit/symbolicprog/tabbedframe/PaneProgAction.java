@@ -9,6 +9,8 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.CombinedLocoSelTreePane;
 import jmri.util.JmriJFrame;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 
 import javax.swing.AbstractAction;
@@ -34,7 +36,7 @@ import javax.swing.JSeparator;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.28 $
+ * @version			$Revision: 1.29 $
  */
 public class PaneProgAction 			extends AbstractAction {
 
@@ -70,6 +72,12 @@ public class PaneProgAction 			extends AbstractAction {
         // create the initial frame that steers
         final JmriJFrame f = new JmriJFrame(rbt.getString("FrameServiceProgrammerSetup"));
         f.getContentPane().setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));
+        
+        // ensure status line is cleared on close so it is normal if re-opened
+        f.addWindowListener(new WindowAdapter(){
+            public void windowClosing(WindowEvent we){
+            	statusLabel.setText(rbt.getString("StateIdle"));
+            	f.windowClosing(we);}});
 
         // add the Roster menu
         JMenuBar menuBar = new JMenuBar();
