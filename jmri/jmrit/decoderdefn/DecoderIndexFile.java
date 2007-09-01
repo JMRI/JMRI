@@ -11,6 +11,7 @@ import javax.swing.JComboBox;
 import org.jdom.Attribute;
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.ProcessingInstruction;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -31,7 +32,7 @@ import java.util.List;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.27 $
+ * @version			$Revision: 1.28 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -401,10 +402,18 @@ public class DecoderIndexFile extends XmlFile {
         // This is taken in large part from "Java and XML" page 368
         File file = new File(prefsDir()+name);
 
-        // create root element
+        // create root element and document
         Element root = new Element("decoderIndex-config");
         Document doc = newDocument(root, "decoderIndex-config.dtd");
 
+        // add XSLT processing instruction
+        // <?xml-stylesheet type="text/xsl" href="XSLT/DecoderID.xsl"?>
+        java.util.Map m = new java.util.HashMap();
+        m.put("type", "text/xsl");
+        m.put("href", "XSLT/DecoderID.xsl");
+        ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
+        doc.addContent(0,p);
+        
         // add top-level elements
         Element index;
         root.addContent(index = new Element("decoderIndex"));
