@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: panelfile.xsl,v 1.1 2007-09-01 05:13:49 jacobsen Exp $ -->
+<!-- $Id: panelfile.xsl,v 1.2 2007-09-01 05:19:22 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI panel file into an HTML page -->
 
@@ -190,12 +190,17 @@
             <h4>Conditional <xsl:value-of select="@systemName"/>
             <xsl:if test="string-length(@userName)!=0" > (<xsl:value-of select="@userName"/>)</xsl:if>
             </h4>
-		    <xsl:apply-templates/>
+		    <xsl:for-each select="conditionalStateVariable">
+		        <xsl:call-template name="conditionalStateVariable"/>
+		    </xsl:for-each>
+		    <xsl:for-each select="conditionalAction">
+		        <xsl:call-template name="conditionalAction"/>
+		    </xsl:for-each>
         </xsl:if>        
     </xsl:for-each>
 </xsl:template>
 
-<xsl:template match="conditionalStateVariable">
+<xsl:template name="conditionalStateVariable">
 State: 
 operator="<xsl:value-of select="@operator"/>"
 type="<xsl:value-of select="@type"/>"
@@ -206,7 +211,7 @@ triggerCalc="<xsl:value-of select="@triggerCalc"/>"
 <br/>
 </xsl:template>
 
-<xsl:template match="conditionalAction">
+<xsl:template name="conditionalAction">
 Action:
 option="<xsl:value-of select="@option"/>"
 delay="<xsl:value-of select="@delay"/>"
@@ -217,6 +222,10 @@ string="<xsl:value-of select="@string"/>"
 <br/>
 </xsl:template>
 
+<xsl:template match="paneleditor">
+<h3>Panel: <xsl:value-of select="@name"/>
+</h3>
+</xsl:template>
 
 
 </xsl:stylesheet>
