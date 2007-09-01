@@ -29,7 +29,7 @@ import java.awt.*;
  *
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class JmriJFrame extends JFrame implements java.awt.event.WindowListener {
@@ -67,21 +67,45 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener 
         setJMenuBar(bar);
     }
     
+    /**
+     * Provide a maximum frame size that is limited
+     * to what can fit on the screen after toolbars, etc
+     * are deducted.
+     *<P>
+     * Some of the methods used here return null pointers 
+     * on some Java implementations, however, so 
+     * this will return the superclasses's maximum size
+     * if the algorithm used here fails.
+     */
     public Dimension getMaximumSize() {
         // adjust maximum size to full screen minus any toolbars
         try {
-            Insets insets = getToolkit().getScreenInsets(this.getGraphicsConfiguration());
-            Dimension screen = getToolkit().getScreenSize();
-            return new Dimension(screen.width-(insets.right+insets.left),
-                screen.height-(insets.top+insets.bottom));
-        } catch (NoSuchMethodError e) {
-            Dimension screen = getToolkit().getScreenSize();
-            return new Dimension(screen.width,
-                screen.height-45);  // approximate this...
+            // Try our own alorithm.  This throws null-pointer exceptions on
+            // some Java installs, however, for unknown reasons, so be
+            // prepared to fal back.
+            try {
+                Insets insets = getToolkit().getScreenInsets(this.getGraphicsConfiguration());
+                Dimension screen = getToolkit().getScreenSize();
+                return new Dimension(screen.width-(insets.right+insets.left),
+                    screen.height-(insets.top+insets.bottom));
+            } catch (NoSuchMethodError e) {
+                Dimension screen = getToolkit().getScreenSize();
+                return new Dimension(screen.width,
+                    screen.height-45);  // approximate this...
+            }
+        } catch (Exception e2) {
+            // failed, fall back to standard method
+            return super.getMaximumSize();
         }
     }
 
+    /**
+     * The preferred size must fit on the physical screen, so 
+     * calculate the lesser of either the preferred size from the
+     * layout or the screen size.
+     */
     public Dimension getPreferredSize() {
+        // limit preferred size to size of screen (from getMaximumSize())
         Dimension screen = getMaximumSize();
         int width = Math.min(super.getPreferredSize().width, screen.width);
         int height = Math.min(super.getPreferredSize().height, screen.height);
