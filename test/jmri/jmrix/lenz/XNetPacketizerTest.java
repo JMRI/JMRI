@@ -10,7 +10,7 @@ import junit.framework.TestCase;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 2.5 $
+ * @version $Revision: 2.6 $
  */
 public class XNetPacketizerTest extends TestCase {
 
@@ -20,14 +20,17 @@ public class XNetPacketizerTest extends TestCase {
 
     public void testOutbound() throws Exception {
         LenzCommandStation lcs = new LenzCommandStation();
-        XNetPacketizer c = new XNetPacketizer(lcs);
+        XNetPacketizer c = new XNetPacketizer(lcs){
+            protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {} // don't care about timeout
+        };
         // connect to iostream via port controller scaffold
         XNetPortControllerScaffold p = new XNetPortControllerScaffold();
         c.connectPort(p);
         //c.startThreads();
         XNetMessage m = XNetMessage.getTurnoutCommandMsg(22, true, false, true);
+        m.setTimeout(1);  // don't want to wait a long time
         c.sendXNetMessage(m, null);
-	Thread.sleep(100); // intermittent problem with seeing 4 characters?
+	    Thread.sleep(100); // intermittent problem with seeing 4 characters?
         Assert.assertEquals("total length ", 4, p.tostream.available());
         Assert.assertEquals("Char 0", 0x52, p.tostream.readByte()&0xff);
         Assert.assertEquals("Char 1", 0x05, p.tostream.readByte()&0xff);
@@ -38,7 +41,9 @@ public class XNetPacketizerTest extends TestCase {
 
     public void testInbound() throws Exception {
         LenzCommandStation lcs = new LenzCommandStation();
-        XNetPacketizer c = new XNetPacketizer(lcs);
+        XNetPacketizer c = new XNetPacketizer(lcs){
+            protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {} // don't care about timeout
+        };
 
         // make sure Swing is up
         JFrame j = new JFrame();
