@@ -7,11 +7,14 @@ import junit.framework.TestSuite;
 import java.beans.PropertyChangeEvent;
 
 /**
- * ReporterIconTest.java
+ * Test the ReporterIcon.
+ *<P>
+ * There is no default (or internal) implementation, so 
+ * test via the specific LocoNet implementation
  *
  * Description:
  * @author			Bob Jacobsen  Copyright 2007
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class ReporterIconTest extends TestCase {
 
@@ -24,20 +27,25 @@ public class ReporterIconTest extends TestCase {
         to = new ReporterIcon();
         jf.getContentPane().add(to);
         
+        // reset instance manager
         jmri.InstanceManager i = new jmri.InstanceManager(){
             protected void init() {
                 super.init();
                 root = this;
             }
         };
+        
+        // reset the LocoNet instances, so this behaves independent of 
+        // any layout connection
+        new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
+
+        // create objects to test
         jmri.InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager());
         to.setReporter("1");
         jmri.InstanceManager.reporterManagerInstance().provideReporter("1").setReport("data");
 
         jf.pack();
         jf.setVisible(true);
-        jmri.util.JUnitAppender.assertErrorMessage("No layout connection, Reporter manager can't function");
-        jmri.util.JUnitAppender.assertWarnMessage("No LocoNet connection, Reporter won't update");
 
 	}
 
