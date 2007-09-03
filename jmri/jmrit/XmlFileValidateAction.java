@@ -11,7 +11,7 @@ import javax.swing.*;
  * Make sure an XML file is readable, and validates OK
  *
  * @author	Bob Jacobsen   Copyright (C) 2005
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  * @see         jmri.jmrit.XmlFile
  * @see         jmri.jmrit.XmlFileCheckAction
  */
@@ -34,7 +34,7 @@ public class XmlFileValidateAction extends AbstractAction {
         // handle selection or cancel
         if (retVal == JFileChooser.APPROVE_OPTION) {
             File file = fci.getSelectedFile();
-            if (log.isInfoEnabled()) log.info("located file "+file+" for XML processing");
+            if (log.isDebugEnabled()) log.debug("located file "+file+" for XML processing");
             // handle the file (later should be outside this thread?)
             boolean original = XmlFile.verify;
             try {
@@ -47,7 +47,7 @@ public class XmlFileValidateAction extends AbstractAction {
                 XmlFile.verify = original;
             }
             JOptionPane.showMessageDialog(_who,"OK");
-            if (log.isInfoEnabled()) log.info("parsing complete");
+            if (log.isDebugEnabled()) log.debug("parsing complete");
 
         }
         else log.info("XmlFileValidatekAction cancelled in open dialog");

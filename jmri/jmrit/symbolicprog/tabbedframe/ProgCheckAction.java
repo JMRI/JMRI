@@ -15,7 +15,7 @@ import org.jdom.*;
  * Check the names in an XML programmer file against the names.xml definitions
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  * @see         jmri.jmrit.XmlFile
  */
 public class ProgCheckAction extends AbstractAction {
@@ -37,11 +37,11 @@ public class ProgCheckAction extends AbstractAction {
         // handle selection or cancel
         if (retVal == JFileChooser.APPROVE_OPTION) {
             File file = fci.getSelectedFile();
-            if (log.isInfoEnabled()) log.info("located file "+file+" for XML processing");
+            if (log.isDebugEnabled()) log.debug("located file "+file+" for XML processing");
             // handle the file (later should be outside this thread?)
             try {
                 Element root = readFile(file);
-                if (log.isInfoEnabled()) log.info("parsing complete");
+                if (log.isDebugEnabled()) log.debug("parsing complete");
                 
                 // check to see if there's a programmer element
                 if (root.getChild("programmer")==null) {

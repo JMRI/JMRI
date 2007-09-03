@@ -17,7 +17,7 @@ import org.jdom.output.*;
 /**
  * Frame providing a table-organized command station programmer from decoder definition files
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
 
@@ -213,12 +213,12 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
         // handle selection or cancel
         if (retVal == JFileChooser.APPROVE_OPTION) {
             File file = fci.getSelectedFile();
-            if (log.isInfoEnabled()) log.info("selectFileButtonActionPerformed: located file "+file+" for XML processing");
+            if (log.isDebugEnabled()) log.debug("selectFileButtonActionPerformed: located file "+file+" for XML processing");
             progStatus.setText("Reading file...");
             // handle the file (later should be outside this thread?)
             readAndParseConfigFile(file);
             progStatus.setText("OK");
-            if (log.isInfoEnabled()) log.info("selectFileButtonActionPerformed: parsing complete");
+            if (log.isDebugEnabled()) log.debug("selectFileButtonActionPerformed: parsing complete");
 
         }
     }
@@ -293,7 +293,7 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
             String mfg = decoder.getAttribute("mfg").getValue();
             String model = decoder.getAttribute("model").getValue();
             String filename = "xml"+File.separator+mfg+"_"+model+".xml";
-            if (log.isInfoEnabled()) log.info("will read decoder info from "+filename);
+            if (log.isDebugEnabled()) log.debug("will read decoder info from "+filename);
             readAndParseConfigFile(new File(filename));
             if (log.isDebugEnabled()) log.debug("finished processing decoder file for loco file");
         } else log.error("No decoder element found in config file");

@@ -30,7 +30,7 @@ import java.util.List;
  *
  * @author  Bob Jacobsen   Copyright (C) 2001, 2002
  * @author  Howard G. Penny Copyright (C) 2005
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  * @see     jmri.jmrit.decoderdefn.IdentifyDecoder
  * @see     jmri.jmrit.roster.IdentifyLoco
  */
@@ -55,7 +55,7 @@ public class NewLocoSelPane extends javax.swing.JPanel  {
         locoBox = Roster.instance().fullRosterComboBox();
         locoBox.addActionListener( new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                if (log.isInfoEnabled()) log.info("Locomotive selected changed");
+                if (log.isDebugEnabled()) log.debug("Locomotive selected changed");
                 matchDecoderToLoco();
             }
         });
@@ -69,7 +69,7 @@ public class NewLocoSelPane extends javax.swing.JPanel  {
         JButton iddecoder= new JButton("Identify decoder");
         iddecoder.addActionListener( new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                if (log.isInfoEnabled()) log.info("identify decoder pressed");
+                if (log.isDebugEnabled()) log.debug("identify decoder pressed");
                 startIdentify();
             }
         });
@@ -84,7 +84,7 @@ public class NewLocoSelPane extends javax.swing.JPanel  {
         JButton go1 = new JButton("Open programmer");
         go1.addActionListener( new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                if (log.isInfoEnabled()) log.info("Open programmer pressed");
+                if (log.isDebugEnabled()) log.debug("Open programmer pressed");
                 openButton();
             }
         });

@@ -36,7 +36,7 @@ import java.util.List;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class CombinedLocoSelListPane extends CombinedLocoSelPane  {
 
@@ -113,7 +113,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane  {
         }
         iddecoder.addActionListener( new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                        if (log.isInfoEnabled()) log.info("identify decoder pressed");
+                        if (log.isDebugEnabled()) log.debug("identify decoder pressed");
                         startIdentifyDecoder();
                 }
         });

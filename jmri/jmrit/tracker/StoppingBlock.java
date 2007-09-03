@@ -27,7 +27,7 @@ import jmri.Throttle;
  * should it not restart? Optional restart?)
  * </UL>
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class StoppingBlock {
     
@@ -108,17 +108,17 @@ public class StoppingBlock {
      * Perform the stop operation
      */
     void doStop() {
-        if (log.isInfoEnabled()) log.info("Block "+block.getSystemName()+" speed being set to stop");
+        if (log.isDebugEnabled()) log.debug("Block "+block.getSystemName()+" speed being set to stop");
         setSpeed(0.0f, false, false, false);  // bell on
     }
     
     void doSlow() {
-        if (log.isInfoEnabled()) log.info("Block "+block.getSystemName()+" speed being set to slow");
+        if (log.isDebugEnabled()) log.debug("Block "+block.getSystemName()+" speed being set to slow");
         setSpeed(slow, false, false, false);  // bell off
     }
 
     void doRestart() {
-        if (log.isInfoEnabled()) log.info("Block "+block.getSystemName()+" speed being set to run");
+        if (log.isDebugEnabled()) log.debug("Block "+block.getSystemName()+" speed being set to run");
         setSpeed(fast, false, false, false);  // bell off
     }
     

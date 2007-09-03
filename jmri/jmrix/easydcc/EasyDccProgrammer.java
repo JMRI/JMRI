@@ -12,7 +12,7 @@ import java.beans.PropertyChangeEvent;
  * Implements the jmri.Programmer interface via commands for the EasyDcc powerstation
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccListener {
 
@@ -140,7 +140,7 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
     protected void useProgrammer(jmri.ProgListener p) throws jmri.ProgrammerException {
         // test for only one!
         if (_usingProgrammer != null && _usingProgrammer != p) {
-            if (log.isInfoEnabled()) log.info("programmer already in use by "+_usingProgrammer);
+            if (log.isDebugEnabled()) log.debug("programmer already in use by "+_usingProgrammer);
             throw new jmri.ProgrammerException("programmer in use");
         }
         else {
