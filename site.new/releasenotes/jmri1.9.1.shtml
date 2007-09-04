@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.9.1.shtml,v 1.4 2007-08-28 15:42:04 jacobsen Exp $ -->
+<!-- $Id: jmri1.9.1.shtml,v 1.5 2007-09-04 06:15:44 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -178,6 +178,24 @@ if the remote stopped responding.
 Paul Bender added the Silver Direct to the Lenz Silver decoder family
 
 <LI>Stephen Williams found and fixed a bug that caused LocoNet slot 119 (a normal slot) to be only shown when system slots were being shown
+
+<LI>Protect against an error where errors are thrown while trying to start the program on certain Linux machines.
+
+<LI>Through the magic of XSLT, decoder files and the decoder index now show useful information when viewed in a web browser
+
+<LI>Dan Boudreau added X&Y positions to the popup menus for panel icons
+
+<LI>Simon Ginsburg updated the German translation
+
+<LI>Dennis Miller changed the way decoder identification is presented by DecoderPro.  If more than one decoder can possibly match when you ask DecoderPro to identify the decoder, they will now all be highlighted and the user will be asked to select one.
+
+<LI>The programs will now log various "INFO" messages as part of running. This is normal, and is meant to help with debugging.
+
+<LI>This release have debugging information present, so that if there's a fault you'll get a useful traceback to send back to us.
+
+<LI>Lots of little JavaDoc improvements
+
+
 <!--#include virtual="/Footer" -->
 
    </div><!-- closes #mainContent-->
