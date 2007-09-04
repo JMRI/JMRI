@@ -9,7 +9,7 @@
 # documenation of org.apache.log4j.PropertyConfigurator.
 
 # The root category uses the appender called A1, which is set to log 
-# priority WARN and above.
+# priority INFO and above.
 # Valid priority names are FATAL, ERROR, WARN, INFO and DEBUG. 
 # The root category is the only category that is given
 # a default priority. All other categories do not have a default
@@ -17,7 +17,7 @@
 # hierarchy.  See the end of the file for examples of how to 
 # control this at a finer level.
 
-log4j.rootCategory= WARN, A1
+log4j.rootCategory= INFO, A1
 
 # A1 is set to be a ConsoleAppender which outputs to System.out. 
 log4j.appender.A1=org.apache.log4j.ConsoleAppender
@@ -62,9 +62,6 @@ log4j.appender.T.layout=org.apache.log4j.PatternLayout
 log4j.appender.T.layout.ConversionPattern=%6r %-37.37c{2} %-5p - %m [%t]%n
 log4j.appender.T.MaxFileSize=100KB
 log4j.appender.T.MaxBackupIndex=1
-
-# Enable info messages
-log4j.category.jmri=INFO
 
 # Examples of changing priority of specific categories (classes, packages):
 #
