@@ -28,7 +28,7 @@ import net.roydesign.mac.MRJAdapter;
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
  * @author  Dennis Miller  Copyright 2005
- * @version     $Revision: 1.40 $
+ * @version     $Revision: 1.41 $
  */
 public class Apps extends JPanel {
 
@@ -500,9 +500,12 @@ public class Apps extends JPanel {
     private JMenuBar menuBar;
 
     static public String startupInfo(String program) {
+    	log.info(ignore);
         return (program+" version "+jmri.Version.name()
                 +" starts under Java "+System.getProperty("java.version","<unknown>"));
     }
+    
+    static protected String ignore ="****** Ignore messages above this line *******";
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Apps.class.getName());
 }
