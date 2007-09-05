@@ -17,7 +17,7 @@ import jmri.util.JmriJFrame;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.63 $
+ * @version     $Revision: 1.64 $
  */
 public class JMRIdemo extends Apps {
 
@@ -61,7 +61,7 @@ public class JMRIdemo extends Apps {
         JmriJFrame f = new JmriJFrame("JmriDemo");
         createFrame(new JMRIdemo(f), f);
 
-        log.info("main initialization done");
+        log.debug("main initialization done");
         splash(false);
     }
 

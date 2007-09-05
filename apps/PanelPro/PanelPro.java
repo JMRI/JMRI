@@ -17,7 +17,7 @@ import javax.swing.JFrame;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 public class PanelPro extends Apps {
 
@@ -51,7 +51,7 @@ public class PanelPro extends Apps {
         JmriJFrame f = new JmriJFrame("PanelPro");
         createFrame(new PanelPro(f), f);
 
-        log.info("main initialization done");
+        log.debug("main initialization done");
         splash(false);
     }
 

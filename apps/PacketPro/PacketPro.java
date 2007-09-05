@@ -22,7 +22,7 @@ import javax.swing.JFrame;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2002
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class PacketPro extends Apps {
 
@@ -48,7 +48,7 @@ public class PacketPro extends Apps {
         JFrame f = new JFrame("PacketPro");
         createFrame(new PacketPro(f), f);
 
-        log.info("main initialization done");
+        log.debug("main initialization done");
         splash(false);
     }
 

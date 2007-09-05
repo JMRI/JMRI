@@ -8,7 +8,7 @@ import jmri.InstanceManager;
  * A simple example of a "Faceless" (no gui) application
  * <P>
  * @author	Bob Jacobsen   Copyright 2003, 2005
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class FacelessApp {
 	static String name = "Faceless App";
@@ -21,7 +21,7 @@ public class FacelessApp {
         
         new FacelessApp(args);   // start the application class itself
 
-        log.info("main initialization done");
+        log.debug("main initialization done");
         
         // You could put your own code here,
         // for example.  The layout connection

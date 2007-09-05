@@ -26,7 +26,7 @@ import jmri.util.JmriJFrame;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.47 $
+ * @version     $Revision: 1.48 $
  */
 public class DecoderPro extends Apps {
 
@@ -103,7 +103,7 @@ public class DecoderPro extends Apps {
         JmriJFrame f = new JmriJFrame("DecoderPro");
         createFrame(new DecoderPro(f), f);
 
-        log.info("main initialization done");
+        log.debug("main initialization done");
         splash(false);
     }
 
