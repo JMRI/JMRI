@@ -45,7 +45,7 @@ import jmri.AbstractNamedBean;
  *		the configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class LayoutBlock extends AbstractNamedBean
@@ -126,6 +126,18 @@ public class LayoutBlock extends AbstractNamedBean
 			}
 		}
 	}
+	public boolean isOnPanel(LayoutEditor panel) {
+		// returns true if this Layout Block is used on panel
+		if (panels.size()>0) {
+			for (int i=0;i<panels.size();i++) {
+				LayoutEditor ed = (LayoutEditor)panels.get(i);
+				if (ed == panel) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}			
 	
 	/**
 	 *  Redraws panels using this layout block
@@ -333,7 +345,7 @@ public class LayoutBlock extends AbstractNamedBean
 			// show block ID (not changeable)
 			JPanel panel1 = new JPanel(); 
             panel1.setLayout(new FlowLayout());
-			JLabel blockNameLabel = new JLabel( rb.getString("BlockID")+": "+blockName );
+			JLabel blockNameLabel = new JLabel( rb.getString("Name")+": "+blockName );
             panel1.add(blockNameLabel);
             contentPane.add(panel1);
 			// show current use count (not editable)
@@ -492,6 +504,7 @@ public class LayoutBlock extends AbstractNamedBean
 	
 	/**
 	 * Utility methods for converting between string and color
+	 * Note: These names are only used internally, so don't need a resource bundle
 	 */
 	public static String colorToString(Color color) {
 		if(color == Color.black) return "black";

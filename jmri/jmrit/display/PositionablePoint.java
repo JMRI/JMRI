@@ -18,7 +18,7 @@ import javax.swing.JSeparator;
 
 /**
  * PositionablePoint is a Point defining a node in the Track that can be dragged around the
- * inside of the enclosing Container using a right-drag.
+ * inside of the enclosing LayoutEditor panel using a right-drag (drag with meta key).
  * <P>
  * Two types of Positionable Point are supported:
  *		Anchor - point on track - two track connections
@@ -28,9 +28,13 @@ import javax.swing.JSeparator;
  * only.  The Track Segments connected to a PositionablePoint may belong to the same block
  * or to different blocks.  Since each Track Segment may only belong to one block, a 
  * PositionablePoint may function as a Block Boundary.
+ * <P>
+ * Signal names are saved here at a Block Boundary anchor point by the tool Set Signals at
+ * Block Boundary. PositionablePoint does nothing with these signal head names; it only 
+ * serves as a place to store them.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class PositionablePoint
@@ -53,6 +57,8 @@ public class PositionablePoint
 	private TrackSegment connect1 = null;
 	private TrackSegment connect2 = null;
 	private Point2D coords = new Point2D.Double(10.0,10.0);
+	private String eastBoundSignalName = ""; // signal head for east (south) bound trains
+	private String westBoundSignalName = ""; // signal head for west (north) bound trains
 	
     public PositionablePoint(String id, int t, Point2D p, LayoutEditor myPanel) {
 		instance = this;
@@ -77,6 +83,10 @@ public class PositionablePoint
 	public TrackSegment getConnect2() {return connect2;}
 	public Point2D getCoords() {return coords;}
 	public void setCoords(Point2D p) {coords = p;}
+	public String getEastBoundSignal() {return eastBoundSignalName;}
+	public void setEastBoundSignal(String signalName) {eastBoundSignalName = signalName;}
+	public String getWestBoundSignal() {return westBoundSignalName;}
+	public void setWestBoundSignal(String signalName) {westBoundSignalName = signalName;}
 	
 	// initialization instance variables (used when loading a LayoutEditor)
 	public String trackSegment1Name = "";
@@ -160,7 +170,7 @@ public class PositionablePoint
     JPopupMenu popup = null;
 
     /**
-     * For editting: only provides remove
+     * For editing: only provides remove
      */
     protected void showPopUp(MouseEvent e) {
         if (popup != null ) {
@@ -195,7 +205,7 @@ public class PositionablePoint
 				break;
 		}
 		popup.add(new JSeparator(JSeparator.HORIZONTAL));
-		popup.add(new AbstractAction("Remove") {
+		popup.add(new AbstractAction(rb.getString("Remove")) {
 				public void actionPerformed(ActionEvent e) {
 					if (layoutEditor.removePositionablePoint(instance)) {
 						// user is serious about removing this point from the panel

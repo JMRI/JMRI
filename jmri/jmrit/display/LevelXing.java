@@ -31,9 +31,13 @@ import javax.swing.*;
  * <P>
  * When LevelXings are first created, there are no connections.  Block information
  *		and connections are added when available.  
+ * <P>
+ * Signal Head names are saved here to keep track of where signals are. LevelXing 
+ *		only serves as a storage place for signal head names. The names are placed here
+ *		by Set Signals at Level Crossing in Tools menu.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class LevelXing 
@@ -54,6 +58,10 @@ public class LevelXing
 	private String ident = "";
 	private String blockNameAC = "";
 	private String blockNameBD = "";
+	private String signalAName = "";  // signal at A track junction
+	private String signalBName = "";  // signal at B track junction
+	private String signalCName = "";  // signal at C track junction
+	private String signalDName = "";  // signal at D track junction
 	private Object connectA = null;
 	private Object connectB = null;
 	private Object connectC = null;
@@ -79,6 +87,14 @@ public class LevelXing
 	public String getID() {return ident;}
 	public String getBlockNameAC() {return blockNameAC;}
 	public String getBlockNameBD() {return blockNameBD;}
+	public String getSignalAName() {return signalAName;}
+	public void setSignalAName(String signalName) {signalAName = signalName;}
+	public String getSignalBName() {return signalBName;}
+	public void setSignalBName(String signalName) {signalBName = signalName;}
+	public String getSignalCName() {return signalCName;}
+	public void setSignalCName(String signalName) {signalCName = signalName;}
+	public String getSignalDName() {return signalDName;}
+	public void setSignalDName(String signalName) {signalDName = signalName;}
 	public Object getConnectA() {return connectA;}
 	public Object getConnectB() {return connectB;}
 	public Object getConnectC() {return connectC;}
@@ -282,9 +298,9 @@ public class LevelXing
             popup = new JPopupMenu();
 		}
 		popup.add(rb.getString("LevelCrossing"));
-		if (blockNameAC=="") popup.add(rb.getString("NoBlock1"));
+		if ( (blockNameAC==null) || (blockNameAC=="") ) popup.add(rb.getString("NoBlock1"));
 		else popup.add(rb.getString("Block1ID")+": "+getLayoutBlockAC().getID());
-		if (blockNameBD=="") popup.add(rb.getString("NoBlock2"));
+		if ( (blockNameBD==null) || (blockNameBD=="") ) popup.add(rb.getString("NoBlock2"));
 		else popup.add(rb.getString("Block2ID")+": "+getLayoutBlockBD().getID());
 		popup.add(new JSeparator(JSeparator.HORIZONTAL));
 		popup.add(new AbstractAction(rb.getString("Edit")) {
@@ -292,7 +308,7 @@ public class LevelXing
 					editLevelXing(instance);
 				}
 			});
-		popup.add(new AbstractAction("Remove") {
+		popup.add(new AbstractAction(rb.getString("Remove")) {
 				public void actionPerformed(ActionEvent e) {
 					if (layoutEditor.removeLevelXing(instance)) {
 						// Returned true if user did not cancel
@@ -401,15 +417,28 @@ public class LevelXing
 	void xingEdit1BlockPressed(ActionEvent a) {
 		// check if a block name has been entered
 		if (!blockNameAC.equals(block1Name.getText()) ) {
-			// block has changed, if old block exists, decrement use
+			// block 1 has changed, if old block exists, decrement use
 			if ( (blockAC!=null) && (blockAC!=blockBD) ) {
 				blockAC.decrementUse();
 			}
 			// get new block, or null if block has been removed
 			blockNameAC = block1Name.getText();
-			blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
-			// decrement use if block was previously counted
-			if ( (blockAC!=null) && (blockAC==blockBD) ) blockAC.decrementUse();
+			if ( (blockNameAC!=null) && (blockNameAC.length()>0)) {
+				blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
+				if (blockAC!=null) {
+					// decrement use if block was previously counted
+					if ( (blockAC!=null) && (blockAC==blockBD) ) blockAC.decrementUse();
+				}
+				else {
+					blockNameAC = "";
+					block1Name.setText("");
+				}
+			}
+			else {
+				blockAC = null;
+				blockNameAC = "";
+			}
+			needsRedraw = true;
 		}
 		// check if a block exists to edit
 		if (blockAC==null) {
@@ -430,9 +459,22 @@ public class LevelXing
 			}
 			// get new block, or null if block has been removed
 			blockNameBD = block2Name.getText();
-			blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
-			// decrement use if block was previously counted
-			if ( (blockBD!=null) && (blockAC==blockBD) ) blockBD.decrementUse();
+			if ( (blockNameBD!=null) && (blockNameBD.length()>0)) {
+				blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
+				if (blockBD!=null) {
+					// decrement use if block was previously counted
+					if ( (blockBD!=null) && (blockAC==blockBD) ) blockBD.decrementUse();
+				}
+				else {
+					blockNameBD = "";
+					block2Name.setText("");
+				}
+			}
+			else {
+				blockBD = null;
+				blockNameBD = "";
+			}
+			needsRedraw = true;
 		}
 		// check if a block exists to edit
 		if (blockBD==null) {
@@ -453,9 +495,21 @@ public class LevelXing
 			}
 			// get new block, or null if block has been removed
 			blockNameAC = block1Name.getText();
-			blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
-			// decrement use if block was previously counted
-			if ( (blockAC!=null) && (blockAC==blockBD) ) blockAC.decrementUse();
+			if ( (blockNameAC!=null) && (blockNameAC.length()>0)) {
+				blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
+				if (blockAC!=null) {
+					// decrement use if block was previously counted
+					if ( (blockAC!=null) && (blockAC==blockBD) ) blockAC.decrementUse();
+				}
+				else {
+					blockNameAC = "";
+					block1Name.setText("");
+				}
+			}
+			else {
+				blockAC = null;
+				blockNameAC = "";
+			}
 			needsRedraw = true;
 		}
 		if ( !blockNameBD.equals(block2Name.getText()) ) {
@@ -465,9 +519,21 @@ public class LevelXing
 			}
 			// get new block, or null if block has been removed
 			blockNameBD = block2Name.getText();
-			blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
-			// decrement use if block was previously counted
-			if ( (blockBD!=null) && (blockAC==blockBD) ) blockBD.decrementUse();
+			if ( (blockNameBD!=null) && (blockNameBD.length()>0)) {
+				blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
+				if (blockBD!=null) {
+					// decrement use if block was previously counted
+					if ( (blockBD!=null) && (blockAC==blockBD) ) blockBD.decrementUse();
+				}
+				else {
+					blockNameBD = "";
+					block2Name.setText("");
+				}
+			}
+			else {
+				blockBD = null;
+				blockNameBD = "";
+			}
 			needsRedraw = true;
 		}
 		editOpen = false;

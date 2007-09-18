@@ -47,7 +47,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -147,6 +147,13 @@ public class LayoutEditor extends JmriJFrame {
     private int numTurnouts = 0;
 	private TrackSegment newTrack = null;
 	private boolean panelChanged = false;
+
+	// selection variables
+	private boolean selectionActive = false;
+	private double selectionX = 0.0;
+	private double selectionY = 0.0;
+	private double selectionWidth = 0.0;
+	private double selectionHeight = 0.0;
    
 	// Option menu items 
     private JCheckBoxMenuItem editModeItem = null;
@@ -191,6 +198,8 @@ public class LayoutEditor extends JmriJFrame {
 	private int numTrackSegments = 0;
 	private int numLevelXings = 0;
 	private int numLayoutTurnouts = 0;
+	// Lists of items that facilitate tools
+	public ArrayList signalList = new ArrayList();  // Signal Head Icons
         
     // persistent instance variables - saved to disk with Save Panel
 	private int panelWidth = 0;
@@ -244,6 +253,8 @@ public class LayoutEditor extends JmriJFrame {
         setJMenuBar(menuBar);
         // setup Options menu
 		setupOptionMenu(menuBar);
+		// setup Tools menu
+		setupToolsMenu(menuBar);
 		// setup Help menu
         addHelpMenu("package.jmri.jmrit.display.LayoutEditor", true);
 		
@@ -372,14 +383,14 @@ public class LayoutEditor extends JmriJFrame {
         top4.add (nextSignalHead);
 		nextSignalHead.setToolTipText(rb.getString("SignalIconToolTip"));		
         signalIconEditor = new MultiIconEditor(8);
-		signalIconEditor.setIcon(0, "Red:","resources/icons/smallschematics/searchlights/left-red-marker.gif");
-		signalIconEditor.setIcon(1, "Flash red:", "resources/icons/smallschematics/searchlights/left-flashred-marker.gif");
-		signalIconEditor.setIcon(2, "Yellow:", "resources/icons/smallschematics/searchlights/left-yellow-marker.gif");
-		signalIconEditor.setIcon(3, "Flash yellow:", "resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif");
-		signalIconEditor.setIcon(4, "Green:","resources/icons/smallschematics/searchlights/left-green-marker.gif");
-		signalIconEditor.setIcon(5, "Flash green:","resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif");
-		signalIconEditor.setIcon(6, "Dark:","resources/icons/smallschematics/searchlights/left-dark-marker.gif");
-		signalIconEditor.setIcon(7, "Held:","resources/icons/smallschematics/searchlights/left-held-marker.gif");
+		signalIconEditor.setIcon(0, "Red:","resources/icons/smallschematics/searchlights/left-red-short.gif");
+		signalIconEditor.setIcon(1, "Flash red:", "resources/icons/smallschematics/searchlights/left-flashred-short.gif");
+		signalIconEditor.setIcon(2, "Yellow:", "resources/icons/smallschematics/searchlights/left-yellow-short.gif");
+		signalIconEditor.setIcon(3, "Flash yellow:", "resources/icons/smallschematics/searchlights/left-flashyellow-short.gif");
+		signalIconEditor.setIcon(4, "Green:","resources/icons/smallschematics/searchlights/left-green-short.gif");
+		signalIconEditor.setIcon(5, "Flash green:","resources/icons/smallschematics/searchlights/left-flashgreen-short.gif");
+		signalIconEditor.setIcon(6, "Dark:","resources/icons/smallschematics/searchlights/left-dark-short.gif");
+		signalIconEditor.setIcon(7, "Held:","resources/icons/smallschematics/searchlights/left-held-short.gif");
         signalIconEditor.complete();
         signalFrame = new JFrame(rb.getString("EditSignalIcons"));
 		signalFrame.getContentPane().add(new JLabel("  "+rb.getString("IconChangeInfo")+"  "),BorderLayout.NORTH);
@@ -508,7 +519,88 @@ public class LayoutEditor extends JmriJFrame {
 					jmri.jmrit.display.PanelMenu.instance().updateLayoutEditorPanel(thisPanel);
                 }
             });
-    }  
+    } 
+	
+	LayoutEditorTools tools = null;
+	void setupToolsMenu(JMenuBar menuBar) {
+		JMenu toolsMenu = new JMenu(rb.getString("MenuTools"));
+		menuBar.add(toolsMenu);
+		// scale track diagram 
+        JMenuItem scaleItem = new JMenuItem(rb.getString("ScaleTrackDiagram")+"...");
+        toolsMenu.add(scaleItem);
+        scaleItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+					// bring up scale track diagram dialog
+					scaleTrackDiagram();
+                }
+            });
+		// translate selection 
+        JMenuItem moveItem = new JMenuItem(rb.getString("TranslateSelection")+"...");
+        toolsMenu.add(moveItem);
+        moveItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+					// bring up translate selection dialog
+					moveSelection();
+                }
+            });
+		// undo translate selection 
+        JMenuItem undoMoveItem = new JMenuItem(rb.getString("UndoTranslateSelection"));
+        toolsMenu.add(undoMoveItem);
+        undoMoveItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+					// undo previous move selection 
+					undoMoveSelection();
+                }
+            });
+		// set signals at turnout
+		JMenuItem turnoutItem = new JMenuItem(rb.getString("SignalsAtTurnout")+"...");
+        toolsMenu.add(turnoutItem);
+        turnoutItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+					if (tools == null) {
+						tools = new LayoutEditorTools(thisPanel);
+					}
+					// bring up signals at turnout tool dialog
+					tools.setSignalsAtTurnout(signalIconEditor,signalFrame);
+                }
+            });
+		// set signals at block boundary
+		JMenuItem boundaryItem = new JMenuItem(rb.getString("SignalsAtBoundary")+"...");
+        toolsMenu.add(boundaryItem);
+        boundaryItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+					if (tools == null) {
+						tools = new LayoutEditorTools(thisPanel);
+					}
+					// bring up signals at block boundary tool dialog
+					tools.setSignalsAtBlockBoundary(signalIconEditor,signalFrame);
+                }
+            });
+		// set signals at crossover turnout
+		JMenuItem xoverItem = new JMenuItem(rb.getString("SignalsAtXoverTurnout")+"...");
+        toolsMenu.add(xoverItem);
+        xoverItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+					if (tools == null) {
+						tools = new LayoutEditorTools(thisPanel);
+					}
+					// bring up signals at block boundary tool dialog
+					tools.setSignalsAtXoverTurnout(signalIconEditor,signalFrame);
+                }
+            });
+		// set signals at level crossing
+		JMenuItem xingItem = new JMenuItem(rb.getString("SignalsAtLevelXing")+"...");
+        toolsMenu.add(xingItem);
+        xingItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+					if (tools == null) {
+						tools = new LayoutEditorTools(thisPanel);
+					}
+					// bring up signals at block boundary tool dialog
+					tools.setSignalsAtLevelXing(signalIconEditor,signalFrame);
+                }
+            });
+	}
 
 	void setupOptionMenu(JMenuBar menuBar) {
         JMenu optionMenu = new JMenu(rb.getString("Options"));
@@ -610,15 +702,6 @@ public class LayoutEditor extends JmriJFrame {
                 public void actionPerformed(ActionEvent event) {
 					// bring up enter track width dialog
 					enterTrackWidth();
-                }
-            });
-		// scale track diagram 
-        JMenuItem scaleItem = new JMenuItem(rb.getString("ScaleTrackDiagram")+"...");
-        optionMenu.add(scaleItem);
-        scaleItem.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent event) {
-					// bring up scale track diagram dialog
-					scaleTrackDiagram();
                 }
             });
 		// track color item
@@ -775,7 +858,7 @@ public class LayoutEditor extends JmriJFrame {
 		}
 	}
 
-	// operational variables for scale track diagram pane
+	// operational variables for scale/translate track diagram pane
 	private JmriJFrame scaleTrackDiagramFrame = null;
 	private boolean scaleTrackDiagramOpen = false;
 	private JTextField xFactorField = new JTextField(6);
@@ -1004,6 +1087,216 @@ public class LayoutEditor extends JmriJFrame {
 		int i = (int)(x+0.5);
 		return ((double)i);
 	}
+
+	// operational variables for move selection pane
+	private JmriJFrame moveSelectionFrame = null;
+	private boolean moveSelectionOpen = false;
+	private JTextField xMoveField = new JTextField(6);
+	private JTextField yMoveField = new JTextField(6);
+	private JButton moveSelectionDone;
+	private JButton moveSelectionCancel;
+	private boolean canUndoMoveSelection = false;
+	private double undoDeltaX = 0.0;
+	private double undoDeltaY = 0.0;
+	private Rectangle2D undoRect;
+
+	// display dialog for translation a selection
+	protected void moveSelection() {
+		if (!selectionActive || (selectionWidth==0.0) || (selectionHeight==0.0) ) {
+			// no selection has been made - nothing to move
+			JOptionPane.showMessageDialog(this,rb.getString("Error12"),
+					rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		if (moveSelectionOpen) {
+			moveSelectionFrame.setVisible(true);
+			return;
+		}
+		// Initialize if needed
+		if (moveSelectionFrame == null) {
+            moveSelectionFrame = new JmriJFrame( rb.getString("TranslateSelection") );
+            moveSelectionFrame.addHelpMenu("package.jmri.jmrit.display.TranslateSelection", true);
+            moveSelectionFrame.setLocation(70,30);
+            Container theContentPane = moveSelectionFrame.getContentPane();        
+            theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
+			// setup x translate
+            JPanel panel31 = new JPanel(); 
+            panel31.setLayout(new FlowLayout());
+			JLabel xMoveLabel = new JLabel( rb.getString("XTranslateLabel"));
+            panel31.add(xMoveLabel);
+            panel31.add(xMoveField);
+            xMoveField.setToolTipText( rb.getString("XTranslateHint") );
+            theContentPane.add(panel31);
+			// setup y translate
+            JPanel panel32 = new JPanel(); 
+            panel32.setLayout(new FlowLayout());
+			JLabel yMoveLabel = new JLabel( rb.getString("YTranslateLabel"));
+            panel32.add(yMoveLabel);
+            panel32.add(yMoveField);
+            yMoveField.setToolTipText( rb.getString("YTranslateHint") );
+            theContentPane.add(panel32);
+			// setup information message 
+            JPanel panel33 = new JPanel(); 
+            panel33.setLayout(new FlowLayout());
+			JLabel message1Label = new JLabel( rb.getString("Message3Label"));
+            panel33.add(message1Label);
+            theContentPane.add(panel33);			
+			// set up Done and Cancel buttons
+            JPanel panel5 = new JPanel();
+            panel5.setLayout(new FlowLayout());
+            panel5.add(moveSelectionDone = new JButton(rb.getString("MoveSelection")));
+            moveSelectionDone.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    moveSelectionDonePressed(e);
+                }
+            });
+            moveSelectionDone.setToolTipText( rb.getString("MoveSelectionHint") );
+            panel5.add(moveSelectionCancel = new JButton(rb.getString("Cancel")));
+            moveSelectionCancel.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    moveSelectionCancelPressed(e);
+                }
+            });
+            moveSelectionCancel.setToolTipText( rb.getString("CancelHint") );
+            theContentPane.add(panel5);
+		}
+		// Set up for Entry of Translation
+		xMoveField.setText("0");
+		yMoveField.setText("0");
+		moveSelectionFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+				public void windowClosing(java.awt.event.WindowEvent e) {
+					moveSelectionCancelPressed(null);
+				}
+			});
+        moveSelectionFrame.pack();
+        moveSelectionFrame.setVisible(true);	
+		moveSelectionOpen = true;
+	}	
+	void moveSelectionDonePressed(ActionEvent a) {
+		String newText = "";
+		float xTranslation = 0.0F;
+		float yTranslation = 0.0F;
+		// get x translation
+		newText = xMoveField.getText();
+		try {
+			xTranslation = Float.parseFloat(newText);
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(moveSelectionFrame,rb.getString("EntryError")+": "+
+					e+" "+rb.getString("TryAgain"),rb.getString("Error"),
+					JOptionPane.ERROR_MESSAGE);
+            return;
+		}
+		// get y translation
+		newText = yMoveField.getText();
+		try {
+			yTranslation = Float.parseFloat(newText);
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(moveSelectionFrame,rb.getString("EntryError")+": "+
+					e+" "+rb.getString("TryAgain"),rb.getString("Error"),
+					JOptionPane.ERROR_MESSAGE);
+            return;
+		}
+		// here when all numbers read in - translation if entered
+		if ( (xTranslation!=0.0F) || (yTranslation!=0.0F) ) {
+			// set up selection rectangle
+			Rectangle2D selectRect = new Rectangle2D.Double (selectionX, selectionY, 
+															selectionWidth, selectionHeight);
+			// set up undo information
+			undoRect = new Rectangle2D.Double (selectionX+xTranslation, selectionY+yTranslation, 
+															selectionWidth, selectionHeight);
+			undoDeltaX = -xTranslation;
+			undoDeltaY = -yTranslation;
+			canUndoMoveSelection = true;
+			// apply translation to icon items within the selection
+			for (int i = 0; i<contents.size(); i++) {
+				Component c = (Component)contents.get(i);
+				Point2D upperLeft = c.getLocation();
+				if (selectRect.contains(upperLeft)) {
+					int xNew = (int)(upperLeft.getX()+xTranslation);
+					int yNew = (int)(upperLeft.getY()+yTranslation);
+					c.setLocation(xNew,yNew);
+				}
+ 			}
+			// loop over all defined turnouts
+			for (int i = 0; i<turnoutList.size();i++) {
+				LayoutTurnout t = (LayoutTurnout)turnoutList.get(i);
+				Point2D center = t.getCoordsCenter();
+				if (selectRect.contains(center)) {
+					t.setCoordsCenter(new Point2D.Double(center.getX()+xTranslation,
+																center.getY()+yTranslation));
+				}
+			}
+			// loop over all defined level crossings
+			for (int i = 0; i<xingList.size();i++) {
+				LevelXing x = (LevelXing)xingList.get(i);
+				Point2D center = x.getCoordsCenter();
+				if (selectRect.contains(center)) {
+					x.setCoordsCenter(new Point2D.Double(center.getX()+xTranslation,
+																center.getY()+yTranslation));
+				}
+			}
+			// loop over all defined Anchor Points and End Bumpers
+			for (int i = 0; i<pointList.size();i++) {
+				PositionablePoint p = (PositionablePoint)pointList.get(i);
+				Point2D coord = p.getCoords();
+				if (selectRect.contains(coord)) {
+					p.setCoords(new Point2D.Double(coord.getX()+xTranslation,
+																coord.getY()+yTranslation));
+				}
+			}
+			repaint();
+			panelChanged = true;
+		}
+		// success - hide dialog 
+		moveSelectionOpen = false;
+		moveSelectionFrame.setVisible(false);
+	}
+	void moveSelectionCancelPressed(ActionEvent a) {
+		moveSelectionOpen = false;
+		moveSelectionFrame.setVisible(false);
+	}
+	void undoMoveSelection() {
+		if (canUndoMoveSelection) {
+			for (int i = 0; i<contents.size(); i++) {
+				Component c = (Component)contents.get(i);
+				Point2D upperLeft = c.getLocation();
+				if (undoRect.contains(upperLeft)) {
+					int xNew = (int)(upperLeft.getX()+undoDeltaX);
+					int yNew = (int)(upperLeft.getY()+undoDeltaY);
+					c.setLocation(xNew,yNew);
+				}
+ 			}
+			for (int i = 0; i<turnoutList.size();i++) {
+				LayoutTurnout t = (LayoutTurnout)turnoutList.get(i);
+				Point2D center = t.getCoordsCenter();
+				if (undoRect.contains(center)) {
+					t.setCoordsCenter(new Point2D.Double(center.getX()+undoDeltaX,
+															center.getY()+undoDeltaY));
+				}
+			}
+			for (int i = 0; i<xingList.size();i++) {
+				LevelXing x = (LevelXing)xingList.get(i);
+				Point2D center = x.getCoordsCenter();
+				if (undoRect.contains(center)) {
+					x.setCoordsCenter(new Point2D.Double(center.getX()+undoDeltaX,
+																center.getY()+undoDeltaY));
+				}
+			}
+			for (int i = 0; i<pointList.size();i++) {
+				PositionablePoint p = (PositionablePoint)pointList.get(i);
+				Point2D coord = p.getCoords();
+				if (undoRect.contains(coord)) {
+					p.setCoords(new Point2D.Double(coord.getX()+undoDeltaX,
+																coord.getY()+undoDeltaY));
+				}
+			}
+			repaint();
+			canUndoMoveSelection = false;
+		}
+		return;
+	}
 	
 	public void setCurrentPositionAndSize() {
 		// save current panel location and size
@@ -1109,6 +1402,8 @@ public class LayoutEditor extends JmriJFrame {
         if (editMode) {
             xLoc = event.getX();
             yLoc = event.getY();
+			boolean prevSelectionActive = selectionActive;
+			selectionActive = false;
             xLabel.setText(Integer.toString(xLoc));
             yLabel.setText(Integer.toString(yLoc));
 			// if asking for menu, or moving a point, check if on known point
@@ -1182,7 +1477,16 @@ public class LayoutEditor extends JmriJFrame {
 						break;
 					}
 				}
-			}	
+				// check if starting selection
+				if (selectedObject == null) {
+					selectionActive = true;
+					selectionX = loc.getX();
+					selectionY = loc.getY();
+					selectionWidth = 0.0;
+					selectionHeight = 0.0;
+				}
+			}
+			if (prevSelectionActive) repaint();	
         }
 		else if ( controlLayout && (!event.isMetaDown()) && (!event.isPopupTrigger()) && 
 								(!event.isShiftDown()) && (!event.isControlDown()) ) {
@@ -1655,6 +1959,11 @@ public class LayoutEditor extends JmriJFrame {
 				}
 				repaint();
 			}
+			else if ( selectionActive && (!event.isShiftDown()) && (!event.isMetaDown()) ) {
+				selectionWidth = xLoc - selectionX;
+				selectionHeight = yLoc - selectionY;
+				repaint();
+			}
         }
     }
 
@@ -1686,6 +1995,14 @@ public class LayoutEditor extends JmriJFrame {
 				break;
 		}
 		panelChanged = true;
+	}
+	public void setLoc(int x, int y) {
+		if (editMode) {
+			xLoc = x;
+			yLoc = y;
+			xLabel.setText(Integer.toString(xLoc));
+			yLabel.setText(Integer.toString(yLoc));
+		}
 	}
     
     /**
@@ -1899,7 +2216,7 @@ public class LayoutEditor extends JmriJFrame {
 			Turnout to = t.getTurnout();
 			if (to!=null) {
 				if ( (to.getSystemName().equals(turnoutName.toUpperCase())) ||
-							(to.getUserName().equals(turnoutName)) ) {
+					((to.getUserName()!=null) && (to.getUserName().equals(turnoutName))) ) {
 					JOptionPane.showMessageDialog(openPane,
 							java.text.MessageFormat.format(rb.getString("Error4"),
 							new String[]{turnoutName}),
@@ -2285,6 +2602,7 @@ public class LayoutEditor extends JmriJFrame {
     public void putSensor(LayoutSensorIcon l) {
         l.invalidate();
         targetPanel.add(l, SENSORS);
+		l.connect(this);
         contents.add(l);
         // reshow the panel
         targetPanel.validate();
@@ -2315,9 +2633,13 @@ public class LayoutEditor extends JmriJFrame {
 		// create and set up signal icon	
         LayoutSignalHeadIcon l = new LayoutSignalHeadIcon();
         l.setRedIcon(signalIconEditor.getIcon(0));
-        l.setYellowIcon(signalIconEditor.getIcon(1));
-        l.setFlashYellowIcon(signalIconEditor.getIcon(2));
-        l.setGreenIcon(signalIconEditor.getIcon(3));
+        l.setFlashRedIcon(signalIconEditor.getIcon(1));
+        l.setYellowIcon(signalIconEditor.getIcon(2));
+        l.setFlashYellowIcon(signalIconEditor.getIcon(3));
+        l.setGreenIcon(signalIconEditor.getIcon(4));
+        l.setFlashGreenIcon(signalIconEditor.getIcon(5));
+        l.setDarkIcon(signalIconEditor.getIcon(6));
+        l.setHeldIcon(signalIconEditor.getIcon(7));
         l.setSignalHead(nextSignalHead.getText());
 		SignalHead xSignal = l.getSignalHead();
 		if (xSignal != null) {
@@ -2332,7 +2654,9 @@ public class LayoutEditor extends JmriJFrame {
     public void putSignal(LayoutSignalHeadIcon l) {
         l.invalidate();
         targetPanel.add(l, SIGNALS);
+		l.connect(this);
         contents.add(l);
+		signalList.add(l);
         // reshow the panel
         targetPanel.validate();
     }
@@ -2352,7 +2676,7 @@ public class LayoutEditor extends JmriJFrame {
         l.invalidate();
         targetPanel.add(l, l.getDisplayLevel());
 		if ( ((l.getDisplayLevel()).intValue()) != (BKG.intValue()) ) {
-			l.connect();
+			l.connect(this);
 		}
 		else {
 			backgroundImage = l;
@@ -2417,7 +2741,11 @@ public class LayoutEditor extends JmriJFrame {
     /**
      * Invoke a window to allow you to add a MultiSensor indicator to the target
      */
+	private int multiLocX;
+	private int multiLocY;
     void startMultiSensor() {
+		multiLocX = xLoc;
+		multiLocY = yLoc;
         if (multiSensorFrame == null) {
             // create a common edit frame
             multiSensorFrame = new MultiSensorIconFrame(this);
@@ -2426,15 +2754,16 @@ public class LayoutEditor extends JmriJFrame {
         }  
         multiSensorFrame.setVisible(true);
     }
-    // Invoked with window has new sensor ready
+    // Invoked when window has new multi-sensor ready
     public void addMultiSensor(MultiSensorIcon l) {
-        setNextLocation(l);
+		l.setLocation(multiLocX,multiLocY);
 		panelChanged = true;
         putMultiSensor(l);
     }
-    // invoked to install the sensor
+    // invoked to install the multi-sensor
     public void putMultiSensor(MultiSensorIcon l) {
         l.invalidate();
+		l.setViewCoordinates(true);
         targetPanel.add(l, l.getDisplayLevel());
         contents.add(l);
         // reshow the panel
@@ -2740,6 +3069,7 @@ public class LayoutEditor extends JmriJFrame {
 				drawTurnoutRects(g2);
 				drawXingRects(g2);
 				drawTrackOvals(g2);
+				drawSelectionRect(g2);
 			}
         }
     }
@@ -3267,7 +3597,15 @@ public class LayoutEditor extends JmriJFrame {
 		}
 	}
 
-	private Point2D getCoords(Object o, int type) {
+	private void drawSelectionRect(Graphics2D g2) {
+		if ( selectionActive && (selectionWidth!=0.0) && (selectionHeight!=0.0) ){
+			g2.setColor(defaultTrackColor);
+			g2.setStroke(new BasicStroke(1.0F,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND));
+			g2.draw(new Rectangle2D.Double (selectionX, selectionY, selectionWidth, selectionHeight));
+		}
+	}
+
+	protected Point2D getCoords(Object o, int type) {
 		if (o != null) {
 			switch (type) {
 				case POS_POINT:

@@ -12,21 +12,28 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JCheckBoxMenuItem;
 
+import java.util.ResourceBundle;
+
 /**
  * This module provides an icon to display a status of a Sensor on a LayoutEditor.
  *   This routine is almost identical to SensorIcon.java, written by Bob Jacobsen.  
  *   Differences are related to the hard interdependence between SensorIconXml.java and 
  *   PanelEditor.java, which made it impossible to use SensorIcon.java directly with 
  *   LayoutEditor. Rectifying these differences is especially important when storing and
- *   loading a saved panel.
+ *   loading a saved panel. 
+ * <P>
+ * This module has been chaanged (from SensorIcon.java) to use a resource bundle for 
+ *	its user-seen text, like other Layout Editor modules.
  *
  * @author David J. Duchamp Copyright (C) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  *
- *  (Copied with only name changes from SensorIcon.java)
+ *  (Copied with minor changes from SensorIcon.java)
  */
 
-public class LayoutSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
+public class LayoutSensorIcon extends LayoutPositionableLabel implements java.beans.PropertyChangeListener {
+
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.LayoutEditorBundle");
 
     public LayoutSensorIcon() {
         // super ctor call to make sure this is an icon label
@@ -125,7 +132,7 @@ public class LayoutSensorIcon extends PositionableLabel implements java.beans.Pr
 
     String getNameString() {
         String name;
-        if (sensor == null) name = "<Not connected>";
+        if (sensor == null) name = rb.getString("NotConnected");
         else if (sensor.getUserName()!=null) {
             name = sensor.getUserName();
             if (sensor.getSystemName()!=null) name = name+" ("+sensor.getSystemName()+")";
@@ -135,20 +142,17 @@ public class LayoutSensorIcon extends PositionableLabel implements java.beans.Pr
     }
 
     /**
-     * Pop-up just displays the sensor name
+     * Display the pop-up menu
      */
     protected void showPopUp(MouseEvent e) {
         if (!getEditable()) return;
         ours = this;
-//        if (popup==null) {
-            popup = new JPopupMenu();
-            
-			if (getViewCoordinates()) {
-				popup.add("x= " + this.getX());
-				popup.add("y= " + this.getY());
-			}
-            popup.add(new JMenuItem(getNameString()));
-            if (icon) popup.add(new AbstractAction("Rotate") {
+		popup = new JPopupMenu();            
+		popup.add(new JMenuItem(getNameString()));
+		popup.add("x= " + this.getX());
+		popup.add("y= " + this.getY());
+		if (icon) {
+			popup.add(new AbstractAction(rb.getString("Rotate")) {
                     public void actionPerformed(ActionEvent e) {
                         active.setRotation(active.getRotation()+1, ours);
                         inactive.setRotation(inactive.getRotation()+1, ours);
@@ -156,25 +160,23 @@ public class LayoutSensorIcon extends PositionableLabel implements java.beans.Pr
                         inconsistent.setRotation(inconsistent.getRotation()+1, ours);
                         displayState(sensorState());
                     }
-                });
-
-            addDisableMenuEntry(popup);
-            
-            momentaryItem = new JCheckBoxMenuItem("Momentary");
-            popup.add(momentaryItem);
-            momentaryItem.addActionListener(new ActionListener(){
+			});
+		}
+		addDisableMenuEntry(popup);            
+		momentaryItem = new JCheckBoxMenuItem(rb.getString("Momentary"));
+		popup.add(momentaryItem);
+		momentaryItem.addActionListener(new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     setMomentary(momentaryItem.isSelected());
                 }
-            });
-            
-            popup.add(new AbstractAction("Remove") {
-                    public void actionPerformed(ActionEvent e) {
-                        remove();
-                        dispose();
-                    }
-                });
- //       }  // end creation of popup menu
+			});            
+		popup.add(new AbstractAction(rb.getString("Remove")) {
+				public void actionPerformed(ActionEvent e) {
+					remove();
+					dispose();
+				}
+			});
+		// end creation of popup menu
 
         popup.show(e.getComponent(), e.getX(), e.getY());
     }
@@ -191,19 +193,19 @@ public class LayoutSensorIcon extends PositionableLabel implements java.beans.Pr
 
         switch (state) {
         case Sensor.UNKNOWN:
-            if (text) super.setText("<unknown>");
+            if (text) super.setText(rb.getString("Unknown"));
             if (icon) super.setIcon(unknown);
             break;
         case Sensor.ACTIVE:
-            if (text) super.setText("Active");
+            if (text) super.setText(rb.getString("SensorActive"));
             if (icon) super.setIcon(active);
             break;
         case Sensor.INACTIVE:
-            if (text) super.setText("Inactive");
+            if (text) super.setText(rb.getString("SensorInactive"));
             if (icon) super.setIcon(inactive);
             break;
         default:
-            if (text) super.setText("<inconsistent>");
+            if (text) super.setText(rb.getString("Inconsistent"));
             if (icon) super.setIcon(inconsistent);
             break;
         }

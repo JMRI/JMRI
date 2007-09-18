@@ -52,10 +52,18 @@ import javax.swing.*;
  *		east.  Rotations are performed in a clockwise direction.
  * <P>
  * When LayoutTurnouts are first created, there are no connections.  Block information
- *		and connections may be added when available.  
+ *		and connections may be added when available.
+ * <P>  
+ * When a LayoutTurnout is first created, it is enabled for control of an assigned
+ *		actual turnout. Clicking on the turnout center point will toggle the turnout.
+ *		This can be disabled via the popup menu.
+ * <P>
+ * Signal Head names are saved here to keep track of where signals are. LayoutTurnout 
+ *		only serves as a storage place for signal head names. The names are placed here
+ *		by tools, Set Signals at Turnout, and Set Signals at Double Crossover.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class LayoutTurnout
@@ -88,12 +96,21 @@ public class LayoutTurnout
 	public String blockBName = "";  // double-Xover - name for second block, if there is one
 	public String blockCName = "";  // double-Xover - name for third block, if there is one
 	public String blockDName = "";  // double-Xover - name for fourth block, if there is one
+	public String signalA1Name = ""; // signal 1 (continuing) (throat for RH, LH, WYE)
+	public String signalA2Name = ""; // signal 2 (diverging) (throat for RH, LH, WYE)
+	public String signalB1Name = ""; // continuing (RH, LH, WYE) signal 1 (double crossover)
+	public String signalB2Name = ""; // double crossover only
+	public String signalC1Name = ""; // diverging (RH, LH, WYE) signal 1 (double crossover)
+	public String signalC2Name = ""; // double crossover only
+	public String signalD1Name = ""; // double crossover only
+	public String signalD2Name = ""; // double crossover only
 	public int type = RH_TURNOUT;
 	public Object connectA = null;		// throat of LH, RH, and WYE turnouts
 	public Object connectB = null;		// straight leg of LH and RH turnouts
 	public Object connectC = null;
 	public Object connectD = null;		// double crossover only
 	public int continuingSense = Turnout.CLOSED;
+	public boolean disabled = false;
 	public Point2D center = new Point2D.Double(50.0,50.0);
 	public Point2D dispB = new Point2D.Double(20.0,0.0);
 	public Point2D dispC = new Point2D.Double(20.0,10.0);
@@ -107,6 +124,7 @@ public class LayoutTurnout
 		turnout = null;
 		turnoutName = "";
 		mTurnoutListener = null;
+		disabled = false;
 		block = null;
 		blockName = "";
 		layoutEditor = myPanel;
@@ -166,6 +184,22 @@ public class LayoutTurnout
 	public String getBlockBName() {return blockBName;}
 	public String getBlockCName() {return blockCName;}
 	public String getBlockDName() {return blockDName;}
+	public String getSignalA1Name() {return signalA1Name;}
+	public void setSignalA1Name(String signalName) {signalA1Name = signalName;}
+	public String getSignalA2Name() {return signalA2Name;}
+	public void setSignalA2Name(String signalName) {signalA2Name = signalName;}
+	public String getSignalB1Name() {return signalB1Name;}
+	public void setSignalB1Name(String signalName) {signalB1Name = signalName;}
+	public String getSignalB2Name() {return signalB2Name;}
+	public void setSignalB2Name(String signalName) {signalB2Name = signalName;}
+	public String getSignalC1Name() {return signalC1Name;}
+	public void setSignalC1Name(String signalName) {signalC1Name = signalName;}
+	public String getSignalC2Name() {return signalC2Name;}
+	public void setSignalC2Name(String signalName) {signalC2Name = signalName;}
+	public String getSignalD1Name() {return signalD1Name;}
+	public void setSignalD1Name(String signalName) {signalD1Name = signalName;}
+	public String getSignalD2Name() {return signalD2Name;}
+	public void setSignalD2Name(String signalName) {signalD2Name = signalName;}
 	public int getTurnoutType() {return type;}
 	public Object getConnectA() {return connectA;}
 	public Object getConnectB() {return connectB;}
@@ -198,6 +232,8 @@ public class LayoutTurnout
 		}
 	}
 	public void setContinuingSense(int sense) {continuingSense=sense;}
+	public void setDisabled(boolean state) {disabled = state;}
+	public boolean isDisabled() {return disabled;}
 	public void setConnectA(Object o,int type) {
 		connectA = o;
 		if ( (type!=LayoutEditor.TRACK) && (type!=LayoutEditor.NONE) ) {
@@ -527,7 +563,7 @@ public class LayoutTurnout
 	 *    not disabled
 	 */
 	public void toggleTurnout() {
-        if (turnout!=null) {
+        if ((turnout!=null) && (!disabled)) {
 			// toggle turnout
 			if (turnout.getKnownState()==jmri.Turnout.CLOSED)
 				turnout.setCommandedState(jmri.Turnout.THROWN);
@@ -613,7 +649,7 @@ public class LayoutTurnout
 	}
 
     JPopupMenu popup = null;
-
+    JCheckBoxMenuItem disableItem = null;
     /**
      * Display popup menu for information and editing
      */
@@ -677,6 +713,15 @@ public class LayoutTurnout
                 }
             });
 		}
+		if (disableItem==null)
+			disableItem = new JCheckBoxMenuItem(rb.getString("Disabled"));
+        disableItem.setSelected(disabled);
+        popup.add(disableItem);
+        disableItem.addActionListener(new ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					disabled = disableItem.isSelected();
+				}
+			});
 		if (blockName=="") popup.add(rb.getString("NoBlock"));
 		else popup.add(rb.getString("Block")+": "+getLayoutBlock().getID());
 		if (type==DOUBLE_XOVER) {
@@ -884,6 +929,9 @@ public class LayoutTurnout
 			// get new block, or null if block has been removed
 			blockName = blockNameField.getText();
 			block = layoutEditor.provideLayoutBlock(blockName);
+			if (block==null) {
+				blockName = "";
+			}
 			// decrement use if block was already counted
 			if ( (block!=null) && ( (block==blockB) || (block==blockC) ||
 					(block==blockD) ) ) block.decrementUse();
@@ -911,6 +959,9 @@ public class LayoutTurnout
 			// get new block, or null if block has been removed
 			blockBName = blockBNameField.getText();
 			blockB = layoutEditor.provideLayoutBlock(blockBName);
+			if (blockB==null) {
+				blockBName = "";
+			}
 			// decrement use if block was already counted
 			if ( (blockB!=null) && ( (block==blockB) || (blockB==blockC) ||
 					(blockB==blockD) ) ) blockB.decrementUse();
@@ -938,6 +989,9 @@ public class LayoutTurnout
 			// get new block, or null if block has been removed
 			blockCName = blockCNameField.getText();
 			blockC = layoutEditor.provideLayoutBlock(blockCName);
+			if (blockC==null) {
+				blockCName = "";
+			}
 			// decrement use if block was already counted
 			if ( (blockC!=null) && ( (block==blockC) || (blockB==blockC) ||
 					(blockC==blockD) ) ) blockD.decrementUse();
@@ -965,6 +1019,9 @@ public class LayoutTurnout
 			// get new block, or null if block has been removed
 			blockDName = blockDNameField.getText();
 			blockD = layoutEditor.provideLayoutBlock(blockDName);
+			if (blockD==null) {
+				blockDName = "";
+			}
 			// decrement use if block was already counted
 			if ( (blockD!=null) && ( (block==blockD) || (blockB==blockD) ||
 					(blockC==blockD) ) ) blockD.decrementUse();
@@ -1014,6 +1071,9 @@ public class LayoutTurnout
 			// get new block, or null if block has been removed
 			blockName = blockNameField.getText();
 			block = layoutEditor.provideLayoutBlock(blockName);
+			if (block==null) {
+				blockName = "";
+			}
 			// decrement use if block was already counted
 			if ( (block!=null) && ( (block==blockB) || (block==blockC) ||
 					(block==blockD) ) ) block.decrementUse();
@@ -1030,6 +1090,9 @@ public class LayoutTurnout
 				// get new block, or null if block has been removed
 				blockBName = blockBNameField.getText();
 				blockB = layoutEditor.provideLayoutBlock(blockBName);
+				if (blockB==null) {
+					blockBName = "";
+				}
 				// decrement use if block was already counted
 				if ( (blockB!=null) && ( (block==blockB) || (blockB==blockC) ||
 						(blockB==blockD) ) ) blockB.decrementUse();
@@ -1045,6 +1108,9 @@ public class LayoutTurnout
 				// get new block, or null if block has been removed
 				blockCName = blockCNameField.getText();
 				blockC = layoutEditor.provideLayoutBlock(blockCName);
+				if (blockC==null) {
+					blockCName = "";
+				}
 				// decrement use if block was already counted
 				if ( (blockC!=null) && ( (block==blockC) || (blockB==blockC) ||
 						(blockC==blockD) ) ) blockC.decrementUse();
@@ -1060,6 +1126,9 @@ public class LayoutTurnout
 				// get new block, or null if block has been removed
 				blockDName = blockDNameField.getText();
 				blockD = layoutEditor.provideLayoutBlock(blockDName);
+				if (blockD==null) {
+					blockDName = "";
+				}
 				// decrement use if block was already counted
 				if ( (blockD!=null) && ( (block==blockD) || (blockB==blockD) ||
 						(blockC==blockD) ) ) blockD.decrementUse();

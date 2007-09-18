@@ -27,7 +27,7 @@ import javax.swing.*;
  *		may be hidden when the panel is not in EditMode. 
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class TrackSegment 
@@ -111,7 +111,7 @@ public class TrackSegment
 	public boolean getMainline() {return mainline;}
 	public void setMainline(boolean main) {mainline = main;} 
 	public LayoutBlock getLayoutBlock() {
-		if ( (block==null) && (blockName!="") ) {
+		if ( (block==null) && (blockName!=null) && (blockName!="") ) {
 			block = layoutEditor.provideLayoutBlock(blockName);
 		}
 		return block;
@@ -335,6 +335,10 @@ public class TrackSegment
 			// get new block, or null if block has been removed
 			blockName = blockNameField.getText();
 			block = layoutEditor.provideLayoutBlock(blockName);
+			if (block == null) {
+				blockName = "";
+			}
+			needsRedraw = true;
 		}
 		// check if a block exists to edit
 		if (block==null) {
@@ -371,6 +375,9 @@ public class TrackSegment
 			// get new block, or null if block has been removed
 			blockName = blockNameField.getText();
 			block = layoutEditor.provideLayoutBlock(blockName);
+			if (block == null) {
+				blockName = "";
+			}
 			needsRedraw = true;
 		}
 		editOpen = false;

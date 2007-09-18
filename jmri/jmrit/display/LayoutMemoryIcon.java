@@ -11,16 +11,28 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 
+import java.util.ResourceBundle;
+
 /**
  * An icon to display a status of a Memory.<P>
  * <P>
  * The value of the memory can't be changed with this icon.
- *<P>
- * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.1 $
+ * <P>
+ * This module is derived with only a few changes from MemoryIcon.java by 
+ *   Bob Jacobsen Copyright (c) 2004. A name change was needed to work around 
+ *   the hard dependence on PanelEditor in MemoryIconXml.java, without risking 
+ *   compromising existing PanelEditor panels. 
+ * <P>
+ * This module has been modified (from MemoryIcon.java) to use a resource
+ *	 bundle for its user-seen text, like other LayoutEditor modules.
+ *
+ * @author Dave Duchamp Copyright (c) 2007
+ * @version $Revision: 1.2 $
  */
 
 public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.beans.PropertyChangeListener {
+
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.LayoutEditorBundle");
 
     public LayoutMemoryIcon() {
         // super ctor call to make sure this is an icon label
@@ -130,7 +142,7 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
 
     String getNameString() {
         String name;
-        if (memory == null) name = "<Not connected>";
+        if (memory == null) name = rb.getString("NotConnected");
         else if (memory.getUserName()!=null)
             name = memory.getUserName()+" ("+memory.getSystemName()+")";
         else
@@ -154,10 +166,12 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
     protected void showPopUp(MouseEvent e) {
         if (!getEditable()) return;
         ours = this;
-        popup = new JPopupMenu();
-        popup.add(new JMenuItem(getNameString()));
+		popup = new JPopupMenu();
+		popup.add(new JMenuItem(getNameString()));
+		popup.add("x= " + this.getX());
+		popup.add("y= " + this.getY());
         if (icon) {
-            popup.add(new AbstractAction("Rotate") {
+            popup.add(new AbstractAction(rb.getString("Rotate")) {
                 public void actionPerformed(ActionEvent e) {
                     // rotate all the icons, a real PITA
                     java.util.Iterator iterator = map.values().iterator();
@@ -169,7 +183,7 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
                 }
             });
 
-            popup.add(new AbstractAction("Remove") {
+            popup.add(new AbstractAction(rb.getString("Remove")) {
                 public void actionPerformed(ActionEvent e) {
                     remove();
                     dispose();
@@ -177,7 +191,6 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
             });
         
         } else if (text) {
-            popup = new JPopupMenu();
             popup.add(makeFontSizeMenu());
 
             popup.add(makeFontStyleMenu());
@@ -187,14 +200,14 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
             addFixedItem(popup);
             addShowTooltipItem(popup);
             
-            popup.add(new AbstractAction("Remove") {
+            popup.add(new AbstractAction(rb.getString("Remove")) {
                 public void actionPerformed(ActionEvent e) {
                     remove();
                     dispose();
                 }
             });
 
-        } else if (!text && !icon)
+        } else
             log.warn("showPopUp when neither text nor icon true");
 
         if (selectable) {

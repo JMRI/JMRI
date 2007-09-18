@@ -14,13 +14,19 @@ import javax.swing.JPopupMenu;
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButtonMenuItem;
 
+import java.util.ResourceBundle;
+
 /**
- * This module provides an icon to display a status of a SignalHead on a LayoutEditor.
- *   This routine is almost identical to SignalHeadIcon.java, written by Bob Jacobsen.  
- *   Differences are related to the hard interdependence between SignalHeadIconXml.java and 
- *   PanelEditor.java, which made it impossible to use SignalHeadIcon.java directly with 
- *   LayoutEditor. Rectifying these differences is especially important when storing and
- *   loading a saved panel.
+ * This module provides an icon to display a status of a SignalHead on a LayoutEditor panel.
+ *   This routine was copied from SignalHeadIcon.java, written by Bob Jacobsen, with only
+ *   minor changes.  The main differences are related to the hard interdependence between 
+ *	 SignalHeadIconXml.java and PanelEditor.java, which made it very hard to use 
+ *	 SignalHeadIcon.java directly with LayoutEditor without risking trouble for existing
+ *   Panel Editor panels. Rectifying these differences is especially important when 
+ *	 storing and loading a saved panel. That said, this module is linked to LayoutEditor.
+ * <P>
+ * This module has also been modified to use a resources bundle for its user-seen text as
+ *	 other LayoutEditor modules do.
  * <P>
  * SignalHeads are located via the SignalHeadManager, which in turn is located
  *   via the InstanceManager.
@@ -29,21 +35,21 @@ import javax.swing.JRadioButtonMenuItem;
  * @see jmri.InstanceManager
  *
  * @author David J. Duchamp Copyright (C) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
- *  (Copied with only name changes from SignalHeadIcon.java)
  */
 
-public class LayoutSignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
+public class LayoutSignalHeadIcon extends LayoutPositionableLabel implements java.beans.PropertyChangeListener {
+
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.LayoutEditorBundle");
 
     public LayoutSignalHeadIcon() {
         // super ctor call to make sure this is an icon label
-        super(new NamedIcon("resources/icons/smallschematics/searchlights/left-red-marker.gif",
-                            "resources/icons/smallschematics/searchlights/left-red-marker.gif"));
+        super(new NamedIcon("resources/icons/smallschematics/searchlights/left-red-short.gif",
+                            "resources/icons/smallschematics/searchlights/left-red-short.gif"));
         icon = true;
         text = false;
         setDisplayLevel(LayoutEditor.SIGNALS);
-
         displayState(SignalHead.RED);
     }
 
@@ -69,28 +75,28 @@ public class LayoutSignalHeadIcon extends PositionableLabel implements java.bean
     }
 
     // display icons
-    String redName = "resources/icons/smallschematics/searchlights/left-red-marker.gif";
+    String redName = "resources/icons/smallschematics/searchlights/left-red-short.gif";
     NamedIcon red = new NamedIcon(redName, redName);
 
-    String flashRedName = "resources/icons/smallschematics/searchlights/left-flashred-marker.gif";
+    String flashRedName = "resources/icons/smallschematics/searchlights/left-flashred-short.gif";
     NamedIcon flashRed = new NamedIcon(flashRedName, flashRedName);
 
-    String yellowName = "resources/icons/smallschematics/searchlights/left-yellow-marker.gif";
+    String yellowName = "resources/icons/smallschematics/searchlights/left-yellow-short.gif";
     NamedIcon yellow = new NamedIcon(yellowName, yellowName);
 
-    String flashYellowName = "resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif";
+    String flashYellowName = "resources/icons/smallschematics/searchlights/left-flashyellow-short.gif";
     NamedIcon flashYellow = new NamedIcon(flashYellowName, flashYellowName);
 
-    String greenName = "resources/icons/smallschematics/searchlights/left-green-marker.gif";
+    String greenName = "resources/icons/smallschematics/searchlights/left-green-short.gif";
     NamedIcon green = new NamedIcon(greenName, greenName);
 
-    String flashGreenName = "resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif";
+    String flashGreenName = "resources/icons/smallschematics/searchlights/left-flashgreen-short.gif";
     NamedIcon flashGreen = new NamedIcon(flashGreenName, flashGreenName);
 
-    String darkName = "resources/icons/smallschematics/searchlights/left-dark-marker.gif";
+    String darkName = "resources/icons/smallschematics/searchlights/left-dark-short.gif";
     NamedIcon dark = new NamedIcon(darkName, darkName);
 
-    String heldName = "resources/icons/smallschematics/searchlights/left-held-marker.gif";
+    String heldName = "resources/icons/smallschematics/searchlights/left-held-short.gif";
     NamedIcon held = new NamedIcon(heldName, heldName);
 
     public NamedIcon getHeldIcon() { return held; }
@@ -186,7 +192,7 @@ public class LayoutSignalHeadIcon extends PositionableLabel implements java.bean
 
     String getNameString() {
         String name;
-        if (mHead == null) name = "<Not connected>";
+        if (mHead == null) name = rb.getString("NotConnected");
         else if (mHead.getUserName() == null)
             name = mHead.getSystemName();
         else
@@ -203,91 +209,90 @@ public class LayoutSignalHeadIcon extends PositionableLabel implements java.bean
     protected void showPopUp(MouseEvent e) {
         if (!getEditable()) return;
         ours = this;
-        if (popup==null) {
-            popup = new JPopupMenu();
-            popup.add(new JMenuItem(getNameString()));
-            if (icon) popup.add(new AbstractAction("Rotate") {
-                    public void actionPerformed(ActionEvent e) {
-                        green.setRotation(green.getRotation()+1, ours);
-                        red.setRotation(red.getRotation()+1, ours);
-                        yellow.setRotation(yellow.getRotation()+1, ours);
-                        if (flashGreen !=null) flashGreen.setRotation(flashGreen.getRotation()+1, ours);
-                        if (flashRed !=null) flashRed.setRotation(flashRed.getRotation()+1, ours);
-                        if (flashYellow !=null) flashYellow.setRotation(flashYellow.getRotation()+1, ours);
-                        if (dark !=null) dark.setRotation(dark.getRotation()+1, ours);
-                        if (held !=null) held.setRotation(held.getRotation()+1, ours);
-                        displayState(headState());
-                    }
-                });
+		popup = new JPopupMenu();
+		popup.add(new JMenuItem(getNameString()));
+		popup.add("x= " + this.getX());
+		popup.add("y= " + this.getY());
+		if (icon) popup.add(new AbstractAction(rb.getString("Rotate")) {
+				public void actionPerformed(ActionEvent e) {
+					green.setRotation(green.getRotation()+1, ours);
+					red.setRotation(red.getRotation()+1, ours);
+					yellow.setRotation(yellow.getRotation()+1, ours);
+					if (flashGreen !=null) flashGreen.setRotation(flashGreen.getRotation()+1, ours);
+					if (flashRed !=null) flashRed.setRotation(flashRed.getRotation()+1, ours);
+					if (flashYellow !=null) flashYellow.setRotation(flashYellow.getRotation()+1, ours);
+					if (dark !=null) dark.setRotation(dark.getRotation()+1, ours);
+					if (held !=null) held.setRotation(held.getRotation()+1, ours);
+					displayState(headState());
+				}
+			});
 
-            addDisableMenuEntry(popup);
+		addDisableMenuEntry(popup);
             
-            // add menu to select action on click
-            JMenu clickMenu = new JMenu("When clicked");
-            clickButtonGroup = new ButtonGroup();
-            JRadioButtonMenuItem r;
-            r = new JRadioButtonMenuItem("change aspect");
-            r.addActionListener(new ActionListener() {
-                final int desired = 0;
-                public void actionPerformed(ActionEvent e) { setClickMode(desired); }
+		// add menu to select action on click
+		JMenu clickMenu = new JMenu(rb.getString("WhenClicked"));
+		clickButtonGroup = new ButtonGroup();
+		JRadioButtonMenuItem r;
+		r = new JRadioButtonMenuItem(" "+rb.getString("ChangeAspect"));
+		r.addActionListener(new ActionListener() {
+				final int desired = 0;
+				public void actionPerformed(ActionEvent e) { setClickMode(desired); }
+			});
+		clickButtonGroup.add(r);
+		if (clickMode == 0)  r.setSelected(true);
+		else r.setSelected(false);
+		clickMenu.add(r);
+		r = new JRadioButtonMenuItem(" "+rb.getString("AlternateLit"));
+		r.addActionListener(new ActionListener() {
+				final int desired = 1;
+				public void actionPerformed(ActionEvent e) { setClickMode(desired); }
             });
-            clickButtonGroup.add(r);
-            if (clickMode == 0)  r.setSelected(true);
-            else r.setSelected(false);
-            clickMenu.add(r);
-            r = new JRadioButtonMenuItem("alternate lit");
-            r.addActionListener(new ActionListener() {
-                final int desired = 1;
-                public void actionPerformed(ActionEvent e) { setClickMode(desired); }
-            });
-            clickButtonGroup.add(r);
-            if (clickMode == 1)  r.setSelected(true);
-            else r.setSelected(false);
-            clickMenu.add(r);
-            r = new JRadioButtonMenuItem("alternate held");
-            r.addActionListener(new ActionListener() {
+		clickButtonGroup.add(r);
+		if (clickMode == 1)  r.setSelected(true);
+		else r.setSelected(false);
+		clickMenu.add(r);
+		r = new JRadioButtonMenuItem(" "+rb.getString("AlternateHeld"));
+		r.addActionListener(new ActionListener() {
                 final int desired = 2;
                 public void actionPerformed(ActionEvent e) { setClickMode(desired); }
             });
-            clickButtonGroup.add(r);
-            if (clickMode == 2)  r.setSelected(true);
-            else r.setSelected(false);
-            clickMenu.add(r);
-            popup.add(clickMenu);
+		clickButtonGroup.add(r);
+		if (clickMode == 2)  r.setSelected(true);
+		else r.setSelected(false);
+		clickMenu.add(r);
+		popup.add(clickMenu);
             
-            
-            // add menu to select handling of lit parameter
-            JMenu litMenu = new JMenu("When not lit");
-            litButtonGroup = new ButtonGroup();
-            r = new JRadioButtonMenuItem(" show appearance");
-            r.addActionListener(new ActionListener() {
+		// add menu to select handling of lit parameter
+		JMenu litMenu = new JMenu(rb.getString("WhenNotLit"));
+		litButtonGroup = new ButtonGroup();
+		r = new JRadioButtonMenuItem(" "+rb.getString("ShowAppearance"));
+		r.addActionListener(new ActionListener() {
                 final boolean desired = false;
                 public void actionPerformed(ActionEvent e) { setLitMode(desired); }
             });
-            litButtonGroup.add(r);
-            if (!litMode)  r.setSelected(true);
-            else r.setSelected(false);
-            litMenu.add(r);
-            r = new JRadioButtonMenuItem(" show dark icon");
-            r.addActionListener(new ActionListener() {
+		litButtonGroup.add(r);
+		if (!litMode)  r.setSelected(true);
+		else r.setSelected(false);
+		litMenu.add(r);
+		r = new JRadioButtonMenuItem(" "+rb.getString("ShowDarkIcon"));
+		r.addActionListener(new ActionListener() {
                 final boolean desired = true;
                 public void actionPerformed(ActionEvent e) { setLitMode(desired); }
             });
-            litButtonGroup.add(r);
-            if (litMode)  r.setSelected(true);
-            else r.setSelected(false);
-            litMenu.add(r);
-            popup.add(litMenu);
+		litButtonGroup.add(r);
+		if (litMode)  r.setSelected(true);
+		else r.setSelected(false);
+		litMenu.add(r);
+		popup.add(litMenu);
             
-            
-            popup.add(new AbstractAction("Remove") {
+		popup.add(new AbstractAction(rb.getString("Remove")) {
                 public void actionPerformed(ActionEvent e) {
                     remove();
                     dispose();
                 }
             });
 
-            popup.add(new AbstractAction("Edit Logic...") {
+		popup.add(new AbstractAction(rb.getString("EditLogic")+"...") {
                 public void actionPerformed(ActionEvent e) {
                     jmri.jmrit.blockboss.BlockBossFrame f = new jmri.jmrit.blockboss.BlockBossFrame();
                     String name;
@@ -295,12 +300,12 @@ public class LayoutSignalHeadIcon extends PositionableLabel implements java.bean
                         name = mHead.getSystemName();
                     else
                         name = mHead.getUserName();
-                    f.setTitle("Signal logic for"+name);
+                    f.setTitle(rb.getString("SignalLogicFor")+" "+name);
                     f.setSignal(name);
                     f.setVisible(true);
                 }
             });
-        } // end creation of pop-up menu
+		// end creation of pop-up menu
 
         popup.show(e.getComponent(), e.getX(), e.getY());
     }
@@ -414,7 +419,7 @@ public class LayoutSignalHeadIcon extends PositionableLabel implements java.bean
         if (getForceControlOff()) return;
         if (e.isMetaDown() || e.isAltDown() ) return;
         if (mHead==null) {
-            log.error("No turnout connection, can't process click");
+            log.error("No Signal Head connection, can't process click");
             return;
         }
         switch (clickMode) {

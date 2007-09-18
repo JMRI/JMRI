@@ -24,19 +24,20 @@ import java.util.ResourceBundle;
 
 /**
  * LayoutPositionableLabel is a JLabel that can be dragged around the
- * inside of the enclosing Draw Panel Container using a right-drag.
- *
- * This is a copy, with only the name changed, of PositionalLabel.java by 
+ * inside of the Layout Editor panel using a right-drag.
+ * <P>
+ * This module is derived with only a few changes from PositionalLabel.java by 
  *   Bob Jacobsen Copyright (c) 2002, Revision 1.30
- * The name change was needed to work around the hard dependence on PanelEditor
+ * <P>
+ * A name change was needed to work around the hard dependence on PanelEditor
  *   in PositionaleLabelXml.java, without the possibility of compromising any
  *   existing PanelEditor panels. 
- *
+ * <P>
  * The positionable parameter is a global, set from outside.
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class LayoutPositionableLabel extends JLabel
@@ -78,13 +79,15 @@ public class LayoutPositionableLabel extends JLabel
     boolean text = false;
 
     NamedIcon namedIcon = null;
+	LayoutEditor layoutPanel = null;
 
     /**
      * Connect listeners - called from Layout Editor
      */
-    public void connect() {
+    public void connect(LayoutEditor panel) {
         addMouseMotionListener(this);
         addMouseListener(this);
+		layoutPanel = panel;
     }
 
     /**
@@ -148,6 +151,7 @@ public class LayoutPositionableLabel extends JLabel
     }
 
     public void mouseMoved(MouseEvent e) {
+		layoutPanel.setLoc(getX()+e.getX(),getY()+e.getY()); 
         //if (debug) log.debug("Moved:   "+where(e));
     }
     public void mouseDragged(MouseEvent e) {
@@ -170,9 +174,11 @@ public class LayoutPositionableLabel extends JLabel
     protected void showPopUp(MouseEvent e) {
         if (!getEditable()) return;
         ours = this;
-        if (icon && popup == null ) {
+        if (icon) {
             popup = new JPopupMenu();
-            popup.add(new AbstractAction("Rotate") {
+			popup.add("x= " + this.getX());
+			popup.add("y= " + this.getY());
+            popup.add(new AbstractAction(rb.getString("Rotate")) {
                 public void actionPerformed(ActionEvent e) {
                     namedIcon.setRotation(namedIcon.getRotation()+1, ours);
                     updateSize();
@@ -183,14 +189,16 @@ public class LayoutPositionableLabel extends JLabel
             addFixedItem(popup);
             addShowTooltipItem(popup);
             
-            popup.add(new AbstractAction("Remove") {
+            popup.add(new AbstractAction(rb.getString("Remove")) {
                 public void actionPerformed(ActionEvent e) {
                     remove();
                     dispose();
                 }
             });
-        } else if (text && popup == null) {
+        } else if (text) {
             popup = new JPopupMenu();
+			popup.add("x= " + this.getX());
+			popup.add("y= " + this.getY());
             popup.add(makeFontSizeMenu());
 
             popup.add(makeFontStyleMenu());
@@ -200,7 +208,7 @@ public class LayoutPositionableLabel extends JLabel
             addFixedItem(popup);
             addShowTooltipItem(popup);
             
-            popup.add(new AbstractAction("Remove") {
+            popup.add(new AbstractAction(rb.getString("Remove")) {
                 public void actionPerformed(ActionEvent e) {
                     remove();
                     dispose();
@@ -214,7 +222,7 @@ public class LayoutPositionableLabel extends JLabel
     }
 
     JMenu makeFontSizeMenu() {
-        JMenu sizeMenu = new JMenu("Font size");
+        JMenu sizeMenu = new JMenu(rb.getString("FontSize"));
         fontButtonGroup = new ButtonGroup();
         addFontMenuEntry(sizeMenu, 6);
         addFontMenuEntry(sizeMenu, 8);
@@ -249,8 +257,8 @@ public class LayoutPositionableLabel extends JLabel
     }
 
     JMenu makeFontStyleMenu() {
-        JMenu styleMenu = new JMenu("Font style");
-        styleMenu.add(italic = newStyleMenuItem(new AbstractAction("Italic") {
+        JMenu styleMenu = new JMenu(rb.getString("FontStyle"));
+        styleMenu.add(italic = newStyleMenuItem(new AbstractAction(rb.getString("Italic")) {
             public void actionPerformed(ActionEvent e) {
                 if (log.isDebugEnabled())
                     log.debug("When style item selected "+((String)getValue(NAME))
@@ -260,7 +268,7 @@ public class LayoutPositionableLabel extends JLabel
             }
           }, Font.ITALIC));
 
-        styleMenu.add(bold = newStyleMenuItem(new AbstractAction("Bold") {
+        styleMenu.add(bold = newStyleMenuItem(new AbstractAction(rb.getString("Bold")) {
             public void actionPerformed(ActionEvent e) {
                 if (log.isDebugEnabled())
                     log.debug("When style item selected "+((String)getValue(NAME))
@@ -273,19 +281,21 @@ public class LayoutPositionableLabel extends JLabel
     }
     
     JMenu makeFontColorMenu() {
-        JMenu colorMenu = new JMenu("Font color");
+        JMenu colorMenu = new JMenu(rb.getString("FontColor"));
         colorButtonGroup = new ButtonGroup();
-        addColorMenuEntry(colorMenu, "Black", Color.black);
-        addColorMenuEntry(colorMenu, "Dark Gray",Color.darkGray);
-        addColorMenuEntry(colorMenu, "Gray",Color.gray);
-        addColorMenuEntry(colorMenu, "Light Gray",Color.lightGray);
-        addColorMenuEntry(colorMenu, "White",Color.white);
-        addColorMenuEntry(colorMenu, "Red",Color.red);
-        addColorMenuEntry(colorMenu, "Orange",Color.orange);
-        addColorMenuEntry(colorMenu, "Yellow",Color.yellow);
-        addColorMenuEntry(colorMenu, "Green",Color.green);
-        addColorMenuEntry(colorMenu, "Blue",Color.blue);
-        addColorMenuEntry(colorMenu, "Magenta",Color.magenta);
+        addColorMenuEntry(colorMenu, rb.getString("Black"), Color.black);
+        addColorMenuEntry(colorMenu, rb.getString("DarkGray"),Color.darkGray);
+        addColorMenuEntry(colorMenu, rb.getString("Gray"),Color.gray);
+        addColorMenuEntry(colorMenu, rb.getString("LightGray"),Color.lightGray);
+        addColorMenuEntry(colorMenu, rb.getString("White"),Color.white);
+        addColorMenuEntry(colorMenu, rb.getString("Red"),Color.red);
+        addColorMenuEntry(colorMenu, rb.getString("Pink"),Color.pink);
+        addColorMenuEntry(colorMenu, rb.getString("Orange"),Color.orange);
+        addColorMenuEntry(colorMenu, rb.getString("Yellow"),Color.yellow);
+        addColorMenuEntry(colorMenu, rb.getString("Green"),Color.green);
+        addColorMenuEntry(colorMenu, rb.getString("Blue"),Color.blue);
+        addColorMenuEntry(colorMenu, rb.getString("Magenta"),Color.magenta);
+        addColorMenuEntry(colorMenu, rb.getString("Cyan"),Color.cyan);
         return colorMenu;
     }
         
@@ -305,7 +315,7 @@ public class LayoutPositionableLabel extends JLabel
 
     JCheckBoxMenuItem showTooltipItem = null;
     void addShowTooltipItem(JPopupMenu popup) {
-        showTooltipItem = new JCheckBoxMenuItem("Tooltip");
+        showTooltipItem = new JCheckBoxMenuItem(rb.getString("Tooltip"));
         showTooltipItem.setSelected(getShowTooltip());
         popup.add(showTooltipItem);
         showTooltipItem.addActionListener(new ActionListener(){
@@ -317,7 +327,7 @@ public class LayoutPositionableLabel extends JLabel
         
     JCheckBoxMenuItem showFixedItem = null;
     void addFixedItem(JPopupMenu popup) {
-        showFixedItem = new JCheckBoxMenuItem("Fixed");
+        showFixedItem = new JCheckBoxMenuItem(rb.getString("Fixed"));
         showFixedItem.setSelected(getFixed());
         popup.add(showFixedItem);
         showFixedItem.addActionListener(new ActionListener(){
@@ -329,7 +339,7 @@ public class LayoutPositionableLabel extends JLabel
         
     JCheckBoxMenuItem disableItem = null;
     void addDisableMenuEntry(JPopupMenu popup) {
-        disableItem = new JCheckBoxMenuItem("Disable");
+        disableItem = new JCheckBoxMenuItem(rb.getString("Disabled"));
         disableItem.setSelected(getForceControlOff());
         popup.add(disableItem);
         disableItem.addActionListener(new ActionListener(){
@@ -373,9 +383,11 @@ public class LayoutPositionableLabel extends JLabel
     public boolean getPositionable() { return positionable; }
     private boolean positionable = true;
     
+// The three items below are not used with Layout Editor, but are present for 
+//		compatibality with the Positionable interface.
     public void setViewCoordinates(boolean enabled) { viewCoordinates = enabled; }
     public boolean getViewCoordinates() { return viewCoordinates; }
-    private boolean viewCoordinates = false;
+    private boolean viewCoordinates = true;
 
     public void setEditable(boolean enabled) {editable = enabled;}
     public boolean getEditable() { return editable; }
