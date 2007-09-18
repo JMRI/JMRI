@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: EditLayoutBlock.html,v 1.1 2007-08-19 19:04:41 djduchamp Exp $ -->
+<!-- $Id: EditLayoutBlock.html,v 1.2 2007-09-18 13:56:37 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -19,10 +19,65 @@
 </head>
 
 <body>
-<H2>Edit Block
+<H2>Create/Edit Block
 </H2>
-    
-This is the help/jmri/jmrit/display/EditLayoutBlock help xx page
+<p>    
+Blocks are sections of track whose occupancy may be individually monitored. 
+Dividing track into blocks is optional. Blocks set up in a track diagram 
+normally correspond to physical blocks on a layout. Block occupancy is indicated 
+by the state of an <i>occupancy sensor</i>. When a layout's track is divided 
+into blocks, all of the track need not belong to a block. For example, yard track
+is normally not in a block, whereas mainline track almost always would be divided 
+into blocks. The main use of blocks is to facilitate signalling, but blocks may 
+be used for other layout control and animation functions.</p>
+<p>
+If a block name is entered in the <b>Block: Name</b> field of the tool bar prior 
+to adding a turnout, level crossing, or track segment, the added item is assigned 
+to that block; if a sensor name (system name or user name) was entered into the
+<b>Occupancy Sensor</b> field, that sensor will be assigned to the entered block. 
+A turnout, level crossing, or track segment may also be assigned
+to a block by entering that block's name in the edit dialog accessed by
+selecting <b>Edit...</b> in that items popup menu. In either case, if a block 
+with the entered name doesn't exist, one is created.</p>
+<p>
+A block name may be any series of alphabetic or numeric characters that describe 
+the block, for example, "Red Main 2", "Lake Siding", or "Moose Block". Once a 
+block is created, its name may not be changed; attempting to change a block's 
+name will create a new block having the new name. After all items assigned to
+the old block are changed to the new block, the block with the old name will
+be automatically deleted (see below).</p>
+<p>
+Turnout, level crossing, and track segment edit dialogs provide access to the 
+Create/Edit Block dialog where information specific to a block may be entered
+or edited. The <b>Occupancy Sensor:</b> field in the Create/Edit Block dialog 
+shows the name of the occupancy sensor currently assigned to the block, if there
+is one. To enter or change the occupancy sensor, enter the name (system name or
+user name) of a sensor in the Sensor Table in the <b>Occupancy Sensor:</b> field. 
+A sensor may be assigned as the occupancy sensor of only one block; attempting 
+to do otherwise will result in an error message. Normally, the state of an 
+occupancy sensor is "Active" when a block is occupied, so "Active" for occupied 
+sense is the automatic default. This can be changed by selecting "Inactive" in 
+the <b>Occupied Sense:</b> selection box.</p>
+<p>
+Block track colors are used instead of the default track color if a section of 
+track is in a block. The track items in a block are drawn with different track 
+colors for occupied and unoccupied states, allowing the track in a block to 
+change color as a train enters and leaves that block. To set track colors, 
+select the unoccupied track color in the <b>Track Color:</b> selection box, 
+and select the occupied track color in the <b>Occupied Track Color:</b> 
+selection box.</p>
+<p>
+Since blocks are items on the physical layout, the same block may be used in 
+more than one panel. Consequently, block information is saved in the non-
+panel specific portion of the layout information, when panels are saved to a
+file on disk.</p>
+<p>
+Blocks are deleted automatically when they are no longer used. Layout Editor 
+keeps track of the number of track items (turnouts, track segments,
+and level crossings) that are assigned to a block. This count is displayed in
+the Create/Edit Block dialog as <b>Current Use Count:</b>. When panels are saved to
+disk, only those blocks with a use count greater than zero are saved.</p>
+
 
 </body>
 </html>
