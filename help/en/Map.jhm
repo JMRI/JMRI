@@ -8,13 +8,17 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 
 	<mapID target="top" url="index.html" />
 	<mapID target="popup_icon" url="images/popup.gif" /> 
+	<mapID target="package.jmri.jmrit.display.SetSignalsAtXoverTurnout" url="package/jmri/jmrit/display/SetSignalsAtXoverTurnout.html" />
 	<mapID target="DecoderProManual.Comp_LightFX_Top" url="DecoderProManual/Comp_LightFX.html#Top" />
 	<mapID target="package.jmri.jmrit.beantable.RouteAddEdit" url="package/jmri/jmrit/beantable/RouteAddEdit.html" />
+	<mapID target="package.jmri.jmrit.display.LayoutEditor_track" url="package/jmri/jmrit/display/LayoutEditor.html#track" />
 	<mapID target="html.tools.fastclock.LocoNetClock" url="html/tools/fastclock/LocoNetClock.html" />
 	<mapID target="package.jmri.jmrit.display.ScaleTrackDiagram" url="package/jmri/jmrit/display/ScaleTrackDiagram.html" />
 	<mapID target="DecoderProManual.Comp_Advanced_Top" url="DecoderProManual/Comp_Advanced.html#Top" />
+	<mapID target="package.jmri.jmrit.display.LayoutEditor_xing" url="package/jmri/jmrit/display/LayoutEditor.html#xing" />
 	<mapID target="DecoderProManual.Basic_Programming" url="DecoderProManual/Basic_Programming.html" />
 	<mapID target="DecoderProManual.Basic_Programming_Top" url="DecoderProManual/Basic_Programming.html#Top" />
+	<mapID target="package.jmri.jmrit.display.LayoutEditor_filemenu" url="package/jmri/jmrit/display/LayoutEditor.html#filemenu" />
 	<mapID target="DecoderProManual.Comp_PrintData_Top" url="DecoderProManual/Comp_PrintData.html#Top" />
 	<mapID target="html.tools.index" url="html/tools/index.html" />
 	<mapID target="package.jmri.jmrit.blockboss.BlockBossFrame" url="package/jmri/jmrit/blockboss/BlockBossFrame.html" />
@@ -42,12 +46,15 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.Sensors" url="html/Sensors.html" />
 	<mapID target="package.jmri.jmrit.beantable.TurnoutTable" url="package/jmri/jmrit/beantable/TurnoutTable.html" />
 	<mapID target="DecoderProManual.Comp_Speed_Top" url="DecoderProManual/Comp_Speed.html#Top" />
+	<mapID target="package.jmri.jmrit.display.LayoutEditor_option" url="package/jmri/jmrit/display/LayoutEditor.html#option" />
 	<mapID target="DecoderProManual.Comp_PrintData_b" url="DecoderProManual/Comp_PrintData_b.html" />
 	<mapID target="package.jmri.jmrit.ussctc.FollowerFrame" url="package/jmri/jmrit/ussctc/FollowerFrame.html" />
 	<mapID target="package.jmri.jmrit.display.EditLevelXing" url="package/jmri/jmrit/display/EditLevelXing.html" />
 	<mapID target="package.jmri.jmrit.display.MultiSensorIconFrame" url="package/jmri/jmrit/display/MultiSensorIconFrame.html" />
+	<mapID target="package.jmri.jmrit.display.SetSignalsAtLevelXing" url="package/jmri/jmrit/display/SetSignalsAtLevelXing.html" />
 	<mapID target="html.Lights" url="html/Lights.html" />
 	<mapID target="package.jmri.jmrit.beantable.SensorAddEdit" url="package/jmri/jmrit/beantable/SensorAddEdit.html" />
+	<mapID target="package.jmri.jmrit.display.LayoutEditor_toolbar" url="package/jmri/jmrit/display/LayoutEditor.html#toolbar" />
 	<mapID target="package.jmri.jmrit.automat.monitor.AutomatTableFrame" url="package/jmri/jmrit/automat/monitor/AutomatTableFrame.html" />
 	<mapID target="DecoderProManual.Comp_Motor_Top" url="DecoderProManual/Comp_Motor.html#Top" />
 	<mapID target="package.jmri.jmrit.display.EditLayoutBlock" url="package/jmri/jmrit/display/EditLayoutBlock.html" />
@@ -65,6 +72,8 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrit.beantable.ReporterTable" url="package/jmri/jmrit/beantable/ReporterTable.html" />
 	<mapID target="DecoderProManual.Getting_Started_Start" url="DecoderProManual/Getting_Started.html#Start" />
 	<mapID target="html.hardware.NCE" url="html/hardware/NCE.html" />
+	<mapID target="package.jmri.jmrit.display.LayoutEditor_intro" url="package/jmri/jmrit/display/LayoutEditor.html#intro" />
+	<mapID target="package.jmri.jmrit.display.LayoutEditor_editing" url="package/jmri/jmrit/display/LayoutEditor.html#editing" />
 	<mapID target="html.doc.Technical.Names" url="html/doc/Technical/Names.html" />
 	<mapID target="package.jmri.jmrit.sensorgroup.SensorGroupFrame" url="package/jmri/jmrit/sensorgroup/SensorGroupFrame.html" />
 	<mapID target="package.jmri.jmrit.simpleclock.SimpleClockFrame" url="package/jmri/jmrit/simpleclock/SimpleClockFrame.html" />
@@ -81,6 +90,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="DecoderProManual.Comp_GlobalCVs_Top" url="DecoderProManual/Comp_GlobalCVs.html#Top" />
 	<mapID target="DecoderProManual.Getting_Started_What is DCC" url="DecoderProManual/Getting_Started.html#What is DCC" />
 	<mapID target="DecoderProManual.index" url="DecoderProManual/index.html" />
+	<mapID target="package.jmri.jmrit.display.LayoutEditor_turnouts" url="package/jmri/jmrit/display/LayoutEditor.html#turnouts" />
 	<mapID target="DecoderProManual.Getting_Started_Preferences" url="DecoderProManual/Getting_Started.html#Preferences" />
 	<mapID target="package.jmri.jmrit.display.EnterTrackWidth" url="package/jmri/jmrit/display/EnterTrackWidth.html" />
 	<mapID target="package.jmri.jmrit.beantable.LogixTable" url="package/jmri/jmrit/beantable/LogixTable.html" />
@@ -89,19 +99,26 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="DecoderProManual.Comp_Motor" url="DecoderProManual/Comp_Motor.html" />
 	<mapID target="package.jmri.jmrit.ussctc.OsIndicatorFrame" url="package/jmri/jmrit/ussctc/OsIndicatorFrame.html" />
 	<mapID target="DecoderProManual.index_Setting up" url="DecoderProManual/index.html#Setting up" />
+	<mapID target="package.jmri.jmrit.display.LayoutEditor_toolsmenu" url="package/jmri/jmrit/display/LayoutEditor.html#toolsmenu" />
+	<mapID target="package.jmri.jmrit.display.SetSignalsAtTurnout" url="package/jmri/jmrit/display/SetSignalsAtTurnout.html" />
 	<mapID target="DecoderProManual.Comp_PrintData" url="DecoderProManual/Comp_PrintData.html" />
+	<mapID target="package.jmri.jmrit.display.LayoutEditor_contents" url="package/jmri/jmrit/display/LayoutEditor.html#contents" />
 	<mapID target="html.Memories" url="html/Memories.html" />
+	<mapID target="package.jmri.jmrit.display.LayoutEditor_finish" url="package/jmri/jmrit/display/LayoutEditor.html#finish" />
 	<mapID target="DecoderProManual.Comp_Basic" url="DecoderProManual/Comp_Basic.html" />
 	<mapID target="package.jmri.jmrit.beantable.RouteTable" url="package/jmri/jmrit/beantable/RouteTable.html" />
+	<mapID target="package.jmri.jmrit.display.TranslateSelection" url="package/jmri/jmrit/display/TranslateSelection.html" />
 	<mapID target="package.jmri.jmrit.display.EditTrackSegment" url="package/jmri/jmrit/display/EditTrackSegment.html" />
 	<mapID target="DecoderProManual.index_Advanced Programmer" url="DecoderProManual/index.html#Advanced Programmer" />
 	<mapID target="DecoderProManual.Comp_FMap" url="DecoderProManual/Comp_FMap.html" />
 	<mapID target="DecoderProManual.index_index" url="DecoderProManual/index.html#index" />
+	<mapID target="package.jmri.jmrit.display.LayoutEditor_block" url="package/jmri/jmrit/display/LayoutEditor.html#block" />
 	<mapID target="package.jmri.jmrit.blockboss.BlockBossFrame_intro" url="package/jmri/jmrit/blockboss/BlockBossFrame.html#intro" />
 	<mapID target="DecoderProManual.Comp_PrintData_c_Top" url="DecoderProManual/Comp_PrintData_c.html#Top" />
 	<mapID target="DecoderProManual.Comp_Consist_Top" url="DecoderProManual/Comp_Consist.html#Top" />
 	<mapID target="Acknowledgements" url="Acknowledgements.html" />
 	<mapID target="package.jmri.jmrit.blockboss.BlockBossFrame_contents" url="package/jmri/jmrit/blockboss/BlockBossFrame.html#contents" />
+	<mapID target="package.jmri.jmrit.display.SetSignalsAtBoundary" url="package/jmri/jmrit/display/SetSignalsAtBoundary.html" />
 	<mapID target="DecoderProManual.index_Basic Programmer" url="DecoderProManual/index.html#Basic Programmer" />
 	<mapID target="package.jmri.jmrit.beantable.SensorTable" url="package/jmri/jmrit/beantable/SensorTable.html" />
 	<mapID target="package.jmri.jmrit.blockboss.BlockBossFrame_start" url="package/jmri/jmrit/blockboss/BlockBossFrame.html#start" />
@@ -121,6 +138,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="DecoderProManual.Comp_GlobalCVs" url="DecoderProManual/Comp_GlobalCVs.html" />
 	<mapID target="DecoderProManual.Comp_Setup_Roster" url="DecoderProManual/Comp_Setup_Roster.html" />
 	<mapID target="DecoderProManual.Comp_ManfSpecific_Top" url="DecoderProManual/Comp_ManfSpecific.html#Top" />
+	<mapID target="package.jmri.jmrit.display.LayoutEditor_start" url="package/jmri/jmrit/display/LayoutEditor.html#start" />
 	<mapID target="DecoderProManual.Comp_PrintData_a" url="DecoderProManual/Comp_PrintData_a.html" />
 	<mapID target="DecoderProManual.Comp_SoundFX" url="DecoderProManual/Comp_SoundFX.html" />
 	<mapID target="DecoderProManual.Comp_Setup_Roster_Top" url="DecoderProManual/Comp_Setup_Roster.html#Top" />
