@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.73 2007-08-19 19:22:48 djduchamp Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.74 2007-09-18 14:20:54 djduchamp Exp $ -->
 
 <!-- This DTD is Copyright 2001-2005 JMRI.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -524,13 +524,15 @@
     <!ATTLIST signalheadicon litmode     CDATA #IMPLIED>
 
   <!ELEMENT positionablepoint EMPTY>
-    <!ATTLIST positionablepoint class        CDATA #REQUIRED>
-    <!ATTLIST positionablepoint ident        CDATA #REQUIRED>
-    <!ATTLIST positionablepoint type     	 CDATA #REQUIRED>
-    <!ATTLIST positionablepoint x		     CDATA #REQUIRED>
-    <!ATTLIST positionablepoint y		     CDATA #REQUIRED>
+    <!ATTLIST positionablepoint class    CDATA #REQUIRED>
+    <!ATTLIST positionablepoint ident    CDATA #REQUIRED>
+    <!ATTLIST positionablepoint type     CDATA #REQUIRED>
+    <!ATTLIST positionablepoint x	 CDATA #REQUIRED>
+    <!ATTLIST positionablepoint y	 CDATA #REQUIRED>
     <!ATTLIST positionablepoint connect1name CDATA #IMPLIED>
     <!ATTLIST positionablepoint connect2name CDATA #IMPLIED>
+    <!ATTLIST positionablepoint eastboundsignal CDATA #IMPLIED>
+    <!ATTLIST positionablepoint westboundsignal CDATA #IMPLIED>
 
   <!ELEMENT tracksegment EMPTY>
     <!ATTLIST tracksegment class        CDATA #REQUIRED>
@@ -557,7 +559,16 @@
     <!ATTLIST layoutturnout connectbname CDATA #IMPLIED>
     <!ATTLIST layoutturnout connectcname CDATA #IMPLIED>
     <!ATTLIST layoutturnout connectdname CDATA #IMPLIED>
+    <!ATTLIST layoutturnout signala1name CDATA #IMPLIED>
+    <!ATTLIST layoutturnout signala2name CDATA #IMPLIED>
+    <!ATTLIST layoutturnout signalb1name CDATA #IMPLIED>
+    <!ATTLIST layoutturnout signalb2name CDATA #IMPLIED>
+    <!ATTLIST layoutturnout signalc1name CDATA #IMPLIED>
+    <!ATTLIST layoutturnout signalc2name CDATA #IMPLIED>
+    <!ATTLIST layoutturnout signald1name CDATA #IMPLIED>
+    <!ATTLIST layoutturnout signald2name CDATA #IMPLIED>
     <!ATTLIST layoutturnout continuing   CDATA #REQUIRED>
+    <!ATTLIST layoutturnout disabled	 (yes|no) "yes">
     <!ATTLIST layoutturnout xb		 CDATA #REQUIRED>
     <!ATTLIST layoutturnout yb           CDATA #REQUIRED>
     <!ATTLIST layoutturnout xc		 CDATA #REQUIRED>
@@ -570,6 +581,10 @@
     <!ATTLIST levelxing ident        CDATA #REQUIRED>
     <!ATTLIST levelxing bloxknameac  CDATA #IMPLIED>
     <!ATTLIST levelxing blocknamebd  CDATA #IMPLIED>
+    <!ATTLIST levelxing signalaname  CDATA #IMPLIED>
+    <!ATTLIST levelxing signalbname  CDATA #IMPLIED>
+    <!ATTLIST levelxing signalcname  CDATA #IMPLIED>
+    <!ATTLIST levelxing signaldname  CDATA #IMPLIED>
     <!ATTLIST levelxing connectaname CDATA #IMPLIED>
     <!ATTLIST levelxing connectbname CDATA #IMPLIED>
     <!ATTLIST levelxing connectcname CDATA #IMPLIED>

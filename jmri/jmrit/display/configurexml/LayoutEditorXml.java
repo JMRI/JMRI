@@ -17,7 +17,7 @@ import org.jdom.*;
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp    Copyright (c) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class LayoutEditorXml implements XmlAdapter {
 
@@ -55,11 +55,16 @@ public class LayoutEditorXml implements XmlAdapter {
 		if (num>0) {
 			for (int i=0; i<num; i++) {
 				Object sub = p.contents.get(i);
-				try {
-					Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-					if (e!=null) panel.addContent(e);
-				} catch (Exception e) {
-					log.error("Error storing panel contents element: "+e); 
+				if (sub!=null) {
+					try {
+						Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
+						if (e!=null) panel.addContent(e);
+					} catch (Exception e) {
+						log.error("Error storing panel contents element: "+e); 
+					}
+				}
+				else {
+					log.warn("Null entry found when storing panel contents.");
 				}
             }
         }

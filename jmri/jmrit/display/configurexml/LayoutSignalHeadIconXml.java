@@ -1,3 +1,5 @@
+// LayoutSignalHeadIconXml.java
+
 package jmri.jmrit.display.configurexml;
 
 import jmri.configurexml.XmlAdapter;
@@ -12,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.LayoutSignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class LayoutSignalHeadIconXml implements XmlAdapter {
 
@@ -37,6 +39,7 @@ public class LayoutSignalHeadIconXml implements XmlAdapter {
         element.setAttribute("x", ""+p.getX());
         element.setAttribute("y", ""+p.getY());
         element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
+        element.setAttribute("held", p.getHeldIcon().getName());
         element.setAttribute("dark", p.getDarkIcon().getName());
         element.setAttribute("red", p.getRedIcon().getName());
         element.setAttribute("yellow", p.getYellowIcon().getName());
@@ -92,6 +95,11 @@ public class LayoutSignalHeadIconXml implements XmlAdapter {
 
         Attribute a; 
 
+        NamedIcon held = null;
+        a = element.getAttribute("held");
+        if (a!=null) 
+            l.setHeldIcon(held = CatalogPane.getIconByName(a.getValue()));
+
         NamedIcon dark = null;
         a = element.getAttribute("dark");
         if (a!=null) 
@@ -123,6 +131,7 @@ public class LayoutSignalHeadIconXml implements XmlAdapter {
                 if (flashyellow!=null) flashyellow.setRotation(rotation, l);
                 if (flashgreen!=null) flashgreen.setRotation(rotation, l);
                 if (dark!=null) dark.setRotation(rotation, l);
+				if (held!=null) held.setRotation(rotation, l);
             }
         } catch (org.jdom.DataConversionException e) {}
 

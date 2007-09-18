@@ -19,7 +19,7 @@ import java.awt.geom.*;
  * This module handles configuration for display.LevelXing objects for a LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class LevelXingXml implements XmlAdapter {
 
@@ -57,6 +57,18 @@ public class LevelXingXml implements XmlAdapter {
 		}
 		if (p.getConnectD()!=null) {
 			element.setAttribute("connectdname", ((TrackSegment)p.getConnectD()).getID());
+		}
+		if (p.getSignalAName().length()>0) {
+			element.setAttribute("signalaname", p.getSignalAName());
+		}
+		if (p.getSignalBName().length()>0) {
+			element.setAttribute("signalbname", p.getSignalBName());
+		}
+		if (p.getSignalCName().length()>0) {
+			element.setAttribute("signalcname", p.getSignalCName());
+		}
+		if (p.getSignalDName().length()>0) {
+			element.setAttribute("signaldname", p.getSignalDName());
 		}
 		Point2D coords = p.getCoordsCenter();
 		element.setAttribute("xcen", ""+coords.getX());
@@ -125,6 +137,22 @@ public class LevelXingXml implements XmlAdapter {
 		if (a != null) {
 			l.connectDName = a.getValue();
 		}
+		a = element.getAttribute("signalaname");
+		if (a != null) {
+			l.setSignalAName(a.getValue());
+		}		
+		a = element.getAttribute("signalbname");
+		if (a != null) {
+			l.setSignalBName(a.getValue());
+		}		
+		a = element.getAttribute("signalcname");
+		if (a != null) {
+			l.setSignalCName(a.getValue());
+		}		
+		a = element.getAttribute("signaldname");
+		if (a != null) {
+			l.setSignalDName(a.getValue());
+		}		
 		try {
 			x = element.getAttribute("xa").getFloatValue();
 			y = element.getAttribute("ya").getFloatValue();

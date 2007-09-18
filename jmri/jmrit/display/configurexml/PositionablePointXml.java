@@ -18,7 +18,7 @@ import java.awt.geom.*;
  * This module handles configuration for display.PositionablePoint objects for a LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class PositionablePointXml implements XmlAdapter {
 
@@ -48,6 +48,12 @@ public class PositionablePointXml implements XmlAdapter {
 		}
 		if (p.getConnect2() != null) {
 			element.setAttribute("connect2name", ((TrackSegment)p.getConnect2()).getID());
+		}
+		if ( (p.getEastBoundSignal()!=null) && (p.getEastBoundSignal().length()>0) ) {
+			element.setAttribute("eastboundsignal", p.getEastBoundSignal());
+		}
+		if ( (p.getWestBoundSignal()!=null) && (p.getWestBoundSignal().length()>0) ) {
+			element.setAttribute("westboundsignal", p.getWestBoundSignal());
 		}
 
         element.setAttribute("class", "jmri.jmrit.display.configurexml.PositionablePointXml");
@@ -93,6 +99,14 @@ public class PositionablePointXml implements XmlAdapter {
 		a = element.getAttribute("connect2name");
 		if (a != null) {
 			l.trackSegment2Name = a.getValue();
+		}
+		a = element.getAttribute("eastboundsignal");
+		if (a != null) {
+			l.setEastBoundSignal(a.getValue());
+		}
+		a = element.getAttribute("westboundsignal");
+		if (a != null) {
+			l.setWestBoundSignal(a.getValue());
 		}
 		p.pointList.add(l);
     }

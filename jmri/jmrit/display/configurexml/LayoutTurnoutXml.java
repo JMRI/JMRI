@@ -20,7 +20,7 @@ import java.awt.geom.*;
  * This module handles configuration for display.LayoutTurnout objects for a LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class LayoutTurnoutXml implements XmlAdapter {
 
@@ -69,7 +69,32 @@ public class LayoutTurnoutXml implements XmlAdapter {
 		if (p.getConnectD()!=null) {
 			element.setAttribute("connectdname", ((TrackSegment)p.getConnectD()).getID());
 		}
+		if (p.getSignalA1Name().length()>0) {
+			element.setAttribute("signala1name", p.getSignalA1Name());
+		}
+		if (p.getSignalA2Name().length()>0) {
+			element.setAttribute("signala2name", p.getSignalA2Name());
+		}
+		if (p.getSignalB1Name().length()>0) {
+			element.setAttribute("signalb1name", p.getSignalB1Name());
+		}
+		if (p.getSignalB2Name().length()>0) {
+			element.setAttribute("signalb2name", p.getSignalB2Name());
+		}
+		if (p.getSignalC1Name().length()>0) {
+			element.setAttribute("signalc1name", p.getSignalC1Name());
+		}
+		if (p.getSignalC2Name().length()>0) {
+			element.setAttribute("signalc2name", p.getSignalC2Name());
+		}
+		if (p.getSignalD1Name().length()>0) {
+			element.setAttribute("signald1name", p.getSignalD1Name());
+		}
+		if (p.getSignalD2Name().length()>0) {
+			element.setAttribute("signald2name", p.getSignalD2Name());
+		}
 		element.setAttribute("continuing", ""+p.getContinuingSense());		
+        element.setAttribute("disabled", ""+(p.isDisabled()?"yes":"no"));
 		Point2D coords = p.getCoordsCenter();
 		element.setAttribute("xcen", ""+coords.getX());
 		element.setAttribute("ycen", ""+coords.getY());
@@ -152,6 +177,38 @@ public class LayoutTurnoutXml implements XmlAdapter {
 		if (a != null) {
 			l.connectDName = a.getValue();
 		}
+		a = element.getAttribute("signala1name");
+		if (a != null) {
+			l.signalA1Name = a.getValue();
+		}		
+		a = element.getAttribute("signala2name");
+		if (a != null) {
+			l.signalA2Name = a.getValue();
+		}		
+		a = element.getAttribute("signalb1name");
+		if (a != null) {
+			l.signalB1Name = a.getValue();
+		}		
+		a = element.getAttribute("signalb2name");
+		if (a != null) {
+			l.signalB2Name = a.getValue();
+		}		
+		a = element.getAttribute("signalc1name");
+		if (a != null) {
+			l.signalC1Name = a.getValue();
+		}		
+		a = element.getAttribute("signalc2name");
+		if (a != null) {
+			l.signalC2Name = a.getValue();
+		}		
+		a = element.getAttribute("signald1name");
+		if (a != null) {
+			l.signalD1Name = a.getValue();
+		}		
+		a = element.getAttribute("signald2name");
+		if (a != null) {
+			l.signalD2Name = a.getValue();
+		}		
 		a = element.getAttribute("continuing");
 		if (a != null) {
 			int continuing = Turnout.CLOSED;
@@ -162,6 +219,10 @@ public class LayoutTurnoutXml implements XmlAdapter {
 			}
 			l.setContinuingSense(continuing);
 		}
+		boolean value = false;
+        if ((a = element.getAttribute("disabled"))!=null && a.getValue().equals("yes"))
+            value = true;
+        l.setDisabled(value);
 		try {
 			x = element.getAttribute("xb").getFloatValue();
 			y = element.getAttribute("yb").getFloatValue();
