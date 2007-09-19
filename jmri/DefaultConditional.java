@@ -9,7 +9,7 @@ import javax.swing.Timer;
  * Class providing the basic logic of the Conditional interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -527,6 +527,25 @@ public class DefaultConditional extends AbstractNamedBean
 							t.setCommandedState(actionData[i]);
 						}
 						break;
+					case Conditional.ACTION_DELAYED_TURNOUT:
+						if (!mDelayTimerActive[i]) {
+							// Create a timer if one does not exist
+							if (mDelayTimer[i]==null) {
+								mDelayListener[i] = new TimeTurnout(i);
+								mDelayTimer[i] = new Timer(2000,
+															mDelayListener[i]);
+								mDelayTimer[i].setRepeats(false);
+							}
+							// Start the Timer to set the turnout
+							mDelayTimer[i].setInitialDelay(actionDelay[i]*1000);
+							mDelayTimerActive[i] = true;
+							mDelayTimer[i].start();
+						}
+						else {
+							log.warn("timer already active on request to start delayed turnout action - "+
+																				actionName[i]);
+						}
+						break;
 					case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
 						h = InstanceManager.signalHeadManagerInstance().
 									getSignalHead(actionName[i]);
@@ -723,6 +742,35 @@ public class DefaultConditional extends AbstractNamedBean
 				catch (JmriException e) {
 					log.warn("Exception setting delayed sensor "+actionName[mIndex]+" in action");
 				}
+			}
+			// Turn Timer OFF
+			mDelayTimer[mIndex].stop();
+			mDelayTimerActive[mIndex] = false;
+		}
+	}
+	
+	/**
+	 *	Class for defining ActionListener for ACTION_DELAYED_TURNOUT
+	 */
+	class TimeTurnout implements java.awt.event.ActionListener 
+	{
+		public TimeTurnout(int index) {
+			mIndex = index;
+		}
+		
+		private int mIndex = 0;
+		
+		public void actionPerformed(java.awt.event.ActionEvent event)
+		{
+			// set turnout state
+			Turnout t = InstanceManager.turnoutManagerInstance().
+										getTurnout(actionName[mIndex]);
+			if (t==null) {
+				log.error("Invalid delayed turnout name - "+actionName[mIndex]);
+			}
+			else {
+				// set the turnout
+				t.setCommandedState(actionData[mIndex]);
 			}
 			// Turn Timer OFF
 			mDelayTimer[mIndex].stop();

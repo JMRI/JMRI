@@ -46,7 +46,7 @@ import jmri.util.JmriJFrame;
  *	   BeanTableBundle.properties, accessed via rb.
  *
  * @author	Dave Duchamp    Copyright (C) 2007
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -1335,6 +1335,15 @@ public class LogixTableAction extends AbstractTableAction {
 					action1TurnoutSetBox.setSelectedIndex(1);
 				}
 				break;
+			case Conditional.ACTION_DELAYED_TURNOUT:
+				if (actionData[0]==Turnout.CLOSED) {
+					action1TurnoutSetBox.setSelectedIndex(0);
+				}
+				else {
+					action1TurnoutSetBox.setSelectedIndex(1);
+				}
+				action1DataField.setText(Integer.toString(actionDelay[0]));
+				break;
 			case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
 				action1SignalSetBox.setSelectedIndex(
 						signalAppearanceToAppearanceIndex(actionData[0]));
@@ -1378,6 +1387,15 @@ public class LogixTableAction extends AbstractTableAction {
 				else {
 					action2TurnoutSetBox.setSelectedIndex(1);
 				}
+				break;
+			case Conditional.ACTION_DELAYED_TURNOUT:
+				if (actionData[1]==Turnout.CLOSED) {
+					action2TurnoutSetBox.setSelectedIndex(0);
+				}
+				else {
+					action2TurnoutSetBox.setSelectedIndex(1);
+				}
+				action2DataField.setText(Integer.toString(actionDelay[1]));
 				break;
 			case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
 				action2SignalSetBox.setSelectedIndex(
@@ -1765,6 +1783,18 @@ public class LogixTableAction extends AbstractTableAction {
 					action1NameField.setToolTipText(rbx.getString("NameHintSensor"));						
 					action1DataField.setToolTipText(rbx.getString("DataHintDelayedSensor"));						
 					break;
+				case Conditional.ACTION_DELAYED_TURNOUT:
+					action1NameField.setVisible(true);
+					action1NameField.setText("");
+					action1DataField.setVisible(true);
+					action1SetButton.setVisible(false);
+					action1TurnoutSetBox.setVisible(true);
+					action1SensorSetBox.setVisible(false);
+					action1SignalSetBox.setVisible(false);
+					action1LightSetBox.setVisible(false);			
+					action1NameField.setToolTipText(rbx.getString("NameHintTurnout"));						
+					action1DataField.setToolTipText(rbx.getString("DataHintDelayedTurnout"));						
+					break;
 				case Conditional.ACTION_SET_LIGHT:
 					action1NameField.setVisible(true);
 					action1NameField.setText("");
@@ -1955,6 +1985,18 @@ public class LogixTableAction extends AbstractTableAction {
 					action2LightSetBox.setVisible(false);			
 					action2NameField.setToolTipText(rbx.getString("NameHintSensor"));						
 					action2DataField.setToolTipText(rbx.getString("DataHintDelayedSensor"));						
+					break;
+				case Conditional.ACTION_DELAYED_TURNOUT:
+					action2NameField.setVisible(true);
+					action2NameField.setText("");
+					action2DataField.setVisible(true);
+					action2SetButton.setVisible(false);
+					action2TurnoutSetBox.setVisible(true);
+					action2SensorSetBox.setVisible(false);
+					action2SignalSetBox.setVisible(false);
+					action2LightSetBox.setVisible(false);			
+					action2NameField.setToolTipText(rbx.getString("NameHintTurnout"));						
+					action2DataField.setToolTipText(rbx.getString("DataHintDelayedTurnout"));						
 					break;
 				case Conditional.ACTION_SET_LIGHT:
 					action2NameField.setVisible(true);
@@ -2598,6 +2640,52 @@ public class LogixTableAction extends AbstractTableAction {
 					actionData[index] = Turnout.THROWN;
 				actionString[index] = " ";
 				break;
+			case Conditional.ACTION_DELAYED_TURNOUT:
+				Turnout tx = null;
+				// check if turnout user name was entered
+				if ((uName!=null) && (uName!="")) {
+					tx = InstanceManager.turnoutManagerInstance().getByUserName(uName);
+					if (tx != null) {
+						actionName[index] = uName;
+						systemNameField.setText(uName);
+					}
+					else {
+						// check turnout system name
+						tx = InstanceManager.turnoutManagerInstance().getBySystemName(sName);
+					}
+				}
+				if (tx == null) {
+					systemNameField.setText(uName);
+					messageInvalidTurnoutName(uName,false);
+					return (false);
+				}
+				if (turnoutSetBox.getSelectedIndex()==0)
+					actionData[index] = Turnout.CLOSED;
+				else
+					actionData[index] = Turnout.THROWN;
+				try {
+                    actionDelay[index] = Integer.valueOf(dataField.getText()).intValue();
+                    if (actionDelay[index]<=0) {
+						javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
+			                java.text.MessageFormat.format(
+				                rbx.getString("Error38"),
+				                new String[]{dataField.getText()}),
+							rbx.getString("ErrorTitle"),
+							javax.swing.JOptionPane.ERROR_MESSAGE);
+						return (false);
+					}
+                }
+                catch (Exception e) {
+					javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
+			            java.text.MessageFormat.format(
+				            rbx.getString("Error39"),
+				            new String[]{dataField.getText()}),
+						rbx.getString("ErrorTitle"),
+						javax.swing.JOptionPane.ERROR_MESSAGE);
+					return (false);
+                }
+				actionString[index] = " ";
+				break;
 			case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
 				SignalHead hx = null;
 				// check if signal head user name was entered
@@ -2924,6 +3012,8 @@ public class LogixTableAction extends AbstractTableAction {
 				return (rbx.getString ("ActionPlaySound"));
 			case Conditional.ACTION_RUN_SCRIPT:
 				return (rbx.getString ("ActionRunScript"));
+			case Conditional.ACTION_DELAYED_TURNOUT:
+				return (rbx.getString ("ActionDelayedTurnout"));
 		}
 		return ("");
 	}	
