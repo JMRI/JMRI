@@ -59,7 +59,7 @@ import java.io.*;
  * FF10 = link macro 16 
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -694,7 +694,7 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
         	if (accyNum < 0)
         		return accyNum;
         	accyNum = accyNum + 3;							// adjust for NCE's way of encoding
-        	int upperByte = (byte)(accyNum&0xFF);
+        	int upperByte = (accyNum&0xFF);
         	upperByte = (upperByte >>2)+ 0x80;
         	b[i] = (byte)upperByte;
         	int lowerByteH = (((-accyNum)& 0x0700)>>4);		// 3 MSB 1s complement
