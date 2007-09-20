@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TechRoadMap.shtml,v 1.8 2007-08-22 16:18:29 jacobsen Exp $ -->
+<!-- $Id: TechRoadMap.shtml,v 1.9 2007-09-20 02:26:20 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -141,6 +141,19 @@ Of course, that code will be around for a very, very long time
 after that, both for running (JRE - Java Runtime Environment) and for building
 individual copies (JDK - Java Development Kit).
 <P>
+
+<h3>Remainging Issues</h3>
+
+We currently use Log4J for logging. At some future point, there
+may be good reasons to migrate to ava Logging API. It was introduced
+in JDK 1.4, and has some nice localization and formating features
+in SDK 1.6.  This version of the plan doesn't discuss this migration,
+however.
+
+<P>
+We currently distribute the crimson.jar XML parser with JMRI.
+At some point, we should revisit that.
+
 
 <table border="1">
 <tr><th>JMRI Versions</th><th>Expected<br>end date</th>
