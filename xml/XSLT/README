@@ -42,3 +42,15 @@ Create views as CommaSeparateVariable files:
  				
  				create CSV file listing decoder power limits
  				uses PowerAsCSV.xsl
+
+
+Information on specific XSLT tranforms:
+
+decoder.xsl     used as a stylesheet by decoder XML files for web display;
+                creates an update form
+                
+DecoderID.xsl   used by Ant "id" target and used as an XML stylesheet to 
+                display the decoderIndex.xml file.
+                
+panelfile.xsl   stylesheet for JMRI panel files
+
