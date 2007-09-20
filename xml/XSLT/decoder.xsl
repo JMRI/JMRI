@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!-- Copyright (C) Bob Jacobsen 2007 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: decoder.xsl,v 1.9 2007-08-21 09:51:17 jacobsen Exp $ -->
+<!-- $Id: decoder.xsl,v 1.10 2007-09-20 15:21:27 jacobsen Exp $ -->
+<!-- -->
 <!-- This XSLT transform is used when a JMRI decoder definition -->
 <!-- file is displayed by a web browser -->
 <html xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml" xsl:version="1.0">
@@ -30,9 +31,15 @@
     <p>
 If you want to submit an update to any of this information,
 change the form and hit the "Enter" button at the bottom.
-<br/>
 You can also add a new model in the spaces at the bottom.
+</p><p>
+JMRI software, including this file, is distributed under license. That
+license defines the terms under which you can use, modify and/or distribute
+it.  Please see our 
+<a href="http://jmri.sourceforge.net/Copyright.html">licensing page</a> 
+for more information.
 </p>
+<hr/>
     <form method="post" action="/cgi-bin/updateDecoder.cgi">
     <!-- store the mfg andfamily name for later retrieval -->
     <xsl:for-each select="decoder-config/decoder/family"><!-- unique -->
