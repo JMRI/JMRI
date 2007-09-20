@@ -32,7 +32,7 @@ import java.util.List;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.29 $
+ * @version			$Revision: 1.30 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -410,7 +410,7 @@ public class DecoderIndexFile extends XmlFile {
         // <?xml-stylesheet type="text/xsl" href="XSLT/DecoderID.xsl"?>
         java.util.Map m = new java.util.HashMap();
         m.put("type", "text/xsl");
-        m.put("href", "XSLT/DecoderID.xsl");
+        m.put("href", "http://jmri.sourceforge.net/xml/XSLT/DecoderID.xsl");
         ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
         doc.addContent(0,p);
         
