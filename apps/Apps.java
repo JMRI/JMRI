@@ -28,7 +28,7 @@ import net.roydesign.mac.MRJAdapter;
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
  * @author  Dennis Miller  Copyright 2005
- * @version     $Revision: 1.41 $
+ * @version     $Revision: 1.42 $
  */
 public class Apps extends JPanel {
 
@@ -258,7 +258,7 @@ public class Apps extends JPanel {
     static HelpBroker globalHelpBroker;
 
     protected void helpMenu(JMenuBar menuBar, final JFrame frame) {
-        JMenu helpMenu = new JMenu("Help");
+        JMenu helpMenu = new JMenu(rb.getString("MenuHelp"));
         menuBar.add(helpMenu);
         try {
             String helpsetName = "help/JmriHelp_en.hs";
@@ -281,7 +281,7 @@ public class Apps extends JPanel {
             }
             globalHelpBroker = globalHelpSet.createHelpBroker();
 
-            JMenuItem menuItem = new JMenuItem("Help");
+            JMenuItem menuItem = new JMenuItem(rb.getString("MenuItemHelp"));
             helpMenu.add(menuItem);
             menuItem.addActionListener(new CSH.DisplayHelpFromSource(globalHelpBroker));
 
@@ -293,15 +293,15 @@ public class Apps extends JPanel {
             log.error("Is jh.jar available? Error starting help system: "+e2);
         }
 
-        JMenuItem license = new JMenuItem("License ...");
+        JMenuItem license = new JMenuItem(rb.getString("MenuItemLicense"));
         helpMenu.add(license);
         license.addActionListener(new LicenseAction());
 
-        JMenuItem directories = new JMenuItem("Locations ...");
+        JMenuItem directories = new JMenuItem(rb.getString("MenuItemLocations"));
         helpMenu.add(directories);
         directories.addActionListener(new jmri.jmrit.XmlFileLocationAction());
 
-        JMenuItem context = new JMenuItem("Context ...");
+        JMenuItem context = new JMenuItem(rb.getString("MenuItemContext"));
         helpMenu.add(context);
         context.addActionListener(new apps.ReportContextAction());
     }
