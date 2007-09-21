@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.3 2007-09-21 06:31:39 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.4 2007-09-21 06:32:27 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -138,7 +138,7 @@ We encourage people to build their own projects on top of JMRI.  That's the orig
 that the project was started!
 
 <P>
-JMRI is licensed only under the "General Public License", sometimes called the "GPL".  
+JMRI is licensed only under the "GNU General Public License", sometimes called the "GPL".  
 We use version 2 of the license, along with the "classpath exception"
 allowing people to link JMRI with their own code under more relaxed conditions.
 Copies of the license are distributed with the source and executable downloads,
