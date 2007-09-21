@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE names-config SYSTEM "names-config.dtd">
-<!-- $Id: names.xml,v 1.10 2003-10-18 18:24:54 jacobsen Exp $ -->
+<!-- $Id: names.xml,v 1.11 2007-09-21 05:49:29 jacobsen Exp $ -->
 <names-config>
 		<version author="jake@physics.berkeley.edu" 
 			version="7.1" lastUpdated="20031008"/>
@@ -29,6 +29,18 @@
 	<!-- 		Volumes and other analog settings -->		
 	<!-- 		Global sound options 			-->
 	
+    <!-- This file is part of JMRI.                                             -->
+    <!--                                                                        -->
+    <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+    <!-- the terms of version 2 of the GNU General Public License as published  -->
+    <!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+    <!-- of this license.                                                       -->
+    <!--                                                                        -->
+    <!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+    <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+    <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+    <!-- for more details.                                                      -->
+
 	
 	<!-- Basic configuration variables -->
 	<definitiongroup name="Basic">

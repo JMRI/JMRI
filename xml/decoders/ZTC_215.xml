@@ -3,8 +3,17 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2003, 2005 All rights reserved -->
-<!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: ZTC_215.xml,v 1.4 2007-09-21 04:59:34 jacobsen Exp $ -->
+<!-- $Id: ZTC_215.xml,v 1.5 2007-09-21 05:49:35 jacobsen Exp $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
 
 <decoder-config>
 		<version author="Ian Birchenough(ian@birchenough.demon.co.uk)"

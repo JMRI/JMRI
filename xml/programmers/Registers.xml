@@ -1,8 +1,20 @@
 <?xml version="1.0"?>
 <!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
 
+<!-- This file is part of JMRI.  Copyright 2007.                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
 <programmer-config>
-<!-- $Id: Registers.xml,v 1.4 2002-10-25 15:07:06 jacobsen Exp $ -->
+<!-- $Id: Registers.xml,v 1.5 2007-09-21 05:49:59 jacobsen Exp $ -->
 		<version author="Bob Jacobsen" version="2" lastUpdated="20020112"/>
 
 <!-- A very basic programmer, containing only the variables that -->

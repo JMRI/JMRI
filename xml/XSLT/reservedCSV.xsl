@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: reservedCSV.xsl,v 1.1 2005-10-18 04:39:11 jacobsen Exp $ -->
+<!-- $Id: reservedCSV.xsl,v 1.2 2007-09-21 05:49:30 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI decoder definition to -->
 <!-- one line of a CSV file  per decoder -->
 
 <!-- This made from the readme2html.xsl file of TestXSLT 2.7 -->
 
+
+<!-- This file is part of JMRI.  Copyright 2007.                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+ 
 <xsl:stylesheet	version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <!-- Need to instruct the XSLT processor to use text output rules.

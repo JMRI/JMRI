@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!-- Copyright (C) Bob Jacobsen 2007 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: decoder.xsl,v 1.10 2007-09-20 15:21:27 jacobsen Exp $ -->
+<!-- $Id: decoder.xsl,v 1.11 2007-09-21 05:49:30 jacobsen Exp $ -->
 <!-- -->
 <!-- This XSLT transform is used when a JMRI decoder definition -->
 <!-- file is displayed by a web browser -->
+
+<!-- This file is part of JMRI.                                             -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+ 
 <html xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml" xsl:version="1.0">
   <body style="font-family:Arial,helvetica,sans-serif;font-size:12pt;         background-color:#EEEEEE">
 <!-- display family info -->

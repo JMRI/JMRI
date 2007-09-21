@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: PropertiesFiles.xsl,v 1.1 2005-08-16 06:14:31 jacobsen Exp $ -->
+<!-- $Id: PropertiesFiles.xsl,v 1.2 2007-09-21 05:49:30 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI decoder definition to a properties file -->
 
-<!-- This made from the readme2html.xsl file of TestXSLT 2.7 -->
-
+<!-- This file is part of JMRI.  Copyright 2007.                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+ 
 <xsl:stylesheet	version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <!-- Need to instruct the XSLT processor to use text output rules.

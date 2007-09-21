@@ -1,9 +1,20 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
+
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
-<!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: TCS_Tx_v27.xml,v 1.4 2007-08-21 10:49:50 jacobsen Exp $ -->
+<!-- $Id: TCS_Tx_v27.xml,v 1.5 2007-09-21 05:49:34 jacobsen Exp $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
 <decoder-config>
 		<version author="jsalemi@speakeasy.net"
 					version="1.2" lastUpdated="20041213"/>

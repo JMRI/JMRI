@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: DecoderModelList.xsl,v 1.3 2003-08-09 01:13:01 jacobsen Exp $ -->
+<!-- $Id: DecoderModelList.xsl,v 1.4 2007-09-21 05:49:30 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI decoder definition to a HTML page -->
 
-<!-- This made from the readme2html.xsl file of TestXSLT 2.7 -->
-
+<!-- This file is part of JMRI.  Copyright 2007.                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+ 
 <xsl:stylesheet	version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
