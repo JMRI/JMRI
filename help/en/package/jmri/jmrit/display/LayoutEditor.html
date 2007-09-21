@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LayoutEditor.html,v 1.3 2007-09-18 13:56:37 djduchamp Exp $ -->
+<!-- $Id: LayoutEditor.html,v 1.4 2007-09-21 22:26:15 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -400,11 +400,14 @@ turnouts and block boundaries are oriented mostly vertically or mostly horizonta
 	the entered turnout. This tool may not have enough information to create
 	logic when it is first invoked, so you may have to return to it later after
 	all signals have been assigned and after blocks have been defined for 
-	signaled regions of track on the panel. (For more information, see the 
-	help page for the Set Signals at Turnout dialog.)</li>
+	signaled regions of track on the panel. After a turnout has been assigned to 
+	the turnout drawing, this tool can be reached by selecting <b>Set Signals...</b> 
+	in that turnout's popup menu. (For more information, see the help page for the 
+	Set Signals at Turnout dialog.)</li>
 	<li><b>Set Signals at Block Boundary...</b> - This item provides an automated
 	procedure for assigning signals to a block boundary not associated with a 
-	turnout. Prior to accessing this item, blocks must be defined for signaled
+	turnout or a level crossing. Prior to accessing this item, blocks must 
+	be defined for signaled
 	regions of track on the panel, and the required signal heads must be in the
 	Signal Table. When this item is selected, a dialog is shown for entry of  
 	names of the two blocks whose boundary is to be signalled, and for entry of
@@ -416,8 +419,50 @@ turnouts and block boundaries are oriented mostly vertically or mostly horizonta
 	signal heads are assigned to the specified block boundary. If create logic 
 	is requested and the tool does not have enough information available to 
 	set up the logic, you may have to return later after more signals have 
-	been assigned. (For more information, see the help page for the Set Signals
+	been assigned. After an anchor point is recognized as a block boundary, 
+	this tool can be reached by selecting <b>Set Signals...</b> in that anchor 
+	point's popup menu. (For more information, see the help page for the Set Signals
 	at Block Boundary dialog.)</li>
+	<li><b>Set Signals at Double Crossover...</b> - This item provides an automated
+	procedure for assigning signals at a double crossover turnout. It also provides
+	for placing signal heads around the double crossover and for setting up logic
+	for those signals. Prior to accessing this item, blocks must be defined for 
+	signaled regions of track on the panel, and the required signal heads must be 
+	in the Signal Table. When this item is selected, a dialog is shown for entry of  
+	the name (system or user) of the turnout to be signalled, and for entry of
+	names (system or user) of four to eight signal heads to be assigned to the 
+	double crossover. For each signal head, check boxes are available for 
+	selecting whether an icon is to be placed on the panel, and whether Simple 
+	Signal Logic is to be created for the signal head. Regardless of whether icons 
+	are placed or logic is created, Layout Editor will record that the entered 
+	signal heads are assigned to the specified turnout. If create logic 
+	is requested and the tool does not have enough information available to 
+	set up the logic, you may have to return later after more signals have 
+	been assigned. After a turnout from the Turnout Table is assigned to the
+	double crossover, this tool can be reached by selecting <b>Set Signals...</b> 
+	in that turnout's popup menu. (For more information, see the help page for the 
+	Set Signals at Double Crossover dialog.)</li>
+	<li><b>Set Signals at Level Crossing...</b> - This item provides an automated
+	procedure for assigning signals at a level crossing (a diamond). It also provides
+	for placing signal heads around the level crossing and for setting up logic
+	for those signals. Prior to accessing this tool, blocks must be defined for 
+	signaled regions of track on the panel, and the required signal heads must be 
+	in the Signal Table. This tool works best if the level crossing also serves as 
+	the boundary between two blocks in each signalled direction. When this item is 
+	selected, a dialog is shown for entry of one or two block names that uniquely 
+	identify the level crossing to be signalled, and for entry of
+	names (system or user) of two or four signal heads to be arrayed around the 
+	level crossing. For each signal head, check boxes are available for 
+	selecting whether an icon is to be placed on the panel, and whether Simple 
+	Signal Logic is to be created for the signal head. Regardless of whether icons 
+	are placed or logic is created, Layout Editor will record that the entered 
+	signal heads are assigned to the specified level crossing. If create logic 
+	is requested and the tool does not have enough information available to 
+	set up the logic, you may have to return later after more signals have 
+	been assigned. After blocks have been assigned to the level crossing tracks, 
+	this tool can be reached by selecting <b>Set Signals...</b> in that level 
+	crossing's popup menu. (For more information, see the help page for the 
+	Set Signals at Level Crossing dialog.)</li>
 </ul></p>
 
 <a name="editing"><h3>Editing and Removing Items
@@ -456,6 +501,15 @@ editing Simple Signal Logic for the signal head (for more information on
 Simple Signal Logic, see that window's help). Simple Signal Logic supports ABS 
 signalling, and will handle most of your signal logic needs. Refer to Logix for 
 more complicated logic needs not handled by Simple Signal Logic.</p>
+<p>
+With turnouts, level crossings, and anchor points, Layout Editor's four tools 
+for assigning signal heads to these items, for automated placement of signal 
+head icons on the panel, and for automated creation of Simple Signal Logic for 
+the assigned signal heads may be reached by selecting <b>Set Signals...</b> in
+the popup menu. <b>Set Signals...</b> is not shown in the popup menu until a 
+minimum amount of information is available to the tools. These tools are briefly
+described above under <a href="#toolsmenu">Using Layout Editor's Tools Menu</a>, 
+and are discussed in detail on the help page of the tool's dialog window.</p>
 
 <a name="turnouts"><H3>Turnouts
 </H3></a>
