@@ -18,9 +18,23 @@ import java.beans.PropertyChangeListener;
  * <P>
  * You get a Programmer object from a {@link ProgrammerManager},
  * which in turn can be located from the {@link InstanceManager}.
+ *
+ * <hr>
+ * This file is part of JMRI.
+ * <P>
+ * JMRI is free software; you can redistribute it and/or modify it under 
+ * the terms of version 2 of the GNU General Public License as published 
+ * by the Free Software Foundation. See the "COPYING" file for a copy
+ * of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * for more details.
+ * <P>
  * @see         jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.17 $
+ * @version	$Revision: 1.18 $
  */
 public interface Programmer  {
 

@@ -18,8 +18,22 @@ import javax.swing.BoxLayout;
  * <P>
  * Note that you should call the dispose() method when you're really done, so that
  * a ProgModePane object can disconnect its listeners.
+ *
+ * <hr>
+ * This file is part of JMRI.
+ * <P>
+ * JMRI is free software; you can redistribute it and/or modify it under 
+ * the terms of version 2 of the GNU General Public License as published 
+ * by the Free Software Foundation. See the "COPYING" file for a copy
+ * of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * for more details.
+ * <P>
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class ProgServiceModePane extends ProgModeSelector implements java.beans.PropertyChangeListener {
 

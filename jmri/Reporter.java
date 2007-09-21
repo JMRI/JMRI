@@ -5,7 +5,7 @@ package jmri;
 /**
  * Represent a device that can report identification information.
  * <P>
- * Repproting devices might include:
+ * Reporting devices might include:
  * <ul>
  *  <li>A DCC device that reports a locomotive number
  *      when it's in a particular location
@@ -24,11 +24,24 @@ package jmri;
  * A Reporter might also not be able to report all the time.  The
  * previous value remains available, but it's also possible to 
  * distinquish this case by using the getCurrentReport member function.
- * 
+ * <P>
+ *
+ * <hr>
+ * This file is part of JMRI.
+ * <P>
+ * JMRI is free software; you can redistribute it and/or modify it under 
+ * the terms of version 2 of the GNU General Public License as published 
+ * by the Free Software Foundation. See the "COPYING" file for a copy
+ * of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * for more details.
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  * @see         jmri.Sensor
  * @see         jmri.AbstractReporter
  * @see         jmri.ReporterManager

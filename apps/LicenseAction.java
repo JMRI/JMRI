@@ -13,7 +13,7 @@ import java.io.*;
  * Swing action to display the JMRI license
  *
  * @author	    Bob Jacobsen    Copyright (C) 2004
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class LicenseAction extends AbstractAction {
 
@@ -39,7 +39,7 @@ public class LicenseAction extends AbstractAction {
 			textPane.setText(t);
 			r.close();
 		} catch (IOException ex) {
-			t = "For license information, see the JMRI website jttp://jmri.sourceforge.net";
+			t = "JMRI is distributed under a license. For license information, see the JMRI website http://jmri.sourceforge.net";
 		}
 		
 		// set up display
