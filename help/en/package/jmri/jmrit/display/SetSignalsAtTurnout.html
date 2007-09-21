@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SetSignalsAtTurnout.html,v 1.1 2007-09-18 13:31:50 djduchamp Exp $ -->
+<!-- $Id: SetSignalsAtTurnout.html,v 1.2 2007-09-21 19:25:19 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -68,7 +68,11 @@ Note: If there was a signal head previously assigned to one of the two
 positions, and you enter a <i>different</i> signal head in the same place, 
 the new signal head will replace the previous signal head, and the icon of
 the previous signal head (if there is one) will be deleted from the 
-panel.</p>
+panel. Similarly, if you replace a previously assigned <b>Throat - 
+Diverging</b> signal head with a blank entry (no signal head), the previous 
+entry is deleted and the turnout will not have a signal head at that 
+position. <b>If a signal head is changed, you must redo any logic that 
+involves it.</b></p>
 <p>
 Check <b>Add Signal Icon to Panel</b> to request that an icon for a signal 
 head be placed on the panel at the turnout position indicated. This tool 
@@ -84,8 +88,9 @@ the tool does not have enough information available to set up the
 logic, a message results, and you will have to return later after 
 more signals have been assigned to turnouts and block boundaries on the
 panel.</p>
+<h3>Notes</h3>
 <p>
-<b>Note:</b> When setting up logic, this tool will follow track within 
+When setting up logic, this tool will follow track within 
 a block until it finds a signal at the end of the block away from the 
 turnout being signalled.  If your layout contains sections that are 
 signalled and sections that are not, to get this tool to set up logic
@@ -105,7 +110,17 @@ add approach lighting. The Simple Signal Logic dialog can
 be accessed from the popup menu of the signal icon. If your special 
 situation cannot be handled by Simple Signal Logic, you should refer
 to Logix to tailor the signal logic to your needs.</p>
-
+<p>
+If you are using two turnouts to represent a double-slip turnout, or if 
+you are using two turnouts to represent a three-way turnout, the logic
+set up by this tool will not work correctly. These are examples where
+you may be better off going directly to Logix, instead of trying to get
+Simple Signal Logic to work correctly by hand edits. Another example 
+where the logic set up by this tool might not work correctly is for very 
+short blocks, or turnouts within blocks.  Hand edits will probably work 
+in these cases. </p>
+<p>
+<b>Please remember to save your panel after using this tool.</b></p>
 </body>
 </html>
 
