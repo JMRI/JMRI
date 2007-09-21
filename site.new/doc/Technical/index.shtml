@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.2 2007-07-13 04:55:23 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.3 2007-09-21 06:31:39 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -138,17 +138,23 @@ We encourage people to build their own projects on top of JMRI.  That's the orig
 that the project was started!
 
 <P>
-JMRI is licensed under the "Artistic License", sometimes called the "MIT Artistic
-License".  Copies of it are distributed with the source and executable downloads,
+JMRI is licensed only under the "General Public License", sometimes called the "GPL".  
+We use version 2 of the license, along with the "classpath exception"
+allowing people to link JMRI with their own code under more relaxed conditions.
+Copies of the license are distributed with the source and executable downloads,
 and can be gotten from 
-<A HREF="COPYING">the web</a>. This is a true Open Source license; for more information
-on that, please see the
+<A HREF="COPYING">the web</a>. 
+
+<P>
+This is both an "open source" and a "free" license.
+For more information
+on those definitions, please see the
 <A HREF="http://www.opensource.org/">Open Source Initiative</a>
 web pages, including their
-<A HREF="http://www.opensource.org/docs/definition.php">description of what Open Source means</a>
-and their 
-<A HREF="http://www.opensource.org/licenses/artistic-license.php">certification of the Artistic License</a>.
-
+<A HREF="http://www.opensource.org/docs/definition.php">description of what Open Source means</a>,
+and the 
+<A HREF="http://www.gnu.org/">Free Software Foundation</a> web pages, particularly their 
+<A HREF="http://www.gnu.org/licenses/">licensing page</a>.
 <P>
 Informally, the license means that there are only a few limitations on what you
 can do with JMRI.  (Check the exact wording in 
