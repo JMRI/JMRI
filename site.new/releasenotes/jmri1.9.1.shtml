@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.9.1.shtml,v 1.5 2007-09-04 06:15:44 jacobsen Exp $ -->
+<!-- $Id: jmri1.9.1.shtml,v 1.6 2007-09-21 06:31:11 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -59,6 +59,13 @@ Therefore, this test version should be considered experimental.
 <!-- <P>We are very pleased to announce that the 1.7 series of JMRI test releases has resulted in a  -->
 <!-- version that's good enough to be recommended for general use, including by new users.  -->
 <!-- We're therefore making that version, "Production version 1.8" available for download today. -->
+
+<b>
+Note that starting with this release, JMRI is only available 
+under the 
+<A HREF="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/Copyright.html">copyright and licensing page</a>.</b>
 
 <h3>New warnings for this version:</h3>
 
@@ -124,8 +131,7 @@ To install it, double click on the file to mount it, and then drag the resulting
 
 <P>Several people worked to update the code to use Java 1.3; this will have some impact on interfaces in the software, if you're writing your own code that uses JMRI.
 
-<P>Dan Boudreau updated the NCE macro editor so that it could
-handle macro 0, and made other improvements.
+<P>Dan Boudreau updated the NCE macro editor so that it could handle macro 0, and made other improvements.
 
 <P>
 Bob Jacobsen added tooltips to the Panel Editor to explain that the "Add" buttons are disabled until information is entered in the text boxes
@@ -162,7 +168,7 @@ Michael Mosher updated the BLI Blueline decoder definitions to no longer use pag
 Michael Mosher updated the NCE DS13SR decoder definition to the recently-observed identifiers
 
 <LI>
-David Duchamp added a completely new layout (panel) editor!
+David Duchamp added a completely new layout (panel) editor! In particular, note the very nice help files.
 
 <LI>
 The "held" icon for a SignalHead on a panel wasn't rotating properly, now fixed.
@@ -195,6 +201,11 @@ Paul Bender added the Silver Direct to the Lenz Silver decoder family
 
 <LI>Lots of little JavaDoc improvements
 
+<LI>DecoderPro now creates a decoder index that displays it's contents when viewed in a modern web browser. Note you need to be connected to the internet for this to work.
+
+<LI>The Decoder Definition Files now display (using XSLT stylesheets) when viewed in a web browser.  Note you need to be connected to the internet for this to work.
+
+<LI>David Duchamp added a "delayed set turnout" action to Logix conditionals
 
 <!--#include virtual="/Footer" -->
 
