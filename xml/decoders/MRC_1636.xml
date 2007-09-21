@@ -1,8 +1,11 @@
 <?xml version="1.0"?>
-<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
+
 <!-- Copyright (C) JMRI 2006 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: MRC_1636.xml,v 1.1 2006-08-01 18:45:55 pbender Exp $ -->
+<!-- $Id: MRC_1636.xml,v 1.2 2007-09-21 04:59:32 jacobsen Exp $ -->
+
 <decoder-config>
 		<version author="Paul Bender"
 			version="1" lastUpdated="20060723" />

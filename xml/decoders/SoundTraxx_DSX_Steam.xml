@@ -1,8 +1,11 @@
 <?xml version="1.0"?>
-<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
+
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: SoundTraxx_DSX_Steam.xml,v 1.13 2006-10-01 06:49:54 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_DSX_Steam.xml,v 1.14 2007-09-21 04:59:32 jacobsen Exp $ -->
+
 <decoder-config>
 		<version author="Michael Mosher" version="9" lastUpdated="20060927"/>
         <version author="Michael Mosher" version="8" lastUpdated="20050817"/>

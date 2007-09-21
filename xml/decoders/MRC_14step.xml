@@ -1,8 +1,11 @@
 <?xml version="1.0"?>
-<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
+
 <!-- Copyright (C) JMRI 2002 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: MRC_14step.xml,v 1.4 2005-05-01 23:25:42 jacobsen Exp $ -->
+<!-- $Id: MRC_14step.xml,v 1.5 2007-09-21 04:59:31 jacobsen Exp $ -->
+
 <decoder-config>
 		<version author="Bob Jacobsen" version="1" lastUpdated="20020405"/>
 

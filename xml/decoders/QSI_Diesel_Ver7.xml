@@ -1,8 +1,11 @@
 <?xml version="1.0"?>
-<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
+
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: QSI_Diesel_Ver7.xml,v 1.4 2007-08-07 04:01:11 jacobsen Exp $ -->
+<!-- $Id: QSI_Diesel_Ver7.xml,v 1.5 2007-09-21 04:59:32 jacobsen Exp $ -->
+
 <decoder-config>
   <version author="Michael Mosher" version="4" lastUpdated="20070802"/>
   <version author="Michael Mosher" version="3" lastUpdated="20070613"/>

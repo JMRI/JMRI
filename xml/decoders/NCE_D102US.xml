@@ -1,8 +1,11 @@
 <?xml version="1.0"?>
-<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
+
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: NCE_D102US.xml,v 1.3 2005-05-01 23:25:42 jacobsen Exp $ -->
+<!-- $Id: NCE_D102US.xml,v 1.4 2007-09-21 04:59:32 jacobsen Exp $ -->
+
 <decoder-config>
 		<version author="Michael Mosher" version="1" lastUpdated="20030706"/>
 

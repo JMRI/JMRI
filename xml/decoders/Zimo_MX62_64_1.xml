@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
-<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Zimo_MX62_64_1.xml,v 1.5 2005-05-01 23:25:43 jacobsen Exp $ -->
+<!-- $Id: Zimo_MX62_64_1.xml,v 1.6 2007-09-21 04:59:34 jacobsen Exp $ -->
 <decoder-config>
 		<version author="sip@euronet.nl"
 			version="1.1" lastUpdated="20031008" />

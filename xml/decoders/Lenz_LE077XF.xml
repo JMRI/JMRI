@@ -1,8 +1,11 @@
 <?xml version="1.0"?>
-<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
+
 <!-- Copyright (C) JMRI 2003 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Lenz_LE077XF.xml,v 1.15 2005-05-01 23:25:42 jacobsen Exp $ -->
+<!-- $Id: Lenz_LE077XF.xml,v 1.16 2007-09-21 04:59:31 jacobsen Exp $ -->
+
 <decoder-config>
 		<version author="Phil Grainger (phil.grainger@ca.com)"
 			version="7.1" lastUpdated="20031008" />

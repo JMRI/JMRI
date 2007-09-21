@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-
-<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Zimo_MX65.xml,v 1.2 2007-02-20 02:00:57 jacobsen Exp $ -->
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
+<!-- $Id: Zimo_MX65.xml,v 1.3 2007-09-21 04:59:34 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Jeff Schmaltz escopetas@comcast.net"
 			version="1.1" lastUpdated="20070214" />

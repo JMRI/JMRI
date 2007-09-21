@@ -1,9 +1,11 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
+
 <!-- Copyright (C) JMRI 2002, 2004 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: 0NMRA.xml,v 1.7 2007-08-08 23:57:35 jacobsen Exp $ -->
+<!-- $Id: 0NMRA.xml,v 1.8 2007-09-21 04:59:31 jacobsen Exp $ -->
+
 <decoder-config>
 		<version author="Bob Jacobsen" version="4" lastUpdated="20031205"/>
 		<!-- version 3 - add consist direction - jake -->

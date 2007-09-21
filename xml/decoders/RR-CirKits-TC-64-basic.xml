@@ -1,6 +1,11 @@
 <?xml version="1.0"?>
-<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: RR-CirKits-TC-64-basic.xml,v 1.7 2006-10-01 07:31:50 jacobsen Exp $ -->
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
+
+<!-- Copyright (C) JMRI 2006 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<!-- $Id: RR-CirKits-TC-64-basic.xml,v 1.8 2007-09-21 04:59:32 jacobsen Exp $ -->
+
 <decoder-config > <!-- showEmptyPanes="no" -->
 		<version author="dick@rr-cirkits.com" 
 					version="1.02" lastUpdated="20060925"/>

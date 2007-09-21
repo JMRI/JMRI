@@ -1,8 +1,11 @@
 <?xml version="1.0"?>
-<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
+
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: ESU_LokSound2_21.xml,v 1.9 2005-08-02 04:43:21 jacobsen Exp $ -->
+<!-- $Id: ESU_LokSound2_21.xml,v 1.10 2007-09-21 04:59:31 jacobsen Exp $ -->
+
 <decoder-config>
 		<version author="wsthompson@earthlink.net"
 			version="6" lastUpdated="20050622"/>

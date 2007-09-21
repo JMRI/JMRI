@@ -1,8 +1,11 @@
 <?xml version="1.0"?>
-<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
+
 <!-- Copyright (C) JMRI 2006 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Lenz_Silver_Mini.xml,v 1.1 2007-04-15 06:18:15 jacobsen Exp $ -->
+<!-- $Id: Lenz_Silver_Mini.xml,v 1.2 2007-09-21 04:59:31 jacobsen Exp $ -->
+
 <decoder-config>
 	<version author="Ian Ware"
 				version="1" lastUpdated="20070323" />

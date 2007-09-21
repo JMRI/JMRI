@@ -1,8 +1,11 @@
 <?xml version="1.0"?>
-<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
+
 <!-- Copyright (C) JMRI 2003, 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Kuehn_ZTC217.xml,v 1.1 2006-08-13 23:31:03 jacobsen Exp $ -->
+<!-- $Id: Kuehn_ZTC217.xml,v 1.2 2007-09-21 04:59:31 jacobsen Exp $ -->
+
 <decoder-config>
 		<version author="Bob Blackwell afticarr@sympatico.ca)"
 			version="1" lastUpdated="20060812" />

@@ -1,8 +1,11 @@
 <?xml version="1.0"?>
-<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
+
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: SoundTraxx_Tsu_Bachmann.xml,v 1.1 2007-04-06 16:13:12 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_Tsu_Bachmann.xml,v 1.2 2007-09-21 04:59:33 jacobsen Exp $ -->
+
 <decoder-config>
 		<!--version author="Michael Mosher" version="1" lastUpdated="20070405"/-->
 

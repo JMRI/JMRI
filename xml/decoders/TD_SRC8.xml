@@ -1,6 +1,11 @@
 <?xml version="1.0"?>
-<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: TD_SRC8.xml,v 1.1 2006-01-03 18:44:44 jacobsen Exp $ -->
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
+
+<!-- Copyright (C) JMRI 2005 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<!-- $Id: TD_SRC8.xml,v 1.2 2007-09-21 04:59:34 jacobsen Exp $ -->
+
 <decoder-config showEmptyPanes="no" >
 		<version author="td@teamdigital1.com" 
 					version="1" lastUpdated="20051215"/>

@@ -1,8 +1,11 @@
 <?xml version="1.0"?>
-<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
+
 <!-- Copyright (C) JMRI 2003, 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: NYB_dualmode.xml,v 1.1 2007-07-10 05:20:27 jacobsen Exp $ -->
+<!-- $Id: NYB_dualmode.xml,v 1.2 2007-09-21 04:59:32 jacobsen Exp $ -->
+
 <decoder-config showEmptyPanes="default">
   <version author="phill_perry@bigpond.com" version="1" lastUpdated="20070630" />
   <!-- Version 1 - made from 0NMRA.xml -->

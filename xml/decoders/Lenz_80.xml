@@ -1,8 +1,11 @@
 <?xml version="1.0"?>
-<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
+
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Lenz_80.xml,v 1.5 2007-01-21 05:06:05 jacobsen Exp $ -->
+<!-- $Id: Lenz_80.xml,v 1.6 2007-09-21 04:59:31 jacobsen Exp $ -->
+
 <decoder-config>
 	<version author="Jack Walton jack@nyrs.com"
 				version="2" lastUpdated="20040208" />

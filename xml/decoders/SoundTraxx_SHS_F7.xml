@@ -1,8 +1,11 @@
 <?xml version="1.0"?>
-<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
+
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: SoundTraxx_SHS_F7.xml,v 1.4 2005-08-18 05:07:48 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_SHS_F7.xml,v 1.5 2007-09-21 04:59:33 jacobsen Exp $ -->
+
 <decoder-config>
 		<version author="Michael Greene (mgreene@cedarlane.com)" 
                           version="3" lastUpdated="20050817"/>
