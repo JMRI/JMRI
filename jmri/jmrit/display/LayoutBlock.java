@@ -45,7 +45,7 @@ import jmri.AbstractNamedBean;
  *		the configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class LayoutBlock extends AbstractNamedBean
@@ -439,9 +439,9 @@ public class LayoutBlock extends AbstractNamedBean
 	void blockEditDonePressed(ActionEvent a) {
 		boolean needsRedraw = false;
 		// check if Sensor changed
-		if ( !occupancySensorName.equals(sensorNameField.getText()) ) {
+		if ( !occupancySensorName.equals(sensorNameField.getText().trim()) ) {
 			// sensor has changed
-			String newName = sensorNameField.getText();
+			String newName = sensorNameField.getText().trim();
 			if (validateSensor(newName,editLayoutBlockFrame)==null) {
 				// invalid sensor entered
 				occupancySensor = null;

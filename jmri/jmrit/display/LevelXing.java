@@ -37,7 +37,7 @@ import javax.swing.*;
  *		by Set Signals at Level Crossing in Tools menu.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class LevelXing 
@@ -287,6 +287,7 @@ public class LevelXing
 
 
     JPopupMenu popup = null;
+	LayoutEditorTools tools = null;
     /**
      * Display popup menu for information and editing
      */
@@ -298,10 +299,18 @@ public class LevelXing
             popup = new JPopupMenu();
 		}
 		popup.add(rb.getString("LevelCrossing"));
+		boolean blockACAssigned = false;
+		boolean blockBDAssigned = false;
 		if ( (blockNameAC==null) || (blockNameAC=="") ) popup.add(rb.getString("NoBlock1"));
-		else popup.add(rb.getString("Block1ID")+": "+getLayoutBlockAC().getID());
+		else {
+			popup.add(rb.getString("Block1ID")+": "+getLayoutBlockAC().getID());
+			blockACAssigned = true;
+		}
 		if ( (blockNameBD==null) || (blockNameBD=="") ) popup.add(rb.getString("NoBlock2"));
-		else popup.add(rb.getString("Block2ID")+": "+getLayoutBlockBD().getID());
+		else {
+			popup.add(rb.getString("Block2ID")+": "+getLayoutBlockBD().getID());
+			blockBDAssigned = true;
+		}
 		popup.add(new JSeparator(JSeparator.HORIZONTAL));
 		popup.add(new AbstractAction(rb.getString("Edit")) {
 				public void actionPerformed(ActionEvent e) {
@@ -317,6 +326,18 @@ public class LevelXing
 					}
 				}
 			});
+		if (blockACAssigned && blockBDAssigned) {
+			popup.add(new AbstractAction(rb.getString("SetSignals")) {
+				public void actionPerformed(ActionEvent e) {
+					if (tools == null) {
+						tools = new LayoutEditorTools(layoutEditor);
+					}
+					// bring up signals at level crossing tool dialog
+					tools.setSignalsAtLevelXingFromMenu(instance,
+						layoutEditor.signalIconEditor,layoutEditor.signalFrame);						
+				}
+			});
+		}			
 		popup.show(e.getComponent(), e.getX(), e.getY());
     }
 
@@ -416,13 +437,13 @@ public class LevelXing
 	}
 	void xingEdit1BlockPressed(ActionEvent a) {
 		// check if a block name has been entered
-		if (!blockNameAC.equals(block1Name.getText()) ) {
+		if (!blockNameAC.equals(block1Name.getText().trim()) ) {
 			// block 1 has changed, if old block exists, decrement use
 			if ( (blockAC!=null) && (blockAC!=blockBD) ) {
 				blockAC.decrementUse();
 			}
 			// get new block, or null if block has been removed
-			blockNameAC = block1Name.getText();
+			blockNameAC = block1Name.getText().trim();
 			if ( (blockNameAC!=null) && (blockNameAC.length()>0)) {
 				blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
 				if (blockAC!=null) {
@@ -452,13 +473,13 @@ public class LevelXing
 	}
 	void xingEdit2BlockPressed(ActionEvent a) {
 		// check if a block name has been entered
-		if (!blockNameBD.equals(block2Name.getText()) ) {
+		if (!blockNameBD.equals(block2Name.getText().trim()) ) {
 			// block has changed, if old block exists, decrement use
 			if ( (blockBD!=null) && (blockBD!=blockAC) ) {
 				blockBD.decrementUse();
 			}
 			// get new block, or null if block has been removed
-			blockNameBD = block2Name.getText();
+			blockNameBD = block2Name.getText().trim();
 			if ( (blockNameBD!=null) && (blockNameBD.length()>0)) {
 				blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
 				if (blockBD!=null) {
@@ -488,13 +509,13 @@ public class LevelXing
 	}
 	void xingEditDonePressed(ActionEvent a) {
 		// check if Blocks changed
-		if ( !blockNameAC.equals(block1Name.getText()) ) {
+		if ( !blockNameAC.equals(block1Name.getText().trim()) ) {
 			// block 1 has changed, if old block exists, decrement use
 			if ( (blockAC!=null) && (blockAC!=blockBD) ) {
 				blockAC.decrementUse();
 			}
 			// get new block, or null if block has been removed
-			blockNameAC = block1Name.getText();
+			blockNameAC = block1Name.getText().trim();
 			if ( (blockNameAC!=null) && (blockNameAC.length()>0)) {
 				blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
 				if (blockAC!=null) {
@@ -512,13 +533,13 @@ public class LevelXing
 			}
 			needsRedraw = true;
 		}
-		if ( !blockNameBD.equals(block2Name.getText()) ) {
+		if ( !blockNameBD.equals(block2Name.getText().trim()) ) {
 			// block 2 has changed, if old block exists, decrement use
 			if ( (blockBD!=null) && (blockBD!=blockAC) ) {
 				blockBD.decrementUse();
 			}
 			// get new block, or null if block has been removed
-			blockNameBD = block2Name.getText();
+			blockNameBD = block2Name.getText().trim();
 			if ( (blockNameBD!=null) && (blockNameBD.length()>0)) {
 				blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
 				if (blockBD!=null) {

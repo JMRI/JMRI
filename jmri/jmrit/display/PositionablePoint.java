@@ -34,7 +34,7 @@ import javax.swing.JSeparator;
  * serves as a place to store them.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class PositionablePoint
@@ -168,7 +168,7 @@ public class PositionablePoint
     }
 
     JPopupMenu popup = null;
-
+	LayoutEditorTools tools = null;
     /**
      * For editing: only provides remove
      */
@@ -179,6 +179,7 @@ public class PositionablePoint
 		else {
             popup = new JPopupMenu();
 		}
+		boolean blockBoundary = false;
 		switch (getType()) {
 			case ANCHOR:
 				popup.add(rb.getString("Anchor"));
@@ -193,6 +194,7 @@ public class PositionablePoint
 					popup.add(rb.getString("BlockDivider"));
 					popup.add(" "+rb.getString("Block1ID")+": "+block1.getID());
 					popup.add(" "+rb.getString("Block2ID")+": "+block2.getID());
+					blockBoundary = true;
 				}
 				break;
 			case END_BUMPER:
@@ -214,6 +216,18 @@ public class PositionablePoint
 					}
 				}
 			});
+		if (blockBoundary) {
+			popup.add(new AbstractAction(rb.getString("SetSignals")) {
+					public void actionPerformed(ActionEvent e) {
+					if (tools == null) {
+						tools = new LayoutEditorTools(layoutEditor);
+					}
+					// bring up signals at level crossing tool dialog
+					tools.setSignalsAtBlockBoundaryFromMenu(instance,
+						layoutEditor.signalIconEditor,layoutEditor.signalFrame);						
+					}
+				});
+		}			
 		popup.show(e.getComponent(), e.getX(), e.getY());
 	}
 

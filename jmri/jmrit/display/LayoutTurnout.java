@@ -63,7 +63,7 @@ import javax.swing.*;
  *		by tools, Set Signals at Turnout, and Set Signals at Double Crossover.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class LayoutTurnout
@@ -650,6 +650,7 @@ public class LayoutTurnout
 
     JPopupMenu popup = null;
     JCheckBoxMenuItem disableItem = null;
+	LayoutEditorTools tools = null;
     /**
      * Display popup menu for information and editing
      */
@@ -745,6 +746,23 @@ public class LayoutTurnout
 					}
 				}
 			});
+		if (turnout!=null) {
+			popup.add(new AbstractAction(rb.getString("SetSignals")) {
+				public void actionPerformed(ActionEvent e) {
+					if (tools == null) {
+						tools = new LayoutEditorTools(layoutEditor);
+					}
+					if (getTurnoutType()==DOUBLE_XOVER) {	
+						tools.setSignalsAtXoverTurnoutFromMenu(instance,
+							layoutEditor.signalIconEditor,layoutEditor.signalFrame);						
+					}
+					else {
+						tools.setSignalsAtTurnoutFromMenu(instance,
+							layoutEditor.signalIconEditor,layoutEditor.signalFrame);											
+					}
+				}
+			});
+		}			
 		popup.show(e.getComponent(), e.getX(), e.getY());
     }
 	
@@ -920,14 +938,14 @@ public class LayoutTurnout
 	}	
 	void turnoutEditBlockPressed(ActionEvent a) {
 		// check if a block name has been entered
-		if (!blockName.equals(blockNameField.getText()) ) {
+		if (!blockName.equals(blockNameField.getText().trim()) ) {
 			// block has changed, if old block exists, decrement use
 			if ( (block!=null) && (block!=blockB) && (block!=blockC)
 							&& (block!=blockD) ) {
 				block.decrementUse();
 			}
 			// get new block, or null if block has been removed
-			blockName = blockNameField.getText();
+			blockName = blockNameField.getText().trim();
 			block = layoutEditor.provideLayoutBlock(blockName);
 			if (block==null) {
 				blockName = "";
@@ -950,14 +968,14 @@ public class LayoutTurnout
 	}
 	void turnoutEditBlockBPressed(ActionEvent a) {
 		// check if a block name has been entered
-		if (!blockBName.equals(blockBNameField.getText()) ) {
+		if (!blockBName.equals(blockBNameField.getText().trim()) ) {
 			// block has changed, if old block exists, decrement use
 			if ( (blockB!=null) && (block!=blockB) && (blockB!=blockC)
 							&& (blockB!=blockD) ) {
 				blockB.decrementUse();
 			}
 			// get new block, or null if block has been removed
-			blockBName = blockBNameField.getText();
+			blockBName = blockBNameField.getText().trim();
 			blockB = layoutEditor.provideLayoutBlock(blockBName);
 			if (blockB==null) {
 				blockBName = "";
@@ -980,14 +998,14 @@ public class LayoutTurnout
 	}
 	void turnoutEditBlockCPressed(ActionEvent a) {
 		// check if a block name has been entered
-		if (!blockCName.equals(blockCNameField.getText()) ) {
+		if (!blockCName.equals(blockCNameField.getText().trim()) ) {
 			// block has changed, if old block exists, decrement use
 			if ( (blockC!=null) && (block!=blockC) && (blockB!=blockC)
 							&& (blockC!=blockD) ) {
 				blockC.decrementUse();
 			}
 			// get new block, or null if block has been removed
-			blockCName = blockCNameField.getText();
+			blockCName = blockCNameField.getText().trim();
 			blockC = layoutEditor.provideLayoutBlock(blockCName);
 			if (blockC==null) {
 				blockCName = "";
@@ -1010,14 +1028,14 @@ public class LayoutTurnout
 	}
 	void turnoutEditBlockDPressed(ActionEvent a) {
 		// check if a block name has been entered
-		if (!blockDName.equals(blockDNameField.getText()) ) {
+		if (!blockDName.equals(blockDNameField.getText().trim()) ) {
 			// block has changed, if old block exists, decrement use
 			if ( (blockD!=null) && (block!=blockD) && (blockB!=blockD)
 							&& (blockC!=blockD) ) {
 				blockD.decrementUse();
 			}
 			// get new block, or null if block has been removed
-			blockDName = blockDNameField.getText();
+			blockDName = blockDNameField.getText().trim();
 			blockD = layoutEditor.provideLayoutBlock(blockDName);
 			if (blockD==null) {
 				blockDName = "";
@@ -1040,9 +1058,9 @@ public class LayoutTurnout
 	}
 	void turnoutEditDonePressed(ActionEvent a) {
 		// check if Turnout changed
-		if ( !turnoutName.equals(turnoutNameField.getText()) ) {
+		if ( !turnoutName.equals(turnoutNameField.getText().trim()) ) {
 			// turnout has changed
-			String newName = turnoutNameField.getText();
+			String newName = turnoutNameField.getText().trim();
 			if ( layoutEditor.validatePhysicalTurnout(newName,
 							editLayoutTurnoutFrame) ) {
 				setTurnout(newName);
@@ -1062,14 +1080,14 @@ public class LayoutTurnout
 			}
 		}
 		// check if Block changed
-		if ( !blockName.equals(blockNameField.getText()) ) {
+		if ( !blockName.equals(blockNameField.getText().trim()) ) {
 			// block has changed, if old block exists, decrement use
 			if ( (block!=null) && (block!=blockB) && (block!=blockC) &&
 					(block!=blockD) ) {
 				block.decrementUse();
 			}
 			// get new block, or null if block has been removed
-			blockName = blockNameField.getText();
+			blockName = blockNameField.getText().trim();
 			block = layoutEditor.provideLayoutBlock(blockName);
 			if (block==null) {
 				blockName = "";
@@ -1081,14 +1099,14 @@ public class LayoutTurnout
 		}
 		if (type==DOUBLE_XOVER) {
 			// check if Block 2 changed
-			if ( !blockBName.equals(blockBNameField.getText()) ) {
+			if ( !blockBName.equals(blockBNameField.getText().trim()) ) {
 				// block has changed, if old block exists, decrement use
 				if ( (blockB!=null) && (block!=blockB) && (blockB!=blockC)
 							&& (blockB!=blockD) ) {
 					blockB.decrementUse();
 				}
 				// get new block, or null if block has been removed
-				blockBName = blockBNameField.getText();
+				blockBName = blockBNameField.getText().trim();
 				blockB = layoutEditor.provideLayoutBlock(blockBName);
 				if (blockB==null) {
 					blockBName = "";
@@ -1099,14 +1117,14 @@ public class LayoutTurnout
 				needRedraw = true;
 			}
 			// check if Block 3 changed
-			if (!blockCName.equals(blockCNameField.getText()) ) {
+			if (!blockCName.equals(blockCNameField.getText().trim()) ) {
 				// block has changed, if old block exists, decrement use
 				if ( (blockC!=null) && (block!=blockC) && (blockB!=blockC)
 							&& (blockC!=blockD) ) {
 					blockC.decrementUse();
 				}
 				// get new block, or null if block has been removed
-				blockCName = blockCNameField.getText();
+				blockCName = blockCNameField.getText().trim();
 				blockC = layoutEditor.provideLayoutBlock(blockCName);
 				if (blockC==null) {
 					blockCName = "";
@@ -1117,14 +1135,14 @@ public class LayoutTurnout
 				needRedraw = true;
 			}
 			// check if Block 4 changed
-			if (!blockDName.equals(blockDNameField.getText()) ) {
+			if (!blockDName.equals(blockDNameField.getText().trim()) ) {
 				// block has changed, if old block exists, decrement use
 				if ( (blockD!=null) && (block!=blockD) && (blockB!=blockD)
 							&& (blockC!=blockD) ) {
 					blockD.decrementUse();
 				}
 				// get new block, or null if block has been removed
-				blockDName = blockDNameField.getText();
+				blockDName = blockDNameField.getText().trim();
 				blockD = layoutEditor.provideLayoutBlock(blockDName);
 				if (blockD==null) {
 					blockDName = "";

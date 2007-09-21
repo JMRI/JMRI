@@ -47,7 +47,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -121,8 +121,8 @@ public class LayoutEditor extends JmriJFrame {
     
     private JCheckBox signalBox = new JCheckBox(rb.getString("SignalIcon"));
     private JTextField nextSignalHead = new JTextField(5);
-    private MultiIconEditor signalIconEditor = null;
-    private JFrame signalFrame;
+    public MultiIconEditor signalIconEditor = null;
+    public JFrame signalFrame;
     
     private JCheckBox textLabelBox = new JCheckBox(rb.getString("TextLabel"));
     private JTextField textLabel = new JTextField(8);
@@ -584,7 +584,7 @@ public class LayoutEditor extends JmriJFrame {
 					if (tools == null) {
 						tools = new LayoutEditorTools(thisPanel);
 					}
-					// bring up signals at block boundary tool dialog
+					// bring up signals at double crossover tool dialog
 					tools.setSignalsAtXoverTurnout(signalIconEditor,signalFrame);
                 }
             });
@@ -596,7 +596,7 @@ public class LayoutEditor extends JmriJFrame {
 					if (tools == null) {
 						tools = new LayoutEditorTools(thisPanel);
 					}
-					// bring up signals at block boundary tool dialog
+					// bring up signals at level crossing tool dialog
 					tools.setSignalsAtLevelXing(signalIconEditor,signalFrame);
                 }
             });
@@ -798,7 +798,7 @@ public class LayoutEditor extends JmriJFrame {
 		String newWidth = "";
 		float wid = 0.0F;
 		// get side track width
-		newWidth = sideWidthField.getText();
+		newWidth = sideWidthField.getText().trim();
 		try {
 			wid = Float.parseFloat(newWidth);
 		}
@@ -820,7 +820,7 @@ public class LayoutEditor extends JmriJFrame {
 			trackWidthChange = true;
 		}
 		// get mainline track width
-		newWidth = mainlineWidthField.getText();
+		newWidth = mainlineWidthField.getText().trim();
 		try {
 			wid = Float.parseFloat(newWidth);
 		}
@@ -967,7 +967,7 @@ public class LayoutEditor extends JmriJFrame {
 		float xFactor = 1.0F;
 		float yFactor = 1.0F;
 		// get x translation
-		newText = xTranslateField.getText();
+		newText = xTranslateField.getText().trim();
 		try {
 			xTranslation = Float.parseFloat(newText);
 		}
@@ -978,7 +978,7 @@ public class LayoutEditor extends JmriJFrame {
             return;
 		}
 		// get y translation
-		newText = yTranslateField.getText();
+		newText = yTranslateField.getText().trim();
 		try {
 			yTranslation = Float.parseFloat(newText);
 		}
@@ -989,7 +989,7 @@ public class LayoutEditor extends JmriJFrame {
             return;
 		}
 		// get x factor
-		newText = xFactorField.getText();
+		newText = xFactorField.getText().trim();
 		try {
 			xFactor = Float.parseFloat(newText);
 		}
@@ -1000,7 +1000,7 @@ public class LayoutEditor extends JmriJFrame {
             return;
 		}
 		// get y factor
-		newText = yFactorField.getText();
+		newText = yFactorField.getText().trim();
 		try {
 			yFactor = Float.parseFloat(newText);
 		}
@@ -1177,7 +1177,7 @@ public class LayoutEditor extends JmriJFrame {
 		float xTranslation = 0.0F;
 		float yTranslation = 0.0F;
 		// get x translation
-		newText = xMoveField.getText();
+		newText = xMoveField.getText().trim();
 		try {
 			xTranslation = Float.parseFloat(newText);
 		}
@@ -1188,7 +1188,7 @@ public class LayoutEditor extends JmriJFrame {
             return;
 		}
 		// get y translation
-		newText = yMoveField.getText();
+		newText = yMoveField.getText().trim();
 		try {
 			yTranslation = Float.parseFloat(newText);
 		}
@@ -2073,11 +2073,11 @@ public class LayoutEditor extends JmriJFrame {
 			setLink(newTrack,TRACK,beginObject,beginPointType);
 			setLink(newTrack,TRACK,foundObject,foundPointType);
 			// check on layout block
-			LayoutBlock b = provideLayoutBlock(blockIDField.getText());
+			LayoutBlock b = provideLayoutBlock(blockIDField.getText().trim());
 			if (b!=null) {
 				newTrack.setLayoutBlock(b);
 				// check on occupancy sensor
-				String sensorName = (blockSensor.getText());
+				String sensorName = (blockSensor.getText().trim());
 				if (sensorName.length()>0) {
 					if (!validateSensor(sensorName,b,this)) {
 						b.setOccupancySensorName("");
@@ -2112,12 +2112,12 @@ public class LayoutEditor extends JmriJFrame {
 			xingList.add(o);
 			panelChanged = true;
 			// check on layout block
-			LayoutBlock b = provideLayoutBlock(blockIDField.getText());
+			LayoutBlock b = provideLayoutBlock(blockIDField.getText().trim());
 			if (b!=null) {
 				o.setLayoutBlockAC(b);
 				o.setLayoutBlockBD(b);
 				// check on occupancy sensor
-				String sensorName = (blockSensor.getText());
+				String sensorName = (blockSensor.getText().trim());
 				if (sensorName.length()>0) {
 					if (!validateSensor(sensorName,b,this)) {
 						b.setOccupancySensorName("");
@@ -2136,7 +2136,7 @@ public class LayoutEditor extends JmriJFrame {
     public void addLayoutTurnout(int type) {
 		// get the rotation entry
 		double rot = 0.0;
-		String s = rotationField.getText();
+		String s = rotationField.getText().trim();
 		if (s.length()<1) {
 			rot = 0.0;
 		}
@@ -2166,11 +2166,11 @@ public class LayoutEditor extends JmriJFrame {
 			turnoutList.add(o);
 			panelChanged = true;
 			// check on layout block
-			LayoutBlock b = provideLayoutBlock(blockIDField.getText());
+			LayoutBlock b = provideLayoutBlock(blockIDField.getText().trim());
 			if (b!=null) {
 				o.setLayoutBlock(b);
 				// check on occupancy sensor
-				String sensorName = (blockSensor.getText());
+				String sensorName = (blockSensor.getText().trim());
 				if (sensorName.length()>0) {
 					if (!validateSensor(sensorName,b,this)) {
 						b.setOccupancySensorName("");
@@ -2183,7 +2183,7 @@ public class LayoutEditor extends JmriJFrame {
 			// set default continuing route Turnout State
  			o.setContinuingSense(Turnout.CLOSED);
 			// check on a physical turnout
-			String turnoutName = nextTurnout.getText();
+			String turnoutName = nextTurnout.getText().trim();
 			if ( validatePhysicalTurnout(turnoutName,targetPanel) ) {
 				// turnout is valid and unique.
 				o.setTurnout(turnoutName);
@@ -2579,7 +2579,7 @@ public class LayoutEditor extends JmriJFrame {
      * Add a sensor indicator to the Draw Panel
      */
     void addSensor() {
-		if ((nextSensor.getText()).length()<=0) {
+		if ((nextSensor.getText()).trim().length()<=0) {
 			JOptionPane.showMessageDialog(targetPanel,rb.getString("Error10"),
 						rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 			return;
@@ -2589,10 +2589,11 @@ public class LayoutEditor extends JmriJFrame {
         l.setInactiveIcon(sensorIconEditor.getIcon(1));
         l.setInconsistentIcon(sensorIconEditor.getIcon(2));
         l.setUnknownIcon(sensorIconEditor.getIcon(3));
-		l.setSensor(nextSensor.getText());
+		l.setSensor(nextSensor.getText().trim());
 		Sensor xSensor = l.getSensor();
 		if (xSensor != null) {
-			if ( (xSensor.getUserName()==null) || (!(xSensor.getUserName().equals(nextSensor.getText()))) ) 
+			if ( (xSensor.getUserName()==null) || 
+					(!(xSensor.getUserName().equals(nextSensor.getText().trim()))) ) 
 				nextSensor.setText(xSensor.getSystemName());
 		}
         setNextLocation(l);
@@ -2613,7 +2614,7 @@ public class LayoutEditor extends JmriJFrame {
      */
     void addSignalHead() {
 		// check for valid signal head entry
-		String tName = nextSignalHead.getText();
+		String tName = nextSignalHead.getText().trim();
         SignalHead mHead = null;
 		if ( (tName!=null) && (tName!="") ) {
 			mHead = InstanceManager.signalHeadManagerInstance().getBySystemName(tName.toUpperCase());
@@ -2640,10 +2641,10 @@ public class LayoutEditor extends JmriJFrame {
         l.setFlashGreenIcon(signalIconEditor.getIcon(5));
         l.setDarkIcon(signalIconEditor.getIcon(6));
         l.setHeldIcon(signalIconEditor.getIcon(7));
-        l.setSignalHead(nextSignalHead.getText());
+        l.setSignalHead(nextSignalHead.getText().trim());
 		SignalHead xSignal = l.getSignalHead();
 		if (xSignal != null) {
-			if ( !(xSignal.getUserName().equals(nextSignalHead.getText())) ) {
+			if ( !(xSignal.getUserName().equals(nextSignalHead.getText().trim())) ) {
 				nextSignalHead.setText(xSignal.getSystemName());
 			}
 		}
@@ -2665,7 +2666,8 @@ public class LayoutEditor extends JmriJFrame {
      * Add a label to the Draw Panel
      */
     void addLabel() {
-        LayoutPositionableLabel l = new LayoutPositionableLabel(textLabel.getText());
+        LayoutPositionableLabel l = new LayoutPositionableLabel(
+											textLabel.getText().trim());
         setNextLocation(l);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(LABELS);
@@ -2689,16 +2691,17 @@ public class LayoutEditor extends JmriJFrame {
      * Add a memory label to the Draw Panel
      */
     void addMemory() {
-		if ((textMemory.getText()).length()<=0) {
+		if ((textMemory.getText()).trim().length()<=0) {
 			JOptionPane.showMessageDialog(targetPanel,rb.getString("Error11"),
 						rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 			return;
 		}
         LayoutMemoryIcon l = new LayoutMemoryIcon();
-        l.setMemory(textMemory.getText());
+        l.setMemory(textMemory.getText().trim());
 		Memory xMemory = l.getMemory();
 		if (xMemory != null) {
-			if ( (xMemory.getUserName() == null) || (!(xMemory.getUserName().equals(textMemory.getText())))  ) {
+			if ( (xMemory.getUserName() == null) || 
+					(!(xMemory.getUserName().equals(textMemory.getText().trim())))  ) {
 				// put the system name in the memory field
 				textMemory.setText(xMemory.getSystemName());
 			}
