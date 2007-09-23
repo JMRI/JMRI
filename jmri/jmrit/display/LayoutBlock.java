@@ -45,7 +45,7 @@ import jmri.AbstractNamedBean;
  *		the configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class LayoutBlock extends AbstractNamedBean
@@ -172,6 +172,9 @@ public class LayoutBlock extends AbstractNamedBean
 					rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
+		if ( !sensorName.equals(s.getUserName()) ) {
+			sensorName = sensorName.toUpperCase();
+		}
 		// ensure that this sensor is unique among defined Layout Blocks
 		Sensor savedSensor = occupancySensor;
 		String savedName = occupancySensorName;
@@ -180,7 +183,7 @@ public class LayoutBlock extends AbstractNamedBean
 		LayoutBlock b = InstanceManager.layoutBlockManagerInstance().
 											getBlockWithSensorAssigned(s);
 		if (b!=null) {
-			// sensor is not unique
+			// new sensor is not unique, return to the old one
 			occupancySensor = savedSensor;
 			if (occupancySensor!=null) activateSensor();
 			JOptionPane.showMessageDialog(openFrame,
@@ -251,6 +254,7 @@ public class LayoutBlock extends AbstractNamedBean
 	 * Add occupancy sensor by name
 	 */
 	public void setOccupancySensorName(String name) {
+		deactivateSensor();
 		occupancySensorName = name;
 		occupancySensor = jmri.InstanceManager.sensorManagerInstance().
                             getSensor(name);
@@ -307,10 +311,10 @@ public class LayoutBlock extends AbstractNamedBean
 		}
 	}
 	private void deactivateSensor() {
-		if (mSensorListener!=null) {
+		if ( (mSensorListener!=null) && (occupancySensor!=null) ) {
 			occupancySensor.removePropertyChangeListener(mSensorListener);
-			mSensorListener = null;
 		}
+		mSensorListener = null;
 	}
 			
 	// variables for Edit Layout Block pane
@@ -448,7 +452,10 @@ public class LayoutBlock extends AbstractNamedBean
 				occupancySensorName = "";
 				sensorNameField.setText("");
 			}
-			else needsRedraw = true;
+			else {
+				sensorNameField.setText(newName);
+				needsRedraw = true;
+			}
 		}
 		// check if occupied sense changed
 		int k = senseBox.getSelectedIndex();
