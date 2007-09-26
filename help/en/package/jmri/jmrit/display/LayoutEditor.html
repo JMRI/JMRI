@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LayoutEditor.html,v 1.4 2007-09-21 22:26:15 djduchamp Exp $ -->
+<!-- $Id: LayoutEditor.html,v 1.5 2007-09-26 19:06:29 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -41,6 +41,7 @@ sections in detail.</p>
 	<li><a href="#turnouts">Turnouts</a></li>
 	<li><a href="#track">Track Segments and Connection Points</a></li>
 	<li><a href="#xing">Level Crossings</a>
+	<li><a href="#turn">Turntables</a>	
 	<li><a href="#block">Blocks</a>
 	<li><a href="#finish">Putting Finishing Touches on your Panel</a>
 </ul>
@@ -340,6 +341,10 @@ selection is described below.
 	active turnout items in the track diagram or on active icon items, such as
 	sensor icons, and signal icons, will toggle the state of the represented 
 	item.</li>
+	<li><b>Allow Turnout Animation</b> - When this item is checked, turnouts 
+	on the track diagram will change to show turnout state. If this item is 
+	not checked, turnout drawings will show the Closed position at all times.
+	</li>
 	<li><b>Show Help Bar in Edit Mode</b> - If this item is checked, the help 
 	bar is displayed when the tool bar is displayed.</li>
 	<li><b>New Title...</b> - Selecting this item brings up a small window that 
@@ -349,6 +354,9 @@ selection is described below.
 	<li><b>Add Fast Clock</b> - Selecting this item adds an analog fast clock 
 	at the upper left. You can then drag it with the meta key pressed to any 
 	location on the panel.</li>
+	<li><b>Add Turntable</b> - Selecting this item adds a turntable to the 
+	panel at the center of the panel. You can then drag it with the meta key 
+	pressed to any location on the panel.</li>
 	<li><b>Save Location and Size</b> - When this item is selected, the current 
 	panel window size and location replace the default size and location of the 
 	panel window. If the panel is saved to disk after this item is selected, when 
@@ -669,6 +677,36 @@ blocks may be entered or changed. The block(s) assigned to a level crossing may
 be different from the block(s) of connected track segments; in this case, each
 level crossing connecting point where the block changes serves as a block 
 boundary. (Blocks are discussed more fully below.)</p>
+
+<a name="turn"><h3>Turntables
+</h3></a>
+<p>
+A Layout Editor turntable is a schematic representation of a turntable on the 
+layout. A turntable is drawn as a circle with a variable number of track 
+connections, called <i>ray tracks</i>. Each <i>ray track</i> is drawn 
+as a short stub track radiating from the turntable circle. A track segment 
+should connect to each ray track. Most of these track segments will connect 
+a ray track to an end bumper. The distance of each ray track connection point 
+from the turntable circle is fixed, but the direction of each ray track may be
+varied by dragging its connection point around the turntable circle. Any 
+number of turntables may be added to a panel, and each turntable may have 
+any number of ray tracks.</p>
+<p>
+A turntable is added to a panel by selecting <b>Add Turntable</b> in the 
+panel's Option menu. New turntables are placed at the center of the 
+panel, and should be moved to desired locations by dragging its center 
+point with the meta key pressed (right button drag on Windows). When a 
+turntable is added, it has four ray tracks located in up, down, left, and
+right directions. The turntable's popup menu has two items. Selecting
+<b>Edit...</b> brings up an Edit Turntable dialog, and selecting <b>Remove</b> 
+deletes the turntable and any track segments connected to it. Before a 
+turntable is actually deleted, the program asks for verification of that
+action.</p>
+<p>
+The Edit Turntable dialog allows the radius of the turntable circle to be 
+changed, and provides for the addition and deletion of ray tracks. For more
+information on how to add and delete ray tracks, see the help page of the 
+Edit Turntable dialog.</p>
 
 <a name="block"><h3>Blocks
 </h3></a>
