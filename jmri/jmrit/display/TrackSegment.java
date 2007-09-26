@@ -27,7 +27,7 @@ import javax.swing.*;
  *		may be hidden when the panel is not in EditMode. 
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class TrackSegment 
@@ -63,13 +63,15 @@ public class TrackSegment
 		}
 		connect1 = c1;
 		connect2 = c2;
-		if ( (t1<LayoutEditor.POS_POINT) || (t1>LayoutEditor.LEVEL_XING_D) ) { 
+		if ( (t1<LayoutEditor.POS_POINT) || ( (t1>LayoutEditor.LEVEL_XING_D) && 
+						(t1<LayoutEditor.TURNTABLE_RAY_OFFSET) ) ) { 
 			log.error("Invalid connect type 1 in TrackSegment constructor - "+id);
 		}
 		else {
 			type1 = t1;
 		}
-		if ( (t2<LayoutEditor.POS_POINT) || (t2>LayoutEditor.LEVEL_XING_D) ) {
+		if ( (t2<LayoutEditor.POS_POINT) || ( (t2>LayoutEditor.LEVEL_XING_D) && 
+						(t2<LayoutEditor.TURNTABLE_RAY_OFFSET) ) ) { 
 			log.error("Invalid connect type 2 in TrackSegment constructor - "+id);
 		}
 		else {
@@ -130,6 +132,9 @@ public class TrackSegment
 		if ( (type == LayoutEditor.LEVEL_XING_A) || (type == LayoutEditor.LEVEL_XING_B) ||
 				(type == LayoutEditor.LEVEL_XING_C) || (type == LayoutEditor.LEVEL_XING_D) ) {
 			return ((LevelXing)o).getID();
+		}
+		if (type>=LayoutEditor.TURNTABLE_RAY_OFFSET) {
+			return ((LayoutTurntable)o).getID();
 		}
 		return "";
 	}

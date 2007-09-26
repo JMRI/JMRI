@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.75 2007-09-21 05:49:29 jacobsen Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.76 2007-09-26 19:29:20 djduchamp Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
 <!--                                                                        -->
@@ -468,6 +468,7 @@
   <!ATTLIST layouteditor editable		(yes|no) "yes" >
   <!ATTLIST layouteditor positionable		(yes|no) "yes" >
   <!ATTLIST layouteditor controlling		(yes|no) "yes" >
+  <!ATTLIST layouteditor animating		(yes|no) "yes" >
   <!ATTLIST layouteditor showhelpbar		(yes|no) "yes" >
 
   <!ELEMENT memoryicon (memorystate)*>
@@ -600,5 +601,17 @@
     <!ATTLIST levelxing yb           CDATA #REQUIRED>
     <!ATTLIST levelxing xcen		 CDATA #REQUIRED>
     <!ATTLIST levelxing ycen         CDATA #REQUIRED>
+
+  <!ELEMENT layoutturntable (raytrack*)>
+    <!ATTLIST layoutturntable class        CDATA #REQUIRED>
+    <!ATTLIST layoutturntable ident        CDATA #REQUIRED>
+    <!ATTLIST layoutturntable radius CDATA #REQUIRED>
+    <!ATTLIST layoutturntable xcen   CDATA #REQUIRED>
+    <!ATTLIST layoutturntable ycen   CDATA #REQUIRED>
+  <!ELEMENT rayTrack EMPTY>
+    <!ATTLIST raytrack connectname  CDATA #IMPLIED>
+    <!ATTLIST raytrack angle        CDATA #IMPLIED>
+    <!ATTLIST raytrack index        CDATA #IMPLIED>
+    
 
 <!ELEMENT signals EMPTY >

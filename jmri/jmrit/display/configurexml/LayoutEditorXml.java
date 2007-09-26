@@ -17,7 +17,7 @@ import org.jdom.*;
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp    Copyright (c) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class LayoutEditorXml implements XmlAdapter {
 
@@ -42,6 +42,7 @@ public class LayoutEditorXml implements XmlAdapter {
         panel.setAttribute("editable", ""+(p.isEditable()?"yes":"no"));
         panel.setAttribute("positionable", ""+(p.isPositionable()?"yes":"no"));
         panel.setAttribute("controlling", ""+(p.isControlling()?"yes":"no"));
+        panel.setAttribute("animating", ""+(p.isAnimating()?"yes":"no"));
 		panel.setAttribute("showhelpbar", ""+(p.getShowHelpBar()?"yes":"no"));
         panel.setAttribute("mainlinetrackwidth", ""+p.getMainlineTrackWidth());
 		panel.setAttribute("xscale", Float.toString((float)p.getXScale()));
@@ -123,6 +124,20 @@ public class LayoutEditorXml implements XmlAdapter {
 					if (e!=null) panel.addContent(e);
 				} catch (Exception e) {
 					log.error("Error storing panel levelxing element: "+e); 
+				}
+			}
+        }		
+		// include LayoutTurntables
+		num = p.turntableList.size();
+        if (log.isDebugEnabled()) log.debug("N turntable elements: "+num);
+		if (num>0) {
+			for (int i=0; i<num; i++) {
+				Object sub = p.turntableList.get(i);
+				try {
+					Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
+					if (e!=null) panel.addContent(e);
+				} catch (Exception e) {
+					log.error("Error storing panel turntable element: "+e); 
 				}
 			}
         }		
@@ -224,6 +239,11 @@ public class LayoutEditorXml implements XmlAdapter {
         if ((a = element.getAttribute("controlling"))!=null && a.getValue().equals("no"))
             value = false;
         panel.setAllControlling(value);
+
+        value = true;
+        if ((a = element.getAttribute("animating"))!=null && a.getValue().equals("no"))
+            value = false;
+        panel.setTurnoutAnimation(value);
 
        boolean hbValue = true;
         if ((a = element.getAttribute("showhelpbar"))!=null && a.getValue().equals("no"))

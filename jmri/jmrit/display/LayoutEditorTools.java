@@ -28,7 +28,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class LayoutEditorTools 
@@ -856,7 +856,8 @@ public class LayoutEditorTools
 		logic.setMode(BlockBossLogic.TRAILINGDIVERGING);
 		logic.setTurnout(turnout.getSystemName());
 		logic.setSensor1(occupancy.getSystemName());
-		logic.setWatchedSignal1(nextHead.getSystemName(),false);
+		if (nextHead!=null)
+			logic.setWatchedSignal1(nextHead.getSystemName(),false);
 		if (auxSignal!=null) {
 			logic.setWatchedSignal1Alt(auxSignal.getSystemName());
 		}
@@ -898,7 +899,9 @@ public class LayoutEditorTools
 		logic.setMode(BlockBossLogic.TRAILINGMAIN);
 		logic.setTurnout(turnout.getSystemName());
 		logic.setSensor1(occupancy.getSystemName());
-		logic.setWatchedSignal1(nextHead.getSystemName(),false);
+		if (nextHead!=null) {
+			logic.setWatchedSignal1(nextHead.getSystemName(),false);
+		}
 		if (auxSignal!=null) {
 			logic.setWatchedSignal1Alt(auxSignal.getSystemName());
 		}
@@ -1249,7 +1252,8 @@ public class LayoutEditorTools
 	 *			points of a turnout or level crossing.
 	 * Note: returns 'null' is signal is not present where it is expected, or
 	 *		if an End Bumper is reached. To test for end bumper, use the 
-	 *      associated routine "reachedEndBumper()".
+	 *      associated routine "reachedEndBumper()". Reaching a turntable ray
+	 *		track connection is considered reaching an end bumper.
 	 */		
 	public SignalHead getNextSignalFromObject(TrackSegment track, Object object) {
 		hitEndBumper = false;
@@ -1387,13 +1391,20 @@ public class LayoutEditorTools
 				if (track.getLayoutBlock()!=t.getLayoutBlock()) return null;
 				obj = (Object)x;				
 			}
+			else if (type>=layoutEditor.TURNTABLE_RAY_OFFSET) {
+				hitEndBumper = true;
+				return null;
+			}
+
 		}
 		return null;
 	}
 	private boolean hitEndBumper = false;
 	/*
 	 * Returns 'true' if an end bumper was reached during the last call to 
-	 *		GetNextSignalFromObject.
+	 *		GetNextSignalFromObject. Also used in the odd case of reaching a
+	 *		turntable ray track connection, which is treated as an end 
+	 *		bumper here.
 	 */
 	public boolean reachedEndBumper() {return hitEndBumper;}
 	/* 
@@ -2950,7 +2961,9 @@ public class LayoutEditorTools
 			logic.setMode(BlockBossLogic.TRAILINGDIVERGING);
 			logic.setTurnout(turnout.getSystemName());
 			logic.setSensor1(occupancy2.getSystemName());
-			logic.setWatchedSignal1(nextHead2.getSystemName(),false);
+			if (nextHead2!=null) {
+				logic.setWatchedSignal1(nextHead2.getSystemName(),false);
+			}
 			if (auxSignal!=null) {
 				logic.setWatchedSignal1Alt(auxSignal.getSystemName());
 			}
