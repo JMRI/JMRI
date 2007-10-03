@@ -11,7 +11,7 @@ import java.util.*;
  * Create a "Tools" menu containing the Jmri system-independent tools
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 public class ToolsMenu extends JMenu {
     public ToolsMenu(String name) {
@@ -32,7 +32,6 @@ public class ToolsMenu extends JMenu {
         programmerMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction(rb.getString("MenuItemDecoderProServiceProgrammer")));
         programmerMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(rb.getString("MenuItemDecoderProOpsModeProgrammer")));
         programmerMenu.add(new jmri.jmrit.dualdecoder.DualDecoderToolAction());
-        programmerMenu.add(new jmri.jmrit.consisttool.ConsistToolAction(rb.getString("MenuItemConsistTool")));
         add(programmerMenu);
         
         JMenu tableMenu = new JMenu(rb.getString("MenuTables"));
@@ -57,6 +56,16 @@ public class ToolsMenu extends JMenu {
         if (jmri.InstanceManager.throttleManagerInstance()==null) {
             throttleMenu.setEnabled(false);
         }
+
+        AbstractAction consistAction= new jmri.jmrit.consisttool.ConsistToolAction(rb.getString("MenuItemConsistTool"));
+
+        add(consistAction);
+
+	// disable the consist tool if there is no consist Manager
+        if (jmri.InstanceManager.consistManagerInstance()==null) {
+            consistAction.setEnabled(false);
+        }
+
         
         JMenu clockMenu = new JMenu(rb.getString("MenuClocks"));
         clockMenu.add(new jmri.jmrit.simpleclock.SimpleClockAction(rb.getString("MenuItemSetupClock")));
@@ -73,7 +82,6 @@ public class ToolsMenu extends JMenu {
         add(new jmri.jmrit.speedometer.SpeedometerAction(rb.getString("MenuItemSpeedometer")));
 
         add(new JSeparator());
-
 
         add(new jmri.jmrit.sendpacket.SendPacketAction( rb.getString("MenuItemSendDCCPacket") ));
 
