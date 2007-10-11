@@ -9,7 +9,7 @@ import javax.swing.Timer;
  * Class providing the basic logic of the Conditional interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -50,6 +50,7 @@ public class DefaultConditional extends AbstractNamedBean
 	 protected Timer[] mDelayTimer = {null,null};
 	 protected java.awt.event.ActionListener[] mDelayListener = {null,null};
 	 protected boolean [] mDelayTimerActive = {false,false}; 
+	 protected jmri.jmrit.Sound[] snd = {null,null};
 	
 	/**
 	 * Get number of State Variables for this Conditional
@@ -231,6 +232,7 @@ public class DefaultConditional extends AbstractNamedBean
 			actionName[i] = name[i];
 			actionData[i] = data[i];
 			actionString[i] = s[i];
+			snd[i] = null;
 		}
 	}		
 	
@@ -680,8 +682,14 @@ public class DefaultConditional extends AbstractNamedBean
 						break;
 					case Conditional.ACTION_PLAY_SOUND:
 						if (!(actionString[i].equals(""))) {
-							jmri.jmrit.Sound snd = new jmri.jmrit.Sound(actionString[i]);
-							snd.play();
+							if (snd[i] == null) {
+// djd debugging
+log.error("Loading sound: "+actionString[i]);
+								snd[i] = new jmri.jmrit.Sound(actionString[i]);
+							}
+// djd debugging
+log.error("Playing sound: "+actionString[i]);
+							snd[i].play();
 						}
 						break;
 					case Conditional.ACTION_RUN_SCRIPT:
