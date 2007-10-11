@@ -46,7 +46,7 @@ import jmri.util.JmriJFrame;
  *	   BeanTableBundle.properties, accessed via rb.
  *
  * @author	Dave Duchamp    Copyright (C) 2007
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -206,7 +206,7 @@ public class LogixTableAction extends AbstractTableAction {
 	boolean inReorderMode = false;
 	int nextInOrder = 0;
     JLabel fixedSystemName = new JLabel("xxxxxxxxxxx");	
-    JTextField editUserName = new JTextField(10);
+    JTextField editUserName = new JTextField(20);
 	ConditionalTableModel conditionalTableModel = null;
 	JPanel pct = null;  // conditional table 
     JButton newConditionalButton;
@@ -221,7 +221,7 @@ public class LogixTableAction extends AbstractTableAction {
 	JmriJFrame editConditionalFrame = null;
 	JLabel conditionalSystemName = new JLabel("xxxxxxxxxxx");
     JLabel conditionalSystemNameLabel = new JLabel( rbx.getString("ConditionalSystemName") );
-    JTextField conditionalUserName = new JTextField(10);
+    JTextField conditionalUserName = new JTextField(20);
     JLabel conditionalUserNameLabel = new JLabel( rbx.getString("ConditionalUserName") );
 	VariableTableModel variableTableModel = null;
 	JPanel vt = null;  // state variables table 
