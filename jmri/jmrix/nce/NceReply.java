@@ -9,7 +9,7 @@ package jmri.jmrix.nce;
  *
  * @author		Bob Jacobsen  Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2007
- * @version             $Revision: 1.12 $
+ * @version             $Revision: 1.13 $
  */
 public class NceReply extends jmri.jmrix.AbstractMRReply {
 
@@ -72,13 +72,14 @@ public class NceReply extends jmri.jmrix.AbstractMRReply {
     }
     
     public boolean isUnsolicited() {
-    	if (isSensorMessage()) {
-    		setUnsolicited();
-    		return true;
-    	} else {
+// dboudreau: remove check for unsolicited sensor messages     	
+//    	if (isSensorMessage()) {
+//    		setUnsolicited();
+//    		return true;
+//    	} else {
     		return false;
     	}
-    }
+//    }
     
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceReply.class.getName());
 

@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface {
 
@@ -153,12 +153,13 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         // first try boolean
         if (replyBinary) {
             // handle "not supported" error
-            if (msg.getElement(0) == 0x30) {
-                log.error("Command unsupported by command station!");
-                return true;
-            } else if (msg.getElement(0) == 0x61 && replyLen != 16 ) {
-                return msg.getNumDataElements() >= 3;
-            } else if (msg.getNumDataElements() >= replyLen ) {
+// dboudreau: remove data sensitive code from input stream        	
+//            if (msg.getElement(0) == 0x30 && replyLen != 16 ) {
+//                log.error("Command unsupported by command station!");
+//                return true;
+//            } else if (msg.getElement(0) == 0x61 && replyLen != 16 ) {
+//                return msg.getNumDataElements() >= 3;
+            if (msg.getNumDataElements() >= replyLen ) {
                 return true;
             } else 
                 return false;
