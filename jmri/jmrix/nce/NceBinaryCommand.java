@@ -65,23 +65,26 @@ package jmri.jmrix.nce;
  *  1 = bad loco address
  *
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 
 public class NceBinaryCommand {
     
-    public static final int ACC_CMD = 0xAD;		//NCE accessory command
-    public static final int LOC_CMD = 0xA2;		//NCE Loco control command 
-    public static final int READ_CMD = 0x8F;	//NCE read 16 bytes of memory command
-    public static final int WRITEn_CMD = 0x8E;	//NCE write up to 16 bytes of memory command
-    public static final int WRITE8_CMD = 0x9A;	//NCE write 8 bytes of memory command
-    public static final int WRITE4_CMD = 0x99;	//NCE write 4 bytes of memory command
     public static final int STOP_CLOCK_CMD = 0x83;	//NCE stop clock command
     public static final int START_CLOCK_CMD = 0x84;	//NCE start clock command
     public static final int SET_CLOCK_CMD = 0x85;	//NCE set clock command
     public static final int CLOCK_1224_CMD = 0x86;	//NCE change clock 12/24 command
     public static final int CLOCK_RATIO_CMD = 0x87;	//NCE set clock ratio command
-    
+
+    public static final int WRITEn_CMD = 0x8E;		//NCE write up to 16 bytes of memory command
+    public static final int READ16_CMD = 0x8F;		//NCE read 16 bytes of memory command
+    public static final int WRITE4_CMD = 0x99;		//NCE write 4 bytes of memory command
+    public static final int WRITE8_CMD = 0x9A;		//NCE write 8 bytes of memory command
+    public static final int READ1_CMD = 0x9D;		//NCE read 1 byte of memory command
+
+    public static final int ACC_CMD = 0xAD;			//NCE accessory command
+    public static final int LOC_CMD = 0xA2;			//NCE Loco control command 
+
     public static byte[] accDecoder(int number, boolean closed) {
         
         if (number < 1 || number > 2044) {
@@ -111,7 +114,21 @@ public class NceBinaryCommand {
         int addr_l = address & 0xFF;
         
         byte []retVal = new byte [3];
-        retVal[0] = (byte) (READ_CMD);	//read 16 bytes command
+        retVal[0] = (byte) (READ16_CMD);//read 16 bytes command
+        retVal[1] = (byte) (addr_h);	//high address
+        retVal[2] = (byte) (addr_l);	//low address
+        
+        return retVal;
+        
+    }
+    
+  public static byte[] accMemoryRead1(int address){
+        
+        int addr_h = address/256;
+        int addr_l = address & 0xFF;
+        
+        byte []retVal = new byte [3];
+        retVal[0] = (byte) (READ1_CMD);	//read 1 byte command
         retVal[1] = (byte) (addr_h);	//high address
         retVal[2] = (byte) (addr_l);	//low address
         
