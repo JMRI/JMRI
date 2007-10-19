@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface {
 
@@ -81,6 +81,14 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 			pollEprom = new NceEpromChecker();
 			return pollEprom.NceEpromPoll();
 		}
+		
+		// Have we checked to see if AIU broadcasts are enabled?
+		
+		if (pollAiuStatus == null){
+			// No, do it this time
+			pollAiuStatus = new NceAIUChecker();
+			return pollAiuStatus.NceAiuPoll();
+		}
 
 		// Start NCE memory poll for accessory states
 		if (pollHandler == null)
@@ -94,12 +102,15 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 	}
 
 	NceEpromChecker pollEprom = null;
+	NceAIUChecker pollAiuStatus = null;
 	NceTurnoutMonitor pollHandler = null;
     
  
     protected AbstractMRListener pollReplyHandler() {
         // First time through, handle reply by checking EPROM revision
-    	if (pollHandler == null) return pollEprom;
+    	// Second time through, handle AIU broadcast check
+    	if (pollHandler == null && pollAiuStatus == null) return pollEprom;
+    	else if (pollHandler == null) return pollAiuStatus;
     	else return pollHandler;
     }
 
