@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
  * AIU broadcasts, 0 = disabled, 1 = enabled.
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * 
  */
 
@@ -42,7 +42,10 @@ public class NceAIUChecker implements NceListener {
 			// if broadcasts are enabled, put up warning
 			
 			byte AIUstatus = (byte) r.getElement(0);
-			if (AIUstatus > 0) {
+			if (AIUstatus > 1){
+				log.warn("AIU check broadcast return value is out of range");
+			}
+			if (AIUstatus == 1) {
 
 				JOptionPane.showMessageDialog(null,
 								"JMRI has detected that AIU broadcasts are enabled. \n"
