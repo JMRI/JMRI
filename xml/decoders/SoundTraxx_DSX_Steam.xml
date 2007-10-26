@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
-<!-- $Id: SoundTraxx_DSX_Steam.xml,v 1.15 2007-09-21 05:49:33 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_DSX_Steam.xml,v 1.16 2007-10-26 16:35:07 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,6 +16,7 @@
 <!-- for more details.                                                      -->
 
 <decoder-config>
+        <version author="Walter Thompson" version="10" lastUpdated="20070816"/>
 		<version author="Michael Mosher" version="9" lastUpdated="20060927"/>
         <version author="Michael Mosher" version="8" lastUpdated="20050817"/>
         
@@ -25,6 +26,7 @@
 		<!-- version 7: added CV105&106  -->
         <!-- version 8: (20050817 BobJ): numFns corrected from 8 to 10 -->
 		<!-- version 9: Added None to function map  -->
+		<!-- version 9: Moved CV50 so CV list is in order  -->
 
 <decoder>
 	<family name="DSX Steam" mfg="Throttle-Up (SoundTraxx)">
@@ -416,6 +418,13 @@
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 
 	<!-- Sound section -->
+	
+		<variable label="Volume Control" CV="50" mask="XXXXVVVV"
+				item="Sound Setting 1" default="8"
+				comment="sets overall volume, 0=Mute">
+				<decVal max="15"/>
+			</variable>
+
 		<variable label="Real Time Clock Mode" CV="51" mask="XXXXXXXV"
 				item="Sound Group 1 Option 1" default="0">
 			<enumVal>
@@ -513,13 +522,6 @@
 			</variable>
 	
 	<!-- Volumes section -->
-	
-		<variable label="Volume Control" CV="50" mask="XXXXVVVV"
-				item="Sound Setting 1" default="8"
-				comment="sets overall volume, 0=Mute">
-				<decVal max="15"/>
-			</variable>
-
 		<variable label="Auto Exhaust Sync Rate" CV="54" mask="VVVVVVVV"
 				item="Sound Setting 2" default="94"
 				comment="When Auto Mode selected, this sets the Chuff Rate relative to throttle setting.">
