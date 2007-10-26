@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2002, 2005 All rights reserved -->
-<!-- $Id: Digitrax_01x3.xml,v 1.33 2007-09-21 05:49:31 jacobsen Exp $ -->
+<!-- $Id: Digitrax_01x3.xml,v 1.34 2007-10-26 19:44:53 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -15,7 +15,10 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
+
 <decoder-config>
+	<version author="Bob Blackwell" version="20" lastUpdated="20070828"/>
+	<version author="Michael Mosher" version="19" lastUpdated="20070824"/>
 	<version author="Bob Blackwell" version="18" lastUpdated="20070304"/>
 	<version author="Bob Blackwell" version="17" lastUpdated="20070216"/>
 	<version author="Bob Blackwell" version="16" lastUpdated="20060807"/>
@@ -41,9 +44,27 @@
   <!-- Version 16 - added DN163K1C (Simon Ginsburg, Bob Blackwell) -->
 	<!-- Version 17 - added DN163A2, DN163K0D, DN163I1A, DN163I1B, DN163I1C, DH163PS; corrected maxMotorCurrent and output name for most DN series decoders ( Bob Blackwell) -->
 	<!-- Version 18 - corrected errors introduced in Version 17 maxMotorCurrent. Added dimensions for DH163L0, DN143,  ( Bob Blackwell) -->
+	<!-- Version 19 - Added DH165xx decoders -->
+	<!-- Version 20 - added DN123K3, Corrected list sorted error; moved DG series ahead of DH series  ( Bob Blackwell) -->
 	
 <decoder>
 	<family name="Series 3 with FX3, silent, readback" mfg="Digitrax" lowVersionID="49" highVersionID="49">
+		<model model="DG383" numOuts="8" numFns="12" maxMotorCurrent="3A (peak=5A)" formFactor="O/G">
+			<output name="4" label="Violet" connection="wire"/> 
+			<output name="5" label="Brown" connection="wire"/>
+			<output name="6" label="Wht/Yel" connection="wire"/>
+			<output name="7" label="Wht/Grn" connection="wire"/>
+			<output name="8" label="Wht/Blu" connection="wire"/>
+			<size length="2.23" width="1.45" height="0" units="inches"/>
+			</model>
+		<model model="DG583" numOuts="8" numFns="12" maxMotorCurrent="5A (peak=10A)" formFactor="O/G">
+			<output name="4" label="Violet" connection="wire"/> 
+			<output name="5" label="Brown" connection="wire"/>
+			<output name="6" label="Wht/Yel" connection="wire"/>
+			<output name="7" label="Wht/Grn" connection="wire"/>
+			<output name="8" label="Wht/Blu" connection="wire"/>
+			<size length="2.23" width="1.45" height="0" units="inches"/>
+			</model>
 		<model model="DH163" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin">
 			<output name="4" label="Violet" connection="wire"/> 
 			<output name="5" label="Pad" connection="solder"/> 
@@ -108,21 +129,46 @@
 			<output name="6" label="Pad" connection="solder"/>
 			<size length="1.05" width="0.67" height="0.25" units="inches"/>
 			</model>
-		<model model="DG383" numOuts="8" numFns="12" maxMotorCurrent="3A (peak=5A)" formFactor="O/G">
-			<output name="4" label="Violet" connection="wire"/> 
-			<output name="5" label="Brown" connection="wire"/>
-			<output name="6" label="Wht/Yel" connection="wire"/>
-			<output name="7" label="Wht/Grn" connection="wire"/>
-			<output name="8" label="Wht/Blu" connection="wire"/>
-			<size length="2.23" width="1.45" height="0" units="inches"/>
+		<model model="DH165A0" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO">
+			<output name="1" label="Pad" connection="solder"/> 
+			<output name="2" label="Pad" connection="solder"/> 
+			<output name="3" label="Pad" connection="solder"/> 
+			<output name="4" label="Pad" connection="solder"/> 
+			<output name="5" label="Pad" connection="solder"/> 
+			<output name="6" label="Pad" connection="solder"/>
+			<size length="2.877" width="0.667" height="0.173" units="inches"/>
 			</model>
-		<model model="DG583" numOuts="8" numFns="12" maxMotorCurrent="5A (peak=10A)" formFactor="O/G">
-			<output name="4" label="Violet" connection="wire"/> 
-			<output name="5" label="Brown" connection="wire"/>
-			<output name="6" label="Wht/Yel" connection="wire"/>
-			<output name="7" label="Wht/Grn" connection="wire"/>
-			<output name="8" label="Wht/Blu" connection="wire"/>
-			<size length="2.23" width="1.45" height="0" units="inches"/>
+		<model model="DH165K0" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO">
+			<output name="1" label="Pad" connection="solder"/> 
+			<output name="2" label="Pad" connection="solder"/> 
+			<output name="3" label="Pad" connection="solder"/> 
+			<output name="4" label="Pad" connection="solder"/> 
+			<output name="5" label="Pad" connection="solder"/> 
+			<output name="6" label="Pad" connection="solder"/>
+			<size length="2.877" width="0.667" height="0.173" units="inches"/>
+			</model>
+		<model model="DH165K1A" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO">
+			<output name="1" label="LED" connection="solder"/> 
+			<output name="2" label="LED" connection="solder"/> 
+			<output name="3" label="LED" connection="solder"/> 
+			<output name="4" label="LED" connection="solder"/> 
+			<output name="5" label="Pad" connection="solder"/> 
+			<output name="6" label="Pad" connection="solder"/>
+			<size length="2.877" width="0.667" height="0.173" units="inches"/>
+			</model>
+		<model model="DH165L0" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO">
+			<output name="1" label="Pin" connection="solder"/> 
+			<output name="2" label="Pin" connection="solder"/> 
+			<output name="3" label="Pad" connection="solder"/> 
+			<output name="4" label="Pad" connection="solder"/> 
+			<output name="5" label="Pad" connection="solder"/> 
+			<output name="6" label="Pad" connection="solder"/>
+			<size length="1.05" width=".67" height=".25" units="inches"/>
+			</model>
+		<model model="DN123K3" numOuts="2" numFns="8" maxMotorCurrent="1.25A (peak=2A)" formFactor="N">
+			<output name="1" label="LED" connection="solder"/> 
+			<output name="2" label="LED" connection="solder"/> 
+			<size length="Unknown" width="Unknown" height="Unknown" units="inches"/>
 			</model>
 		<model model="DN143" numOuts="4" numFns="8" maxMotorCurrent="1.25A (peak=2A)" formFactor="N">
 			<output name="4" label="Violet" connection="wire"/> 
