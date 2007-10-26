@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2002, 2005, 2007 All rights reserved -->
-<!-- $Id: Digitrax_01x3.xml,v 1.35 2007-10-26 19:49:13 jacobsen Exp $ -->
+<!-- $Id: Digitrax_01x3.xml,v 1.36 2007-10-26 19:54:10 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -24,6 +24,7 @@
 	<version author="Michael Mosher" version="19" lastUpdated="20070824"/>
 	<version author="Bob Blackwell afticarr@sympatico.ca" version="20" lastUpdated="20070828"/>
 	<version author="Bob Blackwell afticarr@sympatico.ca" version="21" lastUpdated="20070830"/>
+	<version author="Christopher Zurek" version="22" lastUpdated="20070831"/>
 
 	<!-- Created from version 5 of the 1x2 file -->
 	<!-- V2: fix default values for CV56, 57 BEMF -->
@@ -35,19 +36,20 @@
 	<!-- V8: Function Output Map, CV's 33 to 46, defaults updated by Bob Blackwell, CV9 added -->
 	<!-- Version 9 - fix "rule 17" typos -->
 	<!-- Version 10 - remove DH123 (created new file for it), fixed decoder sizes -->
-  <!-- Version 10.1 - changed spelling of "behavior" (Jack Shall) -->
-  <!-- Version 11 - added DZ123 (Bob Jacobsen) -->
-  <!-- Version 12 - added some tooltips (Jack Shall) -->
-  <!-- Version 13 - added DN163K1B and DN163I0 (Simon Ginsburg) -->
-  <!-- Version 14 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" - Bob Jacobsen -->
-  <!-- Version 15 - added factory reset menu items (Howard G. Penny) -->
-  <!-- Version 16 - added DN163K1C (Simon Ginsburg, Bob Blackwell) -->
+	<!-- Version 10.1 - changed spelling of "behavior" (Jack Shall) -->
+	<!-- Version 11 - added DZ123 (Bob Jacobsen) -->
+	<!-- Version 12 - added some tooltips (Jack Shall) -->
+	<!-- Version 13 - added DN163K1B and DN163I0 (Simon Ginsburg) -->
+	<!-- Version 14 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" - Bob Jacobsen -->
+	<!-- Version 15 - added factory reset menu items (Howard G. Penny) -->
+ 	<!-- Version 16 - added DN163K1C (Simon Ginsburg, Bob Blackwell) -->
 	<!-- Version 17 - added DN163A2, DN163K0D, DN163I1A, DN163I1B, DN163I1C, DH163PS; corrected maxMotorCurrent and output name for most DN series decoders ( Bob Blackwell) -->
 	<!-- Version 18 - corrected errors introduced in Version 17 maxMotorCurrent. Added dimensions for DH163L0, DN143,  (Bob Blackwell) -->
 	<!-- Version 19 - Added DH165xx decoders -->
 	<!-- Version 20 - Added DN123K3, Corrected list sorted error; moved DG series ahead of DH series  (Bob Blackwell) -->
 	<!-- Version 21 - Revised highVersionID to accomodate DN123K3. Value changed from 49 to 51. New value provided by Kent Sulivan (Bob Blackwell) -->
-	
+	<!-- Version 22 - Removed "Rear Headlight Controlled by F4", not supported in this series of decoders  (Christopher Zurek) -->
+
 <decoder>
 	<family name="Series 3 with FX3, silent, readback" mfg="Digitrax" lowVersionID="49" highVersionID="51">
 		<model model="DG383" numOuts="8" numFns="12" maxMotorCurrent="3A (peak=5A)" formFactor="O/G">
@@ -166,7 +168,7 @@
 			<output name="6" label="Pad" connection="solder"/>
 			<size length="1.05" width=".67" height=".25" units="inches"/>
 			</model>
-		<model model="DN123K3" numOuts="2" numFns="8" maxMotorCurrent="1.25A (peak=2A)" formFactor="N">
+	    <model model="DN123K3" numOuts="2" numFns="8" maxMotorCurrent="1.25A (peak=2A)" formFactor="N">
 			<output name="1" label="LED" connection="solder"/> 
 			<output name="2" label="LED" connection="solder"/> 
 			<size length="Unknown" width="Unknown" height="Unknown" units="inches"/>
@@ -835,13 +837,7 @@
 				<enumChoice choice="Normal DC motor"/>
 				<enumChoice choice="Split field/AC motor"/>
 				</enumVal></variable>
-				
-		<variable label="Directional Headlights" CV="61" mask="XXXXXXXV">
-			<enumVal>
-				<enumChoice choice="Normal headlight operation"/>
-				<enumChoice choice="Reverse light lead controlled by F4"/>
-				</enumVal></variable>
-				
+					
 		<variable label="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXVXXXXX">
 			<enumVal>
 				<enumChoice choice="Enabled"/>
