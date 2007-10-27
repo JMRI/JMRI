@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: Gallery.shtml,v 1.1 2007-10-27 23:54:44 jacobsen Exp $ -->
+<html lang="en">
+<head>
+    <TITLE>
+ 	JMRI Gallery
+    </TITLE>
+    <META content="Bob Jacobsen name=Author>
+    <meta name="keywords" content="JMRI PanelPro control panel DCC C/MRI signals">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+    <p class="skipLink"><a href="#mainContent" accesskey="2">Skip to main content</a></p>
+
+<!--#include virtual="/Header" -->
+
+    <hr class="hide">
+
+    <div class="nomenu" id="mBody">
+	<div id="mainContent">
+
+	    <!-- ------------- -->
+	    <!-- Page Contents --> <!-- Required -->
+	    <!-- ------------- -->
+
+	    <H1>JMRI Gallery</H1>
+
+
+This page highlights some of the neat things that people have done
+with JMRI.
+
+<h2>Crandic Dispatcher</h2>
+
+The Cedar River and Iowa Central Railway (Crandic) has
+a great 
+<A HREF="http://homepage.mac.com/dandelany/CRANDIC/">"Dispatching on the Crandic"</a> 
+video, along with several others, available
+for download. The Crandic's control program and dispatcher panel
+was built by Rodney Black on 
+top of the JMRI libraries.
+ 
+<h2><A HREF="http://www.modelrailroadmanager.com">Model Railroad Manager, Advanced Edition</A></h2>
+
+<H2>PanelPro users</H2>
+
+<h3>OWNry</h3>
+
+<A HREF="http://www.ownry.com/html/how_operations.html">page</a>
+
+<h3>Robert Bucklew's Quaker Valley</h3>
+
+<A REF="http://www.quaker-valley.com/CTC/QV_CTC.html">How it's done</a>
+<P>
+<A HREF="mailto:bob@quaker-valley.com">Contact him</a>
+
+<h3>Alan Huberty's Bloomfield & Oakland RR</h3>
+
+<A HREF="images/BORRCTCPanel.gif"><IMG SRC="images/BORRCTCPanel.gif" width="512" height="192"<a/>
+
+<h3>Otis McGee's SP Shasta Route</h3>
+
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+

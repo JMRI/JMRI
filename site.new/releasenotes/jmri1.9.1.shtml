@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.9.1.shtml,v 1.6 2007-09-21 06:31:11 jacobsen Exp $ -->
+<!-- $Id: jmri1.9.1.shtml,v 1.7 2007-10-27 23:54:44 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -159,54 +159,95 @@ David Falkenburg added support for the NCE PowerCab.  This includes some changes
 
 <P>
 Brett Scott contributed scripts for configuring many DCC Specialties products, including the Hare, Wabbit, Block Watcher and PSX.
-<hr class="hide">
 
-<LI>
+<P>
 Michael Mosher updated the BLI Blueline decoder definitions to no longer use paged mode, as it doesn't work well
 
-<LI>
+<P>
 Michael Mosher updated the NCE DS13SR decoder definition to the recently-observed identifiers
 
-<LI>
+<P>
 David Duchamp added a completely new layout (panel) editor! In particular, note the very nice help files.
 
-<LI>
+<P>
 The "held" icon for a SignalHead on a panel wasn't rotating properly, now fixed.
 
-<LI>
+<P>
 Dan Boudreau updated the NCE consist manager
 
-<LI>
+<P>
 Alex Shepherd fixed a bug that would cause a LocoNetOverTcp connection to hang
 if the remote stopped responding.
 
-<LI>
+<P>
 Paul Bender added the Silver Direct to the Lenz Silver decoder family
 
-<LI>Stephen Williams found and fixed a bug that caused LocoNet slot 119 (a normal slot) to be only shown when system slots were being shown
+<P>
+Stephen Williams found and fixed a bug that caused LocoNet slot 119 (a normal slot) to be only shown when system slots were being shown
 
-<LI>Protect against an error where errors are thrown while trying to start the program on certain Linux machines.
+<P>
+Protect against an error where errors are thrown while trying to start the program on certain Linux machines.
 
-<LI>Through the magic of XSLT, decoder files and the decoder index now show useful information when viewed in a web browser
+<P>
+Through the magic of XSLT, decoder files and the decoder index now show useful information when viewed in a web browser
 
-<LI>Dan Boudreau added X&Y positions to the popup menus for panel icons
+<P>
+Dan Boudreau added X&Y positions to the popup menus for panel icons
 
-<LI>Simon Ginsburg updated the German translation
+<P>
+Simon Ginsburg updated the German translation
 
-<LI>Dennis Miller changed the way decoder identification is presented by DecoderPro.  If more than one decoder can possibly match when you ask DecoderPro to identify the decoder, they will now all be highlighted and the user will be asked to select one.
+<P>
+Dennis Miller changed the way decoder identification is presented by DecoderPro.  If more than one decoder can possibly match when you ask DecoderPro to identify the decoder, they will now all be highlighted and the user will be asked to select one.
 
-<LI>The programs will now log various "INFO" messages as part of running. This is normal, and is meant to help with debugging.
+<P>
+The programs will now log various "INFO" messages as part of running. This is normal, and is meant to help with debugging.
 
-<LI>This release have debugging information present, so that if there's a fault you'll get a useful traceback to send back to us.
+<P>
+This release have debugging information present, so that if there's a fault you'll get a useful traceback to send back to us.
 
-<LI>Lots of little JavaDoc improvements
+<P>
+Lots of little JavaDoc improvements
 
-<LI>DecoderPro now creates a decoder index that displays it's contents when viewed in a modern web browser. Note you need to be connected to the internet for this to work.
+<P>
+DecoderPro now creates a decoder index that displays it's contents when viewed in a modern web browser. Note you need to be connected to the internet for this to work.
 
-<LI>The Decoder Definition Files now display (using XSLT stylesheets) when viewed in a web browser.  Note you need to be connected to the internet for this to work.
+<P>
+The Decoder Definition Files now display (using XSLT stylesheets) when viewed in a web browser.  Note you need to be connected to the internet for this to work.
 
-<LI>David Duchamp added a "delayed set turnout" action to Logix conditionals
+<P>
+David Duchamp added a "delayed set turnout" action to Logix conditionals
 
+<P>
+David Duchamp updated Panel menu and the storing and deleting of panels:
+<OL>
+<LI>A panel (either type) is not deleted when its panel window is closed.
+<LI>To delete a panel (either type), select "Delete this panel..." in the panel's File menu.  A validation message is displayed before the panel is actually deleted. This action deletes the panel from the program.  To permanently delete the panel from files, panels must be saved to disk after deleting the panel.
+<LI>A new entry "Show Panel" has been added to the Panels menu.  All panels currently present in the program are listed in the submenu of Show Panel, independent of whether the panel window is closed (checked in the submenu), frontmost, or minimized. Selecting a particular panel makes it visible and frontmost.
+<LI>When "New panel..." is selected, a small window is displayed allowing the user to select a "Panel Editor" panel or a "Layout Editor" panel.  The default choice is "Panel Editor".
+</OL>
+
+<P>
+Alfredo Sola updated the Spanish version of the interface
+
+<P>
+The NCE code has been updated to try to fix a problem with reading specific CV values, most often seen when reading QSI decoders.
+The fix is different for each of the various NCE EPROM versions, and it's not clear that we have properly covered all the cases.
+
+<P>
+Walter Thompson updated the SoundTraxx DSD Steam decoder so that the CV lists display in order.
+
+<P>Michael Mosher fixed a bug in the horn/bell default in the SoundTraxx DSX Diesel and DSD Diesel files.
+
+<P>Bob Blackwell and Michael Mosher updated the Digitrax "3" definition to include the DN123K3 decoder.
+Also, Christopher Zurek removed the "Rear Headlight Controlled by F4", which is not supported in this series of decoders.
+
+<P>
+Michael Mosher updated the QSI V7 decoder definitions to add "grade crossing" as an output type and define CV62 bit 2
+
+<P>
+Petr Koud'a made it possible to use Littfinski Daten Technik (<a href="http://www.ldt-infocenter.com/">LDT</a>) signal decoders with JMRI. These decoders can display up to 8 aspects. One position of a turnout is associated with each signal aspect. This new signal type assigns turnout positions to all 7 JMRI signal aspects.
+<hr class="hide">
 <!--#include virtual="/Footer" -->
 
    </div><!-- closes #mainContent-->
