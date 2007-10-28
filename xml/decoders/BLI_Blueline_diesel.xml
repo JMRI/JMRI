@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
-<!-- $Id: BLI_Blueline_diesel.xml,v 1.5 2007-10-28 22:56:13 jacobsen Exp $ -->
+<!-- $Id: BLI_Blueline_diesel.xml,v 1.6 2007-10-28 22:59:25 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,6 +16,7 @@
 <!-- for more details.                                                      -->
 
 <decoder-config>
+        <version author="Bob Jacobsen" version="4" lastUpdated="20071028"/>
         <version author="Michael Mosher" version="3" lastUpdated="20070805"/>
         <version author="Michael Mosher" version="2" lastUpdated="20070716"/>
         <version author="Michael Mosher" version="1" lastUpdated="20070511"/>
@@ -23,7 +24,7 @@
         <!-- Version 1 New file -->
         <!-- Version 2 Added factory reset & Bug Fix -->
         <!-- Version 3 Removed paged mode programming -->
-        
+        <!-- Version 4 - update connector info -->
         
 <decoder>
     <family name="Blueline" mfg="Broadway Limited Imports, LLC">
