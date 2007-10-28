@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
-<!-- $Id: BLI_Blueline_diesel.xml,v 1.4 2007-09-21 05:49:30 jacobsen Exp $ -->
+<!-- $Id: BLI_Blueline_diesel.xml,v 1.5 2007-10-28 22:56:13 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -27,7 +27,7 @@
         
 <decoder>
     <family name="Blueline" mfg="Broadway Limited Imports, LLC">
-        <model model="Diesel" numOuts="3" numFns="14">
+        <model model="Diesel" numOuts="3" numFns="14" connector="9pin" >
             <versionCV lowVersionID="4"/>
             <output name="1" label="headlight"/>              
             <output name="2" label="rearlight"/>              
