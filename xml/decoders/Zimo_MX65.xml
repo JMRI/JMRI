@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2007 All rights reserved -->
-<!-- $Id: Zimo_MX65.xml,v 1.4 2007-09-21 05:49:35 jacobsen Exp $ -->
+<!-- $Id: Zimo_MX65.xml,v 1.5 2007-10-28 23:15:49 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,6 +16,7 @@
 <!-- for more details.                                                      -->
 
 <decoder-config>
+		<version author="JBob Jacobsen" version="2" lastUpdated="20071028" />
 		<version author="Jeff Schmaltz escopetas@comcast.net"
 			version="1.1" lastUpdated="20070214" />
 		<version author="Jeff Schmaltz escopetas@comcast.net"
@@ -47,17 +48,19 @@
               Initial release 
         1.1 - 14 Feb 07
               Changed family name to differentiate from other Zimo large scale config files
+        2     28 Oct 2007
+              Update connector information
 -->
 
 <decoder>
 	<family name="Zimo MX65" mfg="Zimo">
 		<model model="MX65L/N" lowVersionID="20" highVersionID="29"
-			 numOuts="2" numFns="8" >
+			 numOuts="2" numFns="8" connector="9pin" >
 			<output name="1" label="Front head lights" />
 	   	 	<output name="2" label="Rear head lights" />
 		</model>
 		<model model="MX65S/N" lowVersionID="20" highVersionID="29"
-			 numOuts="8" numFns="8" >
+			 numOuts="8" numFns="8" connector="9pin" >
 			<output name="1" label="Front head lights" />
 	   	 	<output name="2" label="Rear head lights" />
 	  	  	<output name="3" label="F2 pin-15, right" />
@@ -68,7 +71,7 @@
 	  	  	<output name="8" label="F7 pin-8, right" />
 		</model>
 		<model model="MX65V/N" lowVersionID="20" highVersionID="29"
-			 numOuts="12" numFns="8" >
+			 numOuts="12" numFns="8" connector="9pin" >
 			<output name="1" label="Front head lights" />
 	   	 	<output name="2" label="Rear head lights" />
 	  	  	<output name="3" label="F2 pin-15, right" />
