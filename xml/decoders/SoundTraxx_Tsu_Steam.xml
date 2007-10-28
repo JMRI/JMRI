@@ -2,8 +2,8 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
-<!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id: SoundTraxx_Tsu_Steam.xml,v 1.8 2007-09-21 05:49:33 jacobsen Exp $ -->
+<!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<!-- $Id: SoundTraxx_Tsu_Steam.xml,v 1.9 2007-10-28 23:03:06 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,18 +16,20 @@
 <!-- for more details.                                                      -->
 
 <decoder-config>
-		<version author="Bob Jacobsen" version="1" lastUpdated="20051101"/>
+		<version author="Bob Jacobsen" version="3" lastUpdated="20071028"/>
 		<version author="Ken Weygandt" version="2" lastUpdated="20051203"/>
+		<version author="Bob Jacobsen" version="1" lastUpdated="20051101"/>
 
 		<!-- Made from SoundTraxx_DSD_Steam.xml file by M Mosher -->
 		<!-- Some of the contents are based on info provided pre-release -->
 		<!-- by Soundtraxx, who deserve our thanks -->
 		
 		<!-- Version 2 has updated defaults -->
+		<!-- Version 3 changes connector info -->
 
 <decoder>
 	<family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)">
-		<model model="Tsunami Steam" numOuts="4" numFns="14">
+		<model model="Tsunami Steam" numOuts="4" numFns="14" connector="9pin">
 			<versionCV lowVersionID="64"/>
 			<output name="Whistle"/> 
 			<output name="Bell"/> 
