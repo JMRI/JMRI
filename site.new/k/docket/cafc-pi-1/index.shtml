@@ -1,0 +1,266 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: index.shtml,v 1.1 2007-10-28 00:55:35 jacobsen Exp $ -->
+<html lang="en">
+
+<head>
+ <TITLE>JMRI Defense: Appeals Court Papers</TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META name="keywords" content="JMRI Jacobsen open-source patent defense copyright trademark">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body class="secondlevel">
+<div id="container">
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="/k/Sidebar" -->
+ <hr class="hide"> 
+ <div id="mainContent">
+  <div class="list">
+    <h2>JMRI Defense: Papers from the Court of Appeals for the Federal Circuit</h2>
+ 
+ <!-- the content goes here -->
+ 
+Most of our legal defense is happening in the
+Northern District of Calfornia federal court.
+Papers from there are available on our
+<A HREF="../index.shtml">main docket page</a>.
+<P>
+On this page, we're providing copies of the court papers from
+our appeal to the Court of Appeals for the Federal Circuit, located in
+Washington DC.
+
+<h4>Key Appeal Documents</h4>
+
+Note that these are presented in a "logical" order, not 
+necessarily the chronological order in which they were filed.
+This is to intended to make it easier to understand how the 
+key documents are interrelated.  The complete
+chronological listing is 
+<a href="docketlisting">below</a>.
+<UL>
+
+</UL><!-- end of summary index -->
+
+<A ID="docketlisting"/>
+<h4>The Complete Appeal Docket</h4>
+
+The following is automatically made from the 
+Court's "Docket", a complete listing of the activities and 
+documents in the case in time order.  Some of the
+links for minor documents may not work; if you'd like one, please 
+let us know and we'll update it by hand.
+
+<p/>
+Please Note: Motions & Actions Filed are listed first. Entries are listed last.
+<br/>
+
+  <table DATASRC="PACER" DATAPAGESIZE="5" width="660" border="0" cellspacing="2"
+  cellpadding="0">
+
+
+<!-- -------------------------------------------------SEPERATION-LINE---------------- -->
+
+    <td>
+  <br />
+  <tr>
+    <td width="100" align="left"><font size="-1">.</font></td>
+    <td width="645" align="left">
+     <b><font size="1">>> </font><font size="2">
+ Entries for Case Number: 2008-1001 </font>
+     <font size="1"> <<</font></b>
+      </td>
+  </tr>
+  <!--<td align="left">
+  <br>
+  -->
+
+    <tr>
+      <td width="100" align="left" valign="top"><font size="-1"><strong>Entry </strong>8   : </font>
+      </td>
+      <td width="645" align="left"><font size="-1">10/12/2007&nbsp;: &nbsp;Docketing Statement filed on behalf of the appellant, Robert Jacobsen.                                                                                                                                                                                    </font></td>
+    </tr>
+
+    <tr>
+      <td width="100" align="left"><font size="-1">.</font> </td>
+      <td width="645" align="left"><font size="-1"><strong>SERVICE : </strong>by Mail  on 10/12/2007</font></td>
+    </tr>
+
+
+    <tr>
+      <td width="100"><br />
+
+<!-- -------------------------------------------------SEPERATION-LINE---------------- -->
+
+    <tr>
+      <td width="100" align="left" valign="top"><font size="-1"><strong>Entry </strong>7   : </font>
+      </td>
+      <td width="645" align="left"><font size="-1">10/12/2007&nbsp;: &nbsp;Certificate of Interest filed for the appellant, Robert Gibbs Jacobsen.                                                                                                                                                                                   </font></td>
+    </tr>
+
+    <tr>
+      <td width="100" align="left"><font size="-1">.</font> </td>
+      <td width="645" align="left"><font size="-1"><strong>SERVICE : </strong>by Mail  on 10/12/2007</font></td>
+    </tr>
+
+    <tr>
+      <td width="100" align="left"><font size="-1">.</font> </td>
+      <td width="645" align="left"><font size="-1"><strong>DOC : </strong> <a href="7.pdf" target="_blank">  : Jacobson 2008-1001 (10.12.07 COI JACOBSON).PDF                                                      </a> </font></td>
+    </tr>
+
+
+    <tr>
+      <td width="100"><br />
+
+<!-- -------------------------------------------------SEPERATION-LINE---------------- -->
+
+    <tr>
+      <td width="100" align="left" valign="top"><font size="-1"><strong>Entry </strong>6   : </font>
+      </td>
+      <td width="645" align="left"><font size="-1">10/12/2007&nbsp;: &nbsp;Entry of appearance for Victoria K. Hall as principal counsel on behalf of the appellant, Robert Jacobsen.                                                                                                                                                </font></td>
+    </tr>
+
+    <tr>
+      <td width="100" align="left"><font size="-1">.</font> </td>
+      <td width="645" align="left"><font size="-1"><strong>SERVICE : </strong>by Mail  on 10/12/2007</font></td>
+    </tr>
+
+    <tr>
+      <td width="100" align="left"><font size="-1">.</font> </td>
+      <td width="645" align="left"><font size="-1"><strong>DOC : </strong> <a href="6.pdf" target="_blank">  : Jacobson 2008-1001 (10.12.07 EOA HALL).PDF                                                          </a> </font></td>
+    </tr>
+
+
+    <tr>
+      <td width="100"><br />
+
+<!-- -------------------------------------------------SEPERATION-LINE---------------- -->
+
+    <tr>
+      <td width="100" align="left" valign="top"><font size="-1"><strong>Entry </strong>5   : </font>
+      </td>
+      <td width="645" align="left"><font size="-1">10/12/2007&nbsp;: &nbsp;Docketing Statement for the appellee, Matthew Katzer.                                                                                                                                                                                                     </font></td>
+    </tr>
+
+    <tr>
+      <td width="100" align="left"><font size="-1">.</font> </td>
+      <td width="645" align="left"><font size="-1"><strong>SERVICE : </strong>by Mail  on 10/11/2007</font></td>
+    </tr>
+
+
+    <tr>
+      <td width="100"><br />
+
+<!-- -------------------------------------------------SEPERATION-LINE---------------- -->
+
+    <tr>
+      <td width="100" align="left" valign="top"><font size="-1"><strong>Entry </strong>4   : </font>
+      </td>
+      <td width="645" align="left"><font size="-1">10/12/2007&nbsp;: &nbsp;Certificate of Interest filed for the appellee, Matthew Katzer.                                                                                                                                                                                           </font></td>
+    </tr>
+
+    <tr>
+      <td width="100" align="left"><font size="-1">.</font> </td>
+      <td width="645" align="left"><font size="-1"><strong>SERVICE : </strong>by Mail  on 10/12/2007</font></td>
+    </tr>
+
+    <tr>
+      <td width="100" align="left"><font size="-1">.</font> </td>
+      <td width="645" align="left"><font size="-1"><strong>DOC : </strong> <a href="4.pdf" target="_blank">  : Jacobson 2008-1001 (10.12.07 COI FIELD JERGER).PDF                                                  </a> </font></td>
+    </tr>
+
+
+    <tr>
+      <td width="100"><br />
+
+<!-- -------------------------------------------------SEPERATION-LINE---------------- -->
+
+    <tr>
+      <td width="100" align="left" valign="top"><font size="-1"><strong>Entry </strong>3   : </font>
+      </td>
+      <td width="645" align="left"><font size="-1">10/12/2007&nbsp;: &nbsp;Entry of appearance for R. Scott Jerger as principal counsel on behalf of the appellee, Matthew Katzer.                                                                                                                                                   </font></td>
+    </tr>
+
+    <tr>
+      <td width="100" align="left"><font size="-1">.</font> </td>
+      <td width="645" align="left"><font size="-1"><strong>SERVICE : </strong>by Mail  on 10/11/2007</font></td>
+    </tr>
+
+    <tr>
+      <td width="100" align="left"><font size="-1">.</font> </td>
+      <td width="645" align="left"><font size="-1"><strong>DOC : </strong> <a href="3.pdf" target="_blank">  : Jacobson 2008-1001 (10.12.07 EOA JERGER).PDF                                                        </a> </font></td>
+    </tr>
+
+
+    <tr>
+      <td width="100"><br />
+
+<!-- -------------------------------------------------SEPERATION-LINE---------------- -->
+
+    <tr>
+      <td width="100" align="left" valign="top"><font size="-1"><strong>Entry </strong>2   : </font>
+      </td>
+      <td width="645" align="left"><font size="-1">10/2/2007&nbsp;: &nbsp;Official Caption.                                                                                                                                                                                                                                         </font></td>
+    </tr>
+
+    <tr>
+      <td width="100" align="left"><font size="-1">.</font> </td>
+      <td width="645" align="left"><font size="-1"><strong>SERVICE : </strong>by Court on 10/2/2007</font></td>
+    </tr>
+
+    <tr>
+      <td width="100" align="left"><font size="-1">.</font> </td>
+      <td width="645" align="left"><font size="-1"><strong>DOC : </strong> <a href="2.pdf" target="_blank">  : Jacobsen 2008-1001 (10.2.07 CAPTION).pdf                                                            </a> </font></td>
+    </tr>
+
+
+    <tr>
+      <td width="100"><br />
+      </td>
+    </tr>
+
+
+  </table>
+ <!-- The content ends here -->
+   </div> <!-- closes .list -->
+
+
+
+
+  <hr class="hide">
+<!-- Footer -->
+    <hr class="hide">
+    <div id="footer">
+	<ul id="bn">
+	<li><a href="/contact/">Contact Us</a></li>
+	</ul>
+
+	<p>Thanks and congratulations to
+	   <A href="/community/" title="Who is JMRI">
+	   	all who contributed</A>! </p>
+
+	<p>Copyright &copy; 2005 - 2006 JMRI Community. 
+	<P>JMRI, DecoderPro&reg;, PanelPro, DispatcherPro and associated logos are our trademarks.
+	<P><A href="/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a></p>
+    
+       <BR/>Site hosted by: <BR/>
+        <A href="http://sourceforge.net"> 
+        <IMG src="http://sourceforge.net/sflogo.php?group_id=26788&amp;type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A> 
+
+    <IMG src="ksummary.ico" height="1" width="1"/>
+    </div>
+<!-- /Footer -->
+
+ </div> <!-- closes #mainContent-->
+</div> <!-- closes #mBody--> 
+</div> <!-- closes #container --> 
+</body>
+</html>
+
