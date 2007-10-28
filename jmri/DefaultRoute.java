@@ -7,7 +7,7 @@ package jmri;
  *
  * @author	Dave Duchamp Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2006, 2007
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 public class DefaultRoute extends AbstractNamedBean
     implements Route, java.io.Serializable {
@@ -60,6 +60,14 @@ public class DefaultRoute extends AbstractNamedBean
         boolean old = _enabled;
         _enabled = v;
         if (old != v) firePropertyChange("Enabled", new Boolean(old), new Boolean(v));
+    }
+    
+    private boolean _locked = false;
+    public boolean getLocked() { return _locked; }
+    public void setLocked(boolean v) { 
+        boolean old = _locked;
+        _locked = v;
+        if (old != v) firePropertyChange("Locked", new Boolean(old), new Boolean(v));
     }
     
     /**

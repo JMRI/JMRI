@@ -36,7 +36,7 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.18 $
+ * @version	$Revision: 1.19 $
  * @see         jmri.AbstractTurnout
  * @see         jmri.TurnoutManager
  * @see         jmri.InstanceManager
@@ -282,6 +282,43 @@ public interface Turnout extends NamedBean {
      * If true turnouts can be inverted
      */
     public boolean canInvert();
+    
+    /**
+     * Get turnout locked
+     *<P>
+     * If true turnouts are locked
+     */
+    public boolean getLocked();
+    
+    /**
+     * Set turnout locked
+     *<P>
+     * If true lock turnout
+     */
+    public void setLocked(boolean locked);
+    
+    /**
+     * Determine if turnout can be locked
+     *<P>
+     * If true turnouts can be locked
+     */
+    public boolean canLock();
+    
+    /**
+     * Determine if we should send a message to console when
+     * we detect that a turnout that is locked has been accessed
+     * by a cab on the layout. 
+     * If true, report cab attempt to change turnout.
+     */
+    public boolean reportLocked();
+    
+    /**
+     * Set turnout report
+     *<P>
+     * If true report any attempts by a cab to modify turnout state
+     */
+    public void setReportLocked(boolean reportLocked);
+    
     
 }
 

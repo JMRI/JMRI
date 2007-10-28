@@ -31,7 +31,7 @@ import jmri.util.JmriJFrame;
  * @author	Dave Duchamp    Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2007 
  *
- * @version     $Revision: 1.33 $
+ * @version     $Revision: 1.34 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -66,28 +66,37 @@ public class RouteTableAction extends AbstractTableAction {
     void createModel() {
         m = new BeanTableDataModel() {
 		    static public final int ENABLECOL = NUMCOLUMN;
-		    static public final int SETCOL = ENABLECOL+1;
-    		public int getColumnCount( ){ return NUMCOLUMN+2;}
+		    static public final int LOCKCOL = ENABLECOL+1;
+		    static public final int SETCOL = ENABLECOL+2;
+    		public int getColumnCount(){ return NUMCOLUMN+3;}
 
     		public String getColumnName(int col) {
     			if (col==VALUECOL) return "";  // no heading on "Set"
     			if (col==SETCOL) return "";    // no heading on "Edit"
     			if (col==ENABLECOL) return "Enabled";
+    			if (col==LOCKCOL) return "Locked";
     			else return super.getColumnName(col);
 		    }
     		public Class getColumnClass(int col) {
     			if (col==SETCOL) return JButton.class;
     			if (col==ENABLECOL) return Boolean.class;
+    			if (col==LOCKCOL) return Boolean.class;
     			else return super.getColumnClass(col);
 		    }
     		public int getPreferredWidth(int col) {
     			if (col==SETCOL) return new JTextField(6).getPreferredSize().width;
     			if (col==ENABLECOL) return new JTextField(6).getPreferredSize().width;
+    			if (col==LOCKCOL) return new JTextField(6).getPreferredSize().width;
     			else return super.getPreferredWidth(col);
 		    }
     		public boolean isCellEditable(int row, int col) {
     			if (col==SETCOL) return true;
     			if (col==ENABLECOL) return true;
+    			// Route lock is available if turnouts are lockable
+    			if (col==LOCKCOL) {
+    				Route r = (Route)getBySystemName((String)getValueAt(row, SYSNAMECOL));
+    				return routeCanLock(r);
+    			}
     			else return super.isCellEditable(row,col);
 			}    		
     		public Object getValueAt(int row, int col) {
@@ -97,6 +106,16 @@ public class RouteTableAction extends AbstractTableAction {
     			else if (col==ENABLECOL) {
     				return new Boolean(((Route)getBySystemName((String)getValueAt(row, SYSNAMECOL))).getEnabled());
     			}
+    			else if (col==LOCKCOL) {
+    				Route r = (Route)getBySystemName((String)getValueAt(row, SYSNAMECOL));
+    				if (routeCanLock(r)){
+    					return new Boolean(((Route)getBySystemName((String)getValueAt(row, SYSNAMECOL))).getLocked());
+    				}else{
+    					// this covers the case when route was locked and lockable turnouts were removed from the route 
+    					r.setLocked(false);
+    					return new Boolean (false);
+    				}
+     			}
 				else return super.getValueAt(row, col);
 			}    		
     		public void setValueAt(Object value, int row, int col) {
@@ -112,8 +131,22 @@ public class RouteTableAction extends AbstractTableAction {
                     boolean v = r.getEnabled();
                     r.setEnabled(!v);
     			}
+    			else if (col==LOCKCOL) {
+                    // alternate
+                    Route r = (Route)getBySystemName((String)getValueAt(row, SYSNAMECOL));
+                    boolean v = r.getLocked();
+                    r.setLocked(!v);
+                    lockTurnouts (r, !v);
+    			}
     			else super.setValueAt(value, row, col);
     		}
+    		
+    	      public void configureTable(JTable table) {
+                  table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
+                  table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
+                  table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
+                  super.configureTable(table);
+              }
 
             /**
              * Delete the bean after all the checking has been done.
@@ -128,6 +161,7 @@ public class RouteTableAction extends AbstractTableAction {
     		// want to update when enabled parameter changes
             boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("Enabled")) return true;
+                if (e.getPropertyName().equals("Locked")) return true;
                 else return super.matchPropertyName(e);
             }
 
@@ -146,7 +180,37 @@ public class RouteTableAction extends AbstractTableAction {
             }
         };
     }
-
+    
+    /**
+	 * Determine if route can be locked. Requres at least one turnout that can
+	 * be locked
+	 */
+	private boolean routeCanLock(Route r) {
+		for (int i = 0; i < MAX_TURNOUTS; i++) {
+			Turnout t = r.getOutputTurnout(i);
+			if (t == null)
+				return false;
+			if (t.canLock())
+				return true;
+		}
+		return false;
+	}
+	/**
+	 * Lock or unlock turnouts that are part of a route
+	 */
+	private void lockTurnouts(Route r, boolean lock) {
+		// determine if turnout should be locked
+		for (int i = 0; i < MAX_TURNOUTS; i++) {
+			Turnout t = r.getOutputTurnout(i);
+			if (t == null)
+				return;
+			if (lock && t.canLock())
+				t.setLocked(true);
+			else
+				t.setLocked(false);
+		}
+	}
+ 
     void setTitle() {
         f.setTitle("Route Table");
     }

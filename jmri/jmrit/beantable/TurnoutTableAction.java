@@ -42,7 +42,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.46 $
+ * @version     $Revision: 1.47 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -85,7 +85,8 @@ public class TurnoutTableAction extends AbstractTableAction {
         // note that this is a class creation, and very long
         m = new BeanTableDataModel() {
         	static public final int INVERTCOL = NUMCOLUMN;
-		    static public final int KNOWNCOL = INVERTCOL+1;
+		    static public final int LOCKCOL = INVERTCOL+1;
+		    static public final int KNOWNCOL = LOCKCOL+1;
 		    static public final int MODECOL = KNOWNCOL+1;
 		    static public final int SENSOR1COL = MODECOL+1;
 		    static public final int SENSOR2COL = SENSOR1COL+1;
@@ -95,11 +96,12 @@ public class TurnoutTableAction extends AbstractTableAction {
     		    if (showFeedback)
     		        return OPSONOFFCOL+1;
     		    else
-    		        return INVERTCOL+1;
+    		        return LOCKCOL+1;
      		}
     		
     		public String getColumnName(int col) {
     			if (col==INVERTCOL) return "Inverted";
+    			else if (col==LOCKCOL) return "Locked";
     			else if (col==KNOWNCOL) return "Feedback";
     			else if (col==MODECOL) return "Mode";
     			else if (col==SENSOR1COL) return "Sensor 1";
@@ -112,6 +114,7 @@ public class TurnoutTableAction extends AbstractTableAction {
 		    }
     		public Class getColumnClass(int col) {
     			if (col==INVERTCOL) return Boolean.class;
+    			else if (col==LOCKCOL) return Boolean.class;
     			else if (col==KNOWNCOL) return String.class;
     			else if (col==MODECOL) return JComboBox.class;
     			else if (col==SENSOR1COL) return String.class;
@@ -120,7 +123,8 @@ public class TurnoutTableAction extends AbstractTableAction {
     			else return super.getColumnClass(col);
 		    }
     		public int getPreferredWidth(int col) {
-    			if (col==INVERTCOL) return new JTextField(4).getPreferredSize().width;
+    			if (col==INVERTCOL) return new JTextField(6).getPreferredSize().width;
+    			else if (col==LOCKCOL) return new JTextField(6).getPreferredSize().width;
     			else if (col==KNOWNCOL) return new JTextField(10).getPreferredSize().width;
     			else if (col==MODECOL) return new JTextField(10).getPreferredSize().width;
     			else if (col==SENSOR1COL) return new JTextField(5).getPreferredSize().width;
@@ -133,6 +137,7 @@ public class TurnoutTableAction extends AbstractTableAction {
 				TurnoutManager manager = InstanceManager.turnoutManagerInstance();
 				Turnout t = manager.getBySystemName(name);
     			if (col==INVERTCOL) return t.canInvert();
+    			else if (col == LOCKCOL)return t.canLock();
     			else if (col==KNOWNCOL) return false;
     			else if (col==MODECOL) return true;
     			else if (col==SENSOR1COL) return true;
@@ -147,6 +152,9 @@ public class TurnoutTableAction extends AbstractTableAction {
 				Turnout t = manager.getBySystemName(name);
 	   			if (col==INVERTCOL) {
     				boolean val = t.getInverted();
+					return new Boolean(val);
+	   			} else if (col==LOCKCOL){
+	   				boolean val = t.getLocked();
 					return new Boolean(val);
 	   			} else if (col==KNOWNCOL) {
                     if (t.getKnownState()==Turnout.CLOSED) return closedText;
@@ -178,6 +186,11 @@ public class TurnoutTableAction extends AbstractTableAction {
 					if (t.canInvert()) {
 						boolean b = ((Boolean) value).booleanValue();
 						t.setInverted(b);
+					}
+	   			} else if (col==LOCKCOL){
+					if (t.canLock()) {
+						boolean b = ((Boolean) value).booleanValue();
+						t.setLocked(b);
 					}
 	   			} else if (col==MODECOL) {
                     String modeName = (String)((JComboBox)value).getSelectedItem();

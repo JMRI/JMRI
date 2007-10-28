@@ -17,7 +17,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2004
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class DefaultRouteManagerXml implements XmlAdapter {
 
@@ -46,6 +46,8 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                 String uname = r.getUserName();
                 String cTurnout = r.getControlTurnout();
 				int addedDelay = r.getRouteCommandDelay();
+				boolean routeLocked = r.getLocked();
+				
                 Element elem = new Element("route")
                             .setAttribute("systemName", sname);
                 if (uname!=null) elem.setAttribute("userName", uname);
@@ -61,6 +63,10 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                 }
 				if (addedDelay>0) {
 					elem.setAttribute("addedDelay",Integer.toString(addedDelay));
+				}
+				
+				if (routeLocked){
+					elem.setAttribute("routeLocked","True");
 				}
                 // add route output Turnouts, if any
                 int index = 0;
@@ -195,6 +201,7 @@ public class DefaultRouteManagerXml implements XmlAdapter {
             String cTurnout = null;
             String cTurnoutState = null;
 			String addedDelayTxt = null;
+			String routeLockedTxt = null;
 			int addedDelay = 0;
             if ( ((Element)(routeList.get(i))).getAttribute("userName") != null)
                 userName = ((Element)(routeList.get(i))).getAttribute("userName").getValue();
@@ -208,22 +215,29 @@ public class DefaultRouteManagerXml implements XmlAdapter {
 					addedDelay = Integer.parseInt(addedDelayTxt);
 				}
 			}
+            if ( ((Element)(routeList.get(i))).getAttribute("routeLocked") != null)
+            	routeLockedTxt = ((Element)(routeList.get(i))).getAttribute("routeLocked").getValue();
+            
             if (log.isDebugEnabled()) log.debug("create route: ("+sysName+")("+
                                                             (userName==null?"<null>":userName)+")");
             Route r = tm.createNewRoute(sysName, userName);
             if (r!=null) {
-                // add control turnout if there is one
-                if (cTurnout != null) {
-                    r.setControlTurnout(cTurnout);
-                    if ( cTurnoutState.equals("THROWN") ) {
-                        r.setControlTurnoutState(Turnout.THROWN);
-                    }
-                    else {
-                        r.setControlTurnoutState(Turnout.CLOSED);
-                    }
-                }
+				// add control turnout if there is one
+				if (cTurnout != null) {
+					r.setControlTurnout(cTurnout);
+					if (cTurnoutState.equals("THROWN")) {
+						r.setControlTurnoutState(Turnout.THROWN);
+					} else {
+						r.setControlTurnoutState(Turnout.CLOSED);
+					}
+				}
 				// set added delay
 				r.setRouteCommandDelay(addedDelay);
+
+				// determine if route locked
+				if (routeLockedTxt != null && routeLockedTxt.equals("True"))
+					r.setLocked(true);
+                
                 // load output turnouts if there are any - old format first (1.7.6 and before)
                 List routeTurnoutList = ((Element)(routeList.get(i))).getChildren("routeTurnout");
                 if (routeTurnoutList.size() > 0) {
@@ -272,7 +286,13 @@ public class DefaultRouteManagerXml implements XmlAdapter {
 						}
                         // Add turnout to route
                         r.addOutputTurnout(tSysName, tSetState);
-                    }
+                        
+                        // determine if turnout should be locked
+                        Turnout t = r.getOutputTurnout(k);
+						if (t.canLock() && r.getLocked()) {
+							t.setLocked(true);
+						}
+                	}
                 }
                 // load output sensors if there are any - new format
                 routeTurnoutList = ((Element)(routeList.get(i))).getChildren("routeOutputSensor");

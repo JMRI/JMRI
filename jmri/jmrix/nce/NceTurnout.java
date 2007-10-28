@@ -15,7 +15,7 @@ import jmri.Turnout;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.22 $
+ * @version	$Revision: 1.23 $
  */
 public class NceTurnout extends AbstractTurnout {
 
@@ -133,6 +133,18 @@ public class NceTurnout extends AbstractTurnout {
      * NCE turnouts can be inverted
      */
     public boolean canInvert(){return true;}
+    
+    /**
+     * NCE turnouts can be locked if there's feedback available
+     * Only Monitoring is currently supported for turnout locking 
+     */
+    public boolean canLock(){
+    	if ((getFeedbackMode() == MONITORING))
+    		return true;
+    	else
+    		return false;
+    	}
+    
     
     protected void sendMessage(boolean closed) {
         // get the packet

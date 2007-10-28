@@ -25,7 +25,7 @@ package jmri;
  *
  * Description:		Abstract class providing the basic logic of the Turnout interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.28 $
+ * @version			$Revision: 1.29 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean 
     implements Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
@@ -220,6 +220,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean
         if (test!=0) throw new IllegalArgumentException("More than one bit set: "+mode);
         // set the value
         _activeFeedbackType = mode;
+        // unlock turnout if feedback is changed 
+        setLocked (false);
         numFeedbackChanges++;
     }
     
@@ -259,6 +261,52 @@ public abstract class AbstractTurnout extends AbstractNamedBean
      */
     
     public boolean canInvert(){return false;}
+    
+    /**
+     * Turnouts that are locked should only respond to JMRI commands to change state.  
+     * We simulate a locked turnout by monitoring the known state (turnout feedback
+     * is required) and if we detect that the known state has changed, negate it
+     * by forcing the turnout to return to the commanded state.
+     * 
+     * @param locked
+     */
+    
+    public void setLocked(boolean locked) {
+        boolean oldLocked = _locked;
+        _locked = locked;
+        if (oldLocked != _locked)
+            firePropertyChange("locked", new Boolean(oldLocked), new Boolean(_locked));
+    }
+    
+    /**
+     * Determine if turnout is locked. Returns true if turnout is locked. 
+     */
+    public boolean getLocked(){return _locked;}
+    
+    protected boolean _locked = false;
+    
+    public boolean canLock(){return false;}
+    
+    /**
+     *  When true, report to console anytime a cab attempts to change the
+     *  state of a turnout on the layout.  When a turnout is locked, only
+     *  JMRI is allowed to change the state of a turnout.
+     */
+     public void setReportLocked(boolean reportLocked) {
+        boolean oldReportLocked = _reportLocked;
+        _reportLocked = reportLocked;
+        if (oldReportLocked != _reportLocked)
+            firePropertyChange("locked", new Boolean(oldReportLocked), new Boolean(_reportLocked));
+    }
+    
+    /**
+     *  When true, report to console anytime a cab attempts to change the
+     *  state of a turnout on the layout.  When a turnout is locked, only
+     *  JMRI is allowed to change the state of a turnout.
+     */
+    public boolean reportLocked(){return _reportLocked;}
+    
+    protected boolean _reportLocked = true;
      
     /*
      * Support for turnout automation (see TurnoutOperation and related classes)

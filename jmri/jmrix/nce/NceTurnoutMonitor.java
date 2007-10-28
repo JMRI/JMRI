@@ -28,7 +28,7 @@ import jmri.Turnout;
  * 
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 
 public class NceTurnoutMonitor implements NceListener{
@@ -273,8 +273,12 @@ public class NceTurnoutMonitor implements NceListener{
 				.turnoutManagerInstance().getBySystemName("NT" + NTnum);
 		if (rControlTurnout == null)
 			return;
+		
+		// don't update commanded state if turnout locked  
+		if (rControlTurnout.getLocked())
+			return;
 
-		int tState = rControlTurnout.getCommandedState();
+		int tCommandedState = rControlTurnout.getCommandedState();
 		
 		int nceAccyThrown = NCE_ACCY_THROWN;
 		int nceAccyClosed = NCE_ACCY_CLOSED;
@@ -284,7 +288,7 @@ public class NceTurnoutMonitor implements NceListener{
 		}
 
 		if (debugTurnoutMonitor && log.isDebugEnabled()) {
-			log.debug("turnout exists NT" + NTnum + " state: " + tState
+			log.debug("turnout exists NT" + NTnum + " state: " + tCommandedState
 					+ " Feed back mode: " + rControlTurnout.getFeedbackMode());
 		}
 
@@ -295,17 +299,21 @@ public class NceTurnoutMonitor implements NceListener{
 
 		// test for closed or thrown, normally 0 = closed, 1 = thrown
 		int nceAccState = (recMemByte >> bit) & 0x01;
-		if (nceAccState == nceAccyThrown && tState != Turnout.THROWN) {
+		if (nceAccState == nceAccyThrown && tCommandedState != Turnout.THROWN) {
+
 			if (log.isDebugEnabled()) {
-				log.debug("turnout discrepancy, NT"+ NTnum+" CommandedState is now THROWN");
+				log.debug("turnout discrepancy, NT" + NTnum
+						+ " CommandedState is now THROWN");
 			}
 			// change JMRI's knowledge of the turnout state to match observed
 			rControlTurnout.setCommandedStateFromCS(Turnout.THROWN);
 		}
 
-		if (nceAccState == nceAccyClosed && tState != Turnout.CLOSED) {
+		if (nceAccState == nceAccyClosed && tCommandedState != Turnout.CLOSED) {
+
 			if (log.isDebugEnabled()) {
-				log.debug("turnout discrepancy, NT"+ NTnum+" CommandedState is now CLOSED");
+				log.debug("turnout discrepancy, NT" + NTnum
+						+ " CommandedState is now CLOSED");
 			}
 			// change JMRI's knowledge of the turnout state to match observed
 			rControlTurnout.setCommandedStateFromCS(Turnout.CLOSED);
@@ -320,17 +328,18 @@ public class NceTurnoutMonitor implements NceListener{
 		if (rControlTurnout == null)
 			return;
 
-		int tState = rControlTurnout.getKnownState();
-		
+		int tKnownState = rControlTurnout.getKnownState();
+		int tCommandedState = rControlTurnout.getCommandedState();
+
 		int nceAccyThrown = NCE_ACCY_THROWN;
 		int nceAccyClosed = NCE_ACCY_CLOSED;
-		if (rControlTurnout.getInverted()){
+		if (rControlTurnout.getInverted()) {
 			nceAccyThrown = NCE_ACCY_CLOSED;
 			nceAccyClosed = NCE_ACCY_THROWN;
 		}
 
 		if (debugTurnoutMonitor && log.isDebugEnabled()) {
-			log.debug("turnout exists NT" + NTnum + " state: " + tState
+			log.debug("turnout exists NT" + NTnum + " state: " + tKnownState
 					+ " Feed back mode: " + rControlTurnout.getFeedbackMode());
 		}
 
@@ -341,20 +350,58 @@ public class NceTurnoutMonitor implements NceListener{
 
 		// test for closed or thrown, normally 0 = closed, 1 = thrown
 		int nceAccState = (recMemByte >> bit) & 0x01;
-		if (nceAccState == nceAccyThrown && tState != Turnout.THROWN) {
-			if (log.isDebugEnabled()) {
-				log.debug("turnout discrepancy, NT"+ NTnum+" KnownState is now THROWN");
+		if (nceAccState == nceAccyThrown && tKnownState != Turnout.THROWN) {
+
+			if (rControlTurnout.getLocked() && tCommandedState == Turnout.CLOSED) {
+
+				if (log.isDebugEnabled()) {
+					log.debug("Turnout NT" + NTnum + " is locked," 
+							+ " will negate THROW turnout command from layout");
+				}
+				rControlTurnout.forwardCommandChangeToLayout(Turnout.CLOSED);
+				
+				if (rControlTurnout.reportLocked()){
+					log.info("Turnout NT" + NTnum + " is locked," 
+							+ " JMRI has canceled THROW turnout command from cab");
+				}
+
+			} else {
+
+				if (log.isDebugEnabled()) {
+					log.debug("turnout discrepancy, NT" + NTnum
+							+ " KnownState is now THROWN");
+				}
+				// change JMRI's knowledge of the turnout state to match
+				// observed
+				rControlTurnout.setKnownStateFromCS(Turnout.THROWN);
 			}
-			// change JMRI's knowledge of the turnout state to match observed
-			rControlTurnout.setKnownStateFromCS(Turnout.THROWN);
 		}
 
-		if (nceAccState == nceAccyClosed && tState != Turnout.CLOSED) {
-			if (log.isDebugEnabled()) {
-				log.debug("turnout discrepancy, NT"+ NTnum+" KnownState is now CLOSED");
+		if (nceAccState == nceAccyClosed && tKnownState != Turnout.CLOSED) {
+
+			if (rControlTurnout.getLocked()&& tCommandedState == Turnout.THROWN) {
+
+				if (log.isDebugEnabled()) {
+					log.debug("Turnout NT" + NTnum + " is locked," 
+							+ " will negate CLOSE turnout command from layout");
+				}
+				rControlTurnout.forwardCommandChangeToLayout(Turnout.THROWN);
+	
+				if (rControlTurnout.reportLocked()){
+					log.info("Turnout NT" + NTnum + " is locked," 
+							+ " JMRI has canceled CLOSE turnout command from cab");
+				}
+				
+			} else {
+
+				if (log.isDebugEnabled()) {
+					log.debug("turnout discrepancy, NT" + NTnum
+							+ " KnownState is now CLOSED");
+				}
+				// change JMRI's knowledge of the turnout state to match
+				// observed
+				rControlTurnout.setKnownStateFromCS(Turnout.CLOSED);
 			}
-			// change JMRI's knowledge of the turnout state to match observed
-			rControlTurnout.setKnownStateFromCS(Turnout.CLOSED);
 		}
 	}
  

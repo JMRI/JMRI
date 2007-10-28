@@ -42,7 +42,7 @@ package jmri;
  *
  * @author			Dave Duchamp Copyright (C) 2004
  * @author			Bob Jacobsen Copyright (C) 2007
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public interface Route extends NamedBean {
 
@@ -57,6 +57,15 @@ public interface Route extends NamedBean {
      * Get enabled status
     */
     public boolean getEnabled();
+    
+    /**
+     * Set locked status
+     */
+    public void setLocked(boolean state);
+    /**
+     * Get locked status
+    */
+    public boolean getLocked();
 
     // Old interface for outputs 
     
