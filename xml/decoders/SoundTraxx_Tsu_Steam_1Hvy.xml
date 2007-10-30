@@ -2,8 +2,8 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
-<!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id: SoundTraxx_Tsu_Steam_1Hvy.xml,v 1.8 2007-09-21 05:49:33 jacobsen Exp $ -->
+<!-- Copyright (C) JMRI 2005, 2006, 2007 All rights reserved -->
+<!-- $Id: SoundTraxx_Tsu_Steam_1Hvy.xml,v 1.9 2007-10-30 14:15:00 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -21,6 +21,7 @@
 		<version author="Ron McKinnon" version="3" lastUpdated="20060412"/>
 		<version author="Ron McKinnon" version="4" lastUpdated="20060419"/>
 		<version author="Michael Mosher" version="5" lastUpdated="20070406"/>
+		<version author="Michael Mosher" version="6" lastUpdated="20071029"/>
 
 		<!-- Made from SoundTraxx_DSD_Steam.xml file by M Mosher -->
 		<!-- Some of the contents are based on info provided pre-release -->
@@ -31,6 +32,7 @@
 		<!-- Version 4 has acceptable CV's ranges added in sound levels section. -->
 		<!-- Version 5 fixed dupe item tag for CV62 & addeded CV63 & 64. -->
 		<!--		added tool tips for CV105&106 -->
+		<!-- Version 6 added SP 6 chime to whistle types. -->
 		
 <decoder>
 	<family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)">
@@ -1004,6 +1006,7 @@
 				<enumChoice choice="Southern Pacific #4449 (Whistle)"/>
 				<enumChoice choice="Southern Pacific #4449 (Horn)"/>
 				<enumChoice choice="USRA 6-Chime"/>
+				<enumChoice choice="Southern Pacific 6-Chime"/>
 				</enumVal>
 			</variable>
 
@@ -1016,6 +1019,7 @@
 				<enumChoice choice="Southern Pacific #4449 (Whistle)"/>
 				<enumChoice choice="Southern Pacific #4449 (Horn)"/>
 				<enumChoice choice="USRA 6-Chime"/>
+				<enumChoice choice="Southern Pacific 6-Chime"/>
 				</enumVal>
 			</variable>
 
