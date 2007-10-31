@@ -42,7 +42,7 @@ package jmri;
  *
  * @author			Dave Duchamp Copyright (C) 2004
  * @author			Bob Jacobsen Copyright (C) 2007
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public interface Route extends NamedBean {
 
@@ -274,6 +274,26 @@ public interface Route extends NamedBean {
      * Method to get the State of control Turnout that fires this Route
      */
     public int getControlTurnoutState();
+
+    /**
+     * Method to set the SystemName of a lock control Turnout for this Route
+     */
+    public void setLockControlTurnout(String turnoutSystemName);
+
+    /**
+     * Method to get the SystemName of a lock control Turnout for this Route
+     */
+    public String getLockControlTurnout();
+
+    /**
+     * Method to set the State of the lock control Turnout that locks this Route
+     */
+    public void setLockControlTurnoutState(int turnoutState);
+
+    /**
+     * Method to get the State of the lock control Turnout that locks this Route
+     */
+    public int getLockControlTurnoutState();
 
     /**
      * Method to set delay (milliseconds) between issuing Turnout commands

@@ -7,7 +7,7 @@ package jmri;
  *
  * @author	Dave Duchamp Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2006, 2007
- * @version     $Revision: 1.19 $
+ * @version     $Revision: 1.20 $
  */
 public class DefaultRoute extends AbstractNamedBean
     implements Route, java.io.Serializable {
@@ -36,6 +36,9 @@ public class DefaultRoute extends AbstractNamedBean
     protected String mControlTurnout = "";
     protected int mControlTurnoutState = jmri.Turnout.THROWN;
 	protected int mDelay = 0;
+	
+    protected String mLockControlTurnout = "";
+    protected int mLockControlTurnoutState = jmri.Turnout.THROWN;
 
     protected String soundFilename;
     protected String scriptFilename;
@@ -52,6 +55,8 @@ public class DefaultRoute extends AbstractNamedBean
                     new java.beans.PropertyChangeListener[MAX_CONTROL_SENSORS];
     protected Turnout mTurnout = null;
     protected java.beans.PropertyChangeListener mTurnoutListener = null;
+    protected Turnout mLockTurnout = null;
+    protected java.beans.PropertyChangeListener mLockTurnoutListener = null;
 	private boolean busy = false;
      
     private boolean _enabled = true;
@@ -64,7 +69,8 @@ public class DefaultRoute extends AbstractNamedBean
     
     private boolean _locked = false;
     public boolean getLocked() { return _locked; }
-    public void setLocked(boolean v) { 
+    public void setLocked(boolean v) {
+        lockTurnouts (v);
         boolean old = _locked;
         _locked = v;
         if (old != v) firePropertyChange("Locked", new Boolean(old), new Boolean(v));
@@ -433,6 +439,21 @@ public class DefaultRoute extends AbstractNamedBean
     public String getControlTurnout() {
         return mControlTurnout;
     }
+    
+    /**
+     * Method to set the SystemName of a lock control Turnout for this Route
+     */
+    public void setLockControlTurnout(String turnoutSystemName) {
+        mLockControlTurnout = turnoutSystemName;
+        if (mLockControlTurnout.length()<=2) mLockControlTurnout = null;
+    }
+
+    /**
+     * Method to get the SystemName of a lock control Turnout for this Route
+     */
+    public String getLockControlTurnout() {
+        return mLockControlTurnout;
+    }
 
     /**
      * Method to set delay (milliseconds) between issuing Turnout commands
@@ -471,6 +492,43 @@ public class DefaultRoute extends AbstractNamedBean
     public int getControlTurnoutState() {
         return (mControlTurnoutState);
     }
+    
+    /**
+     * Method to set the State of lock control Turnout
+     */
+    public void setLockControlTurnoutState(int turnoutState) {
+		if ((turnoutState == Route.ONTHROWN)
+				|| (turnoutState == Route.ONCLOSED)
+				|| (turnoutState == Route.ONCHANGE)) {
+			mLockControlTurnoutState = turnoutState;
+		} else {
+			log.error("Attempt to set invalid lock control Turnout state for Route.");
+		}
+	}
+
+    /**
+	 * Method to get the State of lock control Turnout
+	 */
+    public int getLockControlTurnoutState() {
+        return (mLockControlTurnoutState);
+    }
+    
+	/**
+	 * Lock or unlock turnouts that are part of a route
+	 */
+	private void lockTurnouts(boolean lock) {
+		// determine if turnout should be locked
+		for (int i = 0; i < MAX_OUTPUT_TURNOUTS_PER_ROUTE; i++) {
+			Turnout t = getOutputTurnout(i);
+			if (t == null)
+				return;
+			if (lock && t.canLock())
+				t.setLocked(true);
+			else
+				t.setLocked(false);
+		}
+	}
+
 
     /**
      * Method to set the Route
@@ -558,6 +616,34 @@ public class DefaultRoute extends AbstractNamedBean
         }
     }
      
+     /**
+      * Turnout has changed, check to see if this 
+      * will lock or unlock route
+      */
+      void checkLockTurnout(int newState, int oldState, Turnout t) {
+         switch (mLockControlTurnoutState) {
+         case ONCLOSED:
+             if (newState == Turnout.CLOSED) setLocked(true);
+             else setLocked (false);
+             return;
+         case ONTHROWN:
+             if (newState == Turnout.THROWN) setLocked(true);
+             else setLocked (false);
+             return;
+         case ONCHANGE:
+             if (newState != oldState){
+            	 if (getLocked())
+            		 setLocked (false);
+            	 else
+            		 setLocked(true);
+             }
+             return;
+         default:
+             // if none, return
+             return;
+         }
+     }
+     
     /**
      * Method to activate the Route via Sensors and control Turnout
      * Sets up for Route activation based on a list of Sensors and a control Turnout
@@ -605,6 +691,27 @@ public class DefaultRoute extends AbstractNamedBean
                 // control turnout does not exist
                 log.error("Route "+getSystemName()+" is linked to a Turnout that does not exist: "+
                                              mControlTurnout);
+            }
+        }
+        if ( (mLockControlTurnout!=null) && (mLockControlTurnout.length() > 2)) {
+            mLockTurnout = InstanceManager.turnoutManagerInstance().
+                                            provideTurnout(mLockControlTurnout);
+            if (mLockTurnout!=null) {
+                mLockTurnout.addPropertyChangeListener(mLockTurnoutListener =
+                                                new java.beans.PropertyChangeListener() {
+                        public void propertyChange(java.beans.PropertyChangeEvent e) {
+                            if (e.getPropertyName().equals("KnownState")) {
+                                int now = ((Integer) e.getNewValue()).intValue();
+                                int then = ((Integer) e.getOldValue()).intValue();
+                                checkLockTurnout(now, then, (Turnout)e.getSource());
+                            }
+                        }
+                    });
+            }
+            else {
+                // control turnout does not exist
+                log.error("Route "+getSystemName()+" is linked to a Turnout that does not exist: "+
+                                             mLockControlTurnout);
             }
         }
     }
