@@ -17,7 +17,8 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2004
- * @version $Revision: 1.12 $
+ * @author Daniel Boudreau Copyright (c) 2007
+ * @version $Revision: 1.13 $
  */
 public class DefaultRouteManagerXml implements XmlAdapter {
 
@@ -47,18 +48,35 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                 String cTurnout = r.getControlTurnout();
 				int addedDelay = r.getRouteCommandDelay();
 				boolean routeLocked = r.getLocked();
+				String cLockTurnout = r.getLockControlTurnout();
 				
                 Element elem = new Element("route")
                             .setAttribute("systemName", sname);
                 if (uname!=null) elem.setAttribute("userName", uname);
-                if (cTurnout!=null) {
+                if (cTurnout!=null && cTurnout!="") {
                     elem.setAttribute("controlTurnout", cTurnout);
                     int state = r.getControlTurnoutState();
-                    if (state == Turnout.THROWN) {
+                    if (state == Route.ONTHROWN) {
                         elem.setAttribute("controlTurnoutState","THROWN");
-                    }
-                    else {
+                    }else if (state == Route.ONCHANGE) {
+                    	elem.setAttribute("controlTurnoutState","CHANGE");
+                    }else if (state == Route.VETOCLOSED) {
+                    	elem.setAttribute("controlTurnoutState","VETOCLOSED");
+                    }else if (state == Route.VETOTHROWN) {
+                    	elem.setAttribute("controlTurnoutState","VETOTHROWN");
+                    }else {
                         elem.setAttribute("controlTurnoutState","CLOSED");
+                    }
+                }
+                if (cLockTurnout!=null && cLockTurnout!="") {
+                    elem.setAttribute("controlLockTurnout", cLockTurnout);
+                    int state = r.getLockControlTurnoutState();
+                    if (state == Route.ONTHROWN) {
+                        elem.setAttribute("controlLockTurnoutState","THROWN");
+                    }else if (state == Route.ONCHANGE) {
+                    	elem.setAttribute("controlLockTurnoutState","CHANGE");
+                    }else {
+                        elem.setAttribute("controlLockTurnoutState","CLOSED");
                     }
                 }
 				if (addedDelay>0) {
@@ -202,6 +220,8 @@ public class DefaultRouteManagerXml implements XmlAdapter {
             String cTurnoutState = null;
 			String addedDelayTxt = null;
 			String routeLockedTxt = null;
+			String cLockTurnout = null;
+			String cLockTurnoutState = null;
 			int addedDelay = 0;
             if ( ((Element)(routeList.get(i))).getAttribute("userName") != null)
                 userName = ((Element)(routeList.get(i))).getAttribute("userName").getValue();
@@ -209,6 +229,10 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                 cTurnout = ((Element)(routeList.get(i))).getAttribute("controlTurnout").getValue();
             if ( ((Element)(routeList.get(i))).getAttribute("controlTurnoutState") != null)
                 cTurnoutState = ((Element)(routeList.get(i))).getAttribute("controlTurnoutState").getValue();
+            if ( ((Element)(routeList.get(i))).getAttribute("controlLockTurnout") != null)
+                cLockTurnout = ((Element)(routeList.get(i))).getAttribute("controlLockTurnout").getValue();
+            if ( ((Element)(routeList.get(i))).getAttribute("controlLockTurnoutState") != null)
+                cLockTurnoutState = ((Element)(routeList.get(i))).getAttribute("controlLockTurnoutState").getValue();
             if ( ((Element)(routeList.get(i))).getAttribute("addedDelay") != null) {
                 addedDelayTxt = ((Element)(routeList.get(i))).getAttribute("addedDelay").getValue();
 				if (addedDelayTxt != null) {
@@ -226,9 +250,15 @@ public class DefaultRouteManagerXml implements XmlAdapter {
 				if (cTurnout != null) {
 					r.setControlTurnout(cTurnout);
 					if (cTurnoutState.equals("THROWN")) {
-						r.setControlTurnoutState(Turnout.THROWN);
+						r.setControlTurnoutState(Route.ONTHROWN);
+					} else if (cTurnoutState.equals("CHANGE"))	{
+						r.setControlTurnoutState(Route.ONCHANGE);
+					} else if (cTurnoutState.equals("VETOCLOSED"))	{
+						r.setControlTurnoutState(Route.VETOCLOSED);
+					} else if (cTurnoutState.equals("VETOTHROWN"))	{
+						r.setControlTurnoutState(Route.VETOTHROWN);
 					} else {
-						r.setControlTurnoutState(Turnout.CLOSED);
+						r.setControlTurnoutState(Route.ONCLOSED);
 					}
 				}
 				// set added delay
@@ -237,6 +267,18 @@ public class DefaultRouteManagerXml implements XmlAdapter {
 				// determine if route locked
 				if (routeLockedTxt != null && routeLockedTxt.equals("True"))
 					r.setLocked(true);
+				
+				//add lock control turout if there is one
+				if (cLockTurnout != null) {
+					r.setLockControlTurnout(cLockTurnout);
+					if (cLockTurnoutState.equals("THROWN")) {
+						r.setLockControlTurnoutState(Route.ONTHROWN);
+					} else if (cLockTurnoutState.equals("CHANGE"))	{
+						r.setLockControlTurnoutState(Route.ONCHANGE);
+					} else {
+						r.setLockControlTurnoutState(Route.ONCLOSED);
+					}
+				}
                 
                 // load output turnouts if there are any - old format first (1.7.6 and before)
                 List routeTurnoutList = ((Element)(routeList.get(i))).getChildren("routeTurnout");

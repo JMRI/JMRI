@@ -31,7 +31,7 @@ import jmri.util.JmriJFrame;
  * @author	Dave Duchamp    Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2007 
  *
- * @version     $Revision: 1.34 $
+ * @version     $Revision: 1.35 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -136,8 +136,7 @@ public class RouteTableAction extends AbstractTableAction {
                     Route r = (Route)getBySystemName((String)getValueAt(row, SYSNAMECOL));
                     boolean v = r.getLocked();
                     r.setLocked(!v);
-                    lockTurnouts (r, !v);
-    			}
+     			}
     			else super.setValueAt(value, row, col);
     		}
     		
@@ -195,21 +194,6 @@ public class RouteTableAction extends AbstractTableAction {
 		}
 		return false;
 	}
-	/**
-	 * Lock or unlock turnouts that are part of a route
-	 */
-	private void lockTurnouts(Route r, boolean lock) {
-		// determine if turnout should be locked
-		for (int i = 0; i < MAX_TURNOUTS; i++) {
-			Turnout t = r.getOutputTurnout(i);
-			if (t == null)
-				return;
-			if (lock && t.canLock())
-				t.setLocked(true);
-			else
-				t.setLocked(false);
-		}
-	}
  
     void setTitle() {
         f.setTitle("Route Table");
@@ -233,6 +217,9 @@ public class RouteTableAction extends AbstractTableAction {
     String[] turnoutInputModes = new String[]{"On "+stateClosed, "On "+stateThrown, "On Change", "Veto Closed", "Veto Thrown"};
     int[] turnoutInputModeValues = new int[]{Route.ONCLOSED, Route.ONTHROWN, Route.ONCHANGE, Route.VETOCLOSED, Route.VETOTHROWN};
 
+    String[] lockTurnoutInputModes = new String[]{"On "+stateClosed, "On "+stateThrown, "On Change"};
+    int[] lockTurnoutInputModeValues = new int[]{Route.ONCLOSED, Route.ONTHROWN, Route.ONCHANGE};
+    
     int sensorModeFromBox(JComboBox box) {
         String mode = (String)box.getSelectedItem();
         int result = jmri.util.StringUtil.getStateFromName(mode, sensorInputModeValues, sensorInputModes);
@@ -282,9 +269,11 @@ public class RouteTableAction extends AbstractTableAction {
     JTextField sensor3 = new JTextField(8);
     JComboBox  sensor3mode = new JComboBox(sensorInputModes);
     JTextField cTurnout = new JTextField(8);
+    JTextField cLockTurnout = new JTextField(8);
 	JTextField timeDelay = new JTextField(5);
 
     JComboBox cTurnoutStateBox = new JComboBox(turnoutInputModes);
+    JComboBox cLockTurnoutStateBox = new JComboBox(lockTurnoutInputModes);
     
     ButtonGroup selGroup = null;
     JRadioButton allButton = null;   
@@ -420,7 +409,7 @@ public class RouteTableAction extends AbstractTableAction {
             } catch (ClassCastException e3) {}  // if not a sortable table model
             routeTurnoutTable.setRowSelectionAllowed(false);
             routeTurnoutTable.setPreferredScrollableViewportSize(new 
-                                                            java.awt.Dimension(480,100));
+                                                            java.awt.Dimension(480,80));
             JComboBox stateTCombo = new JComboBox();
    			stateTCombo.addItem(setStateClosed);
 			stateTCombo.addItem(setStateThrown);
@@ -475,7 +464,7 @@ public class RouteTableAction extends AbstractTableAction {
             } catch (ClassCastException e3) {}  // if not a sortable table model
             routeSensorTable.setRowSelectionAllowed(false);
             routeSensorTable.setPreferredScrollableViewportSize(new 
-                                                            java.awt.Dimension(480,100));
+                                                            java.awt.Dimension(480,80));
             JComboBox stateSCombo = new JComboBox();
    			stateSCombo.addItem(setStateActive);
 			stateSCombo.addItem(setStateInactive);
@@ -553,7 +542,7 @@ public class RouteTableAction extends AbstractTableAction {
             sensor1.setText("");
             sensor2.setText("");
             sensor3.setText("");
-            String sensorHint = "Enter a Sensor system name or nothing.";
+            String sensorHint = "Enter a Sensor system name or nothing";
             sensor1.setToolTipText(sensorHint);
             sensor2.setToolTipText(sensorHint);
             sensor3.setToolTipText(sensorHint);
@@ -566,9 +555,9 @@ public class RouteTableAction extends AbstractTableAction {
             p34.add(new JLabel("Turnout: "));
             p34.add(cTurnout);
             cTurnout.setText("");
-            cTurnout.setToolTipText("Enter a Turnout system name (real or phantom) for throttle control.");
+            cTurnout.setToolTipText("Enter a Turnout system name (real or phantom)");
             p34.add(new JLabel("   Condition: "));
-            cTurnoutStateBox.setToolTipText("Setting control Turnout to selected state will trigger Route.");
+            cTurnoutStateBox.setToolTipText("Setting control Turnout to selected state will trigger Route");
             p34.add(cTurnoutStateBox);
             p3.add(p34);
 			// add added delay
@@ -579,13 +568,35 @@ public class RouteTableAction extends AbstractTableAction {
             p36.add(new JLabel("Added delay: "));
             p36.add(timeDelay);
             timeDelay.setText("0");
-            timeDelay.setToolTipText("Enter time to add to the default of 250 milliseconds between turnout commands.");
+            timeDelay.setToolTipText("Enter time to add to the default of 250 milliseconds between turnout commands");
             p36.add(new JLabel(" (milliseconds) "));
             p3.add(p36);
 			// complete this panel
             Border p3Border = BorderFactory.createEtchedBorder();
             p3.setBorder(p3Border);
             contentPane.add(p3);
+             
+            // add lock control table
+            JPanel p4 = new JPanel();
+            p4.setLayout(new BoxLayout(p4, BoxLayout.Y_AXIS));
+            // add lock control turnout
+            JPanel p43 = new JPanel();
+            p43.add(new JLabel("Enter a Turnout that controls the lock for this Route (optional)"));
+            p4.add(p43);
+            JPanel p44 = new JPanel();
+            p44.add(new JLabel("Turnout: "));
+            p44.add(cLockTurnout);
+            cLockTurnout.setText("");
+            cLockTurnout.setToolTipText("Enter a Turnout system name (real or phantom)");
+            p44.add(new JLabel("   Condition: "));
+            cLockTurnoutStateBox.setToolTipText("Setting control Turnout to selected state will lock Route");
+            p44.add(cLockTurnoutStateBox);
+            p4.add(p44);
+			// complete this panel
+            Border p4Border = BorderFactory.createEtchedBorder();
+            p4.setBorder(p4Border);
+            contentPane.add(p4);
+            
             // add notes panel
             JPanel pa = new JPanel();
             pa.setLayout(new BoxLayout(pa, BoxLayout.Y_AXIS));
@@ -869,7 +880,27 @@ public class RouteTableAction extends AbstractTableAction {
 			addDelay = 0;
 			timeDelay.setText("0");
 		}
-		g.setRouteCommandDelay(addDelay);		
+		g.setRouteCommandDelay(addDelay);
+		
+	    // Set lock turnout information if there is any
+        String turnoutLockSystemName = cLockTurnout.getText();
+        if (turnoutLockSystemName.length() > 0) {
+            Turnout t = InstanceManager.turnoutManagerInstance().
+                                    provideTurnout(turnoutLockSystemName);
+            if (t!=null) {
+                g.setLockControlTurnout(turnoutLockSystemName);
+                // set up control turnout state
+                g.setLockControlTurnoutState(turnoutModeFromBox(cLockTurnoutStateBox));
+            }
+            else {
+                g.setLockControlTurnout("");
+                log.error("Unexpected failure to add lock control Turnout '"+
+                        turnoutLockSystemName+"' to Route '"+g.getSystemName()+"'.");
+            }
+        } else {
+            // No control Turnout was entered
+            g.setLockControlTurnout("");
+        }
     }
     
     JFileChooser soundChooser = null;
@@ -1014,6 +1045,11 @@ public class RouteTableAction extends AbstractTableAction {
         cTurnout.setText(g.getControlTurnout()); 
         
         setTurnoutModeBox(g.getControlTurnoutState(), cTurnoutStateBox);
+        
+        // set up lock control Turnout if there is one
+        cLockTurnout.setText(g.getLockControlTurnout()); 
+        
+        setTurnoutModeBox(g.getLockControlTurnoutState(), cLockTurnoutStateBox);
         
 		// set up additional delay
 		timeDelay.setText(Integer.toString(g.getRouteCommandDelay()));
