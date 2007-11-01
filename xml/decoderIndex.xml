@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 1.9.0 on Wed Sep 19 20:27:55 PDT 2007 $Id: decoderIndex.xml,v 1.106 2007-09-20 03:37:04 jacobsen Exp $-->
-  <decoderIndex version="124">
+  <!--Written by JMRI version 1.9.1 on Thu Nov 01 10:29:58 PDT 2007 $Id: decoderIndex.xml,v 1.107 2007-11-01 17:33:35 jacobsen Exp $-->
+  <decoderIndex version="127">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -114,7 +114,7 @@
         <model model="VO1000 (Part #500099)" numOuts="2" numFns="0" lowVersionID="46" highVersionID="46" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
       <family name="Blueline" mfg="Broadway Limited Imports, LLC" type="locomotive" file="BLI_Blueline_diesel.xml">
-        <model model="Diesel" numOuts="3" numFns="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="Diesel" numOuts="3" numFns="14" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="4" />
           <output name="1" label="headlight" connection="unspecified" />
           <output name="2" label="rearlight" connection="unspecified" />
@@ -316,7 +316,23 @@
         <model model="AD4MC" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
         <model model="AD4HC" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
-      <family name="Series 3 with FX3, silent, readback" mfg="Digitrax" lowVersionID="49" highVersionID="49" type="locomotive" file="Digitrax_01x3.xml">
+      <family name="Series 3 with FX3, silent, readback" mfg="Digitrax" lowVersionID="49" highVersionID="51" type="locomotive" file="Digitrax_01x3.xml">
+        <model model="DG383" numOuts="8" numFns="12" maxMotorCurrent="3A (peak=5A)" formFactor="O/G" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="4" label="Violet" connection="wire" />
+          <output name="5" label="Brown" connection="wire" />
+          <output name="6" label="Wht/Yel" connection="wire" />
+          <output name="7" label="Wht/Grn" connection="wire" />
+          <output name="8" label="Wht/Blu" connection="wire" />
+          <size length="2.23" width="1.45" height="0" units="inches" />
+        </model>
+        <model model="DG583" numOuts="8" numFns="12" maxMotorCurrent="5A (peak=10A)" formFactor="O/G" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="4" label="Violet" connection="wire" />
+          <output name="5" label="Brown" connection="wire" />
+          <output name="6" label="Wht/Yel" connection="wire" />
+          <output name="7" label="Wht/Grn" connection="wire" />
+          <output name="8" label="Wht/Blu" connection="wire" />
+          <size length="2.23" width="1.45" height="0" units="inches" />
+        </model>
         <model model="DH163" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <output name="4" label="Violet" connection="wire" />
           <output name="5" label="Pad" connection="solder" />
@@ -381,21 +397,46 @@
           <output name="6" label="Pad" connection="solder" />
           <size length="1.05" width="0.67" height="0.25" units="inches" />
         </model>
-        <model model="DG383" numOuts="8" numFns="12" maxMotorCurrent="3A (peak=5A)" formFactor="O/G" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
-          <output name="4" label="Violet" connection="wire" />
-          <output name="5" label="Brown" connection="wire" />
-          <output name="6" label="Wht/Yel" connection="wire" />
-          <output name="7" label="Wht/Grn" connection="wire" />
-          <output name="8" label="Wht/Blu" connection="wire" />
-          <size length="2.23" width="1.45" height="0" units="inches" />
+        <model model="DH165A0" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="Pad" connection="solder" />
+          <output name="2" label="Pad" connection="solder" />
+          <output name="3" label="Pad" connection="solder" />
+          <output name="4" label="Pad" connection="solder" />
+          <output name="5" label="Pad" connection="solder" />
+          <output name="6" label="Pad" connection="solder" />
+          <size length="2.877" width="0.667" height="0.173" units="inches" />
         </model>
-        <model model="DG583" numOuts="8" numFns="12" maxMotorCurrent="5A (peak=10A)" formFactor="O/G" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
-          <output name="4" label="Violet" connection="wire" />
-          <output name="5" label="Brown" connection="wire" />
-          <output name="6" label="Wht/Yel" connection="wire" />
-          <output name="7" label="Wht/Grn" connection="wire" />
-          <output name="8" label="Wht/Blu" connection="wire" />
-          <size length="2.23" width="1.45" height="0" units="inches" />
+        <model model="DH165K0" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="Pad" connection="solder" />
+          <output name="2" label="Pad" connection="solder" />
+          <output name="3" label="Pad" connection="solder" />
+          <output name="4" label="Pad" connection="solder" />
+          <output name="5" label="Pad" connection="solder" />
+          <output name="6" label="Pad" connection="solder" />
+          <size length="2.877" width="0.667" height="0.173" units="inches" />
+        </model>
+        <model model="DH165K1A" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="LED" connection="solder" />
+          <output name="2" label="LED" connection="solder" />
+          <output name="3" label="LED" connection="solder" />
+          <output name="4" label="LED" connection="solder" />
+          <output name="5" label="Pad" connection="solder" />
+          <output name="6" label="Pad" connection="solder" />
+          <size length="2.877" width="0.667" height="0.173" units="inches" />
+        </model>
+        <model model="DH165L0" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="Pin" connection="solder" />
+          <output name="2" label="Pin" connection="solder" />
+          <output name="3" label="Pad" connection="solder" />
+          <output name="4" label="Pad" connection="solder" />
+          <output name="5" label="Pad" connection="solder" />
+          <output name="6" label="Pad" connection="solder" />
+          <size length="1.05" width=".67" height=".25" units="inches" />
+        </model>
+        <model model="DN123K3" numOuts="2" numFns="8" maxMotorCurrent="1.25A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <output name="1" label="LED" connection="solder" />
+          <output name="2" label="LED" connection="solder" />
+          <size length="Unknown" width="Unknown" height="Unknown" units="inches" />
         </model>
         <model model="DN143" numOuts="4" numFns="8" maxMotorCurrent="1.25A (peak=2A)" formFactor="N" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <output name="4" label="Violet" connection="wire" />
@@ -1027,9 +1068,13 @@
         <model model="Synch Steam Sound 1627" numOuts="2" numFns="12" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
       <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_1630.xml">
-        <model model="Synch Steam Sound 1630" numOuts="2" numFns="12" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="Synch Steam Sound 1630" numOuts="2" numFns="12" connector="9pin" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <!-- note only F0 to F12 are NMRA compatible -->
           <size length="48" width="17" height="7.5" units="mm" />
+        </model>
+        <model model="1656" numOuts="4" numFns="28" connector="NMRAmedium" maxMotorCurrent="1.5A" maxInputVolts="18" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <!-- note only F0 to F12 are NMRA compatible -->
+          <size length="45" width="18" height="6.2" units="mm" />
         </model>
       </family>
       <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_1631.xml">
@@ -2415,7 +2460,7 @@
         </model>
       </family>
       <family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_Tsu_Steam.xml">
-        <model model="Tsunami Steam" numOuts="4" numFns="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="Tsunami Steam" numOuts="4" numFns="14" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Whistle" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
@@ -3234,11 +3279,11 @@
         </model>
       </family>
       <family name="Zimo MX65" mfg="Zimo" type="locomotive" file="Zimo_MX65.xml">
-        <model model="MX65L/N" lowVersionID="20" highVersionID="29" numOuts="2" numFns="8" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="MX65L/N" lowVersionID="20" highVersionID="29" numOuts="2" numFns="8" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <output name="1" label="Front head lights" connection="unspecified" />
           <output name="2" label="Rear head lights" connection="unspecified" />
         </model>
-        <model model="MX65S/N" lowVersionID="20" highVersionID="29" numOuts="8" numFns="8" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="MX65S/N" lowVersionID="20" highVersionID="29" numOuts="8" numFns="8" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <output name="1" label="Front head lights" connection="unspecified" />
           <output name="2" label="Rear head lights" connection="unspecified" />
           <output name="3" label="F2 pin-15, right" connection="unspecified" />
@@ -3248,7 +3293,7 @@
           <output name="7" label="F6 pin-12, right" connection="unspecified" />
           <output name="8" label="F7 pin-8, right" connection="unspecified" />
         </model>
-        <model model="MX65V/N" lowVersionID="20" highVersionID="29" numOuts="12" numFns="8" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="MX65V/N" lowVersionID="20" highVersionID="29" numOuts="12" numFns="8" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <output name="1" label="Front head lights" connection="unspecified" />
           <output name="2" label="Rear head lights" connection="unspecified" />
           <output name="3" label="F2 pin-15, right" connection="unspecified" />
