@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Help.shtml,v 1.5 2007-08-09 20:54:47 jacobsen Exp $ -->
+<!-- $Id: Help.shtml,v 1.6 2007-11-01 17:51:10 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -52,11 +52,20 @@ Within that, there are several file trees:
 <LI>package - organized like the source package tree,
 this contains code-specific help files for e.g. a particular
 window or component.
-<LI>html - general descriptions, organized in a similar way to the
-main web site. Note that because of limitations to the JavaHelp 
-HTML, you can't just take pages directly from the main web site.
+<LI>html - general descriptions, tutorials, etc.
 <LI>DecoderProManual - a version of the DecoderPro manual reformatted for 
 use in the help system.
+</UL>
+
+<h2>Web access to help</h2>
+
+It's inconvenient to have to maintain two separate web pages for the
+main web site and the help system.  To reduce the need for that, we
+use a particular form for the web pages in the help system.
+<UL>
+<LI>Use ".shtml" file extensions so that
+the main web servers will search the files for
+<A HREF="http://httpd.apache.org/docs/1.3/howto/ssi.html">server-side includes</a>.
 </UL>
 
 <h2>Access in the code</h2>
