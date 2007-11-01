@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.9.1.shtml,v 1.7 2007-10-27 23:54:44 jacobsen Exp $ -->
+<!-- $Id: jmri1.9.1.shtml,v 1.8 2007-11-01 17:49:46 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -60,25 +60,22 @@ Therefore, this test version should be considered experimental.
 <!-- version that's good enough to be recommended for general use, including by new users.  -->
 <!-- We're therefore making that version, "Production version 1.8" available for download today. -->
 
-<b>
+<b><p>
 Note that starting with this release, JMRI is only available 
 under the 
 <A HREF="/COPYING">GNU General Public License</a>. For more information, please
 see our 
-<a href="/Copyright.html">copyright and licensing page</a>.</b>
+<a href="/Copyright.html">copyright and licensing page</a>.</p></b>
 
 <h3>New warnings for this version:</h3>
 
-<P>On using system vs user names:  System names are fixed when they are created, and refer to a specific item such as an input pin, output device, etc.  You can also attach a user name to any of these, and change it after the fact.  By convention, when you put a name in a form, we try to remember that name for the next time you reload that configuration. You can provide either a system name or a user name.  If you don't change the user name once you've set it, it doesn't matter which you provide.  But changing user names can have both good and bad effects:
-<UL>
-<LI>You can use them to name "functional" items, like "east entrance turnout". A particular turnout, like LT12, could be given that user name, and then "east entrance turnout" could be entered in a route or signaling definition.  Then, later, if you wanted to use a different output to control the "east entrance turnout", e.g. CT21, you could move the user name to the other turnout in the turnout table, store the configuration, and reload it (to connect up the various uses of the devices) and everything would still work.
-<LI>On the other hand, if you just edit the user name for LT12 to "East Entrance TO" (note change to capitalization & abbreviation), store and load the configuration, the route will not reload properly and you'll get an error message saying that "east entrance turnout" is not defined.  
-</UL>
-It's up to you to decide how you want to use user names when filling out forms, and whether you might be better off using system names. 
+<P>This version of JMRI no longer supports NCE AIU broadcasts.  This change was needed so that JMRI could reliably read certain CV values. We recommend that if you use NCE AIUs, that you upgrade the command station EPROM to version 2007 or newer and turn off AIU broadcasts.  Code has been added to detect if AIU broadcasts are enabled, and a warning message will appear at startup requesting that AIU broadcasts be turned off for proper operation of the JMRI programs.
 
-<P>The "LocoNet Hexfile" protocol name in the preferences has always been a poor name. 
-This has been changed to "LocoNet Simulator" to better reflect it's purpose.  
-Some documentation may still contain the old name.
+<P>This version of JMRI requires Java 1.3 or later.  
+To see JMRI's plans for which Java versions will be required when, please
+see our
+<A HREF="../doc/Technical/TechRoadMap.shtml">technological roadmap page</a>.
+<h3>Warnings from older versions:</h3>
 
 <P>For Lenz users: There are now separate choices for each of the serial-based Lenz Computer Interfaces 
 (i.e. the LI100,LI100F,LI101F). Since release 1.7.3, to aid in backwards compatibility, all the interfaces 
@@ -103,12 +100,6 @@ otherwise the writes will fail.
 <P>QSI CV 64 CV Numeric Verbal Readout currently does not work for indexed CVs.
  
 <P>The Route interface has had significant changes.  New member functions have been provided for configuring the Turnouts and Sensors that are changed with the Route fires.  The old methods are deprecated. If you've written your own code that uses Routes directly, you should update it.  The deprecated methods will be removed after the next production release.
-
-<P>On Mac OS X, JMRI 1.7.3 and later uses Java 1.4 if it's available.  
-This may result in some small cosmetic changes, but should resolve several bugs in the user interface. 
-Also, Mac OS X is now being distributed as a disk image (DMG) file. 
-To install it, double click on the file to mount it, and then drag the resulting JMRI folder to the Applications folder.
-
 
 <h3>Download links:</h3>
 
@@ -247,6 +238,11 @@ Michael Mosher updated the QSI V7 decoder definitions to add "grade crossing" as
 
 <P>
 Petr Koud'a made it possible to use Littfinski Daten Technik (<a href="http://www.ldt-infocenter.com/">LDT</a>) signal decoders with JMRI. These decoders can display up to 8 aspects. One position of a turnout is associated with each signal aspect. This new signal type assigns turnout positions to all 7 JMRI signal aspects.
+
+<P>
+A definition was added for the MRC 1656 sound decoder
+
+
 <hr class="hide">
 <!--#include virtual="/Footer" -->
 
