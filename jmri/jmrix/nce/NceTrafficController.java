@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.21 $
+ * @version			$Revision: 1.22 $
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface {
 
@@ -163,19 +163,34 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     protected boolean endOfMessage(AbstractMRReply msg) {
         // first try boolean
         if (replyBinary) {
-            // handle "not supported" error
-// dboudreau: remove data sensitive code from input stream        	
-//            if (msg.getElement(0) == 0x30 && replyLen != 16 ) {
-//                log.error("Command unsupported by command station!");
-//                return true;
-//            } else if (msg.getElement(0) == 0x61 && replyLen != 16 ) {
-//                return msg.getNumDataElements() >= 3;
-            if (msg.getNumDataElements() >= replyLen ) {
-                return true;
-            } else 
-                return false;
-        } else {
-            // detect that the reply buffer ends with "COMMAND: " (note ending space)
+			// Attempt to detect and correctly forward AIU broadcast from pre
+			// 2006 EPROMS. We'll check for three byte unsolicated message
+			// starting with "A" 0x61. The second byte contains the AIU number +
+			// 0x30. The third byte constains the sensors, 0x41 < s < 0x6F
+			// This code is problematic, it is data sensitive.
+			// We can also incorrectly forward an AIU broadcast to a routine
+			// that is waiting for a reply
+			if (replyLen == 0 && NceMessage.getCommandOptions() < NceMessage.OPTION_2006) {
+				if (msg.getNumDataElements() == 1 && msg.getElement(0) == 0x61)
+					return false;
+				if (msg.getNumDataElements() == 2 && msg.getElement(0) == 0x61
+						&& msg.getElement(1) >= 0x30)
+					return false;
+				if (msg.getNumDataElements() == 3 && msg.getElement(0) == 0x61
+						&& msg.getElement(1) >= 0x30
+						&& msg.getElement(2) >= 0x41
+						&& msg.getElement(2) <= 0x6F)
+					return true;
+			}
+			if (msg.getNumDataElements() >= replyLen) {
+				// reset reply length so we can detect an unsolicated AIU message 
+				replyLen = 0;
+				return true;
+			} else
+				return false;
+		} else {
+            // detect that the reply buffer ends with "COMMAND: " (note ending
+			// space)
             int num = msg.getNumDataElements();
             // ptr is offset of last element in NceReply
             int ptr = num-1;

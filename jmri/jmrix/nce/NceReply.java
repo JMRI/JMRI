@@ -9,7 +9,7 @@ package jmri.jmrix.nce;
  *
  * @author		Bob Jacobsen  Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2007
- * @version             $Revision: 1.13 $
+ * @version             $Revision: 1.14 $
  */
 public class NceReply extends jmri.jmrix.AbstractMRReply {
 
@@ -62,24 +62,30 @@ public class NceReply extends jmri.jmrix.AbstractMRReply {
     }
     
     /**
-     * Examine message to see if it is an asynchronous sensor (AIU) state report
-     * @return true if message asynch sensor message
-     * dBoudreau: Add check to see if CS memory read of 16 bytes
-     */
+	 * Examine message to see if it is an asynchronous sensor (AIU) state report
+	 * 
+	 * @return true if message asynch sensor message 
+	 * Boudreau: Improved detection to check three bytes and message length
+	 * of exactly 3
+	 */
     
     public boolean isSensorMessage() {
-    	return getElement(0)==0x61 && getNumDataElements()>=3 && getNumDataElements ()!=16;
-    }
+		return getElement(0) == 0x61 && getElement(1) >= 0x30
+				&& getElement(2) >= 0x41 && getElement(2) <= 0x6F
+				&& getNumDataElements() == 3;
+	}
     
     public boolean isUnsolicited() {
-// dboudreau: remove check for unsolicited sensor messages     	
-//    	if (isSensorMessage()) {
-//    		setUnsolicited();
-//    		return true;
-//    	} else {
+// Boudreau: check for unsolicited AIU messages in pre 2006 EPROMs    	
+    	if (NceMessage.getCommandOptions()>= NceMessage.OPTION_2006)
+    		return false;
+    	if (isSensorMessage()) {
+    		setUnsolicited();
+    		return true;
+    	} else {
     		return false;
     	}
-//    }
+    }
     
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceReply.class.getName());
 
