@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractMRReply;
  * see nextAiuPoll()
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class NceSensorManager extends jmri.AbstractSensorManager
                             implements NceListener {
@@ -242,7 +242,7 @@ public class NceSensorManager extends jmri.AbstractSensorManager
                 ((indicator>=0x41 && indicator<=0x5e ) || (indicator>=0x61 && indicator<=0x7e ))) {
         	lastMessageReceived = System.currentTimeMillis();
         	if (aiuArray[index]==null) {
-                log.debug("unsolicited message \"" + r.toString()+ "for unused sensor array");
+                log.debug("unsolicited message \"" + r.toString()+ "\" for unused sensor array");
             } else {
                 int sensorNo;
                 int newState;
