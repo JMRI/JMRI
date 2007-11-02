@@ -11,14 +11,15 @@ import javax.swing.JOptionPane;
  * AIU broadcasts, 0 = disabled, 1 = enabled.
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  * 
  */
 
 public class NceAIUChecker implements NceListener {
 
-	public static final int MEM_AIU = 0xDC15; // NCE CS AIU memory address 
+	private static final int MEM_AIU = 0xDC15; // NCE CS AIU memory address 
 	private static final int REPLY_LEN = 1; // number of bytes read
+	private static boolean EXPECT_REPLY = false; // flag 
 
 	public NceMessage NceAiuPoll() {
 
@@ -26,6 +27,7 @@ public class NceAIUChecker implements NceListener {
 
 		byte[] bl = NceBinaryCommand.accMemoryRead1(MEM_AIU);
 		NceMessage m = NceMessage.createBinaryMessage(bl, REPLY_LEN);
+		EXPECT_REPLY = true;
 		return m;
 
 	}
@@ -37,6 +39,11 @@ public class NceAIUChecker implements NceListener {
 	}
 
 	public void reply(NceReply r) {
+		if (!EXPECT_REPLY && log.isDebugEnabled()){
+			log.debug("Unexpected reply in AIU broadcast checker");
+			return;
+		}
+		EXPECT_REPLY = false;
 		if (r.getNumDataElements() == REPLY_LEN) {
 
 			// if broadcasts are enabled, put up warning
@@ -46,7 +53,7 @@ public class NceAIUChecker implements NceListener {
 				log.warn("AIU check broadcast return value is out of range");
 			}
 			if (AIUstatus == 1) {
-
+				log.warn("AIU broadcasts are enabled");
 				JOptionPane.showMessageDialog(null,
 								"JMRI has detected that AIU broadcasts are enabled. \n"
 								+ "You must disable AIU broadcasts for proper operation of this program. \n" 
