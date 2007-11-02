@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.17 $ -->
+<!-- Revision $Revision: 1.18 $ -->
 
 <project name="JMRI" basedir="." default="none">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -169,6 +169,19 @@
     <delete dir="Linux/JMRI/jython" />
     <cvs command="export" quiet="true" package="jython" dest="Linux/JMRI" tag="${release}"/>
     <cvs command="export" quiet="true" package="scripts" dest="Linux/JMRI" tag="${release}"/>
+    <!-- ensure scripts are executable -->
+    <chmod perm="ugo+rx">
+		<fileset dir="Linux/JMRI/scripts" >
+      		<include name="*.csh"/>
+      		<include name="cornwall"/>
+      		<include name="DecoderPro"/>
+      		<include name="JmriDemo"/>
+      		<include name="LocoTools"/>
+      		<include name="PacketPro"/>
+      		<include name="PanelPro"/>
+       		<include name="jmrithon"/>
+      	</fileset>
+    </chmod>
     <move todir="Linux/JMRI">
 		<fileset dir="Linux/JMRI/scripts" >
       		<include name="*.csh"/>
@@ -184,19 +197,6 @@
       	</fileset>
 	</move>
     <delete dir="Linux/JMRI/scripts" />
-    <!-- ensure scripts are executable -->
-    <chmod perm="ugo+rx">
-		<fileset dir="Linux/JMRI/scripts" >
-      		<include name="*.csh"/>
-      		<include name="DecoderPro"/>
-      		<include name="PanelPro"/>
-      		<include name="LocoTools"/>
-      		<include name="cornwall"/>
-      		<include name="JmriDemo"/>
-      		<include name="PacketPro"/>
-       		<include name="jmrithon"/>
-      	</fileset>
-    </chmod>
 </target>
 
 <target name="x-rel-installer-osx" depends=""
