@@ -1,6 +1,6 @@
 <!-- an ANT build.xml file for JMRI XSLT -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2005 -->
-<!-- Revision $Revision: 1.14 $ -->
+<!-- Revision $Revision: 1.15 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -25,7 +25,8 @@
 
   <!-- set global properties for this build -->
   <property name="xml" value=".."/>
-  <property name="dtd" value="../DTD"/>
+  <property name="toDTD" value="DTD"/>
+  <property name="fromDTD" value="../DTD"/>
   <property name="decoders" value="../decoders"/>
   <property name="target" value="pages"/>
   <property name="propertiesdir" value="properties"/>
@@ -48,13 +49,19 @@
     <tstamp/>
     <!-- Create the build directory structure used by compile -->
     <mkdir dir="${target}"/>
+    <mkdir dir="${toDTD}"/>
     <mkdir dir="${propertiesdir}"/>
   </target>
 
   <target name="copyDTD" description="ensure local DTD file copies present where needed for processing">
-	<copy todir="${target}" >
-    	<fileset dir="${dtd}" >
+	<copy todir="${toDTD}" >
+    	<fileset dir="${fromDTD}" >
       		<include name="*.dtd"/>
+    	</fileset>
+  	</copy> 
+	<copy todir="${target}" >
+    	<fileset dir="${fromDTD}" >
+      		<include name="decoderIndex-config.dtd"/>
     	</fileset>
   	</copy> 
   </target>
@@ -206,6 +213,19 @@
 	</style>
   </target>
   
+  <target name="testweb" depends="init, copyDTD, copyXML" 
+  			description="test a single web transform">
+    <style  basedir="${target}"
+    		destdir="${target}"
+    		extension=".html"
+    		style="decoder.xsl"
+    		in="pages/TCS_A1.xml"
+    		out="pages/testweb.html"
+    	>
+	</style>
+  </target>
+  
+
   <target name="xslt" depends="init, models, index, selection, csv, id"
   		description="run the whole sequence of processing" />
   		
