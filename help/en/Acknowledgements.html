@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.html,v 1.1 2007-03-18 19:28:25 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.html,v 1.2 2007-11-02 05:47:34 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -35,7 +35,7 @@
 <A ID="A"></A>
 	<LI>Debbie Ames of Lenz USA, who has provided valuable information on
 	the Lenz decoders and loaned equipment for testing
-	<LI>Ronald Angel, who figured out how to run the demo on Linux
+	<LI>Ronald Angel, who figured out how to run the demo on GNU/Linux
     <LI>Ian Anderson, who set up the <A HREF="http://www.editthis.info/JMRI/index.php/Main_Page">documentation Wiki</a>,
     which lets a lot of people easily contribute to building better documentation
 	<LI>Ron W. Auld, who's llnmon program formed the basis for the LocoNet
@@ -66,6 +66,9 @@
 	test the physical data fields in the decoder definitions, added
 	features to the decoder index, decoder selection tree, and speedometer,
 	and created the connection to the Zimo MX1 DCC system
+    <LI>Dan Boudreau, who added support for the new NCE turnout command
+    and read-back of turnout positions, updated the "send packet" tool to send 
+    NCE binary messages, and added a tool to let NCE users send macro commands.
 	<LI>Dave Boydston of Serialio.com, who helped with the Windows
 	connection to an MS100.  Check out their great Java serial library!
 	<LI>Peter Brandenburg, for many CT Electronik decoder definitions, definitions for Haber &amp; Koenig decoders, and for creating the SPROG web page
@@ -79,6 +82,7 @@
 	<LI>Bob Byck, who did extensive testing of test release 1.7.3
 	<LI>Allen Byrne, who has systematically made improvements in the syntax and structure of the JMRI code
 <A ID="C"></A>
+    <LI>Ken Cameron, who wrote the NCE fast clock support
 	<LI>Barry Chinn, who created the PDF file of our manual
 	<LI>Normal Clymer, who contribed a TCS definition file
 	<LI>Seth Cohen, who helped get serial sensors and NCE AIUs to work, and
@@ -100,6 +104,7 @@
 	added "two outputs per turnout" support for C/MRI,
 	fixed a bug with complex definition loading
 	<LI>Dave Duchesneau, who provided a decoder definition for the MERG accessory decoder
+	<LI>Michael Dunn, who provided a decoder ddefinition for the MRC 1645 decoder
 <A ID="E"></A>
 	<LI>Joe Ellis provided the DecoderPro configuration files for the Lenz LE077XF decoder
 	    and has done a fantastic job on the manual
@@ -109,7 +114,7 @@
 	He created our
 	Mac Classic and MacOS X icons and worked on the PanelPro logo.
 	He also updated the NCE support to work with new NCE EPROMs
-	that require binary commands.
+	that require binary commands, and made it work with TCS decoders.
     <LI>Don Fiehmann provided MRC decoders for testing
 	<LI>Marco Forcone, who sacrified two turnouts motors to the cause of
 	debugging XPressNet turnout support
@@ -131,6 +136,7 @@
 <A ID="H"></A>
 	<LI>Rob Hamerling, who got the demo to run on OS/2, contributed his scripts and
 	has been patiently testing
+	<LI>Jim Hanna, who helped with instructions for NCE units
 	<LI>David Harris fixed some bugs in the Lenz decoder definitions
 	<LI>Phil Hartung, who provided some CTC graphics
 	<LI>Ian Havercroft, who provided the correct identification codes for ESU decoders
@@ -153,6 +159,7 @@
     <LI>Scott Kitts, who helped debug the new communications library for 
     MacOS X
 	<LI>Tony Koester, who helped with signalling
+	<LI>Ross Kudlick researched options switches on Digitrax command stations
 	<LI>Nick Kulp, who helped test much of the C/MRI and signaling logic, presented
 	<A href="clinics/NickKulpMarch2004/">a nice clinic</a> on
 	how to start making panels, and contributed numerous icons
@@ -160,7 +167,7 @@
 	<LI>Al Lautenslager of CVP Products, who loaned some EasyDCC hardware
 	<LI>Jeff Law provided two Umelec decoder definitions
 	<LI>Jim LeFevre, who did the testing on the TMCC implementation, including buying components so we could do a more complete job
-    <LI>Peter Lloyd-Jones, who contributed a script for playing a sound when a function key is pressed on a throttle
+    <LI>Peter Lloyd-Jones, who contributed a script for playing a sound when a function key is pressed on a throttle and wrote instructions for installing on Ubuntu Linux
 	<LI>Kelly Loyd, who contributed throttle code for EasyDCC
 	<LI>Carsten S. Lundsten, who let us make icons from the artwork on his great signaling
 	website <A HREF="http://www.lundsten.dk/us_signaling">http://www.lundsten.dk/us_signaling</a>.
@@ -178,7 +185,7 @@
 	<LI>Michael Mosher, who helped identify the way Digitrax decoder models are organized,
 	has done a lot of work to improve the decoder definitions for NCE, Soundtraxx 
 	and Atlas decoders, provided new definitions for TCS, MRC and (lots of!) QSI 
-	and Zimo decoders
+	and Zimo decoders; a real hero of decoder definition distinction
 <A ID="N"></A>
 	<LI>Bill Nanney, who tenaciously worked to help find a bug were certain
 	decoders wouldn't read and write all sheets
@@ -190,7 +197,9 @@
 	become an active developer, including providing the code for indexed CVs (ala QSI),
 	better support of text and clocks on panels, providing a "factory reset" feature
 	for decoders, and fixing multiple hard bugs
+	<LI>Phill Perry, who contributed a decoder definition for the New York Byano Limited locomotive
 	<LI>Bruce Petrarca, who has started offering CDs so nobody else has to burn them
+	<LI>Rob Plevier, who provided instructions for running JMRI on OpenSUSE GNU/Linux
 	<LI>John Plocher, who make good suggestions on XML DTD items,
 	created the infrastructure for this web site, and lead the construction of the demo layout for the JavaOne show.
 	<LI>Herb Poppe, who diagnosed a problem in some Digitrax decoder definitions
@@ -198,7 +207,8 @@
 <A ID="R"></A>
 	<LI>Wim Ros, who provide help with the direct connection to the Intellibox
 	<LI>Bill Robinson of Team Digital, who provided a schematic of their
-	MS100-equivalent level shifter, and contributed the LnSendTool.py script
+	MS100-equivalent level shifter, contributed the LnSendTool.py script,
+	and decoder definitions for Team Digital products
     <LI>Mark Rogerson, who provided the RXTX (Java communications library) for MacOS X machines with Intel processors
 	<LI>Klaus Ruebsam, who is hosting German and English JMRI discussion
 	groups on his 
@@ -206,6 +216,7 @@
 <A ID="S"></A>
     <LI>Jeff Schmaltz, who contributed a decoder definition for the Massoth LGB decoder
 	<LI>Jim Scorse, who gave generously of his time to answer questions about NCE details
+	<LI>Brett Scott contributed the scripts for programming DCC Specialties products
 	<LI>Jack Shall, who cleaned up the XML files, contributed decoder definitions
 	and added a huge number of tooltips to DecoderPro
 	<LI>Alex Shepherd, who helped move development to JBuilder, a much better tool, and
@@ -243,7 +254,8 @@
 <A ID="Z"></A>
 	<LI>david zuhn, who provided instructions for installing the comm libraries on Linux
     <LI>Christopher Zurek, who improved the LokSound V3.5 decoder definition
-    </UL>
+    
+</UL>
 
 </body>
 </html>
