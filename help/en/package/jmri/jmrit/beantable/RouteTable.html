@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: RouteTable.html,v 1.3 2007-11-03 16:48:55 dan_boudreau Exp $ -->
+<!-- $Id: RouteTable.html,v 1.4 2007-11-03 18:12:57 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
 <TITLE>JMRI: Route Table Help</TITLE>
@@ -28,7 +28,31 @@ table. These tables can be found under the main menu "Tools -> Tables"</p>
 <p>Once you have some turnouts or sensors to manage use the "Add"
 button in the lower left hand corner of the route table to create a new
 route.</p>
-<p></p>
+<br>
+<h3>Route Table Buttons and Checkboxes</h3>
+
+<ul>
+	<li>User Name <br>
+	You can directly enter or change the "User Name" for an existing route.</li>
+	<li>Set<br>
+	Pushing the "Set" button will trigger an existing route.</li>
+	<li>Delete<br>
+	Pushing the "Delete" button will remove the route. To permanently
+	delete the route you must save the panel.</li>
+	<li>Enabled<br>
+	To disable a route from triggering, uncheck the "Enabled" box for the
+	route. Enabled is not saved and will be restored when a panel is loaded
+	at startup.</li>
+	<li>Locked<br>
+	When checked the route is locked. This means that turnouts that can be
+	locked by JMRI will not respond to commands from cabs to change.</li>
+	<li>Edit<br>
+	Push this button to edit the route.</li>
+	<li>Add<br>
+	Push this button to add a new route.</li>
+
+</ul>
+
 <H3>Add/Edit Route</H3>
 <p>The first thing you must do when creating a route is name it. In
 the box labeled "Route System Name" enter a unique name for your route.
@@ -61,7 +85,7 @@ Panel" command which can be found under the "Panels" main menu. If you
 decide that you need to change your route, use the "Edit" and "Update
 Route" buttons to modify your route.</p>
 
-<p></p>
+<br>
 <H3>NCE turnout lock feature</H3>
 
 <p>The turnout lock feature allows you to selectively disable
@@ -69,16 +93,14 @@ accessory (turnouts) commands from cabs. By locking a turnout, the JMRI
 program will monitor the turnout's accessory address and if it detects a
 change command from a cab, will cancel the command immediately by
 sending out the opposite command to the turnout.</p>
-<p>
-To help you select a set of turnouts to lock, a route can be locked. All
-turnouts that are being monitored by the JMRI program and are included
-in the route will be locked. In the route edit window, an optional
-lock control turnout is available. You can use the lock control turnout
-to enable or disable the locks from a panel icon. The lock control
-turnout can be an internal or external turnout. To use this new feature
-the system must be NCE using 2007 EPROM or newer, and the turnouts to be
-locked must use MONITORING for feedback.
-</p>
+<p>To help you select a set of turnouts to lock, a route can be
+locked. All turnouts that are being monitored by the JMRI program and
+are included in the route will be locked. In the route edit window, an
+optional lock control turnout is available. You can use the lock control
+turnout to enable or disable the locks from a panel icon. The lock
+control turnout can be an internal or external turnout. To use this new
+feature the system must be NCE using 2007 EPROM or newer, and the
+turnouts to be locked must use MONITORING for feedback.</p>
 
 </body>
 </html>
