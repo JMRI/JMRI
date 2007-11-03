@@ -1,29 +1,83 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TurnoutTable.html,v 1.2 2007-04-08 04:41:40 jacobsen Exp $ -->
-<html lang="en">
-<head>
- <TITLE>
-      JMRI: Turnout Table Help
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Turnout Table">
+<!-- $Id: TurnoutTable.html,v 1.3 2007-11-03 21:26:25 dan_boudreau Exp $ -->
+<HTML LANG="en">
+<HEAD>
+<TITLE>JMRI: Turnout Table Help</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META CONTENT="Bob Jacobsen" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI help Turnout Table">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</head>
+</HEAD>
 
-<body>
-<H2>The Turnout Table
-</H2>
-    
-This is the package/jmri/jmrit/beantable/TurnoutTable help page
+<BODY>
+<H2>The Turnout Table</H2>
 
-</body>
-</html>
+<P>This table contains a list of all turnouts that exist for this
+panel.</P>
+<BR>
+<H3>Turnout Table Buttons and Checkboxes</H3>
+
+<UL>
+	<LI>User Name <BR>
+	You can directly enter or change the "User Name" for an existing
+	turnout.</LI>
+	<LI>Cmd<BR>
+	Pushing the "Cmd" command button will change the state of an existing
+	turnout.</LI>
+	<LI>Delete<BR>
+	Pushing the "Delete" button will remove the turnout from the table. To permanently
+	delete the turnout you must save the panel.</LI>
+	<LI>Inverted<BR>
+	When checked, the turnout command and status to and from the layout is
+	inverted. For example, an inverted turnout means that when JMRI sends a
+	"CLOSE" turnout command, it becomes a "THROW" to the layout. Turnouts
+	that can not be inverted have grayed out boxes and can not be checked.</LI>
+	<LI>Locked<BR>
+	When checked, the turnout is locked. This means that turnouts that can
+	be locked by JMRI will not respond to commands from cabs to change.
+	Turnouts that can not be locked have grayed out boxes and can not be
+	checked.</LI>
+	<LI>Feedback<BR>
+	This shows the known state of a turnout.</LI>
+	<LI>Mode<BR>
+	This allows you to change how the turnout will operate.</LI>
+	<LI>Sensor 1<BR>
+	Shows the system name of the optional sensor that provides the feedback
+	for a turnout. You can also directly enter or change the system name of
+	Sensor 1 for a turnout.</LI>
+	<LI>Sensor 2<BR>
+	Shows the system name of the optional sensor that provides the feedback
+	for a turnout. You can also directly enter or change the system name of
+	Sensor 2 for a turnout.</LI>
+	<LI>Add<BR>
+	Pressing this button allows you to add a new turnout.</LI>
+	<LI>Show feedback information<BR>
+	When checked, the optional feedback columns are shown.</LI>
+</UL>
+
+<BR>
+<H3>NCE Turnout lock feature</H3>
+
+<P>The turnout lock feature allows you to selectively disable
+accessory (turnouts) commands from cabs. By locking a turnout, the JMRI
+program will monitor the turnout's accessory address and if it detects a
+change command from a cab, will cancel the command immediately by
+sending out the opposite command to the turnout.</P>
+<P>To use this feature you must select MONITORING as the feedback mode for
+the turnout and the NCE command station must have the 2007 or newer EPROM.</P>
+<P>To help you select a set of turnouts to lock, a route can be
+locked. All turnouts that are being monitored by the JMRI program and
+are included in the route will be locked.</P>
+
+</BODY>
+</HTML>
 

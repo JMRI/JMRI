@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SensorTable.html,v 1.2 2007-04-08 04:41:39 jacobsen Exp $ -->
+<!-- $Id: SensorTable.html,v 1.3 2007-11-03 21:26:25 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -22,7 +22,29 @@
 <H2>The Sensor Table
 </H2>
     
-This is the package/jmri/jmrit/beantable/SensorTable help page
+<P>This table contains a list of all sensors that exist for this
+panel.</P>
+<BR>
+<H3>Turnout Sensor Buttons and Checkboxes</H3>
+
+<UL>
+	<LI>User Name <BR>
+	You can directly enter or change the "User Name" for an existing
+	sensor.</LI>
+	<LI>State<BR>
+	Pushing the "State" command button will change the state of an existing
+	sensor.</LI>
+	<LI>Delete<BR>
+	Pushing the "Delete" button will remove the sensor from the table. To permanently
+	delete the sensor you must save the panel.</LI>
+	<LI>Inverted<BR>
+	When checked, the sensor command and status is
+	inverted. For example, an inverted sensor means that when the layout sends an
+	"active" sensor command, it becomes "inactive" to JMRI. </LI>
+	<LI>Add<BR>
+	Pressing this button allows you to add a new sensor.</LI>
+</UL>
+
 
 </body>
 </html>
