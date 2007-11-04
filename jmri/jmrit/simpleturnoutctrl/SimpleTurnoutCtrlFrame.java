@@ -12,7 +12,7 @@ import javax.swing.JMenuBar;
 /**
  * Frame controlling a single turnout
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
 	
@@ -121,6 +121,9 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
         getContentPane().add(lockButtonLabel);
         getContentPane().add(lockButton);
       
+        // add help menu to window
+    	addHelpMenu("package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl", true);
+
         pack();
 
     }

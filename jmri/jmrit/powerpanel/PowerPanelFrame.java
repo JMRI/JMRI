@@ -13,7 +13,7 @@ import jmri.util.JmriJFrame;
  * Frame for controlling layout power via a PowerManager.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 public class PowerPanelFrame extends JmriJFrame {
 
@@ -26,6 +26,10 @@ public class PowerPanelFrame extends JmriJFrame {
 
         // install items in GUI
         getContentPane().add(pane);
+
+        // add help menu to window
+    	addHelpMenu("package.jmri.jmrit.powerpanel.PowerPanelFrame", true);
+
         pack();
     }
 
