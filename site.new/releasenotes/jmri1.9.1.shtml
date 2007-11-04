@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.9.1.shtml,v 1.10 2007-11-04 16:57:53 jacobsen Exp $ -->
+<!-- $Id: jmri1.9.1.shtml,v 1.11 2007-11-04 17:09:41 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -33,11 +33,11 @@
       Release Notes for JMRI 1.9.1 release
       </H2>
 
-	<p>Date: MMM,DD YYYY</p>
+	<p>Date: November 4, 2007</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 1.9.1 of JMRI/DecoderPro is available for download.
 
-    <br><b>This is a draft release note only; the download links do not yet work</b> 
+<!--     <br><b>This is a draft release note only; the download links do not yet work</b>  -->
 
 <h3>Notes:</h3>
 
@@ -47,7 +47,10 @@
 It contains 
 many new features, including:
 <UL>
-<LI>...
+<LI>A new layout editor for creating panels
+<LI>NCE PowerCab support
+<LI>Lots of new and updated decoder definitions
+<LI>The way that layout information and panels is stored has been improved
 </UL>
 along with lots of other changes.  See the complete list below.
 
@@ -69,12 +72,23 @@ see our
 
 <h3>New warnings for this version:</h3>
 
+<P>The way that panels are opened, closed and accessed has changed:
+<OL>
+<LI>A panel is not deleted when its panel window is closed.
+<LI>To delete a panel, select "Delete this panel..." in the panel's File menu.  A validation message is displayed before the panel is actually deleted. This action deletes the panel from the program.  To permanently delete the panel from files, panels must be saved to disk after deleting the panel.
+<LI>A new entry "Show Panel" has been added to the Panels menu.  All panels currently present in the program are listed in the submenu of Show Panel, independent of whether the panel window is closed (checked in the submenu), frontmost, or minimized. Selecting a particular panel makes it visible and frontmost.
+<LI>When "New panel..." is selected, a small window is displayed allowing the user to select a "Panel Editor" panel or a "Layout Editor" panel.  The default choice is "Panel Editor".
+</OL>
+
+
 <P>This version of JMRI no longer supports NCE AIU broadcasts.  This change was needed so that JMRI could reliably read certain CV values. We recommend that if you use NCE AIUs, that you upgrade the command station EPROM to version 2007 or newer and turn off AIU broadcasts.  Code has been added to detect if AIU broadcasts are enabled, and a warning message will appear at startup requesting that AIU broadcasts be turned off for proper operation of the JMRI programs.
 
 <P>This version of JMRI requires Java 1.3 or later.  
-To see JMRI's plans for which Java versions will be required when, please
-see our
+To see JMRI's plans for which Java versions will be required when, please see our
 <A HREF="../doc/Technical/TechRoadMap.shtml">technological roadmap page</a>.
+
+<P>If DecoderPro finds more than one matching decoder type when trying to automatically identify a decoder, it will now show all the possibilities in the selection tree.  It used to just select the first possible choice.
+
 <h3>Warnings from older versions:</h3>
 
 <P>For Lenz users: There are now separate choices for each of the serial-based Lenz Computer Interfaces 
@@ -167,8 +181,7 @@ The "held" icon for a SignalHead on a panel wasn't rotating properly, now fixed.
 Dan Boudreau updated the NCE consist manager
 
 <P>
-Alex Shepherd fixed a bug that would cause a LocoNetOverTcp connection to hang
-if the remote stopped responding.
+Alex Shepherd fixed a bug that would cause a LocoNetOverTcp connection to hang if the remote stopped responding.
 
 <P>
 Paul Bender added the Silver Direct to the Lenz Silver decoder family
@@ -195,7 +208,7 @@ Dennis Miller changed the way decoder identification is presented by DecoderPro.
 The programs will now log various "INFO" messages as part of running. This is normal, and is meant to help with debugging.
 
 <P>
-This release have debugging information present, so that if there's a fault you'll get a useful traceback to send back to us.
+This release has debugging information included with the code, so that if there's a fault you'll get a useful traceback to send back to us.
 
 <P>
 Lots of little JavaDoc improvements
