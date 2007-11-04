@@ -1,9 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PowerPanelFrame.shtml,v 1.2 2007-11-04 05:19:17 jacobsen Exp $ -->
+<!-- $Id: SpeedometerFrame.shtml,v 1.1 2007-11-04 05:19:08 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
-      JMRI: Power Control
+      JMRI: Speedometer
  </TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
@@ -18,16 +18,11 @@
 <!-- /Style -->
 </head>
 
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
-
 <body>
-<H2>Power Control
+<H2>Speedometer
 </H2>
     
-This is the package/jmri/jmrit/powerpanel/PowerPanelFrame help page
-
-<!--#include virtual="/Footer" -->
+This is the package/jmri/jmrit/speedometer/SpeedometerFrame help page
 
 </body>
 </html>
