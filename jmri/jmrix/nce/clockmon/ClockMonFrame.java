@@ -27,7 +27,7 @@ import javax.swing.*;
  * contact NCE Inc for separate permission.
  *
  * @author			Ken Cameron   Copyright (C) 2007
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  *
  * derived from loconet.clockmonframe by Bob Jacobson Copyright (C) 2003
  * 
@@ -362,6 +362,9 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         }
         internalClock.addMinuteChangeListener(minuteChangeListener);
         
+        // add help menu to window
+    	addHelpMenu("package.jmri.jmrix.nce.clockmon.ClockMonFrame", true);
+
         // pack for display
         pack();
 
