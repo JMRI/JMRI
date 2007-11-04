@@ -24,9 +24,9 @@ import javax.swing.JTextField;
  * the speed is computed and displayed.
  * </UL>
  *
- * @author	Bob Jacobsen   Copyright (C) 2001, 2004
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2004, 2007
  * @author      Adapted for metric system - S.K. Bosch
- * @version	$Revision: 1.21 $
+ * @version	$Revision: 1.22 $
  */
 public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
@@ -217,6 +217,9 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                     stopSensorIcon2.setSensor(stopSensor2.getText());
                 }
             });
+
+        // add help menu to window
+    	addHelpMenu("package.jmri.jmrit.speedometer.SpeedometerFrame", true);
 
         // and get ready to display
         pack();
