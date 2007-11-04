@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SPShasta.shtml,v 1.1 2007-08-22 09:45:25 jacobsen Exp $ -->
+<!-- $Id: SPShasta.shtml,v 1.2 2007-11-04 02:33:06 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -38,7 +38,8 @@
 	    <H1>JMRI: PanelPro on the SP Shasta Route</H1>
 
 This page describes how
-PanelPro is used to control Otis McGee's SP Shasta Route layout.
+PanelPro is used to control 
+<A HREF="http://www.spshastaroute.com/">Otis McGee's SP Shasta Route</a> layout.
 <h3>The Layout</h3>
 The SP Shasta Route layout is a model of the Southern Pacific's
 Shasta Division, Black Butte Subdivision in 1952. There's
@@ -136,9 +137,13 @@ essentially just warning train engineers of unsafe conditions ahead.
 <P>
 Also during this stage, JMRI scripting was used to control a 
 large turntable and roundhouse complex at the Dunsmuir yard.
-Since every locomotive on the layout has sound, Otis wanted
+Since every locomotive on the layout is highly detailed and has sound, 
+Otis wanted
 to turn off power to roundhouse tracks that are not currently
-active. A pair of scripts were used to watch the turnout operation, and
+aligned with the turntable.
+This greatly reduces the sound volume in the engine terminal, and makes 
+it much harder to accidentally drive a locomotive into the turntable pit.
+A pair of scripts were used to watch the turnout operation, and
 turn on and off appropriate channels in C/MRI relay cards to control
 track power in the area.  This is an interesting combination of 
 DCC and C/MRI power control!
