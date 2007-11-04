@@ -14,9 +14,15 @@ import java.util.Vector;
  * This is a decimal value, extended to modify the other CVs when
  * written.  The CVs to be modified and there new values are
  * stored in two arrays for simplicity.
- *
- * @author			Bob Jacobsen   Copyright (C) 2001, 2006
- * @version             $Revision: 1.12 $
+ * <P>
+ * 
+ * The NMRA has decided that writing CV1 causes other CVs to update
+ * within the decoder (CV19 for consisting, CV29 for short/long
+ * address). We want DP to overwrite those _after_ writing CV1,
+ * so that the DP values are forced to be the correct ones.
+ * 
+ * @author	    Bob Jacobsen   Copyright (C) 2001, 2006, 2007
+ * @version     $Revision: 1.13 $
  *
  */
 public class ShortAddrVariableValue extends DecVariableValue {
@@ -54,6 +60,7 @@ public class ShortAddrVariableValue extends DecVariableValue {
     private void updateCvForAddrChange() {
         for (int i=0; i<firstFreeSpace; i++) {
             CvValue cv = ((CvValue)_cvVector.elementAt(cvNumbers[i]));
+            if (cv == null) continue;  // if CV not present this decoder...
             if (cvNumbers[i]!=cv.number())
                 log.error("CV numbers don't match: "
                           +cvNumbers[i]+" "+cv.number());
