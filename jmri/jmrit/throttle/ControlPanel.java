@@ -45,7 +45,9 @@ import org.jdom.Attribute;
  *  TODO: fix speed increments (14, 28)
  *
  * @author     glen   Copyright (C) 2002
- * @version    $Revision: 1.52 $
+ * @author Bob Jacobsen Copyright (C) 2007
+ *
+ * @version    $Revision: 1.53 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener,ActionListener
 {
@@ -657,7 +659,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	 *  A KeyAdapter that listens for the keys that work the control pad buttons
 	 *
 	 * @author     glen
-         * @version    $Revision: 1.52 $
+         * @version    $Revision: 1.53 $
 	 */
 	class ControlPadKeyListener extends KeyAdapter
 	{
