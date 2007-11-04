@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: RouteTable.html,v 1.5 2007-11-03 21:26:25 dan_boudreau Exp $ -->
+<!-- $Id: RouteTable.html,v 1.6 2007-11-04 23:31:28 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Route Table Help</TITLE>
@@ -31,62 +31,41 @@ route.</P>
 <BR>
 <H3>Route Table Buttons and Checkboxes</H3>
 
-<UL>
-	<LI>User Name <BR>
-	You can directly enter or change the "User Name" for an existing route.</LI>
-	<LI>Set<BR>
-	Pushing the "Set" button will trigger an existing route.</LI>
-	<LI>Delete<BR>
-	Pushing the "Delete" button will remove the route from the table. To
-	permanently delete the route you must save the panel.</LI>
-	<LI>Enabled<BR>
-	To disable a route from triggering, uncheck the "Enabled" box for the
-	route. Enabled is not saved and will be restored when a panel is loaded
-	at startup.</LI>
-	<LI>Locked<BR>
-	When checked the route is locked. This means that turnouts that can be
-	locked by JMRI will not respond to commands from cabs to change.</LI>
-	<LI>Edit<BR>
-	Push this button to edit the route.</LI>
-	<LI>Add<BR>
-	Push this button to add a new route.</LI>
+<DL>
+	<DT>User Name</DT>
+	<DD>You can directly enter or change the "User Name" for an
+	existing route.</DD>
 
-</UL>
+	<DT>Set</DT>
+	<DD>Pushing the "Set" button will trigger an existing route.</DD>
 
-<H3>Add/Edit Route</H3>
-<P>The first thing you must do when creating a route is name it. In
-the box labeled "Route System Name" enter a unique name for your route.
-You can optionally enter a more descriptive name in the "Route User
-Name" box.</P>
-<P>The radio button below the "Route User Name" allows you to show
-only the turnouts or sensors that are part of this route. There are two
-tables below the "Show" button, the first one contains turnouts and the
-second contains sensors. Click the "Include" box in either table to add
-the desired turnouts or sensor to your route. Next to the "Include" box
-is the action that the turnout or sensor can perform when the route is
-triggered. For example, if you wish the turnout to throw when the route
-is triggered select "Set Thrown" in the drop down box.</P>
-<P>Below the turnout and sensor tables are two optional features. By
-hitting the "Set" button you can add a sound file that you wish to play
-when the route is triggered, or a script file that you want to run.</P>
-<P>To trigger a route, you need to specify how the route is to be
-activated. You can select up to three sensors and one turnout. Of any of
-the sensors or turnout meets the condition that you specify, the route
-will trigger.</P>
-<P>In some cases, it might be necessary to delay or slow down the
-rate that JMRI sends commands to change turnouts on the layout. By
-entering a value in the "Added Delay" box, you can increase the amount
-of time between turnout commands when this route is triggered.</P>
-<P>The next text box allows you to enter a turnout that will lock
-this route.</P>
-<P>Once you are satisfied with your route, use the "Add Route"
-button to create the route. To save your route you must use the "Store
-Panel" command which can be found under the "Panels" main menu. If you
-decide that you need to change your route, use the "Edit" and "Update
-Route" buttons to modify your route.</P>
+	<DT>Delete</DT>
+	<DD>Pushing the "Delete" button will remove the route from the
+	table. To permanently delete the route you must save the panel.</DD>
+
+	<DT>Enabled</DT>
+	<DD>To disable a route from triggering, uncheck the "Enabled" box
+	for the route. Enabled is not saved and will be restored when a panel
+	is loaded at startup.</DD>
+
+	<DT>Locked</DT>
+	<DD>When checked the route is locked. This means that turnouts
+	that can be locked by JMRI will not respond to commands from cabs to
+	change. For more information see <A HREF="#NCE turnout lock feature">
+	NCE turnout lock feature</A>.</DD>
+
+	<DT>Edit</DT>
+	<DD>Push this button to edit the route. For more information see <A
+		HREF="RouteAddEdit.html">Adding/Editing Routes</A>.</DD>
+
+	<DT>Add</DT>
+	<DD>Push this button to add a new route. For more information see
+	<A HREF="RouteAddEdit.html">Adding/Editing Routes</A>.</DD>
+
+</DL>
 
 <BR>
-<H3>NCE turnout lock feature</H3>
+<H3><A NAME="NCE turnout lock feature">NCE turnout lock feature</A></H3>
 
 <P>The turnout lock feature allows you to selectively disable
 accessory (turnouts) commands from cabs. By locking a turnout, the JMRI
