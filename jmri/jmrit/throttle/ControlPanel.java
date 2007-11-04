@@ -45,7 +45,7 @@ import org.jdom.Attribute;
  *  TODO: fix speed increments (14, 28)
  *
  * @author     glen   Copyright (C) 2002
- * @version    $Revision: 1.51 $
+ * @version    $Revision: 1.52 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener,ActionListener
 {
@@ -453,8 +453,12 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 					//{
                         float newSpeed = ((Integer)JSpinnerUtil.getValue(speedSpinner)).floatValue() / ( MAX_SPEED * 1.0f );
                         log.debug( "stateChanged: spinner pos: " + JSpinnerUtil.getValue(speedSpinner) + " speed: " + newSpeed );
-						throttle.setSpeedSetting( newSpeed );
-						speedSlider.setValue(((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue());
+						if (throttle != null) {
+						    throttle.setSpeedSetting( newSpeed );
+						    speedSlider.setValue(((Integer)JSpinnerUtil.getValue(speedSpinner)).intValue());
+                        } else {
+                            log.warn("no throttle object in stateChanged, ignoring change of speed to "+newSpeed);
+                        }
 					//}
 				   } else {
 					internalAdjust=false;
@@ -653,7 +657,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	 *  A KeyAdapter that listens for the keys that work the control pad buttons
 	 *
 	 * @author     glen
-         * @version    $Revision: 1.51 $
+         * @version    $Revision: 1.52 $
 	 */
 	class ControlPadKeyListener extends KeyAdapter
 	{
