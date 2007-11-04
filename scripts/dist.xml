@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.18 $ -->
+<!-- Revision $Revision: 1.19 $ -->
 
 <project name="JMRI" basedir="." default="none">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -148,6 +148,15 @@
     <cvs command="export" quiet="true" package="help" dest="MacOSX/JMRI" tag="${release}"/>
     <delete dir="MacOSX/JMRI/jython" />
     <cvs command="export" quiet="true" package="jython" dest="MacOSX/JMRI" tag="${release}"/>
+    
+    <cvs command="export" quiet="true" package="scripts" dest="MacOSX/JMRI" tag="${release}"/>
+    <move todir="MacOSX/JMRI">
+		<fileset dir="MacOSX/JMRI/scripts" >
+      		<include name="default.lcf"/>
+      		<include name="COPYING"/>
+      	</fileset>
+	</move>
+    <delete dir="MacOSX/JMRI/scripts" />
 </target>
 
 <target name="x-rel-create-linux" depends=""
@@ -203,7 +212,10 @@
  					description="create MacOS X archive">
 	<!-- The following steps build the distribution archive -->
     <!-- using MacOSX tools -->
-    <echo message="create MacOS X disk image now"/>
+    <echo message="create MacOS X disk image"/>
+    <exec executable="./scripts/diskimage.csh">
+        <arg line="${release} ${number}"/>
+    </exec>
 </target>
 
 <target name="x-rel-installer-linux" depends=""
@@ -211,14 +223,19 @@
 	<!-- The following steps build the distribution archive -->
     <!-- using MacOSX tools -->
     <echo message="create Linux archive"/>
-    <exec executable="open">
-    	<arg line="-a DropTar Linux/JMRI" />
-    </exec>
+    <tar compression="gzip" 
+        destfile="JMRI.${number}.tgz"
+        basedir="Linux"
+        includes="JMRI/**" />
+        
+    <!-- <exec executable="open">                 -->
+    <!-- 	<arg line="-a DropTar Linux/JMRI" />  -->
+    <!-- </exec>                                  -->
 </target>
  
  <target name="release2" depends=""
  					description="part 2 of build a release; useage is ant -Drelease=R1.2.3 -Dnumber=1.2.3 release2">
-    <move file="Linux/JMRI.tgz" tofile="JMRI.${number}.tgz" />
+    <!-- <move file="Linux/JMRI.tgz" tofile="JMRI.${number}.tgz" />  -->
  </target>
  
  <target name="release3" depends=""

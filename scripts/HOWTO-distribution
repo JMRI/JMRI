@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.53 $)
+distribution.  ($Revision: 1.54 $)
 
 Start with a directory, typically called "Distributions", that
 contains "scripts" and "java" (from CVS) as subdirectories, and:
@@ -30,11 +30,15 @@ Make sure everything is up-to-date:
     
 ( ) Check if the help has changed since the previous tag
     If so, remake the help index  (need a command line approach, so can put in ant!)
-    cd JMRI/jhelp/help/en
-    (launch JHelpDev, e.g. "open jhelpdev.jar")
-    (navigate to JHelpDev.xml & open it)
+    open ~/Documents/JMRI/JavaHelpStuff/jhelpdev/jhelpdev.jar
+    (navigate to JHelpDev.xml in release & open it)
+    (select properties from file menu, set directory to project help/en
     (click "generate all")
     
+    Run the program and make sure help works.
+    
+( ) Update the acknowledgements help page.
+
 ( ) Check that the Version.java file has been updated and committed
 
 ( ) Edit the "manifest" file in this directory, and make sure that the
@@ -50,10 +54,14 @@ Make sure everything is up-to-date:
     cd Distributions/java
     cvs -q update -dA
     
+------
+Add somethign about copyright notices on changed files
+------
+    
 To actually create the distribution:
 
 ( ) Go to your working directory and
-	cvs tag Release-X-Y-Z 
+	cvs tag -F Release-X-Y-Z 
 
 -----
 Notes for next section:
@@ -62,8 +70,10 @@ Notes for next section:
 extra scripts.  Add to Ant?  Also, eventually check that the
 Linux startup scripts have the executable permission bit set.
 
-* Check the MacOS X bundles to make sure they work.
+* Check the MacOS X bundles to make sure they work still
 
+
+NOTE THAT build.xml is updated to create a jar file with debug info
 -----
 
 ( ) Come back to Distributions and 
@@ -77,6 +87,9 @@ Linux startup scripts have the executable permission bit set.
 	Ensure tests pass!
 	
 	Check DecoderPro for no startup errors, right version
+
+(From here down, directions are old; StuffIt no longer used, DMG in script,
+release2 no longer needed; uploads still manual)
 
 	Ant will launch a StuffIt (DropTar) process for Linux; click
 	to proceed, and wait for it to be running.
