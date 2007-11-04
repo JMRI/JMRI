@@ -1,13 +1,14 @@
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ConsistToolFrame.html,v 1.1 2007-03-18 22:05:10 jacobsen Exp $ -->
+<!-- $Id: AutomatTableFrame.shtml,v 1.1 2007-11-04 05:29:41 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
-      JMRI: Consist Tool
+      JMRI: Automat Table Help
  </TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Consist Tool">
+    <META name="keywords" content="JMRI help Automat Thread Table">
 
 <!-- Style -->
   <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
@@ -19,10 +20,10 @@
 </head>
 
 <body>
-<H2>Consist Tool
+<H2>The Automat (Thread) Table
 </H2>
     
-This is the help/jmri/jmrit/consisttool/ConsistToolFrame help page
+This is the help/jmri/jmrit/automat/monitor/AutomatTable help page
 
 </body>
 </html>

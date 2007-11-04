@@ -1,13 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: OsIndicatorFrame.html,v 1.1 2007-04-08 04:49:15 jacobsen Exp $ -->
+<!-- $Id: ConsistToolFrame.shtml,v 1.1 2007-11-04 05:31:20 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
-      JMRI: OS Indicators Help
+      JMRI: Consist Tool
  </TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help OS Indicator">
+    <META name="keywords" content="JMRI help Consist Tool">
 
 <!-- Style -->
   <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
@@ -19,10 +19,10 @@
 </head>
 
 <body>
-<H2>OS Indicators
+<H2>Consist Tool
 </H2>
     
-This is the help/jmri/jmrit/ussctc/OsIndicatorFrame help page
+This is the help/jmri/jmrit/consisttool/ConsistToolFrame help page
 
 </body>
 </html>
