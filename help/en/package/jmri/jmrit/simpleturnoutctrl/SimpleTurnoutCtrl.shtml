@@ -1,29 +1,95 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SimpleTurnoutCtrl.shtml,v 1.1 2007-11-02 13:45:36 jacobsen Exp $ -->
-<html lang="en">
-<head>
- <TITLE>
-      JMRI: Turnout Control
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Route Add Edit">
+<!-- $Id: SimpleTurnoutCtrl.shtml,v 1.2 2007-11-04 16:18:18 dan_boudreau Exp $ -->
+<HTML LANG="en">
+<HEAD>
+<TITLE>JMRI: Turnout Control</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META CONTENT="Bob Jacobsen" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI help Route Add Edit">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</head>
+</HEAD>
 
-<body>
-<H2>Turnout Control
-</H2>
-    
-This is the package/jmri/jmrit/simpleturnoutctrl/SimpleTurnoutCtrl help page
+<BODY>
+<H2>Turnout Control</H2>
 
-</body>
-</html>
+Enter the accessory number or turnout system name for the accessory or
+turnout you wish to control in the box to right of "turnout:". For
+example, entering 678 and by pressing either the Thrown or Closed
+button, you should be able to change the state of accessory number 678
+on the layout. Another example, a valid turnout system name for NCE
+could be NT456. Then by pressing either the Thrown or Closed button, you
+should be able to change the state of turnout or accessory number 456 on
+the layout. Another example, a valid turnout system name could be IT123
+which is internal turnout number 123. Pressing Thrown or Closed will
+only change the state of the internal turnout and will not change a
+turnout on the layout. See "
+<A HREF="../../../../html/doc/Technical/Names.html">Names</A>
+" under general help for more information.
+
+<H3>Turnout Control Buttons and Status</H3>
+
+<UL>
+	<LI>current state:<BR>
+	Shows the current known state of the turnout. A turnout can have four
+	states: unknown, inconsistent, thrown, and closed. The unknown state is
+	when JMRI doesn't know if the turnout is thrown or closed. The
+	inconsistent state is when a turnout on the layout is commanded to
+	throw or close but the feedback from the layout hasn't been received.
+	Also note that the inconsistent state can only occur if a turnout has
+	feedback. The thrown and closed states are what the JMRI program knows
+	or believes is the state of the turnout.</LI>
+	<LI>feedback:<BR>
+	Shows the turnout's feedback mode. Some of the available feedback modes
+	are: DIRECT, ONE SENSOR, TWO SENSOR, and MONITORING. A turnout using
+	DIRECT mode doesn't have feedback from the layout. When a close or
+	throw command is executed the JMRI program assumes that the command
+	always competes. ONE SENSOR use one sensor on the layout to provide
+	feedback on the state of the turnout. TWO SENSOR uses two sensors for
+	feedback, one for closed and one for thrown. MONITORING gets feedback
+	from the system by either listening to cab commands on the layout or
+	polling the system for turnout status.</LI>
+
+	<LI>Thrown<BR>
+	Push this button to throw the turnout.</LI>
+	<LI>Closed<BR>
+	Push this button to close the turnout.</LI>
+	<LI>Cab operation:<BR>
+	Some turnouts can be locked. If the control button is grayed out, the
+	lock feature isn't available.</LI>
+</UL>
+<BR>
+<H3>Feedback</H3>
+
+To change the feedback mode for a turnout you must use the turnout
+table. The turnout table is located under the system menu "Tools". Under
+Tools you will find "Tables" and under Tables is "Turnouts", or
+Tools->Tables->Turnouts.
+
+<BR>
+<BR>
+<H3>NCE Turnout lock feature</H3>
+
+<P>The turnout lock feature allows you to selectively disable
+accessory (turnouts) commands from cabs. By locking a turnout, the JMRI
+program will monitor the turnout's accessory address and if it detects a
+change command from a cab, will cancel the command immediately by
+sending out the opposite command to the turnout.</P>
+<P>To use this feature you must select MONITORING as the feedback
+mode for the turnout and the NCE command station must have the 2007 or
+newer EPROM.</P>
+<P>To help you select a set of turnouts to lock, a route can be
+locked. All turnouts that are being monitored by the JMRI program and
+are included in the route will be locked.</P>
+
+</BODY>
+</HTML>
 
