@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2007 All rights reserved -->
-<!-- $Id: Massoth_eMOTION_XL.xml,v 1.3 2007-09-21 05:49:32 jacobsen Exp $ -->
+<!-- $Id: Massoth_eMOTION_XL.xml,v 1.4 2007-11-05 02:56:30 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -1036,7 +1036,7 @@
 			</row>
 			<row>
 				<column>
-					<label layout="right" label="Massoth configuration"/>
+					<label label="Massoth configuration"/>
 					<separator />
 					<label label=" "/>
 					<display item="Data Processing"/>
