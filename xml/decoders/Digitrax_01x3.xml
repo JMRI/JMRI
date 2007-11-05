@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2002, 2005, 2007 All rights reserved -->
-<!-- $Id: Digitrax_01x3.xml,v 1.36 2007-10-26 19:54:10 jacobsen Exp $ -->
+<!-- $Id: Digitrax_01x3.xml,v 1.37 2007-11-05 03:01:18 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -19,7 +19,7 @@
 	<version author="Simon Ginsburg" version="13" lastUpdated="20050422"/>
 	<version author="Howard G. Penny" version="15" lastUpdated="20050422"/>
 	<version author="Bob Blackwell afticarr@sympatico.ca" version="16" lastUpdated="20060807"/>
-	<version author="Bob Blackwell afticarr@sympatico.ca" version="17" LastUpdated="20070216"/>
+	<version author="Bob Blackwell afticarr@sympatico.ca" version="17" lastUpdated="20070216"/>
 	<version author="Bob Blackwell afticarr@sympatico.ca" version="18" lastUpdated="20070304"/>
 	<version author="Michael Mosher" version="19" lastUpdated="20070824"/>
 	<version author="Bob Blackwell afticarr@sympatico.ca" version="20" lastUpdated="20070828"/>
