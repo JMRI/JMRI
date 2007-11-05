@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2006 All rights reserved -->
-<!-- $Id: Lenz_Silver.xml,v 1.7 2007-09-21 05:49:31 jacobsen Exp $ -->
+<!-- $Id: Lenz_Silver.xml,v 1.8 2007-11-05 03:00:38 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -35,7 +35,7 @@
 		comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" >
 		<model model="Silver" numOuts="4" numFns="12" 
                         lowVersionID="65"
-                        highVersion="75"
+                        highVersionID="75"
 			maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO">
 			<output name="1" label="A - White" />
 			<output name="2" label="B - Yellow" />
