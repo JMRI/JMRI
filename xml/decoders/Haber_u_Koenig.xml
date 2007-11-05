@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
-<!-- $Id: Haber_u_Koenig.xml,v 1.4 2007-11-04 05:58:13 jacobsen Exp $ -->
+<!-- $Id: Haber_u_Koenig.xml,v 1.5 2007-11-05 03:08:14 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -15,7 +15,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<decoder-config >
+<decoder-config showEmptyPanes="no">
 
 		<version author="peter.brandenburg@t-online.de"
 			version="1" lastUpdated="2006/11/09" />
@@ -41,13 +41,9 @@
 		
 
 	</family>
-	
-	showEmptyPanes="no"
 
-	<programming direct="yes" paged="yes" register="yes" ops="yes">
+	<programming direct="yes" paged="yes" register="yes" ops="yes"/>
 	
-	</programming>
-
 	<variables>
 
 		<variable label="Primary Address" CV="1" comment="Short address"
