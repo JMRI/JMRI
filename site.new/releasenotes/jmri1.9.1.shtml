@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.9.1.shtml,v 1.11 2007-11-04 17:09:41 jacobsen Exp $ -->
+<!-- $Id: jmri1.9.1.shtml,v 1.12 2007-11-05 03:13:34 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -260,6 +260,9 @@ Dan Boudreau provided help pages for many of the tables.
 
 <P>
 Ken Cameron updated the NCE fast clock support.
+
+<P>
+Daniel Boudreau has added a turnout lock feature which allows the user to selectively disable accessory (turnout) commands from cabs.  By locking a turnout, the JMRI program will monitor the turnout's accessory address and if it detects a change command from a cab, will cancel the command immediately by sending out the opposite command to the turnout.  To help you select a set of turnouts to lock, a route can be locked.  All turnouts that are being monitored by the JMRI program and are included in the route will be locked.  In the route edit window, a new optional lock control turnout is available. You can use the lock control turnout to enable or disable the locks from a panel icon.  The lock control turnout can be an internal or external turnout.  To use this new feature the system must be NCE using 2007 EPROM or newer, and the turnouts to be locked must use MONITORING for feedback.
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
