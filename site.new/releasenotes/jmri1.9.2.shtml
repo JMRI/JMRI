@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.9.2.shtml,v 1.1 2007-11-04 17:09:54 jacobsen Exp $ -->
+<!-- $Id: jmri1.9.2.shtml,v 1.2 2007-11-05 03:10:10 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -118,7 +118,11 @@ otherwise the writes will fail.
 
 <h3>Changes since test version 1.9.1:</h3>
 
-<P>Dan Boudreau updated some help pages.
+<P>
+Dan Boudreau updated some help pages.
+
+<P>
+Some XML-validity problems have been fixed in various decoder definition files, so they now pass the most stringent tests.
 
 
 <hr class="hide">
