@@ -42,7 +42,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.47 $
+ * @version     $Revision: 1.48 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -235,6 +235,12 @@ public class TurnoutTableAction extends AbstractTableAction {
                 table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
                 table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
                 super.configureTable(table);
+            }
+            
+            // update table if turnout lock changes
+            boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
+                if (e.getPropertyName().equals("locked")) return true;
+                else return super.matchPropertyName(e);
             }
 
         };  // end of custom data model
