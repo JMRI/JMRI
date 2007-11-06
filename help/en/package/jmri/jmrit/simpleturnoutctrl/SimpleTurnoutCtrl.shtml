@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SimpleTurnoutCtrl.shtml,v 1.3 2007-11-04 23:31:43 dan_boudreau Exp $ -->
+<!-- $Id: SimpleTurnoutCtrl.shtml,v 1.4 2007-11-06 15:27:17 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Turnout Control</TITLE>
@@ -48,16 +48,17 @@ turnout on the layout. See "
 	a turnout has feedback. The thrown and closed states are what the JMRI
 	program knows or believes is the state of the turnout.</DD>
 
-	<DT>feedback:</DT>
-	<DD>Shows the turnout's feedback mode. Some of the available
-	feedback modes are: DIRECT, ONE SENSOR, TWO SENSOR, and MONITORING. A
-	turnout using DIRECT mode doesn't have feedback from the layout. When a
-	close or throw command is executed the JMRI program assumes that the
-	command always competes. ONE SENSOR use one sensor on the layout to
-	provide feedback on the state of the turnout. TWO SENSOR uses two
-	sensors for feedback, one for closed and one for thrown. MONITORING
-	gets feedback from the system by either listening to cab commands on
-	the layout or polling the system for turnout status. See <A
+	<DT>feedback mode:</DT>
+	<DD>Shows the turnout's feedback mode. Some of the available <A
+		HREF="#Feedback">feedback</A> modes are: DIRECT, ONE SENSOR, TWO
+	SENSOR, and MONITORING. A turnout using DIRECT mode doesn't have
+	feedback from the layout. When a close or throw command is executed the
+	JMRI program assumes that the command always competes. ONE SENSOR use
+	one sensor on the layout to provide feedback on the state of the
+	turnout. TWO SENSOR uses two sensors for feedback, one for closed and
+	one for thrown. MONITORING gets feedback from the system by either
+	listening to cab commands on the layout or polling the system for
+	turnout status. See <A
 		HREF="../beantable/TurnoutTable.html#JMRI:Turnout Feedback">JMRI:
 	Turnout Feedback</A> for more information.</DD>
 
@@ -74,7 +75,7 @@ turnout on the layout. See "
 
 </DL>
 <BR>
-<H3>Feedback</H3>
+<H3><A NAME="Feedback"></A>Feedback</H3>
 
 To change the feedback mode for a turnout you must use the turnout
 table. The turnout table is located under the system menu "Tools". Under
