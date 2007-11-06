@@ -28,10 +28,10 @@ import jmri.Turnout;
  * 
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 
-public class NceTurnoutMonitor implements NceListener{
+public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeListener {
 
     // scope constants
     private static final int CS_ACCY_MEMORY = 0xEC00; 	// Address of start of CS accessory memory 
@@ -46,7 +46,7 @@ public class NceTurnoutMonitor implements NceListener{
     private int currentBlock;							// used as state in scan over active blocks
     private int numTurnouts = 0;						// number of NT turnouts known by NceTurnoutMonitor 
     private int numActiveBlocks = 0;
-    private int savedFeedbackChanges = 0;				// number of feedback changes known by NceTurnoutMonitor
+    private boolean FeedbackChange = false;				// true if feedback for a turnout has changed 
          
     // cached work fields
     boolean [] newTurnouts = new boolean [NUM_BLOCK];	// used to sync poll turnout memory
@@ -70,14 +70,9 @@ public class NceTurnoutMonitor implements NceListener{
     	if (NceTurnout.getNumNtTurnouts() == 0)return null;							//No work!
     	
     	// User can change a turnout's feedback to MONITORING, therefore we need to rescan
-    	// This doesn't occur very often, so we'll assume the change was to MONITORING
-		if (savedFeedbackChanges != NceTurnout.getNumFeedbackChanges()) {
-			savedFeedbackChanges = NceTurnout.getNumFeedbackChanges();
-			numTurnouts = -1; // force rescan
-		}
- 
-    	// See if the number of turnouts now differs from the last scan
-        if (numTurnouts != NceTurnout.getNumNtTurnouts()) {
+    	// also see if the number of turnouts now differs from the last scan
+        if (FeedbackChange || numTurnouts != NceTurnout.getNumNtTurnouts()) {
+        	FeedbackChange = false;
             numTurnouts = NceTurnout.getNumNtTurnouts();	
             
             // Determine what turnouts have been defined and what blocks have active turnouts
@@ -90,11 +85,20 @@ public class NceTurnoutMonitor implements NceListener{
             			int NTnum = 1 + i + (block*128);
             			Turnout mControlTurnout = InstanceManager.turnoutManagerInstance().getBySystemName("NT"+ NTnum);
             			if (mControlTurnout != null){
-            				int tFeedBack = mControlTurnout.getFeedbackMode();
-            				if (tFeedBack==Turnout.MONITORING) {
+           					// remove listener in case we're already listening
+        					mControlTurnout.removePropertyChangeListener(this);
+        					
+             				if (mControlTurnout.getFeedbackMode()==Turnout.MONITORING) {
             					activeBlock[block] = true;	// turnout found, block is active forever
             					numActiveBlocks++;
             					break; 						// don't check rest of block
+            				}else{
+            					// turnout feedback isn't monitoring, but listen in case it changes
+             					mControlTurnout.addPropertyChangeListener(this);
+            					if (log.isDebugEnabled() & debugTurnoutMonitor) {
+            						log.debug("add turnout to listener NT" + NTnum  
+            								+ " Feed back mode: " + mControlTurnout.getFeedbackMode());
+            					}
             				}
             			}
             		}
@@ -404,10 +408,17 @@ public class NceTurnoutMonitor implements NceListener{
 			}
 		}
 	}
- 
-        
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceTurnoutMonitor.class.getName());	
-    
+
+	public void propertyChange(java.beans.PropertyChangeEvent e) {
+		if (e.getPropertyName().equals("feedbackchange")) {
+			if (((Integer) e.getNewValue()).intValue() == Turnout.MONITORING)
+				FeedbackChange = true;
+		}
+	}
+
+	static org.apache.log4j.Category log = org.apache.log4j.Category
+			.getInstance(NceTurnoutMonitor.class.getName());
+
 }
 /* @(#)NceTurnoutMonitor.java */
 
