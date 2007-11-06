@@ -12,7 +12,7 @@ import javax.swing.JMenuBar;
 /**
  * Frame controlling a single turnout
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
 	
@@ -74,13 +74,13 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
         nowStateLabel.setText("<unknown>");
         nowStateLabel.setVisible(true);
         
-        textFeedbackLabel.setText(" feedback: ");
+        textFeedbackLabel.setText(" feedback mode: ");
         textFeedbackLabel.setVisible(true);
 
         nowFeedbackLabel.setText("<unknown>");
         nowFeedbackLabel.setVisible(true);
         
-        textAdvancedLabel.setText("   -- Advanced ");
+        textAdvancedLabel.setText("      -- Advanced ");
         textAdvancedLabel.setVisible(true);
         
         textFeaturesLabel.setText("Features -- ");
@@ -141,11 +141,10 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
 						+ " is not available");
 			} else {
 				turnout.addPropertyChangeListener(this);
-				// if already closed, update status fields
+				updateTurnoutStatusFields();
 				if (turnout.getCommandedState() == turnout.CLOSED) {
 					nowStateLabel.setText(InstanceManager
 							.turnoutManagerInstance().getClosedText());
-					updateTurnoutStatusFields();
 				}
 				if (log.isDebugEnabled())
 					log.debug("about to command CLOSED");
@@ -173,11 +172,10 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
 						+ " is not available");
 			} else {
 				turnout.addPropertyChangeListener(this);
-				// if already thrown, update status fields
+				updateTurnoutStatusFields();
 				if (turnout.getCommandedState() == turnout.THROWN) {
 					nowStateLabel.setText(InstanceManager
 							.turnoutManagerInstance().getThrownText());
-					updateTurnoutStatusFields();
 				}
 				if (log.isDebugEnabled())
 					log.debug("about to command THROWN");
@@ -205,17 +203,12 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
 						+ " is not available");
 			} else {
 				turnout.addPropertyChangeListener(this);
-
 				updateTurnoutStatusFields();
 
 				if (lockButton.getText() == LOCKED) {
-					lockButton.setText(UNLOCKED);
 					turnout.setLocked(false);
-
 				} else if (turnout.canLock()) {
-					lockButton.setText(LOCKED);
 					turnout.setLocked(true);
-
 				}
 			}
 		} catch (Exception ex) {
@@ -228,12 +221,10 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
 
     // update state field in GUI as state of turnout changes
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-    	// If the Commanded State changes, show transition state as "waiting" 
-    	// also update feedback mode & turnout lock state
-    	if (e.getPropertyName().equals("CommandedState")){
-    		nowStateLabel.setText("Waiting");
-    		updateTurnoutStatusFields();
-		}
+    	// If the Commanded State changes, show transition state as "<inconsistent>" 
+     	if (e.getPropertyName().equals("CommandedState")){
+    		nowStateLabel.setText("<inconsistent>");
+ 		}
         if (e.getPropertyName().equals("KnownState")) {
             int now = ((Integer) e.getNewValue()).intValue();
             switch (now) {
@@ -250,6 +241,22 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
                 nowStateLabel.setText("<inconsistent>");
                 return;
             }
+        }
+        if (e.getPropertyName().equals("locked")) {
+        	if (turnout.canLock()) {
+    			if (turnout.getLocked()){
+    				lockButton.setText(LOCKED);
+    			}else{
+    				lockButton.setText(UNLOCKED);
+    			}
+    			lockButton.setEnabled(true);
+    		}else{
+    			lockButton.setText(UNLOCKED);
+    			lockButton.setEnabled(false);
+    		}
+        }
+        if (e.getPropertyName().equals("feedbackchange")) {
+        	updateTurnoutStatusFields();
         }
      }
     
