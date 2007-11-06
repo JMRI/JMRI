@@ -17,8 +17,8 @@ import jmri.Timebase;
  * timebase was paused. If non-null, it indicates the
  * current fast time when the clock was paused.
  *
- * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.5 $
+ * @author			Bob Jacobsen Copyright (C) 2004, 2007
+ * @version			$Revision: 1.6 $
  */
 public class SimpleTimebase implements Timebase {
 
@@ -69,7 +69,12 @@ public class SimpleTimebase implements Timebase {
             factor = 1;
         }
     	double oldFactor = mFactor;
+    	Date now = getTime();
+        // actually make the change
     	mFactor = factor;
+        // make sure time is right with new rate
+        setTime(now);
+        // notify listeners
     	firePropertyChange("rate", new Double(factor), new Double(oldFactor));
     	handleAlarm();
     }
