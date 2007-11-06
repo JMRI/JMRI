@@ -25,7 +25,7 @@ package jmri;
  *
  * Description:		Abstract class providing the basic logic of the Turnout interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.29 $
+ * @version			$Revision: 1.30 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean 
     implements Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
@@ -170,11 +170,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean
     protected int _validFeedbackTypes = DIRECT | ONESENSOR | TWOSENSOR;
     
     protected int _activeFeedbackType   = DIRECT;
-    
-    // Temporary expedient, see jmri.jmrit.nce.NceTurnoutMonitor
-    private static int numFeedbackChanges = 0;
-    public static int getNumFeedbackChanges() {return numFeedbackChanges;};
-    
+ 
     private int _knownState     = UNKNOWN;
     private int _commandedState = UNKNOWN;
     
@@ -219,10 +215,12 @@ public abstract class AbstractTurnout extends AbstractNamedBean
         int test = mode & (mode-1);
         if (test!=0) throw new IllegalArgumentException("More than one bit set: "+mode);
         // set the value
+        int oldMode = _activeFeedbackType;
         _activeFeedbackType = mode;
+        if (oldMode != _activeFeedbackType)
+        	firePropertyChange("feedbackchange",new Integer(oldMode), new Integer(_activeFeedbackType));
         // unlock turnout if feedback is changed 
         setLocked (false);
-        numFeedbackChanges++;
     }
     
     public int getFeedbackMode() { return _activeFeedbackType; }
