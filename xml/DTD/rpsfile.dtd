@@ -1,0 +1,27 @@
+<!-- Defines XML for RPS position information -->
+<!-- $Id: rpsfile.dtd,v 1.1 2007-11-08 07:59:35 jacobsen Exp $ -->
+
+<!-- This DTD is Copyright 2007 Bob Jacobsen.  You may freely use    -->
+<!-- it subject to the Open Source Artistic License, a copy of     -->
+<!-- which is available in the COPYING file distributed along with -->
+<!-- this file or at http://jmri.sf.net/COPYING                    -->
+<!-- For more information on the JMRI project, including this DTD, -->
+<!-- see http://jmri.sf.net                                        -->
+
+<!ELEMENT rpsfile (receiver*, calibrationpoint*)>
+
+<!ELEMENT receiver (position)>
+
+<!ELEMENT calibrationpoint EMPTY>
+
+
+<!ELEMENT position (x, y, z)>
+
+<!ELEMENT x (#PCDATA)>
+<!ELEMENT y (#PCDATA)>
+<!ELEMENT z (#PCDATA)>
+
+<!ELEMENT reading (id, time*)>
+
+<!ELEMENT id (#PCDATA)>
+<!ELEMENT time (#PCDATA)>
