@@ -37,7 +37,7 @@ import jmri.AbstractTurnout;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */public class LnTurnout extends AbstractTurnout implements LocoNetListener {
 
     public LnTurnout(int number) {  // a human-readable turnout number must be specified!
@@ -216,6 +216,10 @@ import jmri.AbstractTurnout;
              return;
          }
          // reach here only in error
+     }
+     
+     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout){
+ 		if (log.isDebugEnabled()) log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock")+ " Pushbutton LT"+_number);
      }
 
      public void dispose() {

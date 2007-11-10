@@ -10,7 +10,7 @@ import jmri.AbstractTurnoutManager;
  * Implement a turnout manager for "Internal" (virtual) turnouts.
  *
  * @author			Bob Jacobsen Copyright (C) 2006
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class InternalTurnoutManager extends AbstractTurnoutManager {
 
@@ -20,6 +20,7 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
     protected Turnout createNewTurnout(String systemName, String userName) {
         return new AbstractTurnout(systemName, userName){
             protected void forwardCommandChangeToLayout(int s) {}
+            protected void turnoutPushbuttonLockout(boolean b){}
         };
     }
     

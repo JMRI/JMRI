@@ -28,7 +28,7 @@ import jmri.Turnout;
  * 
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.19 $
+ * @version     $Revision: 1.20 $
  */
 
 public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeListener {
@@ -278,11 +278,11 @@ public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeL
 		if (rControlTurnout == null)
 			return;
 		
-		// don't update commanded state if turnout locked  
-		if (rControlTurnout.getLocked())
-			return;
-
 		int tCommandedState = rControlTurnout.getCommandedState();
+		
+		// don't update commanded state if turnout locked unless the turnout state is unknown
+		if (rControlTurnout.getLocked(Turnout.CABLOCKOUT) && tCommandedState != Turnout.UNKNOWN)
+			return;
 		
 		int nceAccyThrown = NCE_ACCY_THROWN;
 		int nceAccyClosed = NCE_ACCY_CLOSED;
@@ -356,7 +356,7 @@ public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeL
 		int nceAccState = (recMemByte >> bit) & 0x01;
 		if (nceAccState == nceAccyThrown && tKnownState != Turnout.THROWN) {
 
-			if (rControlTurnout.getLocked() && tCommandedState == Turnout.CLOSED) {
+			if (rControlTurnout.getLocked(Turnout.CABLOCKOUT) && tCommandedState == Turnout.CLOSED) {
 
 				if (log.isDebugEnabled()) {
 					log.debug("Turnout NT" + NTnum + " is locked," 
@@ -364,7 +364,7 @@ public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeL
 				}
 				rControlTurnout.forwardCommandChangeToLayout(Turnout.CLOSED);
 				
-				if (rControlTurnout.reportLocked()){
+				if (rControlTurnout.getReportLocked()){
 					log.info("Turnout NT" + NTnum + " is locked," 
 							+ " JMRI has canceled THROW turnout command from cab");
 				}
@@ -383,7 +383,7 @@ public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeL
 
 		if (nceAccState == nceAccyClosed && tKnownState != Turnout.CLOSED) {
 
-			if (rControlTurnout.getLocked()&& tCommandedState == Turnout.THROWN) {
+			if (rControlTurnout.getLocked(Turnout.CABLOCKOUT)&& tCommandedState == Turnout.THROWN) {
 
 				if (log.isDebugEnabled()) {
 					log.debug("Turnout NT" + NTnum + " is locked," 
@@ -391,7 +391,7 @@ public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeL
 				}
 				rControlTurnout.forwardCommandChangeToLayout(Turnout.THROWN);
 	
-				if (rControlTurnout.reportLocked()){
+				if (rControlTurnout.getReportLocked()){
 					log.info("Turnout NT" + NTnum + " is locked," 
 							+ " JMRI has canceled CLOSE turnout command from cab");
 				}

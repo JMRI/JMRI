@@ -95,7 +95,7 @@
  * may be necessary to poll for the feedback response data.
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001, Portions by Paul Bender Copyright (C) 2003 
- * @version			$Revision: 2.10 $
+ * @version			$Revision: 2.11 $
  */
 
 package jmri.jmrix.lenz;
@@ -187,6 +187,10 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
         XNetTrafficController.instance().sendXNetMessage(msg, this);
         InternalState=COMMANDSENT;
+    }
+    
+    protected void turnoutPushbuttonLockout(boolean _pushButtonLockout){
+		if (log.isDebugEnabled()) log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock")+ " Pushbutton XT"+mNumber);
     }
 
     /**

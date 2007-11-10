@@ -5,6 +5,7 @@ package jmri.jmrix.nce;
 import jmri.AbstractTurnout;
 import jmri.NmraPacket;
 import jmri.Turnout;
+import jmri.PushbuttonPacket;
 
 /**
  * Implement a Turnout via NCE communications.
@@ -15,7 +16,7 @@ import jmri.Turnout;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.23 $
+ * @version	$Revision: 1.24 $
  */
 public class NceTurnout extends AbstractTurnout {
 
@@ -54,6 +55,8 @@ public class NceTurnout extends AbstractTurnout {
     		_validFeedbackNames = modeNames;
     		_validFeedbackModes = modeValues;
     	}
+    	_enableCabLockout = true;
+    	_enablePushButtonLockout = true;
     }
     static String[] modeNames = null;
     static int[] modeValues = null;
@@ -89,6 +92,21 @@ public class NceTurnout extends AbstractTurnout {
             sendMessage(false^getInverted());
         }
     }
+    
+    /**
+     * Send a message to the layout to lock or unluck the turnout pushbuttons
+     * if true, pushbutton lockout enabled
+     */
+    protected void turnoutPushbuttonLockout(boolean pushButtonLockout) {
+		if (log.isDebugEnabled())
+			log.debug("Send command to "
+					+ (_pushButtonLockout ? "Lock" : "Unlock")
+					+ " Pushbutton NT" + _number);
+		
+		byte[] bl = PushbuttonPacket.pushbuttonPkt(_number, pushButtonLockout);
+		NceMessage m = NceMessage.sendPacketMessage(bl);
+		NceTrafficController.instance().sendNceMessage(m, null);
+	}
 
     public void dispose() {}  // no connections need to be broken
 
@@ -135,16 +153,47 @@ public class NceTurnout extends AbstractTurnout {
     public boolean canInvert(){return true;}
     
     /**
-     * NCE turnouts can be locked if there's feedback available
-     * Only Monitoring is currently supported for turnout locking 
+     * NCE turnouts support two types of lockouts, pushbutton and cab.
+     * Cab lockout requires the feedback mode to be Monitoring 
      */
-    public boolean canLock(){
-    	if ((getFeedbackMode() == MONITORING))
-    		return true;
-    	else
-    		return false;
-    	}
+    public boolean canLock(int turnoutLockout) {
+		if ((turnoutLockout & PUSHBUTTONLOCKOUT) > 0 && _enablePushButtonLockout)
+			return true;
+		if ((turnoutLockout & CABLOCKOUT) > 0
+				&& getFeedbackMode() == MONITORING && _enableCabLockout) {
+			return true;
+		} else
+			return false;
+	}
     
+    /**
+     * Control which turnout locks are enabled
+     */
+    public void enableLockOperation(int turnoutLockout, boolean enabled) {
+		if ((turnoutLockout & CABLOCKOUT) > 0)
+			if (enabled)
+				_enableCabLockout = true;
+			else {
+				// unlock cab before disabling
+				_cabLockout = false;
+				_enableCabLockout = false;
+				// pushbutton lockout has to be enabled if cab lockout is disabled
+				_enablePushButtonLockout = true;
+			}
+
+		if ((turnoutLockout & PUSHBUTTONLOCKOUT) > 0)
+			if (enabled) {
+				_enablePushButtonLockout = true;
+			} else {
+				// only time we can disable pushbuttons is if we can lockout cabs
+				if (getFeedbackMode() != MONITORING)
+					return; 
+				// pushbutton lockout has to be enabled if cab lockout is disabled
+				if (_enableCabLockout)
+				_enablePushButtonLockout = false;
+			}
+	}
+ 
     
     protected void sendMessage(boolean closed) {
         // get the packet
@@ -178,9 +227,7 @@ public class NceTurnout extends AbstractTurnout {
     		NceMessage m = NceMessage.sendPacketMessage(bl);
 
     		NceTrafficController.instance().sendNceMessage(m, null);
-        
     	}
-    	
     }
     
     

@@ -14,7 +14,7 @@ import jmri.Turnout;
  *
  * Description:		extend jmri.AbstractTurnout for TMCC serial layouts
  * @author			Bob Jacobsen Copyright (C) 2003, 2006
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SerialTurnout extends AbstractTurnout {
 
@@ -44,6 +44,10 @@ public class SerialTurnout extends AbstractTurnout {
             // send a THROWN command
             sendMessage(false^getInverted());
         }
+    }
+    
+    protected void turnoutPushbuttonLockout(boolean _pushButtonLockout){
+		if (log.isDebugEnabled()) log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock")+ " Pushbutton TT"+_number);
     }
 
     public void dispose() {}  // no connections need to be broken
