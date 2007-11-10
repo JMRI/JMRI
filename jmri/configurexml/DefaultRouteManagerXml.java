@@ -18,7 +18,7 @@ import org.jdom.Element;
  *
  * @author Dave Duchamp Copyright (c) 2004
  * @author Daniel Boudreau Copyright (c) 2007
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class DefaultRouteManagerXml implements XmlAdapter {
 
@@ -331,8 +331,8 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                         
                         // determine if turnout should be locked
                         Turnout t = r.getOutputTurnout(k);
-						if (t.canLock() && r.getLocked()) {
-							t.setLocked(true);
+						if (r.getLocked()) {
+							t.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, true);
 						}
                 	}
                 }

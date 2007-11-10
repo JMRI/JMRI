@@ -12,7 +12,7 @@ import javax.swing.JMenuBar;
 /**
  * Frame controlling a single turnout
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
 	
@@ -37,6 +37,9 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
     
     javax.swing.JLabel lockButtonLabel = new javax.swing.JLabel();
     javax.swing.JButton lockButton = new javax.swing.JButton();
+    
+    javax.swing.JLabel lockPushButtonLabel = new javax.swing.JLabel();
+    javax.swing.JButton lockPushButton = new javax.swing.JButton();
 
     public SimpleTurnoutCtrlFrame() {
 
@@ -98,9 +101,22 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
                 lockButtonActionPerformed(e);
             }
         });
+        
+        lockPushButtonLabel.setText("Pushbuttons: ");
+        lockPushButtonLabel.setVisible(true);
+        
+        lockPushButton.setText(UNLOCKED);
+        lockPushButton.setVisible(true);
+        lockPushButton.setEnabled(false);
+        lockPushButton.setToolTipText ("When locked, turnout pushbuttons are disabled"); 
+        lockPushButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                lockPushButtonActionPerformed(e);
+            }
+        });
         // general GUI config
         setTitle("Turnout Control");
-        getContentPane().setLayout(new GridLayout(6,2));
+        getContentPane().setLayout(new GridLayout(8,2));
 
         // install items in GUI
         getContentPane().add(textAdrLabel);
@@ -120,6 +136,9 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
         
         getContentPane().add(lockButtonLabel);
         getContentPane().add(lockButton);
+        
+        getContentPane().add(lockPushButtonLabel);
+        getContentPane().add(lockPushButton);
       
         // add help menu to window
     	addHelpMenu("package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl", true);
@@ -206,9 +225,9 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
 				updateTurnoutStatusFields();
 
 				if (lockButton.getText() == LOCKED) {
-					turnout.setLocked(false);
-				} else if (turnout.canLock()) {
-					turnout.setLocked(true);
+					turnout.setLocked(Turnout.CABLOCKOUT, false);
+				} else if (turnout.canLock(Turnout.CABLOCKOUT)) {
+					turnout.setLocked(Turnout.CABLOCKOUT, true);
 				}
 			}
 		} catch (Exception ex) {
@@ -218,6 +237,37 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
 			nowFeedbackLabel.setText("<unknown>");
 		}
 	}
+	
+	public void lockPushButtonActionPerformed(java.awt.event.ActionEvent e) {
+		// load address from switchAddrTextField
+		try {
+			if (turnout != null)
+				turnout.removePropertyChangeListener(this);
+			turnout = InstanceManager.turnoutManagerInstance().provideTurnout(
+					adrTextField.getText());
+
+			if (turnout == null) {
+				log.error("Turnout " + adrTextField.getText()
+						+ " is not available");
+			} else {
+				turnout.addPropertyChangeListener(this);
+				updateTurnoutStatusFields();
+				
+				if (lockPushButton.getText() == LOCKED) {
+					turnout.setLocked(Turnout.PUSHBUTTONLOCKOUT, false);
+				} else if (turnout.canLock(Turnout.PUSHBUTTONLOCKOUT)) {
+					turnout.setLocked(Turnout.PUSHBUTTONLOCKOUT, true);
+				}
+				
+			}
+		} catch (Exception ex) {
+			log.error("LockPushButtonActionPerformed, exception: "
+							+ ex.toString());
+			nowStateLabel.setText("ERROR");
+			nowFeedbackLabel.setText("<unknown>");
+		}
+	}
+
 
     // update state field in GUI as state of turnout changes
     public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -243,18 +293,29 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
             }
         }
         if (e.getPropertyName().equals("locked")) {
-        	if (turnout.canLock()) {
-    			if (turnout.getLocked()){
-    				lockButton.setText(LOCKED);
-    			}else{
-    				lockButton.setText(UNLOCKED);
-    			}
-    			lockButton.setEnabled(true);
-    		}else{
-    			lockButton.setText(UNLOCKED);
-    			lockButton.setEnabled(false);
-    		}
-        }
+			if (turnout.canLock(Turnout.CABLOCKOUT)) {
+				if (turnout.getLocked(Turnout.CABLOCKOUT)) {
+					lockButton.setText(LOCKED);
+				} else {
+					lockButton.setText(UNLOCKED);
+				}
+				lockButton.setEnabled(true);
+			} else {
+				lockButton.setText(UNLOCKED);
+				lockButton.setEnabled(false);
+			}
+			if (turnout.canLock(Turnout.PUSHBUTTONLOCKOUT)) {
+				if (turnout.getLocked(Turnout.PUSHBUTTONLOCKOUT)) {
+					lockPushButton.setText(LOCKED);
+				} else {
+					lockPushButton.setText(UNLOCKED);
+				}
+				lockPushButton.setEnabled(true);
+			} else {
+				lockPushButton.setText(UNLOCKED);
+				lockPushButton.setEnabled(false);
+			}
+		}
         if (e.getPropertyName().equals("feedbackchange")) {
         	updateTurnoutStatusFields();
         }
@@ -263,8 +324,8 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
     private void updateTurnoutStatusFields(){
     	
     	nowFeedbackLabel.setText (turnout.getFeedbackModeName());
-		if (turnout.canLock()) {
-			if (turnout.getLocked()){
+		if (turnout.canLock(Turnout.CABLOCKOUT)) {
+			if (turnout.getLocked(Turnout.CABLOCKOUT)){
 				lockButton.setText(LOCKED);
 			}else{
 				lockButton.setText(UNLOCKED);
@@ -273,6 +334,17 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
 		}else{
 			lockButton.setText(UNLOCKED);
 			lockButton.setEnabled(false);
+		}
+		if (turnout.canLock(Turnout.PUSHBUTTONLOCKOUT)) {
+			if (turnout.getLocked(Turnout.PUSHBUTTONLOCKOUT)){
+				lockPushButton.setText(LOCKED);
+			}else{
+				lockPushButton.setText(UNLOCKED);
+			}
+			lockPushButton.setEnabled(true);
+		}else{
+			lockPushButton.setText(UNLOCKED);
+			lockPushButton.setEnabled(false);
 		}
 		int knownState = turnout.getKnownState();
         switch (knownState) {

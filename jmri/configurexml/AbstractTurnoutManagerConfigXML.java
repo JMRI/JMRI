@@ -24,7 +24,7 @@ import org.jdom.Attribute;
  * specific Turnout or AbstractTurnout subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
 
@@ -71,8 +71,22 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
                 elem.setAttribute("inverted", t.getInverted()?"true":"false");
                 
                 // include turnout locked
-                elem.setAttribute("locked", t.getLocked()?"true":"false");          
+                elem.setAttribute("locked", t.getLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT)?"true":"false");          
 				
+                // include turnout lock mode
+                String lockOpr;
+				if (t.canLock(Turnout.CABLOCKOUT) && t.canLock(Turnout.PUSHBUTTONLOCKOUT)){
+					lockOpr = "both"; 
+   				} else if (t.canLock(Turnout.CABLOCKOUT)){
+   					lockOpr = "cab";
+   				} else {
+   					lockOpr = "pushbutton";
+   				}
+                elem.setAttribute("lockMode", lockOpr);          
+                
+                // include turnout decoder
+                elem.setAttribute("decoder", t.getDecoderName());          
+                
 				// include number of control bits, if different from one
 				int iNum = t.getNumberOutputBits();
 				if (iNum!=1) elem.setAttribute("numBits",""+iNum);
@@ -178,13 +192,34 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
             if (a!=null) { 
             	t.setInverted(a.getValue().equals("true"));
             }
+             
+            // check for turnout decoder
+            a = ((Element)(turnoutList.get(i))).getAttribute("decoder");
+            if (a!=null) { 
+            	t.setDecoderName(a.getValue());
+            }
+            
+            // check for turnout lock mode
+			a = ((Element) (turnoutList.get(i))).getAttribute("lockMode");
+			if (a != null) {
+				if (a.getValue().equals("both"))
+					t.enableLockOperation(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, true);
+				if (a.getValue().equals("cab")) {
+					t.enableLockOperation(Turnout.CABLOCKOUT, true);
+					t.enableLockOperation(Turnout.PUSHBUTTONLOCKOUT, false);
+				}
+				if (a.getValue().equals("pushbutton")) {
+					t.enableLockOperation(Turnout.PUSHBUTTONLOCKOUT, true);
+					t.enableLockOperation(Turnout.CABLOCKOUT, false);
+				}
+			}
             
             // check for turnout locked
             a = ((Element)(turnoutList.get(i))).getAttribute("locked");
             if (a!=null) { 
-            	t.setLocked(a.getValue().equals("true"));
+            	t.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, a.getValue().equals("true"));
             }
-			
+ 			
 			// number of bits, if present - if not, defaults to 1
 			a = ((Element)(turnoutList.get(i))).getAttribute("numBits");
 			if (a==null) {

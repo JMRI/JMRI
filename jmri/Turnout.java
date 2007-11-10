@@ -36,7 +36,7 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  * @see         jmri.AbstractTurnout
  * @see         jmri.TurnoutManager
  * @see         jmri.InstanceManager
@@ -284,33 +284,50 @@ public interface Turnout extends NamedBean {
     public boolean canInvert();
     
     /**
-     * Get turnout locked
-     *<P>
-     * If true turnouts are locked
+     *  Constant representing turnout lockout cab commands
      */
-    public boolean getLocked();
+    public static final int CABLOCKOUT = 1;
     
     /**
-     * Set turnout locked
-     *<P>
-     * If true lock turnout
+     *  Constant representing turnout lockout pushbuttons
      */
-    public void setLocked(boolean locked);
+    public static final int PUSHBUTTONLOCKOUT = 2;
+  
+    /**
+	 * Get turnout locked
+	 * <P>
+	 * If true turnout is locked, must specify which type of lock, will return
+	 * true if both tested and either type is locked.
+	 */
+    public boolean getLocked(int turnoutLockout);
     
     /**
-     * Determine if turnout can be locked
+     * Enable turnout lock operators. 
      *<P>
-     * If true turnouts can be locked
+     * If true the type of lock specified is enabled.
      */
-    public boolean canLock();
+    public void enableLockOperation(int turnoutLockout, boolean locked);
     
     /**
-     * Determine if we should send a message to console when
-     * we detect that a turnout that is locked has been accessed
-     * by a cab on the layout. 
-     * If true, report cab attempt to change turnout.
+     * Determine if turnout can be locked.  Must specify the type of lock.
+     *<P>
+     * If true turnouts can be locked.
      */
-    public boolean reportLocked();
+    public boolean canLock(int turnoutLockout);
+    
+    /**
+     * Lock a turnout. Must specify the type of lock.
+     *<P>
+     * If true turnout is to be locked.
+     */
+    public void setLocked(int turnoutLockout, boolean locked);
+      
+    /**
+	 * Determine if we should send a message to console when we detect that a
+	 * turnout that is locked has been accessed by a cab on the layout. If true,
+	 * report cab attempt to change turnout.
+	 */
+    public boolean getReportLocked();
     
     /**
      * Set turnout report
@@ -318,6 +335,21 @@ public interface Turnout extends NamedBean {
      * If true report any attempts by a cab to modify turnout state
      */
     public void setReportLocked(boolean reportLocked);
+    
+    /**
+	 * Get a human readable representation of the decoder types.
+	 */
+    public String[] getValidDecoderNames();
+    
+    /**
+	 * Get a human readable representation of the decoder type for this turnout.
+	 */
+    public String getDecoderName();
+    
+    /**
+	 * Set a human readable representation of the decoder type for this turnout.
+	 */
+    public void setDecoderName(String decoderName); 
     
     
 }

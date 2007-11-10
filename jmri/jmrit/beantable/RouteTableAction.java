@@ -31,7 +31,7 @@ import jmri.util.JmriJFrame;
  * @author	Dave Duchamp    Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2007 
  *
- * @version     $Revision: 1.35 $
+ * @version     $Revision: 1.36 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -189,7 +189,7 @@ public class RouteTableAction extends AbstractTableAction {
 			Turnout t = r.getOutputTurnout(i);
 			if (t == null)
 				return false;
-			if (t.canLock())
+			if (t.canLock(Turnout.CABLOCKOUT))
 				return true;
 		}
 		return false;

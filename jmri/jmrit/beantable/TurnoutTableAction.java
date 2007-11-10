@@ -42,7 +42,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.48 $
+ * @version     $Revision: 1.49 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -71,6 +71,10 @@ public class TurnoutTableAction extends AbstractTableAction {
 	
 	String closedText;
 	String thrownText;
+	String bothText = "Both";
+	String cabOnlyText = "Cab only";
+	String pushbutText = "Pushbutton only";
+	String[] lockOperations = {bothText, cabOnlyText, pushbutText};
 
     /**
      * Create the JTable DataModel, along with the changes
@@ -91,8 +95,12 @@ public class TurnoutTableAction extends AbstractTableAction {
 		    static public final int SENSOR1COL = MODECOL+1;
 		    static public final int SENSOR2COL = SENSOR1COL+1;
 		    static public final int OPSONOFFCOL = SENSOR2COL+1;
+		    static public final int LOCKOPRCOL = OPSONOFFCOL+1;
+		    static public final int LOCKDECCOL = LOCKOPRCOL+1;
 
-    		public int getColumnCount( ){ 
+    		public int getColumnCount(){ 
+    			if (showLock)
+    				return LOCKDECCOL+1;
     		    if (showFeedback)
     		        return OPSONOFFCOL+1;
     		    else
@@ -107,6 +115,8 @@ public class TurnoutTableAction extends AbstractTableAction {
     			else if (col==SENSOR1COL) return "Sensor 1";
     			else if (col==SENSOR2COL) return "Sensor 2";
     			else if (col==OPSONOFFCOL) return "Automate";
+    			else if (col==LOCKOPRCOL) return "Lock Mode";
+    			else if (col==LOCKDECCOL) return "Decoder";
     			
     			else if (col==VALUECOL) return "Cmd";  // override default title
     			
@@ -120,6 +130,8 @@ public class TurnoutTableAction extends AbstractTableAction {
     			else if (col==SENSOR1COL) return String.class;
     			else if (col==SENSOR2COL) return String.class;
     			else if (col==OPSONOFFCOL) return JComboBox.class;
+    			else if (col==LOCKOPRCOL) return JComboBox.class;
+    			else if (col==LOCKDECCOL) return JComboBox.class;
     			else return super.getColumnClass(col);
 		    }
     		public int getPreferredWidth(int col) {
@@ -130,6 +142,8 @@ public class TurnoutTableAction extends AbstractTableAction {
     			else if (col==SENSOR1COL) return new JTextField(5).getPreferredSize().width;
     			else if (col==SENSOR2COL) return new JTextField(5).getPreferredSize().width;
     			else if (col==OPSONOFFCOL) return new JTextField(14).getPreferredSize().width;
+    			else if (col==LOCKOPRCOL) return new JTextField(10).getPreferredSize().width;
+    			else if (col==LOCKDECCOL) return new JTextField(10).getPreferredSize().width;
     			else return super.getPreferredWidth(col);
 		    }
     		public boolean isCellEditable(int row, int col) {
@@ -137,12 +151,14 @@ public class TurnoutTableAction extends AbstractTableAction {
 				TurnoutManager manager = InstanceManager.turnoutManagerInstance();
 				Turnout t = manager.getBySystemName(name);
     			if (col==INVERTCOL) return t.canInvert();
-    			else if (col == LOCKCOL)return t.canLock();
+    			else if (col == LOCKCOL)return t.canLock(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT);
     			else if (col==KNOWNCOL) return false;
     			else if (col==MODECOL) return true;
     			else if (col==SENSOR1COL) return true;
     			else if (col==SENSOR2COL) return true;
     			else if (col==OPSONOFFCOL) return true;
+    			else if (col==LOCKOPRCOL) return true;
+    			else if (col==LOCKDECCOL) return t.canLock(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT);
     			else return super.isCellEditable(row,col);
 			}    		
 
@@ -154,8 +170,22 @@ public class TurnoutTableAction extends AbstractTableAction {
     				boolean val = t.getInverted();
 					return new Boolean(val);
 	   			} else if (col==LOCKCOL){
-	   				boolean val = t.getLocked();
+	   				boolean val = t.getLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT);
 					return new Boolean(val);
+	   			} else if (col == LOCKOPRCOL) {
+	   				JComboBox c = new JComboBox(lockOperations);
+	   				if (t.canLock(Turnout.CABLOCKOUT) && t.canLock(Turnout.PUSHBUTTONLOCKOUT)){
+	   					c.setSelectedItem (bothText); 
+	   				} else if (t.canLock(Turnout.PUSHBUTTONLOCKOUT)){
+	   					c.setSelectedItem (pushbutText);
+	   				} else {
+	   					c.setSelectedItem (cabOnlyText);
+	   				}
+	   				return c;
+	   			} else if (col == LOCKDECCOL) {
+	   				JComboBox c = new JComboBox(t.getValidDecoderNames());
+	   				c.setSelectedItem (t.getDecoderName());
+	   				return c;
 	   			} else if (col==KNOWNCOL) {
                     if (t.getKnownState()==Turnout.CLOSED) return closedText;
                     if (t.getKnownState()==Turnout.THROWN) return thrownText;
@@ -187,12 +217,10 @@ public class TurnoutTableAction extends AbstractTableAction {
 						boolean b = ((Boolean) value).booleanValue();
 						t.setInverted(b);
 					}
-	   			} else if (col==LOCKCOL){
-					if (t.canLock()) {
-						boolean b = ((Boolean) value).booleanValue();
-						t.setLocked(b);
-					}
-	   			} else if (col==MODECOL) {
+	   			} else if (col == LOCKCOL) {
+					boolean b = ((Boolean) value).booleanValue();
+					t.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT,	b);
+				} else if (col == MODECOL) {
                     String modeName = (String)((JComboBox)value).getSelectedItem();
     				t.setFeedbackMode(modeName);
     			} else if (col==SENSOR1COL) {
@@ -209,6 +237,23 @@ public class TurnoutTableAction extends AbstractTableAction {
                     t.provideSecondFeedbackSensor(s);
     			} else if (col==OPSONOFFCOL) {
     									// do nothing as this is handled by the combo box listener
+	   			} else if (col == LOCKOPRCOL) {
+					String lockOpName = (String) ((JComboBox) value)
+							.getSelectedItem();
+					if (lockOpName.equals(bothText)){
+						t.enableLockOperation(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, true);
+					}
+					if (lockOpName.equals(cabOnlyText)) {
+						t.enableLockOperation(Turnout.CABLOCKOUT, true);
+						t.enableLockOperation(Turnout.PUSHBUTTONLOCKOUT, false);
+					}
+					if (lockOpName.equals(pushbutText)) {
+						t.enableLockOperation(Turnout.CABLOCKOUT, false);
+						t.enableLockOperation(Turnout.PUSHBUTTONLOCKOUT, true);
+					}
+	   			} else if (col == LOCKDECCOL) {
+	   				String decoderName = (String)((JComboBox)value).getSelectedItem();
+	   				t.setDecoderName(decoderName);
     			} else super.setValueAt(value, row, col);
     		}
 
@@ -237,9 +282,10 @@ public class TurnoutTableAction extends AbstractTableAction {
                 super.configureTable(table);
             }
             
-            // update table if turnout lock changes
+            // update table if turnout lock or feedback changes
             boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("locked")) return true;
+                if (e.getPropertyName().equals("feedbackchange")) return true;
                 else return super.matchPropertyName(e);
             }
 
@@ -291,6 +337,12 @@ public class TurnoutTableAction extends AbstractTableAction {
     boolean showFeedback = false;
     void showFeedbackChanged() {
         showFeedback = showFeedbackBox.isSelected();
+        m.fireTableStructureChanged(); // update view
+    }
+    
+    boolean showLock = false;
+    void showLockChanged() {
+        showLock = showLockBox.isSelected();
         m.fireTableStructureChanged(); // update view
     }
     
@@ -499,6 +551,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     }
     
     JCheckBox showFeedbackBox = new JCheckBox("Show feedback information");
+    JCheckBox showLockBox = new JCheckBox("Show lock information");
     JCheckBox doAutomationBox = new JCheckBox("Automatic retry");
     
     /**
@@ -511,6 +564,13 @@ public class TurnoutTableAction extends AbstractTableAction {
         showFeedbackBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 showFeedbackChanged();
+            }
+        });
+        f.addToBottomBox(showLockBox);
+        showLockBox.setToolTipText("Show extra columns for configuring turnout lock?");
+        showLockBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                showLockChanged();
             }
         });
         f.addToBottomBox(doAutomationBox);

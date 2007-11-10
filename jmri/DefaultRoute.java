@@ -7,7 +7,7 @@ package jmri;
  *
  * @author	Dave Duchamp Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2006, 2007
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  */
 public class DefaultRoute extends AbstractNamedBean
     implements Route, java.io.Serializable {
@@ -522,10 +522,7 @@ public class DefaultRoute extends AbstractNamedBean
 			Turnout t = getOutputTurnout(i);
 			if (t == null)
 				return;
-			if (lock && t.canLock())
-				t.setLocked(true);
-			else
-				t.setLocked(false);
+			t.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, lock);
 		}
 	}
 
