@@ -42,7 +42,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.49 $
+ * @version     $Revision: 1.50 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -97,12 +97,18 @@ public class TurnoutTableAction extends AbstractTableAction {
 		    static public final int OPSONOFFCOL = SENSOR2COL+1;
 		    static public final int LOCKOPRCOL = OPSONOFFCOL+1;
 		    static public final int LOCKDECCOL = LOCKOPRCOL+1;
+		    
+		    // show only lock columns, no feedback columns
+		    static public final int xLOCKOPRCOL = LOCKCOL+1;
+		    static public final int xLOCKDECCOL = xLOCKOPRCOL+1;
 
     		public int getColumnCount(){ 
-    			if (showLock)
+    			if (showLock && showFeedback)
     				return LOCKDECCOL+1;
     		    if (showFeedback)
     		        return OPSONOFFCOL+1;
+    		    if (showLock)
+    		    	return xLOCKDECCOL+1;
     		    else
     		        return LOCKCOL+1;
      		}
@@ -110,13 +116,13 @@ public class TurnoutTableAction extends AbstractTableAction {
     		public String getColumnName(int col) {
     			if (col==INVERTCOL) return "Inverted";
     			else if (col==LOCKCOL) return "Locked";
-    			else if (col==KNOWNCOL) return "Feedback";
-    			else if (col==MODECOL) return "Mode";
-    			else if (col==SENSOR1COL) return "Sensor 1";
+    			else if (col==KNOWNCOL && showFeedback) return "Feedback";
+    			else if (col==MODECOL && showFeedback) return "Mode";
+     			else if (col==SENSOR1COL) return "Sensor 1";
     			else if (col==SENSOR2COL) return "Sensor 2";
     			else if (col==OPSONOFFCOL) return "Automate";
-    			else if (col==LOCKOPRCOL) return "Lock Mode";
-    			else if (col==LOCKDECCOL) return "Decoder";
+    			else if (col==LOCKOPRCOL || col==xLOCKOPRCOL) return "Lock Mode";
+    			else if (col==LOCKDECCOL || col==xLOCKDECCOL) return "Decoder";
     			
     			else if (col==VALUECOL) return "Cmd";  // override default title
     			
@@ -125,25 +131,25 @@ public class TurnoutTableAction extends AbstractTableAction {
     		public Class getColumnClass(int col) {
     			if (col==INVERTCOL) return Boolean.class;
     			else if (col==LOCKCOL) return Boolean.class;
-    			else if (col==KNOWNCOL) return String.class;
-    			else if (col==MODECOL) return JComboBox.class;
+    			else if (col==KNOWNCOL && showFeedback) return String.class;
+    			else if (col==MODECOL && showFeedback) return JComboBox.class;
     			else if (col==SENSOR1COL) return String.class;
     			else if (col==SENSOR2COL) return String.class;
     			else if (col==OPSONOFFCOL) return JComboBox.class;
-    			else if (col==LOCKOPRCOL) return JComboBox.class;
-    			else if (col==LOCKDECCOL) return JComboBox.class;
+    			else if (col==LOCKOPRCOL || col==xLOCKOPRCOL) return JComboBox.class;
+    			else if (col==LOCKDECCOL || col==xLOCKDECCOL) return JComboBox.class;
     			else return super.getColumnClass(col);
 		    }
     		public int getPreferredWidth(int col) {
     			if (col==INVERTCOL) return new JTextField(6).getPreferredSize().width;
     			else if (col==LOCKCOL) return new JTextField(6).getPreferredSize().width;
-    			else if (col==KNOWNCOL) return new JTextField(10).getPreferredSize().width;
-    			else if (col==MODECOL) return new JTextField(10).getPreferredSize().width;
+    			else if (col==KNOWNCOL && showFeedback) return new JTextField(10).getPreferredSize().width;
+    			else if (col==MODECOL && showFeedback) return new JTextField(10).getPreferredSize().width;
     			else if (col==SENSOR1COL) return new JTextField(5).getPreferredSize().width;
     			else if (col==SENSOR2COL) return new JTextField(5).getPreferredSize().width;
     			else if (col==OPSONOFFCOL) return new JTextField(14).getPreferredSize().width;
-    			else if (col==LOCKOPRCOL) return new JTextField(10).getPreferredSize().width;
-    			else if (col==LOCKDECCOL) return new JTextField(10).getPreferredSize().width;
+    			else if (col==LOCKOPRCOL || col==xLOCKOPRCOL) return new JTextField(10).getPreferredSize().width;
+    			else if (col==LOCKDECCOL || col==xLOCKDECCOL) return new JTextField(10).getPreferredSize().width;
     			else return super.getPreferredWidth(col);
 		    }
     		public boolean isCellEditable(int row, int col) {
@@ -152,13 +158,13 @@ public class TurnoutTableAction extends AbstractTableAction {
 				Turnout t = manager.getBySystemName(name);
     			if (col==INVERTCOL) return t.canInvert();
     			else if (col == LOCKCOL)return t.canLock(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT);
-    			else if (col==KNOWNCOL) return false;
-    			else if (col==MODECOL) return true;
+    			else if (col==KNOWNCOL && showFeedback) return false;
+    			else if (col==MODECOL && showFeedback) return true;
     			else if (col==SENSOR1COL) return true;
     			else if (col==SENSOR2COL) return true;
     			else if (col==OPSONOFFCOL) return true;
-    			else if (col==LOCKOPRCOL) return true;
-    			else if (col==LOCKDECCOL) return t.canLock(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT);
+    			else if (col==LOCKOPRCOL || col==xLOCKOPRCOL) return true;
+    			else if (col==LOCKDECCOL || col==xLOCKDECCOL) return t.canLock(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT);
     			else return super.isCellEditable(row,col);
 			}    		
 
@@ -172,7 +178,7 @@ public class TurnoutTableAction extends AbstractTableAction {
 	   			} else if (col==LOCKCOL){
 	   				boolean val = t.getLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT);
 					return new Boolean(val);
-	   			} else if (col == LOCKOPRCOL) {
+	   			} else if (col == LOCKOPRCOL || (col==xLOCKOPRCOL && !showFeedback)) {
 	   				JComboBox c = new JComboBox(lockOperations);
 	   				if (t.canLock(Turnout.CABLOCKOUT) && t.canLock(Turnout.PUSHBUTTONLOCKOUT)){
 	   					c.setSelectedItem (bothText); 
@@ -182,16 +188,16 @@ public class TurnoutTableAction extends AbstractTableAction {
 	   					c.setSelectedItem (cabOnlyText);
 	   				}
 	   				return c;
-	   			} else if (col == LOCKDECCOL) {
+	   			} else if (col == LOCKDECCOL || (col==xLOCKDECCOL && !showFeedback)) {
 	   				JComboBox c = new JComboBox(t.getValidDecoderNames());
 	   				c.setSelectedItem (t.getDecoderName());
 	   				return c;
-	   			} else if (col==KNOWNCOL) {
+	   			} else if (col==KNOWNCOL && showFeedback) {
                     if (t.getKnownState()==Turnout.CLOSED) return closedText;
                     if (t.getKnownState()==Turnout.THROWN) return thrownText;
                     if (t.getKnownState()==Turnout.INCONSISTENT) return "Inconsistent";
                     else return "Unknown";
-    			} else if (col==MODECOL) {
+    			} else if (col==MODECOL && showFeedback) {
 					JComboBox c = new JComboBox(t.getValidFeedbackNames());
 					c.setSelectedItem(t.getFeedbackModeName());
 					return c;
@@ -220,7 +226,7 @@ public class TurnoutTableAction extends AbstractTableAction {
 	   			} else if (col == LOCKCOL) {
 					boolean b = ((Boolean) value).booleanValue();
 					t.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT,	b);
-				} else if (col == MODECOL) {
+				} else if (col == MODECOL && showFeedback) {
                     String modeName = (String)((JComboBox)value).getSelectedItem();
     				t.setFeedbackMode(modeName);
     			} else if (col==SENSOR1COL) {
@@ -237,7 +243,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     t.provideSecondFeedbackSensor(s);
     			} else if (col==OPSONOFFCOL) {
     									// do nothing as this is handled by the combo box listener
-	   			} else if (col == LOCKOPRCOL) {
+	   			} else if (col == LOCKOPRCOL || (col==xLOCKOPRCOL && !showFeedback)) {
 					String lockOpName = (String) ((JComboBox) value)
 							.getSelectedItem();
 					if (lockOpName.equals(bothText)){
@@ -251,7 +257,7 @@ public class TurnoutTableAction extends AbstractTableAction {
 						t.enableLockOperation(Turnout.CABLOCKOUT, false);
 						t.enableLockOperation(Turnout.PUSHBUTTONLOCKOUT, true);
 					}
-	   			} else if (col == LOCKDECCOL) {
+	   			} else if (col == LOCKDECCOL || (col==xLOCKDECCOL && !showFeedback)) {
 	   				String decoderName = (String)((JComboBox)value).getSelectedItem();
 	   				t.setDecoderName(decoderName);
     			} else super.setValueAt(value, row, col);
