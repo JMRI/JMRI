@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Eclipse.shtml,v 1.2 2007-07-13 04:55:22 jacobsen Exp $ -->
+<!-- $Id: Eclipse.shtml,v 1.3 2007-11-12 07:22:08 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -50,6 +50,16 @@
     <a href="http://www.amazon.com/exec/obidos/tg/detail/-/0321305027/qid=1124158635">
     The Java Developer's Guide to Eclipse</a>).</p>
 
+    <P>
+    On this page, we have our 
+    <a href="#current">current instructions</a> for 
+    getting JMRI working in side Eclipse,
+    followed by 
+    <a href="#older">older instructions</a>.
+    Another version is available in a 
+    <A HREF="http://groups.yahoo.com/group/jmriusers/message/19309">JMRIusers post</a>.
+    
+    <a id="current"/>
     <h2>Setting up Eclipse for building JMRI</h2>
     <P>
     Unfortunately, we don't know how to properly put the Eclipse configuration
@@ -139,6 +149,7 @@
     </ol>
     
 
+    <a id="older"/>
     <h1>Older version of instructions</h1>
     <h2>Checking out code</h2>
     <ul>
