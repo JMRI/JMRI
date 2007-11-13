@@ -1,29 +1,45 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NCE.html,v 1.1 2007-04-08 04:44:18 jacobsen Exp $ -->
-<html lang="en">
-<head>
- <TITLE>
-      JMRI: NCE
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help NCE">
+<!-- $Id: NCE.html,v 1.2 2007-11-13 04:58:03 dan_boudreau Exp $ -->
+<HTML LANG="en">
+<HEAD>
+<TITLE>JMRI: NCE</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META CONTENT="Bob Jacobsen" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI help NCE">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</head>
+</HEAD>
 
-<body>
-<H2>NCE
-</H2>
-    
-This is the html/hardware/NCE help page
+<BODY>
+<H2>NCE</H2>
 
-</body>
-</html>
+
+<P>For reliable operation, we recommend that you disable AIU
+broadcast, and set the baud rate to 9600. These are the normal defaults
+for NCE. Both of these parameters can be found in your NCE user's manual
+under "Setup Command Station".</P>
+
+<P>If you wish to use MONITORING for turnout feedback, you must
+upgrade your command station to the Mar 1 2007A EPROM or newer. The
+release in the first half of 2007 had a problem with odd turnout status.
+Every other odd accessory shared the same status bit. JMRI checks the
+revision number at startup, and will send a warning to the console
+window if it finds the early 2007 EPROM. If you're not sure if you have
+the latest, you can perform a simple test. First normal accessory 1 and
+5 using the "Select Accy" button on your ProCab. Then using the "Select
+Accy" button, change accessory 1 to REV. Then check accessory 5, and if
+NOW = REV for accessory 5, you have the earlier revision with the known
+problem. If you have the early 2007 EPROM and wish to use MONITORING for 
+feedback, contact NCE for an EPROM upgrade.</P>
+
+</BODY>
+</HTML>
 
