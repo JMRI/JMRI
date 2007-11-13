@@ -10,7 +10,7 @@ import java.util.Enumeration;
  * and startup.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  * @see PerformActionPanel
  */
 public abstract class AbstractActionModel {
@@ -27,8 +27,12 @@ public abstract class AbstractActionModel {
 
     public String getName() {
         for (int i =0; i< nameList().length; i++)
+            try {
             if (classList()[i].getName().equals(className))
                 return nameList()[i];
+            } catch(java.lang.NullPointerException npe){
+		log.error("Caught Null Pointer Exception while searching for " +className);
+            }
         return null;
     }
 
