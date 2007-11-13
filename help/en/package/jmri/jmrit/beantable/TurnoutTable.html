@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TurnoutTable.html,v 1.6 2007-11-11 00:48:25 dan_boudreau Exp $ -->
+<!-- $Id: TurnoutTable.html,v 1.7 2007-11-13 04:02:16 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Turnout Table Help</TITLE>
@@ -60,8 +60,8 @@ feedback mode, enter sensors for feedback, invert, lock, and delete it.</P>
 	locks supported by JMRI, cab lockout and pushbutton lockout. When a
 	turnout is locked, only turnout commands from JMRI to move a turnout
 	will work. Cabs and pushbuttons on the layout are disabled. You can
-	selectively decide if you want "both" cabs and pushbuttons locked,
-	"cabs only", or "pushbuttons only". Click the "Show lock information"
+	selectively decide if you want "Both" cabs and pushbuttons locked,
+	"Cabs only", or "Pushbuttons only". Click the "Show lock information"
 	box on the lower edge of the table for the lock options. Not all
 	stationary decoders support pushbutton lockout, and not all systems
 	support cab lockout. Turnouts that can not be locked have grayed out
@@ -101,13 +101,14 @@ feedback mode, enter sensors for feedback, invert, lock, and delete it.</P>
 
 	<DT>Decoder</DT>
 	<DD>Shows which decoder the turnout is using. Currently the
-	program only supports NCE and CVP stationary decoders. CVP decoders
-	support one or two pushbutton operation. Select the number of
+	program only supports NCE revision C and CVP accessory decoders. CVP
+	decoders support one or two pushbutton operation. Select the number of
 	pushbuttons used to operate that specific turnout. CVP_AD4_1B means one
 	button, and CVP_AD4_2B means two buttons. We recommend that you enter
 	all four CVP turnouts per decoder into the turnout table, even if
 	you're only locking one. You do not need to specify the number of
-	pushbuttons for NCE.</DD>
+	pushbuttons for NCE. Unfortunately, NCE revisions A and B accessory
+	decoders do not support pushbutton lockout.</DD>
 
 	<DT>Add</DT>
 	<DD>Pressing this button allows you to add a new turnout.</DD>

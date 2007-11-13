@@ -39,7 +39,7 @@ package jmri;
  * Each CVP can operate up to four turnouts, luckly for us, they are sequential. 
  *
  * @author      Daniel Boudreau Copyright (C) 2007
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * 
  */
 public class PushbuttonPacket {
@@ -47,7 +47,7 @@ public class PushbuttonPacket {
 	/**
 	 * Valid stationary decoder names
 	 */
-	public final static String NCEname = "NCE";
+	public final static String NCEname = "NCE_Rev_C";
 	public final static String CVP_1Bname = "CVP_AD4_1B";
 	public final static String CVP_2Bname = "CVP_AD4_2B";
 	
