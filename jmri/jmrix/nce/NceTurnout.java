@@ -16,7 +16,7 @@ import jmri.PushbuttonPacket;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.24 $
+ * @version	$Revision: 1.25 $
  */
 public class NceTurnout extends AbstractTurnout {
 
@@ -94,13 +94,13 @@ public class NceTurnout extends AbstractTurnout {
     }
     
     /**
-     * Send a message to the layout to lock or unluck the turnout pushbuttons
+     * Send a message to the layout to lock or unlock the turnout pushbuttons
      * if true, pushbutton lockout enabled
      */
     protected void turnoutPushbuttonLockout(boolean pushButtonLockout) {
 		if (log.isDebugEnabled())
 			log.debug("Send command to "
-					+ (_pushButtonLockout ? "Lock" : "Unlock")
+					+ (pushButtonLockout ? "Lock" : "Unlock")
 					+ " Pushbutton NT" + _number);
 		
 		byte[] bl = PushbuttonPacket.pushbuttonPkt(_number, pushButtonLockout);
