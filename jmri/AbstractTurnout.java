@@ -25,7 +25,7 @@ package jmri;
  * interface
  * 
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean implements
 		Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
@@ -397,7 +397,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 	}
 
 	// set the turnout decoder default to NCE
-	protected String _decoderName = "NCE";
+	protected String _decoderName = PushbuttonPacket.NCEname;
 
 	public String getDecoderName() {
 		return _decoderName;
