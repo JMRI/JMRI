@@ -41,7 +41,7 @@ package jmri;
  * <P>
  *
  * @author      Bob Jacobsen Copyright (C) 2001, 2003
- * @version     $Revision: 1.19 $
+ * @version     $Revision: 1.20 $
  */
 public class NmraPacket {
 
@@ -94,10 +94,10 @@ public class NmraPacket {
     /**
      * From the NMRA RP:
      * Basic Accessory Decoder Packet address for operations mode programming
-     * 10AAAAAA 0 1AAACDDD 0 1110CCAA 0 AAAAAAAA 0 DDDDDDDD
+     * 10AAAAAA 0 1AAACDDD 0 1110CCVV 0 VVVVVVVV 0 DDDDDDDD
      * Where DDD is used to indicate the output whose CVs are being modified and C=1.
      * If CDDD= 0000 then the CVs refer to the entire decoder. The resulting packet would be
-     * {preamble} 10AAAAAA 0 1AAACDDD 0 (1110CCAA   0   AAAAAAAA   0   DDDDDDDD) 0 EEEEEEEE 1
+     * {preamble} 10AAAAAA 0 1AAACDDD 0 (1110CCVV   0   VVVVVVVV   0   DDDDDDDD) 0 EEEEEEEE 1
      * Accessory Decoder Address   (Configuration Variable Access Instruction)     Error Byte
      */
      public static byte[] accDecoderPktOpsMode(int addr, int active, int outputChannel, int cvNum, int data) {
@@ -142,6 +142,54 @@ public class NmraPacket {
         return retVal;
     }
 
+     /**
+      * From the NMRA RP:
+      * The format for Accessory Decoder Configuration Variable Access Instructions is:
+      * {preamble} 0 10AAAAAA 0 0AAA11VV 0 VVVVVVVV 0 DDDDDDDD 0 EEEEEEEE 1
+      * Where:
+      *  A = Decoder address bits
+      *  V = Desired CV address - (CV 513 = 10 00000000)
+      *  D = Data for CV
+      *  
+      *  This is the old "legacy" format, newer decoders use the "Basic Accessory Decoder Packet"
+      */
+     
+     public static byte[] accDecPktOpsModeLegacy(int addr, int cvNum, int data) {
+         
+         if (addr < 1 || addr>511) {
+             log.error("invalid address "+addr);
+             return null;
+         }
+          
+         if (cvNum < 1 || cvNum>1023) {
+             log.error("invalid CV number "+cvNum);
+             return null;
+         }
+         
+         if (data<0 || data>255) {
+             log.error("invalid data "+data);
+             return null;
+         }
+
+         int lowAddr = addr & 0x3F;
+         int highAddr = ( (~addr) >> 6) & 0x07;
+         
+         int lowCVnum = (cvNum-1) & 0xFF;
+         int highCVnum = ((cvNum-1) >> 8) & 0x03;
+
+         byte[] retVal = new byte[5];
+         retVal[0] = (byte) (0x80 | lowAddr);
+         retVal[1] = (byte) (0x0C | (highAddr << 4 ) | highCVnum);
+         retVal[2] = (byte) (lowCVnum);
+         retVal[3] = (byte) (0xFF & data);
+         retVal[4] = (byte) (retVal[0]^retVal[1]^retVal[2]^retVal[3]);
+
+         return retVal;
+     }
+
+     
+     
+     
     /**
      * Provide an accessory control packet via a simplified interface
      * @param number Address of accessory output, starting with 1
@@ -190,6 +238,21 @@ public class NmraPacket {
         return NmraPacket.accDecoderPktOpsMode(aBits, cBit, dBits, cvNum, data);
     }
 
+    /**
+     * Provide a legacy operation mode accessory control packet via a simplified interface
+     * @param number Address of accessory, starting with 1
+     * @param cvNum CV number to access
+     * @parm data Data to be written
+     */
+    public static byte[] accDecoderPktOpsModeLegacy(int number, int cvNum, int data) {
+ 
+        // aBits is the "address" part of the nmra packet, which starts with 1
+        int aBits = (number-1) >> 2;      // Divide by 4 to get the 'base'
+        aBits += 1;                       // Base is +1
+
+        // get the packet
+        return NmraPacket.accDecPktOpsModeLegacy(aBits, cvNum, data);
+    }
     static byte[] locoSpeed14S(int address, int speedStep, boolean F0 ) {
         if (log.isDebugEnabled()) log.debug("create "+address+" "+speedStep+" "+F0);
         if (speedStep < 0 || speedStep>14) {

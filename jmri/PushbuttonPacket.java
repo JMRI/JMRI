@@ -36,10 +36,11 @@ package jmri;
  * Unlock 4			192
  * Unlock all		255
  * 
- * Each CVP can operate up to four turnouts, luckly for us, they are sequential. 
+ * Each CVP can operate up to four turnouts, luckly for us, they are sequential.
+ * Also note that CVP decoder's use the old legacy format for ops mode programming. 
  *
  * @author      Daniel Boudreau Copyright (C) 2007
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  * 
  */
 public class PushbuttonPacket {
@@ -68,13 +69,14 @@ public class PushbuttonPacket {
 				bl = NmraPacket.accDecoderPktOpsMode(turnoutNum, 556, 0);
 			return bl;
 			
-		// need to add fine control to CVP turnout lockout data
+		// Note CVP decoders use the old legacy accessory  format
 		} else if (t.getDecoderName().equals(CVP_1Bname)
 				|| t.getDecoderName().equals(CVP_2Bname)) {
 			int CVdata = CVPturnoutLockout(turnoutNum);
-			bl = NmraPacket.accDecoderPktOpsMode(turnoutNum, 514, CVdata);
+			bl = NmraPacket.accDecoderPktOpsModeLegacy(turnoutNum, 514, CVdata);
 			return bl;
 		} else {
+			log.error("Invalid decoder name for turnout "+turnoutNum);
 			return null;
 		}
 	}
@@ -90,10 +92,10 @@ public class PushbuttonPacket {
 
 		char sysLetter = InstanceManager.turnoutManagerInstance().systemLetter();
 		int CVdata = 0;
-		int oneButton = 1;
-		int twoButton = 3;
+		int oneButton = 1;							// one pushbutton enable
+		int twoButton = 3;							// two pushbutton enable
 		int modTurnoutNum = (turnoutNum-1) & 0xFFC; // mask off bits, there are 4 turnouts per
-													// controller
+													// decoder
 
 		for (int i = 0; i < 4; i++) {
 			// set the default for one button in case the turnout doesn't exist
