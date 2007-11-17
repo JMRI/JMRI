@@ -36,7 +36,7 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.20 $
+ * @version	$Revision: 1.21 $
  * @see         jmri.AbstractTurnout
  * @see         jmri.TurnoutManager
  * @see         jmri.InstanceManager
@@ -292,6 +292,16 @@ public interface Turnout extends NamedBean {
      *  Constant representing turnout lockout pushbuttons
      */
     public static final int PUSHBUTTONLOCKOUT = 2;
+    
+    /**
+     * Constant representing a unlocked turnout
+     */
+    public static final int UNLOCKED = 0;
+    
+    /**
+     * Constant representing a locked turnout
+     */
+    public static final int LOCKED = 1;
   
     /**
 	 * Get turnout locked

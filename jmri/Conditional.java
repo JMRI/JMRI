@@ -83,7 +83,7 @@ public interface Conditional extends NamedBean {
 	public static final int ACTION_OPTION_ON_CHANGE_TO_FALSE = 2;
 	public static final int ACTION_OPTION_ON_CHANGE = 3;
 	// action types
-	public static final int NUM_ACTION_TYPES = 17;
+	public static final int NUM_ACTION_TYPES = 18;
 	public static final int ACTION_NONE = 1;
 	public static final int ACTION_SET_TURNOUT = 2;
 	// allowed settings for turnout are Thrown and Closed (in data)
@@ -112,6 +112,7 @@ public interface Conditional extends NamedBean {
 	public static final int ACTION_DELAYED_TURNOUT = 17;
 	// allowed settings for timed turnout are Thrown and Closed (in data)
 	//   time in seconds before setting turnout should be in delay
+	public static final int ACTION_LOCK_TURNOUT = 18;
 	
 	/**
 	 * Get number of State Variables for this Conditional

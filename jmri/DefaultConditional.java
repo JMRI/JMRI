@@ -9,7 +9,7 @@ import javax.swing.Timer;
  * Class providing the basic logic of the Conditional interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -546,6 +546,21 @@ public class DefaultConditional extends AbstractNamedBean
 						else {
 							log.warn("timer already active on request to start delayed turnout action - "+
 																				actionName[i]);
+						}
+						break;
+					case Conditional.ACTION_LOCK_TURNOUT:
+						Turnout tl = InstanceManager.turnoutManagerInstance().
+									getTurnout(actionName[i]);
+						if (tl == null) {
+							log.error("invalid turnout name in action - "+actionName[i]);
+						}
+						else {
+							if (actionData[i] == Turnout.LOCKED){
+								tl.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, true);
+							}
+							else if (actionData[i] == Turnout.UNLOCKED){
+								tl.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, false);
+							}
 						}
 						break;
 					case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
