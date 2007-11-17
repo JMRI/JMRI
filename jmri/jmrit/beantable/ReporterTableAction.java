@@ -26,7 +26,7 @@ import jmri.util.JmriJFrame;
  * ReporterTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 
 public class ReporterTableAction extends AbstractTableAction {
@@ -64,6 +64,8 @@ public class ReporterTableAction extends AbstractTableAction {
             }
             public Manager getManager() { return InstanceManager.reporterManagerInstance(); }
             public NamedBean getBySystemName(String name) { return InstanceManager.reporterManagerInstance().getBySystemName(name);}
+            public NamedBean getByUserName(String name) { return InstanceManager.reporterManagerInstance().getByUserName(name);}
+
             public void clickOn(NamedBean t) {
             	// don't do anything on click; not used in this class, because 
             	// we override setValueAt

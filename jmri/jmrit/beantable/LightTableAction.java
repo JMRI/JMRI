@@ -35,7 +35,7 @@ import jmri.util.JmriJFrame;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.23 $
+ * @version     $Revision: 1.24 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -144,6 +144,9 @@ public class LightTableAction extends AbstractTableAction {
             }
             public NamedBean getBySystemName(String name) { 
                 return InstanceManager.lightManagerInstance().getBySystemName(name);
+            }
+            public NamedBean getByUserName(String name) { 
+                return InstanceManager.lightManagerInstance().getByUserName(name);
             }
             public void clickOn(NamedBean t) {
                 int oldState = ((Light)t).getState();

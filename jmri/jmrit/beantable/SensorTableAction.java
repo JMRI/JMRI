@@ -25,7 +25,7 @@ import jmri.util.JmriJFrame;
  * SensorTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 
 public class SensorTableAction extends AbstractTableAction {
@@ -70,6 +70,7 @@ public class SensorTableAction extends AbstractTableAction {
             }
             public Manager getManager() { return InstanceManager.sensorManagerInstance(); }
             public NamedBean getBySystemName(String name) { return InstanceManager.sensorManagerInstance().getBySystemName(name);}
+            public NamedBean getByUserName(String name) { return InstanceManager.sensorManagerInstance().getByUserName(name);}
             public void clickOn(NamedBean t) {
                 try {
                     int state = ((Sensor)t).getKnownState();

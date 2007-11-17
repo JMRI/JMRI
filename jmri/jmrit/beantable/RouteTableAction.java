@@ -31,7 +31,7 @@ import jmri.util.JmriJFrame;
  * @author	Dave Duchamp    Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2007 
  *
- * @version     $Revision: 1.36 $
+ * @version     $Revision: 1.37 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -168,6 +168,9 @@ public class RouteTableAction extends AbstractTableAction {
             public NamedBean getBySystemName(String name) { 
                     return jmri.InstanceManager.routeManagerInstance().getBySystemName(name);
             }
+            public NamedBean getByUserName(String name) { 
+                return jmri.InstanceManager.routeManagerInstance().getByUserName(name);
+            }    
             public void clickOn(NamedBean t) {
                ((Route)t).setRoute();
             }

@@ -39,7 +39,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.22 $
+ * @version     $Revision: 1.23 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -131,6 +131,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             }
             public Manager getManager() { return InstanceManager.signalHeadManagerInstance(); }
             public NamedBean getBySystemName(String name) { return InstanceManager.signalHeadManagerInstance().getBySystemName(name);}
+            public NamedBean getByUserName(String name) { return InstanceManager.signalHeadManagerInstance().getByUserName(name);}
             public void clickOn(NamedBean t) {
                 int oldState = ((SignalHead)t).getAppearance();
                 int newState;

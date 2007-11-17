@@ -11,6 +11,7 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
@@ -25,7 +26,7 @@ import java.util.List;
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.20 $
+ * @version		$Revision: 1.21 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -166,13 +167,27 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
     abstract Manager getManager();
 
     abstract NamedBean getBySystemName(String name);
+    abstract NamedBean getByUserName(String name);
     abstract void clickOn(NamedBean t);
 
     public void setValueAt(Object value, int row, int col) {
         if (col==USERNAMECOL) {
-            getBySystemName((String)sysNameList.get(row))
-                        .setUserName((String)value);
-            fireTableRowsUpdated(row,row);
+        	// check to see if user name already exists
+            NamedBean nB = getByUserName((String)value);
+            if (nB == null) {
+				getBySystemName((String) sysNameList.get(row)).setUserName(
+						(String) value);
+				fireTableRowsUpdated(row, row);
+			}else{
+				log.error("User name is not unique " + value);
+				String msg;
+				msg = java.text.MessageFormat.format(AbstractTableAction.rb
+						.getString("WarningUserName"),
+						new String[] { ("" + value) });
+				JOptionPane.showMessageDialog(null, msg,
+						AbstractTableAction.rb.getString("WarningTitle"),
+						JOptionPane.ERROR_MESSAGE);
+			}
         } else if (col==VALUECOL) {
             // button fired, swap state
             NamedBean t = getBySystemName((String)sysNameList.get(row));
