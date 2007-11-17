@@ -46,7 +46,7 @@ import jmri.util.JmriJFrame;
  * accessed via rb.
  * 
  * @author Dave Duchamp Copyright (C) 2007
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -192,6 +192,11 @@ public class LogixTableAction extends AbstractTableAction {
 				return InstanceManager.logixManagerInstance().getBySystemName(
 						name);
 			}
+			
+			public NamedBean getByUserName(String name) {
+				return InstanceManager.logixManagerInstance().getByUserName(
+						name);
+			}
 
 			// Not needed - here for interface compatibility
 			public void clickOn(NamedBean t) {
@@ -223,6 +228,7 @@ public class LogixTableAction extends AbstractTableAction {
 	boolean noWarn = false;
 	boolean reminderActive = false;
 	int showReminderCount = 0;
+	boolean showReminder = false;
 	boolean warnStateVariables = true;
 
 	// current focus variables
@@ -334,6 +340,8 @@ public class LogixTableAction extends AbstractTableAction {
 	 * Add Logix window
 	 */
 	void addPressed(ActionEvent e) {
+		// possible change
+		showReminder = true;
 		if (inEditMode) {
 			// cancel Edit and reactivate the edited Logix
 			donePressed(null);
@@ -418,6 +426,8 @@ public class LogixTableAction extends AbstractTableAction {
 	 * Responds to the Create Logix button in Add Logix window
 	 */
 	void createPressed(ActionEvent e) {
+		// possible change
+		showReminder = true;
 		String sName = systemName.getText().toUpperCase();
 		String uName = addUserName.getText().trim();
 		// check validity of Logix system name
@@ -683,11 +693,15 @@ public class LogixTableAction extends AbstractTableAction {
 	 * Display reminder to save
 	 */
 	void showSaveReminder() {
-		showReminderCount++;
-		if (showReminderCount < 4) {
-			javax.swing.JOptionPane.showMessageDialog(editLogixFrame, rbx
-					.getString("Reminder1"), rbx.getString("ReminderTitle"),
-					javax.swing.JOptionPane.INFORMATION_MESSAGE);
+		if (showReminder) {
+			showReminder = false;
+			showReminderCount++;
+			if (showReminderCount < 4) {
+				javax.swing.JOptionPane.showMessageDialog(editLogixFrame, rbx
+						.getString("Reminder1"),
+						rbx.getString("ReminderTitle"),
+						javax.swing.JOptionPane.INFORMATION_MESSAGE);
+			}
 		}
 	}
 
@@ -704,6 +718,8 @@ public class LogixTableAction extends AbstractTableAction {
 					javax.swing.JOptionPane.ERROR_MESSAGE);
 			return;
 		}
+		// possible change
+		showReminder = true;
 		// Initialize for reordering Conditionals
 		curLogix.initializeReorder();
 		nextInOrder = 0;
@@ -751,8 +767,7 @@ public class LogixTableAction extends AbstractTableAction {
 		if (curLogix != null) {
 			Logix x = curLogix;
 			// Check for consistency in suppressing triggering of calculation
-			// among
-			// state variables of this Logix.
+			// among state variables of this Logix.
 			String[] varName = new String[Logix.MAX_LISTENERS];
 			int[] varListenerType = new int[Logix.MAX_LISTENERS];
 			String[] varListenerProperty = new String[Logix.MAX_LISTENERS];
@@ -795,18 +810,19 @@ public class LogixTableAction extends AbstractTableAction {
 				Logix p = logixManager.getByUserName(uName);
 				if (p != null) {
 					// Logix with this user name already exists
-					log
-							.error("Failure to update Logix with Duplicate User Name: "
+					log.error("Failure to update Logix with Duplicate User Name: "
 									+ uName);
 					javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
 							rbx.getString("Error6"), rbx
 									.getString("ErrorTitle"),
 							javax.swing.JOptionPane.ERROR_MESSAGE);
-					return;
+
+				} else {
+					// user name is unique, change it
+					x.setUserName(uName);
+					m.fireTableDataChanged();
+					showReminder = true;
 				}
-				// user name is unique, change it
-				x.setUserName(uName);
-				m.fireTableDataChanged();
 			}
 			// check for possible loop situation
 			if (x.checkLoopCondition()) {
@@ -851,6 +867,7 @@ public class LogixTableAction extends AbstractTableAction {
 	void deletePressed(ActionEvent e) {
 		if (checkEditConditional())
 			return;
+		showReminder = true;
 		showSaveReminder();
 		Logix x = curLogix;
 		// delete this Logix
@@ -895,6 +912,7 @@ public class LogixTableAction extends AbstractTableAction {
 			return;
 		}
 		// Conditional successfully added to Logix
+		showReminder = true;
 		curConditional = c;
 		conditionalTableModel.fireTableRowsInserted(numConditionals,
 				numConditionals);
@@ -1562,6 +1580,7 @@ public class LogixTableAction extends AbstractTableAction {
 					javax.swing.JOptionPane.ERROR_MESSAGE);
 			return;
 		}
+		showReminder = true;
 		variableNOT[numStateVariables] = " ";
 		variableType[numStateVariables] = 0;
 		variableName[numStateVariables] = " ";
@@ -1620,6 +1639,7 @@ public class LogixTableAction extends AbstractTableAction {
 					.error("attempt to delete state variables when none are present");
 			return;
 		}
+		showReminder = true;
 		numStateVariables--;
 		if (numStateVariables == 0) {
 			if (warnStateVariables) {
@@ -1655,6 +1675,7 @@ public class LogixTableAction extends AbstractTableAction {
 	 * Responds to the Update Conditional Button in the Edit Conditional window
 	 */
 	void updateConditionalPressed(ActionEvent e) {
+		showReminder = true;
 		Conditional c = curConditional;
 		// Check if the User Name has been changed
 		String uName = conditionalUserName.getText().trim();
@@ -1728,6 +1749,7 @@ public class LogixTableAction extends AbstractTableAction {
 	 * Responds to the Delete Conditional Button in the Edit Conditional window
 	 */
 	void deleteConditionalPressed(ActionEvent e) {
+		showReminder = true;
 		Conditional c = curConditional;
 		// delete this Conditional - this is done by the parent Logix
 		curConditional = null;
@@ -3489,6 +3511,7 @@ public class LogixTableAction extends AbstractTableAction {
 					editConditionalPressed(rx);
 				}
 			} else if (col == UNAME_COLUMN) {
+				showReminder = true;
 				String uName = (String) value;
 				if (curLogix != null) {
 					Conditional cn = conditionalManager.getByUserName(curLogix,
