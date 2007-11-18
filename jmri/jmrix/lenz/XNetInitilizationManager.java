@@ -10,12 +10,12 @@ package jmri.jmrix.lenz;
  *
  * @author			Paul Bender  Copyright (C) 2003
  * @author			Giorgio Terdina  Copyright (C) 2007
- * @version			$Revision: 2.7 $
+ * @version			$Revision: 2.8 $
  */
 public class XNetInitilizationManager extends AbstractXNetInitilizationManager{
 
     protected void init() {
-	if(log.isDebugEnabled()) log.debug("Init called");
+	if (log.isDebugEnabled()) log.debug("Init called");
         float CSSoftwareVersion = XNetTrafficController.instance()
             .getCommandStation()
             .getCommandStationSoftwareVersion();
@@ -23,7 +23,7 @@ public class XNetInitilizationManager extends AbstractXNetInitilizationManager{
             .getCommandStation()
             .getCommandStationType();
         
-        if(CSSoftwareVersion<0)
+        if (CSSoftwareVersion<0)
             {
                 log.warn("Command Station disconnected, or powered down assuming LZ100/LZV100 V3.x");
                 jmri.InstanceManager.setPowerManager(new jmri.jmrix.lenz.XNetPowerManager());
@@ -38,7 +38,7 @@ public class XNetInitilizationManager extends AbstractXNetInitilizationManager{
                 /* the consist manager has to be set up AFTER the programmer, to 
                    prevent the default consist manager from being loaded on top of it */
                 jmri.InstanceManager.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager());
-            } else if(CSSoftwareVersion<3.0) {
+            } else if (CSSoftwareVersion<3.0) {
                 log.error("Command Station does not support XPressNet Version 3 Command Set");
             } else {
                 /* First, we load things that should work on all systems */
@@ -47,15 +47,15 @@ public class XNetInitilizationManager extends AbstractXNetInitilizationManager{
                 
                 /* Next we check the command station type, and add the 
                    apropriate managers */
-                if(CSType==0x02) {
+                if (CSType==0x02) {
                     if (log.isDebugEnabled()) log.debug("Command Station is Commpact/Commander/Other");
                     jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager());
                     /* the consist manager has to be set up AFTER the programmer, to 
                        prevent the default consist manager from being loaded on top of it */
                     jmri.InstanceManager.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager());
-                } else if(CSType==0x01) {
+                } else if (CSType==0x01) {
                     if (log.isDebugEnabled()) log.debug("Command Station is LH200");
-                } else if(CSType==0x00) {
+                } else if (CSType==0x00) {
                     if (log.isDebugEnabled()) log.debug("Command Station is LZ100/LZV100");
                     jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager());
                     jmri.InstanceManager.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager());
@@ -67,8 +67,7 @@ public class XNetInitilizationManager extends AbstractXNetInitilizationManager{
                     /* the consist manager has to be set up AFTER the programmer, to 
                        prevent the default consist manager from being loaded on top of it */
                     jmri.InstanceManager.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager());
-                } else if(CSType==0x10) {
-                    // multiMAUS - start
+                } else if (CSType==0x10) {
                     if (log.isDebugEnabled()) log.debug("Command Station is multiMaus");
                     jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager());
                     jmri.InstanceManager.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager());
@@ -76,7 +75,6 @@ public class XNetInitilizationManager extends AbstractXNetInitilizationManager{
                     jmri.InstanceManager.setCommandStation(XNetTrafficController.instance()
                                                            .getCommandStation());
                     // multMaus does not support XpressNET consist commands. Let's the default consist manager be loaded.
-                    // multiMAUS - end
                 } else {
                     /* If we still don't  know what we have, load everything */
                     if (log.isDebugEnabled()) log.debug("Command Station is Unknown type");
@@ -92,7 +90,7 @@ public class XNetInitilizationManager extends AbstractXNetInitilizationManager{
                     jmri.InstanceManager.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager());
                 }
             }
-	if(log.isDebugEnabled()) log.debug("XPressNet Initilization Complete");
+	if (log.isDebugEnabled()) log.debug("XPressNet Initilization Complete");
     }
     
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetInitilizationManager.class.getName());
