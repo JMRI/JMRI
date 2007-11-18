@@ -11,7 +11,8 @@ import jmri.jmrix.lenz.XNetConstants;
 /**
  * Frame displaying (and logging) XpressNet messages
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version         $Revision: 2.18 $
+ * @author          Giorgio Terdina Copyright (C) 2007 Corrected display of Command Station Software Version and Emergency Stop packets
+ * @version         $Revision: 2.19 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
@@ -166,7 +167,7 @@ import jmri.jmrix.lenz.XNetConstants;
 				       l.getElement(3));
 				break;
 		  case XNetConstants.CS_SOFTWARE_VERSION:
-				text = new String("Command Station Software Version: " + (l.getElementBCD(2).floatValue())/10 + "Type: ") ;
+				text = new String("Command Station Software Version: " + (l.getElementBCD(2).floatValue())/10 + " Type: ") ;
 				switch(l.getElement(3)) {
 				    case 0x00: text = text+ "LZ100/LZV100";
 				               break;
@@ -174,9 +175,13 @@ import jmri.jmrix.lenz.XNetConstants;
 				               break;
 				    case 0x02: text = text+ "Compact or Other";
 				               break;
+					// GT 2007/11/6 - Added multiMaus
+				    case 0x10: text = text+ "multiMaus";
+				               break;
 				    default:
 					text = text + l.getElement(3);
 				}
+				break; // GT 2007/11/6 - Added break
 		  default:
 			text = l.toString();
 		  }
@@ -718,7 +723,7 @@ import jmri.jmrix.lenz.XNetConstants;
                 // Emergency Stop a locomotive
 		} else if(l.getElement(0)==XNetConstants.EMERGENCY_STOP){
                          text = "Emergency Stop " + 
-			        calcLocoAddress(l.getElement(2),l.getElement(3));
+						calcLocoAddress(l.getElement(1),l.getElement(2)); // GT 2007/11/6 Corrected calculation
 		// Disolve or Establish a Double Header
 		} else if(l.getElement(0)==XNetConstants.LOCO_DOUBLEHEAD &&
 			  l.getElement(1)==XNetConstants.LOCO_DOUBLEHEAD_BYTE2){
