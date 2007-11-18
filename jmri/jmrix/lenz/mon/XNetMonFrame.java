@@ -11,8 +11,8 @@ import jmri.jmrix.lenz.XNetConstants;
 /**
  * Frame displaying (and logging) XpressNet messages
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @author          Giorgio Terdina Copyright (C) 2007 Corrected display of Command Station Software Version and Emergency Stop packets
- * @version         $Revision: 2.19 $
+ * @author          Giorgio Terdina Copyright (C) 2007
+ * @version         $Revision: 2.20 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
