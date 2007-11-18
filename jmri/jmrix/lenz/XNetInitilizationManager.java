@@ -9,7 +9,8 @@ package jmri.jmrix.lenz;
  * based on the Command Station Type.
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 2.5 $
+ * @author			Giorgio Terdina  Copyright (C) 2007
+ * @version			$Revision: 2.6 $
  */
 public class XNetInitilizationManager extends AbstractXNetInitilizationManager{
 
@@ -66,6 +67,16 @@ public class XNetInitilizationManager extends AbstractXNetInitilizationManager{
 	      /* the consist manager has to be set up AFTER the programmer, to 
 	      prevent the default consist manager from being loaded on top of it */
 	      jmri.InstanceManager.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager());
+            } else if(CSType==0x10) {
+		// multiMAUS - start
+	      if (log.isDebugEnabled()) log.debug("Command Station is multiMaus");
+              jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager());
+              jmri.InstanceManager.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager());
+              jmri.InstanceManager.setProgrammerManager(new jmri.jmrix.lenz.XNetProgrammerManager(jmri.jmrix.lenz.XNetProgrammer.instance()));
+              jmri.InstanceManager.setCommandStation(XNetTrafficController.instance()
+                                             .getCommandStation());
+			// multMaus does not support XpressNET consist commands. Let's the default consist manager be loaded.
+		// multiMAUS - end
             } else {
               /* If we still don't  know what we have, load everything */
 	      if (log.isDebugEnabled()) log.debug("Command Station is Unknown type");
