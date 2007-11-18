@@ -20,7 +20,8 @@ import jmri.jmrix.lenz.*;
  * Commander or Compact)
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 2.4 $
+ * @author			Giorgio Terdina  Copyright (C) 2007
+ * @version			$Revision: 2.5 $
  */
 public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListener {
 
@@ -118,6 +119,7 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
 
     // listen for responses from the LI101
     public void message(XNetReply l) {
+	
        // Check to see if this is a response for the LI version info
        // or the Command Station Version Info
        if (l.getElement(0)==XNetConstants.LI_VERSION_RESPONSE)
@@ -188,7 +190,10 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
 		else if(cs_type==0x02) {
 			CSType.setText("Compact or Other");
 		     }
-                else CSType.setText("<unknown>");
+		else if(cs_type==0x10) {
+			CSType.setText("multiMAUS");
+		     }
+        else CSType.setText("<unknown>");
 	}
 
     public void dispose() {
