@@ -7,7 +7,7 @@ package jmri;
  *
  * @author	Dave Duchamp Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2006, 2007
- * @version     $Revision: 1.21 $
+ * @version     $Revision: 1.22 $
  */
 public class DefaultRoute extends AbstractNamedBean
     implements Route, java.io.Serializable {
@@ -743,7 +743,7 @@ public class DefaultRoute extends AbstractNamedBean
     
     /**
      * Method to deactivate the Route 
-     * Deactivates Route based on a list of Sensors and a control Turnout
+     * Deactivates Route based on a list of Sensors and two control Turnouts
      */
     public void deActivateRoute() {
         if (mNumSensors > 0) {
@@ -754,9 +754,15 @@ public class DefaultRoute extends AbstractNamedBean
                 }
             }
         }
+        // remove control turnout if there's one 
         if (mTurnoutListener!=null) {
             mTurnout.removePropertyChangeListener(mTurnoutListener);
             mTurnoutListener = null;
+        }
+        // remove lock control turnout if there's one 
+        if (mLockTurnoutListener!=null) {
+            mLockTurnout.removePropertyChangeListener(mLockTurnoutListener);
+            mLockTurnoutListener = null;
         }
     }
 
