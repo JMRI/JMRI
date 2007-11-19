@@ -11,8 +11,9 @@ import jmri.jmrix.lenz.XNetConstants;
 /**
  * Frame displaying (and logging) XpressNet messages
  * @author			Bob Jacobsen   Copyright (C) 2002
+ # @author          Paul Bender Copyright (C) 2004-2007
  * @author          Giorgio Terdina Copyright (C) 2007
- * @version         $Revision: 2.20 $
+ * @version         $Revision: 2.21 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
@@ -642,19 +643,19 @@ import jmri.jmrix.lenz.XNetConstants;
 						+new String("Set Function Group 1 Status for address: "
 						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ");
 					int element4 = l.getElement(4);
-					if((element4 & 0x10)!=0)
+					if((element4 & 0x10)==0)
 						text += "F0 continuous ";
 					else text += "F0 momentary ";
-					if((element4 & 0x01)!=0)
+					if((element4 & 0x01)==0)
 						text += "F1 continuous ";
 					else text += "F1 momentary ";
-					if((element4 & 0x02)!=0)
+					if((element4 & 0x02)==0)
 						text += "F2 continuous ";
 					else text += "F2 momentary ";
-					if((element4 & 0x04)!=0)
+					if((element4 & 0x04)==0)
 						text += "F3 continous ";
 					else text += "F3 momentary ";
-					if((element4 & 0x08)!=0) 
+					if((element4 & 0x08)==0) 
 						text += "F4 continuous ";
 					else text += "F4 momentary ";
 						break;
@@ -664,16 +665,16 @@ import jmri.jmrix.lenz.XNetConstants;
 						+new String("Set Function Group 2 Status for address: "
 						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ");
 					int element4 = l.getElement(4);
-					if((element4 & 0x01)!=0)
+					if((element4 & 0x01)==0)
 						text += "F5 continuous ";
 					else text += "F5 momentary ";
-					if((element4 & 0x02)!=0)
+					if((element4 & 0x02)==0)
 						text += "F6 continuous ";
 					else text += "F6 momentary ";
-					if((element4 & 0x04)!=0)
+					if((element4 & 0x04)==0)
 						text += "F7 continuous ";
 					else text += "F7 momentary ";
-					if((element4 & 0x08)!=0)
+					if((element4 & 0x08)==0)
 						text += "F8 continuous ";
 					else text += "F8 momentary ";
 						break;
@@ -683,16 +684,16 @@ import jmri.jmrix.lenz.XNetConstants;
 						+new String("Set Function Group 1 Status for address: "
 						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ");
 					int element4 = l.getElement(4);
-					if((element4 & 0x01)!=0)
+					if((element4 & 0x01)==0)
 						text += "F9 continuous ";
 					else text += "F9 momentary ";
-					if((element4 & 0x02)!=0)
+					if((element4 & 0x02)==0)
 						text += "F10 continuous ";
 					else text += "F10 momentary ";
-					if((element4 & 0x04)!=0)
+					if((element4 & 0x04)==0)
 						text += "F11 continuous ";
 					else text += "F11 momentary ";
-					if((element4 & 0x08)!=0) 
+					if((element4 & 0x08)==0) 
 						text += "F12 continuous ";
 					else text += "F12 momentary ";
 						break;
@@ -723,7 +724,7 @@ import jmri.jmrix.lenz.XNetConstants;
                 // Emergency Stop a locomotive
 		} else if(l.getElement(0)==XNetConstants.EMERGENCY_STOP){
                          text = "Emergency Stop " + 
-						calcLocoAddress(l.getElement(1),l.getElement(2)); // GT 2007/11/6 Corrected calculation
+			 calcLocoAddress(l.getElement(1),l.getElement(2)); // GT 2007/11/6 Corrected calculation
 		// Disolve or Establish a Double Header
 		} else if(l.getElement(0)==XNetConstants.LOCO_DOUBLEHEAD &&
 			  l.getElement(1)==XNetConstants.LOCO_DOUBLEHEAD_BYTE2){
