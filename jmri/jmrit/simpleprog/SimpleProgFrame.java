@@ -11,8 +11,10 @@ import jmri.ProgListener;
 
 /**
  * Frame providing a simple command station programmer
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ *
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2007
+ * @author  Giorgio Terdina Copyright (C) 2007
+ * @version			$Revision: 1.10 $
  */
 public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgListener {
 
@@ -105,6 +107,9 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
 
         if (modePane.getProgrammer()== null)
             modePane.setDefaultMode();
+		// disable read button if non-functional
+        if (modePane.getProgrammer()!= null)
+			readButton.setEnabled(modePane.getProgrammer().getCanRead());
 
         pack();
     }
