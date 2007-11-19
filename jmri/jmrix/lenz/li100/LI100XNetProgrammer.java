@@ -25,9 +25,10 @@ import jmri.jmrix.lenz.XNetConstants;
  * <LI>Send Resume Operations request
  * <LI>Wait for Normal Operations Resumed broadcast
  * </UL>
- * @author Bob Jacobsen  Copyright (c) 2002
- * @author Paul Bender  Copyright (c) 2003,2004,2005
- * @version $Revision: 2.3 $
+ * @author Bob Jacobsen     Copyright (c) 2002, 2007
+ * @author Paul Bender      Copyright (c) 2003, 2004, 2005
+ * @author Giorgio Terdina  Copyright (c) 2007
+ * @version $Revision: 2.4 $
  */
 public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener {
 
@@ -92,6 +93,13 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
 
      synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
                 if (log.isDebugEnabled()) log.debug("readCV "+CV+" listens "+p);
+
+				if(!getCanRead()) {
+				    // should not invoke this if cant read, but if done anyway set NotImplemented error
+					p.programmingOpReply(CV,jmri.ProgListener.NotImplemented);
+					return;
+				} 
+
                 useProgrammer(p);
                 _progRead = true;
                 // set new state
@@ -160,6 +168,14 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
                 	   (m.getElement(1)==XNetConstants.BC_SERVICE_MODE_ENTRY ||
 		            m.getElement(1)==XNetConstants.PROG_CS_READY )) ) {
 			       stopTimer();
+
+					if(!getCanRead()) {  
+                        // should not read here if cant read, because read shouldnt be invoked, but still attempt to handle
+					    if (log.isDebugEnabled()) log.debug("CV reading not supported, exiting REQUESTSENT state");
+						stopTimer();
+						notifyProgListenerEnd(_val, jmri.ProgListener.OK);
+						return;
+					}
 
 			       // here ready to request the results
 			       progState = INQUIRESENT;

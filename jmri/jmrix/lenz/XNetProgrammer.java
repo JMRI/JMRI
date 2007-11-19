@@ -24,9 +24,12 @@ import java.beans.PropertyChangeEvent;
  * <LI>Send Resume Operations request
  * <LI>Wait for Normal Operations Resumed broadcast
  * </UL>
- * @author Bob Jacobsen  Copyright (c) 2002
- * @author Paul Bender  Copyright (c) 2003,2004,2005
- * @version $Revision: 2.17 $
+ * @author Bob Jacobsen     Copyright (c) 2002, 2007
+ * @author Paul Bender      Copyright (c) 2003, 2004, 2005
+ * @author Giorgio Terdina  Copyright (c) 2007
+ *
+ * @GT 2007/11/6	Disabled CV reading, when connected to multiMaus
+ * @version $Revision: 2.18 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -104,7 +107,11 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         return false;
     }
 
-    public boolean getCanRead() { return true; }
+    public boolean getCanRead() {
+		// Multimaus cannot read CVs, unless Rocomotion interface is used, assume other Command Stations do.
+		// To be revised if and when a Rocomotion adapter is introduced!!!
+		return (XNetTrafficController.instance().getCommandStation().getCommandStationType() != 0x10);
+    }
 
 	// notify property listeners - see AbstractProgrammer for more
 
@@ -169,11 +176,17 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
 	synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
 		if (log.isDebugEnabled()) log.debug("readCV "+CV+" listens "+p);
+		// If can't read (e.g. multiMaus CS), this shouldnt be invoked, but
+		// still we need to do something rational by returning a NotImplemented error
+		if(!getCanRead()) {
+			p.programmingOpReply(CV,jmri.ProgListener.NotImplemented);
+			return;
+		} 
 		useProgrammer(p);
+		_cv = 0xff & CV;
 		_progRead = true;
 		// set new state
 		progState = REQUESTSENT;
-		_cv = 0xff & CV;
 		try {
                   // start the error timer
 		   restartTimer(XNetProgrammerTimeout);
@@ -193,6 +206,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		  progState = NOTPROGRAMMING;
 		  throw e;
 	        }
+	
 	}
 
 	private jmri.ProgListener _usingProgrammer = null;
@@ -236,8 +250,16 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 			     (m.getElement(0)==XNetConstants.CS_INFO && 
                 	   (m.getElement(1)==XNetConstants.BC_SERVICE_MODE_ENTRY ||
 		            m.getElement(1)==XNetConstants.PROG_CS_READY )) ) {
-			       stopTimer();
-
+					stopTimer();
+					
+					if(!getCanRead()) {  
+					    // should not read this, as shouldn't be attempting CV read if not supported, but still...
+						if (log.isDebugEnabled()) log.debug("CV reading not supported, exiting REQUESTSENT state");
+						progState = NOTPROGRAMMING;
+						notifyProgListenerEnd(_val, jmri.ProgListener.OK);
+						return;
+					}
+				    
 			       // here ready to request the results
 			       progState = INQUIRESENT;
                 	       //start the error timer
