@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.9.2.shtml,v 1.3 2007-11-10 15:29:18 jacobsen Exp $ -->
+<!-- $Id: jmri1.9.2.shtml,v 1.4 2007-11-19 06:32:17 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -61,8 +61,7 @@ Therefore, this test version should be considered experimental.
 <!-- We're therefore making that version, "Production version 1.8" available for download today. -->
 
 <b><p>
-Note that starting with this release, JMRI is only available 
-under the 
+JMRI is now only available under the 
 <A HREF="/COPYING">GNU General Public License</a>. For more information, please
 see our 
 <a href="/Copyright.html">copyright and licensing page</a>.</p></b>
@@ -129,6 +128,31 @@ Fixed a problem what would cause the fast-clock time to jump when the rate was c
 
 <P>
 Turnouts now fire a property change if their feedback mode changes, so the turnout table can properly show their updated status.
+
+<P>
+Ian Birchenough provided a definition for the ZTC 4007 decoder
+
+<P>
+Dan Boudreau added the ability to turn off local control of turnouts with NCE rev C and CVP AD4 controllers
+
+<P>
+Dan Boudreau improved the error checking and handling in the Logix and Conditional editors
+
+<P>
+Paul Bender and Bob Jacobsen fixed bug 1829354, crash if additional buttons were selected in the preferences.
+
+<P>
+Ken Cameron updated the NCE fast clock support
+
+<P>
+Giorgio Terdina updated the XPressNet monitor for the proper reporting of Command Station Software Version and Emergency Stop packets.
+Paul Bender updated how it to use the correct Momentary/Continuous value when setting momentary functions.
+
+<P>
+Paul Bender fixed a problem in the way function notifications were handled in the throttles.
+
+<P>
+Bob Jacobsen updated the advanced preferences panel to show the options for startup actions and buttons in lexical (alphabetical) order.
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
