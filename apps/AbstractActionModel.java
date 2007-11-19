@@ -9,8 +9,12 @@ import java.util.Enumeration;
  * Provide services for invoking actions during configuration
  * and startup.
  * <P>
- * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.4 $
+ * The action classes and corresponding human-readable names are kept in the 
+ * apps.ActionListBundle properties file (which can be translated).
+ * They are displayed in lexical order by human-readable name.
+ * <P>
+ * @author	Bob Jacobsen   Copyright 2003, 2007
+ * @version     $Revision: 1.5 $
  * @see PerformActionPanel
  */
 public abstract class AbstractActionModel {
@@ -64,22 +68,35 @@ public abstract class AbstractActionModel {
             count++;
             e.nextElement();
         }
-        // create arrays
-        classes = new Class[count];
+        // create ordered array of names
         names = new String[count];
-        // load them
         int index = 0;
         e = rb.getKeys();
         while (e.hasMoreElements()) {
             String key = (String)e.nextElement();
             names[index] = rb.getString(key);
-            // get class for key
-            try {
-                classes[index] = Class.forName(key);
-            } catch (ClassNotFoundException ex) {
-                log.error("Did not find class "+key);
-            }
             index++;
+        }
+        jmri.util.StringUtil.sort(names);
+                
+        classes = new Class[count];
+        // load them
+        for (index = 0; index < names.length; index++) {
+            // find the key corresponding to this name
+            e = rb.getKeys();
+            while (e.hasMoreElements()) {
+                String key = (String)e.nextElement();
+                if (names[index].equals(rb.getString(key))) {
+                    // this is a hit,
+                    // get class for key
+                    try {
+                        classes[index] = Class.forName(key);
+                    } catch (ClassNotFoundException ex) {
+                        log.error("Did not find class "+key);
+                    }
+                    break;
+                }
+            }
         }
     }
 
