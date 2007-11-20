@@ -16,7 +16,7 @@ import jmri.PushbuttonPacket;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.25 $
+ * @version	$Revision: 1.26 $
  */
 public class NceTurnout extends AbstractTurnout {
 
@@ -103,7 +103,7 @@ public class NceTurnout extends AbstractTurnout {
 					+ (pushButtonLockout ? "Lock" : "Unlock")
 					+ " Pushbutton NT" + _number);
 		
-		byte[] bl = PushbuttonPacket.pushbuttonPkt(_number, pushButtonLockout);
+		byte[] bl = PushbuttonPacket.pushbuttonPkt(prefix, _number, pushButtonLockout);
 		NceMessage m = NceMessage.sendPacketMessage(bl);
 		NceTrafficController.instance().sendNceMessage(m, null);
 	}

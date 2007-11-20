@@ -40,7 +40,7 @@ package jmri;
  * Also note that CVP decoder's use the old legacy format for ops mode programming. 
  *
  * @author      Daniel Boudreau Copyright (C) 2007
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  * 
  */
 public class PushbuttonPacket {
@@ -55,11 +55,9 @@ public class PushbuttonPacket {
 	protected final static String[] VAILDDECODERNAMES = { NCEname, CVP_1Bname,
 		CVP_2Bname };
 
-	public static byte[] pushbuttonPkt(int turnoutNum, boolean locked) {
+	public static byte[] pushbuttonPkt(String prefix, int turnoutNum, boolean locked) {
 		
-		char sysLetter = InstanceManager.turnoutManagerInstance().systemLetter();
-		
-		Turnout t = InstanceManager.turnoutManagerInstance().getBySystemName(sysLetter+"T"+ turnoutNum);
+		Turnout t = InstanceManager.turnoutManagerInstance().getBySystemName(prefix + turnoutNum);
 		byte[] bl;
 		
 		if (t.getDecoderName().equals(NCEname)) {
@@ -72,7 +70,7 @@ public class PushbuttonPacket {
 		// Note CVP decoders use the old legacy accessory  format
 		} else if (t.getDecoderName().equals(CVP_1Bname)
 				|| t.getDecoderName().equals(CVP_2Bname)) {
-			int CVdata = CVPturnoutLockout(turnoutNum);
+			int CVdata = CVPturnoutLockout(prefix, turnoutNum);
 			bl = NmraPacket.accDecoderPktOpsModeLegacy(turnoutNum, 514, CVdata);
 			return bl;
 		} else {
@@ -88,7 +86,7 @@ public class PushbuttonPacket {
 	// builds the data byte for CVP decoders, builds based on JMRI's current
 	// knowledge of turnout pushbutton lockout states. If a turnout doesn't
 	// exist, assume single button operation.
-	private static int CVPturnoutLockout(int turnoutNum) {
+	private static int CVPturnoutLockout(String prefix, int turnoutNum) {
 
 		char sysLetter = InstanceManager.turnoutManagerInstance().systemLetter();
 		int CVdata = 0;
@@ -102,7 +100,7 @@ public class PushbuttonPacket {
 			int button = oneButton;
 			modTurnoutNum++;
 			Turnout t = InstanceManager.turnoutManagerInstance()
-					.getBySystemName(sysLetter + "T" + modTurnoutNum);
+					.getBySystemName(prefix + modTurnoutNum);
 			if (t != null) {
 				if (t.getDecoderName().equals(CVP_1Bname)) {
 					// do nothing button already = oneButton
