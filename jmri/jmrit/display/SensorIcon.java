@@ -16,7 +16,7 @@ import javax.swing.JCheckBoxMenuItem;
  * An icon to display a status of a Sensor.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -157,6 +157,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
             
             momentaryItem = new JCheckBoxMenuItem("Momentary");
             popup.add(momentaryItem);
+    		momentaryItem.setSelected (getMomentary());
             momentaryItem.addActionListener(new ActionListener(){
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     setMomentary(momentaryItem.isSelected());
