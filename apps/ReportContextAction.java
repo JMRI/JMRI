@@ -12,20 +12,19 @@ import javax.swing.*;
  * Swing action to display the JMRI context for the user
  *
  * @author	    Bob Jacobsen    Copyright (C) 2007
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class ReportContextAction extends AbstractAction {
 
     public ReportContextAction() { super();}
 
-    java.awt.Container pane;
+    javax.swing.JTextArea pane;
     
     public void actionPerformed(ActionEvent ev) {
 
 		JFrame frame = new jmri.util.JmriJFrame();  // JmriJFrame to ensure fits on screen
 		
-        pane = new JPanel();
-		pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
+        pane = new javax.swing.JTextArea();
  
         JScrollPane  scroll = new JScrollPane(pane);
         frame.getContentPane().add(scroll);
@@ -65,8 +64,6 @@ public class ReportContextAction extends AbstractAction {
         addProperty("os.arch");
         addProperty("os.version");
 
-        addProperty("biff");
-
         addProperty("user.name");
         addProperty("user.home");
         addProperty("user.dir");
@@ -78,7 +75,7 @@ public class ReportContextAction extends AbstractAction {
 	}
 		
 	void addString(String val) {
-        pane.add(new JLabel(val));	    
+        pane.append(val+"\n");	    
     }
 	void addProperty(String prop) {
         addString(prop+": "+System.getProperty(prop)+"  ");	    
