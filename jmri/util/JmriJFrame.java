@@ -24,28 +24,30 @@ import java.awt.*;
  * dispose() method is invoked to do cleanup. This is
  * inherited from JFrame itself, so super.dispose() needs
  * to be invoked in the over-loading methods.
- *
+ * <LI>Maintains a list of existing JmriJFrames
  * </ul>
  *
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class JmriJFrame extends JFrame implements java.awt.event.WindowListener {
 
     public JmriJFrame() {
-	super();
+	    super();
         addWindowListener(this);
-	// Set the image for use when minimized
-	setIconImage(getToolkit().getImage("resources/jmri32x32.gif"));
+        list.add(this);
+	    // Set the image for use when minimized
+	    setIconImage(getToolkit().getImage("resources/jmri32x32.gif"));
     }
 
     public JmriJFrame(String name) {
         super(name);
         addWindowListener(this);
-	// Set the image for use when minimized
-	setIconImage(getToolkit().getImage("resources/jmri32x32.gif"));
+        list.add(this);
+	    // Set the image for use when minimized
+	    setIconImage(getToolkit().getImage("resources/jmri32x32.gif"));
     }
 
     /**
@@ -112,6 +114,12 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener 
         return new Dimension(width, height);
     }
 
+    public static java.util.List getFrameList() {
+        return new java.util.ArrayList(list);
+    }
+    
+    static java.util.ArrayList list = new java.util.ArrayList();
+    
     // handle resizing when first shown
     private boolean mShown = false;
     public void addNotify() {
@@ -145,6 +153,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener 
      **/
     public void windowClosing(java.awt.event.WindowEvent e) {
         setVisible(false);
+        list.remove(this);
         dispose();	// and disconnect from the SlotManager
     }
     
