@@ -11,8 +11,8 @@ import javax.swing.*;
 /**
  * Swing action to display the JMRI directory locations
  *
- * @author	    Bob Jacobsen    Copyright (C) 2004
- * @version         $Revision: 1.1 $
+ * @author	    Bob Jacobsen    Copyright (C) 2004, 2007
+ * @version         $Revision: 1.2 $
  */
 public class XmlFileLocationAction extends AbstractAction {
 
@@ -20,14 +20,19 @@ public class XmlFileLocationAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent ev) {
 
-		JFrame frame = new JFrame();
-		frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
+		JFrame frame = new jmri.util.JmriJFrame();  // to ensure fits
+		
+        javax.swing.JTextArea pane = new javax.swing.JTextArea();
+        pane.setEditable(false);
+        
+        JScrollPane  scroll = new JScrollPane(pane);
+        frame.getContentPane().add(scroll);
 
         String prefs = jmri.jmrit.XmlFile.prefsDir();
-        frame.getContentPane().add(new JLabel("Preferences directory: "+prefs+"  "));
+        pane.append("Preferences directory: "+prefs+"\n");
         
         String prog = System.getProperty("user.dir");
-        frame.getContentPane().add(new JLabel("Program directory: "+prog+"  "));
+        pane.append("Program directory: "+prog+"\n");
         		
 		frame.pack();
 		frame.setVisible(true);
