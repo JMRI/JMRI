@@ -12,59 +12,64 @@ import javax.swing.*;
  * Swing action to display the JMRI context for the user
  *
  * @author	    Bob Jacobsen    Copyright (C) 2007
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class ReportContextAction extends AbstractAction {
 
     public ReportContextAction() { super();}
 
+    java.awt.Container pane;
+    
     public void actionPerformed(ActionEvent ev) {
 
-		JFrame frame = new JFrame();
+		JFrame frame = new jmri.util.JmriJFrame();  // JmriJFrame to ensure fits on screen
 		
-		frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
+        pane = new JPanel();
+		pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
+ 
+        JScrollPane  scroll = new JScrollPane(pane);
+        frame.getContentPane().add(scroll);
+        
+        addString("JMRI Version: "+jmri.Version.name()+"  ");	 
 
-        frame.getContentPane().add(new JLabel("JMRI Version: "
-                            +jmri.Version.name()+"  "));	 
+        addProperty("java.version");
 
-        addProperty("java.version", frame);
-
-        frame.getContentPane().add(new JLabel("Connection one: "+Apps.getConnection1()+"  "));
-        frame.getContentPane().add(new JLabel("Connection two: "+Apps.getConnection2()+"  "));
+        addString("Connection one: "+Apps.getConnection1()+"  ");
+        addString("Connection two: "+Apps.getConnection2()+"  ");
 
         String prefs = jmri.jmrit.XmlFile.prefsDir();
-        frame.getContentPane().add(new JLabel("Preferences directory: "+prefs+"  "));
+        addString("Preferences directory: "+prefs+"  ");
         
         String prog = System.getProperty("user.dir");
-        frame.getContentPane().add(new JLabel("Program directory: "+prog+"  "));
+        addString("Program directory: "+prog+"  ");
 
-        addProperty("java.vendor", frame);
-        addProperty("java.home", frame);
+        addProperty("java.vendor");
+        addProperty("java.home");
 
-        addProperty("java.vm.version", frame);
-        addProperty("java.vm.vendor", frame);
-        addProperty("java.vm.name", frame);
+        addProperty("java.vm.version");
+        addProperty("java.vm.vendor");
+        addProperty("java.vm.name");
 
-        addProperty("java.specification.version", frame);
-        addProperty("java.specification.vendor", frame);
-        addProperty("java.specification.name", frame);
+        addProperty("java.specification.version");
+        addProperty("java.specification.vendor");
+        addProperty("java.specification.name");
 
-        addProperty("java.class.version", frame);
-        addProperty("java.class.path", frame);
-        addProperty("java.library.path", frame);
+        addProperty("java.class.version");
+        addProperty("java.class.path");
+        addProperty("java.library.path");
 
-        addProperty("java.compiler", frame);
-        addProperty("java.ext.dirs", frame);
+        addProperty("java.compiler");
+        addProperty("java.ext.dirs");
         		
-        addProperty("os.name", frame);
-        addProperty("os.arch", frame);
-        addProperty("os.version", frame);
+        addProperty("os.name");
+        addProperty("os.arch");
+        addProperty("os.version");
 
-        addProperty("biff", frame);
+        addProperty("biff");
 
-        addProperty("user.name", frame);
-        addProperty("user.home", frame);
-        addProperty("user.dir", frame);
+        addProperty("user.name");
+        addProperty("user.home");
+        addProperty("user.dir");
 
 
 		frame.pack();
@@ -72,9 +77,11 @@ public class ReportContextAction extends AbstractAction {
 	
 	}
 		
-	void addProperty(String prop, JFrame frame) {
-        frame.getContentPane().add(new JLabel(prop+": "
-                            +System.getProperty(prop)+"  "));	    
+	void addString(String val) {
+        pane.add(new JLabel(val));	    
+    }
+	void addProperty(String prop) {
+        addString(prop+": "+System.getProperty(prop)+"  ");	    
     }
 }
 
