@@ -29,7 +29,7 @@ import java.awt.*;
  *
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class JmriJFrame extends JFrame implements java.awt.event.WindowListener {
@@ -37,7 +37,9 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener 
     public JmriJFrame() {
 	    super();
         addWindowListener(this);
-        list.add(this);
+        synchronized (list) {
+            list.add(this);
+        }
 	    // Set the image for use when minimized
 	    setIconImage(getToolkit().getImage("resources/jmri32x32.gif"));
     }
@@ -45,7 +47,9 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener 
     public JmriJFrame(String name) {
         super(name);
         addWindowListener(this);
-        list.add(this);
+        synchronized (list) {
+            list.add(this);
+        }
 	    // Set the image for use when minimized
 	    setIconImage(getToolkit().getImage("resources/jmri32x32.gif"));
     }
@@ -114,8 +118,17 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener 
         return new Dimension(width, height);
     }
 
+    /**
+     * Get a List of the currently-existing JmriJFrame objects.
+     * The returned list is a copy made at the time of the call,
+     * so it can be manipulated as needed by the caller.
+     */
     public static java.util.List getFrameList() {
-        return new java.util.ArrayList(list);
+        java.util.List returnList;
+        synchronized(list) {
+            returnList = new java.util.ArrayList(list);
+        }
+        return returnList;
     }
     
     static java.util.ArrayList list = new java.util.ArrayList();
@@ -153,7 +166,9 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener 
      **/
     public void windowClosing(java.awt.event.WindowEvent e) {
         setVisible(false);
-        list.remove(this);
+        synchronized (list) {
+            list.remove(this);
+        }
         dispose();	// and disconnect from the SlotManager
     }
     
