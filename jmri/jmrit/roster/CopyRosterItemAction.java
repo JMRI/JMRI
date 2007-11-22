@@ -28,7 +28,7 @@ import org.jdom.Element;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  * @see         jmri.jmrit.XmlFile
  */
 public class CopyRosterItemAction extends AbstractRosterItemAction {
@@ -72,6 +72,10 @@ public class CopyRosterItemAction extends AbstractRosterItemAction {
         // set the filename from the ID
         mToEntry.ensureFilenameExists();
 
+        // detach the content element from it's existing file so 
+        // it can be reused
+        lroot.detach();
+        
         // transfer the contents to a new file
         LocoFile newLocoFile = new LocoFile();
         File fout = new File(LocoFile.getFileLocation()+mToEntry.getFileName());
