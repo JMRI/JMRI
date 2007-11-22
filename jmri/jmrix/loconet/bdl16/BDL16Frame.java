@@ -21,14 +21,13 @@ import javax.swing.JCheckBox;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  *
- * @author			Bob Jacobsen   Copyright (C) 2002, 2004
- * @version			$Revision: 1.13 $
+ * @author			Bob Jacobsen   Copyright (C) 2002, 2004, 2007
+ * @version			$Revision: 1.14 $
  */
 public class BDL16Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
 
     public BDL16Frame() {
         super("BDL16 programmer");
-        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         appendLine(provideAddressing("BDL16"));  // add read/write buttons, address
 
@@ -56,8 +55,6 @@ public class BDL16Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
 
         appendLine(provideStatusLine());
         setStatus("The BDL16 should be in normal mode (Don't push the buttons on the BDL16!)");
-        // add status
-        getContentPane().add(provideStatusLine());
 
         setTypeWord(0x71);  // configure BDL16 message type
         

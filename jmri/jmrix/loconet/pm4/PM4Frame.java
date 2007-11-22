@@ -22,14 +22,13 @@ import javax.swing.*;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  *
- * @author			Bob Jacobsen   Copyright (C) 2002, 2004
- * @version			$Revision: 1.9 $
+ * @author			Bob Jacobsen   Copyright (C) 2002, 2004, 2007
+ * @version			$Revision: 1.10 $
  */
 public class PM4Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
 
     public PM4Frame() {
         super("PM4 programmer");
-        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         appendLine(provideAddressing("PM4"));  // add read/write buttons, address
 
@@ -80,7 +79,7 @@ public class PM4Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
         slow4.setSelectedIndex(1);
 
         // add status
-        getContentPane().add(provideStatusLine());
+        appendLine(provideStatusLine());
         setStatus("The PM4 should be in normal mode. (Don't push the buttons on the PM4)");
         
         setTypeWord(0x70);  // configure PM4 message type

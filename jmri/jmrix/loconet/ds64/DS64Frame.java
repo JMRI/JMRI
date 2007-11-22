@@ -21,14 +21,13 @@ import javax.swing.JCheckBox;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  *
- * @author			Bob Jacobsen   Copyright (C) 2002, 2004, 2005
- * @version			$Revision: 1.2 $
+ * @author			Bob Jacobsen   Copyright (C) 2002, 2004, 2005, 2007
+ * @version			$Revision: 1.3 $
  */
 public class DS64Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
 
     public DS64Frame() {
         super("DS64 programmer");
-        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         appendLine(provideAddressing("DS64"));  // add read/write buttons, address
 
@@ -57,7 +56,7 @@ public class DS64Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
         appendLine(provideStatusLine());
         setStatus("The DS64 should be in normal mode (Don't push the buttons on the DS64!)");
         // add status
-        getContentPane().add(provideStatusLine());
+        appendLine(provideStatusLine());
 
         setTypeWord(0x73);  // configure DS64 message type
         

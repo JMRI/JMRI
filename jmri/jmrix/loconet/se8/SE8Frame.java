@@ -25,14 +25,13 @@ import javax.swing.*;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  *
- * @author  Bob Jacobsen   Copyright (C) 2003, 2004
- * @version $Revision: 1.7 $
+ * @author  Bob Jacobsen   Copyright (C) 2003, 2004, 2007
+ * @version $Revision: 1.8 $
  */
 public class SE8Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
 
     public SE8Frame() {
         super("SE8 programmer");
-        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         appendLine(provideAddressing("SE8"));  // add read/write buttons, address
 
@@ -67,8 +66,6 @@ public class SE8Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
 
         appendLine(provideStatusLine());
         setStatus("The SE8 should be in normal mode (Don't push the buttons on the SE8!)");
-        // add status
-        getContentPane().add(provideStatusLine());
 
         setTypeWord(0x72);  // configure SE8 message type
         

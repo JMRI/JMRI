@@ -31,13 +31,19 @@ import javax.swing.*;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  *
- * @author  Bob Jacobsen   Copyright (C) 2004
- * @version $Revision: 1.4 $
+ * @author  Bob Jacobsen   Copyright (C) 2004, 2007
+ * @version $Revision: 1.5 $
  */
 abstract public class AbstractBoardProgFrame extends jmri.util.JmriJFrame implements LocoNetListener {
 
     protected AbstractBoardProgFrame(String title) {
         super(title);
+
+        // basic formatting: Create pane to hold contents
+        // within a scroll box
+        contents.setLayout(new BoxLayout(contents, BoxLayout.Y_AXIS));
+        JScrollPane  scroll = new JScrollPane(contents);
+        getContentPane().add(scroll);
 
         // listen for message traffic
         if (LnTrafficController.instance()!=null)
@@ -49,6 +55,8 @@ abstract public class AbstractBoardProgFrame extends jmri.util.JmriJFrame implem
         addrField.setText("1");
     }
 
+    JPanel contents = new JPanel();
+    
     /**
      * Provide read, write buttons and address
      */
@@ -97,7 +105,7 @@ abstract public class AbstractBoardProgFrame extends jmri.util.JmriJFrame implem
      */
     protected void appendLine(JComponent c) {
         c.setAlignmentX(0.f);
-        getContentPane().add(c);
+        contents.add(c);
     }
 
     boolean read = false;
