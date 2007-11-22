@@ -41,7 +41,7 @@ package jmri;
  * <P>
  *
  * @author      Bob Jacobsen Copyright (C) 2001, 2003
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  */
 public class NmraPacket {
 
@@ -220,7 +220,7 @@ public class NmraPacket {
      * Provide an operation mode accessory control packet via a simplified interface
      * @param number Address of accessory, starting with 1
      * @param cvNum CV number to access
-     * @parm data Data to be written
+     * @param data Data to be written
      */
     public static byte[] accDecoderPktOpsMode(int number, int cvNum, int data) {
         // dBit is the "channel" info, least 7 bits, for the packet
@@ -242,7 +242,7 @@ public class NmraPacket {
      * Provide a legacy operation mode accessory control packet via a simplified interface
      * @param number Address of accessory, starting with 1
      * @param cvNum CV number to access
-     * @parm data Data to be written
+     * @param data Data to be written
      */
     public static byte[] accDecoderPktOpsModeLegacy(int number, int cvNum, int data) {
  

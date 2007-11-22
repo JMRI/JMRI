@@ -27,9 +27,7 @@ import java.beans.PropertyChangeEvent;
  * @author Bob Jacobsen     Copyright (c) 2002, 2007
  * @author Paul Bender      Copyright (c) 2003, 2004, 2005
  * @author Giorgio Terdina  Copyright (c) 2007
- *
- * @GT 2007/11/6	Disabled CV reading, when connected to multiMaus
- * @version $Revision: 2.18 $
+ * @version $Revision: 2.19 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
