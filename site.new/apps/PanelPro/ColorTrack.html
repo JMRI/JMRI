@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ColorTrack.html,v 1.2 2006-08-27 10:43:12 jacobsen Exp $ -->
+<!-- $Id: ColorTrack.html,v 1.3 2007-11-22 19:47:27 jacobsen Exp $ -->
 <html lang="en">
 
 <head>
@@ -87,8 +87,22 @@ JMRI: Displaying Colored Trackwork
 People who model modern railroad might want a control panel
 that shows a "schematic" view of the railroad, with individual
 segments changing color to show where trains are occupying the track.
-PanelPro can do this for you with just a little work.  This
-page explains how.
+PanelPro can do this for your panels.  There are two basic approaches:
+
+<UL>
+<LI>Use the new
+"<a href="/help/en/package/jmri/jmrit/display/LayoutEditor.html">Layout Editor</a>" 
+to create your panel. It allows you
+to 
+<a href="/help/en/package/jmri/jmrit/display/EditTrackSegment.html">draw track segments</a>
+and 
+<a href="/help/en/package/jmri/jmrit/display/EditLayoutTurnout.html">place turnouts</a>
+on the screen, then configure them so they 
+<a href="/help/en/package/jmri/jmrit/display/EditLayoutBlock.html">change color with occupancy</a>.
+
+<LI>If using the original "Panel Editor", you can also configure sensor icons
+to change the color of your track.  This technique is described on this page.
+</UL>
 
 <H3>Background</h3>
 
@@ -223,7 +237,7 @@ and the occupancy (through the color) of that turnout.
 	   <A href="/community/" title="Who is JMRI">
 	   	all who contributed</A>! </p>
 
-	<p>Copyright &copy; 2004 - 2005 JMRI Community. 
+	<p>Copyright &copy; 2004 - 2007 JMRI Community. 
 	<P>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
 	<P><A href="/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a></p>
     
