@@ -8,9 +8,9 @@ import jmri.DccLocoAddress;
 /**
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
- * @author  Paul Bender (C) 2002,2003,2004
+ * @author  Paul Bender (C) 2002-2007
  * @author  Giorgio Terdina (C) 2007
- * @version    $Revision: 2.16 $
+ * @version    $Revision: 2.17 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -25,8 +25,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     
     static final int THROTTLEIDLE=0;  // Idle Throttle
     static final int THROTTLESTATSENT=1;  // Sent Status request
-    static final int THROTTLESPEEDSENT=2;  // Sent command to locomotive
-    
+    static final int THROTTLESPEEDSENT=2;  // Sent speed/dir command to locomotive
+    static final int THROTTLEFUNCSENT=4;   // Sent a function command to locomotive.
+
     private int requestState=THROTTLEIDLE;
     
     private int address;
@@ -39,7 +40,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         super();
         XNetTrafficController.instance().addXNetListener(XNetInterface.COMMINFO |
                                                          XNetInterface.CS_INFO |
-                                                         XNetInterface.FEEDBACK | // multiMAUS
                                                          XNetInterface.THROTTLE, this);
         if (log.isDebugEnabled()) { log.debug("XnetThrottle constructor"); }
     }
@@ -73,45 +73,47 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      */
     protected void sendFunctionGroup1()
     {
-        if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT))!=THROTTLEIDLE) 
-            {
+       if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT|THROTTLEFUNCSENT))
+		==THROTTLESTATSENT) 
+       {
                 log.warn("Outstanding request, Function Group 1 change ignored");
 		return;
-            }
-        XNetMessage msg=new XNetMessage(6);
-        msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
-        msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP1);
-        msg.setElement(2,this.getDccAddressHigh());// set to the upper
-        // byte of the  DCC address
-        msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
-        //of the DCC address
-        // Now, we need to figure out what to send in element 3
-        int element4value=0;
-        if(f0)
-            {
-                element4value += 16;
-            }
-        if(f1)
-            {
-                element4value += 1;
-            }
-        if(f2)
-            {
-                element4value += 2;
-            }
-        if(f3)
-            {
-                element4value += 4;
-            }
-        if(f4)
-            {
-                element4value += 8;
-            }
-        msg.setElement(4,element4value);
-        msg.setParity(); // Set the parity bit
-        // now, we send the message to the command station
-        XNetTrafficController.instance().sendXNetMessage(msg,this);
-        //requestState=THROTTLECMDSENT;
+       }
+       XNetMessage msg=new XNetMessage(6);
+       msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
+       msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP1);
+       msg.setElement(2,this.getDccAddressHigh());// set to the upper
+						    // byte of the  DCC address
+       msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
+						    //of the DCC address
+       // Now, we need to figure out what to send in element 3
+       int element4value=0;
+       if(f0)
+	{
+	  element4value += 16;
+	}
+       if(f1)
+	{
+	  element4value += 1;
+	}
+       if(f2)
+	{
+	  element4value += 2;
+	}
+       if(f3)
+	{
+	  element4value += 4;
+	}
+       if(f4)
+	{
+	  element4value += 8;
+	}
+       msg.setElement(4,element4value);
+       msg.setParity(); // Set the parity bit
+       // now, we send the message to the command station
+       XNetTrafficController.instance().sendXNetMessage(msg,this);
+       if(!isAvailable) 
+          requestState=THROTTLEFUNCSENT;
     }
     
     /**
@@ -120,41 +122,43 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      */
     protected void sendFunctionGroup2()
     {
-        if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT))!=THROTTLEIDLE) 
-            {
+       if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT|THROTTLEFUNCSENT))
+		==THROTTLESTATSENT) 
+       {
                 log.warn("Outstanding request, Function Group 2 change ignored");
 		return;
-            }
-        XNetMessage msg=new XNetMessage(6);
-        msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
-        msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP2);
-        msg.setElement(2,this.getDccAddressHigh());// set to the upper
-        // byte of the  DCC address
-        msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
-        //of the DCC address
-        // Now, we need to figure out what to send in element 3
-        int element4value=0;
-        if(f5)
-            {
-                element4value += 1;
-            }
-        if(f6)
-            {
-                element4value += 2;
-            }
-        if(f7)
-            {
-                element4value += 4;
-            }
-        if(f8)
-            {
-                element4value += 8;
-            }
-        msg.setElement(4,element4value);
-        msg.setParity(); // Set the parity bit
-        // now, we send the message to the command station
-        XNetTrafficController.instance().sendXNetMessage(msg,this);
-        //requestState=THROTTLECMDSENT;
+       }
+       XNetMessage msg=new XNetMessage(6);
+       msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
+       msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP2);
+       msg.setElement(2,this.getDccAddressHigh());// set to the upper
+						    // byte of the  DCC address
+       msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
+						    //of the DCC address
+       // Now, we need to figure out what to send in element 3
+       int element4value=0;
+       if(f5)
+	{
+	  element4value += 1;
+	}
+       if(f6)
+	{
+	  element4value += 2;
+	}
+       if(f7)
+	{
+	  element4value += 4;
+	}
+       if(f8)
+	{
+	  element4value += 8;
+	}
+       msg.setElement(4,element4value);
+       msg.setParity(); // Set the parity bit
+       // now, we send the message to the command station
+       XNetTrafficController.instance().sendXNetMessage(msg,this);
+       if(!isAvailable) 
+          requestState=THROTTLEFUNCSENT;
     }
     
     /**
@@ -163,41 +167,43 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      */
     protected void sendFunctionGroup3()
     {
-        if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT))!=THROTTLEIDLE) 
-            {
+       if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT|THROTTLEFUNCSENT))
+		==THROTTLESTATSENT) 
+       {
                 log.warn("Outstanding request, Function Group 3 change ignored");
 		return;
-            }
-        XNetMessage msg=new XNetMessage(6);
-        msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
-        msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP3);
-        msg.setElement(2,this.getDccAddressHigh());// set to the upper
-        // byte of the  DCC address
-        msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
-        //of the DCC address
-        // Now, we need to figure out what to send in element 3
-        int element4value=0;
-        if(f9)
-            {
-                element4value += 1;
-            }
-        if(f10)
-            {
-                element4value += 2;
-            }
-        if(f11)
-            {
-                element4value += 4;
-            }
-        if(f12)
-            {
-                element4value += 8;
-            }
-        msg.setElement(4,element4value);
-        msg.setParity(); // Set the parity bit
-        // now, we send the message to the command station
-        XNetTrafficController.instance().sendXNetMessage(msg,this);
-        //requestState=THROTTLECMDSENT;
+       }
+       XNetMessage msg=new XNetMessage(6);
+       msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
+       msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP3);
+       msg.setElement(2,this.getDccAddressHigh());// set to the upper
+						    // byte of the  DCC address
+       msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
+						    //of the DCC address
+       // Now, we need to figure out what to send in element 3
+       int element4value=0;
+       if(f9)
+	{
+	  element4value += 1;
+	}
+       if(f10)
+	{
+	  element4value += 2;
+	}
+       if(f11)
+	{
+	  element4value += 4;
+	}
+       if(f12)
+	{
+	  element4value += 8;
+	}
+       msg.setElement(4,element4value);
+       msg.setParity(); // Set the parity bit
+       // now, we send the message to the command station
+       XNetTrafficController.instance().sendXNetMessage(msg,this);
+       if(!isAvailable) 
+          requestState=THROTTLEFUNCSENT;
     }
     
     /**
@@ -206,45 +212,55 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      */
     protected void sendMomentaryFunctionGroup1()
     {
-        if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT))!=THROTTLEIDLE)
-            {
+       if(XNetTrafficController.instance()
+                               .getCommandStation()
+                               .getCommandStationType()==0x10) {
+          // if the command station is multimouse, ignore
+          if(log.isDebugEnabled())
+		log.debug("Command station does not support Momentary functions");
+                return;
+       }
+       if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT|THROTTLEFUNCSENT))
+		==THROTTLESTATSENT) 
+       {
                 log.warn("Outstanding request, Function Group 1 momentary status change ignored");
 		return;
-            }
-        XNetMessage msg=new XNetMessage(6);
-        msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
-        msg.setElement(1,XNetConstants.LOCO_SET_FUNC_Group1);
-        msg.setElement(2,this.getDccAddressHigh());// set to the upper
-        // byte of the  DCC address
-        msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
-        //of the DCC address
-        // Now, we need to figure out what to send in element 3
-        int element4value=0;
-        if(f0Momentary)
-            {
-                element4value += 16;
-            }
-        if(f1Momentary)
-            {
-                element4value += 1;
-            }
-        if(f2Momentary)
-            {
-                element4value += 2;
-            }
-        if(f3Momentary)
-            {
-                element4value += 4;
-            }
-        if(f4Momentary)
-            {
-                element4value += 8;
-            }
-        msg.setElement(4,element4value);
-        msg.setParity(); // Set the parity bit
-        // now, we send the message to the command station
-        XNetTrafficController.instance().sendXNetMessage(msg,this);
-        //requestState=THROTTLECMDSENT;
+       }  
+       XNetMessage msg=new XNetMessage(6);
+       msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
+       msg.setElement(1,XNetConstants.LOCO_SET_FUNC_Group1);
+       msg.setElement(2,this.getDccAddressHigh());// set to the upper
+						    // byte of the  DCC address
+       msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
+						    //of the DCC address
+       // Now, we need to figure out what to send in element 3
+       int element4value=0;
+       if(f0Momentary)
+	{
+	  element4value += 16;
+	}
+       if(f1Momentary)
+	{
+	  element4value += 1;
+	}
+       if(f2Momentary)
+	{
+	  element4value += 2;
+	}
+       if(f3Momentary)
+	{
+	  element4value += 4;
+	}
+       if(f4Momentary)
+	{
+	  element4value += 8;
+	}
+       msg.setElement(4,element4value);
+       msg.setParity(); // Set the parity bit
+       // now, we send the message to the command station
+       XNetTrafficController.instance().sendXNetMessage(msg,this);
+       if(!isAvailable) 
+          requestState=THROTTLEFUNCSENT;
     }
     
     /**
@@ -253,41 +269,51 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      */
     protected void sendMomentaryFunctionGroup2()
     {
-        if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT))!=THROTTLEIDLE) 
-            {
+       if(XNetTrafficController.instance()
+                               .getCommandStation()
+                               .getCommandStationType()==0x10) {
+          // if the command station is multimouse, ignore
+          if(log.isDebugEnabled())
+		log.debug("Command station does not support Momentary functions");
+                return;
+       }
+       if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT|THROTTLEFUNCSENT))
+		==THROTTLESTATSENT) 
+       {
                 log.warn("Outstanding request, Function Group 2 momentary status change ignored");
 		return;
             }
         XNetMessage msg=new XNetMessage(6);
         msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
         msg.setElement(1,XNetConstants.LOCO_SET_FUNC_Group2);
-        msg.setElement(2,this.getDccAddressHigh());// set to the upper
-        // byte of the  DCC address
-        msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
-        //of the DCC address
-        // Now, we need to figure out what to send in element 3
-        int element4value=0;
-        if(f5Momentary)
-            {
-                element4value += 1;
-            }
-        if(f6Momentary)
-            {
-                element4value += 2;
-            }
-        if(f7Momentary)
-            {
-                element4value += 4;
-            }
-        if(f8Momentary)
-            {
-                element4value += 8;
-            }
-        msg.setElement(4,element4value);
-        msg.setParity(); // Set the parity bit
-        // now, we send the message to the command station
-        XNetTrafficController.instance().sendXNetMessage(msg,this);
-        //requestState=THROTTLECMDSENT;
+       msg.setElement(2,this.getDccAddressHigh());// set to the upper
+						    // byte of the  DCC address
+       msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
+						    //of the DCC address
+       // Now, we need to figure out what to send in element 3
+       int element4value=0;
+       if(f5Momentary)
+	{
+	  element4value += 1;
+	}
+       if(f6Momentary)
+	{
+	  element4value += 2;
+	}
+       if(f7Momentary)
+	{
+	  element4value += 4;
+	}
+       if(f8Momentary)
+	{
+	  element4value += 8;
+	}
+       msg.setElement(4,element4value);
+       msg.setParity(); // Set the parity bit
+       // now, we send the message to the command station
+       XNetTrafficController.instance().sendXNetMessage(msg,this);
+       if(!isAvailable) 
+          requestState=THROTTLEFUNCSENT;
     }
     
     /**
@@ -296,41 +322,51 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      */
     protected void sendMomentaryFunctionGroup3()
     {
-        if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT))!=THROTTLEIDLE) 
-            {
+       if(XNetTrafficController.instance()
+                               .getCommandStation()
+                               .getCommandStationType()==0x10) {
+          // if the command station is multimouse, ignore
+          if(log.isDebugEnabled())
+		log.debug("Command station does not support Momentary functions");
+                return;
+       }
+       if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT|THROTTLEFUNCSENT))
+		==THROTTLESTATSENT) 
+       {
                 log.warn("Outstanding request, Function Group 3 momentary status change ignored");
 		return;
-            }
-        XNetMessage msg=new XNetMessage(6);
-        msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
-        msg.setElement(1,XNetConstants.LOCO_SET_FUNC_Group3);
-        msg.setElement(2,this.getDccAddressHigh());// set to the upper
-        // byte of the  DCC address
-        msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
-        //of the DCC address
-        // Now, we need to figure out what to send in element 3
-        int element4value=0;
-        if(f9Momentary)
-            {
-                element4value += 1;
-            }
-        if(f10Momentary)
-            {
-                element4value += 2;
-            }
-        if(f11Momentary)
-            {
-                element4value += 4;
-            }
-        if(f12Momentary)
-            {
-                element4value += 8;
-            }
-        msg.setElement(4,element4value);
-        msg.setParity(); // Set the parity bit
-        // now, we send the message to the command station
-        XNetTrafficController.instance().sendXNetMessage(msg,this);
-        //requestState=THROTTLECMDSENT;
+       }
+       XNetMessage msg=new XNetMessage(6);
+       msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
+       msg.setElement(1,XNetConstants.LOCO_SET_FUNC_Group3);
+       msg.setElement(2,this.getDccAddressHigh());// set to the upper
+						    // byte of the  DCC address
+       msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
+						    //of the DCC address
+       // Now, we need to figure out what to send in element 3
+       int element4value=0;
+       if(f9Momentary)
+	{
+	  element4value += 1;
+	}
+       if(f10Momentary)
+	{
+	  element4value += 2;
+	}
+       if(f11Momentary)
+	{
+	  element4value += 4;
+	}
+       if(f12Momentary)
+	{
+	  element4value += 8;
+	}
+       msg.setElement(4,element4value);
+       msg.setParity(); // Set the parity bit
+       // now, we send the message to the command station
+       XNetTrafficController.instance().sendXNetMessage(msg,this);
+       if(!isAvailable) 
+         requestState=THROTTLEFUNCSENT;
     }
     
     /** speed - expressed as a value 0.0 -> 1.0. Negative means emergency stop.
@@ -344,10 +380,11 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     synchronized public void setSpeedSetting(float speed)
     {
 	if(log.isDebugEnabled()) log.debug("set Speed to: " + speed +
-                                           " Current step mode is: " + this.speedStepMode );
-        
-	if(requestState!=THROTTLEIDLE)
-            {
+					  " Current step mode is: " + this.speedStepMode );
+
+        if((requestState&(THROTTLESPEEDSENT|THROTTLESTATSENT|THROTTLEFUNCSENT))
+		==THROTTLESTATSENT) 
+        {
                 log.warn("Outstanding request, Speed/Direction Setting Change ignored");
 		return;
             }
@@ -358,74 +395,75 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                 sendEmergencyStop();
             }
 	else
-            {
-                if(speed>(float)1)
-                    speed=(float)1.0;
-                /* we're sending a speed to the locomotive */
-                XNetMessage msg=new XNetMessage(6);
-                msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
-                int element4value=0;   /* this is for holding the speed and 
-                                          direction setting */
-                if(this.speedStepMode == DccThrottle.SpeedStepMode128) {
-                    // We're in 128 speed step mode
-                    msg.setElement(1,XNetConstants.LOCO_SPEED_128);
-                    // Now, we need to figure out what to send in element 4
-                    // Remember, the speed steps are identified as 0-127 (in 
-                    // 128 step mode), not 1-128.
-                    int speedVal=java.lang.Math.round(speed*126);
-                    // speed step 1 is reserved to indicate emergency stop, 
-                    // so we need to step over speed step 1
-                    if(speedVal>=1) { element4value=speedVal+1; }
-                } else if(this.speedStepMode == DccThrottle.SpeedStepMode28) {
-                    // We're in 28 speed step mode
-                    msg.setElement(1,XNetConstants.LOCO_SPEED_28);
-                    // Now, we need to figure out what to send in element 4
-                    int speedVal=java.lang.Math.round(speed*28);
-                    // The first speed step used is actually at 4 for 28 
-                    // speed step mode.
-                    if(speedVal>=1) { speedVal+=3; }
-                    // We have to re-arange the bits, since bit 4 is the LSB,
-                    // but other bits are in order from 0-3
-                    element4value=((speedVal&0x1e)>>1) + 
-                        ((speedVal & 0x01) <<4);
-                } else if(this.speedStepMode == DccThrottle.SpeedStepMode27) {
-                    // We're in 27 speed step mode
-                    msg.setElement(1,XNetConstants.LOCO_SPEED_27);
-                    // Now, we need to figure out what to send in element 4
-                    int speedVal=java.lang.Math.round(speed*27);
-                    // The first speed step used is actually at 4 for 27 
-                    // speed step mode.
-                    if(speedVal>=1) { speedVal+=3; }
-                    // We have to re-arange the bits, since bit 4 is the LSB,
-                    // but other bits are in order from 0-3
-                    element4value=((speedVal&0x1e)>>1) + 
-                        ((speedVal & 0x01) <<4);
-                } else {
-                    // We're in 14 speed step mode
-                    msg.setElement(1,XNetConstants.LOCO_SPEED_14);
-                    // Now, we need to figure out what to send in element 4
-                    element4value=(int)(speed*14);
-                    int speedVal=java.lang.Math.round(speed*14);
-                    // The first speed step used is actually at 2 for 14 
-                    // speed step mode.
-                    if(element4value>=1) { speedVal+=1; }
-                }
-                msg.setElement(2,this.getDccAddressHigh());// set to the upper
-                // byte of the  DCC address
-                msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
-                //of the DCC address
-                if(isForward)
-                    {
-                        /* the direction bit is always the most significant bit */
-                        element4value+=128;
-                    }
-                msg.setElement(4,element4value);
-                msg.setParity(); // Set the parity bit
-                
-                // now, we send the message to the command station
-                XNetTrafficController.instance().sendXNetMessage(msg,this);
-                requestState=THROTTLESPEEDSENT;
-            }
+	{
+        if(speed>(float)1)
+		speed=(float)1.0;
+	/* we're sending a speed to the locomotive */
+       	 XNetMessage msg=new XNetMessage(6);
+         msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
+         int element4value=0;   /* this is for holding the speed and 
+                                 direction setting */
+	 if(this.speedStepMode == DccThrottle.SpeedStepMode128) {
+		 // We're in 128 speed step mode
+		 msg.setElement(1,XNetConstants.LOCO_SPEED_128);
+                 // Now, we need to figure out what to send in element 4
+                 // Remember, the speed steps are identified as 0-127 (in 
+	         // 128 step mode), not 1-128.
+                 int speedVal=java.lang.Math.round(speed*126);
+                 // speed step 1 is reserved to indicate emergency stop, 
+                 // so we need to step over speed step 1
+                 if(speedVal>=1) { element4value=speedVal+1; }
+	 } else if(this.speedStepMode == DccThrottle.SpeedStepMode28) {
+		 // We're in 28 speed step mode
+		 msg.setElement(1,XNetConstants.LOCO_SPEED_28);
+                 // Now, we need to figure out what to send in element 4
+                 int speedVal=java.lang.Math.round(speed*28);
+                 // The first speed step used is actually at 4 for 28 
+                 // speed step mode.
+                 if(speedVal>=1) { speedVal+=3; }
+                 // We have to re-arange the bits, since bit 4 is the LSB,
+                 // but other bits are in order from 0-3
+                 element4value=((speedVal&0x1e)>>1) + 
+                                   ((speedVal & 0x01) <<4);
+	 } else if(this.speedStepMode == DccThrottle.SpeedStepMode27) {
+		 // We're in 27 speed step mode
+		 msg.setElement(1,XNetConstants.LOCO_SPEED_27);
+                 // Now, we need to figure out what to send in element 4
+                 int speedVal=java.lang.Math.round(speed*27);
+                 // The first speed step used is actually at 4 for 27 
+                 // speed step mode.
+                 if(speedVal>=1) { speedVal+=3; }
+                 // We have to re-arange the bits, since bit 4 is the LSB,
+                 // but other bits are in order from 0-3
+                 element4value=((speedVal&0x1e)>>1) + 
+                                   ((speedVal & 0x01) <<4);
+	 } else {
+		 // We're in 14 speed step mode
+		 msg.setElement(1,XNetConstants.LOCO_SPEED_14);
+                 // Now, we need to figure out what to send in element 4
+                 element4value=(int)(speed*14);
+                 int speedVal=java.lang.Math.round(speed*14);
+                 // The first speed step used is actually at 2 for 14 
+                 // speed step mode.
+                 if(element4value>=1) { speedVal+=1; }
+	 }
+      	 msg.setElement(2,this.getDccAddressHigh());// set to the upper
+						    // byte of the  DCC address
+         msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
+						    //of the DCC address
+         if(isForward)
+ 	 {
+	    /* the direction bit is always the most significant bit */
+	    element4value+=128;
+	 }
+        msg.setElement(4,element4value);
+        msg.setParity(); // Set the parity bit
+
+        // now, we send the message to the command station
+        XNetTrafficController.instance().sendXNetMessage(msg,this);
+        if (!isAvailable) 
+	   requestState=THROTTLESPEEDSENT;
+	}
     }
     
     /* Since xpressnet has a seperate Opcode for emergency stop,
@@ -443,10 +481,10 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         msg.setParity(); // Set the parity bit
         // now, we send the message to the command station
         XNetTrafficController.instance().sendXNetMessage(msg,this);
-        requestState=THROTTLESPEEDSENT;
+        if(!isAvailable) 
+            requestState=THROTTLESPEEDSENT;
     }
-    
-    
+
     /** direction
      * This is an bound parameter.
      */
@@ -522,6 +560,14 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     // of functions from the command station
     synchronized private void sendFunctionStatusInformationRequest()
     {
+       if(XNetTrafficController.instance()
+                               .getCommandStation()
+                               .getCommandStationType()==0x10) {
+          // if the command station is multimouse, ignore
+          if(log.isDebugEnabled())
+		log.debug("Command station does not support Momentary functions");
+                return;
+       }
         if(log.isDebugEnabled())log.debug("Throttle " +address +" sending request for function momentary status.");
         /* Send the request for Function status */
         XNetMessage msg=XNetMessage.getLocomotiveFunctionStatusMsg(this.address);
@@ -591,15 +637,16 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                         //} else {
                         // Remove the throttle
                         // TODO
-                        //}
-                    }
-                }
-            }
-	} else if (requestState==THROTTLESPEEDSENT) {
-            if(log.isDebugEnabled()) { log.debug("Current throttle status is THROTTLESPEEDSENT"); }
-            // For a Throttle Command, we're just looking for a return 
-            // acknowledgment, Either a Success or Failure message.
-            if(l.isOkMessage()) 
+		      //}
+		   }
+	       }
+           }
+	} else if ((requestState&THROTTLESPEEDSENT)==THROTTLESPEEDSENT ||
+                   (requestState&THROTTLEFUNCSENT)==THROTTLEFUNCSENT) {
+	     if(log.isDebugEnabled()) { log.debug("Current throttle status is THROTTLESPEEDSENT"); }
+	     // For a Throttle Command, we're just looking for a return 
+             // acknowledgment, Either a Success or Failure message.
+	     if(l.isOkMessage()) 
 		{
                     if(log.isDebugEnabled()) { log.debug("Last Command processed successfully."); }
                     // Since we recieved an "ok",  we want to make sure 
@@ -721,7 +768,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
             } else if(l.getElement(0)==XNetConstants.CS_INFO &&
                       l.getElement(1)==XNetConstants.CS_NOT_SUPPORTED) {
                 /* The Command Station does not support this command */
-                if(log.isDebugEnabled()) log.error("Unsupported Command Sent to command station");
+                log.error("Unsupported Command Sent to command station");
                 requestState=THROTTLEIDLE;
 	    }
 	}
