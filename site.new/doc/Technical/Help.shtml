@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Help.shtml,v 1.6 2007-11-01 17:51:10 jacobsen Exp $ -->
+<!-- $Id: Help.shtml,v 1.7 2007-11-23 07:05:35 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -91,7 +91,7 @@ class inherits from JmriJFrame, and adds a help menu with the line
 </CODE>
 </PRE>
 The help file is then located at 
-<code>help/en/package/jmri/jmrit/simpleclock/SimpleClockFrame.html</code>.
+<code>help/en/package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml</code>.
 <P>
 A number of help files have been put in place without any contents;
 hopefully some users will edit them and contribute them back.
