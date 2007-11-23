@@ -1,0 +1,239 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: TurnoutTable.shtml,v 1.1 2007-11-23 06:11:08 jacobsen Exp $ -->
+<HTML LANG="en">
+<HEAD>
+<TITLE>JMRI: Turnout Table Help</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META CONTENT="Bob Jacobsen" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI help Turnout Table">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<H2>The Turnout Table</H2>
+
+<P>This table contains a list of all turnouts that exist for this
+panel. From this table you can change the state of a turnout, change the
+feedback mode, enter sensors for feedback, invert, lock, and delete it.</P>
+<BR>
+<H3>Turnout Table Buttons and Checkboxes</H3>
+
+<DL>
+	<DT>System Name</DT>
+	<DD>The System Name cannot be changed once entered into the table.
+	The "Add" button located in the lower left corner of the table allows
+	you to add a new turnout to the table. You must use a valid System Name
+	for a turnout. See <A HREF="../../../../html/doc/Technical/Names.html">Names</A>
+	for more info.</DD>
+
+	<DT>User Name</DT>
+	<DD>You can directly enter or change the "User Name" for an
+	existing turnout. This can be pretty much anything you wish to describe
+	the turnout.</DD>
+
+	<DT>Cmd</DT>
+	<DD>Pushing the "Cmd" command button will change the state of an
+	existing turnout.</DD>
+
+	<DT>Delete</DT>
+	<DD>Pushing the "Delete" button will remove the turnout from the
+	table. To permanently delete the turnout you must save the panel.</DD>
+
+	<DT>Inverted</DT>
+	<DD>When checked, the turnout command and status to and from the
+	layout is inverted. For example, an inverted turnout means that when
+	JMRI sends a "CLOSE" turnout command, it becomes a "THROW" to the
+	layout. Turnouts that can not be inverted have grayed out boxes and can
+	not be checked.</DD>
+
+	<DT>Locked</DT>
+	<DD>When checked, the turnout is locked. There are two types of
+	locks supported by JMRI, cab lockout and pushbutton lockout. When a
+	turnout is locked, only turnout commands from JMRI to move a turnout
+	will work. Cabs and pushbuttons on the layout are disabled. You can
+	selectively decide if you want "Both" cabs and pushbuttons locked,
+	"Cabs only", or "Pushbuttons only". Click the "Show lock information"
+	box on the lower edge of the table for the lock options. Not all
+	stationary decoders support pushbutton lockout, and not all systems
+	support cab lockout. Turnouts that can not be locked have grayed out
+	boxes and can not be checked. See <A HREF="#NCE Turnout lock feature">NCE
+	Turnout lock feature</A> below.</DD>
+
+	<DT>Feedback</DT>
+	<DD>This shows the known state of a turnout.</DD>
+
+	<DT>Mode</DT>
+	<DD>The pull down boxes allow you to select the method of
+	operation for a turnout. See <A HREF="#JMRI:Turnout Feedback">JMRI:
+	Turnout Feedback</A> below.</DD>
+
+	<DT>Sensor 1</DT>
+	<DD>Shows the system name of the optional sensor that provides the
+	feedback for a turnout. You can also directly enter or change the
+	system name of Sensor 1 for a turnout.</DD>
+
+	<DT>Sensor 2</DT>
+	<DD>Shows the system name of the optional sensor that provides the
+	feedback for a turnout. You can also directly enter or change the
+	system name of Sensor 2 for a turnout.</DD>
+
+	<DT><A NAME="Lock Mode"></A>Lock Mode</DT>
+	<DD>Shows which lockouts are active for this turnout. "Both" means
+	that cabs and pushbuttons will be locked out if the lock is active.
+	"Cabs only" means that cabs will be locked out, but pushbuttons will
+	continue to work when the lock is active. And "Pushbuttons only" means
+	that pushbuttons will be locked out, but cabs will continue to work
+	when the lock is active. Note, when JMRI locks a turnout's pushbutton,
+	it does so by sending a lock command to the turnout decoder's lock
+	control CV register. You must unlock the turnout before shutting down
+	the JMRI program if you want to restore the operation of the
+	pushbuttons. Cab lockout automatically terminates when the JMRI program
+	is shut down.</DD>
+
+	<DT>Decoder</DT>
+	<DD>Shows which decoder the turnout is using. Currently the
+	program only supports NCE revision C and CVP accessory decoders. CVP
+	decoders support one or two pushbutton operation. Select the number of
+	pushbuttons used to operate that specific turnout. CVP_AD4_1B means one
+	button, and CVP_AD4_2B means two buttons. We recommend that you enter
+	all four CVP turnouts per decoder into the turnout table, even if
+	you're only locking one. You do not need to specify the number of
+	pushbuttons for NCE. Unfortunately, NCE revisions A and B accessory
+	decoders do not support pushbutton lockout.</DD>
+
+	<DT>Add</DT>
+	<DD>Pressing this button allows you to add a new turnout.</DD>
+
+	<DT>Show feedback information</DT>
+	<DD>When checked, the optional feedback columns are shown.</DD>
+
+	<DT>Show lock information</DT>
+	<DD>When checked, the optional lock columns are shown.</DD>
+
+</DL>
+
+<H3><A NAME="JMRI:Turnout Feedback"></A>JMRI: Turnout Feedback</H3>
+
+<P>Model railroaders want different things when it comes to knowing
+the status of the turnouts on their layout. Some are quite happy to say
+"I told it to move, that's good enough for me". These people don't worry
+about whether a turnout on their layout actually moved when they told it
+to. Those people can just ignore this page, and leave the JMRI settings
+at their default.</P>
+
+<P>But some modelers want to have better information about the
+status of the turnouts on their layout, and so use some form of
+"feedback" to indicate turnout position. This could be as complicated as
+two microswitches, adjusted to only close when the turnout is properly
+seated in either position. Or it could be something simpler.</P>
+<P>In the JMRI program, Turnout objects actually know about two
+different states: "Commanded" state and "Known" state. The commanded
+state is "This is what was asked for last". The known state is "This is
+what's happening on the layout as far as I know".</P>
+<P>Built into NCE, LocoNet and XPressNet systems are limited
+abilities to monitor what is happening on their networks. This allows
+JMRI to capture messages or poll the system concerning Turnout state
+changes. All the other protocols normally use a "you told it to change,
+so it did" logic. In other words, when something in the code (the
+Turnout Tool or a script) commands a state change from closed to thrown,
+the default is for both both the commanded state and the known state to
+change to "thrown".</P>
+<P>But it is also possible to control this in more detail if you
+have wired your layout to allow it.</P>
+<P>The whole question of turnout feedback is then "How do we
+configure the program to understand the known state properly, given my
+layout hardware?"</P>
+<P>In the turnout table (Tools->Tables->Turnouts) click on the box
+in the lower left that is labeled "Show feedback information". Now
+expand the turnout table window and you'll find four columns associated
+with feedback:</P>
+<DL>
+	<DT>"Feedback"</DT>
+	<DD>This is the "known state". You can't change it, but this
+	column will show you what the program thinks it is.</DD>
+
+	<DT>"Mode"</DT>
+	<DD>This is the feedback method used by this turnout. (You can
+	change it for each turnout individually, but note the change doesn't
+	take effect until you click somewhere else, and you might need to add
+	some sensor names in the next column(s))</DD>
+
+	<DT>"Sensor 1", "Sensor 2"</DT>
+	<DD>These define the sensors needed by certain types of feedback.
+	You can type a sensor number, system name or user name here; the
+	program will change it to the system name that it needs.</DD>
+</DL>
+
+<P>Available feedback modes are:</P>
+<DL>
+	<DT>DIRECT</DT>
+	<DD>The default in many cases, and also the original behavior of
+	the program. When something tells the turnout to change, it's just
+	immediately assumed that it actually did it.</DD>
+
+	<DT>ONESENSOR</DT>
+	<DD>The turnout watches the sensor defined by the "Sensor 1"
+	column, which is probably hooked to a microswitch on the turnout or
+	similar. When the sensor is Active, the turnout is known to be in the
+	"Thrown" position. When it's Inactive, the turnout is known to be in
+	the "Closed" position.</DD>
+
+	<DT>TWOSENSOR</DT>
+	<DD>The turnout watches two sensors defined by the "Sensor 1" and
+	"Sensor 2" columns, which are probably hooked to microswitches at
+	either end of the turnout's throw bar. When Sensor 1 is active, the
+	turnout is known to be thrown. When Sensor 2 is active, the turnout is
+	known to be closed (normal).</DD>
+
+	<DT>MONITORING</DT>
+	<DD>Default for LocoNet turnouts (and probably XpressNet soon),
+	and available for NCE. When selected, the network is monitored for
+	messages about the status of the turnout. This mode is only available
+	for certain systems, i.e. some systems can't do the monitoring
+	properly, and don't have this choice.</DD>
+
+	<DT>INDIRECT</DT>
+	<DD>Currently only available for LocoNet turnouts, this informs
+	the program that the turnout is being driven by a Digitrax DS54 with a
+	microswitch attached to the switch lead. For more information, see the
+	JMRI <A
+		HREF="http://jmri.sourceforge.net/doc/Technical/loconet/DS54.html">DS54</A>
+	examples page on the JMRI website.</DD>
+
+	<DT>EXACT</DT>
+	<DD>Currently only available for LocoNet turnouts, this informs
+	the program that the turnout is being driven by a Digitrax DS54 with
+	two microswitches attached to the switch and aux leads. For more
+	information, see the JMRI <A
+		HREF="http://jmri.sourceforge.net/doc/Technical/loconet/DS54.html">DS54</A>
+	examples page on the JMRI website.</DD>
+
+</DL>
+
+<BR>
+<H3><A NAME="NCE Turnout lock feature"></A>NCE Turnout lock feature</H3>
+
+<P>The turnout lock feature allows you to selectively disable
+accessory (turnouts) commands from cabs. By locking a turnout, the JMRI
+program will monitor the turnout's accessory address and if it detects a
+change command from a cab, will cancel the command immediately by
+sending out the opposite command to the turnout.</P>
+<P>To use this feature you must select MONITORING as the feedback
+mode for the turnout and the NCE command station must have the 2007 or
+newer EPROM.</P>
+<P>To help you select a set of turnouts to lock, a route can be
+locked. All turnouts that are being monitored by the JMRI program and
+are included in the route will be locked.</P>
+
+</BODY>
+</HTML>
+

@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: RouteTable.shtml,v 1.1 2007-11-23 06:11:07 jacobsen Exp $ -->
+<HTML LANG="en">
+<HEAD>
+<TITLE>JMRI: Route Table Help</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META CONTENT="Bob Jacobsen" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI help Route Table">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<H2>The Route Table</H2>
+
+<P>A route consists of one or more turnouts or sensors that you
+would like to control. Before creating a route, you should first add
+some turnouts or sensors by using either the turnout table or sensor
+table. These tables can be found under the main menu "Tools -> Tables"</P>
+<P>Once you have some turnouts or sensors to manage use the "Add"
+button in the lower left hand corner of the route table to create a new
+route.</P>
+<BR>
+<H3>Route Table Buttons and Checkboxes</H3>
+
+<DL>
+	<DT>System Name</DT>
+	<DD>The System Name cannot be changed once entered into the table.
+	The "Add" button located in the lower left corner of the table allows
+	you to add a new route to the table.</DD>
+
+	<DT>User Name</DT>
+	<DD>You can directly enter or change the "User Name" for an
+	existing route.</DD>
+
+	<DT>Set</DT>
+	<DD>Pushing the "Set" button will trigger an existing route.</DD>
+
+	<DT>Delete</DT>
+	<DD>Pushing the "Delete" button will remove the route from the
+	table. To permanently delete the route you must save the panel.</DD>
+
+	<DT>Enabled</DT>
+	<DD>To disable a route from triggering, uncheck the "Enabled" box
+	for the route. Enabled is not saved and will be restored when a panel
+	is loaded at startup.</DD>
+
+	<DT>Locked</DT>
+	<DD>When checked the route is locked. This means that turnouts
+	that can be locked by JMRI will not respond to commands from cabs or
+	pushbuttons to change. For more information see Turnout Table, <A
+		HREF="TurnoutTable.html#Lock Mode">Lock Mode</A> and <A
+		HREF="#NCE turnout lock feature"> NCE turnout lock feature</A>.</DD>
+
+	<DT>Edit</DT>
+	<DD>Push this button to edit the route. For more information see <A
+		HREF="RouteAddEdit.html">Adding/Editing Routes</A>.</DD>
+
+	<DT>Add</DT>
+	<DD>Push this button to add a new route. For more information see
+	<A HREF="RouteAddEdit.html">Adding/Editing Routes</A>.</DD>
+
+</DL>
+
+<BR>
+<H3><A NAME="NCE turnout lock feature">NCE turnout lock feature</A></H3>
+
+<P>The turnout lock feature allows you to selectively disable
+accessory (turnouts) commands from cabs. By locking a turnout, the JMRI
+program will monitor the turnout's accessory address and if it detects a
+change command from a cab, will cancel the command immediately by
+sending out the opposite command to the turnout.</P>
+<P>To help you select a set of turnouts to lock, a route can be
+locked. All turnouts that are being monitored by the JMRI program and
+are included in the route will be locked. In the route edit window, an
+optional lock control turnout is available. You can use the lock control
+turnout to enable or disable the locks from a panel icon. The lock
+control turnout can be an internal or external turnout. To use this new
+feature the system must be NCE using 2007 EPROM or newer, and the
+turnouts to be locked must use MONITORING for feedback.</P>
+
+</BODY>
+</HTML>
+

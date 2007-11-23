@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: SensorTable.shtml,v 1.1 2007-11-23 06:11:07 jacobsen Exp $ -->
+<HTML LANG="en">
+<HEAD>
+<TITLE>JMRI: Sensor Table Help</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META CONTENT="Bob Jacobsen" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI help Sensor Table">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<H2>The Sensor Table</H2>
+
+<P>This table contains a list of the sensors that exist for this
+panel.</P>
+<BR>
+<H3>Turnout Sensor Buttons and Checkboxes</H3>
+
+<DL>
+	<DT>User Name</DT>
+	<DD>You can directly enter or change the "User Name" for an
+	existing sensor.</DD>
+
+	<DT>State</DT>
+	<DD>Pushing the "State" command button will change the state of an
+	existing sensor.</DD>
+
+	<DT>Delete</DT>
+	<DD>Pushing the "Delete" button will remove the sensor from the
+	table. To permanently delete the sensor you must save the panel.</DD>
+
+	<DT>Inverted</DT>
+	<DD>When checked, the sensor command and status is inverted. For
+	example, an inverted sensor means that when the layout sends an
+	"active" sensor command, it becomes "inactive" to JMRI.</DD>
+
+	<DT>Add</DT>
+	<DD>Pressing this button allows you to add a new sensor.</DD>
+
+</DL>
+
+</BODY>
+</HTML>
+

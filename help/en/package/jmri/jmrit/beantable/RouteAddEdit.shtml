@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: RouteAddEdit.shtml,v 1.1 2007-11-23 06:11:07 jacobsen Exp $ -->
+<html lang="en">
+<head>
+ <TITLE>
+      JMRI: Adding/Editing Routes
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help Route Add Edit">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<H2><a name="Adding/Editing Routes"></a>Adding/Editing Routes 
+</H2>
+    
+<p>The first thing you must do when creating a route is name it. In
+the box labeled "Route System Name" enter a unique name for your route.
+You can optionally enter a more descriptive name in the "Route User
+Name" box.</p>
+<p>The radio button below the "Route User Name" allows you to show
+only the turnouts or sensors that are part of this route. There are two
+tables below the "Show" button, the first one contains turnouts and the
+second contains sensors. Click the "Include" box in either table to add
+the desired turnouts or sensor to your route. Next to the "Include" box
+is the action that the turnout or sensor can perform when the route is
+triggered. For example, if you wish the turnout to throw when the route
+is triggered select "Set Thrown" in the drop down box.</p>
+<p>Below the turnout and sensor tables are two optional features. By
+hitting the "Set" button you can add a sound file that you wish to play
+when the route is triggered, or a script file that you want to run.</p>
+<p>To trigger a route, you need to specify how the route is to be
+activated. You can select up to three sensors and one turnout. Of any of
+the sensors or turnout meets the condition that you specify, the route
+will trigger.</p>
+<p>In some cases, it might be necessary to delay or slow down the
+rate that JMRI sends commands to change turnouts on the layout. By
+entering a value in the "Added Delay" box, you can increase the amount
+of time between turnout commands when this route is triggered.</p>
+<p>The next text box allows you to enter a turnout that will lock
+this route.</p>
+<p>Once you are satisfied with your route, use the "Add Route"
+button to create the route. To save your route you must use the "Store
+Panel" command which can be found under the "Panels" main menu. If you
+decide that you need to change your route, use the "Edit" and "Update
+Route" buttons to modify your route.</p>
+
+<p></p>
+<H3>NCE turnout lock feature</H3>
+
+<p>The turnout lock feature allows you to selectively disable
+accessory (turnouts) commands from cabs. By locking a turnout, the JMRI
+program will monitor the turnout's accessory address and if it detects a
+change command from a cab, will cancel the command immediately by
+sending out the opposite command to the turnout.</p>
+<p>
+To help you select a set of turnouts to lock, a route can be locked. All
+turnouts that are being monitored by the JMRI program and are included
+in the route will be locked. In the route edit window, an optional
+lock control turnout is available. You can use the lock control turnout
+to enable or disable the locks from a panel icon. The lock control
+turnout can be an internal or external turnout. To use this new feature
+the system must be NCE using 2007 EPROM or newer, and the turnouts to be
+locked must use MONITORING for feedback.
+</p>
+
+</body>
+</html>
+
