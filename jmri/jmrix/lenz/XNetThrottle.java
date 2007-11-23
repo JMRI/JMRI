@@ -8,8 +8,9 @@ import jmri.DccLocoAddress;
 /**
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
- * @author     Paul Bender (C) 2002,2003,2004
- * @version    $Revision: 2.15 $
+ * @author  Paul Bender (C) 2002,2003,2004
+ * @author  Giorgio Terdina (C) 2007
+ * @version    $Revision: 2.16 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -38,6 +39,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         super();
         XNetTrafficController.instance().addXNetListener(XNetInterface.COMMINFO |
                                                          XNetInterface.CS_INFO |
+                                                         XNetInterface.FEEDBACK | // multiMAUS
                                                          XNetInterface.THROTTLE, this);
         if (log.isDebugEnabled()) { log.debug("XnetThrottle constructor"); }
     }
@@ -474,7 +476,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                                                             XNetInterface.CS_INFO |
                                                             XNetInterface.THROTTLE, this);
 	stopStatusTimer();
-        super.dispose();
+        //     super.dispose(); // GT 2007/11/6 - This statement results in a warning at run time
     }
     
     public int setDccAddress(int newaddress)
@@ -625,102 +627,102 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
             if (l.getElement(0)==XNetConstants.LOCO_INFO_NORMAL_UNIT) {
                 if(log.isDebugEnabled()) {log.debug("Throttle - message is LOCO_INFO_NORMAL_UNIT"); }
                 /* there is no address sent with this information */
-		int b1=l.getElement(1);
-		int b2=l.getElement(2);
-		int b3=l.getElement(3);
-		int b4=l.getElement(4);
+                int b1=l.getElement(1);
+                int b2=l.getElement(2);
+                int b3=l.getElement(3);
+                int b4=l.getElement(4);
 		
-		parseSpeedandAvailability(b1);
-		parseSpeedandDirection(b2);
-		parseFunctionInformation(b3,b4);
+                parseSpeedandAvailability(b1);
+                parseSpeedandDirection(b2);
+                parseFunctionInformation(b3,b4);
                 
                 //We've processed this request, so set the status to Idle.
-		requestState=THROTTLEIDLE;
+                requestState=THROTTLEIDLE;
                 // And then we want to request the Function Momentary Status
                 sendFunctionStatusInformationRequest();
                 return;
 	    } else if (l.getElement(0)==XNetConstants.LOCO_INFO_MUED_UNIT) {
                 if(log.isDebugEnabled()) {log.debug("Throttle - message is LOCO_INFO_MUED_UNIT "); }
                 /* there is no address sent with this information */
-		int b1=l.getElement(1);
-		int b2=l.getElement(2);
-		int b3=l.getElement(3);
-		int b4=l.getElement(4);
+                int b1=l.getElement(1);
+                int b2=l.getElement(2);
+                int b3=l.getElement(3);
+                int b4=l.getElement(4);
                 // Element 5 is the consist address, it can only be in the 
                 // range 1-99
-		int b5=l.getElement(5);
+                int b5=l.getElement(5);
                 
-		parseSpeedandAvailability(b1);
-		parseSpeedandDirection(b2);
-		parseFunctionInformation(b3,b4);
+                parseSpeedandAvailability(b1);
+                parseSpeedandDirection(b2);
+                parseFunctionInformation(b3,b4);
                 
-                //We've processed this request, so set the status to Idle.
-		requestState=THROTTLEIDLE;
+                // We've processed this request, so set the status to Idle.
+                requestState=THROTTLEIDLE;
                 // And then we want to request the Function Momentary Status
                 sendFunctionStatusInformationRequest();
                 return;
 	    } else if (l.getElement(0)==XNetConstants.LOCO_INFO_DH_UNIT) {
                 if(log.isDebugEnabled()) {log.debug("Throttle - message is LOCO_INFO_DH_UNIT "); }
                 /* there is no address sent with this information */
-		int b1=l.getElement(1);
-		int b2=l.getElement(2);
-		int b3=l.getElement(3);
-		int b4=l.getElement(4);
+                int b1=l.getElement(1);
+                int b2=l.getElement(2);
+                int b3=l.getElement(3);
+                int b4=l.getElement(4);
                 
-   		// elements 5 and 6 contain the address of the other unit 
-		// in the DH
-		int b5=l.getElement(5);		
-		int b6=l.getElement(6);		
+                // elements 5 and 6 contain the address of the other unit 
+                // in the DH
+                int b5=l.getElement(5);		
+                int b6=l.getElement(6);		
                 
-		parseSpeedandAvailability(b1);
-		parseSpeedandDirection(b2);
-		parseFunctionInformation(b3,b4);
+                parseSpeedandAvailability(b1);
+                parseSpeedandDirection(b2);
+                parseFunctionInformation(b3,b4);
                 
-                //We've processed this request, so set the status to Idle.
-		requestState=THROTTLEIDLE;
+                // We've processed this request, so set the status to Idle.
+                requestState=THROTTLEIDLE;
                 // And then we want to request the Function Momentary Status
                 sendFunctionStatusInformationRequest();
                 return;
 	    } else if (l.getElement(0)==XNetConstants.LOCO_INFO_MU_ADDRESS) {
                 if(log.isDebugEnabled()) {log.debug("Throttle - message is LOCO_INFO_MU ADDRESS "); }
                 /* there is no address sent with this information */
-		int b1=l.getElement(1);
-		int b2=l.getElement(2);
+                int b1=l.getElement(1);
+                int b2=l.getElement(2);
                 
-		parseSpeedandAvailability(b1);
-		parseSpeedandDirection(b2);
+                parseSpeedandAvailability(b1);
+                parseSpeedandDirection(b2);
                 
                 //We've processed this request, so set the status to Idle.
-		requestState=THROTTLEIDLE;
+                requestState=THROTTLEIDLE;
                 // And then we want to request the Function Momentary Status
                 sendFunctionStatusInformationRequest();
                 return;
 	    } else if (l.getElement(0)==XNetConstants.LOCO_INFO_RESPONSE) {
                 if(log.isDebugEnabled()) {log.debug("Throttle - message is LOCO_INFO_RESPONSE "); }
-		if(l.getElement(1)==XNetConstants.LOCO_NOT_AVAILABLE) {
+                if(l.getElement(1)==XNetConstants.LOCO_NOT_AVAILABLE) {
                     /* the address is in bytes 3 and 4*/
                     if(getDccAddressHigh()==l.getElement(2) && getDccAddressLow()==l.getElement(3)) {
-			//Set the Is available flag to "False"
+                        //Set the Is available flag to "False"
                         log.info("Loco "+ getDccAddress() + " In use by another device");
                         setIsAvailable(false);
                     }
-		} else if(l.getElement(1)==XNetConstants.LOCO_FUNCTION_STATUS) {
-		    /* Bytes 3 and 4 contain function momentary status information */
-		    int b3=l.getElement(2);
-		    int b4=l.getElement(3);
-	            parseFunctionMomentaryInformation(b3,b4);
-                } else if(l.isCommErrorMessage()) {
-                    /* this is a communications error */
-                    log.error("Communications error occured - message recieved was: " + l);
-                    requestState=THROTTLEIDLE;
-                } else if(l.getElement(0)==XNetConstants.CS_INFO &&
-                          l.getElement(2)==XNetConstants.CS_NOT_SUPPORTED) {
-                    /* The Command Station does not support this command */
-                    log.error("Unsupported Command Sent to command station");
-                    requestState=THROTTLEIDLE;
-		}
-                //We've processed this request, so set the status to Idle.
-		requestState=THROTTLEIDLE;
+                } else if(l.getElement(1)==XNetConstants.LOCO_FUNCTION_STATUS) {
+                    /* Bytes 3 and 4 contain function momentary status information */
+                    int b3=l.getElement(2);
+                    int b4=l.getElement(3);
+                    parseFunctionMomentaryInformation(b3,b4);
+                }
+                // We've processed this request, so set the status to Idle.
+                requestState=THROTTLEIDLE;
+            } else if(l.isCommErrorMessage()) {
+                /* this is a communications error */
+                log.error("Communications error occured - message received was: " + l);
+                requestState=THROTTLEIDLE;
+            } else if(l.getElement(0)==XNetConstants.CS_INFO &&
+                      l.getElement(1)==XNetConstants.CS_NOT_SUPPORTED) {
+                /* The Command Station does not support this command */
+                if(log.isDebugEnabled()) log.error("Unsupported Command Sent to command station");
+                requestState=THROTTLEIDLE;
 	    }
 	}
 	//requestState=THROTTLEIDLE;
@@ -966,11 +968,11 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                                          new Boolean(this.f9),
                                          new Boolean(this.f9 = true));
 	} else if ((b4 &0x10)==0x00 && getF9()==true) {
-           notifyPropertyChangeListener("F9",
-					new Boolean(this.f9),
-					new Boolean(this.f9 = false));
+            notifyPropertyChangeListener("F9",
+                                         new Boolean(this.f9),
+                                         new Boolean(this.f9 = false));
 	}
-		
+        
 	if((b4 & 0x20)==0x20 && getF10()==false) {
             notifyPropertyChangeListener("F10",
                                          new Boolean(this.f10),
@@ -1117,7 +1119,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                                          new Boolean(this.f10Momentary),
                                          new Boolean(this.f10Momentary = false));
 	}
-
+        
 	if((b4 & 0x40)==0x40 && this.f11Momentary==false) {
             notifyPropertyChangeListener("F11Momentary",
                                          new Boolean(this.f11Momentary),
