@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.9.2.shtml,v 1.4 2007-11-19 06:32:17 jacobsen Exp $ -->
+<!-- $Id: jmri1.9.2.shtml,v 1.5 2007-11-23 07:04:58 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -153,6 +153,16 @@ Paul Bender fixed a problem in the way function notifications were handled in th
 
 <P>
 Bob Jacobsen updated the advanced preferences panel to show the options for startup actions and buttons in lexical (alphabetical) order.
+
+<P>
+The configuration tools for Digitrax boards (PM4, SE8c, etc) now have scroll-bars on their windows, so they can be used on computers with smaller screens,
+
+<P>
+Fix bug (introduced in 1.9.1) that prevented the Copy Roster Entry menu item from working
+
+<P>
+Add methods to JmriJFrame so you can get a list of all currently-existing frames (windows)
+
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
