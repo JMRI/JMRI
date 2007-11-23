@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PanelTarget.shtml,v 1.1 2007-11-23 06:11:08 jacobsen Exp $ -->
+<!-- $Id: PanelTarget.shtml,v 1.2 2007-11-23 06:28:28 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Panel Help</TITLE>
@@ -49,7 +49,7 @@ represent a lit/dark panel indicator. A red circle represents the
 layout.</P>
 <H3>Creating a panel</H3>
 These are made with a
-<A HREF="PanelEditor.html"> Panel Editor</A>
+<A HREF="PanelEditor.shtml"> Panel Editor</A>
 , which allows you to place images to represent turnouts, sensors (on
 some systems) and trackwork.
 

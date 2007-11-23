@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SignalTable.shtml,v 1.1 2007-11-23 06:11:07 jacobsen Exp $ -->
+<!-- $Id: SignalTable.shtml,v 1.2 2007-11-23 06:28:28 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -43,7 +43,7 @@ machine logic to say "Don't change this signal head from red, even if it
 would be safe to do so, because I want to hold a train here".
 </UL>
 <P>To define a new signal, click on the 
-"<A HREF="SignalAddEdit.html">Add.." button<a/>.
+"<A HREF="SignalAddEdit.shtml">Add.." button<a/>.
 It will
 prompt you for the type (run off turnout outputs; SE8c; etc), and
 whatever setup information is needed.
@@ -52,7 +52,7 @@ with control panel setup and similar stuff.  For more information
 on creating and displaying panels, including how to show signals
 on your panels,
 please see the 
-<A HREF="../apps/PanelPro/Panels.html">Panels pages</a>.
+<A HREF="../../../../html/apps/PanelPro/Panels.html">Panels pages</a>.
 
 </body>
 </html>

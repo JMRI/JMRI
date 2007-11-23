@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: RouteTable.shtml,v 1.1 2007-11-23 06:11:07 jacobsen Exp $ -->
+<!-- $Id: RouteTable.shtml,v 1.2 2007-11-23 06:28:28 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Route Table Help</TITLE>
@@ -57,16 +57,16 @@ route.</P>
 	<DD>When checked the route is locked. This means that turnouts
 	that can be locked by JMRI will not respond to commands from cabs or
 	pushbuttons to change. For more information see Turnout Table, <A
-		HREF="TurnoutTable.html#Lock Mode">Lock Mode</A> and <A
+		HREF="TurnoutTable.shtml#Lock Mode">Lock Mode</A> and <A
 		HREF="#NCE turnout lock feature"> NCE turnout lock feature</A>.</DD>
 
 	<DT>Edit</DT>
 	<DD>Push this button to edit the route. For more information see <A
-		HREF="RouteAddEdit.html">Adding/Editing Routes</A>.</DD>
+		HREF="RouteAddEdit.shtml">Adding/Editing Routes</A>.</DD>
 
 	<DT>Add</DT>
 	<DD>Push this button to add a new route. For more information see
-	<A HREF="RouteAddEdit.html">Adding/Editing Routes</A>.</DD>
+	<A HREF="RouteAddEdit.shtml">Adding/Editing Routes</A>.</DD>
 
 </DL>
 

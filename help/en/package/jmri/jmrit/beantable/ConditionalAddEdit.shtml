@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ConditionalAddEdit.shtml,v 1.1 2007-11-23 06:11:07 jacobsen Exp $ -->
+<!-- $Id: ConditionalAddEdit.shtml,v 1.2 2007-11-23 06:28:28 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Adding/Editing Logix Conditionals</TITLE>
@@ -276,7 +276,7 @@ listed below along with information on each:</P>
 	<LI><B>Turnout Lock</B>: Locks or unlocks a turnout. Enter the
 	name for the turnout, and choose the operation from the popup menu.
 	Note, to control the type of turnout lock go to the <A
-		HREF="TurnoutTable.html">Turnout Table</A> and select the Lock Mode.</LI>
+		HREF="TurnoutTable.shtml">Turnout Table</A> and select the Lock Mode.</LI>
 </UL>
 <P></P>
 </BODY>
