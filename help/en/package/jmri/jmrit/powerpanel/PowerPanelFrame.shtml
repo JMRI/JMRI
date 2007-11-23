@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PowerPanelFrame.shtml,v 1.2 2007-11-04 05:19:17 jacobsen Exp $ -->
+<!-- $Id: PowerPanelFrame.shtml,v 1.3 2007-11-23 06:45:59 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -18,17 +18,15 @@
 <!-- /Style -->
 </head>
 
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
-
 <body>
+<!--#include virtual="/Header" -->
+
 <H2>Power Control
 </H2>
     
 This is the package/jmri/jmrit/powerpanel/PowerPanelFrame help page
 
 <!--#include virtual="/Footer" -->
-
 </body>
 </html>
 

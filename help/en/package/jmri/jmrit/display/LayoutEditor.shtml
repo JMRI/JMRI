@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LayoutEditor.shtml,v 1.1 2007-11-23 06:11:08 jacobsen Exp $ -->
+<!-- $Id: LayoutEditor.shtml,v 1.2 2007-11-23 06:45:58 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -19,6 +19,8 @@
 </head>
 
 <body>
+<!--#include virtual="/Header" -->
+
 <H2>The Layout Editor
 </H2>
 <dt class="left"><a name="contents"><h3>Contents</h3></a></dt><p>
@@ -845,6 +847,7 @@ For those planning to install signals, setting up a panel with
 blocks defined and signals placed can help in deciding where blocks and 
 signals should be placed before actually installing them on your layout.</p>
 
+<!--#include virtual="/Footer" -->
 </body>
 </html>
 

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: EditLayoutTurnout.shtml,v 1.1 2007-11-23 06:11:08 jacobsen Exp $ -->
+<!-- $Id: EditLayoutTurnout.shtml,v 1.2 2007-11-23 06:45:58 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -19,10 +19,11 @@
 </head>
 
 <body>
-<H2>Edit Turnout
-</H2>
-<H3> Turnouts
-</H3>
+<!--#include virtual="/Header" -->
+
+<H2>Edit Turnout</H2>
+
+<H3> Turnouts</H3>
 <P>
 Layout Editor supports four different types of turnouts (track switches): right-
 handed (<b>RH</b>), left-handed (<b>LH</b>), wye (<b>WYE</b>), and double 
@@ -111,6 +112,8 @@ default block for the double crossover. If any of <b>Block 2</b>, <b>Block 3</b>
 or <b>Block 4</b> entries are blank, the default block is used. Block connection 
 points are numbered 1, 2, 3 and 4, proceeding from the upper left connection 
 point in a clockwise direction.</p>
+
+<!--#include virtual="/Footer" -->
 </body>
 </html>
 

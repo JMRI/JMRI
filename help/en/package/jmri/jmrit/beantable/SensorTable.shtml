@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SensorTable.shtml,v 1.1 2007-11-23 06:11:07 jacobsen Exp $ -->
+<!-- $Id: SensorTable.shtml,v 1.2 2007-11-23 06:45:57 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Sensor Table Help</TITLE>
@@ -19,6 +19,8 @@
 </HEAD>
 
 <BODY>
+<!--#include virtual="/Header" -->
+
 <H2>The Sensor Table</H2>
 
 <P>This table contains a list of the sensors that exist for this
@@ -49,6 +51,7 @@ panel.</P>
 
 </DL>
 
+<!--#include virtual="/Footer" -->
 </BODY>
 </HTML>
 

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: MemoryAddEdit.shtml,v 1.1 2007-11-23 06:11:07 jacobsen Exp $ -->
+<!-- $Id: MemoryAddEdit.shtml,v 1.2 2007-11-23 06:45:57 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -19,11 +19,13 @@
 </head>
 
 <body>
-<H2>Adding/Editing Memories
-</H2>
+<!--#include virtual="/Header" -->
+
+<H2>Adding/Editing Memories</H2>
     
 This is the package/jmri/jmrit/beantable/MemoryAddEdit help page
 
+<!--#include virtual="/Footer" -->
 </body>
 </html>
 

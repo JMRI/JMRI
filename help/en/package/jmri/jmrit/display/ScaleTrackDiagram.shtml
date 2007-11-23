@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ScaleTrackDiagram.shtml,v 1.1 2007-11-23 06:11:08 jacobsen Exp $ -->
+<!-- $Id: ScaleTrackDiagram.shtml,v 1.2 2007-11-23 06:45:58 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -19,6 +19,8 @@
 </head>
 
 <body>
+<!--#include virtual="/Header" -->
+
 <H2>Scale/Translate Track Diagram
 </H2>
 <p>    
@@ -60,6 +62,7 @@ Only the track diagram drawing is scaled and translated.</p>
 <p>
 <b> To retain your changes, please remember to save your panel! </p>
  
+<!--#include virtual="/Footer" -->
 </body>
 </html>
 

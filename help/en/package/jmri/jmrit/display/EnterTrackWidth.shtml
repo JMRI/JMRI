@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: EnterTrackWidth.shtml,v 1.1 2007-11-23 06:11:08 jacobsen Exp $ -->
+<!-- $Id: EnterTrackWidth.shtml,v 1.2 2007-11-23 06:45:58 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -19,6 +19,8 @@
 </head>
 
 <body>
+<!--#include virtual="/Header" -->
+
 <H2>Set Track Width
 </H2>
 <p>    
@@ -33,6 +35,7 @@ that you may or may not choose to take advantage of.</p>
 Each type of track may be drawn using a different track width. Changing the width of a 
 track type changes the widths of all track of that type in the track diagram.</p>
 
+<!--#include virtual="/Footer" -->
 </body>
 </html>
 

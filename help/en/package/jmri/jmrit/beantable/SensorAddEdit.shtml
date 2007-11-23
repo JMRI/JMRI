@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SensorAddEdit.shtml,v 1.1 2007-11-23 06:11:07 jacobsen Exp $ -->
+<!-- $Id: SensorAddEdit.shtml,v 1.2 2007-11-23 06:45:57 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Adding/Editing Sensors</TITLE>
@@ -19,6 +19,8 @@
 </HEAD>
 
 <BODY>
+<!--#include virtual="/Header" -->
+
 <H2>Adding/Editing Sensors</H2>
 
 Enter the system name for the sensor you wish to add. For example, a
@@ -29,6 +31,7 @@ optional user name can be anything you wish to describe the sensor. See
 <A HREF="../../../../html/doc/Technical/Names.html">Names</A>
 " under general help for more information.
 
+<!--#include virtual="/Footer" -->
 </BODY>
 </HTML>
 

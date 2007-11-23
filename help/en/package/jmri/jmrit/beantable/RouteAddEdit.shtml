@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: RouteAddEdit.shtml,v 1.1 2007-11-23 06:11:07 jacobsen Exp $ -->
+<!-- $Id: RouteAddEdit.shtml,v 1.2 2007-11-23 06:45:57 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -19,6 +19,8 @@
 </head>
 
 <body>
+<!--#include virtual="/Header" -->
+
 <H2><a name="Adding/Editing Routes"></a>Adding/Editing Routes 
 </H2>
     
@@ -72,6 +74,7 @@ the system must be NCE using 2007 EPROM or newer, and the turnouts to be
 locked must use MONITORING for feedback.
 </p>
 
+<!--#include virtual="/Footer" -->
 </body>
 </html>
 

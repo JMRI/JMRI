@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: EditLayoutBlock.shtml,v 1.1 2007-11-23 06:11:08 jacobsen Exp $ -->
+<!-- $Id: EditLayoutBlock.shtml,v 1.2 2007-11-23 06:45:58 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -19,6 +19,7 @@
 </head>
 
 <body>
+<!--#include virtual="/Header" -->
 <H2>Create/Edit Block
 </H2>
 <p>    
@@ -78,7 +79,7 @@ and level crossings) that are assigned to a block. This count is displayed in
 the Create/Edit Block dialog as <b>Current Use Count:</b>. When panels are saved to
 disk, only those blocks with a use count greater than zero are saved.</p>
 
-
+<!--#include virtual="/Footer" -->
 </body>
 </html>
 

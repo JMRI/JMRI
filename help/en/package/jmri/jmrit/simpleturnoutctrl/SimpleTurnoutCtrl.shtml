@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SimpleTurnoutCtrl.shtml,v 1.4 2007-11-06 15:27:17 dan_boudreau Exp $ -->
+<!-- $Id: SimpleTurnoutCtrl.shtml,v 1.5 2007-11-23 06:45:59 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Turnout Control</TITLE>
@@ -19,6 +19,8 @@
 </HEAD>
 
 <BODY>
+<!--#include virtual="/Header" -->
+
 <H2>Turnout Control</H2>
 
 Enter the accessory number or turnout system name for the accessory or
@@ -98,6 +100,7 @@ newer EPROM.</P>
 locked. All turnouts that are being monitored by the JMRI program and
 are included in the route will be locked.</P>
 
+<!--#include virtual="/Footer" -->
 </BODY>
 </HTML>
 

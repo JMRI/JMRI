@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SetSignalsAtTurnout.shtml,v 1.1 2007-11-23 06:11:08 jacobsen Exp $ -->
+<!-- $Id: SetSignalsAtTurnout.shtml,v 1.2 2007-11-23 06:45:58 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -19,6 +19,8 @@
 </head>
 
 <body>
+<!--#include virtual="/Header" -->
+
 <H2>Set Signals at Turnout
 </H2>
 <h3>Introduction</h3>
@@ -121,6 +123,8 @@ short blocks, or turnouts within blocks.  Hand edits will probably work
 in these cases. </p>
 <p>
 <b>Please remember to save your panel after using this tool.</b></p>
+
+<!--#include virtual="/Footer" -->
 </body>
 </html>
 

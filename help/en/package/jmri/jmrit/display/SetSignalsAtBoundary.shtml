@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SetSignalsAtBoundary.shtml,v 1.1 2007-11-23 06:11:08 jacobsen Exp $ -->
+<!-- $Id: SetSignalsAtBoundary.shtml,v 1.2 2007-11-23 06:45:58 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -19,6 +19,8 @@
 </head>
 
 <body>
+<!--#include virtual="/Header" -->
+
 <H2>Set Signals at Block Boundary
 </H2>
 <h3>Introduction</h3>
@@ -102,6 +104,8 @@ will have to edit the information entered by the tool. The Simple Signal
 Logic dialog can be accessed from the popup menu of the signal icon. If 
 your special situation cannot be handled by Simple Signal Logic, you should 
 refer to Logix to tailor the signal logic to your needs.</p>
+
+<!--#include virtual="/Footer" -->
 </body>
 </html>
 

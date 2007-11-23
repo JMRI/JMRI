@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: EditTurntable.shtml,v 1.1 2007-11-23 06:11:08 jacobsen Exp $ -->
+<!-- $Id: EditTurntable.shtml,v 1.2 2007-11-23 06:45:58 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -19,6 +19,8 @@
 </head>
 
 <body>
+<!--#include virtual="/Header" -->
+
 <H2>Edit Turntable
 </H2>
 
@@ -76,6 +78,7 @@ ray track connection point. After shrinking the radius back to its final
 radius, add track segments. Track segments will be aligned fairly 
 precisely to the turntable center.</p>
 
+<!--#include virtual="/Footer" -->
 </body>
 </html>
 
