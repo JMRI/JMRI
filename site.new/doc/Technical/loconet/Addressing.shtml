@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: Addressing.shtml,v 1.1 2007-11-25 17:31:24 jacobsen Exp $ -->
+<html lang="en">
+<head>
+    <TITLE>
+ 	JMRI: LocoNet Addressing
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI LocoNet Address Addressing Sensors Turnout">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+    <p class="skipLink"><a href="#mainContent" accesskey="2">Skip to main content</a></p>
+
+<!--#include virtual="/Header" -->
+
+    <hr class="hide">
+
+    <div class="nomenu" id="mBody">
+	<div id="mainContent">
+	    <!-- ------------- -->
+	    <!-- Page Contents --> <!-- Required -->
+	    <!-- ------------- -->
+
+<h1>LocoNet addressing</h1>
+
+LocoNet systems address input sensors and output turnouts using numbers.
+This page talks about how those numbers are defined in JMRI, and how they relate
+to the numbers in other systems.
+
+<h2>Addressing LocoNet turnouts in JMRI</h2>
+
+Inside packets on the LocoNet, output turnouts are addressed with numbers from 0 to 4095.
+Throttles, however, address these with numbers from 1 to 4096. To avoid user
+confusion, JMRI uses the same numbering as the throttles:  LT1 to LT4096.
+<P>
+Note that when the LocoNet monitor panel shows the contents of the LocoNet packets
+in text, it uses the same addressing, hence
+1 to 4096.  This is then 
+different from the raw bytes that are displayed, but
+at least it's consistent with what users expect to see.
+We agree that's confusing, but there has to be some confusion somewhere, given
+the way this was set up.
+
+<h2>Addressing LocoNet sensors in JMRI</h2>
+
+Inside packets on the LocoNet, sensors are addressed with numbers from 0 to 4095.
+Digitrax documentation refers to these as 1 to 4096, however.  Just like
+turnouts, we use the documentation numbering to define the sensor names: LS1 to LS4096.
+<P>
+The simplest way to find the 
+right number for a given block is to open a "LocoNet monitor" window, and drop a 
+locomotive onto the block you're interested in.  You'll see the 
+LocoNet message, complete with number, in the window that looks 
+something like this:
+<PRE>
+   General sensor input report: contact 161 (DS54 switch 81 Aux input) (BDL16 11,1) is Hi 
+</PRE>
+The contact number, 161 in this case, is the address of the sensor.
+Prefix that with LS that to get the sensor name, e.g. LS161 in this case.
+<P>
+If you want to calculate the address of a BDL168 input, you can use
+<CODE>
+<PRE>
+   number = 16 * (board number) + (channel number) - 16
+</PRE></CODE>
+where "channel number" runs from 1 to 16.  For example, the first circuit
+(number 1) on board 11 has number:
+<CODE>
+<PRE>
+   number = 16 * (11) + (1) - 16 = 161
+</PRE></CODE>
+as we saw in the example above.
+<P>
+If you want to calculate the address of a DS54 aux input, use:
+<CODE><PRE>
+   number = 2 * (turnout number - 1) + 1
+</PRE></CODE>
+For example, the aux input associated with turnout 81 has number:
+<CODE><PRE>
+   number = 2 * (81 - 1) + 1 = 161
+</pre></code>
+If it's the switch input, you add one more to that:
+<CODE><PRE>
+   number = 2 * (turnout number - 1) + 2
+</PRE></CODE>
+For example, the switch input associated with turnout 12 has number:
+<CODE><PRE>
+   number = 2 * ( 12 - 1 ) + 2 = 24
+</pre></code>
+
+<h2>Addressing Transponding in JMRI</h2>
+
+Digitrax transponding is handled via the Reporter mechanism
+in JMRI.  Reporters gather information from the layout and make it
+available when it changes.
+<P>
+The transponding zones are numbered sequentially from 1, so that
+1 through 4 are on the 1st BDL16, etc.
+
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+
