@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.76 2007-09-26 19:29:20 djduchamp Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.77 2007-11-26 07:23:37 jacobsen Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
 <!--                                                                        -->
@@ -16,7 +16,8 @@
 
 <!ELEMENT layout-config (connection | gui | programmer | roster | perform |
 			preferences | turnouts | sensors | lights | blocks | signals | routes |
-						securityelements | aspectgenerator | paneleditor |
+						securityelements | aspectgenerator | 
+			paneleditor | LayoutEditor |
 			signalheads | conditionals | logixs | application | blocks | reporters |
 						memories | memorys | timebase )*>
 
@@ -73,6 +74,7 @@
   <!ELEMENT sensor EMPTY >
     <!ATTLIST sensor systemName	CDATA #REQUIRED>  <!-- defines system type -->
     <!ATTLIST sensor userName		CDATA #IMPLIED>
+    <!ATTLIST sensor inverted		(true | false ) "false">
 
 <!ELEMENT turnouts (operations?, turnout*)>
   <!ATTLIST turnouts class		CDATA #REQUIRED>
@@ -105,6 +107,10 @@
     <!ATTLIST turnout numBits		CDATA #IMPLIED>
     <!ATTLIST turnout controlType	CDATA #IMPLIED>
     <!ATTLIST turnout automate		CDATA #IMPLIED>
+    <!ATTLIST turnout inverted		(true | false ) "false">
+    <!ATTLIST turnout locked		(true | false ) "false">
+    <!ATTLIST turnout lockMode		CDATA #IMPLIED>
+    <!ATTLIST turnout decoder		CDATA #IMPLIED>
 
 <!ELEMENT lights (light*)>
   <!ATTLIST lights class		CDATA #REQUIRED>
@@ -159,7 +165,7 @@
 <!ELEMENT routes (route*)>
   <!ATTLIST routes class		CDATA #REQUIRED>
 
-  <!ELEMENT route (routeTurnout*, routeOutputTurnout*, routeOutputSensor*, routeSensor*, routeSoundFile, routeScriptFile) >
+  <!ELEMENT route (routeTurnout*, routeOutputTurnout*, routeOutputSensor*, routeSensor*, routeSoundFile*, routeScriptFile*) >
     <!ATTLIST route systemName		CDATA #REQUIRED>  <!-- defines system type -->
     <!ATTLIST route userName		CDATA #IMPLIED>
     <!ATTLIST route controlTurnout	CDATA #IMPLIED>
@@ -397,7 +403,7 @@
     <!ATTLIST signalheadicon litmode     CDATA #IMPLIED>
 
     <!-- the next two (aspectgenerator and head) are obsolete, and -->
-    <!-- are only retained until JMRI 3 so that old files can be read -->
+    <!-- are only retained until JMRI 2 so that old files can be read -->
     <!ATTLIST signalheadicon aspectgenerator		CDATA #IMPLIED>
     <!ATTLIST signalheadicon head		CDATA #IMPLIED>
 
@@ -447,87 +453,32 @@
   <!ATTLIST block limitspeed2       (true|false) "false" >
   <!ATTLIST block distantsignal     (true|false) "false" >
 
-<!ELEMENT layouteditors (layouteditor*) >
-  <!ATTLIST layouteditors class CDATA #REQUIRED> <!-- selects XML class that will handle -->
-
-<!ELEMENT layouteditor (positionablelabel|sensoricon|layoutblock|
+<!ELEMENT LayoutEditor (positionablelabel|sensoricon|layoutblock|
 			positionablepoint | securityelementicon | signalheadicon |
 			levelxing | layoutturnout | reportericon | memoryicon |
-					    fastclock)* >
-  <!ATTLIST layouteditor class			CDATA #REQUIRED>
-  <!ATTLIST layouteditor name			CDATA #IMPLIED>
-  <!ATTLIST layouteditor x			CDATA #REQUIRED>
-  <!ATTLIST layouteditor y			CDATA #REQUIRED>
-  <!ATTLIST layouteditor height			CDATA #REQUIRED>
-  <!ATTLIST layouteditor width			CDATA #REQUIRED>
-  <!ATTLIST layouteditor mainlinetrackwidth	CDATA #REQUIRED>
-  <!ATTLIST layouteditor sidetrackwidth		CDATA #REQUIRED>
-  <!ATTLIST layouteditor xscale			CDATA #IMPLIED>
-  <!ATTLIST layouteditor yscale			CDATA #IMPLIED>
-  <!ATTLIST layouteditor defaulttrackcolor	CDATA #REQUIRED>
-  <!ATTLIST layouteditor editable		(yes|no) "yes" >
-  <!ATTLIST layouteditor positionable		(yes|no) "yes" >
-  <!ATTLIST layouteditor controlling		(yes|no) "yes" >
-  <!ATTLIST layouteditor animating		(yes|no) "yes" >
-  <!ATTLIST layouteditor showhelpbar		(yes|no) "yes" >
+			tracksegment | fastclock)* >
+  <!ATTLIST LayoutEditor class			CDATA #REQUIRED>
+  <!ATTLIST LayoutEditor name			CDATA #IMPLIED>
+  <!ATTLIST LayoutEditor x			CDATA #REQUIRED>
+  <!ATTLIST LayoutEditor y			CDATA #REQUIRED>
+  <!ATTLIST LayoutEditor height			CDATA #REQUIRED>
+  <!ATTLIST LayoutEditor width			CDATA #REQUIRED>
+  <!ATTLIST LayoutEditor mainlinetrackwidth	CDATA #REQUIRED>
+  <!ATTLIST LayoutEditor sidetrackwidth		CDATA #REQUIRED>
+  <!ATTLIST LayoutEditor xscale			CDATA #IMPLIED>
+  <!ATTLIST LayoutEditor yscale			CDATA #IMPLIED>
+  <!ATTLIST LayoutEditor defaulttrackcolor	CDATA #REQUIRED>
+  <!ATTLIST LayoutEditor editable		(yes|no) "yes" >
+  <!ATTLIST LayoutEditor positionable		(yes|no) "yes" >
+  <!ATTLIST LayoutEditor controlling		(yes|no) "yes" >
+  <!ATTLIST LayoutEditor animating		(yes|no) "yes" >
+  <!ATTLIST LayoutEditor showhelpbar		(yes|no) "yes" >
 
-  <!ELEMENT memoryicon (memorystate)*>
-    <!ATTLIST memoryicon class	CDATA #REQUIRED>
-    <!ATTLIST memoryicon x		CDATA #REQUIRED>
-    <!ATTLIST memoryicon y		CDATA #REQUIRED>
-    <!ATTLIST memoryicon level	CDATA #IMPLIED>
-    <!ATTLIST memoryicon size	CDATA #IMPLIED>
-    <!ATTLIST memoryicon style	CDATA #IMPLIED>
-    <!ATTLIST memoryicon red  	CDATA #IMPLIED>
-    <!ATTLIST memoryicon green	CDATA #IMPLIED>
-    <!ATTLIST memoryicon blue	CDATA #IMPLIED>
-    <!ATTLIST memoryicon rotate  	CDATA #IMPLIED>
-    <!ATTLIST memoryicon memory	CDATA #IMPLIED>
-    <!ATTLIST memoryicon defaulticon CDATA #IMPLIED>
-    <!ATTLIST memoryicon selectable ( yes | no ) "no" >
-    <!ATTLIST memoryicon forcecontroloff	(true|false) "false">
-        
-  <!ELEMENT memorystate EMPTY>
-    <!ATTLIST memorystate value	CDATA #REQUIRED>
-    <!ATTLIST memorystate icon	CDATA #REQUIRED>
-
-  <!ELEMENT fastclock EMPTY>
-    <!ATTLIST fastclock class CDATA #REQUIRED>
-    <!ATTLIST fastclock x     CDATA #REQUIRED>
-    <!ATTLIST fastclock y     CDATA #REQUIRED>
-
-  <!ELEMENT sensoricon EMPTY>
-    <!ATTLIST sensoricon class		CDATA #REQUIRED>
-    <!ATTLIST sensoricon x			CDATA #REQUIRED>
-    <!ATTLIST sensoricon y			CDATA #REQUIRED>
-    <!ATTLIST sensoricon level	CDATA #IMPLIED>
-    <!ATTLIST sensoricon rotate  	CDATA #IMPLIED>
-    <!ATTLIST sensoricon active		CDATA #IMPLIED>
-    <!ATTLIST sensoricon inactive	CDATA #IMPLIED>
-    <!ATTLIST sensoricon unknown	CDATA #IMPLIED>
-    <!ATTLIST sensoricon inconsistent		CDATA #IMPLIED>
-    <!ATTLIST sensoricon sensor		CDATA #IMPLIED>
-    <!ATTLIST sensoricon forcecontroloff	(true|false) "false">
-    <!ATTLIST sensoricon momentary	(true|false) "false">
-
-  <!ELEMENT signalheadicon EMPTY>
-    <!ATTLIST signalheadicon class		CDATA #REQUIRED>
-    <!ATTLIST signalheadicon x			CDATA #REQUIRED>
-    <!ATTLIST signalheadicon y			CDATA #REQUIRED>
-    <!ATTLIST signalheadicon level		CDATA #IMPLIED>
-    <!ATTLIST signalheadicon rotate  	CDATA #IMPLIED>
-    <!ATTLIST signalheadicon dark        CDATA #IMPLIED>
-    <!ATTLIST signalheadicon red         CDATA #IMPLIED>
-    <!ATTLIST signalheadicon flashred    CDATA #IMPLIED>
-    <!ATTLIST signalheadicon yellow      CDATA #IMPLIED>
-    <!ATTLIST signalheadicon flashyellow CDATA #IMPLIED>
-    <!ATTLIST signalheadicon green       CDATA #IMPLIED>
-    <!ATTLIST signalheadicon flashgreen  CDATA #IMPLIED>
-    <!ATTLIST signalheadicon signalhead  CDATA #IMPLIED>
-    <!ATTLIST signalheadicon forcecontroloff	(true|false) "false">
-    <!ATTLIST signalheadicon clickmode	 CDATA #IMPLIED>
-    <!ATTLIST signalheadicon heldicon    CDATA #IMPLIED>
-    <!ATTLIST signalheadicon litmode     CDATA #IMPLIED>
+<!-- memoryicon defined above already -->
+<!-- memorystate defined above already -->
+<!-- fastclock defined above already -->
+<!-- sensoricon defined above already -->
+<!-- signalheadicon defined above already -->
 
   <!ELEMENT positionablepoint EMPTY>
     <!ATTLIST positionablepoint class    CDATA #REQUIRED>
