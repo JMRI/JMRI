@@ -30,7 +30,7 @@ import javax.swing.*;
  * contact NCE Inc for separate permission.
  *
  * @author			Ken Cameron   Copyright (C) 2007
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  *
  * derived from loconet.clockmonframe by Bob Jacobson Copyright (C) 2003
  * 
@@ -130,6 +130,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
     
     private int nceSyncInitStateCounter = 0;	// NCE master sync initialzation state machine
     private int	nceSyncRunStateCounter = 0;	// NCE master sync runtime state machine
+    private int	alarmDisplayStateCounter = 0;	// manages the display update from the alarm
     
     Timebase internalClock ;
     javax.swing.Timer timerDisplayUpdate = null;
@@ -505,6 +506,9 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
             if (nceSyncRunStateCounter > 0) {
                 nceSyncRunStates();
             }
+            if (alarmDisplayStateCounter > 0) {
+            	alarmDisplayStates();
+            }
             return;
         }
         if (waitingForCmdTime) {
@@ -610,10 +614,8 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         timerDisplayUpdate.setInitialDelay((int)(1 * 1000));
         timerDisplayUpdate.setRepeats(true);     // in case we run by
         timerDisplayUpdate.start();
-        if (!NceEpromChecker.nceUSBdetected){
-            issueReadOnlyRequest();
-        }
-        updateNceClockDisplay();
+    	alarmDisplayStateCounter = 1;
+    	alarmDisplayStates();
         updateInternalClockDisplay();
     }
     
@@ -681,6 +683,45 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         if (clockMode == SYNCMODE_OFF) {
             alarmSyncUpdate.stop();
         }
+        if (alarmDisplayStateCounter == 0){
+            alarmDisplayStateCounter = 1;
+            alarmDisplayStates();
+        }
+    }
+    
+    private void alarmDisplayStates() {
+		if (log.isDebugEnabled() && false){
+			log.debug("alarmDisplayStates: before: " + alarmDisplayStateCounter + " " + internalClock.getTime());
+		}
+		int priorState = 0;
+		do {
+			priorState = alarmDisplayStateCounter;
+	    	switch (alarmDisplayStateCounter) {
+	    	case 0:
+	    		// inactive
+	    		break;
+	    	case 1:
+	    		// issue nce read
+	            issueReadOnlyRequest();
+	    		alarmDisplayStateCounter++;
+	    		break;
+	    	case 2:
+	    		// wait for update
+	    		if (!waitingForRead) {
+	    			alarmDisplayStateCounter++;
+	    		}
+	    		break;
+	    	case 3:
+	    		// update clock display
+	    		alarmDisplayStateCounter = 0;
+	            updateNceClockDisplay();
+	            updateInternalClockDisplay();
+	    		break;
+	    	}
+		} while (priorState != alarmDisplayStateCounter);
+		if (log.isDebugEnabled() && false){
+			log.debug("alarmDisplayStates: after: " + alarmDisplayStateCounter + " " + internalClock.getTime());
+		}
     }
     
     private double getNceTime() {
@@ -733,109 +774,123 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         if (log.isDebugEnabled() && internalSyncStateCounter > 0){
             log.debug("internalSyncStates: " + internalSyncStateCounter + " @ " + now);
         }
-        switch (internalSyncStateCounter) {
-        case 1:
-            // get current values + initialize all values for sync operations
-            priorDiffs.clear();
-            priorCorrections.clear();
-            priorOffsetErrors.clear();
-            syncInterval = TARGET_SYNC_DELAY;
-            syncOffset = TARGET_SYNC_OFFSET;
-            // stop NCE clock
-            // set NCE ratio, mode etc...
-            // set initial NCE time
-            // set NCE from internal settings
-            // start NCE clock
-            issueClockStop();
-            issueClockRatio((int)internalClock.getRate());
-            issueClock1224(true);
-            now = internalClock.getTime();
-            issueClockSet(now.getHours(), now.getMinutes(), now.getSeconds());
-            issueClockStart();
-            issueReadOnlyRequest();
-            alarmSyncStart();
-            clockMode = SYNCMODE_INTERNAL_MASTER;
-            internalSyncStateCounter++;
-            break;
-        case 2:
-            // initialization complete
-            internalSyncStateCounter = 10;
-            if (log.isDebugEnabled()){
-                log.debug("internalSyncState: init done");
-            }
-            break;
-        case 10:
-            // alarm fired, issue fresh nce reads
-            issueReadOnlyRequest();
-            internalSyncStateCounter++;
-            break;
-        case 11:
-            // compute error
-            nceTime = getNceTime();
-            intTime = getIntTime();
-            diffTime = intTime - nceTime;
-            if (log.isDebugEnabled()) {
-                /*    			log.debug("syncStates2 begin. NCE: " +
-    					(nceLastHour / 10) + (nceLastHour - ((nceLastHour / 10) * 10)) +
-    					rb.getString("LabelTimeSep") +
-    					(nceLastMinute / 10) + (nceLastMinute - ((nceLastMinute / 10) * 10)) +
-    					rb.getString("LabelTimeSep") +
-    					(nceLastSecond / 10) + (nceLastSecond - ((nceLastSecond / 10) * 10)) +
-    					" Internal: " +
-    					(now.getHours() / 10) + (now.getHours() - ((now.getHours() / 10) * 10)) + 
-    					rb.getString("LabelTimeSep") +
-    					(now.getMinutes() / 10) + (now.getMinutes() - ((now.getMinutes() / 10) * 10)) + 
-    					rb.getString("LabelTimeSep") +
-    					(now.getSeconds() / 10) + (now.getSeconds() - ((now.getSeconds() / 10) * 10)) +
-    					" diff: " +
-    					diffTime);*/
-            }
-            // save error to array
-            while (priorDiffs.size() >= MAX_ERROR_ARRAY) {
-                priorDiffs.remove(0);
-            }
-            priorDiffs.add(new Double(diffTime));
-            recomputeInternalSync();
-            internalSyncStateCounter++;
-            break;
-        case 12:
-            issueReadOnlyRequest();
-            internalSyncStateCounter++;
-            break;
-        case 13:
-            // compute offset delay
-            intTime = getIntTime();
-            diffTime = intTime - TARGET_SYNC_OFFSET;
-            // save offset error to array
-            while (priorOffsetErrors.size() >= MAX_ERROR_ARRAY) {
-                priorOffsetErrors.remove(0);
-            }
-            priorOffsetErrors.add(new Double(diffTime));
-            recomputeOffset();
-            if (log.isDebugEnabled()) {
-                log.debug("syncState compute offset. NCE: " +
-                          (nceLastHour / 10) + (nceLastHour - ((nceLastHour / 10) * 10)) +
-                          rb.getString("LabelTimeSep") +
-                          (nceLastMinute / 10) + (nceLastMinute - ((nceLastMinute / 10) * 10)) +
-                          rb.getString("LabelTimeSep") +
-                          (nceLastSecond / 10) + (nceLastSecond - ((nceLastSecond / 10) * 10)) +
-                          " Internal: " +
-                          (now.getHours() / 10) + (now.getHours() - ((now.getHours() / 10) * 10)) + 
-                          rb.getString("LabelTimeSep") +
-                          (now.getMinutes() / 10) + (now.getMinutes() - ((now.getMinutes() / 10) * 10)) + 
-                          rb.getString("LabelTimeSep") +
-                          (now.getSeconds() / 10) + (now.getSeconds() - ((now.getSeconds() / 10) * 10)));
-            }
-            internalSyncStateCounter = 0;
-            break;
-        default:
-            if (internalSyncStateCounter < 10 && internalSyncStateCounter > 0) {
-                internalSyncStateCounter = 10;
-            } else if (internalSyncStateCounter > 14) {
-                internalSyncStateCounter = 0;
-            }
-            break;
-        }
+        int priorState = internalSyncStateCounter;
+        do {
+	        priorState = internalSyncStateCounter;
+	        switch (internalSyncStateCounter) {
+	        case 1:
+	            // get current values + initialize all values for sync operations
+	            priorDiffs.clear();
+	            priorCorrections.clear();
+	            priorOffsetErrors.clear();
+	            syncInterval = TARGET_SYNC_DELAY;
+	            syncOffset = TARGET_SYNC_OFFSET;
+	            // stop NCE clock
+	            // set NCE ratio, mode etc...
+	            // set initial NCE time
+	            // set NCE from internal settings
+	            // start NCE clock
+	            issueClockStop();
+	            issueClockRatio((int)internalClock.getRate());
+	            issueClock1224(true);
+	            now = internalClock.getTime();
+	            issueClockSet(now.getHours(), now.getMinutes(), now.getSeconds());
+	            issueClockStart();
+	            issueReadOnlyRequest();
+	            alarmSyncStart();
+	            clockMode = SYNCMODE_INTERNAL_MASTER;
+	            internalSyncStateCounter++;
+	            break;
+	        case 2:
+	            // initialization complete
+	            internalSyncStateCounter = 10;
+	            if (log.isDebugEnabled()){
+	                log.debug("internalSyncState: init done");
+	            }
+	            break;
+	        case 10:
+	            // alarm fired, issue fresh nce reads
+	            issueReadOnlyRequest();
+	            internalSyncStateCounter++;
+	            break;
+	        case 11:
+	        	if (!waitingForRead){
+		            internalSyncStateCounter++;
+	        	}
+	        	break;
+	        case 12:
+	            // compute error
+	            nceTime = getNceTime();
+	            intTime = getIntTime();
+	            diffTime = intTime - nceTime;
+	            if (log.isDebugEnabled()) {
+	                /*    			log.debug("syncStates2 begin. NCE: " +
+	    					(nceLastHour / 10) + (nceLastHour - ((nceLastHour / 10) * 10)) +
+	    					rb.getString("LabelTimeSep") +
+	    					(nceLastMinute / 10) + (nceLastMinute - ((nceLastMinute / 10) * 10)) +
+	    					rb.getString("LabelTimeSep") +
+	    					(nceLastSecond / 10) + (nceLastSecond - ((nceLastSecond / 10) * 10)) +
+	    					" Internal: " +
+	    					(now.getHours() / 10) + (now.getHours() - ((now.getHours() / 10) * 10)) + 
+	    					rb.getString("LabelTimeSep") +
+	    					(now.getMinutes() / 10) + (now.getMinutes() - ((now.getMinutes() / 10) * 10)) + 
+	    					rb.getString("LabelTimeSep") +
+	    					(now.getSeconds() / 10) + (now.getSeconds() - ((now.getSeconds() / 10) * 10)) +
+	    					" diff: " +
+	    					diffTime);*/
+	            }
+	            // save error to array
+	            while (priorDiffs.size() >= MAX_ERROR_ARRAY) {
+	                priorDiffs.remove(0);
+	            }
+	            priorDiffs.add(new Double(diffTime));
+	            recomputeInternalSync();
+	            internalSyncStateCounter++;
+	            break;
+	        case 13:
+	            issueReadOnlyRequest();
+	            internalSyncStateCounter++;
+	            break;
+	        case 14:
+	        	if (!waitingForRead){
+		            internalSyncStateCounter++;
+	        	}
+	        	break;
+	        case 15:
+	            // compute offset delay
+	            intTime = getIntTime();
+	            diffTime = intTime - TARGET_SYNC_OFFSET;
+	            // save offset error to array
+	            while (priorOffsetErrors.size() >= MAX_ERROR_ARRAY) {
+	                priorOffsetErrors.remove(0);
+	            }
+	            priorOffsetErrors.add(new Double(diffTime));
+	            recomputeOffset();
+	            if (log.isDebugEnabled()) {
+	                log.debug("syncState compute offset. NCE: " +
+	                          (nceLastHour / 10) + (nceLastHour - ((nceLastHour / 10) * 10)) +
+	                          rb.getString("LabelTimeSep") +
+	                          (nceLastMinute / 10) + (nceLastMinute - ((nceLastMinute / 10) * 10)) +
+	                          rb.getString("LabelTimeSep") +
+	                          (nceLastSecond / 10) + (nceLastSecond - ((nceLastSecond / 10) * 10)) +
+	                          " Internal: " +
+	                          (now.getHours() / 10) + (now.getHours() - ((now.getHours() / 10) * 10)) + 
+	                          rb.getString("LabelTimeSep") +
+	                          (now.getMinutes() / 10) + (now.getMinutes() - ((now.getMinutes() / 10) * 10)) + 
+	                          rb.getString("LabelTimeSep") +
+	                          (now.getSeconds() / 10) + (now.getSeconds() - ((now.getSeconds() / 10) * 10)));
+	            }
+	            internalSyncStateCounter = 0;
+	            break;
+	        default:
+	            if (internalSyncStateCounter < 10 && internalSyncStateCounter > 0) {
+	                internalSyncStateCounter = 10;
+	            } else if (internalSyncStateCounter > 15) {
+	                internalSyncStateCounter = 0;
+	            }
+	            break;
+	        }
+        } while (priorState != internalSyncStateCounter);
     }
     
     private void changePidValues() {
@@ -1087,65 +1142,69 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         if (log.isDebugEnabled() && false) {
             log.debug("Before nceSyncInitStateCounter: " + nceSyncInitStateCounter + " " + internalClock.getTime());
         }
-        switch (nceSyncInitStateCounter) {
-        case -1:
-            // turn all this off
-            if (alarmSyncUpdate != null){
-                alarmSyncUpdate.stop();
-            }
-            // clear any old records
-            priorDiffs.clear();
-            priorCorrections.clear();
-            nceSyncInitStateCounter = 0;
-            nceSyncRunStateCounter = 0;
-            break;
-        case 0:
-            // idle state
-            break;
-        case 1:
-            // first init step
-            if (log.isDebugEnabled()) {
-                log.debug("Init/Reset NCE Clock Sync");
-            }
-            // make sure other state is off
-            nceSyncRunStateCounter = 0;
-            // stop internal clock
-            internalClock.setRun(false);
-            if (alarmSyncUpdate != null){
-                alarmSyncUpdate.stop();
-            }
-            // clear any old records
-            priorDiffs.clear();
-            priorCorrections.clear();
-            // request all current nce values
-            issueReadOnlyRequest();
-            nceSyncInitStateCounter++;
-            break;
-        case 2:
-            // make sure the read only has happened
-            if (!waitingForRead) {
-                nceSyncInitStateCounter++;
-            }
-            break;
-        case 3:
-            // set ratio, modes etc...
-            try {
-                internalClock.setRate(nceLastRatio * ESTIMATED_NCE_RATE_FACTOR);
-            } catch (TimebaseRateException e) {
-                log.error("nceSyncInitStates: failed to set internal clock rate: " + nceLastRatio);
-            }
-            // get time from NCE settings and set internal clock
-            setInternalClockFromNce();
-            clockMode = SYNCMODE_NCE_MASTER;
-            internalClock.setRun(true);
-            nceSyncInitStateCounter = 0;	// init is done
-            nceSyncRunStateCounter = 1;
-            nceSyncRunStates();
-            alarmSyncStart();
-            updateNceClockDisplay();
-            updateInternalClockDisplay();
-            break;
-        }
+        int priorState = 0;
+        do {
+	        priorState = nceSyncInitStateCounter;
+	        switch (nceSyncInitStateCounter) {
+	        case -1:
+	            // turn all this off
+	            if (alarmSyncUpdate != null){
+	                alarmSyncUpdate.stop();
+	            }
+	            // clear any old records
+	            priorDiffs.clear();
+	            priorCorrections.clear();
+	            nceSyncInitStateCounter = 0;
+	            nceSyncRunStateCounter = 0;
+	            break;
+	        case 0:
+	            // idle state
+	            break;
+	        case 1:
+	            // first init step
+	            if (log.isDebugEnabled()) {
+	                log.debug("Init/Reset NCE Clock Sync");
+	            }
+	            // make sure other state is off
+	            nceSyncRunStateCounter = 0;
+	            // stop internal clock
+	            internalClock.setRun(false);
+	            if (alarmSyncUpdate != null){
+	                alarmSyncUpdate.stop();
+	            }
+	            // clear any old records
+	            priorDiffs.clear();
+	            priorCorrections.clear();
+	            // request all current nce values
+	            issueReadOnlyRequest();
+	            nceSyncInitStateCounter++;
+	            break;
+	        case 2:
+	            // make sure the read only has happened
+	            if (!waitingForRead) {
+	                nceSyncInitStateCounter++;
+	            }
+	            break;
+	        case 3:
+	            // set ratio, modes etc...
+	            try {
+	                internalClock.setRate(nceLastRatio * ESTIMATED_NCE_RATE_FACTOR);
+	            } catch (TimebaseRateException e) {
+	                log.error("nceSyncInitStates: failed to set internal clock rate: " + nceLastRatio);
+	            }
+	            // get time from NCE settings and set internal clock
+	            setInternalClockFromNce();
+	            clockMode = SYNCMODE_NCE_MASTER;
+	            internalClock.setRun(true);
+	            nceSyncInitStateCounter = 0;	// init is done
+	            nceSyncRunStateCounter = 1;
+	            nceSyncRunStates();
+	            alarmSyncStart();
+	            updateNceClockDisplay();
+	            updateInternalClockDisplay();
+	            break;
+	        }
+        } while (priorState != nceSyncInitStateCounter);
         if (log.isDebugEnabled() && false) {
             log.debug("After nceSyncInitStateCounter: " + nceSyncInitStateCounter + " " + internalClock.getTime());
         }
@@ -1157,48 +1216,52 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         if (log.isDebugEnabled() && false) {
             log.debug("Before nceSyncRunStateCounter: " + nceSyncRunStateCounter + " " + internalClock.getTime());
         }
-        switch (nceSyncRunStateCounter) {
-        case 1:	// issue read for nce time
-            issueReadOnlyRequest();
-            nceSyncRunStateCounter++;
-            break;
-        case 2:
-            // did read happen??
-            if (!waitingForRead) {
-                nceSyncRunStateCounter++;
-            }
-            break;
-        case 3:	// compare internal with nce time
-            intTime = getIntTime();
-            nceTime = getNceTime();
-            diffTime = nceTime - intTime;
-            // deal with end of day reset
-            if (diffTime > MAX_SECONDS_IN_DAY / 2) {
-                diffTime = MAX_SECONDS_IN_DAY + nceTime - intTime;
-            } else if (diffTime < MAX_SECONDS_IN_DAY / -2) {
-                diffTime = nceTime ;
-            }
-            if (log.isDebugEnabled()){
-                log.debug("new diffTime: " + diffTime + " = " + nceTime + " - " + intTime);
-            }
-            // save error to array
-            while (priorDiffs.size() >= MAX_ERROR_ARRAY) {
-                priorDiffs.remove(0);
-            }
-            priorDiffs.add(new Double(diffTime));
-            recomputeNceSync();
-            // initialize things if not running
-            if (alarmSyncUpdate == null){
-                alarmSyncInit();
-            }
-            updateNceClockDisplay();
-            updateInternalClockDisplay();
-            nceSyncRunStateCounter++;
-            break;
-        case 4:
-            // wait for next minute
-            nceSyncRunStateCounter = 0;
-        }
+        int priorState = 0;
+        do {
+	        priorState = nceSyncRunStateCounter;
+	        switch (nceSyncRunStateCounter) {
+	        case 1:	// issue read for nce time
+	            issueReadOnlyRequest();
+	            nceSyncRunStateCounter++;
+	            break;
+	        case 2:
+	            // did read happen??
+	            if (!waitingForRead) {
+	                nceSyncRunStateCounter++;
+	            }
+	            break;
+	        case 3:	// compare internal with nce time
+	            intTime = getIntTime();
+	            nceTime = getNceTime();
+	            diffTime = nceTime - intTime;
+	            // deal with end of day reset
+	            if (diffTime > MAX_SECONDS_IN_DAY / 2) {
+	                diffTime = MAX_SECONDS_IN_DAY + nceTime - intTime;
+	            } else if (diffTime < MAX_SECONDS_IN_DAY / -2) {
+	                diffTime = nceTime ;
+	            }
+	            if (log.isDebugEnabled()){
+	                log.debug("new diffTime: " + diffTime + " = " + nceTime + " - " + intTime);
+	            }
+	            // save error to array
+	            while (priorDiffs.size() >= MAX_ERROR_ARRAY) {
+	                priorDiffs.remove(0);
+	            }
+	            priorDiffs.add(new Double(diffTime));
+	            recomputeNceSync();
+	            // initialize things if not running
+	            if (alarmSyncUpdate == null){
+	                alarmSyncInit();
+	            }
+	            updateNceClockDisplay();
+	            updateInternalClockDisplay();
+	            nceSyncRunStateCounter++;
+	            break;
+	        case 4:
+	            // wait for next minute
+	            nceSyncRunStateCounter = 0;
+	        }
+        } while (priorState != nceSyncRunStateCounter);
         if (log.isDebugEnabled() && false) {
             log.debug("After nceSyncRunStateCounter: " + nceSyncRunStateCounter + " " + internalClock.getTime());
         }
