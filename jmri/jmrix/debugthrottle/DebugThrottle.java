@@ -8,7 +8,7 @@ import jmri.jmrix.AbstractThrottle;
  * An implementation of DccThrottle for debugging use.
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class DebugThrottle extends AbstractThrottle
 {
@@ -102,8 +102,7 @@ public class DebugThrottle extends AbstractThrottle
      */
     public void dispose() {
         log.debug("dispose");
-        super.dispose();
-
+ 
         // if this object has registered any listeners, remove those.
         super.dispose();
     }

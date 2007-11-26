@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractThrottle;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public class NceThrottle extends AbstractThrottle
 {
@@ -124,17 +124,21 @@ public class NceThrottle extends AbstractThrottle
      * but it could set the speed to zero, turn off functions, etc.
      */
     public void release() {
-        if (!active) log.warn("release called when not active");
-        dispose();
-    }
+		// release is called twice when throttle frame closed and throttle
+		// exists, therefore it is not a reportable error
+		if (!active) {
+			if (log.isDebugEnabled())
+				log.warn("release called when not active");
+		} else
+			dispose();
+	}
 
     /**
-     * Dispose when finished with this object.  After this, further usage of
-     * this Throttle object will result in a JmriException.
-     */
+	 * Dispose when finished with this object. After this, further usage of this
+	 * Throttle object will result in a JmriException.
+	 */
     public void dispose() {
         log.debug("dispose");
-        super.dispose();
 
         // if this object has registered any listeners, remove those.
         super.dispose();
