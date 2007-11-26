@@ -14,7 +14,7 @@ import jmri.*;
  * @see            jmri.Programmer
  * @author         Paul Bender Copyright (C) 2003
  * @author         Girgio Terdina Copyright (C) 2007
- * @version        $Revision: 2.7 $
+ * @version        $Revision: 2.8 $
 */
 
 public class XNetOpsModeProgrammer implements Programmer,XNetListener 
@@ -91,14 +91,19 @@ public class XNetOpsModeProgrammer implements Programmer,XNetListener
      * Can this ops-mode programmer read back values?
      * Indirectly we can, though this requires an external display 
      * (a Lenz LRC120) and enabling railcom.
-     * But when connected to a multiMAUS, it definitely can't.
-     * (Note that a Rocomotion adapter might be able to do this)
      * @return true to allow us to trigger an ops mode read
      */
     public boolean getCanRead() {
-		// Multimaus cannot read CVs, assume other Command Stations do.
-		// To be revised if and when a Rocomotion adapter will be introduced!!!
-		return (XNetTrafficController.instance().getCommandStation().getCommandStationType() != 0x10);
+                // An operations mode read can be triggered on command 
+                // stations which support Operations Mode Writes (LZ100,
+                // LZV100,MultiMouse).  Whether or not the operation produces
+                // a result depends on additional external hardware (a booster 
+                // with an enabled  RailCom cutout (LV102 or similar) and a 
+                // RailCom receiver circuit (LRC120 or similar)).
+                // We have no way of determining if the required external 
+                // hardware is present, so we return true for all command 
+                // stations on which the Operations Mode Programmer is enabled.
+		return(true);
     }
 
     public String decodeErrorCode(int i) {
