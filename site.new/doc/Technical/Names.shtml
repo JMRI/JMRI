@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Names.shtml,v 1.3 2007-11-25 17:31:45 jacobsen Exp $ -->
+<!-- $Id: Names.shtml,v 1.4 2007-11-26 18:41:44 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -108,10 +108,12 @@ to be assigned monotonically, nor are they restricted to a single system.
 Note that some of these are placeholders, and have no underlying implementation. 
 
 <ul>
-<LI>B (reserved for Train-Brain)
+<LI>A (reserved for CTI Acela)
+<LI>B (reserved for CTI Train-Brain)
 <LI>C C/MRI serial
 <LI>D Direct-packet-drive
 <LI>E EasyDCC
+<LI>G (Reserved for Grapevine (ProTrak))
 <LI>I Internal, e.g. objects with no associated hardware
 <LI>L LocoNet
 <LI>M MRRLCB
