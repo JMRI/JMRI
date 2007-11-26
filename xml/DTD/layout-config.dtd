@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.77 2007-11-26 07:23:37 jacobsen Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.78 2007-11-26 20:16:45 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
 <!--                                                                        -->
@@ -170,6 +170,8 @@
     <!ATTLIST route userName		CDATA #IMPLIED>
     <!ATTLIST route controlTurnout	CDATA #IMPLIED>
     <!ATTLIST route controlTurnoutState	CDATA #IMPLIED>
+    <!ATTLIST route controlLockTurnout	CDATA #IMPLIED>
+    <!ATTLIST route controlLockTurnoutState	CDATA #IMPLIED>
     <!ATTLIST route addedDelay          CDATA #IMPLIED>
 
    <!-- the following routeTurnout element is only for backward compatibility -->
@@ -305,6 +307,7 @@
   <!ATTLIST paneleditor positionable	(yes|no) "yes" >
   <!ATTLIST paneleditor controlling	(yes|no) "yes" >
   <!ATTLIST paneleditor hide		(yes|no) "no" >
+  <!ATTLIST paneleditor showcoordinates		(yes|no) "no" >
   <!ATTLIST paneleditor panelmenu	(yes|no) "yes" >  <!-- menu present on panel window -->
 
   <!ELEMENT positionablelabel EMPTY>
@@ -421,6 +424,7 @@
     <!ATTLIST turnouticon inconsistent		CDATA #IMPLIED>
     <!ATTLIST turnouticon turnout	CDATA #IMPLIED>
     <!ATTLIST turnouticon forcecontroloff	(true|false) "false">
+    <!ATTLIST turnouticon tristate	(true|false) "false">
 
   <!ELEMENT securityelementicon EMPTY>
     <!ATTLIST securityelementicon class		CDATA #REQUIRED>
