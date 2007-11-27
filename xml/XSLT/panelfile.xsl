@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: panelfile.xsl,v 1.3 2007-09-21 05:49:30 jacobsen Exp $ -->
+<!-- $Id: panelfile.xsl,v 1.4 2007-11-27 18:09:31 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI panel file into an HTML page -->
 
@@ -213,9 +213,37 @@
 </xsl:template>
 
 <xsl:template name="conditionalStateVariable">
-State: 
-operator="<xsl:value-of select="@operator"/>"
-type="<xsl:value-of select="@type"/>"
+<!-- decode operator -->
+<xsl:choose>
+  <xsl:when test="( @operator = 1 )" >And </xsl:when>
+  <xsl:when test="( @operator = 2 )" >Not </xsl:when>
+  <xsl:when test="( @operator = 3 )" >And not </xsl:when>
+  <xsl:when test="( @operator = 4 )" ></xsl:when>  <!-- None -->
+  <xsl:otherwise>(operator="<xsl:value-of select="@operator"/>") </xsl:otherwise>
+</xsl:choose>
+<!-- decode type -->
+<xsl:choose>
+  <xsl:when test="( @type = 1 )" >Sensor Active</xsl:when>
+  <xsl:when test="( @type = 2 )" >Sensor Inactive</xsl:when>
+  <xsl:when test="( @type = 3 )" >Turnout Thrown</xsl:when>
+  <xsl:when test="( @type = 4 )" >Turnout Closed</xsl:when>
+  <xsl:when test="( @type = 5 )" >Conditional True</xsl:when>
+  <xsl:when test="( @type = 6 )" >Conditional False</xsl:when>
+  <xsl:when test="( @type = 7 )" >Light On</xsl:when>
+  <xsl:when test="( @type = 8 )" >Light Off</xsl:when>
+  <xsl:when test="( @type = 9 )" >Memory Equal</xsl:when>
+  <xsl:when test="( @type = 10 )" >Fast Clock Range"</xsl:when>
+  <xsl:when test="( @type = 11 )" >Signal Red</xsl:when>
+  <xsl:when test="( @type = 12 )" >Signal Yellow</xsl:when>
+  <xsl:when test="( @type = 13 )" >Signal Green</xsl:when>
+  <xsl:when test="( @type = 14 )" >SIgnal Dark</xsl:when>
+  <xsl:when test="( @type = 15 )" >Signal Flashing Red</xsl:when>
+  <xsl:when test="( @type = 16 )" >Signal Flashing Yellow</xsl:when>
+  <xsl:when test="( @type = 17 )" >Signal Flashing Green</xsl:when>
+  <xsl:when test="( @type = 18 )" >Signal Head Lit</xsl:when>
+  <xsl:when test="( @type = 19 )" >Signal Head Held</xsl:when>
+  <xsl:otherwise>(type="<xsl:value-of select="@type"/>")</xsl:otherwise>
+</xsl:choose>
 systemName="<xsl:value-of select="@systemName"/>"
 num1="<xsl:value-of select="@num1"/>"
 num2="<xsl:value-of select="@num2"/>"
@@ -224,10 +252,37 @@ triggerCalc="<xsl:value-of select="@triggerCalc"/>"
 </xsl:template>
 
 <xsl:template name="conditionalAction">
-Action:
-option="<xsl:value-of select="@option"/>"
+<p/>
+<!-- decode operator -->
+<xsl:choose>
+  <xsl:when test="( @option = 1 )" >On change to true: </xsl:when>
+  <xsl:when test="( @option = 2 )" >On change to false: </xsl:when>
+  <xsl:when test="( @option = 3 )" >On change: </xsl:when>
+  <xsl:otherwise>(option="<xsl:value-of select="@option"/>") </xsl:otherwise>
+</xsl:choose>
+<!-- decode type -->
+<xsl:choose>
+  <xsl:when test="( @type = 1 )" >(none) </xsl:when>
+  <xsl:when test="( @type = 2 )" >Set Turnout </xsl:when>
+  <xsl:when test="( @type = 3 )" >Set Signal Appearance </xsl:when>
+  <xsl:when test="( @type = 4 )" >Set Signal Held </xsl:when>
+  <xsl:when test="( @type = 5 )" >Clear Signal Held </xsl:when>
+  <xsl:when test="( @type = 6 )" >Set Signal Dark </xsl:when>
+  <xsl:when test="( @type = 7 )" >Set Signal Lit </xsl:when>
+  <xsl:when test="( @type = 8 )" >Trigger Route </xsl:when>
+  <xsl:when test="( @type = 9 )" >Set Sensor </xsl:when>
+  <xsl:when test="( @type = 10 )" >Delayed Set Sensor </xsl:when>
+  <xsl:when test="( @type = 11 )" >Set Light </xsl:when>
+  <xsl:when test="( @type = 12 )" >Set Memory </xsl:when>
+  <xsl:when test="( @type = 13 )" >Enable Logix </xsl:when>
+  <xsl:when test="( @type = 14 )" >Disable Logix </xsl:when>
+  <xsl:when test="( @type = 15 )" >Play Sound File </xsl:when>
+  <xsl:when test="( @type = 16 )" >Run Script </xsl:when>
+  <xsl:when test="( @type = 17 )" >Delayed Set Turnout </xsl:when>
+  <xsl:when test="( @type = 18 )" >Lock Turnout </xsl:when>
+  <xsl:otherwise>(type="<xsl:value-of select="@type"/>") </xsl:otherwise>
+</xsl:choose>
 delay="<xsl:value-of select="@delay"/>"
-type="<xsl:value-of select="@type"/>"
 systemName="<xsl:value-of select="@systemName"/>"
 data="<xsl:value-of select="@data"/>"
 string="<xsl:value-of select="@string"/>"
