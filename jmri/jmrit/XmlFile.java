@@ -17,9 +17,24 @@ import org.jdom.output.XMLOutputter;
 
 /**
  * Handle common aspects of XML files.
- *
- * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.25 $
+ *<P>
+ * JMRI needs to be able to operate offline, so it needs to store
+ * DTDs locally.  At the same time, we want XML files to be 
+ * transportable, and to have their DTDs accessible via the web
+ * (for browser rendering).  To do this, we use a two-part
+ * strategy:
+ *<UL>
+ *<LI>When the DTD is not being verified, we use a null EntityResolver
+ * to just bypass the whole problem. (Note: This means that the DTD
+ * cannot define any entities itself!)  Note that by default JMRI does
+ * not verify during normal operation.
+ *<LI>When the DTD is being verified, the first thing tried is
+ * normal opening of the file.  If that fails, the class silently
+ * tries with a local EntityResolver that (attempts to) find the
+ * DTD in $PWD/xml/DTD.
+ *</UL>
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
+ * @version	$Revision: 1.26 $
  */
 public abstract class XmlFile {
 
@@ -104,9 +119,10 @@ public abstract class XmlFile {
     
     /**
      * Find the DTD via a relative path and get the root element.
-     * 
+     * @deprecated 1.8
      */
     protected Element getRootViaRelative(boolean verify, InputStream stream) throws org.jdom.JDOMException, java.io.IOException {
+        log.error("getRootViaRelative is obsolete, and should not be used");
         // Invoke a utility service routine to provide the URL for DTDs
         String dtdUrl = "file:xml"+File.separator+"DTD";
 
@@ -114,6 +130,12 @@ public abstract class XmlFile {
 
         // Open and parse file
         SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation
+        
+        org.xml.sax.EntityResolver resolver;
+        if (verify) resolver = new jmri.util.JmriLocalEntityResolver();
+        else resolver = new jmri.util.JmriNullEntityResolver();
+        builder.setEntityResolver(resolver);
+        
         Document doc = builder.build(new BufferedInputStream(stream),dtdUrl);
 
         // find root
@@ -122,9 +144,11 @@ public abstract class XmlFile {
     
     /**
      * Find the DTD via a URL and get the root element.
+     * @deprecated 1.8
      * 
      */
     protected Element getRootViaURL(boolean verify, InputStream stream) throws org.jdom.JDOMException, java.io.IOException {
+        log.error("getRootViaRelative is obsolete, and should not be used");
         // Invoke a utility service routine to provide the URL for DTDs
         String dtdpath = "xml"+File.separator+"DTD"+File.separator;
         File dtdFile = new File(dtdpath);
@@ -134,6 +158,12 @@ public abstract class XmlFile {
 
         // Open and parse file
         SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation
+        
+        org.xml.sax.EntityResolver resolver;
+        if (verify) resolver = new jmri.util.JmriLocalEntityResolver();
+        else resolver = new jmri.util.JmriNullEntityResolver();
+        builder.setEntityResolver(resolver);
+        
         Document doc = builder.build(new BufferedInputStream(stream),dtdUrl);
 
         // find root
@@ -154,7 +184,13 @@ public abstract class XmlFile {
 
         // Open and parse file
         SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation
-        Document doc = builder.build(new BufferedInputStream(stream),dtdUrl);
+        
+        org.xml.sax.EntityResolver resolver;
+        if (verify) resolver = new jmri.util.JmriLocalEntityResolver();
+        else resolver = new jmri.util.JmriNullEntityResolver();
+        builder.setEntityResolver(resolver);
+        
+        Document doc = builder.build(new BufferedInputStream(stream), dtdUrl);
 
         // find root
         return doc.getRootElement();
@@ -172,8 +208,6 @@ public abstract class XmlFile {
         java.io.FileOutputStream o = new java.io.FileOutputStream(file);
         XMLOutputter fmt = new XMLOutputter();
         
-        // fmt.setNewlines(true); // pretty printing
-        // fmt.setIndent(true);
         fmt.setFormat(org.jdom.output.Format.getPrettyFormat());
         
         fmt.output(doc, o);
@@ -317,7 +351,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.25 2007-08-02 01:56:47 jacobsen Exp $";
+                        +" $Id: XmlFile.java,v 1.26 2007-11-27 18:11:42 jacobsen Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }
