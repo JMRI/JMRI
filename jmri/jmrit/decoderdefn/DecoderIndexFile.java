@@ -32,7 +32,7 @@ import java.util.List;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.30 $
+ * @version			$Revision: 1.31 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -404,7 +404,7 @@ public class DecoderIndexFile extends XmlFile {
 
         // create root element and document
         Element root = new Element("decoderIndex-config");
-        Document doc = newDocument(root, "decoderIndex-config.dtd");
+        Document doc = newDocument(root, "http://jmri.sourceforge.net/xml/DTD/decoderIndex-config.dtd");
 
         // add XSLT processing instruction
         // <?xml-stylesheet type="text/xsl" href="XSLT/DecoderID.xsl"?>
