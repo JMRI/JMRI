@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: rpsfile.xsl,v 1.1 2007-11-26 08:29:46 jacobsen Exp $ -->
+<!-- $Id: rpsfile.xsl,v 1.2 2007-11-27 16:18:55 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI RPS XML file into displayable HTML -->
 
@@ -32,7 +32,7 @@
      We also pick some stuff out explicitly in the head section using
      value-of instructions.
 -->     
-<xsl:template match='decoderIndex-config'>
+<xsl:template match='rpsfile'>
 
 <html>
 	<head>
@@ -54,6 +54,8 @@
 </html>
 
 </xsl:template>
+
+<!-- formatting hasn't been coded yet, so ignore the rest -->
 
 <!-- Index through manufacturers -->
 <xsl:template match="decoderIndex-config/decoderIndex/mfgList/manufacturer">
