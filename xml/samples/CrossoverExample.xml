@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE layout-config SYSTEM "layout-config.dtd">
+<?xml-stylesheet type="text/xsl" href="http://jmri.sourceforge.net/xml/XSLT/panelfile.xsl"?>
+<!DOCTYPE layout-config SYSTEM "http://jmri.sourceforge.net/xml/DTD/layout-config.dtd">
+
 <layout-config>
   <turnouts class="jmri.jmrix.loconet.configurexml.LnTurnoutManagerXml">
     <turnout systemName="LT17" feedback="MONITORING" />
@@ -126,6 +128,6 @@
     <signalheadicon signalhead="VH58" x="208" y="241" red="resource:resources/icons/smallschematics/bordersearchlights/left-red-high.gif" yellow="resource:resources/icons/smallschematics/bordersearchlights/left-yellow-high.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" green="resource:resources/icons/smallschematics/bordersearchlights/left-green-high.gif" rotate="0" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
     <signalheadicon signalhead="VH59" x="210" y="265" red="resource:resources/icons/smallschematics/bordersearchlights/left-red-high.gif" yellow="resource:resources/icons/smallschematics/bordersearchlights/left-yellow-high.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" green="resource:resources/icons/smallschematics/bordersearchlights/left-green-high.gif" rotate="2" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
   </paneleditor>
-  <!--Written by JMRI version 1.7.2 on Tue Aug 02 15:07:28 PDT 2005 $Id: CrossoverExample.xml,v 1.3 2007-05-13 02:49:15 jacobsen Exp $-->
+  <!--Written by JMRI version 1.7.2 on Tue Aug 02 15:07:28 PDT 2005 $Id: CrossoverExample.xml,v 1.4 2007-11-27 20:10:11 jacobsen Exp $-->
 </layout-config>
 

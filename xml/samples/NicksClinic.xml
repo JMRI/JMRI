@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE layout-config SYSTEM "layout-config.dtd">
+<?xml-stylesheet type="text/xsl" href="http://jmri.sourceforge.net/xml/XSLT/panelfile.xsl"?>
+<!DOCTYPE layout-config SYSTEM "http://jmri.sourceforge.net/xml/DTD/layout-config.dtd">
 
 <!-- This is the panel definition file for Nick Kulps PnalePro clinic of -->
 <!-- March 2004.  For more info, see http://jmri.sourceforge.net/clinics/NickKulpMarch2004/clinic.html  -->
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
 
 <layout-config>
   <turnouts class="jmri.jmrix.loconet.configurexml.LnTurnoutManagerXml">

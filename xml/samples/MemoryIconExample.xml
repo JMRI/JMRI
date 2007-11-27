@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE layout-config SYSTEM "layout-config.dtd">
+<?xml-stylesheet type="text/xsl" href="http://jmri.sourceforge.net/xml/XSLT/panelfile.xsl"?>
+<!DOCTYPE layout-config SYSTEM "http://jmri.sourceforge.net/xml/DTD/layout-config.dtd">
+
 <!-- This is an example panel containing MemoryIcons to display   -->
 <!-- text and images as the value changes.  To see it work,       -->
 <!-- go to the Memory Table Tool and change the values.           -->
@@ -41,6 +43,6 @@
       <memorystate value="0" icon="resource:resources/icons/misc/Nixie/M0B.gif" />
     </memoryicon>
   </paneleditor>
-  <!--Written by JMRI version 1.7.6 on Thu Aug 03 17:55:38 PDT 2006 $Id: MemoryIconExample.xml,v 1.9 2006-12-27 07:06:18 jacobsen Exp $-->
+  <!--Written by JMRI version 1.7.6 on Thu Aug 03 17:55:38 PDT 2006 $Id: MemoryIconExample.xml,v 1.10 2007-11-27 20:10:11 jacobsen Exp $-->
 </layout-config>
 

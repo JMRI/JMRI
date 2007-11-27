@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE layout-config SYSTEM "layout-config.dtd">
+<?xml-stylesheet type="text/xsl" href="http://jmri.sourceforge.net/xml/XSLT/panelfile.xsl"?>
+<!DOCTYPE layout-config SYSTEM "http://jmri.sourceforge.net/xml/DTD/layout-config.dtd">
 <!-- This is an example panel containing a LocoNet reporter        -->
 <!-- which shows a transponding response from transponding zone 12 -->
 <layout-config>
