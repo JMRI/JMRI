@@ -9,9 +9,11 @@ import javax.swing.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Hashtable;
 
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.ProcessingInstruction;
 
 /**
  * Roster manages and manipulates a roster of locomotives.
@@ -39,7 +41,7 @@ import org.jdom.Element;
  * sort is done manually each time an entry is added.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001;  Dennis Miller Copyright 2004
- * @version	$Revision: 1.30 $
+ * @version	$Revision: 1.31 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -213,8 +215,16 @@ public class Roster extends XmlFile {
         }
         // create root element
         Element root = new Element("roster-config");
-        Document doc = newDocument(root, "roster-config.dtd");
+        Document doc = newDocument(root, "http://jmri.sourceforge.net/xml/DTD/roster-config.dtd");
 
+        // add XSLT processing instruction
+        // <?xml-stylesheet type="text/xsl" href="XSLT/roster.xsl"?>
+        java.util.Map m = new java.util.HashMap();
+        m.put("type", "text/xsl");
+        m.put("href", "http://jmri.sourceforge.net/xml/XSLT/roster.xsl");
+        ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
+        doc.addContent(0,p);
+        
         //Check the Comment and Decoder Comment fields for line breaks and
         //convert them to a processor directive for storage in XML
         //Note: this is also done in the LocoFile.java class to do

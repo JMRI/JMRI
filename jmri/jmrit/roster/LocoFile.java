@@ -13,6 +13,10 @@ import java.util.List;
 import java.util.Vector;
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.ProcessingInstruction;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
 
 /**
  * Represents and manipulates a locomotive definition, both as a file and
@@ -24,7 +28,7 @@ import org.jdom.Element;
  * @author    Bob Jacobsen     Copyright (C) 2001, 2002
  * @author    Dennis Miller    Copyright (C) 2004
  * @author    Howard G. Penny  Copyright (C) 2005
- * @version   $Revision: 1.20 $
+ * @version   $Revision: 1.21 $
  * @see       jmri.jmrit.roster.RosterEntry
  * @see       jmri.jmrit.roster.Roster
  */
@@ -139,8 +143,16 @@ class LocoFile extends XmlFile {
 
             // create root element
             Element root = new Element("locomotive-config");
-            Document doc = newDocument(root, "locomotive-config.dtd");
+            Document doc = newDocument(root, "http://jmri.sourceforge.net/xml/DTD/locomotive-config.dtd");
 
+            // add XSLT processing instruction
+            // <?xml-stylesheet type="text/xsl" href="XSLT/locomotive.xsl"?>
+            java.util.Map m = new java.util.HashMap();
+            m.put("type", "text/xsl");
+            m.put("href", "http://jmri.sourceforge.net/xml/XSLT/locomotive.xsl");
+            ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
+            doc.addContent(0,p);
+        
             //Before adding the roster locomotive values, scan the Comment and
             //Decoder Comment fields to change any \n to a <?p?> processor directive.
             //Extract the Comment from the RosterEntry and transfer it one character
@@ -255,7 +267,7 @@ class LocoFile extends XmlFile {
             // This is taken in large part from "Java and XML" page 368
 
             // create root element
-            Document doc = newDocument(pRootElement, "locomotive-config.dtd");
+            Document doc = newDocument(pRootElement, "http://jmri.sourceforge.net/xml/DTD/locomotive-config.dtd");
 
             // Update the locomotive.id element
             pRootElement.getChild("locomotive").getAttribute("id").setValue(pEntry.getId());

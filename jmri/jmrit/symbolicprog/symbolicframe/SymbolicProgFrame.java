@@ -10,14 +10,15 @@ import java.io.*;
 
 import javax.swing.*;
 
-import java.util.List;
+import java.util.List;   // resolve ambiguity with java.awt.List
+import java.util.*;
 import org.jdom.*;
 import org.jdom.output.*;
 
 /**
  * Frame providing a table-organized command station programmer from decoder definition files
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
 
@@ -387,8 +388,16 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
 
             // create root element
             Element root = new Element("locomotive-config");
-            Document doc = jmri.jmrit.XmlFile.newDocument(root, "locomotive-config.dtd");
+            Document doc = jmri.jmrit.XmlFile.newDocument(root, "http://jmri.sourceforge.net/xml/DTD/locomotive-config.dtd");
 
+            // add XSLT processing instruction
+            // <?xml-stylesheet type="text/xsl" href="XSLT/locomotive.xsl"?>
+            java.util.Map m = new java.util.HashMap();
+            m.put("type", "text/xsl");
+            m.put("href", "http://jmri.sourceforge.net/xml/XSLT/locomotive.xsl");
+            ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
+            doc.addContent(0,p);
+            
             // add top-level elements
             Element values;
             root.addContent(new Element("locomotive")		// locomotive values are first item

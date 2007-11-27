@@ -10,6 +10,10 @@ import java.util.List;
 //import org.jdom.DocType;
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.ProcessingInstruction;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
 
 /**
  * Provides the mechanisms for storing an entire layout configuration
@@ -17,7 +21,7 @@ import org.jdom.Element;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -196,7 +200,16 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
     protected void finalStore(Element root, File file) {
         try {
-            Document doc = newDocument(root, "layout-config.dtd");
+            Document doc = newDocument(root, "http://jmri.sourceforge.net/xml/DTD/layout-config.dtd");
+
+            // add XSLT processing instruction
+            // <?xml-stylesheet type="text/xsl" href="XSLT/DecoderID.xsl"?>
+            java.util.Map m = new java.util.HashMap();
+            m.put("type", "text/xsl");
+            m.put("href", "http://jmri.sourceforge.net/xml/XSLT/panelfile.xsl");
+            ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
+            doc.addContent(0,p);
+
             writeXML(file, doc);
         } catch (java.io.FileNotFoundException ex3) {
             log.error("FileNotFound error writing file: "+ex3.getLocalizedMessage());
