@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: roster.xsl,v 1.1 2007-11-26 08:29:46 jacobsen Exp $ -->
+<!-- $Id: roster.xsl,v 1.2 2007-11-27 16:03:07 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI roster XML file into displayable HTML -->
 
@@ -32,7 +32,7 @@
      We also pick some stuff out explicitly in the head section using
      value-of instructions.
 -->     
-<xsl:template match='decoderIndex-config'>
+<xsl:template match='roster-config'>
 
 <html>
 	<head>
@@ -55,71 +55,34 @@
 
 </xsl:template>
 
-<!-- Index through manufacturers -->
-<xsl:template match="decoderIndex-config/decoderIndex/mfgList/manufacturer">
-<xsl:if test="not( @mfg = 'NMRA' )" >
-<h3><xsl:value-of select="@mfg"/> CV8=<xsl:value-of select="@mfgID"/></h3>
-        <xsl:call-template name="familyTable">
-                <xsl:with-param name="mfgname" select="@mfg"/>
-        </xsl:call-template>
-</xsl:if>
+<!-- Display each roster entry -->
+<xsl:template match="roster/locomotive">
+<h3>Locomotive: <xsl:value-of select="@id"/></h3>
+roadNumber="<xsl:value-of select="@roadNumber"/>"<br/>
+roadName="<xsl:value-of select="@roadName"/>"<br/>
+mfg="<xsl:value-of select="@mfg"/>"<br/>
+owner="<xsl:value-of select="@owner"/>"<br/>
+model="<xsl:value-of select="@model"/>"<br/>
+dccAddress="<xsl:value-of select="@dccAddress"/>"<br/>
+comment="<xsl:value-of select="@comment"/>"<br/>
+Filename: <xsl:value-of select="@fileName"/>
+<p/>
+<xsl:apply-templates/>
 </xsl:template>
 
-<!-- template to create the table for a specific mfg -->
-<!-- needs two improvements:  dont put out a line if the versionCV is present and -->
-<!--   handle versions specified at several levels -->
-<xsl:template name="familyTable">
-        <xsl:param name="mfgname"/>
-		<!-- define table and fill -->
-		<table border="0" cellspacing="1" cellpadding="1">
-		<tr>
-			<th bgcolor="#cccccc">Model</th>
-			<th bgcolor="#cccccc">Family</th>
-			<th bgcolor="#cccccc">Min CV7 value</th>
-			<th bgcolor="#cccccc">Max CV7 value</th>
-		</tr>
-
-		<xsl:for-each select="/decoderIndex-config/decoderIndex/familyList/family">
-		  <xsl:if test="( @mfg = $mfgname )" >
-			<xsl:for-each select="model">
-			
-			  <!-- display model as row in table -->
-			  <tr>
-				<td bgcolor="#eeeeee" valign="top" align="center"><xsl:value-of select="@model"/></td>
-				<td bgcolor="#eeeeee" valign="top" align="center"><xsl:value-of select="../@name"/></td>
-				<td bgcolor="#eeeeee" valign="top" align="center">
-<!-- display model version if present, else family -->
-<xsl:if test="string-length(@lowVersionID)=0" ><xsl:value-of select="../@lowVersionID"/></xsl:if>
-<xsl:value-of select="@lowVersionID"/>
-</td>
-				<td bgcolor="#eeeeee" valign="top" align="center">
-<xsl:if test="string-length(@highVersionID)=0" ><xsl:value-of select="../@highVersionID"/></xsl:if>
-<xsl:value-of select="@highVersionID"/>
-</td>
-			  </tr>
-			  <xsl:for-each select="versionCV">
-        		<xsl:call-template name="versionCVline"/>
- 			  </xsl:for-each>
-			</xsl:for-each>
-		  </xsl:if>
-		</xsl:for-each>
-
-		</table>
+<!-- Display decoder info -->
+<xsl:template match="decoder">
+Decoder: <xsl:value-of select="@model"/>
+family="<xsl:value-of select="@family"/>"
+comment="<xsl:value-of select="@comment"/>"
+<p/>
 </xsl:template>
 
-<!-- Index through versionCV elements in a model  -->
-<xsl:template name="versionCVline">
-                        <tr>
-                        		<!-- dont display model or name for these subcases -->
-                                <td bgcolor="#eeeeee" valign="top" align="center"></td>
-                                <td bgcolor="#eeeeee" valign="top" align="center"></td>
-                                <td bgcolor="#eeeeee" valign="top" align="center">
-<xsl:value-of select="@lowVersionID"/>
-</td>
-                                <td bgcolor="#eeeeee" valign="top" align="center">
-<xsl:value-of select="@highVersionID"/>
-</td>
-                        </tr>
+<xsl:template match="dcclocoaddress">
+Loco address: 
+number="<xsl:value-of select="@number"/>"
+longaddress="<xsl:value-of select="@longaddress"/>" 
+<p/>
 </xsl:template>
 
 
