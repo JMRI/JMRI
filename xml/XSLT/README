@@ -54,3 +54,11 @@ DecoderID.xsl   used by Ant "id" target and used as an XML stylesheet to
                 
 panelfile.xsl   stylesheet for JMRI panel files
 
+locomotive.xsl  stylesheet for JMRI roster entry files
+
+roster.xsl      stylesheet for JMRI roster index
+
+rpsfile.xsl     stylesheet for JMRI RPS files
+
+throttle.xsl    stylesheet for JMRI throttle layout files
+
