@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: panelfile.xsl,v 1.4 2007-11-27 18:09:31 jacobsen Exp $ -->
+<!-- $Id: panelfile.xsl,v 1.5 2007-11-29 07:36:02 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI panel file into an HTML page -->
 
@@ -290,9 +290,27 @@ string="<xsl:value-of select="@string"/>"
 </xsl:template>
 
 <xsl:template match="paneleditor">
-<h3>Panel: <xsl:value-of select="@name"/>
-</h3>
+<h3>Panel: <xsl:value-of select="@name"/></h3>
+
+    <!-- index through individal panel elements -->
+    <xsl:apply-templates/>
+
 </xsl:template>
 
+<xsl:template match="signalheadicon">
+Signalhead Icon <xsl:value-of select="@signalhead"/><br/>
+</xsl:template>
+
+<xsl:template match="turnouticon">
+Turnout Icon <xsl:value-of select="@turnout"/><br/>
+</xsl:template>
+
+<xsl:template match="sensoricon">
+Sensor Icon <xsl:value-of select="@sensor"/><br/>
+</xsl:template>
+
+<xsl:template match="positionablelabel">
+Positionable Label <xsl:value-of select="@icon"/><br/>
+</xsl:template>
 
 </xsl:stylesheet>
