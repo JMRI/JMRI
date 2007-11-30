@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
  * Also checks for March 2007 EPROM and warns user about Monitoring feedback.
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  * 
  */
 
@@ -80,7 +80,7 @@ public class NceEpromChecker implements NceListener{
         			+ Integer.toHexString(VV & 0xFF)+"."
     				+ Integer.toHexString(MM & 0xFF)+"."
     				+ Integer.toHexString(mm & 0xFF));
-        	
+         	
         	// Confirm that user selected correct revision of EPROM, check for old EPROM installed, new EPROM preferences
          	if ((VV <= VV_2007 && MM < MM_2007) && (NceMessage.getCommandOptions() >= NceMessage.OPTION_2006)){
         		log.error("Wrong revision (" 
@@ -116,9 +116,43 @@ public class NceEpromChecker implements NceListener{
  //       				" contact NCE if you want to use MONITORING feedback  ",
  //       				"Warning", JOptionPane.INFORMATION_MESSAGE);
         	}
+         	
+         	// Check that layout connection is correct
+         	// PowerHouse? 3 cases for PH, 1999, 2004, & 2007
+         	if (VV == VV_1999 || (VV == VV_2004 && MM == MM_2004) || (VV == VV_2007 && MM == MM_2007))
+         		// make sure system connection is not NCE USB
+         		if (NceUSB.getUsbSystem()> NceUSB.USB_SYSTEM_NONE){
+         			log.error("Layout connection is incorrect, USB not found");
+            		JOptionPane.showMessageDialog(null, "Wrong NCE layout connection selected in Preferences. " +
+            				"Change the layout connection to \"NCE\" or \"NCE via network\".",
+            				"Error", JOptionPane.ERROR_MESSAGE);
+           		}
+         	
          	// Check for USB
          	if (VV == VV_USB && MM == MM_USB ){
          		nceUSBdetected = true;
+         		// USB detected, check to see if user preferences are correct
+         		if (mm == mm_USB_PwrCab && NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_POWERCAB){
+         			log.error("Layout connection is incorrect, USB connected to a PowerCab detected");
+            		JOptionPane.showMessageDialog(null, "Wrong NCE layout connection selected in Preferences. " +
+            				"Change the layout connection to \"NCE USB\" and the system to \"PowerCab\".",
+            				"Error", JOptionPane.ERROR_MESSAGE);
+         			
+         		}
+         		if (mm == mm_USB_SB3 && NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_SB3){
+         			log.error("Layout connection is incorrect, USB connected to a Smart Booster SB3 detected");
+            		JOptionPane.showMessageDialog(null, "Wrong NCE layout connection selected in Preferences. " +
+            				"Change the layout connection to \"NCE USB\" and the system to \"Smart Booster SB3\".",
+            				"Error", JOptionPane.ERROR_MESSAGE);
+         			
+         		}
+         		if (mm == mm_USB_PH && NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_POWERHOUSE){
+         			log.error("Layout connection is incorrect, USB connected to a PowerHouse detected");
+            		JOptionPane.showMessageDialog(null, "Wrong NCE layout connection selected in Preferences. " +
+            				"Change the layout connection to \"NCE USB\" and the system to \"PowerHouse\".",
+            				"Error", JOptionPane.ERROR_MESSAGE);
+         			
+         		}
          	}
 
         }
