@@ -16,7 +16,7 @@ import jmri.PushbuttonPacket;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.26 $
+ * @version	$Revision: 1.27 $
  */
 public class NceTurnout extends AbstractTurnout {
 
@@ -34,9 +34,9 @@ public class NceTurnout extends AbstractTurnout {
     	
     	numNtTurnouts++;
 
-    	// dBoudreau update feedback modes
+    	// update feedback modes, MONITORING requires PowerHouse system with new EPROM
     	
-    	if (NceMessage.getCommandOptions() >= NceMessage.OPTION_2006) {
+    	if (NceMessage.getCommandOptions() >= NceMessage.OPTION_2006 && NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_NONE) {
 
     		if (modeNames == null) {
 

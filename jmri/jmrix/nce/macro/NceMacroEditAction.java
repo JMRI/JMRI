@@ -14,6 +14,7 @@ package jmri.jmrix.nce.macro;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import jmri.jmrix.nce.NceEpromChecker;
+import jmri.jmrix.nce.NceUSB;
 
 public class NceMacroEditAction  extends AbstractAction {
 
@@ -21,7 +22,7 @@ public class NceMacroEditAction  extends AbstractAction {
 		super(s);
 
 		// disable if NCE USB detected
-		if (NceEpromChecker.nceUSBdetected) {
+		if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE) {
 			setEnabled(false);
 		}
 	}

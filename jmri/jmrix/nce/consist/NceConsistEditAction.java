@@ -15,14 +15,15 @@ package jmri.jmrix.nce.consist;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import jmri.jmrix.nce.NceEpromChecker;
+import jmri.jmrix.nce.NceUSB;
 
 public class NceConsistEditAction  extends AbstractAction {
 
 	public NceConsistEditAction(String s) { 
 		super(s);
 		
-		// disable if NCE USB detected
-		if (NceEpromChecker.nceUSBdetected) {
+		// disable if NCE USB selected
+		if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE) {
 			setEnabled(false);
 		}
 	}

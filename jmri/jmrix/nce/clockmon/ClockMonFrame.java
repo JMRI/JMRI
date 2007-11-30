@@ -8,7 +8,7 @@ import jmri.TimebaseRateException;
 import jmri.jmrix.nce.NceListener;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
-import jmri.jmrix.nce.NceEpromChecker;
+import jmri.jmrix.nce.NceUSB;
 
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -30,7 +30,7 @@ import javax.swing.*;
  * contact NCE Inc for separate permission.
  *
  * @author			Ken Cameron   Copyright (C) 2007
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  *
  * derived from loconet.clockmonframe by Bob Jacobson Copyright (C) 2003
  * 
@@ -292,7 +292,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         pane2.add(setSyncButton, gConstraints);
         //setSyncModeInternalMaster.setEnabled(false);
         //setSyncModeNceMaster.setEnabled(false);
-        if (NceEpromChecker.nceUSBdetected) {	// needs memory commands to sync
+        if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE) {	// needs memory commands to sync
             setSyncModeInternalMaster.setEnabled(false);
             setSyncModeNceMaster.setEnabled(false);
         }
