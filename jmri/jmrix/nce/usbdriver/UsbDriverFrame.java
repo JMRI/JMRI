@@ -1,5 +1,5 @@
 /** 
- * SerialDriverFrame.java
+ * UsbDriverFrame.java
  *
  * Description:		Frame to control and connect NCE command station via SerialDriver interface and comm port
  * @author			Bob Jacobsen   Copyright (C) 2001

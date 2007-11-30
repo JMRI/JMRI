@@ -1,4 +1,4 @@
-// SerialDriverAdapter.java
+// UsbDriverAdapter.java
 
 package jmri.jmrix.nce.usbdriver;
 
@@ -30,7 +30,7 @@ import javax.comm.SerialPort;
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Daniel Boudreau Copyright (C) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class UsbDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
