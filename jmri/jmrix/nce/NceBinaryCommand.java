@@ -65,7 +65,7 @@ package jmri.jmrix.nce;
  *  1 = bad loco address
  *
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 
 public class NceBinaryCommand {
@@ -89,6 +89,12 @@ public class NceBinaryCommand {
         
         if (number < 1 || number > 2044) {
             log.error("invalid NCE accessory address "+number);
+            return null;
+        }
+        
+        // USB can only access addresses up to 250
+        if (number > 250 && NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE) {
+            log.error("invalid NCE accessory address for USB "+number);
             return null;
         }
         
