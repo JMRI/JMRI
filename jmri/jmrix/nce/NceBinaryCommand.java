@@ -65,17 +65,21 @@ package jmri.jmrix.nce;
  *  1 = bad loco address
  *
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 
 public class NceBinaryCommand {
     
-    public static final int STOP_CLOCK_CMD = 0x83;	//NCE stop clock command
+	// NOTE: NCE USB does not support any clock commands
+	
+	public static final int STOP_CLOCK_CMD = 0x83;	//NCE stop clock command
     public static final int START_CLOCK_CMD = 0x84;	//NCE start clock command
     public static final int SET_CLOCK_CMD = 0x85;	//NCE set clock command
     public static final int CLOCK_1224_CMD = 0x86;	//NCE change clock 12/24 command
     public static final int CLOCK_RATIO_CMD = 0x87;	//NCE set clock ratio command
 
+    // NOTE: NCE USB does not support any read or write memory commands
+    
     public static final int WRITEn_CMD = 0x8E;		//NCE write up to 16 bytes of memory command
     public static final int READ16_CMD = 0x8F;		//NCE read 16 bytes of memory command
     public static final int WRITE4_CMD = 0x99;		//NCE write 4 bytes of memory command
@@ -84,6 +88,7 @@ public class NceBinaryCommand {
 
     public static final int ACC_CMD = 0xAD;			//NCE accessory command
     public static final int LOC_CMD = 0xA2;			//NCE Loco control command 
+    public static final int SW_REV_CMD = 0xAA; 		// NCE get EPROM revision cmd, Reply Format: VV.MM.mm
 
     public static byte[] accDecoder(int number, boolean closed) {
         
@@ -115,6 +120,11 @@ public class NceBinaryCommand {
     }
     
     public static byte[] accMemoryRead(int address){
+       	// this command isn't supported by the NCE USB
+    	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
+    		log.error("attempt to send unsupported binary command to NCE USB");
+			return null;
+    	}
         
         int addr_h = address/256;
         int addr_l = address & 0xFF;
@@ -128,7 +138,12 @@ public class NceBinaryCommand {
         
     }
     
-  public static byte[] accMemoryRead1(int address){
+  public static byte[] accMemoryRead1(int address) {
+		// this command isn't supported by the NCE USB
+		if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE) {
+			log.error("attempt to send unsupported binary command to NCE USB");
+			return null;
+		}
         
         int addr_h = address/256;
         int addr_l = address & 0xFF;
@@ -143,6 +158,11 @@ public class NceBinaryCommand {
     }
 
 	public static byte[] accMemoryWriteN(int address, int num) {
+	   	// this command isn't supported by the NCE USB
+    	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
+    		log.error("attempt to send unsupported binary command to NCE USB");
+			return null;
+    	}
 
 		int addr_h = address / 256;
 		int addr_l = address & 0xFF;
@@ -158,6 +178,11 @@ public class NceBinaryCommand {
 	}
 	
 	public static byte[] accMemoryWrite8(int address) {
+	   	// this command isn't supported by the NCE USB
+    	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
+    		log.error("attempt to send unsupported binary command to NCE USB");
+			return null;
+    	}
 
 		int addr_h = address / 256;
 		int addr_l = address & 0xFF;
@@ -172,6 +197,11 @@ public class NceBinaryCommand {
 }
 
 	public static byte[] accMemoryWrite4(int address) {
+	   	// this command isn't supported by the NCE USB
+    	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
+    		log.error("attempt to send unsupported binary command to NCE USB");
+			return null;
+    	}
 
 		int addr_h = address / 256;
 		int addr_l = address & 0xFF;
@@ -185,6 +215,11 @@ public class NceBinaryCommand {
 	}
 
 	public static byte[] accStopClock() {
+	   	// this command isn't supported by the NCE USB
+    	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
+    		log.error("attempt to send unsupported binary command to NCE USB");
+			return null;
+    	}
 
 		byte[] retVal = new byte[1];
 		retVal[0] = (byte) (STOP_CLOCK_CMD);// stop clock command
@@ -193,6 +228,11 @@ public class NceBinaryCommand {
 	}
 
 	public static byte[] accStartClock() {
+	   	// this command isn't supported by the NCE USB
+    	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
+    		log.error("attempt to send unsupported binary command to NCE USB");
+			return null;
+    	}
 
 		byte[] retVal = new byte[1];
 		retVal[0] = (byte) (START_CLOCK_CMD);// start clock command
@@ -201,6 +241,11 @@ public class NceBinaryCommand {
 	}
 
 	public static byte[] accSetClock(int hours, int minutes) {
+	   	// this command isn't supported by the NCE USB
+    	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
+    		log.error("attempt to send unsupported binary command to NCE USB");
+			return null;
+    	}
 
 		byte[] retVal = new byte[3];
 		retVal[0] = (byte) (SET_CLOCK_CMD);// set clock command
@@ -211,6 +256,11 @@ public class NceBinaryCommand {
 	}
 
 	public static byte[] accSetClock1224(boolean flag) {
+	   	// this command isn't supported by the NCE USB
+    	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
+    		log.error("attempt to send unsupported binary command to NCE USB");
+			return null;
+    	}
 
 		int bit = 0;
 		if (flag) {
@@ -226,6 +276,11 @@ public class NceBinaryCommand {
 	}
 
 	public static byte[] accSetClockRatio(int ratio) {
+	   	// this command isn't supported by the NCE USB
+    	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
+    		log.error("attempt to send unsupported binary command to NCE USB");
+			return null;
+    	}
 
 		byte[] retVal = new byte[2];
 		retVal[0] = (byte) (CLOCK_RATIO_CMD);// set clock command
@@ -264,7 +319,12 @@ public class NceBinaryCommand {
 		
 		return retVal;
 	}
-    
+	
+	public static byte[] getNceEpromRev() {
+		byte[] retVal = new byte[1];
+		retVal[0] = (byte) (SW_REV_CMD);
+		return retVal;
+	}
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceBinaryCommand.class.getName());
 }
 /* @(#)NceBinaryCommand.java */

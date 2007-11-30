@@ -9,7 +9,7 @@ package jmri.jmrix.nce;
  * SB3 V1.28 - 6.3.1 (No program track on an SB3) When used with PH-Pro or PH-10 -
  * 6.3.2 (limited set of features available through cab bus)
  * <P>
- * From NCE 2007:
+ * From NCE 2007 (with some minor corrections):
  * <P>
  * I've added two new binary commands on the Power Cab. They are for OPs
  * programming of locomotives and OPs programming of accessories/signals The
@@ -167,7 +167,7 @@ package jmri.jmrix.nce;
  * <P>
  * 0xAE (5 data bytes) OPs program loco CV (1) !,1,3
  * <P>
- * Command Format: 0xA2 (addr_h) (addr_l) (CV_h) (CV_l) (data)
+ * Command Format: 0xAE (addr_h) (addr_l) (CV_h) (CV_l) (data)
  * <P>
  * addr_h,addr_l are loco address (same as 0xA2 command) CV_h, CV_l are cv
  * address high byte first data is 8 bit data for CV
@@ -176,7 +176,7 @@ package jmri.jmrix.nce;
  * <P>
  * 0xAF <5 data bytes> OPs program accessory/signal (1) !,1,3
  * <P>
- * Command Format: 0xA2 (addr_h) (addr_l) (CV_h) (CV_l) (data)
+ * Command Format: 0xAF (addr_h) (addr_l) (CV_h) (CV_l) (data)
  * <P>
  * addr_h,addr_l are accy/sig address (same as 0xAD command) CV_h, CV_l are CV
  * address high byte first data is 8 bit data for CV
@@ -206,7 +206,7 @@ package jmri.jmrix.nce;
  * <P>
  * 
  * @author Daniel Boudreau Copyright (C) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class NceUSB  {
 	

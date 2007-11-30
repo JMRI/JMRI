@@ -11,18 +11,23 @@ import javax.swing.JOptionPane;
  * AIU broadcasts, 0 = disabled, 1 = enabled.
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  * 
  */
 
 public class NceAIUChecker implements NceListener {
 
-	private static final int MEM_AIU = 0xDC15; // NCE CS AIU memory address 
-	private static final int REPLY_LEN = 1; // number of bytes read
+	private static final int MEM_AIU = 0xDC15; 	// NCE CS AIU memory address 
+	private static final int REPLY_LEN = 1; 	// number of bytes read
 	private static boolean EXPECT_REPLY = false; // flag 
 
 	public NceMessage NceAiuPoll() {
 
+		// If USB, just return
+		
+		if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE)
+			return null;
+		
 		// read one byte from NCE memory to determine if AIU broadcasts are enabled
 
 		byte[] bl = NceBinaryCommand.accMemoryRead1(MEM_AIU);

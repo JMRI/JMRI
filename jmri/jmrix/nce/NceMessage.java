@@ -26,10 +26,28 @@ package jmri.jmrix.nce;
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2007
- * @version     $Revision: 1.31 $
+ * @version     $Revision: 1.32 $
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
+	
+	public static final int NOP_CMD = 0x80;				//NCE NOP command
+	public static final int ENTER_PROG_CMD = 0x9E;		//NCE enter programming track mode command
+	public static final int EXIT_PROG_CMD = 0x9F;		//NCE exit programming track mode command
+	public static final int WRITE_PAGED_CV_CMD = 0xA0;	//NCE write CV paged command
+	public static final int READ_PAGED_CV_CMD = 0xA1;	//NCE read CV paged command
+	public static final int WRITE_REG_CMD = 0xA6;		//NCE write register command
+	public static final int READ_REG_CMD = 0xA7;		//NCE read register command
+	public static final int WRITE_DIR_CV_CMD = 0xA8;	//NCE write CV direct command
+	public static final int READ_DIR_CV_CMD = 0xA9;		//NCE read CV direct command
 
+	// The following commands are not supported by the NCE USB  
+	
+	public static final int ENABLE_MAIN_CMD = 0x89;		//NCE enable main trk, kill prog command
+	public static final int KILL_MAIN_CMD = 0x8B;		//NCE kill main trk, enable prog command
+	public static final int SENDn_BYTES_CMD = 0x90;		//NCE send 3 to 6 bytes (0x9n, n = 3-6) command
+	public static final int QUEUEn_BYTES_CMD = 0xA0;	//NCE queue 3 to 6 bytes (0xAn, n = 3-6) command
+
+	
     static protected int NCE_PAGED_CV_TIMEOUT=20000;
     static protected int NCE_DIRECT_CV_TIMEOUT=5000;			// worst case is when loading the first panel
     static protected boolean ncsProgMode = false;				// Do not use exit program mode unless active
@@ -70,14 +88,14 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     // diagnose format
     public boolean isKillMain() {
         if (isBinary()) 
-            return getOpCode() == 0x8B;
+            return getOpCode() == KILL_MAIN_CMD;
         else
             return getOpCode() == 'K';
     }
 
     public boolean isEnableMain() {
         if (isBinary()) 
-            return getOpCode() == 0x89;
+            return getOpCode() == ENABLE_MAIN_CMD;
         else
             return getOpCode() == 'E';
     }
@@ -85,11 +103,16 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
     // static methods to return a formatted message
     static public NceMessage getEnableMain() {
+    	// this command isn't supported by the NCE USB
+    	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
+    		log.error("attempt to send unsupported binary command to NCE USB");
+			return null;
+    	}
         NceMessage m = new NceMessage(1);
         if (getCommandOptions() >= OPTION_1999) {
             m.setBinary(true);
             m.setReplyLen(1);
-            m.setOpCode(0x89);
+            m.setOpCode(ENABLE_MAIN_CMD);
         } else {
             m.setBinary(false);
             m.setOpCode('E');
@@ -98,11 +121,16 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     static public NceMessage getKillMain() {
+    	// this command isn't supported by the NCE USB
+    	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
+    		log.error("attempt to send unsupported binary command to NCE USB");
+			return null;
+    	}
         NceMessage m = new NceMessage(1);
         if (getCommandOptions() >= OPTION_1999) {
             m.setBinary(true);
             m.setReplyLen(1);
-            m.setOpCode(0x8B);
+            m.setOpCode(KILL_MAIN_CMD);
         } else {
             m.setBinary(false);
             m.setOpCode('K');
@@ -116,7 +144,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         	ncsProgMode = true;
             m.setBinary(true);
             m.setReplyLen(1);
-            m.setOpCode(0x9E);
+            m.setOpCode(ENTER_PROG_CMD);
         }
         else {
             m.setBinary(false);
@@ -136,7 +164,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             ncsProgMode = false;
             m.setBinary(true);
             m.setReplyLen(1);
-            m.setOpCode(0x9F);
+            m.setOpCode(EXIT_PROG_CMD);
         }
         else {
             m.setBinary(false);
@@ -150,7 +178,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             NceMessage m = new NceMessage(3);
             m.setBinary(true);
             m.setReplyLen(2);
-            m.setOpCode(0xA1);
+            m.setOpCode(READ_PAGED_CV_CMD);
             m.setElement(1,(cv >> 8));
             m.setElement(2,(cv & 0x0FF));
             m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
@@ -172,7 +200,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             NceMessage m = new NceMessage(4);
             m.setBinary(true);
             m.setReplyLen(1);
-            m.setOpCode(0xA0);
+            m.setOpCode(WRITE_PAGED_CV_CMD);
             m.setElement(1,cv>>8);
             m.setElement(2,cv&0xFF);
             m.setElement(3,val);
@@ -198,7 +226,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             NceMessage m = new NceMessage(2);
             m.setBinary(true);
             m.setReplyLen(2);
-            m.setOpCode(0xA7);
+            m.setOpCode(READ_REG_CMD);
             m.setElement(1,reg);
             m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
             m.setTimeout(NCE_PAGED_CV_TIMEOUT);
@@ -221,7 +249,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             NceMessage m = new NceMessage(3);
             m.setBinary(true);
             m.setReplyLen(2);
-            m.setOpCode(0xA6);
+            m.setOpCode(WRITE_REG_CMD);
             m.setElement(1,reg);
             m.setElement(2,val);
             m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
@@ -247,7 +275,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         NceMessage m = new NceMessage(3);
         m.setBinary(true);
         m.setReplyLen(2);
-        m.setOpCode(0xA9);
+        m.setOpCode(READ_DIR_CV_CMD);
         m.setElement(1,(cv >> 8));
         m.setElement(2,(cv & 0x0FF));
         m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
@@ -261,7 +289,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         NceMessage m = new NceMessage(4);
         m.setBinary(true);
         m.setReplyLen(1);
-        m.setOpCode(0xA8);
+        m.setOpCode(WRITE_DIR_CV_CMD);
         m.setElement(1,cv>>8);
         m.setElement(2,cv&0xFF);
         m.setElement(3,val);
@@ -271,7 +299,12 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     }
     
     static public NceMessage sendPacketMessage(byte[] bytes) {
-        if (getCommandOptions() >= OPTION_1999) {
+    	// this command isn't supported by the NCE USB
+    	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
+    		log.error("attempt to send unsupported binary command to NCE USB");
+			return null;
+    	}
+		if (getCommandOptions() >= OPTION_1999) {
             if (bytes.length<3 || bytes.length>6)
                 log.error("Send of NCE track packet too short or long:"+(bytes.length)+
                     " packet:"+bytes);
@@ -281,7 +314,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             m.setReplyLen(1);
             int i = 0; // counter to make it easier to format the message
         
-            m.setElement(i++, 0x90+bytes.length);
+            m.setElement(i++, SENDn_BYTES_CMD + bytes.length);
             m.setElement(i++, 0x02);        // send twice
             for (int j = 0; j<bytes.length; j++) {
                 m.setElement(i++, bytes[j]&0xFF);
@@ -339,6 +372,11 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     static public NceMessage queuePacketMessage(byte[] bytes) {
+    	// this command isn't supported by the NCE USB
+    	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
+    		log.error("attempt to send unsupported binary command to NCE USB");
+			return null;
+    	}
         if (getCommandOptions() >= OPTION_1999) {
             if (bytes.length<3 || bytes.length>6)
                 log.error("Queue of NCE track packet too long:"+(bytes.length)+
@@ -348,7 +386,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             m.setReplyLen(1);
             int i = 0; // counter to make it easier to format the message
         
-            m.setElement(i++, 0xA0+bytes.length);
+            m.setElement(i++, QUEUEn_BYTES_CMD + bytes.length);
             for (int j = 0; j<bytes.length; j++) {
                 m.setElement(i++, bytes[j]&0xFF);
             }

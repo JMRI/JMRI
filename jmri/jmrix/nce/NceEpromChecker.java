@@ -12,13 +12,12 @@ import javax.swing.JOptionPane;
  * Also checks for March 2007 EPROM and warns user about Monitoring feedback.
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  * 
  */
 
 public class NceEpromChecker implements NceListener {
 
-	public static final int SW_REV_CMD = 0xAA; // NCE get EPROM revision cmd, Reply Format: VV.MM.mm
 	private static final int REPLY_LEN = 3; // number of bytes read
 
 	public static boolean nceEpromMarch2007 = false; // flag to allow JMRI to be bug for bug compatible
@@ -53,8 +52,7 @@ public class NceEpromChecker implements NceListener {
 
 	public NceMessage NceEpromPoll() {
 
-		byte[] bl = new byte[1];
-		bl[0] = (byte) (SW_REV_CMD);
+		byte[] bl = NceBinaryCommand.getNceEpromRev();
 		NceMessage m = NceMessage.createBinaryMessage(bl, REPLY_LEN);
 		return m;
 
