@@ -21,7 +21,7 @@ import jmri.util.JmriJFrame;
  * Modified by Dennis Miller for resizing Nov, 2004
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
 
@@ -169,7 +169,8 @@ public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyCh
     }
 
     public void dispose() {
-        timer.stop();
+    	if (timer != null)
+			timer.stop();
         super.dispose();
     }
 
