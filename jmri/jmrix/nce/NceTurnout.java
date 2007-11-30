@@ -16,7 +16,7 @@ import jmri.PushbuttonPacket;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.27 $
+ * @version	$Revision: 1.28 $
  */
 public class NceTurnout extends AbstractTurnout {
 
@@ -157,8 +157,13 @@ public class NceTurnout extends AbstractTurnout {
      * Cab lockout requires the feedback mode to be Monitoring 
      */
     public boolean canLock(int turnoutLockout) {
+    	// can not lock if using a USB
+    	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE)
+    		return false;
+    	// check to see if push button lock is enabled
 		if ((turnoutLockout & PUSHBUTTONLOCKOUT) > 0 && _enablePushButtonLockout)
 			return true;
+		// check to see if cab lockout is enabled
 		if ((turnoutLockout & CABLOCKOUT) > 0
 				&& getFeedbackMode() == MONITORING && _enableCabLockout) {
 			return true;
