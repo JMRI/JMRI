@@ -9,7 +9,7 @@ package jmri.jmrix.nce;
  * SB3 V1.28 - 6.3.1 (No program track on an SB3) When used with PH-Pro or PH-10 -
  * 6.3.2 (limited set of features available through cab bus)
  * <P>
- * From NCE 2007 (with some minor corrections):
+ * From NCE 2007 (with some minor corrections, formatting & additional info):
  * <P>
  * I've added two new binary commands on the Power Cab. They are for OPs
  * programming of locomotives and OPs programming of accessories/signals The
@@ -17,8 +17,10 @@ package jmri.jmrix.nce;
  * <P>
  * The USB interface when configured for Power Cab Ver 1.28 returns software
  * version 6.3.0. When configured for the SB3 V1.28 it returns version 6.3.1.
- * (SB3 doesn't have a program track) Not all binary commands are useful or
- * available with the PowerCab or SB3. PowerCab/SB3 commands supported below:
+ * (SB3 doesn't have a program track) And when configured for the PowerHouse
+ * 2007 it returns version 6.3.2. Not all binary commands are useful or
+ * available with the PowerCab, SB3, or PowerHouse. PowerCab/SB3/PowerHouse
+ * commands supported below:
  * <P>
  * *************************************************************************
  * <P>
@@ -51,25 +53,27 @@ package jmri.jmrix.nce;
  * <P>
  * --------------------------------------------------------------------------
  * <P>
- * 0x9E Enter Programming track mode (1) ! = success 3 = short circuit
+ * 0x9E Enter Programming track mode (1) ! = success 3 = short circuit. Not
+ * supported by SB3 or PH
  * <P>
  * --------------------------------------------------------------------------
  * <P>
- * 0x9F Exit Programming track mode (1) ! = success
+ * 0x9F Exit Programming track mode (1) ! = success. Not supported by SB3 or PH
  * <P>
  * --------------------------------------------------------------------------
  * <P>
  * 0xA0 aaaa xx Program CV aa with data xx in (1) ! = success paged mode 0 =
- * program track not enabled
+ * program track not enabled. Not supported by SB3 or PH
  * <P>
  * --------------------------------------------------------------------------
  * <P>
  * 0xA1 aaaa Read CV aa in paged mode (2) !,0,3 NOTE: cv data followed ! for ok,
- * 0xff followed by 3 for can't read
+ * 0xff followed by 3 for can't read. Not supported by SB3 or PH
  * <P>
  * --------------------------------------------------------------------------
  * <P>
- * 0xA2 (4 data bytes) Locomotive control command (1) !,1
+ * 0xA2 (4 data bytes) Locomotive control command (1) !,1. Not supported by SB3
+ * or PH
  * <P>
  * Sends a speed or function packet to a locomotive. Command Format: 0xA2
  * (addr_h) (addr_l) (op_1) (data_1)
@@ -113,22 +117,24 @@ package jmri.jmrix.nce;
  * --------------------------------------------------------------------------
  * <P>
  * 0xA6 rr xx Program register rr with data xx (1) ! = success in register mode
- * 0 = program track not enabled
+ * 0 = program track not enabled. Not supported by SB3 or PH
  * <P>
  * --------------------------------------------------------------------------
  * <P>
  * 0xA7 rr Read register rr in register mode(2) !,3 NOTE: cv data followed ! for
- * ok, 0 = program track not enabled 0xff followed by 3 for can't read
+ * ok, 0 = program track not enabled 0xff followed by 3 for can't read. Not
+ * supported by SB3 or PH
  * <P>
  * --------------------------------------------------------------------------
  * <P>
  * 0xA8 aaaa xx Program CV aaaa with data xx (1) ! = success in direct mode 0 =
- * program track not enabled
+ * program track not enabled. Not supported by SB3 or PH
  * <P>
  * --------------------------------------------------------------------------
  * <P>
  * 0xA9 aaaa Read CV aaaa in direct mode (2) !,3 NOTE: cv data followed ! for
- * ok, 0 = program track not enabled 0xff followed by 3 for can't read
+ * ok, 0 = program track not enabled 0xff followed by 3 for can't read. Not
+ * supported by SB3 or PH
  * <P>
  * --------------------------------------------------------------------------
  * <P>
@@ -146,7 +152,8 @@ package jmri.jmrix.nce;
  * <P>
  * NOTE: accy/signal address 0 is not a valid address
  * <P>
- * SPECIAL NOTE: PowerCab/SB3 version 1.28 only supports up to accessory address 250
+ * SPECIAL NOTE: PowerCab/SB3 version 1.28 only supports up to accessory address
+ * 250
  * <P>
  * Op_1 Data_1 Operation description
  * <P>
@@ -165,7 +172,7 @@ package jmri.jmrix.nce;
  * <P>
  * --------------------------------------------------------------------------
  * <P>
- * 0xAE (5 data bytes) OPs program loco CV (1) !,1,3
+ * 0xAE (5 data bytes) OPs program loco CV (1) !,1,3. Not supported by PH
  * <P>
  * Command Format: 0xAE (addr_h) (addr_l) (CV_h) (CV_l) (data)
  * <P>
@@ -174,7 +181,8 @@ package jmri.jmrix.nce;
  * <P>
  * --------------------------------------------------------------------------
  * <P>
- * 0xAF <5 data bytes> OPs program accessory/signal (1) !,1,3
+ * 0xAF <5 data bytes> OPs program accessory/signal (1) !,1,3. Not supported by
+ * PH
  * <P>
  * Command Format: 0xAF (addr_h) (addr_l) (CV_h) (CV_l) (data)
  * <P>
@@ -204,9 +212,23 @@ package jmri.jmrix.nce;
  * <P>
  * *************************************************************************
  * <P>
+ * Commands not supported by USB, will return ASCII '0':
+ * <P>
+ * 0x81 through 0x8B
+ * <P>
+ * 0x8D through 0x9B
+ * <P>
+ * 0x9D
+ * <P>
+ * 0xA3 through 0xA5
+ * <P>
+ * 0xAB, 0xAC
+ * <P>
+ * 0xB2 through 0xBF
+ * <P>
  * 
  * @author Daniel Boudreau Copyright (C) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class NceUSB  {
 	

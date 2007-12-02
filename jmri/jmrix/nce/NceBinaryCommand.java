@@ -65,7 +65,7 @@ package jmri.jmrix.nce;
  *  1 = bad loco address
  *
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 
 public class NceBinaryCommand {
@@ -88,9 +88,9 @@ public class NceBinaryCommand {
 
     public static final int ACC_CMD = 0xAD;			//NCE accessory command
     public static final int LOC_CMD = 0xA2;			//NCE Loco control command 
-    public static final int SW_REV_CMD = 0xAA; 		// NCE get EPROM revision cmd, Reply Format: VV.MM.mm
+    public static final int SW_REV_CMD = 0xAA; 		//NCE get EPROM revision cmd, Reply Format: VV.MM.mm
 
-    // NOTE: ONLY NCE USB supports the following commands
+    // NOTE: ONLY NCE USB connected to PowerCab or SB3 supports the following commands
     
     public static final int OPS_PROG_LOCO_CMD = 0xAE; // NCE ops mode program loco
     public static final int OPS_PROG_ACCY_CMD = 0xAF; // NCE ops mode program accessories
@@ -307,6 +307,12 @@ public class NceBinaryCommand {
 	public static final byte LOC_CMD_KILL_CONSIST = 0x11;			//Kill consist
 	
 	public static byte[] nceLocoCmd (int locoAddr, byte locoCmd, byte locoData){
+		// not supported by USB connected to SB3 or PH
+		if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3
+				|| NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERHOUSE){
+			log.error("attempt to send unsupported binary command to NCE USB");
+			return null;
+		}
 		
         if (locoCmd < 1 || locoCmd > 0x17) {
             log.error("invalid NCE loco command "+locoCmd);
@@ -338,62 +344,70 @@ public class NceBinaryCommand {
 	
 	/**
 	 * create an NCE USB compatible ops mode loco message
+	 * 
 	 * @param locoAddr
 	 * @param cvAddr
 	 * @param cvData
 	 * @return
 	 */
-	public static byte[] usbOpsModeLoco(int locoAddr, int cvAddr, int cvData){
-		// ONLY USB can send this message
-    	if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_NONE){
-    		log.error("attempt to send unsupported binary command");
+	public static byte[] usbOpsModeLoco(int locoAddr, int cvAddr, int cvData) {
+		// ONLY USB connected to PowerCab or SB3 can send this message
+		if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERCAB
+				|| NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3) {
+
+			byte[] retVal = new byte[6];
+			int locoAddr_h = locoAddr / 256;
+			int locoAddr_l = locoAddr & 0xFF;
+			int cvAddr_h = cvAddr / 256;
+			int cvAddr_l = cvAddr & 0xFF;
+
+			retVal[0] = (byte) (OPS_PROG_LOCO_CMD); // NCE ops mode loco command
+			retVal[1] = (byte) (locoAddr_h); // loco high address
+			retVal[2] = (byte) (locoAddr_l); // loco low address
+			retVal[3] = (byte) (cvAddr_h); // CV high address
+			retVal[4] = (byte) (cvAddr_l); // CV low address
+			retVal[5] = (byte) (cvData); // CV data
+
+			return retVal;
+
+		} else {
+			log.error("attempt to send unsupported binary command");
 			return null;
-    	}
-		
-		byte[] retVal = new byte[6];
-		int locoAddr_h = locoAddr/256;
-        int locoAddr_l = locoAddr & 0xFF;
-		int cvAddr_h = cvAddr/256;
-        int cvAddr_l = cvAddr & 0xFF;
-        
-        retVal[0] = (byte) (OPS_PROG_LOCO_CMD); //NCE ops mode loco command
-        retVal[1] = (byte) (locoAddr_h);		//loco high address
-        retVal[2] = (byte) (locoAddr_l);		//loco low address
-        retVal[3] = (byte) (cvAddr_h);			//CV high address
-        retVal[4] = (byte) (cvAddr_l); 			//CV low address
-        retVal[5] = (byte) (cvData);			//CV data 
-        
-		return retVal;
+		}
 	}
-	
+
 	/**
 	 * create an NCE USB compatible ops mode accy message
+	 * 
 	 * @param accyAddr
 	 * @param cvAddr
 	 * @param cvData
 	 * @return
 	 */
-	public static byte[] usbOpsModeAccy(int accyAddr, int cvAddr, int cvData){
-		// ONLY USB can send this message
-    	if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_NONE){
-    		log.error("attempt to send unsupported binary command");
+	public static byte[] usbOpsModeAccy(int accyAddr, int cvAddr, int cvData) {
+		// ONLY USB connected to PowerCab or SB3 can send this message
+		if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERCAB
+				|| NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3) {
+
+			byte[] retVal = new byte[6];
+			int accyAddr_h = accyAddr / 256;
+			int accyAddr_l = accyAddr & 0xFF;
+			int cvAddr_h = cvAddr / 256;
+			int cvAddr_l = cvAddr & 0xFF;
+
+			retVal[0] = (byte) (OPS_PROG_ACCY_CMD); // NCE ops mode accy command
+			retVal[1] = (byte) (accyAddr_h); // accy high address
+			retVal[2] = (byte) (accyAddr_l); // accy low address
+			retVal[3] = (byte) (cvAddr_h); // CV high address
+			retVal[4] = (byte) (cvAddr_l); // CV low address
+			retVal[5] = (byte) (cvData); // CV data
+
+			return retVal;
+
+		} else {
+			log.error("attempt to send unsupported binary command");
 			return null;
-    	}
-    	
-    	byte[] retVal = new byte[6];
-		int accyAddr_h = accyAddr/256;
-        int accyAddr_l = accyAddr & 0xFF;
-		int cvAddr_h = cvAddr/256;
-        int cvAddr_l = cvAddr & 0xFF;
-        
-        retVal[0] = (byte) (OPS_PROG_ACCY_CMD); //NCE ops mode accy command
-        retVal[1] = (byte) (accyAddr_h);		//accy high address
-        retVal[2] = (byte) (accyAddr_l);		//accy low address
-        retVal[3] = (byte) (cvAddr_h);			//CV high address
-        retVal[4] = (byte) (cvAddr_l); 			//CV low address
-        retVal[5] = (byte) (cvData);			//CV data 
-        
-		return retVal;
+		}
 	}
 	
 	
