@@ -58,7 +58,7 @@ import javax.swing.event.ChangeListener;
  * be removed.
  *<P>
  * @author	Bob Jacobsen, Alex Shepherd   Copyright (C) 2001, 2004
- * @version	$Revision: 1.28 $
+ * @version	$Revision: 1.29 $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
@@ -424,10 +424,20 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      * finishes.
      */
     private int _progState = IDLE;
+    
     private static final int IDLE = -1;
     boolean isReading;
     boolean isWriting;
 
+    /**
+     * Count number of retries done
+     */
+    private int retries = 0;
+    /**
+     * Define maximum number of retries of read/write operations before moving on
+     */
+    private static final int RETRY_MAX = 2;
+    
     boolean onlyChanges = false;
 
     /**
@@ -457,6 +467,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         isReading = true;
         isWriting = false;
         _progState = -1;
+        retries = 0;
         if (log.isDebugEnabled()) log.debug("start series of read operations");
         readNext();
     }
@@ -472,6 +483,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         isReading = false;
         isWriting = true;
         _progState = -1;
+        retries = 0;
         if (log.isDebugEnabled()) log.debug("start series of write operations");
         writeNext();
     }
@@ -486,6 +498,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         isReading = true;
         isWriting = false;
         _progState = -1;
+        retries = 0;
         if (log.isDebugEnabled()) log.debug("start series of read operations");
         readNext();
     }
@@ -501,13 +514,24 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         isReading = false;
         isWriting = true;
         _progState = -1;
+        retries = 0;
         if (log.isDebugEnabled()) log.debug("start series of write operations");
         writeNext();
     }
 
     void readNext() {
-        // read operation
-        _progState++;  // progState is the index of the CV to handle now, do next
+        // read operation start/continue
+        // check for retry if needed
+        if ( (_progState>=0) && (retries < RETRY_MAX) 
+                && (((CvValue)_cvVector.elementAt(getCvNum()+_progState)).getState() != CvValue.READ) ) {
+            // need to retry an error; leave progState (CV number) as it was
+            retries++;
+        } else {    
+            // normal read operation of next CV
+            retries = 0;
+            _progState++;  // progState is the index of the CV to handle now
+        }
+
         if (_progState >= nValues) {
             // done, clean up and return to invoker
             _progState = IDLE;
@@ -525,8 +549,18 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
     }
 
     void writeNext() {
-        // write operation
-        _progState++;  // progState is the index of the CV to handle now
+        // write operation start/continue
+        // check for retry if needed
+        if ( (_progState>=0) && (retries < RETRY_MAX) 
+                && (((CvValue)_cvVector.elementAt(getCvNum()+_progState)).getState() != CvValue.STORED) ) {
+            // need to retry an error; leave progState (CV number) as it was
+            retries++;
+        } else {    
+            // normal read operation of next CV
+            retries = 0;
+            _progState++;  // progState is the index of the CV to handle now
+        }
+
         if (_progState >= nValues) {
             _progState = IDLE;
             isReading = false;
