@@ -16,7 +16,7 @@ import jmri.util.JmriJFrame;
  *
  * <p> Time code copied from code for the Nixie clock by Bob Jacobsen</p>
  * @author                     Dennis Miller Copyright (C) 2004
- * @version                    $Revision: 1.9 $
+ * @version                    $Revision: 1.10 $
  */
 
 public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
@@ -34,10 +34,6 @@ public AnalogClockFrame() {
 
 
         clock = InstanceManager.timebaseInstance();
-
-        // set time to now
-        clock.setTime(new Date());
-        try { clock.setRate(4.); } catch (Exception e) {}
 
         // listen for changes to the timebase parameters
         clock.addPropertyChangeListener(this);

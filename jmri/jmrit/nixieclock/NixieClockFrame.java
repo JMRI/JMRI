@@ -21,7 +21,7 @@ import jmri.util.JmriJFrame;
  * Modified by Dennis Miller for resizing Nov, 2004
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
 
@@ -71,10 +71,6 @@ public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyCh
         // this DOES NOT allow space for the Run/Stop button, if it is
         // enabled.  When the Run/Stop button is enabled, the layout will have to be changed
         aspect =  (4.5*24.)/32.;
-
-        // set time to now
-        clock.setTime(new Date());
-        try { clock.setRate(4.); } catch (Exception e) {}
 
         // listen for changes to the timebase parameters
         clock.addPropertyChangeListener(this);

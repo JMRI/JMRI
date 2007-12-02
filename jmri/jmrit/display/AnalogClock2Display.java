@@ -18,7 +18,7 @@ import jmri.util.JmriJFrame;
  * <p>Time code copied in part from code for the Nixie clock by Bob Jacobsen </p>
  *
  * @author  Howard G. Penny - Copyright (C) 2005
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class AnalogClock2Display extends PositionableJComponent {
     Timebase clock;
@@ -74,8 +74,6 @@ public class AnalogClock2Display extends PositionableJComponent {
         super((JmriJFrame)parentFrame);
         clock = InstanceManager.timebaseInstance();
 
-        // set time to now
-        clock.setTime(new Date());
         rate = (int) clock.getRate();
 
         // Load the JMRI logo and clock face
