@@ -47,7 +47,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -606,6 +606,18 @@ public class LayoutEditor extends JmriJFrame {
 					}
 					// bring up signals at level crossing tool dialog
 					tools.setSignalsAtLevelXing(signalIconEditor,signalFrame);
+                }
+            });
+		// set signals at throat-to-throat turnouts
+		JMenuItem tToTItem = new JMenuItem(rb.getString("SignalsAtTToTTurnout")+"...");
+        toolsMenu.add(tToTItem);
+        tToTItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+					if (tools == null) {
+						tools = new LayoutEditorTools(thisPanel);
+					}
+					// bring up signals at throat-to-throat turnouts tool dialog
+					tools.setSignalsAtTToTTurnouts(signalIconEditor,signalFrame);
                 }
             });
 	}

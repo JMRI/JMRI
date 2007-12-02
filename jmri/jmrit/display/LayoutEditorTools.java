@@ -4,6 +4,8 @@ package jmri.jmrit.display;
 
 import jmri.InstanceManager;
 import jmri.util.JmriJFrame;
+import jmri.Conditional;
+import jmri.Logix;
 
 import java.awt.*;
 import java.awt.geom.*;
@@ -28,7 +30,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class LayoutEditorTools 
@@ -306,7 +308,7 @@ public class LayoutEditorTools
 			}		
 		}
 		else {
-			int assigned = isHeadAssignedHere(throatContinuingHead);
+			int assigned = isHeadAssignedHere(throatContinuingHead,layoutTurnout);
 			if (assigned == NONE) {
 				if ( isHeadOnPanel(throatContinuingHead) && 
 									isHeadAssignedAnywhere(throatContinuingHead) ) {
@@ -353,7 +355,7 @@ public class LayoutEditorTools
 			}		
 		}
 		else if (throatDivergingHead!=null) {
-			int assigned = isHeadAssignedHere(throatDivergingHead);
+			int assigned = isHeadAssignedHere(throatDivergingHead,layoutTurnout);
 			if (assigned == NONE) {
 				if (isHeadOnPanel(throatDivergingHead) && 
 									isHeadAssignedAnywhere(throatDivergingHead) ) {
@@ -404,7 +406,7 @@ public class LayoutEditorTools
 			}		
 		}
 		else {
-			int assigned = isHeadAssignedHere(continuingHead);
+			int assigned = isHeadAssignedHere(continuingHead,layoutTurnout);
 			if (assigned == NONE) {
 				if (isHeadOnPanel(continuingHead)  && 
 									isHeadAssignedAnywhere(continuingHead) ) {
@@ -451,7 +453,7 @@ public class LayoutEditorTools
 			}		
 		}
 		else {
-			int assigned = isHeadAssignedHere(divergingHead);
+			int assigned = isHeadAssignedHere(divergingHead,layoutTurnout);
 			if (assigned == NONE) {
 				if (isHeadOnPanel(divergingHead) && 
 									isHeadAssignedAnywhere(divergingHead) ) {
@@ -957,6 +959,44 @@ public class LayoutEditorTools
 	 */
 	 
 	/**
+	 * Returns the layout turnout corresponding to a given turnout.
+	 * If require double crossover is requested, and error message is sent to the user if the 
+	 *		layout turnout is not a double crossover, and null is returned.
+	 * If a layout turnout corresponding to the turnout is not found, an error message
+	 *		is sent to the user and null is returned.
+	 */
+	public LayoutTurnout getLayoutTurnoutFromTurnout(Turnout turnout, boolean requireDoubleXover,
+				String str, JFrame theFrame) {
+		LayoutTurnout t = null;
+		for (int i=0;i<layoutEditor.turnoutList.size();i++) {
+			t = (LayoutTurnout)layoutEditor.turnoutList.get(i);
+			if (t.getTurnout() == turnout) {
+				// have the layout turnout corresponding to the turnout
+				if ( (t.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER) &&
+									(!requireDoubleXover) ) {
+					javax.swing.JOptionPane.showMessageDialog(theFrame,
+								rb.getString("InfoMessage1"),"",
+								javax.swing.JOptionPane.INFORMATION_MESSAGE);
+					return null;
+				}
+				if (requireDoubleXover && (t.getTurnoutType()!=LayoutTurnout.DOUBLE_XOVER) ) {
+					javax.swing.JOptionPane.showMessageDialog(theFrame,
+								rb.getString("InfoMessage8"),"",
+								javax.swing.JOptionPane.INFORMATION_MESSAGE);
+					return null;
+				}					
+				return t;
+			}
+		}
+		// layout turnout not found
+		JOptionPane.showMessageDialog(theFrame,
+				java.text.MessageFormat.format(rb.getString("SignalsError3"),
+						new String[]{str}), rb.getString("Error"),
+							JOptionPane.ERROR_MESSAGE);
+		return null;
+	}
+	 
+	/**
 	 * Returns the SignalHead corresponding to an entry field in the specified dialog.
 	 *		This also takes care of UpperCase and trimming of leading and trailing blanks.
 	 *		If entry is required, and no entry is present, and error message is sent.
@@ -1032,31 +1072,31 @@ public class LayoutEditorTools
 	 *		The index specifies the turnout position of the signal head
 	 *		according to the code listed at the beginning of this module.
 	 */
-	private int isHeadAssignedHere(SignalHead head) {
+	private int isHeadAssignedHere(SignalHead head, LayoutTurnout lTurnout) {
 		String sysName = head.getSystemName();
 		String uName = head.getUserName();
-		String name = layoutTurnout.getSignalA1Name();
+		String name = lTurnout.getSignalA1Name();
 		if ( (name!=null) && (name.length()>0) && ((name.equals(uName)) || 
 						(name.equals(sysName))) ) return A1;
-		name = layoutTurnout.getSignalA2Name();
+		name = lTurnout.getSignalA2Name();
 		if ( (name!=null) && (name.length()>0) && ((name.equals(uName)) || 
 						(name.equals(sysName))) ) return A2;
-		name = layoutTurnout.getSignalB1Name();
+		name = lTurnout.getSignalB1Name();
 		if ( (name!=null) && (name.length()>0) && ((name.equals(uName)) || 
 						(name.equals(sysName))) ) return B1;
-		name = layoutTurnout.getSignalB2Name();
+		name = lTurnout.getSignalB2Name();
 		if ( (name!=null) && (name.length()>0) && ((name.equals(uName)) || 
 						(name.equals(sysName))) ) return B2;
-		name = layoutTurnout.getSignalC1Name();
+		name = lTurnout.getSignalC1Name();
 		if ( (name!=null) && (name.length()>0) && ((name.equals(uName)) || 
 						(name.equals(sysName))) ) return C1;
-		name = layoutTurnout.getSignalC2Name();
+		name = lTurnout.getSignalC2Name();
 		if ( (name!=null) && (name.length()>0) && ((name.equals(uName)) || 
 						(name.equals(sysName))) ) return C2;
-		name = layoutTurnout.getSignalD1Name();
+		name = lTurnout.getSignalD1Name();
 		if ( (name!=null) && (name.length()>0) && ((name.equals(uName)) || 
 						(name.equals(sysName))) ) return D1;
-		name = layoutTurnout.getSignalD2Name();
+		name = lTurnout.getSignalD2Name();
 		if ( (name!=null) && (name.length()>0) && ((name.equals(uName)) || 
 						(name.equals(sysName))) ) return D2;
 		return NONE;
@@ -2255,7 +2295,7 @@ public class LayoutEditorTools
 			}		
 		}
 		else {
-			int assigned = isHeadAssignedHere(a1Head);
+			int assigned = isHeadAssignedHere(a1Head,layoutTurnout);
 			if (assigned == NONE) {
 				if ( isHeadOnPanel(a1Head) && 
 									isHeadAssignedAnywhere(a1Head) ) {
@@ -2302,7 +2342,7 @@ public class LayoutEditorTools
 			}		
 		}
 		else if (a2Head!=null) {
-			int assigned = isHeadAssignedHere(a2Head);
+			int assigned = isHeadAssignedHere(a2Head,layoutTurnout);
 			if (assigned == NONE) {
 				if ( isHeadOnPanel(a2Head) && 
 									isHeadAssignedAnywhere(a2Head) ) {
@@ -2353,7 +2393,7 @@ public class LayoutEditorTools
 			}		
 		}
 		else {
-			int assigned = isHeadAssignedHere(b1Head);
+			int assigned = isHeadAssignedHere(b1Head,layoutTurnout);
 			if (assigned == NONE) {
 				if ( isHeadOnPanel(b1Head) && 
 									isHeadAssignedAnywhere(b1Head) ) {
@@ -2400,7 +2440,7 @@ public class LayoutEditorTools
 			}		
 		}
 		else if (b2Head!=null) {
-			int assigned = isHeadAssignedHere(b2Head);
+			int assigned = isHeadAssignedHere(b2Head,layoutTurnout);
 			if (assigned == NONE) {
 				if ( isHeadOnPanel(b2Head) && 
 									isHeadAssignedAnywhere(b2Head) ) {
@@ -2451,7 +2491,7 @@ public class LayoutEditorTools
 			}		
 		}
 		else {
-			int assigned = isHeadAssignedHere(c1Head);
+			int assigned = isHeadAssignedHere(c1Head,layoutTurnout);
 			if (assigned == NONE) {
 				if ( isHeadOnPanel(c1Head) && 
 									isHeadAssignedAnywhere(c1Head) ) {
@@ -2498,7 +2538,7 @@ public class LayoutEditorTools
 			}		
 		}
 		else if (c2Head!=null) {
-			int assigned = isHeadAssignedHere(c2Head);
+			int assigned = isHeadAssignedHere(c2Head,layoutTurnout);
 			if (assigned == NONE) {
 				if ( isHeadOnPanel(c2Head) && 
 									isHeadAssignedAnywhere(c2Head) ) {
@@ -2549,7 +2589,7 @@ public class LayoutEditorTools
 			}		
 		}
 		else {
-			int assigned = isHeadAssignedHere(d1Head);
+			int assigned = isHeadAssignedHere(d1Head,layoutTurnout);
 			if (assigned == NONE) {
 				if ( isHeadOnPanel(d1Head) && 
 									isHeadAssignedAnywhere(d1Head) ) {
@@ -2596,7 +2636,7 @@ public class LayoutEditorTools
 			}		
 		}
 		else if (d2Head!=null) {
-			int assigned = isHeadAssignedHere(d2Head);
+			int assigned = isHeadAssignedHere(d2Head,layoutTurnout);
 			if (assigned == NONE) {
 				if ( isHeadOnPanel(d2Head) && 
 									isHeadAssignedAnywhere(d2Head) ) {
@@ -2612,7 +2652,7 @@ public class LayoutEditorTools
 					layoutTurnout.setSignalD2Name(d2Field.getText().trim());
 				}
 			}
-			else if (assigned!=A2) {
+			else if (assigned!=D2) {
 // need to figure out what to do in this case.			
 			}
 		}
@@ -2971,6 +3011,7 @@ public class LayoutEditorTools
 			finalizeBlockBossLogic();			
 		}
 	}
+
 	/**
 	 * Tool to set signals at a level crossing, including placing the 
 	 *		signal icons and setup of Simple Signal Logic for each signal head
@@ -3769,6 +3810,1540 @@ public class LayoutEditorTools
 		else if (track2Occupancy!=null)
 			logic.setSensor2(track2Occupancy.getSystemName());
 		finalizeBlockBossLogic();
+	}
+
+	/**
+	 * Tool to set signals at throat-to-throat turnouts, including placing the 
+	 *		signal icons and setup of signal logic for each signal head
+	 * <P>
+	 * This tool can only be accessed from the Tools menu. There is no access
+	 *		from a turnout pop-up menu.
+	 * <P>
+	 * This tool requires a situation where two turnouts are connected throat-
+	 *		to-throat by a single "short" track segment.  The actual length of 
+	 *		the track segment is not tested. If this situation is not found,
+	 *		and error message is sent to the user.  To get started with this 
+	 *      the user needs to enter at least one of the two connected turnouts.
+	 * <P>
+	 * This tool assumes two turnouts connected throat-to-throat, as would be
+	 *		used to represent a double slip turnout. The turnouts may be either
+	 *		left-handed, right-handed, wye, or any pair of these. This tool also
+	 *		assumes that there are no signals at the throat junction. The signal
+	 *		heads will be rotated to face outward--away from the throats. Four
+	 *		sets of one or two signal heads will be placed, one at each of the
+	 *		converging and diverging for each turnout.
+	 * <P>
+	 * This tool assumes that each of the four tracks is contained in a 
+	 *		different block. Things work best if the two throat-to-throat
+	 *		turnouts are in their own separate block, but this is not necessary.
+	 * <P>
+	 * This tool will place icons on the outside edges of each turnout.
+	 * <P>
+	 * At least one signal at each of the four connection points is 
+	 *		required. A second signal at each is optional.
+	 * <P>
+	 * This tool only places signal icons if the turnout is either mostly vertical 
+	 *		or mostly horizontal. Some user adjustment may be needed.
+	 */	
+	
+	// operational variables for Set Signals at Double Crossover Turnout tool
+	private JmriJFrame setSignalsAtTToTFrame = null;
+	private boolean setSignalsAtTToTOpen = false;
+	private JTextField turnout1NameField = new JTextField(16);
+	private JTextField turnout2NameField = new JTextField(16);
+	private JTextField a1TToTField = new JTextField(16);
+	private JTextField a2TToTField = new JTextField(16);
+	private JTextField b1TToTField = new JTextField(16);
+	private JTextField b2TToTField = new JTextField(16);
+	private JTextField c1TToTField = new JTextField(16);
+	private JTextField c2TToTField = new JTextField(16);
+	private JTextField d1TToTField = new JTextField(16);
+	private JTextField d2TToTField = new JTextField(16);
+	private JCheckBox setA1TToTHead = new JCheckBox(rb.getString("PlaceHead"));
+	private JCheckBox setupA1TToTLogic = new JCheckBox(rb.getString("SetLogic"));
+	private JCheckBox setA2TToTHead = new JCheckBox(rb.getString("PlaceHead"));
+	private JCheckBox setupA2TToTLogic = new JCheckBox(rb.getString("SetLogic"));
+	private JCheckBox setB1TToTHead = new JCheckBox(rb.getString("PlaceHead"));
+	private JCheckBox setupB1TToTLogic = new JCheckBox(rb.getString("SetLogic"));
+	private JCheckBox setB2TToTHead = new JCheckBox(rb.getString("PlaceHead"));
+	private JCheckBox setupB2TToTLogic = new JCheckBox(rb.getString("SetLogic"));
+	private JCheckBox setC1TToTHead = new JCheckBox(rb.getString("PlaceHead"));
+	private JCheckBox setupC1TToTLogic = new JCheckBox(rb.getString("SetLogic"));
+	private JCheckBox setC2TToTHead = new JCheckBox(rb.getString("PlaceHead"));
+	private JCheckBox setupC2TToTLogic = new JCheckBox(rb.getString("SetLogic"));
+	private JCheckBox setD1TToTHead = new JCheckBox(rb.getString("PlaceHead"));
+	private JCheckBox setupD1TToTLogic = new JCheckBox(rb.getString("SetLogic"));
+	private JCheckBox setD2TToTHead = new JCheckBox(rb.getString("PlaceHead"));
+	private JCheckBox setupD2TToTLogic = new JCheckBox(rb.getString("SetLogic"));
+	private JButton getSavedTToTSignalHeads = null;
+	private JButton changeTToTSignalIcon = null;
+	private JButton setTToTSignalsDone = null;
+	private JButton setTToTSignalsCancel = null;
+	private LayoutTurnout layoutTurnout1 = null;
+	private LayoutTurnout layoutTurnout2 = null;
+	private Turnout turnout1 = null;
+	private Turnout turnout2 = null;
+	private TrackSegment connectorTrack = null;
+	private SignalHead a1TToTHead = null;
+	private SignalHead a2TToTHead = null;
+	private SignalHead b1TToTHead = null;
+	private SignalHead b2TToTHead = null;
+	private SignalHead c1TToTHead = null;
+	private SignalHead c2TToTHead = null;
+	private SignalHead d1TToTHead = null;
+	private SignalHead d2TToTHead = null;
+	private boolean	layoutTurnout1Horizontal = false;
+	private boolean	layoutTurnout1Vertical = false;
+	private boolean	layoutTurnout2Horizontal = false;
+	private boolean	layoutTurnout2Vertical = false;
+	private boolean	layoutTurnout1ThroatLeft = false;
+	private boolean	layoutTurnout1ThroatUp = false;
+	private boolean	layoutTurnout2ThroatLeft = false;
+	private boolean	layoutTurnout2ThroatUp = false;
+	private boolean	layoutTurnout1BUp = false;
+	private boolean	layoutTurnout1BLeft = false;
+	private boolean	layoutTurnout2BUp = false;
+	private boolean	layoutTurnout2BLeft = false;
+	
+	public void setSignalsAtTToTTurnouts( MultiIconEditor theEditor, JFrame theFrame ) {
+		signalIconEditor = theEditor;
+		signalFrame = theFrame;
+		if (setSignalsAtTToTOpen) {
+			setSignalsAtTToTFrame.setVisible(true);
+			return;
+		}
+		// Initialize if needed
+		if (setSignalsAtTToTFrame == null) {
+            setSignalsAtTToTFrame = new JmriJFrame( rb.getString("SignalsAtTToTTurnout") );
+            setSignalsAtTToTFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtTToTTurnout", true);
+            setSignalsAtTToTFrame.setLocation(70,30);
+            Container theContentPane = setSignalsAtTToTFrame.getContentPane();        
+            theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
+			JPanel panel1 = new JPanel();
+            panel1.setLayout(new FlowLayout());
+			JLabel turnout1NameLabel = new JLabel( rb.getString("Turnout")+" 1 "+
+																rb.getString("Name") );
+			panel1.add(turnout1NameLabel);
+			panel1.add(turnout1NameField);
+			turnout1NameField.setToolTipText(rb.getString("SignalsTurnoutNameHint"));
+            theContentPane.add(panel1);
+			JPanel panel11 = new JPanel();
+            panel11.setLayout(new FlowLayout());
+			JLabel turnout2NameLabel = new JLabel( rb.getString("Turnout")+" 2 "+
+																rb.getString("Name") );
+			panel11.add(turnout2NameLabel);
+			panel11.add(turnout2NameField);
+			turnout2NameField.setToolTipText(rb.getString("SignalsTurnoutNameHint"));
+			theContentPane.add(panel11);
+			theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
+			// Provide for retrieval of names of previously saved signal heads
+            JPanel panel2 = new JPanel();
+			JLabel shTitle = new JLabel(rb.getString("SignalHeads"));
+			panel2.add(shTitle);			
+			panel2.add(new JLabel("     "));
+            panel2.add(getSavedTToTSignalHeads = new JButton(rb.getString("GetSaved")));
+            getSavedTToTSignalHeads.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						tToTTurnoutSignalsGetSaved(e);
+					}
+				});
+            getSavedTToTSignalHeads.setToolTipText( rb.getString("GetSavedHint") );
+			theContentPane.add(panel2);
+			theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
+			// Signal heads located at turnout 1			
+			JPanel panel21x = new JPanel();
+            panel21x.setLayout(new FlowLayout());
+			panel21x.add(new JLabel(rb.getString("SignalLocated")+" "+rb.getString("Turnout")+" 1 - "+
+											rb.getString("ContinuingTrack")));
+			theContentPane.add(panel21x);
+			JPanel panel21 = new JPanel();
+            panel21.setLayout(new FlowLayout());
+			panel21.add(new JLabel(rb.getString("ProtectsTurnout")+" 2 - "+rb.getString("ContinuingTrack")+" : "));
+			panel21.add(a1TToTField);
+			theContentPane.add(panel21);
+			a1TToTField.setToolTipText(rb.getString("SignalHeadNameHint"));
+            JPanel panel22 = new JPanel();
+            panel22.setLayout(new FlowLayout());
+			panel22.add(new JLabel(rb.getString("OrBoth")+" 2 "+rb.getString("Tracks)")+"   "));
+			panel22.add(setA1TToTHead);
+			setA1TToTHead.setToolTipText(rb.getString("PlaceHeadHint"));
+			panel22.add(new JLabel("  "));
+			panel22.add(setupA1TToTLogic);
+			setupA1TToTLogic.setToolTipText(rb.getString("SetLogicHint"));
+			theContentPane.add(panel22);
+            JPanel panel23 = new JPanel();
+            panel23.setLayout(new FlowLayout());
+			panel23.add(new JLabel(rb.getString("ProtectsTurnout")+" 2 - "+rb.getString("DivergingTrack")+" : "));
+			panel23.add(a2TToTField);
+			theContentPane.add(panel23);
+			a2TToTField.setToolTipText(rb.getString("SignalHeadNameHint"));
+            JPanel panel24 = new JPanel();
+            panel24.setLayout(new FlowLayout());
+			panel24.add(new JLabel("                "));
+			panel24.add(setA2TToTHead);
+			setA2TToTHead.setToolTipText(rb.getString("PlaceHeadHint"));
+			panel24.add(new JLabel("  "));
+			panel24.add(setupA2TToTLogic);
+			setupA2TToTLogic.setToolTipText(rb.getString("SetLogicHint"));
+			theContentPane.add(panel24);
+			JPanel panel31x = new JPanel();
+            panel31x.setLayout(new FlowLayout());
+			panel31x.add(new JLabel(rb.getString("SignalLocated")+" "+rb.getString("Turnout")+" 1 - "+
+											rb.getString("DivergingTrack")));
+			theContentPane.add(panel31x);
+            JPanel panel31 = new JPanel();
+            panel31.setLayout(new FlowLayout());
+			panel31.add(new JLabel(rb.getString("ProtectsTurnout")+" 2 - "+rb.getString("ContinuingTrack")+" : "));
+			panel31.add(b1TToTField);
+			theContentPane.add(panel31);
+			b1TToTField.setToolTipText(rb.getString("SignalHeadNameHint"));
+            JPanel panel32 = new JPanel();
+            panel32.setLayout(new FlowLayout());
+			panel32.add(new JLabel(rb.getString("OrBoth")+" 2 "+rb.getString("Tracks)")+"   "));
+			panel32.add(setB1TToTHead);
+			setB1TToTHead.setToolTipText(rb.getString("PlaceHeadHint"));
+			panel32.add(new JLabel("  "));
+			panel32.add(setupB1TToTLogic);
+			setupB1TToTLogic.setToolTipText(rb.getString("SetLogicHint"));
+			theContentPane.add(panel32);
+            JPanel panel33 = new JPanel();
+            panel33.setLayout(new FlowLayout());
+			panel33.add(new JLabel(rb.getString("ProtectsTurnout")+" 2 - "+rb.getString("DivergingTrack")+" : "));
+			panel33.add(b2TToTField);
+			theContentPane.add(panel33);
+			b2TToTField.setToolTipText(rb.getString("SignalHeadNameHint"));
+            JPanel panel34 = new JPanel();
+            panel34.setLayout(new FlowLayout());
+			panel34.add(new JLabel("                "));
+			panel34.add(setB2TToTHead);
+			setB2TToTHead.setToolTipText(rb.getString("PlaceHeadHint"));
+			panel34.add(new JLabel("  "));
+			panel34.add(setupB2TToTLogic);
+			setupB2TToTLogic.setToolTipText(rb.getString("SetLogicHint"));
+			theContentPane.add(panel34);
+			theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
+			// Signal heads located at turnout 2			
+			JPanel panel41x = new JPanel();
+            panel41x.setLayout(new FlowLayout());
+			panel41x.add(new JLabel(rb.getString("SignalLocated")+" "+rb.getString("Turnout")+" 2 - "+
+											rb.getString("ContinuingTrack")));
+			theContentPane.add(panel41x);
+			JPanel panel41 = new JPanel();
+            panel41.setLayout(new FlowLayout());
+			panel41.add(new JLabel(rb.getString("ProtectsTurnout")+" 1 - "+rb.getString("ContinuingTrack")+" : "));
+			panel41.add(c1TToTField);
+			theContentPane.add(panel41);
+			c1TToTField.setToolTipText(rb.getString("SignalHeadNameHint"));
+            JPanel panel42 = new JPanel();
+            panel42.setLayout(new FlowLayout());
+			panel42.add(new JLabel(rb.getString("OrBoth")+" 1 "+rb.getString("Tracks)")+"   "));
+			panel42.add(setC1TToTHead);
+			setC1TToTHead.setToolTipText(rb.getString("PlaceHeadHint"));
+			panel42.add(new JLabel("  "));
+			panel42.add(setupC1TToTLogic);
+			setupC1TToTLogic.setToolTipText(rb.getString("SetLogicHint"));
+			theContentPane.add(panel42);
+            JPanel panel43 = new JPanel();
+            panel43.setLayout(new FlowLayout());
+			panel43.add(new JLabel(rb.getString("ProtectsTurnout")+" 1 - "+rb.getString("DivergingTrack")+" : "));
+			panel43.add(c2TToTField);
+			theContentPane.add(panel43);
+			c2TToTField.setToolTipText(rb.getString("SignalHeadNameHint"));
+            JPanel panel44 = new JPanel();
+            panel44.setLayout(new FlowLayout());
+			panel44.add(new JLabel("                "));
+			panel44.add(setC2TToTHead);
+			setC2TToTHead.setToolTipText(rb.getString("PlaceHeadHint"));
+			panel44.add(new JLabel("  "));
+			panel44.add(setupC2TToTLogic);
+			setupC2TToTLogic.setToolTipText(rb.getString("SetLogicHint"));
+			theContentPane.add(panel44);
+			JPanel panel51x = new JPanel();
+            panel51x.setLayout(new FlowLayout());
+			panel51x.add(new JLabel(rb.getString("SignalLocated")+" "+rb.getString("Turnout")+" 2 - "+
+											rb.getString("DivergingTrack")));
+			theContentPane.add(panel51x);
+            JPanel panel51 = new JPanel();
+            panel51.setLayout(new FlowLayout());
+			panel51.add(new JLabel(rb.getString("ProtectsTurnout")+" 1 - "+rb.getString("ContinuingTrack")+" : "));
+			panel51.add(d1TToTField);
+			theContentPane.add(panel51);
+			d1TToTField.setToolTipText(rb.getString("SignalHeadNameHint"));
+            JPanel panel52 = new JPanel();
+            panel52.setLayout(new FlowLayout());
+			panel52.add(new JLabel(rb.getString("OrBoth")+" 1 "+rb.getString("Tracks)")+"   "));
+			panel52.add(setD1TToTHead);
+			setD1TToTHead.setToolTipText(rb.getString("PlaceHeadHint"));
+			panel52.add(new JLabel("  "));
+			panel52.add(setupD1TToTLogic);
+			setupD1TToTLogic.setToolTipText(rb.getString("SetLogicHint"));
+			theContentPane.add(panel52);
+            JPanel panel53 = new JPanel();
+            panel53.setLayout(new FlowLayout());
+			panel53.add(new JLabel(rb.getString("ProtectsTurnout")+" 1 - "+rb.getString("DivergingTrack")+" : "));
+			panel53.add(d2TToTField);
+			theContentPane.add(panel53);
+			d2TToTField.setToolTipText(rb.getString("SignalHeadNameHint"));
+            JPanel panel54 = new JPanel();
+            panel54.setLayout(new FlowLayout());
+			panel54.add(new JLabel("                "));
+			panel54.add(setD2TToTHead);
+			setD2TToTHead.setToolTipText(rb.getString("PlaceHeadHint"));
+			panel54.add(new JLabel("  "));
+			panel54.add(setupD2TToTLogic);
+			setupD2TToTLogic.setToolTipText(rb.getString("SetLogicHint"));
+			theContentPane.add(panel54);
+			theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
+            JPanel panel6 = new JPanel();
+            panel6.setLayout(new FlowLayout());
+            panel6.add(changeTToTSignalIcon = new JButton(rb.getString("ChangeSignalIcon")));
+            changeTToTSignalIcon.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						signalFrame.show();
+					}
+				});
+            changeTToTSignalIcon.setToolTipText( rb.getString("ChangeSignalIconHint") );
+			panel6.add(new JLabel("  "));
+            panel6.add(setTToTSignalsDone = new JButton(rb.getString("Done")));
+            setTToTSignalsDone.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setTToTSignalsDonePressed(e);
+                }
+            });
+            setTToTSignalsDone.setToolTipText( rb.getString("SignalDoneHint") );
+            panel6.add(setTToTSignalsCancel = new JButton(rb.getString("Cancel")));
+            setTToTSignalsCancel.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setTToTSignalsCancelPressed(e);
+                }
+            });
+            setTToTSignalsCancel.setToolTipText( rb.getString("CancelHint") );
+            theContentPane.add(panel6);
+			setSignalsAtTToTFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+				public void windowClosing(java.awt.event.WindowEvent e) {
+					setTToTSignalsCancelPressed(null);
+				}
+			});
+		}
+        setSignalsAtTToTFrame.pack();
+        setSignalsAtTToTFrame.setVisible(true);		
+		setSignalsAtTToTOpen = true;
+	}	
+	private void tToTTurnoutSignalsGetSaved (ActionEvent a) {
+		if ( !getTToTTurnoutInformation() ) return;
+		a1TToTField.setText(layoutTurnout1.getSignalB1Name());	
+		a2TToTField.setText(layoutTurnout1.getSignalB2Name());
+		b1TToTField.setText(layoutTurnout1.getSignalC1Name());
+		b2TToTField.setText(layoutTurnout1.getSignalC2Name());
+		c1TToTField.setText(layoutTurnout2.getSignalB1Name());	
+		c2TToTField.setText(layoutTurnout2.getSignalB2Name());	
+		d1TToTField.setText(layoutTurnout2.getSignalC1Name());	
+		d2TToTField.setText(layoutTurnout2.getSignalC2Name());	
+	}
+	private void setTToTSignalsCancelPressed (ActionEvent a) {
+		setSignalsAtTToTOpen = false;
+		setSignalsAtTToTFrame.setVisible(false);
+	}
+	private boolean getTToTTurnoutInformation() {
+		LayoutTurnout t = null;
+		int type = 0;
+		Object connect = null;
+		String str = "";
+		turnout1 = null;
+		turnout2 = null;
+		layoutTurnout1 = null;
+		layoutTurnout2 = null;
+		str = turnout1NameField.getText().trim();
+		if ( (str==null) || (str.equals("")) ) {
+			// turnout 1 not entered, test turnout 2
+			str = turnout2NameField.getText().trim();
+			if ( (str==null) || (str.equals("")) ) {
+				// no entries in turnout fields 
+				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,rb.getString("SignalsError1"),
+									rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+			turnout2 = jmri.InstanceManager.turnoutManagerInstance().getTurnout(str);
+			if (turnout2==null) {
+				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+					java.text.MessageFormat.format(rb.getString("SignalsError2"),
+						new String[]{str}), rb.getString("Error"),
+							JOptionPane.ERROR_MESSAGE);
+				return false ;
+			}
+			if ( (turnout2.getUserName()==null) || (turnout2.getUserName()=="") ||
+									!turnout2.getUserName().equals(str) ) {
+				str = str.toUpperCase();
+				turnout2NameField.setText(str);
+			}
+			layoutTurnout2 = getLayoutTurnoutFromTurnout(turnout2,false,str,setSignalsAtTToTFrame);
+			if (layoutTurnout2==null)
+				return false;
+			// have turnout 2 and layout turnout 2 - look for turnout 1
+			connectorTrack = (TrackSegment)layoutTurnout2.getConnectA();
+			if (connectorTrack == null) {
+				// Inform user of error, and terminate
+				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+						rb.getString("SignalsError18"),
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+			type = connectorTrack.getType1();
+			connect = connectorTrack.getConnect1();
+			if (connect == (Object)layoutTurnout2) {
+				type = connectorTrack.getType2();
+				connect = connectorTrack.getConnect2();
+			}
+			if ( (type != LayoutEditor.TURNOUT_A) || (connect==null) ) {
+				// Not two turnouts connected throat-to-throat by a single Track Segment
+				// Inform user of error and terminate
+				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+						rb.getString("SignalsError18"),
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+			layoutTurnout1 = (LayoutTurnout)connect;
+			turnout1 = layoutTurnout1.getTurnout();
+			if (turnout1==null) {
+				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+						rb.getString("SignalsError18"),
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+			turnout1NameField.setText(layoutTurnout1.getTurnoutName());
+		}
+		else {
+			// something was entered in the turnout 1 field
+			turnout1 = jmri.InstanceManager.turnoutManagerInstance().getTurnout(str);
+			if (turnout1==null) {
+				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+					java.text.MessageFormat.format(rb.getString("SignalsError2"),
+						new String[]{str}), rb.getString("Error"),
+							JOptionPane.ERROR_MESSAGE);
+				return false ;
+			}
+			if ( (turnout1.getUserName()==null) || (turnout1.getUserName()=="") ||
+									!turnout1.getUserName().equals(str) ) {
+				str = str.toUpperCase();
+				turnout1NameField.setText(str);
+			}
+			// have turnout 1 - get corresponding layoutTurnout
+			layoutTurnout1 = getLayoutTurnoutFromTurnout(turnout1,false,str,setSignalsAtTToTFrame);
+			if (layoutTurnout1 == null)
+				return false;
+			turnout1NameField.setText(str);
+			// have turnout 1 and layout turnout 1 - was something entered for turnout 2
+			str = turnout2NameField.getText().trim();
+			if ( (str==null) || (str.equals("")) ) {
+				// no entry for turnout 2
+				connectorTrack = (TrackSegment)layoutTurnout1.getConnectA();
+				if (connectorTrack == null) {
+					// Inform user of error, and terminate
+					JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+							rb.getString("SignalsError18"),
+								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+					return false;
+				}
+				type = connectorTrack.getType1();
+				connect = connectorTrack.getConnect1();
+				if (connect == (Object)layoutTurnout1) {
+					type = connectorTrack.getType2();
+					connect = connectorTrack.getConnect2();
+				}
+				if ( (type != LayoutEditor.TURNOUT_A) || (connect==null) ) {
+					// Not two turnouts connected throat-to-throat by a single Track Segment
+					// Inform user of error and terminate
+					JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+							rb.getString("SignalsError18"),
+								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+					return false;
+				}
+				layoutTurnout2 = (LayoutTurnout)connect;
+				turnout2 = layoutTurnout2.getTurnout();
+				if (turnout2==null) {
+					JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+							rb.getString("SignalsError18"),
+								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+					return false;
+				}
+				turnout2NameField.setText(layoutTurnout2.getTurnoutName());
+			}
+			else {
+				// turnout 2 entered also
+				turnout2 = jmri.InstanceManager.turnoutManagerInstance().getTurnout(str);
+				if (turnout2==null) {
+					JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+						java.text.MessageFormat.format(rb.getString("SignalsError2"),
+								new String[]{str}), rb.getString("Error"),
+									JOptionPane.ERROR_MESSAGE);
+					return false ;
+				}
+				if ( (turnout2.getUserName()==null) || (turnout2.getUserName()=="") ||
+									!turnout2.getUserName().equals(str) ) {
+					str = str.toUpperCase();
+					turnout2NameField.setText(str);
+				}
+				layoutTurnout2 = getLayoutTurnoutFromTurnout(turnout2,false,str,setSignalsAtTToTFrame);
+				if (layoutTurnout2==null)
+					return false;
+				turnout2NameField.setText(str);
+				// check that layout turnout 1 and layout turnout 2 are connected throat-to-throat 
+				if (layoutTurnout1.getConnectA()!=layoutTurnout2.getConnectA()) {
+					// Not two turnouts connected throat-to-throat by a single Track Segment
+					// Inform user of error and terminate
+					JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+							rb.getString("SignalsError18"),
+								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+					return false;
+				}
+				connectorTrack = (TrackSegment)layoutTurnout1.getConnectA();
+			}
+		}
+		// have both turnouts, correctly connected - complete initialization 
+		layoutTurnout1Horizontal = false;
+		layoutTurnout1Vertical = false;
+		layoutTurnout2ThroatLeft = false;
+		layoutTurnout2Vertical = false;
+		layoutTurnout1ThroatLeft = false;
+		layoutTurnout1ThroatUp = false;
+		layoutTurnout2ThroatLeft = false;
+		layoutTurnout2ThroatUp = false;
+		layoutTurnout1BUp = false;
+		layoutTurnout1BLeft = false;
+		layoutTurnout2BUp = false;
+		layoutTurnout2BLeft = false;
+		double delX = layoutTurnout1.getCoordsA().getX() - layoutTurnout1.getCoordsB().getX();
+		double delY = layoutTurnout1.getCoordsA().getY() - layoutTurnout1.getCoordsB().getY();
+		if (java.lang.Math.abs(delX) > 2.0*java.lang.Math.abs(delY)) {
+			layoutTurnout1Horizontal = true;
+			if (delX < 0.0) layoutTurnout1ThroatLeft = true;
+			if (layoutTurnout1.getCoordsB().getY() < layoutTurnout1.getCoordsC().getY())
+				layoutTurnout1BUp = true;
+		}
+		else if (java.lang.Math.abs(delY) > 2.0*java.lang.Math.abs(delX)) { 
+			layoutTurnout1Vertical = true;
+			if (delY <0.0) layoutTurnout1ThroatUp = true;
+			if (layoutTurnout1.getCoordsB().getX() < layoutTurnout1.getCoordsC().getX())
+				layoutTurnout1BLeft = true;
+		}
+		delX = layoutTurnout2.getCoordsA().getX() - layoutTurnout2.getCoordsB().getX();
+		delY = layoutTurnout2.getCoordsA().getY() - layoutTurnout2.getCoordsB().getY();
+		if (java.lang.Math.abs(delX) > 2.0*java.lang.Math.abs(delY)) {
+			layoutTurnout2Horizontal = true;
+			if (delX < 0.0) layoutTurnout2ThroatLeft = true;
+			if (layoutTurnout2.getCoordsB().getY() < layoutTurnout2.getCoordsC().getY())
+				layoutTurnout2BUp = true;
+		}
+		else if (java.lang.Math.abs(delY) > 2.0*java.lang.Math.abs(delX)) { 
+			layoutTurnout2Vertical = true;
+			if (delY <0.0) layoutTurnout2ThroatUp = true;
+			if (layoutTurnout2.getCoordsB().getX() < layoutTurnout2.getCoordsC().getX())
+				layoutTurnout2BLeft = true;
+		}
+		return true;
+	}
+	private void setTToTSignalsDonePressed (ActionEvent a) {
+		if ( !getTToTTurnoutInformation() ) return;
+		if ( !getTToTSignalHeadInformation() ) return;
+		// place signal icons if requested, and assign signal heads to this turnout
+		if (setA1TToTHead.isSelected()) {
+			if (isHeadOnPanel(a1TToTHead) &&
+				(a1TToTHead!=getHeadFromName(layoutTurnout1.getSignalB1Name()))) {
+				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+					java.text.MessageFormat.format(rb.getString("SignalsError6"),
+						new String[]{a1Field.getText().trim()}), 
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			else if ( (!layoutTurnout1Horizontal) && (!layoutTurnout1Vertical) ) {
+				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+					rb.getString("InfoMessage2"),"",JOptionPane.INFORMATION_MESSAGE);
+				if (a1TToTHead!=getHeadFromName(layoutTurnout1.getSignalB1Name())) {				
+					removeSignalHeadFromPanel(layoutTurnout1.getSignalB1Name());
+					removeAssignment(a1TToTHead);
+					layoutTurnout1.setSignalB1Name(a1TToTField.getText().trim());
+				}
+			}				
+			else {
+				removeSignalHeadFromPanel(layoutTurnout1.getSignalB1Name());
+				placeA1TToT();
+				removeAssignment(a1TToTHead);
+				layoutTurnout1.setSignalB1Name(a1TToTField.getText().trim());
+				needRedraw = true;
+			}		
+		}
+		else {
+			int assigned = isHeadAssignedHere(a1TToTHead,layoutTurnout1);
+			if (assigned == NONE) {
+				if ( isHeadOnPanel(a1TToTHead) && 
+									isHeadAssignedAnywhere(a1TToTHead) ) {
+					JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+						java.text.MessageFormat.format(rb.getString("SignalsError8"),
+							new String[]{a1TToTField.getText().trim()}), 
+								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+					return;
+				}		
+				else {
+					removeSignalHeadFromPanel(layoutTurnout1.getSignalB1Name());
+					removeAssignment(a1TToTHead);
+					layoutTurnout1.setSignalB1Name(a1TToTField.getText().trim());
+				}
+			}
+			else if (assigned!=B1) {
+// need to figure out what to do in this case - assigned to a different position on the same turnout.			
+			}
+		}
+		if ( (a2TToTHead!=null) && setA2TToTHead.isSelected() ) {
+			if (isHeadOnPanel(a2TToTHead) &&
+				(a2TToTHead!=getHeadFromName(layoutTurnout1.getSignalB2Name()))) {
+				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+					java.text.MessageFormat.format(rb.getString("SignalsError6"),
+						new String[]{a2Field.getText().trim()}), 
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			else if ( (!layoutTurnout1Horizontal) && (!layoutTurnout1Vertical) ) {
+				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+					rb.getString("InfoMessage2"),"",JOptionPane.INFORMATION_MESSAGE);
+				if (a2TToTHead!=getHeadFromName(layoutTurnout1.getSignalB2Name())) {				
+					removeSignalHeadFromPanel(layoutTurnout1.getSignalB2Name());
+					removeAssignment(a2TToTHead);
+					layoutTurnout1.setSignalB2Name(a2TToTField.getText().trim());
+				}
+			}				
+			else {
+				removeSignalHeadFromPanel(layoutTurnout1.getSignalB2Name());
+				placeA2TToT();
+				removeAssignment(a2TToTHead);
+				layoutTurnout1.setSignalB2Name(a2TToTField.getText().trim());
+				needRedraw = true;
+			}		
+		}
+		else if (a2TToTHead!=null) {
+			int assigned = isHeadAssignedHere(a2TToTHead,layoutTurnout1);
+			if (assigned == NONE) {
+				if ( isHeadOnPanel(a2TToTHead) && 
+									isHeadAssignedAnywhere(a2TToTHead) ) {
+					JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+						java.text.MessageFormat.format(rb.getString("SignalsError8"),
+							new String[]{a2TToTField.getText().trim()}), 
+								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+					return;
+				}		
+				else {
+					removeSignalHeadFromPanel(layoutTurnout1.getSignalB2Name());
+					removeAssignment(a2TToTHead);
+					layoutTurnout1.setSignalB2Name(a2TToTField.getText().trim());
+				}
+			}
+			else if (assigned!=B2) {
+// need to figure out what to do in this case.			
+			}
+		}
+		else if (a2TToTHead==null) {
+			removeSignalHeadFromPanel(layoutTurnout1.getSignalB2Name());
+			layoutTurnout1.setSignalB2Name("");
+		}
+		if (setB1TToTHead.isSelected()) {
+			if (isHeadOnPanel(b1TToTHead) &&
+				(b1TToTHead!=getHeadFromName(layoutTurnout1.getSignalC1Name()))) {
+				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+					java.text.MessageFormat.format(rb.getString("SignalsError6"),
+						new String[]{b1TToTField.getText().trim()}), 
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			else if ( (!layoutTurnout1Horizontal) && (!layoutTurnout1Vertical) ) {
+				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+					rb.getString("InfoMessage2"),"",JOptionPane.INFORMATION_MESSAGE);
+				if (b1TToTHead!=getHeadFromName(layoutTurnout1.getSignalC1Name())) {				
+					removeSignalHeadFromPanel(layoutTurnout.getSignalC1Name());
+					removeAssignment(b1TToTHead);
+					layoutTurnout1.setSignalC1Name(b1TToTField.getText().trim());
+				}
+			}				
+			else {
+				removeSignalHeadFromPanel(layoutTurnout1.getSignalC1Name());
+				placeB1TToT();
+				removeAssignment(b1TToTHead);
+				layoutTurnout1.setSignalC1Name(b1TToTField.getText().trim());
+				needRedraw = true;
+			}		
+		}
+		else {
+			int assigned = isHeadAssignedHere(b1TToTHead,layoutTurnout1);
+			if (assigned == NONE) {
+				if ( isHeadOnPanel(b1TToTHead) && 
+									isHeadAssignedAnywhere(b1TToTHead) ) {
+					JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+						java.text.MessageFormat.format(rb.getString("SignalsError8"),
+							new String[]{b1TToTField.getText().trim()}), 
+								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+					return;
+				}		
+				else {
+					removeSignalHeadFromPanel(layoutTurnout1.getSignalC1Name());
+					removeAssignment(b1TToTHead);
+					layoutTurnout1.setSignalC1Name(b1TToTField.getText().trim());
+				}
+			}
+			else if (assigned!=C1) {
+// need to figure out what to do in this case.			
+			}
+		}
+		if ( (b2TToTHead!=null) && setB2TToTHead.isSelected() ) {
+			if (isHeadOnPanel(b2TToTHead) &&
+				(b2TToTHead!=getHeadFromName(layoutTurnout1.getSignalC2Name()))) {
+				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+					java.text.MessageFormat.format(rb.getString("SignalsError6"),
+						new String[]{b2TToTField.getText().trim()}), 
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			else if ( (!layoutTurnout1Horizontal) && (!layoutTurnout1Vertical) ) {
+				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+					rb.getString("InfoMessage2"),"",JOptionPane.INFORMATION_MESSAGE);
+				if (b2TToTHead!=getHeadFromName(layoutTurnout1.getSignalC2Name())) {				
+					removeSignalHeadFromPanel(layoutTurnout1.getSignalC2Name());
+					removeAssignment(b2TToTHead);
+					layoutTurnout1.setSignalC2Name(b2TToTField.getText().trim());
+				}
+			}				
+			else {
+				removeSignalHeadFromPanel(layoutTurnout1.getSignalC2Name());
+				placeB2TToT();
+				removeAssignment(b2TToTHead);
+				layoutTurnout1.setSignalC2Name(b2TToTField.getText().trim());
+				needRedraw = true;
+			}		
+		}
+		else if (b2TToTHead!=null) {
+			int assigned = isHeadAssignedHere(b2TToTHead,layoutTurnout1);
+			if (assigned == NONE) {
+				if ( isHeadOnPanel(b2TToTHead) && 
+									isHeadAssignedAnywhere(b2TToTHead) ) {
+					JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+						java.text.MessageFormat.format(rb.getString("SignalsError8"),
+							new String[]{b2TToTField.getText().trim()}), 
+								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+					return;
+				}		
+				else {
+					removeSignalHeadFromPanel(layoutTurnout1.getSignalC2Name());
+					removeAssignment(b2TToTHead);
+					layoutTurnout1.setSignalC2Name(b2TToTField.getText().trim());
+				}
+			}
+			else if (assigned!=C2) {
+// need to figure out what to do in this case.			
+			}
+		}
+		else if (b2TToTHead==null) {
+			removeSignalHeadFromPanel(layoutTurnout1.getSignalC2Name());
+			layoutTurnout1.setSignalC2Name("");
+		}
+		// signal heads on turnout 2
+		if (setC1TToTHead.isSelected()) {
+			if (isHeadOnPanel(c1TToTHead) &&
+				(c1TToTHead!=getHeadFromName(layoutTurnout2.getSignalB1Name()))) {
+				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+					java.text.MessageFormat.format(rb.getString("SignalsError6"),
+						new String[]{c1TToTField.getText().trim()}), 
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			else if ( (!layoutTurnout2Horizontal) && (!layoutTurnout2Vertical) ) {
+				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+					rb.getString("InfoMessage2"),"",JOptionPane.INFORMATION_MESSAGE);
+				if (c1TToTHead!=getHeadFromName(layoutTurnout2.getSignalB1Name())) {				
+					removeSignalHeadFromPanel(layoutTurnout2.getSignalB1Name());
+					removeAssignment(c1TToTHead);
+					layoutTurnout2.setSignalB1Name(c1TToTField.getText().trim());
+				}
+			}				
+			else {
+				removeSignalHeadFromPanel(layoutTurnout2.getSignalB1Name());
+				placeC1TToT();
+				removeAssignment(c1TToTHead);
+				layoutTurnout2.setSignalB1Name(c1TToTField.getText().trim());
+				needRedraw = true;
+			}		
+		}
+		else {
+			int assigned = isHeadAssignedHere(c1TToTHead,layoutTurnout2);
+			if (assigned == NONE) {
+				if ( isHeadOnPanel(c1TToTHead) && 
+									isHeadAssignedAnywhere(c1TToTHead) ) {
+					JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+						java.text.MessageFormat.format(rb.getString("SignalsError8"),
+							new String[]{c1TToTField.getText().trim()}), 
+								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+					return;
+				}		
+				else {
+					removeSignalHeadFromPanel(layoutTurnout2.getSignalB1Name());
+					removeAssignment(c1TToTHead);
+					layoutTurnout2.setSignalB1Name(c1TToTField.getText().trim());
+				}
+			}
+			else if (assigned!=B1) {
+// need to figure out what to do in this case.			
+			}
+		}
+		if ( (c2TToTHead!=null) && setC2TToTHead.isSelected() ) {
+			if (isHeadOnPanel(c2TToTHead) &&
+				(c2TToTHead!=getHeadFromName(layoutTurnout2.getSignalB2Name()))) {
+				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+					java.text.MessageFormat.format(rb.getString("SignalsError6"),
+						new String[]{c2TToTField.getText().trim()}), 
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			else if ( (!layoutTurnout2Horizontal) && (!layoutTurnout2Vertical) ) {
+				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+					rb.getString("InfoMessage2"),"",JOptionPane.INFORMATION_MESSAGE);
+				if (c2TToTHead!=getHeadFromName(layoutTurnout2.getSignalB2Name())) {				
+					removeSignalHeadFromPanel(layoutTurnout2.getSignalB2Name());
+					removeAssignment(c2TToTHead);
+					layoutTurnout2.setSignalC2Name(c2TToTField.getText().trim());
+				}
+			}				
+			else {
+				removeSignalHeadFromPanel(layoutTurnout2.getSignalB2Name());
+				placeC2TToT();
+				removeAssignment(c2TToTHead);
+				layoutTurnout2.setSignalB2Name(c2TToTField.getText().trim());
+				needRedraw = true;
+			}		
+		}
+		else if (c2TToTHead!=null) {
+			int assigned = isHeadAssignedHere(c2TToTHead,layoutTurnout2);
+			if (assigned == NONE) {
+				if ( isHeadOnPanel(c2TToTHead) && 
+									isHeadAssignedAnywhere(c2TToTHead) ) {
+					JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+						java.text.MessageFormat.format(rb.getString("SignalsError8"),
+							new String[]{c2TToTField.getText().trim()}), 
+								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+					return;
+				}		
+				else {
+					removeSignalHeadFromPanel(layoutTurnout2.getSignalB2Name());
+					removeAssignment(c2TToTHead);
+					layoutTurnout2.setSignalB2Name(c2TToTField.getText().trim());
+				}
+			}
+			else if (assigned!=B2) {
+// need to figure out what to do in this case.			
+			}
+		}
+		else if (c2TToTHead==null) {
+			removeSignalHeadFromPanel(layoutTurnout2.getSignalB2Name());
+			layoutTurnout2.setSignalB2Name("");
+		}
+		if (setD1TToTHead.isSelected()) {
+			if (isHeadOnPanel(d1TToTHead) &&
+				(d1TToTHead!=getHeadFromName(layoutTurnout2.getSignalC1Name()))) {
+					JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+					java.text.MessageFormat.format(rb.getString("SignalsError6"),
+						new String[]{d1TToTField.getText().trim()}), 
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			else if ( (!layoutTurnout2Horizontal) && (!layoutTurnout2Vertical) ) {
+				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+					rb.getString("InfoMessage2"),"",JOptionPane.INFORMATION_MESSAGE);
+				if (d1TToTHead!=getHeadFromName(layoutTurnout2.getSignalC1Name())) {				
+					removeSignalHeadFromPanel(layoutTurnout2.getSignalC1Name());
+					removeAssignment(d1TToTHead);
+					layoutTurnout2.setSignalC1Name(d1TToTField.getText().trim());
+				}
+			}				
+			else {
+				removeSignalHeadFromPanel(layoutTurnout2.getSignalC1Name());
+				placeD1TToT();
+				removeAssignment(d1TToTHead);
+				layoutTurnout2.setSignalC1Name(d1TToTField.getText().trim());
+				needRedraw = true;
+			}		
+		}
+		else {
+			int assigned = isHeadAssignedHere(d1TToTHead,layoutTurnout2);
+			if (assigned == NONE) {
+				if ( isHeadOnPanel(d1TToTHead) && 
+									isHeadAssignedAnywhere(d1TToTHead) ) {
+					JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+						java.text.MessageFormat.format(rb.getString("SignalsError8"),
+							new String[]{d1TToTField.getText().trim()}), 
+								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+					return;
+				}		
+				else {
+					removeSignalHeadFromPanel(layoutTurnout2.getSignalC1Name());
+					removeAssignment(d1TToTHead);
+					layoutTurnout2.setSignalC1Name(d1TToTField.getText().trim());
+				}
+			}
+			else if (assigned!=C1) {
+// need to figure out what to do in this case.			
+			}
+		}
+		if ( (d2TToTHead!=null) && setD2TToTHead.isSelected() ) {
+			if (isHeadOnPanel(d2TToTHead) &&
+				(d2TToTHead!=getHeadFromName(layoutTurnout2.getSignalC2Name()))) {
+				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+					java.text.MessageFormat.format(rb.getString("SignalsError6"),
+						new String[]{d2TToTField.getText().trim()}), 
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			else if ( (!layoutTurnout2Horizontal) && (!layoutTurnout2Vertical) ) {
+				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+					rb.getString("InfoMessage2"),"",JOptionPane.INFORMATION_MESSAGE);
+				if (d2TToTHead!=getHeadFromName(layoutTurnout2.getSignalC2Name())) {				
+					removeSignalHeadFromPanel(layoutTurnout2.getSignalC2Name());
+					removeAssignment(d2TToTHead);
+					layoutTurnout2.setSignalC2Name(d2TToTField.getText().trim());
+				}
+			}				
+			else {
+				removeSignalHeadFromPanel(layoutTurnout2.getSignalC2Name());
+				placeD2TToT();
+				removeAssignment(d2TToTHead);
+				layoutTurnout2.setSignalC2Name(d2TToTField.getText().trim());
+				needRedraw = true;
+			}		
+		}
+		else if (d2TToTHead!=null) {
+			int assigned = isHeadAssignedHere(d2TToTHead,layoutTurnout2);
+			if (assigned == NONE) {
+				if ( isHeadOnPanel(d2TToTHead) && 
+									isHeadAssignedAnywhere(d2TToTHead) ) {
+					JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+						java.text.MessageFormat.format(rb.getString("SignalsError8"),
+							new String[]{d2TToTField.getText().trim()}), 
+								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+					return;
+				}		
+				else {
+					removeSignalHeadFromPanel(layoutTurnout2.getSignalC2Name());
+					removeAssignment(d2TToTHead);
+					layoutTurnout2.setSignalC2Name(d2TToTField.getText().trim());
+				}
+			}
+			else if (assigned!=C2) {
+// need to figure out what to do in this case.			
+			}
+		}
+		else if (d2TToTHead==null) {
+			removeSignalHeadFromPanel(layoutTurnout2.getSignalC2Name());
+			layoutTurnout2.setSignalC2Name("");
+		}
+		
+		// setup logic if requested
+		if (setupA1TToTLogic.isSelected() || setupA2TToTLogic.isSelected()) {
+			setLogicTToT(a1TToTHead,(TrackSegment)layoutTurnout2.getConnectB(),a2TToTHead,
+					(TrackSegment)layoutTurnout2.getConnectC(),setupA1TToTLogic.isSelected(),
+					setupA2TToTLogic.isSelected(),true,layoutTurnout2,layoutTurnout1);
+		}
+		if (setupB1TToTLogic.isSelected() || setupB2TToTLogic.isSelected()) {
+			setLogicTToT(b1TToTHead,(TrackSegment)layoutTurnout2.getConnectB(),b2TToTHead,
+					(TrackSegment)layoutTurnout2.getConnectC(),setupB1TToTLogic.isSelected(),
+					setupB2TToTLogic.isSelected(),false,layoutTurnout2,layoutTurnout1);
+		}
+		if (setupC1TToTLogic.isSelected() || setupC2TToTLogic.isSelected()) {
+			setLogicTToT(c1TToTHead,(TrackSegment)layoutTurnout1.getConnectB(),c2TToTHead,
+					(TrackSegment)layoutTurnout1.getConnectC(),setupC1TToTLogic.isSelected(),
+					setupC2TToTLogic.isSelected(),true,layoutTurnout1,layoutTurnout2);
+		}
+		if (setupD1TToTLogic.isSelected() || setupD2TToTLogic.isSelected()) {
+			setLogicTToT(d1TToTHead,(TrackSegment)layoutTurnout1.getConnectB(),d2TToTHead,
+					(TrackSegment)layoutTurnout1.getConnectC(),setupD1TToTLogic.isSelected(),
+					setupD2TToTLogic.isSelected(),false,layoutTurnout1,layoutTurnout2);
+		}
+		// finish up
+		setSignalsAtTToTOpen = false;
+		setSignalsAtTToTFrame.setVisible(false);
+		if (needRedraw) {
+			layoutEditor.redrawPanel();
+			needRedraw = false;
+			layoutEditor.setDirty();
+		}		
+	}
+	private boolean getTToTSignalHeadInformation() {
+		a1TToTHead = getSignalHeadFromEntry(a1TToTField,true,setSignalsAtTToTFrame);
+		if (a1TToTHead==null) return false;
+		a2TToTHead = getSignalHeadFromEntry(a2TToTField,false,setSignalsAtTToTFrame);
+		b1TToTHead = getSignalHeadFromEntry(b1TToTField,true,setSignalsAtTToTFrame);
+		if (b1TToTHead==null) return false;
+		b2TToTHead = getSignalHeadFromEntry(b2TToTField,false,setSignalsAtTToTFrame);
+		c1TToTHead = getSignalHeadFromEntry(c1TToTField,true,setSignalsAtTToTFrame);
+		if (c1TToTHead==null) return false;
+		c2TToTHead = getSignalHeadFromEntry(c2TToTField,false,setSignalsAtTToTFrame);
+		d1TToTHead = getSignalHeadFromEntry(d1TToTField,true,setSignalsAtTToTFrame);
+		if (d1TToTHead==null) return false;
+		d2TToTHead = getSignalHeadFromEntry(d2TToTField,false,setSignalsAtTToTFrame);
+		return true;
+	}
+	private void placeA1TToT() {
+		if (testIcon == null)
+			testIcon = signalIconEditor.getIcon(0);
+		if( layoutTurnout1Horizontal && layoutTurnout1ThroatLeft && layoutTurnout1BUp ) {
+			setSignalHeadOnPanel(0,a1TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsB().getX()),
+				(int)(layoutTurnout1.getCoordsB().getY()-4-testIcon.getIconHeight()) );
+		}
+		else if( layoutTurnout1Horizontal && layoutTurnout1ThroatLeft && (!layoutTurnout1BUp) ) {
+			setSignalHeadOnPanel(0,a1TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsB().getX()),
+				(int)(layoutTurnout1.getCoordsB().getY()+4) );
+		}
+		else if( layoutTurnout1Horizontal && (!layoutTurnout1ThroatLeft) && layoutTurnout1BUp ) {
+			setSignalHeadOnPanel(2,a1TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsB().getX()-testIcon.getIconWidth()),
+				(int)(layoutTurnout1.getCoordsB().getY()-4-testIcon.getIconHeight()) );
+		}
+		else if( layoutTurnout1Horizontal && (!layoutTurnout1ThroatLeft) && (!layoutTurnout1BUp) ) {
+			setSignalHeadOnPanel(2,a1TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsB().getX()-testIcon.getIconWidth()),
+				(int)(layoutTurnout1.getCoordsB().getY()+4) );
+		}
+		else if( layoutTurnout1Vertical && layoutTurnout1ThroatUp && layoutTurnout1BLeft ) {
+			setSignalHeadOnPanel(3,a1TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsB().getX()-4-testIcon.getIconWidth()),
+				(int)(layoutTurnout1.getCoordsB().getY()) );
+		}
+		else if( layoutTurnout1Vertical && layoutTurnout1ThroatUp && (!layoutTurnout1BLeft) ) {
+			setSignalHeadOnPanel(3,a1TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsB().getX()+4),
+				(int)(layoutTurnout1.getCoordsB().getY()) );
+		}
+		else if( layoutTurnout1Vertical && (!layoutTurnout1ThroatUp) && layoutTurnout1BLeft ) {
+			setSignalHeadOnPanel(1,a1TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsB().getX()-4-testIcon.getIconWidth()),
+				(int)(layoutTurnout1.getCoordsB().getY()-testIcon.getIconHeight()) );
+		}
+		else if( layoutTurnout1Vertical && (!layoutTurnout1ThroatUp) && (!layoutTurnout1BLeft) ) {
+			setSignalHeadOnPanel(1,a1TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsB().getX()+4),
+				(int)(layoutTurnout1.getCoordsB().getY()-testIcon.getIconHeight()) );
+		}
+	}
+	private void placeA2TToT() {
+		if (testIcon == null)
+			testIcon = signalIconEditor.getIcon(0);
+		if( layoutTurnout1Horizontal && layoutTurnout1ThroatLeft && layoutTurnout1BUp ) {
+			setSignalHeadOnPanel(0,a2TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsB().getX()+4+testIcon.getIconWidth()),
+				(int)(layoutTurnout1.getCoordsB().getY()-4-testIcon.getIconHeight()) );
+		}
+		else if( layoutTurnout1Horizontal && layoutTurnout1ThroatLeft && (!layoutTurnout1BUp) ) {
+			setSignalHeadOnPanel(0,a2TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsB().getX()+4+testIcon.getIconWidth()),
+				(int)(layoutTurnout1.getCoordsB().getY()+4) );
+		}
+		else if( layoutTurnout1Horizontal && (!layoutTurnout1ThroatLeft) && layoutTurnout1BUp ) {
+			setSignalHeadOnPanel(2,a2TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsB().getX()-4-(2*testIcon.getIconWidth())),
+				(int)(layoutTurnout1.getCoordsB().getY()-4-testIcon.getIconHeight()) );
+		}
+		else if( layoutTurnout1Horizontal && (!layoutTurnout1ThroatLeft) && (!layoutTurnout1BUp) ) {
+			setSignalHeadOnPanel(2,a2TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsB().getX()-4-(2*testIcon.getIconWidth())),
+				(int)(layoutTurnout1.getCoordsB().getY()+4) );
+		}
+		else if( layoutTurnout1Vertical && layoutTurnout1ThroatUp && layoutTurnout1BLeft ) {
+			setSignalHeadOnPanel(3,a2TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsB().getX()-4-testIcon.getIconWidth()),
+				(int)(layoutTurnout1.getCoordsB().getY()+4+testIcon.getIconHeight()) );
+		}
+		else if( layoutTurnout1Vertical && layoutTurnout1ThroatUp && (!layoutTurnout1BLeft) ) {
+			setSignalHeadOnPanel(3,a2TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsB().getX()+4),
+				(int)(layoutTurnout1.getCoordsB().getY()+4+testIcon.getIconHeight()) );
+		}
+		else if( layoutTurnout1Vertical && (!layoutTurnout1ThroatUp) && layoutTurnout1BLeft ) {
+			setSignalHeadOnPanel(1,a2TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsB().getX()-4-testIcon.getIconWidth()),
+				(int)(layoutTurnout1.getCoordsB().getY()-4-(2*testIcon.getIconHeight())) );
+		}
+		else if( layoutTurnout1Vertical && (!layoutTurnout1ThroatUp) && (!layoutTurnout1BLeft) ) {
+			setSignalHeadOnPanel(1,a2TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsB().getX()+4),
+				(int)(layoutTurnout1.getCoordsB().getY()-4-(2*testIcon.getIconHeight())) );
+		}
+	}
+	private void placeB1TToT() {
+		if (testIcon == null)
+			testIcon = signalIconEditor.getIcon(0);
+		if( layoutTurnout1Horizontal && layoutTurnout1ThroatLeft && layoutTurnout1BUp) {
+			setSignalHeadOnPanel(0,b1TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsC().getX()),
+				(int)(layoutTurnout1.getCoordsC().getY()+4) );
+		}
+		else if( layoutTurnout1Horizontal && layoutTurnout1ThroatLeft && (!layoutTurnout1BUp) ) {
+			setSignalHeadOnPanel(0,b1TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsC().getX()),
+				(int)(layoutTurnout1.getCoordsC().getY()-4-testIcon.getIconHeight()) );
+		}
+		else if( layoutTurnout1Horizontal && (!layoutTurnout1ThroatLeft) && layoutTurnout1BUp ) {
+			setSignalHeadOnPanel(2,b1TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsC().getX()-testIcon.getIconWidth()),
+				(int)(layoutTurnout1.getCoordsC().getY()+4) );
+		}
+		else if( layoutTurnout1Horizontal && (!layoutTurnout1ThroatLeft) && (!layoutTurnout1BUp) ) {
+			setSignalHeadOnPanel(2,b1TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsC().getX()-testIcon.getIconWidth()),
+				(int)(layoutTurnout1.getCoordsC().getY()-4-testIcon.getIconHeight()) );
+		}
+		else if( layoutTurnout1Vertical && layoutTurnout1ThroatUp && layoutTurnout1BLeft ) {
+			setSignalHeadOnPanel(3,b1TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsC().getX()+4),
+				(int)(layoutTurnout1.getCoordsC().getY()) );
+		}
+		else if( layoutTurnout1Vertical && layoutTurnout1ThroatUp && (!layoutTurnout1BLeft) ) {
+			setSignalHeadOnPanel(3,b1TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsC().getX()-4-testIcon.getIconWidth()),
+				(int)(layoutTurnout1.getCoordsC().getY()) );
+		}
+		else if( layoutTurnout1Vertical && (!layoutTurnout1ThroatUp) && layoutTurnout1BLeft ) {
+			setSignalHeadOnPanel(1,b1TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsC().getX()+4),
+				(int)(layoutTurnout1.getCoordsC().getY()-testIcon.getIconHeight()) );
+		}
+		else if( layoutTurnout1Vertical && (!layoutTurnout1ThroatUp) && (!layoutTurnout1BLeft) ) {
+			setSignalHeadOnPanel(1,b1TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsC().getX()-4-testIcon.getIconWidth()),
+				(int)(layoutTurnout1.getCoordsC().getY()-testIcon.getIconHeight()) );
+		}
+	}
+	private void placeB2TToT() {
+		if (testIcon == null)
+			testIcon = signalIconEditor.getIcon(0);
+		if( layoutTurnout1Horizontal && layoutTurnout1ThroatLeft && layoutTurnout1BUp) {
+			setSignalHeadOnPanel(0,b2TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsC().getX()+4+testIcon.getIconWidth()),
+				(int)(layoutTurnout1.getCoordsC().getY()+4) );
+		}
+		else if( layoutTurnout1Horizontal && layoutTurnout1ThroatLeft && (!layoutTurnout1BUp) ) {
+			setSignalHeadOnPanel(0,b2TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsC().getX()+4+testIcon.getIconWidth()),
+				(int)(layoutTurnout1.getCoordsC().getY()-4-testIcon.getIconHeight()) );
+		}
+		else if( layoutTurnout1Horizontal && (!layoutTurnout1ThroatLeft) && layoutTurnout1BUp ) {
+			setSignalHeadOnPanel(2,b2TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsC().getX()-4-(2*testIcon.getIconWidth())),
+				(int)(layoutTurnout1.getCoordsC().getY()+4) );
+		}
+		else if( layoutTurnout1Horizontal && (!layoutTurnout1ThroatLeft) && (!layoutTurnout1BUp) ) {
+			setSignalHeadOnPanel(2,b2TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsC().getX()-4-(2*testIcon.getIconWidth())),
+				(int)(layoutTurnout1.getCoordsC().getY()-4-testIcon.getIconHeight()) );
+		}
+		else if( layoutTurnout1Vertical && layoutTurnout1ThroatUp && layoutTurnout1BLeft ) {
+			setSignalHeadOnPanel(3,b2TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsC().getX()+4),
+				(int)(layoutTurnout1.getCoordsC().getY()+4+testIcon.getIconHeight()) );
+		}
+		else if( layoutTurnout1Vertical && layoutTurnout1ThroatUp && (!layoutTurnout1BLeft) ) {
+			setSignalHeadOnPanel(3,b2TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsC().getX()-4-testIcon.getIconWidth()),
+				(int)(layoutTurnout1.getCoordsC().getY()+4+testIcon.getIconHeight()) );
+		}
+		else if( layoutTurnout1Vertical && (!layoutTurnout1ThroatUp) && layoutTurnout1BLeft ) {
+			setSignalHeadOnPanel(1,b2TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsC().getX()+4),
+				(int)(layoutTurnout1.getCoordsC().getY()-4-(2*testIcon.getIconHeight())) );
+		}
+		else if( layoutTurnout1Vertical && (!layoutTurnout1ThroatUp) && (!layoutTurnout1BLeft) ) {
+			setSignalHeadOnPanel(1,b2TToTField.getText().trim(),
+				(int)(layoutTurnout1.getCoordsC().getX()-4-testIcon.getIconWidth()),
+				(int)(layoutTurnout1.getCoordsC().getY()-4-(2*testIcon.getIconHeight())) );
+		}
+	}
+	private void placeC1TToT() {
+		if (testIcon == null)
+			testIcon = signalIconEditor.getIcon(0);
+		if( layoutTurnout2Horizontal && layoutTurnout2ThroatLeft && layoutTurnout2BUp ) {
+			setSignalHeadOnPanel(0,c1TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsB().getX()),
+				(int)(layoutTurnout2.getCoordsB().getY()-4-testIcon.getIconHeight()) );
+		}
+		else if( layoutTurnout2Horizontal && layoutTurnout2ThroatLeft && (!layoutTurnout2BUp) ) {
+			setSignalHeadOnPanel(0,c1TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsB().getX()),
+				(int)(layoutTurnout2.getCoordsB().getY()+4) );
+		}
+		else if( layoutTurnout2Horizontal && (!layoutTurnout2ThroatLeft) && layoutTurnout2BUp ) {
+			setSignalHeadOnPanel(2,c1TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsB().getX()-testIcon.getIconWidth()),
+				(int)(layoutTurnout2.getCoordsB().getY()-4-testIcon.getIconHeight()) );
+		}
+		else if( layoutTurnout2Horizontal && (!layoutTurnout2ThroatLeft) && (!layoutTurnout2BUp) ) {
+			setSignalHeadOnPanel(2,c1TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsB().getX()-testIcon.getIconWidth()),
+				(int)(layoutTurnout2.getCoordsB().getY()+4) );
+		}
+		else if( layoutTurnout2Vertical && layoutTurnout2ThroatUp && layoutTurnout2BLeft ) {
+			setSignalHeadOnPanel(3,c1TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsB().getX()-4-testIcon.getIconWidth()),
+				(int)(layoutTurnout2.getCoordsB().getY()) );
+		}
+		else if( layoutTurnout2Vertical && layoutTurnout2ThroatUp && (!layoutTurnout2BLeft) ) {
+			setSignalHeadOnPanel(3,c1TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsB().getX()+4),
+				(int)(layoutTurnout2.getCoordsB().getY()) );
+		}
+		else if( layoutTurnout2Vertical && (!layoutTurnout2ThroatUp) && layoutTurnout2BLeft ) {
+			setSignalHeadOnPanel(1,c1TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsB().getX()-4-testIcon.getIconWidth()),
+				(int)(layoutTurnout2.getCoordsB().getY()-testIcon.getIconHeight()) );
+		}
+		else if( layoutTurnout2Vertical && (!layoutTurnout2ThroatUp) && (!layoutTurnout2BLeft) ) {
+			setSignalHeadOnPanel(1,c1TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsB().getX()+4),
+				(int)(layoutTurnout2.getCoordsB().getY()-testIcon.getIconHeight()) );
+		}
+	}
+	private void placeC2TToT() {
+		if (testIcon == null)
+			testIcon = signalIconEditor.getIcon(0);
+		if( layoutTurnout2Horizontal && layoutTurnout2ThroatLeft && layoutTurnout2BUp ) {
+			setSignalHeadOnPanel(0,c2TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsB().getX()+4+testIcon.getIconWidth()),
+				(int)(layoutTurnout2.getCoordsB().getY()-4-testIcon.getIconHeight()) );
+		}
+		else if( layoutTurnout2Horizontal && layoutTurnout2ThroatLeft && (!layoutTurnout2BUp) ) {
+			setSignalHeadOnPanel(0,c2TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsB().getX()+4+testIcon.getIconWidth()),
+				(int)(layoutTurnout2.getCoordsB().getY()+4) );
+		}
+		else if( layoutTurnout2Horizontal && (!layoutTurnout2ThroatLeft) && layoutTurnout2BUp ) {
+			setSignalHeadOnPanel(2,c2TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsB().getX()-4-(2*testIcon.getIconWidth())),
+				(int)(layoutTurnout2.getCoordsB().getY()-4-testIcon.getIconHeight()) );
+		}
+		else if( layoutTurnout2Horizontal && (!layoutTurnout2ThroatLeft) && (!layoutTurnout2BUp) ) {
+			setSignalHeadOnPanel(2,c2TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsB().getX()-4-(2*testIcon.getIconWidth())),
+				(int)(layoutTurnout2.getCoordsB().getY()+4) );
+		}
+		else if( layoutTurnout2Vertical && layoutTurnout2ThroatUp && layoutTurnout2BLeft ) {
+			setSignalHeadOnPanel(3,c2TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsB().getX()-4-testIcon.getIconWidth()),
+				(int)(layoutTurnout2.getCoordsB().getY()+4+testIcon.getIconHeight()) );
+		}
+		else if( layoutTurnout2Vertical && layoutTurnout2ThroatUp && (!layoutTurnout2BLeft) ) {
+			setSignalHeadOnPanel(3,c2TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsB().getX()+4),
+				(int)(layoutTurnout2.getCoordsB().getY()+4+testIcon.getIconHeight()) );
+		}
+		else if( layoutTurnout2Vertical && (!layoutTurnout2ThroatUp) && layoutTurnout2BLeft ) {
+			setSignalHeadOnPanel(1,c2TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsB().getX()-4-testIcon.getIconWidth()),
+				(int)(layoutTurnout2.getCoordsB().getY()-4-(2*testIcon.getIconHeight())) );
+		}
+		else if( layoutTurnout2Vertical && (!layoutTurnout2ThroatUp) && (!layoutTurnout2BLeft) ) {
+			setSignalHeadOnPanel(1,c2TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsB().getX()+4),
+				(int)(layoutTurnout2.getCoordsB().getY()-4-(2*testIcon.getIconHeight())) );
+		}
+	}
+	private void placeD1TToT() {
+		if (testIcon == null)
+			testIcon = signalIconEditor.getIcon(0);
+		if( layoutTurnout2Horizontal && layoutTurnout2ThroatLeft && layoutTurnout2BUp) {
+			setSignalHeadOnPanel(0,d1TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsC().getX()),
+				(int)(layoutTurnout2.getCoordsC().getY()+4) );
+		}
+		else if( layoutTurnout2Horizontal && layoutTurnout2ThroatLeft && (!layoutTurnout2BUp) ) {
+			setSignalHeadOnPanel(0,d1TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsC().getX()),
+				(int)(layoutTurnout2.getCoordsC().getY()-4-testIcon.getIconHeight()) );
+		}
+		else if( layoutTurnout2Horizontal && (!layoutTurnout2ThroatLeft) && layoutTurnout2BUp ) {
+			setSignalHeadOnPanel(2,d1TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsC().getX()-testIcon.getIconWidth()),
+				(int)(layoutTurnout2.getCoordsC().getY()+4) );
+		}
+		else if( layoutTurnout2Horizontal && (!layoutTurnout2ThroatLeft) && (!layoutTurnout2BUp) ) {
+			setSignalHeadOnPanel(2,d1TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsC().getX()-testIcon.getIconWidth()),
+				(int)(layoutTurnout2.getCoordsC().getY()-4-testIcon.getIconHeight()) );
+		}
+		else if( layoutTurnout2Vertical && layoutTurnout2ThroatUp && layoutTurnout2BLeft ) {
+			setSignalHeadOnPanel(3,d1TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsC().getX()+4),
+				(int)(layoutTurnout2.getCoordsC().getY()) );
+		}
+		else if( layoutTurnout2Vertical && layoutTurnout2ThroatUp && (!layoutTurnout2BLeft) ) {
+			setSignalHeadOnPanel(3,d1TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsC().getX()-4-testIcon.getIconWidth()),
+				(int)(layoutTurnout2.getCoordsC().getY()) );
+		}
+		else if( layoutTurnout2Vertical && (!layoutTurnout2ThroatUp) && layoutTurnout2BLeft ) {
+			setSignalHeadOnPanel(1,d1TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsC().getX()+4),
+				(int)(layoutTurnout2.getCoordsC().getY()-testIcon.getIconHeight()) );
+		}
+		else if( layoutTurnout2Vertical && (!layoutTurnout2ThroatUp) && (!layoutTurnout2BLeft) ) {
+			setSignalHeadOnPanel(1,d1TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsC().getX()-4-testIcon.getIconWidth()),
+				(int)(layoutTurnout2.getCoordsC().getY()-testIcon.getIconHeight()) );
+		}
+	}
+	private void placeD2TToT() {
+		if (testIcon == null)
+			testIcon = signalIconEditor.getIcon(0);
+		if( layoutTurnout2Horizontal && layoutTurnout2ThroatLeft && layoutTurnout2BUp) {
+			setSignalHeadOnPanel(0,d2TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsC().getX()+4+testIcon.getIconWidth()),
+				(int)(layoutTurnout2.getCoordsC().getY()+4) );
+		}
+		else if( layoutTurnout2Horizontal && layoutTurnout2ThroatLeft && (!layoutTurnout2BUp) ) {
+			setSignalHeadOnPanel(0,d2TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsC().getX()+4+testIcon.getIconWidth()),
+				(int)(layoutTurnout2.getCoordsC().getY()-4-testIcon.getIconHeight()) );
+		}
+		else if( layoutTurnout2Horizontal && (!layoutTurnout2ThroatLeft) && layoutTurnout2BUp ) {
+			setSignalHeadOnPanel(2,d2TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsC().getX()-4-(2*testIcon.getIconWidth())),
+				(int)(layoutTurnout2.getCoordsC().getY()+4) );
+		}
+		else if( layoutTurnout2Horizontal && (!layoutTurnout2ThroatLeft) && (!layoutTurnout2BUp) ) {
+			setSignalHeadOnPanel(2,d2TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsC().getX()-4-(2*testIcon.getIconWidth())),
+				(int)(layoutTurnout2.getCoordsC().getY()-4-testIcon.getIconHeight()) );
+		}
+		else if( layoutTurnout2Vertical && layoutTurnout2ThroatUp && layoutTurnout2BLeft ) {
+			setSignalHeadOnPanel(3,d2TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsC().getX()+4),
+				(int)(layoutTurnout2.getCoordsC().getY()+4+testIcon.getIconHeight()) );
+		}
+		else if( layoutTurnout2Vertical && layoutTurnout2ThroatUp && (!layoutTurnout2BLeft) ) {
+			setSignalHeadOnPanel(3,d2TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsC().getX()-4-testIcon.getIconWidth()),
+				(int)(layoutTurnout2.getCoordsC().getY()+4+testIcon.getIconHeight()) );
+		}
+		else if( layoutTurnout2Vertical && (!layoutTurnout2ThroatUp) && layoutTurnout2BLeft ) {
+			setSignalHeadOnPanel(1,d2TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsC().getX()+4),
+				(int)(layoutTurnout2.getCoordsC().getY()-4-(2*testIcon.getIconHeight())) );
+		}
+		else if( layoutTurnout2Vertical && (!layoutTurnout2ThroatUp) && (!layoutTurnout2BLeft) ) {
+			setSignalHeadOnPanel(1,d2TToTField.getText().trim(),
+				(int)(layoutTurnout2.getCoordsC().getX()-4-testIcon.getIconWidth()),
+				(int)(layoutTurnout2.getCoordsC().getY()-4-(2*testIcon.getIconHeight())) );
+		}
+	}
+	private void setLogicTToT(SignalHead head,TrackSegment track1,SignalHead secondHead,TrackSegment track2,
+					boolean setup1, boolean setup2, boolean continuing,
+						LayoutTurnout farTurnout, LayoutTurnout nearTurnout) {
+		// initialize common components and ensure all is defined
+		LayoutBlock connectorBlock = connectorTrack.getLayoutBlock();
+		LayoutBlock nearTurnoutBlock = nearTurnout.getLayoutBlock();
+		LayoutBlock farTurnoutBlock = farTurnout.getLayoutBlock();
+		Sensor connectorOccupancy = null;
+		if ( (connectorBlock==null) || (nearTurnoutBlock==null) || (farTurnoutBlock==null) ) {
+			JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+					rb.getString("InfoMessage6"),"",JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		connectorOccupancy = connectorBlock.getOccupancySensor();
+		if (connectorOccupancy==null) {
+			JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+					java.text.MessageFormat.format(rb.getString("InfoMessage4"),
+						new String[]{connectorBlock.getUserName()}), 
+							null,JOptionPane.INFORMATION_MESSAGE);						
+			return;
+		}
+		// setup signal head for continuing track of far turnout (or both tracks of far turnout)
+		if ( (track1==null) && setup1 ) {
+			JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+					rb.getString("InfoMessage7"),"",JOptionPane.INFORMATION_MESSAGE);			
+			return;
+		}			
+		Sensor occupancy = null;
+		SignalHead nextHead = null;
+		if ( (track1!=null) && setup1) {
+			LayoutBlock block = track1.getLayoutBlock();
+			if (block==null) {
+				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+					rb.getString("InfoMessage6"),"",JOptionPane.INFORMATION_MESSAGE);
+				return;
+			}
+			occupancy = block.getOccupancySensor();
+			if (occupancy==null) {
+				JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+					java.text.MessageFormat.format(rb.getString("InfoMessage4"),
+						new String[]{block.getUserName()}), 
+							null,JOptionPane.INFORMATION_MESSAGE);						
+				return;
+			}
+			nextHead = getNextSignalFromObject(track1,(Object)farTurnout);
+			if ( (nextHead==null) && (!reachedEndBumper()) ) {
+				JOptionPane.showMessageDialog(setSignalsFrame,
+					java.text.MessageFormat.format(rb.getString("InfoMessage5"),
+						new String[]{block.getUserName()}), 
+							null,JOptionPane.INFORMATION_MESSAGE);
+				return;
+			}
+			if (secondHead!=null) {
+				// this head signals only the continuing track of the far turnout
+				if (!initializeBlockBossLogic(head.getSystemName())) return;
+				logic.setMode(BlockBossLogic.TRAILINGMAIN);
+				logic.setTurnout(farTurnout.getTurnout().getSystemName());
+				logic.setSensor1(occupancy.getSystemName());
+				if (occupancy!=connectorOccupancy)
+					logic.setSensor2(connectorOccupancy.getSystemName());
+				if (nextHead!=null) {
+					logic.setWatchedSignal1(nextHead.getSystemName(),false);
+				}
+				if (auxSignal!=null) {
+					logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+				}
+				String nearSensorName = setupNearLogix(nearTurnout,continuing,head);
+				if (nearSensorName!="") {
+					logic.setSensor3(nearSensorName);
+				}
+				finalizeBlockBossLogic();
+			}
+		}
+		if ( (secondHead!=null) && !setup2 ) return;
+		SignalHead savedAuxSignal = auxSignal;
+		if (track2==null) {
+			JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+					rb.getString("InfoMessage7"),"",JOptionPane.INFORMATION_MESSAGE);			
+			return;
+		}
+		LayoutBlock block2 = track2.getLayoutBlock();
+		if (block2==null) {
+			JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+					rb.getString("InfoMessage6"),"",JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		Sensor occupancy2 = block2.getOccupancySensor();
+		if (occupancy2==null) {
+			JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+				java.text.MessageFormat.format(rb.getString("InfoMessage4"),
+					new String[]{block2.getUserName()}), 
+						null,JOptionPane.INFORMATION_MESSAGE);						
+			return;
+		}
+		SignalHead nextHead2 = getNextSignalFromObject(track2,
+													(Object)farTurnout);
+		if ( (nextHead2==null) && (!reachedEndBumper()) ) {
+			JOptionPane.showMessageDialog(setSignalsAtTToTFrame,
+				java.text.MessageFormat.format(rb.getString("InfoMessage5"),
+					new String[]{block2.getUserName()}), 
+						null,JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		if ( (secondHead==null) && setup1 ) {
+			if (!initializeBlockBossLogic(head.getSystemName())) return;
+			logic.setMode(BlockBossLogic.FACING);
+			logic.setTurnout(farTurnout.getTurnout().getSystemName());
+			logic.setWatchedSensor1(occupancy.getSystemName());
+			logic.setWatchedSensor2(occupancy2.getSystemName());
+			logic.setSensor2(connectorOccupancy.getSystemName());
+			if (nextHead!=null) {
+				logic.setWatchedSignal1(nextHead.getSystemName(),false);
+			}
+			if (savedAuxSignal!=null) {
+				logic.setWatchedSignal1Alt(savedAuxSignal.getSystemName());
+			}
+			if (nextHead2!=null) {
+				logic.setWatchedSignal2(nextHead2.getSystemName());
+			}
+			if (auxSignal!=null) {
+				logic.setWatchedSignal2Alt(auxSignal.getSystemName());
+			}		
+			String nearSensorName = setupNearLogix(nearTurnout,continuing,head);
+			if (nearSensorName!="") {
+				logic.setSensor3(nearSensorName);
+			}
+			logic.setLimitSpeed2(true);
+			finalizeBlockBossLogic();
+		}
+		else if ( (secondHead!=null) && setup2) {
+			if (!initializeBlockBossLogic(secondHead.getSystemName())) return;
+			logic.setMode(BlockBossLogic.TRAILINGDIVERGING);
+			logic.setTurnout(farTurnout.getTurnout().getSystemName());
+			logic.setSensor1(occupancy2.getSystemName());
+			if (occupancy2!=connectorOccupancy)
+				logic.setSensor2(connectorOccupancy.getSystemName());
+			if (nextHead2!=null) {
+				logic.setWatchedSignal1(nextHead2.getSystemName(),false);
+			}
+			if (auxSignal!=null) {
+				logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+			}
+			String nearSensorName = setupNearLogix(nearTurnout,continuing,head);
+			if (nearSensorName!="") {
+				logic.setSensor3(nearSensorName);
+			}
+			logic.setLimitSpeed2(true);
+			finalizeBlockBossLogic();			
+		}
+	}
+	/* 
+	 * Sets up a Logix to set a sensor active if a turnout is set against
+	 *      a track.  This routine creates an internal sensor for the purpose.
+	 * Note: The sensor and logix are named IS or IX followed by TTT_X_HHH where 
+	 *		TTT is the system name of the turnout, X is either C or T depending 
+	 *      on "continuing", and HHH is the system name of the signal head. 
+	 * Note: If there is any problem, a string of "" is returned, and a warning 
+	 *		message is issued.
+	 */
+	private String setupNearLogix(LayoutTurnout nearTurnout, boolean continuing, 
+					SignalHead head) {
+		String turnoutName = nearTurnout.getTurnout().getSystemName();
+		String namer = turnoutName+"_T_"+head.getSystemName();
+		if (!continuing) namer = namer+"_C_"+head.getSystemName();
+		String sensorName = "IS"+namer;
+		String logixName = "IX"+namer;
+		Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
+		if (sensor==null) {
+			log.error("Trouble creating sensor "+sensorName+" while setting up Logix.");
+			return "";
+		}
+		if (InstanceManager.logixManagerInstance().getBySystemName(logixName)==null) {
+			// Logix does not exist, create it
+			Logix x = InstanceManager.logixManagerInstance().createNewLogix(logixName,"");
+			if (x==null) {
+				log.error("Trouble creating logix "+logixName+" while setting up signal logic.");
+				return "";
+			}
+			String cName = x.getSystemName()+"C1";
+			Conditional c = InstanceManager.conditionalManagerInstance().
+												createNewConditional(cName,"");
+			if (c==null) {
+				log.error("Trouble creating conditional "+cName+" while setting up Logix.");
+				return "";
+			}
+			int type = Conditional.TYPE_TURNOUT_THROWN;
+			if (!continuing) type = Conditional.TYPE_TURNOUT_CLOSED;
+			c.setStateVariables(new int[]{Conditional.OPERATOR_AND},	// operand
+								new int[]{type},						// type
+								new String[]{turnoutName},				// name
+								new String[]{""},						// data
+								new int[]{0},							// num 1
+								new int[]{0},							// num 2
+								new boolean[]{true},					// triggersCalc
+								1);										// num variables
+			c.setAction(new int[]{Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
+									Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE},	// option
+						new int[]{0,0},											// delay
+						new int[]{Conditional.ACTION_SET_SENSOR,
+											Conditional.ACTION_SET_SENSOR},			// type
+						new String[]{sensorName,sensorName},						// name
+						new int[]{Sensor.ACTIVE,Sensor.INACTIVE},					// data
+						new String[]{"",""});										// string data
+			x.addConditional(cName,-1);
+			x.activateLogix();
+		}
+		return sensorName;
 	}
 
     /**

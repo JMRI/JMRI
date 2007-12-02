@@ -63,7 +63,7 @@ import javax.swing.*;
  *		by tools, Set Signals at Turnout, and Set Signals at Double Crossover.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class LayoutTurnout
@@ -818,7 +818,7 @@ public class LayoutTurnout
 				stateBox.addItem( InstanceManager.turnoutManagerInstance().getThrownText() );
 				turnoutThrownIndex = 1;
 				stateBox.setToolTipText(rb.getString("StateToolTip"));
-				panel3.add (new JLabel(rb.getString("Continuing")));
+				panel3.add (new JLabel(rb.getString("ContinuingState")));
 				panel3.add (stateBox);
 				contentPane.add(panel3);
 			}
