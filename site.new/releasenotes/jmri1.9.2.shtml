@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.9.2.shtml,v 1.5 2007-11-23 07:04:58 jacobsen Exp $ -->
+<!-- $Id: jmri1.9.2.shtml,v 1.6 2007-12-02 03:17:48 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -163,6 +163,17 @@ Fix bug (introduced in 1.9.1) that prevented the Copy Roster Entry menu item fro
 <P>
 Add methods to JmriJFrame so you can get a list of all currently-existing frames (windows)
 
+<P>
+Dan Boudreau fixed some spurious error messages when opening a saved throttle layout
+
+<P>
+The various files written rom now on by JMRI can now be easily viewed in a web browser, but only if you have an active internet connection so that formatting information can be downloaded.  The formatting is still somewhat rough, and suggestions as to how to improve it are welcomed.
+
+<P>
+The help pages have been reformatted so they can be properly displayed on the web site.  This shouldn't cause any problems, but please let us know if you notice any.
+
+<P>
+Dan Bourdreau fixed an error that would occasionally surface when closing a clock window
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
