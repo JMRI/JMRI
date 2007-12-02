@@ -30,7 +30,7 @@ import javax.swing.*;
  * contact NCE Inc for separate permission.
  *
  * @author			Ken Cameron   Copyright (C) 2007
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  *
  * derived from loconet.clockmonframe by Bob Jacobson Copyright (C) 2003
  * 
@@ -123,7 +123,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
     private double ncePidGainPv = 0.04;
     private double ncePidGainIv = 0.01;
     private double ncePidGainDv = 0.005;
-    private double intPidGainPv = 0.01;
+    private double intPidGainPv = 0.02;
     private double intPidGainIv = 0.001;
     private double intPidGainDv = 0.01;
     
@@ -669,7 +669,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         alarmSyncUpdate.setDelay(delay);
         alarmSyncUpdate.setInitialDelay(delay);
         alarmSyncUpdate.start();
-        if (log.isDebugEnabled()) {
+        if (log.isDebugEnabled() && false) {
             log.debug("alarmSyncStart delay: " + delay + " @ " + now);
         }
     }
@@ -1039,14 +1039,14 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
             sumDiff = ((Double) priorOffsetErrors.get(0)).doubleValue() + ((Double) priorOffsetErrors.get(1)).doubleValue();
         }
         double avgDiff = sumDiff / 2;
-        syncInterval = syncInterval - avgDiff;
+        syncInterval = syncInterval + avgDiff;
         if (syncInterval < 30) {
         	syncInterval = 30;
         }
         if (syncInterval > 58) {
         	syncInterval = 58;
         }
-        if (log.isDebugEnabled()) {
+        if (log.isDebugEnabled() && false) {
             String txt = "";
             for (int i = 0; i < priorOffsetErrors.size(); i++) {
                 txt = txt + " " + ((Double)priorOffsetErrors.get(i)).doubleValue();
