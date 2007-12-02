@@ -8,6 +8,7 @@ import jmri.util.JmriJFrame;
 
 import java.awt.*;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -18,7 +19,7 @@ import javax.swing.border.Border;
  * Frame for user configuration of Simple Timebase
  *
  * @author	Dave Duchamp   Copyright (C) 2004
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class SimpleClockFrame extends JmriJFrame
 	implements java.beans.PropertyChangeListener {
@@ -29,6 +30,7 @@ public class SimpleClockFrame extends JmriJFrame
     javax.swing.Timer timer = null;
     static int delay = 2*1000;  // update display every two seconds
     protected boolean showTime = false;
+    DecimalFormat threeDigits = new DecimalFormat("0.000");	// 3 digit precision for speedup factor
 
     protected javax.swing.JComboBox timeSourceBox = null;
 
@@ -84,7 +86,7 @@ public class SimpleClockFrame extends JmriJFrame
         JPanel panel12 = new JPanel();
         panel12.add(new JLabel(rb.getString("SpeedUpFactor")+" "));
         panel12.add(factorField);
-        factorField.setText(Double.toString(clock.getRate()));
+        factorField.setText(threeDigits.format(clock.getRate()));
         factorField.setToolTipText(rb.getString("TipFactorField"));
         panel12.add(new JLabel(":1 "));
         setRateButton.setToolTipText(rb.getString("TipSetRateButton"));
@@ -177,7 +179,7 @@ public class SimpleClockFrame extends JmriJFrame
      * Method to adjust to rate changes
      */
     void updateRate() {
-        factorField.setText(Double.toString(clock.getRate()));
+        factorField.setText(threeDigits.format(clock.getRate()));
 	}
 
     /**
