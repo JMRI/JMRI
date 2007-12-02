@@ -14,7 +14,7 @@ import jmri.ProgListener;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2007
  * @author  Giorgio Terdina Copyright (C) 2007
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgListener {
 
@@ -56,6 +56,17 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
                 writePushed(e);
             }
         });
+        decButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                decHexButtonChanged(e);
+            }
+        });
+        hexButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                decHexButtonChanged(e);
+            }
+        });
+        
 
         resultsField.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 
@@ -75,7 +86,7 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
 
         tPane = new JPanel();
         tPane.setLayout(new GridLayout(2,2));
-        tPane.add(new JLabel("Address:"));
+        tPane.add(new JLabel("CV Number:"));
         tPane.add(addrField);
         tPane.add(new JLabel("Value:"));
         tPane.add(valField);
@@ -193,6 +204,30 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
             }
         }
     }
+    
+    // provide simple data conversion if dec or hex button changed
+    public void decHexButtonChanged(java.awt.event.ActionEvent e) {
+    	resultsField.setText("OK");
+    	if (valField.getText().equals(""))
+			return;
+    	int value = 0;
+		try {
+			if (decButton.isSelected())
+				// convert from hex to dec
+				value = Integer.valueOf(valField.getText(), 16).intValue();
+			else
+				// convert from dec to hex
+				value = Integer.valueOf(valField.getText()).intValue();
+		} catch (java.lang.NumberFormatException ee) {
+			resultsField.setText("error");
+		}
+		if (value != 0) {
+			if (decButton.isSelected())
+				valField.setText(Integer.toString(value));
+			else
+				valField.setText(Integer.toHexString(value));
+		}
+	}
 
     public void dispose() {
         modePane.dispose();
