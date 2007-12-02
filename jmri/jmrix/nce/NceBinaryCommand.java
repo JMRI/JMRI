@@ -2,71 +2,76 @@
 
 package jmri.jmrix.nce;
 
-/**
- *
- * From NCE System notes for version March 1, 2007
- *
- * New 0xAD command sends accessory or signal packets.
- * This command can also issue NCE macros
- * Command Format: 0xAD <addr_h> <addr_l> <op_1> <data_1>
- * Addr_h and Addr_l are the accessory/signal address as a
- * normal binary number (NOT in DCC format).
- * Ex: Accessory Address 1 = 0x00 0x01 (hi byte first)
- * Ex: Accessory Address 2 = 0x00 0x02 (hi byte first)
- * Ex: Accessory Address 513 = 0x02 0x01 (hi byte first)
- * NOTE: accy/signal address 0 is not a valid address
- *
- * Op_1 Data_1 		Operation description
- *	01 	0-255 		NCE macro number 0-255
- *	02 	0-255 		Duplicate of Op_1 command 01
- *	03 	0 			Accessory Normal direction (ON)
- *	04 	0 			Accessory Reverse direction (OFF)
- *	05 	0-1f 		Signal Aspect 0-31
- *	06-7f 			reserved reserved
- *
- *	Returns: ! = success
- *	1 = bad accy/signal address
- *
- * 0xA2 sends speed or function packets to a locomotive.
- *
- * Command Format: 0xA2 <addr_h> <addr_l> <op_1> <data_1>
- * Addr_h and Addr_l are the loco address in DCC format.
- * If a long address is in use, bits 6 and 7 of the high byte are set.
- * Example: Long address 3 = 0xc0 0x03
- * Short address 3 = 0x00 0x03
- * 
- * op_1 data_1 		Operation description
- *  01  0-7f 		Reverse 28 speed command
- *  02  0-7f 		Forward 28 speed command
- *  03  0-7f 		Reverse 128 speed command
- *  04  0-7f 		Forward 128 speed command
- *  05  0 			Estop reverse command
- *  06  0 			Estop forward command
- *  07  0-1f 		Function group 1 (same format as DCC packet for FG1
- *  08  0-0f 		Function group 2 (same format as DCC packet for FG2
- *  09  0-0f 		Function group 3 (same format as DCC packet for FG3
- *  0a  0-7f 		Set reverse consist address for lead loco
- *  0b  0-7f 		Set forward consist address for lead loco
- *  0c  0-7f 		Set reverse consist address for rear loco
- *  0d  0-7f 		Set forward consist address for rear loco
- *  0e  0-7f 		Set reverse consist address for additional loco
- *  0f  0-7f 		Set forward consist address for additional loco
- *  10  0 			Del loco from consist
- *  11  0 			Kill consist
- *  12  0-9 		Set momentum
- *  13  0-7f 		No action, always returns success
- *  14  0-7f 		No action, always returns success
- *  15  0-ff 		Functions 13-20 control (bit 0=F13, bit 7=F20)
- *  16  0-ff 		Functions 21-28 control (bit 0=F21, bit 7=F28)
- *  17  0-3f 		Assign this loco to cab number in data_1
- *  18-7f 			reserved reserved
- * 
- *  Returns: ! = success
- *  1 = bad loco address
- *
- * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.16 $
- */
+//
+//
+// From NCE System notes for version March 1, 2007
+//
+// New 0xAD command sends accessory or signal packets.
+// This command can also issue NCE macros
+// Command Format: 0xAD <addr_h> <addr_l> <op_1> <data_1>
+// Addr_h and Addr_l are the accessory/signal address as a
+// normal binary number (NOT in DCC format).
+// Ex: Accessory Address 1 = 0x00 0x01 (hi byte first)
+// Ex: Accessory Address 2 = 0x00 0x02 (hi byte first)
+// Ex: Accessory Address 513 = 0x02 0x01 (hi byte first)
+// NOTE: accy/signal address 0 is not a valid address
+//
+// Op_1 Data_1 		Operation description
+//	01 	0-255 		NCE macro number 0-255
+//	02 	0-255 		Duplicate of Op_1 command 01
+//	03 	0 			Accessory Normal direction (ON)
+//	04 	0 			Accessory Reverse direction (OFF)
+//	05 	0-1f 		Signal Aspect 0-31
+//	06-7f 			reserved reserved
+//
+//	Returns: ! = success
+//	1 = bad accy/signal address
+//
+// 0xA2 sends speed or function packets to a locomotive.
+//
+// Command Format: 0xA2 <addr_h> <addr_l> <op_1> <data_1>
+// Addr_h and Addr_l are the loco address in DCC format.
+// If a long address is in use, bits 6 and 7 of the high byte are set.
+// Example: Long address 3 = 0xc0 0x03
+// Short address 3 = 0x00 0x03
+// 
+// op_1 data_1 		Operation description
+//  01  0-7f 		Reverse 28 speed command
+//  02  0-7f 		Forward 28 speed command
+//  03  0-7f 		Reverse 128 speed command
+//  04  0-7f 		Forward 128 speed command
+//  05  0 			Estop reverse command
+//  06  0 			Estop forward command
+//  07  0-1f 		Function group 1 (same format as DCC packet for FG1
+//  08  0-0f 		Function group 2 (same format as DCC packet for FG2
+//  09  0-0f 		Function group 3 (same format as DCC packet for FG3
+//  0a  0-7f 		Set reverse consist address for lead loco
+//  0b  0-7f 		Set forward consist address for lead loco
+//  0c  0-7f 		Set reverse consist address for rear loco
+//  0d  0-7f 		Set forward consist address for rear loco
+//  0e  0-7f 		Set reverse consist address for additional loco
+//  0f  0-7f 		Set forward consist address for additional loco
+//  10  0 			Del loco from consist
+//  11  0 			Kill consist
+//  12  0-9 		Set momentum
+//  13  0-7f 		No action, always returns success
+//  14  0-7f 		No action, always returns success
+//  15  0-ff 		Functions 13-20 control (bit 0=F13, bit 7=F20)
+//  16  0-ff 		Functions 21-28 control (bit 0=F21, bit 7=F28)
+//  17  0-3f 		Assign this loco to cab number in data_1
+//  18-7f 			reserved reserved
+// 
+//  Returns: ! = success
+//  1 = bad loco address
+//  
+ /**
+  * NCE Binary Commands
+  * 
+  * Also see NceMessage.java for additional commands
+  * 
+  * @author Daniel Boudreau (C) 2007
+  * @version     $Revision: 1.17 $
+  */
 
 public class NceBinaryCommand {
     
@@ -87,7 +92,7 @@ public class NceBinaryCommand {
     public static final int READ1_CMD = 0x9D;		//NCE read 1 byte of memory command
 
     public static final int ACC_CMD = 0xAD;			//NCE accessory command
-    public static final int LOC_CMD = 0xA2;			//NCE Loco control command 
+    public static final int LOCO_CMD = 0xA2;		//NCE Loco control command 
     public static final int SW_REV_CMD = 0xAA; 		//NCE get EPROM revision cmd, Reply Format: VV.MM.mm
 
     // NOTE: ONLY NCE USB connected to PowerCab or SB3 supports the following commands
@@ -298,17 +303,28 @@ public class NceBinaryCommand {
 	}
 	
 	// NCE Command 0xA2 sends speed or function packets to a locomotive
-	// 0xA2 sub commands
-	public static final byte LOC_CMD_REV_CONSIST_LEAD = 0x0A;		//reverse consist address for lead loco
-	public static final byte LOC_CMD_FWD_CONSIST_LEAD = 0x0B;		//forward consist address for lead loco 
-	public static final byte LOC_CMD_REV_CONSIST_REAR = 0x0C;		//reverse consist address for rear loco 
-	public static final byte LOC_CMD_FWD_CONSIST_REAR = 0x0D;		//forward consist address for rear loco
-	public static final byte LOC_CMD_REV_CONSIST_MID = 0x0E;			//reverse consist address for additional loco 
-	public static final byte LOC_CMD_FWD_CONSIST_MID = 0x0F;			//forward consist address for additional loco 
-	public static final byte LOC_CMD_DELETE_LOC_CONSIST = 0x10;		//Delete loco from consist
-	public static final byte LOC_CMD_KILL_CONSIST = 0x11;			//Kill consist
+	// 0xA2 sub commands speed and functions
+	public static final byte LOCO_CMD_REV_28SPEED = 0x01;			//set loco speed 28 steps reverse
+	public static final byte LOCO_CMD_FWD_28SPEED = 0x02;			//set loco speed 28 steps forward
+	public static final byte LOCO_CMD_REV_128SPEED = 0x03;			//set loco speed 128 steps reverse
+	public static final byte LOCO_CMD_FWD_128SPEED = 0x04;			//set loco speed 128 steps forward
+	public static final byte LOCO_CMD_REV_ESTOP = 0x05;				//emergency stop reverse
+	public static final byte LOCO_CMD_FWD_ESTOP = 0x06;				//emergency stop forward
+	public static final byte LOCO_CMD_FG1 = 0x07;					//function group 1
+	public static final byte LOCO_CMD_FG2 = 0x08;					//function group 2
+	public static final byte LOCO_CMD_FG3 = 0x09;					//function group 3
 	
-	public static byte[] nceLocoCmd (int locoAddr, byte locoCmd, byte locoData){
+	// OxA2 sub commands consist
+	public static final byte LOCO_CMD_REV_CONSIST_LEAD = 0x0A;		//reverse consist address for lead loco
+	public static final byte LOCO_CMD_FWD_CONSIST_LEAD = 0x0B;		//forward consist address for lead loco 
+	public static final byte LOCO_CMD_REV_CONSIST_REAR = 0x0C;		//reverse consist address for rear loco 
+	public static final byte LOCO_CMD_FWD_CONSIST_REAR = 0x0D;		//forward consist address for rear loco
+	public static final byte LOCO_CMD_REV_CONSIST_MID = 0x0E;		//reverse consist address for additional loco 
+	public static final byte LOCO_CMD_FWD_CONSIST_MID = 0x0F;		//forward consist address for additional loco 
+	public static final byte LOCO_CMD_DELETE_LOCO_CONSIST = 0x10;	//Delete loco from consist
+	public static final byte LOCO_CMD_KILL_CONSIST = 0x11;			//Kill consist
+	
+	public static byte[] nceLocoCmd (int locoAddr, byte locoSubCmd, byte locoData){
 		// not supported by USB connected to SB3 or PH
 		if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3
 				|| NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERHOUSE){
@@ -316,8 +332,8 @@ public class NceBinaryCommand {
 			return null;
 		}
 		
-        if (locoCmd < 1 || locoCmd > 0x17) {
-            log.error("invalid NCE loco command "+locoCmd);
+        if (locoSubCmd < 1 || locoSubCmd > 0x17) {
+            log.error("invalid NCE loco command "+locoSubCmd);
             return null;
         }
 		
@@ -325,10 +341,10 @@ public class NceBinaryCommand {
         int locoAddr_l = locoAddr & 0xFF;
 		
 		byte[] retVal = new byte[5];
-        retVal[0] = (byte) (LOC_CMD); 		//NCE Loco command
+        retVal[0] = (byte) (LOCO_CMD); 		//NCE Loco command
         retVal[1] = (byte) (locoAddr_h);	//loco high address
         retVal[2] = (byte) (locoAddr_l);	//loco low address
-        retVal[3] = (byte) (locoCmd);		//sub command
+        retVal[3] = (byte) (locoSubCmd);	//sub command
         retVal[4] = (byte) (locoData); 		//sub data
 		
 		return retVal;

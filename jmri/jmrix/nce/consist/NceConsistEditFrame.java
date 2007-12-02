@@ -46,7 +46,7 @@ import java.io.*;
  * :0000
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -337,7 +337,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 			refresh = true;
 			
 			byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-					NceBinaryCommand.LOC_CMD_KILL_CONSIST, (byte) 0);
+					NceBinaryCommand.LOCO_CMD_KILL_CONSIST, (byte) 0);
 			sendNceMessage(bl,REPLY_1);
 
 		}
@@ -829,7 +829,7 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 		if (cmdButton.getText() == DELETE) {
 			
 			bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-					NceBinaryCommand.LOC_CMD_DELETE_LOC_CONSIST, (byte) 0);
+					NceBinaryCommand.LOCO_CMD_DELETE_LOCO_CONSIST, (byte) 0);
 			sendNceMessage(bl, REPLY_1);
 
 
@@ -853,7 +853,7 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 			if (engTextField == engTextField1) {
 
 				bl = NceBinaryCommand.nceLocoCmd(0,
-						NceBinaryCommand.LOC_CMD_FWD_CONSIST_LEAD, cN);
+						NceBinaryCommand.LOCO_CMD_FWD_CONSIST_LEAD, cN);
 				sendNceMessage(bl, REPLY_1);
 				
 				// no lead loco so we can't kill the consist
@@ -862,14 +862,14 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 			}else{
 				
 				bl = NceBinaryCommand.nceLocoCmd(0,
-						NceBinaryCommand.LOC_CMD_FWD_CONSIST_REAR, cN);
+						NceBinaryCommand.LOCO_CMD_FWD_CONSIST_REAR, cN);
 				sendNceMessage(bl, REPLY_1);
 				
 			}
 			// now delete lead or rear loco from layout
 			
 			bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-					NceBinaryCommand.LOC_CMD_DELETE_LOC_CONSIST, (byte) 0);
+					NceBinaryCommand.LOCO_CMD_DELETE_LOCO_CONSIST, (byte) 0);
 			sendNceMessage(bl, REPLY_1);
 
 		} else {
@@ -891,7 +891,7 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 			// delete loco from any existing consists
 
 			bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-					NceBinaryCommand.LOC_CMD_DELETE_LOC_CONSIST, (byte) 0);
+					NceBinaryCommand.LOCO_CMD_DELETE_LOCO_CONSIST, (byte) 0);
 			sendNceMessage(bl, REPLY_1);
 			
 			// now we need to determine if lead, rear, or mid loco
@@ -901,13 +901,13 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 				
 				if (dirButton.getText() == FWD) {
 					bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-							NceBinaryCommand.LOC_CMD_FWD_CONSIST_LEAD, cN);
+							NceBinaryCommand.LOCO_CMD_FWD_CONSIST_LEAD, cN);
 					sendNceMessage(bl, REPLY_1);
 				}
 				if (dirButton.getText() == REV) {
 
 					bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-							NceBinaryCommand.LOC_CMD_REV_CONSIST_LEAD, cN);
+							NceBinaryCommand.LOCO_CMD_REV_CONSIST_LEAD, cN);
 					sendNceMessage(bl, REPLY_1);
 				}
 			
@@ -916,13 +916,13 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 				
 				if (dirButton.getText() == FWD) {
 					bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-							NceBinaryCommand.LOC_CMD_FWD_CONSIST_REAR, cN);
+							NceBinaryCommand.LOCO_CMD_FWD_CONSIST_REAR, cN);
 					sendNceMessage(bl, REPLY_1);
 				}
 				if (dirButton.getText() == REV) {
 
 					bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-							NceBinaryCommand.LOC_CMD_REV_CONSIST_REAR, cN);
+							NceBinaryCommand.LOCO_CMD_REV_CONSIST_REAR, cN);
 					sendNceMessage(bl, REPLY_1);
 				}
 			
@@ -931,13 +931,13 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 
 				if (dirButton.getText() == FWD) {
 					bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-							NceBinaryCommand.LOC_CMD_FWD_CONSIST_MID, cN);
+							NceBinaryCommand.LOCO_CMD_FWD_CONSIST_MID, cN);
 					sendNceMessage(bl, REPLY_1);
 				}
 				if (dirButton.getText() == REV) {
 
 					bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-							NceBinaryCommand.LOC_CMD_REV_CONSIST_MID, cN);
+							NceBinaryCommand.LOCO_CMD_REV_CONSIST_MID, cN);
 					sendNceMessage(bl, REPLY_1);
 				}
 			}
