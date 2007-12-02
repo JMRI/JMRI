@@ -65,7 +65,7 @@ package jmri.jmrix.nce;
  *  1 = bad loco address
  *
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 
 public class NceBinaryCommand {
@@ -350,7 +350,7 @@ public class NceBinaryCommand {
 	 * @param locoAddr
 	 * @param cvAddr
 	 * @param cvData
-	 * @return
+	 * @return byte[] containing message
 	 */
 	public static byte[] usbOpsModeLoco(int locoAddr, int cvAddr, int cvData) {
 		// ONLY USB connected to PowerCab or SB3 can send this message
@@ -384,7 +384,7 @@ public class NceBinaryCommand {
 	 * @param accyAddr
 	 * @param cvAddr
 	 * @param cvData
-	 * @return
+	 * @return byte[] containing message
 	 */
 	public static byte[] usbOpsModeAccy(int accyAddr, int cvAddr, int cvData) {
 		// ONLY USB connected to PowerCab or SB3 can send this message

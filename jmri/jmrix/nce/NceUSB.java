@@ -228,7 +228,7 @@ package jmri.jmrix.nce;
  * <P>
  * 
  * @author Daniel Boudreau Copyright (C) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class NceUSB  {
 	
@@ -258,10 +258,10 @@ public class NceUSB  {
     /**
      * Set the type of system the NCE USB is connected to
      * <UL>
-     * <LI>{@link # USB_SYSTEM_NONE}
-     * <LI>{@link # USB_SYSTEM_POWERCAB}
-     * <LI>{@link # USB_SYSTEM_SB3}
-     * <LI>{@link # USB_SYSTEM_POWERHOUSE}
+     * <LI>{@link #USB_SYSTEM_NONE}
+     * <LI>{@link #USB_SYSTEM_POWERCAB}
+     * <LI>{@link #USB_SYSTEM_SB3}
+     * <LI>{@link #USB_SYSTEM_POWERHOUSE}
      * </UL>
      * 
      * @param val
@@ -278,10 +278,10 @@ public class NceUSB  {
 	/**
      * Get the type of system the NCE USB is connected to
      * <UL>
-     * <LI>{@link # USB_SYSTEM_NONE}
-     * <LI>{@link # USB_SYSTEM_POWERCAB}
-     * <LI>{@link # USB_SYSTEM_SB3}
-     * <LI>{@link # USB_SYSTEM_POWERHOUSE}
+     * <LI>{@link #USB_SYSTEM_NONE}
+     * <LI>{@link #USB_SYSTEM_POWERCAB}
+     * <LI>{@link #USB_SYSTEM_SB3}
+     * <LI>{@link #USB_SYSTEM_POWERHOUSE}
      * </UL>
      * 
      */
