@@ -70,7 +70,7 @@ package jmri.jmrix.nce;
   * Also see NceMessage.java for additional commands
   * 
   * @author Daniel Boudreau (C) 2007
-  * @version     $Revision: 1.17 $
+  * @version     $Revision: 1.18 $
   */
 
 public class NceBinaryCommand {
@@ -325,13 +325,6 @@ public class NceBinaryCommand {
 	public static final byte LOCO_CMD_KILL_CONSIST = 0x11;			//Kill consist
 	
 	public static byte[] nceLocoCmd (int locoAddr, byte locoSubCmd, byte locoData){
-		// not supported by USB connected to SB3 or PH
-		if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3
-				|| NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERHOUSE){
-			log.error("attempt to send unsupported binary command to NCE USB");
-			return null;
-		}
-		
         if (locoSubCmd < 1 || locoSubCmd > 0x17) {
             log.error("invalid NCE loco command "+locoSubCmd);
             return null;

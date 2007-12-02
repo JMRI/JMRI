@@ -72,8 +72,7 @@ package jmri.jmrix.nce;
  * <P>
  * --------------------------------------------------------------------------
  * <P>
- * 0xA2 (4 data bytes) Locomotive control command (1) !,1. Not supported by SB3
- * or PH
+ * 0xA2 (4 data bytes) Locomotive control command (1) !,1. 
  * <P>
  * Sends a speed or function packet to a locomotive. Command Format: 0xA2
  * (addr_h) (addr_l) (op_1) (data_1)
@@ -228,7 +227,7 @@ package jmri.jmrix.nce;
  * <P>
  * 
  * @author Daniel Boudreau Copyright (C) 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class NceUSB  {
 	
