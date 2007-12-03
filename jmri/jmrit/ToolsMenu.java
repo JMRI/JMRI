@@ -11,7 +11,7 @@ import java.util.*;
  * Create a "Tools" menu containing the Jmri system-independent tools
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 public class ToolsMenu extends JMenu {
     public ToolsMenu(String name) {
@@ -33,6 +33,11 @@ public class ToolsMenu extends JMenu {
         programmerMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(rb.getString("MenuItemDecoderProOpsModeProgrammer")));
         programmerMenu.add(new jmri.jmrit.dualdecoder.DualDecoderToolAction());
         add(programmerMenu);
+        
+        // disable programmer menu if there's no programmer manager
+        if (jmri.InstanceManager.programmerManagerInstance()==null){
+        	programmerMenu.setEnabled(false);
+        }
         
         JMenu tableMenu = new JMenu(rb.getString("MenuTables"));
         tableMenu.add(new jmri.jmrit.beantable.TurnoutTableAction(rb.getString("MenuItemTurnoutTable")));
