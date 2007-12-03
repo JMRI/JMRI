@@ -19,7 +19,7 @@ import javax.swing.JPanel;
  * a .hex file, feeding the information to a LocoMonFrame (monitor) and
  * connecting to a LocoGenFrame (for sending a few commands).
  * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version                     $Revision: 1.18 $
+ * @version                     $Revision: 1.19 $
  */
 public class HexFileFrame extends JmriJFrame {
 
@@ -58,7 +58,7 @@ public class HexFileFrame extends JmriJFrame {
         jLabel1.setText("Delay:");
         jLabel1.setVisible(true);
 
-        setTitle("Hexfile LocoNet simulator");
+        setTitle("LocoNet Simulator");
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         JPanel pane1 = new JPanel();
