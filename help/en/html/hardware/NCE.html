@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NCE.html,v 1.2 2007-11-13 04:58:03 dan_boudreau Exp $ -->
+<!-- $Id: NCE.html,v 1.3 2007-12-03 17:05:59 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: NCE</TITLE>
@@ -21,6 +21,13 @@
 <BODY>
 <H2>NCE</H2>
 
+<P>JMRI supports three NCE layout connections, PowerHouse via serial
+cable, PowerHouse via network connection, and USB via serial cable. They
+are shown in the preferences menu as NCE, NCE via network, and NCE USB
+respectively.</P>
+<BR>
+
+<H3>PowerHouse</H3>
 
 <P>For reliable operation, we recommend that you disable AIU
 broadcast, and set the baud rate to 9600. These are the normal defaults
@@ -37,8 +44,49 @@ the latest, you can perform a simple test. First normal accessory 1 and
 5 using the "Select Accy" button on your ProCab. Then using the "Select
 Accy" button, change accessory 1 to REV. Then check accessory 5, and if
 NOW = REV for accessory 5, you have the earlier revision with the known
-problem. If you have the early 2007 EPROM and wish to use MONITORING for 
+problem. If you have the early 2007 EPROM and wish to use MONITORING for
 feedback, contact NCE for an EPROM upgrade.</P>
+<BR>
+
+<H3>USB</H3>
+
+<P>The NCE USB can be connected to three NCE systems, PowerCab, SB3
+(SmartBooster) or PowerHouse. You must select the correct system from
+the preference menu for reliable operation.</P>
+<BR>
+
+<H3>USB Limitations</H3>
+
+<P>The NCE USB doesn't support all of the current JMRI features and
+functions. The some of the restrictions are based on the type of system
+the USB is connected to. The turnout feedback mode MONITORING isn't
+available when using a USB, and the Clock functions found in tools are
+also not available. The USB when connected to a PowerHouse system
+doesn't support any type of loco programming, and when connected to a
+SB3 only operation mode (no program track) is available for loco
+programming. Most functions and features that are not supported by the
+NCE USB are disabled or grayed out in the JMRI program.</P>
+
+<P>The USB when connected to a PowerCab or SB3 can only address
+accessories (turnouts) between 1 and 250. There isn't a limitation when
+connected to a PowerHouse.</P>
+<BR>
+
+<H3>USB Limitation Summary</H3>
+
+<DL>
+	<DT>PowerCab, SB3, PowerHouse:</DT>
+	<DD>No Turnout MONITORING, No Clock functions.</DD>
+
+	<DT>PowerCab and SB3:</DT>
+	<DD>Can only access accessory addresses between 1 and 250.</DD>
+
+	<DT>SB3:</DT>
+	<DD>No programming track support, operation mode only.</DD>
+
+	<DT>PowerHouse:</DT>
+	<DD>No loco programming</DD>
+</DL>
 
 </BODY>
 </HTML>
