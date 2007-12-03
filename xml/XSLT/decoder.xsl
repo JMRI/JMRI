@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!-- Copyright (C) Bob Jacobsen 2007 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: decoder.xsl,v 1.11 2007-09-21 05:49:30 jacobsen Exp $ -->
-<!-- -->
+<!-- $Id: decoder.xsl,v 1.12 2007-12-03 16:03:28 jacobsen Exp $ -->
+
+
 <!-- This XSLT transform is used when a JMRI decoder definition -->
 <!-- file is displayed by a web browser -->
 
@@ -226,6 +227,8 @@ for more information.
         </xsl:if>
       </xsl:element>
       
+      issued:
+      <xsl:element name="input"><xsl:attribute name="type">date</xsl:attribute><xsl:attribute name="name"><xsl:value-of select="@model"/>-nmraWarrantStart</xsl:attribute><xsl:attribute name="value"><xsl:value-of select="@nmraWarrantStart"/></xsl:attribute></xsl:element>
       expires:
       <xsl:element name="input"><xsl:attribute name="type">date</xsl:attribute><xsl:attribute name="name"><xsl:value-of select="@model"/>-nmraWarrantEnd</xsl:attribute><xsl:attribute name="value"><xsl:value-of select="@nmraWarrantEnd"/></xsl:attribute></xsl:element>
       <br/>
