@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!-- Copyright (C) Bob Jacobsen 2007 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: decoder.xsl,v 1.12 2007-12-03 16:03:28 jacobsen Exp $ -->
+<!-- $Id: decoder.xsl,v 1.13 2007-12-03 16:52:11 jacobsen Exp $ -->
 
 
 <!-- This XSLT transform is used when a JMRI decoder definition -->
@@ -222,7 +222,7 @@ for more information.
       <xsl:element name="input">
         <xsl:attribute name="type">checkbox</xsl:attribute>
         <xsl:attribute name="name"><xsl:value-of select="@model"/>-nmraWarrant</xsl:attribute>
-        <xsl:if test="@nmraWarrant = 'true'">
+        <xsl:if test="@nmraWarrant = 'yes'">
             <xsl:attribute name="checked">checked</xsl:attribute>
         </xsl:if>
       </xsl:element>
