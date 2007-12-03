@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractThrottle;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 public class NceThrottle extends AbstractThrottle
 {
@@ -70,7 +70,7 @@ public class NceThrottle extends AbstractThrottle
 			
 			byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr,
 					NceBinaryCommand.LOCO_CMD_FG1, (byte) data);
-			NceMessage m = NceMessage.createBinaryMessage(bl, 1);
+			NceMessage m = NceMessage.createBinaryMessage(bl);
 			NceTrafficController.instance().sendNceMessage(m, null);
 
 			// NCE USB connected to SB3 or Powerhouse can't control a loco!
@@ -109,7 +109,7 @@ public class NceThrottle extends AbstractThrottle
 			
 			byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr,
 					NceBinaryCommand.LOCO_CMD_FG1, (byte) data);
-			NceMessage m = NceMessage.createBinaryMessage(bl, 1);
+			NceMessage m = NceMessage.createBinaryMessage(bl);
 			NceTrafficController.instance().sendNceMessage(m, null);
 
 			// NCE USB connected to SB3 or Powerhouse can't control a loco!
@@ -148,7 +148,7 @@ public class NceThrottle extends AbstractThrottle
 			
 			byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr,
 					NceBinaryCommand.LOCO_CMD_FG1, (byte) data);
-			NceMessage m = NceMessage.createBinaryMessage(bl, 1);
+			NceMessage m = NceMessage.createBinaryMessage(bl);
 			NceTrafficController.instance().sendNceMessage(m, null);
 
 			// NCE USB connected to SB3 or Powerhouse can't control a loco!
@@ -201,7 +201,7 @@ public class NceThrottle extends AbstractThrottle
 								: NceBinaryCommand.LOCO_CMD_REV_ESTOP),
 						(byte) 0);
 			}
-			NceMessage m = NceMessage.createBinaryMessage(bl, 1);
+			NceMessage m = NceMessage.createBinaryMessage(bl);
 			NceTrafficController.instance().sendNceMessage(m, null);
 
 		// NCE USB connected to SB3 or Powerhouse can't control a loco!
