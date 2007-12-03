@@ -30,7 +30,7 @@ import javax.comm.SerialPort;
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Daniel Boudreau Copyright (C) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class UsbDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -131,10 +131,22 @@ public class UsbDriverAdapter extends NcePortController  implements jmri.jmrix.S
     public void configure() {
         // connect to the traffic controller
         NceTrafficController.instance().connectPort(this);
+  
+		// set the system the USB is connected to
+		if (getCurrentOption1Setting().equals(validOption1()[0])) {
+			NceUSB.setUsbSystem(NceUSB.USB_SYSTEM_POWERCAB);
+		} else if (getCurrentOption1Setting().equals(validOption1()[1])) {
+			NceUSB.setUsbSystem(NceUSB.USB_SYSTEM_SB3);
+		} else{
+			NceUSB.setUsbSystem(NceUSB.USB_SYSTEM_POWERHOUSE);
+		}
 
-        jmri.InstanceManager.setProgrammerManager(
-                new NceProgrammerManager(
-                    new NceProgrammer()));
+		// No programmer manager if USB connected to PowerHouse
+		// this kills the programmer menu
+        if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_POWERHOUSE) {
+			jmri.InstanceManager.setProgrammerManager(new NceProgrammerManager(
+					new NceProgrammer()));
+		}
 
         jmri.InstanceManager.setPowerManager(new jmri.jmrix.nce.NcePowerManager());
 
@@ -150,15 +162,6 @@ public class UsbDriverAdapter extends NcePortController  implements jmri.jmrix.S
 
         // set binary mode
 		NceMessage.setCommandOptions(NceMessage.OPTION_2006);
-
-		// set the system the USB is connected to
-		if (getCurrentOption1Setting().equals(validOption1()[0])) {
-			NceUSB.setUsbSystem(NceUSB.USB_SYSTEM_POWERCAB);
-		} else if (getCurrentOption1Setting().equals(validOption1()[1])) {
-			NceUSB.setUsbSystem(NceUSB.USB_SYSTEM_SB3);
-		} else{
-			NceUSB.setUsbSystem(NceUSB.USB_SYSTEM_POWERHOUSE);
-		}
 
 	}
 
