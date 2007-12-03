@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a type or types of DCC decoder as  -->
 <!-- a component, esp. information on how to program it. -->
-<!-- $Revision: 1.47 $ -->
+<!-- $Revision: 1.48 $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
 <!--                                                                        -->
@@ -112,6 +112,7 @@
 <!ATTLIST model formFactor      CDATA #IMPLIED >  <!-- mfg name for specific shape, etc -->
 <!-- NMRA Conformance status -->
 <!ATTLIST model nmraWarrant  (yes|no) "no" >
+<!ATTLIST model nmraWarrantStart CDATA #IMPLIED >  <!-- issue date of current warrant, if known -->
 <!ATTLIST model nmraWarrantEnd CDATA #IMPLIED >  <!-- end date of current warrant, if any -->
 <!-- wiring specification -->
 <!ATTLIST model connector ( unspecified | NMRAsmall | 9pin |
