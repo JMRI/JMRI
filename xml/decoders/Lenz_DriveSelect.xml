@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
-<!-- $Id: Lenz_DriveSelect.xml,v 1.14 2007-09-21 05:49:31 jacobsen Exp $ -->
+<!-- $Id: Lenz_DriveSelect.xml,v 1.15 2007-12-03 16:01:02 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -28,7 +28,8 @@
 <decoder>
 	<family name="Lenz Drive-Select decoders" mfg="Lenz" 
 			lowVersionID="46" highVersionID="46">
-		<model model="LE0511" numOuts="2" numFns="8">
+		<model model="LE0511" numOuts="2" numFns="8"
+		    nmraWarrant="yes" nmraWarrantStart="20020615">
 			<size length="0.53" width="0.39" height="0.14" units="inches" />
 		</model>
 		<model model="LE1014" numOuts="4" numFns="8" />
