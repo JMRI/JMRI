@@ -21,7 +21,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2006
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.31 $
+ * @version   $Revision: 1.32 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -220,6 +220,20 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         } else {
             log.debug("Element missing readOnly attribute: "+name);
         }
+        
+        // Ops mode doesn't allow reads, therefore we must disable read buttons
+		if (_cvModel.getProgrammer() != null
+				&& !_cvModel.getProgrammer().getCanRead()) {
+			// can't read, so adjust
+			if (readOnly) {
+				readOnly = false;
+				infoOnly = true;
+			}
+			if (!infoOnly) {
+				writeOnly = true;
+			}
+		}
+        	
 
         JButton bw = new JButton("Write");
         _writeButtons.addElement(bw);
@@ -256,6 +270,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             return;
         }
         if (CV>0)   // some variables have no CV per se
+  
             _cvModel.addCV(""+CV, readOnly, infoOnly, writeOnly);
 
         // have to handle various value types, see "snippet"

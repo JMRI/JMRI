@@ -18,7 +18,7 @@ import jmri.*;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2006
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.19 $
+ * @version   $Revision: 1.20 $
  */
 public class CvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -53,7 +53,9 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         for (int i=0; i<=MAXCVNUM; i++) _cvAllVector.addElement(null);
 
         // define just address CV at start, pending some variables
-        addCV("1", false, false, false);
+        // boudreau: not sure why we need the statement below, 
+        // messes up building CV table for CV #1 when in ops mode.
+        //addCV("1", false, false, false);
     }
 
     /**
