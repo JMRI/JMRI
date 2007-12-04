@@ -30,7 +30,7 @@ import javax.swing.*;
  * contact NCE Inc for separate permission.
  *
  * @author			Ken Cameron   Copyright (C) 2007
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  *
  * derived from loconet.clockmonframe by Bob Jacobson Copyright (C) 2003
  * 
@@ -113,6 +113,8 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
     private boolean nceLastAmPm;
     private boolean nceLast1224;
     private boolean nceLastRunning;
+    private double internalLastRatio;
+    private boolean internalLastRunning;
     private double pollingInterval = DEFAULT_POLLING_INTERVAL;
     private ArrayList priorDiffs = new ArrayList();
     private ArrayList priorOffsetErrors = new ArrayList();
@@ -480,14 +482,17 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
     }  
     
     public void reply(NceReply r) {
-        //		log.debug("nceReplyCatcher() waiting: " + waiting +
-        //		" watingForRead: " + waitingForCmdRead +
-        //		" waitingForCmdTime: " + waitingForCmdTime +
-        //		" waitingForCmd1224: " + waitingForCmd1224 +
-        //		" waitingForCmdRatio: " + waitingForCmdRatio +
-        //		" waitingForCmdStop: " + waitingForCmdStop +
-        //		" waitingForCmdStart: " + waitingForCmdStart
-        //		);
+    	if (log.isDebugEnabled() && false){
+            log.debug("nceReplyCatcher() waiting: " + waiting +
+        		" watingForRead: " + waitingForCmdRead +
+        		" waitingForCmdTime: " + waitingForCmdTime +
+        		" waitingForCmd1224: " + waitingForCmd1224 +
+        		" waitingForCmdRatio: " + waitingForCmdRatio +
+        		" waitingForCmdStop: " + waitingForCmdStop +
+        		" waitingForCmdStart: " + waitingForCmdStart
+        	);
+    		
+    	}
         if (waiting <= 0) {
             log.error(rb.getString("LogReplyEnexpected"));
             return;
@@ -496,21 +501,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         if (waitingForCmdRead && r.getNumDataElements() == CS_CLOCK_MEM_SIZE) {
             readClockPacket(r);
             waitingForCmdRead = false;
-            if (internalSyncInitStateCounter > 0) {
-                internalSyncInitStates();
-            }
-            if (internalSyncRunStateCounter > 0) {
-                internalSyncRunStates();
-            }
-            if (nceSyncInitStateCounter > 0) {
-                nceSyncInitStates();
-            }
-            if (nceSyncRunStateCounter > 0) {
-                nceSyncRunStates();
-            }
-            if (alarmDisplayStateCounter > 0) {
-            	alarmDisplayStates();
-            }
+            callStateMachines();
             return;
         }
         if (waitingForCmdTime) {
@@ -522,18 +513,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
                 if (r.getElement(0) != '!') {
                     log.error("NCE set clock replied: " + r.getElement(0));
                 }
-                if (internalSyncInitStateCounter > 0) {
-                    internalSyncInitStates();
-                }
-                if (internalSyncRunStateCounter > 0) {
-                    internalSyncRunStates();
-                }
-                if (nceSyncInitStateCounter > 0) {
-                    nceSyncInitStates();
-                }
-                if (nceSyncRunStateCounter > 0) {
-                    nceSyncRunStates();
-                }
+                callStateMachines();
                 return;
             }
         }
@@ -546,6 +526,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
                 if (r.getElement(0) != '!') {
                     log.error(rb.getString("LogNceClock1224CmdError") + r.getElement(0));
                 }
+                callStateMachines();
                 return;
             }
             if (waitingForCmdRatio) {
@@ -553,6 +534,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
                 if (r.getElement(0) != '!') {
                     log.error(rb.getString("LogNceClockRatioCmdError") + r.getElement(0));
                 }
+                callStateMachines();
                 return;
             }
             if (waitingForCmdStop) {
@@ -560,6 +542,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
                 if (r.getElement(0) != '!') {
                     log.error(rb.getString("LogNceClockStopCmdError") + r.getElement(0));
                 }
+                callStateMachines();
                 return;
             }
             if (waitingForCmdStart) {
@@ -567,14 +550,35 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
                 if (r.getElement(0) != '!') {
                     log.error(rb.getString("LogNceClockStartCmdError") + r.getElement(0));
                 }
+                callStateMachines();
                 return;
             }
         }
         log.error(rb.getString("LogReplyEnexpected"));
         return;
     }
+    private void callStateMachines(){
+        if (internalSyncInitStateCounter > 0) {
+            internalSyncInitStates();
+        }
+        if (internalSyncRunStateCounter > 0) {
+            internalSyncRunStates();
+        }
+        if (nceSyncInitStateCounter > 0) {
+            nceSyncInitStates();
+        }
+        if (nceSyncRunStateCounter > 0) {
+            nceSyncRunStates();
+        }
+        if (alarmDisplayStateCounter > 0) {
+        	alarmDisplayStates();
+        }
+    }
     
     private void readClockPacket (NceReply r) {
+    	NceReply priorClockReadPacket = lastClockReadPacket;
+    	int priorNceRatio = nceLastRatio;
+    	boolean priorNceRunning = nceLastRunning;
         lastClockReadPacket = r;
         lastClockReadAtTime = internalClock.getTime();
         //log.debug("readClockPacket - at time: " + lastClockReadAtTime);
@@ -595,10 +599,34 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         if (sc > 0) {
             nceLastRatio = 250 / sc;
         }
+        if (clockMode == SYNCMODE_NCE_MASTER) {
+        	if (priorClockReadPacket != null && priorNceRatio != nceLastRatio) {
+        		if (log.isDebugEnabled()){
+        			log.debug("NCE Change Rate from cab: prior vs last: " + priorNceRatio + " vs " + nceLastRatio);
+        		}
+        		rateNce.setText("" + nceLastRatio);
+        		nceSyncInitStateCounter = 1;
+        		nceSyncInitStates();
+        	}
+        }
         if (r.getElement(CS_CLOCK_STATUS) == 1) {
             nceLastRunning = false;
         } else {
             nceLastRunning = true;
+        }
+        if (clockMode == SYNCMODE_NCE_MASTER) {
+        	if (priorClockReadPacket != null && priorNceRunning != nceLastRunning) {
+        		if (log.isDebugEnabled()){
+            		log.debug("NCE Stop/Start: prior vs last: " + priorNceRunning + " vs " + nceLastRunning);
+        		}
+        		if (nceLastRunning) {
+        			nceSyncInitStateCounter = 1;
+        		} else {
+        			nceSyncInitStateCounter = -1;
+        		}
+        		nceSyncInitStates();
+        		internalClock.setRun(nceLastRunning);
+        	}
         }
         updateSettingsFromNce();
     }
@@ -695,11 +723,11 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
     }
     
     private void alarmDisplayStates() {
-		if (log.isDebugEnabled() && false){
-			log.debug("alarmDisplayStates: before: " + alarmDisplayStateCounter + " " + internalClock.getTime());
-		}
 		int priorState = 0;
 		do {
+			if (log.isDebugEnabled() && false){
+				log.debug("alarmDisplayStates: before: " + alarmDisplayStateCounter + " " + internalClock.getTime());
+			}
 			priorState = alarmDisplayStateCounter;
 	    	switch (alarmDisplayStateCounter) {
 	    	case 0:
@@ -707,6 +735,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
 	    		break;
 	    	case 1:
 	    		// issue nce read
+	    		internalClockStatusCheck();
 	            issueReadOnlyRequest();
 	    		alarmDisplayStateCounter++;
 	    		break;
@@ -723,10 +752,10 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
 	            updateInternalClockDisplay();
 	    		break;
 	    	}
+			if (log.isDebugEnabled() && false){
+				log.debug("alarmDisplayStates: after: " + alarmDisplayStateCounter + " " + internalClock.getTime());
+			}
 		} while (priorState != alarmDisplayStateCounter);
-		if (log.isDebugEnabled() && false){
-			log.debug("alarmDisplayStates: after: " + alarmDisplayStateCounter + " " + internalClock.getTime());
-		}
     }
     
     private double getNceTime() {
@@ -775,7 +804,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         Date now = internalClock.getTime();
         int priorState = internalSyncInitStateCounter;
         do {
-            if (log.isDebugEnabled() && internalSyncInitStateCounter != 0){
+            if (log.isDebugEnabled() && internalSyncInitStateCounter != 0 && false){
                 log.debug("internalSyncInitStates begin: " + internalSyncInitStateCounter + " @ " + now);
             }
 	        priorState = internalSyncInitStateCounter;
@@ -788,6 +817,19 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
 	        	alarmSyncUpdate.stop();
 	        	internalSyncInitStateCounter = 0;
 	        	internalSyncRunStateCounter = 0;
+	        	break;
+	        case -3:
+	        	// stopping from internal clock
+	        	internalSyncRunStateCounter = 0;
+	        	alarmSyncUpdate.stop();
+	        	issueClockStop();
+	        	internalSyncInitStateCounter++;
+	        	break;
+	        case -2:
+	        	// waiting for nce to stop
+	        	if (!waitingForCmdStop){
+		            internalSyncInitStateCounter = 0;
+	        	}
 	        	break;
 	        case 1:
 	            // get current values + initialize all values for sync operations
@@ -864,7 +906,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
 	            // initialization complete
 	        	internalSyncInitStateCounter = 0;
 	            internalSyncRunStateCounter = 1;
-	            if (log.isDebugEnabled()){
+	            if (log.isDebugEnabled() && false){
 	                log.debug("internalSyncState: init done");
 	            }
 	            break;
@@ -894,6 +936,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
 	        	internalSyncInitStates();
 	        	break;
 	        case 1:
+	        	internalClockStatusCheck();
 	            // alarm fired, issue fresh nce reads
 	            issueReadOnlyRequest();
 	            internalSyncRunStateCounter++;
@@ -982,6 +1025,27 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
 	            break;
 	        }
         } while (priorState != internalSyncRunStateCounter);
+    }
+    
+    private void internalClockStatusCheck(){
+
+    	// if change to internal clock
+    	if (clockMode == SYNCMODE_INTERNAL_MASTER) {
+	    	if (internalLastRunning != internalClock.getRun()) {
+	    		if (internalClock.getRun()){
+	    			internalSyncInitStateCounter = 1;
+	    		} else {
+	    			internalSyncInitStateCounter = -3;
+	    		}
+	    		internalSyncInitStates();
+	    	}
+	    	if (internalLastRatio != internalClock.getRate()) {
+	    		internalSyncInitStateCounter = 1;
+	    		internalSyncInitStates();
+	    	}
+    	}
+    	internalLastRunning = internalClock.getRun();
+    	internalLastRatio = internalClock.getRate();
     }
     
     private void changePidValues() {
@@ -1089,7 +1153,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         if (syncInterval < 40) {
             syncInterval = 40;
         }
-        if (log.isDebugEnabled()) {
+        if (log.isDebugEnabled() && false) {
             String txt = "";
             for (int i = 0; i < priorDiffs.size(); i++) {
                 txt = txt + " " + priorDiffs.get(i);
@@ -1218,11 +1282,15 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
                         // clear nce sync
                         nceSyncInitStateCounter = -1;
                         nceSyncInitStates();
+                        internalSyncInitStateCounter = 1;
+                        internalSyncInitStates();
                     }
                     if (oldMode == SYNCMODE_INTERNAL_MASTER) {
                         // clear internal mode
                         internalSyncInitStateCounter = -1;
                         internalSyncInitStates();
+                        nceSyncInitStateCounter = 1;
+                        nceSyncInitStates();
                     }
                 }
             }
@@ -1230,11 +1298,11 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
     }
     
     private void nceSyncInitStates() {
-        if (log.isDebugEnabled() && false) {
-            log.debug("Before nceSyncInitStateCounter: " + nceSyncInitStateCounter + " " + internalClock.getTime());
-        }
         int priorState = 0;
         do {
+            if (log.isDebugEnabled() && false) {
+                log.debug("Before nceSyncInitStateCounter: " + nceSyncInitStateCounter + " " + internalClock.getTime());
+            }
 	        priorState = nceSyncInitStateCounter;
 	        switch (nceSyncInitStateCounter) {
 	        case -1:
@@ -1294,10 +1362,10 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
 	            updateInternalClockDisplay();
 	            break;
 	        }
+	        if (log.isDebugEnabled() && false) {
+	            log.debug("After nceSyncInitStateCounter: " + nceSyncInitStateCounter + " " + internalClock.getTime());
+	        }
         } while (priorState != nceSyncInitStateCounter);
-        if (log.isDebugEnabled() && false) {
-            log.debug("After nceSyncInitStateCounter: " + nceSyncInitStateCounter + " " + internalClock.getTime());
-        }
     }
     private void nceSyncRunStates() {
         double intTime = 0;
