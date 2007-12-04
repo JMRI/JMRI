@@ -20,7 +20,11 @@ import jmri.util.JmriJFrame;
  *
  *
  * @author			Ken Cameron   Copyright (C) 2007
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
+ * 
+ * This was a very direct steal from the Nixie clock code, ver 1.12.
+ * Thank you Bob Jacobson.
+ * 
  */
 public class LcdClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
 
