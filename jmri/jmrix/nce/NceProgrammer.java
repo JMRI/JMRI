@@ -15,7 +15,7 @@ import java.util.Vector;
  * This has two states:  NOTPROGRAMMING, and COMMANDSENT.  The transistions
  * to and from programming mode are now handled in the TrafficController code.
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 public class NceProgrammer extends AbstractProgrammer implements NceListener {
 
@@ -53,6 +53,10 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
      * @return True if paged or register mode
      */
     public boolean hasMode(int mode) {
+    	if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3){
+    		log.debug("NCE USB-SB3 hasMode returns false on mode "+mode);
+    		return false;
+    	}
         if ( mode == Programmer.PAGEMODE ||
              mode == Programmer.REGISTERMODE ) {
             log.debug("hasMode request on mode "+mode+" returns true (1)");
@@ -69,7 +73,12 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
 
     public int getMode() { return _mode; }
 
-    public boolean getCanRead() { return true; }
+    public boolean getCanRead() {
+    	if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3)
+    		return false;
+    	else
+    		return true;
+    	}
 
     // notify property listeners - see AbstractProgrammer for more
 
