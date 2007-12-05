@@ -5,7 +5,7 @@ package jmri.jmrix.sprog;
 import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.Vector;
-import jmri.jmrix.sprog.serialdriver.SerialDriverAdapter;
+import jmri.jmrix.sprog.sprog.SerialDriverAdapter;
 
 import javax.comm.SerialPort;
 
@@ -17,7 +17,7 @@ import javax.comm.SerialPort;
  * handled in an independent thread.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class SprogTrafficController implements SprogInterface, Runnable {
 
@@ -255,6 +255,10 @@ public class SprogTrafficController implements SprogInterface, Runnable {
           if (log.isDebugEnabled()) log.debug("dispatch reply of length "+i);
           {
             final SprogReply thisMsg = msg;
+            if (unsolicited) {
+              log.debug("Unsolicited Reply");
+              thisMsg.setUnsolicited();
+            }
             final SprogTrafficController thisTC = this;
             // return a notification via the queue to ensure end
             Runnable r = new Runnable() {
@@ -291,6 +295,13 @@ public class SprogTrafficController implements SprogInterface, Runnable {
            if (msg.getElement(ptr)   != ' ') return false;
            if (msg.getElement(ptr-1) != '>') return false;
            if ((msg.getElement(ptr-2) != 'P')&&(msg.getElement(ptr-2) != 'R')) return false;
+           // Now see if it's unsolicited !O for overload
+           unsolicited = false;
+           if ( num >= 5 ) {
+             for (int i = 0; i < num-1; i++) {
+               if ((msg.getElement(i) == '!')) unsolicited = true;
+             }
+           }
            return true;
          }
          else return false;
@@ -326,6 +337,8 @@ public class SprogTrafficController implements SprogInterface, Runnable {
          }
          else return false;
        }
+
+       private boolean unsolicited;
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogTrafficController.class.getName());
 }

@@ -11,10 +11,9 @@ import jmri.Programmer;
  * class handles the response from the command station.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
-public class SprogMessage {
-    // is this logically an abstract class?
+public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
 
     // Special characters (NOTE: microchip bootloader does not use standard ASCII)
     public static final int STX = 15;
@@ -231,6 +230,12 @@ public class SprogMessage {
         return m;
     }
 
+    static public SprogMessage getStatus() {
+        SprogMessage m = new SprogMessage(1);
+        m.setOpCode('S');
+        return m;
+    }
+
     /*
      * SPROG uses same commands for reading and writing, with the number of
      * parameters determining the action. Currently supports page mode and
@@ -287,6 +292,24 @@ public class SprogMessage {
         SprogMessage m = new SprogMessage(1);
         m.setOpCode(' ');
         return m;
+    }
+
+    /**
+     * Send a DCC packet
+     * @param bytes byte[]
+     * @return SprogMessage
+     */
+    static public SprogMessage sendPacketMessage(byte[] bytes) {
+      SprogMessage m = new SprogMessage(1+3*bytes.length);
+      int i = 0; // counter to make it easier to format the message
+
+      m.setElement(i++, 'O');  // "O" Output DCC packet command
+      for (int j = 0; j<bytes.length; j++) {
+        m.setElement(i++, ' ');
+        m.addIntAsTwoHex(bytes[j]&0xFF,i);
+        i = i+2;
+      }
+      return m;
     }
 
     // Bootloader messages are initially created long enough for

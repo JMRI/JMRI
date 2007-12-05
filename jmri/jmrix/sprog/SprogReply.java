@@ -7,27 +7,31 @@ package jmri.jmrix.sprog;
  *
  * Description:		Carries the reply to an SprogMessage
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SprogReply {
-	// is this logically an abstract class?
+	// This should be an extension af AbstractMRReply and needs re-factoring
 
 	// create a new one
 	public  SprogReply() {
           _isBoot = false;
+          unsolicited = false;
 	}
 
 	// copy one
 	public  SprogReply(SprogReply m) {
+          this();
 		if (m == null)
 			log.error("copy ctor of null message");
 		_nDataChars = m._nDataChars;
                 _isBoot = m._isBoot;
+                unsolicited = m.unsolicited;
 		for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
 	}
 
 	// from String
 	public SprogReply(String s) {
+          this();
 		_nDataChars = s.length();
 		for (int i = 0; i<_nDataChars; i++)
 			_dataChars[i] = s.charAt(i);
@@ -35,6 +39,7 @@ public class SprogReply {
 
         // from String
         public SprogReply(String s, boolean b) {
+          this();
                 _nDataChars = s.length();
                 for (int i = 0; i<_nDataChars; i++)
                         _dataChars[i] = s.charAt(i);
@@ -43,6 +48,18 @@ public class SprogReply {
 
 	public void setOpCode(int i) { _dataChars[0]= (char)i;}
 	public int getOpCode() {return _dataChars[0];}
+
+        public final void setUnsolicited() { unsolicited = true; }
+
+        public boolean isUnsolicited() { return unsolicited; };
+
+        public boolean isOverload() {
+          return (this.toString().indexOf("!O") >= 0);
+        }
+
+        public boolean isError() {
+          return (this.toString().indexOf("!E") >= 0);
+        }
 
 	// accessors to the bulk data
 	public int getNumDataElements() {return _nDataChars;}
@@ -164,6 +181,7 @@ public class SprogReply {
 	private int _nDataChars;
 	private char _dataChars[] = new char[maxSize];
        private boolean _isBoot = false;
+       private boolean unsolicited;
 
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogReply.class.getName());
 

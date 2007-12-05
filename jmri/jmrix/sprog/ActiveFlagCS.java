@@ -9,10 +9,10 @@ package jmri.jmrix.sprog;
  * This is a very light-weight class, carrying only the flag,
  * so as to limit the number of unneeded class loading.
  *
- * @author		Bob Jacobsen  Copyright (C) 2003
- * @version             $Revision: 1.2 $
+ * @author		Andrew Crosland  Copyright (C) 2006
+ * @version             $Revision: 1.1 $
  */
-abstract public class ActiveFlag {
+abstract public class ActiveFlagCS {
 
     static private boolean flag = false;
     static public void setActive() {
@@ -22,9 +22,9 @@ abstract public class ActiveFlag {
         return flag;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ActiveFlag.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ActiveFlagCS.class.getName());
 
 }
 
 
-/* @(#)AbstractMRReply.java */
+/* @(#)ActiveFlagCS.java */

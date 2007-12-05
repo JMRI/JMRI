@@ -13,18 +13,18 @@ import java.util.Vector;
  * Implements the jmri.Programmer interface via commands for the Sprog programmer.
  *
  * @author      Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class SprogProgrammer extends AbstractProgrammer implements SprogListener {
 
     public SprogProgrammer() {
-        // error if more than one constructed?
-        if (self != null)
-            log.error("Creating too many SprogProgrammer objects");
+//        // error if more than one constructed?
+//        if (self != null)
+//            log.error("Creating too many SprogProgrammer objects");
 
-        // register this as the default, register as the Programmer
-        self = this;
-        jmri.InstanceManager.setProgrammerManager(new jmri.DefaultProgrammerManager(this));
+//        // register this as the default, register as the Programmer
+//        self = this;
+//        jmri.InstanceManager.setProgrammerManager(new jmri.DefaultProgrammerManager(this));
 
     }
 
