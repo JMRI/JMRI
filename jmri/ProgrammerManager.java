@@ -32,7 +32,7 @@ package jmri;
  * <P>
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public interface ProgrammerManager  {
 
@@ -81,6 +81,14 @@ public interface ProgrammerManager  {
      * @return false if there's no chance of getting one
      */
     public boolean isOpsModePossible();
+
+    /**
+     * Convenience method to check whether you'll be able to get
+     * a Service Mode programmer.
+     * @return false if there's no chance of getting one
+     */
+    public boolean isServiceModePossible();
+
 
 }
 

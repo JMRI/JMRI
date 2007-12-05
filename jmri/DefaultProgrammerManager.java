@@ -9,7 +9,7 @@ package jmri;
  *
  * @see             jmri.ProgrammerManager
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class DefaultProgrammerManager implements ProgrammerManager {
 
@@ -44,6 +44,11 @@ public class DefaultProgrammerManager implements ProgrammerManager {
      */
     public boolean isOpsModePossible() {return false;}
 
+    /**
+     * Allow for implementations that do not support Service mode programming
+     * @return false if there's no chance of getting one
+     */
+    public boolean isServiceModePossible() {return true;}
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DefaultProgrammerManager.class.getName());
 }
