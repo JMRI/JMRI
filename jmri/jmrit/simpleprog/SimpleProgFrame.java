@@ -14,7 +14,7 @@ import jmri.ProgListener;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2007
  * @author  Giorgio Terdina Copyright (C) 2007
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgListener {
 
@@ -116,8 +116,11 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
 
         getContentPane().add(resultsField);
 
-        if (modePane.getProgrammer()== null)
-            modePane.setDefaultMode();
+       if (modePane.getProgrammer()== null){
+    	   readButton.setEnabled (false);
+    	   // boudreau let system Programmer determine default mode
+//         modePane.setDefaultMode();
+       }
 		// disable read button if non-functional
         if (modePane.getProgrammer()!= null)
 			readButton.setEnabled(modePane.getProgrammer().getCanRead());
@@ -179,13 +182,18 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
             resultsField.setText("No programmer connected");
             readButton.setSelected(false);
         } else {
-            try {
-                resultsField.setText("programming...");
-                p.readCV(getNewAddr(), this);
-            } catch (jmri.ProgrammerException ex) {
-                resultsField.setText(""+ex);
-                readButton.setSelected(false);
-            }
+        	if (p.getCanRead()) {
+				try {
+					resultsField.setText("programming...");
+					p.readCV(getNewAddr(), this);
+				} catch (jmri.ProgrammerException ex) {
+					resultsField.setText("" + ex);
+					readButton.setSelected(false);
+				}
+			}else{
+				resultsField.setText("can't read in this Mode");
+				readButton.setSelected(false);
+			}
         }
     }
 
