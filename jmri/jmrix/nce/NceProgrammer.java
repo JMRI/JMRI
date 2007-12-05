@@ -15,12 +15,15 @@ import java.util.Vector;
  * This has two states:  NOTPROGRAMMING, and COMMANDSENT.  The transistions
  * to and from programming mode are now handled in the TrafficController code.
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 public class NceProgrammer extends AbstractProgrammer implements NceListener {
 
     public NceProgrammer() {
         super.SHORT_TIMEOUT = 4000;
+        if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3){
+        	_mode = Programmer.OPSBYTEMODE;
+        }
     }
 
     // handle mode
