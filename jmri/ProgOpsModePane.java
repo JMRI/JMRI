@@ -12,7 +12,7 @@ import jmri.Programmer;
  * Note that you should call the dispose() method when you're really done, so that
  * a ProgModePane object can disconnect its listeners.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class ProgOpsModePane extends javax.swing.JPanel {
 
@@ -64,20 +64,26 @@ public class ProgOpsModePane extends javax.swing.JPanel {
      * Get a configured programmer
      */
     public Programmer getProgrammer() {
-        if (InstanceManager.programmerManagerInstance()!=null) {
-            int address = Integer.parseInt(mAddrField.getText());
-            boolean longAddr = mLongAddrCheck.isSelected();
-            log.debug("ops programmer for address "+address+" long long address "+longAddr);
-            Programmer p = InstanceManager.programmerManagerInstance()
-                                .getOpsModeProgrammer(longAddr, address);
-            p.setMode(getMode());
-            return p;
-        }
-        else {
-            log.warn("request for ops mode programmer with no ProgrammerManager configured");
-            return null;
-        }
-    }
+		if (InstanceManager.programmerManagerInstance() != null) {
+			int address;
+			try {
+				address = Integer.parseInt(mAddrField.getText());
+			} catch (java.lang.NumberFormatException e) {
+				log.error("loco address not correct");
+				return null;
+			}
+			boolean longAddr = mLongAddrCheck.isSelected();
+			log.debug("ops programmer for address " + address
+					+ ", long address " + longAddr);
+			Programmer p = InstanceManager.programmerManagerInstance()
+					.getOpsModeProgrammer(longAddr, address);
+			p.setMode(getMode());
+			return p;
+		} else {
+			log.warn("request for ops mode programmer with no ProgrammerManager configured");
+			return null;
+		}
+	}
 
     public boolean isSelected() {
         return mOpsByteButton.isSelected();
