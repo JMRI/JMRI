@@ -26,7 +26,7 @@ package jmri.jmrix.nce;
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2007
- * @version     $Revision: 1.33 $
+ * @version     $Revision: 1.34 $
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 	
@@ -106,7 +106,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     static public NceMessage getEnableMain() {
     	// this command isn't supported by the NCE USB
     	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
-    		log.error("attempt to send unsupported binary command to NCE USB");
+    		log.error("attempt to send unsupported binary command ENABLE_MAIN_CMD to NCE USB");
 			return null;
     	}
         NceMessage m = new NceMessage(1);
@@ -124,7 +124,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     static public NceMessage getKillMain() {
     	// this command isn't supported by the NCE USB
     	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
-    		log.error("attempt to send unsupported binary command to NCE USB");
+    		log.error("attempt to send unsupported binary command KILL_MAIN_CMD to NCE USB");
 			return null;
     	}
         NceMessage m = new NceMessage(1);
@@ -143,8 +143,8 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 		// not supported by USB connected to SB3 or PH
 		if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3
 				|| NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERHOUSE){
-			log.error("attempt to send unsupported binary command to NCE USB");
-			return null;
+			log.error("attempt to send unsupported binary command ENTER_PROG_CMD to NCE USB");
+//			return null;
 		}
 		NceMessage m = new NceMessage(1);
 		if (getCommandOptions() >= OPTION_2006) {
@@ -160,12 +160,6 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 	}
 
     static public NceMessage getExitProgMode() {
-		// not supported by USB connected to SB3 or PH
-		if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3
-				|| NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERHOUSE){
-			log.error("attempt to send unsupported binary command to NCE USB");
-			return null;
-		}
         NceMessage m = new NceMessage(1);
         if (getCommandOptions() >= OPTION_2006) {
         	// Sending exit programing mode binary can crash pre 2006 EPROMs
@@ -173,6 +167,12 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         	// sending command
             if (ncsProgMode == false)
             	return null;
+    		// not supported by USB connected to SB3 or PH
+    		if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3
+    				|| NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERHOUSE){
+    			log.error("attempt to send unsupported binary command EXIT_PROG_CMD to NCE USB");
+//    			return null;
+    		}
             ncsProgMode = false;
             m.setBinary(true);
             m.setReplyLen(1);
@@ -189,7 +189,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 		// not supported by USB connected to SB3 or PH
 		if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3
 				|| NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERHOUSE){
-			log.error("attempt to send unsupported binary command to NCE USB");
+			log.error("attempt to send unsupported binary command READ_PAGED_CV_CMD to NCE USB");
 			return null;
 		}
         if (getCommandOptions() >= OPTION_2006) {
@@ -217,8 +217,8 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 		// not supported by USB connected to SB3 or PH
 		if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3
 				|| NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERHOUSE){
-			log.error("attempt to send unsupported binary command to NCE USB");
-			return null;
+			log.error("attempt to send unsupported binary command WRITE_PAGED_CV_CMD to NCE USB");
+//			return null;
 		}
         if (getCommandOptions() >= OPTION_2006) {
             NceMessage m = new NceMessage(4);
@@ -248,7 +248,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 		// not supported by USB connected to SB3 or PH
 		if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3
 				|| NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERHOUSE){
-			log.error("attempt to send unsupported binary command to NCE USB");
+			log.error("attempt to send unsupported binary command READ_REG_CMD to NCE USB");
 			return null;
 		}
         if (reg>8) log.error("register number too large: "+reg);
@@ -277,7 +277,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 		// not supported by USB connected to SB3 or PH
 		if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3
 				|| NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERHOUSE){
-			log.error("attempt to send unsupported binary command to NCE USB");
+			log.error("attempt to send unsupported binary command WRITE_REG_CMD to NCE USB");
 			return null;
 		}
         if (reg>8) log.error("register number too large: "+reg);
@@ -309,7 +309,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 		// not supported by USB connected to SB3 or PH
 		if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3
 				|| NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERHOUSE){
-			log.error("attempt to send unsupported binary command to NCE USB");
+			log.error("attempt to send unsupported binary command EAD_DIR_CV_CMD to NCE USB");
 			return null;
 		}
         if (getCommandOptions() < OPTION_2006)
@@ -329,7 +329,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 		// not supported by USB connected to SB3 or PH
 		if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3
 				|| NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERHOUSE){
-			log.error("attempt to send unsupported binary command to NCE USB");
+			log.error("attempt to send unsupported binary command WRITE_DIR_CV_CMD to NCE USB");
 			return null;
 		}
         if (getCommandOptions() < OPTION_2006)
@@ -349,7 +349,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     static public NceMessage sendPacketMessage(byte[] bytes) {
     	// this command isn't supported by the NCE USB
     	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
-    		log.error("attempt to send unsupported binary command to NCE USB");
+    		log.error("attempt to send unsupported sendPacketMessage to NCE USB");
 			return null;
     	}
 		if (getCommandOptions() >= OPTION_1999) {
@@ -422,7 +422,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     static public NceMessage queuePacketMessage(byte[] bytes) {
     	// this command isn't supported by the NCE USB
     	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
-    		log.error("attempt to send unsupported binary command to NCE USB");
+    		log.error("attempt to send unsupported queuePacketMessage to NCE USB");
 			return null;
     	}
         if (getCommandOptions() >= OPTION_1999) {

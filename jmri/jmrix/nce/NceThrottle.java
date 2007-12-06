@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractThrottle;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 public class NceThrottle extends AbstractThrottle
 {
@@ -54,9 +54,8 @@ public class NceThrottle extends AbstractThrottle
      * Send the message to set the state of functions F0, F1, F2, F3, F4.
      */
     protected void sendFunctionGroup1() {
-		// The NCE USB connected to PowerCab doesn't support the NMRA packet
-		// format
-		if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERCAB) {
+		// The NCE USB doesn't support the NMRA packet format
+		if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE) {
 			int locoAddr = address.getNumber();
 			if (address.isLongAddress())
 				locoAddr += 0xC000;
@@ -73,12 +72,6 @@ public class NceThrottle extends AbstractThrottle
 			NceMessage m = NceMessage.createBinaryMessage(bl);
 			NceTrafficController.instance().sendNceMessage(m, null);
 
-			// NCE USB connected to SB3 or Powerhouse can't control a loco!
-		} else if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3
-				|| NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERHOUSE) {
-			log.error("attempt to send loco command via USB connected to SB3 or PH");
-			return;
-
 			// This code can be eliminated once we confirm that the NCE 0xA2
 			// commands work properly
 		} else {
@@ -94,9 +87,8 @@ public class NceThrottle extends AbstractThrottle
 	 * Send the message to set the state of functions F5, F6, F7, F8.
 	 */
 	protected void sendFunctionGroup2() {
-		// The NCE USB connected to PowerCab doesn't support the NMRA packet
-		// format
-		if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERCAB) {
+		// The NCE USB doesn't support the NMRA packet format
+		if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE) {
 			int locoAddr = address.getNumber();
 			if (address.isLongAddress())
 				locoAddr += 0xC000;
@@ -108,15 +100,9 @@ public class NceThrottle extends AbstractThrottle
 			(f5 ? 0x01 : 0);
 			
 			byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-					NceBinaryCommand.LOCO_CMD_FG1, (byte) data);
+					NceBinaryCommand.LOCO_CMD_FG2, (byte) data);
 			NceMessage m = NceMessage.createBinaryMessage(bl);
 			NceTrafficController.instance().sendNceMessage(m, null);
-
-			// NCE USB connected to SB3 or Powerhouse can't control a loco!
-		} else if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3
-				|| NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERHOUSE) {
-			log.error("attempt to send loco command via USB connected to SB3 or PH");
-			return;
 
 			// This code can be eliminated once we confirm that the NCE 0xA2
 			// commands work properly
@@ -133,9 +119,8 @@ public class NceThrottle extends AbstractThrottle
 	 * Send the message to set the state of functions F9, F10, F11, F12.
 	 */
     protected void sendFunctionGroup3() {
-		// The NCE USB connected to PowerCab doesn't support the NMRA packet
-		// format
-		if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERCAB) {
+		// The NCE USB doesn't support the NMRA packet format
+		if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE) {
 			int locoAddr = address.getNumber();
 			if (address.isLongAddress())
 				locoAddr += 0xC000;
@@ -147,15 +132,9 @@ public class NceThrottle extends AbstractThrottle
             ( f9  ? 0x01 : 0);
 			
 			byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-					NceBinaryCommand.LOCO_CMD_FG1, (byte) data);
+					NceBinaryCommand.LOCO_CMD_FG3, (byte) data);
 			NceMessage m = NceMessage.createBinaryMessage(bl);
 			NceTrafficController.instance().sendNceMessage(m, null);
-
-			// NCE USB connected to SB3 or Powerhouse can't control a loco!
-		} else if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3
-				|| NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERHOUSE) {
-			log.error("attempt to send loco command via USB connected to SB3 or PH");
-			return;
 
 			// This code can be eliminated once we confirm that the NCE 0xA2
 			// commands work properly
@@ -182,8 +161,9 @@ public class NceThrottle extends AbstractThrottle
 			value = value + 1; // skip estop
 		if (value > 127)
 			value = 127; // max possible speed
-		// The NCE USB connected to PowerCab doesn't support the NMRA packet format
-		if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERCAB) {
+		
+		// The NCE USB doesn't support the NMRA packet format
+		if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE) {
 			int locoAddr = address.getNumber();
 			if (address.isLongAddress())
 				locoAddr += 0xC000;
@@ -203,12 +183,6 @@ public class NceThrottle extends AbstractThrottle
 			}
 			NceMessage m = NceMessage.createBinaryMessage(bl);
 			NceTrafficController.instance().sendNceMessage(m, null);
-
-		// NCE USB connected to SB3 or Powerhouse can't control a loco!
-		} else if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3
-				|| NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERHOUSE) {
-			log.error("attempt to send loco command via USB connected to SB3 or PH");
-			return;
 
 		// This code can be eliminated once we confirm that the NCE 0xA2 commands work properly
 		} else {
