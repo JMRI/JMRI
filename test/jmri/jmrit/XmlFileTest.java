@@ -21,7 +21,7 @@ import java.io.InputStream;
  * Uses (creates, modifies, destroys) files in the local preferences directory
  *
  * @author	    Bob Jacobsen  Copyright 2001
- * @version         $Revision: 1.9 $
+ * @version         $Revision: 1.10 $
  */
 public class XmlFileTest extends TestCase {
 
@@ -82,7 +82,10 @@ public class XmlFileTest extends TestCase {
     
     /**
      * Test error recovery by forcing the 1st attempt to fail (by overriding the
-     * method), and capturing the error-notification method
+     * method), and capturing the error-notification method.
+     *
+     * This test expects an error message from the getRootViaURL() methd, and 
+     * tests for it.
      */
     public void testReadFileMethod1() throws org.jdom.JDOMException, java.io.IOException {
         // ensure file present
