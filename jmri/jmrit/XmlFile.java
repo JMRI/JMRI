@@ -34,13 +34,13 @@ import org.jdom.output.XMLOutputter;
  * DTD in $PWD/xml/DTD.
  *</UL>
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.26 $
+ * @version	$Revision: 1.27 $
  */
 public abstract class XmlFile {
 
 
     /**
-     * Read the contents of an XML file from its name.  
+     * Read the contents of an XML file from its filename.  
      * The name is expanded by the {@link #findFile}
      * routine.
      * @param name Filename, as needed by {@link #findFile}
@@ -80,7 +80,7 @@ public abstract class XmlFile {
             return getRootViaURI(verify, stream);
         }
         catch (org.jdom.JDOMException e1) {
-            // 1st attempt failed, try second
+            // 1st attempt failed, try second using deprecated method
             if (!openWarn1) reportError1(file, e1);
             openWarn1 = true;
             try {
@@ -98,6 +98,7 @@ public abstract class XmlFile {
                 InputStream stream = new BufferedInputStream(new FileInputStream(file));
                 e = getRootViaRelative(verify, stream);
                 log.info("GetRootViaRelative succeeded as 3rd try");
+                new Exception().printStackTrace();
                 return e;
             }
             // other errors are allowed to propagate out
@@ -121,8 +122,8 @@ public abstract class XmlFile {
      * Find the DTD via a relative path and get the root element.
      * @deprecated 1.8
      */
-    protected Element getRootViaRelative(boolean verify, InputStream stream) throws org.jdom.JDOMException, java.io.IOException {
-        log.error("getRootViaRelative is obsolete, and should not be used");
+    private Element getRootViaRelative(boolean verify, InputStream stream) throws org.jdom.JDOMException, java.io.IOException {
+
         // Invoke a utility service routine to provide the URL for DTDs
         String dtdUrl = "file:xml"+File.separator+"DTD";
 
@@ -147,8 +148,8 @@ public abstract class XmlFile {
      * @deprecated 1.8
      * 
      */
-    protected Element getRootViaURL(boolean verify, InputStream stream) throws org.jdom.JDOMException, java.io.IOException {
-        log.error("getRootViaRelative is obsolete, and should not be used");
+    private Element getRootViaURL(boolean verify, InputStream stream) throws org.jdom.JDOMException, java.io.IOException {
+        
         // Invoke a utility service routine to provide the URL for DTDs
         String dtdpath = "xml"+File.separator+"DTD"+File.separator;
         File dtdFile = new File(dtdpath);
@@ -351,7 +352,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.26 2007-11-27 18:11:42 jacobsen Exp $";
+                        +" $Id: XmlFile.java,v 1.27 2007-12-06 16:13:34 jacobsen Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }
