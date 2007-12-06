@@ -30,7 +30,7 @@ import javax.swing.*;
  * contact NCE Inc for separate permission.
  *
  * @author			Ken Cameron   Copyright (C) 2007
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  *
  * derived from loconet.clockmonframe by Bob Jacobson Copyright (C) 2003
  * 
@@ -817,6 +817,11 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
 	        	alarmSyncUpdate.stop();
 	        	internalSyncInitStateCounter = 0;
 	        	internalSyncRunStateCounter = 0;
+	            setClockButton.setEnabled(true);
+	            setRatioButton.setEnabled(true);
+	            set1224Button.setEnabled(true);
+	            setStopNceButton.setEnabled(true);
+	            setStartNceButton.setEnabled(true);
 	        	break;
 	        case -3:
 	        	// stopping from internal clock
@@ -837,6 +842,12 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
 	            priorCorrections.clear();
 	            priorOffsetErrors.clear();
 	            syncInterval = TARGET_SYNC_DELAY;
+	            // disable NCE clock options
+	            setClockButton.setEnabled(false);
+	            setRatioButton.setEnabled(false);
+	            set1224Button.setEnabled(false);
+	            setStopNceButton.setEnabled(false);
+	            setStartNceButton.setEnabled(false);
 	            // stop NCE clock
 	            issueClockStop();
 	            internalSyncInitStateCounter++;
