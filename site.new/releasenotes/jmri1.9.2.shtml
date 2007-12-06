@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.9.2.shtml,v 1.6 2007-12-02 03:17:48 jacobsen Exp $ -->
+<!-- $Id: jmri1.9.2.shtml,v 1.7 2007-12-06 17:12:17 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -68,13 +68,18 @@ see our
 
 <h3>New warnings for this version:</h3>
 
+<P>
+The NCE support has been revamped so that "NCE USB adapter" is a new choice in the preferences window.
+Note that this support is still experimental, and will likely evolve as NCE adds features to the adapter.
+
+<h3>Warnings from older versions:</h3>
+
 <P>This version of JMRI no longer supports NCE AIU broadcasts.  This change was needed so that JMRI could reliably read certain CV values. We recommend that if you use NCE AIUs, that you upgrade the command station EPROM to version 2007 or newer and turn off AIU broadcasts.  Code has been added to detect if AIU broadcasts are enabled, and a warning message will appear at startup requesting that AIU broadcasts be turned off for proper operation of the JMRI programs.
 
 <P>This version of JMRI requires Java 1.3 or later.  
 To see JMRI's plans for which Java versions will be required when, please
 see our
 <A HREF="../doc/Technical/TechRoadMap.shtml">technological roadmap page</a>.
-<h3>Warnings from older versions:</h3>
 
 <P>For Lenz users: There are now separate choices for each of the serial-based Lenz Computer Interfaces 
 (i.e. the LI100,LI100F,LI101F). Since release 1.7.3, to aid in backwards compatibility, all the interfaces 
@@ -98,7 +103,7 @@ otherwise the writes will fail.
  
 <P>QSI CV 64 CV Numeric Verbal Readout currently does not work for indexed CVs.
  
-<P>The Route interface has had significant changes.  New member functions have been provided for configuring the Turnouts and Sensors that are changed with the Route fires.  The old methods are deprecated. If you've written your own code that uses Routes directly, you should update it.  The deprecated methods will be removed after the next production release.
+<P>The beginnings of support for the QSI Programmer device are present, but it's not complete yet
 
 <h3>Download links:</h3>
 
@@ -167,13 +172,37 @@ Add methods to JmriJFrame so you can get a list of all currently-existing frames
 Dan Boudreau fixed some spurious error messages when opening a saved throttle layout
 
 <P>
-The various files written rom now on by JMRI can now be easily viewed in a web browser, but only if you have an active internet connection so that formatting information can be downloaded.  The formatting is still somewhat rough, and suggestions as to how to improve it are welcomed.
+The various files written from now on by JMRI can now be easily viewed in a web browser, 
+but only if you have an active internet connection so that formatting information can be downloaded.  
+The formatting is still somewhat rough, and suggestions as to how to improve it are welcomed.
 
 <P>
 The help pages have been reformatted so they can be properly displayed on the web site.  This shouldn't cause any problems, but please let us know if you notice any.
 
 <P>
-Dan Bourdreau fixed an error that would occasionally surface when closing a clock window
+Dan Boudreau fixed an error that would occasionally surface when closing a clock window
+
+<P>
+Bob Jacobsen added retry-twice-on-error to the DecoderPro speed table handling
+
+<P>
+Ken Cameron added a modern LCD-type clock display
+
+<P>
+Many of the decoder definitions have been updated to show whether they have NMRA warrants
+
+<P>
+Dan Boudreau improved handling of programming errors. Dan and Andrew Crosland changed the single CV programmer and DecoderPro main screen so that options that are not available are now disabled.
+
+<P>
+Andrew Crosland added new support for the SPROG acting as a command station.  Please see the SPROG web pages for more information on this, as it's still under development
+
+<p>
+Help pages have been added to many more windows, though they generally need volunteers to add content to them.
+
+<P>
+The DTDs for several file types have been brought up to date.  If you're using a smart XML editor, this will be useful to you.
+
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
