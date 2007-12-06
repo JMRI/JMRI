@@ -21,7 +21,7 @@ import java.beans.*;
  * Frame displaying and programming a LocoIO configuration.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.17 $
+ * @version	$Revision: 1.18 $
  */
 
 public class LocoIOFrame extends jmri.util.JmriJFrame
@@ -185,6 +185,9 @@ public class LocoIOFrame extends jmri.util.JmriJFrame
         } catch (NullPointerException e) {
             System.err.println("Caught NullPointerException: " + e.getMessage());
         }
+
+        // add help menu to window
+    	addHelpMenu("package.jmri.jmrix.loconet.locoio.LocoIOFrame", true);
 
         // and prep for display
         pack();

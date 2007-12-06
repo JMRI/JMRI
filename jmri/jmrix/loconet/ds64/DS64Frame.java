@@ -22,7 +22,7 @@ import javax.swing.JCheckBox;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002, 2004, 2005, 2007
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class DS64Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
 
@@ -60,6 +60,9 @@ public class DS64Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
 
         setTypeWord(0x73);  // configure DS64 message type
         
+        // add help menu to window
+    	addHelpMenu("package.jmri.jmrix.loconet.ds64.DS64Frame", true);
+
         // and prep for display
         pack();
 

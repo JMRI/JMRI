@@ -20,7 +20,7 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2003, 2004
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class ClockMonFrame extends jmri.util.JmriJFrame implements SlotListener {
 
@@ -58,6 +58,9 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements SlotListener 
 
         // Load GUI element contents with current slot contents
         notifyChangedSlot(SlotManager.instance().slot(LnConstants.FC_SLOT));
+
+        // add help menu to window
+    	addHelpMenu("package.jmri.jmrix.loconet.clockmon.ClockMonFrame", true);
 
         // install "read" button handler
         readButton.addActionListener( new ActionListener() {

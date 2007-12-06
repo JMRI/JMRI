@@ -19,7 +19,7 @@ import jmri.jmrix.loconet.sdf.SdfBuffer;
  * This handles file read/write.
  *
  * @author		Bob Jacobsen   Copyright (C) 2007
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class EditorFrame extends JmriJFrame {
 
@@ -42,6 +42,9 @@ public class EditorFrame extends JmriJFrame {
         pane.addSdf(buff);
         getContentPane().add(pane);        
         
+        // add help menu to window
+    	addHelpMenu("package.jmri.jmrix.loconet.sdfeditor.EditorFrame", true);
+
         pack();
  
     }

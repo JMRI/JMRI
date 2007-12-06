@@ -26,7 +26,7 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author  Bob Jacobsen   Copyright (C) 2003, 2004, 2007
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class SE8Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
 
@@ -69,6 +69,9 @@ public class SE8Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
 
         setTypeWord(0x72);  // configure SE8 message type
         
+        // add help menu to window
+    	addHelpMenu("package.jmri.jmrix.loconet.se8.SE8Frame", true);
+
         // and prep for display
         pack();
         setVisible(true);

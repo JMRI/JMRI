@@ -15,7 +15,7 @@ import jmri.util.JmriJFrame;
  * This is just an enclosure for the LoaderPane, which does the real work.
  *
  * @author		Bob Jacobsen   Copyright (C) 2006
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class LoaderFrame extends JmriJFrame {
 
@@ -28,6 +28,10 @@ public class LoaderFrame extends JmriJFrame {
 
         // install items in GUI
         getContentPane().add(pane);
+
+        // add help menu to window
+    	addHelpMenu("package.jmri.jmrix.loconet.soundloader.LoaderFrame", true);
+
         pack();
     }
 

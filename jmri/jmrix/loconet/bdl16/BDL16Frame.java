@@ -22,7 +22,7 @@ import javax.swing.JCheckBox;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002, 2004, 2007
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class BDL16Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
 
@@ -58,6 +58,9 @@ public class BDL16Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
 
         setTypeWord(0x71);  // configure BDL16 message type
         
+        // add help menu to window
+    	addHelpMenu("package.jmri.jmrix.loconet.bdl16.BDL16Frame", true);
+
         // and prep for display
         pack();
 

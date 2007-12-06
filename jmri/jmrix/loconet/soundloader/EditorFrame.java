@@ -19,7 +19,7 @@ import jmri.util.JmriJFrame;
  * This handles file read/write.
  *
  * @author		Bob Jacobsen   Copyright (C) 2006
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 public class EditorFrame extends JmriJFrame {
 
@@ -68,6 +68,9 @@ public class EditorFrame extends JmriJFrame {
         // pane = new EditorPane("ac4400-silence.spj");
         // pane = new EditorPane("java/test/jmri/jmrix/loconet/spjfile/sd38_2.spj");
         //getContentPane().add(pane);
+
+        // add help menu to window
+    	addHelpMenu("package.jmri.jmrix.loconet.soundloader.EditorFrame", true);
 
         pack();
  

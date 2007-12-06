@@ -14,7 +14,7 @@ import javax.swing.*;
  * User interface for setting the LocoNet ID
  *
  * @author			Bob Jacobsen   Copyright (C) 2006
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class LocoIdFrame extends jmri.util.JmriJFrame implements LocoNetListener {
 
@@ -65,6 +65,9 @@ public class LocoIdFrame extends jmri.util.JmriJFrame implements LocoNetListener
                     readButtonActionPerformed();
                 }
             });
+
+        // add help menu to window
+    	addHelpMenu("package.jmri.jmrix.loconet.locoid.LocoIdFrame", true);
 
         // pack to format display
         pack();

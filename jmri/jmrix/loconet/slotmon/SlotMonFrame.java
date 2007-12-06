@@ -25,7 +25,7 @@ import jmri.util.JTableUtil;
  * so are shown separately.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class SlotMonFrame extends jmri.util.JmriJFrame {
 
@@ -109,6 +109,11 @@ public class SlotMonFrame extends jmri.util.JmriJFrame {
 
         getContentPane().add(pane1);
         getContentPane().add(slotScroll);
+
+        // add help menu to window
+    	addHelpMenu("package.jmri.jmrix.loconet.slotmon.SlotMonFrame", true);
+
+       // pack & set scroll size
         pack();
         pane1.setMaximumSize(pane1.getSize());
         pack();

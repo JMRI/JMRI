@@ -23,7 +23,7 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002, 2004, 2007
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class PM4Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
 
@@ -84,6 +84,9 @@ public class PM4Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
         
         setTypeWord(0x70);  // configure PM4 message type
         
+        // add help menu to window
+    	addHelpMenu("package.jmri.jmrix.loconet.pm4.PM4Frame", true);
+
         // and prep for display
         pack();
     }

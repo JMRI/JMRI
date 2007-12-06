@@ -30,7 +30,7 @@ import java.util.ResourceBundle;
  *
  * @author			Alex Shepherd   Copyright (C) 2004
  * @author			Bob Jacobsen  Copyright (C) 2006
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class CmdStnConfigFrame extends jmri.util.JmriJFrame implements LocoNetListener {
 
@@ -182,6 +182,9 @@ public class CmdStnConfigFrame extends jmri.util.JmriJFrame implements LocoNetLi
 
     updateVisibility(optionBox.isSelected());
     
+    // add help menu to window
+    addHelpMenu("package.jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigFrame", true);
+
     // pack to prepare for display
     pack();
   }
