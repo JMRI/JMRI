@@ -19,7 +19,7 @@ import java.io.DataInputStream;
  * The rest of the GUI then appears.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
 
@@ -134,7 +134,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
                 }
             });
             p2.add(p);
-        }  // speed off/on
+        }  // end speed off/on
 
         {
             JPanel p = new JPanel();
@@ -159,7 +159,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             });
             b.setSelected(true);
             p2.add(p);
-        }  // acc off/on
+        }  // end acc off/on
 
         {
             JPanel p = new JPanel();
@@ -184,7 +184,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             });
             b.setSelected(true);
             p2.add(p);
-        }  // acc single/double
+        }  // end acc single/double
 
         {
             JPanel p = new JPanel();
@@ -209,7 +209,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             });
             b.setSelected(true);
             p2.add(p);
-        }  // reset off/on
+        }  // end reset off/on
 
         {
             JPanel p = new JPanel();
@@ -234,7 +234,32 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             });
             b.setSelected(true);
             p2.add(p);
-        }  // idle off/on
+        }  // end idle off/on
+
+        {
+            JPanel p = new JPanel();
+            p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+            ButtonGroup g = new ButtonGroup();
+            JRadioButton b;
+            b= new JRadioButton("Hide signal packets");
+            g.add(b);
+            p.add(b);
+            b.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    sendBytes(new byte[]{(byte)'S',(byte)'-'});
+                }
+            });
+            b= new JRadioButton("Show signal packets");
+            g.add(b);
+            p.add(b);
+            b.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    sendBytes(new byte[]{(byte)'S',(byte)'+'});
+                }
+            });
+            b.setSelected(true);
+            p2.add(p);
+        }  // end signal off/on
 
         getContentPane().add(p2);
     }
@@ -242,7 +267,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
     JButton checkButton = new JButton("Init");
 
     protected String title() {
-        return "Packet Monitor";
+        return "Packet Monitor / Analyzer";
     }
 
     synchronized void sendBytes(byte[] bytes) {
