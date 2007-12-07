@@ -21,23 +21,16 @@ import org.jdom.output.XMLOutputter;
  * JMRI needs to be able to operate offline, so it needs to store
  * DTDs locally.  At the same time, we want XML files to be 
  * transportable, and to have their DTDs accessible via the web
- * (for browser rendering).  To do this, we use a two-part
- * strategy:
- *<UL>
- *<LI>When the DTD is not being verified, we use a null EntityResolver
- * to just bypass the whole problem. (Note: This means that the DTD
- * cannot define any entities itself!)  Note that by default JMRI does
- * not verify during normal operation.
- *<LI>When the DTD is being verified, the first thing tried is
- * normal opening of the file.  If that fails, the class silently
- * tries with a local EntityResolver that (attempts to) find the
- * DTD in $PWD/xml/DTD.
- *</UL>
+ * (for browser rendering).  
+ * Further, our code assumes that default values for attributes will
+ * be provided, and it's necessary to read the DTD for that to work.
+ *<p>
+ * We implement this using our own EntityResolved, the jmri.util.JmriLocalEntityResolver class
+ *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.27 $
+ * @version	$Revision: 1.28 $
  */
 public abstract class XmlFile {
-
 
     /**
      * Read the contents of an XML file from its filename.  
@@ -132,10 +125,7 @@ public abstract class XmlFile {
         // Open and parse file
         SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation
         
-        org.xml.sax.EntityResolver resolver;
-        if (verify) resolver = new jmri.util.JmriLocalEntityResolver();
-        else resolver = new jmri.util.JmriNullEntityResolver();
-        builder.setEntityResolver(resolver);
+        builder.setEntityResolver(jmri.util.JmriLocalEntityResolver());
         
         Document doc = builder.build(new BufferedInputStream(stream),dtdUrl);
 
@@ -160,10 +150,7 @@ public abstract class XmlFile {
         // Open and parse file
         SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation
         
-        org.xml.sax.EntityResolver resolver;
-        if (verify) resolver = new jmri.util.JmriLocalEntityResolver();
-        else resolver = new jmri.util.JmriNullEntityResolver();
-        builder.setEntityResolver(resolver);
+        builder.setEntityResolver(jmri.util.JmriLocalEntityResolver());
         
         Document doc = builder.build(new BufferedInputStream(stream),dtdUrl);
 
@@ -186,11 +173,8 @@ public abstract class XmlFile {
         // Open and parse file
         SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation
         
-        org.xml.sax.EntityResolver resolver;
-        if (verify) resolver = new jmri.util.JmriLocalEntityResolver();
-        else resolver = new jmri.util.JmriNullEntityResolver();
-        builder.setEntityResolver(resolver);
-        
+        builder.setEntityResolver(jmri.util.JmriLocalEntityResolver());
+
         Document doc = builder.build(new BufferedInputStream(stream), dtdUrl);
 
         // find root
@@ -352,7 +336,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.27 2007-12-06 16:13:34 jacobsen Exp $";
+                        +" $Id: XmlFile.java,v 1.28 2007-12-07 07:39:31 jacobsen Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }
