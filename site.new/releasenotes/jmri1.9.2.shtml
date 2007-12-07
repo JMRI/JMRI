@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.9.2.shtml,v 1.7 2007-12-06 17:12:17 jacobsen Exp $ -->
+<!-- $Id: jmri1.9.2.shtml,v 1.8 2007-12-07 02:16:49 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -69,7 +69,7 @@ see our
 <h3>New warnings for this version:</h3>
 
 <P>
-The NCE support has been revamped so that "NCE USB adapter" is a new choice in the preferences window.
+The NCE support has been revamped so that "NCE USB" is a new choice in the preferences window.
 Note that this support is still experimental, and will likely evolve as NCE adds features to the adapter.
 
 <h3>Warnings from older versions:</h3>
@@ -147,7 +147,7 @@ Dan Boudreau improved the error checking and handling in the Logix and Condition
 Paul Bender and Bob Jacobsen fixed bug 1829354, crash if additional buttons were selected in the preferences.
 
 <P>
-Ken Cameron updated the NCE fast clock support
+Ken Cameron updated the NCE fast clock support. The internal and NCE clocks are synchronized, and either can be master.
 
 <P>
 Giorgio Terdina updated the XPressNet monitor for the proper reporting of Command Station Software Version and Emergency Stop packets.
@@ -203,6 +203,8 @@ Help pages have been added to many more windows, though they generally need volu
 <P>
 The DTDs for several file types have been brought up to date.  If you're using a smart XML editor, this will be useful to you.
 
+<P>
+Dan Boudreau updated the NCE packet sniffer inteface to add some more capabilities
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
