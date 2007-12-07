@@ -18,7 +18,7 @@ import jmri.*;
  * Programmer used to access it is a data member.
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.6 $
+ * @version   $Revision: 1.7 $
  */
 public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -209,6 +209,16 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
     private static final int READING_CV = 5;
     private static final int WRITING_CV = 6;
 
+    /**
+     * Count number of retries done
+     */
+    private int retries = 0;
+    
+    /**
+     * Define maximum number of retries of read/write operations before moving on
+     */
+    private static final int RETRY_MAX = 2;
+
     public void indexedRead() {
         if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in read()");
         // lets skip the SI step if SI is not used
@@ -217,6 +227,7 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
         } else {
             _progState = WRITING_SI4R;
         }
+        retries = 0;
         if (log.isDebugEnabled()) log.debug("invoke PI write for CV read");
         // to read any indexed CV we must write the PI
         ((CvValue)_indxCvDisplayVector.elementAt(_row)).writePI(_status);
@@ -233,6 +244,7 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
         } else {
             _progState = WRITING_SI4W;
         }
+        retries = 0;
         if (log.isDebugEnabled()) log.debug("invoke PI write for CV write");
         // to write any indexed CV we must write the PI
         ((CvValue)_indxCvDisplayVector.elementAt(_row)).writePI(_status);
@@ -251,12 +263,38 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
             case WRITING_PI4R:   // have written the PI, now write SI if needed
             case WRITING_PI4W:
                 if (log.isDebugEnabled()) log.debug("Busy goes false with state WRITING_PI");
+
+                // check for success
+                if ((retries < RETRY_MAX)
+                    && ( ((CvValue)_indxCvDisplayVector.elementAt(_row)).getState() != CvValue.STORED) ) {
+                    // need to retry on error; leave progState as it was
+                    log.debug("retry");
+                    retries++;
+                    ((CvValue)_indxCvDisplayVector.elementAt(_row)).writePI(_status);
+                    return;
+                }
+                // success, move on to next
+                retries = 0;
+
                 _progState = (_progState == WRITING_PI4R ? WRITING_SI4R : WRITING_SI4W);
                 ((CvValue)_indxCvDisplayVector.elementAt(_row)).writeSI(_status);
                 return;
             case WRITING_SI4R:  // have written the SI if needed, now read or write CV
             case WRITING_SI4W:
                 if (log.isDebugEnabled()) log.debug("Busy goes false with state WRITING_SI");
+
+                // check for success
+                if ((retries < RETRY_MAX)
+                    && ( ((CvValue)_indxCvDisplayVector.elementAt(_row)).getState() != CvValue.STORED) ) {
+                    // need to retry on error; leave progState as it was
+                    log.debug("retry");
+                    retries++;
+                    ((CvValue)_indxCvDisplayVector.elementAt(_row)).writeSI(_status);
+                    return;
+                }
+                // success, move on to next
+                retries = 0;
+
                 if (_progState == WRITING_SI4R ) {
                     _progState = READING_CV;
                     ((CvValue)_indxCvDisplayVector.elementAt(_row)).readIcV(_status);
@@ -267,10 +305,36 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
                 return;
             case READING_CV:  // now done with the read request
                 if (log.isDebugEnabled()) log.debug("Finished reading the Indexed CV");
+
+                // check for success
+                if ((retries < RETRY_MAX)
+                    && ( ((CvValue)_indxCvDisplayVector.elementAt(_row)).getState() != CvValue.READ) ) {
+                    // need to retry on error; leave progState as it was
+                    log.debug("retry");
+                    retries++;
+                    ((CvValue)_indxCvDisplayVector.elementAt(_row)).readIcV(_status);
+                    return;
+                }
+                // success, move on to next
+                retries = 0;
+
                 _progState = IDLE;
                 return;
             case WRITING_CV:  // now done with the write request
                 if (log.isDebugEnabled()) log.debug("Finished writing the Indexed CV");
+
+                // check for success
+                if ((retries < RETRY_MAX)
+                    && ( ((CvValue)_indxCvDisplayVector.elementAt(_row)).getState() != CvValue.STORED) ) {
+                    // need to retry on error; leave progState as it was
+                    log.debug("retry");
+                    retries++;
+                    ((CvValue)_indxCvDisplayVector.elementAt(_row)).writeIcV(_status);
+                    return;
+                }
+                // success, move on to next
+                retries = 0;
+
                 _progState = IDLE;
                 return;
             default:  // unexpected!

@@ -24,7 +24,7 @@ import javax.swing.text.Document;
  * Value to put in text field = ((value in High CV) * Factor) + Low CV
  *
  * @author   Howard G. Penny  Copyright (C) 2005
- * @version  $Revision: 1.5 $
+ * @version  $Revision: 1.6 $
  *
  */
 public class IndexedPairVariableValue extends VariableValue
@@ -215,6 +215,16 @@ public class IndexedPairVariableValue extends VariableValue
     private static final int WRITING_CV = 6;
 
     /**
+     * Count number of retries done
+     */
+    private int retries = 0;
+    
+    /**
+     * Define maximum number of retries of read/write operations before moving on
+     */
+    private static final int RETRY_MAX = 2;
+
+    /**
      * Notify the connected CVs of a state change from above
      * @param state
      */
@@ -262,6 +272,7 @@ public class IndexedPairVariableValue extends VariableValue
         else {
             _progState = WRITING_SI4R;
         }
+        retries = 0;
         if (log.isDebugEnabled()) log.debug("invoke PI write for CV read");
         // to read any indexed CV we must write the PI
         ((CvValue)_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).writePI(_status);
@@ -280,6 +291,7 @@ public class IndexedPairVariableValue extends VariableValue
         } else {
             _progState = WRITING_SI4W;
         }
+        retries = 0;
         if (log.isDebugEnabled()) log.debug("invoke PI write for CV write");
         // to write any indexed CV we must write the PI
         ((CvValue)_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).writePI(_status);
@@ -299,12 +311,38 @@ public class IndexedPairVariableValue extends VariableValue
                 case WRITING_PI4R:   // have written the PI, now write SI if needed
                 case WRITING_PI4W:
                     if (log.isDebugEnabled()) log.debug("Busy goes false with state WRITING_PI");
+
+                    // check for success
+                    if ((retries < RETRY_MAX)
+                        && ( ((CvValue)_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).getState() != CvValue.STORED) ) {
+                        // need to retry on error; leave progState as it was
+                        log.debug("retry");
+                        retries++;
+                        ((CvValue)_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).writePI(_status);
+                        return;
+                    }
+                    // success, move on to next
+                    retries = 0;
+                    
                     _progState = (_progState == WRITING_PI4R ? WRITING_SI4R : WRITING_SI4W);
                     ((CvValue)_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).writeSI(_status);
                     return;
                 case WRITING_SI4R:
                 case WRITING_SI4W:  // have written SI if needed, now read or write CV
                     if (log.isDebugEnabled()) log.debug("Busy goes false with state WRITING_SI");
+
+                    // check for success
+                    if ((retries < RETRY_MAX)
+                        && ( ((CvValue)_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).getState() != CvValue.STORED) ) {
+                        // need to retry on error; leave progState as it was
+                        log.debug("retry");
+                        retries++;
+                        ((CvValue)_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).writeSI(_status);
+                        return;
+                    }
+                    // success, move on to next
+                    retries = 0;
+                    
                     if (_progState == WRITING_SI4R ) {
                         _progState = READING_CV;
                         ((CvValue)_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).readIcV(_status);
@@ -315,6 +353,19 @@ public class IndexedPairVariableValue extends VariableValue
                     return;
                 case READING_CV:  // now done with the read request
                     if (log.isDebugEnabled()) log.debug("Finished reading the Indexed CV");
+
+                    // check for success
+                    if ((retries < RETRY_MAX)
+                        && ( ((CvValue)_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).getState() != CvValue.READ) ) {
+                        // need to retry on error; leave progState as it was
+                        log.debug("retry");
+                        retries++;
+                        ((CvValue)_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).readIcV(_status);
+                        return;
+                    }
+                    // success, move on to next
+                    retries = 0;
+                    
                     _progState = IDLE;
                     if (programmingLow) {
                         programmingLow = false;
@@ -326,6 +377,19 @@ public class IndexedPairVariableValue extends VariableValue
                     return;
                 case WRITING_CV:  // now done with the write request
                     if (log.isDebugEnabled()) log.debug("Finished writing the Indexed CV");
+
+                    // check for success
+                    if ((retries < RETRY_MAX)
+                        && ( ((CvValue)_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).getState() != CvValue.STORED) ) {
+                        // need to retry on error; leave progState as it was
+                        log.debug("retry");
+                        retries++;
+                        ((CvValue)_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).writeIcV(_status);
+                        return;
+                    }
+                    // success, move on to next
+                    retries = 0;
+                    
                     _progState = IDLE;
                     if (programmingLow) {
                         programmingLow = false;
@@ -385,7 +449,7 @@ public class IndexedPairVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.5 $
+     * @version     $Revision: 1.6 $
      */
     public class VarTextField extends JTextField {
 
