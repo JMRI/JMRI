@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.19 $ -->
+<!-- Revision $Revision: 1.20 $ -->
 
 <project name="JMRI" basedir="." default="none">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -49,8 +49,12 @@
     <antcall target="x-rel-create-linux" />
     <antcall target="x-rel-installer-osx" />
     <antcall target="x-rel-installer-linux" />
+
+	<echo message="**************************"/>
 	<echo message="build the Windows .exe now"/>
-	<echo message="end of part 1; do part 2 after MacOSX, Linux uploads completely built"/>
+	<echo message="**************************"/>
+
+    <antcall target="x-rel-upload-mac-linux" />
 </target>
 
  <target name="x-rel-base-build" depends=""
@@ -233,39 +237,28 @@
     <!-- </exec>                                  -->
 </target>
  
- <target name="release2" depends=""
- 					description="part 2 of build a release; useage is ant -Drelease=R1.2.3 -Dnumber=1.2.3 release2">
-    <!-- <move file="Linux/JMRI.tgz" tofile="JMRI.${number}.tgz" />  -->
- </target>
- 
- <target name="release3" depends=""
+ <target name="x-rel-upload-mac-linux" depends=""
  					description="part 3 of build a release; useage is ant -Drelease=R1.2.3 -Dnumber=1.2.3 release2">
 	<echo message="upload Mac, Linux files"/>
 	<echo message="JMRI.${number}.dmg, JMRI.${number}.tgz"/>
-    <echo message="if you get an error here, upload manually and move to step 3"/>
 
     <ftp server="upload.sourceforge.net"
          userid="ftp" password="jake@physics.berkeley.edu"
-         action="put"
+         action="put" passive="yes"
          verbose="yes" remotedir="incoming" >
       <fileset dir="." includes="JMRI.${number}.dmg, JMRI.${number}.tgz" />
     </ftp>
-
-	<echo message="end of part 3; part 4 will do the windows upload when ready"/>
-	<echo message="make sure Release.${number}.exe is present"/>
-
  </target>
  
  <target name="release4" depends=""
  					description="part 4 of build a release; usage is ant -Drelease=R1.2.3 -Dnumber=1.2.3 release4">
 	<echo message="upload file Windows .exe file"/>
-	<echo message="if you get an error, upload manually, then ant uploadjavadoc"/>
-    <!-- <ftp server="upload.sourceforge.net"  -->
-    <!--      userid="ftp" password="jake@physics.berkeley.edu"  -->
-    <!--      action="put"  -->
-    <!--      verbose="yes" remotedir="incoming" >  -->
-    <!--   <fileset dir="." includes="JMRI.${number}.exe" />  -->
-    <!-- </ftp>  -->
+    <ftp server="upload.sourceforge.net"
+         userid="ftp" password="jake@physics.berkeley.edu"
+         action="put" passive="yes"
+         verbose="yes" remotedir="incoming" >
+      <fileset dir="." includes="JMRI.${number}.exe" />
+    </ftp>
  </target>
  
  <target name="release5" depends=""

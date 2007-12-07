@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.54 $)
+distribution.  ($Revision: 1.55 $)
 
 Start with a directory, typically called "Distributions", that
 contains "scripts" and "java" (from CVS) as subdirectories, and:
@@ -73,7 +73,8 @@ Linux startup scripts have the executable permission bit set.
 * Check the MacOS X bundles to make sure they work still
 
 
-NOTE THAT build.xml is updated to create a jar file with debug info
+NOTE THAT build.xml is updated to create a jar file with debug info;
+change that (temporarily) for production versions
 -----
 
 ( ) Come back to Distributions and 
@@ -88,21 +89,18 @@ NOTE THAT build.xml is updated to create a jar file with debug info
 	
 	Check DecoderPro for no startup errors, right version
 
-(From here down, directions are old; StuffIt no longer used, DMG in script,
-release2 no longer needed; uploads still manual)
-
-	Ant will launch a StuffIt (DropTar) process for Linux; click
-	to proceed, and wait for it to be running.
+    Ant will do the various builds, construct the distribution
+    directories, and then start uploading the MacOS X and Linux
+    versions, followed by doing the javadocs.
 	
-( ) Once the StuffIt processes launches, you can start building the Windows installer
-	in parallel.
+( ) Once uploads start, you can start building the Windows installer.
 	
 	Using VPC, make sure you have the Z disk available and that it
 	contains the JMRI folder. (If not, check the "shared folders" and 
 	"networking settings"; see Control menu)
 	
 	Launch Installer Vise from the last build file.
-	"Update archive"; Check changes make sense.
+	Click "File" -> "Update archive"; Check changes make sense.
 	Click the "test archive" button (right one of the pair)
 	Name the installer JMRI.1.2.3.exe or so
 	After the installer runs, run DecoderPro from desktop icon and check.
@@ -114,41 +112,7 @@ release2 no longer needed; uploads still manual)
     Mount PC.  Copy last .vct and Windows/JMRI to C:\WINDOWS\Desktop
     Create and test installer as above.  Copy the .exe back
     to the Distributions directory
-    
-    
-( ) Create MacOS X DMG
-   
-    rm temp.dmg
-    hdiutil create -size 20MB -fs HFS+ -volname "JMRI 1.2.3" temp.dmg
-    open temp.dmg
-    (copy MacOSX/JMRI folder to DMG using finder)
-    (cd /Volumes/JMRI(tab) ; ln -s /Applications .)
-    ln -s /Applications .
-    cd (back to Distributions)
-    (eject)
-    hdiutil convert temp.dmg -format UDZO -o JMRI.1.2.3.dmg
-    
-( ) Once the StuffIt process is done
-	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release2
-	
-	This does some file copying and renaming; it should finish instantly
-	
-( ) Upload the 1st two files
-    (Do the next step manually for now!!)
-
-	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release4
-	
-    Normally the next step is to run release3, which uploads 
-    the MacOS and Linux files for you. But there's recently been
-    a problem with this, so do it manually
-    
-    ftp upload.sf.net (userid ftp, pwd is email address)
-    cd incoming
-    bin
-    put JMRI.1.2.3.dmg
-    put JMRI.1.2.3.tgz
-    exit
-	
+    	
 ( ) Create and upload the XSLT pages. This can be done at any time after now,
     but doing it now works well in parallel with the rest of the Windows build
     if that's going slowly in VPC.
@@ -162,7 +126,7 @@ release2 no longer needed; uploads still manual)
 ( ) The Windows .exe must be present before the next step
 	
 ( ) When ready to upload the Windows version:
-	(Do this manually for now, see above)
+
 	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release4
 		
 ( ) Any time after release2, create and upload the JavaDocs
@@ -255,4 +219,52 @@ release2 no longer needed; uploads still manual)
 ( ) Commit back any changes made to this doc
 
 ( ) Take a break!
+
+=========================================
+
+Old notes follow
+
+------------
+
+( ) Create MacOS X DMG
+   
+   (this step is automatic in the release1 target, please ignore)
+   
+    rm temp.dmg
+    hdiutil create -size 20MB -fs HFS+ -volname "JMRI 1.2.3" temp.dmg
+    open temp.dmg
+    (copy MacOSX/JMRI folder to DMG using finder)
+    (cd /Volumes/JMRI(tab) ; ln -s /Applications .)
+    ln -s /Applications .
+    cd (back to Distributions)
+    (eject)
+    hdiutil convert temp.dmg -format UDZO -o JMRI.1.2.3.dmg
+
+------------
+
+( ) Upload the 1st two files
+    (Do the next step manually for now!!)
+
+	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release3
+	
+    Normally the next step is to run release3, which uploads 
+    the MacOS and Linux files for you. But there's recently been
+    a problem with this, so do it manually
+    
+    ftp upload.sf.net (userid ftp, pwd is email address)
+    cd incoming
+    bin
+    put JMRI.1.2.3.dmg
+    put JMRI.1.2.3.tgz
+    exit
+
+------------
+
+To get ftp to work, needed to download two Apache jar
+files and put in ~/.ant/lib/
+
+ls -lt ~/.ant/lib
+total 488
+-rw-r--r--   1 jake  admin  180792 Nov  4 06:41 commons-net-1.4.1.jar
+-rw-r--r--   1 jake  admin   65261 Nov  4 06:40 jakarta-oro-2.0.8.jar
 
