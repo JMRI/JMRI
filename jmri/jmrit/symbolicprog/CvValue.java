@@ -23,7 +23,7 @@ import javax.swing.JTextField;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.19 $
+ * @version   $Revision: 1.20 $
  */
 public class CvValue extends AbstractValue implements ProgListener {
 
@@ -101,6 +101,7 @@ public class CvValue extends AbstractValue implements ProgListener {
     private int _value = 0;
 
     public int getState()  { return _state; }
+    
     /**
      * Set state value and send notification.  Also sets GUI color as needed.
      */
