@@ -28,7 +28,7 @@ import org.jdom.output.XMLOutputter;
  * We implement this using our own EntityResolved, the jmri.util.JmriLocalEntityResolver class
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.28 $
+ * @version	$Revision: 1.29 $
  */
 public abstract class XmlFile {
 
@@ -125,7 +125,7 @@ public abstract class XmlFile {
         // Open and parse file
         SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation
         
-        builder.setEntityResolver(jmri.util.JmriLocalEntityResolver());
+        builder.setEntityResolver(new jmri.util.JmriLocalEntityResolver());
         
         Document doc = builder.build(new BufferedInputStream(stream),dtdUrl);
 
@@ -150,7 +150,7 @@ public abstract class XmlFile {
         // Open and parse file
         SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation
         
-        builder.setEntityResolver(jmri.util.JmriLocalEntityResolver());
+        builder.setEntityResolver(new jmri.util.JmriLocalEntityResolver());
         
         Document doc = builder.build(new BufferedInputStream(stream),dtdUrl);
 
@@ -173,7 +173,7 @@ public abstract class XmlFile {
         // Open and parse file
         SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation
         
-        builder.setEntityResolver(jmri.util.JmriLocalEntityResolver());
+        builder.setEntityResolver(new jmri.util.JmriLocalEntityResolver());
 
         Document doc = builder.build(new BufferedInputStream(stream), dtdUrl);
 
@@ -336,7 +336,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.28 2007-12-07 07:39:31 jacobsen Exp $";
+                        +" $Id: XmlFile.java,v 1.29 2007-12-07 15:07:45 jacobsen Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }
