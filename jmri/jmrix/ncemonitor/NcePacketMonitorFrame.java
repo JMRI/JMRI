@@ -19,7 +19,7 @@ import java.io.DataInputStream;
  * The rest of the GUI then appears.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
 
@@ -62,14 +62,12 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
         {
         JPanel p = new JPanel();
 			p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-			checkButton.setToolTipText("? L-");
+			checkButton.setToolTipText("?");
 			checkButton.setEnabled(false); 
 			p.add(checkButton);
 			checkButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent evt) {
-					locoSpeedButton.setSelected(true);
-					sendBytes(new byte[] { (byte) '?' });
-					sendBytes(new byte[] { (byte) 'L', (byte) '-' });
+					sendBytes(new byte[] { (byte) '?'});
 				}
 			});
 			truncateCheckBox
@@ -87,7 +85,6 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             b.setToolTipText("V");
             g.add(b);
             p.add(b);
-            b.setSelected(true);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     sendBytes(new byte[]{(byte)'V'});
@@ -148,7 +145,6 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
                     sendBytes(new byte[]{(byte)'A',(byte)'+'});
                 }
             });
-            b.setSelected(true);
             p2.add(p);
         }  // end acc off/on
         
@@ -175,7 +171,6 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
                     sendBytes(new byte[]{(byte)'I',(byte)'+'});
                 }
             });
-            b.setSelected(true);
             p2.add(p);
         }  // end idle off/on
         
@@ -187,7 +182,6 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             locoSpeedButton.setToolTipText("L-");
             g.add(locoSpeedButton);
             p.add(locoSpeedButton);
-            locoSpeedButton.setSelected(true);
             locoSpeedButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     sendBytes(new byte[]{(byte)'L',(byte)'-'});
@@ -197,7 +191,6 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             b.setToolTipText("L+");
             g.add(b);
             p.add(b);
-            b.setToolTipText("L+");
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     sendBytes(new byte[]{(byte)'L',(byte)'+'});
@@ -229,7 +222,6 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
                     sendBytes(new byte[]{(byte)'R',(byte)'+'});
                 }
             });
-            b.setSelected(true);
             p2.add(p);
         }  // end reset off/on
  
@@ -256,7 +248,6 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
                     sendBytes(new byte[]{(byte)'S',(byte)'+'});
                 }
             });
-            b.setSelected(true);
             p2.add(p);
         }  // end signal off/on
         
@@ -285,7 +276,6 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
                     sendBytes(new byte[]{(byte)'A',(byte)'P'});
                 }
             });
-            b.setSelected(true);
             p2.add(p);
         }  // end acc single/double
 
