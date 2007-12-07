@@ -58,7 +58,7 @@ import javax.swing.event.ChangeListener;
  * be removed.
  *<P>
  * @author	Bob Jacobsen, Alex Shepherd   Copyright (C) 2001, 2004
- * @version	$Revision: 1.29 $
+ * @version	$Revision: 1.30 $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
@@ -433,6 +433,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      * Count number of retries done
      */
     private int retries = 0;
+    
     /**
      * Define maximum number of retries of read/write operations before moving on
      */
