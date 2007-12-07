@@ -10,7 +10,7 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class NceProgrammerManager  extends DefaultProgrammerManager {
 
@@ -27,6 +27,20 @@ public class NceProgrammerManager  extends DefaultProgrammerManager {
      * @return true
      */
     public boolean isOpsModePossible() {return true;}
+    
+    /**
+	 * Works with PH command station to provide Service Mode and USB connect to
+	 * PowerCab.
+	 * 
+	 * @return true if not USB connect to SB3
+	 */
+    public boolean isServiceModePossible() {
+		if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3)
+			return false;
+		else
+			return true;
+	}
+
 
     public Programmer getOpsModeProgrammer(boolean pLongAddress, int pAddress) {
         return new NceOpsModeProgrammer(pAddress, pLongAddress);
