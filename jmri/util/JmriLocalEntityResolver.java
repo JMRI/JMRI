@@ -21,7 +21,7 @@ import java.net.URI;
  * local files within the JMRI distributions in the xml/DTD directory.
  *
  * @author Bob Jacobsen  Copyright 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 import org.xml.sax.EntityResolver;
@@ -50,7 +50,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
                     return new InputSource(new java.io.FileReader(new File(filename)));
                 } catch (java.io.FileNotFoundException e2) {
                     log.error("did not find type 3 DTD file: "+filename);
-                    return null;
+                    return null;  // use default, which is to find on web
                 }
             } else if (path.startsWith("../DTD")) {
                 // type 1
@@ -61,8 +61,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
                     log.error("did not find type 1 DTD file: "+filename);
                     return null;
                 }
-            //} else if (!path.contains("/")) {
-            } else if (path.indexOf("/")==-1) {
+            } else if (path.indexOf("/")==-1) {  // path doesn't contain "/", so is just name
                 // type 2
                 String filename = "xml"+File.separator+"DTD"+File.separator+path;
                 try {
@@ -72,7 +71,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
                     return null;
                 }
             } else if (scheme.equals("file")) {
-                // still looking for a local file
+                // still looking for a local file, this must be absolute or full relative path
                 try {
                     return new InputSource(new java.io.FileReader(new File(path)));
                 } catch (java.io.FileNotFoundException e2) {
