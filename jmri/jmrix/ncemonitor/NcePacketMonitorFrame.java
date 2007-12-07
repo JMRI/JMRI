@@ -19,7 +19,7 @@ import java.io.DataInputStream;
  * The rest of the GUI then appears.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
 
@@ -59,20 +59,32 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
         // add user part of GUI
         getContentPane().add(new JSeparator());
         JPanel p2 = new JPanel();
-        p2.add(checkButton);
-        checkButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sendBytes(new byte[]{(byte)'?'});
-                sendBytes(new byte[]{(byte)'L',(byte)'-'});
-            }
-        });
-
+        {
+        JPanel p = new JPanel();
+			p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+			checkButton.setToolTipText("? L-");
+			checkButton.setEnabled(false); 
+			p.add(checkButton);
+			checkButton.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					locoSpeedButton.setSelected(true);
+					sendBytes(new byte[] { (byte) '?' });
+					sendBytes(new byte[] { (byte) 'L', (byte) '-' });
+				}
+			});
+			truncateCheckBox
+					.setToolTipText("Check this box to suppress identical packets");
+			p.add(truncateCheckBox);
+			p2.add(p);
+		}
+        
         {
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
             JRadioButton b;
             b= new JRadioButton("Verbose");
+            b.setToolTipText("V");
             g.add(b);
             p.add(b);
             b.setSelected(true);
@@ -82,6 +94,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
                 }
             });
             b= new JRadioButton("Hex with preamble symbol");
+            b.setToolTipText("H0");
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
@@ -91,6 +104,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             });
             p2.add(p);
             b= new JRadioButton("Hex without preamble symbol");
+            b.setToolTipText("H2");
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
@@ -100,6 +114,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             });
             p2.add(p);
             b= new JRadioButton("Hex with preamble in hex");
+            b.setToolTipText("H4");
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
@@ -110,38 +125,13 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             p2.add(p);
         }  // end hex/verbose group
 
-        {
-            JPanel p = new JPanel();
-            p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-            ButtonGroup g = new ButtonGroup();
-            JRadioButton b;
-            b= new JRadioButton("Hide speed packets");
-            g.add(b);
-            p.add(b);
-            b.setSelected(true);
-            b.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'L',(byte)'-'});
-                }
-            });
-            b= new JRadioButton("Show speed packets");
-            g.add(b);
-            p.add(b);
-            b.setToolTipText("This setting overloads the display with data");
-            b.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'L',(byte)'+'});
-                }
-            });
-            p2.add(p);
-        }  // end speed off/on
-
-        {
+        {	// start acc off/on
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
             JRadioButton b;
             b= new JRadioButton("Hide acc packets");
+            b.setToolTipText("A-");
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
@@ -150,6 +140,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
                 }
             });
             b= new JRadioButton("Show acc packets");
+            b.setToolTipText("A+");
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
@@ -160,13 +151,124 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             b.setSelected(true);
             p2.add(p);
         }  // end acc off/on
-
-        {
+        
+        {	// start idle off/on
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
             JRadioButton b;
+            b= new JRadioButton("Hide idle packets");
+            b.setToolTipText("I-");
+            g.add(b);
+            p.add(b);
+            b.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    sendBytes(new byte[]{(byte)'I',(byte)'-'});
+                }
+            });
+            b= new JRadioButton("Show idle packets");
+            b.setToolTipText("I+");
+            g.add(b);
+            p.add(b);
+            b.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    sendBytes(new byte[]{(byte)'I',(byte)'+'});
+                }
+            });
+            b.setSelected(true);
+            p2.add(p);
+        }  // end idle off/on
+        
+        {	// start loco off/on
+            JPanel p = new JPanel();
+            p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+            ButtonGroup g = new ButtonGroup();
+            JRadioButton b;
+            locoSpeedButton.setToolTipText("L-");
+            g.add(locoSpeedButton);
+            p.add(locoSpeedButton);
+            locoSpeedButton.setSelected(true);
+            locoSpeedButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    sendBytes(new byte[]{(byte)'L',(byte)'-'});
+                }
+            });
+            b= new JRadioButton("Show loco packets");
+            b.setToolTipText("L+");
+            g.add(b);
+            p.add(b);
+            b.setToolTipText("L+");
+            b.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    sendBytes(new byte[]{(byte)'L',(byte)'+'});
+                }
+            });
+            p2.add(p);
+        }  // end loco off/on
+
+        {	// start reset off/on
+            JPanel p = new JPanel();
+            p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+            ButtonGroup g = new ButtonGroup();
+            JRadioButton b;
+            b= new JRadioButton("Hide reset packets");
+            b.setToolTipText("R-");
+            g.add(b);
+            p.add(b);
+            b.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    sendBytes(new byte[]{(byte)'R',(byte)'-'});
+                }
+            });
+            b= new JRadioButton("Show reset packets");
+            b.setToolTipText("R+");
+            g.add(b);
+            p.add(b);
+            b.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    sendBytes(new byte[]{(byte)'R',(byte)'+'});
+                }
+            });
+            b.setSelected(true);
+            p2.add(p);
+        }  // end reset off/on
+ 
+        {	// start signal on/off
+            JPanel p = new JPanel();
+            p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+            ButtonGroup g = new ButtonGroup();
+            JRadioButton b;
+            b= new JRadioButton("Hide signal packets");
+            b.setToolTipText("S-");
+            g.add(b);
+            p.add(b);
+            b.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    sendBytes(new byte[]{(byte)'S',(byte)'-'});
+                }
+            });
+            b= new JRadioButton("Show signal packets");
+            b.setToolTipText("S+");
+            g.add(b);
+            p.add(b);
+            b.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    sendBytes(new byte[]{(byte)'S',(byte)'+'});
+                }
+            });
+            b.setSelected(true);
+            p2.add(p);
+        }  // end signal off/on
+        
+        {	// Monitor command acc single/double
+            JPanel p = new JPanel();
+            p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+            JLabel t = new JLabel("Monitor Command");
+            p.add(t);
+            ButtonGroup g = new ButtonGroup();
+            JRadioButton b;
             b= new JRadioButton("Acc addresses single");
+            b.setToolTipText("AS");
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
@@ -175,6 +277,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
                 }
             });
             b= new JRadioButton("Acc addresses paired");
+            b.setToolTipText("AP");
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
@@ -186,88 +289,16 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             p2.add(p);
         }  // end acc single/double
 
-        {
-            JPanel p = new JPanel();
-            p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-            ButtonGroup g = new ButtonGroup();
-            JRadioButton b;
-            b= new JRadioButton("Hide reset packets");
-            g.add(b);
-            p.add(b);
-            b.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'R',(byte)'-'});
-                }
-            });
-            b= new JRadioButton("Show reset packets");
-            g.add(b);
-            p.add(b);
-            b.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'R',(byte)'+'});
-                }
-            });
-            b.setSelected(true);
-            p2.add(p);
-        }  // end reset off/on
-
-        {
-            JPanel p = new JPanel();
-            p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-            ButtonGroup g = new ButtonGroup();
-            JRadioButton b;
-            b= new JRadioButton("Hide idle packets");
-            g.add(b);
-            p.add(b);
-            b.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'I',(byte)'-'});
-                }
-            });
-            b= new JRadioButton("Show idle packets");
-            g.add(b);
-            p.add(b);
-            b.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'I',(byte)'+'});
-                }
-            });
-            b.setSelected(true);
-            p2.add(p);
-        }  // end idle off/on
-
-        {
-            JPanel p = new JPanel();
-            p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-            ButtonGroup g = new ButtonGroup();
-            JRadioButton b;
-            b= new JRadioButton("Hide signal packets");
-            g.add(b);
-            p.add(b);
-            b.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'S',(byte)'-'});
-                }
-            });
-            b= new JRadioButton("Show signal packets");
-            g.add(b);
-            p.add(b);
-            b.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'S',(byte)'+'});
-                }
-            });
-            b.setSelected(true);
-            p2.add(p);
-        }  // end signal off/on
 
         getContentPane().add(p2);
     }
 
     JButton checkButton = new JButton("Init");
+    JRadioButton locoSpeedButton = new JRadioButton("Hide loco packets");
+    JCheckBox truncateCheckBox = new JCheckBox("+ on");
 
     protected String title() {
-        return "Packet Monitor / Analyzer";
+        return "DCC Packet Analyzer";
     }
 
     synchronized void sendBytes(byte[] bytes) {
@@ -298,6 +329,8 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
         // start the reader
         readerThread = new Thread(new Reader());
         readerThread.start();
+        // enable buttons
+        checkButton.setEnabled(true);
         log.info("Open button processing complete");
     }
 
@@ -463,7 +496,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             msgString = new String(msg);
 
             // is this a duplicate?
-            if (msgString.equals(matchString)) {
+            if (msgString.equals(matchString)&& truncateCheckBox.isSelected()) {
                 // yes, suppress and represent with a '+'
                 duplicates.append('+');
             } else {
