@@ -10,17 +10,17 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.rps.csvinput package.
  * @author      Bob Jacobsen  Copyright 2006
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class CsvTest extends TestCase {
 
 
     public void testCreateReader() throws java.io.IOException {
-        Object o = new com.csvreader.CsvReader("rps/testdata.csv");
+        Object o = new com.csvreader.CsvReader("java/test/jmri/jmrix/rps/csvinput/testdata.csv");
     }
     
     public void testReading() throws java.io.IOException {
-        com.csvreader.CsvReader o = new com.csvreader.CsvReader("rps/testdata.csv");
+        com.csvreader.CsvReader o = new com.csvreader.CsvReader("java/test/jmri/jmrix/rps/csvinput/testdata.csv");
         Assert.assertTrue("read 1st line", o.readRecord());
         Assert.assertEquals("1st line column count", 4, o.getColumnCount());
         
