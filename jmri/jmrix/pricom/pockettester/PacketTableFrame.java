@@ -22,7 +22,7 @@ import jmri.util.JTableUtil;
  * Frame providing survey of DCC contents
  *
  * @author	Bob Jacobsen   Copyright (C) 2005
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class PacketTableFrame extends jmri.util.JmriJFrame implements DataListener {
 
@@ -61,7 +61,7 @@ public class PacketTableFrame extends jmri.util.JmriJFrame implements DataListen
     }
 
     public void dispose() {
-        source.removeListener(this);
+        if (source!=null) source.removeListener(this);
         model.dispose();
         model = null;
         table = null;
