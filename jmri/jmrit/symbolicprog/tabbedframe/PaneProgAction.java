@@ -36,7 +36,7 @@ import javax.swing.JSeparator;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.29 $
+ * @version			$Revision: 1.30 $
  */
 public class PaneProgAction 			extends AbstractAction {
 
@@ -57,7 +57,8 @@ public class PaneProgAction 			extends AbstractAction {
         statusLabel = new JLabel(rbt.getString("StateIdle"));
 
         // disable ourself if programming is not possible
-        if (jmri.InstanceManager.programmerManagerInstance()==null) {
+        if (jmri.InstanceManager.programmerManagerInstance()==null ||
+            !jmri.InstanceManager.programmerManagerInstance().isServiceModePossible()) {
             setEnabled(false);
             // This needs to return, so we don't start the xmlThread
 	    return;
