@@ -26,7 +26,7 @@ import java.util.List;
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.21 $
+ * @version		$Revision: 1.22 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -135,8 +135,10 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         switch (col) {
         case SYSNAMECOL:  // slot number
             return sysNameList.get(row);
-        case USERNAMECOL:  //
-            return getBySystemName((String)sysNameList.get(row)).getUserName();
+        case USERNAMECOL:  // return user name
+            // sometimes, the TableSorter invokes this on rows that no longer exist, so we check
+            NamedBean b = getBySystemName((String)sysNameList.get(row));
+            return (b!=null) ? b.getUserName() : null;
         case VALUECOL:  //
             return getValue((String)sysNameList.get(row));
         case DELETECOL:  //
@@ -307,8 +309,10 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
     synchronized public void dispose() {
         getManager().removePropertyChangeListener(this);
         if (sysNameList != null) {
-            for (int i = 0; i< sysNameList.size(); i++)
-                getBySystemName((String)sysNameList.get(i)).removePropertyChangeListener(this);
+            for (int i = 0; i< sysNameList.size(); i++) {
+                NamedBean b = getBySystemName((String)sysNameList.get(i));
+                if (b!=null) b.removePropertyChangeListener(this);
+            }
         }
     }
     
