@@ -13,7 +13,7 @@ import java.util.Vector;
  * Implements the jmri.Programmer interface via commands for the Sprog programmer.
  *
  * @author      Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class SprogProgrammer extends AbstractProgrammer implements SprogListener {
 
@@ -33,12 +33,15 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
      */
     static public final SprogProgrammer instance() {
         if (self == null) self = new SprogProgrammer();
+        // change default
+        if (jmri.InstanceManager.programmerManagerInstance().isOpsModePossible())
+            _mode = Programmer.OPSBYTEMODE;
         return self;
     }
     static private SprogProgrammer self = null;
 
     // handle mode
-    protected int _mode = Programmer.DIRECTBITMODE;
+    static protected int _mode = Programmer.DIRECTBITMODE;
 
     /**
      * Switch to a new programming mode.  SPROG currently supports bit
@@ -68,17 +71,27 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
      * @return True if paged or direct mode
      */
     public boolean hasMode(int mode) {
-        if ( mode == Programmer.DIRECTBITMODE ||
-             mode == Programmer.PAGEMODE ) {
-            log.debug("hasMode request on mode "+mode+" returns true");
-            return true;
+        if (jmri.InstanceManager.programmerManagerInstance().isOpsModePossible()){
+            log.debug("hasMode request on mode "+mode+" returns false");
+            return false;
+        }else{
+            if ( mode == Programmer.DIRECTBITMODE ||
+                 mode == Programmer.PAGEMODE ) {
+                log.debug("hasMode request on mode "+mode+" returns true");
+                return true;
+            }
+            log.debug("hasMode request on mode "+mode+" returns false");
+            return false;
         }
-        log.debug("hasMode request on mode "+mode+" returns false");
-        return false;
     }
     public int getMode() { return _mode; }
 
-    public boolean getCanRead() { return true; }
+    public boolean getCanRead() {
+        if (jmri.InstanceManager.programmerManagerInstance().isOpsModePossible())
+            return false;
+        else 
+            return true;
+    }
 
     // notify property listeners - see AbstractProgrammer for more
 
