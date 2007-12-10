@@ -23,7 +23,7 @@ import javax.swing.JTextField;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.20 $
+ * @version   $Revision: 1.21 $
  */
 public class CvValue extends AbstractValue implements ProgListener {
 
@@ -99,6 +99,14 @@ public class CvValue extends AbstractValue implements ProgListener {
         }
     }
     private int _value = 0;
+    
+    /**
+     * Get the decoder value read during compare
+     * @return _decoderValue
+     */
+    public int getDecoderValue()  { return _decoderValue; }
+    
+    private int _decoderValue = 0;
 
     public int getState()  { return _state; }
     
@@ -115,6 +123,8 @@ public class CvValue extends AbstractValue implements ProgListener {
         case READ    : setColor(COLOR_READ    ); break;
         case STORED  : setColor(COLOR_STORED  ); break;
         case FROMFILE: setColor(COLOR_FROMFILE); break;
+        case SAME: setColor(COLOR_SAME); break;
+        case DIFF: setColor(COLOR_DIFF); break;
         default:      log.error("Inconsistent state: "+_state);
         }
         if (oldstate != state) prop.firePropertyChange("State", new Integer(oldstate), new Integer(state));
@@ -481,8 +491,13 @@ public class CvValue extends AbstractValue implements ProgListener {
                 notifyBusyChange(oldBusy, _busy);
             }
             else if (_confirm) {
-                // value doesn't change, just the state
-                setState(READ);
+                // _value doesn't change, just the state, and save the value read 
+            	_decoderValue = value;
+            	// does the decoder value match the file value
+            	if (value == _value)
+            		setState(SAME);
+            	else
+            		setState(DIFF);
                 _busy = false;
                 notifyBusyChange(oldBusy, _busy);
             } else {  // writing

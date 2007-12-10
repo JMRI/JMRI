@@ -17,7 +17,7 @@ import java.awt.Color;
  *
  * Description:		Represents a single CV value
  * @author			Bob Jacobsen   Copyright (C) 2001, 2005
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public abstract class AbstractValue {
 
@@ -41,6 +41,14 @@ public abstract class AbstractValue {
     /** Defines state where value was read from a config file, but might not be
         the same as the decoder */
     public static final int FROMFILE = 256;
+    
+    /** Defines state where value was read from a config file, and is
+    the same as the decoder */
+    public static final int SAME = 512;
+    
+    /** Defines state where value was read from a config file, and is
+    the not the same as the decoder */
+    public static final int DIFF = 1024;
 
     /** Define color to denote UNKNOWN state.  null means to use default for the component */
     static final Color COLOR_UNKNOWN  = Color.red.brighter();
@@ -56,6 +64,12 @@ public abstract class AbstractValue {
 
     /** Define color to denote FROMFILE state.  null means to use default for the component */
     static final Color COLOR_FROMFILE = Color.yellow;
+    
+    /** Define color to denote SAME state.  null means to use default for the component */
+    static final Color COLOR_SAME     = null;
+    
+    /** Define color to denote DIFF state.  null means to use default for the component */
+    static final Color COLOR_DIFF = Color.red.brighter();
 
     public void setToRead(boolean state) {
         _toRead = state;
@@ -81,6 +95,10 @@ public abstract class AbstractValue {
                 return "Stored";
             case FROMFILE:
                 return "FromFile";
+            case SAME:
+                return "Same";
+            case DIFF:
+                return "Different";
             default:
                 return "<unexpected value: "+val+">";
         }

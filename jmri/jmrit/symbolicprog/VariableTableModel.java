@@ -21,7 +21,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2006
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.32 $
+ * @version   $Revision: 1.33 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -768,7 +768,15 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             log.error("new value of "+e.getPropertyName()+" should not be null!");
             (new Exception()).printStackTrace();
         }
-        setFileDirty(true);
+        // don't set dirty if only compare
+        if (e.getPropertyName().equals("State")
+				&& ((Integer) e.getNewValue()).intValue() == CvValue.SAME
+				|| e.getPropertyName().equals("State")
+				&& ((Integer) e.getNewValue()).intValue() == CvValue.DIFF) {
+
+		} else {
+			setFileDirty(true);
+		}
         fireTableDataChanged();
     }
 

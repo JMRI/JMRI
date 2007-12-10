@@ -18,7 +18,7 @@ import jmri.*;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2006
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.20 $
+ * @version   $Revision: 1.21 $
  */
 public class CvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -29,6 +29,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
     public Vector allCvVector() { return _cvAllVector; }
     private Vector _writeButtons = new Vector();
     private Vector _readButtons = new Vector();
+    private Vector _compareButtons = new Vector();
     private Programmer mProgrammer;
 
     // Defines the columns
@@ -37,7 +38,8 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
     private static final int STATECOLUMN = 2;
     private static final int READCOLUMN  = 3;
     private static final int WRITECOLUMN = 4;
-    private static final int HIGHESTCOLUMN = WRITECOLUMN+1;
+    private static final int COMPARECOLUMN = 5;
+    private static final int HIGHESTCOLUMN = COMPARECOLUMN+1;
 
     private JLabel _status = null;
 
@@ -79,6 +81,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         case STATECOLUMN: return "State";
         case READCOLUMN: return "Read";
         case WRITECOLUMN: return "Write";
+        case COMPARECOLUMN: return "Compare";
         default: return "unknown";
         }
     }
@@ -90,6 +93,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         case STATECOLUMN: return String.class;
         case READCOLUMN: return JButton.class;
         case WRITECOLUMN: return JButton.class;
+        case COMPARECOLUMN: return JButton.class;
         default: return null;
         }
     }
@@ -107,6 +111,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         case STATECOLUMN: return false;
         case READCOLUMN: return true;
         case WRITECOLUMN: return true;
+        case COMPARECOLUMN: return true;
         default: return false;
         }
     }
@@ -136,12 +141,17 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
             case CvValue.EDITED:  		return "Edited";
             case CvValue.STORED:  		return "Stored";
             case CvValue.FROMFILE:  	return "From file";
+            case CvValue.SAME:  		return "Same";
+            case CvValue.DIFF:  		return "Decoder = " + 
+            							((CvValue)_cvDisplayVector.elementAt(row)).getDecoderValue();
             default: return "inconsistent";
             }
         case READCOLUMN:
             return _readButtons.elementAt(row);
         case WRITECOLUMN:
             return _writeButtons.elementAt(row);
+        case COMPARECOLUMN:
+            return _compareButtons.elementAt(row);
         default: return "unknown";
         }
     }
@@ -166,6 +176,9 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         if (b=='R') {
             // read command
             ((CvValue)_cvDisplayVector.elementAt(row)).read(_status);
+        } else if (b=='C'){
+        	// compare command
+        	((CvValue)_cvDisplayVector.elementAt(row)).confirm(_status);
         } else {
             // write command
             ((CvValue)_cvDisplayVector.elementAt(row)).write(_status);
@@ -189,6 +202,8 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
             _writeButtons.addElement(bw);
             JButton br = new JButton("Read");
             _readButtons.addElement(br);
+            JButton bc = new JButton("Compare");
+            _compareButtons.addElement(bc);
             if (infoOnly || readOnly) {
                 if (writeOnly) {
                     bw.setEnabled(true);
@@ -199,10 +214,14 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
                 }
                 if (infoOnly) {
                     br.setEnabled(false);
+                    bc.setEnabled(false);
                 } else {
                     br.setEnabled(true);
                     br.setActionCommand("R"+_numRows);
                     br.addActionListener(this);
+                    bc.setEnabled(true);
+                    bc.setActionCommand("C"+_numRows);
+                    bc.addActionListener(this);
                 }
             } else {
                 bw.setEnabled(true);
@@ -210,10 +229,14 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
                 bw.addActionListener(this);
                 if (writeOnly) {
                     br.setEnabled(false);
+                    bc.setEnabled(false);
                 } else {
                     br.setEnabled(true);
                     br.setActionCommand("R" + _numRows);
                     br.addActionListener(this);
+                    bc.setEnabled(true);
+                    bc.setActionCommand("C" + _numRows);
+                    bc.addActionListener(this);
                 }
            }
             _numRows++;
@@ -251,6 +274,9 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         for (int i = 0; i<_readButtons.size(); i++) {
             ((JButton)_readButtons.elementAt(i)).removeActionListener(this);
         }
+        for (int i = 0; i<_compareButtons.size(); i++) {
+            ((JButton)_compareButtons.elementAt(i)).removeActionListener(this);
+        }
 
         // remove CV listeners
         for (int i = 0; i<_cvDisplayVector.size(); i++) {
@@ -269,6 +295,9 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 
         _readButtons.removeAllElements();
         _readButtons = null;
+        
+        _compareButtons.removeAllElements();
+        _compareButtons = null;
 
         _status = null;
     }
