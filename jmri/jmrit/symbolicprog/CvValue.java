@@ -23,7 +23,7 @@ import javax.swing.JTextField;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.21 $
+ * @version   $Revision: 1.22 $
  */
 public class CvValue extends AbstractValue implements ProgListener {
 
@@ -308,6 +308,40 @@ public class CvValue extends AbstractValue implements ProgListener {
             log.error("No programmer available!");
         }
     }
+    
+    public void confirmIcV(JLabel status) {
+        setToRead(false);
+        // get a programmer reference and write an indexed CV
+        _status = status;
+
+        if (status != null) status.setText(
+                                java.text.MessageFormat.format(
+                                    rbt.getString("StateConfirmIndexedCV"),
+                                    new String[]{""+_iCv, ""+_piVal+(_siVal>=0?"."+_siVal:"")}));
+
+        if (mProgrammer != null) {
+            setBusy(true);
+            _reading = false;
+            _confirm = true;
+            try {
+                setState(UNKNOWN);
+                mProgrammer.readCV(_iCv, this);
+            }
+            catch (Exception e) {
+                setState(UNKNOWN);
+                if (status != null) status.setText(
+                                java.text.MessageFormat.format(
+                                    rbt.getString("StateExceptionDuringIndexedRead"),
+                                    new String[]{e.toString()}));
+                log.warn("Exception during IndexedCV read: " + e);
+                setBusy(false);
+            }
+        } else {
+            if (status != null) status.setText(rbt.getString("StateNoProgrammer"));
+            log.error("No programmer available!");
+        }
+    }
+
 
     public void confirm(JLabel status) {
         if (log.isDebugEnabled()) log.debug("confirm call with Cv number "+_num);

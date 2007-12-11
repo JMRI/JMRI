@@ -18,7 +18,8 @@ import jmri.*;
  * Programmer used to access it is a data member.
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.8 $
+ * @author 		Daniel Boudreau Copyright (C) 2007
+ * @version   $Revision: 1.9 $
  */
 public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -204,6 +205,9 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
         if (b=='R') {
             // read command
             indexedRead();
+        } else if (b=='C'){
+        	// compare command
+        	indexedCompare();
         } else {
             // write command
             indexedWrite();
@@ -218,6 +222,10 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
     private static final int WRITING_SI4W = 4;
     private static final int READING_CV = 5;
     private static final int WRITING_CV = 6;
+    private static final int WRITING_PI4C = 7;
+    private static final int WRITING_SI4C = 8;
+    private static final int COMPARE_CV = 9;
+    
 
     /**
      * Count number of retries done
@@ -259,6 +267,20 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
         // to write any indexed CV we must write the PI
         ((CvValue)_indxCvDisplayVector.elementAt(_row)).writePI(_status);
     }
+    
+    public void indexedCompare() {
+        if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in read()");
+        // lets skip the SI step if SI is not used
+        if (((CvValue)_indxCvDisplayVector.elementAt(_row)).siVal() >= 0) {
+            _progState = WRITING_PI4C;
+        } else {
+            _progState = WRITING_SI4C;
+        }
+        retries = 0;
+        if (log.isDebugEnabled()) log.debug("invoke PI write for CV compare");
+        // to read any indexed CV we must write the PI
+        ((CvValue)_indxCvDisplayVector.elementAt(_row)).writePI(_status);
+    }
 
     public void propertyChange(PropertyChangeEvent e) {
 
@@ -271,6 +293,7 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
                 if (log.isDebugEnabled()) log.error("Busy goes false with state IDLE");
                 return;
             case WRITING_PI4R:   // have written the PI, now write SI if needed
+            case WRITING_PI4C:
             case WRITING_PI4W:
                 if (log.isDebugEnabled()) log.debug("Busy goes false with state WRITING_PI");
 
@@ -286,10 +309,16 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
                 // success, move on to next
                 retries = 0;
 
-                _progState = (_progState == WRITING_PI4R ? WRITING_SI4R : WRITING_SI4W);
+                if (_progState == WRITING_PI4R )
+                	_progState = WRITING_SI4R;
+                else if (_progState == WRITING_PI4C )
+                	_progState = WRITING_SI4C;
+                else
+                	_progState = WRITING_SI4W;
                 ((CvValue)_indxCvDisplayVector.elementAt(_row)).writeSI(_status);
                 return;
             case WRITING_SI4R:  // have written the SI if needed, now read or write CV
+            case WRITING_SI4C:
             case WRITING_SI4W:
                 if (log.isDebugEnabled()) log.debug("Busy goes false with state WRITING_SI");
 
@@ -308,7 +337,10 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
                 if (_progState == WRITING_SI4R ) {
                     _progState = READING_CV;
                     ((CvValue)_indxCvDisplayVector.elementAt(_row)).readIcV(_status);
-                } else {
+                } else if (_progState == WRITING_SI4C ) {
+                    _progState = COMPARE_CV;
+                    ((CvValue)_indxCvDisplayVector.elementAt(_row)).confirmIcV(_status);
+                 } else {
                     _progState = WRITING_CV;
                     ((CvValue)_indxCvDisplayVector.elementAt(_row)).writeIcV(_status);
                 }
@@ -323,6 +355,26 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
                     log.debug("retry");
                     retries++;
                     ((CvValue)_indxCvDisplayVector.elementAt(_row)).readIcV(_status);
+                    return;
+                }
+                // success, move on to next
+                retries = 0;
+
+                _progState = IDLE;
+                return;
+            case COMPARE_CV:  // now done with the read request
+                if (log.isDebugEnabled()) log.debug("Finished reading the Indexed CV for compare");
+
+                // check for success SAME or DIFF?
+                if ((retries < RETRY_MAX)
+						&& (((CvValue) _indxCvDisplayVector.elementAt(_row))
+								.getState() != CvValue.SAME)
+						&& (((CvValue) _indxCvDisplayVector.elementAt(_row))
+								.getState() != CvValue.DIFF)) {
+					// need to retry on error; leave progState as it was
+                    log.debug("retry");
+                    retries++;
+                    ((CvValue)_indxCvDisplayVector.elementAt(_row)).confirmIcV(_status);
                     return;
                 }
                 // success, move on to next
