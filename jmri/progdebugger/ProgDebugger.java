@@ -17,7 +17,7 @@ import jmri.ProgrammerException;
  * when a read to the same CV is made.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.21 $
+ * @version         $Revision: 1.22 $
  */
 public class ProgDebugger implements Programmer  {
 
@@ -87,18 +87,27 @@ public class ProgDebugger implements Programmer  {
     private int _lastReadCv = -1;
     public int lastReadCv() { return _lastReadCv; }
 
-    public boolean _confirmOK = false;
+    boolean confirmOK;  // cached result of last compare
 
     public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
         final ProgListener m = p;
-        log.info("confirm CV: "+CV+" mode: "+getMode()+" will read pass: "+_confirmOK);
+        
+        // guess by comparing current value in val to has table
+        Integer saw = ((Integer)mValues.get(new Integer(CV)));
+        if (saw!=null) { 
+            confirmOK = (saw.intValue()==val);
+            log.info("confirm CV: "+CV+" mode: "+getMode()+" will read pass: "+confirmOK);
+        } else {
+            confirmOK = false;
+            log.info("confirm CV: "+CV+" mode: "+getMode()+" will return false due to no previous value");
+        }
         _lastReadCv = CV;
         // return a notification via the queue to ensure end
         Runnable r = new Runnable() {
                 ProgListener l = m;
                 public void run() {
                     log.debug("read CV reply");
-                    if (_confirmOK) l.programmingOpReply(_nextRead, ProgListener.OK);
+                    if (confirmOK) l.programmingOpReply(_nextRead, ProgListener.OK);
                     else l.programmingOpReply(_nextRead, ProgListener.ConfirmFailed);
                 }
             };
