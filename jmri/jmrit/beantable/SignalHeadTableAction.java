@@ -39,7 +39,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.23 $
+ * @version     $Revision: 1.24 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -90,34 +90,38 @@ public class SignalHeadTableAction extends AbstractTableAction {
     			else return super.isCellEditable(row,col);
 			}    		
     		public Object getValueAt(int row, int col) {
+    		    String name = (String)sysNameList.get(row);
+                SignalHead s = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
+                if (s==null) return new Boolean(false); // if due to race condition, the device is going away
     			if (col==LITCOL) {
-    				String name = (String)sysNameList.get(row);
-    				boolean val = InstanceManager.signalHeadManagerInstance().getBySystemName(name).getLit();
+    				boolean val = s.getLit();
 					return new Boolean(val);
     			}
     			else if (col==HELDCOL) {
-    				String name = (String)sysNameList.get(row);
-    				boolean val = InstanceManager.signalHeadManagerInstance().getBySystemName(name).getHeld();
+    				boolean val = s.getHeld();
 					return new Boolean(val);
     			}
 				else return super.getValueAt(row, col);
 			}    		
     		public void setValueAt(Object value, int row, int col) {
+    			String name = (String)sysNameList.get(row);
+                SignalHead s = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
+                if (s==null) return;  // device is going away anyway
     			if (col==LITCOL) {
-    				String name = (String)sysNameList.get(row);
     				boolean b = ((Boolean)value).booleanValue();
-    				InstanceManager.signalHeadManagerInstance().getBySystemName(name).setLit(b);
+    				s.setLit(b);
     			}
     			else if (col==HELDCOL) {
-    				String name = (String)sysNameList.get(row);
     				boolean b = ((Boolean)value).booleanValue();
-    				InstanceManager.signalHeadManagerInstance().getBySystemName(name).setHeld(b);
+    				s.setHeld(b);
     			}
     			else super.setValueAt(value, row, col);
     		}
     		
             public String getValue(String name) {
-                int val = InstanceManager.signalHeadManagerInstance().getBySystemName(name).getAppearance();
+                SignalHead s = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
+                if (s==null) return "<lost>"; // if due to race condition, the device is going away
+                int val = s.getAppearance();
                 switch (val) {
                 case SignalHead.RED: return rbean.getString("SignalHeadStateRed");
                 case SignalHead.YELLOW: return rbean.getString("SignalHeadStateYellow");
