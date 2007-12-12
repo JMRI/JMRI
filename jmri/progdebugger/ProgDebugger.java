@@ -17,7 +17,7 @@ import jmri.ProgrammerException;
  * when a read to the same CV is made.
  *
  * @author			Bob Jacobsen Copyright (C) 2001, 2007
- * @version         $Revision: 1.24 $
+ * @version         $Revision: 1.25 $
  */
 public class ProgDebugger implements Programmer  {
 
@@ -98,14 +98,10 @@ public class ProgDebugger implements Programmer  {
         if (saw!=null) { 
             result = saw.intValue();
             confirmOK = (result==val);
-
-            System.out.println("confirm CV: "+CV+" mode: "+getMode()+" will return "+result+" pass: "+confirmOK);
             log.info("confirm CV: "+CV+" mode: "+getMode()+" will return "+result+" pass: "+confirmOK);
         } else {
             result = -1;
             confirmOK = false;
-
-            System.out.println("confirm CV: "+CV+" mode: "+getMode()+" will return -1 pass: false due to no previous value");
             log.info("confirm CV: "+CV+" mode: "+getMode()+" will return -1 pass: false due to no previous value");
         }
         _lastReadCv = CV;
