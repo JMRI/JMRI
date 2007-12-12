@@ -12,7 +12,7 @@ import junit.framework.Assert;
  * Log4J Appender that just publishes what it sees
  *
  * @author	Bob Jacobsen - Copyright 2007
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
  
 public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
@@ -94,7 +94,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
         }
         LoggingEvent evt = (LoggingEvent) list.remove(0);
         if (evt.priority!=Priority.ERROR) 
-            Assert.fail("Level mismatch when looking for ERROR message: \""+msg+"\"");
+            Assert.fail("Level mismatch when looking for ERROR message: \""+msg+"\" found \""+(String)evt.getMessage()+"\"");
             
         if (!((String)evt.getMessage()).equals(msg) ) {
             Assert.fail("Looking for ERROR message \""+msg+"\" got \""+evt.getMessage()+"\"");
