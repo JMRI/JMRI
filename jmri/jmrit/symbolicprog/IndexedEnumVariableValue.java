@@ -16,7 +16,7 @@ import java.util.List;
  * Extends VariableValue to represent a enumerated indexed variable.
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.8 $
+ * @version   $Revision: 1.9 $
  *
  */
 public class IndexedEnumVariableValue extends VariableValue
@@ -240,6 +240,9 @@ public class IndexedEnumVariableValue extends VariableValue
     private static final int WRITING_SI4W = 4;
     private static final int READING_CV = 5;
     private static final int WRITING_CV = 6;
+    private static final int WRITING_PI4C = 7;
+    private static final int WRITING_SI4C = 8;
+    private static final int COMPARE_CV = 9;
 
    /**
      * Count number of retries done
@@ -318,9 +321,26 @@ public class IndexedEnumVariableValue extends VariableValue
         // to write any indexed CV we must write the PI first
         ((CvValue)_cvVector.elementAt(_row)).writePI(_status);
     }
+    
+    public void confirmAll() {
+        setBusy(true);  // will be reset when value changes
+        setToRead(false);
+        if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in read()");
+        // lets skip the SI step if SI is not used
+        if (((CvValue)_cvVector.elementAt(_row)).siVal() >= 0) {
+            _progState = WRITING_PI4C;
+        } else {
+            _progState = WRITING_SI4C;
+        }
+        retries = 0;
+        if (log.isDebugEnabled()) log.debug("invoke PI write for CV confirm");
+        // to read any indexed CV we must write the PI
+        ((CvValue)_cvVector.elementAt(_row)).writePI(_status);
+    }
 
     // handle incoming parameter notification
     public void propertyChange(java.beans.PropertyChangeEvent e) {
+        if (log.isDebugEnabled()) log.debug("Property changed: "+e.getPropertyName());
         // notification from CV; check for Value being changed
         if (e.getPropertyName().equals("Busy") && ((Boolean)e.getNewValue()).equals(Boolean.FALSE)) {
             // busy transitions drive the state
@@ -329,6 +349,7 @@ public class IndexedEnumVariableValue extends VariableValue
                 if (log.isDebugEnabled()) log.error("Busy goes false with state IDLE");
                 return;
             case WRITING_PI4R:   // have written the PI, now write SI if needed
+            case WRITING_PI4C:
             case WRITING_PI4W:
                 if (log.isDebugEnabled()) log.debug("Busy goes false with state WRITING_PI");
                 // check for success
@@ -342,10 +363,17 @@ public class IndexedEnumVariableValue extends VariableValue
                 }
                 // success, move on to next
                 retries = 0;
-                _progState = (_progState == WRITING_PI4R ? WRITING_SI4R : WRITING_SI4W);
+
+                if (_progState == WRITING_PI4R )
+                	_progState = WRITING_SI4R;
+                else if (_progState == WRITING_PI4C )
+                	_progState = WRITING_SI4C;
+                else
+                	_progState = WRITING_SI4W;
                 ((CvValue)_cvVector.elementAt(_row)).writeSI(_status);
                 return;
             case WRITING_SI4R:  // have written the SI if needed, now read or write CV
+            case WRITING_SI4C:
             case WRITING_SI4W:
                 if (log.isDebugEnabled()) log.debug("Busy goes false with state WRITING_SI");
                 // check for success
@@ -362,7 +390,10 @@ public class IndexedEnumVariableValue extends VariableValue
                 if (_progState == WRITING_SI4R ) {
                     _progState = READING_CV;
                     ((CvValue)_cvVector.elementAt(_row)).readIcV(_status);
-                } else {
+                } else if (_progState == WRITING_SI4C ) {
+                    _progState = COMPARE_CV;
+                    ((CvValue)_cvVector.elementAt(_row)).confirmIcV(_status);
+                 } else {
                     _progState = WRITING_CV;
                     ((CvValue)_cvVector.elementAt(_row)).writeIcV(_status);
                 }
@@ -380,6 +411,27 @@ public class IndexedEnumVariableValue extends VariableValue
                 }
                 // success, move on to next
                 retries = 0;
+                _progState = IDLE;
+                setBusy(false);
+                return;
+            case COMPARE_CV:  // now done with the read request
+                if (log.isDebugEnabled()) log.debug("Finished reading the Indexed CV for compare");
+
+                // check for success SAME or DIFF?
+                if ((retries < RETRY_MAX)
+						&& (((CvValue) _cvVector.elementAt(_row))
+								.getState() != CvValue.SAME)
+						&& (((CvValue) _cvVector.elementAt(_row))
+								.getState() != CvValue.DIFF)) {
+					// need to retry on error; leave progState as it was
+                    log.debug("retry");
+                    retries++;
+                    ((CvValue)_cvVector.elementAt(_row)).confirmIcV(_status);
+                    return;
+                }
+                // success, move on to next
+                retries = 0;
+
                 _progState = IDLE;
                 setBusy(false);
                 return;
@@ -424,7 +476,7 @@ public class IndexedEnumVariableValue extends VariableValue
      * model between this object and the real JComboBox value.
      *
      * @author  Bob Jacobsen   Copyright (C) 2001
-     * @version $Revision: 1.8 $
+     * @version $Revision: 1.9 $
      */
     public class iVarComboBox extends JComboBox {
 

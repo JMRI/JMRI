@@ -63,7 +63,7 @@ import java.util.List;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005, 2006
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.61 $
+ * @version   $Revision: 1.62 $
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -74,6 +74,8 @@ public class PaneProgPane extends javax.swing.JPanel
     IndexedCvTableModel _indexedCvModel;
     VariableTableModel _varModel;
     PaneProgFrame _parentFrame;
+    
+    boolean _cvTable; 
 
     static final java.util.ResourceBundle rbt 
         = java.util.ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle");
@@ -82,6 +84,8 @@ public class PaneProgPane extends javax.swing.JPanel
     ItemListener l2;
     ItemListener l3;
     ItemListener l4;
+    ItemListener l5;
+    ItemListener l6;
 
     String mName = "";
     /**
@@ -107,6 +111,9 @@ public class PaneProgPane extends javax.swing.JPanel
         _cvModel = cvModel;
         _indexedCvModel = icvModel;
         _varModel = varModel;
+        
+        // when true a cv table with compare was loaded into pane
+        _cvTable = false;
 
         // This is a JPanel containing a JScrollPane, containing a
         // laid-out JPanel
@@ -233,11 +240,60 @@ public class PaneProgPane extends javax.swing.JPanel
                 }
             }
         });
+  
+        // enable confirm buttons, if possible, and
+        // set their tool tips
+        enableConfirmButtons();
+        
+        // add confirm button listeners
+        confirmChangesButton.addItemListener(l5 = new ItemListener() {
+            public void itemStateChanged (ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    confirmChangesButton.setText(rbt.getString("ButtonStopConfirmChangesSheet"));
+                    if (_parentFrame.isBusy() == false) {
+                        prepConfirmPane(true);
+                        prepGlassPane(confirmChangesButton);
+                        _parentFrame.glassPane.setVisible(true);
+                        confirmPaneChanges();
+                    }
+                } else {
+                    stopProgramming();
+                    confirmChangesButton.setText(rbt.getString("ButtonConfirmChangesSheet"));
+                    if (_parentFrame.isBusy()) {
+                        confirmChangesButton.setEnabled(false);
+                    }
+                }
+            }
+        });
+        confirmAllButton.addItemListener(l6 = new ItemListener() {
+            public void itemStateChanged (ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    confirmAllButton.setText(rbt.getString("ButtonStopConfirmSheet"));
+                    if (_parentFrame.isBusy() == false) {
+                        prepConfirmPane(false);
+                        prepGlassPane(confirmAllButton);
+                        _parentFrame.glassPane.setVisible(true);
+                        confirmPaneAll();
+                    }
+                } else {
+                    stopProgramming();
+                    confirmAllButton.setText(rbt.getString("ButtonConfirmFullSheet"));
+                    if (_parentFrame.isBusy()) {
+                        confirmAllButton.setEnabled(false);
+                    }
+                }
+            }
+        });
 
+//      Only add change buttons to CV tables
         bottom.add(readChangesButton);
         bottom.add(writeChangesButton);
+        if (_cvTable)
+        	bottom.add(confirmChangesButton);
         bottom.add(readAllButton);
         bottom.add(writeAllButton);
+        if (_cvTable)
+        	bottom.add(confirmAllButton);
 
         add(bottom);
     }
@@ -262,6 +318,28 @@ public class PaneProgPane extends javax.swing.JPanel
         } else {
             readChangesButton.setEnabled(true);
             readAllButton.setEnabled(true);
+        }
+    }
+    
+    /**
+     * Enable the compare all and compare changes button if possible.
+     * This checks to make sure this is appropriate, given
+     * the attached programmer's capability.
+     */
+    void enableConfirmButtons() {
+        confirmChangesButton.setToolTipText(rbt.getString("TipConfirmChangesSheet"));
+        confirmAllButton.setToolTipText(rbt.getString("TipConfirmAllSheet"));
+        if (_cvModel.getProgrammer()!= null
+            && !_cvModel.getProgrammer().getCanRead()) {
+            // can't read, disable the buttons
+            confirmChangesButton.setEnabled(false);
+            confirmAllButton.setEnabled(false);
+            // set tooltip to explain why
+            confirmChangesButton.setToolTipText(rbt.getString("TipNoRead"));
+            confirmAllButton.setToolTipText(rbt.getString("TipNoRead"));
+        } else {
+            confirmChangesButton.setEnabled(true);
+            confirmAllButton.setEnabled(true);
         }
     }
 
@@ -295,6 +373,8 @@ public class PaneProgPane extends javax.swing.JPanel
     JToggleButton readAllButton      = new JToggleButton(rbt.getString("ButtonReadFullSheet"));
     JToggleButton writeChangesButton = new JToggleButton(rbt.getString("ButtonWriteChangesSheet"));
     JToggleButton writeAllButton     = new JToggleButton(rbt.getString("ButtonWriteFullSheet"));
+    JToggleButton confirmChangesButton = new JToggleButton(rbt.getString("ButtonConfirmChangesSheet"));
+    JToggleButton confirmAllButton     = new JToggleButton(rbt.getString("ButtonConfirmFullSheet"));
 
     /**
      * Estimate the number of CVs that will be accessed when
@@ -357,9 +437,12 @@ public class PaneProgPane extends javax.swing.JPanel
     void enableButtons(boolean stat) {
         if (stat) {
             enableReadButtons();
+            enableConfirmButtons();
         } else {
             readChangesButton.setEnabled(stat);
             readAllButton.setEnabled(stat);
+            confirmChangesButton.setEnabled(stat);
+            confirmAllButton.setEnabled(stat);
         }
         writeChangesButton.setEnabled(stat);
         writeAllButton.setEnabled(stat);
@@ -661,6 +744,74 @@ public class PaneProgPane extends javax.swing.JPanel
         _parentFrame.paneFinished();
         return false;
     }
+    
+    /**
+     * If there are any more compare operations to be done on this pane,
+     * do the next one.
+     * <P>
+     * Each invocation of this method compare one CV; completion
+     * of that request will cause it to happen again, reading the next one, until
+     * there's nothing left to read.
+     * <P>
+     * @return true is a compare has been started, false if the pane is complete.
+     */
+    boolean nextConfirm() {
+        // look for possible CVs
+        while ((cvList.size() >= 0) && (cvListIndex < cvList.size())) {
+            int cvNum = ((Integer)cvList.get(cvListIndex)).intValue();
+            CvValue cv = _cvModel.getCvByRow(cvNum);
+            if (log.isDebugEnabled()) log.debug("nextConfirm cv index "+cvNum+" state "+cv.getState());
+            cvListIndex++;
+            if (cv.isToRead()) {
+               if (log.isDebugEnabled()) log.debug("start confirm of cv "+cvNum);
+                setBusy(true);
+                if (_programmingCV != null) log.error("listener already set at confirm start");
+                _programmingCV = _cvModel.getCvByRow(cvNum);
+                _read = true;
+                // get notified when that state changes so can repeat
+                _programmingCV.addPropertyChangeListener(this);
+                // and make the compare request
+                _programmingCV.confirm(_cvModel.getStatusLabel());
+                if (log.isDebugEnabled()) log.debug("return from starting CV confirm");
+                // the request may have instantateously been satisfied...
+                return true;  // only make one request at a time!
+            }
+        }
+        // found no CVs needing read, try indexed CVs
+        while ((indexedCvList.size() >= 0) && (indexedCvListIndex < indexedCvList.size())) {
+            int indxVarNum = ( (Integer) indexedCvList.get(indexedCvListIndex)).intValue();
+            int indxState = _varModel.getState(indxVarNum);
+            if (log.isDebugEnabled()) log.debug(
+                "nextRead indexed cv @ row index " + indexedCvListIndex + " state " + indxState);
+            VariableValue iCv = _varModel.getVariable(indxVarNum);
+            indexedCvListIndex++;
+            if (iCv.isToRead()) {
+                String sz = "start confirm of indexed cv " +
+                    ((CvValue)_indexedCvModel.getCvByRow(indexedCvListIndex-1)).cvName();
+                if (log.isDebugEnabled()) log.debug(sz);
+                setBusy(true);
+                if (_programmingIndexedCV != null) log.error(
+                    "listener already set at confirm start");
+                _programmingIndexedCV = _varModel.getVariable(indxVarNum);
+                _read = true;
+                // get notified when that state changes so can repeat
+                _programmingIndexedCV.addPropertyChangeListener(this);
+                // and make the compare request
+                _programmingIndexedCV.confirmAll();
+                if (log.isDebugEnabled()) log.debug(
+                    "return from starting indexed CV confirm");
+                // the request may have instantateously been satisfied...
+                return true; // only make one request at a time!
+            }
+        }
+        // nothing to program, end politely
+        if (log.isDebugEnabled()) log.debug("nextConfirm found nothing to do");
+        confirmChangesButton.setSelected(false);
+        confirmAllButton.setSelected(false);  // reset both, as that's final state we want
+        setBusy(false);
+        _parentFrame.paneFinished();
+        return false;
+    }
 
     /**
      * Invoked by "Write changes on sheet" button, this sets in motion a
@@ -790,6 +941,74 @@ public class PaneProgPane extends javax.swing.JPanel
         log.debug("return from nextWrite with nothing to do");
         return false;
     }
+    
+    /**
+     * Prepare this pane for a compare operation.
+     * <P>The read mechanism only reads
+     * variables in certain states (and needs to do that to handle error
+     * processing right now), so this is implemented by first
+     * setting all variables and CVs on this pane to TOREAD via this method
+     *
+     */
+    public void prepConfirmPane(boolean onlyChanges) {
+        if (log.isDebugEnabled()) log.debug("start prepReadPane with onlyChanges="+onlyChanges);
+        justChanges = onlyChanges;
+        enableButtons(false);
+        if (justChanges) {
+            confirmChangesButton.setEnabled(true);
+            confirmChangesButton.setSelected(true);
+        } else {
+            confirmAllButton.setSelected(true);
+            confirmAllButton.setEnabled(true);
+        }
+        if (_parentFrame.isBusy() == false) {
+            _parentFrame.enableButtons(false);
+        }
+        // we can use the read prep since confirm has to read first
+        setToRead(justChanges, true);
+        varListIndex = 0;
+        cvListIndex = 0;
+        indexedCvListIndex = 0;
+    }
+
+    
+    /**
+     * Invoked by "Compare changes on sheet" button, this sets in motion a
+     * continuing sequence of "confirm" operations on the
+     * variables & CVs in the Pane.  Only variables in states
+     * marked as "changed" will be checked.
+     *
+     * @return true is a confirm has been started, false if the pane is complete.
+     */
+    public boolean confirmPaneChanges() {
+        if (log.isDebugEnabled()) log.debug("confirmPane starts with "
+                                            +varList.size()+" vars, "
+                                            +cvList.size()+" cvs "
+                                            +indexedCvList.size()+" indexed cvs" );
+        prepConfirmPane(true);
+        return nextConfirm();
+    }
+
+    /**
+     * Invoked by "Compare Full Sheet" button, this sets in motion a
+     * continuing sequence of "confirm" operations on the
+     * variables & CVs in the Pane.  The read mechanism only reads
+     * variables in certain states (and needs to do that to handle error
+     * processing right now), so this is implemented by first
+     * setting all variables and CVs on this pane to TOREAD
+     * in prepReadPaneAll, then starting the execution.
+     *
+     * @return true is a confirm has been started, false if the pane is complete.
+     */
+    public boolean confirmPaneAll() {
+        if (log.isDebugEnabled()) log.debug("confirmAllPane starts with "
+                                            +varList.size()+" vars, "
+                                            +cvList.size()+" cvs "
+                                            +indexedCvList.size()+" indexed cvs" );
+        prepConfirmPane(false);
+        // start operation
+        return nextConfirm();
+    }
 
     // reference to variable being programmed (or null if none)
     VariableValue _programmingVar = null;
@@ -904,6 +1123,8 @@ public class PaneProgPane extends javax.swing.JPanel
         log.debug("start restartProgramming");
         if (_read && readChangesButton.isSelected()) nextRead();
         else if (_read && readAllButton.isSelected()) nextRead();
+        else if (_read && confirmChangesButton.isSelected()) nextConfirm();
+        else if (_read && confirmAllButton.isSelected()) nextConfirm();
         else if (writeChangesButton.isSelected()) nextWrite();   // was writePaneChanges
         else if (writeAllButton.isSelected()) nextWrite();
         else {
@@ -1003,6 +1224,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     cvList.add(new Integer(j));
                 }
 
+                _cvTable = true;
                 log.debug("end of building CvTable pane");
 
             }
@@ -1015,7 +1237,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 indxcvTable.setDefaultEditor(JTextField.class, new ValueEditor());
                 indxcvTable.setDefaultEditor(JButton.class, new ValueEditor());
                 indxcvTable.setRowHeight(new JButton("X").getPreferredSize().height);
-                indxcvTable.setPreferredScrollableViewportSize(new Dimension(560, indxcvTable.getRowHeight()*14));
+                indxcvTable.setPreferredScrollableViewportSize(new Dimension(700, indxcvTable.getRowHeight()*14));
                 cvScroll.setColumnHeaderView(indxcvTable.getTableHeader());
                 // don't want a horizontal scroll bar
                 // Need to see the whole row at one time
@@ -1032,6 +1254,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     indexedCvList.add(new Integer(in));
                 }
 
+                _cvTable = true;
                 log.debug("end of building IndexedCvTable pane");
 
             }
@@ -1140,7 +1363,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 for (int j=0; j<_cvModel.getRowCount(); j++) {
                     cvList.add(new Integer(j));
                 }
-
+                _cvTable = true;
                 log.debug("end of building CvTable pane");
 
             }
@@ -1153,7 +1376,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 indxcvTable.setDefaultEditor(JTextField.class, new ValueEditor());
                 indxcvTable.setDefaultEditor(JButton.class, new ValueEditor());
                 indxcvTable.setRowHeight(new JButton("X").getPreferredSize().height);
-                indxcvTable.setPreferredScrollableViewportSize(new Dimension(560, indxcvTable.getRowHeight()*14));
+                indxcvTable.setPreferredScrollableViewportSize(new Dimension(700, indxcvTable.getRowHeight()*14));
                 cvScroll.setColumnHeaderView(indxcvTable.getTableHeader());
                 // don't want a horizontal scroll bar
                 // Need to see the whole row at one time
@@ -1170,6 +1393,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     indexedCvList.add(new Integer(in));
                 }
 
+                _cvTable = true;
                 log.debug("end of building IndexedCvTable pane");
             }
             else if (name.equals("fnmapping")) {
@@ -1342,7 +1566,9 @@ public class PaneProgPane extends javax.swing.JPanel
         readAllButton.removeItemListener(l2);
         writeChangesButton.removeItemListener(l3);
         writeAllButton.removeItemListener(l4);
-        l1 = l2 = l3 = l4 = null;
+        confirmChangesButton.removeItemListener(l5);
+        confirmAllButton.removeItemListener(l6);
+        l1 = l2 = l3 = l4 = l5 = l6 = null;
 
         if (_programmingVar != null) _programmingVar.removePropertyChangeListener(this);
         if (_programmingCV != null) _programmingCV.removePropertyChangeListener(this);

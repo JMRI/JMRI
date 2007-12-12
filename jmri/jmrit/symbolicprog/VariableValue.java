@@ -15,7 +15,7 @@ import javax.swing.*;
  *
  * @author   Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2004, 2005
  * @author   Howard G. Penny Copyright (C) 2005
- * @version  $Revision: 1.29 $
+ * @version  $Revision: 1.30 $
  */
 public abstract class VariableValue extends AbstractValue implements java.beans.PropertyChangeListener {
 
@@ -63,6 +63,13 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * Always write the contents of this Variable
      */
     abstract public void writeAll();
+    /**
+     * Confirm the contents of this Variable
+     */
+    public void confirmAll(){
+    	log.error("should never execute this");
+    }
+    
 
     /**
      * Read the contents of this Variable if it's in a state
