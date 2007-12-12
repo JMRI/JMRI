@@ -16,8 +16,8 @@ import jmri.ProgrammerException;
  * Remembers writes, and returns the last written value
  * when a read to the same CV is made.
  *
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.22 $
+ * @author			Bob Jacobsen Copyright (C) 2001, 2007
+ * @version         $Revision: 1.23 $
  */
 public class ProgDebugger implements Programmer  {
 
