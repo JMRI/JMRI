@@ -1,10 +1,4 @@
-/**
- * QsiReplyTest.java
- *
- * Description:	    JUnit tests for the QsiReplyclass
- * @author			Bob Jacobsen
- * @version         $Revision: 1.2 $
- */
+// QsiReplyTest.java
 
 package jmri.jmrix.qsi;
 
@@ -14,8 +8,16 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import jmri.util.JUnitAppender;
+
 import jmri.jmrix.qsi.QsiReply;
 
+/**
+ * JUnit tests for the QsiReplyclass
+ * @author			Bob Jacobsen Copyright 2006, 2007
+ *
+ * @version         $Revision: 1.3 $
+ */
 public class QsiReplyTest extends TestCase {
 
 	public void testCreate() {
@@ -69,6 +71,7 @@ public class QsiReplyTest extends TestCase {
 		m.setElement(i++, '2');
 		m.setElement(i++, '7');
 		Assert.assertEquals("value ", -1, m.value());
+		JUnitAppender.assertErrorMessage("Unable to get number from reply: \"CV\" index: 0 message: \"CV00127\"");
 	}
 
 	public void testValue2() {
@@ -83,6 +86,7 @@ public class QsiReplyTest extends TestCase {
 		m.setElement(i++, 'A');
 		m.setElement(i++, 'B');
 		Assert.assertEquals("value ", -1, m.value());
+		JUnitAppender.assertErrorMessage("Unable to get number from reply: \"CV\" index: 0 message: \"CV001AB\"");
 	}
 
 	public void testMatch() {
