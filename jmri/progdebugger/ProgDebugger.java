@@ -17,7 +17,7 @@ import jmri.ProgrammerException;
  * when a read to the same CV is made.
  *
  * @author			Bob Jacobsen Copyright (C) 2001, 2007
- * @version         $Revision: 1.23 $
+ * @version         $Revision: 1.24 $
  */
 public class ProgDebugger implements Programmer  {
 
@@ -94,21 +94,30 @@ public class ProgDebugger implements Programmer  {
         
         // guess by comparing current value in val to has table
         Integer saw = ((Integer)mValues.get(new Integer(CV)));
+        int result = -1; // what was read
         if (saw!=null) { 
-            confirmOK = (saw.intValue()==val);
-            log.info("confirm CV: "+CV+" mode: "+getMode()+" will read pass: "+confirmOK);
+            result = saw.intValue();
+            confirmOK = (result==val);
+
+            System.out.println("confirm CV: "+CV+" mode: "+getMode()+" will return "+result+" pass: "+confirmOK);
+            log.info("confirm CV: "+CV+" mode: "+getMode()+" will return "+result+" pass: "+confirmOK);
         } else {
+            result = -1;
             confirmOK = false;
-            log.info("confirm CV: "+CV+" mode: "+getMode()+" will return false due to no previous value");
+
+            System.out.println("confirm CV: "+CV+" mode: "+getMode()+" will return -1 pass: false due to no previous value");
+            log.info("confirm CV: "+CV+" mode: "+getMode()+" will return -1 pass: false due to no previous value");
         }
         _lastReadCv = CV;
         // return a notification via the queue to ensure end
+        final int returnResult = result;  // final to allow passing to inner class
         Runnable r = new Runnable() {
                 ProgListener l = m;
+                int result = returnResult; 
                 public void run() {
                     log.debug("read CV reply");
-                    if (confirmOK) l.programmingOpReply(_nextRead, ProgListener.OK);
-                    else l.programmingOpReply(_nextRead, ProgListener.ConfirmFailed);
+                    if (confirmOK) l.programmingOpReply(result, ProgListener.OK);
+                    else l.programmingOpReply(result, ProgListener.ConfirmFailed);
                 }
             };
         sendReturn(r);
