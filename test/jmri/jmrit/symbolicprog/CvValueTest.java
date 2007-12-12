@@ -15,7 +15,7 @@ import java.util.Vector;
  * Test CvValue class
  *
  * @author			Bob Jacobsen Copyright 2004, 2006
- * @version         $Revision: 1.13 $
+ * @version         $Revision: 1.14 $
  */
 public class CvValueTest extends TestCase {
 
@@ -56,7 +56,6 @@ public class CvValueTest extends TestCase {
 
     // check a confirm operation
     public void testCvValConfirmFail() {
-        p._confirmOK = false;
 
         // create the CV value
         CvValue cv = new CvValue(66, p);
@@ -74,24 +73,23 @@ public class CvValueTest extends TestCase {
         if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+cv.getValue()+" state="+cv.getState());
         if (i==0) log.warn("textCvValRead saw an immediate return from isBusy");
 
-        Assert.assertTrue("loop passes before 100", i<100);
+        Assert.assertTrue("loop passes before 1 sec", i<100);
         Assert.assertEquals("CV value ", 91, cv.getValue());
         Assert.assertEquals("CV state ", CvValue.UNKNOWN, cv.getState());
     }
 
     // check a confirm operation
     public void testCvValConfirmPass() {
-        // initialize the system
-        p._confirmOK = true;
 
         // create the CV value
-        CvValue cv = new CvValue(66, p);
+        CvValue cv = new CvValue(67, p);
         cv.setValue(123);
+        cv.write(null); // force out, so dummy read works
 
         cv.confirm(null);
         // wait for reply (normally, done by callback; will check that later)
         int i = 0;
-        while ( cv.isBusy() && i++ < 100 )  {
+        while ( cv.isBusy() && i++ < 500 )  {
             try {
                 Thread.sleep(10);
             } catch (Exception e) {
@@ -99,9 +97,9 @@ public class CvValueTest extends TestCase {
         }
         if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+cv.getValue()+" state="+cv.getState());
 
-        Assert.assertTrue("loop passes before 100", i<100);
+        Assert.assertTrue("loop passes before 5 sec", i<500);
         Assert.assertEquals("CV value ", 123, cv.getValue());
-        Assert.assertEquals("CV state ", CvValue.READ, cv.getState());
+        Assert.assertEquals("CV state ", CvValue.SAME, cv.getState());
     }
 
     // check a write operation
