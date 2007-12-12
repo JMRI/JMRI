@@ -28,7 +28,7 @@ import java.util.List;
  * @author    Bob Jacobsen     Copyright (C) 2001, 2002
  * @author    Dennis Miller    Copyright (C) 2004
  * @author    Howard G. Penny  Copyright (C) 2005
- * @version   $Revision: 1.21 $
+ * @version   $Revision: 1.22 $
  * @see       jmri.jmrit.roster.RosterEntry
  * @see       jmri.jmrit.roster.Roster
  */
@@ -143,7 +143,7 @@ class LocoFile extends XmlFile {
 
             // create root element
             Element root = new Element("locomotive-config");
-            Document doc = newDocument(root, "http://jmri.sourceforge.net/xml/DTD/locomotive-config.dtd");
+            Document doc = newDocument(root, dtdLocation+"locomotive-config.dtd");
 
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/locomotive.xsl"?>
@@ -267,7 +267,7 @@ class LocoFile extends XmlFile {
             // This is taken in large part from "Java and XML" page 368
 
             // create root element
-            Document doc = newDocument(pRootElement, "http://jmri.sourceforge.net/xml/DTD/locomotive-config.dtd");
+            Document doc = newDocument(pRootElement, dtdLocation+"locomotive-config.dtd");
 
             // Update the locomotive.id element
             pRootElement.getChild("locomotive").getAttribute("id").setValue(pEntry.getId());

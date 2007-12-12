@@ -28,7 +28,7 @@ import org.jdom.output.XMLOutputter;
  * We implement this using our own EntityResolved, the jmri.util.JmriLocalEntityResolver class
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.29 $
+ * @version	$Revision: 1.30 $
  */
 public abstract class XmlFile {
 
@@ -102,6 +102,11 @@ public abstract class XmlFile {
     static boolean openWarn1 = false;
     static boolean openWarn2 = false;
     static boolean openWarn3 = false;
+    
+    /**
+     * Specify a standard prefix for DTDs in new XML documents
+     */
+    static public final String dtdLocation = "";
     
     // made members for overriding in tests
     protected void reportError1(File file, Exception e) {
@@ -336,7 +341,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.29 2007-12-07 15:07:45 jacobsen Exp $";
+                        +" $Id: XmlFile.java,v 1.30 2007-12-12 19:04:02 jacobsen Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }

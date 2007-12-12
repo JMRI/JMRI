@@ -18,7 +18,7 @@ import java.util.List;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class LayoutConfigXML extends jmri.jmrit.XmlFile {
 
@@ -31,7 +31,7 @@ public class LayoutConfigXML extends jmri.jmrit.XmlFile {
 
             // create root element
             Element root = new Element("layout-config");
-            Document doc = newDocument(root, "http://jmri.sourceforge.net/xml/DTD/layout-config.dtd");
+            Document doc = newDocument(root, dtdLocation+"layout-config.dtd");
 
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/DecoderID.xsl"?>

@@ -14,7 +14,7 @@ import org.jdom.output.*;
  * Save throttles to XML
  *
  * @author			Glen Oberhauser
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 public class StoreXmlThrottleAction extends AbstractAction {
 
@@ -47,7 +47,7 @@ public class StoreXmlThrottleAction extends AbstractAction {
         try
         {
             Element root = new Element("throttle-config");
-            Document doc = XmlFile.newDocument(root, "http://jmri.sourceforge.net/xml/DTD/throttle-config.dtd");
+            Document doc = XmlFile.newDocument(root, XmlFile.dtdLocation+"throttle-config.dtd");
 
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/throttle.xsl"?>

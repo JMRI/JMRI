@@ -41,7 +41,7 @@ import org.jdom.ProcessingInstruction;
  * sort is done manually each time an entry is added.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001;  Dennis Miller Copyright 2004
- * @version	$Revision: 1.31 $
+ * @version	$Revision: 1.32 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -215,7 +215,7 @@ public class Roster extends XmlFile {
         }
         // create root element
         Element root = new Element("roster-config");
-        Document doc = newDocument(root, "http://jmri.sourceforge.net/xml/DTD/roster-config.dtd");
+        Document doc = newDocument(root, dtdLocation+"roster-config.dtd");
 
         // add XSLT processing instruction
         // <?xml-stylesheet type="text/xsl" href="XSLT/roster.xsl"?>

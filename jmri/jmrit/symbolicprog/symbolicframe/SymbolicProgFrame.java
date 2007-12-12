@@ -18,7 +18,7 @@ import org.jdom.output.*;
 /**
  * Frame providing a table-organized command station programmer from decoder definition files
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
 
@@ -388,7 +388,7 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
 
             // create root element
             Element root = new Element("locomotive-config");
-            Document doc = jmri.jmrit.XmlFile.newDocument(root, "http://jmri.sourceforge.net/xml/DTD/locomotive-config.dtd");
+            Document doc = jmri.jmrit.XmlFile.newDocument(root, jmri.jmrit.XmlFile.dtdLocation+"locomotive-config.dtd");
 
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/locomotive.xsl"?>
