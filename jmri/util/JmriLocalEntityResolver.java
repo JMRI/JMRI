@@ -21,7 +21,7 @@ import java.net.URI;
  * local files within the JMRI distributions in the xml/DTD directory.
  *
  * @author Bob Jacobsen  Copyright 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.5 $
  */
 
 import org.xml.sax.EntityResolver;
@@ -83,12 +83,17 @@ public class JmriLocalEntityResolver implements EntityResolver {
                 log.error("could not parse systemId: "+systemId);
                 return null;
             }
-        } catch (java.net.URISyntaxException e1) {
+        } catch (Exception e1) { // was java.net.URISyntaxException, but that's not in Java 1.3.1
             log.warn(e1);
+            return null;
+        } catch (NoClassDefFoundError e2) { // working on an old version of java, go with default quietly
+            if (!toldYouOnce) log.info("Falling back to defailt resolver due to JVM version");
+            toldYouOnce = true;
             return null;
         }
     }
 
+    static private boolean toldYouOnce = false;
     static private org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(JmriLocalEntityResolver.class.getName());
 
 }

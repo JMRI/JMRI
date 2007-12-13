@@ -4,16 +4,16 @@ Class-Path: java/classes jmriplugins.jar lib/jmriplugins.jar jmri.jar lib/log4j.
 
 Name: jmri
 Specification-Title: “Java Model Railroad Interface Classes”
-Specification-Version: “1.9.1”
+Specification-Version: “1.9.2”
 Specification-Vendor: “JMRI”
 Package-Title: “jmri”
-Package-Version: “1.9.1”
+Package-Version: “1.9.2”
 Package-Vendor: “JMRI”
  
 Name: apps
 Specification-Title: “JMRI Application Classes”
-Specification-Version: “1.9.1”
+Specification-Version: “1.9.2”
 Specification-Vendor: “JMRI”
 Package-Title: “apps”
-Package-Version: “1.9.1”
+Package-Version: “1.9.2”
 Package-Vendor: “JMRI”

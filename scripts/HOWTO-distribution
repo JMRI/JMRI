@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.55 $)
+distribution.  ($Revision: 1.56 $)
 
 Start with a directory, typically called "Distributions", that
 contains "scripts" and "java" (from CVS) as subdirectories, and:
@@ -55,7 +55,7 @@ Make sure everything is up-to-date:
     cvs -q update -dA
     
 ------
-Add somethign about copyright notices on changed files
+Add something about copyright notices on changed files
 ------
     
 To actually create the distribution:
