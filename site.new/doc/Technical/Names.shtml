@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Names.shtml,v 1.4 2007-11-26 18:41:44 jacobsen Exp $ -->
+<!-- $Id: Names.shtml,v 1.5 2007-12-13 22:27:19 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -111,7 +111,7 @@ Note that some of these are placeholders, and have no underlying implementation.
 <LI>A (reserved for CTI Acela)
 <LI>B (reserved for CTI Train-Brain)
 <LI>C C/MRI serial
-<LI>D Direct-packet-drive
+<LI>D (reserved for Direct-packet-drive)
 <LI>E EasyDCC
 <LI>G (Reserved for Grapevine (ProTrak))
 <LI>I Internal, e.g. objects with no associated hardware
@@ -119,6 +119,7 @@ Note that some of these are placeholders, and have no underlying implementation.
 <LI>M MRRLCB
 <LI>N NCE (also Wangrow currently)
 <LI>O Oak Tree Systems
+<LI>P (Reserved for Powerline transmission, e.g. X10 and Insteon)
 <LI>Q QSI programmer interface
 <LI>R RS232 (e.g. serial port) used for direct sensors
 <LI>S SPROG
