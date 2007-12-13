@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle XML persistance of SimpleTimebase objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class SimpleTimebaseXml implements XmlAdapter {
 
@@ -34,9 +34,19 @@ public class SimpleTimebaseXml implements XmlAdapter {
         Element elem = new Element("timebase");
         elem.setAttribute("class", this.getClass().getName());
 
-        elem.setAttribute("time", clock.getTime().toString());
+		if (clock.getStartTime()!=null)
+			elem.setAttribute("time", clock.getStartTime().toString());
         elem.setAttribute("rate", ""+clock.getRate());
-        elem.setAttribute("run", (clock.getRun()?"yes":"no"));
+        elem.setAttribute("run", (!clock.getStartStopped()?"yes":"no"));
+        elem.setAttribute("master", (clock.getInternalMaster()?"yes":"no"));
+		if (!clock.getInternalMaster())
+			elem.setAttribute("mastername",clock.getMasterName());
+        elem.setAttribute("sync", (clock.getSynchronize()?"yes":"no"));
+        elem.setAttribute("correct", (clock.getCorrectHardware()?"yes":"no"));
+		elem.setAttribute("startstopped", (clock.getStartStopped()?"yes":"no"));
+		elem.setAttribute("startsettime", (clock.getStartSetTime()?"yes":"no"));
+		elem.setAttribute("startclockoption",Integer.toString(
+							clock.getStartClockOption()));
         
         return elem;
     }
@@ -48,14 +58,37 @@ public class SimpleTimebaseXml implements XmlAdapter {
     public void load(Element element) {
 
         Timebase clock = InstanceManager.timebaseInstance();
-        String val;
-
+        String val,val2;
+        if (element.getAttribute("master")!=null) {
+            val = element.getAttributeValue("master");
+            if (val.equals("yes")) clock.setInternalMaster(true,false);
+            if (val.equals("no")) {
+				clock.setInternalMaster(false,false);
+				if (element.getAttribute("mastername")!=null)
+					clock.setMasterName(element.getAttributeValue("mastername"));
+			}
+        }
+        if (element.getAttribute("sync")!=null) {
+            val = element.getAttributeValue("sync");
+            if (val.equals("yes")) clock.setSynchronize(true,false);
+            if (val.equals("no")) clock.setSynchronize(false,false);
+        }
+        if (element.getAttribute("correct")!=null) {
+            val = element.getAttributeValue("correct");
+            if (val.equals("yes")) clock.setCorrectHardware(true,false);
+            if (val.equals("no")) clock.setCorrectHardware(false,false);
+        }
         if (element.getAttribute("run")!=null) {
             val = element.getAttributeValue("run");
-            if (val.equals("yes")) clock.setRun(true);
-            if (val.equals("no")) clock.setRun(false);
+            if (val.equals("yes")) {
+				clock.setRun(true);
+				clock.setStartStopped(false);
+			}
+            if (val.equals("no")) {
+				clock.setRun(false);
+				clock.setStartStopped(true);
+			}
         }
-
         if (element.getAttribute("rate")!=null) {
             try {
                 double r = element.getAttribute("rate").getDoubleValue();
@@ -67,14 +100,37 @@ public class SimpleTimebaseXml implements XmlAdapter {
             } catch (org.jdom.DataConversionException e2) {
                 log.error("Cannot convert rate: "+e2);
             }
+        }		
+		if (element.getAttribute("startsettime")!=null) {
+			val = element.getAttributeValue("startsettime");
+			if (val.equals("yes")) {
+				if (element.getAttribute("time")!=null) {
+					val2 = element.getAttributeValue("time");
+					clock.setStartSetTime(true,new Date(val2));
+					clock.setTime(new Date(val2));
+				}
+			}
+			else if (val.equals("no")) {
+				if (element.getAttribute("time")!=null) {
+					val2 = element.getAttributeValue("time");
+					clock.setStartSetTime(false,new Date(val2));
+				}
+			}				
         }
-
-        if (element.getAttribute("time")!=null) {
-            val = element.getAttributeValue("time");
-            clock.setTime(new Date(val));
-        }
+		else if (element.getAttribute("time")!=null) {
+			// this only to preserve previous behavior for preexisting files
+			val2 = element.getAttributeValue("time");
+			clock.setStartSetTime(true,new Date(val2));
+			clock.setTime(new Date(val2));
+		}
+		if (element.getAttribute("startclockoption")!=null) {
+			int option = Integer.parseInt(element.getAttribute(
+									"startclockoption").getValue());
+			clock.setStartClockOption(option);
+			clock.initializeClock();
+	    }
+		clock.initializeHardwareClock();					
     }
-
 
     /**
      * Update static data from XML file

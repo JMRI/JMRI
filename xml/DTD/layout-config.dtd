@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.78 2007-11-26 20:16:45 dan_boudreau Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.79 2007-12-13 02:12:14 djduchamp Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
 <!--                                                                        -->
@@ -153,6 +153,13 @@
   <!ATTLIST timebase time		CDATA #IMPLIED>
   <!ATTLIST timebase run		CDATA #IMPLIED>
   <!ATTLIST timebase rate		CDATA #IMPLIED>
+  <!ATTLIST timebase master		CDATA #IMPLIED>
+  <!ATTLIST timebase mastername		CDATA #IMPLIED>
+  <!ATTLIST timebase sync		CDATA #IMPLIED>
+  <!ATTLIST timebase correct		CDATA #IMPLIED>
+  <!ATTLIST timebase startstopped	CDATA #IMPLIED>  
+  <!ATTLIST timebase startsettime	CDATA #IMPLIED>
+  <!ATTLIST timebase startclockoption	CDATA #IMPLIED>
 
 <!ELEMENT signalheads (signalhead*)>
   <!ATTLIST signalheads class		CDATA #REQUIRED>

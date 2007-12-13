@@ -27,7 +27,7 @@ import jmri.jmrit.display.LayoutBlockManager;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.29 $
+ * @version			$Revision: 1.30 $
  */
 public class InstanceManager {
 
@@ -92,6 +92,16 @@ public class InstanceManager {
         return instance().timebase;
     }
 
+    static public ClockControl clockControlInstance()  {
+        if (instance().clockControl != null) return instance().clockControl;
+        // As a convenience, we create a default object if none was registered explicitly.
+        instance().clockControl = new DefaultClockControl();
+        return instance().clockControl;
+    }
+	static public void addClockControl(ClockControl cc) {
+		instance().clockControl = cc;
+	}
+
     static public ConsistManager consistManagerInstance() { return instance().consistManager; }
 
     static public CommandStation commandStationInstance()  { return instance().commandStation; }
@@ -149,9 +159,9 @@ public class InstanceManager {
 	// Now that we have a programmer manager, install the default
         // Consist manager if Ops mode is possible, and there isn't a
         // consist manager already.
-	if(programmerManager.isOpsModePossible() && consistManager == null) {
-   		 setConsistManager(new DccConsistManager());
-	}
+		if(programmerManager.isOpsModePossible() && consistManager == null) {
+			setConsistManager(new DccConsistManager());
+		}
     }
 
     private SensorManager sensorManager = null;
@@ -249,6 +259,8 @@ public class InstanceManager {
     }
 
     private Timebase timebase = null;
+	
+	private ClockControl clockControl = null;
 
     private ConsistManager consistManager = null;
 

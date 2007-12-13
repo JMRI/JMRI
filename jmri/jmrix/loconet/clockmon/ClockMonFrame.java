@@ -20,7 +20,7 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2003, 2004
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class ClockMonFrame extends jmri.util.JmriJFrame implements SlotListener {
 
@@ -50,17 +50,17 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements SlotListener 
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         getContentPane().add(readButton);
-        getContentPane().add(setButton);
+//        getContentPane().add(setButton);
         getContentPane().add(panel);
 
-        getContentPane().add(setInternal);
-        getContentPane().add(correctFastClockMaster);
+//        getContentPane().add(setInternal);
+//        getContentPane().add(correctFastClockMaster);
 
         // Load GUI element contents with current slot contents
         notifyChangedSlot(SlotManager.instance().slot(LnConstants.FC_SLOT));
 
         // add help menu to window
-    	addHelpMenu("package.jmri.jmrix.loconet.clockmon.ClockMonFrame", true);
+//    	addHelpMenu("package.jmri.jmrix.loconet.clockmon.ClockMonFrame", true);
 
         // install "read" button handler
         readButton.addActionListener( new ActionListener() {
@@ -70,20 +70,20 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements SlotListener 
             }
         );
         // install "set" button handler
-        setButton.addActionListener( new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                	setContents();
-                }
-            }
-        );
+//        setButton.addActionListener( new ActionListener() {
+//                public void actionPerformed(ActionEvent a) {
+//                	setContents();
+//                }
+//            }
+//        );
 
         // install "Correct Fast Clock Master handler
-        correctFastClockMaster.addActionListener( new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                        correctFastClockMasterAction();
-                }
-            }
-        );
+//        correctFastClockMaster.addActionListener( new ActionListener() {
+//                public void actionPerformed(ActionEvent a) {
+//                        correctFastClockMasterAction();
+//                }
+//            }
+//        );
 
         // listen for updated slot contents
         if (SlotManager.instance()!=null)
@@ -131,6 +131,10 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements SlotListener 
       if( correctFastClockMaster.isSelected() && inSyncWithFastClockMaster )
       {
         Date now = clock.getTime();
+		
+// djd debugging
+		if (now.getMinutes()!=0) {
+// end djd
 
         LocoNetSlot s = SlotManager.instance().slot(LnConstants.FC_SLOT);
           // Set the Fast Clock Day to the current Day of the month 1-31
@@ -148,6 +152,9 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements SlotListener 
 
         s.setFcFracMins( ticks );
         LnTrafficController.instance().sendLocoNetMessage(s.writeSlot());
+// djd debugging
+		}
+// end djd
       }
     }
 

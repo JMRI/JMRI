@@ -16,7 +16,7 @@ import jmri.util.JmriJFrame;
  *
  * <p> Time code copied from code for the Nixie clock by Bob Jacobsen</p>
  * @author                     Dennis Miller Copyright (C) 2004
- * @version                    $Revision: 1.10 $
+ * @version                    $Revision: 1.11 $
  */
 
 public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
@@ -50,6 +50,7 @@ public AnalogClockFrame() {
 	// Without it, the button does not center properly
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
         buttonPanel.add(b = new JButton("Pause"));
+		if (!clock.getRun()) b.setText("Run");
         b.addActionListener( new ButtonListener());
         b.setOpaque(true);
         b.setVisible(true);
