@@ -19,17 +19,18 @@ import javax.swing.*;
  *      extension of the standard Turnout object with drawing and connectivity
  *      information added. 
  * <P> 
- *  Four types are supported:
- *		right-hand, left-hand, wye, and double crossover.  Note that double-slip
+ *  Six types are supported:
+ *		right-hand, left-hand, wye, double crossover, right-handed single crossover,
+ *      and left-handed single crossover.  Note that double-slip
  *      turnouts can be handled as two turnouts, throat to throat, and three-way
  *		turnouts can be handles as two turnouts, left-hand and right-hand, 
  *      arranged throat to continuing route.
  * <P>
  * A LayoutTurnout has three or four connection points, designated A, B, C, and D.
  *		For right-handed or left-handed turnouts, A corresponds to the throat.
- *		At the crossing, A-B (and C-D for double crossover) is a straight segment
- *		(continuing route).  A-C (and B-D for double crossover) is the diverging
- *		route.  B-C (and A-D for double crossover) is an illegal condition.
+ *		At the crossing, A-B (and C-D for crossovers) is a straight segment
+ *		(continuing route).  A-C (and B-D for crossovers) is the diverging
+ *		route.  B-C (and A-D for crossovers) is an illegal condition.
  * <P>     
  * A LayoutTurnout carries Block information.  For right-handed, left-handed, and wye
  *      turnouts, the entire turnout is in one block,however, a block border may occur 
@@ -45,7 +46,9 @@ import javax.swing.*;
  *		displacement for A = - the displacement for C and the displacement for D = 
  *		- the displacement for B.  The center point and these displacements may be 
  *		adjusted by the user when in edit mode.  For double crossovers, AB and BC
- *      are constrained to remain perpendicular.
+ *      are constrained to remain perpendicular.  For single crossovers, AB and CD 
+ *		are constrained to remain parallel, and AC and BD are constrained to remain 
+ *      parallel.
  * <P>
  * When LayoutTurnouts are first created, a rotation (degrees) is provided.
  *		For 0.0 rotation, the turnout lies on the east-west line with A facing
@@ -63,7 +66,7 @@ import javax.swing.*;
  *		by tools, Set Signals at Turnout, and Set Signals at Double Crossover.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class LayoutTurnout
@@ -77,13 +80,15 @@ public class LayoutTurnout
 	public static final int LH_TURNOUT = 2;
 	public static final int WYE_TURNOUT = 3;
 	public static final int DOUBLE_XOVER = 4;
+	public static final int RH_XOVER = 5;
+	public static final int LH_XOVER = 6;	
 
 	// operational instance variables (not saved between sessions)
 	private Turnout turnout = null;
 	private LayoutBlock block = null;
-	private LayoutBlock blockB = null;  // double-Xover - second block, if there is one
-	private LayoutBlock blockC = null;  // double-Xover - third block, if there is one
-	private LayoutBlock blockD = null;  // double-Xover - fourth block, if there is one
+	private LayoutBlock blockB = null;  // Xover - second block, if there is one
+	private LayoutBlock blockC = null;  // Xover - third block, if there is one
+	private LayoutBlock blockD = null;  // Xover - fourth block, if there is one
 	private LayoutTurnout instance = null;
 	private LayoutEditor layoutEditor = null;
 	private java.beans.PropertyChangeListener mTurnoutListener = null;
@@ -93,22 +98,22 @@ public class LayoutTurnout
 	public String turnoutName = "";   // should be the name (system or user) of
 								//	an existing physical turnout
 	public String blockName = "";  // name for block, if there is one
-	public String blockBName = "";  // double-Xover - name for second block, if there is one
-	public String blockCName = "";  // double-Xover - name for third block, if there is one
-	public String blockDName = "";  // double-Xover - name for fourth block, if there is one
+	public String blockBName = "";  // Xover - name for second block, if there is one
+	public String blockCName = "";  // Xover - name for third block, if there is one
+	public String blockDName = "";  // Xover - name for fourth block, if there is one
 	public String signalA1Name = ""; // signal 1 (continuing) (throat for RH, LH, WYE)
 	public String signalA2Name = ""; // signal 2 (diverging) (throat for RH, LH, WYE)
 	public String signalB1Name = ""; // continuing (RH, LH, WYE) signal 1 (double crossover)
-	public String signalB2Name = ""; // double crossover only
+	public String signalB2Name = ""; // LH_Xover and double crossover only
 	public String signalC1Name = ""; // diverging (RH, LH, WYE) signal 1 (double crossover)
-	public String signalC2Name = ""; // double crossover only
-	public String signalD1Name = ""; // double crossover only
-	public String signalD2Name = ""; // double crossover only
+	public String signalC2Name = ""; // RH_Xover and double crossover only
+	public String signalD1Name = ""; // single or double crossover only
+	public String signalD2Name = ""; // LH_Xover and double crossover only
 	public int type = RH_TURNOUT;
-	public Object connectA = null;		// throat of LH, RH, and WYE turnouts
+	public Object connectA = null;		// throat of LH, RH, RH Xover, LH Xover, and WYE turnouts
 	public Object connectB = null;		// straight leg of LH and RH turnouts
-	public Object connectC = null;
-	public Object connectD = null;		// double crossover only
+	public Object connectC = null;		
+	public Object connectD = null;		// double xover, RH Xover, LH Xover only
 	public int continuingSense = Turnout.CLOSED;
 	public boolean disabled = false;
 	public Point2D center = new Point2D.Double(50.0,50.0);
@@ -149,6 +154,26 @@ public class LayoutTurnout
 			blockD = null;
 			blockDName = "";
 		}
+		else if (type==RH_XOVER) {
+			dispB.setLocation(10.0,-10.0);
+			dispC.setLocation(30.0,10.0);
+			blockB = null;
+			blockBName = "";
+			blockC = null;
+			blockCName = "";
+			blockD = null;
+			blockDName = "";
+		}
+		else if (type==LH_XOVER) {
+			dispB.setLocation(30.0,-10.0);
+			dispC.setLocation(10.0,10.0);
+			blockB = null;
+			blockBName = "";
+			blockC = null;
+			blockCName = "";
+			blockD = null;
+			blockDName = "";
+		}		
 		rotateCoords(rot);
 		// adjust size of new turnout
 		Point2D pt = new Point2D.Double(round(dispB.getX()*xFactor),
@@ -273,7 +298,7 @@ public class LayoutTurnout
 	}
 	public Point2D getCoordsCenter() {return center;}
 	public Point2D getCoordsA() {
-		if (type==DOUBLE_XOVER) {
+		if ( (type==DOUBLE_XOVER) || (type==LH_XOVER) || (type==RH_XOVER) ) {
 			double x = center.getX() - dispC.getX();
 			double y = center.getY() - dispC.getY();
 			return new Point2D.Double(x,y);
@@ -300,7 +325,7 @@ public class LayoutTurnout
 		return new Point2D.Double(x,y);
 	}
 	public Point2D getCoordsD() {
-		// only allowed for double crossovers
+		// only allowed for single and double crossovers
 		double x = center.getX() - dispB.getX();
 		double y = center.getY() - dispB.getY();
 		return new Point2D.Double(x,y);
@@ -315,60 +340,60 @@ public class LayoutTurnout
 		else blockName = "";
 	}
 	public void setLayoutBlockB (LayoutBlock b) {
-		if (type == DOUBLE_XOVER) {
+		if ( (type==DOUBLE_XOVER) || (type==LH_XOVER) || (type==RH_XOVER) ) {
 			blockB = b;
 			if (b!=null) blockBName = b.getID();
 			else blockBName = "";
 		}
 		else {
-			log.error ("Attempt to set block B, but not a double crossover");
+			log.error ("Attempt to set block B, but not a crossover");
 		}
 	}
 	public void setLayoutBlockC (LayoutBlock b) {
-		if (type == DOUBLE_XOVER) {
+		if ( (type==DOUBLE_XOVER) || (type==LH_XOVER) || (type==RH_XOVER) ) {
 			blockC = b;
 			if (b!=null) blockCName = b.getID();
 			else blockCName = "";
 		}
 		else {
-			log.error ("Attempt to set block C, but not a double crossover");
+			log.error ("Attempt to set block C, but not a crossover");
 		}
 	}
 	public void setLayoutBlockD (LayoutBlock b) {
-		if (type == DOUBLE_XOVER) {
+		if ( (type==DOUBLE_XOVER) || (type==LH_XOVER) || (type==RH_XOVER) ) {
 			blockD = b;
 			if (b!=null) blockDName = b.getID();
 			else blockDName = "";
 		}
 		else {
-			log.error ("Attempt to set block D, but not a double crossover");
+			log.error ("Attempt to set block D, but not a crossover");
 		}
 	}
 	public void setLayoutBlockByName (String name) {
 		blockName = name;
 	}
 	public void setLayoutBlockBByName (String name) {
-		if (type == DOUBLE_XOVER) {
+		if ( (type==DOUBLE_XOVER) || (type==LH_XOVER) || (type==RH_XOVER) ) {
 			blockBName = name;
 		}
 		else {
-			log.error ("Attempt to set block B name, but not a double crossover");
+			log.error ("Attempt to set block B name, but not a crossover");
 		}
 	}
 	public void setLayoutBlockCByName (String name) {
-		if (type == DOUBLE_XOVER) {
+		if ( (type==DOUBLE_XOVER) || (type==LH_XOVER) || (type==RH_XOVER) ) {
 			blockCName = name;
 		}
 		else {
-			log.error ("Attempt to set block C name, but not a double crossover");
+			log.error ("Attempt to set block C name, but not a crossover");
 		}
 	}
 	public void setLayoutBlockDByName (String name) {
-		if (type == DOUBLE_XOVER) {
+		if ( (type==DOUBLE_XOVER) || (type==LH_XOVER) || (type==RH_XOVER) ) {
 			blockDName = name;
 		}
 		else {
-			log.error ("Attempt to set block D name, but not a double crossover");
+			log.error ("Attempt to set block D name, but not a crossover");
 		}
 	}
 	
@@ -382,8 +407,8 @@ public class LayoutTurnout
 			return ((TrackSegment)connectA).getMainline();
 		else {
 			// if no connection, depends on type of turnout
-			if (type == DOUBLE_XOVER) {
-				// Double crossover - straight continuing is B
+			if ( (type==DOUBLE_XOVER) || (type==LH_XOVER) || (type==RH_XOVER) ) {
+				// All crossovers - straight continuing is B
 				if (connectB != null) 
 					return ((TrackSegment)connectB).getMainline();
 			}
@@ -401,8 +426,8 @@ public class LayoutTurnout
 			return ((TrackSegment)connectB).getMainline();
 		else {
 			// if no connection, depends on type of turnout
-			if (type == DOUBLE_XOVER) {
-				// Double crossover - straight continuing is A
+			if ( (type==DOUBLE_XOVER) || (type==LH_XOVER) || (type==RH_XOVER) ) {
+				// All crossovers - straight continuing is A
 				if (connectA != null) 
 					return ((TrackSegment)connectA).getMainline();
 			}
@@ -422,8 +447,8 @@ public class LayoutTurnout
 			return ((TrackSegment)connectC).getMainline();
 		else {
 			// if no connection, depends on type of turnout
-			if (type == DOUBLE_XOVER) {
-				// Double crossover - straight continuing is D
+			if ( (type==DOUBLE_XOVER) || (type==LH_XOVER) || (type==RH_XOVER) ) {
+				// All crossovers - straight continuing is D
 				if (connectD != null) 
 					return ((TrackSegment)connectD).getMainline();
 			}
@@ -439,7 +464,7 @@ public class LayoutTurnout
 		return false;
 	}
 	public boolean isMainlineD() {
-		// this is a double crossover turnout
+		// this is a crossover turnout
 		if (connectD != null) 
 			return ((TrackSegment)connectD).getMainline();
 		else if (connectC != null) 
@@ -464,6 +489,29 @@ public class LayoutTurnout
 			double newLength = Math.sqrt( (x*x) + (y*y) );
 			x = dispB.getX()*newLength/oldLength;
 			y = dispB.getY()*newLength/oldLength;
+			dispB = new Point2D.Double(x,y);
+		}
+		else if ( (type == RH_XOVER) || (type == LH_XOVER) ) {
+			dispC = new Point2D.Double(x,y);
+			// adjust to maintain the parallelogram
+			double a = 0.0;
+			double b = -y;
+			double xi = 0.0;
+			double yi = b;
+			if ((dispB.getX() + x)!=0.0) {
+				a = (dispB.getY() + y)/(dispB.getX() + x);
+				b = -y + (a*x);
+				xi = -b/(a + (1.0/a));
+				yi = (a*xi) + b;
+			}
+			if (type == RH_XOVER) {
+				x = xi - (0.333333*(-x - xi));
+				y = yi - (0.333333*(-y - yi));
+			}
+			else if (type == LH_XOVER) {
+				x = xi - (3.0*(-x - xi));
+				y = yi - (3.0*(-y - yi));
+			}
 			dispB = new Point2D.Double(x,y);
 		}
 		else if (type == WYE_TURNOUT) {
@@ -498,6 +546,28 @@ public class LayoutTurnout
 			y = dispC.getY()*newLength/oldLength;
 			dispC = new Point2D.Double(x,y);
 		}
+		else if ( (type == RH_XOVER) || (type == LH_XOVER) ) {
+			// adjust to maintain the parallelogram
+			double a = 0.0;
+			double b = y;
+			double xi = 0.0;
+			double yi = b;
+			if ((dispC.getX() - x)!=0.0) {
+				a = (dispC.getY() - y)/(dispC.getX() - x);
+				b = y - (a*x);
+				xi = -b/(a + (1.0/a));
+				yi = (a*xi) + b;
+			}
+			if (type == LH_XOVER) {
+				x = xi - (0.333333*(x - xi));
+				y = yi - (0.333333*(y - yi));
+			}
+			else if (type == RH_XOVER) {
+				x = xi - (3.0*(x - xi));
+				y = yi - (3.0*(y - yi));
+			}
+			dispC = new Point2D.Double(x,y);
+		}
 	}
 	public void setCoordsC(Point2D p) {
 		double x = center.getX() - p.getX();
@@ -512,19 +582,64 @@ public class LayoutTurnout
 			y = dispB.getY()*newLength/oldLength;
 			dispB = new Point2D.Double(x,y);
 		}
+		else if ( (type == RH_XOVER) || (type == LH_XOVER) ) {
+			double a = 0.0;
+			double b = -y;
+			double xi = 0.0;
+			double yi = b;
+			if ((dispB.getX() + x)!=0.0) {
+				a = (-dispB.getY() + y)/(-dispB.getX() + x);
+				b = -y + (a*x);
+				xi = -b/(a + (1.0/a));
+				yi = (a*xi) + b;
+			}
+			if (type == RH_XOVER) {
+				x = xi - (0.333333*(-x - xi));
+				y = yi - (0.333333*(-y - yi));
+			}
+			else if (type == LH_XOVER) {
+				x = xi - (3.0*(-x - xi));
+				y = yi - (3.0*(-y - yi));
+			}
+			dispB = new Point2D.Double(-x,-y);
+		}
 	}
 	public void setCoordsD(Point2D p) {
-		// only used for double crossover
+		// only used for crossovers
 		double x = center.getX() - p.getX();
 		double y = center.getY() - p.getY();
 		dispB = new Point2D.Double(x,y);
-		// adjust to maintain rectangle
-		double oldLength = Math.sqrt( (dispC.getX()*dispC.getX()) + 
+		if (type == DOUBLE_XOVER) {
+			// adjust to maintain rectangle
+			double oldLength = Math.sqrt( (dispC.getX()*dispC.getX()) + 
 													(dispC.getY()*dispC.getY()) );
-		double newLength = Math.sqrt( (x*x) + (y*y) );
-		x = dispC.getX()*newLength/oldLength;
-		y = dispC.getY()*newLength/oldLength;
-		dispC = new Point2D.Double(x,y);
+			double newLength = Math.sqrt( (x*x) + (y*y) );
+			x = dispC.getX()*newLength/oldLength;
+			y = dispC.getY()*newLength/oldLength;
+			dispC = new Point2D.Double(x,y);
+		}
+		else if ( (type == RH_XOVER) || (type == LH_XOVER) ) {
+			// adjust to maintain the parallelogram
+			double a = 0.0;
+			double b = y;
+			double xi = 0.0;
+			double yi = b;
+			if ((dispC.getX() + x)!=0.0) {
+				a = (dispC.getY() + y)/(dispC.getX() + x);
+				b = -y + (a*x);
+				xi = -b/(a + (1.0/a));
+				yi = (a*xi) + b;
+			}
+			if (type == LH_XOVER) {
+				x = xi - (0.333333*(-x - xi));
+				y = yi - (0.333333*(-y - yi));
+			}
+			else if (type == RH_XOVER) {
+				x = xi - (3.0*(-x - xi));
+				y = yi - (3.0*(-y - yi));
+			}
+			dispC = new Point2D.Double(x,y);
+		}
 	}	
 	public void scaleCoords(float xFactor, float yFactor) {
 		Point2D pt = new Point2D.Double(round(center.getX()*xFactor),
@@ -674,6 +789,12 @@ public class LayoutTurnout
 			case DOUBLE_XOVER:
 				popup.add(rb.getString("XOverTurnout"));
 				break;
+			case RH_XOVER:
+				popup.add(rb.getString("RHXOverTurnout"));
+				break;
+			case LH_XOVER:
+				popup.add(rb.getString("LHXOverTurnout"));
+				break;
 		}
 		if (turnout==null) popup.add(rb.getString("NoTurnout"));
 		else popup.add(rb.getString("Turnout")+": "+turnoutName);
@@ -725,7 +846,7 @@ public class LayoutTurnout
 			});
 		if (blockName=="") popup.add(rb.getString("NoBlock"));
 		else popup.add(rb.getString("Block")+": "+getLayoutBlock().getID());
-		if (type==DOUBLE_XOVER) {
+		if ( (type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER) ) {
 			// check if extra blocks have been entered
 			if (blockB!=null) popup.add(rb.getString("Block2ID")+": "+blockBName);
 			if (blockC!=null) popup.add(rb.getString("Block3ID")+": "+blockCName);
@@ -752,7 +873,8 @@ public class LayoutTurnout
 					if (tools == null) {
 						tools = new LayoutEditorTools(layoutEditor);
 					}
-					if (getTurnoutType()==DOUBLE_XOVER) {	
+					if ( (getTurnoutType()==DOUBLE_XOVER) || (getTurnoutType()==RH_XOVER) ||
+											(getTurnoutType()==LH_XOVER) ) {	
 						tools.setSignalsAtXoverTurnoutFromMenu(instance,
 							layoutEditor.signalIconEditor,layoutEditor.signalFrame);						
 					}
@@ -808,8 +930,8 @@ public class LayoutTurnout
             panel1.add(turnoutNameField);
             turnoutNameField.setToolTipText( rb.getString("EditTurnoutNameHint") );
             contentPane.add(panel1);
-			// add continuing state choice, if not double crossover
-			if (type != DOUBLE_XOVER) { 
+			// add continuing state choice, if not crossover
+			if ( (type != DOUBLE_XOVER) && (type != RH_XOVER) && (type != LH_XOVER) ) { 
 				JPanel panel3 = new JPanel(); 
 				panel3.setLayout(new FlowLayout());
 				stateBox.removeAllItems();
@@ -830,7 +952,7 @@ public class LayoutTurnout
             panel2.add(blockNameField);
             blockNameField.setToolTipText( rb.getString("EditBlockNameHint") );
             contentPane.add(panel2);
-			if (type == DOUBLE_XOVER) { 
+			if ( (type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER) ) { 
 				JPanel panel21 = new JPanel(); 
 				panel21.setLayout(new FlowLayout());
 				JLabel blockBNameLabel = new JLabel( rb.getString("Block2ID"));
@@ -881,7 +1003,7 @@ public class LayoutTurnout
             });
             turnoutEditCancel.setToolTipText( rb.getString("CancelHint") );
             contentPane.add(panel5);
-			if (type == DOUBLE_XOVER) {
+			if ( (type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER) ) {
 				JPanel panel6 = new JPanel();
 				panel6.setLayout(new FlowLayout());
 				// Edit Block 2
@@ -913,13 +1035,13 @@ public class LayoutTurnout
 		}
 		// Set up for Edit
 		blockNameField.setText(blockName);
-		if (type == DOUBLE_XOVER) {
+		if ( (type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER) ) {
 			blockBNameField.setText(blockBName);
 			blockCNameField.setText(blockCName);
 			blockDNameField.setText(blockDName);
 		}	
 		turnoutNameField.setText(turnoutName);
-		if (type != DOUBLE_XOVER) {
+		if ( (type != DOUBLE_XOVER) && (type != RH_XOVER) && (type != LH_XOVER) ) {
 			if (continuingSense==Turnout.CLOSED) {
 				stateBox.setSelectedIndex(turnoutClosedIndex);
 			}
@@ -1073,7 +1195,7 @@ public class LayoutTurnout
 			needRedraw = true;
 		}
 		// set the continuing route Turnout State
-		if (type != DOUBLE_XOVER) {
+		if ( (type==DOUBLE_XOVER) || (type==LH_XOVER) || (type==RH_XOVER) ) {
 			continuingSense = Turnout.CLOSED;
 			if ( stateBox.getSelectedIndex() == turnoutThrownIndex ) {
 				continuingSense = Turnout.THROWN;
@@ -1097,7 +1219,7 @@ public class LayoutTurnout
 					(block==blockD) ) ) block.decrementUse();
 			needRedraw = true;
 		}
-		if (type==DOUBLE_XOVER) {
+		if ( (type==DOUBLE_XOVER) || (type==LH_XOVER) || (type==RH_XOVER) ) {
 			// check if Block 2 changed
 			if ( !blockBName.equals(blockBNameField.getText().trim()) ) {
 				// block has changed, if old block exists, decrement use

@@ -47,7 +47,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -105,6 +105,8 @@ public class LayoutEditor extends JmriJFrame {
     private JCheckBox turnoutLHBox = new JCheckBox(rb.getString("LeftHandAbbreviation"));
     private JCheckBox turnoutWYEBox = new JCheckBox(rb.getString("WYEAbbreviation"));
     private JCheckBox doubleXoverBox = new JCheckBox(rb.getString("DoubleCrossOver"));
+    private JCheckBox rhXoverBox = new JCheckBox(rb.getString("RHCrossOver"));
+    private JCheckBox lhXoverBox = new JCheckBox(rb.getString("LHCrossOver"));
 	private JTextField rotationField = new JTextField(3);
     private JTextField nextTurnout = new JTextField(5);
     
@@ -163,6 +165,7 @@ public class LayoutEditor extends JmriJFrame {
     private JCheckBoxMenuItem controlItem = null;
     private JCheckBoxMenuItem animationItem = null;
     private JCheckBoxMenuItem showHelpItem = null;
+    private JCheckBoxMenuItem showGridItem = null;
     private ButtonGroup bkColorButtonGroup = null;
 	private ButtonGroup trackColorButtonGroup = null;
 	private Color[] trackColors = new Color[13];
@@ -222,6 +225,7 @@ public class LayoutEditor extends JmriJFrame {
     private boolean controlLayout = true;
 	private boolean animatingLayout = true;
 	private boolean showHelpBar = true;
+	private boolean drawGrid = false;
 	
 	// saved state of options when panel was loaded or created
 	private boolean savedEditMode = true;
@@ -271,6 +275,8 @@ public class LayoutEditor extends JmriJFrame {
         itemGroup.add(turnoutLHBox);
         itemGroup.add(turnoutWYEBox);
         itemGroup.add(doubleXoverBox);
+        itemGroup.add(rhXoverBox);
+        itemGroup.add(lhXoverBox);
         itemGroup.add(levelXingBox);
         itemGroup.add(endBumperBox);
         itemGroup.add(anchorBox);
@@ -307,6 +313,10 @@ public class LayoutEditor extends JmriJFrame {
 		turnoutWYEBox.setToolTipText(rb.getString("WYEToolTip"));
         top1.add (doubleXoverBox);
 		doubleXoverBox.setToolTipText(rb.getString("DoubleCrossOverToolTip"));
+        top1.add (rhXoverBox);
+		rhXoverBox.setToolTipText(rb.getString("RHCrossOverToolTip"));
+        top1.add (lhXoverBox);
+		lhXoverBox.setToolTipText(rb.getString("LHCrossOverToolTip"));
 		top1.add (new JLabel("    "+rb.getString("Rotation")));
 		top1.add (rotationField);
 		rotationField.setToolTipText(rb.getString("RotationToolTip"));
@@ -680,6 +690,16 @@ public class LayoutEditor extends JmriJFrame {
                 }
             });                    
         showHelpItem.setSelected(showHelpBar);
+		// show grid item
+		showGridItem = new JCheckBoxMenuItem(rb.getString("ShowEditGrid"));
+        optionMenu.add(showGridItem);
+        showGridItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    drawGrid = showGridItem.isSelected();
+					repaint();
+                }
+            });                    
+        showGridItem.setSelected(drawGrid);
 		// title item
         optionMenu.addSeparator();
         JMenuItem titleItem = new JMenuItem(rb.getString("NewTitle")+"...");
@@ -1685,7 +1705,9 @@ public class LayoutEditor extends JmriJFrame {
 						return true;
 					}
 				}
-				if ((t.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER) && (
+				if (( (t.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER) || 
+						(t.getTurnoutType()==LayoutTurnout.RH_XOVER) || 
+						(t.getTurnoutType()==LayoutTurnout.LH_XOVER) ) && (
 						!requireUnconnected || (t.getConnectD()==null))) {
 					// check the D connection point, double crossover turnouts only
 					Point2D pt = t.getCoordsD();
@@ -1896,6 +1918,12 @@ public class LayoutEditor extends JmriJFrame {
                 }
                 else if (doubleXoverBox.isSelected()) {
 					addLayoutTurnout(LayoutTurnout.DOUBLE_XOVER);
+                }
+                else if (rhXoverBox.isSelected()) {
+					addLayoutTurnout(LayoutTurnout.RH_XOVER);
+                }
+                else if (lhXoverBox.isSelected()) {
+					addLayoutTurnout(LayoutTurnout.LH_XOVER);
                 }
                 else if (levelXingBox.isSelected()) {
 					addLevelXing();
@@ -2592,7 +2620,9 @@ public class LayoutEditor extends JmriJFrame {
 		// decrement Block use count(s)
 		LayoutBlock b = o.getLayoutBlock();
 		if (b!=null) b.decrementUse();
-		if (o.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER) {
+		if ( (o.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER) ||
+				(o.getTurnoutType()==LayoutTurnout.RH_XOVER) || 
+					(o.getTurnoutType()==LayoutTurnout.LH_XOVER) ) {
 			LayoutBlock b2 = o.getLayoutBlockB();
 			if ( (b2!=null) && (b2!=b) ) b2.decrementUse();
 			LayoutBlock b3 = o.getLayoutBlockC();
@@ -3294,6 +3324,7 @@ public class LayoutEditor extends JmriJFrame {
         public void paint(Graphics g) {
             super.paint(g);
             Graphics2D g2 = (Graphics2D)g;
+			if (editMode && drawGrid) drawPanelGrid(g2);
             g2.setColor(defaultTrackColor);			
 			main = false;
             g2.setStroke(new BasicStroke(sideTrackWidth,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND));
@@ -3351,7 +3382,7 @@ public class LayoutEditor extends JmriJFrame {
 				g2.setColor(defaultTrackColor);
 			}
 			if (t.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER) {
-				// double crossover turnout
+				//  double crossover turnout
 				Turnout t1 = t.getTurnout();
 				if (t1==null) {
 					// no physical turnout linked - draw A corner
@@ -3505,6 +3536,231 @@ public class LayoutEditor extends JmriJFrame {
 					}
 				}
 			}
+			else if ( (t.getTurnoutType()==LayoutTurnout.RH_XOVER) || 
+							(t.getTurnoutType()==LayoutTurnout.LH_XOVER) ) {
+				//  LH and RH crossover turnouts
+				int ttype = t.getTurnoutType();
+				Turnout t1 = t.getTurnout();
+				if (t1==null) {
+					// no physical turnout linked - draw A corner
+					setTrackStrokeWidth(g2,t.isMainlineA());
+					g2.draw(new Line2D.Double(t.getCoordsA(),
+										midpoint(t.getCoordsA(),t.getCoordsB())));
+					if (ttype == LayoutTurnout.RH_XOVER) {
+						setTrackStrokeWidth(g2,false);
+						g2.draw(new Line2D.Double(midpoint(t.getCoordsA(),t.getCoordsB()),
+																t.getCoordsCenter()));
+					}
+					// change block if needed
+					b = t.getLayoutBlockB();
+					if (b!=null) g2.setColor(b.getBlockColor());
+					else g2.setColor(defaultTrackColor);
+					// draw B corner
+					setTrackStrokeWidth(g2,t.isMainlineB());
+					g2.draw(new Line2D.Double(t.getCoordsB(),
+										midpoint(t.getCoordsA(),t.getCoordsB())));
+					if (ttype == LayoutTurnout.LH_XOVER) {
+						setTrackStrokeWidth(g2,false);
+						g2.draw(new Line2D.Double(midpoint(t.getCoordsA(),t.getCoordsB()),
+																t.getCoordsCenter()));
+					}
+					// change block if needed
+					b = t.getLayoutBlockC();
+					if (b!=null) g2.setColor(b.getBlockColor());
+					else g2.setColor(defaultTrackColor);
+					// draw C corner
+					setTrackStrokeWidth(g2,t.isMainlineC());
+					g2.draw(new Line2D.Double(t.getCoordsC(),
+										midpoint(t.getCoordsC(),t.getCoordsD())));
+					if (ttype == LayoutTurnout.RH_XOVER) {										
+						setTrackStrokeWidth(g2,false);
+						g2.draw(new Line2D.Double(midpoint(t.getCoordsC(),t.getCoordsD()),
+																t.getCoordsCenter()));
+					}
+					// change block if needed
+					b = t.getLayoutBlockD();
+					if (b!=null) g2.setColor(b.getBlockColor());
+					else g2.setColor(defaultTrackColor);
+					// draw D corner
+					setTrackStrokeWidth(g2,t.isMainlineD());
+					g2.draw(new Line2D.Double(t.getCoordsD(),
+										midpoint(t.getCoordsC(),t.getCoordsD())));
+					if (ttype == LayoutTurnout.LH_XOVER) {
+						setTrackStrokeWidth(g2,false);
+						g2.draw(new Line2D.Double(midpoint(t.getCoordsC(),t.getCoordsD()),
+																t.getCoordsCenter()));
+					}
+				}
+				else {
+					int state = Turnout.CLOSED;
+					if (animatingLayout)
+						state = t1.getKnownState();
+					if ( state == Turnout.CLOSED ) {
+						// continuing path - not crossed over
+						setTrackStrokeWidth(g2,t.isMainlineA());
+						g2.draw(new Line2D.Double(t.getCoordsA(),
+												midpoint(t.getCoordsA(),t.getCoordsB())));
+						if (ttype == LayoutTurnout.RH_XOVER) {										
+							setTrackStrokeWidth(g2,false);
+							g2.draw(new Line2D.Double(t.getCoordsCenter(),
+									third(t.getCoordsCenter(),midpoint(t.getCoordsA(),t.getCoordsB()))));
+						}
+						b = t.getLayoutBlockB();
+						if (b!=null) g2.setColor(b.getBlockColor());
+						else g2.setColor(defaultTrackColor);
+						setTrackStrokeWidth(g2,t.isMainlineB());
+						g2.draw(new Line2D.Double(t.getCoordsB(),
+												midpoint(t.getCoordsA(),t.getCoordsB())));
+						if (ttype == LayoutTurnout.LH_XOVER) {										
+							setTrackStrokeWidth(g2,false);
+							g2.draw(new Line2D.Double(t.getCoordsCenter(),
+									third(t.getCoordsCenter(),midpoint(t.getCoordsA(),t.getCoordsB()))));
+						}
+						b = t.getLayoutBlockC();
+						if (b!=null) g2.setColor(b.getBlockColor());
+						else g2.setColor(defaultTrackColor);
+						setTrackStrokeWidth(g2,t.isMainlineC());
+						g2.draw(new Line2D.Double(t.getCoordsC(),
+												midpoint(t.getCoordsC(),t.getCoordsD())));
+						if (ttype == LayoutTurnout.RH_XOVER) {										
+							setTrackStrokeWidth(g2,false);
+							g2.draw(new Line2D.Double(t.getCoordsCenter(),
+									third(t.getCoordsCenter(),midpoint(t.getCoordsC(),t.getCoordsD()))));
+						}
+						b = t.getLayoutBlockD();
+						if (b!=null) g2.setColor(b.getBlockColor());
+						else g2.setColor(defaultTrackColor);
+						setTrackStrokeWidth(g2,t.isMainlineD());
+						g2.draw(new Line2D.Double(t.getCoordsD(),
+												midpoint(t.getCoordsC(),t.getCoordsD())));
+						if (ttype == LayoutTurnout.LH_XOVER) {										
+							setTrackStrokeWidth(g2,false);
+							g2.draw(new Line2D.Double(t.getCoordsCenter(),
+									third(t.getCoordsCenter(),midpoint(t.getCoordsC(),t.getCoordsD()))));
+						}
+					}
+					else if (state == Turnout.THROWN) {
+						// diverting (crossed) path 
+						setTrackStrokeWidth(g2,t.isMainlineA());
+						if (ttype == LayoutTurnout.RH_XOVER) {										
+							g2.draw(new Line2D.Double(t.getCoordsA(),
+												midpoint(t.getCoordsA(),t.getCoordsB())));
+							setTrackStrokeWidth(g2,false);
+							g2.draw(new Line2D.Double(midpoint(t.getCoordsA(),t.getCoordsB()),
+																t.getCoordsCenter()));
+						}
+						else if (ttype == LayoutTurnout.LH_XOVER) {										
+							g2.draw(new Line2D.Double(t.getCoordsA(),
+												fourth(t.getCoordsA(),t.getCoordsB())));
+						}
+						b = t.getLayoutBlockB();
+						if (b!=null) g2.setColor(b.getBlockColor());
+						else g2.setColor(defaultTrackColor);
+						setTrackStrokeWidth(g2,t.isMainlineB());
+						if (ttype == LayoutTurnout.LH_XOVER) {										
+							g2.draw(new Line2D.Double(t.getCoordsB(),
+												midpoint(t.getCoordsB(),t.getCoordsA())));
+							setTrackStrokeWidth(g2,false);
+							g2.draw(new Line2D.Double(midpoint(t.getCoordsA(),t.getCoordsB()),
+																t.getCoordsCenter()));
+						}
+						else if (ttype == LayoutTurnout.RH_XOVER) {	
+							g2.draw(new Line2D.Double(t.getCoordsB(),
+												fourth(t.getCoordsB(),t.getCoordsA())));
+						}									
+						b = t.getLayoutBlockC();
+						if (b!=null) g2.setColor(b.getBlockColor());
+						else g2.setColor(defaultTrackColor);
+						setTrackStrokeWidth(g2,t.isMainlineC());
+						if (ttype == LayoutTurnout.RH_XOVER) {										
+							g2.draw(new Line2D.Double(t.getCoordsC(),
+												midpoint(t.getCoordsC(),t.getCoordsD())));
+							setTrackStrokeWidth(g2,false);
+							g2.draw(new Line2D.Double(midpoint(t.getCoordsC(),t.getCoordsD()),
+																t.getCoordsCenter()));
+						}
+						else if (ttype == LayoutTurnout.LH_XOVER) {	
+							g2.draw(new Line2D.Double(t.getCoordsC(),
+												fourth(t.getCoordsC(),t.getCoordsD())));
+						}
+						b = t.getLayoutBlockD();
+						if (b!=null) g2.setColor(b.getBlockColor());
+						else g2.setColor(defaultTrackColor);
+						setTrackStrokeWidth(g2,t.isMainlineD());
+						if (ttype == LayoutTurnout.LH_XOVER) {										
+							g2.draw(new Line2D.Double(t.getCoordsD(),
+												midpoint(t.getCoordsD(),t.getCoordsC())));
+							setTrackStrokeWidth(g2,false);
+							g2.draw(new Line2D.Double(midpoint(t.getCoordsC(),t.getCoordsD()),
+																t.getCoordsCenter()));
+						}
+						else if (ttype == LayoutTurnout.RH_XOVER) {	
+							g2.draw(new Line2D.Double(t.getCoordsD(),
+												fourth(t.getCoordsD(),t.getCoordsC())));
+						}									
+					}
+					else {
+						// unknown or inconsistent
+						setTrackStrokeWidth(g2,t.isMainlineA());
+						if (ttype == LayoutTurnout.RH_XOVER) {										
+							g2.draw(new Line2D.Double(t.getCoordsA(),
+												midpoint(t.getCoordsA(),t.getCoordsB())));
+							setTrackStrokeWidth(g2,false);
+							g2.draw(new Line2D.Double(t.getCoordsCenter(),
+									third(t.getCoordsCenter(),midpoint(t.getCoordsA(),t.getCoordsB()))));
+						}
+						else if (ttype == LayoutTurnout.LH_XOVER) {										
+							g2.draw(new Line2D.Double(t.getCoordsA(),
+												fourth(t.getCoordsA(),t.getCoordsB())));
+						}
+						b = t.getLayoutBlockB();
+						if (b!=null) g2.setColor(b.getBlockColor());
+						else g2.setColor(defaultTrackColor);
+						setTrackStrokeWidth(g2,t.isMainlineB());
+						if (ttype == LayoutTurnout.LH_XOVER) {										
+							g2.draw(new Line2D.Double(t.getCoordsB(),
+												midpoint(t.getCoordsB(),t.getCoordsA())));
+							setTrackStrokeWidth(g2,false);
+							g2.draw(new Line2D.Double(t.getCoordsCenter(),
+									third(t.getCoordsCenter(),midpoint(t.getCoordsA(),t.getCoordsB()))));
+						}
+						else if (ttype == LayoutTurnout.RH_XOVER) {										
+							g2.draw(new Line2D.Double(t.getCoordsB(),
+												fourth(t.getCoordsB(),t.getCoordsA())));
+						}
+						b = t.getLayoutBlockC();
+						if (b!=null) g2.setColor(b.getBlockColor());
+						else g2.setColor(defaultTrackColor);
+						setTrackStrokeWidth(g2,t.isMainlineC());
+						if (ttype == LayoutTurnout.RH_XOVER) {										
+							g2.draw(new Line2D.Double(t.getCoordsC(),
+												midpoint(t.getCoordsC(),t.getCoordsD())));
+							setTrackStrokeWidth(g2,false);
+							g2.draw(new Line2D.Double(t.getCoordsCenter(),
+									third(t.getCoordsCenter(),midpoint(t.getCoordsC(),t.getCoordsD()))));
+						}
+						else if (ttype == LayoutTurnout.LH_XOVER) {										
+							g2.draw(new Line2D.Double(t.getCoordsC(),
+												fourth(t.getCoordsC(),t.getCoordsD())));
+						}
+						b = t.getLayoutBlockD();
+						if (b!=null) g2.setColor(b.getBlockColor());
+						else g2.setColor(defaultTrackColor);
+						setTrackStrokeWidth(g2,t.isMainlineD());
+						if (ttype == LayoutTurnout.LH_XOVER) {										
+							g2.draw(new Line2D.Double(t.getCoordsD(),
+												midpoint(t.getCoordsC(),t.getCoordsD())));
+							setTrackStrokeWidth(g2,false);
+							g2.draw(new Line2D.Double(t.getCoordsCenter(),
+									third(t.getCoordsCenter(),midpoint(t.getCoordsC(),t.getCoordsD()))));
+						}
+						else if (ttype == LayoutTurnout.RH_XOVER) {										
+							g2.draw(new Line2D.Double(t.getCoordsD(),
+												fourth(t.getCoordsD(),t.getCoordsC())));
+						}
+					}
+				}
+			}
 			else {
 				// LH, RH, or WYE Turnouts
 				Turnout t2 = t.getTurnout();
@@ -3577,6 +3833,11 @@ public class LayoutEditor extends JmriJFrame {
 	private Point2D third (Point2D p1,Point2D p2) {
 		return new Point2D.Double( p1.getX()+((p2.getX()-p1.getX())/3.0),
 						p1.getY()+((p2.getY()-p1.getY())/3.0) );
+	}
+	
+	private Point2D fourth (Point2D p1,Point2D p2) {
+		return new Point2D.Double( p1.getX()+((p2.getX()-p1.getX())/4.0),
+						p1.getY()+((p2.getY()-p1.getY())/4.0) );
 	}
 	
 	private void drawXings(Graphics2D g2)
@@ -3659,7 +3920,9 @@ public class LayoutEditor extends JmriJFrame {
 			}
 			g2.draw(new Rectangle2D.Double (
 							pt.getX()-SIZE, pt.getY()-SIZE, SIZE2, SIZE2));
-			if (t.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER) {
+			if ( (t.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER) || 
+					(t.getTurnoutType()==LayoutTurnout.RH_XOVER) || 
+						(t.getTurnoutType()==LayoutTurnout.LH_XOVER) ) {
 				pt = t.getCoordsD();
 				if (t.getConnectD()==null) {
 					g2.setColor(Color.red);
@@ -3908,6 +4171,47 @@ public class LayoutEditor extends JmriJFrame {
 			g2.setColor(defaultTrackColor);
 			g2.setStroke(new BasicStroke(1.0F,BasicStroke.CAP_BUTT,BasicStroke.JOIN_ROUND));
 			g2.draw(new Rectangle2D.Double (selectionX, selectionY, selectionWidth, selectionHeight));
+		}
+	}
+	
+	private void drawPanelGrid(Graphics2D g2) {
+		double pix = 10.0;
+		double maxX = width;
+		double maxY = height;
+		Point2D startPt = new Point2D.Double(0.0, 10.0);
+		Point2D stopPt = new Point2D.Double(maxX, 10.0);
+		BasicStroke narrow = new BasicStroke(1.0F,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND);
+		BasicStroke wide = new BasicStroke(2.0F,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND);
+		g2.setColor(Color.gray);
+		g2.setStroke(narrow);
+		// draw horizontal lines
+		while (pix<maxY) {
+			startPt.setLocation(0.0,pix);
+			stopPt.setLocation(maxX,pix);
+			if ( (pix-((int)pix/100)*100.0) < 5.0) {
+				g2.setStroke(wide);
+				g2.draw(new Line2D.Double(startPt,stopPt));
+				g2.setStroke(narrow);
+			}
+			else {
+				g2.draw(new Line2D.Double(startPt,stopPt));
+			}
+			pix += 10.0;
+		}
+		// draw vertical lines
+		pix = 10.0;
+		while (pix<maxX) {
+			startPt.setLocation(pix,0.0);
+			stopPt.setLocation(pix,maxY);
+			if ( (pix-((int)pix/100)*100.0) < 5.0) {
+				g2.setStroke(wide);
+				g2.draw(new Line2D.Double(startPt,stopPt));
+				g2.setStroke(narrow);
+			}
+			else {
+				g2.draw(new Line2D.Double(startPt,stopPt));
+			}
+			pix += 10.0;
 		}
 	}
 
