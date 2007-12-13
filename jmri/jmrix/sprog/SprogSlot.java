@@ -12,7 +12,7 @@ import java.util.Vector;
  * changes in values will result in notification.
  * <P>
  * @author			Andrew Crosland Copyright (C) 2006
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
  public class SprogSlot {
 
@@ -60,8 +60,8 @@ import java.util.Vector;
       * Set the contents of the slot.
       *
       * @param address int
-      * @param spd int
-      * @param Forward boolean
+      * @param speed int
+      * @param forward boolean
       * @param payload byte[]
       * @param repeat int number of times packet should be sent to rails -1 is
       * a persistent speed/direction packet. > 1000 is an ops mode programming
