@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.9.2.shtml,v 1.9 2007-12-13 06:08:29 jacobsen Exp $ -->
+<!-- $Id: jmri1.9.2.shtml,v 1.10 2007-12-13 06:13:17 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -33,11 +33,11 @@
       Release Notes for JMRI 1.9.2 release
       </H2>
 
-	<p>Date: MMM,DD YYYY</p>
+	<p>Date: December 12, 2007</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 1.9.2 of JMRI/DecoderPro is available for download.
 
-    <br><b>This is a draft release note only; the download links do not yet work</b> 
+<!-- <br><b>This is a draft release note only; the download links do not yet work</b> -->
 
 <h3>Notes:</h3>
 
@@ -47,7 +47,9 @@
 It contains 
 many new features, including:
 <UL>
-<LI>...
+<LI>several new decoder definitions
+<LI>support for the fast clock on NCE systems
+<LI>DecoderPro is much smarter about handling errors while reading and writing CVs
 </UL>
 along with lots of other changes.  See the complete list below.
 
@@ -56,9 +58,9 @@ along with lots of other changes.  See the complete list below.
 They may require a certain amount of experience before they are working well.  
 Therefore, this test version should be considered experimental.
 
-<!-- <P>We are very pleased to announce that the 1.7 series of JMRI test releases has resulted in a  -->
+<!-- <P>We are very pleased to announce that the 1.9 series of JMRI test releases has resulted in a  -->
 <!-- version that's good enough to be recommended for general use, including by new users.  -->
-<!-- We're therefore making that version, "Production version 1.8" available for download today. -->
+<!-- We're therefore making that version, "Production version 2.0" available for download today. -->
 
 <b><p>
 JMRI is now only available under the 
@@ -68,11 +70,12 @@ see our
 
 <h3>New warnings for this version:</h3>
 
+
+<h3>Warnings from older versions:</h3>
+
 <P>
 The NCE support has been revamped so that "NCE USB" is a new choice in the preferences window.
 Note that this support is still experimental, and will likely evolve as NCE adds features to the adapter.
-
-<h3>Warnings from older versions:</h3>
 
 <P>This version of JMRI no longer supports NCE AIU broadcasts.  This change was needed so that JMRI could reliably read certain CV values. We recommend that if you use NCE AIUs, that you upgrade the command station EPROM to version 2007 or newer and turn off AIU broadcasts.  Code has been added to detect if AIU broadcasts are enabled, and a warning message will appear at startup requesting that AIU broadcasts be turned off for proper operation of the JMRI programs.
 
@@ -88,7 +91,7 @@ Eventually, the port speeds which are not supported by each interface WILL be re
 If you're using one of the interfaces listed above with this release, please check your configuration 
 and select the correct device-specific option. There is no impact for LIUSB users with this change.
 
-<P>We have added additional information to the roster files in this version to help properly handle short/long addressing 
+<P>We have added additional information to the roster files to help properly handle short/long addressing 
 in systems that allow low addresses (e.g. 65) to be either short or long addresses. 
 The only current system we support that has this capability is NCE.
 If you have an NCE system, and you have locomotives with addresses of 127 or less,
