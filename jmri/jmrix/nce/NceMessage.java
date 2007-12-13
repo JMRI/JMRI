@@ -26,7 +26,7 @@ package jmri.jmrix.nce;
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2007
- * @version     $Revision: 1.34 $
+ * @version     $Revision: 1.35 $
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 	
@@ -50,11 +50,13 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 	// some constants
 	
     static protected int NCE_PAGED_CV_TIMEOUT=20000;
-    static protected int NCE_DIRECT_CV_TIMEOUT=5000;			// worst case is when loading the first panel
+    static protected int NCE_DIRECT_CV_TIMEOUT=5000;			
+    static protected int SHORT_TIMEOUT=5000;					// worst case is when loading the first panel
     static protected boolean ncsProgMode = false;				// Do not use exit program mode unless active
     
     public NceMessage() {
         super();
+        // this doesn't seem to work!
         super.SHORT_TIMEOUT = 4000;
     }
     
@@ -152,6 +154,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 			m.setBinary(true);
 			m.setReplyLen(1);
 			m.setOpCode(ENTER_PROG_CMD);
+			m.setTimeout(SHORT_TIMEOUT);
 		} else {
 			m.setBinary(false);
 			m.setOpCode('M');
@@ -177,6 +180,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             m.setBinary(true);
             m.setReplyLen(1);
             m.setOpCode(EXIT_PROG_CMD);
+            m.setTimeout(SHORT_TIMEOUT);
         }
         else {
             m.setBinary(false);
@@ -309,7 +313,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 		// not supported by USB connected to SB3 or PH
 		if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3
 				|| NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERHOUSE){
-			log.error("attempt to send unsupported binary command EAD_DIR_CV_CMD to NCE USB");
+			log.error("attempt to send unsupported binary command READ_DIR_CV_CMD to NCE USB");
 			return null;
 		}
         if (getCommandOptions() < OPTION_2006)
@@ -358,7 +362,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
                     " packet:"+bytes);
             NceMessage m = new NceMessage(2+bytes.length);
             m.setBinary(true);
-            m.setTimeout(NCE_DIRECT_CV_TIMEOUT);
+            m.setTimeout(SHORT_TIMEOUT);
             m.setReplyLen(1);
             int i = 0; // counter to make it easier to format the message
         
