@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.9.2.shtml,v 1.8 2007-12-07 02:16:49 jacobsen Exp $ -->
+<!-- $Id: jmri1.9.2.shtml,v 1.9 2007-12-13 06:08:29 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -205,6 +205,9 @@ The DTDs for several file types have been brought up to date.  If you're using a
 
 <P>
 Dan Boudreau updated the NCE packet sniffer inteface to add some more capabilities
+
+<P>
+Dan Boudreau added a "Confirm" button to the CV panel, for checking whether a value is correct in the decoder
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
