@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LayoutEditor.shtml,v 1.2 2007-11-23 06:45:58 jacobsen Exp $ -->
+<!-- $Id: LayoutEditor.shtml,v 1.3 2007-12-13 02:21:28 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -189,6 +189,8 @@ bar:</p>
 	<li><b>LH</b> - selects a left-handed turnout</li>
 	<li><b>WYE</b> - selects a wye turnout</li>
 	<li><b>Double Xover</b> - selects a double crossover turnout</li>
+	<li><b>RH Xover</b> - selects a right-handed single crossover turnout</li>
+	<li><b>LH Xover</b> - selects a left-handed single crossover turnout</li>	
 	<li><b>Level Crossing</b> - selects a level crossing track (a  diamond)</li>
 	<li><b>Track Segment</b> - selects a piece of straight track</li>
 	<li><b>End Bumper</b> - selects a connection point at the end of a track</li>
@@ -206,7 +208,7 @@ bar:</p>
 	<li><b>Icon Label</b> - selects a general purpose icon</li>
 </ul></p>
 <p>
-The top eight items are used to create a track diagram, and are new with Layout Editor.
+The top ten items are used to create a track diagram, and are new with Layout Editor.
 The remaining six items are icon-based and are similar to corresponding icon items in 
 Panel Editor.</p>
 <p>
@@ -250,15 +252,16 @@ described below, along with which created items they apply to and whether they
 are optional or required.
 </p>
 <p><ul>
-	<li><b>Turnout: Name</b> (field) - applies to RH, LH, WYE, Double Xover - 
-	Entry is optional. If a name is entered, it must correspond to a turnout in 
-	the Turnout Table.</li>
-	<li><b>Rotation</b> (field) - applies to RH, LH, WYE, Double Xover - Entry is 
-	optional. If there is no entry, the turnout is not rotated when it is created. 
-	Remember to try to keep your turnouts oriented vertically or horizontally.</li>
-	<li><b>Block: Name</b> (field) - applies to RH, LH, WYE, Double Xover, 
-	Track Segment, Level Crossing - Entry is optional. If a name is entered, the 
-	created item is assigned to the named block. If a name is entered and that block 
+	<li><b>Turnout: Name</b> (field) - applies to RH, LH, WYE, Double Xover, 
+	RH Xover, LH Xover - Entry is optional. If a name is entered, it must 
+	correspond to a turnout in the Turnout Table.</li>
+	<li><b>Rotation</b> (field) - applies to RH, LH, WYE, Double Xover, RH Xover, 
+	LH Xover - Entry is optional. If there is no entry, the turnout is not rotated 
+	when it is created. Remember to try to keep your turnouts oriented vertically 
+	or horizontally.</li>
+	<li><b>Block: Name</b> (field) - applies to RH, LH, WYE, Double Xover, RH Xover, 
+	LH Xover, Track Segment, Level Crossing - Entry is optional. If a name is entered, 
+	the created item is assigned to the named block. If a name is entered and that block 
 	does not exist, a new block with that name is created. A block name may be any 
 	alphabetic or numeric characters that identify the block.</li>
 	<li><b>Occupancy Sensor</b> (field) - applies to the block named in the above 
@@ -316,7 +319,7 @@ The File menu provides for storing and deleting panels.
 	selecting <b>Store Configuration And Panels To File...</b> in the Store 
 	submenu of the File menu of any table.</li>
 	<li><b>Delete this panel...</b> - This item deletes the front most panel. A 
-	confirmation dialog is displayed, allowing the choice of cancelling before
+	confirmation dialog is displayed, allowing the choice of canceling before
 	deleting. Deletion removes the panel from the program. To permanently delete 
 	a panel from your panel file, <b>Store panels...</b> must be selected after 
 	deleting that panel. <b>There is no undo for deletion.</b> Unless the panel has 
@@ -349,6 +352,9 @@ selection is described below.
 	</li>
 	<li><b>Show Help Bar in Edit Mode</b> - If this item is checked, the help 
 	bar is displayed when the tool bar is displayed.</li>
+	<li><b>Show Grid in Edit Mode</b> - If this item is checked, a background 
+	grid is displayed in edit  mode. This is a temporary item. When a panel is 
+	loaded, it is automatically unchecked.</li>
 	<li><b>New Title...</b> - Selecting this item brings up a small window that 
 	allows a new panel window title to be entered.</li>
 	<li><b>Add Background Image...</b> - Selecting this item shows a dialog
@@ -420,7 +426,7 @@ turnouts and block boundaries are oriented mostly vertically or mostly horizonta
 	be defined for signaled
 	regions of track on the panel, and the required signal heads must be in the
 	Signal Table. When this item is selected, a dialog is shown for entry of  
-	names of the two blocks whose boundary is to be signalled, and for entry of
+	names of the two blocks whose boundary is to be signaled, and for entry of
 	names (system or user) of one or two signal heads to be assigned to the 
 	block boundary. For each signal head, check boxes are available for 
 	selecting whether an icon is to be placed on the panel, and whether Simple 
@@ -433,34 +439,38 @@ turnouts and block boundaries are oriented mostly vertically or mostly horizonta
 	this tool can be reached by selecting <b>Set Signals...</b> in that anchor 
 	point's popup menu. (For more information, see the help page for the Set Signals
 	at Block Boundary dialog.)</li>
-	<li><b>Set Signals at Double Crossover...</b> - This item provides an automated
-	procedure for assigning signals at a double crossover turnout. It also provides
-	for placing signal heads around the double crossover and for setting up logic
+	<li><b>Set Signals at Crossover...</b> - This item provides an automated
+	procedure for assigning signals at a crossover turnout. It also provides
+	for placing signal heads around the crossover and for setting up logic
 	for those signals. Prior to accessing this item, blocks must be defined for 
 	signaled regions of track on the panel, and the required signal heads must be 
-	in the Signal Table. When this item is selected, a dialog is shown for entry of  
-	the name (system or user) of the turnout to be signalled, and for entry of
-	names (system or user) of four to eight signal heads to be assigned to the 
-	double crossover. For each signal head, check boxes are available for 
-	selecting whether an icon is to be placed on the panel, and whether Simple 
-	Signal Logic is to be created for the signal head. Regardless of whether icons 
-	are placed or logic is created, Layout Editor will record that the entered 
-	signal heads are assigned to the specified turnout. If create logic 
+	in the Signal Table. When this item is selected, a small dialog is shown for 
+	entry of the name (system or user) of the crossover turnout to be signaled. 
+	The entered name must correspond to a double crossover, a right-handed crossover,
+	or a left-handed crossover. (If this tool is accessed by selecting 
+	<b>Set Signals...</b> in a turnout's popup menu, the turnout name is 
+	entered automatically.) After the crossover turnout is identified, a dialog 
+	is displayed for entry of names (system or user) of four to eight signal 
+	heads to be assigned to the crossover. For each signal head, check boxes are 
+	available for selecting whether an icon is to be placed on the panel, and 
+	whether signal logic is to be created for the signal head. Regardless of 
+	whether icons are placed or logic is created, Layout Editor will record that 
+	the entered signal heads are assigned to the specified turnout. If create logic 
 	is requested and the tool does not have enough information available to 
 	set up the logic, you may have to return later after more signals have 
-	been assigned. After a turnout from the Turnout Table is assigned to the
-	double crossover, this tool can be reached by selecting <b>Set Signals...</b> 
+	been assigned. After a turnout from the Turnout Table is assigned to a 
+	crossover, this tool can be reached by selecting <b>Set Signals...</b> 
 	in that turnout's popup menu. (For more information, see the help page for the 
-	Set Signals at Double Crossover dialog.)</li>
+	Set Signals at Crossover dialog.)</li>
 	<li><b>Set Signals at Level Crossing...</b> - This item provides an automated
 	procedure for assigning signals at a level crossing (a diamond). It also provides
 	for placing signal heads around the level crossing and for setting up logic
 	for those signals. Prior to accessing this tool, blocks must be defined for 
 	signaled regions of track on the panel, and the required signal heads must be 
 	in the Signal Table. This tool works best if the level crossing also serves as 
-	the boundary between two blocks in each signalled direction. When this item is 
+	the boundary between two blocks in each signaled direction. When this item is 
 	selected, a dialog is shown for entry of one or two block names that uniquely 
-	identify the level crossing to be signalled, and for entry of
+	identify the level crossing to be signaled, and for entry of
 	names (system or user) of two or four signal heads to be arrayed around the 
 	level crossing. For each signal head, check boxes are available for 
 	selecting whether an icon is to be placed on the panel, and whether Simple 
@@ -473,6 +483,30 @@ turnouts and block boundaries are oriented mostly vertically or mostly horizonta
 	this tool can be reached by selecting <b>Set Signals...</b> in that level 
 	crossing's popup menu. (For more information, see the help page for the 
 	Set Signals at Level Crossing dialog.)</li>
+	<li><b>Set Signals at Throat-to-Throat Turnouts...</b> - This item provides an 
+	automated procedure for assigning signals to two turnouts in close proximity 
+	oriented throat-to-throat, with the throats connected by a single track segment.
+	This arrangement is used where four tracks come together in a small area, so 
+	closely that no signals are placed at the turnout throats. Such a setup is used 
+	to model a double-slip turnout, for example, but can also occur in other contexts.
+	Each of the two turnouts may be either right-hand (RH), left-hand (LH), or wye 
+	(WYE) turnouts. This tool provides for placing signal heads at the continuing 
+	and diverging tracks of the two turnouts.  It also provides for setting up logic
+	for those signals. Prior to accessing this item, blocks must be defined for 
+	signaled regions of track on the panel, and the required signal heads must be 
+	in the Signal Table. When this item is selected, a dialog is shown for entry of  
+	the names (system or user) of the two turnouts to be signaled, and for entry of
+	names (system or user) of four to eight signal heads to be assigned. For 
+	each signal head, check boxes are available for selecting whether a signal  
+	head icon is to be placed on the panel, and whether signal logic 
+	is to be created for the signal head. Regardless of whether icons 
+	are placed or logic is created, Layout Editor will record that the entered 
+	signal heads are assigned to the specified turnouts. If create logic 
+	is requested and the tool does not have enough information available to 
+	set up the logic, you may have to return later after more signals have 
+	been assigned. This tool is invoked from the Tools menu only. It cannot be 
+	reached a turnout's popup menu. (For more information, see the help page for 
+	the Set Signals at Throat-to-Throat Turnouts dialog.)</li>
 </ul></p>
 
 <a name="editing"><h3>Editing and Removing Items
@@ -509,24 +543,26 @@ A signal icon's popup menu allows editing of signal information related to the
 panel, but also contains an <b>Edit Logic...</b> item that brings up a window for 
 editing Simple Signal Logic for the signal head (for more information on 
 Simple Signal Logic, see that window's help). Simple Signal Logic supports ABS 
-signalling, and will handle most of your signal logic needs. Refer to Logix for 
+signaling, and will handle most of your signal logic needs. Refer to Logix for 
 more complicated logic needs not handled by Simple Signal Logic.</p>
 <p>
-With turnouts, level crossings, and anchor points, Layout Editor's four tools 
+With turnouts, level crossings, and anchor points, most of Layout Editor's tools 
 for assigning signal heads to these items, for automated placement of signal 
-head icons on the panel, and for automated creation of Simple Signal Logic for 
+head icons on the panel, and for automated creation of signal logic for 
 the assigned signal heads may be reached by selecting <b>Set Signals...</b> in
 the popup menu. <b>Set Signals...</b> is not shown in the popup menu until a 
-minimum amount of information is available to the tools. These tools are briefly
+minimum amount of information is available to the tools. The remaining <b>Set 
+Signals...</b> tools may be accessed via the Tools menu. These tools are briefly
 described above under <a href="#toolsmenu">Using Layout Editor's Tools Menu</a>, 
 and are discussed in detail on the help page of the tool's dialog window.</p>
 
 <a name="turnouts"><H3>Turnouts
 </H3></a>
 <P>
-Layout Editor supports four different types of turnouts (track switches): right-
-handed (<b>RH</b>), left-handed (<b>LH</b>), wye (<b>WYE</b>), and double 
-crossover (<b>Double Xover</b>). The
+Layout Editor supports six different types of turnouts (track switches): right-
+handed (<b>RH</b>), left-handed (<b>LH</b>), wye (<b>WYE</b>), double 
+crossover (<b>Double Xover</b>), right-handed single crossover (<b>RH Xover</b>). 
+and left-handed single crossover (<b>LH Xover</b>). The
 other two types of turnouts sometimes used on model railroad layouts, double slip
 and three-way, can be drawn using two LH or RH turnouts. Double slip turnouts, 
 for example, are easily represented by two LH and/or RH turnouts drawn with their 
@@ -580,28 +616,28 @@ mainline. The Turnout Table state should match the Continuing Route Turnout
 State chosen in the Edit Turnout dialog. Defining mainline track is 
 optional; if you are not defining mainline track this item can be ignored.</p>
 <p>
-Double crossover turnouts differ from other turnouts in several important ways. 
-Like other turnouts, double crossovers have two states--crossed and straight. To
-change a double crossover's state, however, requires four track switches to 
+Crossover turnouts differ from other turnouts in several important ways. 
+Like other turnouts, crossovers have two states--crossed and straight. To
+change a crossover's state, however, requires two or four track switches to 
 change in unison. This may be accomplished using one to four switch 
-machines. Normally a double crossover is assigned a single turnout entry in the 
+machines. Normally a crossover is assigned a single turnout entry in the 
 turnout table, but it may have several if its switch machines are controlled by
 different stationary decoders. (You can use two JMRI Routes controlled by the 
 same internal turnout to make multiple switch machines work together. In this 
-case, enter the internal turnout as the turnout linked to the double crossover
-turnout drawing.) With double crossovers, the crossover tracks are always 
+case, enter the internal turnout as the turnout linked to the crossover
+turnout drawing.) With crossovers, the crossover tracks are always 
 considered side track, and any mainline track entering the turnout, leaves on 
 the same straight as it entered. So there is no Continuing Route Turnout State 
-entry in a double crossover's Edit dialog.</p> 
+entry in a crossover's Edit dialog.</p> 
 <p>
-If you are defining blocks through double crossovers, note that double crossovers 
+If you are defining blocks through crossovers, note that crossovers 
 have four connecting points, each of which may be connected to a different track 
-block. So parts of a double crossover may be in one, two, three, or four separate 
-blocks. The Edit Turnout dialog for a double crossover allows the entry of up to 
+block. So parts of a crossover may be in one, two, three, or four separate 
+blocks. The Edit Turnout dialog for a crossover allows the entry of up to 
 four blocks, each linked to one of the four connection points. The first block 
 entered must be the <b>Block: Name</b> field; this block is linked to upper left 
 connection point (if the turnout has not been rotated), and serves as the 
-default block for the double crossover. If any of <b>Block 2</b>, <b>Block 3</b>, 
+default block for the crossover. If any of <b>Block 2</b>, <b>Block 3</b>, 
 or <b>Block 4</b> entries are blank, the default block is used. Block connection 
 points are numbered 1, 2, 3 and 4, proceeding from the upper left connection 
 point in a clockwise direction.</p>
@@ -719,7 +755,7 @@ normally correspond to physical blocks on a layout. Block occupancy is indicated
 by the state of an <i>occupancy sensor</i>. When a layout's track is divided 
 into blocks, all of the track need not belong to a block. For example, yard track
 is normally not in a block, whereas mainline track almost always would be divided 
-into blocks. The main use of blocks is to facilitate signalling, but blocks may 
+into blocks. The main use of blocks is to facilitate signaling, but blocks may 
 be used for other layout control and animation functions.</p>
 <p>
 If a block name is entered in the <b>Block: Name</b> field of the tool bar prior 
