@@ -27,7 +27,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.24 $
+ * @version	$Revision: 1.25 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -53,33 +53,6 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     public synchronized void removeSerialListener(SerialListener l) {
         this.removeListener(l);
     }
-
-// remove this code when SerialLight is operational - obsoleted and doesn't belong here anyway
-    /**
-     * Public method to set a C/MRI Serial Output bit
-     *     Note: systemName is of format CNnnnBxxxx where
-     *              "nnn" is the serial node number (0 - 127)
-     *              "xxxx' is the bit number within that node (1 thru number of defined bits)
-     *           state is 'true' for 0, 'false' for 1
-     *     The bit is transmitted to the C/MRI hardware immediately before the
-     *           next poll packet is sent.
-     */
-    public void setSerialOutput(String systemName, boolean state) {
-        // get the node and bit numbers
-        SerialNode node = SerialAddress.getNodeFromSystemName(systemName);
-        if ( node == null ) {
-            log.error("bad SerialNode specification in SerialOutput system name:"+systemName);
-            return;
-        }
-        int bit = SerialAddress.getBitFromSystemName(systemName);
-        if ( bit == 0 ) {
-            log.error("bad output bit specification in SerialOutput system name:"+systemName);
-            return;
-        }
-        // set the bit
-        node.setOutputBit(bit,state);
-    }
-// end of code to be removed
 
     private int numNodes = 0;       // Incremented as Serial Nodes are created and registered
                                     // Corresponds to next available address in nodeArray
