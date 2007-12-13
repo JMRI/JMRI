@@ -13,7 +13,7 @@ import jmri.jmrix.lenz.XNetConstants;
  * @author			Bob Jacobsen   Copyright (C) 2002
  # @author          Paul Bender Copyright (C) 2004-2007
  * @author          Giorgio Terdina Copyright (C) 2007
- * @version         $Revision: 2.21 $
+ * @version         $Revision: 2.22 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
@@ -245,7 +245,7 @@ import jmri.jmrix.lenz.XNetConstants;
 			}
 		// Loco Information Response Messages
 		} else if (l.getElement(0) == XNetConstants.LOCO_INFO_NORMAL_UNIT) {
-		     text = new String("Locomoitve Information Response: Normal Unit ");
+		     text = new String("Locomotive Information Response: Normal Unit ");
 		     text += parseSpeedandDirection(l.getElement(1),l.getElement(2)) + " ";
                      // message byte 4, contains F0,F1,F2,F3,F4
 	             int element3 = l.getElement(3);
@@ -253,7 +253,7 @@ import jmri.jmrix.lenz.XNetConstants;
 	             int element4 = l.getElement(4);
 	             text += parseFunctionStatus(element3,element4);
 		} else if (l.getElement(0) == XNetConstants.LOCO_INFO_MUED_UNIT) {
-		     text = new String("Locomoitve Information Response: Locomoitve in Multiple Unit ");
+		     text = new String("Locomotive Information Response: Locomotive in Multiple Unit ");
 		     text += parseSpeedandDirection(l.getElement(1),l.getElement(2)) + " ";
                      // message byte 4, contains F0,F1,F2,F3,F4
 	             int element3 = l.getElement(3);
@@ -261,10 +261,10 @@ import jmri.jmrix.lenz.XNetConstants;
 	             int element4 = l.getElement(4);
 	             text += parseFunctionStatus(element3,element4);
 		} else if (l.getElement(0) == XNetConstants.LOCO_INFO_MU_ADDRESS) {
-		     text = new String("Locomoitve Information Response: Multi Unit Base Address");
+		     text = new String("Locomotive Information Response: Multi Unit Base Address");
 		     text += parseSpeedandDirection(l.getElement(1),l.getElement(2)) + " ";
 		} else if (l.getElement(0) == XNetConstants.LOCO_INFO_DH_UNIT) {
-		     text = new String("Locomoitve Information Response: Locomoitve in Double Header ");
+		     text = new String("Locomotive Information Response: Locomotive in Double Header ");
 		     text += parseSpeedandDirection(l.getElement(1),l.getElement(2)) + " ";
                      // message byte 4, contains F0,F1,F2,F3,F4
 	             int element3 = l.getElement(3);
@@ -274,7 +274,7 @@ import jmri.jmrix.lenz.XNetConstants;
 		     text += " Second Locomotive in Double Header is: ";
 		     text += calcLocoAddress(l.getElement(5),l.getElement(6));
 		} else if (l.getElement(0) == XNetConstants.LOCO_INFO_RESPONSE) {
-		    text = new String("Locomoitve Information Response: ");
+		    text = new String("Locomotive Information Response: ");
                     switch(l.getElement(1)) {
                        case XNetConstants.LOCO_SEARCH_RESPONSE_N:
 			  text += "Search Response, Normal Locomotive: ";
