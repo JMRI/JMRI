@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.html,v 1.48 2007-11-05 03:53:46 jacobsen Exp $ -->
+<!-- $Id: index.html,v 1.49 2007-12-13 13:44:27 jacobsen Exp $ -->
 <html lang="en">
 
 <head>
@@ -94,6 +94,7 @@
 	    </UL>
 	<li>Development Versions</li>
 	    <UL>
+	    <LI><A href="../releasenotes/jmri1.9.2.shtml">JMRI 1.9.2</a>
 	    <LI><A href="../releasenotes/jmri1.9.1.shtml">JMRI 1.9.1</a>
 	    <LI><A href="../releasenotes/jmri1.7.8.shtml">JMRI 1.7.8</a>
 	    <LI><A href="../releasenotes/jmri1.7.7.html">JMRI 1.7.7</a>
@@ -120,7 +121,7 @@
 	    </UL>
 	<li>(Tentative) Next Version</li>
 	    <UL>
-	    <LI><A href="../releasenotes/jmri1.9.2.shtml">JMRI 1.9.2</a>
+	    <LI><A href="../releasenotes/jmri1.9.3.shtml">JMRI 1.9.3</a>
         </ul>
 	</ul>
 
@@ -166,18 +167,17 @@
 	    <A HREF="#prod-rel">next section</A> for download and install
 	    information. 
 	    
-	    <dt>Test version 1.9.1 released</dt>
+	    <dt>Test version 1.9.2 released</dt>
 	    <dd>
-	    <p>Test version 1.9.1 was made available on November 4, 2007.</p>
+	    <p>Test version 1.9.2 was made available on December 12, 2007.</p>
 
-        JMRI 1.9.1 is the most recent test release, containing the latest
+        JMRI 1.9.2 is the most recent test release, containing the latest
         and greatest JMRI updates.
         Some key changes include
         <UL> 
-        <LI>a new layout editor for creating panels,
-        <LI>NCE PowerCab support,
-        <LI>lots of new and updated decoder definitions, and
-        <LI>the way that layout information and panels is stored has been improved
+        <LI>several new decoder definitions
+        <LI>support for the fast clock on NCE systems
+        <LI>DecoderPro is much smarter about handling errors while reading and writing CVs
         </UL>
         along with lots of other changes. 	    
         For more
@@ -264,6 +264,22 @@
 
 	<dt class="im"><img src="../images/ico-jmri.gif" width="34" height="34" alt="JMRI logo"></dt>
     <A ID="latest"/>
+	<dt>JMRI Developer Release 1.9.2</dt>
+	<dd>
+	    <p>Test version 1.9.2 was made available on December 12, 2007.</p>
+
+        <p class="dl">Some key changes include 
+several new decoder definitions,
+support for the fast clock on NCE systems,
+and DecoderPro is now much smarter about handling errors while reading and writing CVs.       
+        </p>
+        	    
+	    <p class="dl">For the complete list of changes and download links, see:
+	    <A href="../releasenotes/jmri1.9.1.shtml">JMRI 1.9.1 Release Notes</a></p>
+	    
+	</dd>
+
+	<dt class="im"><img src="../images/ico-jmri.gif" width="34" height="34" alt="JMRI logo"></dt>
 	<dt>JMRI Developer Release 1.9.1</dt>
 	<dd>
 	    <p>Test version 1.9.1 was made available on November 4, 2007.</p>
@@ -281,73 +297,21 @@
 	    <A href="../releasenotes/jmri1.9.1.shtml">JMRI 1.9.1 Release Notes</a></p>
 	    
 	</dd>
-	<dt class="im"><img src="../images/ico-jmri.gif" width="34" height="34" alt="JMRI logo"></dt>
-	<dt>JMRI Developer Release 1.7.7</dt>
-	<dd>
-	    <p>Test version 1.7.7 was made available on June 9, 2007.</p>
-
-        <p class="dl">Some key changes include 
-            numerous decoder updates, 
-            improvements to support for the new NCE EPROM, including a send macro tool and turnout readback,
-            improvements to signaling logic,  Routes and the new 
-            <A HREF="../tools/Logix.html">Logix capability</a> for layout control,
-            a complete revamp of help system (including help information for most windows)
-            greatly improved support for the Digitrax PR2 programmer and it's sound files,
-        
-        </p>
-        	    
-	    <p class="dl">For the complete list of changes and download links, see:
-	    <A href="../releasenotes/jmri1.7.7.html">JMRI 1.7.7 Release Notes</a></p>
-	    
-	</dd>
-	<dt class="im"><img src="../images/ico-jmri.gif" width="34" height="34" alt="JMRI logo"></dt>
-	<dt>JMRI Developer Release 1.7.6</dt>
-	<dd>
-	    <p>Test version 1.7.6 was made available on January 24, 2007.</p>
-
-        <p class="dl">Some key changes include 
-        numerous decoder updates, 
-        improvements to signaling logic, 
-        and greatly improved support for the Digitrax PR2 programmer and it's sound files.
-        
-        </p>
-        	    
-	    <p class="dl">For the complete list of changes and download links, see:
-	    <A href="../releasenotes/jmri1.7.6.html">JMRI 1.7.6 Release Notes</a></p>
-	    
-	</dd>
-	<dt class="im"><img src="../images/ico-jmri.gif" width="34" height="34" alt="JMRI logo"></dt>
-    <A ID="latest"/>
-	<dt>JMRI Developer Release 1.7.5</dt>
-	<dd>
-	    <p>After an unfortunate delay of several months due to events
-	    beyond our control, 
-	    test version 1.7.4 was made available on July 1, 2006.
-	    This was quickly followed on July 4 with version 1.7.5
-	    to fix some bugs uncovered in the first testing.</p>
-
-        <p class="dl">Some key changes include 
-        additional support for sound decoders, 
-        support for Oak Tree Systems boards and the Digitrax PR2 programmer, 
-	    and other great stuff.
-        </p>
-        	    
-	    <p class="dl">For the complete list of changes and download links, see:
-	    <A href="../releasenotes/jmri1.7.5.html">JMRI 1.7.5 Release Notes</a></p>
-	    
-	</dd>
 
     </dl>
 
 
     <h2>Other Related Items</h2>
     <dl>
-	<dt class="im"><a href="CD.html"><img src="CDROM.gif" width="32" height="30" alt="Java"></a></dt>
-	<dt><a href="CD.html">JMRI CD</a></dt>
-	<dd>
-	    <p>The JMRI software suite is also available on CD
-	    <A HREF="CD.html">[More]</a></p>
-	</dd>
+
+<!-- 	<dt class="im"><a href="CD.html"><img src="CDROM.gif" width="32" height="30" alt="Java"></a></dt> -->
+<!-- 	<dt><a href="CD.html">JMRI CD</a></dt> -->
+<!-- 	<dd> -->
+<!-- 	    <p>The JMRI software suite is also available on CD -->
+<!-- 	    <A HREF="CD.html">[More]</a></p> -->
+<!-- 	</dd> -->
+	
+	
 	<dt class="im">
 <a href="http://java.com/java/download/index.jsp?cid=jdp74834" target="_blank">
 <img width="88" height="31" border="0" style="margin: 8px;" alt="GetJava Download Button" title="GetJava" src="http://java.com/en/img/everywhere/getjava_sm.gif?cid=jdp74834">
@@ -367,6 +331,10 @@
 	    controlling and operating a model railroad. There's
 	    more information on the
 	    <A HREF="http://home.comcast.net/~kb0oys/">CATS web site</a>.
+	    </p>
+	    <p>Version 40 of CATS (current December 1, 2007)
+	    requires JMRI 1.8; the test releases in the JMRI 1.9 series
+	    are not recommended at this time for use with CATS.
 	    </p>
 	</dd>
     
