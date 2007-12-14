@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.9.2.shtml,v 1.11 2007-12-13 06:14:06 jacobsen Exp $ -->
+<!-- $Id: jmri1.9.2.shtml,v 1.12 2007-12-14 01:07:32 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -201,6 +201,8 @@ Dan Boudreau improved handling of programming errors. Dan and Andrew Crosland ch
 <P>
 Andrew Crosland added new support for the SPROG acting as a command station.  Please see the SPROG web pages for more information on this, as it's still under development
 
+<p>
+Previously, if an error was encountered in the early parts of reading or writing an indexed CV, the operation would end improperly. Now, the failed write is retried a couple times, and if it still fails, the CV is marked in error (red)
 <p>
 Help pages have been added to many more windows, though they generally need volunteers to add content to them.
 
