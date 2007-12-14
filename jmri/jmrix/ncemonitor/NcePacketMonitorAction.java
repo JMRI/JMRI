@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  *       			NcePacketMonitorFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2002
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class NcePacketMonitorAction extends AbstractAction  {
 
@@ -22,6 +22,7 @@ public class NcePacketMonitorAction extends AbstractAction  {
     public void actionPerformed(ActionEvent e) {
 		// create a SerialDriverFrame
 		NcePacketMonitorFrame f = new NcePacketMonitorFrame();
+		f.addHelpMenu("package.jmri.jmrix.nce.analyzer.NcePacketMonitorFrame", true);
 		try {
 			f.initComponents();
 			}
