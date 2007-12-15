@@ -34,7 +34,7 @@ import javax.swing.JPanel;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class PaneOpsProgAction 	extends AbstractAction {
 
@@ -44,6 +44,10 @@ public class PaneOpsProgAction 	extends AbstractAction {
     static final java.util.ResourceBundle rbt 
         = java.util.ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle");
 
+    public PaneOpsProgAction() {
+        this("DecoderPro ops-mode programmer");
+    }
+    
     public PaneOpsProgAction(String s) {
         super(s);
 
