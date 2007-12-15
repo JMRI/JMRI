@@ -19,7 +19,7 @@ import jmri.util.JUnitAppender;
 /**
  * Description:	    JUnit tests for the SerialTrafficController class
  * @author			Bob Jacobsen Copyright 2006
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class SerialTrafficControllerTest extends TestCase {
 
@@ -57,36 +57,6 @@ public class SerialTrafficControllerTest extends TestCase {
         Assert.assertEquals("1st Node after del2", f, c.getSerialNode(0) );
         Assert.assertEquals("2nd Node after del2", d, c.getSerialNode(1) );
         Assert.assertEquals("no more Nodes after del2", null, c.getSerialNode(2) );        
-    }
-    public void testSerialOutput() {
-        SerialTrafficController c = new SerialTrafficController();
-        SerialNode a = new SerialNode();
-        SerialNode g = new SerialNode(5,SerialNode.SMINI);
-        Assert.assertTrue("must Send", g.mustSend() );
-        g.resetMustSend();
-        Assert.assertTrue("must Send off", !(g.mustSend()) );
-        c.setSerialOutput("CL5B2",false);
-        c.setSerialOutput("CL5B1",false);
-        c.setSerialOutput("CL5B23",false);
-        c.setSerialOutput("CL5B41",false);
-        c.setSerialOutput("CL5B25",false);
-        c.setSerialOutput("CL5B2",true);
-        c.setSerialOutput("CL5B19",false);
-        c.setSerialOutput("CL5B5",false);
-        c.setSerialOutput("CL5B26",false);
-        c.setSerialOutput("CL5B48",false);
-        Assert.assertTrue("must Send on", g.mustSend() );
-        SerialMessage m = g.createOutPacket();
-        Assert.assertEquals("packet size", 9, m.getNumDataElements() );
-        Assert.assertEquals("node address", 70, m.getElement(0) );
-        Assert.assertEquals("packet type", 84, m.getElement(1) );  // 'T'        
-        Assert.assertEquals("out byte 1", 17, (m.getElement(2) & 0xff));      
-        Assert.assertEquals("out byte 2", 0, (m.getElement(3) & 0xff));      
-        Assert.assertEquals("out byte 3", 68, (m.getElement(4) & 0xff));      
-        Assert.assertEquals("DLE", 16, (m.getElement(5) & 0xff));      
-        Assert.assertEquals("out byte 4", 3, (m.getElement(6) & 0xff));      
-        Assert.assertEquals("out byte 5", 0, (m.getElement(7) & 0xff));      
-        Assert.assertEquals("out byte 6", 129, (m.getElement(8) & 0xff));      
     }
 
     private boolean waitForReply() {
