@@ -38,8 +38,8 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 1.0//EN"
       <tocitem text="Logix" target="package.jmri.jmrit.beantable.LogixTable"/>
       <tocitem text="Memories" target="html.Memories"/>
       <tocitem text="Reporters" target="html.Reporters"/>
-      <tocitem text="Routes" target="package.jmri.jmrit.beantable.ReporterTable"/>
-      <tocitem text="Send DCC Packet Tool" target="package.jmri.jmrit.sendpacket.SendPacketFrame"/>
+      <tocitem text="Routes" target="package.jmri.jmrit.beantable.RouteTable"/>
+      <tocitem text="Send DCC Packet Tool" target="package.jmri.jmrit.sendpacket.SendPacketFrame"></tocitem>
       <tocitem text="Sensors" target="html.Sensors"/>
       <tocitem text="Sensor Groups" target="package.jmri.jmrit.sensorgroup.SensorGroupFrame"/>
       <tocitem text="Simple Signal Logic" target="package.jmri.jmrit.blockboss.BlockBossFrame"/>
