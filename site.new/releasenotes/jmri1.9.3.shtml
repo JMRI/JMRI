@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.9.3.shtml,v 1.1 2007-12-13 06:51:05 jacobsen Exp $ -->
+<!-- $Id: jmri1.9.3.shtml,v 1.2 2007-12-15 23:11:00 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -134,6 +134,13 @@ David Duchamp has added single crossover turnouts and an optional grid to Layout
 
 <P>
 Handling of hardware and software fast clocks has been updated by David Duchamp, with help from Ken Cameron
+
+<p>
+Fixed a bug that prevented adding a "Ops Mode Programmer" button in the advanced preferences.
+
+<p>
+The help system search is working again.
+
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
