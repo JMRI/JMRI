@@ -28,7 +28,7 @@ import net.roydesign.mac.MRJAdapter;
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
  * @author  Dennis Miller  Copyright 2005
- * @version     $Revision: 1.42 $
+ * @version     $Revision: 1.43 $
  */
 public class Apps extends JPanel {
 
@@ -261,7 +261,7 @@ public class Apps extends JPanel {
         JMenu helpMenu = new JMenu(rb.getString("MenuHelp"));
         menuBar.add(helpMenu);
         try {
-            String helpsetName = "help/JmriHelp_en.hs";
+            String helpsetName = "help/en/JmriHelp_en.hs";
             URL hsURL;
             try {
                 // HelpSet.findHelpSet doesn't seem to be working, so is temporarily bypassed

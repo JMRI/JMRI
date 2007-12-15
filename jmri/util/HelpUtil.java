@@ -22,7 +22,7 @@ import java.io.File;
  * It assumes that Java Help 1.1.8 is in use
  *
  * @author Bob Jacobsen  Copyright 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class HelpUtil {
@@ -76,7 +76,7 @@ public class HelpUtil {
         if (!init) {
             init = true;
             try {
-                String helpsetName = "help/JmriHelp_en.hs";
+                String helpsetName = "help/en/JmriHelp_en.hs";
                 URL hsURL;
                 try {
                     // HelpSet.findHelpSet doesn't seem to be working, so is temporarily bypassed
