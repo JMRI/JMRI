@@ -15,7 +15,7 @@ import java.util.Vector;
  * Test CvValue class
  *
  * @author			Bob Jacobsen Copyright 2004, 2006
- * @version         $Revision: 1.14 $
+ * @version         $Revision: 1.15 $
  */
 public class CvValueTest extends TestCase {
 
@@ -85,6 +85,11 @@ public class CvValueTest extends TestCase {
         CvValue cv = new CvValue(67, p);
         cv.setValue(123);
         cv.write(null); // force out, so dummy read works
+        // release, to ensure
+        try {
+            Thread.sleep(20);
+        } catch (Exception e) {
+        }
 
         cv.confirm(null);
         // wait for reply (normally, done by callback; will check that later)
