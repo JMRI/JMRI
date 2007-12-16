@@ -1,9 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XmlPersistance.shtml,v 1.2 2007-07-13 04:55:23 jacobsen Exp $ -->
+<!-- $Id: XmlPersistance.shtml,v 1.3 2007-12-16 23:13:20 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
- 	JMRI: Xml Persistance
+ 	JMRI: XML Persistance
     </TITLE>
     <META content="Bob Jacobsen" name=Author>
     <meta name="keywords" content="JMRI technical code xml persistance">
@@ -32,7 +32,7 @@
 
 	<div id="mainContent">
 
-	    <H1>JMRI: Xml Persistance</H1>
+	    <H1>JMRI: XML Persistance</H1>
 
 
 <P>
@@ -48,11 +48,11 @@ It goes through the registered objects and finds the persisting class responsibl
 storing the object.  E.g. class a.b.Foo will have the class a.b.configurexml.FooXml 
 located.  If that class is found, it's told to store the Foo object, and it adds Xml 
 content to a JDOM document to do that.  If it's not located, an error message is issued.
-
+<P>
 On load, an XML file is read by the manager.  Each element is examined for 
 a "class" attribute.  If found, that class is loaded and handed the element to 
 process.  Etc.
-
+<P>
 It's quite hackish, and not very cleanly factored. There's a fair amount of 
 code duplication, but that might be because it comes from a C++ background and 
 the developer keeps wishing 
