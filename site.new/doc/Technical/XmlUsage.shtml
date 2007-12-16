@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: XmlUsage.shtml,v 1.1 2007-12-16 23:14:24 jacobsen Exp $ -->
+<html lang="en">
+<head>
+    <TITLE>
+ 	JMRI: Xml Usage
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code xml usage">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+
+    <p class="skipLink"><a href="#mainContent" accesskey="2">Skip to main content</a></p>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+
+	    <H1>JMRI: XML Usage</H1>
+
+
+<P>
+JMRI uses XML for a number of purposes: 
+to hold decoder definitions, for its
+<a href="XmlPersistance.shtml">persistance system</a>
+for configuration and panel information,
+and to create parts of the web site from other files.
+This page describes some aspects of this.
+
+<h2>Access to File Format Definitions</h2>
+JMRI uses DTDs to define the format of its files.
+<P>
+Those DTDs need to be available to the program when it
+reads the files, as they define the default values of missing
+attributes and other needed information.
+<P>
+In the JMRI distributions, these are stored in the 
+<a href="/xml/DTD">xml/DTD</a> 
+directory.  
+Note that they are not stored in each directory
+alongside the XML files. There are just too many 
+locations to keep such a set of DTD files up to date.
+JMRI itself, via the jmri.jmrit.XmlFile class, provides
+support for locating those files when the XML parser
+needs them.  
+<P>
+Each file contains a DOCTYPE line that
+specifies which DTD should be used. There are three different uses:
+<UL>
+<LI>Web browsers look exactly where the DOCTYPE line specifies,
+and must find the DTD there to function.
+<LI>JMRI 1.8 and earlier...
+<LI>JMRI 1.9.2 and later provides a powerful DTD search
+procedure using the jmri.util.JmriLocalResolver class. It parses the
+reference in the DOCTYPE and handles it in several ways:
+    <UL>
+    <LI>If it's an HTTP URL, it looks via the internet
+    <LI>If it's just a filename...
+    </UL>
+</UL>
+
+
+<h2>Formatting with XSLT</h2>
+
+The 
+<a href="/xml/XSLT">xml/XSLT</a>
+directory contains a number of XSLT transformations
+that can be used to format JMRI XML files.
+They are used in several ways, described here.
+
+<h3>Web Pages from Decoder Definitions</h3>
+There's an Ant build.xml file provided which
+runs a number of transforms to create web pages from the
+decoder files.  These are then uploaded to the 
+<a href="/xml/XSLT/">web site</a>
+as part of each release.
+
+<h3>Viewing XML Files</h3>
+There are also XSLT transforms that are
+used as stylesheets when displaying a JMRI XML file
+in a browser.  
+In most cases, they just provide a human readable form.
+For decoder definition files, this goes further to convert
+the file to a form which can be used to submit updates.
+<P>
+To ease this, JMRI writes a line like<br/>
+<pre>
+&lt;?xml-stylesheet href="http://jmri.sourceforge.net/xml/XSLT/panelfile.xsl" type="text/xsl"?&gt;
+</pre>
+at the start of each file. This loads the stylesheet from the main JMRI web server.
+If you don't have a web connection, or want to use a local copy for some reason, just
+change the href URL.  For example, href="panelfile.xsl" would reference a local file 
+in the same location as the file being viewed.
+</UL>
+
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+
