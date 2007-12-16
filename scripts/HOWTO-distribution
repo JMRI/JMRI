@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.56 $)
+distribution.  ($Revision: 1.57 $)
 
 Start with a directory, typically called "Distributions", that
 contains "scripts" and "java" (from CVS) as subdirectories, and:
@@ -95,7 +95,7 @@ change that (temporarily) for production versions
 	
 ( ) Once uploads start, you can start building the Windows installer.
 	
-	Using VPC, make sure you have the Z disk available and that it
+	Using VMware Fusion, make sure you have the Z disk available and that it
 	contains the JMRI folder. (If not, check the "shared folders" and 
 	"networking settings"; see Control menu)
 	
@@ -115,7 +115,7 @@ change that (temporarily) for production versions
     	
 ( ) Create and upload the XSLT pages. This can be done at any time after now,
     but doing it now works well in parallel with the rest of the Windows build
-    if that's going slowly in VPC.
+    if that's going slowly.
     
     cd Release-1-2-3/xml/XLST
     ant xslt
