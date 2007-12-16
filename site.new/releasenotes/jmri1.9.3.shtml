@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.9.3.shtml,v 1.2 2007-12-15 23:11:00 jacobsen Exp $ -->
+<!-- $Id: jmri1.9.3.shtml,v 1.3 2007-12-16 23:11:52 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -141,6 +141,8 @@ Fixed a bug that prevented adding a "Ops Mode Programmer" button in the advanced
 <p>
 The help system search is working again.
 
+<p>
+Added a sample script (<a href="http://jmri.sf.net/jython/AD4OnOff.py">jython/AD4OnOff.py</a>) that gives you a checkbox on the screen to turn on and off local control of AD4-connected turnouts.
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
