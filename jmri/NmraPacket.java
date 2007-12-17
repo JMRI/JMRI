@@ -41,7 +41,7 @@ package jmri;
  * <P>
  *
  * @author      Bob Jacobsen Copyright (C) 2001, 2003
- * @version     $Revision: 1.21 $
+ * @version     $Revision: 1.22 $
  */
 public class NmraPacket {
 
@@ -443,6 +443,86 @@ public class NmraPacket {
             retVal[0] = (byte) (address&0xFF);
             retVal[1] = (byte) arg1;
             retVal[2] = (byte) (retVal[0]^retVal[1]);
+        }
+        return retVal;
+    }
+    
+    public static byte[] function13Through20Packet(int address, boolean longAddr,
+                        boolean f13, boolean f14, boolean f15, boolean f16,
+                        boolean f17, boolean f18, boolean f19, boolean f20 ) {
+        if (log.isDebugEnabled()) log.debug("f13 through f20 packet "+address);
+
+        if (!addressCheck(address, longAddr)) {
+            return null;  // failed!
+        }
+
+        // end sanity check, format output
+        byte[] retVal;
+        int arg1 = 0xDE;
+        int arg2 =  ( f20 ? 0x80 : 0) |
+                    ( f19 ? 0x40 : 0) |
+                    ( f18 ? 0x20 : 0) |
+                    ( f17 ? 0x10 : 0) |
+                    ( f16 ? 0x08 : 0) |
+                    ( f15 ? 0x04 : 0) |
+                    ( f14 ? 0x02 : 0) |
+                    ( f13 ? 0x01 : 0);
+
+        if (longAddr) {
+            // long address form
+            retVal = new byte[5];
+            retVal[0] = (byte) (192+((address/256)&0x3F));
+            retVal[1] = (byte) (address&0xFF);
+            retVal[2] = (byte) arg1;
+            retVal[3] = (byte) arg2;
+            retVal[4] = (byte) (retVal[0]^retVal[1]^retVal[2]^retVal[3]);
+        } else {
+            // short address form
+            retVal = new byte[4];
+            retVal[0] = (byte) (address&0xFF);
+            retVal[1] = (byte) arg1;
+            retVal[2] = (byte) arg2;
+            retVal[3] = (byte) (retVal[0]^retVal[1]^retVal[2]);
+        }
+        return retVal;
+    }
+    
+    public static byte[] function21Through28Packet(int address, boolean longAddr,
+                        boolean f21, boolean f22, boolean f23, boolean f24,
+                        boolean f25, boolean f26, boolean f27, boolean f28 ) {
+        if (log.isDebugEnabled()) log.debug("f21 through f28 packet "+address);
+
+        if (!addressCheck(address, longAddr)) {
+            return null;  // failed!
+        }
+
+        // end sanity check, format output
+        byte[] retVal;
+        int arg1 = 0xDF;
+        int arg2 =  ( f28 ? 0x80 : 0) |
+                    ( f27 ? 0x40 : 0) |
+                    ( f26 ? 0x20 : 0) |
+                    ( f25 ? 0x10 : 0) |
+                    ( f24 ? 0x08 : 0) |
+                    ( f23 ? 0x04 : 0) |
+                    ( f22 ? 0x02 : 0) |
+                    ( f21 ? 0x01 : 0);
+
+        if (longAddr) {
+            // long address form
+            retVal = new byte[5];
+            retVal[0] = (byte) (192+((address/256)&0x3F));
+            retVal[1] = (byte) (address&0xFF);
+            retVal[2] = (byte) arg1;
+            retVal[3] = (byte) arg2;
+            retVal[4] = (byte) (retVal[0]^retVal[1]^retVal[2]^retVal[3]);
+        } else {
+            // short address form
+            retVal = new byte[4];
+            retVal[0] = (byte) (address&0xFF);
+            retVal[1] = (byte) arg1;
+            retVal[2] = (byte) arg2;
+            retVal[3] = (byte) (retVal[0]^retVal[1]^retVal[2]);
         }
         return retVal;
     }

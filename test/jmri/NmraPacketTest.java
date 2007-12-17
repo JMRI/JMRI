@@ -155,6 +155,44 @@ public class NmraPacketTest extends TestCase {
 	    NmraPacket.extractAddressType(ba);
         }
 
+	public void testF13F20A() {
+		// "typical packet" test, short address
+		byte[] ba = NmraPacket.function13Through20Packet(60, false, true, false, true, false, true, false, true, false);
+		Assert.assertEquals("first byte ",  0x3C, ba[0] & 0xFF);
+		Assert.assertEquals("second byte ", 0xDE, ba[1] & 0xFF);
+		Assert.assertEquals("third byte ",  0x55, ba[2] & 0xFF);
+		Assert.assertEquals("fourth byte ",  0x3C^0xDE^0x55, ba[3] & 0xFF);
+	}
+
+	public void testF13F20B() {
+		// "typical packet" test, long address
+		byte[] ba = NmraPacket.function13Through20Packet(2065, true, true, false, true, false, true, false, true, false);
+		Assert.assertEquals("first byte ",  0xC8, ba[0] & 0xFF);
+		Assert.assertEquals("second byte ", 0x11, ba[1] & 0xFF);
+		Assert.assertEquals("third byte ", 0xDE, ba[2] & 0xFF);
+		Assert.assertEquals("fourth byte ",  0x55, ba[3] & 0xFF);
+		Assert.assertEquals("fifth byte ",  0xC8^0x11^0xDE^0x55, ba[4] & 0xFF);
+	}
+
+	public void testF21F28A() {
+		// "typical packet" test, short address
+		byte[] ba = NmraPacket.function21Through28Packet(60, false, true, false, true, false, true, false, true, false);
+		Assert.assertEquals("first byte ",  0x3C, ba[0] & 0xFF);
+		Assert.assertEquals("second byte ", 0xDF, ba[1] & 0xFF);
+		Assert.assertEquals("third byte ",  0x55, ba[2] & 0xFF);
+		Assert.assertEquals("fourth byte ",  0x3C^0xDF^0x55, ba[3] & 0xFF);
+	}
+
+	public void testF21F28B() {
+		// "typical packet" test, long address
+		byte[] ba = NmraPacket.function21Through28Packet(2065, true, true, false, true, false, true, false, true, false);
+		Assert.assertEquals("first byte ",  0xC8, ba[0] & 0xFF);
+		Assert.assertEquals("second byte ", 0x11, ba[1] & 0xFF);
+		Assert.assertEquals("third byte ", 0xDF, ba[2] & 0xFF);
+		Assert.assertEquals("fourth byte ",  0x55, ba[3] & 0xFF);
+		Assert.assertEquals("fifth byte ",  0xC8^0x11^0xDF^0x55, ba[4] & 0xFF);
+	}
+
 	public void testConsist1() {
 		// "typical packet" test
 		byte[] ba = NmraPacket.consistControl(60, false, 1, true);
