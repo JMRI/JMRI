@@ -47,7 +47,7 @@ import java.util.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.70 $
+ * @version $Revision: 1.71 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -627,12 +627,15 @@ public class PanelEditor extends JmriJFrame {
             });
     }  // end ctor
 
+    // For choosing background images
+    JFileChooser inputFileChooser = null;
+    
     /**
      * Button pushed, add a background image. Note that a background image
      * differs from a regular icon only in the level at which it's presented.
      */
     void addBackground() {
-        JFileChooser inputFileChooser = new JFileChooser(" ");
+        if  (inputFileChooser == null) inputFileChooser = new JFileChooser(" ");
         int retVal = inputFileChooser.showOpenDialog(this);
         if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
         log.debug("Open image file: "+inputFileChooser.getSelectedFile().getPath());
