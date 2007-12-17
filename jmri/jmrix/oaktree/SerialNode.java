@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRMessage;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class SerialNode {
 
@@ -111,7 +111,7 @@ public class SerialNode {
         int byteNumber = (bitNumber-1)/8;
         // validate that this byte number is defined
         if (byteNumber > outputBytes[nodeType] ) {
-            warn("Output bit out-of-range for defined node");
+            warn("Output bit out-of-range for defined node: "+bitNumber);
         }
         if (byteNumber >= 256) byteNumber = 255;
         // update the byte
