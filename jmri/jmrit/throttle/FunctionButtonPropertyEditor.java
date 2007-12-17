@@ -138,7 +138,7 @@ public class FunctionButtonPropertyEditor extends JDialog
         lockableCheckBox.setSelected(button.getIsLockable());
         idField.setText(String.valueOf(button.getIdentity()));
         fontField.setText(String.valueOf(button.getFont().getSize()));
-        visibleCheckBox.setSelected(button.isVisible());
+        visibleCheckBox.setSelected(button.getDisplay());
     }
 
     /**
@@ -156,9 +156,11 @@ public class FunctionButtonPropertyEditor extends JDialog
                                     button.getFont().getStyle(),
                                     Integer.parseInt(fontField.getText())));
             button.setVisible(visibleCheckBox.isSelected());
+            button.setDisplay(visibleCheckBox.isSelected());
             int butWidth = button.getFontMetrics(button.getFont()).stringWidth(button.getText());
-            if (butWidth < 34) butWidth = 34;
-            button.setPreferredSize(new Dimension(butWidth+20,30));
+            butWidth = butWidth + 20;	// pad out the width a bit
+            if (butWidth < FunctionButton.BUT_WDTH) butWidth = FunctionButton.BUT_WDTH;
+            button.setPreferredSize(new Dimension(butWidth,FunctionButton.BUT_HGHT));
             finishEdit();
         }
     }
@@ -178,11 +180,11 @@ public class FunctionButtonPropertyEditor extends JDialog
     {
         StringBuffer errors = new StringBuffer();
         int errorNumber = 0;
-        /* ID >=0 && ID <= 12 */
+        /* ID >=0 && ID <= 28 */
         try
         {
             int id = Integer.parseInt(idField.getText());
-            if ((id < 0) || id > 12)
+            if ((id < 0) || id > 28)
             {
                 throw new NumberFormatException("");
             }
@@ -190,7 +192,7 @@ public class FunctionButtonPropertyEditor extends JDialog
         catch (NumberFormatException ex)
         {
             errors.append(String.valueOf(++errorNumber));
-            errors.append(". Function number must integer between 0 and 12\n");
+            errors.append(". Function number must integer between 0 and 28\n");
         }
 
         /* font > 0 */

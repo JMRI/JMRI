@@ -33,7 +33,10 @@ public class FunctionButton extends JToggleButton implements ActionListener
     private int identity; // F0, F1, etc?
     private boolean isOn;
     private boolean isLockable = true;
+    private boolean isDisplayed = true;
 	private int actionKey;
+	static final int BUT_HGHT = 30;
+	static final int BUT_WDTH = 54;
 
     private JPopupMenu popup;
 
@@ -52,7 +55,7 @@ public class FunctionButton extends JToggleButton implements ActionListener
         MouseListener popupListener = new PopupListener();
         this.addMouseListener(popupListener);
         this.setFont(new Font("Monospaced",Font.PLAIN, 12));
-        this.setPreferredSize(new Dimension(54,30));
+        this.setPreferredSize(new Dimension(BUT_WDTH,BUT_HGHT));
 
         this.setMargin(new Insets(2,2,2,2));
     }
@@ -60,7 +63,7 @@ public class FunctionButton extends JToggleButton implements ActionListener
 
     /**
      * Set the function number this button will operate
-     * @param id An integer from 0 to 9.
+     * @param id An integer from 0 to 28.
      */
     public void setIdentity(int id)
     {
@@ -69,7 +72,7 @@ public class FunctionButton extends JToggleButton implements ActionListener
 
     /**
      * Get the function number this button operates
-     * @return An integer from 0 to 9.
+     * @return An integer from 0 to 28.
      */
     public int getIdentity()
     {
@@ -131,7 +134,26 @@ public class FunctionButton extends JToggleButton implements ActionListener
     {
         return isLockable;
     }
+    
+    /**
+     * Set the display state of the button
+     * @param displayed True if the button exists 
+     * False if the button has been removed by the user
+     */
+    public void setDisplay(boolean displayed)
+    {
+        this.isDisplayed = displayed;
+    }
 
+    /**
+     * Get the display state of the button
+     * @return True if the button exists  
+     * False if the button has been removed by the user
+     */
+    public boolean getDisplay()
+    {
+        return isDisplayed;
+    }
 
     /**
      * Handle the selection from the popup menu.
@@ -154,7 +176,7 @@ public class FunctionButton extends JToggleButton implements ActionListener
     {
         if (log.isDebugEnabled()) {
         	log.debug("Change state to "+newState);
-        	new Exception().printStackTrace();
+//        	new Exception().printStackTrace();
         }
         isOn = newState;
 		this.setSelected(isOn);
@@ -265,7 +287,7 @@ public class FunctionButton extends JToggleButton implements ActionListener
         me.setAttribute("id", String.valueOf(this.getIdentity()));
         me.setAttribute("text", this.getText());
         me.setAttribute("isLockable", String.valueOf(this.getIsLockable()));
-        me.setAttribute("isVisible", String.valueOf(this.isVisible()));
+        me.setAttribute("isVisible", String.valueOf(this.getDisplay()));
         me.setAttribute("fontSize", String.valueOf(this.getFont().getSize()));
         return me;
     }
@@ -288,11 +310,16 @@ public class FunctionButton extends JToggleButton implements ActionListener
             boolean isLockable = e.getAttribute("isLockable").getBooleanValue();
             this.setIsLockable(isLockable);
             boolean isVisible = e.getAttribute("isVisible").getBooleanValue();
-            this.setVisible(isVisible);
+            this.setDisplay(isVisible);
+            if (this.getIdentity() < FunctionPanel.NUM_FUNC_BUTTONS_INIT)
+            	this.setVisible(isVisible);
+            else
+            	this.setVisible(false);
             this.setFont(new Font("Monospaced", Font.PLAIN, e.getAttribute("fontSize").getIntValue()));
             int butWidth = this.getFontMetrics(this.getFont()).stringWidth(this.getText());
-            if (butWidth < 34) butWidth = 34;
-            this.setPreferredSize(new Dimension(butWidth+20,30));
+            butWidth = butWidth + 20;	// pad out the width a bit
+            if (butWidth < BUT_WDTH) butWidth = BUT_WDTH;
+            this.setPreferredSize(new Dimension(butWidth,BUT_HGHT));
 
         }
         catch (org.jdom.DataConversionException ex)
