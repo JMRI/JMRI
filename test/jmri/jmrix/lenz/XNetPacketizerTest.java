@@ -10,7 +10,7 @@ import junit.framework.TestCase;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 2.6 $
+ * @version $Revision: 2.7 $
  */
 public class XNetPacketizerTest extends TestCase {
 
@@ -22,6 +22,8 @@ public class XNetPacketizerTest extends TestCase {
         LenzCommandStation lcs = new LenzCommandStation();
         XNetPacketizer c = new XNetPacketizer(lcs){
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {} // don't care about timeout
+            public void receiveLoop() {}
+            protected void portWarn(Exception e) {}
         };
         // connect to iostream via port controller scaffold
         XNetPortControllerScaffold p = new XNetPortControllerScaffold();
@@ -43,6 +45,8 @@ public class XNetPacketizerTest extends TestCase {
         LenzCommandStation lcs = new LenzCommandStation();
         XNetPacketizer c = new XNetPacketizer(lcs){
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {} // don't care about timeout
+            protected void reportReceiveLoopException(Exception e) {}           
+            protected void portWarn(Exception e) {}
         };
 
         // make sure Swing is up
@@ -89,6 +93,12 @@ public class XNetPacketizerTest extends TestCase {
         if (i==0) log.warn("waitForReply saw an immediate return; is threading right?");
         return i<100;
     }
+
+	// Main entry point
+	static public void main(String[] args) {
+		String[] testCaseName = {"-noloading", XNetPacketizerTest.class.getName()};
+		junit.swingui.TestRunner.main(testCaseName);
+	}
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }

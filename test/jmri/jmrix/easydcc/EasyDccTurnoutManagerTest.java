@@ -51,7 +51,7 @@ public class EasyDccTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {EasyDccTurnoutManager.class.getName()};
+		String[] testCaseName = {EasyDccTurnoutManagerTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 

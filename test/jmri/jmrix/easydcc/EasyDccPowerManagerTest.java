@@ -101,6 +101,7 @@ public class EasyDccPowerManagerTest extends AbstractPowerManagerTest {
 
 	// setup a default EasyDccTrafficController interface
 	public void setUp() {
+	    apps.tests.Log4JFixture.setUp();
 		controller = new EasyDccInterfaceScaffold();
 		p = new EasyDccPowerManager();
 	}
@@ -133,7 +134,10 @@ public class EasyDccPowerManagerTest extends AbstractPowerManagerTest {
 		TestSuite suite = new TestSuite(EasyDccPowerManagerTest.class);
 		return suite;
 	}
-
+	
+    // The minimal setup for log4J
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccPowerManagerTest.class.getName());
 	
 }

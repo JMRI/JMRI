@@ -14,7 +14,7 @@ import junit.framework.TestSuite;
 /**
  Tests for the jmri.jmrix.lenz.XNetTurnoutManager class.
  * @author			Bob Jacobsen Copyright 2004
- * @version         $Revision: 2.2 $
+ * @version         $Revision: 2.3 $
  */
 public class XNetTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 
@@ -101,7 +101,7 @@ public class XNetTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XNetTurnoutManager.class.getName()};
+        String[] testCaseName = {"-noloading", XNetTurnoutManagerTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 

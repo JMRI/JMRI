@@ -26,7 +26,12 @@ public class QsiTrafficControllerTest extends TestCase {
 	}
 
 	public void testSendAscii() throws Exception {
-		QsiTrafficController c = new QsiTrafficController();
+		QsiTrafficController c = new QsiTrafficController(){
+		    // skip timeout message
+		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {};
+            public void receiveLoop() {}
+            protected void portWarn(Exception e) {}
+        };
 
 		// connect to iostream via port controller
 		QsiPortControllerScaffold p = new QsiPortControllerScaffold();
@@ -49,7 +54,12 @@ public class QsiTrafficControllerTest extends TestCase {
 	}
 
 	public void testMonitor() throws Exception {
-		QsiTrafficController c = new QsiTrafficController();
+		QsiTrafficController c = new QsiTrafficController(){
+		    // skip timeout message
+		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {};
+            public void receiveLoop() {}
+            protected void portWarn(Exception e) {}
+        };
 
 		// connect to iostream via port controller
 		QsiPortControllerScaffold p = new QsiPortControllerScaffold();
@@ -79,7 +89,12 @@ public class QsiTrafficControllerTest extends TestCase {
 	}
 
 	public void testRcvReply() throws Exception {
-		QsiTrafficController c = new QsiTrafficController();
+		QsiTrafficController c = new QsiTrafficController(){
+		    // skip timeout message
+		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {};
+            public void receiveLoop() {}
+            protected void portWarn(Exception e) {}
+        };
 
 		// connect to iostream via port controller
 		QsiPortControllerScaffold p = new QsiPortControllerScaffold();

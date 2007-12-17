@@ -8,7 +8,7 @@ import junit.framework.*;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 2.5 $
+ * @version $Revision: 2.6 $
  */
 public class XNetTrafficRouterTest extends TestCase {
 
@@ -24,6 +24,8 @@ public class XNetTrafficRouterTest extends TestCase {
         XNetTrafficRouter router = new XNetTrafficRouter(new LenzCommandStation())
         {
             protected void connectionWarn() {}
+            public void receiveLoop() {}
+            protected void portWarn(Exception e) {}
         };
         Assert.assertEquals("router is instance", XNetTrafficController.instance(), router);
 
@@ -50,6 +52,8 @@ public class XNetTrafficRouterTest extends TestCase {
         XNetTrafficRouter router = new XNetTrafficRouter(new LenzCommandStation())
         {
             protected void connectionWarn() {}
+            public void receiveLoop() {}
+            protected void portWarn(Exception e) {}
         };
         Assert.assertEquals("router is instance", XNetTrafficController.instance(), router);
 
@@ -79,6 +83,8 @@ public class XNetTrafficRouterTest extends TestCase {
         XNetInterfaceScaffold upstream = new XNetInterfaceScaffold(new LenzCommandStation())
         {
             protected void connectionWarn() {}
+            public void receiveLoop() {}
+            protected void portWarn(Exception e) {}
         };
 
         // create object
@@ -93,6 +99,12 @@ public class XNetTrafficRouterTest extends TestCase {
         router.disconnectPort(upstream);
         Assert.assertTrue("not connected", !router.status());
     }
+
+	// Main entry point
+	static public void main(String[] args) {
+		String[] testCaseName = {"-noloading", XNetTrafficRouterTest.class.getName()};
+		junit.swingui.TestRunner.main(testCaseName);
+	}
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }

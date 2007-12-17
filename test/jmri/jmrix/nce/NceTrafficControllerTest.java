@@ -21,7 +21,7 @@ import jmri.jmrix.nce.NcePortController;
 /**
  * JUnit tests for the NceTrafficController class
  * @author			Bob Jacobsen Copyright 2003, 2007
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class NceTrafficControllerTest extends TestCase {
 
@@ -33,7 +33,12 @@ public class NceTrafficControllerTest extends TestCase {
      * Test disabled until threading can be resolved
      */
 	public void xtestSendAscii() throws Exception {
-		NceTrafficController c = new NceTrafficController();
+		NceTrafficController c = new NceTrafficController(){
+		    // skip timeout message
+		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {};
+            public void receiveLoop() {}
+            protected void portWarn(Exception e) {}
+        };
 
 		// connect to iostream via port controller
 		NcePortControllerScaffold p = new NcePortControllerScaffold();
@@ -58,7 +63,12 @@ public class NceTrafficControllerTest extends TestCase {
      * Test disabled until threading can be resolved
      */
 	public void xtestSendBinary() throws Exception {
-		NceTrafficController c = new NceTrafficController();
+		NceTrafficController c = new NceTrafficController(){
+		    // skip timeout message
+		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {};
+            public void receiveLoop() {}
+            protected void portWarn(Exception e) {}
+        };
 
 		// connect to iostream via port controller
 		NcePortControllerScaffold p = new NcePortControllerScaffold();
@@ -82,7 +92,12 @@ public class NceTrafficControllerTest extends TestCase {
      * Test disabled until threading can be resolved
      */
 	public void xtestMonitor() throws Exception {
-		NceTrafficController c = new NceTrafficController();
+		NceTrafficController c = new NceTrafficController(){
+		    // skip timeout message
+		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {};
+            public void receiveLoop() {}
+            protected void portWarn(Exception e) {}
+        };
 
 		// connect to iostream via port controller
 		NcePortControllerScaffold p = new NcePortControllerScaffold();
@@ -110,7 +125,12 @@ public class NceTrafficControllerTest extends TestCase {
 	}
 
 	public void testRcvReply() throws Exception {
-		NceTrafficController c = new NceTrafficController();
+		NceTrafficController c = new NceTrafficController(){
+		    // skip timeout message
+		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {};
+            public void receiveLoop() {}
+            protected void portWarn(Exception e) {}
+        };
 
 		// connect to iostream via port controller
 		NcePortControllerScaffold p = new NcePortControllerScaffold();

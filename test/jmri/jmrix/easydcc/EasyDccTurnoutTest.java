@@ -19,6 +19,7 @@ public class EasyDccTurnoutTest extends AbstractTurnoutTest {
 	private EasyDccTrafficControlScaffold tcis = null;
 
 	public void setUp() {
+	    apps.tests.Log4JFixture.setUp(); 
 		// prepare an interface
 		tcis = new EasyDccTrafficControlScaffold();
 
@@ -55,6 +56,9 @@ public class EasyDccTurnoutTest extends AbstractTurnoutTest {
 		return suite;
 	}
 
-	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccTurnoutTest.class.getName());
+    // The minimal setup for log4J
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+ 	
+ 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccTurnoutTest.class.getName());
 
 }

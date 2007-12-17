@@ -9,7 +9,7 @@ import java.util.Vector;
  *
  * Description:	 	Test scaffold implementation of XNetInterface
  * @author			Bob Jacobsen Copyright (C) 2002, 2006
- * @version			$Revision: 2.3 $
+ * @version			$Revision: 2.4 $
  *
  * Use an object of this type as a XNetTrafficController in tests
  */
@@ -58,14 +58,14 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
     /**
      * Avoid error message, normal in parent
      */
-    protected void connectionWarn() {
-    }
+    protected void connectionWarn() {}
 
     /**
      * Avoid error message, normal in parent
      */
-	void portWarn(Exception e) {
-    }
+	protected void portWarn(Exception e) {}
+
+    public void receiveLoop() {}
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetInterfaceScaffold.class.getName());
 

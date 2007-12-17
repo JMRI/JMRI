@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.tmcc package.
  * @author      Bob Jacobsen  Copyright 2003
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class SerialTest extends TestCase {
 
@@ -21,7 +21,7 @@ public class SerialTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {SerialTest.class.getName()};
+        String[] testCaseName = {"-noloading", SerialTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
@@ -39,4 +39,7 @@ public class SerialTest extends TestCase {
         return suite;
     }
 
+    // The minimal setup for log4J
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 }

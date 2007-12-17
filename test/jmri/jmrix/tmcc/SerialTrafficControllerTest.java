@@ -14,7 +14,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialTrafficController class
  * @author			Bob Jacobsen  Copyright 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class SerialTrafficControllerTest extends TestCase {
 
@@ -33,7 +33,6 @@ public class SerialTrafficControllerTest extends TestCase {
         }
         if (log.isDebugEnabled()) log.debug("past loop, i="+i
                                             +" reply="+rcvdReply);
-        if (i==0) log.warn("waitForReply saw an immediate return; is threading right?");
         return i<100;
     }
 
@@ -48,7 +47,12 @@ public class SerialTrafficControllerTest extends TestCase {
      * this test is disabled until the threading can be worked out
      */
     public void xtestSendOK() throws Exception {
-            SerialTrafficController c = new SerialTrafficController();
+        SerialTrafficController c = new SerialTrafficController(){
+		    // skip timeout message
+		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {};
+            public void receiveLoop() {}
+            protected void portWarn(Exception e) {}
+        };
 
             // connect to iostream via port controller
             SerialPortControllerScaffold p = new SerialPortControllerScaffold();
@@ -68,7 +72,12 @@ public class SerialTrafficControllerTest extends TestCase {
     }
 
     public void testRcvReplyOK() throws Exception {
-            SerialTrafficController c = new SerialTrafficController();
+        SerialTrafficController c = new SerialTrafficController(){
+		    // skip timeout message
+		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {};
+            public void receiveLoop() {}
+            protected void portWarn(Exception e) {}
+        };
 
             // connect to iostream via port controller
             SerialPortControllerScaffold p = new SerialPortControllerScaffold();
@@ -99,7 +108,12 @@ public class SerialTrafficControllerTest extends TestCase {
     }
 
     public void testRcvReplyShort() throws Exception {
-            SerialTrafficController c = new SerialTrafficController();
+        SerialTrafficController c = new SerialTrafficController(){
+		    // skip timeout message
+		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {};
+            public void receiveLoop() {}
+            protected void portWarn(Exception e) {}
+        };
 
             // connect to iostream via port controller
             SerialPortControllerScaffold p = new SerialPortControllerScaffold();
@@ -125,6 +139,7 @@ public class SerialTrafficControllerTest extends TestCase {
             Assert.assertTrue("reply received ", waitForReply());
             Assert.assertEquals("first char of reply ", 0xF0, rcvdReply.getOpCode()&0xFF);
             Assert.assertEquals("length of reply ", 1, rcvdReply.getNumDataElements());
+            jmri.util.JUnitAppender.assertWarnMessage("return short message as 1st byte is 240");
     }
 
     // internal class to simulate a Listener
@@ -178,7 +193,7 @@ public class SerialTrafficControllerTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {SerialTrafficControllerTest.class.getName()};
+        String[] testCaseName = {"-noloading", SerialTrafficControllerTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
@@ -187,6 +202,10 @@ public class SerialTrafficControllerTest extends TestCase {
         TestSuite suite = new TestSuite(SerialTrafficControllerTest.class);
         return suite;
     }
+
+    // The minimal setup for log4J
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTrafficControllerTest.class.getName());
 

@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the StatusFrame class
  * @author		Bob Jacobsen  Copyright 2005
- * @version		$Revision: 1.4 $
+ * @version		$Revision: 1.5 $
  */
 public class StatusFrameTest extends TestCase {
 
@@ -22,6 +22,9 @@ public class StatusFrameTest extends TestCase {
         StatusFrame f = new StatusFrame();
         f.initComponents();
         f.setVisible(true);
+        f.setSource(new DataSource(){
+            void sendBytes(byte[] bytes) {}
+        });
         f.asciiFormattedMessage(PocketTesterTest.version);
         f.asciiFormattedMessage(PocketTesterTest.speed0003A);
         f.asciiFormattedMessage(PocketTesterTest.idlePacket);
@@ -37,6 +40,9 @@ public class StatusFrameTest extends TestCase {
         StatusFrame f = new StatusFrame();
         f.initComponents();
         f.setVisible(true);
+        f.setSource(new DataSource(){
+            void sendBytes(byte[] bytes) {}
+        });
         f.asciiFormattedMessage(PocketTesterTest.version);
         f.asciiFormattedMessage(PocketTesterTest.speed0003A);
         f.asciiFormattedMessage(PocketTesterTest.idlePacket);

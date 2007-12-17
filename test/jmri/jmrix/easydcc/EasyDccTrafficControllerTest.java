@@ -16,8 +16,8 @@ import java.util.Vector;
 
 /**
  * Description:	    JUnit tests for the EasyDccTrafficController class
- * @author			Bob Jacobsen
- * @version
+ * @author			Bob Jacobsen Copyright (C) 2003, 2007
+ * @version         $Revision: 1.11 $
  */
 public class EasyDccTrafficControllerTest extends TestCase {
 
@@ -26,7 +26,12 @@ public class EasyDccTrafficControllerTest extends TestCase {
 	}
 
 	public void testSendAscii() throws Exception {
-		EasyDccTrafficController c = new EasyDccTrafficController();
+		EasyDccTrafficController c = new EasyDccTrafficController(){
+		    // skip timeout message
+		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {};
+            public void receiveLoop() {}
+            protected void portWarn(Exception e) {}
+        };
 
 		// connect to iostream via port controller
 		EasyDccPortControllerScaffold p = new EasyDccPortControllerScaffold();
@@ -49,7 +54,12 @@ public class EasyDccTrafficControllerTest extends TestCase {
 	}
 
 	public void testRcvReply() throws Exception {
-		EasyDccTrafficController c = new EasyDccTrafficController();
+		EasyDccTrafficController c = new EasyDccTrafficController(){
+		    // skip timeout message
+		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {};
+            public void receiveLoop() {}
+            protected void portWarn(Exception e) {}
+        };
 
 		// connect to iostream via port controller
 		EasyDccPortControllerScaffold p = new EasyDccPortControllerScaffold();
@@ -162,8 +172,12 @@ public class EasyDccTrafficControllerTest extends TestCase {
 		TestSuite suite = new TestSuite(EasyDccTrafficControllerTest.class);
 		return suite;
 	}
-
-	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccTrafficControllerTest.class.getName());
+	
+    // The minimal setup for log4J
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    
+	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccTrafficControllerTest.class.getName());
 
 
 }

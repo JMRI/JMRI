@@ -1,10 +1,4 @@
-/**
- * SerialTrafficControllerTest.java
- *
- * Description:	    JUnit tests for the SerialTrafficController class
- * @author			Bob Jacobsen
- * @version $Revision: 1.6 $
- */
+// SerialTrafficControllerTest.java
 
 package jmri.jmrix.oaktree;
 
@@ -18,6 +12,11 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+/**
+ * JUnit tests for the SerialTrafficController class
+ * @author			Bob Jacobsen Copyright 2005
+ * @version $Revision: 1.7 $
+ */
 public class SerialTrafficControllerTest extends TestCase {
 
     public void testCreate() {
