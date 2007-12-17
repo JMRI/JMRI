@@ -36,7 +36,7 @@ package jmri;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public interface Throttle {
 
@@ -92,6 +92,54 @@ public interface Throttle {
 
     public boolean getF12();
     public void setF12(boolean f12);
+    
+    public boolean getF13();
+    public void setF13(boolean f13);
+    
+    public boolean getF14();
+    public void setF14(boolean f14);
+    
+    public boolean getF15();
+    public void setF15(boolean f15);
+    
+    public boolean getF16();
+    public void setF16(boolean f16);
+    
+    public boolean getF17();
+    public void setF17(boolean f17);
+    
+    public boolean getF18();
+    public void setF18(boolean f18);
+    
+    public boolean getF19();
+    public void setF19(boolean f19);
+    
+    public boolean getF20();
+    public void setF20(boolean f20);
+    
+    public boolean getF21();
+    public void setF21(boolean f21);
+    
+    public boolean getF22();
+    public void setF22(boolean f22);
+    
+    public boolean getF23();
+    public void setF23(boolean f23);
+    
+    public boolean getF24();
+    public void setF24(boolean f24);
+    
+    public boolean getF25();
+    public void setF25(boolean f25);
+    
+    public boolean getF26();
+    public void setF26(boolean f26);
+    
+    public boolean getF27();
+    public void setF27(boolean f27);
+    
+    public boolean getF28();
+    public void setF28(boolean f28);
 
     // functions momentary status - note that we use the naming for DCC, 
     // though that's not the implication;
@@ -134,6 +182,54 @@ public interface Throttle {
 
     public boolean getF12Momentary();
     public void setF12Momentary(boolean f12Momentary);
+
+    public boolean getF13Momentary();
+    public void setF13Momentary(boolean f13Momentary);
+
+    public boolean getF14Momentary();
+    public void setF14Momentary(boolean f14Momentary);
+
+    public boolean getF15Momentary();
+    public void setF15Momentary(boolean f15Momentary);
+
+    public boolean getF16Momentary();
+    public void setF16Momentary(boolean f16Momentary);
+
+    public boolean getF17Momentary();
+    public void setF17Momentary(boolean f17Momentary);
+
+    public boolean getF18Momentary();
+    public void setF18Momentary(boolean f18Momentary);
+
+    public boolean getF19Momentary();
+    public void setF19Momentary(boolean f19Momentary);
+
+    public boolean getF20Momentary();
+    public void setF20Momentary(boolean f20Momentary);
+
+    public boolean getF21Momentary();
+    public void setF21Momentary(boolean f21Momentary);
+
+    public boolean getF22Momentary();
+    public void setF22Momentary(boolean f22Momentary);
+
+    public boolean getF23Momentary();
+    public void setF23Momentary(boolean f23Momentary);
+
+    public boolean getF24Momentary();
+    public void setF24Momentary(boolean f24Momentary);
+
+    public boolean getF25Momentary();
+    public void setF25Momentary(boolean f25Momentary);
+
+    public boolean getF26Momentary();
+    public void setF26Momentary(boolean f26Momentary);
+
+    public boolean getF27Momentary();
+    public void setF27Momentary(boolean f27Momentary);
+
+    public boolean getF28Momentary();
+    public void setF28Momentary(boolean f28Momentary);
 
     /**
      * Locomotive address.  The exact format is defined by the
