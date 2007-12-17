@@ -26,7 +26,7 @@ import java.util.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.37 $
+ * @version			$Revision: 1.38 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -327,7 +327,7 @@ abstract public class AbstractMRTrafficController {
     private int timeouts = 0;
     protected void handleTimeout(AbstractMRMessage msg) {
         log.warn("Timeout on reply to message: "+msg.toString()+
-                " consecutive="+timeouts);
+                " consecutive timeouts = "+timeouts);
         timeouts++;
     }
     protected void resetTimeout(AbstractMRMessage msg) {
@@ -435,7 +435,7 @@ abstract public class AbstractMRTrafficController {
         new Exception().printStackTrace();
     }
 
-    void portWarn(Exception e) {
+    protected void portWarn(Exception e) {
         log.warn("sendMessage: Exception: "+e.toString());
     }
     
@@ -518,12 +518,20 @@ abstract public class AbstractMRTrafficController {
                 handleOneIncomingReply();
             }
             catch (java.io.IOException e) {
-                log.error("run: Exception: "+e.toString());
+                reportReceiveLoopException(e);
                 break;
             }
         }
     }
-
+    
+    
+    /**
+     * Report error on receive loop. Separated so tests can suppress,
+     * even though message is asynchronous.
+     */
+    protected void reportReceiveLoopException(Exception e) {
+        log.error("run: Exception: "+e.toString());
+    }
     abstract protected AbstractMRReply newReply();
     abstract protected boolean endOfMessage(AbstractMRReply r);
 
