@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractThrottle;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 public class NceThrottle extends AbstractThrottle
 {
@@ -167,6 +167,8 @@ public class NceThrottle extends AbstractThrottle
 	 * Send the message to set the state of functions F13, F14, F15, F16, F17, F18, F19, F20
 	 */
     protected void sendFunctionGroup4() {
+		// The NCE USB doesn't support the NMRA packet format
+		if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE) {
 			int locoAddr = address.getNumber();
 			if (address.isLongAddress())
 				locoAddr += 0xC000;
@@ -185,12 +187,23 @@ public class NceThrottle extends AbstractThrottle
 					NceBinaryCommand.LOCO_CMD_FG4, (byte) data);
 			NceMessage m = NceMessage.createBinaryMessage(bl);
 			NceTrafficController.instance().sendNceMessage(m, null);
+			
+		} else {
+			// Note NCE EPROM 2004 doesn't support LOCO_CMD_FG4
+			byte[] result = jmri.NmraPacket.function13Through20Packet(address
+					.getNumber(), address.isLongAddress(), getF13(), getF14(),
+					getF15(), getF16(), getF17(), getF18(), getF19(), getF20());
+			NceMessage m = NceMessage.sendPacketMessage(result);
+			NceTrafficController.instance().sendNceMessage(m, null);
 		}
+	}
 
     /**
-	 * Send the message to set the state of functions F13, F14, F15, F16, F17, F18, F19, F20
+	 * Send the message to set the state of functions F21, F22, F23, F24, F25, F26, F27, F28
 	 */
     protected void sendFunctionGroup5() {
+		// The NCE USB doesn't support the NMRA packet format
+		if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE) {
 			int locoAddr = address.getNumber();
 			if (address.isLongAddress())
 				locoAddr += 0xC000;
@@ -209,7 +222,16 @@ public class NceThrottle extends AbstractThrottle
 					NceBinaryCommand.LOCO_CMD_FG5, (byte) data);
 			NceMessage m = NceMessage.createBinaryMessage(bl);
 			NceTrafficController.instance().sendNceMessage(m, null);
+
+		} else {
+			// Note NCE EPROM 2004 doesn't support LOCO_CMD_FG5
+			byte[] result = jmri.NmraPacket.function21Through28Packet(address
+					.getNumber(), address.isLongAddress(), getF21(), getF22(),
+					getF23(), getF24(), getF25(), getF25(), getF27(), getF28());
+			NceMessage m = NceMessage.sendPacketMessage(result);
+			NceTrafficController.instance().sendNceMessage(m, null);
 		}
+	}
 
     /**
 	 * Set the speed & direction.
