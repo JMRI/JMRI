@@ -20,7 +20,7 @@ import jmri.util.JmriJFrame;
  *
  *
  * @author			Ken Cameron   Copyright (C) 2007
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  * 
  * This was a very direct steal from the Nixie clock code, ver 1.12.
  * Thank you Bob Jacobson.
@@ -49,7 +49,8 @@ public class LcdClockFrame extends JmriJFrame implements java.beans.PropertyChan
     //"base" variables used to hold original gifs, other variables used with scaled images
 
     public LcdClockFrame() {
-
+        super();
+        
         clock = InstanceManager.timebaseInstance();
 
         //Load the images (these are now the larger version of the original gifs

@@ -1,6 +1,5 @@
 // NceConsistEditFrame.java
 
-
 package jmri.jmrix.nce.consist;
 
 import jmri.jmrix.nce.*;
@@ -9,8 +8,6 @@ import java.awt.*;
 import javax.swing.*;
 
 import java.io.*;
-
-
 
 /**
  * Frame for user edit of NCE Consists
@@ -46,7 +43,7 @@ import java.io.*;
  * :0000
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -159,6 +156,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
     javax.swing.JButton dirButton6 = new javax.swing.JButton();
     
     public NceConsistEditFrame() {
+        super();
     }
  
 

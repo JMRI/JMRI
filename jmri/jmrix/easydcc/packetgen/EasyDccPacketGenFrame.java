@@ -3,7 +3,7 @@
  *
  * Description:		Frame for user input of EasyDcc messages
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 
 
@@ -24,6 +24,7 @@ public class EasyDccPacketGenFrame extends jmri.util.JmriJFrame implements jmri.
 	javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
 
 	public EasyDccPacketGenFrame() {
+	    super();
 	}
 
 	public void initComponents() throws Exception {

@@ -12,11 +12,12 @@ import javax.swing.*;
  * Frame for adding to the log file.
  * 
  * @author			Bob Jacobsen   Copyright (C) 2007
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class LogFrame extends jmri.util.JmriJFrame {
 
     public LogFrame() {
+        super();
     }
 
     public void initComponents() throws Exception {

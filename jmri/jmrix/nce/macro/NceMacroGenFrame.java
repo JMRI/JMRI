@@ -11,7 +11,7 @@ import javax.swing.*;
  * Frame for user input of Nce macros
  * @author	Bob Jacobsen   Copyright (C) 2001
  * @author Dan Boudreau 	Copyright (C) 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  **/
 
 public class NceMacroGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -26,6 +26,7 @@ public class NceMacroGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(4);
 
     public NceMacroGenFrame() {
+        super();
     }
 
     public void initComponents() throws Exception {

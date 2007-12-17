@@ -20,13 +20,14 @@ import javax.swing.event.ChangeEvent;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003, 2004
  * @author      Alex Shepherd Copyright (C) 2006
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 
 public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
 
   private ServerFrame() {
     super("LocoNetOverTcp Server");
+    
     getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
     portNumber = JSpinnerUtil.getJSpinner();

@@ -19,11 +19,12 @@ import java.util.List;
  * any other object.
  *
  * @author			Bob Jacobsen   Copyright (C) 2007
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class SensorGroupFrame extends jmri.util.JmriJFrame {
 
     public SensorGroupFrame() {
+        super();
     }
 
     private final static String namePrefix  = "SENSOR GROUP:";  // should be upper case

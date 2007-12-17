@@ -12,7 +12,7 @@ import jmri.jmrix.zimo.Mx1TrafficController;
  * Frame for user input of MX-1 messages.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001,2002
- * @version		$Revision: 1.4 $
+ * @version		$Revision: 1.5 $
  *
  * Adapted by Sip Bosch for use with Zimo MX-1
  *
@@ -25,6 +25,7 @@ public class ZimoPacketGenFrame extends jmri.util.JmriJFrame {
 	javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
 
 	public ZimoPacketGenFrame() {
+	    super();
 	}
 
 	public void initComponents() throws Exception {

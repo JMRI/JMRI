@@ -19,7 +19,7 @@ import javax.swing.JSeparator;
 /**
  * Frame for user input of CMRI serial messages
  * @author	Bob Jacobsen   Copyright (C) 2002, 2003
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.cmri.serial.SerialListener {
 
@@ -32,6 +32,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     javax.swing.JTextField uaAddrField = new javax.swing.JTextField(5);
 
     public SerialPacketGenFrame() {
+        super();
     }
 
     public void initComponents() throws Exception {

@@ -29,7 +29,7 @@ import java.awt.*;
  *
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class JmriJFrame extends JFrame implements java.awt.event.WindowListener {
@@ -45,13 +45,8 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener 
     }
 
     public JmriJFrame(String name) {
-        super(name);
-        addWindowListener(this);
-        synchronized (list) {
-            list.add(this);
-        }
-	    // Set the image for use when minimized
-	    setIconImage(getToolkit().getImage("resources/jmri32x32.gif"));
+        this();
+        setTitle(name);
     }
 
     /**

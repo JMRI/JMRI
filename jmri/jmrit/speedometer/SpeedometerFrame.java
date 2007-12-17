@@ -26,7 +26,7 @@ import javax.swing.JTextField;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2004, 2007
  * @author      Adapted for metric system - S.K. Bosch
- * @version	$Revision: 1.22 $
+ * @version	$Revision: 1.23 $
  */
 public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
@@ -77,7 +77,8 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
     }
     
     public SpeedometerFrame() {
-
+        super();
+        
         startOnEntry.setSelected(true);
         stopOnEntry1.setSelected(true);
         stopOnEntry2.setSelected(true);

@@ -30,7 +30,7 @@ import javax.swing.*;
  * contact NCE Inc for separate permission.
  *
  * @author			Ken Cameron   Copyright (C) 2007
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  *
  * derived from loconet.clockmonframe by Bob Jacobson Copyright (C) 2003
  * 
@@ -175,7 +175,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
     JButton setPollingSpeedButton = new JButton(rb.getString("SetInterfaceUpdRate"));
     JButton setPidButton = new JButton(rb.getString("SetPid"));
     
-    public ClockMonFrame() {}
+    public ClockMonFrame() { super(); }
     
     public void initComponents() throws Exception {
         setTitle(rb.getString("TitleNceClockMonitor"));

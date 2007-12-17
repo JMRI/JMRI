@@ -12,7 +12,7 @@ import jmri.jmrix.sprog.SprogReply;
 /**
  * Frame for user input of Sprog messages.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SprogPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.sprog.SprogListener {
 
@@ -22,6 +22,7 @@ public class SprogPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jm
 	javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
 
 	public SprogPacketGenFrame() {
+	    super();
 	}
 
 	public void initComponents() throws Exception {

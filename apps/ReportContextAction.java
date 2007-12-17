@@ -12,7 +12,7 @@ import javax.swing.*;
  * Swing action to display the JMRI context for the user
  *
  * @author	    Bob Jacobsen    Copyright (C) 2007
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class ReportContextAction extends AbstractAction {
 
@@ -22,7 +22,7 @@ public class ReportContextAction extends AbstractAction {
     
     public void actionPerformed(ActionEvent ev) {
 
-		JFrame frame = new jmri.util.JmriJFrame();  // JmriJFrame to ensure fits on screen
+		JFrame frame = new jmri.util.JmriJFrame(){};  // JmriJFrame to ensure fits on screen
 		
         pane = new javax.swing.JTextArea();
         pane.setEditable(false);

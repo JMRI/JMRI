@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * Frame object for manipulating consists.
  *
  * @author               Paul Bender Copyright (C) 2003
- * @version              $Revision: 1.19 $
+ * @version              $Revision: 1.20 $
  */
 public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.ConsistListener{
 
@@ -52,8 +52,9 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
     private int _Consist_Type = Consist.ADVANCED_CONSIST;
 
     public ConsistToolFrame() {
-
-  	ConsistMan = InstanceManager.consistManagerInstance();
+        super();
+        
+  	    ConsistMan = InstanceManager.consistManagerInstance();
 
         // configure items for GUI
 
@@ -61,10 +62,10 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
         textAdrLabel.setText("Consist:");
         textAdrLabel.setVisible(true);
 
-	adrSelector.setVisible(true);
+	    adrSelector.setVisible(true);
         adrSelector.setToolTipText("consist being created or deleted");
 
-	initializeConsistBox();
+	    initializeConsistBox();
 
 	consistAdrBox.addActionListener(new java.awt.event.ActionListener() {
 		public void actionPerformed(java.awt.event.ActionEvent e)

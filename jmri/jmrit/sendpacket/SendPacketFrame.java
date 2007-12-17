@@ -17,7 +17,7 @@ import javax.swing.*;
  * immediately.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2003
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class SendPacketFrame extends jmri.util.JmriJFrame {
 
@@ -27,6 +27,7 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
 
     public SendPacketFrame() {
+        super();
     }
 
     // internal members to hold sequence widgets

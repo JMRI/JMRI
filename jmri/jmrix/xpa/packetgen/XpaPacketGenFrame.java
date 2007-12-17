@@ -3,7 +3,7 @@
  *
  * Description:		Frame for user input of Xpa+Modem (dialing) messages
  * @author			Paul Bender Copyright (C) 2004
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 
 
@@ -23,6 +23,7 @@ public class XpaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmri
 	javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
 
 	public XpaPacketGenFrame() {
+	    super();
 	}
 
 	public void initComponents() throws Exception {

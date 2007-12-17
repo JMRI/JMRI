@@ -1,6 +1,5 @@
 // NceMacroEditFrame.java
 
-
 package jmri.jmrix.nce.macro;
 
 import jmri.jmrix.nce.*;
@@ -9,8 +8,6 @@ import java.awt.*;
 import javax.swing.*;
 
 import java.io.*;
-
-
 
 /**
  * Frame for user edit of NCE macros
@@ -59,7 +56,7 @@ import java.io.*;
  * FF10 = link macro 16 
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -187,6 +184,7 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
     javax.swing.JButton deleteButton10 = new javax.swing.JButton();	
     
     public NceMacroEditFrame() {
+        super();
     }
  
 

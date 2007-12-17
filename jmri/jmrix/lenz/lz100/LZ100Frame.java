@@ -13,14 +13,14 @@ import java.util.ResourceBundle;
  * utiliy is defined in {@link LZ100InternalFrame}
  *
  * @author			Paul Bender  Copyright (C) 2005
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class LZ100Frame extends jmri.util.JmriJFrame {
 
     private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.lz100.LZ100Bundle");
 
     public LZ100Frame() {
-	this("LZ100 Configuration Utility");
+	    this("LZ100 Configuration Utility");
     }
 
     public LZ100Frame(String FrameName) {

@@ -25,7 +25,7 @@ import jmri.util.JTableUtil;
  * so are shown separately.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class SlotMonFrame extends jmri.util.JmriJFrame {
 
@@ -44,7 +44,8 @@ public class SlotMonFrame extends jmri.util.JmriJFrame {
     JScrollPane 		slotScroll;
 
     public SlotMonFrame() {
-
+        super();
+        
     	slotTable	= JTableUtil.sortableDataModel(slotModel);
     	slotScroll	= new JScrollPane(slotTable);
 

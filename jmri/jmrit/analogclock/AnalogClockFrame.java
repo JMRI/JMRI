@@ -16,7 +16,7 @@ import jmri.util.JmriJFrame;
  *
  * <p> Time code copied from code for the Nixie clock by Bob Jacobsen</p>
  * @author                     Dennis Miller Copyright (C) 2004
- * @version                    $Revision: 1.11 $
+ * @version                    $Revision: 1.12 $
  */
 
 public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
@@ -31,7 +31,7 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
       static String amPm;
 
 public AnalogClockFrame() {
-
+        super();
 
         clock = InstanceManager.timebaseInstance();
 

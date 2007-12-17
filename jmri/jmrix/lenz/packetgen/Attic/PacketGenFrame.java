@@ -13,7 +13,7 @@ import jmri.jmrix.lenz.XNetTrafficController;
 /**
  * Frame for user input of XpressNet messages
  * @author			Bob Jacobsen   Copyright (C) 2001,2002
- * @version			$Revision: 2.3 $
+ * @version			$Revision: 2.4 $
  */
 public class PacketGenFrame extends jmri.util.JmriJFrame {
 
@@ -23,6 +23,7 @@ public class PacketGenFrame extends jmri.util.JmriJFrame {
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
     
     public PacketGenFrame() {
+        super();
     }
     
     public void initComponents() throws Exception {

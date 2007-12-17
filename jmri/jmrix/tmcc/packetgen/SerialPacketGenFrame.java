@@ -15,7 +15,7 @@ import javax.swing.JSeparator;
 /**
  * Frame for user input of serial messages
  * @author	Bob Jacobsen   Copyright (C) 2002, 2003, 2006
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.tmcc.SerialListener {
 
@@ -25,6 +25,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
 
     public SerialPacketGenFrame() {
+        super();
     }
 
     public void initComponents() throws Exception {

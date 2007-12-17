@@ -18,7 +18,7 @@ import org.jdom.output.*;
 /**
  * Frame providing a table-organized command station programmer from decoder definition files
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
 
@@ -71,6 +71,7 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
 
     // ctor
     public SymbolicProgFrame() {
+        super();
 
         // configure GUI elements
         selectFileButton.setText("Read File");

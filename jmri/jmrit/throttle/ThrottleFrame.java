@@ -43,7 +43,7 @@ import org.jdom.Element;
  *  directed by the interface.
  *
  * @author     Glen Oberhauser
- * @version    $Revision: 1.30 $
+ * @version    $Revision: 1.31 $
  */
 /**
  * @author DSM
@@ -87,6 +87,7 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
 	 */
 	public ThrottleFrame()
 	{
+	    super();
         powerMgr = InstanceManager.powerManagerInstance();
         if (powerMgr == null) {
             log.info("No power manager instance found, panel not active");

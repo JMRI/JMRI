@@ -22,7 +22,7 @@ import javax.swing.*;
  * <LI>When the timer trips, repeat if buttons still down.
  * </UL>
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class LocoGenFrame extends jmri.util.JmriJFrame implements LocoNetListener {
 
@@ -32,6 +32,7 @@ public class LocoGenFrame extends jmri.util.JmriJFrame implements LocoNetListene
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
 
     public LocoGenFrame() {
+        super();
     }
 
     // internal members to hold sequence widgets

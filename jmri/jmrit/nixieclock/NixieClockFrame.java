@@ -21,7 +21,7 @@ import jmri.util.JmriJFrame;
  * Modified by Dennis Miller for resizing Nov, 2004
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
 
@@ -46,7 +46,8 @@ public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyCh
     //"base" variables used to hold original gifs, other variables used with scaled images
 
     public NixieClockFrame() {
-
+        super();
+        
         clock = InstanceManager.timebaseInstance();
 
         //Load the images (these are now the larger version of the original gifs

@@ -9,7 +9,7 @@ import java.util.Vector;
 /**
  * Abstract base Frame to open and configure a SerialPortAdapter
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 abstract public class SerialPortFrame extends jmri.util.JmriJFrame {
 
@@ -20,6 +20,9 @@ abstract public class SerialPortFrame extends jmri.util.JmriJFrame {
 	protected javax.swing.JComboBox opt2Box = new javax.swing.JComboBox();
 	protected javax.swing.JButton openPortButton = new javax.swing.JButton();
 
+	public SerialPortFrame() {
+		super();
+	}
 	public SerialPortFrame(String name) {
 		super(name);
 	}

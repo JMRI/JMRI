@@ -12,7 +12,7 @@ import jmri.jmrix.qsi.QsiReply;
 /**
  * Frame for user input of QSI messages
  * @author			Bob Jacobsen   Copyright (C) 2007
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.qsi.QsiListener {
 
@@ -22,6 +22,7 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.q
 	javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
 
 	public PacketGenFrame() {
+	    super();
 	}
 
 	public void initComponents() throws Exception {

@@ -28,7 +28,7 @@ import javax.swing.BoxLayout;
  * <P>
  *
  * @author	Paul Bender   Copyright (C) 2005
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener {
 
@@ -42,8 +42,8 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
     private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.stackmon.StackMonBundle");
 
     public StackMonFrame() {
-
-	// Configure GUI components
+        super();
+	    // Configure GUI components
 
         // add listener object to retrieve the next entry
         nextButton.addActionListener(new ActionListener() {

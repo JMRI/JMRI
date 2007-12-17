@@ -24,7 +24,7 @@ import java.lang.Integer;
 /**
  * Frame for running CMRI assignment list.
  * @author	 Dave Duchamp   Copyright (C) 2006
- * @version	 $Revision: 1.3 $
+ * @version	 $Revision: 1.4 $
  */
 public class ListFrame extends jmri.util.JmriJFrame {
 
@@ -67,6 +67,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
     ListFrame curFrame;
     
     public ListFrame() {
+        super();
         curFrame = this;
     }
 

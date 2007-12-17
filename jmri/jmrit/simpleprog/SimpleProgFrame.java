@@ -14,7 +14,7 @@ import jmri.ProgListener;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2007
  * @author  Giorgio Terdina Copyright (C) 2007
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgListener {
 
@@ -33,7 +33,8 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
     javax.swing.JLabel       resultsField   = new javax.swing.JLabel(" ");
 
     public SimpleProgFrame() {
-
+        super();
+        
         // configure items for GUI
         readButton.setText("Read CV");
         readButton.setToolTipText("Read the value from the selected CV");
