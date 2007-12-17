@@ -13,7 +13,7 @@ import java.util.Vector;
  * it has some DCC-specific content.
  *
  * @author  Bob Jacobsen  Copyright (C) 2001, 2005
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 abstract public class AbstractThrottle implements DccThrottle {
     protected float speedSetting;
@@ -21,10 +21,15 @@ abstract public class AbstractThrottle implements DccThrottle {
     protected int speedStepMode;
     protected boolean isForward;
     protected boolean f0, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12;
-    protected boolean f0Momentary, f1Momentary, f2Momentary, f3Momentary, 
-                      f4Momentary, f5Momentary, f6Momentary, f7Momentary, 
-                      f8Momentary, f9Momentary, f10Momentary, f11Momentary,
-                      f12Momentary;
+    protected boolean f13, f14, f15, f16, f17, f18, f19, f20, f21, f22, f23,
+			f24, f25, f26, f27, f28;
+    protected boolean f0Momentary, f1Momentary, f2Momentary, f3Momentary,
+			f4Momentary, f5Momentary, f6Momentary, f7Momentary, f8Momentary,
+			f9Momentary, f10Momentary, f11Momentary, f12Momentary;
+    protected boolean f13Momentary, f14Momentary, f15Momentary, f16Momentary,
+			f17Momentary, f18Momentary, f19Momentary, f20Momentary,
+			f21Momentary, f22Momentary, f23Momentary, f24Momentary,
+			f25Momentary, f26Momentary, f27Momentary, f28Momentary; 
 
     /**
      * Is this object still usable?  Set false after dispose, this
@@ -103,6 +108,70 @@ abstract public class AbstractThrottle implements DccThrottle {
     public boolean getF12() {
         return f12;
     }
+    
+    public boolean getF13() {
+        return f13;
+    }
+    
+    public boolean getF14() {
+        return f14;
+    }
+    
+    public boolean getF15() {
+        return f15;
+    }
+    
+    public boolean getF16() {
+        return f16;
+    }
+    
+    public boolean getF17() {
+        return f17;
+    }
+    
+    public boolean getF18() {
+        return f18;
+    }
+    
+    public boolean getF19() {
+        return f19;
+    }
+    
+    public boolean getF20() {
+        return f20;
+    }
+    
+    public boolean getF21() {
+        return f21;
+    }
+    
+    public boolean getF22() {
+        return f22;
+    }
+    
+    public boolean getF23() {
+        return f23;
+    }
+    
+    public boolean getF24() {
+        return f24;
+    }
+    
+    public boolean getF25() {
+        return f25;
+    }
+    
+    public boolean getF26() {
+        return f26;
+    }
+    
+    public boolean getF27() {
+        return f27;
+    }
+    
+    public boolean getF28() {
+        return f28;
+    }
 
     // function momentary status  - note that we use the naming for DCC, 
     // though that's not the implication;
@@ -157,6 +226,70 @@ abstract public class AbstractThrottle implements DccThrottle {
 
     public boolean getF12Momentary() {
         return f12Momentary;
+    }
+
+    public boolean getF13Momentary() {
+        return f13Momentary;
+    }
+
+    public boolean getF14Momentary() {
+        return f14Momentary;
+    }
+
+    public boolean getF15Momentary() {
+        return f15Momentary;
+    }
+
+    public boolean getF16Momentary() {
+        return f16Momentary;
+    }
+
+    public boolean getF17Momentary() {
+        return f17Momentary;
+    }
+
+    public boolean getF18Momentary() {
+        return f18Momentary;
+    }
+
+    public boolean getF19Momentary() {
+        return f19Momentary;
+    }
+
+    public boolean getF20Momentary() {
+        return f20Momentary;
+    }
+
+    public boolean getF21Momentary() {
+        return f21Momentary;
+    }
+
+    public boolean getF22Momentary() {
+        return f22Momentary;
+    }
+
+    public boolean getF23Momentary() {
+        return f23Momentary;
+    }
+
+    public boolean getF24Momentary() {
+        return f24Momentary;
+    }
+
+    public boolean getF25Momentary() {
+        return f25Momentary;
+    }
+
+    public boolean getF26Momentary() {
+        return f26Momentary;
+    }
+
+    public boolean getF27Momentary() {
+        return f27Momentary;
+    }
+
+    public boolean getF28Momentary() {
+        return f28Momentary;
     }
 
 
@@ -296,12 +429,93 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f12 = f12;
         sendFunctionGroup3();
     }
+    
+    public void setF13(boolean f13) {
+        this.f13 = f13;
+        sendFunctionGroup4();
+    }
+    
+    public void setF14(boolean f14) {
+        this.f14 = f14;
+        sendFunctionGroup4();
+    }
+    
+    public void setF15(boolean f15) {
+        this.f15 = f15;
+        sendFunctionGroup4();
+    }
+    
+    public void setF16(boolean f16) {
+        this.f16 = f16;
+        sendFunctionGroup4();
+    }
+    
+    public void setF17(boolean f17) {
+        this.f17 = f17;
+        sendFunctionGroup4();
+    }
+    
+    public void setF18(boolean f18) {
+        this.f18 = f18;
+        sendFunctionGroup4();
+    }
+    
+    public void setF19(boolean f19) {
+        this.f19 = f19;
+        sendFunctionGroup4();
+    }
+    
+    public void setF20(boolean f20) {
+        this.f20 = f20;
+        sendFunctionGroup4();
+    }
+    
+    public void setF21(boolean f21) {
+        this.f21 = f21;
+        sendFunctionGroup5();
+    }
+    
+    public void setF22(boolean f22) {
+        this.f22 = f22;
+        sendFunctionGroup5();
+    }
+    
+    public void setF23(boolean f23) {
+        this.f23 = f23;
+        sendFunctionGroup5();
+    }
+    
+    public void setF24(boolean f24) {
+        this.f24 = f24;
+        sendFunctionGroup5();
+    }
+    
+    public void setF25(boolean f25) {
+        this.f25 = f25;
+        sendFunctionGroup5();
+    }
+    
+    public void setF26(boolean f26) {
+        this.f26 = f26;
+        sendFunctionGroup5();
+    }
+    
+    public void setF27(boolean f27) {
+        this.f27 = f27;
+        sendFunctionGroup5();
+    }
+    
+    public void setF28(boolean f28) {
+        this.f28 = f28;
+        sendFunctionGroup5();
+    }
+
 
     /**
      * Send the message to set the state of
      * functions F0, F1, F2, F3, F4.
      * <P>
-     * This is used in the setFn implementations provided in this class,
+     * This is used in the s24 implementations provided in this class,
      * but a real implementation needs to be provided.
      */
     protected void sendFunctionGroup1() {
@@ -328,6 +542,29 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     protected void sendFunctionGroup3() {
         log.error("sendFunctionGroup3 needs to be implemented if invoked");
+    }
+    
+    /**
+     * Send the message to set the state of
+     * functions F13, F14, F15, F16, F17, F18, F19, F20
+     * <P>
+     * This is used in the setFn implementations provided in this class,
+     * but a real implementation needs to be provided.
+     */
+    protected void sendFunctionGroup4() {
+        log.error("sendFunctionGroup4 needs to be implemented if invoked");
+    }
+    
+    
+    /**
+     * Send the message to set the state of
+     * functions F21, F22, F23, F24, F25, F26, F27, F28
+     * <P>
+     * This is used in the setFn implementations provided in this class,
+     * but a real implementation needs to be provided.
+     */
+    protected void sendFunctionGroup5() {
+        log.error("sendFunctionGroup5 needs to be implemented if invoked");
     }
 
     // function momentary status  - note that we use the naming for DCC, 
@@ -398,6 +635,86 @@ abstract public class AbstractThrottle implements DccThrottle {
         sendMomentaryFunctionGroup3();
     }
 
+    public void setF13Momentary(boolean f13Momentary) {
+        this.f13Momentary = f13Momentary;
+        sendMomentaryFunctionGroup4();
+    }
+
+    public void setF14Momentary(boolean f14Momentary) {
+        this.f14Momentary = f14Momentary;
+        sendMomentaryFunctionGroup4();
+    }
+
+    public void setF15Momentary(boolean f15Momentary) {
+        this.f15Momentary = f15Momentary;
+        sendMomentaryFunctionGroup4();
+    }
+
+    public void setF16Momentary(boolean f16Momentary) {
+        this.f16Momentary = f16Momentary;
+        sendMomentaryFunctionGroup4();
+    }
+
+    public void setF17Momentary(boolean f17Momentary) {
+        this.f17Momentary = f17Momentary;
+        sendMomentaryFunctionGroup4();
+    }
+
+    public void setF18Momentary(boolean f18Momentary) {
+        this.f18Momentary = f18Momentary;
+        sendMomentaryFunctionGroup4();
+    }
+
+    public void setF19Momentary(boolean f19Momentary) {
+        this.f19Momentary = f19Momentary;
+        sendMomentaryFunctionGroup4();
+    }
+
+    public void setF20Momentary(boolean f20Momentary) {
+        this.f20Momentary = f20Momentary;
+        sendMomentaryFunctionGroup4();
+    }
+
+    public void setF21Momentary(boolean f21Momentary) {
+        this.f21Momentary = f21Momentary;
+        sendMomentaryFunctionGroup5();
+    }
+
+    public void setF22Momentary(boolean f22Momentary) {
+        this.f22Momentary = f22Momentary;
+        sendMomentaryFunctionGroup5();
+    }
+
+    public void setF23Momentary(boolean f23Momentary) {
+        this.f23Momentary = f23Momentary;
+        sendMomentaryFunctionGroup5();
+    }
+
+    public void setF24Momentary(boolean f24Momentary) {
+        this.f24Momentary = f24Momentary;
+        sendMomentaryFunctionGroup5();
+    }
+
+    public void setF25Momentary(boolean f25Momentary) {
+        this.f25Momentary = f25Momentary;
+        sendMomentaryFunctionGroup5();
+    }
+
+    public void setF26Momentary(boolean f26Momentary) {
+        this.f26Momentary = f26Momentary;
+        sendMomentaryFunctionGroup5();
+    }
+
+    public void setF27Momentary(boolean f27Momentary) {
+        this.f27Momentary = f27Momentary;
+        sendMomentaryFunctionGroup5();
+    }
+
+    public void setF28Momentary(boolean f28Momentary) {
+        this.f28Momentary = f28Momentary;
+        sendMomentaryFunctionGroup5();
+    }
+
     /**
      * Send the message to set the momentary state of
      * functions F0, F1, F2, F3, F4.
@@ -429,6 +746,32 @@ abstract public class AbstractThrottle implements DccThrottle {
      * hardware supports setting functions momentary.
      */
     protected void sendMomentaryFunctionGroup3() {
+    }
+    
+    /**
+     * Send the message to set the Momentary state of
+     * functions F13, F14, F15, F16, F17, F18, F19, F20
+     * <P>
+     * This is used in the setFnMomentary implementations provided in this 
+     * class, but a real implementation needs to be provided if the 
+     * hardware supports setting functions momentary.
+     */
+    protected void sendMomentaryFunctionGroup4() {
+        log.error("sendMomentaryFunctionGroup4 needs to be implemented if invoked");
+    }
+
+    
+    /**
+     * Send the message to set the Momentary state of
+     * functions F21, F22, F23, F24, F25, F26, F27, F28
+     * <P>
+     * This is used in the setFnMomentary implementations provided in this 
+     * class, but a real implementation needs to be provided if the 
+     * hardware supports setting functions momentary.
+     */
+    protected void sendMomentaryFunctionGroup5() {
+        log.error("sendMomentaryFunctionGroup5 needs to be implemented if invoked");
+
     }
 
 

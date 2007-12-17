@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
  * Also checks for March 2007 EPROM and warns user about Monitoring feedback.
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  * 
  */
 
@@ -43,12 +43,21 @@ public class NceEpromChecker implements NceListener {
 	// When used with PH-Pro or PH-10 - 6.3.2 (limited set of features available
 	// through cab bus)
 	//
+	// Future version of PowerCab V1.61 - 6.3.4
+	// Future version of SB3 V1.61 - 6.3.5
+	//
 	// NOTE: The USB port can not read CS memory 	
 	private static final int VV_USB = 6; 		// Revision of USB EPROM VV.MM.mm = 6.3.x
 	private static final int MM_USB = 3;
 	private static final int mm_USB_PwrCab = 0; // PowerCab
 	private static final int mm_USB_SB3 = 1; 	// SB3
 	private static final int mm_USB_PH = 2; 	// PH-Pro or PH-10
+	
+	// Future releases by NCE (Not used by JMRI yet!)
+	
+	private static final int mm_USB_ALL = 3;	// All systems, not currently used
+	private static final int mm_USB_PC161 = 4; 	// Future use, PowerCab 1.61, not currently used
+	private static final int mm_USB_SB161 = 5; 	// Future use, SB3 1.61, not currently used
 
 	public NceMessage NceEpromPoll() {
 

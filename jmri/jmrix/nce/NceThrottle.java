@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractThrottle;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 public class NceThrottle extends AbstractThrottle
 {
@@ -41,6 +41,22 @@ public class NceThrottle extends AbstractThrottle
         this.f10           = false;
         this.f11           = false;
         this.f12           = false;
+        this.f13           = false;
+        this.f14           = false;
+        this.f15           = false;
+        this.f16           = false;
+        this.f17           = false;
+        this.f18           = false;
+        this.f19           = false;
+        this.f20           = false;
+        this.f21           = false;
+        this.f22           = false;
+        this.f23           = false;
+        this.f24           = false;
+        this.f25           = false;
+        this.f26           = false;
+        this.f27           = false;
+        this.f28           = false;
         this.address      = address;
         this.isForward    = true;
 
@@ -146,6 +162,54 @@ public class NceThrottle extends AbstractThrottle
 			NceTrafficController.instance().sendNceMessage(m, null);
 		}
 	}
+
+    /**
+	 * Send the message to set the state of functions F13, F14, F15, F16, F17, F18, F19, F20
+	 */
+    protected void sendFunctionGroup4() {
+			int locoAddr = address.getNumber();
+			if (address.isLongAddress())
+				locoAddr += 0xC000;
+			
+			int data = 0x00 |
+	        ( f20 ? 0x80 : 0) |
+	        ( f19 ? 0x40 : 0) |
+	        ( f18 ? 0x20 : 0) |
+	        ( f17 ? 0x10 : 0) |
+            ( f16 ? 0x08 : 0) |
+            ( f15 ? 0x04 : 0) |
+            ( f14 ? 0x02 : 0) |
+            ( f13 ? 0x01 : 0);
+			
+			byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr,
+					NceBinaryCommand.LOCO_CMD_FG4, (byte) data);
+			NceMessage m = NceMessage.createBinaryMessage(bl);
+			NceTrafficController.instance().sendNceMessage(m, null);
+		}
+
+    /**
+	 * Send the message to set the state of functions F13, F14, F15, F16, F17, F18, F19, F20
+	 */
+    protected void sendFunctionGroup5() {
+			int locoAddr = address.getNumber();
+			if (address.isLongAddress())
+				locoAddr += 0xC000;
+			
+			int data = 0x00 |
+	        ( f28 ? 0x80 : 0) |
+	        ( f27 ? 0x40 : 0) |
+	        ( f26 ? 0x20 : 0) |
+	        ( f25 ? 0x10 : 0) |
+            ( f24 ? 0x08 : 0) |
+            ( f23 ? 0x04 : 0) |
+            ( f22 ? 0x02 : 0) |
+            ( f21 ? 0x01 : 0);
+			
+			byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr,
+					NceBinaryCommand.LOCO_CMD_FG5, (byte) data);
+			NceMessage m = NceMessage.createBinaryMessage(bl);
+			NceTrafficController.instance().sendNceMessage(m, null);
+		}
 
     /**
 	 * Set the speed & direction.

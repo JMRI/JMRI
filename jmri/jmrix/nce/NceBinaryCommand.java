@@ -70,7 +70,7 @@ package jmri.jmrix.nce;
   * Also see NceMessage.java for additional commands
   * 
   * @author Daniel Boudreau (C) 2007
-  * @version     $Revision: 1.18 $
+  * @version     $Revision: 1.19 $
   */
 
 public class NceBinaryCommand {
@@ -313,6 +313,9 @@ public class NceBinaryCommand {
 	public static final byte LOCO_CMD_FG1 = 0x07;					//function group 1
 	public static final byte LOCO_CMD_FG2 = 0x08;					//function group 2
 	public static final byte LOCO_CMD_FG3 = 0x09;					//function group 3
+	public static final byte LOCO_CMD_FG4 = 0x15;					//function group 4
+	public static final byte LOCO_CMD_FG5 = 0x16;					//function group 5
+
 	
 	// OxA2 sub commands consist
 	public static final byte LOCO_CMD_REV_CONSIST_LEAD = 0x0A;		//reverse consist address for lead loco

@@ -43,7 +43,7 @@ import org.jdom.Element;
  *  directed by the interface.
  *
  * @author     Glen Oberhauser
- * @version    $Revision: 1.31 $
+ * @version    $Revision: 1.32 $
  */
 /**
  * @author DSM
@@ -182,10 +182,10 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
 
                 // assumes button width of 54, height of 30 (set in class FunctionButton) with
                 // horiz and vert gaps of 5 each (set in FunctionPanel class)
-                // with 3 buttons across and 5 rows high
-                // width = 3*54 + 2*3*5 = 192
-                // height = 5*30 + 2*5*5 = 200 (but there seems to be another 10 needed for some LAFs)
-                functionPanel.setSize(192, 210);
+                // with 3 buttons across and 6 rows high
+        int width = 3*(FunctionButton.BUT_WDTH) + 2*3*5; 		// = 192
+        int height = 6*(FunctionButton.BUT_HGHT) + 2*6*5 +10;	// = 240 (but there seems to be another 10 needed for some LAFs)
+        functionPanel.setSize(width, height);
 		functionPanel.setLocation(controlPanel.getWidth(), 0);
 		functionPanel.setVisible(true);
 		functionPanel.setEnabled(false);
