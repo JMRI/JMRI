@@ -30,7 +30,7 @@ import javax.swing.*;
  * contact NCE Inc for separate permission.
  *
  * @author			Ken Cameron   Copyright (C) 2007
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  *
  * derived from loconet.clockmonframe by Bob Jacobson Copyright (C) 2003
  * 
@@ -554,9 +554,10 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
                 return;
             }
         }
-        log.error(rb.getString("LogReplyEnexpected"));
+        log.error(rb.getString("LogReplyUnexpected"));
         return;
     }
+    
     private void callStateMachines(){
         if (internalSyncInitStateCounter > 0) {
             internalSyncInitStates();
@@ -657,12 +658,12 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         int delay = 1000;
         if (alarmSyncUpdate == null){
             alarmSyncUpdate = new javax.swing.Timer(delay,
-                                                    new java.awt.event.ActionListener() {
-                                                        public void actionPerformed(java.awt.event.ActionEvent e) {
-                                                            alarmSyncHandler();
-                                                        }
-                                                    }
-                                                    );
+            		new java.awt.event.ActionListener() {
+            			public void actionPerformed(java.awt.event.ActionEvent e) {
+            				alarmSyncHandler();
+            			}
+            		}
+            );
             if (clockMode == SYNCMODE_INTERNAL_MASTER) {
                 delay = (int)(syncInterval * 1000 / nceLastRatio);
                 alarmSyncUpdate.setRepeats(false);
@@ -1628,7 +1629,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         waitingForCmdTime = true;
         jmri.jmrix.nce.NceTrafficController.instance().sendNceMessage(cmdNce, this);
     }
-    
+   
     private void issueClockRatio(int r) {
         byte [] cmd = jmri.jmrix.nce.NceBinaryCommand.accSetClockRatio(r);
         NceMessage cmdNce = jmri.jmrix.nce.NceMessage.createBinaryMessage(cmd, CMD_CLOCK_SET_REPLY_SIZE);
