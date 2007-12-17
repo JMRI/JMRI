@@ -29,7 +29,7 @@ import javax.comm.SerialPort;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.28 $
+ * @version			$Revision: 1.29 $
  */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -145,6 +145,8 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
 
         jmri.InstanceManager.setThrottleManager(new jmri.jmrix.nce.NceThrottleManager());
 
+        jmri.InstanceManager.addClockControl(new jmri.jmrix.nce.NceClockControl());
+        
         jmri.jmrix.nce.ActiveFlag.setActive();
 
         if (getCurrentOption1Setting().equals(validOption1()[1])) {
