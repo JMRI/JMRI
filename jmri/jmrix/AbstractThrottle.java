@@ -13,7 +13,7 @@ import java.util.Vector;
  * it has some DCC-specific content.
  *
  * @author  Bob Jacobsen  Copyright (C) 2001, 2005
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 abstract public class AbstractThrottle implements DccThrottle {
     protected float speedSetting;
@@ -515,7 +515,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      * Send the message to set the state of
      * functions F0, F1, F2, F3, F4.
      * <P>
-     * This is used in the s24 implementations provided in this class,
+     * This is used in the setFn implementations provided in this class,
      * but a real implementation needs to be provided.
      */
     protected void sendFunctionGroup1() {
