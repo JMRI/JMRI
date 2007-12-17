@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the SerialTrafficController class
  * @author			Bob Jacobsen
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 package jmri.jmrix.oaktree;
@@ -46,6 +46,7 @@ public class SerialTrafficControllerTest extends TestCase {
         Assert.assertEquals("3rd Node after del", d, c.getSerialNode(2) );
         Assert.assertEquals("no more Nodes after del", null, c.getSerialNode(3) );
         c.deleteSerialNode(1);
+        jmri.util.JUnitAppender.assertWarnMessage("Deleting the serial node active in the polling loop");
         Assert.assertEquals("1st Node after del2", f, c.getSerialNode(0) );
         Assert.assertEquals("2nd Node after del2", d, c.getSerialNode(1) );
         Assert.assertEquals("no more Nodes after del2", null, c.getSerialNode(2) );        
@@ -60,13 +61,13 @@ public class SerialTrafficControllerTest extends TestCase {
         c.setSerialOutput("OL5B2",false);
         c.setSerialOutput("OL5B1",false);
         c.setSerialOutput("OL5B23",false);
-        c.setSerialOutput("OL5B41",false);
-        c.setSerialOutput("OL5B25",false);
+        c.setSerialOutput("OL5B22",false);
+        c.setSerialOutput("OL5B21",false);
         c.setSerialOutput("OL5B2",true);
         c.setSerialOutput("OL5B19",false);
         c.setSerialOutput("OL5B5",false);
-        c.setSerialOutput("OL5B26",false);
-        c.setSerialOutput("OL5B48",false);
+        c.setSerialOutput("OL5B20",false);
+        c.setSerialOutput("OL5B17",false);
         Assert.assertTrue("must Send on", g.mustSend() );
         SerialMessage m = g.createOutPacket();
         Assert.assertEquals("packet size", 5, m.getNumDataElements() );
@@ -149,7 +150,10 @@ public class SerialTrafficControllerTest extends TestCase {
         TestSuite suite = new TestSuite(SerialTrafficControllerTest.class);
         return suite;
     }
-
+    // The minimal setup for log4J
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTrafficControllerTest.class.getName());
 
 }

@@ -12,11 +12,21 @@ import jmri.*;
  *
  * Description:	    tests for the SerialTurnoutManager class
  * @author			Bob Jacobsen
- * @version  $Revision: 1.1 $
+ * @version  $Revision: 1.2 $
  */
 public class SerialTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 
 	public void setUp() {
+	    apps.tests.Log4JFixture.setUp();
+	    
+	    // replace the SerialTrafficController
+	    SerialTrafficController t = new SerialTrafficController() {
+	        SerialTrafficController test() {
+	            setInstance();
+	            return this;
+	        }
+	    }.test();
+		t.registerSerialNode(new SerialNode(0, SerialNode.IO48));
 		// create and register the manager object
 		l = new SerialTurnoutManager();
 		jmri.InstanceManager.setTurnoutManager(l);
@@ -52,7 +62,7 @@ public class SerialTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {SerialTurnoutManager.class.getName()};
+		String[] testCaseName = {SerialTurnoutManagerTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 
@@ -62,7 +72,9 @@ public class SerialTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 		TestSuite suite = new TestSuite(SerialTurnoutManagerTest.class);
 		return suite;
 	}
-
-	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTurnoutManagerTest.class.getName());
+    // The minimal setup for log4J
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+	
+	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTurnoutManagerTest.class.getName());
 
 }

@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the SerialNode class
  * @author		Bob Jacobsen  Copyright 2003
  * @author		Dave Duchamp  multi-node extensions 2003
- * @version		$Revision: 1.3 $
+ * @version		$Revision: 1.4 $
  */
 public class SerialNodeTest extends TestCase {
 		
@@ -53,13 +53,13 @@ public class SerialNodeTest extends TestCase {
         g.setOutputBit(2,false);
         g.setOutputBit(1,false);
         g.setOutputBit(23,false);
-        g.setOutputBit(41,false);
+        g.setOutputBit(21,false);
         g.setOutputBit(31,false);
         g.setOutputBit(2,true);
         g.setOutputBit(19,false);
         g.setOutputBit(5,false);
         g.setOutputBit(26,false);
-        g.setOutputBit(48,false);
+        g.setOutputBit(28,false);
         Assert.assertTrue("must Send on", g.mustSend() );
         SerialMessage m = g.createOutPacket();
         Assert.assertEquals("packet size", 5, m.getNumDataElements() );
