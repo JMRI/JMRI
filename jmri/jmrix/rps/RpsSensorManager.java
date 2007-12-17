@@ -13,7 +13,7 @@ import jmri.jmrix.AbstractMRReply;
  * CSV representation of the region.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2007
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class RpsSensorManager extends jmri.AbstractSensorManager {
 
@@ -45,11 +45,11 @@ public class RpsSensorManager extends jmri.AbstractSensorManager {
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RpsSensorManager.class.getName());
 
     static { // class initialization
-        // now want a SensorManager
+        // now want a SensorManager always, not just when RPS is created
         if (_instance == null) {
             _instance = new RpsSensorManager();
             jmri.InstanceManager.setSensorManager(jmri.jmrix.rps.RpsSensorManager.instance());
-            log.warn("Setting RpsSensorManager instance at startup time!");
+            // log.warn("Setting RpsSensorManager instance at startup time!");
         }
     }
 }
