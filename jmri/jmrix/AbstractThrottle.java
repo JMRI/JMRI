@@ -13,7 +13,7 @@ import java.util.Vector;
  * it has some DCC-specific content.
  *
  * @author  Bob Jacobsen  Copyright (C) 2001, 2005
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 abstract public class AbstractThrottle implements DccThrottle {
     protected float speedSetting;
@@ -757,8 +757,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      * hardware supports setting functions momentary.
      */
     protected void sendMomentaryFunctionGroup4() {
-        log.error("sendMomentaryFunctionGroup4 needs to be implemented if invoked");
-    }
+     }
 
     
     /**
@@ -770,8 +769,6 @@ abstract public class AbstractThrottle implements DccThrottle {
      * hardware supports setting functions momentary.
      */
     protected void sendMomentaryFunctionGroup5() {
-        log.error("sendMomentaryFunctionGroup5 needs to be implemented if invoked");
-
     }
 
 
