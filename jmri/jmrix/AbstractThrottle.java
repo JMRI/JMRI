@@ -1,6 +1,10 @@
 package jmri.jmrix;
 
 import jmri.DccThrottle;
+import jmri.CommandStation;
+import jmri.DccLocoAddress;
+import jmri.InstanceManager;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Vector;
@@ -13,7 +17,7 @@ import java.util.Vector;
  * it has some DCC-specific content.
  *
  * @author  Bob Jacobsen  Copyright (C) 2001, 2005
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 abstract public class AbstractThrottle implements DccThrottle {
     protected float speedSetting;
@@ -552,9 +556,19 @@ abstract public class AbstractThrottle implements DccThrottle {
      * but a real implementation needs to be provided.
      */
     protected void sendFunctionGroup4() {
-        log.error("sendFunctionGroup4 needs to be implemented if invoked");
+        DccLocoAddress a = (DccLocoAddress) getLocoAddress();
+        byte[] result = jmri.NmraPacket.function13Through20Packet(
+                a.getNumber(), a.isLongAddress(), 
+                getF13(), getF14(), getF15(), getF16(),
+                getF17(), getF18(), getF19(), getF20());
+        // send it 3 times
+        CommandStation c = InstanceManager.commandStationInstance();
+        if (c != null) 
+            c.sendPacket(result,3);
+        else
+            log.error("Can't send F13-F20 since no command station defined");
+        return;
     }
-    
     
     /**
      * Send the message to set the state of
@@ -564,8 +578,20 @@ abstract public class AbstractThrottle implements DccThrottle {
      * but a real implementation needs to be provided.
      */
     protected void sendFunctionGroup5() {
-        log.error("sendFunctionGroup5 needs to be implemented if invoked");
+        DccLocoAddress a = (DccLocoAddress) getLocoAddress();
+        byte[] result = jmri.NmraPacket.function21Through28Packet(
+                a.getNumber(), a.isLongAddress(), 
+                getF21(), getF22(), getF23(), getF24(),
+                getF25(), getF26(), getF27(), getF28());
+        // send it 3 times
+        CommandStation c = InstanceManager.commandStationInstance();
+        if (c != null) 
+            c.sendPacket(result,3);
+        else
+            log.error("Can't send F21-F28 since no command station defined");
+        return;
     }
+    
 
     // function momentary status  - note that we use the naming for DCC, 
     // though that's not the implication;
