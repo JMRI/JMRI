@@ -41,7 +41,7 @@ import java.awt.event.*;
  * @author      Ken Cameron Copyright (C) 2007
  * @author      Dave Duchamp Copyright (C) 2007
  * @author		Bob Jacobsen, Alex Shepherd
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class NceClockControl extends DefaultClockControl implements NceListener
 {
@@ -223,12 +223,18 @@ public class NceClockControl extends DefaultClockControl implements NceListener
     
     /** name of Nce clock */
 	public String getHardwareClockName() {
+		if (log.isDebugEnabled()){
+			log.debug("getHardwareClockName");
+		}
 		return ("Nce Fast Clock");
 	}
 	
-	/** supports adjusting Nce clock */
+	/** Nce clock runs stable enough */
 	public boolean canCorrectHardwareClock() {
-		return true;
+		if (log.isDebugEnabled()){
+			log.debug("getHardwareClockName");
+		}
+		return false;
 	}
 	
 	/** sets Nce clock speed, must be 1 to 15 */
@@ -246,6 +252,9 @@ public class NceClockControl extends DefaultClockControl implements NceListener
 	
 	/** Nce only supports integer rates */
 	public boolean requiresIntegerRate() {
+		if (log.isDebugEnabled()){
+			log.debug("requiresIntegerRate");
+		}
 		return true;
 	}
 	
@@ -299,7 +308,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
 	/** not ksc */
 	public void initializeHardwareClock(double rate, Date now, boolean getTime) {
 		if (log.isDebugEnabled()){
-			log.debug("initializeHardwareClock");
+			log.debug("initializeHardwareClock(" + rate + ", " + now + ", " + getTime + "}");
 		}
 	}
 	
