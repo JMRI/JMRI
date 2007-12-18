@@ -18,7 +18,7 @@ import java.util.Vector;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class NetworkDriverAdapter extends EasyDccPortController {
 
@@ -42,6 +42,8 @@ public class NetworkDriverAdapter extends EasyDccPortController {
         // happens AFTER the programmer manager to override the default   
         // consist manager.
         jmri.InstanceManager.setConsistManager(new jmri.jmrix.easydcc.EasyDccConsistManager());
+
+        jmri.InstanceManager.setCommandStation(new jmri.jmrix.easydcc.EasyDccCommandStation());
 
         jmri.jmrix.easydcc.ActiveFlag.setActive();
     }

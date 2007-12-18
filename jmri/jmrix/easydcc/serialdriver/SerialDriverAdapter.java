@@ -26,7 +26,7 @@ import javax.comm.SerialPort;
  * not use any other options at configuration time.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.18 $
+ * @version	$Revision: 1.19 $
  */
 public class SerialDriverAdapter extends EasyDccPortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -139,6 +139,8 @@ public class SerialDriverAdapter extends EasyDccPortController  implements jmri.
         // consist manager. 
         jmri.InstanceManager.setConsistManager(new jmri.jmrix.easydcc.EasyDccConsistManager());
 
+        jmri.InstanceManager.setCommandStation(new jmri.jmrix.easydcc.EasyDccCommandStation());
+        
         jmri.jmrix.easydcc.ActiveFlag.setActive();
     }
 
