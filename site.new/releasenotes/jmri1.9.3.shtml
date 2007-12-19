@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.9.3.shtml,v 1.4 2007-12-18 04:52:31 jacobsen Exp $ -->
+<!-- $Id: jmri1.9.3.shtml,v 1.5 2007-12-19 06:52:11 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -145,8 +145,7 @@ The help system search is working again.
 Added a sample script (<a href="http://jmri.sf.net/jython/AD4OnOff.py">jython/AD4OnOff.py</a>) that gives you a checkbox on the screen to turn on and off local control of AD4-connected turnouts.
 
 <p>
-Dick Bronson provided new sounds, icons and backgrounds for use in creating USS CTC panels.
-
+Dick Bronson provided new sounds, icons and backgrounds for use in creating USS CTC panels. Particularly interesting are the images in the resources/icons/USS/background/ folder, with which you can build up a realistic USS CTC panel of any (reasonable) size.
 <p>
 Dan Boudreau has updated the throttle to have functions up to F28. The popup menu on each function button lets you configure which function is on which button.
 
