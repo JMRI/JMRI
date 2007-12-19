@@ -41,7 +41,7 @@ import java.awt.event.*;
  * @author      Ken Cameron Copyright (C) 2007
  * @author      Dave Duchamp Copyright (C) 2007
  * @author		Bob Jacobsen, Alex Shepherd
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class NceClockControl extends DefaultClockControl implements NceListener
 {
@@ -365,10 +365,10 @@ public class NceClockControl extends DefaultClockControl implements NceListener
         			);
         }
         int newMode = SYNCMODE_OFF;
-        if (internalClock.getInternalMaster() == false && internalClock.getMasterName() == getHardwareClockName()) {
+        if (internalClock.getInternalMaster() == false && internalClock.getMasterName().equals(getHardwareClockName())) {
             newMode = SYNCMODE_NCE_MASTER;
         }
-        if (internalClock.getInternalMaster() == true && internalClock.getMasterName() != getHardwareClockName()) {
+        if (internalClock.getInternalMaster() == true) {
             newMode = SYNCMODE_INTERNAL_MASTER;
         }
         if (internalClock != null) {
@@ -378,36 +378,36 @@ public class NceClockControl extends DefaultClockControl implements NceListener
             if (oldMode != newMode) {
                 clockMode = SYNCMODE_OFF;
                 // some change so, change settings
-                if (oldMode == SYNCMODE_OFF) {
-                    if (newMode == SYNCMODE_INTERNAL_MASTER) {
-                    	log.debug("starting Internal mode");
-                        internalSyncInitStateCounter = 1;
-                        internalSyncRunStateCounter = 0;
-                        internalSyncInitStates();
-                        clockMode = SYNCMODE_INTERNAL_MASTER;
-                    }
-                    if (newMode == SYNCMODE_NCE_MASTER) {
-                    	log.debug("starting NCE mode");
-                        nceSyncInitStateCounter = 1;
-                        nceSyncRunStateCounter = 0;
-                        nceSyncInitStates();
-                        clockMode = SYNCMODE_NCE_MASTER;
-                    }
-                } else {
-                    if (oldMode == SYNCMODE_NCE_MASTER) {
-                        // clear nce sync
-                        nceSyncInitStateCounter = -1;
-                        nceSyncInitStates();
-                        internalSyncInitStateCounter = 1;
-                        internalSyncInitStates();
-                    }
-                    if (oldMode == SYNCMODE_INTERNAL_MASTER) {
-                        // clear internal mode
-                        internalSyncInitStateCounter = -1;
-                        internalSyncInitStates();
-                        nceSyncInitStateCounter = 1;
-                        nceSyncInitStates();
-                    }
+	            if (oldMode == SYNCMODE_NCE_MASTER) {
+	                // clear nce sync
+	            	log.debug("stopping Nce master sync");
+	                nceSyncInitStateCounter = -1;
+	                nceSyncInitStates();
+	                internalSyncInitStateCounter = 1;
+	                internalSyncInitStates();
+	            }
+	            if (oldMode == SYNCMODE_INTERNAL_MASTER) {
+	                // clear internal mode
+	            	log.debug("stopping Internal master sync");
+	                internalSyncInitStateCounter = -1;
+	                internalSyncInitStates();
+	                nceSyncInitStateCounter = 1;
+	                nceSyncInitStates();
+	            }
+                // now we've stopped anything running, see what to start
+                if (newMode == SYNCMODE_INTERNAL_MASTER) {
+                	log.debug("starting Internal master mode");
+                    internalSyncInitStateCounter = 1;
+                    internalSyncRunStateCounter = 0;
+                    internalSyncInitStates();
+                    clockMode = SYNCMODE_INTERNAL_MASTER;
+                }
+                if (newMode == SYNCMODE_NCE_MASTER) {
+                	log.debug("starting NCE master mode");
+                    nceSyncInitStateCounter = 1;
+                    nceSyncRunStateCounter = 0;
+                    nceSyncInitStates();
+                    clockMode = SYNCMODE_NCE_MASTER;
                 }
             }
         }
