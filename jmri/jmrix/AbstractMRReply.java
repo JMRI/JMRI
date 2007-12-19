@@ -8,7 +8,7 @@ package jmri.jmrix;
  * Handles the character manipulation.
  *
  * @author		Bob Jacobsen  Copyright (C) 2003
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 abstract public class AbstractMRReply {
     // is this logically an abstract class?
@@ -45,6 +45,9 @@ abstract public class AbstractMRReply {
     public void setElement(int n, int v) {
         _dataChars[n] = (char) v;
         _nDataChars = Math.max(_nDataChars, n+1);
+    }
+    public void flush(){
+    	_nDataChars = 0;
     }
 
     // mode accessors

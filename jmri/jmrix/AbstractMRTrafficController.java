@@ -26,7 +26,7 @@ import java.util.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.38 $
+ * @version			$Revision: 1.39 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -325,10 +325,12 @@ abstract public class AbstractMRTrafficController {
     }
 
     private int timeouts = 0;
+    private boolean flushReceiveChars = false;
     protected void handleTimeout(AbstractMRMessage msg) {
         log.warn("Timeout on reply to message: "+msg.toString()+
                 " consecutive timeouts = "+timeouts);
         timeouts++;
+        flushReceiveChars = true;
     }
     protected void resetTimeout(AbstractMRMessage msg) {
         if (timeouts>0) log.debug("Reset timeout after "+timeouts+" timeouts");
@@ -574,15 +576,36 @@ abstract public class AbstractMRTrafficController {
      * @param istream character source.
      * @throws IOException when presented by the input source.
      */
-    protected void loadChars(AbstractMRReply msg, DataInputStream istream) throws java.io.IOException {
-        int i;
-        for (i = 0; i < msg.maxSize(); i++) {
-            byte char1 = readByteProtected(istream);
-            msg.setElement(i, char1);
-            if (endOfMessage(msg)) {
-                break;
-            } 
-        }
+    protected void loadChars(AbstractMRReply msg, DataInputStream istream)
+			throws java.io.IOException {
+		int i;
+		for (i = 0; i < msg.maxSize(); i++) {
+			byte char1 = readByteProtected(istream);
+			// if there was a timeout, flush any char received and start over
+			if(flushReceiveChars){
+				log.warn("timeout flushs receive buffer: "+ msg.toString());
+				msg.flush();
+				i = 0;	// restart
+				flushReceiveChars = false;
+			}
+			if (canReceive()) {
+				msg.setElement(i, char1);
+				if (endOfMessage(msg))
+					break;
+			} else {
+				i--; // flush char
+				log.error("unsolicited character received: "+ Integer.toHexString(char1));
+			}
+		}
+	}
+    
+    /**
+     * Override in the system specific code if necessary 
+     * @return true if it is okay to buffer receive characters
+     * into a reply message.  When false, discard char received
+     */
+    protected boolean canReceive(){
+    	return true;
     }
 
     /**

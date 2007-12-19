@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.22 $
+ * @version			$Revision: 1.23 $
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface {
 
@@ -159,6 +159,19 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         reply.setBinary(replyBinary);
         return reply;
     }
+    
+    // pre 2006 EPROMs can't stop AIU broadcasts so we have to accept them
+	protected boolean canReceive() {
+		if (NceMessage.getCommandOptions() < NceMessage.OPTION_2006) {
+			return true;
+		} else if (replyLen > 0) {
+			return true;
+		} else {
+			if (log.isDebugEnabled())
+				log.error("unsolicited character received");
+			return false;
+		}
+	}
 
     protected boolean endOfMessage(AbstractMRReply msg) {
         // first try boolean
