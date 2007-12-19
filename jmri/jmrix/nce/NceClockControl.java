@@ -41,7 +41,7 @@ import java.awt.event.*;
  * @author      Ken Cameron Copyright (C) 2007
  * @author      Dave Duchamp Copyright (C) 2007
  * @author		Bob Jacobsen, Alex Shepherd
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class NceClockControl extends DefaultClockControl implements NceListener
 {
@@ -145,7 +145,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
     }  
     
     public void reply(NceReply r) {
-    	if (log.isDebugEnabled() && true){
+    	if (log.isDebugEnabled() && false){
             log.debug("nceReplyCatcher() waiting: " + waiting +
         		" watingForRead: " + waitingForCmdRead +
         		" waitingForCmdTime: " + waitingForCmdTime +
@@ -223,7 +223,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
     
     /** name of Nce clock */
 	public String getHardwareClockName() {
-		if (log.isDebugEnabled()){
+		if (log.isDebugEnabled() && false){
 			log.debug("getHardwareClockName");
 		}
 		return ("Nce Fast Clock");
@@ -247,6 +247,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
 			log.error(rb.getString("LogNceClockRatioRangeError"));
 		} else {
         	issueClockRatio(newRatio);
+        	changeSyncMode();
 		}
 	}
 	
@@ -272,29 +273,34 @@ public class NceClockControl extends DefaultClockControl implements NceListener
 			log.debug("setTime: " + now);
 		}
 		issueClockSet(now.getHours(), now.getMinutes(), now.getSeconds());
+		changeSyncMode();
 	}
-	
-	/** returns the current Nce time, does not have a date component */
-	public Date getTime() {
-        Date now = internalClock.getTime();
-        if (lastClockReadPacket != null) {
-            now.setHours(lastClockReadPacket.getElement(CS_CLOCK_HOURS));
-            now.setMinutes(lastClockReadPacket.getElement(CS_CLOCK_MINUTES));
-            now.setSeconds(lastClockReadPacket.getElement(CS_CLOCK_SECONDS));
-        }
-        if (log.isDebugEnabled()){
-        	log.debug("getTime returning: " + now);
-        }
-        return(now);
-	}
+//	
+//	/** returns the current Nce time, does not have a date component */
+//	public Date getTime() {
+//        Date now = internalClock.getTime();
+//        if (lastClockReadPacket != null) {
+//            now.setHours(lastClockReadPacket.getElement(CS_CLOCK_HOURS));
+//            now.setMinutes(lastClockReadPacket.getElement(CS_CLOCK_MINUTES));
+//            now.setSeconds(lastClockReadPacket.getElement(CS_CLOCK_SECONDS));
+//        }
+//        if (log.isDebugEnabled()){
+//        	log.debug("getTime returning: " + now);
+//        }
+//        return(now);
+//	}
 	
 	/** set Nce clock and start clock */
 	public void startHardwareClock(Date now) {
 		if (log.isDebugEnabled()){
 			log.debug("startHardwareClock: " + now);
 		}
+		if (!internalClock.getInternalMaster() && internalClock.getMasterName() == getHardwareClockName()){
+			
+		}
 		issueClockSet(now.getHours(), now.getMinutes(), now.getSeconds());
 		issueClockStart();
+		changeSyncMode();
 	}
 	
 	/** stops the Nce Clock */
@@ -310,6 +316,9 @@ public class NceClockControl extends DefaultClockControl implements NceListener
 		if (log.isDebugEnabled()){
 			log.debug("initializeHardwareClock(" + rate + ", " + now + ", " + getTime + "}");
 		}
+		issueClockRatio((int)rate);
+		issueClockSet(now.getHours(), now.getMinutes(), now.getSeconds());
+		changeSyncMode();
 	}
 	
 	/** not ksc */
@@ -346,6 +355,64 @@ public class NceClockControl extends DefaultClockControl implements NceListener
         }
     }
 
+    /** determines what to do about mode changes */
+    private void changeSyncMode() {
+        int oldMode = clockMode;
+        if (log.isDebugEnabled() && true){
+        	log.debug("pre changeSyncMode was: " + oldMode 
+        			+ " intMaster: " + internalClock.getInternalMaster() 
+        			+ " master: " + internalClock.getMasterName()
+        			);
+        }
+        int newMode = SYNCMODE_OFF;
+        if (internalClock.getInternalMaster() == false && internalClock.getMasterName() == getHardwareClockName()) {
+            newMode = SYNCMODE_NCE_MASTER;
+        }
+        if (internalClock.getInternalMaster() == true && internalClock.getMasterName() != getHardwareClockName()) {
+            newMode = SYNCMODE_INTERNAL_MASTER;
+        }
+        if (internalClock != null) {
+            if (log.isDebugEnabled()) {
+                log.debug("post changeSyncMode(): New Mode: " + newMode + " Old Mode: " + oldMode);
+            }
+            if (oldMode != newMode) {
+                clockMode = SYNCMODE_OFF;
+                // some change so, change settings
+                if (oldMode == SYNCMODE_OFF) {
+                    if (newMode == SYNCMODE_INTERNAL_MASTER) {
+                    	log.debug("starting Internal mode");
+                        internalSyncInitStateCounter = 1;
+                        internalSyncRunStateCounter = 0;
+                        internalSyncInitStates();
+                        clockMode = SYNCMODE_INTERNAL_MASTER;
+                    }
+                    if (newMode == SYNCMODE_NCE_MASTER) {
+                    	log.debug("starting NCE mode");
+                        nceSyncInitStateCounter = 1;
+                        nceSyncRunStateCounter = 0;
+                        nceSyncInitStates();
+                        clockMode = SYNCMODE_NCE_MASTER;
+                    }
+                } else {
+                    if (oldMode == SYNCMODE_NCE_MASTER) {
+                        // clear nce sync
+                        nceSyncInitStateCounter = -1;
+                        nceSyncInitStates();
+                        internalSyncInitStateCounter = 1;
+                        internalSyncInitStates();
+                    }
+                    if (oldMode == SYNCMODE_INTERNAL_MASTER) {
+                        // clear internal mode
+                        internalSyncInitStateCounter = -1;
+                        internalSyncInitStates();
+                        nceSyncInitStateCounter = 1;
+                        nceSyncInitStates();
+                    }
+                }
+            }
+        }
+    }
+    
     private void alarmSyncStart(){
         // initialize things if not running
         Date now = internalClock.getTime();
