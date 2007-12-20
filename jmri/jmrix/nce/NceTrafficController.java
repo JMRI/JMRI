@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.23 $
+ * @version			$Revision: 1.24 $
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface {
 
@@ -73,13 +73,15 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 			if (log.isDebugEnabled())log.debug("Command options are not valid yet!!");
 			return null;
 		}
-
-		// Have we checked the EPROM revision yet?
-		if (pollEprom == null) {
-			// No, do it this time
-			// after the 1st time through, don't repeat checking the EPROM
-			pollEprom = new NceEpromChecker();
-			return pollEprom.NceEpromPoll();
+		
+		// Keep checking the state of the communication link by polling
+		// the command station using the EPROM checker
+		NceMessage m = pollEprom.NceEpromPoll();
+		if (m != null){
+			expectReplyEprom = true;
+			return m;
+		}else{
+			expectReplyEprom = false;
 		}
 		
 		// Have we checked to see if AIU broadcasts are enabled?
@@ -101,15 +103,17 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 
 	}
 
-	NceEpromChecker pollEprom = null;
+	NceEpromChecker pollEprom = new NceEpromChecker();
 	NceAIUChecker pollAiuStatus = null;
 	NceTurnoutMonitor pollHandler = null;
+	
+	boolean expectReplyEprom = false;
     
  
     protected AbstractMRListener pollReplyHandler() {
         // First time through, handle reply by checking EPROM revision
     	// Second time through, handle AIU broadcast check
-    	if (pollHandler == null && pollAiuStatus == null) return pollEprom;
+    	if (expectReplyEprom) return pollEprom;
     	else if (pollHandler == null) return pollAiuStatus;
     	else return pollHandler;
     }

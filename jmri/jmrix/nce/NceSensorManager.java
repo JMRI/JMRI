@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractMRReply;
  * see nextAiuPoll()
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class NceSensorManager extends jmri.AbstractSensorManager
                             implements NceListener {
@@ -185,14 +185,18 @@ public class NceSensorManager extends jmri.AbstractSensorManager
     						wait(pollTimeout);
     					} catch (InterruptedException e) { };
     				}
-    				if (awaitingReply) {
-    					log.warn("timeout awaiting poll response for AIU "+aiuNo);
-    				}
-    	    		int delay = shortCycleInterval;
+     	    		int delay = shortCycleInterval;
     	    		if (aiuCycleCount>=2 &&
     	    				lastMessageReceived>=System.currentTimeMillis()-maxSilentInterval) {
     	    			delay = longCycleInterval;
     	    		}
+    				if (awaitingReply) {
+    					log.warn("timeout awaiting poll response for AIU "+aiuNo);
+    					// slow down the poll since we're not getting responses
+    					// this lets NceEpromChecker to do its thing
+    					delay = pollTimeout;
+    				}
+   
     	    		synchronized (this) {
     	    			try {
     	    				awaitingDelay = true;

@@ -4,21 +4,33 @@ package jmri.jmrix.nce;
 
 import javax.swing.JOptionPane;
 
-/* 
+/* Continuously checks and confirms that the communication link to the
+ * NCE Command Station is operational by reading the revision number of
+ * the EPROM. Only invokes the EPROM read when the interface experiences 
+ * a timeout. 
+ * 
  * Checks revision of NCE CS by reading the 3 byte revision.
  * Sends a warning message NCE EPROM found & preferences
- * are not correct for revsion selected. 
+ * are not correct for revision selected. 
  * 
  * Also checks for March 2007 EPROM and warns user about Monitoring feedback.
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  * 
  */
 
 public class NceEpromChecker implements NceListener {
 
 	private static final int REPLY_LEN = 3; // number of bytes read
+	
+	// EPROM Checker states
+	
+	private static final int INIT_STATE = 0;	//Initial state
+	private static final int READ_STATE = 1;
+	private static final int CHECK_STATE = 2;	//Normal state
+	
+	private static int epromState = INIT_STATE;	//Eprom state
 
 	public static boolean nceEpromMarch2007 = false; // flag to allow JMRI to be bug for bug compatible
 	
@@ -60,6 +72,30 @@ public class NceEpromChecker implements NceListener {
 	private static final int mm_USB_SB161 = 5; 	// Future use, SB3 1.61, not currently used
 
 	public NceMessage NceEpromPoll() {
+		
+		if (epromState == CHECK_STATE)
+			// are there interface timeouts?
+			if (NceTrafficController.hasTimeouts()){
+				epromState = INIT_STATE;
+			}else{
+				return null;
+			}
+			
+		
+		// no response from command station?
+		if (epromState == READ_STATE){
+			log.error("Incorrect or no response from NCE command station");
+			JOptionPane.showMessageDialog(null,
+					"JMRI could not establish communication with NCE command station. \n"
+							+ "Check the \"Serial port:\" and \"Baud rate:\" in Edit -> Preferences. \n"
+							+ "Confirm cabling and that the NCE system is powered up.",
+					"Error", JOptionPane.ERROR_MESSAGE);
+			
+			epromState = CHECK_STATE;
+			return null;
+		}
+		// go ahead and read the EPROM revision
+		epromState = READ_STATE;
 
 		byte[] bl = NceBinaryCommand.getNceEpromRev();
 		NceMessage m = NceMessage.createBinaryMessage(bl, REPLY_LEN);
@@ -79,6 +115,15 @@ public class NceEpromChecker implements NceListener {
 			byte VV = (byte) r.getElement(0);
 			byte MM = (byte) r.getElement(1);
 			byte mm = (byte) r.getElement(2);
+			
+			// Is the reply valid? Check major revision VV_2004 = VV_2007 = VV_USB
+			if(VV != VV_2004 && VV != VV_1999){
+				log.error("Wrong major revision: "+ Integer.toHexString(VV & 0xFF));
+				return;
+			}
+			
+			// We got a valid reply so we're done!
+			epromState = CHECK_STATE;
 
 			// Send to log file the NCE EPROM revision
 			log.info("NCE EPROM revision = " + Integer.toHexString(VV & 0xFF)
