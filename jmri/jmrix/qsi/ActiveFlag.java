@@ -7,10 +7,10 @@ package jmri.jmrix.qsi;
  * this package is active.
  * <P>
  * This is a very light-weight class, carrying only the flag,
- * so as to limit the number of unneeded class loading.
+ * so as to limit the number of unneeded class loadings.
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 abstract public class ActiveFlag {
 

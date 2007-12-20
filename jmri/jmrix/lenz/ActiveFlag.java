@@ -7,10 +7,10 @@ package jmri.jmrix.lenz;
  * this package is active.
  * <P>
  * This is a very light-weight class, carrying only the flag,
- * so as to limit the number of unneeded class loading.
+ * so as to limit the number of unneeded class loadings.
  *
  * @author		Bob Jacobsen  Copyright (C) 2003
- * @version             $Revision: 2.0 $
+ * @version             $Revision: 2.1 $
  */
 abstract public class ActiveFlag {
 
