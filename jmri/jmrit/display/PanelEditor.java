@@ -47,7 +47,7 @@ import java.util.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003, 2007
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.72 $
+ * @version $Revision: 1.73 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -635,7 +635,9 @@ public class PanelEditor extends JmriJFrame {
      * differs from a regular icon only in the level at which it's presented.
      */
     void addBackground() {
-        if  (inputFileChooser == null) inputFileChooser = new JFileChooser(" ");
+        if  (inputFileChooser == null) inputFileChooser = new JFileChooser(jmri.jmrit.XmlFile.prefsDir());
+        inputFileChooser.rescanCurrentDirectory();
+        
         int retVal = inputFileChooser.showOpenDialog(this);
         if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
         log.debug("Open image file: "+inputFileChooser.getSelectedFile().getPath());
