@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  * Also checks for March 2007 EPROM and warns user about Monitoring feedback.
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  * 
  */
 
@@ -27,10 +27,21 @@ public class NceEpromChecker implements NceListener {
 	// EPROM Checker states
 	
 	private static final int INIT_STATE = 0;	//Initial state
-	private static final int READ_STATE = 1;
-	private static final int CHECK_STATE = 2;	//Normal state
+	private static final int WAIT_STATE = 1;	//Waiting for reply
+	private static final int ERROR_STATE = 2;	//Serial interface is not functioning properly
+	private static final int CHECK_STATE = 4;	//Normal state
+	
+	// all of the error states below display a JOptionPane error message
+	private static final int ERROR1_STATE = 8;	
+	private static final int ERROR2_STATE = 9;
+	private static final int ERROR3_STATE = 10;
+	private static final int ERROR4_STATE = 11;
+	private static final int ERROR5_STATE = 12;
+	private static final int ERROR6_STATE = 13;
+	private static final int ERROR7_STATE = 14;
 	
 	private static int epromState = INIT_STATE;	//Eprom state
+	private static boolean epromChecked = false;
 
 	public static boolean nceEpromMarch2007 = false; // flag to allow JMRI to be bug for bug compatible
 	
@@ -73,7 +84,7 @@ public class NceEpromChecker implements NceListener {
 
 	public NceMessage NceEpromPoll() {
 		
-		if (epromState == CHECK_STATE)
+		if (epromState == CHECK_STATE)			// normal state for this routine
 			// are there interface timeouts?
 			if (NceTrafficController.hasTimeouts()){
 				epromState = INIT_STATE;
@@ -81,9 +92,8 @@ public class NceEpromChecker implements NceListener {
 				return null;
 			}
 			
-		
 		// no response from command station?
-		if (epromState == READ_STATE){
+		if (epromState == WAIT_STATE){
 			log.error("Incorrect or no response from NCE command station");
 			JOptionPane.showMessageDialog(null,
 					"JMRI could not establish communication with NCE command station. \n"
@@ -91,11 +101,80 @@ public class NceEpromChecker implements NceListener {
 							+ "Confirm cabling and that the NCE system is powered up.",
 					"Error", JOptionPane.ERROR_MESSAGE);
 			
+			epromState = ERROR_STATE;
+		}
+		
+		// still no response from command station?
+		else if (epromState == ERROR_STATE){
+			log.error("No response from NCE command station");
+		}
+		
+		if (epromState == ERROR1_STATE){
+			JOptionPane.showMessageDialog(null,
+					"Wrong revision of Command Station EPROM selected in Preferences \n"
+							+ "Change the Command Station EPROM selection to \"2004 or earlier\"",
+					"Error", JOptionPane.ERROR_MESSAGE);
 			epromState = CHECK_STATE;
 			return null;
 		}
+		
+		if (epromState == ERROR2_STATE){
+			JOptionPane.showMessageDialog(null,
+					"Wrong revision of Command Station EPROM selected in Preferences \n"
+							+ "Change the Command Station EPROM selection to \"2006 or later\"",
+					"Error", JOptionPane.ERROR_MESSAGE);
+			epromState = CHECK_STATE;
+			return null;
+		}
+		
+		if (epromState == ERROR3_STATE){
+			// Need to add checkbox "Do not show this message again" otherwise the message can be a pain. 
+			//       		JOptionPane.showMessageDialog(null, "The 2007 March EPROM doesn't provide reliable feedback," +
+			//       				" contact NCE if you want to use MONITORING feedback  ",
+			//       				"Warning", JOptionPane.INFORMATION_MESSAGE);
+			epromState = CHECK_STATE;
+			return null;
+		}
+		
+		if (epromState == ERROR4_STATE){
+			JOptionPane.showMessageDialog(null,
+					"Wrong NCE layout connection selected in Preferences. "
+							+ "Change the layout connection to \"NCE\" or \"NCE via network\".",
+					"Error", JOptionPane.ERROR_MESSAGE);
+			epromState = CHECK_STATE;
+			return null;
+		}
+		
+		if (epromState == ERROR5_STATE){
+			JOptionPane.showMessageDialog(null,
+					"Wrong NCE layout connection selected in Preferences. "
+							+ "Change the layout connection to \"NCE USB\" and the system to \"PowerCab\".",
+					"Error", JOptionPane.ERROR_MESSAGE);
+			epromState = CHECK_STATE;
+			return null;
+		}
+		
+		if (epromState == ERROR6_STATE){
+			JOptionPane.showMessageDialog(null,
+					"Wrong NCE layout connection selected in Preferences. "
+							+ "Change the layout connection to \"NCE USB\" and the system to \"Smart Booster SB3\".",
+					"Error", JOptionPane.ERROR_MESSAGE);
+			epromState = CHECK_STATE;
+			return null;
+		}
+		
+		if (epromState == ERROR7_STATE){
+			JOptionPane.showMessageDialog(null,
+					"Wrong NCE layout connection selected in Preferences. "
+							+ "Change the layout connection to \"NCE USB\" and the system to \"PowerHouse\".",
+					"Error", JOptionPane.ERROR_MESSAGE);
+			epromState = CHECK_STATE;
+			return null;
+		}
+		
 		// go ahead and read the EPROM revision
-		epromState = READ_STATE;
+		if (epromState != ERROR_STATE)					// stay in error state until reply
+			epromState = WAIT_STATE;
 
 		byte[] bl = NceBinaryCommand.getNceEpromRev();
 		NceMessage m = NceMessage.createBinaryMessage(bl, REPLY_LEN);
@@ -124,6 +203,11 @@ public class NceEpromChecker implements NceListener {
 			
 			// We got a valid reply so we're done!
 			epromState = CHECK_STATE;
+			
+			// Have we already done the error checking?
+			if (epromChecked)
+				return;
+			epromChecked =true;
 
 			// Send to log file the NCE EPROM revision
 			log.info("NCE EPROM revision = " + Integer.toHexString(VV & 0xFF)
@@ -138,10 +222,7 @@ public class NceEpromChecker implements NceListener {
 								+ Integer.toHexString(MM & 0xFF)+ "."
 								+ Integer.toHexString(mm & 0xFF)
 								+ ") of the NCE Command Station EPROM selected in Preferences");
-				JOptionPane.showMessageDialog(null,
-								"Wrong revision of Command Station EPROM selected in Preferences \n"
-										+ "Change the Command Station EPROM selection to \"2004 or earlier\"",
-								"Error", JOptionPane.ERROR_MESSAGE);
+				epromState = ERROR1_STATE;
 			}
 
 			// Confirm that user selected correct revision of EPROM, check for new EPROM installed, old EPROM preferences
@@ -153,10 +234,7 @@ public class NceEpromChecker implements NceListener {
 								+ Integer.toHexString(MM & 0xFF)+ "."
 								+ Integer.toHexString(mm & 0xFF)
 								+ ") of the NCE Command Station EPROM selected in Preferences");
-				JOptionPane.showMessageDialog(null,
-								"Wrong revision of Command Station EPROM selected in Preferences \n"
-										+ "Change the Command Station EPROM selection to \"2006 or later\"",
-								"Error", JOptionPane.ERROR_MESSAGE);
+				epromState = ERROR2_STATE;
 			}
 
 			// Warn about the March 2007 CS EPROM	
@@ -167,10 +245,7 @@ public class NceEpromChecker implements NceListener {
 								+ Integer.toHexString(MM & 0xFF)+ "."
 								+ Integer.toHexString(mm & 0xFF)
 								+ ") of the NCE Command Station EPROM has problems with MONITORING feedback");
-				// Need to add checkbox "Do not show this message again" otherwise the message can be a pain. 
-				//       		JOptionPane.showMessageDialog(null, "The 2007 March EPROM doesn't provide reliable feedback," +
-				//       				" contact NCE if you want to use MONITORING feedback  ",
-				//       				"Warning", JOptionPane.INFORMATION_MESSAGE);
+				epromState = ERROR3_STATE;
 			}
 
 			// Check that layout connection is correct
@@ -179,10 +254,7 @@ public class NceEpromChecker implements NceListener {
 				// make sure system connection is not NCE USB
 				if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE) {
 					log.error("Layout connection is incorrect, detected PowerHouse");
-					JOptionPane.showMessageDialog(null,
-									"Wrong NCE layout connection selected in Preferences. "
-											+ "Change the layout connection to \"NCE\" or \"NCE via network\".",
-									"Error", JOptionPane.ERROR_MESSAGE);
+					epromState = ERROR4_STATE;
 				}
 
 			// Check for USB
@@ -190,27 +262,15 @@ public class NceEpromChecker implements NceListener {
 				// USB detected, check to see if user preferences are correct
 				if (mm == mm_USB_PwrCab	&& NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_POWERCAB) {
 					log.error("Layout connection is incorrect, detected USB connected to a PowerCab");
-					JOptionPane.showMessageDialog(null,
-									"Wrong NCE layout connection selected in Preferences. "
-											+ "Change the layout connection to \"NCE USB\" and the system to \"PowerCab\".",
-									"Error", JOptionPane.ERROR_MESSAGE);
-
+					epromState = ERROR5_STATE;
 				}
 				if (mm == mm_USB_SB3 && NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_SB3) {
 					log.error("Layout connection is incorrect, detected USB connected to a Smart Booster SB3");
-					JOptionPane.showMessageDialog(null,
-									"Wrong NCE layout connection selected in Preferences. "
-											+ "Change the layout connection to \"NCE USB\" and the system to \"Smart Booster SB3\".",
-									"Error", JOptionPane.ERROR_MESSAGE);
-
+					epromState = ERROR6_STATE;
 				}
 				if (mm == mm_USB_PH && NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_POWERHOUSE) {
 					log.error("Layout connection is incorrect, detected USB connected to a PowerHouse");
-					JOptionPane.showMessageDialog(null,
-									"Wrong NCE layout connection selected in Preferences. "
-											+ "Change the layout connection to \"NCE USB\" and the system to \"PowerHouse\".",
-									"Error", JOptionPane.ERROR_MESSAGE);
-
+					epromState = ERROR7_STATE;
 				}
 			}
 

@@ -26,7 +26,7 @@ package jmri.jmrix.nce;
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2007
- * @version     $Revision: 1.36 $
+ * @version     $Revision: 1.37 $
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 	
@@ -50,14 +50,14 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 	// some constants
 	
     static protected int NCE_PAGED_CV_TIMEOUT=20000;
-    static protected int NCE_DIRECT_CV_TIMEOUT=5000;			
-    static protected int SHORT_TIMEOUT=5000;					// worst case is when loading the first panel
+    static protected int NCE_DIRECT_CV_TIMEOUT=10000;			
+    static protected int SHORT_TIMEOUT=10000;					// worst case is when loading the first panel
     static protected boolean ncsProgMode = false;				// Do not use exit program mode unless active
     
     public NceMessage() {
         super();
         // this doesn't seem to work!
-        super.SHORT_TIMEOUT = 4000;
+        super.SHORT_TIMEOUT = 10000;
     }
     
     // create a new one
