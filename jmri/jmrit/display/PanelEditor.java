@@ -44,10 +44,10 @@ import java.util.ArrayList;
  * The title of the target and the editor panel are kept
  * consistent via the {#setTitle} method.
  *
- * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003
+ * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003, 2007
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.71 $
+ * @version $Revision: 1.72 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -66,8 +66,8 @@ public class PanelEditor extends JmriJFrame {
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
     static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
-    JTextField nextX = new JTextField("20",4);
-    JTextField nextY = new JTextField("30",4);
+    JTextField nextX = new JTextField(rb.getString("DefaultX"),4);
+    JTextField nextY = new JTextField(rb.getString("DefaultY"),4);
 
     JCheckBox editableBox = new JCheckBox(rb.getString("CheckBoxEditable"));
     JCheckBox positionableBox = new JCheckBox(rb.getString("CheckBoxPositionable"));
@@ -646,6 +646,8 @@ public class PanelEditor extends JmriJFrame {
         l.setShowTooltip(false);
         l.setSize(icon.getIconWidth(), icon.getIconHeight());
         l.setDisplayLevel(BKG);
+        
+        setNextLocation(l);
         putLabel(l);
     }
 
