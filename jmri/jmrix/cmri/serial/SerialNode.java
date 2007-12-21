@@ -25,7 +25,7 @@ import jmri.jmrix.AbstractMRMessage;
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.23 $
+ * @version	$Revision: 1.24 $
  */
 public class SerialNode {
 
@@ -798,6 +798,19 @@ public class SerialNode {
             timeout = 0;
             // reset poll and send control so will retry initialization
             setMustSend();
+            
+            // force sensors to UNKNOWN, including callbacks; might take some time
+            for (int i=0; i<=lastUsedSensor; i++) {
+                if (sensorArray[i] != null) {
+                    sensorLastSetting[i] = Sensor.UNKNOWN;
+                    sensorTempSetting[i] = Sensor.UNKNOWN;
+                    try {
+                        sensorArray[i].setKnownState(Sensor.UNKNOWN);
+                    } catch (jmri.JmriException e) {
+                        log.error("unexpected exception setting sensor i="+i+" on node "+nodeAddress+"e: "+e);
+                    }
+                }
+            }
             return true;   // tells caller to force init
         } 
         else return false;
