@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.9.3.shtml,v 1.5 2007-12-19 06:52:11 jacobsen Exp $ -->
+<!-- $Id: jmri1.9.3.shtml,v 1.6 2007-12-22 15:46:23 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -146,11 +146,20 @@ Added a sample script (<a href="http://jmri.sf.net/jython/AD4OnOff.py">jython/AD
 
 <p>
 Dick Bronson provided new sounds, icons and backgrounds for use in creating USS CTC panels. Particularly interesting are the images in the resources/icons/USS/background/ folder, with which you can build up a realistic USS CTC panel of any (reasonable) size.
+
 <p>
 Dan Boudreau has updated the throttle to have functions up to F28. The popup menu on each function button lets you configure which function is on which button.
 
 <p>
 The EasyDCC system now provides a CommandStation interface.  This is mostly an internal thing, but we thought you might want to know.
+
+<p>
+When adding backgrounds in the panel editor, the file chooser now remembers where you left it, which makes it easier to build backgrounds from the "slices" that Dick Bronson provided.  Also, backgrounds are added at the specified X, Y location, so you can precisely position the slices.  The default is now 0,0, and can be set via properties.
+
+<p>
+So that parts of the program can respond when a C/MRI node goes offline, sensors defined on a C/MRI node are set to UNKNOWN if the program loses contact with that node and has to reinitialize it.
+
+
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
