@@ -41,7 +41,7 @@ import java.awt.event.*;
  * @author      Ken Cameron Copyright (C) 2007
  * @author      Dave Duchamp Copyright (C) 2007
  * @author		Bob Jacobsen, Alex Shepherd
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class NceClockControl extends DefaultClockControl implements NceListener
 {
@@ -145,8 +145,8 @@ public class NceClockControl extends DefaultClockControl implements NceListener
     }  
     
     public void reply(NceReply r) {
-    	if (log.isDebugEnabled() && false){
-            log.debug("nceReplyCatcher() waiting: " + waiting +
+    	if (false && log.isDebugEnabled()){
+            log.debug("NceReply(len " + r.getNumDataElements() + ") waiting: " + waiting +
         		" watingForRead: " + waitingForCmdRead +
         		" waitingForCmdTime: " + waitingForCmdTime +
         		" waitingForCmd1224: " + waitingForCmd1224 +
@@ -223,7 +223,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
     
     /** name of Nce clock */
 	public String getHardwareClockName() {
-		if (log.isDebugEnabled() && false){
+		if (false && log.isDebugEnabled()){
 			log.debug("getHardwareClockName");
 		}
 		return ("Nce Fast Clock");
@@ -231,10 +231,18 @@ public class NceClockControl extends DefaultClockControl implements NceListener
 	
 	/** Nce clock runs stable enough */
 	public boolean canCorrectHardwareClock() {
-		if (log.isDebugEnabled()){
+		if (true && log.isDebugEnabled()){
 			log.debug("getHardwareClockName");
 		}
 		return false;
+	}
+
+	/** Nce clock supports 12/24 operation */
+	public boolean canSet12Or24HourClock() {
+		if (true && log.isDebugEnabled()){
+			log.debug("canSet12Or24HourClock");
+		}
+		return true;
 	}
 	
 	/** sets Nce clock speed, must be 1 to 15 */
@@ -358,21 +366,23 @@ public class NceClockControl extends DefaultClockControl implements NceListener
     /** determines what to do about mode changes */
     private void changeSyncMode() {
         int oldMode = clockMode;
-        if (log.isDebugEnabled() && true){
+        if (false && log.isDebugEnabled()){
         	log.debug("pre changeSyncMode was: " + oldMode 
         			+ " intMaster: " + internalClock.getInternalMaster() 
         			+ " master: " + internalClock.getMasterName()
         			);
         }
         int newMode = SYNCMODE_OFF;
-        if (internalClock.getInternalMaster() == false && internalClock.getMasterName().equals(getHardwareClockName())) {
-            newMode = SYNCMODE_NCE_MASTER;
-        }
-        if (internalClock.getInternalMaster() == true) {
-            newMode = SYNCMODE_INTERNAL_MASTER;
+        if (internalClock.getSynchronize()) {
+	        if (internalClock.getInternalMaster() == false && internalClock.getMasterName().equals(getHardwareClockName())) {
+	            newMode = SYNCMODE_NCE_MASTER;
+	        }
+	        if (internalClock.getInternalMaster() == true) {
+	            newMode = SYNCMODE_INTERNAL_MASTER;
+	        }
         }
         if (internalClock != null) {
-            if (log.isDebugEnabled()) {
+            if (false && log.isDebugEnabled()) {
                 log.debug("post changeSyncMode(): New Mode: " + newMode + " Old Mode: " + oldMode);
             }
             if (oldMode != newMode) {
@@ -433,7 +443,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
         alarmSyncUpdate.setDelay(delay);
         alarmSyncUpdate.setInitialDelay(delay);
         alarmSyncUpdate.start();
-        if (log.isDebugEnabled() && false) {
+        if (false && log.isDebugEnabled()) {
             log.debug("alarmSyncStart delay: " + delay + " @ " + now);
         }
     }
@@ -498,7 +508,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
         Date now = internalClock.getTime();
         int priorState = internalSyncInitStateCounter;
         do {
-            if (log.isDebugEnabled() && internalSyncInitStateCounter != 0 && false){
+            if (false && log.isDebugEnabled() && internalSyncInitStateCounter != 0){
                 log.debug("internalSyncInitStates begin: " + internalSyncInitStateCounter + " @ " + now);
             }
 	        priorState = internalSyncInitStateCounter;
@@ -598,7 +608,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
 	            // initialization complete
 	        	internalSyncInitStateCounter = 0;
 	            internalSyncRunStateCounter = 1;
-	            if (log.isDebugEnabled() && false){
+	            if (false && log.isDebugEnabled()){
 	                log.debug("internalSyncState: init done");
 	            }
 	            break;
@@ -615,7 +625,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
         double nceTime = 0;
         double diffTime = 0;
         Date now = internalClock.getTime();
-        if (log.isDebugEnabled() && internalSyncRunStateCounter != 0 && false){
+        if (true && log.isDebugEnabled() && internalSyncRunStateCounter != 0){
             log.debug("internalSyncRunStates: " + internalSyncRunStateCounter + " @ " + now);
         }
         int priorState = internalSyncRunStateCounter;
@@ -643,7 +653,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
 	            nceTime = getNceTime();
 	            intTime = getIntTime();
 	            diffTime = intTime - nceTime;
-	            if (log.isDebugEnabled() && false) {
+	            if (false && log.isDebugEnabled()) {
                     log.debug("syncStates2 begin. NCE: " +
     					(nceLastHour / 10) + (nceLastHour - ((nceLastHour / 10) * 10)) +
     					rb.getString("LabelTimeSep") +
@@ -696,7 +706,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
 	            }
 	            priorOffsetErrors.add(new Double(diffTime));
 	            recomputeOffset();
-	            if (log.isDebugEnabled() && false) {
+	            if (false && log.isDebugEnabled()) {
 	                log.debug("syncState compute offset. NCE: " +
 	                          (nceLastHour / 10) + (nceLastHour - ((nceLastHour / 10) * 10)) +
 	                          rb.getString("LabelTimeSep") +
@@ -866,7 +876,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
         if (syncInterval > 58) {
         	syncInterval = 58;
         }
-        if (log.isDebugEnabled() && false) {
+        if (false && log.isDebugEnabled()) {
             String txt = "";
             for (int i = 0; i < priorOffsetErrors.size(); i++) {
                 txt = txt + " " + ((Double)priorOffsetErrors.get(i)).doubleValue();
@@ -909,7 +919,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
         if (syncInterval < 40) {
             syncInterval = 40;
         }
-        if (log.isDebugEnabled() && false) {
+        if (false && log.isDebugEnabled()) {
             String txt = "";
             for (int i = 0; i < priorDiffs.size(); i++) {
                 txt = txt + " " + priorDiffs.get(i);
@@ -963,7 +973,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
         } else if (oldInternalRate != newInternalRate) {
             try {
                 internalClock.setRate(newInternalRate);
-                if (log.isDebugEnabled()){
+                if (false && log.isDebugEnabled()){
                     log.debug("changing internal rate: " + newInternalRate);
                 }
             } catch (TimebaseRateException e) {
@@ -973,7 +983,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
                 nceSyncInitStates();
             }
         }
-        if (log.isDebugEnabled() && false) {
+        if (false && log.isDebugEnabled()) {
             String txt = "";
             for (int i = priorDiffs.size() - 1; i >= 0 ; i--) {
                 txt = txt + " " + threeDigits.format(priorDiffs.get(i));
@@ -995,7 +1005,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
     private void nceSyncInitStates() {
         int priorState = 0;
         do {
-            if (log.isDebugEnabled() && false) {
+            if (false && log.isDebugEnabled()) {
                 log.debug("Before nceSyncInitStateCounter: " + nceSyncInitStateCounter + " " + internalClock.getTime());
             }
 	        priorState = nceSyncInitStateCounter;
@@ -1055,7 +1065,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
 	            alarmSyncStart();
 	            break;
 	        }
-	        if (log.isDebugEnabled() && false) {
+	        if (false && log.isDebugEnabled()) {
 	            log.debug("After nceSyncInitStateCounter: " + nceSyncInitStateCounter + " " + internalClock.getTime());
 	        }
         } while (priorState != nceSyncInitStateCounter);
@@ -1064,7 +1074,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
         double intTime = 0;
         double nceTime = 0;
         double diffTime = 0;
-        if (log.isDebugEnabled() && false) {
+        if (false && log.isDebugEnabled()) {
             log.debug("Before nceSyncRunStateCounter: " + nceSyncRunStateCounter + " " + internalClock.getTime());
         }
         int priorState = 0;
@@ -1111,7 +1121,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
 	            nceSyncRunStateCounter = 0;
 	        }
         } while (priorState != nceSyncRunStateCounter);
-        if (log.isDebugEnabled() && false) {
+        if (false && log.isDebugEnabled()) {
             log.debug("After nceSyncRunStateCounter: " + nceSyncRunStateCounter + " " + internalClock.getTime());
         }
     }
@@ -1151,7 +1161,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
         int ss = now.getSeconds();
         int mm = now.getMinutes();
         int hh = now.getHours();
-        if (log.isDebugEnabled() && false) {
+        if (false && log.isDebugEnabled()) {
             log.debug("getIntTime: " + hh + ":" + mm + ":" + ss + "." + ms);
         }
         return((hh * 60 * 60) + (mm * 60) + ss + (ms / 1000));
