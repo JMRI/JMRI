@@ -30,7 +30,7 @@ import java.util.Date;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2004, 2007
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public interface Timebase {
 
@@ -60,6 +60,13 @@ public interface Timebase {
 	// methods for setting and getting hardware correction option
 	public void setCorrectHardware(boolean correct, boolean update);
 	public boolean getCorrectHardware();
+ 
+	/**
+	 * Methods for setting and getting 12 or 24 hour display option
+	 * 'display' should be true if a 12-hour display is requested, false for 24-hour display
+	 */
+	public void set12HourDisplay(boolean display, boolean update);
+	public boolean use12HourDisplay();
 
 	// methods for start up with clock stopped option
 	public void setStartStopped(boolean stopped);

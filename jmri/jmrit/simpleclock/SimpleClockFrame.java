@@ -21,7 +21,7 @@ import javax.swing.border.Border;
  * The current implementation (2007) handles the internal clock and one hardware clock
  *
  * @author	Dave Duchamp   Copyright (C) 2004, 2007
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class SimpleClockFrame extends JmriJFrame
 	implements java.beans.PropertyChangeListener {
@@ -42,6 +42,7 @@ public class SimpleClockFrame extends JmriJFrame
 	
 	protected javax.swing.JCheckBox synchronizeCheckBox = null;
 	protected javax.swing.JCheckBox correctCheckBox = null;
+	protected javax.swing.JCheckBox displayCheckBox = null;
 	protected javax.swing.JCheckBox showStartupCheckBox = null;
 	protected javax.swing.JCheckBox startStoppedCheckBox = null;
 	protected javax.swing.JCheckBox startSetTimeCheckBox = null;
@@ -138,6 +139,19 @@ public class SimpleClockFrame extends JmriJFrame
 				});
 				panel11y.add(correctCheckBox);
 				contentPane.add(panel11y);
+			}
+			if (InstanceManager.clockControlInstance().canSet12Or24HourClock()) {
+				JPanel panel11z = new JPanel();
+				displayCheckBox = new JCheckBox(rb.getString("Display12Hour"));
+				displayCheckBox.setToolTipText(rb.getString("TipDisplay"));
+				displayCheckBox.setSelected(clock.use12HourDisplay());
+				displayCheckBox.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(java.awt.event.ActionEvent e) {
+						displayChanged();
+					}
+				});
+				panel11z.add(displayCheckBox);
+				contentPane.add(panel11z);
 			}
 		}			
 
@@ -397,6 +411,14 @@ public class SimpleClockFrame extends JmriJFrame
 	 */
 	private void correctChanged() {
 		clock.setCorrectHardware(correctCheckBox.isSelected(),true);
+		changed = true;
+	}
+ 
+	/** 
+	 * Method to handle 12-hour display check box change
+	 */
+	private void displayChanged() {
+		clock.set12HourDisplay(displayCheckBox.isSelected(),true);
 		changed = true;
 	}
 

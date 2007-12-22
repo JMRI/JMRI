@@ -60,6 +60,12 @@ public interface ClockControl {
 	public boolean canCorrectHardwareClock();
 
 	/**
+	 * Returns 'true' if hardware clock can be set to 12 or 24 hour display from
+     *              JMRI software.
+	 */
+	public boolean canSet12Or24HourClock();
+  
+	/**
 	 * Returns true if hardware clock requires an integer rate 
 	 */
 	public boolean requiresIntegerRate();

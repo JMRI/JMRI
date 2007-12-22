@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SimpleClockFrame.shtml,v 1.4 2007-12-18 02:19:42 ken_c Exp $ -->
+<!-- $Id: SimpleClockFrame.shtml,v 1.5 2007-12-22 20:49:51 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -49,6 +49,12 @@ will be shown. If you tried using your DCC command station to create a fast
 clock, you may have noticed that it didn't keep particularly good time. If 
 <b>Correct hardware clock</b> is available and you check it, JMRI will adjust 
 the rate of your hardware clock so that it keeps better time.</p> 
+<p>
+Not all hardware fast clocks support changing a 12-hour/24-hour display option 
+from the computer. For those that do, a check box labeled <b>Use 12-hour clock 
+display</b>, will be shown. If you check this option, your hardware clock will 
+set up for a 12-hour clock display.  If this option is unchecked (the default), a 
+24-hour clock display will be set up.</p> 
 <p>
 If you select <b>Internal Computer Clock</b> as your time source, and do not 
 check either the <b>Synchronize...</b> or <b>Correct...</b> options, only the 

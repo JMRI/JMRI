@@ -22,7 +22,7 @@ import jmri.Sensor;
  *
  * @author			Bob Jacobsen Copyright (C) 2004, 2007
  *                  Dave Duchamp - 2007 additions/revisions for handling one hardware clock
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class SimpleTimebase implements Timebase {
 
@@ -164,6 +164,17 @@ public class SimpleTimebase implements Timebase {
 	}
 	public boolean getCorrectHardware() {return correctHardware;}
 	
+	public void set12HourDisplay(boolean display, boolean update) {
+		if (display!=display12HourClock) {
+			display12HourClock = display;
+			if (update) {
+				jmri.InstanceManager.clockControlInstance().initializeHardwareClock(mFactor,
+													getTime(), false);
+			}
+		}
+	}
+	public boolean use12HourDisplay() {return display12HourClock;}
+	
 	public void setStartStopped(boolean stopped) {
 		startStopped = stopped;
 	}
@@ -274,8 +285,9 @@ public class SimpleTimebase implements Timebase {
 	private java.beans.PropertyChangeListener clockSensorListener = null;
 	private boolean internalMaster = true;     // false indicates a hardware clock is the master
 	private String masterName = "";		// name of hardware time source, if not internal master
-	private boolean synchronizeWithHardware = true;  // true indicates need to synchronize
+	private boolean synchronizeWithHardware = false;  // true indicates need to synchronize
 	private boolean correctHardware = true;    // true indicates hardware correction requested
+	private boolean display12HourClock = false; // true if 12-hour clock display is requested
 	private boolean startStopped = false;    // true indicates start up with clock stopped requested
 	private boolean startSetTime = false;    // true indicates set fast clock to specified time at 
 															//start up requested

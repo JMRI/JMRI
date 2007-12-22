@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle XML persistance of SimpleTimebase objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class SimpleTimebaseXml implements XmlAdapter {
 
@@ -43,6 +43,7 @@ public class SimpleTimebaseXml implements XmlAdapter {
 			elem.setAttribute("mastername",clock.getMasterName());
         elem.setAttribute("sync", (clock.getSynchronize()?"yes":"no"));
         elem.setAttribute("correct", (clock.getCorrectHardware()?"yes":"no"));
+		elem.setAttribute("display", (clock.use12HourDisplay()?"yes":"no"));
 		elem.setAttribute("startstopped", (clock.getStartStopped()?"yes":"no"));
 		elem.setAttribute("startsettime", (clock.getStartSetTime()?"yes":"no"));
 		elem.setAttribute("startclockoption",Integer.toString(
@@ -78,6 +79,11 @@ public class SimpleTimebaseXml implements XmlAdapter {
             if (val.equals("yes")) clock.setCorrectHardware(true,false);
             if (val.equals("no")) clock.setCorrectHardware(false,false);
         }
+		if (element.getAttribute("display")!=null) {
+			val = element.getAttributeValue("display");
+			if (val.equals("yes")) clock.set12HourDisplay(true,false);
+			if (val.equals("no")) clock.set12HourDisplay(false,false);
+		}
         if (element.getAttribute("run")!=null) {
             val = element.getAttributeValue("run");
             if (val.equals("yes")) {

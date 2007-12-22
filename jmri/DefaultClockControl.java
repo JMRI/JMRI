@@ -16,7 +16,7 @@ import javax.swing.Timer;
  *	systems with no hardware fast clock.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class DefaultClockControl implements ClockControl {
 
@@ -31,20 +31,27 @@ public class DefaultClockControl implements ClockControl {
 	/**
 	 * Get Status of the Fast Clock
 	 */
-	public int getStatus() {return 0;};
+	public int getStatus() {return 0;}
 	
 	/**
 	 * Get name of hardware clock
 	 * Note: If there is no hardware clock, this method returns null.
 	 */
-	public String getHardwareClockName(){return null;};
+	public String getHardwareClockName(){return null;}
 
 	/**
 	 * Returns true if hardware clock accuracy can be corrected using the 
 	 *		computer clock. Hardware implementations should override this and
 	 *		return true if they can correct their hardware clock.
 	 */
-	public boolean canCorrectHardwareClock() {return false;};
+	public boolean canCorrectHardwareClock() {return false;}
+ 
+	/**
+	 * Returns true if hardware clock can be set to 12 or 24 hour display from
+	 *              JMRI software.
+	 * Note: Default implementation is to return false.
+	 */
+	public boolean canSet12Or24HourClock() {return false;}
 	
 	/**
 	 * Returns true if hardware clock requires an integer rate
