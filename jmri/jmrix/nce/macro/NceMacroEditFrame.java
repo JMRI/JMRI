@@ -56,7 +56,7 @@ import java.io.*;
  * FF10 = link macro 16 
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -69,7 +69,7 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
 	private int replyLen = 0;						// expected byte length
 	private int waiting = 0;						// to catch responses not intended for this module
 	
-	private static final String QUESTION = "  ??  ";// The three possible states for a turnout
+	private static final String QUESTION = "  Add  ";// The three possible states for a turnout
 	private static final String CLOSED = "Closed ";
 	private static final String THROWN = "Thrown";	
 	private static final String CLOSED_NCE = "Normal ";

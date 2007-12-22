@@ -29,6 +29,7 @@ public class NceMacroEditAction  extends AbstractAction {
 	
     public void actionPerformed(ActionEvent e) {
 		NceMacroEditFrame f = new NceMacroEditFrame();
+		f.addHelpMenu("package.jmri.jmrix.nce.macro.NceMacroEditFrame", true);
 		try {
 			f.initComponents();
 			}
