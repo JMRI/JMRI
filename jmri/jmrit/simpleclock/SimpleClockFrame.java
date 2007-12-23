@@ -21,7 +21,7 @@ import javax.swing.border.Border;
  * The current implementation (2007) handles the internal clock and one hardware clock
  *
  * @author	Dave Duchamp   Copyright (C) 2004, 2007
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class SimpleClockFrame extends JmriJFrame
 	implements java.beans.PropertyChangeListener {
@@ -373,7 +373,7 @@ public class SimpleClockFrame extends JmriJFrame
 			}
 		}
         try {
-            clock.setRate(rate);
+            clock.userSetRate(rate);
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(this,(rb.getString("SetRateError")+"\n"+e),
@@ -466,7 +466,7 @@ public class SimpleClockFrame extends JmriJFrame
         long cNumMSec = tem.getTime();
         long nNumMSec = ((cNumMSec/mSecPerHour)*mSecPerHour) - (cHours*mSecPerHour) +
                     (hours*mSecPerHour) + (minutes*mSecPerMinute);
-        clock.setTime(new Date(nNumMSec));
+        clock.userSetTime(new Date(nNumMSec));
         showTime = true;
 		updateTime();
     }

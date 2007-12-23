@@ -30,12 +30,14 @@ import java.util.Date;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2004, 2007
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public interface Timebase {
 
     // methods for setting and getting the current time
     public void setTime(Date d);
+	// the method below is used only when the user changes fast clock time in Setup Fast Clock
+	public void userSetTime(Date d);
     public Date getTime();
 
 	// methods for setting and getting run status of the fast clock
@@ -44,6 +46,8 @@ public interface Timebase {
 
 	// methods for setting and getting fast clock rate
     public void setRate(double factor) throws TimebaseRateException;
+	// the method below is used only when the user changes fast clock rate in Setup Fast Clock
+    public void userSetRate(double factor) throws TimebaseRateException;
     public double getRate();
 
 	// methods for setting and getting master time source

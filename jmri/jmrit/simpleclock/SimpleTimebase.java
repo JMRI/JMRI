@@ -5,11 +5,14 @@ package jmri.jmrit.simpleclock;
 import java.util.Date;
 import jmri.Timebase;
 import jmri.Sensor;
+import jmri.ClockControl;
 
 /**
  * Provide basic Timebase implementation from system clock.
  * <P>
  * This implementation provides for the internal clock and for one hardware clock.
+ * A number of hooks and comments are provided below for implementing multiple hardware clocks
+ * should that ever be done. 
  * <P>
  * The setTimeValue member is the fast time when the clock
  * started.  The startAtTime member is the wall-clock time
@@ -22,7 +25,7 @@ import jmri.Sensor;
  *
  * @author			Bob Jacobsen Copyright (C) 2004, 2007
  *                  Dave Duchamp - 2007 additions/revisions for handling one hardware clock
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class SimpleTimebase implements Timebase {
 
@@ -57,10 +60,31 @@ public class SimpleTimebase implements Timebase {
     	return new Date(nowMSec);
     }    	
     public void setTime(Date d) {
-    	startAtTime = new Date();	// set now
+    	startAtTime = new Date();	// set now in wall clock time
     	setTimeValue = new Date(d.getTime());   // to ensure not modified from outside
-		if (synchronizeWithHardware || correctHardware || (!internalMaster)) {
+		if (synchronizeWithHardware) {
+			// send new time to all hardware clocks, except the hardware time source if there is one 
+			// Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
+			if (jmri.InstanceManager.clockControlInstance()!=hardwareTimeSource) {
+				jmri.InstanceManager.clockControlInstance().setTime(d);
+			}
+		}
+    	if (pauseTime != null)
+    		pauseTime = setTimeValue;  // if stopped, continue stopped at new time
+    	handleAlarm();
+    }
+    public void userSetTime(Date d) {
+		// this call only results from user changing fast clock time in Setup Fast Clock
+    	startAtTime = new Date();	// set now in wall clock time
+    	setTimeValue = new Date(d.getTime());   // to ensure not modified from outside
+		if (synchronizeWithHardware) {
+			// send new time to all hardware clocks, including the hardware time source if there is one 
+			// Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
 			jmri.InstanceManager.clockControlInstance().setTime(d);
+		}
+		else if (!internalMaster && (hardwareTimeSource!=null)) {
+			// if not synchronizing, send to the hardware time source if there is one
+			hardwareTimeSource.setTime(d);
 		}
     	if (pauseTime != null)
     		pauseTime = setTimeValue;  // if stopped, continue stopped at new time
@@ -72,8 +96,12 @@ public class SimpleTimebase implements Timebase {
     	if (run && pauseTime!=null) {
     		// starting of stopped clock
     		setTime(pauseTime);
-			if (synchronizeWithHardware || correctHardware || (!internalMaster)) {
+			if (synchronizeWithHardware) {
+				// Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
 				jmri.InstanceManager.clockControlInstance().startHardwareClock(getTime());
+			}
+			else if (!internalMaster && hardwareTimeSource!=null) {
+				hardwareTimeSource.startHardwareClock(getTime());
 			}
 			pauseTime = null;
 			if (clockSensor!=null) {
@@ -87,8 +115,12 @@ public class SimpleTimebase implements Timebase {
     		// stopping of running clock:
     		// Store time it was stopped, and stop it
     		pauseTime = getTime();
-			if (synchronizeWithHardware || correctHardware || (!internalMaster)) {
+			if (synchronizeWithHardware) {
+				// Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
 				jmri.InstanceManager.clockControlInstance().stopHardwareClock();
+			}
+			else if (!internalMaster && hardwareTimeSource!=null) {
+				hardwareTimeSource.stopHardwareClock();
 			}
 			if (clockSensor!=null) {
 				try {				
@@ -113,8 +145,37 @@ public class SimpleTimebase implements Timebase {
     	Date now = getTime();
         // actually make the change
     	mFactor = factor;
-		if (synchronizeWithHardware || correctHardware || (!internalMaster)) {
+		if (synchronizeWithHardware) {
+			// send new rate to all hardware clocks, except the hardware time source if there is one 
+			// Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
+			if (jmri.InstanceManager.clockControlInstance()!=hardwareTimeSource) {
+				jmri.InstanceManager.clockControlInstance().setRate(factor);
+			}
+		}
+        // make sure time is right with new rate
+        setTime(now);
+        // notify listeners
+    	firePropertyChange("rate", new Double(factor), new Double(oldFactor));
+    	handleAlarm();
+    }
+    public void userSetRate(double factor) {
+		// this call only results from user changing fast clock rate in Setup Fast Clock
+        if (factor < 0.1 || factor > 100) {
+            log.error("rate of "+factor+" is out of reasonable range, set to 1");
+            factor = 1;
+        }
+    	double oldFactor = mFactor;
+    	Date now = getTime();
+        // actually make the change
+    	mFactor = factor;
+		if (synchronizeWithHardware) { 
+			// send new rate to all hardware clocks, including the hardware time source if there is one 
+			// Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
 			jmri.InstanceManager.clockControlInstance().setRate(factor);
+		}
+		else if (!internalMaster  && (hardwareTimeSource!=null)) {
+			// if not synchronizing, send to the hardware time source if there is one
+			hardwareTimeSource.setRate(factor);
 		}
         // make sure time is right with new rate
         setTime(now);
@@ -128,24 +189,43 @@ public class SimpleTimebase implements Timebase {
 		if (master!=internalMaster) {
 			internalMaster = master;
 			if (update) {
+				// Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
 				jmri.InstanceManager.clockControlInstance().initializeHardwareClock(mFactor,
 													getTime(), false);
 			}
-			if (internalMaster)
+			if (internalMaster) {
 				masterName = "";
-			else
-				masterName = jmri.InstanceManager.clockControlInstance().getHardwareClockName();
+				hardwareTimeSource = null;
+			}
+			else {
+				// Note if there are multiple hardware clocks, this should be changed to correctly
+				//    identify which hardware clock has been chosen-currently assumes only one
+				hardwareTimeSource = jmri.InstanceManager.clockControlInstance();
+				masterName = hardwareTimeSource.getHardwareClockName();
+			}
 		}
 	}
 	public boolean getInternalMaster() {return internalMaster;}
 	
-	public void setMasterName(String name) {masterName = name;}
+	public void setMasterName(String name) {
+		if (!internalMaster) {
+			masterName = name;
+			// if multiple clocks, this must be replaced by a loop over all hardware clocks to identify
+			// the one that is the hardware time source
+			hardwareTimeSource = jmri.InstanceManager.clockControlInstance();
+		}
+		else {
+			masterName = "";
+			hardwareTimeSource = null;
+		}
+	}
 	public String getMasterName() {return masterName;}
 	
 	public void setSynchronize(boolean synchronize, boolean update) {
 		if (synchronizeWithHardware!=synchronize) {
 			synchronizeWithHardware = synchronize;
 			if (update) {
+				// Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
 				jmri.InstanceManager.clockControlInstance().initializeHardwareClock(mFactor,
 													getTime(), false);
 			}
@@ -157,6 +237,7 @@ public class SimpleTimebase implements Timebase {
 		if (correctHardware!=correct) {
 			correctHardware = correct;
 			if (update) {
+				// Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
 				jmri.InstanceManager.clockControlInstance().initializeHardwareClock(mFactor,
 												  getTime(), false);
 			}
@@ -168,6 +249,7 @@ public class SimpleTimebase implements Timebase {
 		if (display!=display12HourClock) {
 			display12HourClock = display;
 			if (update) {
+				// Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
 				jmri.InstanceManager.clockControlInstance().initializeHardwareClock(mFactor,
 													getTime(), false);
 			}
@@ -216,14 +298,24 @@ public class SimpleTimebase implements Timebase {
 	 *		It should be ignored if there is no communication with a hardware clock.
 	 */
 	public void initializeHardwareClock() {
-		if (synchronizeWithHardware || correctHardware || !internalMaster) {
+		if (synchronizeWithHardware || correctHardware) {
 			if (startStopped) {
+				// Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
 				jmri.InstanceManager.clockControlInstance().initializeHardwareClock(0,
 						getTime(),(!internalMaster && !startSetTime));
 			}
 			else {
+				// Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
 				jmri.InstanceManager.clockControlInstance().initializeHardwareClock(mFactor,
 						getTime(),(!internalMaster && !startSetTime));
+			}
+		}
+		else if (!internalMaster) {
+			if (startStopped) {
+				hardwareTimeSource.initializeHardwareClock(0,getTime(),(!startSetTime));
+			}
+			else {
+				hardwareTimeSource.initializeHardwareClock(mFactor,getTime(),(!startSetTime));
 			}
 		}
 	}
@@ -285,6 +377,7 @@ public class SimpleTimebase implements Timebase {
 	private java.beans.PropertyChangeListener clockSensorListener = null;
 	private boolean internalMaster = true;     // false indicates a hardware clock is the master
 	private String masterName = "";		// name of hardware time source, if not internal master
+	private ClockControl hardwareTimeSource = null;  // ClockControl instance of hardware time source
 	private boolean synchronizeWithHardware = false;  // true indicates need to synchronize
 	private boolean correctHardware = true;    // true indicates hardware correction requested
 	private boolean display12HourClock = false; // true if 12-hour clock display is requested
