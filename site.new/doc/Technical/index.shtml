@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.4 2007-09-21 06:32:27 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.5 2007-12-23 02:02:32 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -57,6 +57,11 @@ Links to the SourceForge pages:<P>
 
 <P>
 <A HREF="http://sourceforge.net/docman/display_doc.php?docid=2352&group_id=1">SourceForge Site Status</a>
+
+<p>
+JMRI-Developers mailing list:
+<a href="https://lists.sourceforge.net/lists/listinfo/jmri-developers">Subscribe</a>,
+<a href="http://sourceforge.net/mailarchive/forum.php?forum_name=jmri-developers">Archive</a>
 
 <h2>Code</h2>
 All of the JMRI code is available from CVS.  See the 
