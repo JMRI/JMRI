@@ -28,7 +28,7 @@ import net.roydesign.mac.MRJAdapter;
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
  * @author  Dennis Miller  Copyright 2005
- * @version     $Revision: 1.43 $
+ * @version     $Revision: 1.44 $
  */
 public class Apps extends JPanel {
 
@@ -320,6 +320,19 @@ public class Apps extends JPanel {
         return MessageFormat.format(rb.getString("ConnectionCredit"),
                                 new String[]{prefs.getConnection1(), prefs.getPort1()});
     }
+    protected JComponent line5() {
+        JPanel pane2 = new JPanel();
+        pane2.setLayout(new BoxLayout(pane2, BoxLayout.Y_AXIS));
+        
+        if (!prefs.getConnection2().equals("(none)")) {
+            pane2.add(new JLabel(" "));
+            pane2.add(new JLabel(MessageFormat.format(rb.getString("ConnectionCredit"),
+                                new String[]{prefs.getConnection2(), prefs.getPort2()}
+                            )));
+        }
+        return pane2;
+    }
+
     protected String line6() {
         return " ";
     }
@@ -345,18 +358,17 @@ public class Apps extends JPanel {
 
         log.debug("start labels");
         JPanel pane2 = new JPanel();
+        
+        JComponent l;
+        
         pane2.setLayout(new BoxLayout(pane2, BoxLayout.Y_AXIS));
         pane2.add(new JLabel(line1()));
         pane2.add(new JLabel(line2()));
         pane2.add(new JLabel(line3()));
         pane2.add(new JLabel(line4()));
 
-        if (!prefs.getConnection2().equals("(none)")) {
-            pane2.add(new JLabel(" "));
-            pane2.add(new JLabel(MessageFormat.format(rb.getString("ConnectionCredit"),
-                                new String[]{prefs.getConnection2(), prefs.getPort2()}
-                            )));
-        }
+        l = line5();
+        if (l!=null) pane2.add(l);
 
         pane2.add(new JLabel(line6()));
         pane2.add(new JLabel(line7()));
