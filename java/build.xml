@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.12 $ -->
+<!-- Revision $Revision: 1.13 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -135,6 +135,7 @@
   </target>
 
   <target name="decoderpro" depends="debug" description="build and run DecoderPro app">
+    <property name="antargline" value="DecoderProConfig2.xml" />
     <java classname="apps.DecoderPro.DecoderPro"
           dir=".." 
 	  fork="yes" >
@@ -146,16 +147,19 @@
        <!-- <jvmarg value="-verbose"/> -->
        <!-- <jvmarg value="-verbosegc"/> -->
        <!-- <jvmarg value="-Xloggc:memory.vgc"/> --> <!-- for JTune -->
+       <arg value="${antargline}"/>
     </java>
  </target>
 
   <target name="panelpro" depends="debug" description="build and run PanelPro app">
+    <property name="antargline" value="PanelProConfig2.xml" />
     <java classname="apps.PanelPro.PanelPro"
           dir=".." 
 	  fork="yes" >
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
+       <arg value="${antargline}"/>
     </java>
  </target>
 
