@@ -40,7 +40,8 @@
 				<LI><A HREF="../../JavaDoc/doc/allclasses-frame.html">Class heirarchy</A>
 				</UL>
 			<LI><a href="Threads.shtml">Threads</a>
-			<LI><a href="XmlPersistance.shtml">Xml Persistance</a>
+			<LI><a href="XmlUsage.shtml">Use of XML</a>
+			<LI><a href="XmlPersistance.shtml">XML Persistance</a>
 			<LI><a href="WebSite.shtml">Web Site</a>
 			</ul>
 		</dd>
