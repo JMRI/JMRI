@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NcePacketMonitorFrame.shtml,v 1.3 2007-12-22 03:54:41 dan_boudreau Exp $ -->
+<!-- $Id: NcePacketMonitorFrame.shtml,v 1.4 2007-12-23 19:22:52 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: NCE DCC Packet Analyzer</TITLE>
@@ -22,11 +22,27 @@
 <!--#include virtual="/Header" -->
 
 <H2>NCE DCC Packet Analyzer</H2>
+Select the "Serial port:" and push the "Open" button before using any of
+the radio buttons. The baud rate is fixed at 38.4Kbps. Press the "Init"
+button to initialize the analyzer.
 
-The following help was copied from NCE Corporation with their
-permission.
-<P>Commands: Type the command in the left column (below) such as
-"A+"</P>
+<P>The "+ on" checkbox allows you to suppress identical packets.
+Each time the JMRI program detects a packet that it identical to the
+previous it will replace the packet with a "+" character. Warning, the
+JMRI program will only display the suppressed packets ("+" characters)
+after receiving a packet that isn't identical to the previous. If
+there's little activity it is recommended that you not use the suppress
+feature. This way you will immediately see all packets being captured by
+the analyzer.</P>
+
+<P>Use the radio buttons to configure the analyzer to your liking.
+Note that the NCE analyzer will remember the configuration when it is
+powered down.</P>
+
+
+<P>The following help was copied from NCE Corporation with their
+permission.</P>
+<P><B>Commands:</B></P>
 <P>V Display packets in 'verbose' mode (able to be intrepreted by
 humans) <BR>
 H Display packets as hex bytes <BR>
