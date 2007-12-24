@@ -10,8 +10,8 @@ import javax.swing.*;
 /**
  * Make sure an XML file is readable, without doing a DTD validation.
  *
- * @author	Bob Jacobsen   Copyright (C) 2001, 2005
- * @version	$Revision: 1.5 $
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2005, 2007
+ * @version	$Revision: 1.6 $
  * @see         jmri.jmrit.XmlFile
  * @see         jmri.jmrit.XmlFileValidateAction
  */
@@ -22,12 +22,15 @@ public class XmlFileCheckAction extends AbstractAction {
         _who = who;
     }
 
-    JFileChooser fci = new JFileChooser(" ");
+    JFileChooser fci;
 
     JPanel _who;
 
     public void actionPerformed(ActionEvent e) {
-
+        if (fci==null) {
+            fci = new JFileChooser(" ");
+            fci.setFileFilter(new jmri.util.NoArchiveFileFilter());
+        }
         // request the filename from an open dialog
         fci.rescanCurrentDirectory();
         int retVal = fci.showOpenDialog(_who);

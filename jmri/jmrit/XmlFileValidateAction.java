@@ -10,8 +10,8 @@ import javax.swing.*;
 /**
  * Make sure an XML file is readable, and validates OK
  *
- * @author	Bob Jacobsen   Copyright (C) 2005
- * @version	$Revision: 1.3 $
+ * @author	Bob Jacobsen   Copyright (C) 2005, 2007
+ * @version	$Revision: 1.4 $
  * @see         jmri.jmrit.XmlFile
  * @see         jmri.jmrit.XmlFileCheckAction
  */
@@ -22,12 +22,15 @@ public class XmlFileValidateAction extends AbstractAction {
         _who = who;
     }
 
-    JFileChooser fci = new JFileChooser(" ");
+    JFileChooser fci;
 
     JPanel _who;
 
     public void actionPerformed(ActionEvent e) {
-
+        if (fci==null) {
+            fci = new JFileChooser(" ");
+            fci.setFileFilter(new jmri.util.NoArchiveFileFilter());
+        }
         // request the filename from an open dialog
         fci.rescanCurrentDirectory();
         int retVal = fci.showOpenDialog(_who);

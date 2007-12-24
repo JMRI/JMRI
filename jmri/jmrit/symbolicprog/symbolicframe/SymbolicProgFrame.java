@@ -17,8 +17,8 @@ import org.jdom.output.*;
 
 /**
  * Frame providing a table-organized command station programmer from decoder definition files
- * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.15 $
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
+ * @version	$Revision: 1.16 $
  */
 public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
 
@@ -66,7 +66,7 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
     JLabel decoderModel   	= new JLabel("         ");
 
     // member to find and remember the configuration file in and out
-    final JFileChooser fci 	= new JFileChooser("xml"+File.separator+"decoders"+File.separator);
+    JFileChooser fci;
     final JFileChooser fco 	= new JFileChooser("xml"+File.separator+"decoders"+File.separator);
 
     // ctor
@@ -208,6 +208,10 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
     }
 
     protected void selectFileButtonActionPerformed(java.awt.event.ActionEvent e) {
+        if (fci==null) {
+            fci = new JFileChooser("xml"+File.separator+"decoders"+File.separator);
+            fci.setFileFilter(new jmri.util.NoArchiveFileFilter());
+        }
         // show dialog
         fci.rescanCurrentDirectory();
         int retVal = fci.showOpenDialog(this);

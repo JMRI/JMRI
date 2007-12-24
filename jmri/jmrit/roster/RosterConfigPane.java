@@ -21,8 +21,8 @@ import javax.swing.JOptionPane;
  * Provide GUI to configure Roster defaults.
  *
  *
- * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.5 $
+ * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2007
+ * @version	$Revision: 1.6 $
  */
 public class RosterConfigPane extends JPanel {
 

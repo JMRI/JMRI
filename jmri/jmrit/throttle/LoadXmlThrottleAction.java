@@ -14,8 +14,8 @@ import org.jdom.Element;
 /**
  *  Load throttles from XML
  *
- * @author     Glen Oberhauser
- * @version     $Revision: 1.13 $
+ * @author     Glen Oberhauser 2004
+ * @version     $Revision: 1.14 $
  */
 public class LoadXmlThrottleAction extends AbstractAction
 {
@@ -38,6 +38,8 @@ public class LoadXmlThrottleAction extends AbstractAction
         this("Load Throttle");
     }
     
+    JFileChooser fileChooser;
+    
     /**
      *  The action is performed. Let the user choose the file to load from. Read
      *  XML for each ThrottleFrame.
@@ -46,7 +48,10 @@ public class LoadXmlThrottleAction extends AbstractAction
      */
     public void actionPerformed(ActionEvent e)
     {
-        JFileChooser fileChooser = new JFileChooser(XmlFile.prefsDir());
+        if (fileChooser == null) {
+            fileChooser = new JFileChooser(XmlFile.prefsDir());
+            fileChooser.setFileFilter(new jmri.util.NoArchiveFileFilter());
+        }
         int retVal = fileChooser.showOpenDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION)
             {
@@ -111,7 +116,7 @@ public class LoadXmlThrottleAction extends AbstractAction
      *  An extension of the abstract XmlFile. No changes made to that class.
      *
      * @author     glen
-     * @version    $Revision: 1.13 $
+     * @version    $Revision: 1.14 $
      */
     class ThrottlePrefs extends XmlFile
     {

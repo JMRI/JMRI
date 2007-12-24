@@ -18,8 +18,8 @@ import java.io.*;
  * without the jython.jar file in the classpath. To make it easier to
  * read the code, the "non-reflection" statements are in the comments.
  *
- * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.5 $
+ * @author	Bob Jacobsen    Copyright (C) 2004, 2007
+ * @version     $Revision: 1.6 $
  */
 public class RunJythonScript extends AbstractAction {
 
@@ -46,6 +46,7 @@ public class RunJythonScript extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         if (fci==null) {
             fci = new JFileChooser(" ");
+            fci.setFileFilter(new jmri.util.NoArchiveFileFilter());
             fci.setDialogTitle("Find desired script file");
         } else {
             // when reusing the chooser, make sure new files are included

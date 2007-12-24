@@ -46,7 +46,7 @@ import jmri.util.JmriJFrame;
  * accessed via rb.
  * 
  * @author Dave Duchamp Copyright (C) 2007
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -1779,8 +1779,10 @@ public class LogixTableAction extends AbstractTableAction {
 	 *            equal to 1 or 2, depending upon which action button is clicked
 	 */
 	void setFileLocation(int actionNum) {
-		if (fileChooser == null)
+		if (fileChooser == null) {
 			fileChooser = new JFileChooser(jmri.jmrit.XmlFile.prefsDir());
+			fileChooser.setFileFilter(new jmri.util.NoArchiveFileFilter());
+		}
 		fileChooser.rescanCurrentDirectory();
 		int retVal = fileChooser.showOpenDialog(null);
 		// handle selection or cancel

@@ -2,7 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
-import jmri.jmrit.FileChooserFilter;
+import jmri.util.FileChooserFilter;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +15,7 @@ import javax.swing.JFrame;
  * Action to import the CV values from a PR1WIN/PR1DOS data file.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 
 public class Pr1ImportAction  extends AbstractAction {

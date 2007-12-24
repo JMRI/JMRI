@@ -14,8 +14,8 @@ import org.jdom.*;
 /**
  * Check the names in an XML programmer file against the names.xml definitions
  *
- * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.5 $
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2007
+ * @version	$Revision: 1.6 $
  * @see         jmri.jmrit.XmlFile
  */
 public class ProgCheckAction extends AbstractAction {
@@ -25,11 +25,15 @@ public class ProgCheckAction extends AbstractAction {
         _who = who;
     }
     
-    JFileChooser fci = new JFileChooser(" ");
+    JFileChooser fci;
     
     JPanel _who;
     
     public void actionPerformed(ActionEvent e) {
+        if (fci == null) {
+            fci = new JFileChooser(" ");
+            fci.setFileFilter(new jmri.util.NoArchiveFileFilter());
+        }
         // request the filename from an open dialog
         fci.rescanCurrentDirectory();
         int retVal = fci.showOpenDialog(_who);

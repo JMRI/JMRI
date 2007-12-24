@@ -17,8 +17,8 @@ import javax.swing.JOptionPane;
  * Note that {@link DeleteRosterItemAction} is sufficiently
  * different that it doesn't use this base class.
  *
- * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.10 $
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
+ * @version	$Revision: 1.11 $
  * @see         jmri.jmrit.XmlFile
  */
 abstract public class AbstractRosterItemAction extends AbstractAction {
@@ -109,9 +109,13 @@ abstract public class AbstractRosterItemAction extends AbstractAction {
         return true;
     }
 
-    javax.swing.JFileChooser fileChooser = new JFileChooser(jmri.jmrit.XmlFile.prefsDir());
+    javax.swing.JFileChooser fileChooser;
 
     boolean selectNewFromFile() {
+        if (fileChooser==null) {
+            fileChooser = new JFileChooser(jmri.jmrit.XmlFile.prefsDir());
+            fileChooser.setFileFilter(new jmri.util.NoArchiveFileFilter());
+        }
         // refresh fileChooser view of directory, in case it changed
         fileChooser.rescanCurrentDirectory();
         int retVal = fileChooser.showOpenDialog(mParent);
