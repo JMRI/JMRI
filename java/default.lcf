@@ -6,18 +6,20 @@
 # that order.
 
 # For the general syntax of property based configuration files see the
-# documenation of org.apache.log4j.PropertyConfigurator.
+# documentation of org.apache.log4j.PropertyConfigurator.
 
-# The root category uses the appender called A1, which is set to log 
-# priority INFO and above.
 # Valid priority names are FATAL, ERROR, WARN, INFO and DEBUG. 
+
+# The root category is set to log priority INFO and above
+# to the console (A1) , and also to rolling files (T).
+
 # The root category is the only category that is given
 # a default priority. All other categories do not have a default
 # priority. in which case the priority is inherited from the
 # hierarchy.  See the end of the file for examples of how to 
 # control this at a finer level.
 
-log4j.rootCategory= INFO, A1
+log4j.rootCategory= INFO, A1, R
 
 # A1 is set to be a ConsoleAppender which outputs to System.out. 
 log4j.appender.A1=org.apache.log4j.ConsoleAppender
@@ -51,17 +53,19 @@ log4j.appender.A1.layout.ConversionPattern=%6r %-37.37c{2} %-5p - %m [%t]%n
 # R is set to output to a log file
 log4j.appender.R=org.apache.log4j.FileAppender
 log4j.appender.R.File=example.log
+log4j.appender.R.Append=false
 log4j.appender.R.layout=org.apache.log4j.PatternLayout
 log4j.appender.R.layout.ConversionPattern=%6r %-37.37c{2} %-5p - %m [%t]%n
 
 # T is set to output to a rolling file.  This only works for certain systems,
 # but manages files in a convenient way.
 log4j.appender.T=org.apache.log4j.RollingFileAppender
-log4j.appender.T.File=example.log
+log4j.appender.T.File=messages.log
+log4j.appender.T.Append=false
 log4j.appender.T.layout=org.apache.log4j.PatternLayout
 log4j.appender.T.layout.ConversionPattern=%6r %-37.37c{2} %-5p - %m [%t]%n
-log4j.appender.T.MaxFileSize=100KB
-log4j.appender.T.MaxBackupIndex=1
+log4j.appender.T.MaxFileSize=1000KB
+log4j.appender.T.MaxBackupIndex=2
 
 # Examples of changing priority of specific categories (classes, packages):
 #
