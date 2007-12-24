@@ -1,4 +1,4 @@
-package jmri.jmrit;
+package jmri.util;
 
 import java.io.*;
 
@@ -8,7 +8,7 @@ import java.util.*;
  * Allow selection of possible files by their extension.
  *
  * @author Alex Shepherd
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.1 $
  */
 
 public class FileChooserFilter extends javax.swing.filechooser.FileFilter {
