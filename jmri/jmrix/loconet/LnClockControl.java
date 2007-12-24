@@ -43,7 +43,7 @@ import java.awt.event.*;
  *
  * @author      Dave Duchamp Copyright (C) 2007
  * @author		Bob Jacobsen, Alex Shepherd
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class LnClockControl extends DefaultClockControl implements SlotListener
 {
@@ -100,8 +100,13 @@ public class LnClockControl extends DefaultClockControl implements SlotListener
 	}
 	public boolean canCorrectHardwareClock() {return true;};
 	public void setRate(double newRate) {
-		curRate = (int)newRate;
-		if (curRate!=0) savedRate = curRate;
+		if (curRate==0) {
+			savedRate = (int)newRate;      // clock stopped case
+		}
+		else {
+			curRate = (int)newRate;        // clock running case
+			savedRate = curRate;
+		}
 		setClock();
 	}
 	public boolean requiresIntegerRate() {return true;};
