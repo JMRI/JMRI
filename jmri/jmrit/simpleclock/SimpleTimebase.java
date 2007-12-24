@@ -25,7 +25,7 @@ import jmri.ClockControl;
  *
  * @author			Bob Jacobsen Copyright (C) 2004, 2007
  *                  Dave Duchamp - 2007 additions/revisions for handling one hardware clock
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class SimpleTimebase implements Timebase {
 
@@ -145,6 +145,7 @@ public class SimpleTimebase implements Timebase {
     	Date now = getTime();
         // actually make the change
     	mFactor = factor;
+		if (internalMaster || notInitialized) hardwareFactor = factor;
 		if (synchronizeWithHardware) {
 			// send new rate to all hardware clocks, except the hardware time source if there is one 
 			// Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
@@ -159,7 +160,8 @@ public class SimpleTimebase implements Timebase {
     	handleAlarm();
     }
     public void userSetRate(double factor) {
-		// this call only results from user changing fast clock rate in Setup Fast Clock
+		// this call only results from user changing fast clock rate in Setup Fast Clock and by 
+		//		hardware ClockControl implementations that fiddle with the fast clock rate to synchronize
         if (factor < 0.1 || factor > 100) {
             log.error("rate of "+factor+" is out of reasonable range, set to 1");
             factor = 1;
@@ -168,6 +170,7 @@ public class SimpleTimebase implements Timebase {
     	Date now = getTime();
         // actually make the change
     	mFactor = factor;
+		hardwareFactor = factor;
 		if (synchronizeWithHardware) { 
 			// send new rate to all hardware clocks, including the hardware time source if there is one 
 			// Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
@@ -184,15 +187,28 @@ public class SimpleTimebase implements Timebase {
     	handleAlarm();
     }
     public double getRate() { return mFactor; }
+    public double userGetRate() { 
+		if (internalMaster) return mFactor;
+		else return hardwareFactor;
+	}
 	
 	public void setInternalMaster(boolean master, boolean update) {
 		if (master!=internalMaster) {
 			internalMaster = master;
-			if (update) {
+			if (internalMaster) {
+				mFactor = hardwareFactor;  // get rid of any fiddled rate present
+				if (update) {
+					// Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
+					jmri.InstanceManager.clockControlInstance().initializeHardwareClock(mFactor,
+													getTime(), false);
+				}
+			}
+			else if (update) {
 				// Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
-				jmri.InstanceManager.clockControlInstance().initializeHardwareClock(mFactor,
+				jmri.InstanceManager.clockControlInstance().initializeHardwareClock(hardwareFactor,
 													getTime(), false);
 			}
+			
 			if (internalMaster) {
 				masterName = "";
 				hardwareTimeSource = null;
@@ -225,9 +241,16 @@ public class SimpleTimebase implements Timebase {
 		if (synchronizeWithHardware!=synchronize) {
 			synchronizeWithHardware = synchronize;
 			if (update) {
-				// Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
-				jmri.InstanceManager.clockControlInstance().initializeHardwareClock(mFactor,
+				if (internalMaster) {
+					// Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
+					jmri.InstanceManager.clockControlInstance().initializeHardwareClock(mFactor,
 													getTime(), false);
+				}
+				else {
+					// Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
+					jmri.InstanceManager.clockControlInstance().initializeHardwareClock(hardwareFactor,
+													getTime(), false);
+				}
 			}
 		}
 	}
@@ -237,9 +260,16 @@ public class SimpleTimebase implements Timebase {
 		if (correctHardware!=correct) {
 			correctHardware = correct;
 			if (update) {
-				// Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
-				jmri.InstanceManager.clockControlInstance().initializeHardwareClock(mFactor,
+				if (internalMaster) {
+					// Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
+					jmri.InstanceManager.clockControlInstance().initializeHardwareClock(mFactor,
 												  getTime(), false);
+				}
+				else {
+					// Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
+					jmri.InstanceManager.clockControlInstance().initializeHardwareClock(hardwareFactor,
+													getTime(), false);
+				}
 			}
 		}
 	}
@@ -249,9 +279,16 @@ public class SimpleTimebase implements Timebase {
 		if (display!=display12HourClock) {
 			display12HourClock = display;
 			if (update) {
-				// Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
-				jmri.InstanceManager.clockControlInstance().initializeHardwareClock(mFactor,
+				if (internalMaster) {
+					// Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
+					jmri.InstanceManager.clockControlInstance().initializeHardwareClock(mFactor,
 													getTime(), false);
+				}
+				else {
+					// Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
+					jmri.InstanceManager.clockControlInstance().initializeHardwareClock(hardwareFactor,
+													getTime(), false);
+				}
 			}
 		}
 	}
@@ -315,10 +352,12 @@ public class SimpleTimebase implements Timebase {
 				hardwareTimeSource.initializeHardwareClock(0,getTime(),(!startSetTime));
 			}
 			else {
-				hardwareTimeSource.initializeHardwareClock(mFactor,getTime(),(!startSetTime));
+				hardwareTimeSource.initializeHardwareClock(hardwareFactor,getTime(),(!startSetTime));
 			}
 		}
+		notInitialized = false;
 	}
+	public boolean getIsInitialized() {return (!notInitialized);}
 	
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
     protected void firePropertyChange(String p, Object old, Object n) { 
@@ -369,7 +408,10 @@ public class SimpleTimebase implements Timebase {
 	/**
 	 * Timebase variables and options
 	 */
-	private double mFactor = 1.0;
+	private double mFactor = 1.0;  // this is the rate factor for the JMRI fast clock
+	private double hardwareFactor = 1.0;  // this is the rate factor for the hardware clock 
+	//  The above is necessary to support hardware clock Time Sources that fiddle with mFactor to 
+	//      synchronize, instead of sending over a new time to synchronize.
 	private Date startAtTime;
 	private Date setTimeValue;
 	private Date pauseTime;   // null value indicates clock is running
@@ -386,6 +428,7 @@ public class SimpleTimebase implements Timebase {
 															//start up requested
 	private Date startTime = new Date();	// specified time for setting fast clock at start up
 	private int startClockOption = NONE;	// request start of a clock at start up
+	private boolean notInitialized = true;  // true before initialization received from start up
 
 	javax.swing.Timer timer = null;
     java.beans.PropertyChangeSupport pcMinutes = new java.beans.PropertyChangeSupport(this);

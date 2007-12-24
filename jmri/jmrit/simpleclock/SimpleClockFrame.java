@@ -21,7 +21,7 @@ import javax.swing.border.Border;
  * The current implementation (2007) handles the internal clock and one hardware clock
  *
  * @author	Dave Duchamp   Copyright (C) 2004, 2007
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class SimpleClockFrame extends JmriJFrame
 	implements java.beans.PropertyChangeListener {
@@ -321,7 +321,7 @@ public class SimpleClockFrame extends JmriJFrame
      * Method to adjust to rate changes
      */
     void updateRate() {
-        factorField.setText(threeDigits.format(clock.getRate()));
+        factorField.setText(threeDigits.format(clock.userGetRate()));
 		changed = true;
 	}
 
