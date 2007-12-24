@@ -30,7 +30,7 @@ import java.util.Date;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2004, 2007
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public interface Timebase {
 
@@ -46,9 +46,17 @@ public interface Timebase {
 
 	// methods for setting and getting fast clock rate
     public void setRate(double factor) throws TimebaseRateException;
-	// the method below is used only when the user changes fast clock rate in Setup Fast Clock
+	// the method below is used when the user changes fast clock rate in Setup Fast Clock  and by 
+	//		hardware ClockControl implementations that fiddle with the fast clock rate to synchronize
     public void userSetRate(double factor) throws TimebaseRateException;
+	// Caution: The method below may return a fiddled clock rate if certain hardware clocks
+	//   are the Time Source.  Use "userGetRate" if you want the real clock rate instead.
     public double getRate();
+	// The method below is used by Setup Fast Clock when an external change in fast 
+	//   clock rate occurs because of the peculiar way some hardware clocks attempt to 
+	//   synchronize with the JMRI fast clock. This call will return the "true" rate even if the
+	//   master Timebase rate has been fiddled by a hardware clock.
+    public double userGetRate();
 
 	// methods for setting and getting master time source
 	public void setInternalMaster(boolean master, boolean update);
@@ -96,6 +104,7 @@ public interface Timebase {
 	// Note: This method is always called at start up. It should be ignored if there
 	//			is no communication with a hardware clock
 	public void initializeHardwareClock();
+	public boolean getIsInitialized();  // returns true if call to initialize Hardware Clock has occurred.
 
     /**
      * Request a call-back when the bound Rate or Run property changes.
