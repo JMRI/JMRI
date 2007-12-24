@@ -28,7 +28,7 @@ import net.roydesign.mac.MRJAdapter;
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
  * @author  Dennis Miller  Copyright 2005
- * @version     $Revision: 1.44 $
+ * @version     $Revision: 1.45 $
  */
 public class Apps extends JPanel {
 
@@ -442,7 +442,7 @@ public class Apps extends JPanel {
                 org.apache.log4j.PropertyConfigurator.configure(logFile);
             } else {
                 org.apache.log4j.BasicConfigurator.configure();
-                org.apache.log4j.Category.getRoot().setPriority(org.apache.log4j.Priority.ERROR);
+                org.apache.log4j.Category.getRoot().setPriority(org.apache.log4j.Priority.WARN);
             }
         }
         catch (java.lang.NoSuchMethodError e) { log.error("Exception starting logging: "+e); }
@@ -514,7 +514,8 @@ public class Apps extends JPanel {
     static public String startupInfo(String program) {
     	log.info(ignore);
         return (program+" version "+jmri.Version.name()
-                +" starts under Java "+System.getProperty("java.version","<unknown>"));
+                +" starts under Java "+System.getProperty("java.version","<unknown>")
+                +" at "+(new java.util.Date()));
     }
     
     static protected String ignore ="****** Ignore messages above this line *******";
