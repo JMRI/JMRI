@@ -56,7 +56,7 @@ import java.io.*;
  * FF10 = link macro 16 
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -695,7 +695,7 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
         	int upperByte = (accyNum&0xFF);
         	upperByte = (upperByte >>2)+ 0x80;
         	b[i] = (byte)upperByte;
-        	int lowerByteH = (((-accyNum)& 0x0700)>>4);		// 3 MSB 1s complement
+        	int lowerByteH = (((accyNum ^ 0x0700) & 0x0700)>>4);// 3 MSB 1s complement
         	int lowerByteL = ((accyNum & 0x3)<<1);       	// 2 LSB
         	int lowerByte = (lowerByteH + lowerByteL + 0x88);
         	if (cmdButton.getText() == CLOSED)				// adjust for turnout command	
