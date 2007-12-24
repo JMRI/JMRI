@@ -6,22 +6,27 @@ package jmri.util;
  * File filter to suppress zip file archives.
  *<P>
  * Java 1.6's FileChooser gets slow when it encounters
- * large zip files.  This filter skips them.
+ * large zip files.  This filter skips them, while still
+ * allowing you to specify others, etc.
  *
  * @author Bob Jacobsen  Copyright 2007
  * Made from a suggestion by John Plocher
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
-class NoArchiveFileFilter extends javax.swing.filechooser.FileFilter {
-       public NoArchiveFileFilter() {
-       }
+public class NoArchiveFileFilter extends jmri.util.FileChooserFilter {
 
-       public boolean accept(java.io.File f) {
-         return !f.getName().endsWith(".zip");
-       }
+    public NoArchiveFileFilter() {
+        super("Omit zip archives");
+    }
+        
+    public NoArchiveFileFilter(String description) {
+        super(description);
+    }
 
-       public String getDescription() {
-         return "No archive files";
-       }
+    public boolean accept(java.io.File f) {
+        if (f.getName().endsWith(".zip")) return false;
+        else return super.accept(f);
+    }
+
 }
