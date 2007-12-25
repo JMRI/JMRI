@@ -1,4 +1,4 @@
-// LnClockControl.java
+// NceClockControl.java
 
 package jmri.jmrix.nce;
 
@@ -41,7 +41,7 @@ import java.awt.event.*;
  * @author      Ken Cameron Copyright (C) 2007
  * @author      Dave Duchamp Copyright (C) 2007
  * @author		Bob Jacobsen, Alex Shepherd
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class NceClockControl extends DefaultClockControl implements NceListener
 {
@@ -778,6 +778,16 @@ public class NceClockControl extends DefaultClockControl implements NceListener
         	if (priorClockReadPacket != null && priorNceRatio != nceLastRatio) {
         		if (log.isDebugEnabled()){
         			log.debug("NCE Change Rate from cab: prior vs last: " + priorNceRatio + " vs " + nceLastRatio);
+        		}
+        		try {
+            		internalClock.userSetRate(nceLastRatio);
+            		if (true && log.isDebugEnabled()) {
+            			log.debug("update userSetRate(" + nceLastRatio + ")");
+            		}
+        		} catch (TimebaseRateException e) {
+                    log.error("readClockPacket: Invalid rate from cab: " + nceLastRatio);
+                    // just set the internal to NCE and set the clock
+                    nceLastRatio = priorNceRatio;
         		}
         		nceSyncInitStateCounter = 1;
         		nceSyncInitStates();
