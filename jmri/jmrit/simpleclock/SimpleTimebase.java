@@ -25,7 +25,7 @@ import jmri.ClockControl;
  *
  * @author			Bob Jacobsen Copyright (C) 2004, 2007
  *                  Dave Duchamp - 2007 additions/revisions for handling one hardware clock
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class SimpleTimebase implements Timebase {
 
@@ -141,12 +141,14 @@ public class SimpleTimebase implements Timebase {
             log.error("rate of "+factor+" is out of reasonable range, set to 1");
             factor = 1;
         }
+		if (internalMaster && (!notInitialized)) 
+			log.error("Probable Error - questionable attempt to change fast clock rate");
     	double oldFactor = mFactor;
     	Date now = getTime();
         // actually make the change
     	mFactor = factor;
 		if (internalMaster || notInitialized) hardwareFactor = factor;
-		if (synchronizeWithHardware) {
+		if (internalMaster || (synchronizeWithHardware && notInitialized)) {
 			// send new rate to all hardware clocks, except the hardware time source if there is one 
 			// Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
 			if (jmri.InstanceManager.clockControlInstance()!=hardwareTimeSource) {
@@ -155,18 +157,20 @@ public class SimpleTimebase implements Timebase {
 		}
         // make sure time is right with new rate
         setTime(now);
-        // notify listeners
-    	firePropertyChange("rate", new Double(factor), new Double(oldFactor));
+        // notify listeners if internal master
+		if (internalMaster) {
+			firePropertyChange("rate", new Double(factor), new Double(oldFactor));
+		}
     	handleAlarm();
     }
     public void userSetRate(double factor) {
-		// this call only results from user changing fast clock rate in Setup Fast Clock and by 
-		//		hardware ClockControl implementations that fiddle with the fast clock rate to synchronize
+		// this call is used when user changes fast clock rate either in Setup Fast Clock or via a ClockControl  
+		//		implementation
         if (factor < 0.1 || factor > 100) {
             log.error("rate of "+factor+" is out of reasonable range, set to 1");
             factor = 1;
         }
-    	double oldFactor = mFactor;
+    	double oldFactor = hardwareFactor;
     	Date now = getTime();
         // actually make the change
     	mFactor = factor;

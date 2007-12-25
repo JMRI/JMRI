@@ -43,7 +43,7 @@ import java.awt.event.*;
  *
  * @author      Dave Duchamp Copyright (C) 2007
  * @author		Bob Jacobsen, Alex Shepherd
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class LnClockControl extends DefaultClockControl implements SlotListener
 {
@@ -228,7 +228,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener
 		// keep the new rate if different and resetting the internal clock
 		else if ( (temRate != curRate) && setInternal) {
 			try {
-				clock.setRate((double)temRate);
+				clock.userSetRate((double)temRate);
 			} 
             catch (jmri.TimebaseRateException e) {
                 if (!timebaseErrorReported) {
