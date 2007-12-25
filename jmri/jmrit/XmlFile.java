@@ -28,7 +28,7 @@ import org.jdom.output.XMLOutputter;
  * We implement this using our own EntityResolved, the jmri.util.JmriLocalEntityResolver class
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.30 $
+ * @version	$Revision: 1.31 $
  */
 public abstract class XmlFile {
 
@@ -341,7 +341,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.30 2007-12-12 19:04:02 jacobsen Exp $";
+                        +" $Id: XmlFile.java,v 1.31 2007-12-25 22:37:04 jacobsen Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }
@@ -421,6 +421,48 @@ public abstract class XmlFile {
 
     static boolean verify = false;
 
+    /**
+     * Provide default initial location for JFileChoosers
+     * to user files
+     */ 
+    public static String userFileLocationDefault() {
+        return jmri.jmrit.XmlFile.prefsDir();
+    }
+    
+    /**
+     * Provide a JFileChooser initialized to the default
+     * user location, and with a default filter.
+     * @param filter Title for the filter, may not be null
+     * @param suffix1 An allowed suffix, or null
+     * @param suffix2 A second allowed suffix, or null. If both arguments are
+     * null, no specific filtering is done.
+     */
+    public static javax.swing.JFileChooser userFileChooser(
+            String filter, String suffix1, String suffix2) {
+        javax.swing.JFileChooser fc = new javax.swing.JFileChooser(userFileLocationDefault());
+        jmri.util.NoArchiveFileFilter filt = new jmri.util.NoArchiveFileFilter(filter);
+        if (suffix1 != null) filt.addExtension(suffix1);
+        if (suffix2 != null) filt.addExtension(suffix2);
+        fc.setFileFilter(filt);
+        return fc;
+    }
+
+    public static javax.swing.JFileChooser userFileChooser() {
+        javax.swing.JFileChooser fc = new javax.swing.JFileChooser(userFileLocationDefault());
+        jmri.util.NoArchiveFileFilter filt = new jmri.util.NoArchiveFileFilter();
+        fc.setFileFilter(filt);
+        return fc;
+    }
+        
+    public static javax.swing.JFileChooser userFileChooser(String filter) {
+        return userFileChooser(filter, null, null);
+    }
+        
+    public static javax.swing.JFileChooser userFileChooser(
+            String filter, String suffix1) {
+        return userFileChooser(filter, suffix1, null);
+    }
+        
     // initialize SAXbuilder
     static private SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation, on for now
 
