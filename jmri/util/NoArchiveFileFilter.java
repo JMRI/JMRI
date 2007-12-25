@@ -11,13 +11,13 @@ package jmri.util;
  *
  * @author Bob Jacobsen  Copyright 2007
  * Made from a suggestion by John Plocher
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class NoArchiveFileFilter extends jmri.util.FileChooserFilter {
 
     public NoArchiveFileFilter() {
-        super("Omit zip archives");
+        super("Omit archive files");
     }
         
     public NoArchiveFileFilter(String description) {
@@ -26,6 +26,7 @@ public class NoArchiveFileFilter extends jmri.util.FileChooserFilter {
 
     public boolean accept(java.io.File f) {
         if (f.getName().endsWith(".zip")) return false;
+        if (f.getName().endsWith(".jar")) return false;
         else return super.accept(f);
     }
 
