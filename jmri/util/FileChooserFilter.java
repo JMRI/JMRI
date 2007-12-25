@@ -7,8 +7,13 @@ import java.util.*;
 /**
  * Allow selection of possible files by their extension.
  *
+ *<p>
+ * As a convenience, if no extension(s) are specified, all files pass.
+ *<p>
+ * Except in that case, files without extensions fail.
+ *
  * @author Alex Shepherd
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class FileChooserFilter extends javax.swing.filechooser.FileFilter {
@@ -41,13 +46,14 @@ public class FileChooserFilter extends javax.swing.filechooser.FileFilter {
   }
 
   public boolean accept( File f ){
+    if (allowedExtensions.isEmpty()) return true;
     if(f != null) {
       if(f.isDirectory()) {
         return true;
       }
       String extension = getFileExtension( f );
-      if(extension != null && allowedExtensions.contains( extension ) )
-        return true;
+      if (extension == null) return false;
+      if (allowedExtensions.contains( extension ) ) return true;
     }
     return false;
   }
