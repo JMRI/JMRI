@@ -22,7 +22,7 @@ import jmri.util.JmriJFrame;
 /**
  * Abstact base class for Frames displaying communications monitor information
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public abstract class AbstractMonFrame extends JmriJFrame  {
 
@@ -54,7 +54,7 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
     protected JButton openFileChooserButton = new JButton();
 
     // to find and remember the log file
-    final javax.swing.JFileChooser logFileChooser = new JFileChooser(" ");
+    final javax.swing.JFileChooser logFileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
 
     public AbstractMonFrame() {
 	    super();
