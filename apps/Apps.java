@@ -28,7 +28,7 @@ import net.roydesign.mac.MRJAdapter;
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
  * @author  Dennis Miller  Copyright 2005
- * @version     $Revision: 1.45 $
+ * @version     $Revision: 1.46 $
  */
 public class Apps extends JPanel {
 
@@ -291,6 +291,8 @@ public class Apps extends JPanel {
 
         } catch (java.lang.NoSuchMethodError e2) {
             log.error("Is jh.jar available? Error starting help system: "+e2);
+        } catch (java.lang.Throwable e3) {
+            log.error("Unexpected error starting help system: "+e3);
         }
 
         JMenuItem license = new JMenuItem(rb.getString("MenuItemLicense"));
