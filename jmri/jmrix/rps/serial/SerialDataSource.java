@@ -22,7 +22,7 @@ import jmri.jmrix.rps.*;
  * When opened, the user must first select a serial port and click "Start".
  *
  * @author			Bob Jacobsen   Copyright (C) 2006
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SerialDataSource extends jmri.util.JmriJFrame implements ThrottleListener {
 
@@ -240,7 +240,6 @@ public class SerialDataSource extends jmri.util.JmriJFrame implements ThrottleLi
                 // get selected speed
                 int speed = 9600;
                 speed = Integer.parseInt((String)speedBox.getSelectedItem());
-                speed = 9600;
                 // 8-bits, 1-stop, no parity
                 activeSerialPort.setSerialPortParams(speed, SerialPort.DATABITS_8, 
                                                             SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
