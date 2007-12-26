@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.21 $ -->
+<!-- Revision $Revision: 1.22 $ -->
 
 <project name="JMRI" basedir="." default="none">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -249,6 +249,12 @@
     </ftp>
  </target>
  
+ <target name="release3" depends=""
+ 					description="part 3 of build a release; usage is ant -Drelease=R1.2.3 -Dnumber=1.2.3 release3">
+ 	<echo message="upload javadocs"/>
+    <ant antfile="build.xml" dir="${release}/java" target="uploadjavadoc" />
+ </target>
+
  <target name="release4" depends=""
  					description="part 4 of build a release; usage is ant -Drelease=R1.2.3 -Dnumber=1.2.3 release4">
 	<echo message="upload file Windows .exe file"/>
@@ -258,12 +264,6 @@
          verbose="yes" remotedir="incoming" >
       <fileset dir="." includes="JMRI.${number}.exe" />
     </ftp>
- </target>
- 
- <target name="release5" depends=""
- 					description="part 5 of build a release; usage is ant -Drelease=R1.2.3 -Dnumber=1.2.3 release4">
- 	<echo message="upload javadocs"/>
-    <ant antfile="build.xml" dir="${release}/java" target="uploadjavadoc" />
  </target>
 
 </project>
