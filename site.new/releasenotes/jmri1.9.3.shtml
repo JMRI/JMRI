@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.9.3.shtml,v 1.6 2007-12-22 15:46:23 jacobsen Exp $ -->
+<!-- $Id: jmri1.9.3.shtml,v 1.7 2007-12-26 02:06:20 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -159,7 +159,20 @@ When adding backgrounds in the panel editor, the file chooser now remembers wher
 <p>
 So that parts of the program can respond when a C/MRI node goes offline, sensors defined on a C/MRI node are set to UNKNOWN if the program loses contact with that node and has to reinitialize it.
 
+<p>
+David Duchamp added a 12hr/24hr option to the fast clock support.
 
+<p>
+Dan Boudreau fixed a bug in the NCE Macro Editor that caused problems for turnout numbers greater than 255.
+
+<p>
+Fixed a problem with CV115 (Auto brake squeal) and CV116 (Coupling sound type) in the MRC 1631 and 1636 decoder definitions.
+
+<p>
+With the help of Bill Carman, decoder definitions have been added for the Athearn Challenger and F Unit built in decoders.  These are provided by MRC, and are filed there in the selection window.  Note that the decoder documentation says that the decoder "does not support the CV read back feature".
+
+<p>
+The file choosers in the program have been overhauled so they start in more useful places, and have filters to highlight just files with the preferred suffix. The filters also help with a problem seen by some people using Java 1.6 where file operations get very slow if the user has large .zip archives around, especially on their desktop.
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
