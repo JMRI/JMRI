@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XmlUsage.shtml,v 1.1 2007-12-16 23:14:24 jacobsen Exp $ -->
+<!-- $Id: XmlUsage.shtml,v 1.2 2007-12-26 02:06:47 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -75,6 +75,7 @@ reference in the DOCTYPE and handles it in several ways:
     </UL>
 </UL>
 
+<h3>Backwards Compatibility</h3>
 
 <h2>Formatting with XSLT</h2>
 
@@ -108,6 +109,20 @@ If you don't have a web connection, or want to use a local copy for some reason,
 change the href URL.  For example, href="panelfile.xsl" would reference a local file 
 in the same location as the file being viewed.
 </UL>
+
+<p>
+Note that there's a known bug in recent versions of Firefox that prevent this from
+working.  Normally, security requires that pages loaded from remote
+locations (e.g. servers, not the local computer) are not allowed to reference
+local resources (e.g. local files).  This prevents malicious pages
+from accessing your local secrets.  
+On the other hand, there's no problem with a local page referencing
+a remote page; that happens all the time.   Unfortunately, the current
+(December 2007) versions of FireFox have this backwards, allowing remote
+pages to access local ones and preventing local ones from accessing
+remote resources. This stops a local JMRI XML page from loading the
+remote formatting information, and prevents the page from displaying.
+
 
 <!--#include virtual="/Footer" -->
 
