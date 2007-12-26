@@ -29,7 +29,7 @@ import javax.comm.SerialPort;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.29 $
+ * @version			$Revision: 1.30 $
  */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -128,6 +128,14 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
      * station connected to this port
      */
     public void configure() {
+
+        if (getCurrentOption1Setting().equals(validOption1()[1])) {
+            // setting binary mode
+            NceMessage.setCommandOptions(NceMessage.OPTION_2006);
+        } else {
+            NceMessage.setCommandOptions(NceMessage.OPTION_2004);
+        }
+        
         // connect to the traffic controller
         NceTrafficController.instance().connectPort(this);
 
@@ -149,12 +157,6 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
         
         jmri.jmrix.nce.ActiveFlag.setActive();
 
-        if (getCurrentOption1Setting().equals(validOption1()[1])) {
-            // setting binary mode
-            NceMessage.setCommandOptions(NceMessage.OPTION_2006);
-        } else {
-            NceMessage.setCommandOptions(NceMessage.OPTION_2004);
-        }
     }
 
     private Thread sinkThread;
