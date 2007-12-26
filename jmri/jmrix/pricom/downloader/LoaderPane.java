@@ -21,7 +21,7 @@ import java.io.DataInputStream;
 /**
  * Pane for downloading software updates to PRICOM products
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.9 $
+ * @version	    $Revision: 1.10 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -39,7 +39,7 @@ public class LoaderPane extends javax.swing.JPanel {
     JButton     openPortButton = new JButton();
     JTextArea   traffic = new JTextArea();
 
-    JFileChooser chooser = new JFileChooser();
+    JFileChooser chooser = jmri.jmrit.XmlFile.userFileChooser();
     JButton     fileButton;
     JLabel      inputFileName = new JLabel("");
     JTextArea   comment = new JTextArea();
@@ -527,6 +527,7 @@ public class LoaderPane extends javax.swing.JPanel {
     }
 
     void selectInputFile() {
+        chooser.rescanCurrentDirectory();
         int retVal = chooser.showOpenDialog(this);
         if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
         inputFileName.setText(chooser.getSelectedFile().getPath());

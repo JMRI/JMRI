@@ -58,7 +58,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * This backup routine uses the same macro data format as NCE.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 
@@ -81,7 +81,7 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 	public void run() {
 
 		// get file to write to
-		JFileChooser fc = new JFileChooser(jmri.jmrit.XmlFile.prefsDir());
+		JFileChooser fc = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
 		fc.addChoosableFileFilter(new textFilter());
 		
 		File fs = new File ("NCE macro backup.txt");

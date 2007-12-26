@@ -15,7 +15,7 @@ import java.io.*;
  * Frame for manual operation and debugging of the RPS system
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 
 
@@ -234,7 +234,7 @@ public class DisplayFrame extends jmri.util.JmriJFrame
         pack();
     }
     
-    JFileChooser fci = new JFileChooser(" ");
+    JFileChooser fci = jmri.jmrit.XmlFile.userFileChooser();
     void load() {
         try {
             // request the filename from an open dialog

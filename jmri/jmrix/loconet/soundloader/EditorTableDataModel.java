@@ -26,7 +26,7 @@ import javax.swing.table.TableColumnModel;
  * Table data model for display of Digitrax SPJ files
  * @author		Bob Jacobsen   Copyright (C) 2003, 2006
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.6 $
+ * @version		$Revision: 1.7 $
  */
 public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 
@@ -200,8 +200,10 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 
     // should probably be abstract and put in invoking GUI
     static JFileChooser chooser;  // shared across all uses
+    
     void replWavButtonPressed(Object value, int row, int col) {
-        if (chooser == null) chooser = new JFileChooser(System.getProperty("user.dir"));
+        if (chooser == null) chooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+        chooser.rescanCurrentDirectory();
         int retVal = chooser.showOpenDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
         

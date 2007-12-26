@@ -19,7 +19,7 @@ import jmri.util.JmriJFrame;
  * This handles file read/write.
  *
  * @author		Bob Jacobsen   Copyright (C) 2006
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 public class EditorFrame extends JmriJFrame {
 
@@ -79,7 +79,8 @@ public class EditorFrame extends JmriJFrame {
     static JFileChooser chooser;  // shared across all of these
     
     void selectInputFile() {
-        if (chooser == null) chooser = new JFileChooser(System.getProperty("user.dir"));
+        if (chooser == null) chooser = jmri.jmrit.XmlFile.userFileChooser();
+        chooser.rescanCurrentDirectory();
         int retVal = chooser.showOpenDialog(this);
         if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
         

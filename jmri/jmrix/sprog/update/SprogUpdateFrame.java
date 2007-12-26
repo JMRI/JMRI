@@ -13,7 +13,7 @@ import jmri.jmrix.sprog.SprogTrafficController;
 /**
  * Frame for SPROG firmware update utility.
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SprogUpdateFrame
     extends jmri.util.JmriJFrame
@@ -27,7 +27,7 @@ public class SprogUpdateFrame
   protected JButton setCSModeButton = new JButton();
 
   // to find and remember the hex file
-  final javax.swing.JFileChooser hexFileChooser = new JFileChooser(" ");
+  final javax.swing.JFileChooser hexFileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
 
   JLabel statusBar = new JLabel();
   SprogAlertDialog ad;

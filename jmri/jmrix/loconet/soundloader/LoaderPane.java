@@ -13,7 +13,7 @@ import java.io.*;
 /**
  * Pane for downloading .hex files
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.5 $
+ * @version	    $Revision: 1.6 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -125,7 +125,7 @@ public class LoaderPane extends javax.swing.JPanel {
     void selectInputFile() {
         String name = inputFileName.getText();
         if (name.equals("")) {
-            name = System.getProperty("user.dir");
+            name = jmri.jmrit.XmlFile.userFileLocationDefault();
         }
         if (chooser == null) chooser = new JFileChooser(name);
         inputFileName.setText("");  // clear out in case of failure

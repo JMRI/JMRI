@@ -19,7 +19,7 @@ import javax.swing.JPanel;
  * a .hex file, feeding the information to a LocoMonFrame (monitor) and
  * connecting to a LocoGenFrame (for sending a few commands).
  * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version                     $Revision: 1.20 $
+ * @version                     $Revision: 1.21 $
  */
 public class HexFileFrame extends JmriJFrame {
 
@@ -31,7 +31,8 @@ public class HexFileFrame extends JmriJFrame {
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
 
     // to find and remember the log file
-    final javax.swing.JFileChooser inputFileChooser = new JFileChooser(" ");
+    final javax.swing.JFileChooser inputFileChooser = 
+            jmri.jmrit.XmlFile.userFileChooser("Hex files", "hex");
 
     public HexFileFrame() {
         super();
@@ -101,9 +102,6 @@ public class HexFileFrame extends JmriJFrame {
                     delayFieldActionPerformed(e);
                 }
             });
-
-        // set file chooser to a default
-        inputFileChooser.setSelectedFile(new File("lnpacket.hex"));
 
         // create a new Hex file handler, set its delay
         port = new LnHexFilePort();
