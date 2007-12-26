@@ -11,7 +11,7 @@ import javax.swing.*;
  * Make sure an XML file is readable, without doing a DTD validation.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2005, 2007
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  * @see         jmri.jmrit.XmlFile
  * @see         jmri.jmrit.XmlFileValidateAction
  */
@@ -28,8 +28,7 @@ public class XmlFileCheckAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
         if (fci==null) {
-            fci = new JFileChooser(" ");
-            fci.setFileFilter(new jmri.util.NoArchiveFileFilter());
+            fci = jmri.jmrit.XmlFile.userFileChooser("XML files", "xml");
         }
         // request the filename from an open dialog
         fci.rescanCurrentDirectory();

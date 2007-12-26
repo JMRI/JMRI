@@ -11,7 +11,7 @@ import javax.swing.*;
  * Make sure an XML file is readable, and validates OK
  *
  * @author	Bob Jacobsen   Copyright (C) 2005, 2007
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  * @see         jmri.jmrit.XmlFile
  * @see         jmri.jmrit.XmlFileCheckAction
  */
@@ -28,8 +28,7 @@ public class XmlFileValidateAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
         if (fci==null) {
-            fci = new JFileChooser(" ");
-            fci.setFileFilter(new jmri.util.NoArchiveFileFilter());
+            fci = jmri.jmrit.XmlFile.userFileChooser("XML files", "xml");
         }
         // request the filename from an open dialog
         fci.rescanCurrentDirectory();
