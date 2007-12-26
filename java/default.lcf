@@ -19,7 +19,7 @@
 # hierarchy.  See the end of the file for examples of how to 
 # control this at a finer level.
 
-log4j.rootCategory= INFO, A1, R
+log4j.rootCategory= INFO, A1
 
 # A1 is set to be a ConsoleAppender which outputs to System.out. 
 log4j.appender.A1=org.apache.log4j.ConsoleAppender
