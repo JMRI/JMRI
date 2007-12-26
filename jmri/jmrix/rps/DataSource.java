@@ -21,7 +21,7 @@ import jmri.*;
  * When opened, the user must first select a serial port and click "Start".
  *
  * @author			Bob Jacobsen   Copyright (C) 2006
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class DataSource extends jmri.util.JmriJFrame implements ThrottleListener {
 
@@ -169,17 +169,17 @@ public class DataSource extends jmri.util.JmriJFrame implements ThrottleListener
                 pollThread.interrupt();
                 // release throttle
                 if (throttle1!=null) {
-                    throttle1.setF3(false);
+                    throttle1.setF2(false);
                     throttle1.release();
                     throttle1 = null;
                 }
                 if (throttle2!=null) {
-                    throttle2.setF3(false);
+                    throttle2.setF2(false);
                     throttle2.release();
                     throttle2 = null;
                 }
                 if (throttle3!=null) {
-                    throttle3.setF3(false);
+                    throttle3.setF2(false);
                     throttle3.release();
                     throttle3 = null;
                 }
@@ -244,27 +244,27 @@ public class DataSource extends jmri.util.JmriJFrame implements ThrottleListener
                         if (throttle1 != null) {
                             polledAddress = num1;
                             if (log.isDebugEnabled()) log.debug("Set polledAddress = "+polledAddress);
-                            throttle1.setF3(true);
+                            throttle1.setF2(true);
                             synchronized (this) { wait(onDelay); }
-                            throttle1.setF3(false);
+                            throttle1.setF2(false);
                             synchronized (this) { wait(offDelay); }
                         }
                         
                         if (throttle2 !=null) {
                             polledAddress = num2;
                             if (log.isDebugEnabled()) log.debug("Set polledAddress = "+polledAddress);
-                            throttle2.setF3(true);
+                            throttle2.setF2(true);
                             synchronized (this) { wait(onDelay); }
-                            throttle2.setF3(false);
+                            throttle2.setF2(false);
                             synchronized (this) { wait(offDelay); }
                         }
                         
                         if (throttle3 != null ) {
                             polledAddress = num3;
                             if (log.isDebugEnabled()) log.debug("Set polledAddress = "+polledAddress);
-                            throttle3.setF3(true);
+                            throttle3.setF2(true);
                             synchronized (this) { wait(onDelay); }
-                            throttle3.setF3(false);
+                            throttle3.setF2(false);
                             synchronized (this) { wait(offDelay); }
                         }
                     }
