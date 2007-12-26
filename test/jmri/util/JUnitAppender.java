@@ -12,7 +12,7 @@ import junit.framework.Assert;
  * Log4J Appender that just publishes what it sees
  *
  * @author	Bob Jacobsen - Copyright 2007
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
  
 public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
@@ -81,6 +81,19 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
         super.append(l);
     }
     
+    /**
+     * Remove any messages stored up, returning
+     * how many there were.  This is used to skip
+     * over messages that don't matter, e.g. during
+     * setting up a test.
+     */
+    public static int clearBacklog() {
+        if (list.isEmpty()) return 0;
+        int retval = list.size();
+        list.clear();
+        return retval;
+    }
+   
     /**
      * Check that the next queued message was of Error 
      * severity, and has a specific message.
