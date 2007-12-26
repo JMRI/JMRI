@@ -7,10 +7,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 <map version="1.0"> 
 
 	<mapID target="top" url="index.html" />
-	<mapID target="popup_icon" url="images/popup.gif" />
-	<mapID target="package.jmri.jmrix.nce.consist.NceConsistEditFrame" url="package/jmri/jmrix/nce/consist/NceConsistEditFrame.shtml" /> 
-	<mapID target="package.jmri.jmrix.nce.macro.NceMacroEditFrame" url="package/jmri/jmrix/nce/macro/NceMacroEditFrame.shtml" /> 
-	<mapID target="package.jmri.jmrix.nce.analyzer.NcePacketMonitorFrame" url="package/jmri/jmrix/nce/analyzer/NcePacketMonitorFrame.shtml" /> 
+	<mapID target="popup_icon" url="images/popup.gif" /> 
 	<mapID target="package.jmri.jmrit.display.SetSignalsAtXoverTurnout" url="package/jmri/jmrit/display/SetSignalsAtXoverTurnout.shtml" />
 	<mapID target="DecoderProManual.Comp_LightFX_Top" url="DecoderProManual/Comp_LightFX.html#Top" />
 	<mapID target="package.jmri.jmrit.beantable.RouteAddEdit" url="package/jmri/jmrit/beantable/RouteAddEdit.shtml" />
@@ -53,6 +50,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="index" url="index.html" />
 	<mapID target="html.Sensors" url="html/Sensors.html" />
 	<mapID target="package.jmri.jmrit.beantable.TurnoutTable" url="package/jmri/jmrit/beantable/TurnoutTable.shtml" />
+	<mapID target="package.jmri.jmrix.nce.consist.NceConsistEditFrame" url="package/jmri/jmrix/nce/consist/NceConsistEditFrame.shtml" />
 	<mapID target="DecoderProManual.Comp_Speed_Top" url="DecoderProManual/Comp_Speed.html#Top" />
 	<mapID target="package.jmri.jmrit.display.LayoutEditor_option" url="package/jmri/jmrit/display/LayoutEditor.shtml#option" />
 	<mapID target="package.jmri.jmrix.nce.clockmon.ClockMonFrame" url="package/jmri/jmrix/nce/clockmon/ClockMonFrame.shtml" />
@@ -123,6 +121,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrit.ussctc.OsIndicatorFrame" url="package/jmri/jmrit/ussctc/OsIndicatorFrame.shtml" />
 	<mapID target="DecoderProManual.index_Setting up" url="DecoderProManual/index.html#Setting up" />
 	<mapID target="package.jmri.jmrit.beantable.ConditionalAddEdit_variable" url="package/jmri/jmrit/beantable/ConditionalAddEdit.shtml#variable" />
+	<mapID target="package.jmri.jmrix.nce.analyzer.NcePacketMonitorFrame" url="package/jmri/jmrix/nce/analyzer/NcePacketMonitorFrame.shtml" />
 	<mapID target="package.jmri.jmrit.display.LayoutEditor_toolsmenu" url="package/jmri/jmrit/display/LayoutEditor.shtml#toolsmenu" />
 	<mapID target="package.jmri.jmrit.display.EditTurntable" url="package/jmri/jmrit/display/EditTurntable.shtml" />
 	<mapID target="package.jmri.jmrit.display.SetSignalsAtTurnout" url="package/jmri/jmrit/display/SetSignalsAtTurnout.shtml" />
@@ -170,6 +169,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="DecoderProManual.Comp_Consist" url="DecoderProManual/Comp_Consist.html" />
 	<mapID target="DecoderProManual.Comp_GlobalCVs" url="DecoderProManual/Comp_GlobalCVs.html" />
 	<mapID target="package.jmri.jmrix.loconet.clockmon.ClockMonFrame" url="package/jmri/jmrix/loconet/clockmon/ClockMonFrame.shtml" />
+	<mapID target="package.jmri.jmrix.nce.macro.NceMacroEditFrame" url="package/jmri/jmrix/nce/macro/NceMacroEditFrame.shtml" />
 	<mapID target="DecoderProManual.Comp_Setup_Roster" url="DecoderProManual/Comp_Setup_Roster.html" />
 	<mapID target="DecoderProManual.Comp_ManfSpecific_Top" url="DecoderProManual/Comp_ManfSpecific.html#Top" />
 	<mapID target="package.jmri.jmrit.display.LayoutEditor_start" url="package/jmri/jmrit/display/LayoutEditor.shtml#start" />
