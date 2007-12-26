@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XmlUsage.shtml,v 1.2 2007-12-26 02:06:47 jacobsen Exp $ -->
+<!-- $Id: XmlUsage.shtml,v 1.3 2007-12-26 05:22:38 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -59,23 +59,58 @@ locations to keep such a set of DTD files up to date.
 JMRI itself, via the jmri.jmrit.XmlFile class, provides
 support for locating those files when the XML parser
 needs them.  
-<P>
+<p/>
 Each file contains a DOCTYPE line that
-specifies which DTD should be used. There are three different uses:
-<UL>
-<LI>Web browsers look exactly where the DOCTYPE line specifies,
+specifies a DTD name. There are three different methods
+used to locate the actual DTD file:
+<ul>
+<li>Web browsers look exactly where the DOCTYPE line specifies,
 and must find the DTD there to function.
-<LI>JMRI 1.8 and earlier...
-<LI>JMRI 1.9.2 and later provides a powerful DTD search
-procedure using the jmri.util.JmriLocalResolver class. It parses the
+<li>JMRI 1.8 and earlier 
+assumes that the name is relative to
+the program's xml/DTD directory, and looks for it using that.
+In practice, this allows two forms for the DOCTYPE line:
+  <ul>
+  <li>name.dtd
+  <li>../DTD/name.dtd
+  </ul>
+Early XML files used both; the program itself could generate
+either depending on the circumstances.
+<li>JMRI 1.9.2 through 2.0 provide a more powerful DTD search
+procedure using the 
+<a href="/JavaDoc/doc/jmri/util/JmriLocalResolver.html">jmri.util.JmriLocalResolver</a>
+class. It parses the
 reference in the DOCTYPE and handles it in several ways:
-    <UL>
-    <LI>If it's an HTTP URL, it looks via the internet
-    <LI>If it's just a filename...
-    </UL>
-</UL>
+    <ul>
+    <li>If it's an HTTP URL, JMRI first attempts to
+    find the corresponding file in the local distribution.
+    If so, it uses the local copy, otherwise it attempts to load a copy
+    from the Internet using the URL.
+    <li>If it's a file path that starts with "../DTD/",
+    JMRI looks in it's local xml/DTD directory for the DTD file.
+    <li>If the path is just a filename,
+    JMRI looks in it's local xml/DTD directory for the DTD file.
+    <li>In any other case, e.g. a local or absolute pathname,
+    JMRI looks there for the DTD file.  Relative pathnames
+    are interpreted as starting from the JMRI install directory.
+    </ul>
+    If the file can't be found, the XML file isn't opened.
+    <p/>
+    These JMRI versions write just the DTD filename in the DOCTYPE
+    line when writing XML files.
+    <p/>
+    This provides complete backward compatibility with existing
+    files and older versions of JMRI back to 1.7.1.
+    At the same time, since it can handle HTTP URLs even without
+    an Internet connection, it allows us to eventually move forward.
+</ul>
+<p/>
+The JMRI 2.1 test release series will eventually start 
+writing HTTP URL DOCTYPE lines in it's output XML files.  These 
+will still be readable by JMRI 2.0, the prior production version,
+but will also allow us to version control the DTD files. We're going to
+need that capability eventually, and this is a way to get to it.
 
-<h3>Backwards Compatibility</h3>
 
 <h2>Formatting with XSLT</h2>
 
@@ -95,7 +130,7 @@ as part of each release.
 <h3>Viewing XML Files</h3>
 There are also XSLT transforms that are
 used as stylesheets when displaying a JMRI XML file
-in a browser.  
+in a web browser.  
 In most cases, they just provide a human readable form.
 For decoder definition files, this goes further to convert
 the file to a form which can be used to submit updates.
@@ -104,15 +139,20 @@ To ease this, JMRI writes a line like<br/>
 <pre>
 &lt;?xml-stylesheet href="http://jmri.sourceforge.net/xml/XSLT/panelfile.xsl" type="text/xsl"?&gt;
 </pre>
-at the start of each file. This loads the stylesheet from the main JMRI web server.
-If you don't have a web connection, or want to use a local copy for some reason, just
+at the start of each file. 
+When the browser encounters this, it loads the stylesheet from the main JMRI web server
+and uses it to transform the XML file into HTML, which it then displays.
+
+<h4>Use without Internet Access</h4>
+
+If you don't have a web connection, or want to use a local copy 
+of the spreadsheet for some reason, just
 change the href URL.  For example, href="panelfile.xsl" would reference a local file 
 in the same location as the file being viewed.
-</UL>
-
 <p>
-Note that there's a known bug in recent versions of Firefox that prevent this from
-working.  Normally, security requires that pages loaded from remote
+Note that there's a known bug in recent versions of Firefox that prevents 
+it from loading the stylesheet from the Internet, even when access is available.
+Normally, security requires that pages loaded from remote
 locations (e.g. servers, not the local computer) are not allowed to reference
 local resources (e.g. local files).  This prevents malicious pages
 from accessing your local secrets.  
@@ -122,6 +162,11 @@ a remote page; that happens all the time.   Unfortunately, the current
 pages to access local ones and preventing local ones from accessing
 remote resources. This stops a local JMRI XML page from loading the
 remote formatting information, and prevents the page from displaying.
+Use the solution described above for the case of no access:  Put 
+a copy of the stylesheet in the same directory as the 
+file you want to display, and then edit the xml-stylesheet line to point
+to that directly.
+
 
 
 <!--#include virtual="/Footer" -->
