@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NceConsistEditFrame.shtml,v 1.1 2007-12-22 03:50:58 dan_boudreau Exp $ -->
+<!-- $Id: NceConsistEditFrame.shtml,v 1.2 2007-12-26 22:23:47 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
-<TITLE>JMRI: NCE DCC Packet Analyzer</TITLE>
+<TITLE>JMRI: Edit NCE Consist</TITLE>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <META CONTENT="Dan Boudreau" NAME="Author">
 <META NAME="keywords" CONTENT="JMRI Help NCE Edit Consist ">
