@@ -14,17 +14,20 @@ import junit.framework.TestSuite;
  *
  * Description:
  * @author			Bob Jacobsen
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class PanelEditorTest extends TestCase {
 
     TurnoutIcon to = null;
 
 	public void testShow() throws java.io.IOException {
+        // ensure demo directory exists
+        XmlFile.ensurePrefsPresent("temp");
+        XmlFile.ensurePrefsPresent("temp"+File.separator+"prefs");
+	    // don't care about logged messages
+	    jmri.util.JUnitAppender.clearBacklog();
 	    // create a test file
-        XmlFile.ensurePrefsPresent("prefs");
-        XmlFile.ensurePrefsPresent("prefs"+File.separator+"temp");
-	    File f = new File(XmlFile.prefsDir()+File.separator+"temp"+File.separator+"PanelEditorTest1.xml");
+	    File f = new File("temp"+File.separator+"prefs"+File.separator+"PanelEditorTest1.xml");
 	    FileWriter fw = new FileWriter(f);
 	    fw.write(layerTestData);
 	    fw.close();

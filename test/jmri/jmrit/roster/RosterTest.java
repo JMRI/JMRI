@@ -17,7 +17,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.roster package & jmrit.roster.Roster class.
  * @author	Bob Jacobsen     Copyright (C) 2001, 2002
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 public class RosterTest extends TestCase {
 
@@ -118,7 +118,7 @@ public class RosterTest extends TestCase {
         // store files in "temp"
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
-        Roster.setFileLocation("temp");
+        Roster.setFileLocation("temp"+File.separator);
         Roster.setRosterFileName("rosterTest.xml");
 
         File f = new File(XmlFile.prefsDir()+"temp"+File.separator+"rosterTest.xml");

@@ -21,7 +21,7 @@ import java.io.InputStream;
  * Uses (creates, modifies, destroys) files in the local preferences directory
  *
  * @author	    Bob Jacobsen  Copyright 2001
- * @version         $Revision: 1.10 $
+ * @version         $Revision: 1.11 $
  */
 public class XmlFileTest extends TestCase {
 
@@ -33,8 +33,8 @@ public class XmlFileTest extends TestCase {
         // this test uses explicit filenames intentionally, to ensure that
         // the resulting files go into the test tree area.  This is not
         // a test of prefsDir, and shouldn't use that.
-        XmlFile.ensurePrefsPresent("prefs");
-        XmlFile.ensurePrefsPresent("prefs"+File.separator+"temp");
+        XmlFile.ensurePrefsPresent("temp");
+        XmlFile.ensurePrefsPresent("temp"+File.separator+"prefs");
         Assert.assertTrue("existing file ", x.checkFile("decoders"));  // should be in xml
         Assert.assertTrue("non-existing file ", !x.checkFile("dummy file not expected to exist"));
     }
@@ -60,9 +60,9 @@ public class XmlFileTest extends TestCase {
         doc.setDocType(new DocType("decoder-config","decoder-config.dtd"));
 
         // write it out
-        XmlFile.ensurePrefsPresent("prefs");
-        XmlFile.ensurePrefsPresent("prefs"+File.separator+"temp");
-        File f = new File(XmlFile.prefsDir()+File.separator+"temp"+File.separator+"test.xml");
+        XmlFile.ensurePrefsPresent("temp");
+        XmlFile.ensurePrefsPresent("temp"+File.separator+"prefs");
+        File f = new File("temp"+File.separator+"prefs"+File.separator+"test.xml");
 
         x.writeXML(f, doc);
         
@@ -76,7 +76,7 @@ public class XmlFileTest extends TestCase {
         // try to read
         XmlFile x = new XmlFile() {
             };
-        Element e = x.rootFromName(XmlFile.prefsDir()+File.separator+"temp"+File.separator+"test.xml");
+        Element e = x.rootFromName("temp"+File.separator+"prefs"+File.separator+"test.xml");
         Assert.assertTrue("Element found", e!=null);
     }
     
@@ -103,7 +103,7 @@ public class XmlFileTest extends TestCase {
                 throw new org.jdom.JDOMException("test dummy");
             }
         };
-        Element e = x.rootFromName(XmlFile.prefsDir()+File.separator+"temp"+File.separator+"test.xml");
+        Element e = x.rootFromName("temp"+File.separator+"prefs"+File.separator+"test.xml");
         log.debug("returns "+testFlag);
         Assert.assertTrue("Error handler invoked OK", testFlag);
     }
