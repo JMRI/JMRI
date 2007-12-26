@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.57 $)
+distribution.  ($Revision: 1.58 $)
 
 Start with a directory, typically called "Distributions", that
 contains "scripts" and "java" (from CVS) as subdirectories, and:
@@ -37,8 +37,12 @@ Make sure everything is up-to-date:
     
     Run the program and make sure help works.
     
-( ) Update the acknowledgements help page.
+( ) Update the acknowledgements help page from the site community/index page
 
+( ) the default.lcf file for releases is taken from Distribution/scripts/; 
+    the one for normal development is from Distribution/java/.  Make sure
+    the one in scripts/ is the one you want.
+    
 ( ) Check that the Version.java file has been updated and committed
 
 ( ) Edit the "manifest" file in this directory, and make sure that the
@@ -70,16 +74,23 @@ Notes for next section:
 extra scripts.  Add to Ant?  Also, eventually check that the
 Linux startup scripts have the executable permission bit set.
 
-* Check the MacOS X bundles to make sure they work still
+* Update the MacOS X bundles:
+bbedit ../MacOSX/JMRI/*.app/Contents/Info.plist
+(three versions, two copyright dates)
+bbedit ../MacOSX/JMRI/*.app/Contents/Resources/MRJApp.properties
+(Version number)
 
-
-NOTE THAT build.xml is updated to create a jar file with debug info;
+    Then check to make sure they still work.
+    
+* NOTE THAT build.xml is updated to create a jar file with debug info;
 change that (temporarily) for production versions
+
 -----
 
 ( ) Come back to Distributions and 
     cd scripts
-	(be sure that's the default.lcf you want!)
+	cvs tag Release-X-Y-Z
+    cd ../java
 	cvs tag Release-X-Y-Z
     cd ..
     
@@ -123,15 +134,18 @@ change that (temporarily) for production versions
     ant upload
     cd ../../..
 
+( ) There is no step 2 (e.g. ant release2) anymore; the numbers will be
+    redone at some point
+
+( ) Any time after release1 is complete, create and upload the JavaDocs
+	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release3
+
 ( ) The Windows .exe must be present before the next step
 	
 ( ) When ready to upload the Windows version:
 
 	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release4
 		
-( ) Any time after release2, create and upload the JavaDocs
-	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release5
-
 ( ) Format the email announcement; you'll cut and paste parts
 	to the release form.
 
