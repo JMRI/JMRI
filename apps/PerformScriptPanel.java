@@ -25,7 +25,7 @@ import javax.swing.JPanel;
  *
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @see apps.PerformScriptModel
  */
 public class PerformScriptPanel extends JPanel {
@@ -73,7 +73,7 @@ public class PerformScriptPanel extends JPanel {
         }
     }
 
-    JFileChooser fc = new JFileChooser();
+    JFileChooser fc = jmri.jmrit.XmlFile.userFileChooser("Python script files", "py");
 
     public class Item extends JPanel implements ActionListener {
         JButton removeButton = new JButton(rb.getString("ButtonScriptRemove"));

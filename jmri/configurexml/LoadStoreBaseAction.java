@@ -19,7 +19,7 @@ import javax.swing.JFileChooser;
  * place in the file system each time an action is invoked.
  *
  * @author	Bob Jacobsen   Copyright (C) 2004
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  * @see         jmri.jmrit.XmlFile
  */
 abstract public class LoadStoreBaseAction extends AbstractAction {
@@ -31,10 +31,18 @@ abstract public class LoadStoreBaseAction extends AbstractAction {
             InstanceManager.setConfigureManager(new ConfigXmlManager());
     }
 
-    static JFileChooser allFileChooser = new JFileChooser(jmri.jmrit.XmlFile.prefsDir());
-    static JFileChooser configFileChooser = new JFileChooser(jmri.jmrit.XmlFile.prefsDir());
-    static JFileChooser userFileChooser = new JFileChooser(jmri.jmrit.XmlFile.prefsDir());
+    static JFileChooser allFileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+    static JFileChooser configFileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+    static JFileChooser userFileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
 
+    static {  // static class initialization
+        jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("XML files");
+        filt.addExtension("xml");
+        allFileChooser.setFileFilter(filt);
+        configFileChooser.setFileFilter(filt);
+        userFileChooser.setFileFilter(filt);
+    }
+    
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LoadStoreBaseAction.class.getName());
 

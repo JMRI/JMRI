@@ -25,7 +25,7 @@ import javax.swing.JPanel;
  *
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  * @see apps.PerformFileModel
  */
 public class PerformFilePanel extends JPanel {
@@ -73,7 +73,7 @@ public class PerformFilePanel extends JPanel {
         }
     }
 
-    JFileChooser fc = new JFileChooser();
+    JFileChooser fc = jmri.jmrit.XmlFile.userFileChooser("XML files", "xml");
 
     public class Item extends JPanel implements ActionListener {
         JButton removeButton = new JButton(rb.getString("ButtonFileRemove"));
