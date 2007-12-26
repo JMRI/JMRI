@@ -14,10 +14,11 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the rps.PositionFile class.
  * <P>
- * Stores a PositionFileTest.xml file in the current working directory.
+ * Stores a PositionFileTest.xml file in the temp
+ * directory below current working directory.
  *
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class PositionFileTest extends TestCase {
 
@@ -66,10 +67,11 @@ public class PositionFileTest extends TestCase {
         Reading rout = new Reading(21, new double[]{11,12,13,14});
         fout.setCalibrationPoint(new Point3d(-1.0f,-2.0f,-3.0f), rout);
         
-        fout.store(new File("PositionFileTest.xml"));
+        jmri.jmrit.XmlFile.ensurePrefsPresent("temp");
+        fout.store(new File("temp"+File.separator+"PositionFileTest.xml"));
         
         PositionFile fin = new PositionFile();
-        fin.loadFile(new File("PositionFileTest.xml"));
+        fin.loadFile(new File("temp"+File.separator+"PositionFileTest.xml"));
         
         Point3d p;
         p = fin.getReceiverPosition(0);
