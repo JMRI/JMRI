@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.58 $)
+distribution.  ($Revision: 1.59 $)
 
 Start with a directory, typically called "Distributions", that
 contains "scripts" and "java" (from CVS) as subdirectories, and:
@@ -101,10 +101,16 @@ change that (temporarily) for production versions
 	Check DecoderPro for no startup errors, right version
 
     Ant will do the various builds, construct the distribution
-    directories, and then start uploading the MacOS X and Linux
-    versions, followed by doing the javadocs.
+    directories, and finally construct the Linux and MacOS X
+    distribution files.
 	
-( ) Once uploads start, you can start building the Windows installer.
+	The next few steps can be done in parallel.
+	
+( ) Upload the MacOS X and Linux files
+
+	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release2
+
+( ) Any time after release1 is complete, start building the Windows installer.
 	
 	Using VMware Fusion, make sure you have the Z disk available and that it
 	contains the JMRI folder. (If not, check the "shared folders" and 
@@ -124,9 +130,7 @@ change that (temporarily) for production versions
     Create and test installer as above.  Copy the .exe back
     to the Distributions directory
     	
-( ) Create and upload the XSLT pages. This can be done at any time after now,
-    but doing it now works well in parallel with the rest of the Windows build
-    if that's going slowly.
+( ) Any time after release1 is complete, create and upload the XSLT pages. 
     
     cd Release-1-2-3/xml/XLST
     ant xslt
@@ -134,13 +138,8 @@ change that (temporarily) for production versions
     ant upload
     cd ../../..
 
-( ) There is no step 2 (e.g. ant release2) anymore; the numbers will be
-    redone at some point
-
 ( ) Any time after release1 is complete, create and upload the JavaDocs
 	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release3
-
-( ) The Windows .exe must be present before the next step
 	
 ( ) When ready to upload the Windows version:
 
@@ -178,7 +177,7 @@ change that (temporarily) for production versions
 ( ) Commit announcement file to the web site CVS directory
 
 ( ) For a test version, update the web site downloads page
-    and add a release-note page
+    and release-note page
     
 ( ) For a production version, update web page source:
     	Linux install.html         
@@ -197,7 +196,7 @@ change that (temporarily) for production versions
 ( ) Commit site and update on server
 	
 ( ) Mail announcement to jmriusers@yahoogroups.com
-    Subject is "Test version 1.7.4 of JMRI/DecoderPro is available for download"
+    Subject is "Test version 1.2.3 of JMRI/DecoderPro is available for download"
 
 ( ) Mail announcement to jmri-announce@lists.sourceforge.net
 
@@ -205,7 +204,7 @@ change that (temporarily) for production versions
 
 ( ) News item from JMRI sourceforge page
 
-	Title is of the form "JMRI M.N is available"
+	Title is of the form "JMRI 1.2.3 is available"
 
 ( ) If a production version, update the SF automatic download pages
 
@@ -256,14 +255,7 @@ Old notes follow
 
 ------------
 
-( ) Upload the 1st two files
-    (Do the next step manually for now!!)
-
-	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release3
-	
-    Normally the next step is to run release3, which uploads 
-    the MacOS and Linux files for you. But there's recently been
-    a problem with this, so do it manually
+( ) To manually upload:
     
     ftp upload.sf.net (userid ftp, pwd is email address)
     cd incoming
