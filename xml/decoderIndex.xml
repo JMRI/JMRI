@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 1.9.2 on Wed Dec 12 21:45:30 PST 2007 $Id: decoderIndex.xml,v 1.108 2007-12-13 05:46:52 jacobsen Exp $-->
-  <decoderIndex version="129">
+  <!--Written by JMRI version 1.9.2D on Tue Dec 25 17:19:08 PST 2007 $Id: decoderIndex.xml,v 1.109 2007-12-26 01:23:15 jacobsen Exp $-->
+  <decoderIndex version="131">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -1116,6 +1116,12 @@
           <!-- The four electical outputs are front headlight, back -->
           <!-- headlight, F5, F6 -->
         </model>
+      </family>
+      <family name="Athearn Genesis Challenger" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_Challenger.xml">
+        <model model="Athearn Genesis Challenger" numOuts="2" numFns="19" maxTotalCurrent="1.5A" extFnsNmraF13="yes" extFnsMRC="no" extFnsNmraBSC="no" nmraWarrant="no" connector="unspecified" />
+      </family>
+      <family name="Athearn Genesis F Unit" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_F_Unit.xml">
+        <model model="Athearn Genesis F Unit" numOuts="2" numFns="19" maxTotalCurrent="1.5A" extFnsNmraF13="yes" extFnsMRC="no" extFnsNmraBSC="no" nmraWarrant="no" connector="unspecified" />
       </family>
       <family name="LGB" mfg="Massoth Elektronik, GmbH" type="locomotive" file="Massoth_LGB.xml">
         <model model="LGB MTS loco decoders" lowVersionID="10" highVersionID="39" comment="includes 55021, 55022, large and small on-board decoders" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
