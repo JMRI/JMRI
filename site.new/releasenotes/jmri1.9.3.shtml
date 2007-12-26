@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.9.3.shtml,v 1.8 2007-12-26 19:16:22 jacobsen Exp $ -->
+<!-- $Id: jmri1.9.3.shtml,v 1.9 2007-12-26 23:33:23 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -41,7 +41,7 @@
 
 <h3>Notes:</h3>
 
-<p>This is a test release.  Please post a note if you encounter any new or old bugs!  And please back up your JMRI files before installing this, in case you want to go back to an earlier version.
+<!-- <p>This is a test release.  Please post a note if you encounter any new or old bugs!  And please back up your JMRI files before installing this, in case you want to go back to an earlier version. -->
 
 <p>This is the next in a series of test versions.
 It contains 
@@ -102,13 +102,13 @@ The NCE support has been revamped so that "NCE USB" is a new choice in the prefe
 <p>Please use these links for downloading, including the "?download" at the end. That adds to SourceForge's advertising statistics, which makes them happy to host our stuff.
 
 <p>MacOS X:
-     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.1.9.3.dmg?download">http://downloads.sourceforge.net/jmri/JMRI.1.9.3.dmg?download</a>
+     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.1.9.3A.dmg?download">http://downloads.sourceforge.net/jmri/JMRI.1.9.3A.dmg?download</a>
 
 <p>Windows:
      <A HREF="http://downloads.sourceforge.net/jmri/JMRI.1.9.3.exe?download">http://downloads.sourceforge.net/jmri/JMRI.1.9.3.exe?download</a>
 
 <p>Linux:
-     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.1.9.3.tgz?download">http://downloads.sourceforge.net/jmri/JMRI.1.9.3.tgz?download</a>
+     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.1.9.3A.tgz?download">http://downloads.sourceforge.net/jmri/JMRI.1.9.3A.tgz?download</a>
 
 
 
