@@ -19,7 +19,7 @@
 # hierarchy.  See the end of the file for examples of how to 
 # control this at a finer level.
 
-log4j.rootCategory= INFO, A1, R
+log4j.rootCategory= INFO, A1, T
 
 # A1 is set to be a ConsoleAppender which outputs to System.out. 
 log4j.appender.A1=org.apache.log4j.ConsoleAppender
@@ -52,7 +52,7 @@ log4j.appender.A1.layout.ConversionPattern=%6r %-37.37c{2} %-5p - %m [%t]%n
 
 # R is set to output to a log file
 log4j.appender.R=org.apache.log4j.FileAppender
-log4j.appender.R.File=example.log
+log4j.appender.R.File=messages.log
 log4j.appender.R.Append=false
 log4j.appender.R.layout=org.apache.log4j.PatternLayout
 log4j.appender.R.layout.ConversionPattern=%6r %-37.37c{2} %-5p - %m [%t]%n
