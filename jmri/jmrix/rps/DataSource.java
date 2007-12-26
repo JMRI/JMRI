@@ -21,7 +21,7 @@ import jmri.*;
  * When opened, the user must first select a serial port and click "Start".
  *
  * @author			Bob Jacobsen   Copyright (C) 2006
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class DataSource extends jmri.util.JmriJFrame implements ThrottleListener {
 
@@ -191,7 +191,7 @@ public class DataSource extends jmri.util.JmriJFrame implements ThrottleListener
     
     // true when done getting throttles
     boolean getNextThrottle() {
-        System.out.println("getNextThrottle");
+        log.debug("getNextThrottle start");
         if (num1>0 && throttle1 == null) {
             nextThrottle = 1;
             if (log.isDebugEnabled()) log.debug("request 1 is "+num1);
@@ -208,13 +208,13 @@ public class DataSource extends jmri.util.JmriJFrame implements ThrottleListener
             InstanceManager.throttleManagerInstance().requestThrottle(num3,long3, this);
             return false;
         } 
-        System.out.println("done");
+        log.debug("getNextThrottle done");
         return true;
 
     }
     
     public void notifyThrottleFound(DccThrottle t) {
-        System.out.println("notifyThrottle "+nextThrottle+":"+t);
+        if (log.isDebugEnabled()) log.debug("notifyThrottle "+nextThrottle+":"+t);
         switch (nextThrottle) {
             case 1:
                 throttle1 = t;
@@ -235,7 +235,7 @@ public class DataSource extends jmri.util.JmriJFrame implements ThrottleListener
     }
     
     void startpoll() {
-        System.out.println("start poll");
+        log.debug("start poll");
         // time to start operation
         pollThread = new Thread(){
             public void run() {
