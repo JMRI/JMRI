@@ -31,7 +31,7 @@ import jmri.util.JmriJFrame;
  * @author	Dave Duchamp    Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2007 
  *
- * @version     $Revision: 1.38 $
+ * @version     $Revision: 1.39 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -913,7 +913,7 @@ public class RouteTableAction extends AbstractTableAction {
      */
     void setSoundPressed() {
         if (soundChooser == null) {
-            soundChooser = new JFileChooser(jmri.jmrit.XmlFile.prefsDir());
+            soundChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
             soundChooser.setFileFilter(new jmri.util.NoArchiveFileFilter());
         }
         soundChooser.rescanCurrentDirectory();
@@ -935,8 +935,7 @@ public class RouteTableAction extends AbstractTableAction {
      */
     void setScriptPressed() {
         if (scriptChooser == null) {
-            scriptChooser = new JFileChooser(jmri.jmrit.XmlFile.prefsDir());
-            scriptChooser.setFileFilter(new jmri.util.NoArchiveFileFilter());
+            scriptChooser = jmri.jmrit.XmlFile.userFileChooser("Python script files", "py");
         }
         scriptChooser.rescanCurrentDirectory();
         int retVal = scriptChooser.showOpenDialog(null);

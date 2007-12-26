@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  * different that it doesn't use this base class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  * @see         jmri.jmrit.XmlFile
  */
 abstract public class AbstractRosterItemAction extends AbstractAction {
@@ -113,8 +113,7 @@ abstract public class AbstractRosterItemAction extends AbstractAction {
 
     boolean selectNewFromFile() {
         if (fileChooser==null) {
-            fileChooser = new JFileChooser(jmri.jmrit.XmlFile.prefsDir());
-            fileChooser.setFileFilter(new jmri.util.NoArchiveFileFilter());
+            fileChooser = jmri.jmrit.XmlFile.userFileChooser();
         }
         // refresh fileChooser view of directory, in case it changed
         fileChooser.rescanCurrentDirectory();
@@ -132,6 +131,9 @@ abstract public class AbstractRosterItemAction extends AbstractAction {
     }
 
     boolean selectNewToFile() {
+        if (fileChooser==null) {
+            fileChooser = jmri.jmrit.XmlFile.userFileChooser();
+        }
         fileChooser.setSelectedFile(new File(mFromFilename));
         int retVal = fileChooser.showSaveDialog(mParent);
 

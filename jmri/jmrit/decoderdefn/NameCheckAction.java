@@ -15,7 +15,7 @@ import org.jdom.*;
  * Check the names in an XML decoder file against the names.xml definitions
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2007
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  * @see jmri.jmrit.XmlFile
  */
 public class NameCheckAction extends AbstractAction {
@@ -31,8 +31,7 @@ public class NameCheckAction extends AbstractAction {
     
     public void actionPerformed(ActionEvent e) {
         if (fci==null) {
-            fci = new JFileChooser(" ");
-            fci.setFileFilter(new jmri.util.NoArchiveFileFilter());
+            fci = jmri.jmrit.XmlFile.userFileChooser("XML files", "xml");
         }
         // request the filename from an open dialog
         fci.rescanCurrentDirectory();

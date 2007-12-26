@@ -12,7 +12,7 @@ import javax.swing.*;
  * JythonSiglet object
  *
  * @author	    Bob Jacobsen    Copyright (C) 2003, 2007
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class JythonSigletAction extends AbstractAction {
 
@@ -25,8 +25,7 @@ public class JythonSigletAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
         // create a SampleAutomaton
-        JFileChooser fci = new JFileChooser(" ");
-        fci.setFileFilter(new jmri.util.NoArchiveFileFilter());
+        JFileChooser fci = jmri.jmrit.XmlFile.userFileChooser("Python script files", "py");
         fci.setDialogTitle("Find desired script file");
         int retVal = fci.showOpenDialog(_who);
         // handle selection or cancel

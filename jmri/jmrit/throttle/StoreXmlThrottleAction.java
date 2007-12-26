@@ -14,7 +14,7 @@ import org.jdom.output.*;
  * Save throttles to XML
  *
  * @author			Glen Oberhauser
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 public class StoreXmlThrottleAction extends AbstractAction {
 
@@ -37,7 +37,7 @@ public class StoreXmlThrottleAction extends AbstractAction {
      */
     public void actionPerformed(ActionEvent e)
     {
-        JFileChooser fileChooser = new JFileChooser(XmlFile.prefsDir());
+        JFileChooser fileChooser = new JFileChooser(XmlFile.userFileLocationDefault());
         int retVal = fileChooser.showSaveDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION)
         {

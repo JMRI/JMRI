@@ -19,7 +19,7 @@ import java.io.*;
  * read the code, the "non-reflection" statements are in the comments.
  *
  * @author	Bob Jacobsen    Copyright (C) 2004, 2007
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class RunJythonScript extends AbstractAction {
 
@@ -45,8 +45,10 @@ public class RunJythonScript extends AbstractAction {
      */
     public void actionPerformed(ActionEvent e) {
         if (fci==null) {
-            fci = new JFileChooser(" ");
-            fci.setFileFilter(new jmri.util.NoArchiveFileFilter());
+            fci = new JFileChooser(System.getProperty("user.dir")+java.io.File.separator+"jython");
+            jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("Python script files");
+            filt.addExtension("py");
+            fci.setFileFilter(filt);
             fci.setDialogTitle("Find desired script file");
         } else {
             // when reusing the chooser, make sure new files are included

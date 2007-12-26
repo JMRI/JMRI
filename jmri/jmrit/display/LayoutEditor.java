@@ -47,7 +47,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -2965,9 +2965,14 @@ public class LayoutEditor extends JmriJFrame {
 	 */
 	public void addBackground() {
         if (inputFileChooser == null) {
-            inputFileChooser = new JFileChooser("Select Background Image");
-            inputFileChooser.setFileFilter(new jmri.util.NoArchiveFileFilter());
+            inputFileChooser = new JFileChooser(System.getProperty("user.dir")+java.io.File.separator+"resources"+java.io.File.separator+"icons");
+            jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("Graphics Files");
+            filt.addExtension("gif");
+            filt.addExtension("jpg");
+            inputFileChooser.setFileFilter(filt);
         }
+        inputFileChooser.rescanCurrentDirectory();
+        
         int retVal = inputFileChooser.showOpenDialog(this);
         if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
         NamedIcon icon = new NamedIcon(inputFileChooser.getSelectedFile().getPath(),

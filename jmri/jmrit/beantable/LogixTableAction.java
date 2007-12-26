@@ -46,7 +46,7 @@ import jmri.util.JmriJFrame;
  * accessed via rb.
  * 
  * @author Dave Duchamp Copyright (C) 2007
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -1770,7 +1770,9 @@ public class LogixTableAction extends AbstractTableAction {
 		editLogixFrame.setVisible(true);
 	}
 
-	JFileChooser fileChooser = null;
+	JFileChooser sndFileChooser = null;
+	JFileChooser scriptFileChooser = null;
+	JFileChooser defaultFileChooser = null;
 
 	/**
 	 * Responds to the Set button in the Edit Conditional window action section.
@@ -1779,31 +1781,58 @@ public class LogixTableAction extends AbstractTableAction {
 	 *            equal to 1 or 2, depending upon which action button is clicked
 	 */
 	void setFileLocation(int actionNum) {
-		if (fileChooser == null) {
-			fileChooser = new JFileChooser(jmri.jmrit.XmlFile.prefsDir());
-			fileChooser.setFileFilter(new jmri.util.NoArchiveFileFilter());
-		}
-		fileChooser.rescanCurrentDirectory();
-		int retVal = fileChooser.showOpenDialog(null);
-		// handle selection or cancel
-		if (retVal == JFileChooser.APPROVE_OPTION) {
-			// set selected file location in data string
-			try {
-				if (actionNum == 1) {
-					action1DataField.setText(fileChooser.getSelectedFile()
-							.getCanonicalPath());
-				} else if (actionNum == 2) {
-					action2DataField.setText(fileChooser.getSelectedFile()
-							.getCanonicalPath());
-				}
-			} catch (java.io.IOException e) {
-				log.error("exception setting file location: " + e);
-				if (actionNum == 1)
-					action1DataField.setText("");
-				else if (actionNum == 2)
-					action2DataField.setText("");
-			}
-		}
+
+        if ( (actionNum<1) || (actionNum >2)) {
+            log.error("invalid actionNum: "+actionNum);
+            return;
+        }
+        JFileChooser currentChooser;
+        if (actionType[actionNum-1] == Conditional.ACTION_PLAY_SOUND) {
+            if (sndFileChooser == null) {
+                sndFileChooser = new JFileChooser(System.getProperty("user.dir")+java.io.File.separator+"resources"+java.io.File.separator+"sounds");
+                jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("wav sound files");
+                filt.addExtension("wav");
+                sndFileChooser.setFileFilter(filt);
+            }
+            currentChooser = sndFileChooser;
+        } else if (actionType[actionNum-1] == Conditional.ACTION_RUN_SCRIPT) {
+            if (scriptFileChooser == null) {
+                scriptFileChooser = new JFileChooser(System.getProperty("user.dir")+java.io.File.separator+"jython");
+                jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("Python script files");
+                filt.addExtension("py");
+                scriptFileChooser.setFileFilter(filt);
+            }
+            currentChooser = scriptFileChooser;
+        } else {
+            log.warn("Unexpected actionType["+(actionNum-1)+"] = "+actionType[actionNum-1]);
+            if (defaultFileChooser == null) {
+                defaultFileChooser = new JFileChooser(jmri.jmrit.XmlFile.prefsDir());
+                defaultFileChooser.setFileFilter(new jmri.util.NoArchiveFileFilter());
+            }
+            currentChooser = defaultFileChooser;
+        }
+        
+        currentChooser.rescanCurrentDirectory();
+        int retVal = currentChooser.showOpenDialog(null);
+        // handle selection or cancel
+        if (retVal == JFileChooser.APPROVE_OPTION) {
+        // set selected file location in data string
+            try {
+                if (actionNum == 1) {
+                    action1DataField.setText(currentChooser.getSelectedFile()
+                            .getCanonicalPath());
+                } else if (actionNum == 2) {
+                    action2DataField.setText(currentChooser.getSelectedFile()
+                            .getCanonicalPath());
+                }
+            } catch (java.io.IOException e) {
+                log.error("exception setting file location: " + e);
+                if (actionNum == 1)
+                    action1DataField.setText("");
+                else if (actionNum == 2)
+                    action2DataField.setText("");
+            }
+        }
 	}
 
 	/**

@@ -15,7 +15,7 @@ import javax.swing.JFrame;
  * Action to import the CV values from a PR1WIN/PR1DOS data file.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 
 public class Pr1ImportAction  extends AbstractAction {
@@ -37,13 +37,7 @@ public class Pr1ImportAction  extends AbstractAction {
         log.debug("start to import PR1 file");
 
         if( fileChooser == null ){
-            fileChooser = new JFileChooser() ;
-            try {  // This may fail on old JVMs, in which case we provide no filter
-                fileFilter = new FileChooserFilter( "PR1 Filter" ) ;
-                fileFilter.addExtension( "dec" );
-
-                fileChooser.setFileFilter( fileFilter );
-            } catch (NoClassDefFoundError ex) {}
+            fileChooser = jmri.jmrit.XmlFile.userFileChooser("PR1 files", "dec");
 
         }
 

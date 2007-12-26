@@ -22,16 +22,30 @@ import javax.swing.JOptionPane;
  *
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2007
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class RosterConfigPane extends JPanel {
 
     JLabel filename;
     JTextField owner = new JTextField(20);
-    JFileChooser fc = new JFileChooser();
+    JFileChooser fc;
     JPanel parent;
     
     public RosterConfigPane() {
+        fc = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+        // filter to only show the roster.xml file
+        FileFilter filt = new FileFilter(){
+            public boolean accept(File f) {
+                if (f.getName().equals("roster.xml")) return true;
+                else if (f.isDirectory()) return true;
+                else return false;
+            }
+            public String getDescription() { return "roster.xml only"; }
+        };
+        
+        fc.setDialogTitle("Find desired roster.xml file");
+        fc.setFileFilter(filt);
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JPanel p = new JPanel();
         p.setLayout(new FlowLayout());
@@ -52,18 +66,7 @@ public class RosterConfigPane extends JPanel {
                 )) return;
                 
                 // get the file
-                FileFilter filt = new FileFilter(){
-                    public boolean accept(File f) {
-                        if (f.getName().equals("roster.xml")) return true;
-                        else if (f.isDirectory()) return true;
-                        else return false;
-                    }
-                    public String getDescription() { return "roster.xml only"; }
-                };
-                
-                fc.setDialogTitle("Find desired roster.xml file");
                 fc.rescanCurrentDirectory();
-                fc.setFileFilter(filt);
                 fc.showOpenDialog(null);
                 if (fc.getSelectedFile()==null) return; // cancelled
                 if (!fc.getSelectedFile().getName().equals("roster.xml")) return; // wrong file
