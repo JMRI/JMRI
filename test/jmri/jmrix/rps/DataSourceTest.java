@@ -10,12 +10,13 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the rps.DataSource class.
  * @author	Bob Jacobsen Copyright 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class DataSourceTest extends TestCase {
 
 	public void testStringParsing3() throws java.io.IOException {
-        String input = "DATA,TIME,4105,3751,1423,2835";
+        // String input = "DATA,TIME,4105,3751,1423,2835";
+        String input = "4105,3751,1423,2835";
         DataSource s = new DataSource();
         s.polledAddress = 4321;
 	    Reading r = s.makeReading(input);
@@ -28,7 +29,8 @@ public class DataSourceTest extends TestCase {
 	}
         
 	public void testStringParsing12() throws java.io.IOException {
-        String input = "DATA,TIME,1,2,3,4,5,6,7,8,9,10,11,12";
+        // String input = "DATA,TIME,1,2,3,4,5,6,7,8,9,10,11,12";
+        String input = "1,2,3,4,5,6,7,8,9,10,11,12";
         DataSource s = new DataSource();
         s.polledAddress = 1234;
 	    Reading r = s.makeReading(input);

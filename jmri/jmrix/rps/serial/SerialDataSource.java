@@ -22,7 +22,7 @@ import jmri.jmrix.rps.*;
  * When opened, the user must first select a serial port and click "Start".
  *
  * @author			Bob Jacobsen   Copyright (C) 2006
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SerialDataSource extends jmri.util.JmriJFrame implements ThrottleListener {
 
@@ -406,6 +406,8 @@ public class SerialDataSource extends jmri.util.JmriJFrame implements ThrottleLi
         }
     }
 
+    static private int SKIPCOLS = 0; // used to skip DATA,TIME; was there a trailing "'"?
+    
     /**
      * Convert input line to Reading object
      */
@@ -415,10 +417,10 @@ public class SerialDataSource extends jmri.util.JmriJFrame implements ThrottleLi
         com.csvreader.CsvReader c = new com.csvreader.CsvReader(b);
         c.readRecord();
 
-        int count = c.getColumnCount()-2;  // skip DATA,TIME; was there a trailing "'"?
+        int count = c.getColumnCount()-SKIPCOLS;
         double[] vals = new double[count];
         for (int i=0; i<count; i++) {
-            vals[i] = Double.valueOf(c.get(i+2)).doubleValue();
+            vals[i] = Double.valueOf(c.get(i+SKIPCOLS)).doubleValue();
         }
         Reading r = new Reading(21, vals);
         
