@@ -47,7 +47,7 @@ import java.util.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003, 2007
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.76 $
+ * @version $Revision: 1.77 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -1077,7 +1077,9 @@ public class PanelEditor extends JmriJFrame {
         return editableBox.isSelected();
     }
     public boolean isPositionable() {
-        return positionableBox.isSelected();
+    	// always allow new panel items to be repositioned
+    	return true;
+ //       return positionableBox.isSelected();
     }
     public boolean isShowCoordinates() {
         return showCoordinatesBox.isSelected();
