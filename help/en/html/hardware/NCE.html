@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NCE.html,v 1.4 2007-12-26 22:25:05 dan_boudreau Exp $ -->
+<!-- $Id: NCE.html,v 1.5 2007-12-27 20:33:52 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: NCE</TITLE>
@@ -57,13 +57,14 @@ the preference menu for reliable operation.</P>
 
 <P>The NCE USB doesn't support all of the current JMRI features and
 functions. The some of the restrictions are based on the type of system
-the USB is connected to. The turnout feedback mode MONITORING isn't
-available when using a USB, and the Clock functions found in tools are
-also not available. The USB when connected to a PowerHouse system
-doesn't support any type of loco programming, and when connected to a
-SB3 only operation mode (no program track) is available for loco
-programming. Most functions and features that are not supported by the
-NCE USB are disabled or grayed out in the JMRI program.</P>
+the USB is connected to. The USB can't get information from AIUs, so
+they can't be used to get feedback from the layout. The turnout feedback
+mode MONITORING isn't available when using a USB, and the Clock
+functions found in tools are also not available. The USB when connected
+to a PowerHouse system doesn't support any type of loco programming, and
+when connected to a SB3 only operation mode (no program track) is
+available for loco programming. Most functions and features that are not
+supported by the NCE USB are disabled or grayed out in the JMRI program.</P>
 
 <P>The USB when connected to a PowerCab or SB3 can only address
 accessories (turnouts) between 1 and 250. There isn't a limitation when
@@ -73,8 +74,8 @@ connected to a PowerHouse.</P>
 <H3>USB Limitation Summary</H3>
 
 <DL>
-	<DT>PowerCab, SB3, PowerHouse:</DT>
-	<DD>No Turnout MONITORING, No Clock functions.</DD>
+	<DT>All systems:</DT>
+	<DD>No AIU support, No Turnout MONITORING, No Clock functions.</DD>
 
 	<DT>PowerCab and SB3:</DT>
 	<DD>Can only access accessory addresses between 1 and 250.</DD>
