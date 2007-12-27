@@ -47,7 +47,7 @@ import java.util.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003, 2007
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.75 $
+ * @version $Revision: 1.76 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -657,6 +657,7 @@ public class PanelEditor extends JmriJFrame {
         
         setNextLocation(l);
         putLabel(l);
+        moveToFront(l);
     }
 
     /**
@@ -675,6 +676,7 @@ public class PanelEditor extends JmriJFrame {
 
         setNextLocation(l);
         putTurnout(l);
+        moveToFront(l);
     }
     void addTurnoutL() {
         int errorCheck = checkEntry("Turnout" , nextTurnoutL.getText());
@@ -689,6 +691,7 @@ public class PanelEditor extends JmriJFrame {
 
         setNextLocation(l);
         putTurnout(l);
+        moveToFront(l);
     }
     public void putTurnout(TurnoutIcon l) {
         l.invalidate();
@@ -729,6 +732,7 @@ public class PanelEditor extends JmriJFrame {
         l.setSensor(nextSensor.getText());
         setNextLocation(l);
         putSensor(l);
+        moveToFront(l);
     }
     public void putSensor(SensorIcon l) {
         l.invalidate();
@@ -755,6 +759,7 @@ public class PanelEditor extends JmriJFrame {
     public void addMultiSensor(MultiSensorIcon l) {
         setNextLocation(l);
         putMultiSensor(l);
+        moveToFront(l);
     }
     // invoked to install the sensor
     public void putMultiSensor(MultiSensorIcon l) {
@@ -782,6 +787,7 @@ public class PanelEditor extends JmriJFrame {
         l.setSignalHead(nextSignalHead.getText());
         setNextLocation(l);
         putSignal(l);
+        moveToFront(l);
     }
     public void putSignal(SignalHeadIcon l) {
         l.invalidate();
@@ -802,6 +808,7 @@ public class PanelEditor extends JmriJFrame {
         l.setDisplayLevel(CLOCK);
         setNextLocation(l);
         putClock(l);
+        moveToFront(l);
     }
     public void putClock(AnalogClock2Display c) {
         c.invalidate();
@@ -824,6 +831,7 @@ public class PanelEditor extends JmriJFrame {
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(LABELS);
         putLabel(l);
+        moveToFront(l);
     }
     public void putLabel(PositionableLabel l) {
         l.invalidate();
@@ -840,6 +848,7 @@ public class PanelEditor extends JmriJFrame {
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(MEMORIES);
         putLabel(l);
+        moveToFront(l);
     }
     
     void addReporter() {
@@ -849,6 +858,7 @@ public class PanelEditor extends JmriJFrame {
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(REPORTERS);
         putLabel(l);
+        moveToFront(l);
     }
     
     void addRpsReporter() {
@@ -857,6 +867,7 @@ public class PanelEditor extends JmriJFrame {
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(SENSORS);
         putLabel(l);
+        moveToFront(l);
     }
     
     /**
@@ -868,6 +879,7 @@ public class PanelEditor extends JmriJFrame {
         setNextLocation(l);
         l.setDisplayLevel(ICONS);
         putLabel(l);
+        moveToFront(l);
     }
 
     /**
@@ -1178,6 +1190,15 @@ public class PanelEditor extends JmriJFrame {
 
     }
 
+    /**
+     * Internal method to move a component to the front
+     * of it's level, used when each item is added.
+     */
+    void moveToFront(Component l) {
+        target.moveToFront(l);
+        target.revalidate();
+    }
+    
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PanelEditor.class.getName());
 }
