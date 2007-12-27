@@ -2,8 +2,8 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
-<!-- Copyright (C) JMRI 2006 All rights reserved -->
-<!-- $Id: RR-CirKits-TC-64-basic.xml,v 1.9 2007-09-21 05:49:33 jacobsen Exp $ -->
+<!-- Copyright (C) JMRI 2006, 2007 All rights reserved -->
+<!-- $Id: RR-CirKits-TC-64-basic.xml,v 1.10 2007-12-27 19:48:43 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -17,11 +17,9 @@
 
 <decoder-config > <!-- showEmptyPanes="no" -->
 		<version author="dick@rr-cirkits.com" 
-					version="1.02" lastUpdated="20060925"/>
-		<version author="dick@rr-cirkits.com" 
-                    version="1.01" lastUpdated="20060422"/>					
-					
-		<!-- Version 1.02  -->
+					version="1.03" lastUpdated="20071227"/>
+		
+		<!-- Version 1.03  -->
 		
 <decoder>
 	<family name="Tower Controller" mfg="RR-CirKits" type="stationary"
@@ -38,7 +36,7 @@
           		<splitVal highCV="2" upperMask="XXXXXVVV"/>
 			</variable>
 		
-		<variable label="P1 Direction" CV="2" mask="VXXXXXXX">
+		<variable label="P1 Direction" CV="2" mask="VXXXXXXX" default="1">
 			<enumVal><enumChoice choice="Output"/><enumChoice choice="Input"/>
 				</enumVal></variable>
 
@@ -54,7 +52,7 @@
           		<splitVal highCV="4" upperMask="XXXXXVVV"/>
 			</variable>
 		
-		<variable label="P2 Direction" CV="4" mask="VXXXXXXX">
+		<variable label="P2 Direction" CV="4" mask="VXXXXXXX" default="1">
 			<enumVal><enumChoice choice="Output"/><enumChoice choice="Input"/>
 				</enumVal></variable>
 
@@ -70,7 +68,7 @@
           		<splitVal highCV="6" upperMask="XXXXXVVV"/>
 			</variable>
 		
-		<variable label="P3 Direction" CV="6" mask="VXXXXXXX">
+		<variable label="P3 Direction" CV="6" mask="VXXXXXXX" default="1">
 			<enumVal><enumChoice choice="Output"/><enumChoice choice="Input"/>
 				</enumVal></variable>
 
@@ -86,7 +84,7 @@
           		<splitVal highCV="8" upperMask="XXXXXVVV"/>
 			</variable>
 		
-		<variable label="P4 Direction" CV="8" mask="VXXXXXXX">
+		<variable label="P4 Direction" CV="8" mask="VXXXXXXX" default="1">
 			<enumVal><enumChoice choice="Output"/><enumChoice choice="Input"/>
 				</enumVal></variable>
 
@@ -102,7 +100,7 @@
           		<splitVal highCV="10" upperMask="XXXXXVVV"/>
 			</variable>
 		
-		<variable label="P5 Direction" CV="10" mask="VXXXXXXX">
+		<variable label="P5 Direction" CV="10" mask="VXXXXXXX" default="1">
 			<enumVal><enumChoice choice="Output"/><enumChoice choice="Input"/>
 				</enumVal></variable>
 
@@ -118,7 +116,7 @@
           		<splitVal highCV="12" upperMask="XXXXXVVV"/>
 			</variable>
 		
-		<variable label="P6 Direction" CV="12" mask="VXXXXXXX">
+		<variable label="P6 Direction" CV="12" mask="VXXXXXXX" default="1">
 			<enumVal><enumChoice choice="Output"/><enumChoice choice="Input"/>
 				</enumVal></variable>
 
@@ -134,7 +132,7 @@
           		<splitVal highCV="14" upperMask="XXXXXVVV"/>
 			</variable>
 		
-		<variable label="P7 Direction" CV="14" mask="VXXXXXXX">
+		<variable label="P7 Direction" CV="14" mask="VXXXXXXX" default="1">
 			<enumVal><enumChoice choice="Output"/><enumChoice choice="Input"/>
 				</enumVal></variable>
 
@@ -150,7 +148,7 @@
           		<splitVal highCV="16" upperMask="XXXXXVVV"/>
 			</variable>
 		
-		<variable label="P8 Direction" CV="16" mask="VXXXXXXX">
+		<variable label="P8 Direction" CV="16" mask="VXXXXXXX" default="1">
 			<enumVal><enumChoice choice="Output"/><enumChoice choice="Input"/>
 				</enumVal></variable>
 
@@ -171,7 +169,7 @@
 			</variable>
 
 <!--		<variable label="Address" CV="17" item="Extended Address"  -->
-		<variable label="Long Address" CV="17" item="Extended Address"
+		<variable label="Long Address" CV="17" default="10000" item="Extended Address"
 		        comment="5 digit address (Range 00001-16383)">
 			<longAddressVal/>
 			</variable>
@@ -180,15 +178,15 @@
 			<decVal min="1" max="255"/>
 			</variable>
 
-		<variable label="Port State Memory" CV="19" mask="XXXXXXXV">
+		<variable label="Port State Memory" CV="19" mask="XXXXXXXV" default="1">
 			<enumVal><enumChoice choice="No"/><enumChoice choice="Enable"/>
 				</enumVal></variable>
 
-		<variable label="OPS Mode Programing" CV="19" mask="XXXXXXVX">
+		<variable label="OPS Mode Programing" CV="19" mask="XXXXXXVX" default="1">
 			<enumVal><enumChoice choice="No"/><enumChoice choice="Enable"/>
 				</enumVal></variable>
 
-		<variable label="GPON Interrogate" CV="19" mask="XXXXXVXX">
+		<variable label="GPON Interrogate" CV="19" mask="XXXXXVXX" default="1">
 			<enumVal><enumChoice choice="No"/><enumChoice choice="Enable"/>
 				</enumVal></variable>
 
@@ -204,14 +202,19 @@
 				<decVal/>
 			</variable>
 
-		<variable label="Firmware Version" CV="21" readOnly="yes" item="Firmware Version" default="1">
+		<variable label="Firmware Version" CV="21" readOnly="yes" item="Firmware Version" default="3">
 				<decVal/>
 			</variable>
+
+		<variable label="Manufacturer ID - Reset" CV="21"
+			item="Reset"
+			comment="Writing a value of 170 will reset decoder to factory defaults" >
+			<decVal/>
+		</variable>
 
     	<variable label="Manufacturer ID" CV="22" readOnly="yes" item="Manufacturer ID" default="87">
 				<decVal/>
 			</variable>
-
 
 		<variable label="P1A Input Direction" CV="23" mask="VXXXXXXX">
 			<enumVal>
@@ -220,7 +223,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="1A Mode" CV="23" mask="XXVVXXXX">
+		<variable label="1A Mode" CV="23" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -238,7 +241,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="1A Transition" CV="23" mask="XXXXXXVV">
+		<variable label="1A Transition" CV="23" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -319,7 +322,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="1B Mode" CV="27" mask="XXVVXXXX">
+		<variable label="1B Mode" CV="27" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -337,7 +340,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="1B Transition" CV="27" mask="XXXXXXVV">
+		<variable label="1B Transition" CV="27" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -418,7 +421,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="1C Mode" CV="31" mask="XXVVXXXX">
+		<variable label="1C Mode" CV="31" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -436,7 +439,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="1C Transition" CV="31" mask="XXXXXXVV">
+		<variable label="1C Transition" CV="31" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -517,7 +520,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="1D Mode" CV="35" mask="XXVVXXXX">
+		<variable label="1D Mode" CV="35" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -535,7 +538,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="1D Transition" CV="35" mask="XXXXXXVV">
+		<variable label="1D Transition" CV="35" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -616,7 +619,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="1E Mode" CV="39" mask="XXVVXXXX">
+		<variable label="1E Mode" CV="39" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -634,7 +637,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="1E Transition" CV="39" mask="XXXXXXVV">
+		<variable label="1E Transition" CV="39" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -715,7 +718,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="1F Mode" CV="43" mask="XXVVXXXX">
+		<variable label="1F Mode" CV="43" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -733,7 +736,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="1F Transition" CV="43" mask="XXXXXXVV">
+		<variable label="1F Transition" CV="43" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -814,7 +817,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="1G Mode" CV="47" mask="XXVVXXXX">
+		<variable label="1G Mode" CV="47" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -832,7 +835,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="1G Transition" CV="47" mask="XXXXXXVV">
+		<variable label="1G Transition" CV="47" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -913,7 +916,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="1H Mode" CV="51" mask="XXVVXXXX">
+		<variable label="1H Mode" CV="51" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -931,7 +934,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="1H Transition" CV="51" mask="XXXXXXVV">
+		<variable label="1H Transition" CV="51" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -1010,7 +1013,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="2A Mode" CV="55" mask="XXVVXXXX">
+		<variable label="2A Mode" CV="55" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -1028,7 +1031,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="2A Transition" CV="55" mask="XXXXXXVV">
+		<variable label="2A Transition" CV="55" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -1109,7 +1112,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="2B Mode" CV="59" mask="XXVVXXXX">
+		<variable label="2B Mode" CV="59" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -1127,7 +1130,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="2B Transition" CV="59" mask="XXXXXXVV">
+		<variable label="2B Transition" CV="59" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -1208,7 +1211,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="2C Mode" CV="63" mask="XXVVXXXX">
+		<variable label="2C Mode" CV="63" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -1226,7 +1229,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="2C Transition" CV="63" mask="XXXXXXVV">
+		<variable label="2C Transition" CV="63" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -1307,7 +1310,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="2D Mode" CV="67" mask="XXVVXXXX">
+		<variable label="2D Mode" CV="67" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -1325,7 +1328,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="2D Transition" CV="67" mask="XXXXXXVV">
+		<variable label="2D Transition" CV="67" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -1406,7 +1409,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="2E Mode" CV="71" mask="XXVVXXXX">
+		<variable label="2E Mode" CV="71" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -1424,7 +1427,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="2E Transition" CV="71" mask="XXXXXXVV">
+		<variable label="2E Transition" CV="71" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -1505,7 +1508,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="2F Mode" CV="75" mask="XXVVXXXX">
+		<variable label="2F Mode" CV="75" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -1523,7 +1526,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="2F Transition" CV="75" mask="XXXXXXVV">
+		<variable label="2F Transition" CV="75" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -1604,7 +1607,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="2G Mode" CV="79" mask="XXVVXXXX">
+		<variable label="2G Mode" CV="79" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -1622,7 +1625,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="2G Transition" CV="79" mask="XXXXXXVV">
+		<variable label="2G Transition" CV="79" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -1703,7 +1706,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="2H Mode" CV="83" mask="XXVVXXXX">
+		<variable label="2H Mode" CV="83" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -1721,7 +1724,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="2H Transition" CV="83" mask="XXXXXXVV">
+		<variable label="2H Transition" CV="83" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -1801,7 +1804,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="3A Mode" CV="87" mask="XXVVXXXX">
+		<variable label="3A Mode" CV="87" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -1819,7 +1822,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="3A Transition" CV="87" mask="XXXXXXVV">
+		<variable label="3A Transition" CV="87" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -1900,7 +1903,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="3B Mode" CV="91" mask="XXVVXXXX">
+		<variable label="3B Mode" CV="91" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -1918,7 +1921,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="3B Transition" CV="91" mask="XXXXXXVV">
+		<variable label="3B Transition" CV="91" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -1999,7 +2002,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="3C Mode" CV="95" mask="XXVVXXXX">
+		<variable label="3C Mode" CV="95" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -2017,7 +2020,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="3C Transition" CV="95" mask="XXXXXXVV">
+		<variable label="3C Transition" CV="95" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -2098,7 +2101,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="3D Mode" CV="99" mask="XXVVXXXX">
+		<variable label="3D Mode" CV="99" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -2116,7 +2119,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="3D Transition" CV="99" mask="XXXXXXVV">
+		<variable label="3D Transition" CV="99" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -2197,7 +2200,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="3E Mode" CV="103" mask="XXVVXXXX">
+		<variable label="3E Mode" CV="103" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -2215,7 +2218,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="3E Transition" CV="103" mask="XXXXXXVV">
+		<variable label="3E Transition" CV="103" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -2296,7 +2299,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="3F Mode" CV="107" mask="XXVVXXXX">
+		<variable label="3F Mode" CV="107" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -2314,7 +2317,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="3F Transition" CV="107" mask="XXXXXXVV">
+		<variable label="3F Transition" CV="107" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -2395,7 +2398,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="3G Mode" CV="111" mask="XXVVXXXX">
+		<variable label="3G Mode" CV="111" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -2413,7 +2416,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="3G Transition" CV="111" mask="XXXXXXVV">
+		<variable label="3G Transition" CV="111" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -2494,7 +2497,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="3H Mode" CV="115" mask="XXVVXXXX">
+		<variable label="3H Mode" CV="115" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -2512,7 +2515,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="3H Transition" CV="115" mask="XXXXXXVV">
+		<variable label="3H Transition" CV="115" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -2592,7 +2595,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="4A Mode" CV="119" mask="XXVVXXXX">
+		<variable label="4A Mode" CV="119" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -2610,7 +2613,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="4A Transition" CV="119" mask="XXXXXXVV">
+		<variable label="4A Transition" CV="119" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -2691,7 +2694,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="4B Mode" CV="123" mask="XXVVXXXX">
+		<variable label="4B Mode" CV="123" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -2709,7 +2712,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="4B Transition" CV="123" mask="XXXXXXVV">
+		<variable label="4B Transition" CV="123" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -2790,7 +2793,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="4C Mode" CV="127" mask="XXVVXXXX">
+		<variable label="4C Mode" CV="127" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -2808,7 +2811,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="4C Transition" CV="127" mask="XXXXXXVV">
+		<variable label="4C Transition" CV="127" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -2889,7 +2892,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="4D Mode" CV="131" mask="XXVVXXXX">
+		<variable label="4D Mode" CV="131" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -2907,7 +2910,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="4D Transition" CV="131" mask="XXXXXXVV">
+		<variable label="4D Transition" CV="131" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -2988,7 +2991,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="4E Mode" CV="135" mask="XXVVXXXX">
+		<variable label="4E Mode" CV="135" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -3006,7 +3009,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="4E Transition" CV="135" mask="XXXXXXVV">
+		<variable label="4E Transition" CV="135" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -3087,7 +3090,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="4F Mode" CV="139" mask="XXVVXXXX">
+		<variable label="4F Mode" CV="139" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -3105,7 +3108,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="4F Transition" CV="139" mask="XXXXXXVV">
+		<variable label="4F Transition" CV="139" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -3186,7 +3189,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="4G Mode" CV="143" mask="XXVVXXXX">
+		<variable label="4G Mode" CV="143" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -3204,7 +3207,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="4G Transition" CV="143" mask="XXXXXXVV">
+		<variable label="4G Transition" CV="143" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -3285,7 +3288,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="4H Mode" CV="147" mask="XXVVXXXX">
+		<variable label="4H Mode" CV="147" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -3303,7 +3306,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="4H Transition" CV="147" mask="XXXXXXVV">
+		<variable label="4H Transition" CV="147" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -3383,7 +3386,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="5A Mode" CV="151" mask="XXVVXXXX">
+		<variable label="5A Mode" CV="151" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -3401,7 +3404,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="5A Transition" CV="151" mask="XXXXXXVV">
+		<variable label="5A Transition" CV="151" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -3482,7 +3485,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="5B Mode" CV="155" mask="XXVVXXXX">
+		<variable label="5B Mode" CV="155" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -3500,7 +3503,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="5B Transition" CV="155" mask="XXXXXXVV">
+		<variable label="5B Transition" CV="155" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -3581,7 +3584,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="5C Mode" CV="159" mask="XXVVXXXX">
+		<variable label="5C Mode" CV="159" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -3599,7 +3602,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="5C Transition" CV="159" mask="XXXXXXVV">
+		<variable label="5C Transition" CV="159" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -3680,7 +3683,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="5D Mode" CV="163" mask="XXVVXXXX">
+		<variable label="5D Mode" CV="163" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -3698,7 +3701,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="5D Transition" CV="163" mask="XXXXXXVV">
+		<variable label="5D Transition" CV="163" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -3779,7 +3782,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="5E Mode" CV="167" mask="XXVVXXXX">
+		<variable label="5E Mode" CV="167" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -3797,7 +3800,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="5E Transition" CV="167" mask="XXXXXXVV">
+		<variable label="5E Transition" CV="167" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -3878,7 +3881,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="5F Mode" CV="171" mask="XXVVXXXX">
+		<variable label="5F Mode" CV="171" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -3896,7 +3899,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="5F Transition" CV="171" mask="XXXXXXVV">
+		<variable label="5F Transition" CV="171" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -3977,7 +3980,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="5G Mode" CV="175" mask="XXVVXXXX">
+		<variable label="5G Mode" CV="175" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -3995,7 +3998,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="5G Transition" CV="175" mask="XXXXXXVV">
+		<variable label="5G Transition" CV="175" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -4076,7 +4079,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="5H Mode" CV="179" mask="XXVVXXXX">
+		<variable label="5H Mode" CV="179" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -4094,7 +4097,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="5H Transition" CV="179" mask="XXXXXXVV">
+		<variable label="5H Transition" CV="179" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -4173,7 +4176,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="6A Mode" CV="183" mask="XXVVXXXX">
+		<variable label="6A Mode" CV="183" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -4191,7 +4194,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="6A Transition" CV="183" mask="XXXXXXVV">
+		<variable label="6A Transition" CV="183" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -4272,7 +4275,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="6B Mode" CV="187" mask="XXVVXXXX">
+		<variable label="6B Mode" CV="187" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -4290,7 +4293,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="6B Transition" CV="187" mask="XXXXXXVV">
+		<variable label="6B Transition" CV="187" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -4371,7 +4374,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="6C Mode" CV="191" mask="XXVVXXXX">
+		<variable label="6C Mode" CV="191" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -4389,7 +4392,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="6C Transition" CV="191" mask="XXXXXXVV">
+		<variable label="6C Transition" CV="191" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -4470,7 +4473,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="6D Mode" CV="195" mask="XXVVXXXX">
+		<variable label="6D Mode" CV="195" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -4488,7 +4491,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="6D Transition" CV="195" mask="XXXXXXVV">
+		<variable label="6D Transition" CV="195" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -4569,7 +4572,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="6E Mode" CV="199" mask="XXVVXXXX">
+		<variable label="6E Mode" CV="199" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -4587,7 +4590,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="6E Transition" CV="199" mask="XXXXXXVV">
+		<variable label="6E Transition" CV="199" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -4668,7 +4671,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="6F Mode" CV="203" mask="XXVVXXXX">
+		<variable label="6F Mode" CV="203" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -4686,7 +4689,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="6F Transition" CV="203" mask="XXXXXXVV">
+		<variable label="6F Transition" CV="203" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -4767,7 +4770,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="6G Mode" CV="207" mask="XXVVXXXX">
+		<variable label="6G Mode" CV="207" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -4785,7 +4788,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="6G Transition" CV="207" mask="XXXXXXVV">
+		<variable label="6G Transition" CV="207" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -4866,7 +4869,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="6H Mode" CV="211" mask="XXVVXXXX">
+		<variable label="6H Mode" CV="211" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -4884,7 +4887,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="6H Transition" CV="211" mask="XXXXXXVV">
+		<variable label="6H Transition" CV="211" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -4964,7 +4967,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="7A Mode" CV="215" mask="XXVVXXXX">
+		<variable label="7A Mode" CV="215" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -4982,7 +4985,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="7A Transition" CV="215" mask="XXXXXXVV">
+		<variable label="7A Transition" CV="215" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -5063,7 +5066,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="7B Mode" CV="219" mask="XXVVXXXX">
+		<variable label="7B Mode" CV="219" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -5081,7 +5084,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="7B Transition" CV="219" mask="XXXXXXVV">
+		<variable label="7B Transition" CV="219" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -5162,7 +5165,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="7C Mode" CV="223" mask="XXVVXXXX">
+		<variable label="7C Mode" CV="223" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -5180,7 +5183,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="7C Transition" CV="223" mask="XXXXXXVV">
+		<variable label="7C Transition" CV="223" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -5261,7 +5264,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="7D Mode" CV="227" mask="XXVVXXXX">
+		<variable label="7D Mode" CV="227" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -5279,7 +5282,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="7D Transition" CV="227" mask="XXXXXXVV">
+		<variable label="7D Transition" CV="227" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -5360,7 +5363,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="7E Mode" CV="231" mask="XXVVXXXX">
+		<variable label="7E Mode" CV="231" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -5378,7 +5381,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="7E Transition" CV="231" mask="XXXXXXVV">
+		<variable label="7E Transition" CV="231" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -5459,7 +5462,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="7F Mode" CV="235" mask="XXVVXXXX">
+		<variable label="7F Mode" CV="235" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -5477,7 +5480,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="7F Transition" CV="235" mask="XXXXXXVV">
+		<variable label="7F Transition" CV="235" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -5558,7 +5561,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="7G Mode" CV="239" mask="XXVVXXXX">
+		<variable label="7G Mode" CV="239" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -5576,7 +5579,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="7G Transition" CV="239" mask="XXXXXXVV">
+		<variable label="7G Transition" CV="239" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -5657,7 +5660,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="7H Mode" CV="243" mask="XXVVXXXX">
+		<variable label="7H Mode" CV="243" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -5675,7 +5678,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="7H Transition" CV="243" mask="XXXXXXVV">
+		<variable label="7H Transition" CV="243" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -5756,7 +5759,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="8A Mode" CV="247" mask="XXVVXXXX">
+		<variable label="8A Mode" CV="247" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -5774,7 +5777,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="8A Transition" CV="247" mask="XXXXXXVV">
+		<variable label="8A Transition" CV="247" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -5855,7 +5858,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="8B Mode" CV="251" mask="XXVVXXXX">
+		<variable label="8B Mode" CV="251" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -5873,7 +5876,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="8B Transition" CV="251" mask="XXXXXXVV">
+		<variable label="8B Transition" CV="251" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -5954,7 +5957,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="8C Mode" CV="255" mask="XXVVXXXX">
+		<variable label="8C Mode" CV="255" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -5972,7 +5975,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="8C Transition" CV="255" mask="XXXXXXVV">
+		<variable label="8C Transition" CV="255" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -6053,7 +6056,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="8D Mode" CV="259" mask="XXVVXXXX">
+		<variable label="8D Mode" CV="259" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -6071,7 +6074,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="8D Transition" CV="259" mask="XXXXXXVV">
+		<variable label="8D Transition" CV="259" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -6152,7 +6155,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="8E Mode" CV="263" mask="XXVVXXXX">
+		<variable label="8E Mode" CV="263" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -6170,7 +6173,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="8E Transition" CV="263" mask="XXXXXXVV">
+		<variable label="8E Transition" CV="263" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -6251,7 +6254,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="8F Mode" CV="267" mask="XXVVXXXX">
+		<variable label="8F Mode" CV="267" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -6269,7 +6272,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="8F Transition" CV="267" mask="XXXXXXVV">
+		<variable label="8F Transition" CV="267" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -6350,7 +6353,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="8G Mode" CV="271" mask="XXVVXXXX">
+		<variable label="8G Mode" CV="271" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -6368,7 +6371,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="8G Transition" CV="271" mask="XXXXXXVV">
+		<variable label="8G Transition" CV="271" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -6449,7 +6452,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="8H Mode" CV="275" mask="XXVVXXXX">
+		<variable label="8H Mode" CV="275" mask="XXVVXXXX" default="2">
 			<enumVal>
 				<enumChoice choice="Switch Request"/>
 				<enumChoice choice="Switch Feedback"/>
@@ -6467,7 +6470,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="8H Transition" CV="275" mask="XXXXXXVV">
+		<variable label="8H Transition" CV="275" mask="XXXXXXVV" default="3">
 			<enumVal>
 				<enumChoice choice="No Input Message Sent"/>
 				<enumChoice choice="Send on Positive Edge"/>
@@ -7947,6 +7950,11 @@
             </compositeVal>
         </variable>
 </variables>
+
+        <resets>
+           <factReset label="Restore to Factory Defaults. Address = 10000" CV="21" default="170"/>
+        </resets>
+
 </decoder>
 
 <pane name="Tower Controller">
