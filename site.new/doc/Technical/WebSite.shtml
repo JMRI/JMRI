@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: WebSite.shtml,v 1.5 2007-07-13 04:55:23 jacobsen Exp $ -->
+<!-- $Id: WebSite.shtml,v 1.6 2007-12-27 18:22:44 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -59,7 +59,7 @@ structure described below and on our
 <A HREF="Help.shtml">JavaHelp</a>
 page.
 <P>
-The rest are from the site.local CVS module, and are checked out at 
+The rest are from the site.new CVS module, and are checked out at 
 the root of the web server.
 <P>
 <LI>apps - 
