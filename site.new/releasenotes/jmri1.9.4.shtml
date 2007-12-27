@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.9.4.shtml,v 1.1 2007-12-27 08:18:43 jacobsen Exp $ -->
+<!-- $Id: jmri1.9.4.shtml,v 1.2 2007-12-27 08:59:57 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -125,6 +125,10 @@ The RPS code was updated to work with the newest hardware formats.
 
 <p>
 Many help screen updates!
+
+<p>
+Ian Birchenough contributed a definition for the ZTC 255 decoder (version 2).
+
 
 
 <hr class="hide">
