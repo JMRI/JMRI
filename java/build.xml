@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.13 $ -->
+<!-- Revision $Revision: 1.14 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -282,6 +282,30 @@
             <jvmarg value="-Djava.compiler=none"/>
             <jvmarg value="-Xrunjdwp:transport=dt_socket,address=${jpda.address}"/>
         </java>
+  </target>
+
+  <!-- The next target is NetBeans-specific, but is here so it -->
+  <!-- can use other info defined in this file -->
+  <target name="profile-nb" depends="debug" description="build and run DecoderPro app with NetBeans profiling">
+    <property name="antargline" value="DecoderProConfig2.xml" />
+    <fail unless="netbeans.home">This target can only run inside the NetBeans IDE.</fail>
+    <nbprofiledirect>
+       <classpath refid="project.class.path"    />
+    </nbprofiledirect>
+    <java classname="apps.DecoderPro.DecoderPro"
+            dir=".." 
+	        fork="yes" >
+       <classpath refid="project.class.path"    />
+       <sysproperty key="java.security.policy" value="lib/security.policy"/> 
+       <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
+       <jvmarg value="${profiler.info.jvmargs.agent}"/>
+       <jvmarg value="-Xms10m"/>
+       <!-- <jvmarg value="-Xmx60m"/> -->
+       <!-- <jvmarg value="-verbose"/> -->
+       <!-- <jvmarg value="-verbosegc"/> -->
+       <!-- <jvmarg value="-Xloggc:memory.vgc"/> --> <!-- for JTune -->
+       <arg value="${antargline}"/>
+    </java>
   </target>
 
   <target name="jar" depends="compile, rmic"  
