@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2007 All rights reserved -->
-<!-- $Id: Massoth_eMOTION_XLS.xml,v 1.4 2007-11-05 02:56:31 jacobsen Exp $ -->
+<!-- $Id: Massoth_eMOTION_XLS.xml,v 1.5 2007-12-28 05:07:22 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -80,7 +80,8 @@
 <decoder>
 	<family name="Massoth eMOTION" mfg="Massoth Elektronik, GmbH">
 		<model model="eMOTION XLS" lowVersionID="10"
-                   comment="includes eMOTION XLS decoders">
+                   comment="includes eMOTION XLS decoders"
+                   connector="9pin">
 		</model>
 	</family>
 

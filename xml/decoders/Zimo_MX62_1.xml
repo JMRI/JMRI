@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
-<!-- $Id: Zimo_MX62_1.xml,v 1.7 2007-09-21 05:49:35 jacobsen Exp $ -->
+<!-- $Id: Zimo_MX62_1.xml,v 1.8 2007-12-28 05:04:09 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -27,7 +27,7 @@
 		<model model="MX62 version 4/7" lowVersionID="4" highVersionID="7" 
 		 maxInputVolts="12-24V" maxMotorCurrent="0.7A (peak=1.5A, 5 sec.)"
 		 maxTotalCurrent="0.8A" formFactor="N, HOe, HOm"
-		 numOuts="4" numFns="6" >
+		 numOuts="4" numFns="6" connector="9pin" >
 		<size length="0.55" width="0.35" height="0.10" units="inches" />
 		<output name="1" label="White" />
 	    <output name="2" label="Yellow" />
