@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PanelEditor.shtml,v 1.2 2007-11-23 06:45:58 jacobsen Exp $ -->
+<!-- $Id: PanelEditor.shtml,v 1.3 2007-12-28 00:39:18 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Panel Editor Help</TITLE>
@@ -102,9 +102,10 @@ Bronson's clinics page</A>.</P>
 	before the icon responds with the known state of the turnout.</P>
 	</LI>
 
-	<LI>Panel items can be repositioned. When checked you can move
+	<LI>All panel items can be repositioned. When checked you can move
 	items in your panel by selecting and dragging them with the meta key.
-	For window's users, hold the right click down and drag.</LI>
+	For window's users, hold the right click down and drag.  By default new
+	items can be repositoned even if this box isn't checked.</LI>
 
 	<LI>Show item's coordinates in popup menu. When checked, the
 	item's popup menu will include the item's X and Y coordinates. This can
