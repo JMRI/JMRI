@@ -6,7 +6,7 @@ import jmri.AbstractLightManager;
 import jmri.Light;
 
 /**
- * Implement light manager for CMRI serial systems
+ * Implement light manager for Oak Tree serial systems
  * <P>
  * System names are "TLnnn", where nnn is the bit number without padding.
  * <P>
@@ -14,7 +14,7 @@ import jmri.Light;
  *
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SerialLightManager extends AbstractLightManager {
 
@@ -23,9 +23,9 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     *  Returns the system letter for CMRI
+     *  Returns the system letter for Oak Tree
      */
-    public char systemLetter() { return 'T'; }
+    public char systemLetter() { return 'O'; }
     
     /**
      * Method to create a new Light based on the system name
