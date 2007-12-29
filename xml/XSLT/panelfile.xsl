@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: panelfile.xsl,v 1.5 2007-11-29 07:36:02 jacobsen Exp $ -->
+<!-- $Id: panelfile.xsl,v 1.6 2007-12-29 18:05:55 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI panel file into an HTML page -->
 
@@ -60,14 +60,28 @@
 <xsl:template match="layout-config/turnouts">
 <h3>Turnouts</h3>
     <table border="1">
-    <tr><td>System Name</td><td>User Name</td></tr>
-    <!-- index through individal turnout elements -->
+    <tr>
+      <th>System Name</th>
+      <th>User Name</th>
+      <th>Feedback</th>
+      <th>Invert?</th>
+      <th>Locked?</th>
+      <th>Automate?</th>
+    </tr>
+    <!-- index through individual turnout elements -->
     <xsl:apply-templates/>
     </table>
 </xsl:template>
 
 <xsl:template match="turnout">
-<tr><td><xsl:value-of select="@systemName"/></td><td><xsl:value-of select="@userName"/></td></tr>
+<tr> 
+  <td><xsl:value-of select="@systemName"/></td>
+  <td><xsl:value-of select="@userName"/></td>
+  <td> <xsl:value-of select="@feedback"/> </td>
+  <td><xsl:if test="( @inverted = 'true' )" >Yes</xsl:if></td>
+  <td><xsl:if test="( @locked = 'true' )" >Yes</xsl:if></td>
+  <td><xsl:if test="( @automate != 'Default' )" >Yes</xsl:if></td>
+</tr>
 </xsl:template>
 
 <!-- Index through signalheads elements -->
@@ -144,10 +158,6 @@
     <!-- index through individal turnout elements -->
     <xsl:apply-templates/>
     </table>
-</xsl:template>
-
-<xsl:template match="turnout">
-<tr><td><xsl:value-of select="@systemName"/></td><td><xsl:value-of select="@userName"/></td></tr>
 </xsl:template>
 
 <xsl:template match="signalhead">
