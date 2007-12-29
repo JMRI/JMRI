@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PanelEditor.shtml,v 1.3 2007-12-28 00:39:18 dan_boudreau Exp $ -->
+<!-- $Id: PanelEditor.shtml,v 1.4 2007-12-29 15:56:13 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Panel Editor Help</TITLE>
@@ -42,12 +42,12 @@ Bronson's clinics page</A>.</P>
 	<LI>Two text fields specifying where (in pixels) new components
 	will be inserted on the panel. You can generally ignore these, as once
 	the components has been inserted you can drag it around by holding the
-	meta (Apple, command, etc) key down.</LI>
+	meta (Apple, command; Linux & Windows, right button) key down.</LI>
 	<LI>A button to pick a background image. The editor's drawing
 	capability is rudimentary and likely to stay that way for a long time.
-	To create CTC panels, complex track diagrams, etc, its easier to draw
+	To create CTC panels, complex track diagrams, etc, it may be easier to draw
 	them in some other program and insert them as the background image for
-	a JMRI control panel.</LI>
+	a JMRI control panel. (see below for more information)</LI>
 	<LI>A button to add a text label. Put the desired text in the
 	field and click the button. You can slide the label around after
 	inserting it, but you currently can't edit the text later.</LI>
@@ -104,7 +104,7 @@ Bronson's clinics page</A>.</P>
 
 	<LI>All panel items can be repositioned. When checked you can move
 	items in your panel by selecting and dragging them with the meta key.
-	For window's users, hold the right click down and drag.  By default new
+	Linux and Windows users can hold the right click down and drag.  By default new
 	items can be repositoned even if this box isn't checked.</LI>
 
 	<LI>Show item's coordinates in popup menu. When checked, the
@@ -125,20 +125,22 @@ Bronson's clinics page</A>.</P>
 
 </UL>
 
-<P>After getting the panel the way you want, you can use the "Store
+<P>After getting the panel the way you want, you need to use the "Store
 panels..." entry in the "Panels" menu to write it to an XML file.</P>
 <H3>Available Icons</H3>
 The JMRI library contains lots of contributed icons for representing CTC
 panels, LEDs, etc. You can browse through them using the file tree in
 the Change Icon frame.
-<P>You can also create your own icons and add them to the
-appropriate folders.</P>
+<P>You can also create your own icons. Create a new folder named "resources" in
+your JMRI Preferences directory. Add your new icons to that folder. This will prevent any
+possible conflicts or loss of data during an upgrade. These new items will automatically 
+appear under "files" in the icon selections.</P>
 
 <H3>Other types of panels</H3>
 
 Because this is icon-based, you can create panels that look any way you
 want. For example, instead of using track-schematic icons for turnouts,
-you could use small images of the levels and plates on CTC machine. This
+you could use small images of the levers and plates on CTC machine. This
 would give you "mechanical" levers you can flip back and forth with a
 click.
 
@@ -150,13 +152,44 @@ page</A>.</P>
 <H3>Manipulating Icons</H3>
 
 To move an icon around on the panel, you "meta-drag" it. On a Mac,
-that's "hold the cmd key and drag with the cursor"; on Windows, hold the
-"right mouse click and drag".
-<P>There's also a pop-up menu (ctrl-click on a Mac, right click on a
-PC) that will provide various ways to manipulate the icon. It will let
+that's "hold the cmd key and drag with the cursor"; on Linux or Windows, "hold the
+right mouse click and drag with the cursor".
+<P>There's also a pop-up menu (ctrl-click on a Mac; right-click on Linux or
+Windows) that will provide various ways to manipulate the icon. It will let
 you rotate the icon so that it points in whatever direction you want.
 Text labels can have their font, size and color changed. You can also
 remove icons from the panel with the popup menu.</P>
+<H3>Multi Slice Backgrounds</H3>
+For users that need to build a classic US&S panel there are several options. The first is to
+simply select the 15 position panel background from icons/USS/background/uss-15.gif. Another
+option is to use a pixel based image editor to create your own background image. Save the 
+image as a .gif or similar file. (see info above on where to store new images)
+Yet another option is to create the background image from multiple 
+slices of the whole panel. JMRI supports using multiple background images so, by simply 
+positioning each image properly, a complete panel of any reasonable size may be created.</P> 
+<P>Currently there are two sets of image 'slices' available.  One set is 718 pixels high, and the second set is 
+900 pixles high. Choose the set that best fits your display. These 'slices' are located 
+at icons/USS/background/. The 900 pixel high images include a "-9" in their names. The left and right
+edge images are each 12 pixels wide. The main panel 'slices' are 65 pixels wide. This allows you to 
+precisely position each slice simply by changing the x: and y: coordinates in the Panel Editor. 
+The advantages of building backgrounds with slices are that you can make virtually any length
+of panel that is required, and the plates will be precisely located automatically. </P>
+<P>First set the coordinates to x:0, y:0 and select icons/USS/background/Panel-left.gif. 
+(or icons/USS/background/Panel-left-9.gif) This gives you the left edge of the panel. Change 
+the coordinates to x:12 y:0 and choose the next slice. It may be blank, include a switch
+plate, include a signal plate, or include both plates. Only the "x:" coordinate needs to be changed
+as you continue to add additional panel sections. The 'slices' are each 65 pixles wide, 
+so simply add 65 to the x: value for each 
+additional slice. For example; to build up a 15 position panel from slices, use x:0 for the left side, then 
+x:12, x:77, x:142, x:207, x:272, x:337, x:402, x:467, x:532, x:597, x:662, x:727, x:792, 
+x:857, and x:922  for the individual slices. Finally set x:987
+and complete the panel with icons/USS/background/Panel-right.gif. </P>
+<P>To change the style of any individual slice (e.g. to add a new plate to your panel) 
+first check the "Show item's 
+coordinates in popup menu" check box in the editor window. Next, right click in a blank area of
+the old slice to raise the pop up information including the coordinates of that slice. Put those numbers 
+in the editor's coordinates, then remove the slice. Finally, choose a new slice and it will 
+appear where the old one was.</P>
 
 <H2>Communicating with Multiple Systems</H2>
 
@@ -178,4 +211,3 @@ a LocoNet Turnout as LT13; a LocoNet sensor as LS21, etc.</P>
 <!--#include virtual="/Footer" -->
 </BODY>
 </HTML>
-
