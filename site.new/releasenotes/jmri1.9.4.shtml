@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.9.4.shtml,v 1.2 2007-12-27 08:59:57 jacobsen Exp $ -->
+<!-- $Id: jmri1.9.4.shtml,v 1.3 2007-12-29 21:01:18 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -124,12 +124,32 @@ Dan Boudreau made more improvements to the NCE help.
 The RPS code was updated to work with the newest hardware formats.
 
 <p>
-Many help screen updates!
+Help screen updates by Dick Bronson and Dan Boudreau.
 
 <p>
 Ian Birchenough contributed a definition for the ZTC 255 decoder (version 2).
 
+<p>
+Dick Bronson updated the decoder definition for the RR-CirKits TC-64 to better handle reset operations.
 
+<p>
+The panel editor was changed so that newly added icons for turnouts, sensors, etc are in front of (on top of) previously added ones, instead of the other way around.
+Also, newly added icons can be positioned even if the checkbox is set to keep the others fixed.  You can always make an icon movable by opening its popup menu and unchecking the "Fixed" option.
+
+<p>
+The build tests were updated to produce less spurious output. If you build your own JMRI version and run the "alltest" target, you shouldn't get any WARN or ERROR messages now.
+
+<p>
+The connector information in several decoder definitions was updated based on info contributed via the web site.
+
+<p>
+The build file was updated so you can now run profiles within NetBeans.
+
+<p>
+A rarely-encountered bug with Lights on Oak Tree hardware was fixed. 
+
+<p>
+David Duchamp and Ken Cameron fixed a problem which caused the NCE fast clock to be reset erroneously.
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
