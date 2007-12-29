@@ -21,7 +21,7 @@ import javax.swing.border.Border;
  * The current implementation (2007) handles the internal clock and one hardware clock
  *
  * @author	Dave Duchamp   Copyright (C) 2004, 2007
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class SimpleClockFrame extends JmriJFrame
 	implements java.beans.PropertyChangeListener {
@@ -96,6 +96,10 @@ public class SimpleClockFrame extends JmriJFrame
             dispose();
             throw new jmri.JmriException("Could not obtain a timebase instance");
         }
+		if (!clock.getIsInitialized()) {
+			// if clocks have not been initialized at start up, do so now
+			clock.initializeHardwareClock();
+		}
 
         // Set up time source choice
         JPanel panel11 = new JPanel();
@@ -159,7 +163,7 @@ public class SimpleClockFrame extends JmriJFrame
         JPanel panel12 = new JPanel();
         panel12.add(new JLabel(rb.getString("SpeedUpFactor")+" "));
         panel12.add(factorField);
-        factorField.setText(threeDigits.format(clock.getRate()));
+        factorField.setText(threeDigits.format(clock.userGetRate()));
         factorField.setToolTipText(rb.getString("TipFactorField"));
         panel12.add(new JLabel(":1 "));
         setRateButton.setToolTipText(rb.getString("TipSetRateButton"));
@@ -360,7 +364,7 @@ public class SimpleClockFrame extends JmriJFrame
 		if (rate < 0.0) {
             JOptionPane.showMessageDialog(this,rb.getString("NegativeRateError"),
                     rb.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
-			factorField.setText(threeDigits.format(clock.getRate()));
+			factorField.setText(threeDigits.format(clock.userGetRate()));
 			return;
 		}
 		if (InstanceManager.clockControlInstance().requiresIntegerRate()) {
@@ -368,7 +372,7 @@ public class SimpleClockFrame extends JmriJFrame
 			if (frac > 0.001) {
 				JOptionPane.showMessageDialog(this,rb.getString("NonIntegerError"),
                     rb.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
-				factorField.setText(threeDigits.format(clock.getRate()));
+				factorField.setText(threeDigits.format(clock.userGetRate()));
 				return;
 			}
 		}
