@@ -70,6 +70,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrix.loconet.pm4.PM4Frame" url="package/jmri/jmrix/loconet/pm4/PM4Frame.shtml" />
 	<mapID target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl" url="package/jmri/jmrit/simpleturnoutctrl/SimpleTurnoutCtrl.shtml" />
 	<mapID target="package.jmri.jmrit.automat.monitor.AutomatTableFrame" url="package/jmri/jmrit/automat/monitor/AutomatTableFrame.shtml" />
+	<mapID target="package.jmri.jmrix.grapevine.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/grapevine/nodeconfig/NodeConfigFrame.shtml" />
 	<mapID target="DecoderProManual.Comp_Motor_Top" url="DecoderProManual/Comp_Motor.html#Top" />
 	<mapID target="package.jmri.jmrit.display.EditLayoutBlock" url="package/jmri/jmrit/display/EditLayoutBlock.shtml" />
 	<mapID target="package.jmri.jmrit.beantable.MemoryAddEdit" url="package/jmri/jmrit/beantable/MemoryAddEdit.shtml" />
@@ -102,6 +103,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrix.loconet.se8.SE8Frame" url="package/jmri/jmrix/loconet/se8/SE8Frame.shtml" />
 	<mapID target="DecoderProManual.Basic_Programming_Select Decoder" url="DecoderProManual/Basic_Programming.html#Select Decoder" />
 	<mapID target="package.jmri.jmrit.consisttool.ConsistToolFrame" url="package/jmri/jmrit/consisttool/ConsistToolFrame.shtml" />
+	<mapID target="package.jmri.jmrix.grapevine.packetgen.SerialPacketGenFrame" url="package/jmri/jmrix/grapevine/packetgen/SerialPacketGenFrame.shtml" />
 	<mapID target="package.jmri.jmrix.loconet.ds64.DS64Frame" url="package/jmri/jmrix/loconet/ds64/DS64Frame.shtml" />
 	<mapID target="package.jmri.jmrit.beantable.SignalTable" url="package/jmri/jmrit/beantable/SignalTable.shtml" />
 	<mapID target="package.jmri.jmrix.loconet.locoid.LocoIdFrame" url="package/jmri/jmrix/loconet/locoid/LocoIdFrame.shtml" />
@@ -118,6 +120,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrit.beantable.LogixTable" url="package/jmri/jmrit/beantable/LogixTable.shtml" />
 	<mapID target="DecoderProManual.Comp_ManfSpecific" url="DecoderProManual/Comp_ManfSpecific.html" />
 	<mapID target="package.jmri.jmrit.display.EditLayoutTurnout" url="package/jmri/jmrit/display/EditLayoutTurnout.shtml" />
+	<mapID target="package.jmri.jmrix.grapevine.serialmon.SerialMonFrame" url="package/jmri/jmrix/grapevine/serialmon/SerialMonFrame.shtml" />
 	<mapID target="DecoderProManual.Comp_Motor" url="DecoderProManual/Comp_Motor.html" />
 	<mapID target="package.jmri.jmrit.ussctc.OsIndicatorFrame" url="package/jmri/jmrit/ussctc/OsIndicatorFrame.shtml" />
 	<mapID target="DecoderProManual.index_Setting up" url="DecoderProManual/index.html#Setting up" />
