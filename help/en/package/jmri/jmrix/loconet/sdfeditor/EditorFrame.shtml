@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: EditorFrame.shtml,v 1.1 2007-12-06 05:48:36 jacobsen Exp $ -->
+<!-- $Id: EditorFrame.shtml,v 1.2 2007-12-30 04:15:19 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -24,7 +24,19 @@
 <H2>SDF Sound File Editor
 </H2>
     
-This is the help/jmri/jmrix/loconet/sdfeditor/EditorFrame help page
+Digitrax sound decoders are loaded with "sound projects", stored in
+"Sound Project" (.spj) files.  Those contain a number of "sound fragments"
+in .wav format, plus a small program that tells the decoder when to 
+play the various sounds, and controls the use of functions and CVs.  That
+program is stored in a "Sound Definition" (SDF) format.
+
+<p>
+Digitrax provides sample sound project files at their Sound Depot 
+<a href="http://www.digitrax.com/sounddepot.php">(http://www.digitrax.com/sounddepot.php)</a>
+web site. You can also find links to documentation and additional tools there.
+
+<p>
+(This is the help/jmri/jmrix/loconet/sdfeditor/EditorFrame help page)
 
 <!--#include virtual="/Footer" -->
 </body>

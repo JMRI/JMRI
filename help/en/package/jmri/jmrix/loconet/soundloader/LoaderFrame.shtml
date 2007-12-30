@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LoaderFrame.shtml,v 1.1 2007-12-06 05:48:37 jacobsen Exp $ -->
+<!-- $Id: LoaderFrame.shtml,v 1.2 2007-12-30 04:15:19 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -23,7 +23,19 @@
 
 <H2>Sound Loader
 </H2>
-    
+Digitrax sound decoders are loaded with "sound projects", stored in
+"Sound Project" (.spj) files.  Those contain a number of "sound fragments"
+in .wav format, plus some additional control information.
+<p>
+The Decoder Sound Downloader tool lets you load a new .spj file into 
+a Digitrax sound decoder via a Digitrax PR2 interface.
+
+<p>
+Digitrax provides sample sound project files at their Sound Depot 
+<a href="http://www.digitrax.com/sounddepot.php">(http://www.digitrax.com/sounddepot.php)</a>
+web site. You can also find links to documentation and additional tools there.
+
+<p>    
 This is the help/jmri/jmrix/loconet/soundloader/LoaderFrame help page
 
 <!--#include virtual="/Footer" -->
