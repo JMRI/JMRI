@@ -1,17 +1,24 @@
 English JavaHelp files for JMRI
 
-The JHelpDev.xml file is a convenient project definition for
-JHelpDev (http:jhelpdev.sf.net), a tool for maintaining index,
-table of contents and map files.  These files may also be manually
-maintained in this directory.
+This directory contains metadata for the javahelp sub-system,
+plus the actual content.
 
-Note that the HelpSet definition file (JmriHelp.hs or similar)
-lives in the directory above this.  The .cvsignore file here
-has been set to ignore it, so that copies created automatically
-here don't cause confusion.
-
-There are several subtrees to this:
+There are several content subtrees:
   DecoderProManual - a help version of the original manual
   html - a help-customized version of the web site
   package - package-sensitive help, organized by Java package
   
+For more information on maintaining the various metadata in the 
+help system, please see:
+<http://jmri.sourceforge.net/doc/Technical/Help.shtml>
+
+The JHelpDev.xml file is a convenient project definition for
+JHelpDev (http:jhelpdev.sf.net), a tool for maintaining index,
+table of contents and map files.  These files may also be manually
+maintained in this directory; JHelpDev will pick up changes when
+next run. Note that we use .shtml as the help file name suffix;
+this requires a special version of JHelpDev.
+
+The search index files in JavaHelpSearch/ should NOT be 
+manually edited.  JHelpDev will overwrite them when next run.
+
