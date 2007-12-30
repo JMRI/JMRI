@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri1.9.4.shtml,v 1.3 2007-12-29 21:01:18 jacobsen Exp $ -->
+<!-- $Id: jmri1.9.4.shtml,v 1.4 2007-12-30 21:18:41 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -150,6 +150,14 @@ A rarely-encountered bug with Lights on Oak Tree hardware was fixed.
 
 <p>
 David Duchamp and Ken Cameron fixed a problem which caused the NCE fast clock to be reset erroneously.
+
+<p>
+Allow Digitrax sound editor to open files anywhere, not just in program directory
+
+<p>
+Dan Boudreau added an option to the pop-up menu on Panel Editor icons to let you set
+the icons coordinates exactly.  When the "Show item's coordinates in popup menu" box
+is checked, each icon's popup menu contains a "Set x &amp; y" option. 
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
