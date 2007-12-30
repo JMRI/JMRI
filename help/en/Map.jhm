@@ -7,7 +7,8 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 <map version="1.0"> 
 
 	<mapID target="top" url="index.html" />
-	<mapID target="popup_icon" url="images/popup.gif" /> 
+	<mapID target="popup_icon" url="images/popup.gif" />
+	<mapID target="package.jmri.jmrit.display.CoordinateEdit" url="package/jmri/jmrit/display/CoordinateEdit.shtml#turn" />
 	<mapID target="package.jmri.jmrit.display.SetSignalsAtXoverTurnout" url="package/jmri/jmrit/display/SetSignalsAtXoverTurnout.shtml" />
 	<mapID target="DecoderProManual.Comp_LightFX_Top" url="DecoderProManual/Comp_LightFX.html#Top" />
 	<mapID target="package.jmri.jmrit.beantable.RouteAddEdit" url="package/jmri/jmrit/beantable/RouteAddEdit.shtml" />
