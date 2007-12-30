@@ -9,18 +9,18 @@ import jmri.jmrit.Sound;
 /**
  * Tests for the jmri.jmrix.loconet.spjfile package
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class SpjFileTest extends TestCase {
 
     public void testCreate() {
-        new SpjFile("ac4400.spj");
+        new SpjFile(new java.io.File("ac4400.spj"));
     }
 
     SpjFile testFile = null;
     void loadFile() throws java.io.IOException {
         if (testFile == null) {
-            testFile = new SpjFile("java/test/jmri/jmrix/loconet/spjfile/test.spj");
+            testFile = new SpjFile(new java.io.File("java/test/jmri/jmrix/loconet/spjfile/test.spj"));
             testFile.read();
         }
     }

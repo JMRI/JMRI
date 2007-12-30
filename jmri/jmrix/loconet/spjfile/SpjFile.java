@@ -11,13 +11,13 @@ import jmri.jmrix.loconet.sdf.SdfBuffer;
  * Digitrax SPJ files
  *
  * @author		Bob Jacobsen  Copyright (C) 2006
- * @version             $Revision: 1.8 $
+ * @version             $Revision: 1.9 $
  */
 
 public class SpjFile {
 
-    public SpjFile(String name) {
-        file = new File(name);
+    public SpjFile(File file) {
+        this.file = file;
     }
     
     /**

@@ -5,6 +5,7 @@ package jmri.jmrix.loconet.soundloader;
 import java.awt.Dimension;
 import java.util.ResourceBundle;
 import java.io.IOException;
+import java.io.File;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +20,7 @@ import jmri.util.JmriJFrame;
  * This handles file read/write.
  *
  * @author		Bob Jacobsen   Copyright (C) 2006
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 public class EditorFrame extends JmriJFrame {
 
@@ -85,7 +86,7 @@ public class EditorFrame extends JmriJFrame {
         if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
         
         // success, open the file
-        addFile(chooser.getSelectedFile().getName());
+        addFile(chooser.getSelectedFile());
     }
 
     void selectSaveFile() {
@@ -103,7 +104,7 @@ public class EditorFrame extends JmriJFrame {
         }
     }
 
-    void addFile(String name) {
+    void addFile(File name) {
         if (pane != null) {
             // already defined
             return;

@@ -13,7 +13,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * Tests for the jmri.jmrix.loconet.soundloader.EditorPane class.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2006
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class EditorFrameTest extends TestCase {
 
@@ -24,7 +24,7 @@ public class EditorFrameTest extends TestCase {
     public void testShowFile() {
         EditorFrame f = new EditorFrame();
         // select test file and open
-        f.addFile("java/test/jmri/jmrix/loconet/spjfile/test.spj");
+        f.addFile(new java.io.File("java/test/jmri/jmrix/loconet/spjfile/test.spj"));
         f.setVisible(true);
         
         // show the SDF component

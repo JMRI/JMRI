@@ -13,7 +13,7 @@ import java.io.*;
 /**
  * Pane for downloading .hex files
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.6 $
+ * @version	    $Revision: 1.7 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -153,7 +153,7 @@ public class LoaderPane extends javax.swing.JPanel {
         loadButton.setToolTipText(res.getString("TipLoadDisabled"));
         
         try {
-            file = new SpjFile(chooser.getSelectedFile().getPath());
+            file = new SpjFile(chooser.getSelectedFile());
             file.read();
         } catch (FileNotFoundException f) {
             JOptionPane.showMessageDialog(this, res.getString("ErrorFileNotFound"),

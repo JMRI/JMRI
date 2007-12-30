@@ -8,6 +8,7 @@ import javax.swing.*;
 import javax.swing.text.*;
 import java.util.ResourceBundle;
 import java.io.IOException;
+import java.io.File;
 
 import jmri.jmrix.loconet.*;
 import jmri.jmrix.loconet.spjfile.SpjFile;
@@ -19,7 +20,7 @@ import jmri.util.com.sun.TableSorter;
 /**
  * Pane for editing Digitrax SPJ files
  * @author	    Bob Jacobsen   Copyright (C) 2006
- * @version	    $Revision: 1.2 $
+ * @version	    $Revision: 1.3 $
  */
 public class EditorPane extends javax.swing.JPanel {
 
@@ -29,7 +30,7 @@ public class EditorPane extends javax.swing.JPanel {
     SpjFile file;
     EditorTableDataModel dataModel;
     
-    public EditorPane(String name) {
+    public EditorPane(File name) {
         // open and save file
         try {
             file = new SpjFile(name);
