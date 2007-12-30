@@ -8,7 +8,7 @@ package jmri.jmrix;
  * Carries a sequence of characters, with accessors.
  *
  * @author	        Bob Jacobsen  Copyright (C) 2003
- * @version             $Revision: 1.8 $
+ * @version             $Revision: 1.9 $
  */
 abstract public class AbstractMRMessage {
 
@@ -62,6 +62,18 @@ abstract public class AbstractMRMessage {
     public void setNeededMode(int pMode) {mNeededMode = pMode; }
     public int getNeededMode() { return mNeededMode; }
 
+    /**
+     * Is a reply expected to this message?
+     * <P>
+     * By default, a reply is expected to every message; 
+     * either a reply or a timeout is needed before the next
+     * message can be sent.
+     * <p>
+     * If this returns false, the transmit queue will
+     * immediately go on to transmitt the next message (if any).
+     */
+    public boolean replyExpected() { return true; }
+    
     // mode accessors
     boolean _isBinary;
     public boolean isBinary() { return _isBinary; }
