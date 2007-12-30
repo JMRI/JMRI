@@ -1,6 +1,8 @@
 package jmri.jmrit.display;
 
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrix.nce.macro.NceMacroEditFrame;
+
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
@@ -17,6 +19,7 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 
@@ -28,7 +31,7 @@ import javax.swing.JRadioButtonMenuItem;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  */
 
 public class PositionableLabel extends JLabel
@@ -161,6 +164,13 @@ public class PositionableLabel extends JLabel
 			if (getViewCoordinates()) {
 				popup.add("x= " + this.getX());
 				popup.add("y= " + this.getY());
+				popup.add(new AbstractAction("Set x & y") {
+	                public void actionPerformed(ActionEvent e) {
+	                	String name = getText();
+	                	displayCoordinateEdit(name);
+	                }
+				});
+				
 			}
              
             popup.add(new AbstractAction("Rotate") {
@@ -187,6 +197,12 @@ public class PositionableLabel extends JLabel
 			if (getViewCoordinates()) {
 				popup.add("x= " + this.getX());
 				popup.add("y= " + this.getY());
+				popup.add(new AbstractAction("Set x & y") {
+	                public void actionPerformed(ActionEvent e) {
+	                	String name = getText();
+	                	displayCoordinateEdit(name);
+	                }
+				});
 			}
             popup.add(makeFontSizeMenu());
 
@@ -268,6 +284,21 @@ public class PositionableLabel extends JLabel
           }, Font.BOLD));
          return styleMenu;     
     }
+    
+    public void displayCoordinateEdit(String name) {
+		if (log.isDebugEnabled())
+			log.debug("make new coordinate menu");
+		CoordinateEdit f = new CoordinateEdit();
+		f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
+		try {
+			f.initComponents(this, name);
+			}
+		catch (Exception ex) {
+			log.error("Exception: "+ex.toString());
+			}
+		f.setVisible(true);	
+	}
+ 
     
     JMenu makeFontColorMenu() {
         JMenu colorMenu = new JMenu("Font color");
@@ -362,7 +393,7 @@ public class PositionableLabel extends JLabel
     JMenuItem bold = null;
     ButtonGroup fontButtonGroup = null;
     ButtonGroup colorButtonGroup = null;
-
+ 
     public void setFontStyle(int addStyle, int dropStyle) {
         int styleValue = (getFont().getStyle() & ~dropStyle) | addStyle;
         if (bold != null) bold.setSelected( (styleValue & Font.BOLD) != 0);

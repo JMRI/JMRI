@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -141,6 +141,12 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
 			if (getViewCoordinates()) {
 				popup.add("x= " + this.getX());
 				popup.add("y= " + this.getY());
+				popup.add(new AbstractAction("Set x & y") {
+	                public void actionPerformed(ActionEvent e) {
+	                	String name = getNameString();
+	                	displayCoordinateEdit(name);
+	                }
+				});
 			}
 			
             if (icon) popup.add(new AbstractAction("Rotate") {

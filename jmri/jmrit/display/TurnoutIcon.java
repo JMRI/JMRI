@@ -22,7 +22,7 @@ import javax.swing.JPopupMenu;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -180,6 +180,12 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
 			if (getViewCoordinates()) {
 				popup.add("x= " + this.getX());
 				popup.add("y= " + this.getY());
+				popup.add(new AbstractAction("Set x & y") {
+	                public void actionPerformed(ActionEvent e) {
+	                	String name = getNameString();
+	                	displayCoordinateEdit(name);
+	                }
+				});
 			}
 			
 			popup.add(new AbstractAction("Rotate") {
