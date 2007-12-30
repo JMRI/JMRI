@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SignalAddEdit.shtml,v 1.2 2007-11-23 06:45:57 jacobsen Exp $ -->
+<!-- $Id: SignalAddEdit.shtml,v 1.3 2007-12-30 16:33:47 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -26,6 +26,66 @@
     
 This is the package/jmri/jmrit/beantable/SignalAddEdit help page
 
+<p>
+Types of signals:
+<dl>
+<dt>Triple Turnout</dt>
+  <dd>
+  This type controls a signal via three electrical connections.
+  One goes to a green lamp/LED, one to a yellow one, 
+  and the third to a red one.
+  <p>
+  For each connection, enter the appropriate JMRI
+  turnout, either as a number (1,2,3) or as a JMRI
+  name (LT1, CT3, XT3).
+  They need not be consecutive, or in any particular order.
+  </dd>
+
+<dt>Double Turnout</dt>
+  <dd>
+  This type controls a signal via two electrical connections.
+  One goes to a green lamp/LED, and the other to a red one.
+  Yellow is created by turning them both on at the same time.
+  <p>
+  For each connection, enter the appropriate JMRI
+  turnout, either as a number (1,2) or as a JMRI
+  name (LT1, CT2). 
+  They need not be consecutive, or in any particular order.
+  </dd>
+
+<dt>Virtual</dt>
+  <dd>
+  This type doesn't connect to the layout at all.
+  Use it when you want to e.g. display a signal on a PanelPro panel,
+  but don't have a real one on the layout.
+  </dd>
+
+<dt>SE8c 4 Aspect</dt>
+  <dd>
+  This type controls signals attached to a 
+  <a href="http://www.digitrax.com">Digitrax</a>
+  <a href="http://www.digitrax.com/prd_statdec_se8c.php">SE8c signal driver card</a>.
+  <p>
+  In the text field, enter the appropriate address as a number.  For example,
+  the 1st signal head on the 1st SE8c, as configured from the Digitrax
+  factory, is addressed by putting a "257" here. See e.g. page
+  5 of the Digitrax SE8c manual (http://www.digitrax.com/ftp/se8c.pdf).
+  </dd>
+
+<dt>LDT LS-DEC</dt>
+  <dd>
+  This type controls signals attached to a
+  <a href="http://www.ldt-infocenter.com/english/home_frame_e.htm">Littfinski DatenTechnik (LDT)</a>
+  <A href="http://www.ldt-infocenter.com/english/lsdec_sb_e.htm">LS-DEC signal decoder</a>.
+  <p>
+  These controllers use seven DCC turnout (accessory decoder) addresses to specify
+  the seven possible appearances of the signal.  Enter those, either as 
+  numbers (1,2,3,...) or as JMRI turnout names (LT1, LT2, LT3, ...) in 
+  the appropriate text fields.
+  </dd>
+  
+
+</dl>
 <!--#include virtual="/Footer" -->
 </body>
 </html>
