@@ -1,8 +1,6 @@
 package jmri.jmrit.display;
 
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrix.nce.macro.NceMacroEditFrame;
-
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
@@ -31,7 +29,7 @@ import javax.swing.JRadioButtonMenuItem;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.35 $
+ * @version $Revision: 1.36 $
  */
 
 public class PositionableLabel extends JLabel
