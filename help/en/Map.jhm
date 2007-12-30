@@ -7,8 +7,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 <map version="1.0"> 
 
 	<mapID target="top" url="index.html" />
-	<mapID target="popup_icon" url="images/popup.gif" />
-	<mapID target="package.jmri.jmrit.display.CoordinateEdit" url="package/jmri/jmrit/display/CoordinateEdit.shtml" />
+	<mapID target="popup_icon" url="images/popup.gif" /> 
 	<mapID target="package.jmri.jmrit.display.SetSignalsAtXoverTurnout" url="package/jmri/jmrit/display/SetSignalsAtXoverTurnout.shtml" />
 	<mapID target="DecoderProManual.Comp_LightFX_Top" url="DecoderProManual/Comp_LightFX.html#Top" />
 	<mapID target="package.jmri.jmrit.beantable.RouteAddEdit" url="package/jmri/jmrit/beantable/RouteAddEdit.shtml" />
@@ -45,6 +44,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="DecoderProManual.Comp_FMap_Top" url="DecoderProManual/Comp_FMap.html#Top" />
 	<mapID target="package.jmri.jmrit.speedometer.SpeedometerFrame" url="package/jmri/jmrit/speedometer/SpeedometerFrame.shtml" />
 	<mapID target="DecoderProManual.Getting_Started_Top" url="DecoderProManual/Getting_Started.html#Top" />
+	<mapID target="package.jmri.jmrit.display.CoordinateEdit" url="package/jmri/jmrit/display/CoordinateEdit.shtml" />
 	<mapID target="DecoderProManual.Comp_SoundFX_Top" url="DecoderProManual/Comp_SoundFX.html#Top" />
 	<mapID target="DecoderProManual.Basic_Programming_Do More" url="DecoderProManual/Basic_Programming.html#Do More" />
 	<mapID target="package.jmri.jmrit.beantable.LightTable" url="package/jmri/jmrit/beantable/LightTable.shtml" />
@@ -133,6 +133,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrit.beantable.RouteAddEdit_Adding/Editing Routes" url="package/jmri/jmrit/beantable/RouteAddEdit.shtml#Adding/Editing Routes" />
 	<mapID target="package.jmri.jmrit.display.LayoutEditor_finish" url="package/jmri/jmrit/display/LayoutEditor.shtml#finish" />
 	<mapID target="DecoderProManual.Comp_Basic" url="DecoderProManual/Comp_Basic.html" />
+	<mapID target="package.jmri.jmrix.AbstractMonFrame" url="package/jmri/jmrix/AbstractMonFrame.shtml" />
 	<mapID target="package.jmri.jmrit.beantable.RouteTable" url="package/jmri/jmrit/beantable/RouteTable.shtml" />
 	<mapID target="package.jmri.jmrit.display.TranslateSelection" url="package/jmri/jmrit/display/TranslateSelection.shtml" />
 	<mapID target="package.jmri.jmrit.beantable.TurnoutTable_JMRI:Turnout Feedback" url="package/jmri/jmrit/beantable/TurnoutTable.shtml#JMRI:Turnout Feedback" />
