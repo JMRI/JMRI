@@ -22,7 +22,7 @@ import jmri.util.JmriJFrame;
 /**
  * Abstact base class for Frames displaying communications monitor information
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 public abstract class AbstractMonFrame extends JmriJFrame  {
 
@@ -157,7 +157,7 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
         init();
 
         // add help menu to window
-    	addHelpMenu("package.jmri.jmrix.AbstractMonFrame", true);
+    	addHelpMenu();
 
         // prevent button areas from expanding
         pack();
@@ -165,6 +165,18 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
         pack();
     }
 
+    /**
+     * Define help menu for this window.
+     * <p>
+     * By default, provides a generic help page
+     * that covers general features.  Specific
+     * implementations can override this to 
+     * show their own help page if desired.
+     */
+    protected void addHelpMenu() {
+    	addHelpMenu("package.jmri.jmrix.AbstractMonFrame", true);
+    }
+    
     public void nextLine(String line, String raw) {
         // handle display of traffic
         // line is the traffic in 'normal form', raw is the "raw form"
