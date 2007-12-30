@@ -22,7 +22,7 @@ import jmri.util.JmriJFrame;
 /**
  * Abstact base class for Frames displaying communications monitor information
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public abstract class AbstractMonFrame extends JmriJFrame  {
 
@@ -155,6 +155,9 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
 
         // connect to data source
         init();
+
+        // add help menu to window
+    	addHelpMenu("package.jmri.jmrix.AbstractMonFrame", true);
 
         // prevent button areas from expanding
         pack();
