@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.3 2007-12-29 23:05:33 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.4 2007-12-31 01:37:27 jacobsen Exp $ -->
 <html lang="en">
 
 <head>
@@ -46,7 +46,7 @@ key documents are interrelated.  The complete
 chronological listing is 
 <a href="docketlisting">below</a>.
 <UL>
-
+<LI>(Corrected) <A HREF="AppellantsBrief.pdf">JMRI Appeal Brief</a>, 12/21/2007
 </UL><!-- end of summary index -->
 
 <A ID="docketlisting"/>
@@ -57,6 +57,68 @@ Court's "Docket", a complete listing of the activities and
 documents in the case in time order.  Some of the
 links for minor documents may not work; if you'd like one, please 
 let us know and we'll update it by hand.
+
+  <table DATASRC="PACER" DATAPAGESIZE="5" width="763" border="0" cellspacing="2" cellpadding="0">
+
+<!---------------------------------------------------------------------->  
+
+<!---------------------------------------------------------------------->
+
+    <tr>
+      <td width="48" align="left" valign="top"><font size="-1"> 12/17/2007 </font></td>
+      <td width="595" align="left"><font size="-1"> <A HREF="AppellantsBrief.pdf">Corrected Brief of Plaintiff-Appellant Robert Jacobsen</a>                                                                                                                              .  BY Robert Jacobsen                                                                            (Appellant       ).  SERVED BY Mail       ON 12/21/2007.
+        FILED ON 12/17/2007  .
+      
+           (NON-CONFIDENTIAL)
+        </font>
+        </td>
+      <td width="67" align="right"><font size="-10"></font></td>
+    </tr>
+     
+<!---------------------------------------------------------------------->   
+  
+<!---------------------------------------------------------------------->
+
+<!--Gov't Atty -or- Private Atty-->
+        
+    <tr>
+      <td width="186"><br>
+
+<!---------------------------------------------------------------------->  
+      
+
+<!----------------------------------------------------------------------> 
+
+    <tr>
+      <td width="48" align="left" valign="top"><font size="-1"> 12/18/2007 </font></td>
+      <td width="595" align="left"><font size="-1"> Brief of Robert G. Jacobsen, Plaintiff-Appellant                                                                                                                                    .  BY Robert Jacobsen                                                                            (Appellant       ).  
+      
+         SERVED BY Mail       ON 12/17/2007.
+      
+        REJECTED ON <b> 12/18/2007</b> .
+       
+           (NON-CONFIDENTIAL)
+        </font>
+        </td>
+      <td width="67" align="right"><font size="-10"></font></td>
+    </tr>
+     
+<!---------------------------------------------------------------------->
+    
+<!---------------------------------------------------------------------->
+
+<!---------------------------------------------------------------------->
+  
+<!---------------------------------------------------------------------->
+
+<!--Gov't Atty -or- Private Atty-->
+        
+    <tr>
+      <td width="186"><br>
+      </td>
+    </tr>
+  </table>
+
 
 <p/>
 Please Note: Motions & Actions Filed are listed first. Entries are listed last.
@@ -108,6 +170,23 @@ Please Note: Motions & Actions Filed are listed first. Entries are listed last.
   <!--<td align="left">
   <br>
   -->
+
+    <tr>
+      <td width="100" align="left" valign="top"><font size="-1"><strong>Entry </strong>13  : </font>
+      </td>
+      <td width="645" align="left"><font size="-1">12/21/2007&nbsp;: &nbsp;Notice of Correction from Plaintiff-Appellant, Robert Jacobsen, notifying clerk's office of corrected brief submitted.                                                                                                                                    </font></td>
+    </tr>
+
+    <tr>
+      <td width="100" align="left"><font size="-1">.</font> </td>
+      <td width="645" align="left"><font size="-1"><strong>SERVICE : </strong>by Mail  on 12/21/2007</font></td>
+    </tr>
+
+
+    <tr>
+      <td width="100"><br />
+
+<!-- -------------------------------------------------SEPERATION-LINE---------------- -->
 
     <tr>
       <td width="100" align="left" valign="top"><font size="-1"><strong>Entry </strong>8   : </font>
