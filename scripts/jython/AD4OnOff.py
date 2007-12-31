@@ -1,11 +1,16 @@
 # Sample script to show put a button on the screen that
 # will enable or disable local control of AD4 accessory decoders.
 #
+#
+# This script has been superceded by the "Lock" capability in 
+# JMRI 1.9.3 and later.  You can directly request that JMRI lock/unlock
+# a turnout via the Turnout Table, Routes and Logi
+#
 # Author: Bob Jacobsen, copyright 2007
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 
 import java
 import javax.swing
