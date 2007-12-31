@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 1.9.3 on Wed Dec 26 10:50:49 PST 2007 $Id: decoderIndex.xml,v 1.110 2007-12-26 18:58:08 jacobsen Exp $-->
-  <decoderIndex version="131">
+  <!--Written by JMRI version 2.0 on Mon Dec 31 09:56:43 PST 2007 $Id: decoderIndex.xml,v 1.111 2007-12-31 17:59:29 jacobsen Exp $-->
+  <decoderIndex version="133">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -1133,7 +1133,7 @@
         <model model="eMOTION XL" lowVersionID="10" comment="includes eMOTION XL decoders" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
       <family name="Massoth eMOTION" mfg="Massoth Elektronik, GmbH" type="locomotive" file="Massoth_eMOTION_XLS.xml">
-        <model model="eMOTION XLS" lowVersionID="10" comment="includes eMOTION XLS decoders" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+        <model model="eMOTION XLS" lowVersionID="10" comment="includes eMOTION XLS decoders" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" />
       </family>
       <family name="Non silent drive directional Lights" mfg="North Coast Engineering" lowVersionID="21" highVersionID="21" type="locomotive" file="NCE_D102EU.xml">
         <model model="D102EU" numOuts="2" numFns="0" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
@@ -3137,6 +3137,9 @@
           <output name="2" label="Yellow" connection="unspecified" />
         </model>
       </family>
+      <family name="ZTC 255" mfg="ZTC" lowVersionID="132" highVersionID="132" type="locomotive" file="ZTC_255v2.xml">
+        <model model="ZTC 255" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+      </family>
       <family name="ZTC 4007" mfg="ZTC" lowVersionID="132" highVersionID="132" type="locomotive" file="ZTC_4007.xml">
         <model model="ZTC 4007" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
@@ -3228,7 +3231,7 @@
         </model>
       </family>
       <family name="Zimo Silent BEMF decoders, late model" mfg="Zimo" type="locomotive" file="Zimo_MX62_1.xml">
-        <model model="MX62 version 4/7" lowVersionID="4" highVersionID="7" maxInputVolts="12-24V" maxMotorCurrent="0.7A (peak=1.5A, 5 sec.)" maxTotalCurrent="0.8A" formFactor="N, HOe, HOm" numOuts="4" numFns="6" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="MX62 version 4/7" lowVersionID="4" highVersionID="7" maxInputVolts="12-24V" maxMotorCurrent="0.7A (peak=1.5A, 5 sec.)" maxTotalCurrent="0.8A" formFactor="N, HOe, HOm" numOuts="4" numFns="6" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <size length="0.55" width="0.35" height="0.10" units="inches" />
           <output name="1" label="White" connection="unspecified" />
           <output name="2" label="Yellow" connection="unspecified" />
