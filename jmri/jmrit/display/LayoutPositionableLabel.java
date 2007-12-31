@@ -19,6 +19,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
+import jmri.util.JmriJFrame;
 
 import java.util.ResourceBundle;
 
@@ -37,7 +38,7 @@ import java.util.ResourceBundle;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class LayoutPositionableLabel extends JLabel
@@ -178,6 +179,12 @@ public class LayoutPositionableLabel extends JLabel
             popup = new JPopupMenu();
 			popup.add("x= " + this.getX());
 			popup.add("y= " + this.getY());
+			popup.add(new AbstractAction("Set x & y") {
+				public void actionPerformed(ActionEvent e) {
+					String name = getText();
+					displayCoordinateEdit(name);
+				}
+			});
             popup.add(new AbstractAction(rb.getString("Rotate")) {
                 public void actionPerformed(ActionEvent e) {
                     namedIcon.setRotation(namedIcon.getRotation()+1, ours);
@@ -199,6 +206,12 @@ public class LayoutPositionableLabel extends JLabel
             popup = new JPopupMenu();
 			popup.add("x= " + this.getX());
 			popup.add("y= " + this.getY());
+			popup.add(new AbstractAction("Set x & y") {
+				public void actionPerformed(ActionEvent e) {
+					String name = getText();
+					displayCoordinateEdit(name);
+				}
+			});
             popup.add(makeFontSizeMenu());
 
             popup.add(makeFontStyleMenu());
@@ -279,6 +292,20 @@ public class LayoutPositionableLabel extends JLabel
           }, Font.BOLD));
          return styleMenu;     
     }
+    
+    public void displayCoordinateEdit(String name) {
+		if (log.isDebugEnabled())
+			log.debug("make new coordinate menu");
+		LayoutCoordinateEdit f = new LayoutCoordinateEdit();
+		f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
+		try {
+			f.initComponents(this, name);
+			}
+		catch (Exception ex) {
+			log.error("Exception: "+ex.toString());
+			}
+		f.setVisible(true);	
+	}
     
     JMenu makeFontColorMenu() {
         JMenu colorMenu = new JMenu(rb.getString("FontColor"));

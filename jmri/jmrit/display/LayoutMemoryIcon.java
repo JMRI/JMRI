@@ -27,7 +27,7 @@ import java.util.ResourceBundle;
  *	 bundle for its user-seen text, like other LayoutEditor modules.
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.beans.PropertyChangeListener {
@@ -170,6 +170,12 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
 		popup.add(new JMenuItem(getNameString()));
 		popup.add("x= " + this.getX());
 		popup.add("y= " + this.getY());
+		popup.add(new AbstractAction(rb.getString("SetXY")) {
+				public void actionPerformed(ActionEvent e) {
+					String name = getNameString();
+					displayCoordinateEdit(name);
+				}
+			});
         if (icon) {
             popup.add(new AbstractAction(rb.getString("Rotate")) {
                 public void actionPerformed(ActionEvent e) {

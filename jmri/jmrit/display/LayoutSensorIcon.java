@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
  *	its user-seen text, like other Layout Editor modules.
  *
  * @author David J. Duchamp Copyright (C) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  *
  *  (Copied with minor changes from SensorIcon.java)
  */
@@ -151,6 +151,12 @@ public class LayoutSensorIcon extends LayoutPositionableLabel implements java.be
 		popup.add(new JMenuItem(getNameString()));
 		popup.add("x= " + this.getX());
 		popup.add("y= " + this.getY());
+		popup.add(new AbstractAction(rb.getString("SetXY")) {
+				public void actionPerformed(ActionEvent e) {
+					String name = getNameString();
+					displayCoordinateEdit(name);
+				}
+			});
 		if (icon) {
 			popup.add(new AbstractAction(rb.getString("Rotate")) {
                     public void actionPerformed(ActionEvent e) {
