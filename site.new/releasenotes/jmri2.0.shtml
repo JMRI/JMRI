@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.0.shtml,v 1.1 2007-12-31 05:24:42 jacobsen Exp $ -->
+<!-- $Id: jmri2.0.shtml,v 1.2 2007-12-31 21:03:18 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -30,14 +30,14 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <h2>
-      Release Notes for JMRI 2.0 release
+      Release Notes for JMRI 2.0 Release
       </h2>
 
-	<p>Date: MMM DD, YYYY</p>
+	<p>Date: December 31, 2007</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Production version 2.0 of JMRI/DecoderPro is available for download.
 
-<br><b>This is a draft release note only; the download links do not yet work</b>
+<!-- <br><b>This is a draft release note only; the download links do not yet work</b> -->
 
 <h3>Notes:</h3>
 
@@ -52,16 +52,16 @@ see our
 <h3>New warnings for this version:</h3>
 
 <p>
-The starting location of file chooser windows used to determine which file to 
-open or where to save a file have been updated to (hopefully) more useful initial places.  They now retain their location from one use to the next, so you don't have to keep navigating back to the same place.  Please let us know (via a comment on the jmriusers list) if these two changes are an improvement or not.
-
-<p>
 The NCE support has been revamped so that "NCE USB" is a new choice in the preferences window.
 
 <p>This version of JMRI no longer supports NCE AIU broadcasts. This change was needed so that JMRI could reliably read certain CV values. We recommend that if you use NCE AIUs, that you upgrade the command station EPROM to version 2007 or newer and turn off AIU broadcasts. Code has been added to detect if AIU broadcasts are enabled, and a warning message will appear at startup requesting that AIU broadcasts be turned off for proper operation of the JMRI programs.
 
 <p>This version of JMRI requires Java 1.3 or later.  To see JMRI's plans for which Java versions will be required when, please see our
 <A HREF="../doc/Technical/TechRoadMap.shtml">technological roadmap page</a>.
+
+<p>
+The starting location of file chooser windows used to determine which file to 
+open or where to save a file have been updated to (hopefully) more useful initial places.  They now retain their location from one use to the next, so you don't have to keep navigating back to the same place.
 
 <h3>Warnings from older versions:</h3>
 
