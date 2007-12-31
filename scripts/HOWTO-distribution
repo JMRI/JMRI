@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.59 $)
+distribution.  ($Revision: 1.60 $)
 
 Start with a directory, typically called "Distributions", that
 contains "scripts" and "java" (from CVS) as subdirectories, and:
@@ -16,8 +16,7 @@ contains "scripts" and "java" (from CVS) as subdirectories, and:
   (Windows is separate, and involves a shared disk with VPC, but
    basically all the necessary stuff is in a VPC directory)
    
-This probably already exists. Make sure that scripts, etc, have
-been updated!
+This probably already exists. 
 
 Make sure everything is up-to-date:
 
@@ -37,7 +36,7 @@ Make sure everything is up-to-date:
     
     Run the program and make sure help works.
     
-( ) Update the acknowledgements help page from the site community/index page
+( ) Update the help/en/Acknowledgements.html help page from the site community/index page
 
 ( ) the default.lcf file for releases is taken from Distribution/scripts/; 
     the one for normal development is from Distribution/java/.  Make sure
@@ -45,8 +44,8 @@ Make sure everything is up-to-date:
     
 ( ) Check that the Version.java file has been updated and committed
 
-( ) Edit the "manifest" file in this directory, and make sure that the
-    version number is correct in four places
+( ) Edit the "manifest" file in your development directory, and make sure that the
+    version number is correct in four places (this file comes from java/, not scripts/)
     
 ( ) To ensure that you've got the HEAD of CVS, in your test area do:
 
@@ -65,35 +64,54 @@ Add something about copyright notices on changed files
 To actually create the distribution:
 
 ( ) Go to your working directory and
-	cvs tag -F Release-X-Y-Z 
+	cvs -q tag -F Release-X-Y-Z 
 
+( ) Create a new working directory, if you haven't already:
+    
+    cd <project directory>
+    mkdir X-Y-Z-cand
+    cd X-Y-Z-cand
+    cvs co -r Release-X-Y-Z all
+    
+    This gives it a sticky tag.  If your working directory
+    already has that name, just
+    
+    cvs update -r Release-X-Y-Z
+    
+    to make sure it's got the tag
+    
 -----
 Notes for next section:
 
 * Clear out the Linux/JMRI directory, as it seems to have some
 extra scripts.  Add to Ant?  Also, eventually check that the
 Linux startup scripts have the executable permission bit set.
+(2.0 had some work on this, follow up)
 
-* Update the MacOS X bundles:
-bbedit ../MacOSX/JMRI/*.app/Contents/Info.plist
-(three versions, two copyright dates)
-bbedit ../MacOSX/JMRI/*.app/Contents/Resources/MRJApp.properties
-(Version number)
-
-    Then check to make sure they still work.
     
-* NOTE THAT build.xml is updated to create a jar file with debug info;
+* NOTE THAT build.xml now creates a jar file with debug info by default;
 change that (temporarily) for production versions
 
 -----
 
 ( ) Come back to Distributions and 
     cd scripts
-	cvs tag Release-X-Y-Z
+	cvs -q tag -F Release-X-Y-Z
     cd ../java
-	cvs tag Release-X-Y-Z
+	cvs -q tag -F Release-X-Y-Z
     cd ..
     
+( ) Update the MacOS X bundles:
+
+    bbedit ../MacOSX/JMRI/*.app/Contents/Info.plist
+    (three versions, two copyright years)
+    bbedit ../MacOSX/JMRI/*.app/Contents/Resources/MRJApp.properties
+    (Version number)
+
+    Then check to make sure they still work.
+
+( ) Start the actual build!  In the Distributions directory:
+
 	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release1
 	
 	Ensure tests pass!
