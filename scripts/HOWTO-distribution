@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.60 $)
+distribution.  ($Revision: 1.61 $)
 
 Start with a directory, typically called "Distributions", that
 contains "scripts" and "java" (from CVS) as subdirectories, and:
@@ -183,30 +183,13 @@ change that (temporarily) for production versions
 	
 	Be sure to select "preserve preformatted text"
 	
-	Note on using SF "Quick File Release" system:
-		In Spring 2004, it would often give an error about "could not
-		add file".  In that case, reupload the file, and edit the release
-		to include the file (was a Safari problem; use IE)
-		
-		Alternately, use the Quick File Release system without selecting
-		a file, then add it later.  This prevents the original uploads from
-		being erased, so you don't have to upload them twice.
-
+( ) Wait until the downloads have propagated to the mirrors; check 
+    by trying to download each file
+    
 ( ) Commit announcement file to the web site CVS directory
 
-( ) For a test version, update the web site downloads page
-    and release-note page
-    
-( ) For a production version, update web page source:
-    	Linux install.html         
-    	MacOS Classic install.html 
-    	MacOS X install.html       
-    	OS2 install.html          
-    	Windows install.html
-		index.html
-		DecoderPro/index.html
-		README.html
-		
+( ) Update the web site front page and downloads page
+    		
 ( ) If the decoder definitions have changed, make a .zip file and send to:
     Hans Tanner:  hans.tanner@complexitymanager.com
     Graham Plowman: gppsoftware@gppsoftware.com
@@ -254,6 +237,15 @@ change that (temporarily) for production versions
 =========================================
 
 Old notes follow
+
+	Note on using SF "Quick File Release" system:
+		In Spring 2004, it would often give an error about "could not
+		add file".  In that case, reupload the file, and edit the release
+		to include the file (was a Safari problem; use IE)
+		
+		Alternately, use the Quick File Release system without selecting
+		a file, then add it later.  This prevents the original uploads from
+		being erased, so you don't have to upload them twice.
 
 ------------
 
