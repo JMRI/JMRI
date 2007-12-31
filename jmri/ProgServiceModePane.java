@@ -33,7 +33,7 @@ import javax.swing.BoxLayout;
  * for more details.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class ProgServiceModePane extends ProgModeSelector implements java.beans.PropertyChangeListener {
 
@@ -102,7 +102,7 @@ public class ProgServiceModePane extends ProgModeSelector implements java.beans.
             if (!p.hasMode(Programmer.REGISTERMODE)) registerButton.setEnabled(false);
             if (!p.hasMode(Programmer.ADDRESSMODE)) addressButton.setEnabled(false);
         } else {
-            log.warn("No programmer available, so modes not set");
+            log.info("No programmer available, so modes not set");
         }
 
         // add listeners to buttons
