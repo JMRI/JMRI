@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: JVMCapabilities.shtml,v 1.7 2007-09-20 02:25:30 jacobsen Exp $ -->
+<!-- $Id: JVMCapabilities.shtml,v 1.8 2007-12-31 21:01:48 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -31,16 +31,12 @@
 
 	    <H1>JMRI: Java Version-Specific Features</H1>
 
-JMRI currently builds to Java 1.1.8, with some
-minor extensions and compatibility hacks; we have a 
-<A HREF="Java118.html">separate page</a>
-describing those.
-<P>
-If we move JMRI's reference Java version forward to a more
-recent one, new features of Java will become available to
-JMRI developers.
-This page contains information to help make the decision about
-when and how to do that.
+This page contains information about 
+the compatibility and features of various
+Java versions.  We use this information
+to decide on our 
+<a href="TechRoadMap.shtml">road map</a>
+for future JMRI versions.
 
 <h2>Capabilities</h2>
 
