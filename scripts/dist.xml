@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.23 $ -->
+<!-- Revision $Revision: 1.24 $ -->
 
 <project name="JMRI" basedir="." default="none">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -202,14 +202,16 @@
     </chmod>
     <move todir="Linux/JMRI">
 		<fileset dir="Linux/JMRI/scripts" >
-      		<include name="*.csh"/>
       		<include name="DecoderPro"/>
       		<include name="PanelPro"/>
       		<include name="LocoTools"/>
       		<include name="cornwall"/>
       		<include name="JmriDemo"/>
-      		<include name="PacketPro"/>
-       		<include name="jmrithon"/>
+      		<include name="DecoderPro.csh"/>
+      		<include name="PanelPro.csh"/>
+      		<include name="LocoTools.csh"/>
+      		<include name="cornwall.csh"/>
+      		<include name="JmriDemo.csh"/>
       		<include name="default.lcf"/>
       		<include name="COPYING"/>
       	</fileset>

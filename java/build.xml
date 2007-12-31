@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.15 $ -->
+<!-- Revision $Revision: 1.16 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -365,7 +365,8 @@
   </target>
 
  <!-- dist target forces the jar file to be built without test classes -->
- <target name="dist" depends="clean, init, debug, rmic, jar"
+ <!-- Note production builds should use compile, not debug, prereq  -->
+ <target name="dist" depends="clean, init, compile, rmic, jar"
  		 description="create a distribution jar file"/>
 	<echo message="jar built with debug contents"/>
 
