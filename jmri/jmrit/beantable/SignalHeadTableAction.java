@@ -39,7 +39,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.24 $
+ * @version     $Revision: 1.25 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -204,6 +204,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
     String tripleTurnout = rb.getString("StringTripleTurnout");
     String doubleTurnout = rb.getString("StringDoubleTurnout");
     String virtualHead = rb.getString("StringVirtual");
+    String grapevine = rb.getString("StringGrapevine");
     String lsDec = rb.getString("StringLsDec");
     
     int turnoutStateFromBox(JComboBox box) {
@@ -217,14 +218,25 @@ public class SignalHeadTableAction extends AbstractTableAction {
         return result;
     }
     
+    /**
+     * Provide GUI for adding a new SignalHead.
+     * <P>
+     * Because there are multiple options,
+     * each of which requires different inputs,
+     * we directly manipulate which parts of the 
+     * GUI are displayed when the selected type is
+     * changed.
+     */
     void addPressed(ActionEvent e) {
         if (addFrame==null) {
             addFrame = new JmriJFrame(rb.getString("TitleAddSignal"));
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             addFrame.getContentPane().add(typeBox = new JComboBox(new String[]{
-                se8c4Aspect, tripleTurnout, doubleTurnout, virtualHead, lsDec
+                tripleTurnout, doubleTurnout, virtualHead, 
+                se8c4Aspect, lsDec
             }));
+            if (jmri.jmrix.grapevine.ActiveFlag.isActive()) typeBox.addItem(grapevine);
             typeBox.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e) {
                     typeChanged();
@@ -236,6 +248,8 @@ public class SignalHeadTableAction extends AbstractTableAction {
             p.add(name);
             addFrame.getContentPane().add(p);
 
+            // create seven boxes for input information, and put into pane
+            
             p = new JPanel(); p.setLayout(new FlowLayout());
             p.add(v1Label);
             p.add(to1);
@@ -294,6 +308,31 @@ public class SignalHeadTableAction extends AbstractTableAction {
         if (se8c4Aspect.equals(typeBox.getSelectedItem())) {
             nameLabel.setText(rb.getString("LabelUserName"));
             v1Label.setText(rb.getString("LabelTurnoutNumber"));
+            v1Label.setVisible(true);
+            to1.setVisible(true);
+            s1Box.setVisible(false);
+            v2Label.setVisible(false);
+            to2.setVisible(false);
+            s2Box.setVisible(false);
+            v3Label.setVisible(false);
+            to3.setVisible(false);
+            s3Box.setVisible(false);
+            v4Label.setVisible(false);
+            to4.setVisible(false);    
+            s4Box.setVisible(false);
+            v5Label.setVisible(false);
+            to5.setVisible(false);    
+            s5Box.setVisible(false);
+            v6Label.setVisible(false);
+            to6.setVisible(false);    
+            s6Box.setVisible(false);
+            v7Label.setVisible(false);
+            to7.setVisible(false);    
+            s7Box.setVisible(false);
+
+        } else if (grapevine.equals(typeBox.getSelectedItem())) {
+            nameLabel.setText(rb.getString("LabelSystemName"));
+            v1Label.setText(rb.getString("LabelUserName"));
             v1Label.setVisible(true);
             to1.setVisible(true);
             s1Box.setVisible(false);
@@ -442,6 +481,14 @@ public class SignalHeadTableAction extends AbstractTableAction {
             else
                 number = Integer.parseInt(num);
             s = new jmri.jmrix.loconet.SE8cSignalHead(number,name.getText());
+            InstanceManager.signalHeadManagerInstance().register(s);
+        } else if (grapevine.equals(typeBox.getSelectedItem())) {
+            // the turnout field must hold a GH system name
+            if (!name.getText().substring(0,2).equals("GH")) {
+                log.warn("skipping creation of signal, "+name.getText()+" does not start with GH");
+                return;
+            }
+            s = new jmri.jmrix.grapevine.SerialSignalHead(name.getText(),to1.getText());
             InstanceManager.signalHeadManagerInstance().register(s);
         } else if (tripleTurnout.equals(typeBox.getSelectedItem())) {
             Turnout t1 = InstanceManager.turnoutManagerInstance().provideTurnout(to1.getText());

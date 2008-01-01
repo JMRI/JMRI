@@ -26,7 +26,7 @@ import java.util.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.40 $
+ * @version			$Revision: 1.41 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -254,17 +254,21 @@ abstract public class AbstractMRTrafficController {
 		    }
                 }
                 forwardToPort(m, l);
-                // wait for a reply, or eventually timeout
-                try {
-                    synchronized(xmtRunnable) {
-                        xmtRunnable.wait(m.getTimeout());
+                
+                // reply expected?
+                if (m.replyExpected()) {
+                    // wait for a reply, or eventually timeout
+                    try {
+                        synchronized(xmtRunnable) {  
+                            xmtRunnable.wait(m.getTimeout()); // rcvr normally ends this w state change
+                        }
+                    } catch (InterruptedException e) { log.error("transmitLoop interrupted"); }
+                    if (mCurrentState == WAITMSGREPLYSTATE) {
+                        handleTimeout(m);
+                    } else {
+                        resetTimeout(m);
                     }
-                } catch (InterruptedException e) { log.error("transmitLoop interrupted"); }
-                if (mCurrentState == WAITMSGREPLYSTATE) {
-                    handleTimeout(m);
-                } else {
-                    resetTimeout(m);
-                }
+                } // just continue to the next message from here
             } else {
                 // nothing to do
                 if (mCurrentState!=IDLESTATE) log.debug("Setting IDLESTATE");
@@ -308,7 +312,7 @@ abstract public class AbstractMRTrafficController {
                                 synchronized(xmtRunnable) {
                                     xmtRunnable.wait(msg.getTimeout());
                                 }
-                            } catch (InterruptedException e) { log.error("interrupted while leaving programming mode"); }
+                            } catch (InterruptedException e) { log.error("interrupted while waiting poll reply"); }
                             // and go around again
                             if (mCurrentState == WAITMSGREPLYSTATE) {
                                 handleTimeout(msg);
