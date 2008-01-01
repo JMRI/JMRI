@@ -62,3 +62,6 @@ rpsfile.xsl     stylesheet for JMRI RPS files
 
 throttle.xsl    stylesheet for JMRI throttle layout files
 
+LogixToCode.xml Tool for creating Java code from the Logix and Routes
+                in a panel file.  The code will (with a little adjustment)
+                recreate the contents.
