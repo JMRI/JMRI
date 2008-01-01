@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SignalAddEdit.shtml,v 1.3 2007-12-30 16:33:47 jacobsen Exp $ -->
+<!-- $Id: SignalAddEdit.shtml,v 1.4 2008-01-01 08:10:33 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -84,6 +84,17 @@ Types of signals:
   the appropriate text fields.
   </dd>
   
+<dt>Grapevine</dt>
+  <dd>
+  This type controls signals attached to a
+  <a href="http://www.protrak.cc/">ProTrak</a>
+  <A href="http://www.protrak.cc/signals.htm">Grapevine node</a>.
+  <p>
+  In the text field, enter a system name for a Grapevine
+  signal head, e.g. GH4 for the 4th connector on the 1st node
+  or GH1003 for the 3rd signal connector on the 
+  second node.
+  </dd>
 
 </dl>
 <!--#include virtual="/Footer" -->

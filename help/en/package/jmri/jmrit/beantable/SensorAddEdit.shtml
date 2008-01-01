@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SensorAddEdit.shtml,v 1.3 2007-11-23 22:13:18 dan_boudreau Exp $ -->
+<!-- $Id: SensorAddEdit.shtml,v 1.4 2008-01-01 08:10:33 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Adding/Editing Sensors</TITLE>
@@ -44,6 +44,36 @@ specific sensor input.
 BD20s is connected to pin 2. Therefore the Sensor ID would be:</P>
 <P>Sensor ID = (50 - 1) * 16 + (2) -1</P>
 <P>Sensor ID = 785 <!--#include virtual="/Footer" --></P>
+
+<H3>Grapevine Sensor to JMRI Sensor Mapping</H3>
+
+There are three separate types of Grapevine sensors:
+<dl>
+<dt>Advanced Serial Detectors</dt>
+<dd>
+Up to three Advanced Serial Detector boards can be attached to
+a Grapevine node.  Each provides eight occupancy detectors, and
+associates a motion detector with each of those.
+<table>
+<tr><th>Board</th><th>Occupancy</th><th>Motion</th></tr>
+<tr><td>Master</td> <td>1-8</td>  <td>9-16</td></tr>
+<tr><td>Slave 1</td><td>17-24</td><td>25-32</td></tr>
+<tr><td>Slave 2</td><td>33-40</td><td>41-48</td></tr>
+</table>
+</dd>
+<dt>Original Serial Sensors</dt>
+<dd>
+Occupancy sensors on the original serial boards replace 
+sensors attached through advanced boards at addresses 1 to 8.
+There are no motion sensors in this case.
+</dd>
+<dt>Parallel Sensors</dt>
+<dd>The parallel sensors, connectors on the Grapevine node 
+itself, appear as JMRI sensors 101 to 108 on the node.
+If the optional second bank of serial sensors are present,
+they appear as sensors 109 to 116 on the node.
+</dd>
+</dl>
 </BODY>
 </HTML>
 
