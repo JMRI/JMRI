@@ -13,7 +13,7 @@ import jmri.Sensor;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007
  * @author          Dave Duchamp, multi node extensions, 2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SerialSensorManager extends jmri.AbstractSensorManager
                             implements SerialListener {
@@ -98,7 +98,6 @@ public class SerialSensorManager extends jmri.AbstractSensorManager
      * Dummy routine
      */
     public void message(SerialMessage r) {
-        log.warn("unexpected message");
     }
 
     /**
