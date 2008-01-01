@@ -25,9 +25,9 @@ import java.io.DataInputStream;
  * <P>
  * Handles initialization, polling, output, and input for multiple Serial Nodes.
  *
- * @author	Bob Jacobsen  Copyright (C) 2003, 2006
+ * @author	Bob Jacobsen  Copyright (C) 2003, 2006, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -350,11 +350,15 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
                     log.warn("3rd byte HOB set: "+(buffer[3]&0xFF));
                     return true;
                 }
+                // Check for "software version" command, special
+                // case wth deliberately bad parity
+                boolean pollMsg = ( (buffer[1] == buffer[3]) && (buffer[1] == 119) );
+                
                 // check 'parity'
                 int parity = (buffer[0]&0xF)+((buffer[0]&0x70)>>4)
                             +(buffer[1]&0xF)+((buffer[1]&0x70)>>4)        
                             +(buffer[3]&0xF)+((buffer[3]&0x70)>>4);
-                if ( (parity&0xF) != 0) {
+                if ( ((parity&0xF) != 0) && !pollMsg ) {
                     log.warn("parity mismatch: "+parity);  
                     buffer[0] = buffer[2];
                     buffer[1] = buffer[3];
