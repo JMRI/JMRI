@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRMessage;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SerialNode {
 
@@ -326,8 +326,11 @@ public class SerialNode {
      */
     void markBit(boolean input, int sensorNum) {
         if (sensorArray[sensorNum] == null) {
-            log.warn("Can't set sensor "+sensorNum+" on node "+getNodeAddress()+", sensor doesn't exist");
-            return; // skip ones that don't exist
+            log.info("Try to create sensor "+sensorNum+" on node "+getNodeAddress()+", since sensor doesn't exist");
+            // try to make the sensor
+            sensorArray[sensorNum] = jmri.InstanceManager
+                                        .sensorManagerInstance()
+                                        .provideSensor("GS"+(getNodeAddress()*1000+sensorNum));
         }
         
         boolean value = input ^ sensorArray[sensorNum].getInverted(); 
