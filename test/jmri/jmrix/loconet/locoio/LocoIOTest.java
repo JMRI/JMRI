@@ -8,7 +8,7 @@ import junit.framework.*;
 /**
  * Tests for the jmri.jmrix.loconet.locoio package
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class LocoIOTest extends TestCase {
 
@@ -20,7 +20,7 @@ public class LocoIOTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", LocoIOTest.class.getName()};
+        String[] testCaseName = {LocoIOTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 

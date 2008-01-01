@@ -12,7 +12,7 @@ import apps.tests.*;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Id: LnTrafficControllerTest.java,v 1.2 2007-07-03 07:03:28 jacobsen Exp $
+ * @version $Id: LnTrafficControllerTest.java,v 1.3 2008-01-01 07:06:40 jacobsen Exp $
  */
 public class LnTrafficControllerTest extends TestCase {
 
@@ -26,7 +26,7 @@ public class LnTrafficControllerTest extends TestCase {
     
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {"-noloading", LnTrafficControllerTest.class.getName()};
+		String[] testCaseName = {LnTrafficControllerTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 

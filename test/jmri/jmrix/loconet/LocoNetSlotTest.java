@@ -24,7 +24,7 @@ public class LocoNetSlotTest extends TestCase {
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {"-noloading", LocoNetSlotTest.class.getName()};
+		String[] testCaseName = {LocoNetSlotTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 

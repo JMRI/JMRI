@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.LnSensor class.
  * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 public class LnSensorTest extends TestCase {
 
@@ -81,7 +81,7 @@ public class LnSensorTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", LnSensor.class.getName()};
+        String[] testCaseName = {LnSensor.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 

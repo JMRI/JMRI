@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.LnReporter class.
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class LnReporterTest extends TestCase {
 
@@ -75,7 +75,7 @@ public class LnReporterTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-    	String[] testCaseName = {"-noloading", LnReporterTest.class.getName()};
+    	String[] testCaseName = {LnReporterTest.class.getName()};
     	junit.swingui.TestRunner.main(testCaseName);
     }
 

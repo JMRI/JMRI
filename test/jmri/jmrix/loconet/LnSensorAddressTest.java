@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.LnSensorAddress class.
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class LnSensorAddressTest extends TestCase {
 
@@ -100,7 +100,7 @@ public class LnSensorAddressTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-    	String[] testCaseName = {"-noloading", LnSensorAddressTest.class.getName()};
+    	String[] testCaseName = {LnSensorAddressTest.class.getName()};
     	junit.swingui.TestRunner.main(testCaseName);
     }
 

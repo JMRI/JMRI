@@ -11,7 +11,7 @@ import apps.tests.*;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class LnTrafficRouterTest extends TestCase {
 
@@ -82,7 +82,7 @@ public class LnTrafficRouterTest extends TestCase {
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {"-noloading", LnTrafficRouterTest.class.getName()};
+		String[] testCaseName = {LnTrafficRouterTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 

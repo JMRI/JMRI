@@ -12,7 +12,7 @@ import jmri.jmrix.loconet.sdf.SdfBuffer;
  * Tests for the jmri.jmrix.loconet.sdfeditor.EditorPane class.
  *
  * @author			Bob Jacobsen  Copyright 2007
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class EditorFrameTest extends TestCase {
 
@@ -29,7 +29,7 @@ public class EditorFrameTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", EditorPaneTest.class.getName()};
+        String[] testCaseName = {EditorPaneTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 

@@ -13,7 +13,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.locoio.LocoIOFrame class
  * @author	    Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.10 $
+ * @version         $Revision: 1.11 $
  */
 public class LocoIOFrameTest extends TestCase {
 
@@ -106,7 +106,7 @@ public class LocoIOFrameTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", LocoIOFrameTest.class.getName()};
+        String[] testCaseName = {LocoIOFrameTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 

@@ -13,7 +13,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * Tests for the jmri.jmrix.loconet.soundloader.EditorPane class.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2006
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class EditorPaneTest extends TestCase {
 
@@ -29,7 +29,7 @@ public class EditorPaneTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", EditorPaneTest.class.getName()};
+        String[] testCaseName = {EditorPaneTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 

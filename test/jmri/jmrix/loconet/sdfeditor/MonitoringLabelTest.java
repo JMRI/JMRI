@@ -13,7 +13,7 @@ import javax.swing.*;
  * Tests for the jmri.jmrix.loconet.sdfeditor.MonitoringLabel class.
  *
  * @author			Bob Jacobsen  Copyright 2007
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class MonitoringLabelTest extends TestCase {
 
@@ -37,7 +37,7 @@ public class MonitoringLabelTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", MonitoringLabelTest.class.getName()};
+        String[] testCaseName = {MonitoringLabelTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 

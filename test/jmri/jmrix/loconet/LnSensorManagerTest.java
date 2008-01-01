@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.LnSensorManagerTurnout class.
  * @author	Bob Jacobsen  Copyright 2001
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class LnSensorManagerTest extends TestCase  {
 
@@ -105,7 +105,7 @@ public class LnSensorManagerTest extends TestCase  {
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {"-noloading", LnSensorManagerTest.class.getName()};
+		String[] testCaseName = {LnSensorManagerTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 

@@ -16,7 +16,7 @@ import jmri.util.StringUtil;
 /**
  * Tests for the jmri.jmrix.loconet.locomon.Llnmon class.
  * @author	    Bob Jacobsen Copyright (C) 2002, 2007
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class LlnmonTest extends TestCase {
 
@@ -74,7 +74,7 @@ public class LlnmonTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", LlnmonTest.class.getName()};
+        String[] testCaseName = {LlnmonTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 

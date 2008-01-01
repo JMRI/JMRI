@@ -18,7 +18,7 @@ import jmri.util.StringUtil;
 /**
  * Tests for the jmri.jmrix.loconet.locoio.LocoIOTableModel class.
  * @author	    Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.17 $
+ * @version         $Revision: 1.18 $
  */
 public class LocoIOTableModelTest extends TestCase {
 
@@ -485,7 +485,7 @@ public class LocoIOTableModelTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", LocoIOTableModelTest.class.getName()};
+        String[] testCaseName = {LocoIOTableModelTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 

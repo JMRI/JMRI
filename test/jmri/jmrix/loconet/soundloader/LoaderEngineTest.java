@@ -13,7 +13,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * Tests for the jmri.jmrix.loconet.soundloader.LoaderEngine class.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2006
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class LoaderEngineTest extends TestCase {
 
@@ -116,7 +116,7 @@ public class LoaderEngineTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", LoaderEngineTest.class.getName()};
+        String[] testCaseName = {LoaderEngineTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
