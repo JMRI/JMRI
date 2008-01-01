@@ -23,7 +23,7 @@ import junit.framework.TestSuite;
  * for more details.
  *
  * @author	Bob Jacobsen
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class AllTest extends TestCase  {
     public AllTest(String s) {
@@ -37,7 +37,7 @@ public class AllTest extends TestCase  {
 
     // Main entry point
     static public void main(String[] args) {
-		String[] testCaseName = {"-noloading", AllTest.class.getName()};
+		String[] testCaseName = {AllTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
     }
 
