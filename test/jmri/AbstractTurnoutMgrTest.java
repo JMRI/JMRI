@@ -50,29 +50,29 @@ public abstract class AbstractTurnoutMgrTest extends TestCase {
 
 	public void testTurnoutPutGet() {
 		// create
-		Turnout t = l.newTurnout(getSystemName(21), "mine");
+		Turnout t = l.newTurnout(getSystemName(getNumToTest1()), "mine");
 		// check
 		Assert.assertTrue("real object returned ", t != null);
 		Assert.assertTrue("user name correct ", t == l.getByUserName("mine"));
-		Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(21)));
+		Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
 	}
 
 	public void testDefaultSystemName() {
 		// create
-		Turnout t = l.provideTurnout("21");
+		Turnout t = l.provideTurnout(""+getNumToTest1());
 		// check
 		Assert.assertTrue("real object returned ", t != null);
-		Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(21)));
+		Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
 	}
 
 	public void testSingleObject() {
 		// test that you always get the same representation
-		Turnout t1 = l.newTurnout(getSystemName(21), "mine");
+		Turnout t1 = l.newTurnout(getSystemName(getNumToTest1()), "mine");
 		Assert.assertTrue("t1 real object returned ", t1 != null);
 		Assert.assertTrue("same by user ", t1 == l.getByUserName("mine"));
-		Assert.assertTrue("same by system ", t1 == l.getBySystemName(getSystemName(21)));
+		Assert.assertTrue("same by system ", t1 == l.getBySystemName(getSystemName(getNumToTest1())));
 
-		Turnout t2 = l.newTurnout(getSystemName(21), "mine");
+		Turnout t2 = l.newTurnout(getSystemName(getNumToTest1()), "mine");
 		Assert.assertTrue("t2 real object returned ", t2 != null);
 		// check
 		Assert.assertTrue("same new ", t1 == t2);
@@ -80,7 +80,7 @@ public abstract class AbstractTurnoutMgrTest extends TestCase {
 
 	public void testMisses() {
 		// sample address object
-		TurnoutAddress a = new TurnoutAddress(getSystemName(31), "user");
+		TurnoutAddress a = new TurnoutAddress(getSystemName(getNumToTest2()), "user");
 
 		// try to get nonexistant turnouts
 		Assert.assertTrue(null == l.getByUserName("foo"));
@@ -91,18 +91,26 @@ public abstract class AbstractTurnoutMgrTest extends TestCase {
 		// sample address object
 		TurnoutAddress a = new TurnoutAddress(getSystemName(31), "user");
 
-		Turnout t = l.provideTurnout("31");
+		Turnout t = l.provideTurnout(""+getNumToTest2());
 		String name = t.getSystemName();
 		Assert.assertTrue(t.equals(l.getTurnout(name.toLowerCase())));
 	}
 
 	public void testRename() {
 		// get turnout
-		Turnout t1 = l.newTurnout(getSystemName(21), "before");
+		Turnout t1 = l.newTurnout(getSystemName(getNumToTest1()), "before");
 		Assert.assertTrue("t1 real object ", t1 != null);
 		t1.setUserName("after");
 		Turnout t2 = l.getByUserName("after");
 		Assert.assertEquals("same object", t1, t2);
 		Assert.assertEquals("no old object", null, l.getByUserName("before"));
 	}
+	
+	/**
+	 * Number of turnout to test.  
+	 * Made a separate method so it can be overridden in 
+	 * subclasses that do or don't support various numbers
+	 */
+	protected int getNumToTest1() { return 9; }
+	protected int getNumToTest2() { return 7; }
 }
