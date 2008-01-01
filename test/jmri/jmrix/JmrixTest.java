@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Set of tests for the jmri.jmrix package
  * @author	Bob Jacobsen  Copyright 2003, 2007
- * @version         $Revision: 1.15 $
+ * @version         $Revision: 1.16 $
  */
 public class JmrixTest extends TestCase {
 
@@ -21,7 +21,7 @@ public class JmrixTest extends TestCase {
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {"-noloading", JmrixTest.class.getName()};
+		String[] testCaseName = {JmrixTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 
@@ -41,6 +41,7 @@ public class JmrixTest extends TestCase {
 		suite.addTest(jmri.jmrix.qsi.QsiTest.suite());
 		suite.addTest(jmri.jmrix.rps.RpsTest.suite());
 		suite.addTest(jmri.jmrix.tmcc.SerialTest.suite());
+		suite.addTest(jmri.jmrix.grapevine.SerialTest.suite());
 
 		return suite;
 
