@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractMRReply;
  * see nextAiuPoll()
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class NceSensorManager extends jmri.AbstractSensorManager
                             implements NceListener {
@@ -258,6 +258,14 @@ public class NceSensorManager extends jmri.AbstractSensorManager
                     newState = Sensor.INACTIVE;
                 }
                 Sensor s = aiuArray[index].getSensor(sensorNo);
+                if (s.getInverted()){
+        			if (newState == Sensor.ACTIVE) {
+        				newState = Sensor.INACTIVE;
+        			} else if (newState == Sensor.INACTIVE) {
+        				newState = Sensor.ACTIVE;
+        			}
+                }
+
                 if (log.isDebugEnabled()) {
                     String msg = "Handling sensor message \""+r.toString()+ "\" for ";
                     if (s != null) {
