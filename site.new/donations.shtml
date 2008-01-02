@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: donations.shtml,v 1.1 2008-01-01 22:19:29 jacobsen Exp $ -->
+<!-- $Id: donations.shtml,v 1.2 2008-01-02 01:23:01 jacobsen Exp $ -->
 <html lang="en">
 
 <head>
@@ -27,9 +27,8 @@
  <!-- the content goes here -->
  
 JMRI runs entirely on volunteer labor. We have an 
-impressive
-<a href="../community/index.html">list of contributors</a>
-in that respect.
+impressive list of 
+<a href="../community/index.html">people who have worked on JMRI</a>.
 <P>
 
 However, JMRI also needs contributions of money. We use them to cover the costs of providing the software,
@@ -42,10 +41,6 @@ If possible, we prefer that you donate via PayPal. Just click on one of the butt
 will take you to a PayPal page for making a donation. 
 <table width=100%>
 	<tr>
-		<td align="center">
-		<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=jmri%40pacbell%2enet&item_name=Donation%20To%20JMRI%20Project&amount=5%2e00&no_shipping=0&no_note=1&&currency_code=USD&lc=US&bn=PP%2dBuyNowBF&charset=UTF%2d8">
-		<img src="/images/x-click-but7.gif" alt="[Donate US$5]" /></a></td>
-		
 		<td align="center">
 		<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=jmri%40pacbell%2enet&item_name=Donation%20To%20JMRI%20Project&amount=10%2e00&no_shipping=0&no_note=1&&currency_code=USD&lc=US&bn=PP%2dBuyNowBF&charset=UTF%2d8">
 		<img src="/images/x-click-but7.gif" alt="[Donate US$10]" /></a></td>
@@ -72,7 +67,6 @@ will take you to a PayPal page for making a donation.
 		
 	</tr>
 	<tr>
-		<td align=center>Donate $5</td>
 		<td align=center>Donate $10</td>
 		<td align=center>Donate $20</td>
 		<td align=center>Donate $50</td>
@@ -81,22 +75,22 @@ will take you to a PayPal page for making a donation.
 		<td align=center>Pick Amount</td>
 	</tr>
 	</table>
-
-<P>
+<p>
+Thanks!
+<p>
 Previously, use used the SourceForge donation system
 for handling donations to JMRI.  Unfortunately, 
 in December 2007 they changed to requiring that people create a SourceForge account
-before using that system to donate, and make it 
-significantly more complicated to use.
-<P>
+before using that system to donate, which made it 
+significantly more complicated to use their system to make a donation.
 If you have a SourceForge account and want to use that system,
 <a href="http://sourceforge.net/account/login.php" target="_blank">click here to login</a> to your account, and then
 <a href="http://sourceforge.net/donate/index.php?group_id=26788">click here to get to the JMRI donation page</a>.
 
-<P>
+<p>
 Finally, if you don't want to use PayPal, please 
 <a href="mailto:jmri@pacbell.net">contact us directly via email</a>
-and we can find some other method.
+and we can make other arrangements.
 <!--#include virtual="/Footer" -->
 
  </div> <!-- closes #mainContent-->
