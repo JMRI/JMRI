@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * Basic configuration GUI infrastructure.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
 public class AppConfigPanel extends JPanel {
 
@@ -201,7 +201,7 @@ public class AppConfigPanel extends JPanel {
         return p2.getCurrentProtocolName();
     }
     public static String getPort2() {
-        if (p2 == null) p2 = JmrixConfigPane.instance(1);
+        if (p2 == null) p2 = JmrixConfigPane.instance(2);
         if (p2 == null) return "(none)";
         return p2.getCurrentProtocolInfo();
     }
