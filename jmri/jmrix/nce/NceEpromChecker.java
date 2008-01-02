@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  * Also checks for March 2007 EPROM and warns user about Monitoring feedback.
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  * 
  */
 
@@ -32,7 +32,8 @@ public class NceEpromChecker implements NceListener {
 	private static final int INIT_STATE = 0;	//Initial state
 	private static final int WAIT_STATE = 1;	//Waiting for reply
 	private static final int ERROR_STATE = 2;	//Serial interface is not functioning properly
-	private static final int CHECK_STATE = 4;	//Normal state
+	private static final int CHECK_OK = 4;		//Valid response
+	private static final int CHECK_STATE = 8;	//Normal state
 	
 	// all of the error states below display a JOptionPane error message
 	private static final int ERROR1_STATE = 8;	
@@ -87,13 +88,19 @@ public class NceEpromChecker implements NceListener {
 
 	public NceMessage NceEpromPoll() {
 		
-		if (epromState == CHECK_STATE)			// normal state for this routine
+		if (epromState == CHECK_STATE) { // normal state for this routine
 			// are there interface timeouts?
-			if (NceTrafficController.hasTimeouts()){
+			if (NceTrafficController.hasTimeouts()) {
 				epromState = INIT_STATE;
-			}else{
+			} else {
 				return null;
 			}
+		}
+		
+		if (epromState == CHECK_OK) {
+			epromState = CHECK_STATE;
+			return null;
+		}
 			
 		// no response from command station?
 		if (epromState == WAIT_STATE) {
@@ -215,8 +222,8 @@ public class NceEpromChecker implements NceListener {
 			}
 			
 			// We got a valid reply so we're done!
-			epromState = CHECK_STATE;
-			
+			epromState = CHECK_OK;
+						
 			// Have we already done the error checking?
 			if (epromChecked)
 				return;
@@ -253,11 +260,6 @@ public class NceEpromChecker implements NceListener {
 			// Warn about the March 2007 CS EPROM	
 			if (VV == VV_2007 && MM == MM_2007 && mm == mm_2007) {
 				nceEpromMarch2007 = true;
-				log.warn("This revision ("
-								+ Integer.toHexString(VV & 0xFF)+ "."
-								+ Integer.toHexString(MM & 0xFF)+ "."
-								+ Integer.toHexString(mm & 0xFF)
-								+ ") of the NCE Command Station EPROM has problems with MONITORING feedback");
 				epromState = ERROR3_STATE;
 			}
 

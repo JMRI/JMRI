@@ -28,7 +28,7 @@ import jmri.Turnout;
  * 
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.21 $
+ * @version     $Revision: 1.22 $
  */
 
 public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeListener {
@@ -59,6 +59,7 @@ public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeL
     
     Thread NceTurnoutMonitorThread;
     boolean turnoutUpdateValid = true;					// keep the thread running
+    private boolean sentWarnMessage = false;			// used to report about early 2007 EPROM problem 
     
     // debug final
     static final boolean debugTurnoutMonitor = false;	// Control verbose debug
@@ -250,6 +251,10 @@ public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeL
 									// by one bit, ie accy num 2 is in bit 0,
 									// should have been in bit 1.
 									if (NceEpromChecker.nceEpromMarch2007) {
+										if (!sentWarnMessage){
+											log.warn("The installed NCE Command Station EPROM has problems when using turnout MONITORING feedback");
+											sentWarnMessage = true;
+										}
 										// bit 3 is shared by two accessories!!!!
 										if (i == 3)
 											monitorActionKnown(NTnum - 3,
