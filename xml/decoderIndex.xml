@@ -3,7 +3,7 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.0 on Mon Dec 31 09:56:43 PST 2007 $Id: decoderIndex.xml,v 1.111 2007-12-31 17:59:29 jacobsen Exp $-->
+  <!--Written by JMRI version 2.0 on Mon Dec 31 09:56:43 PST 2007 $Id: decoderIndex.xml,v 1.112 2008-01-03 15:06:49 crosland Exp $-->
   <decoderIndex version="133">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -74,6 +74,7 @@
       <manufacturer mfg="S Helper Service" mfgID="23" />
       <manufacturer mfg="Sanda Kan Industrial" mfgID="95" />
       <manufacturer mfg="Signaling Solution" mfgID="119" />
+      <manufacturer mfg="SPROG DCC" mfgID="44" />
       <manufacturer mfg="T4T - Technology for Trains GmbH" mfgID="20" />
       <manufacturer mfg="Tams Elektronik GmbH" mfgID="62" />
       <manufacturer mfg="Team Digital, LLC" mfgID="25" />
