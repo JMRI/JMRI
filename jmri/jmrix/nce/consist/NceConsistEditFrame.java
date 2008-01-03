@@ -43,7 +43,7 @@ import java.io.*;
  * :0000
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -55,6 +55,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 	private static final int CONSIST_MAX = 127;
 	private static final int LOC_ADR_MIN = 1;
 	private static final int LOC_ADR_MAX = 9999;
+	private static final int LOC_ADR_REPLACE = 0xFFFF;	// dummy loco address used when replacing lead or rear loco
 	private int consistNum = 127;					// consist being worked
 	private int engineNum = 0; 						// which engine 
 	private static final int REPLY_1 = 1;			// reply length of 1 byte expected
@@ -575,7 +576,7 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 			return cN;
     }
     
-//  Check for valid consist number, return number if valid, -1 if not.
+//  Check for valid loco number, return number if valid, -1 if not.
     private int validLocoAdr (String s){
     	int lA;
 		try {
@@ -850,7 +851,8 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 			
 			if (engTextField == engTextField1) {
 
-				bl = NceBinaryCommand.nceLocoCmd(0,
+				// warning loco addr = 0 is broadcast
+				bl = NceBinaryCommand.nceLocoCmd(LOC_ADR_REPLACE,
 						NceBinaryCommand.LOCO_CMD_FWD_CONSIST_LEAD, cN);
 				sendNceMessage(bl, REPLY_1);
 				
@@ -859,7 +861,7 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 				
 			}else{
 				
-				bl = NceBinaryCommand.nceLocoCmd(0,
+				bl = NceBinaryCommand.nceLocoCmd(LOC_ADR_REPLACE,
 						NceBinaryCommand.LOCO_CMD_FWD_CONSIST_REAR, cN);
 				sendNceMessage(bl, REPLY_1);
 				
