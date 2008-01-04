@@ -25,7 +25,7 @@ import jmri.ClockControl;
  *
  * @author			Bob Jacobsen Copyright (C) 2004, 2007
  *                  Dave Duchamp - 2007 additions/revisions for handling one hardware clock
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class SimpleTimebase implements Timebase {
 
@@ -425,7 +425,7 @@ public class SimpleTimebase implements Timebase {
 	private String masterName = "";		// name of hardware time source, if not internal master
 	private ClockControl hardwareTimeSource = null;  // ClockControl instance of hardware time source
 	private boolean synchronizeWithHardware = false;  // true indicates need to synchronize
-	private boolean correctHardware = true;    // true indicates hardware correction requested
+	private boolean correctHardware = false;    // true indicates hardware correction requested
 	private boolean display12HourClock = false; // true if 12-hour clock display is requested
 	private boolean startStopped = false;    // true indicates start up with clock stopped requested
 	private boolean startSetTime = false;    // true indicates set fast clock to specified time at 
