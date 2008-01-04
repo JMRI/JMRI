@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.5 2008-01-04 05:29:19 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.6 2008-01-04 06:39:48 jacobsen Exp $ -->
 <html lang="en">
 
 <head>
@@ -371,28 +371,8 @@ Please Note: Motions & Actions Filed are listed first. Entries are listed last.
 
 
   <hr class="hide">
-<!-- Footer -->
-    <hr class="hide">
-    <div id="footer">
-	<ul id="bn">
-	<li><a href="/contact/">Contact Us</a></li>
-	</ul>
 
-	<p>Thanks and congratulations to
-	   <A href="/community/" title="Who is JMRI">
-	   	all who contributed</A>! </p>
-
-	<p>Copyright &copy; 2005 - 2006 JMRI Community. 
-	<P>JMRI, DecoderPro&reg;, PanelPro, DispatcherPro and associated logos are our trademarks.
-	<P><A href="/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a></p>
-    
-       <BR/>Site hosted by: <BR/>
-        <A href="http://sourceforge.net"> 
-        <IMG src="http://sourceforge.net/sflogo.php?group_id=26788&amp;type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A> 
-
-    <IMG src="ksummary.ico" height="1" width="1"/>
-    </div>
-<!-- /Footer -->
+<!--#include virtual="/Footer" -->
 
  </div> <!-- closes #mainContent-->
 </div> <!-- closes #mBody--> 
