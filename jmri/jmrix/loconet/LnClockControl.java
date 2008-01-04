@@ -43,7 +43,7 @@ import java.awt.event.*;
  *
  * @author      Dave Duchamp Copyright (C) 2007
  * @author		Bob Jacobsen, Alex Shepherd
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class LnClockControl extends DefaultClockControl implements SlotListener
 {
@@ -100,6 +100,8 @@ public class LnClockControl extends DefaultClockControl implements SlotListener
 	}
 	public boolean canCorrectHardwareClock() {return true;};
 	public void setRate(double newRate) {
+// djd debugging
+log.error("LnClockControl setRate");	
 		if (curRate==0) {
 			savedRate = (int)newRate;      // clock stopped case
 		}
@@ -138,6 +140,13 @@ public class LnClockControl extends DefaultClockControl implements SlotListener
 		setClock();
 	}
 	public void initializeHardwareClock(double rate, Date now, boolean getTime) {
+		synchronizeWithInternalClock= clock.getSynchronize();
+		correctFastClock = clock.getCorrectHardware();
+		setInternal = !clock.getInternalMaster();
+		if (!setInternal && !synchronizeWithInternalClock && !correctFastClock) {
+			// No request to interact with hardware fast clock - ignore call
+			return;
+		}
 		if (rate == 0.0) {
 			if (curRate!=0) savedRate = curRate;
 			curRate = 0;
@@ -149,9 +158,6 @@ public class LnClockControl extends DefaultClockControl implements SlotListener
 		curDays = now.getDate();
 		curHours = now.getHours();
 		curMinutes = now.getMinutes();
-		synchronizeWithInternalClock= clock.getSynchronize();
-		correctFastClock = clock.getCorrectHardware();
-		setInternal = !clock.getInternalMaster();
 		if (!getTime) {
 			setTime(now);
 		}
@@ -264,13 +270,16 @@ public class LnClockControl extends DefaultClockControl implements SlotListener
      * Push current Clock Control parameters out to LocoNet slot.
      */
     private void setClock() {
-        LocoNetSlot s = SlotManager.instance().slot(LnConstants.FC_SLOT);
-        s.setFcDays(curDays);
-        s.setFcHours(curHours);
-        s.setFcMinutes(curMinutes);
-        s.setFcRate(curRate);
-        s.setFcFracMins(curFractionalMinutes);
-        LnTrafficController.instance().sendLocoNetMessage(s.writeSlot());
+		if (setInternal || synchronizeWithInternalClock || correctFastClock) {
+			// we are allowed to send commands to the fast clock
+			LocoNetSlot s = SlotManager.instance().slot(LnConstants.FC_SLOT);
+			s.setFcDays(curDays);
+			s.setFcHours(curHours);
+			s.setFcMinutes(curMinutes);
+			s.setFcRate(curRate);
+			s.setFcFracMins(curFractionalMinutes);
+			LnTrafficController.instance().sendLocoNetMessage(s.writeSlot());
+		}
     }
 
     public void dispose() {

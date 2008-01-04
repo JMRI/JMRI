@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle XML persistance of SimpleTimebase objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class SimpleTimebaseXml implements XmlAdapter {
 
@@ -99,7 +99,7 @@ public class SimpleTimebaseXml implements XmlAdapter {
             try {
                 double r = element.getAttribute("rate").getDoubleValue();
                 try {
-                    clock.setRate(r);
+                    clock.userSetRate(r);
                 } catch (jmri.TimebaseRateException e1) {
                     log.error("Cannot restore rate: "+r+" "+e1);
                 }
