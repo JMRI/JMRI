@@ -38,7 +38,7 @@ import java.util.ResourceBundle;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class LayoutPositionableLabel extends JLabel
@@ -92,6 +92,13 @@ public class LayoutPositionableLabel extends JLabel
     }
 
     /**
+     * Set panel (called from Layout Editor)
+     */
+    public void setPanel(LayoutEditor panel) {
+		layoutPanel = panel;
+    }
+
+    /**
      * Update the AWT and Swing size information due to change in internal
      * state, e.g. if one or more of the icons that might be displayed
      * is changed
@@ -111,6 +118,7 @@ public class LayoutPositionableLabel extends JLabel
     public void setDisplayLevel(Integer l) { displayLevel = l; }
     public void setDisplayLevel(int l) { setDisplayLevel(new Integer(l)); }
     public Integer getDisplayLevel() { return displayLevel; }
+	public boolean isBackground() { return (displayLevel.intValue() == LayoutEditor.BKG.intValue());}
 
     // cursor location reference for this move (relative to object)
     int xClick = 0;
@@ -185,17 +193,17 @@ public class LayoutPositionableLabel extends JLabel
 					displayCoordinateEdit(name);
 				}
 			});
-            popup.add(new AbstractAction(rb.getString("Rotate")) {
-                public void actionPerformed(ActionEvent e) {
-                    namedIcon.setRotation(namedIcon.getRotation()+1, ours);
-                    updateSize();
-                    setIcon(namedIcon);
-                }
-            });
-            
-            addFixedItem(popup);
-            addShowTooltipItem(popup);
-            
+			if (!isBackground()) {
+				popup.add(new AbstractAction(rb.getString("Rotate")) {
+					public void actionPerformed(ActionEvent e) {
+						namedIcon.setRotation(namedIcon.getRotation()+1, ours);
+						updateSize();
+						setIcon(namedIcon);
+					}
+				});
+				addFixedItem(popup);
+				addShowTooltipItem(popup);
+			}            
             popup.add(new AbstractAction(rb.getString("Remove")) {
                 public void actionPerformed(ActionEvent e) {
                     remove();
@@ -467,6 +475,9 @@ public class LayoutPositionableLabel extends JLabel
      * Removes this object from display and persistance
      */
     void remove() {
+		if (isBackground()) {
+			layoutPanel.removeBackground(this);
+		}
         Point p = this.getLocation();
         int w = this.getWidth();
         int h = this.getHeight();

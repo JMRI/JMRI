@@ -23,15 +23,17 @@ import java.io.*;
  * 
  * @author Dan Boudreau Copyright (C) 2007
  * @author Dave Duchamp (LayoutEditor version);
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
-public class LayoutCoordinateEdit extends JmriJFrame {
+public class LayoutCoordinateEdit extends JmriJFrame 
+//								implements MouseListener 
+{
 
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.LayoutEditorBundle");
 
-	LayoutPositionableLabel pl; 	// positional label tracked by this frame
-	MouseListener ml = new ml(); 	// mouse listerner so we know if the label moves
+	LayoutPositionableLabel pl; 	// layout positional label tracked by this frame
+	MouseListener ml = null; 	// mouse listerner so we know if non-background label moves
 	static final int INIT = -999;
 	int oldX = INIT;
 	int oldY = INIT;
@@ -59,12 +61,17 @@ public class LayoutCoordinateEdit extends JmriJFrame {
 	}
 
 	public void windowClosed(java.awt.event.WindowEvent e) {
-		pl.removeMouseListener(ml);
+		if (ml != null) {
+			pl.removeMouseListener(ml);
+		}
 		super.windowClosed(e);
 	}
 
 	public void initComponents(LayoutPositionableLabel l, String name) throws Exception {
 		pl = l;
+		if (!pl.isBackground()) {
+			ml = new ml();
+		}
 		// the following code sets the frame's initial state
 		
 		lableName.setText(rb.getString("Name")+": ");
@@ -117,9 +124,10 @@ public class LayoutCoordinateEdit extends JmriJFrame {
 		addButtonAction(cancelButton);
 		pack();
 
-		// Add listener so we know if the label moves
-
-		pl.addMouseListener(ml);
+		if (!pl.isBackground()) {
+			// Add listener so we know if the label moves
+			pl.addMouseListener(ml);
+		}
 	}
 
 	private void addItem(JComponent c, int x, int y) {
@@ -156,6 +164,8 @@ public class LayoutCoordinateEdit extends JmriJFrame {
 		if (ae.getSource() == cancelButton) {
 			if (oldX != INIT)
 				pl.setLocation(oldX, oldY);
+			if (ml != null) 
+				pl.removeMouseListener(ml);
 			dispose();
 		}
 	}
@@ -221,25 +231,20 @@ public class LayoutCoordinateEdit extends JmriJFrame {
 	class ml implements MouseListener {
 
 		public void mousePressed(MouseEvent e) {
-			// log.debug("Pressed: ");
 		}
 
 		public void mouseReleased(MouseEvent e) {
-			log.debug("Mouse released");
 			textX.setText("x= " + pl.getX());
 			textY.setText("y= " + pl.getY());
 		}
 
 		public void mouseClicked(MouseEvent e) {
-			// log.debug("Clicked: ");
 		}
 
 		public void mouseEntered(MouseEvent e) {
-			// log.debug("Entered: ");
 		}
 
 		public void mouseExited(MouseEvent e) {
-			// log.debug("Exited:  ");
 		}
 	}
 

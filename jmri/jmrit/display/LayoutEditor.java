@@ -47,7 +47,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -95,7 +95,8 @@ public class LayoutEditor extends JmriJFrame {
 	private LayoutPane targetPanel = null;
 	private JPanel topEditBar = null;
 	private JPanel helpBar = null;
-	private LayoutPositionableLabel backgroundImage = null;
+    public ArrayList backgroundImage = new ArrayList();  // background images
+//	private LayoutPositionableLabel backgroundImage = null;
         
     private ButtonGroup itemGroup = null;
     private JTextField blockIDField = new JTextField(8);
@@ -1553,9 +1554,11 @@ public class LayoutEditor extends JmriJFrame {
 					if (tr!=null) {
 						tr.showPopUp(event);
 					}
-					else if (backgroundImage != null) {
-						// show background image popup menu
-						backgroundImage.showPopUp(event);
+					else {
+						LayoutPositionableLabel b = checkBackgrounds(loc);
+						if (b!=null) {
+							b.showPopUp(event);							
+						}	
 					}
 				}
 			}
@@ -1864,6 +1867,24 @@ public class LayoutEditor extends JmriJFrame {
 			if (r.contains(loc)) {
 				// mouse was pressed in detection rectangle
 				return tr;
+			}
+		}
+		return null;
+	}
+	
+	private LayoutPositionableLabel checkBackgrounds(Point2D loc) {
+		// check background images, if any
+		for (int i=backgroundImage.size()-1; i>=0; i--) {
+			LayoutPositionableLabel b = (LayoutPositionableLabel)backgroundImage.get(i);
+			double x = b.getX();
+			double y = b.getY();
+			double w = b.maxWidth();
+			double h = b.maxHeight();			
+			Rectangle2D r = new Rectangle2D.Double(x ,y ,x+w ,y+h);
+			// Test this detection rectangle
+			if (r.contains(loc)) {
+				// mouse was pressed in background image
+				return b;
 			}
 		}
 		return null;
@@ -2911,11 +2932,13 @@ public class LayoutEditor extends JmriJFrame {
     public void putLabel(LayoutPositionableLabel l) {
         l.invalidate();
         targetPanel.add(l, l.getDisplayLevel());
-		if ( ((l.getDisplayLevel()).intValue()) != (BKG.intValue()) ) {
+		if ( !l.isBackground() ) {
 			l.connect(this);
 		}
 		else {
-			backgroundImage = l;
+			backgroundImage.add(l);
+			targetPanel.moveToFront(l);
+			l.setPanel(this);
 		}	
         contents.add(l);
         targetPanel.validate();
@@ -2977,12 +3000,41 @@ public class LayoutEditor extends JmriJFrame {
         if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
         NamedIcon icon = new NamedIcon(inputFileChooser.getSelectedFile().getPath(),
                                        inputFileChooser.getSelectedFile().getPath());
+									   
         LayoutPositionableLabel l = new LayoutPositionableLabel(icon);
         l.setFixed(true);
         l.setShowTooltip(false);
         l.setSize(icon.getIconWidth(), icon.getIconHeight());
         l.setDisplayLevel(BKG);
+		l.setLocation(getNextBackgroundLeft(),0);
         putLabel(l);
+	}
+	
+	/**
+	 * Determine right side x of furthest right background
+	 */
+	private int getNextBackgroundLeft() {
+		int left = 0;
+		// place to right of background images, if any
+		for (int i=0; i<backgroundImage.size(); i++) {
+			LayoutPositionableLabel b = (LayoutPositionableLabel)backgroundImage.get(i);
+			int test = b.getX() + b.maxWidth();
+			if (test>left) left = test;
+		}
+		return left;
+	}
+	
+	/**
+	 * Remove a background image from the list of background images
+	 */
+	protected void removeBackground(LayoutPositionableLabel b) {
+		for (int i=0; i<backgroundImage.size(); i++) {
+			if (b == (LayoutPositionableLabel)backgroundImage.get(i)) {
+				backgroundImage.remove(i);
+				panelChanged = true;
+				return;
+			}
+		}
 	}
 
     /**
