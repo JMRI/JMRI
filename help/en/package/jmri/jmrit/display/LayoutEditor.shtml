@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LayoutEditor.shtml,v 1.3 2007-12-13 02:21:28 djduchamp Exp $ -->
+<!-- $Id: LayoutEditor.shtml,v 1.4 2008-01-06 21:46:57 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -44,6 +44,7 @@ sections in detail.</p>
 	<li><a href="#track">Track Segments and Connection Points</a></li>
 	<li><a href="#xing">Level Crossings</a>
 	<li><a href="#turn">Turntables</a>	
+	<li><a href="#background">Backgrounds</a>
 	<li><a href="#block">Blocks</a>
 	<li><a href="#finish">Putting Finishing Touches on your Panel</a>
 </ul>
@@ -358,7 +359,8 @@ selection is described below.
 	<li><b>New Title...</b> - Selecting this item brings up a small window that 
 	allows a new panel window title to be entered.</li>
 	<li><b>Add Background Image...</b> - Selecting this item shows a dialog
-	that allows a background image to be added to the panel.</li>
+	that allows a background image to be added to the panel. See 
+	<a href="#background">Backgrounds</a> below for more information.</li>
 	<li><b>Add Fast Clock</b> - Selecting this item adds an analog fast clock 
 	at the upper left. You can then drag it with the meta key pressed to any 
 	location on the panel.</li>
@@ -530,7 +532,10 @@ from the popup menu, for example, font size, style, and color options for text
 labels and text memory labels. The fast clock's popup menu allows stopping and 
 starting the fast clock and changing its rate ratio. Icon-based popup menus show
 the <i>x</i> (horizontal) and <i>y</i> (vertical) location of the icon on the 
-panel. These coordinates give the location of the upper left corner of the icon.</p>
+panel. These coordinates give the location of the upper left corner of the icon. 
+A convenient way to change the location of an icon-based item is to select 
+<b>Set x & y</b> in its popup menu. Selecting <b>Set x & y</b> brings up a small 
+window that provides for precise adjustment of the icon's position.</p>
 <p>
 With turnouts, level crossings, and track segments, selecting 
 <b>Edit...</b> in the popup menu brings up a small window for editing. If a 
@@ -745,6 +750,54 @@ The Edit Turntable dialog allows the radius of the turntable circle to be
 changed, and provides for the addition and deletion of ray tracks. For more
 information on how to add and delete ray tracks, see the help page of the 
 Edit Turntable dialog.</p>
+
+<a name="background"><h3>Backgrounds
+</h3></a>
+<p>
+Background images are not required for Layout Editor panels. Support for 
+adding a background is provided for panels that require other than the 
+default Layout Editor background. Background images may be used simply to change 
+the color of the Layout Editor background, or for more sophisticated 
+applications, such as setting up a CTC panel.</p>
+<p>
+A background image may be created using any pixel-based image editor to 
+create the image, and to save it as a .gif format image file. You may create a 
+single background image for the whole panel, or create vertical slices to be 
+used in a multi-slice background (see below). For a multi-slice background, 
+create your slice image(s), then add copies, one to the right of the other, 
+until the desired panel area is covered. </p>
+<p>
+<b>Important Note: if you create your own background images (or icons) don't store 
+them with the JMRI predefined images or they will be deleted when you upgrade 
+JMRI. Instead, create a new folder called "resources" in your JMRI Preferences 
+directory (where your panel file is stored), and add your images and icons to 
+that folder.</b></p>
+<p>
+A background image is added to a panel by selecting <b>Add Background Image...</b> 
+in the panel's Option menu. Selecting <b>Add Background Image...</b> brings up a 
+file selection dialog for selecting the file containing the background image. 
+Layout Editor provides for multiple background images. The first background 
+image is placed with its upper left corner at x = 0, and y = 0. The next 
+background image is placed at the top of the panel and to the right of right-most 
+existing background image. This allows easy implementation of multi-slice 
+background images (see below).  The <i>x, y</i> location of the upper left corner 
+of each background image is shown in it's popup menu. This location may be 
+changed by selecting <b>Set x & y</b> in the popup menu.</p>
+<p>
+For users building a classic US&S panel, there are two sets of predefined image 
+'slices' currently available. One set is 718 pixels high, and the second set is 
+900 pixels high. Choose the set that best fits your display. These 'slices' are 
+located at icons/USS/background/. The 900 pixel high images include a "-9" in 
+their names. The left and right edge images are each 12 pixels wide. The main 
+panel 'slices' are 65 pixels wide. First add the left edge image, then 
+add a blank slice or one including switch plate(s) for each turnout on your
+CTC panel, then finish by adding the right edge image. The advantages of 
+building CTC backgrounds with slices are that 1) you can make virtually any 
+length CTC panel, and 2) the plates will be precisely located automatically.</P>
+
+
+
+
 
 <a name="block"><h3>Blocks
 </h3></a>
