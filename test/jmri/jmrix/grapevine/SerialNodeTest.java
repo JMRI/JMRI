@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the SerialNode class
  * @author		Bob Jacobsen  Copyright 2003, 2007
  * @author		Dave Duchamp  multi-node extensions 2003
- * @version		$Revision: 1.1 $
+ * @version		$Revision: 1.2 $
  */
 public class SerialNodeTest extends TestCase {
 		
@@ -67,7 +67,39 @@ public class SerialNodeTest extends TestCase {
         Assert.assertEquals("packet type", 17, m.getElement(1) );  // 'T'        
     }
 	
-    public void testMarkChangesSerial1() {
+    public void testMarkChangesRealData1() {
+        // new serial format
+        
+        b = new SerialNode(98,SerialNode.NODE2002V6);
+        SerialSensor s1 = new SerialSensor("GS98101","s1");
+        SerialSensor s2 = new SerialSensor("GS98102","s2");
+        SerialSensor s3 = new SerialSensor("GS98103","s3");
+        SerialSensor s4 = new SerialSensor("GS98104","s4");
+        b.registerSensor(s1, 101);
+        b.registerSensor(s2, 102);
+        b.registerSensor(s3, 103);
+        b.registerSensor(s4, 104);
+
+        SerialReply r = new SerialReply();
+        r.setElement(0, 128+98);
+        r.setElement(1, 0x0E);
+        r.setElement(2, 128+98);
+        r.setElement(3, 0x56);
+        b.markChanges(r);
+        Assert.assertEquals("check s1", Sensor.ACTIVE, s1.getKnownState());
+        Assert.assertEquals("check s2", Sensor.INACTIVE, s2.getKnownState());
+        Assert.assertEquals("check s3", Sensor.INACTIVE, s3.getKnownState());
+        r.setElement(0, 128+98);
+        r.setElement(1, 0x0F);
+        r.setElement(2, 128+98);
+        r.setElement(3, 0x54);
+        b.markChanges(r);
+        Assert.assertEquals("check s1", Sensor.INACTIVE, s1.getKnownState());
+        Assert.assertEquals("check s2", Sensor.INACTIVE, s2.getKnownState());
+        Assert.assertEquals("check s3", Sensor.INACTIVE, s3.getKnownState());
+    }
+
+    public void testMarkChangesNewSerial1() {
         // new serial format
         
         b = new SerialNode(1,SerialNode.NODE2002V6);
@@ -112,7 +144,7 @@ public class SerialNodeTest extends TestCase {
         Assert.assertEquals("check s3", Sensor.UNKNOWN, s3.getKnownState());
     }
 
-    public void testMarkChangesSerial2() {
+    public void testMarkChangesOldSerial1() {
         // old serial format
         
         b = new SerialNode(1,SerialNode.NODE2002V6);

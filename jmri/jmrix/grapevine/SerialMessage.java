@@ -8,8 +8,8 @@ import jmri.util.StringUtil;
  * Contains the data payload of a serial
  * packet.
  * 
- * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007
- * @version   $Revision: 1.1 $
+ * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008
+ * @version   $Revision: 1.2 $
  */
 
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
@@ -79,13 +79,23 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     }
     
     public void setParity() {
+        // leave unchanged if poll
+        if ( (getElement(1)==119) && (getElement(3)==119) ) return;
+        // error messages have zero parity
+        if ( (getElement(0)&0x7F) == 0 ) {
+            setElement(3, getElement(3)&0xF0);
+            return;
+        }
+        // nibble sum method
         int sum  = getElement(0) & 0x0F;
         sum     += (getElement(0)&0x70)>>4;
-        sum     += getElement(1)&0x0F;
-        sum     += (getElement(1)&0x70)>>4;
+        sum     += (getElement(1)*2)&0x0F;
+        sum     += ((getElement(1)*2)&0xF0)>>4;
         sum     += (getElement(3)&0x70)>>4;
-        int parity = 16 - sum;
-        setElement(3, getElement(3) | (parity&0xF));
+
+        int parity = 16 - (sum&0xF);
+
+        setElement(3, (getElement(3)&0xF0) | (parity&0xF));
     }
     
     /**
@@ -96,7 +106,46 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     static String staticFormat(int b1, int b2, int b3, int b4) {
-        String result = "address: "+(b1&0x7F)
+        String result;
+
+        // address == 0 is a special case
+        if ((b1&0x7F)==0) {
+            // error report
+            result = "Error report from node "+b2+": ";
+            switch (((b4 & 0x70)>>4)-1) {  // the -1 is an observed offset
+                case 0:
+                    result += "Parity Error";
+                    break;
+                case 1:
+                    result += "First Byte Data";
+                    break;
+                case 2:
+                    result += "Second Byte Address";
+                    break;
+                case 3:
+                    result += "error 3";
+                    break;
+                case 4:
+                    result += "Software UART Overflow";
+                    break;
+                case 5:
+                    result += "Serial Detector Power Failure";
+                    break;
+                case 6:
+                    result += "Printer Busy";
+                    break;
+                case 7:
+                    result += "I/O Configuration Not Set";
+                    break;
+                default:
+                    result += "error number "+((b4&0x70)>>4);
+                    break;
+            }
+            return result;
+        }
+
+        // normal message
+        result = "address: "+(b1&0x7F)
                 +" data bytes: 0x"+StringUtil.twoHexFromInt(b2)
                 +" 0x"+StringUtil.twoHexFromInt(b4)
                 +" => ";

@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRMessage;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SerialNode {
 
@@ -256,22 +256,33 @@ public class SerialNode {
      */
     public void markChanges(SerialReply l) {
         // first, is it from a sensor?
-        if ( !(l.isFromParallelSensor() || l.isFromSerialSensor()) ) return;  // not interesting message
+        if ( !(l.isFromParallelSensor() || l.isFromNewSerialSensor() || l.isFromOldSerialSensor()) ) return;  // not interesting message
 
         // Yes, continue.
         // Want to get individual sensor bits, and xor them with the 
         // past state and the inverted bit.
     
-        if (l.isFromSerialSensor()) {
+        if (l.isFromNewSerialSensor()) {
             // Serial sensor has only one bit. Extract value, then address
             boolean input = ((l.getElement(1)&0x01)!=0);
             int number = ((l.getElement(1)&0x7E)>>1) +1;
             // Update
             markBit(input, number);
+        } else if (l.isFromOldSerialSensor()) {
+            // Serial sensor brings in a nibble of four bits
+            int byte1 = l.getElement(1);
+            boolean oldSerial  = ( (byte1&0x20) != 0);
+            boolean highNibble = ( (byte1&0x10) != 0);
+            boolean b0 = (byte1 & 0x01) == 0;
+            boolean b1 = (byte1 & 0x02) == 0;
+            boolean b2 = (byte1 & 0x04) == 0;
+            boolean b3 = (byte1 & 0x08) == 0;
+            int number = 1 + (highNibble ? 4 : 0) + (!oldSerial ? 100 : 0);
+            markBit(b0, number);
+            markBit(b1, number+1);
+            markBit(b2, number+2);
+            markBit(b3, number+3);
         } else {
-            // Skip if missing high bits
-            if ((l.getElement(1)&0xC0) != 0x40) return;
-            
             // Parallel sensor brings in a nibble of four bits
             int byte1 = l.getElement(1);
             boolean oldSerial  = ( (byte1&0x20) != 0);
@@ -325,6 +336,7 @@ public class SerialNode {
      * @param sensorNum from 0 to lastUsedSensor on this node
      */
     void markBit(boolean input, int sensorNum) {
+        if (log.isDebugEnabled()) log.debug("Mark bit "+sensorNum+" "+input+" in node "+getNodeAddress());
         if (sensorArray[sensorNum] == null) {
             log.info("Try to create sensor "+sensorNum+" on node "+getNodeAddress()+", since sensor doesn't exist");
             // try to make the sensor

@@ -27,13 +27,15 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003, 2006, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
     public SerialTrafficController() {
         super();
 
+        logDebug = log.isDebugEnabled();
+        
         // not polled at all, so allow unexpected messages, and
         // poll only slowly to know the link is alive
         setAllowUnexpectedReply(true);
@@ -46,6 +48,10 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         }
     }
 
+    // have several debug statements in tight loops, e.g. every character;
+    // only want to check once
+    boolean logDebug = false;
+    
     // The methods to implement the SerialInterface
 
     public synchronized void addSerialListener(SerialListener l) {
@@ -317,6 +323,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
             case 0:
                 // get 1st char, check for address bit
                 buffer[0] = readByteProtected(istream);
+                if (logDebug) log.debug("state 0, rcv "+(buffer[0]&0xFF));
                 if ( (buffer[0]&0x80) == 0) {
                     log.warn("1st byte not address: "+(buffer[0]&0xFF));
                     return true;  // try again with next
@@ -325,18 +332,20 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
                 // and continue anyway
             case 1:
                 buffer[1] = readByteProtected(istream);
+                if (logDebug) log.debug("state 1, rcv "+(buffer[1]&0xFF));
                 if ( (buffer[1]&0x80) != 0) {
                     buffer[0] = buffer[1];
                     state = 1; // use this as address and try again
-                    log.warn("2nd byte HOB set: "+(buffer[1]&0xFF));
+                    log.warn("2nd byte HOB set: "+(buffer[1]&0xFF)+", going to state 1");
                     return true;
                 }
                 state = 2;
             case 2:
                 buffer[2] = readByteProtected(istream);
+                if (logDebug) log.debug("state 2, rcv "+(buffer[2]&0xFF));
                 if (buffer[0]!=buffer[2]) {
                     // no match, consider buffer[2] start of new message
-                    log.warn("addresses don't match: "+(buffer[0]&0xFF)+", "+(buffer[2]&0xFF));
+                    log.warn("addresses don't match: "+(buffer[0]&0xFF)+", "+(buffer[2]&0xFF)+", going to state 1");
                     buffer[0] = buffer[2];
                     state = 1;
                     return true;
@@ -344,22 +353,24 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
                 state = 3;
             case 3:
                 buffer[3] = readByteProtected(istream);
+                if (logDebug) log.debug("state 3, rcv "+(buffer[3]&0xFF));
                 if ( (buffer[3]&0x80) != 0) { // unexpected high bit
                     buffer[0] = buffer[3];
                     state = 1; // use this as address and try again
-                    log.warn("3rd byte HOB set: "+(buffer[3]&0xFF));
+                    log.warn("3rd byte HOB set: "+(buffer[3]&0xFF)+", going to state 1");
                     return true;
                 }
-                // Check for "software version" command, special
-                // case wth deliberately bad parity
+                // Check for "software version" command, error message; special
+                // cases with deliberately bad parity
                 boolean pollMsg = ( (buffer[1] == buffer[3]) && (buffer[1] == 119) );
+                boolean errMsg = ( (buffer[0]&0xFF) == 0x80);
                 
                 // check 'parity'
                 int parity = (buffer[0]&0xF)+((buffer[0]&0x70)>>4)
                             +(buffer[1]&0xF)+((buffer[1]&0x70)>>4)        
                             +(buffer[3]&0xF)+((buffer[3]&0x70)>>4);
-                if ( ((parity&0xF) != 0) && !pollMsg ) {
-                    log.warn("parity mismatch: "+parity);  
+                if ( ((parity&0xF) != 0) && !pollMsg && !errMsg) {
+                    log.warn("parity mismatch: "+parity+", going to state 2 with content "+(buffer[2]&0xFF)+","+(buffer[3]&0xFF));  
                     buffer[0] = buffer[2];
                     buffer[1] = buffer[3];
                     state = 2;
@@ -367,10 +378,11 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
                 }
                 // success!
                 loadBuffer(msg);
+                if (logDebug) log.debug("Message complete: "+msg.toString());
                 state = 0;
                 return false;
             default:
-                log.error("unexpected loadChars state: "+state);
+                log.error("unexpected loadChars state: "+state+", go direct to state 0");
                 state = 0;
                 return true;
         }

@@ -8,7 +8,7 @@ import junit.framework.*;
 /**
  * Tests for the jmri.jmrix.grapevine.SerialTurnout class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SerialTurnoutTest extends AbstractTurnoutTest {
 
@@ -27,12 +27,12 @@ public class SerialTurnoutTest extends AbstractTurnoutTest {
 
 	public void checkThrownMsgSent() {
 		Assert.assertTrue("message sent", tcis.outbound.size()>0);
-		Assert.assertEquals("content", "81 26 81 07", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // THROWN message
+		Assert.assertEquals("content", "81 26 81 0F", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // THROWN message
 	}
 
 	public void checkClosedMsgSent() {
 		Assert.assertTrue("message sent", tcis.outbound.size()>0);
-		Assert.assertEquals("content", "81 20 81 0D", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
+		Assert.assertEquals("content", "81 20 81 0B", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
 	}
 
 	// from here down is testing infrastructure

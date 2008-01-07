@@ -8,7 +8,7 @@ package jmri.jmrix.grapevine;
  * packet.  Note that its _only_ the payload.
  *
  * @author	Bob Jacobsen  Copyright (C) 2002, 2006, 2007
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
@@ -49,10 +49,18 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
     public boolean isFromParallelSensor() {
         // bank 5?
         if ( (getElement(3) & 0x70) != 0x50) return false;
+        if ( (getElement(1) & 0xA0) != 0x00) return false;
         return true;
     }
     
-    public boolean isFromSerialSensor() {
+    public boolean isFromOldSerialSensor() {
+        // bank 5?
+        if ( (getElement(3) & 0x70) != 0x50) return false;
+        if ( (getElement(1) & 0xA0) != 0x20) return false;
+        return true;
+    }
+    
+    public boolean isFromNewSerialSensor() {
         // bank 4?
         if ( (getElement(3) & 0x70) != 0x40) return false;
         return true;
