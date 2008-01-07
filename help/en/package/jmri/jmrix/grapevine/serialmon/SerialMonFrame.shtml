@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SerialMonFrame.shtml,v 1.1 2007-12-28 16:51:44 jacobsen Exp $ -->
+<!-- $Id: SerialMonFrame.shtml,v 1.2 2008-01-07 09:20:36 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -24,7 +24,7 @@
 <H2>Monitor Grapevine Traffic
 </H2>
     
-This is the help/jmri/jmrix/sprog/packetgen/SerialMonFrame help page
+This is the help/jmri/jmrix/grapevine/packetgen/SerialMonFrame help page
 
 <!--#include virtual="/Footer" -->
 </body>
