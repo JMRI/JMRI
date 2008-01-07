@@ -17,8 +17,8 @@ import jmri.jmrix.AbstractMRReply;
 
 /**
  * JUnit tests for the SerialTrafficController class
- * @author			Bob Jacobsen Copyright 2005, 2007
- * @version $Revision: 1.3 $
+ * @author			Bob Jacobsen Copyright 2005, 2007, 2008
+ * @version $Revision: 1.4 $
  */
 public class SerialTrafficControllerTest extends TestCase {
 

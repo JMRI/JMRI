@@ -11,8 +11,8 @@ import jmri.*;
  * SerialTurnoutManagerTest.java
  *
  * Description:	    tests for the SerialTurnoutManager class
- * @author			Bob Jacobsen Copyright 2004, 2007
- * @version  $Revision: 1.1 $
+ * @author			Bob Jacobsen Copyright 2004, 2007, 2008
+ * @version  $Revision: 1.2 $
  */
 public class SerialTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 

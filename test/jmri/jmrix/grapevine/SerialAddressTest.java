@@ -12,8 +12,8 @@ import jmri.util.JUnitAppender;
 /**
  * JUnit tests for the SerialAddress utility class.
  * @author	Dave Duchamp Copyright 2004
- * @author  Bob Jacobsen Copyright 2007
- * @version	$Revision: 1.1 $
+ * @author  Bob Jacobsen Copyright 2007, 2008
+ * @version	$Revision: 1.2 $
  */
 public class SerialAddressTest extends TestCase {
 
