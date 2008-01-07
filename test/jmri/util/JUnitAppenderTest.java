@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.util.JUnitAppender class.
  * @author	Bob Jacobsen  Copyright 2007
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class JUnitAppenderTest extends TestCase {
 
@@ -22,7 +22,7 @@ public class JUnitAppenderTest extends TestCase {
     boolean allTests = false;
 
     public void testInstance() {
-        Assert.assertTrue("Instance exists", JUnitAppender.instance() != null);
+        Assert.assertTrue("Instance exists, e.g. initialization for tests OK", JUnitAppender.instance() != null);
     }
 
     public void testExpectedErrorMessage() {
@@ -33,6 +33,13 @@ public class JUnitAppenderTest extends TestCase {
 
     public void testExpectedWarnMessage() {
         String msg = "Message for testing";
+        log.warn(msg);
+        JUnitAppender.assertWarnMessage(msg);
+    }
+
+    public void testExpectedWarnAfterDebugMessage() {
+        String msg = "Message for testing";
+        log.debug("debug to skip");
         log.warn(msg);
         JUnitAppender.assertWarnMessage(msg);
     }
@@ -52,7 +59,7 @@ public class JUnitAppenderTest extends TestCase {
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {"-noloading", JUnitAppenderTest.class.getName()};
+		String[] testCaseName = {JUnitAppenderTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 

@@ -12,7 +12,7 @@ import junit.framework.Assert;
  * Log4J Appender that just publishes what it sees
  *
  * @author	Bob Jacobsen - Copyright 2007
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
  
 public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
@@ -105,7 +105,18 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
             Assert.fail("No message present: "+msg);
             return;
         }
-        LoggingEvent evt = (LoggingEvent) list.remove(0);
+
+        LoggingEvent evt = (LoggingEvent) list.remove(0);         
+
+        while ( (evt.priority == Priority.INFO) || (evt.priority == Priority.DEBUG) ) {
+            if (list.isEmpty()) {
+                Assert.fail("Only debug/info messages present: "+msg);
+                return;
+            }
+            evt = (LoggingEvent) list.remove(0);         
+        }
+
+        // check the remaining message, if any
         if (evt.priority!=Priority.ERROR) 
             Assert.fail("Level mismatch when looking for ERROR message: \""+msg+"\" found \""+(String)evt.getMessage()+"\"");
             
@@ -126,8 +137,18 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
             return;
         }
         LoggingEvent evt = (LoggingEvent) list.remove(0);
+
+        while ( (evt.priority == Priority.INFO) || (evt.priority == Priority.DEBUG) ) {
+            if (list.isEmpty()) {
+                Assert.fail("Only debug/info messages present: "+msg);
+                return;
+            }
+            evt = (LoggingEvent) list.remove(0);         
+        }
+
+        // check the remaining message, if any
         if (evt.priority!=Priority.WARN) 
-            Assert.fail("Level mismatch when looking for WARN message: \""+msg+"\"");
+            Assert.fail("Level mismatch when looking for WARN message: \""+msg+"\" found \""+(String)evt.getMessage()+"\"");
             
         if (!((String)evt.getMessage()).equals(msg) ) {
             Assert.fail("Looking for WARN message \""+msg+"\" got \""+evt.getMessage()+"\"");
