@@ -9,7 +9,7 @@ import jmri.util.StringUtil;
  * packet.
  * 
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
@@ -153,7 +153,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         // Check special cases
         switch (b2) {
         case 0x77:  // software status query
-            result += "software version query "+(b4>>4);
+            result += "software version query";
             return result;
         default:
             result += "Misc w bank "+((b4&0x70)>>4);
