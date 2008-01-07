@@ -27,7 +27,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003, 2006, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -318,6 +318,11 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         while (doNextStep(msg, istream)) {}
     }
 
+    /**
+     * Execute a state machine to parse messages from the input characters.
+     * May consume one or more than one character.
+     * Returns true when the message has been completely loaded.
+     */
     boolean doNextStep(AbstractMRReply msg, DataInputStream istream) throws java.io.IOException {
         switch (state) {
             case 0:
@@ -367,7 +372,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
                 
                 // check 'parity'
                 int parity = (buffer[0]&0xF)+((buffer[0]&0x70)>>4)
-                            +(buffer[1]&0xF)+((buffer[1]&0x70)>>4)        
+                            +((buffer[1]*2)&0xF)+(((buffer[1]*2)&0xF0)>>4)        
                             +(buffer[3]&0xF)+((buffer[3]&0x70)>>4);
                 if ( ((parity&0xF) != 0) && !pollMsg && !errMsg) {
                     log.warn("parity mismatch: "+parity+", going to state 2 with content "+(buffer[2]&0xFF)+","+(buffer[3]&0xFF));  

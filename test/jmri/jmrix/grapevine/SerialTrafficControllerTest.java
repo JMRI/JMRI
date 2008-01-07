@@ -18,7 +18,7 @@ import jmri.jmrix.AbstractMRReply;
 /**
  * JUnit tests for the SerialTrafficController class
  * @author			Bob Jacobsen Copyright 2005, 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class SerialTrafficControllerTest extends TestCase {
 
@@ -168,6 +168,72 @@ public class SerialTrafficControllerTest extends TestCase {
         Assert.assertEquals("byte 3", (byte)119, testBuffer[3]);
     }
     
+    public void testStateMachineOK3() throws java.io.IOException {
+        SerialTrafficController c = new SerialTrafficController(){
+            void loadBuffer(AbstractMRReply msg) {        
+                testBuffer[0] = buffer[0];testBuffer[1] = buffer[1];
+                testBuffer[2] = buffer[2];testBuffer[3] = buffer[3];
+                invoked = true;
+            }
+        };
+        testBuffer = new byte[4];invoked = false;
+        
+        DataInputStream i = new DataInputStream(new ByteArrayInputStream(
+                            new byte[]{(byte)0xE2,(byte)13,(byte)0xE2,(byte)88}));
+        
+        c.doNextStep(null,i);
+        
+        Assert.assertEquals("invoked", true, invoked);
+        Assert.assertEquals("byte 0", (byte)0xE2, testBuffer[0]);
+        Assert.assertEquals("byte 1", (byte)13, testBuffer[1]);
+        Assert.assertEquals("byte 2", (byte)0xE2, testBuffer[2]);
+        Assert.assertEquals("byte 3", (byte)88, testBuffer[3]);
+    }
+    
+    public void testStateMachineOK4() throws java.io.IOException {
+        SerialTrafficController c = new SerialTrafficController(){
+            void loadBuffer(AbstractMRReply msg) {        
+                testBuffer[0] = buffer[0];testBuffer[1] = buffer[1];
+                testBuffer[2] = buffer[2];testBuffer[3] = buffer[3];
+                invoked = true;
+            }
+        };
+        testBuffer = new byte[4];invoked = false;
+        
+        DataInputStream i = new DataInputStream(new ByteArrayInputStream(
+                            new byte[]{(byte)0xE2,(byte)14,(byte)0xE2,(byte)86}));
+        
+        c.doNextStep(null,i);
+        
+        Assert.assertEquals("invoked", true, invoked);
+        Assert.assertEquals("byte 0", (byte)0xE2, testBuffer[0]);
+        Assert.assertEquals("byte 1", (byte)14, testBuffer[1]);
+        Assert.assertEquals("byte 2", (byte)0xE2, testBuffer[2]);
+        Assert.assertEquals("byte 3", (byte)86, testBuffer[3]);
+    }
+    
+    public void testStateMachineOK5() throws java.io.IOException {
+        SerialTrafficController c = new SerialTrafficController(){
+            void loadBuffer(AbstractMRReply msg) {        
+                testBuffer[0] = buffer[0];testBuffer[1] = buffer[1];
+                testBuffer[2] = buffer[2];testBuffer[3] = buffer[3];
+                invoked = true;
+            }
+        };
+        testBuffer = new byte[4];invoked = false;
+        
+        DataInputStream i = new DataInputStream(new ByteArrayInputStream(
+                            new byte[]{(byte)0xE2,(byte)15,(byte)0xE2,(byte)84}));
+        
+        c.doNextStep(null,i);
+        
+        Assert.assertEquals("invoked", true, invoked);
+        Assert.assertEquals("byte 0", (byte)0xE2, testBuffer[0]);
+        Assert.assertEquals("byte 1", (byte)15, testBuffer[1]);
+        Assert.assertEquals("byte 2", (byte)0xE2, testBuffer[2]);
+        Assert.assertEquals("byte 3", (byte)84, testBuffer[3]);
+    }
+    
     public void testStateMachineRecover1() throws java.io.IOException {
         SerialTrafficController c = new SerialTrafficController(){
             void loadBuffer(AbstractMRReply msg) {        
@@ -256,7 +322,7 @@ public class SerialTrafficControllerTest extends TestCase {
         c.doNextStep(null,i);
         c.doNextStep(null,i);
         
-        jmri.util.JUnitAppender.assertWarnMessage("parity mismatch: 28, going to state 2 with content 129,90");
+        jmri.util.JUnitAppender.assertWarnMessage("parity mismatch: 25, going to state 2 with content 129,90");
         Assert.assertEquals("invoked", true, invoked);
         Assert.assertEquals("byte 0", (byte)129, testBuffer[0]);
         Assert.assertEquals("byte 1", (byte)90, testBuffer[1]);
