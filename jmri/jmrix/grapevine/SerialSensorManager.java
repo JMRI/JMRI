@@ -11,9 +11,9 @@ import jmri.Sensor;
  * <P>
  * Sensors are numbered from 1.
  * <P>
- * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007
+ * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author          Dave Duchamp, multi node extensions, 2004
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SerialSensorManager extends jmri.AbstractSensorManager
                             implements SerialListener {

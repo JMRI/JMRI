@@ -7,8 +7,8 @@ package jmri.jmrix.grapevine;
  * Contains the data payload of a serial reply
  * packet.  Note that its _only_ the payload.
  *
- * @author	Bob Jacobsen  Copyright (C) 2002, 2006, 2007
- * @version     $Revision: 1.2 $
+ * @author	Bob Jacobsen  Copyright (C) 2002, 2006, 2007, 2008
+ * @version     $Revision: 1.3 $
  */
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 

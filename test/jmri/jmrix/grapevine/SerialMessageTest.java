@@ -9,8 +9,8 @@ import junit.framework.TestSuite;
 
 /**
  * JUnit tests for the SerialMessage class.
- * @author	Bob Jacobsen Copyright 2003, 2007
- * @version	$Revision: 1.2 $
+ * @author	Bob Jacobsen Copyright 2003, 2007, 2008
+ * @version	$Revision: 1.3 $
  */
 public class SerialMessageTest extends TestCase {
 

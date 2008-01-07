@@ -19,9 +19,9 @@ import jmri.jmrix.AbstractMRMessage;
  * change a state via an icon, and not have it change back the next time
  * that node is polled.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007
+ * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class SerialNode {
 
