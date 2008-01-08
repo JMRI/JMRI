@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: format.xsl,v 1.1 2008-01-08 06:19:40 jacobsen Exp $ -->
+<!-- $Id: format.xsl,v 1.2 2008-01-08 07:29:30 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert JavaHelp index and TOC pages into HTML -->
 
@@ -49,12 +49,12 @@
     </HEAD>
     
     <BODY>
-    <!--#include virtual="/Header" -->
+    <xsl:comment>#include virtual="/Header" </xsl:comment>
     <ul>
         <xsl:apply-templates/>
     </ul>
     
-    <!--#include virtual="/Footer" -->
+    <xsl:comment>#include virtual="/Footer" </xsl:comment>
     </BODY>
     </HTML>
 </xsl:template>
@@ -84,6 +84,37 @@
         <xsl:apply-templates/>
         </ul>
     </li>
+</xsl:template>
+
+
+<xsl:template match='toc'>
+    <HTML LANG="en">
+    <HEAD>
+    <TITLE>JMRI: Help Index</TITLE>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1" />
+    <META CONTENT="Bob Jacobsen" NAME="Author" />
+    <META NAME="keywords" CONTENT="JMRI help Route Add Edit" />
+    
+    <!-- Style -->
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1" />
+    <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+        MEDIA="screen" />
+    <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+        MEDIA="print" />
+    <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png" />
+    <LINK REL="home" TITLE="Home" HREF="/" />
+    <!-- /Style -->
+    </HEAD>
+    
+    <BODY>
+    <xsl:comment>#include virtual="/Header" </xsl:comment>
+    <ul>
+        <xsl:apply-templates/>
+    </ul>
+    
+    <xsl:comment>#include virtual="/Footer" </xsl:comment>
+    </BODY>
+    </HTML>
 </xsl:template>
 
 <!-- recursively handle TOC items -->
