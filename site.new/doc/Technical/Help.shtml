@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Help.shtml,v 1.9 2008-01-08 15:12:40 jacobsen Exp $ -->
+<!-- $Id: Help.shtml,v 1.10 2008-01-08 15:53:10 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -56,6 +56,16 @@ window or component.
 <LI>DecoderProManual - a version of the DecoderPro manual reformatted for 
 use in the help system.
 </UL>
+
+<a id="user"/>
+<h2>Adding Help Information</h2>
+
+People are encouraged to add information to the help pages. If
+you discover something missing, after you figure it out from another
+source please come back and add it to the help page!  
+Just edit the corresponding ".shtml" file in the "help" directory
+on your computer, and then 
+<a href="index.shtml#contributing">send the updated file to us</a>.
 
 <h2>Web access to help</h2>
 
