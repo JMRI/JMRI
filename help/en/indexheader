@@ -1,0 +1,12 @@
+<!-- indexheader - This file is included at the top of the page   -->
+<!-- when the web index is displayed online.   $Revision: 1.1 $   -->
+<!-- Copyright 2008 JMRI, Bob Jacobsen  See COPYING file for info -->
+
+<h2>JMRI Help System: Index</h2>
+
+This is the index for JMRI's in-program help system.  
+<p/>
+In the program, you get this by selecting "Help" from any of the 
+Help menus on the windows.  You'll find the table of contents and 
+index on the left side.
+<p/>
