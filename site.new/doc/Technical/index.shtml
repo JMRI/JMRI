@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.5 2007-12-23 02:02:32 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.6 2008-01-08 15:52:28 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -95,6 +95,7 @@ and compile it from a command line, please see the page of instructions for
 <a href="Ant.html">building with Ant</a>.
 
 
+<a id="contributing"/>
 <h2><A id="contributing"/>Contributing</h2>
 
 We encourage contributions of code, decoder definitions, improvements to 
@@ -105,7 +106,11 @@ For your first small contributions, e.g. a new decoder file or small bug fix,
 please fill out a new "Patches" entry on SourceForge using 
 <A HREF="http://sourceforge.net/tracker/?group_id=26788&atid=388315">our patches page</a>
 (click new on the middle-left, then fill out the resulting form).
-You can attach the entire file there.  If it's multiple files,
+You can attach the entire file there.  
+(If that seems daunting, please ask for help on
+one of the mailing lists; we really want to get your update!)
+<p/>
+If it's multiple files,
 and you're using an IDE like
 <A HREF="">NetBeans</a>, it's very easy to create a "diff patch file"
 to carry your changes, and that will save us a significant amount of
