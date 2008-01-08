@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRMessage;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SerialNode {
 
@@ -259,7 +259,6 @@ public class SerialNode {
                 if (sensorArray[i] == null) continue; // skip ones that don't exist
                 boolean value = ((inputBits&1)!=0);
                 inputBits = inputBits>>1;
-                System.out.println("index "+i+" value "+value+" "+inputBits);
                 if ( value ) {
                     // bit set, considered ACTIVE
                     if (    ( (sensorTempSetting[i] == Sensor.ACTIVE) || 
