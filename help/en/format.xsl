@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: format.xsl,v 1.2 2008-01-08 07:29:30 jacobsen Exp $ -->
+<!-- $Id: format.xsl,v 1.3 2008-01-08 14:56:06 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert JavaHelp index and TOC pages into HTML -->
 
@@ -32,7 +32,7 @@
 <xsl:template match='index'>
     <HTML LANG="en">
     <HEAD>
-    <TITLE>JMRI: Help Index</TITLE>
+    <TITLE>JMRI Help System: Index</TITLE>
     <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1" />
     <META CONTENT="Bob Jacobsen" NAME="Author" />
     <META NAME="keywords" CONTENT="JMRI help Route Add Edit" />
@@ -50,6 +50,7 @@
     
     <BODY>
     <xsl:comment>#include virtual="/Header" </xsl:comment>
+    <xsl:comment>#include virtual="indexheader" </xsl:comment>
     <ul>
         <xsl:apply-templates/>
     </ul>
@@ -90,7 +91,7 @@
 <xsl:template match='toc'>
     <HTML LANG="en">
     <HEAD>
-    <TITLE>JMRI: Help Index</TITLE>
+    <TITLE>JMRI Help System: Table of Contents</TITLE>
     <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1" />
     <META CONTENT="Bob Jacobsen" NAME="Author" />
     <META NAME="keywords" CONTENT="JMRI help Route Add Edit" />
@@ -108,6 +109,7 @@
     
     <BODY>
     <xsl:comment>#include virtual="/Header" </xsl:comment>
+    <xsl:comment>#include virtual="indexheader" </xsl:comment>
     <ul>
         <xsl:apply-templates/>
     </ul>
