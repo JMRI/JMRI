@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: format.xsl,v 1.3 2008-01-08 14:56:06 jacobsen Exp $ -->
+<!-- $Id: format.xsl,v 1.4 2008-01-08 15:13:53 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert JavaHelp index and TOC pages into HTML -->
 
@@ -109,7 +109,7 @@
     
     <BODY>
     <xsl:comment>#include virtual="/Header" </xsl:comment>
-    <xsl:comment>#include virtual="indexheader" </xsl:comment>
+    <xsl:comment>#include virtual="tocheader" </xsl:comment>
     <ul>
         <xsl:apply-templates/>
     </ul>
