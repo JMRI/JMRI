@@ -22,3 +22,6 @@ this requires a special version of JHelpDev.
 The search index files in JavaHelpSearch/ should NOT be 
 manually edited.  JHelpDev will overwrite them when next run.
 
+The build.xml and format.xsl files are used to create the webtoc.html
+and webindex.html files automatically.
+
