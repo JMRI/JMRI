@@ -66,7 +66,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.doc.Technical.Threads" url="html/doc/Technical/Threads.shtml" />
 	<mapID target="package.jmri.jmrit.beantable.SignalTable" url="package/jmri/jmrit/beantable/SignalTable.shtml" />
 	<mapID target="package.jmri.jmrix.loconet.locoid.LocoIdFrame" url="package/jmri/jmrix/loconet/locoid/LocoIdFrame.shtml" />
-	<mapID target="webindex" url="webindex.html" />
+	<mapID target="webindex" url="webindex.shtml" />
 	<mapID target="package.jmri.jmrix.secsi.serialmon.SerialMonFrame" url="package/jmri/jmrix/secsi/serialmon/SerialMonFrame.shtml" />
 	<mapID target="package.jmri.jmrix.secsi.packetgen.SerialPacketGenFrame" url="package/jmri/jmrix/secsi/packetgen/SerialPacketGenFrame.shtml" />
 	<mapID target="DecoderProManual.Basic_Programming_Basic Programmer" url="DecoderProManual/Basic_Programming.html#Basic Programmer" />
@@ -79,7 +79,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="DecoderProManual.Comp_ManfSpecific" url="DecoderProManual/Comp_ManfSpecific.html" />
 	<mapID target="DecoderProManual.index_Setting up" url="DecoderProManual/index.html#Setting up" />
 	<mapID target="package.jmri.jmrit.ussctc.OsIndicatorFrame" url="package/jmri/jmrit/ussctc/OsIndicatorFrame.shtml" />
-	<mapID target="webtoc" url="webtoc.html" />
+	<mapID target="webtoc" url="webtoc.shtml" />
 	<mapID target="html.doc.Technical.TechRoadMap" url="html/doc/Technical/TechRoadMap.shtml" />
 	<mapID target="package.jmri.jmrit.display.LayoutEditor_toolsmenu" url="package/jmri/jmrit/display/LayoutEditor.shtml#toolsmenu" />
 	<mapID target="html.doc.Technical.WebSite" url="html/doc/Technical/WebSite.shtml" />

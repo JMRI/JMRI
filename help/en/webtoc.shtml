@@ -267,6 +267,31 @@
 <a href="Acknowledgements.html">Acknowledgements</a>
 <ul></ul>
 </li>
+   
+<li>System-Specific<ul>
+      
+<li>Digitrax<ul>
+         
+<li>Sound<ul>
+            
+<li>
+<a href="package/jmri/jmrix/loconet/soundloader/LoaderFrame.shtml">Sound Loader</a>
+<ul></ul>
+</li>
+            
+<li>
+<a href="package/jmri/jmrix/loconet/soundloader/EditorFrame.shtml">Sound Editor</a>
+<ul></ul>
+</li>
+         
+</ul>
+</li>
+      
+</ul>
+</li>
+   
+</ul>
+</li>
 
 
 </ul>

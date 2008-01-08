@@ -61,5 +61,13 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
    </tocitem>
    <tocitem text="Names" target="html.doc.Technical.Names"/>
    <tocitem text="Acknowledgements" target="Acknowledgements"/>
+   <tocitem text="System-Specific">
+      <tocitem text="Digitrax">
+         <tocitem text="Sound">
+            <tocitem text="Sound Loader" target="package.jmri.jmrix.loconet.soundloader.LoaderFrame"/>
+            <tocitem text="Sound Editor" target="package.jmri.jmrix.loconet.soundloader.EditorFrame"/>
+         </tocitem>
+      </tocitem>
+   </tocitem>
 
 </toc>

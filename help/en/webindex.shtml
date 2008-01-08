@@ -59,6 +59,61 @@
 </ul>
 </li>
    
+<li>Digitrax<ul>
+      
+<li>
+<a href="package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">DS64</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrix/loconet/locoid/LocoIdFrame.shtml">LocoNet ID</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrix/loconet/pm4/PM4Frame.shtml">PM4</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrix/loconet/se8/SE8Frame.shtml">SE8c</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrix/loconet/slotmon/SlotMonFrame.shtml">Slot Monitor</a>
+<ul></ul>
+</li>
+      
+<li>Sound<ul>
+         
+<li>
+<a href="package/jmri/jmrix/loconet/soundloader/LoaderFrame.shtml">Downloader</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="package/jmri/jmrix/loconet/sdfeditor/EditorFrame.shtml">SDF Sound Program Editor</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="package/jmri/jmrix/loconet/soundloader/EditorFrame.shtml">SPJ Project File Editor</a>
+<ul></ul>
+</li>
+      
+</ul>
+</li>
+   
+</ul>
+</li>
+   
+<li>
+<a href="package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">DS64</a>
+<ul></ul>
+</li>
+   
 <li>
 <a href="html/Lights.html">Light</a>
 <ul>
@@ -86,6 +141,9 @@
 <li>
 <a href="package/jmri/jmrit/beantable/LogixAddEdit.shtml">Add Logix</a>
 <ul></ul>
+</li>
+      
+<li>Digitrax<ul></ul>
 </li>
       
 <li>
@@ -119,11 +177,21 @@
 </li>
    
 <li>
+<a href="html/doc/Technical/Names.shtml">Names</a>
+<ul></ul>
+</li>
+   
+<li>
 <a href="html/apps/PanelPro/Panels.html">Panels</a>
 <ul>
       
 <li>
 <a href="html/apps/PanelPro/Panels.html">Intro</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a>
 <ul></ul>
 </li>
       
@@ -136,13 +204,13 @@
 <a href="package/jmri/jmrit/display/PanelEditor.shtml">Panel Editor</a>
 <ul></ul>
 </li>
-      
-<li>
-<a href="package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a>
-<ul></ul>
-</li>
    
 </ul>
+</li>
+   
+<li>
+<a href="package/jmri/jmrix/loconet/pm4/PM4Frame.shtml">PM4</a>
+<ul></ul>
 </li>
    
 <li>
@@ -180,6 +248,11 @@
 </li>
    
 </ul>
+</li>
+   
+<li>
+<a href="package/jmri/jmrix/loconet/se8/SE8Frame.shtml">SE8c</a>
+<ul></ul>
 </li>
    
 <li>
@@ -236,6 +309,11 @@
    
 <li>
 <a href="package/jmri/jmrit/blockboss/BlockBossFrame.shtml">Simple Signal Logic</a>
+<ul></ul>
+</li>
+   
+<li>
+<a href="package/jmri/jmrix/loconet/slotmon/SlotMonFrame.shtml">Slot Monitor</a>
 <ul></ul>
 </li>
    
@@ -304,11 +382,6 @@
 </li>
    
 </ul>
-</li>
-   
-<li>
-<a href="html/doc/Technical/Names.shtml">Names</a>
-<ul></ul>
 </li>
 
 
