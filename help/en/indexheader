@@ -1,5 +1,5 @@
 <!-- indexheader - This file is included at the top of the page   -->
-<!-- when the web index is displayed online.   $Revision: 1.2 $   -->
+<!-- when the web index is displayed online.   $Revision: 1.3 $   -->
 <!-- Copyright 2008 JMRI, Bob Jacobsen  See COPYING file for info -->
 
 <h2>JMRI Help System: Index</h2>
@@ -10,3 +10,10 @@ In the program, you get this by selecting "Help" from any of the
 Help menus on the windows.  You'll find the table of contents and 
 index on the left side of the help window.
 <p/>
+The help system <a href="webtoc.shtml">table of contents</a>
+is also available online.
+<p/>
+This page is generated automatically as part of the 
+build process.  For more information, see the
+<a href="http://jmri.sf.net/doc/Technical/Help.shtml">developer page on the help system</a>.
+</p>
