@@ -9,7 +9,7 @@ import jmri.util.StringUtil;
  * packet.
  * 
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
@@ -149,14 +149,13 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
                 +" data bytes: 0x"+StringUtil.twoHexFromInt(b2)
                 +" 0x"+StringUtil.twoHexFromInt(b4)
                 +" => ";
-                
-        // Check special cases
-        switch (b2) {
-        case 0x77:  // software status query
+        
+        if ( (b2 == b4) && (b2==0x77)) {
             result += "software version query";
             return result;
-        default:
-            result += "Misc w bank "+((b4&0x70)>>4);
+        } else // check various bank forms 
+        if ( (b4&0xF0) == 0x00 ) {
+            // Bank 0 - signal command
             result += " signal "+((b2&0x78)>>3);
             int cmd = b2&0x07;
             result += " cmd "+cmd;
@@ -165,6 +164,28 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
             if (cmd ==6) result += "/thrown";
             result +=")";
             return result;
+        } else if ( (b4&0xF0) == 0x40 ) {
+            // bank 4 - new serial sensor message
+            result += "serial sensor bit "+(((b2&0x7E)>>1) +1)+" is "+(((b2&0x01)!=0)?"active":"inactive");
+            return result;
+        } else if ( (b4&0xF0) == 0x50 ) {
+            // bank 5 - sensor message
+            if ((b2&0x20) == 0) {
+                // parallel sensor
+                result += "parallel sensor "+((b2&0x10)!=0 ? "high" : "low")+" nibble:";
+            } else {
+                // old serial sensor
+                result += "older serial sensor "+((b2&0x10)!=0 ? "high" : "low")+" nibble:";
+            }
+            // add bits
+            result += ( (b2&0x08)==0)?" A":" I";
+            result += ( (b2&0x04)==0)?" A":" I";
+            result += ( (b2&0x02)==0)?" A":" I";
+            result += ( (b2&0x01)==0)?" A":" I";
+            return result;
+        } else {
+            // other banks
+            return result+"bank "+((b4&0xF0)>>4)+", unknown message";
         }
     }
 
