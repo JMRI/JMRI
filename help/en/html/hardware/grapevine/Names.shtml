@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- $Id: Names.shtml,v 1.1 2008-01-10 07:33:40 jacobsen Exp $ -->
+<title>JMRI: Grapevine System Names</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+<h2> 
+JMRI: Grapevine System Names
+</h2>
+
+Individual inputs (Sensors)  and outputs (Turnouts and Lights)
+in JMRI are accessed via names.  
+For information on the general scheme, please see
+the 
+<a href="../../doc/Technical/Names.shtml">naming page</a>
+in the
+<a href="../../doc/Technical/index.shtml">technical documentation</a>.
+
+<p>
+For Grapevine systems, all names start with a system letter of "G".
+After that, there's a 
+<a href="../../doc/Technical/Names.shtml#type">type letter</a>,
+then a node number and a pin number.
+
+<p>
+Each Grapevine node has a number, from 1 to 127.
+
+<p>
+The pin number, from 001 up, defines the specific input or output 
+connection on the node. Note that a pin number is always three digits.
+
+<p>
+For example, the 1st Grapevine Sensor input pin on node 23 would be
+named GS23001.  The 5th Turnout on node 2 would be GT2005. 
+
+<p>
+If it's helpful, you can think of the node number as being the "thousands"
+part of the combined number, and the pin number as the lower three digits.
+
+<h3>Inputs</h3>
+
+Grapevine nodes have a number of possible inputs:
+<dl>
+ <dt>
+    Parallel Inputs
+ </dt><dd>
+    There are eight three-pin connectors on a Grapevine node
+    that can be used as general inputs.  These Sensors are 
+    referenced as 001 to 008.
+    <p>
+    In addition, there are eight additional pins in the 
+    14-pin connector that can be referenced as Sensors
+    009 to 016.
+ </dd>
+ <dt>
+    Serial Occupancy Sensor Cards
+ </dt><dd>
+    Up to three serial occupancy sensor cards can be attached
+    to each node.  Each one senses occupancy on up to eight track
+    segments.
+ </dd>
+ <dt>
+    Older Occupancy Sensors
+ </dt><dd>
+ </dd>
+</dl>
+<h3>Outputs</h3>
+
+
+    
+<!--#include virtual="/Footer" -->
+</body>
+</html>
