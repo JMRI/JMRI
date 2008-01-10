@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: Names.shtml,v 1.1 2008-01-10 07:33:40 jacobsen Exp $ -->
+<!-- $Id: Names.shtml,v 1.2 2008-01-10 08:06:43 jacobsen Exp $ -->
 <title>JMRI: Grapevine System Names</title>
 
 <!-- Style -->
@@ -71,17 +71,44 @@ Grapevine nodes have a number of possible inputs:
  </dt><dd>
     Up to three serial occupancy sensor cards can be attached
     to each node.  Each one senses occupancy on up to eight track
-    segments.
+    segments. In addition, "occupancy" and "motion" are
+    separately detected.
  </dd>
  <dt>
     Older Occupancy Sensors
  </dt><dd>
+    (TBD)
  </dd>
 </dl>
 <h3>Outputs</h3>
 
+Each Grapevine node can have up to four output cards attached to it.
+The outputs on the first card are referenced starting with 1, and
+can go up to 24 depending on the type of card.
+The outputs on the second card start at 25 and go up to 48.
+The third and fourth cards start at 49 and 73 respectively.
 
-    
+<p>
+Each of these can be used as a JMRI 
+<a href="../../tools/Turnouts.shtml">Turnout</a>, 
+<a href="../../tools/Lights.shtml">Light</a> 
+or 
+<a href="../../tools/Signals.shtml">Signal</a>.
+
+<h4>Signals</h4>
+To use a Grapevine output as a signal, capable of displaying
+red/yellow/green and associated flashing aspects, 
+you must define it as a "Grapevine Signal Head" using the
+<a href="../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml">Add...</a> button in the 
+<a href="../../../package/jmri/jmrit/beantable/SignalTable.shtml">Signal Table</a>.
+Give it a system name that starts with "GH", and is followed by the node and
+output numbers.  
+
+<p>
+For example, to use the 3rd connector on the 2nd driver card on node 1, 
+define a Grapevine signal head using system name GH1027.  (The 2nd driver card starts with
+number 025, so the 3rd connection is 25, 26, 27)
+
 <!--#include virtual="/Footer" -->
 </body>
 </html>
