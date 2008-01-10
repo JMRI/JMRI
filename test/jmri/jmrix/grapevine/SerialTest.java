@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.grapevine package.
  * @author      Bob Jacobsen  Copyright 2003, 2007
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class SerialTest extends TestCase {
 
@@ -36,6 +36,9 @@ public class SerialTest extends TestCase {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.grapevine.SerialTest");
         suite.addTest(SerialTurnoutTest.suite());
+        suite.addTest(SerialTurnoutTest1.suite());
+        suite.addTest(SerialTurnoutTest2.suite());
+        suite.addTest(SerialTurnoutTest3.suite());
         suite.addTest(SerialTurnoutManagerTest.suite());
         suite.addTest(SerialSensorManagerTest.suite());
         suite.addTest(SerialNodeTest.suite());
