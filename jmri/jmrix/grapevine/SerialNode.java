@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRMessage;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class SerialNode {
 
@@ -291,7 +291,7 @@ public class SerialNode {
             boolean b1 = (byte1 & 0x02) == 0;
             boolean b2 = (byte1 & 0x04) == 0;
             boolean b3 = (byte1 & 0x08) == 0;
-            int number = 1 + (highNibble ? 4 : 0) + (!oldSerial ? 100 : 0);
+            int number = 1 + (highNibble ? 4 : 0) + (!oldSerial ? 50 : 0);
             markBit(b0, number);
             markBit(b1, number+1);
             markBit(b2, number+2);
