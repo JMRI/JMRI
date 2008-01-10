@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: TemplatePlain.shtml,v 1.1 2008-01-10 07:08:37 jacobsen Exp $ -->
-<title>???Page Title</title>
+<!-- $Id: TemplatePlain.shtml,v 1.2 2008-01-10 08:15:56 jacobsen Exp $ -->
+<title>JMRI: ???Page Title</title>
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
