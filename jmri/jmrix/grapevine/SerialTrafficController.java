@@ -27,7 +27,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003, 2006, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -311,6 +311,13 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     
     protected int currentAddr= -1; // at startup, can't match
     
+    int nextReplyLen = 4;
+
+    protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
+        nextReplyLen = ((SerialMessage)m).getReplyLen();
+        super.forwardToPort(m, reply);
+    }
+    
     byte[] buffer = new byte[4];
     int state = 0;
     
@@ -346,6 +353,20 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
                 }
                 state = 2;
             case 2:
+                // as a special case, see what happens if a short
+                // message is expected
+                if (nextReplyLen==2) {
+                    // we'll accept these two bytes as a reply
+                    buffer[2] = 0;
+                    buffer[3] = 0;
+                    loadBuffer(msg);
+                    ((SerialReply)msg).setNumDataElements(2); // flag short reply
+                    nextReplyLen = 4; // only happens once
+                    state = 0;
+                    if (logDebug) log.debug("Short message complete: "+msg.toString());
+                    return false;  // have received a message
+                }
+                // here for normal four byte message expected
                 buffer[2] = readByteProtected(istream);
                 if (logDebug) log.debug("state 2, rcv "+(buffer[2]&0xFF));
                 if (buffer[0]!=buffer[2]) {

@@ -8,7 +8,7 @@ package jmri.jmrix.grapevine;
  * packet.  Note that its _only_ the payload.
  *
  * @author	Bob Jacobsen  Copyright (C) 2002, 2006, 2007, 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
@@ -66,6 +66,14 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
         return true;
     }
     
+    public void setNumDataElements(int len) {
+        if (len > _nDataChars) {
+            log.error("Can't shorten reply from "+_nDataChars+" to "+len);
+            return;
+        }
+        _nDataChars = len;
+    }
+
     /**
      * Format the reply as human-readable text.
      * <P>

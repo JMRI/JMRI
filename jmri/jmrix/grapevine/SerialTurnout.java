@@ -14,7 +14,7 @@ import jmri.Turnout;
  *
  * Description:		extend jmri.AbstractTurnout for grapevine serial layouts
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SerialTurnout extends AbstractTurnout {
 
@@ -76,12 +76,28 @@ public class SerialTurnout extends AbstractTurnout {
             log.error("Can't find node for "+tSystemName+", command ignored");
             return;
         }
-        SerialMessage m = new SerialMessage();
-        m.setElement(0,tNode.getNodeAddress()|0x80);  // address 1
-        m.setElement(1, (tBit<<3)|(closed ? 0 : 6));  // closed is green, thrown is red
-        m.setElement(2,tNode.getNodeAddress()|0x80);  // address 2
-        m.setElement(3, 0<<4); // bank zero
-        m.setParity();
+        int output = tBit % 24; /// 0 to 23 range for individual bank
+        boolean high = (output>=12);
+        if (high) output = output-12;
+        int bank = tBit/24;  
+        if ( (bank<0)||(bank>4) ) {
+            log.error("invalid bank "+bank+" for Turnout "+getSystemName());
+            bank = 0;
+        }
+        SerialMessage m = new SerialMessage(high?8:4);
+        int i = 0;
+        if (high) {
+            m.setElement(i++,tNode.getNodeAddress()|0x80);  // address 1
+            m.setElement(i++,122);   // shift command
+            m.setElement(i++,tNode.getNodeAddress()|0x80);  // address 2
+            m.setElement(i++,0x10);  // bank 1
+            m.setParity(i-4);
+        }
+        m.setElement(i++,tNode.getNodeAddress()|0x80);  // address 1
+        m.setElement(i++, (output<<3)|(closed ? 0 : 6));  // closed is green, thrown is red
+        m.setElement(i++,tNode.getNodeAddress()|0x80);  // address 2
+        m.setElement(i++, bank<<4); // bank is most significant bits
+        m.setParity(i-4);
         SerialTrafficController.instance().sendSerialMessage(m, null);
     }
 

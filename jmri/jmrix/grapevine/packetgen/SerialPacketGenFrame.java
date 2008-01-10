@@ -18,8 +18,8 @@ import javax.swing.JSeparator;
 
 /**
  * Frame for user input of serial messages
- * @author	Bob Jacobsen   Copyright (C) 2002, 2003, 2006, 2007
- * @version	$Revision: 1.1 $
+ * @author	Bob Jacobsen   Copyright (C) 2002, 2003, 2006, 2007, 2008
+ * @version	$Revision: 1.2 $
  */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.grapevine.SerialListener {
 
@@ -27,6 +27,8 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
+
+    javax.swing.JButton parityButton = new javax.swing.JButton("Set Parity");
 
     javax.swing.JButton pollButton = new javax.swing.JButton("Query Node");
     javax.swing.JTextField uaAddrField = new javax.swing.JTextField(5);
@@ -58,12 +60,22 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
 
         getContentPane().add(jLabel1);
         getContentPane().add(packetTextField);
-        getContentPane().add(sendButton);
+        JPanel p1 = new JPanel();
+        p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
+        p1.add(parityButton);
+        p1.add(sendButton);
+        getContentPane().add(p1);
 
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     sendButtonActionPerformed(e);
+                }
+            });
+
+        parityButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    parityButtonActionPerformed(e);
                 }
             });
 
@@ -100,6 +112,12 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         SerialTrafficController.instance().sendSerialMessage(createPacket(packetTextField.getText()), this);
+    }
+
+    public void parityButtonActionPerformed(java.awt.event.ActionEvent e) {
+        SerialMessage m = createPacket(packetTextField.getText());
+        m.setParity();
+        packetTextField.setText(m.toString());
     }
 
     SerialMessage createPacket(String s) {

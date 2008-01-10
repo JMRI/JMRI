@@ -9,14 +9,19 @@ import jmri.util.StringUtil;
  * packet.
  * 
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     // is this logically an abstract class?
 
     public SerialMessage() {
-        super(4);  // all messages are four bytes, binary
+        super(4);  // most messages are four bytes, binary
+        setBinary(true);
+    }
+    
+    public SerialMessage(int len) {
+        super(len);  // most messages are four bytes, binary
         setBinary(true);
     }
     
@@ -69,6 +74,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         m.setElement(1, 119);  // get software version
         m.setElement(2, addr | 0x80);  // read first two bytes
         m.setElement(3, 119);  // send twice, without parity
+        m.setReplyLen(2); // only two bytes come back
         return m;
     }
 
@@ -78,26 +84,41 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         setElement(3,old | ( (b&0x7)<<4 ));
     }
     
-    public void setParity() {
+    public void setParity() { setParity(0); }
+    
+    public void setParity(int start) {
         // leave unchanged if poll
-        if ( (getElement(1)==119) && (getElement(3)==119) ) return;
+        if ( (getElement(1+start)==119) && (getElement(3+start)==119) ) return;
         // error messages have zero parity
-        if ( (getElement(0)&0x7F) == 0 ) {
-            setElement(3, getElement(3)&0xF0);
+        if ( (getElement(0+start)&0x7F) == 0 ) {
+            setElement(3, getElement(3+start)&0xF0);
             return;
         }
         // nibble sum method
-        int sum  = getElement(0) & 0x0F;
-        sum     += (getElement(0)&0x70)>>4;
-        sum     += (getElement(1)*2)&0x0F;
-        sum     += ((getElement(1)*2)&0xF0)>>4;
-        sum     += (getElement(3)&0x70)>>4;
+        int sum  = getElement(0+start) & 0x0F;
+        sum     += (getElement(0+start)&0x70)>>4;
+        sum     += (getElement(1+start)*2)&0x0F;
+        sum     += ((getElement(1+start)*2)&0xF0)>>4;
+        sum     += (getElement(3+start)&0x70)>>4;
 
         int parity = 16 - (sum&0xF);
 
-        setElement(3, (getElement(3)&0xF0) | (parity&0xF));
+        setElement(3+start, (getElement(3+start)&0xF0) | (parity&0xF));
     }
     
+    // default to expecting four reply characters, a standard message
+    int replyLen = 4;    
+    /**
+     * Set the number of characters expected back from the 
+     * command station.  Normally four, this is used to
+     * set other lengths for special cases, like
+     * a reply to a poll (software version) message.
+     */
+    public void setReplyLen(int len) { 
+        replyLen = len;
+    }
+    public int getReplyLen() { return replyLen; }
+
     /**
      * Format the reply as human-readable text.
      */
@@ -154,9 +175,9 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
             result += "software version query";
             return result;
         } else // check various bank forms 
-        if ( (b4&0xF0) == 0x00 ) {
-            // Bank 0 - signal command
-            result += " signal "+((b2&0x78)>>3);
+        if ( (b4&0xF0) <= 0x30 ) {
+            // Bank 0-3 - signal command
+            result += "bank "+((b4&0xF0))>>4)+" signal "+((b2&0x78)>>3);
             int cmd = b2&0x07;
             result += " cmd "+cmd;
             result +=" (set "+colorAsString(cmd);
