@@ -19,7 +19,7 @@ import javax.swing.JMenuBar;
  * @see SystemsMenu
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 public class ActiveSystemsMenu extends JMenu {
     public ActiveSystemsMenu(String name) {
@@ -47,10 +47,16 @@ public class ActiveSystemsMenu extends JMenu {
             m.add(getMenu("jmri.jmrix.cmri.CMRIMenu"));
         if (jmri.jmrix.easydcc.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.easydcc.EasyDCCMenu"));
+        if (jmri.jmrix.grapevine.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.grapevine.GrapevineMenu"));
         if (jmri.jmrix.loconet.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.loconet.LocoNetMenu"));
         if (jmri.jmrix.nce.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.nce.NceMenu"));
+        if (jmri.jmrix.oaktree.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.oaktree.OakTreeMenu"));
+        if (jmri.jmrix.tmcc.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.tmcc.TMCCMenu"));
         if (jmri.jmrix.sprog.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.sprog.SPROGMenu"));
         if (jmri.jmrix.sprog.ActiveFlagCS.isActive())
@@ -68,14 +74,8 @@ public class ActiveSystemsMenu extends JMenu {
         
         if (jmri.jmrix.direct.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.direct.DirectMenu"));
-        if (jmri.jmrix.tmcc.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.tmcc.TMCCMenu"));
-        if (jmri.jmrix.oaktree.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.oaktree.OakTreeMenu"));
         if (jmri.jmrix.qsi.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.qsi.QSIMenu"));
-        if (jmri.jmrix.grapevine.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.grapevine.GrapevineMenu"));
     }
 
     static public void addItems(JMenuBar m) {
@@ -89,17 +89,29 @@ public class ActiveSystemsMenu extends JMenu {
         if (jmri.jmrix.easydcc.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.easydcc.EasyDCCMenu"));
 
+        if (jmri.jmrix.grapevine.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.grapevine.GrapevineMenu"));
+
         if (jmri.jmrix.loconet.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.loconet.LocoNetMenu"));
 
         if (jmri.jmrix.nce.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.nce.NceMenu"));
 
+        if (jmri.jmrix.oaktree.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.oaktree.OakTreeMenu"));
+
+        if (jmri.jmrix.qsi.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.qsi.QSIMenu"));
+
         if (jmri.jmrix.sprog.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.sprog.SPROGMenu"));
 
         if (jmri.jmrix.sprog.ActiveFlagCS.isActive())
               m.add(getMenu("jmri.jmrix.sprog.SPROGCSMenu"));
+
+        if (jmri.jmrix.tmcc.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.tmcc.TMCCMenu"));
 
         if (jmri.jmrix.wangrow.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.wangrow.WangrowMenu"));
@@ -116,17 +128,6 @@ public class ActiveSystemsMenu extends JMenu {
         if (jmri.jmrix.direct.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.direct.DirectMenu"));
 
-        if (jmri.jmrix.tmcc.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.tmcc.TMCCMenu"));
-
-        if (jmri.jmrix.oaktree.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.oaktree.OakTreeMenu"));
-
-        if (jmri.jmrix.qsi.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.qsi.QSIMenu"));
-
-        if (jmri.jmrix.grapevine.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.grapevine.GrapevineMenu"));
     }
 
     static JMenu getMenu(String className) {

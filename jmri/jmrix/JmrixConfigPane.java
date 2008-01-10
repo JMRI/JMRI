@@ -28,7 +28,7 @@ import javax.swing.JSeparator;
  * configuration GUI, and responding to its changes.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2004
- * @version	$Revision: 1.28 $
+ * @version	$Revision: 1.29 $
  */
 public class JmrixConfigPane extends JPanel {
 
@@ -80,6 +80,7 @@ public class JmrixConfigPane extends JPanel {
                               "jmri.jmrix.zimo.mx1.ConnectionConfig",
                               "jmri.jmrix.lenz.ztc640.ConnectionConfig",
                               // "jmri.jmrix.mrc.serialdriver.ConnectionConfig",     // experimental
+                              "jmri.jmrix.powerline.serialdriver.ConnectionConfig",  // experimental
                               "jmri.jmrix.direct.serial.ConnectionConfig",           // experimental
                               "jmri.jmrix.qsi.serialdriver.ConnectionConfig"         // experimental
         };
