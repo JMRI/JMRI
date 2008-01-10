@@ -9,7 +9,7 @@ import jmri.util.StringUtil;
  * packet.
  * 
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008
- * @version   $Revision: 1.5 $
+ * @version   $Revision: 1.6 $
  */
 
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
@@ -177,7 +177,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         } else // check various bank forms 
         if ( (b4&0xF0) <= 0x30 ) {
             // Bank 0-3 - signal command
-            result += "bank "+((b4&0xF0))>>4)+" signal "+((b2&0x78)>>3);
+            result += "bank "+((b4&0xF0)>>4)+" signal "+((b2&0x78)>>3);
             int cmd = b2&0x07;
             result += " cmd "+cmd;
             result +=" (set "+colorAsString(cmd);
