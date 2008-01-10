@@ -16,7 +16,7 @@ import java.io.*;
  * Frame for user edit of NCE Consists
  * 
  * NCE Consists are stored in Command Station (CS) memory starting at address
- * xF500 and ending xFAFF.  NCE supports up to 128 consists, numbered 0 to 127.
+ * xF500 and ending xFAFF.  NCE supports up to 127 consists, numbered 1 to 127.
  * They track the lead engine, rear engine, and four mid engines in the consist file.
  * NCE cabs start at consist 127 when building and reviewing consists, so we also
  * start with 127.  Consist lead engines are stored in memory locations xF500 through 
@@ -46,7 +46,7 @@ import java.io.*;
  * :0000
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -54,13 +54,13 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 	private static final int CS_CONSIST_MEM = 0xF500;	// start of NCE CS Consist memory 
 	private static final int CS_CON_MEM_REAR = 0xF600;	// start of rear consist engines
 	private static final int CS_CON_MEM_MID = 0xF700;	// start of mid consist engines
-	private static final int CONSIST_MIN = 1;
+	private static final int CONSIST_MIN = 1;			// NCE doesn't use consist 0
 	private static final int CONSIST_MAX = 127;
 	private static final int LOC_ADR_MIN = 1;
 	private static final int LOC_ADR_MAX = 9999;
 	private static final int LOC_ADR_REPLACE = 0x3FFF;	// dummy loco address used when replacing lead or rear loco
 	private int consistNum = 127;					// consist being worked
-	private int engineNum = 0; 						// which engine 
+	private int engineNum = 0; 						// which engine, 0 = lead, 1 = rear, 3 = mid 
 	private int consistNumVerify;					// which consist number we're checking
 	private int engineVerify;						// engine number being verified
 	private int engineDir;							// mid engine direction
@@ -86,8 +86,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 	
 	private boolean consistSearchInc = false;		// next search
 	private boolean consistSearchDec = false;		// previous search
-	private boolean leadEngineSearch = false;		// when true searching for lead engine
-	private boolean rearEngineSearch = false;		// when true searching for rear engine
+	private boolean engineSearch = false;			// when true searching for lead engine
 	private boolean engineMatch = false;			// when true found lead or rear engine in another consist
 	private int consistCount = 0;					// search count not to exceed CONSIST_MAX
 	private boolean secondRead = false;				// when true, another 16 byte read expected
@@ -406,24 +405,18 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 		if (consistSearchInc || consistSearchDec)
 			return;
 
-		if (ae.getSource() == cmdButton1) {
+		if (ae.getSource() == cmdButton1) 
 			modifyLocoFields(locoRosterBox1, engTextField1, adrButton1, dirButton1, cmdButton1);
-		}
-		if (ae.getSource() == cmdButton2) {
+		if (ae.getSource() == cmdButton2) 
 			modifyLocoFields(locoRosterBox2, engTextField2, adrButton2, dirButton2, cmdButton2);
-		}
-		if (ae.getSource() == cmdButton3) {
+		if (ae.getSource() == cmdButton3) 
 			modifyLocoFields(locoRosterBox3, engTextField3, adrButton3, dirButton3, cmdButton3);
-		}
-		if (ae.getSource() == cmdButton4) {
+		if (ae.getSource() == cmdButton4) 
 			modifyLocoFields(locoRosterBox4, engTextField4, adrButton4, dirButton4, cmdButton4);
-		}
-		if (ae.getSource() == cmdButton5) {
+		if (ae.getSource() == cmdButton5) 
 			modifyLocoFields(locoRosterBox5, engTextField5, adrButton5, dirButton5, cmdButton5);
-		}
-		if (ae.getSource() == cmdButton6) {
+		if (ae.getSource() == cmdButton6) 
 			modifyLocoFields(locoRosterBox6, engTextField6, adrButton6, dirButton6, cmdButton6);
-		}
 	}
 	
 	// one of six loco address type buttons
@@ -433,30 +426,18 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 		if (consistSearchInc || consistSearchDec)
 			return;
 		
-		if (ae.getSource() == adrButton1) {
+		if (ae.getSource() == adrButton1) 
 			toggleAdrButton (engTextField1, adrButton1);
-			
-		}
-		if (ae.getSource() == adrButton2) {
+		if (ae.getSource() == adrButton2) 
 			toggleAdrButton (engTextField2, adrButton2);
-			
-		}
-		if (ae.getSource() == adrButton3) {
+		if (ae.getSource() == adrButton3) 
 			toggleAdrButton (engTextField3, adrButton3);
-			
-		}
-		if (ae.getSource() == adrButton4) {
+		if (ae.getSource() == adrButton4) 
 			toggleAdrButton (engTextField4, adrButton4);
-			
-		}
-		if (ae.getSource() == adrButton5) {
+		if (ae.getSource() == adrButton5) 
 			toggleAdrButton (engTextField5, adrButton5);
-			
-		}
-		if (ae.getSource() == adrButton6) {
+		if (ae.getSource() == adrButton6) 
 			toggleAdrButton (engTextField6, adrButton6);
-			
-		}
 	}
 	
 	private void toggleAdrButton(JTextField engTextField, JButton adrButton) {
@@ -491,30 +472,18 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 		if (consistSearchInc || consistSearchDec)
 			return;
 		
-		if (ae.getSource() == dirButton1) {
+		if (ae.getSource() == dirButton1) 
 			toggleDirButton (engTextField1, dirButton1, cmdButton1);
-			
-		}
-		if (ae.getSource() == dirButton2) {
+		if (ae.getSource() == dirButton2) 
 			toggleDirButton (engTextField2, dirButton2, cmdButton2);
-			
-		}
-		if (ae.getSource() == dirButton3) {
+		if (ae.getSource() == dirButton3) 
 			toggleDirButton (engTextField3, dirButton3, cmdButton3);
-			
-		}
-		if (ae.getSource() == dirButton4) {
+		if (ae.getSource() == dirButton4) 
 			toggleDirButton (engTextField4, dirButton4, cmdButton4);
-			
-		}
-		if (ae.getSource() == dirButton5) {
+		if (ae.getSource() == dirButton5) 
 			toggleDirButton (engTextField5, dirButton5, cmdButton5);
-			
-		}
-		if (ae.getSource() == dirButton6) {
+		if (ae.getSource() == dirButton6) 
 			toggleDirButton (engTextField6, dirButton6, cmdButton6);
-			
-		}
 	}
 	
 	private void toggleDirButton(JTextField engTextField, JButton dirButton, JButton cmdButton) {
@@ -681,7 +650,7 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 			// Looking for proper response
 			int recChar = r.getElement(0);
 			if (recChar == '!'){
-				if (leadEngineSearch && waiting == 0){
+				if (engineSearch && waiting == 0){
 					byte[] bl = readConsistMemory(consistNumVerify, engineNum);
 					sendNceMessage(bl, REPLY_16);
 					consistReply.setText("verifying");
@@ -704,7 +673,7 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 		if (replyLen == REPLY_16) {
 			
 			// are we verifying that engine isn't already part of a consist?
-			if (leadEngineSearch) {
+			if (engineSearch) {
 				// search the 16 bytes for a loco match
 				for (int i = 0; i < 16;) {
 					int rC = r.getElement(i++);
@@ -715,7 +684,7 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 					if (rC == engineVerify) {
 						// ignore matching the consist that we're adding the loco  
 						if (consistNumVerify != consistNum) {
-							leadEngineSearch = false;
+							engineSearch = false;
 							consistReply.setText("error");
 							int engNum = rC & 0x3FFF;
 							JOptionPane.showMessageDialog(NceConsistEditFrame.this,
@@ -728,11 +697,12 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 				}
 				if (consistNumVerify > CONSIST_MAX) {
 					if (engineNum == 0) {
+						// now read the rear loco consist
 						engineNum++;
 						consistNumVerify = 0;
 					} else {
 						// verify complete, loco address is unique
-						leadEngineSearch = false;
+						engineSearch = false;
 						consistReply.setText("okay");
 						// load mid engine to this consist
 						if (engineDir >0){
@@ -746,6 +716,7 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 								sendNceMessage(bl, REPLY_1);
 							}
 						}
+						// must of been verifying lead or rear loco
 						else if (refresh && waiting == 0) {
 							refresh = false;
 							// update panel
@@ -755,6 +726,7 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 						return;
 					}
 				}
+				// continue verify
 				byte[] bl = readConsistMemory(consistNumVerify, engineNum);
 				sendNceMessage(bl, REPLY_16);
 				return;
@@ -1034,7 +1006,7 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 			// must be mid loco
 			} else {
 				// wait for verify before updating mid loco
-				if (leadEngineSearch) {
+				if (engineSearch) {
 					if (dirButton.getText() == FWD)
 						engineDir = MID_FWD;
 					else
@@ -1097,7 +1069,7 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 		if (checkBoxVerify.isSelected()){
 			engineNum = 0;
 			engineVerify = locoAddr;
-			leadEngineSearch = true;
+			engineSearch = true;
 			consistNumVerify = 0;
 		} 
 	}
