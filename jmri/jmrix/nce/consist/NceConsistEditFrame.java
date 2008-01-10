@@ -2,6 +2,9 @@
 
 package jmri.jmrix.nce.consist;
 
+import jmri.DccLocoAddress;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrix.nce.*;
 
 import java.awt.*;
@@ -43,7 +46,7 @@ import java.io.*;
  * :0000
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -55,16 +58,22 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 	private static final int CONSIST_MAX = 127;
 	private static final int LOC_ADR_MIN = 1;
 	private static final int LOC_ADR_MAX = 9999;
-	private static final int LOC_ADR_REPLACE = 0xFFFF;	// dummy loco address used when replacing lead or rear loco
+	private static final int LOC_ADR_REPLACE = 0x3FFF;	// dummy loco address used when replacing lead or rear loco
 	private int consistNum = 127;					// consist being worked
 	private int engineNum = 0; 						// which engine 
+	private int consistNumVerify;					// which consist number we're checking
+	private int engineVerify;						// engine number being verified
+	private int engineDir;							// mid engine direction
+	private static final int MID_NONE = 0;			// not mid engine being verified 
+	private static final int MID_FWD = 1;			// mid engine foward being verified
+	private static final int MID_REV = 2;			// mid engine reverse being verified
 	private static final int REPLY_1 = 1;			// reply length of 1 byte expected
 	private static final int REPLY_16 = 16;			// reply length of 16 bytes expected
 	private int replyLen = 0;						// expected byte length
 	private int waiting = 0;						// to catch responses not intended for this module
 	
-	private static final String DELETE = "Delete";
-	private static final String ADD = " Add ";
+	private static final String DELETE = "  Delete ";
+	private static final String ADD = "    Add   ";
 	private static final String REPLACE = "Replace";
 	private static final String QUESTION = "  ??  ";
 	private static final String FWD = "Forward";
@@ -77,6 +86,9 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 	
 	private boolean consistSearchInc = false;		// next search
 	private boolean consistSearchDec = false;		// previous search
+	private boolean leadEngineSearch = false;		// when true searching for lead engine
+	private boolean rearEngineSearch = false;		// when true searching for rear engine
+	private boolean engineMatch = false;			// when true found lead or rear engine in another consist
 	private int consistCount = 0;					// search count not to exceed CONSIST_MAX
 	private boolean secondRead = false;				// when true, another 16 byte read expected
 	private boolean consistValid = false;			// when true, NCE CS has responed to consist read
@@ -100,12 +112,14 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
     
     // check boxes
     javax.swing.JCheckBox checkBoxEmpty = new javax.swing.JCheckBox ();
+    javax.swing.JCheckBox checkBoxVerify = new javax.swing.JCheckBox ();
   
     // consist text field
     javax.swing.JTextField consistTextField = new javax.swing.JTextField(4);
     
     // labels
     javax.swing.JLabel textEngine = new javax.swing.JLabel();
+    javax.swing.JLabel textRoster = new javax.swing.JLabel();
     javax.swing.JLabel textAddress = new javax.swing.JLabel();
     javax.swing.JLabel textAddrType = new javax.swing.JLabel();
     javax.swing.JLabel textDirection = new javax.swing.JLabel();
@@ -117,6 +131,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
     // lead engine
     javax.swing.JLabel textEng1 = new javax.swing.JLabel();
     javax.swing.JTextField engTextField1 = new javax.swing.JTextField(4);
+    javax.swing.JComboBox locoRosterBox1 = Roster.instance().fullRosterComboBox();
     javax.swing.JButton adrButton1 = new javax.swing.JButton();
     javax.swing.JButton cmdButton1 = new javax.swing.JButton();
     javax.swing.JButton dirButton1 = new javax.swing.JButton();
@@ -124,6 +139,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
     //  rear engine
     javax.swing.JLabel textEng2 = new javax.swing.JLabel();
     javax.swing.JTextField engTextField2 = new javax.swing.JTextField(4);
+    javax.swing.JComboBox locoRosterBox2 = Roster.instance().fullRosterComboBox();
     javax.swing.JButton adrButton2 = new javax.swing.JButton();
     javax.swing.JButton cmdButton2 = new javax.swing.JButton();
     javax.swing.JButton dirButton2 = new javax.swing.JButton();
@@ -131,6 +147,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
     //  mid engine
     javax.swing.JLabel textEng3 = new javax.swing.JLabel();
     javax.swing.JTextField engTextField3 = new javax.swing.JTextField(4);
+    javax.swing.JComboBox locoRosterBox3 = Roster.instance().fullRosterComboBox();
     javax.swing.JButton adrButton3 = new javax.swing.JButton();
     javax.swing.JButton cmdButton3 = new javax.swing.JButton();
     javax.swing.JButton dirButton3 = new javax.swing.JButton();
@@ -138,6 +155,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
     //  mid engine
     javax.swing.JLabel textEng4 = new javax.swing.JLabel();
     javax.swing.JTextField engTextField4 = new javax.swing.JTextField(4);
+    javax.swing.JComboBox locoRosterBox4 = Roster.instance().fullRosterComboBox();
     javax.swing.JButton adrButton4 = new javax.swing.JButton();
     javax.swing.JButton cmdButton4 = new javax.swing.JButton();
     javax.swing.JButton dirButton4 = new javax.swing.JButton();
@@ -145,6 +163,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
     //  mid engine
     javax.swing.JLabel textEng5 = new javax.swing.JLabel();
     javax.swing.JTextField engTextField5 = new javax.swing.JTextField(4);
+    javax.swing.JComboBox locoRosterBox5 = Roster.instance().fullRosterComboBox();
     javax.swing.JButton adrButton5 = new javax.swing.JButton();
     javax.swing.JButton cmdButton5 = new javax.swing.JButton();
     javax.swing.JButton dirButton5 = new javax.swing.JButton();
@@ -152,6 +171,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
     //  mid engine
     javax.swing.JLabel textEng6 = new javax.swing.JLabel();
     javax.swing.JTextField engTextField6 = new javax.swing.JTextField(4);
+    javax.swing.JComboBox locoRosterBox6 = Roster.instance().fullRosterComboBox();
     javax.swing.JButton adrButton6 = new javax.swing.JButton();
     javax.swing.JButton cmdButton6 = new javax.swing.JButton();
     javax.swing.JButton dirButton6 = new javax.swing.JButton();
@@ -175,7 +195,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 
         previousButton.setText("Previous");
         previousButton.setVisible(true);
-        previousButton.setToolTipText("Search for consist inccrementing");
+        previousButton.setToolTipText("Search for consist incrementing");
         
         nextButton.setText("   Next   ");
         nextButton.setVisible(true);
@@ -192,6 +212,8 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
         
 		textEngine.setText("Engine");
 		textEngine.setVisible(true);
+		textRoster.setText("Roster");
+		textRoster.setVisible(true);
 		textAddress.setText("Address");
 		textAddress.setVisible(true);
 		textAddrType.setText("Type");
@@ -202,7 +224,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 		clearButton.setText("Clear");
         clearButton.setVisible(true);
         clearButton.setEnabled (false);
-        clearButton.setToolTipText("Clear this consist");
+        clearButton.setToolTipText("Remove all engines from this consist");
 		
 		saveButton.setText("Save");
         saveButton.setVisible(false);
@@ -220,6 +242,11 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 		checkBoxEmpty.setText("Empty Consist");
         checkBoxEmpty.setVisible(true);
         checkBoxEmpty.setToolTipText("Check to search for empty consists");
+        
+		checkBoxVerify.setText("Verify engine");
+        checkBoxVerify.setVisible(true);
+        checkBoxVerify.setSelected(true);
+        checkBoxVerify.setToolTipText("Verify that add engine isn't already a consist lead or rear engine");
         
         space1.setText("            ");
         space1.setVisible(true);
@@ -245,33 +272,36 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
         addItem(textReply, 0,2);
         addItem(consistReply, 1,2);
         addItem(getButton, 2,2);
+        addItem(checkBoxVerify, 4,2);
         
         // row 3 padding for looks
         addItem(space1, 1,3);
         
         // row 4 labels
         addItem(textEngine, 0,4);
-        addItem(textAddress, 1,4);
-        addItem(textAddrType, 2,4);
-        addItem(textDirection, 3,4);
+        addItem(textRoster, 1,4);
+        addItem(textAddress, 2,4);
+        addItem(textAddrType, 3,4);
+        addItem(textDirection, 4,4);
+              
         
         // row 5 Lead Engine
-        addEngRow (textEng1, engTextField1, adrButton1, dirButton1, cmdButton1,  5);
+        addEngRow (textEng1, locoRosterBox1, engTextField1, adrButton1, dirButton1, cmdButton1,  5);
           
         // row 6 Rear Engine
-        addEngRow (textEng2, engTextField2, adrButton2, dirButton2, cmdButton2,  6);
+        addEngRow (textEng2, locoRosterBox2, engTextField2, adrButton2, dirButton2, cmdButton2,  6);
         
         // row 7 Mid Engine
-        addEngRow (textEng3, engTextField3, adrButton3, dirButton3, cmdButton3,  7);
+        addEngRow (textEng3, locoRosterBox3, engTextField3, adrButton3, dirButton3, cmdButton3,  7);
         
         // row 8 Mid Engine
-        addEngRow (textEng4, engTextField4, adrButton4, dirButton4, cmdButton4,  8);
+        addEngRow (textEng4, locoRosterBox4, engTextField4, adrButton4, dirButton4, cmdButton4,  8);
         
         // row 9 Mid Engine
-        addEngRow (textEng5, engTextField5, adrButton5, dirButton5, cmdButton5,  9);
+        addEngRow (textEng5, locoRosterBox5, engTextField5, adrButton5, dirButton5, cmdButton5,  9);
         
         // row 10 Mid Engine
-        addEngRow (textEng6, engTextField6, adrButton6, dirButton6, cmdButton6,  10);
+        addEngRow (textEng6, locoRosterBox6, engTextField6, adrButton6, dirButton6, cmdButton6,  10);
         
         // row 15 padding for looks
         addItem(space2, 2,15);
@@ -290,34 +320,10 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
         addButtonAction(saveButton);
         addButtonAction(backUpButton);
         addButtonAction(restoreButton);
-        
-        // engine address length buttons
-        addButtonAdrAction(adrButton1);
-        addButtonAdrAction(adrButton2);
-        addButtonAdrAction(adrButton3);
-        addButtonAdrAction(adrButton4);
-        addButtonAdrAction(adrButton5);
-        addButtonAdrAction(adrButton6);
-        
-        // engine direction buttons
-        addButtonDirAction(dirButton1);
-        addButtonDirAction(dirButton2);
-        addButtonDirAction(dirButton3);
-        addButtonDirAction(dirButton4);
-        addButtonDirAction(dirButton5);
-        addButtonDirAction(dirButton6);
-        
-        // engine command buttons
-        addButtonCmdAction(cmdButton1);
-        addButtonCmdAction(cmdButton2);
-        addButtonCmdAction(cmdButton3);
-        addButtonCmdAction(cmdButton4);
-        addButtonCmdAction(cmdButton5);
-        addButtonCmdAction(cmdButton6);
-        
+         
         // set frame size for display
-        this.setSize (400,350);
-    }
+        this.setSize (450,350);
+     }
  
     // Previous, Next, Get, Clear, Save, Restore & Backup buttons
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
@@ -401,22 +407,22 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 			return;
 
 		if (ae.getSource() == cmdButton1) {
-			modifyLocoFields(engTextField1, adrButton1, dirButton1, cmdButton1);
+			modifyLocoFields(locoRosterBox1, engTextField1, adrButton1, dirButton1, cmdButton1);
 		}
 		if (ae.getSource() == cmdButton2) {
-			modifyLocoFields(engTextField2, adrButton2, dirButton2, cmdButton2);
+			modifyLocoFields(locoRosterBox2, engTextField2, adrButton2, dirButton2, cmdButton2);
 		}
 		if (ae.getSource() == cmdButton3) {
-			modifyLocoFields(engTextField3, adrButton3, dirButton3, cmdButton3);
+			modifyLocoFields(locoRosterBox3, engTextField3, adrButton3, dirButton3, cmdButton3);
 		}
 		if (ae.getSource() == cmdButton4) {
-			modifyLocoFields(engTextField4, adrButton4, dirButton4, cmdButton4);
+			modifyLocoFields(locoRosterBox4, engTextField4, adrButton4, dirButton4, cmdButton4);
 		}
 		if (ae.getSource() == cmdButton5) {
-			modifyLocoFields(engTextField5, adrButton5, dirButton5, cmdButton5);
+			modifyLocoFields(locoRosterBox5, engTextField5, adrButton5, dirButton5, cmdButton5);
 		}
 		if (ae.getSource() == cmdButton6) {
-			modifyLocoFields(engTextField6, adrButton6, dirButton6, cmdButton6);
+			modifyLocoFields(locoRosterBox6, engTextField6, adrButton6, dirButton6, cmdButton6);
 		}
 	}
 	
@@ -533,8 +539,38 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 			dirButton.setText(FWD);
 		}
 	}
-
-	//RFU
+	
+	   
+    // one of six roster select, load engine number and address length
+    public void locoSelected(java.awt.event.ActionEvent ae) {
+    	if (ae.getSource() == locoRosterBox1)
+    		rosterBoxSelect(locoRosterBox1, engTextField1, adrButton1);
+       	if (ae.getSource() == locoRosterBox2)
+    		rosterBoxSelect(locoRosterBox2, engTextField2, adrButton2);
+       	if (ae.getSource() == locoRosterBox3)
+    		rosterBoxSelect(locoRosterBox3, engTextField3, adrButton3);
+       	if (ae.getSource() == locoRosterBox4)
+    		rosterBoxSelect(locoRosterBox4, engTextField4, adrButton4);
+       	if (ae.getSource() == locoRosterBox5)
+    		rosterBoxSelect(locoRosterBox5, engTextField5, adrButton5);
+       	if (ae.getSource() == locoRosterBox6)
+    		rosterBoxSelect(locoRosterBox6, engTextField6, adrButton6);
+    }
+    
+    private void rosterBoxSelect (JComboBox locoRosterBox, JTextField engTextField, JButton adrButton){
+    	 
+        String rosterEntryTitle = locoRosterBox.getSelectedItem().toString();
+        if (rosterEntryTitle == "") return;
+        RosterEntry entry = Roster.instance().entryFromTitle(rosterEntryTitle);
+        DccLocoAddress a = entry.getDccLocoAddress();
+        if (a!=null) {
+        	engTextField.setText(""+a.getNumber());
+            if (a.isLongAddress()) adrButton.setText(LONG);
+            else adrButton.setText(SHORT);
+        }
+     }
+  
+   	//RFU
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
 	}
     
@@ -604,13 +640,13 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
     	int nceConsistBaseMemory = CS_CONSIST_MEM;
     	if (eNum == 1)
     		nceConsistBaseMemory = CS_CON_MEM_REAR;
-    	int nceMacroAddr = (consistNum * 2) + nceConsistBaseMemory;
+    	int nceMemAddr = (consistNum * 2) + nceConsistBaseMemory;
     	if (eNum == 2){
     		nceConsistBaseMemory = CS_CON_MEM_MID;
-    		nceMacroAddr = (consistNum * 8) + nceConsistBaseMemory;
+    		nceMemAddr = (consistNum * 8) + nceConsistBaseMemory;
     	}
  
- 		byte[] bl = NceBinaryCommand.accMemoryRead(nceMacroAddr);
+ 		byte[] bl = NceBinaryCommand.accMemoryRead(nceMemAddr);
 		return bl;
     }
  
@@ -645,6 +681,12 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 			// Looking for proper response
 			int recChar = r.getElement(0);
 			if (recChar == '!'){
+				if (leadEngineSearch && waiting == 0){
+					byte[] bl = readConsistMemory(consistNumVerify, engineNum);
+					sendNceMessage(bl, REPLY_16);
+					consistReply.setText("verifying");
+					return;
+				}
 				consistReply.setText("okay");
 				if (refresh && waiting == 0){
 					refresh = false;
@@ -661,10 +703,67 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 		// Consist memory read
 		if (replyLen == REPLY_16) {
 			
+			// are we verifying that engine isn't already part of a consist?
+			if (leadEngineSearch) {
+				// search the 16 bytes for a loco match
+				for (int i = 0; i < 16;) {
+					int rC = r.getElement(i++);
+					rC = (rC << 8) & 0xFF00;
+					int rC_l = r.getElement(i++);
+					rC_l = rC_l & 0xFF;
+					rC = rC + rC_l;
+					if (rC == engineVerify) {
+						// ignore matching the consist that we're adding the loco  
+						if (consistNumVerify != consistNum) {
+							leadEngineSearch = false;
+							consistReply.setText("error");
+							int engNum = rC & 0x3FFF;
+							JOptionPane.showMessageDialog(NceConsistEditFrame.this,
+									"Loco address "+ engNum + " is part of consist " + consistNumVerify, "NCE Consist",
+									JOptionPane.ERROR_MESSAGE);
+							return;
+						}
+					}
+					consistNumVerify++;
+				}
+				if (consistNumVerify > CONSIST_MAX) {
+					if (engineNum == 0) {
+						engineNum++;
+						consistNumVerify = 0;
+					} else {
+						// verify complete, loco address is unique
+						leadEngineSearch = false;
+						consistReply.setText("okay");
+						// load mid engine to this consist
+						if (engineDir >0){
+							if (engineDir == MID_FWD){
+								byte[] bl = NceBinaryCommand.nceLocoCmd(engineVerify,
+										NceBinaryCommand.LOCO_CMD_FWD_CONSIST_MID, (byte)consistNum);
+								sendNceMessage(bl, REPLY_1);
+							} else {
+								byte[] bl = NceBinaryCommand.nceLocoCmd(engineVerify,
+										NceBinaryCommand.LOCO_CMD_REV_CONSIST_MID, (byte)consistNum);
+								sendNceMessage(bl, REPLY_1);
+							}
+						}
+						else if (refresh && waiting == 0) {
+							refresh = false;
+							// update panel
+							byte[] bl = readConsistMemory(consistNum, 0);
+							sendNceMessage(bl, REPLY_16);
+						}
+						return;
+					}
+				}
+				byte[] bl = readConsistMemory(consistNumVerify, engineNum);
+				sendNceMessage(bl, REPLY_16);
+				return;
+			}
+			
 			// load lead engine
 			if (engineNum == 0) {
 
-				boolean eng1exists = updateLocoFields (r, 0, engTextField1, adrButton1, dirButton1, cmdButton1);
+				boolean eng1exists = updateLocoFields (r, 0, locoRosterBox1, engTextField1, adrButton1, dirButton1, cmdButton1);
 
 				clearButton.setEnabled (eng1exists);
 				
@@ -699,15 +798,15 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 				// load rear engine
 			} else if (engineNum == 1) {
 
-				updateLocoFields (r, 0, engTextField2, adrButton2, dirButton2, cmdButton2);
+				updateLocoFields (r, 0, locoRosterBox2, engTextField2, adrButton2, dirButton2, cmdButton2);
 
 				// load mid engines
 			} else {
 
-				updateLocoFields (r, 0, engTextField3, adrButton3, dirButton3, cmdButton3);
-				updateLocoFields (r, 2, engTextField4, adrButton4, dirButton4, cmdButton4);
-				updateLocoFields (r, 4, engTextField5, adrButton5, dirButton5, cmdButton5);
-				updateLocoFields (r, 6, engTextField6, adrButton6, dirButton6, cmdButton6);
+				updateLocoFields (r, 0, locoRosterBox3, engTextField3, adrButton3, dirButton3, cmdButton3);
+				updateLocoFields (r, 2, locoRosterBox4, engTextField4, adrButton4, dirButton4, cmdButton4);
+				updateLocoFields (r, 4, locoRosterBox5, engTextField5, adrButton5, dirButton5, cmdButton5);
+				updateLocoFields (r, 6, locoRosterBox6, engTextField6, adrButton6, dirButton6, cmdButton6);
 				
 			}
 
@@ -746,7 +845,7 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 	}
 	
 	// update loco fields, returns false if loco address is null
-	private boolean updateLocoFields (NceReply r, int i, JTextField engTextField, JButton adrButton, JButton dirButton, JButton cmdButton ){
+	private boolean updateLocoFields (NceReply r, int i, JComboBox locoRosterBox, JTextField engTextField, JButton adrButton, JButton dirButton, JButton cmdButton ){
 		
 		String locoAddr = getLocoAddr(r, i);
 		boolean locoType = getLocoType (r, i); 
@@ -756,6 +855,8 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 		
 		if (locoAddr == EMPTY){
 			
+			locoRosterBox.setEnabled (true);
+			locoRosterBox.setSelectedIndex(0);
 			engTextField.setEnabled(true);
 			
 			cmdButton.setText(ADD);
@@ -773,6 +874,8 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 			
 		}else{
 			
+			locoRosterBox.setEnabled (false);
+			locoRosterBox.setSelectedIndex(0);
 			engTextField.setEnabled(false);
 			
 			// can not delete lead or rear locos, but can replace
@@ -801,7 +904,7 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 	}
 	
 	// modify loco fields
-	private void modifyLocoFields(JTextField engTextField, JButton adrButton,
+	private void modifyLocoFields(JComboBox locoRosterBox, JTextField engTextField, JButton adrButton,
 			JButton dirButton, JButton cmdButton) {
 		
 		if (validLocoAdr(engTextField.getText())<0)
@@ -839,6 +942,7 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 	
 			//allow user to add loco to lead or rear consist
 	
+			locoRosterBox.setEnabled (true);
 			engTextField.setText(EMPTY);
 			engTextField.setEnabled (true);
 			adrButton.setEnabled (true);
@@ -894,6 +998,9 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 					NceBinaryCommand.LOCO_CMD_DELETE_LOCO_CONSIST, (byte) 0);
 			sendNceMessage(bl, REPLY_1);
 			
+			// check to see if loco is already a lead or rear in another consist
+			verifyLocoAddr (locoAddr);
+			
 			// now we need to determine if lead, rear, or mid loco
 			
 			// lead loco?
@@ -905,7 +1012,6 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 					sendNceMessage(bl, REPLY_1);
 				}
 				if (dirButton.getText() == REV) {
-
 					bl = NceBinaryCommand.nceLocoCmd(locoAddr,
 							NceBinaryCommand.LOCO_CMD_REV_CONSIST_LEAD, cN);
 					sendNceMessage(bl, REPLY_1);
@@ -920,7 +1026,6 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 					sendNceMessage(bl, REPLY_1);
 				}
 				if (dirButton.getText() == REV) {
-
 					bl = NceBinaryCommand.nceLocoCmd(locoAddr,
 							NceBinaryCommand.LOCO_CMD_REV_CONSIST_REAR, cN);
 					sendNceMessage(bl, REPLY_1);
@@ -928,17 +1033,25 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 			
 			// must be mid loco
 			} else {
+				// wait for verify before updating mid loco
+				if (leadEngineSearch) {
+					if (dirButton.getText() == FWD)
+						engineDir = MID_FWD;
+					else
+						engineDir = MID_REV;
 
-				if (dirButton.getText() == FWD) {
-					bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-							NceBinaryCommand.LOCO_CMD_FWD_CONSIST_MID, cN);
-					sendNceMessage(bl, REPLY_1);
-				}
-				if (dirButton.getText() == REV) {
+				} else {
 
-					bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-							NceBinaryCommand.LOCO_CMD_REV_CONSIST_MID, cN);
-					sendNceMessage(bl, REPLY_1);
+					if (dirButton.getText() == FWD) {
+						bl = NceBinaryCommand.nceLocoCmd(locoAddr,
+								NceBinaryCommand.LOCO_CMD_FWD_CONSIST_MID, cN);
+						sendNceMessage(bl, REPLY_1);
+					}
+					if (dirButton.getText() == REV) {
+						bl = NceBinaryCommand.nceLocoCmd(locoAddr,
+								NceBinaryCommand.LOCO_CMD_REV_CONSIST_MID, cN);
+						sendNceMessage(bl, REPLY_1);
+					}
 				}
 			}
 		}
@@ -948,7 +1061,7 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 		NceMessage m = NceMessage.createBinaryMessage(b, replyLength);
 		int testcount = 0;
 		waiting++;
-		replyLen = replyLength;			// Expect 1 byte response
+		replyLen = replyLength;			// Expect n byte response
 
 		NceTrafficController.instance().sendNceMessage(m, this);
 	}
@@ -972,19 +1085,30 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 		rC_l = rC_l&0xFF;
 		rC = rC + rC_l;
 		String locoAddr = EMPTY;
-		if (rC != 0){
+		if (rC != 0 & rC != LOC_ADR_REPLACE){
 			locoAddr = Integer.toString (rC);
 		}
 		return locoAddr;
 	}
- 
-    
-    private void addEngRow (JComponent col1, JComponent col2, JComponent col3, JComponent col4, JComponent col5, int row){
+	
+	// check command station memory for lead or rear loco match
+	private void verifyLocoAddr (int locoAddr){
+		engineDir = MID_NONE;
+		if (checkBoxVerify.isSelected()){
+			engineNum = 0;
+			engineVerify = locoAddr;
+			leadEngineSearch = true;
+			consistNumVerify = 0;
+		} 
+	}
+     
+    private void addEngRow (JComponent col1, JComponent col2, JComponent col3, JComponent col4, JComponent col5, JComponent col6, int row){
         addItem(col1,0,row); 
         addItem(col2,1,row);
         addItem(col3,2,row);
         addItem(col4,3,row);
         addItem(col5,4,row);
+        addItem(col6,5,row);
      }
     
     private void addItem(JComponent c, int x, int y ){
@@ -1003,32 +1127,7 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 			}
 		});
 	}
-    
-	private void addButtonAdrAction(JButton b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				buttonActionAdrPerformed(e);
-			}
-		});
-	}  
-
-	private void addButtonDirAction(JButton b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				buttonActionDirPerformed(e);
-			}
-		});
-	}  
-    
-
-	private void addButtonCmdAction(JButton b) {
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				buttonActionCmdPerformed(e);
-			}
-		});
-	}  
-     
+ 
     private void addCheckBoxAction (JCheckBox cb){
 		cb.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -1039,15 +1138,15 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
     
     //  initialize engine fields
     private void initEngFields() {
-    	initEngRow(1, "Lead", textEng1, engTextField1, adrButton1, dirButton1, cmdButton1);
-    	initEngRow(2, "Rear", textEng2, engTextField2, adrButton2, dirButton2, cmdButton2);
-    	initEngRow(3, "Mid 1", textEng3, engTextField3, adrButton3, dirButton3, cmdButton3);
-    	initEngRow(4, "Mid 2", textEng4, engTextField4, adrButton4, dirButton4, cmdButton4);
-    	initEngRow(5, "Mid 3", textEng5, engTextField5, adrButton5, dirButton5, cmdButton5);
-    	initEngRow(6, "Mid 4", textEng6, engTextField6, adrButton6, dirButton6, cmdButton6);
+    	initEngRow(1, "Lead", textEng1, engTextField1, locoRosterBox1, adrButton1, dirButton1, cmdButton1);
+    	initEngRow(2, "Rear", textEng2, engTextField2, locoRosterBox2, adrButton2, dirButton2, cmdButton2);
+    	initEngRow(3, "Mid 1", textEng3, engTextField3, locoRosterBox3, adrButton3, dirButton3, cmdButton3);
+    	initEngRow(4, "Mid 2", textEng4, engTextField4, locoRosterBox4, adrButton4, dirButton4, cmdButton4);
+    	initEngRow(5, "Mid 3", textEng5, engTextField5, locoRosterBox5, adrButton5, dirButton5, cmdButton5);
+    	initEngRow(6, "Mid 4", textEng6, engTextField6, locoRosterBox6, adrButton6, dirButton6, cmdButton6);
 	}
     
-    private void initEngRow(int row, String s, JLabel textEng, JTextField engTextField, JButton adrButton, JButton dirButton, JButton cmdButton) {
+    private void initEngRow(int row, String s, JLabel textEng, JTextField engTextField, JComboBox locoRosterBox, JButton adrButton, JButton dirButton, JButton cmdButton) {
 		
 		textEng.setText(s);
 		textEng.setVisible(true);
@@ -1056,18 +1155,45 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 		adrButton.setVisible(true);
 		adrButton.setEnabled(false);
 		adrButton.setToolTipText("Press to change address type");
+		adrButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				buttonActionAdrPerformed(e);
+			}
+		});
+		
+        locoRosterBox.insertItemAt("", 0);
+		locoRosterBox.setSelectedIndex(0);
+		locoRosterBox.setVisible(true);
+		locoRosterBox.setEnabled(false);
+		locoRosterBox.setToolTipText("Select engine from roster");
+		locoRosterBox.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				locoSelected(e);
+			}
+		});
 		
 		dirButton.setText(QUESTION);
 		dirButton.setVisible(true);
 		dirButton.setEnabled(false);
 		dirButton.setToolTipText("Press to change engine direction");
+		dirButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				buttonActionDirPerformed(e);
+			}
+		});
 		
 		cmdButton.setText(ADD);
 		cmdButton.setVisible(true);
 		cmdButton.setEnabled(false);
 		cmdButton.setToolTipText(ToolTipAdd);
+		cmdButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				buttonActionCmdPerformed(e);
+			}
+		});
 
 		engTextField.setText(EMPTY);
+		engTextField.setEnabled(false);
 		engTextField.setToolTipText("Enter engine address");
 		engTextField.setMaximumSize(new Dimension(engTextField
 				.getMaximumSize().width,
