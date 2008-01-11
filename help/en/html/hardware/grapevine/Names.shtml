@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: Names.shtml,v 1.2 2008-01-10 08:06:43 jacobsen Exp $ -->
+<!-- $Id: Names.shtml,v 1.3 2008-01-11 16:51:53 jacobsen Exp $ -->
 <title>JMRI: Grapevine System Names</title>
 
 <!-- Style -->
@@ -69,15 +69,34 @@ Grapevine nodes have a number of possible inputs:
  <dt>
     Serial Occupancy Sensor Cards
  </dt><dd>
-    Up to three serial occupancy sensor cards can be attached
+    Advanced serial occupancy sensor cards (ASCs) can be attached
     to each node.  Each one senses occupancy on up to eight track
     segments. In addition, "occupancy" and "motion" are
     separately detected.
+    <p>
+    Sensors on these cards are numbered in groups of 20, starting
+    with 041.  With each group, the occupancy sensors are 
+    start with 1, and the motion sensors start with 10.
+    <p>
+    Examples, all for node 22:
+    <ul>
+    <li>GS22041 is the occupancy sensor for the first block input on the 1st ASC.
+        GS22051 is the corresponding motion sensor for the first 
+        block input on the 1st ASC.
+    <li>GS22061 is the occupancy sensor for the first block input on the 2nd ASC.
+        GS22071 is the corresponding motion sensor for the first 
+        block input on the 2nd ASC.
+    <li>GS22088 is the occupancy sensor for the 8th block input on the 3rd ASC.
+        GS22098 is the corresponding motion sensor for the 8th 
+        block input on the 3rd ASC.
+    </ul>
  </dd>
  <dt>
     Older Occupancy Sensors
  </dt><dd>
-    (TBD)
+    A small number of nodes have older serial occupancy detectors
+    attached.  If you have one of these, the sensors will appear
+    as 021 through 036.
  </dd>
 </dl>
 <h3>Outputs</h3>
@@ -108,6 +127,11 @@ output numbers.
 For example, to use the 3rd connector on the 2nd driver card on node 1, 
 define a Grapevine signal head using system name GH1027.  (The 2nd driver card starts with
 number 025, so the 3rd connection is 25, 26, 27)
+
+<h3>More Information</h3>
+
+More information on the Grapevine hardware can be found on the
+<a href="http://www.protrak.cc">ProTrak web site</a>.
 
 <!--#include virtual="/Footer" -->
 </body>
