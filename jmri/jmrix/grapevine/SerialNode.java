@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRMessage;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class SerialNode {
 
@@ -265,19 +265,22 @@ public class SerialNode {
         if (l.isFromNewSerialSensor()) {
             // Serial sensor has only one bit. Extract value, then address
             boolean input = ((l.getElement(1)&0x01)!=0);
-            int number = ((l.getElement(1)&0x7E)>>1) +1;
+            int card = ((l.getElement(1)&0x60)>>5); // number from 0
+            boolean motion = (l.getElement(1)&0x10) !=0;
+            int number = ((l.getElement(1)&0x0E)>>1) +1;
+            int sensor = card*20+(motion?10:0)+number+40;
             // Update
-            markBit(input, number);
+            markBit(input, sensor);
         } else if (l.isFromOldSerialSensor()) {
             // Serial sensor brings in a nibble of four bits
             int byte1 = l.getElement(1);
-            boolean oldSerial  = ( (byte1&0x20) != 0);
+            boolean altPort  = ( (byte1&0x40) != 0);
             boolean highNibble = ( (byte1&0x10) != 0);
             boolean b0 = (byte1 & 0x01) == 0;
             boolean b1 = (byte1 & 0x02) == 0;
             boolean b2 = (byte1 & 0x04) == 0;
             boolean b3 = (byte1 & 0x08) == 0;
-            int number = 1 + (highNibble ? 4 : 0) + (!oldSerial ? 100 : 0);
+            int number = 1 + (highNibble ? 4 : 0) + (altPort ? 8 : 0) + 20;
             markBit(b0, number);
             markBit(b1, number+1);
             markBit(b2, number+2);
@@ -285,13 +288,13 @@ public class SerialNode {
         } else {
             // Parallel sensor brings in a nibble of four bits
             int byte1 = l.getElement(1);
-            boolean oldSerial  = ( (byte1&0x20) != 0);
+            boolean altPort  = ( (byte1&0x40) != 0);
             boolean highNibble = ( (byte1&0x10) != 0);
             boolean b0 = (byte1 & 0x01) == 0;
             boolean b1 = (byte1 & 0x02) == 0;
             boolean b2 = (byte1 & 0x04) == 0;
             boolean b3 = (byte1 & 0x08) == 0;
-            int number = 1 + (highNibble ? 4 : 0) + (!oldSerial ? 50 : 0);
+            int number = 1 + (highNibble ? 4 : 0) + (altPort ? 8 : 0);
             markBit(b0, number);
             markBit(b1, number+1);
             markBit(b2, number+2);
@@ -385,7 +388,7 @@ public class SerialNode {
         else {
             // multiple registration of the same sensor
             log.warn("multiple registration of same sensor: GS"+
-                    Integer.toString((nodeAddress*SerialSensorManager.SENSORSPERNODE) + i + 1) );
+                     Integer.toString((nodeAddress*SerialSensorManager.SENSORSPERNODE) + i) );
         }
     }
 
