@@ -26,7 +26,7 @@ import java.util.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.41 $
+ * @version			$Revision: 1.42 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -263,6 +263,7 @@ abstract public class AbstractMRTrafficController {
                             xmtRunnable.wait(m.getTimeout()); // rcvr normally ends this w state change
                         }
                     } catch (InterruptedException e) { log.error("transmitLoop interrupted"); }
+                    checkReplyInDispatch();
                     if (mCurrentState == WAITMSGREPLYSTATE) {
                         handleTimeout(m);
                     } else {
@@ -313,6 +314,7 @@ abstract public class AbstractMRTrafficController {
                                     xmtRunnable.wait(msg.getTimeout());
                                 }
                             } catch (InterruptedException e) { log.error("interrupted while waiting poll reply"); }
+                            checkReplyInDispatch();
                             // and go around again
                             if (mCurrentState == WAITMSGREPLYSTATE) {
                                 handleTimeout(msg);
@@ -327,6 +329,32 @@ abstract public class AbstractMRTrafficController {
             }
         }   // end of permanent loop; go around again
     }
+    
+    // Dispatch control and timer
+    private boolean replyInDispatch = false;			// true when reply has been received but dispatch not completed
+    private int maxDispatchTime = 0;
+    private static final int DISPATCH_WAIT_INTERVAL = 100;
+    private static final int DISPATCH_WARNING_TIME = 8000;	// report warning when max dispatch time exceeded
+    
+    private void checkReplyInDispatch() {
+		int loopCount = 0;
+		while (replyInDispatch) {
+			try {
+				synchronized (xmtRunnable) {
+					xmtRunnable.wait(DISPATCH_WAIT_INTERVAL);
+				}
+			} catch (InterruptedException e) {
+				log.error("transmitLoop interrupted");
+			}
+			loopCount++;
+			int currentDispatchTime = loopCount * DISPATCH_WAIT_INTERVAL;
+			if (currentDispatchTime > maxDispatchTime) {
+				maxDispatchTime = currentDispatchTime;
+				if (maxDispatchTime > DISPATCH_WARNING_TIME)
+					log.warn("Max dispatch time is now " + maxDispatchTime);
+			}
+		}
+	}
     
     // used to determine if interface is down
     public static boolean hasTimeouts(){
@@ -486,6 +514,9 @@ abstract public class AbstractMRTrafficController {
                 public void run() { receiveLoop(); }
             });
             rcvThread.setName("Receive");
+            int xr = rcvThread.getPriority();
+            xr++;
+            rcvThread.setPriority(xr);		//bump up the priority
             rcvThread.start();
         } catch (Exception e) {
             log.error("Failed to start up communications. Error was "+e);
@@ -641,6 +672,7 @@ abstract public class AbstractMRTrafficController {
         loadChars(msg, istream);
 
         // message is complete, dispatch it !!
+        replyInDispatch = true;
         if (log.isDebugEnabled()) log.debug("dispatch reply of length "+msg.getNumDataElements()+
                                         " contains "+msg.toString()+" state "+mCurrentState);
 
@@ -662,6 +694,7 @@ abstract public class AbstractMRTrafficController {
         		// update state, and notify to continue
         		synchronized (xmtRunnable) {
         			mCurrentState = NOTIFIEDSTATE;
+        			replyInDispatch = false;
         			xmtRunnable.notify();
         		}
         		break;
@@ -669,6 +702,7 @@ abstract public class AbstractMRTrafficController {
         	case WAITREPLYINPROGMODESTATE: {
         		// entering programming mode
         		mCurrentMode = PROGRAMINGMODE;
+        		replyInDispatch = false;
         		
         		// check to see if we need to delay to allow decoders to become responsive
         		int warmUpDelay = enterProgModeDelayTime();
@@ -689,6 +723,7 @@ abstract public class AbstractMRTrafficController {
         	case WAITREPLYINNORMMODESTATE: {
         		// entering normal mode
         		mCurrentMode = NORMALMODE;
+        		replyInDispatch = false;
         		// update state, and notify to continue
         		synchronized (xmtRunnable) {
         			mCurrentState = OKSENDMSGSTATE;
@@ -697,6 +732,7 @@ abstract public class AbstractMRTrafficController {
         		break;
         	}
         	default: {
+        		replyInDispatch = false;
         		if(allowUnexpectedReply==true) {
         			if(log.isDebugEnabled()) log.debug("Error suppressed: reply complete in unexpected state: "
         					+mCurrentState
