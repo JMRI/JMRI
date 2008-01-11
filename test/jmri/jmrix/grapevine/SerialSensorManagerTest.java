@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialSensorManager class.
  * @author	Bob Jacobsen  Copyright 2003, 2007, 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SerialSensorManagerTest extends TestCase {
 
@@ -74,8 +74,17 @@ public class SerialSensorManagerTest extends TestCase {
         return suite;
     }
 
+    protected void setUp() { 
+        apps.tests.Log4JFixture.setUp(); 
+        // replace the SensorManager
+        jmri.InstanceManager i = new jmri.InstanceManager(){
+            protected void init() {
+                super.init();
+                root = this;
+            }
+        };
+    }
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 }
