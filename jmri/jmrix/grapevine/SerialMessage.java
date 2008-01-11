@@ -9,7 +9,7 @@ import jmri.util.StringUtil;
  * packet.
  * 
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008
- * @version   $Revision: 1.6 $
+ * @version   $Revision: 1.7 $
  */
 
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
@@ -126,9 +126,22 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         return staticFormat(getElement(0)&0xff, getElement(1)&0xff, getElement(2)&0xff, getElement(3)&0xff);
     }
 
+    /**
+     * Provide a human-readable form of a message.
+     *<P>
+     * Used by both SerialMessage and SerialReply, because so
+     * much of it is common. That forces the passing of arguements
+     * as numbers.
+     * Short messages are signalled by having missing bytes 
+     * put to -1 in the arguments.
+     */
     static String staticFormat(int b1, int b2, int b3, int b4) {
         String result;
 
+        // short reply is special case
+        if (b3<0) {
+            return "Node "+(b1&0x7F)+" reports software version "+b2;
+        }
         // address == 0 is a special case
         if ((b1&0x7F)==0) {
             // error report
@@ -193,6 +206,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
             // bank 5 - sensor message
             if ((b2&0x20) == 0) {
                 // parallel sensor
+                if ((b2&0x40) == 0) result += "2nd connector ";
                 result += "parallel sensor "+((b2&0x10)!=0 ? "high" : "low")+" nibble:";
             } else {
                 // old serial sensor

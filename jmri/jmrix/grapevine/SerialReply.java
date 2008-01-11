@@ -8,7 +8,7 @@ package jmri.jmrix.grapevine;
  * packet.  Note that its _only_ the payload.
  *
  * @author	Bob Jacobsen  Copyright (C) 2002, 2006, 2007, 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
@@ -49,14 +49,14 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
     public boolean isFromParallelSensor() {
         // bank 5?
         if ( (getElement(3) & 0x70) != 0x50) return false;
-        if ( (getElement(1) & 0xA0) != 0x00) return false;
+        if ( (getElement(1) & 0x20) != 0x00) return false;
         return true;
     }
     
     public boolean isFromOldSerialSensor() {
         // bank 5?
         if ( (getElement(3) & 0x70) != 0x50) return false;
-        if ( (getElement(1) & 0xA0) != 0x20) return false;
+        if ( (getElement(1) & 0x20) != 0x20) return false;
         return true;
     }
     
@@ -81,7 +81,22 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
      * and reply, this uses the Message method.
      */
     public String format() {
-        return SerialMessage.staticFormat(getElement(0)&0xff, getElement(1)&0xff, getElement(2)&0xff, getElement(3)&0xff);
+        int b1 = -1;
+        int b2 = -1;
+        int b3 = -1;
+        int b4 = -1;
+        switch (getNumDataElements()) {
+        case 4:
+            b4 = getElement(3)&0xff;
+        case 3:
+            b3 = getElement(2)&0xff;
+        case 2:
+            b2 = getElement(1)&0xff;
+        case 1:
+            b1 = getElement(0)&0xff;
+        }
+        
+        return SerialMessage.staticFormat(b1, b2, b3, b4);
     }
     
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialReply.class.getName());
