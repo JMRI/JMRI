@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: JUnit.shtml,v 1.7 2007-09-02 18:51:51 jacobsen Exp $ -->
+<!-- $Id: JUnit.shtml,v 1.8 2008-01-11 18:20:13 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -42,7 +42,7 @@ been broken by a change.
 For more information on JUnit, see
 <A HREF="http://www.junit.org">the JUnit home page</A>.
 A very interesting example of test-based development is available from 
-<A HREF="http://www.objectmentor.com/publications/xpepisode.htm">Robert Martin</a>'s new book.
+<A HREF="http://www.objectmentor.com/publications/xpepisode.htm">Robert Martin</a>'s book.
 <P>
 Some of the classes have JUnit tests available. It's good
 to add JUnit tests as you make changes (test your new functionality
@@ -139,7 +139,7 @@ don't forget to put an entry in the enclosing package's test suite)
 (Needs info here: basically, copy some other package, and
 don't forget to put an entry in the enclosing package's test suite)
 
-<h3>Handling Log4J Output Form Tests</h3>
+<h3>Handling Log4J Output From Tests</h3>
 
 JMRI uses 
 <A HREF="http://logging.apache.org/log4j/docs/index.html">Log4j</a>
@@ -210,7 +210,7 @@ clear and reset it to ensure you get reproducible results.
         }
     };
 </pre></code>
-
+This can go in the test class setup() method for convenience.
 
 <!--#include virtual="/Footer" -->
 
