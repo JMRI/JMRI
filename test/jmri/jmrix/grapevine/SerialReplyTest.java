@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialMessage class.
  * @author	Bob Jacobsen Copyright 2003, 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SerialReplyTest extends TestCase {
 
@@ -27,13 +27,21 @@ public class SerialReplyTest extends TestCase {
 		Assert.assertEquals("string compare ", "81 02 A2 00", m.toString());
 	}
 
-    public void testFormat() {
+    public void testFormat1() {
 		SerialReply m = new SerialReply();
 		m.setElement(0, (byte)0x00);
 		m.setElement(1, (byte)0x62);
 		m.setElement(2, (byte)0x00);
 		m.setElement(3, (byte)0x10);
 		Assert.assertEquals("string compare ", "Error report from node 98: Parity Error", m.format());
+    }
+
+    public void testFormat2() {
+		SerialReply m = new SerialReply();
+		m.setElement(0, (byte)0xE2);
+		m.setElement(1, (byte)0x06);
+		m.setNumDataElements(2);
+		Assert.assertEquals("string compare ", "Node 98 reports software version 6", m.format());
     }
 
     public void testParallel() {
