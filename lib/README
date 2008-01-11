@@ -41,3 +41,4 @@ junit.jar
  version 3.8.2
  from <junit.org>
 
+JMRI 1.9/2.0 had the jakarta-regexp-1.5.jar present in this directory
