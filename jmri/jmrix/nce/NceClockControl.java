@@ -41,7 +41,7 @@ import java.awt.event.*;
  * @author      Ken Cameron Copyright (C) 2007
  * @author      Dave Duchamp Copyright (C) 2007
  * @author		Bob Jacobsen, Alex Shepherd
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class NceClockControl extends DefaultClockControl implements NceListener
 {
@@ -224,34 +224,37 @@ public class NceClockControl extends DefaultClockControl implements NceListener
                 return;
             }
         }
-        String txt = "NceReply(len " + r.getNumDataElements() + ")";
-        if (waiting > 0) {
-        	txt = txt + " waiting: " + waiting;
+        // unhandled reply, nothing to do about it
+        if (log.isDebugEnabled()) {
+	        String txt = "NceReply(len " + r.getNumDataElements() + ")";
+	        if (waiting > 0) {
+	        	txt = txt + " waiting: " + waiting;
+	        }
+	        if (waitingForCmdRead) {
+	            txt = txt + " waitingForCmdRead: " + waitingForCmdRead;
+	        }
+	        if (waitingForCmdTime) {
+	        	txt = txt + " waitingForCmdTime: " + waitingForCmdTime;
+	        }
+	        if (waitingForCmd1224) {
+	        	txt = txt + " waitingForCmd1224: " + waitingForCmd1224;
+	        }
+	        if (waitingForCmdRatio) {
+	        	txt = txt + " waitingForCmdRatio: " + waitingForCmdRatio;
+	        }
+	        if (waitingForCmdStop) {
+	        	txt = txt + " waitingForCmdStop: " + waitingForCmdStop;
+	        }
+	        if (waitingForCmdStart) {
+	        	txt = txt + " waitingForCmdStart: " + waitingForCmdStart;
+	        }
+	        log.debug(txt);
+	        txt = rb.getString("LogReplyUnexpected") + ":";
+	        for (int i = 0; i < r.getNumDataElements(); i++) {
+	            txt = txt + " " + r.getElement(i);
+	        }
+	        log.debug(txt);
         }
-        if (waitingForCmdRead) {
-            txt = txt + " waitingForCmdRead: " + waitingForCmdRead;
-        }
-        if (waitingForCmdTime) {
-        	txt = txt + " waitingForCmdTime: " + waitingForCmdTime;
-        }
-        if (waitingForCmd1224) {
-        	txt = txt + " waitingForCmd1224: " + waitingForCmd1224;
-        }
-        if (waitingForCmdRatio) {
-        	txt = txt + " waitingForCmdRatio: " + waitingForCmdRatio;
-        }
-        if (waitingForCmdStop) {
-        	txt = txt + " waitingForCmdStop: " + waitingForCmdStop;
-        }
-        if (waitingForCmdStart) {
-        	txt = txt + " waitingForCmdStart: " + waitingForCmdStart;
-        }
-        log.error(txt);
-        txt = rb.getString("LogReplyUnexpected") + ":";
-        for (int i = 0; i < r.getNumDataElements(); i++) {
-            txt = txt + " " + r.getElement(i);
-        }
-        log.error(txt);
         return;
     }
     
