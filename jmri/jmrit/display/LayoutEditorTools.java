@@ -30,7 +30,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class LayoutEditorTools 
@@ -1822,6 +1822,8 @@ public class LayoutEditorTools
 			}
 		}
 		// set track orientation at boundary
+		eastTrack = null;
+		westTrack = null;
 		TrackSegment track1 = boundary.getConnect1();
 		Point2D point1;
 		if (track1.getConnect1()==(Object)boundary) 
@@ -1859,6 +1861,17 @@ public class LayoutEditorTools
 				eastTrack = track2;		// south
 				westTrack = track1;		// north
 			}
+		}
+		if (eastTrack==null) {
+			// did not meet the horizontal or vertical test, assume horizontal
+			if (delX>0.0) {
+				eastTrack = track1;
+				westTrack = track2;
+			}
+			else {
+				eastTrack = track2;
+				westTrack = track1;
+			}						
 		}
 		return true;
 	}		
