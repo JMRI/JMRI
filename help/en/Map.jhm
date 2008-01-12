@@ -8,6 +8,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 
 	<mapID target="top" url="index.html" />
 	<mapID target="popup_icon" url="images/popup.gif" /> 
+	<mapID target="package.jmri.jmrix.nce.packetgen.NcePacketGenFrame" url="package/jmri/jmrix/nce/packetgen/NcePacketGenFrame.shtml" />
 	<mapID target="package.jmri.jmrit.display.SetSignalsAtXoverTurnout" url="package/jmri/jmrit/display/SetSignalsAtXoverTurnout.shtml" />
 	<mapID target="package.jmri.jmrit.beantable.RouteAddEdit" url="package/jmri/jmrit/beantable/RouteAddEdit.shtml" />
 	<mapID target="package.jmri.jmrit.display.LayoutEditor_track" url="package/jmri/jmrit/display/LayoutEditor.shtml#track" />
