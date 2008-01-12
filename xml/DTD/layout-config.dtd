@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.80 2007-12-22 21:00:44 djduchamp Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.81 2008-01-12 19:43:22 djduchamp Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
 <!--                                                                        -->
@@ -480,6 +480,12 @@
   <!ATTLIST LayoutEditor xscale			CDATA #IMPLIED>
   <!ATTLIST LayoutEditor yscale			CDATA #IMPLIED>
   <!ATTLIST LayoutEditor defaulttrackcolor	CDATA #REQUIRED>
+  <!ATTLIST LayoutEditor turnoutbx		CDATA #IMPLIED>
+  <!ATTLIST LayoutEditor turnoutcx		CDATA #IMPLIED>
+  <!ATTLIST LayoutEditor turnoutwid		CDATA #IMPLIED>
+  <!ATTLIST LayoutEditor xoverlong		CDATA #IMPLIED>
+  <!ATTLIST LayoutEditor xoverhwid		CDATA #IMPLIED>
+  <!ATTLIST LayoutEditor xovershort		CDATA #IMPLIED>
   <!ATTLIST LayoutEditor editable		(yes|no) "yes" >
   <!ATTLIST LayoutEditor positionable		(yes|no) "yes" >
   <!ATTLIST LayoutEditor controlling		(yes|no) "yes" >

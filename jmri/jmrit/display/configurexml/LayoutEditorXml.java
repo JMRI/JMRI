@@ -17,7 +17,7 @@ import org.jdom.*;
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp    Copyright (c) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class LayoutEditorXml implements XmlAdapter {
 
@@ -49,6 +49,12 @@ public class LayoutEditorXml implements XmlAdapter {
 		panel.setAttribute("yscale", Float.toString((float)p.getYScale()));
         panel.setAttribute("sidetrackwidth", ""+p.getSideTrackWidth());
 		panel.setAttribute("defaulttrackcolor",p.getDefaultTrackColor());
+		panel.setAttribute("turnoutbx", Float.toString((float)p.getTurnoutBX()));
+		panel.setAttribute("turnoutcx", Float.toString((float)p.getTurnoutCX()));
+		panel.setAttribute("turnoutwid", Float.toString((float)p.getTurnoutWid()));
+		panel.setAttribute("xoverlong", Float.toString((float)p.getXOverLong()));
+		panel.setAttribute("xoverhwid", Float.toString((float)p.getXOverHWid()));
+		panel.setAttribute("xovershort", Float.toString((float)p.getXOverShort()));
 		p.resetDirty();
 
         // include contents (Icons and Labels)
@@ -191,7 +197,7 @@ public class LayoutEditorXml implements XmlAdapter {
 				log.error("failed to convert to float - "+a.getValue());
 			}
 		}
-        // find the name and default track color
+       // find the name and default track color
         String name = "";
         if (element.getAttribute("name")!=null)
             name = element.getAttribute("name").getValue();
@@ -207,7 +213,63 @@ public class LayoutEditorXml implements XmlAdapter {
 		panel.setDefaultTrackColor(defaultColor);
 		panel.setXScale(xScale);
 		panel.setYScale(yScale);
-
+		// turnout size parameters
+		double sz = 20.0;
+		a = element.getAttribute("turnoutbx");
+		if (a!=null) {
+			try {
+				sz = (double)(Float.parseFloat(a.getValue()));
+				panel.setTurnoutBX(sz);
+			} catch (Exception e) {
+				log.error("failed to convert to float - "+a.getValue());
+			}
+		}
+		a = element.getAttribute("turnoutcx");
+		if (a!=null) {
+			try {
+				sz = (double)(Float.parseFloat(a.getValue()));
+				panel.setTurnoutCX(sz);
+			} catch (Exception e) {
+				log.error("failed to convert to float - "+a.getValue());
+			}
+		}
+		a = element.getAttribute("turnoutwid");
+		if (a!=null) {
+			try {
+				sz = (double)(Float.parseFloat(a.getValue()));
+				panel.setTurnoutWid(sz);
+			} catch (Exception e) {
+				log.error("failed to convert to float - "+a.getValue());
+			}
+		}
+		a = element.getAttribute("xoverlong");
+		if (a!=null) {
+			try {
+				sz = (double)(Float.parseFloat(a.getValue()));
+				panel.setXOverLong(sz);
+			} catch (Exception e) {
+				log.error("failed to convert to float - "+a.getValue());
+			}
+		}
+		a = element.getAttribute("xoverhwid");
+		if (a!=null) {
+			try {
+				sz = (double)(Float.parseFloat(a.getValue()));
+				panel.setXOverHWid(sz);
+			} catch (Exception e) {
+				log.error("failed to convert to float - "+a.getValue());
+			}
+		}
+		a = element.getAttribute("xovershort");
+		if (a!=null) {
+			try {
+				sz = (double)(Float.parseFloat(a.getValue()));
+				panel.setXOverShort(sz);
+			} catch (Exception e) {
+				log.error("failed to convert to float - "+a.getValue());
+			}
+		}
+ 
         // load the contents
         List items = element.getChildren();
         for (int i = 0; i<items.size(); i++) {

@@ -66,7 +66,7 @@ import javax.swing.*;
  *		by tools, Set Signals at Turnout, and Set Signals at Double Crossover.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class LayoutTurnout
@@ -138,15 +138,20 @@ public class LayoutTurnout
 		center = c;
 		// adjust initial coordinates
 		if (type==LH_TURNOUT) {
-			dispC.setLocation(20.0,-10.0);
+			dispB.setLocation(layoutEditor.getTurnoutBX(),0.0);
+			dispC.setLocation(layoutEditor.getTurnoutCX(),-layoutEditor.getTurnoutWid());
+		}
+		else if (type==RH_TURNOUT) {
+			dispB.setLocation(layoutEditor.getTurnoutBX(),0.0);
+			dispC.setLocation(layoutEditor.getTurnoutCX(),layoutEditor.getTurnoutWid());
 		}
 		else if (type==WYE_TURNOUT) {
-			dispB.setLocation(20.0,5.0);
-			dispC.setLocation(20.0,-5.0);
+			dispB.setLocation(layoutEditor.getTurnoutBX(),0.5*layoutEditor.getTurnoutWid());
+			dispC.setLocation(layoutEditor.getTurnoutBX(),-0.5*layoutEditor.getTurnoutWid());
 		}
 		else if (type==DOUBLE_XOVER) {
-			dispB.setLocation(30.0,-10.0);
-			dispC.setLocation(30.0,10.0);
+			dispB.setLocation(layoutEditor.getXOverLong(),-layoutEditor.getXOverHWid());
+			dispC.setLocation(layoutEditor.getXOverLong(),layoutEditor.getXOverHWid());
 			blockB = null;
 			blockBName = "";
 			blockC = null;
@@ -155,8 +160,8 @@ public class LayoutTurnout
 			blockDName = "";
 		}
 		else if (type==RH_XOVER) {
-			dispB.setLocation(10.0,-10.0);
-			dispC.setLocation(30.0,10.0);
+			dispB.setLocation(layoutEditor.getXOverShort(),-layoutEditor.getXOverHWid());
+			dispC.setLocation(layoutEditor.getXOverLong(),layoutEditor.getXOverHWid());
 			blockB = null;
 			blockBName = "";
 			blockC = null;
@@ -165,8 +170,8 @@ public class LayoutTurnout
 			blockDName = "";
 		}
 		else if (type==LH_XOVER) {
-			dispB.setLocation(30.0,-10.0);
-			dispC.setLocation(10.0,10.0);
+			dispB.setLocation(layoutEditor.getXOverLong(),-layoutEditor.getXOverHWid());
+			dispC.setLocation(layoutEditor.getXOverShort(),layoutEditor.getXOverHWid());
 			blockB = null;
 			blockBName = "";
 			blockC = null;
@@ -329,6 +334,53 @@ public class LayoutTurnout
 		double x = center.getX() - dispB.getX();
 		double y = center.getY() - dispB.getY();
 		return new Point2D.Double(x,y);
+	}
+	
+	/**
+	 * Set default size parameters to correspond to this turnout's size
+	 */
+	private void setUpDefaultSize() {
+		// remove the overall scale factor
+		double bX = dispB.getX()/layoutEditor.getXScale();
+		double bY = dispB.getY()/layoutEditor.getYScale();
+		double cX = dispC.getX()/layoutEditor.getXScale();
+		double cY = dispC.getY()/layoutEditor.getYScale();
+		// calculate default parameters according to type of turnout
+		double lenB = Math.sqrt((bX*bX) + (bY*bY));
+		double lenC = Math.sqrt((cX*cX) + (cY*cY));
+		double distBC = Math.sqrt(((bX-cX)*(bX-cX)) + ((bY-cY)*(bY-cY)));
+		if ( (type == LH_TURNOUT) || (type == RH_TURNOUT) ) {
+			layoutEditor.setTurnoutBX(round(lenB+0.1));
+			double xc = ((bX*cX)+(bY*cY))/lenB;
+			layoutEditor.setTurnoutCX(round(xc+0.1));
+			layoutEditor.setTurnoutWid(round(Math.sqrt((lenC*lenC)-(xc*xc))+0.1));
+		}
+		else if (type == WYE_TURNOUT) {
+			double xx = Math.sqrt((lenB*lenB)-(0.25*(distBC*distBC)));
+			layoutEditor.setTurnoutBX(round(xx+0.1));
+			layoutEditor.setTurnoutCX(round(xx+0.1));
+			layoutEditor.setTurnoutWid(round(distBC+0.1));
+		}
+		else if (type == DOUBLE_XOVER) {
+			double lng = Math.sqrt((lenB*lenB)-(0.25*(distBC*distBC)));
+			layoutEditor.setXOverLong(round(lng+0.1));			
+			layoutEditor.setXOverHWid(round((0.5*distBC)+0.1));
+			layoutEditor.setXOverShort(round((0.5*lng)+0.1));
+		}
+		else if (type == RH_XOVER) {
+			double distDC = Math.sqrt(((bX+cX)*(bX+cX)) + ((bY+cY)*(bY+cY)));
+			layoutEditor.setXOverShort(round((0.25*distDC)+0.1));
+			layoutEditor.setXOverLong(round((0.75*distDC)+0.1));
+			double hwid = Math.sqrt((lenC*lenC)-(0.5625*distDC*distDC));
+			layoutEditor.setXOverHWid(round(hwid+0.1));
+		}
+		else if (type == LH_XOVER) {
+			double distDC = Math.sqrt(((bX+cX)*(bX+cX)) + ((bY+cY)*(bY+cY)));
+			layoutEditor.setXOverShort(round((0.25*distDC)+0.1));
+			layoutEditor.setXOverLong(round((0.75*distDC)+0.1));
+			double hwid = Math.sqrt((lenC*lenC)-(0.0625*distDC*distDC));
+			layoutEditor.setXOverHWid(round(hwid+0.1));
+		}
 	}
 
 	/**
@@ -853,6 +905,11 @@ public class LayoutTurnout
 			if (blockD!=null) popup.add(rb.getString("Block4ID")+": "+blockDName);
 		}
 		popup.add(new JSeparator(JSeparator.HORIZONTAL));
+		popup.add(new AbstractAction(rb.getString("UseSizeAsDefault")) {
+				public void actionPerformed(ActionEvent e) {
+					setUpDefaultSize();
+				}
+			});
 		popup.add(new AbstractAction(rb.getString("Edit")) {
 				public void actionPerformed(ActionEvent e) {
 					editLayoutTurnout();

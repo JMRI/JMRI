@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LayoutEditor.shtml,v 1.4 2008-01-06 21:46:57 djduchamp Exp $ -->
+<!-- $Id: LayoutEditor.shtml,v 1.5 2008-01-12 19:37:03 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -404,6 +404,10 @@ turnouts and block boundaries are oriented mostly vertically or mostly horizonta
 	<li><b>Undo Translate Selection</b> - Selecting this item automatically 
 	reverses the previous <b>Translate Selection...</b>. Only one level of undo
 	is supported. If a selection has not been translated, this item is ignored.</li>
+	<li><b>Use Program Default Turnout Size</b> - Selecting this item sets default 
+	sizes of new turnouts to Layout Editor program defaults, cancelling any 
+	changes to turnout default sizes that may have been made. See 
+	<a href="#turnouts">Turnouts</a> for more information on turnout sizes.</li>
 	<li><b>Set Signals at Turnout...</b> - This item provides an automated 
 	procedure for assigning signals to a turnout. Right-handed turnouts, 
 	left-handed turnouts, and wye turnouts are supported. Prior to accessing this 
@@ -577,6 +581,20 @@ recreating the turnout. Drawn turnout parts may be lengthened, shortened, or
 repositioned by dragging connection points with the meta key pressed, and 
 the entire turnout may be repositioned by dragging the center circle with the
 meta key pressed.</P>
+<P>
+When new turnouts (and crossovers) are created, Layout Editor uses default 
+displacements from the center of the new turnout to "size" the new turnout drawing. 
+Layout Editor maintains two sets of default displacements, one for for regular 
+turnouts (<b>RH</b>, <b>LH</b>, <b>WYE</b>) and one for crossovers (
+<b>Double Xover</b>, <b>RH Xover</b>, <b>LH Xover</b>). These default size 
+parameters may be changed if a different default size is needed. First create a 
+new turnout (or select an existing turnout) and resize it by dragging its connection 
+points. Then select <b>Use Size As Default</b> in that turnout's popup menu. This 
+will change default size parameters so that the next  and subsequent turnouts to be 
+added will be the same size as the resized turnout. Each <b>Use Size As Default</b> 
+changes one of the two sets of default size parameters. Both sets of default size 
+parameters are saved when the panel is saved. To return to Layout Editor's default 
+turnout sizes select <b>Use Program Default Turnout Size</b> in the Tools menu.</P>
 <P>
 Turnout drawings in a track diagram are drawn using solid lines for both 
 continuing and diverging legs until the turnout drawings are linked to

@@ -47,7 +47,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -96,7 +96,6 @@ public class LayoutEditor extends JmriJFrame {
 	private JPanel topEditBar = null;
 	private JPanel helpBar = null;
     public ArrayList backgroundImage = new ArrayList();  // background images
-//	private LayoutPositionableLabel backgroundImage = null;
         
     private ButtonGroup itemGroup = null;
     private JTextField blockIDField = new JTextField(8);
@@ -192,6 +191,14 @@ public class LayoutEditor extends JmriJFrame {
 	private int beginPointType = 0;   // connection type within begin connection object
 	private Point2D currentLocation = new Point2D.Double(0.0,0.0); // current location
 	
+	// program default turnout size parameters
+	private double turnoutBXDefault = 20.0;  // RH, LH, WYE
+	private double turnoutCXDefault = 20.0;
+	private double turnoutWidDefault = 10.0;
+	private double xOverLongDefault = 30.0;   // DOUBLE_XOVER, RH_XOVER, LH_XOVER
+	private double xOverHWidDefault = 10.0;
+	private double xOverShortDefault = 10.0;
+	
 	// Lists of items that describe the Layout, and allow it to be drawn
 	//		Each of the items must be saved to disk over sessions
     public ArrayList contents = new ArrayList();  // icons and labels
@@ -227,6 +234,13 @@ public class LayoutEditor extends JmriJFrame {
 	private boolean animatingLayout = true;
 	private boolean showHelpBar = true;
 	private boolean drawGrid = false;
+	// turnout size parameters - saved with panel
+	private double turnoutBX = turnoutBXDefault;  // RH, LH, WYE
+	private double turnoutCX = turnoutCXDefault;
+	private double turnoutWid = turnoutWidDefault;
+	private double xOverLong = xOverLongDefault;   // DOUBLE_XOVER, RH_XOVER, LH_XOVER
+	private double xOverHWid = xOverHWidDefault;
+	private double xOverShort = xOverShortDefault;
 	
 	// saved state of options when panel was loaded or created
 	private boolean savedEditMode = true;
@@ -571,6 +585,16 @@ public class LayoutEditor extends JmriJFrame {
 					undoMoveSelection();
                 }
             });
+		// reset turnout size to program defaults
+		JMenuItem undoTurnoutSize = new JMenuItem(rb.getString("ResetTurnoutSize"));
+		toolsMenu.add(undoTurnoutSize);
+		undoTurnoutSize.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent event) {
+					// undo previous move selection 
+					resetTurnoutSize();
+				}
+			});
+		toolsMenu.addSeparator();
 		// set signals at turnout
 		JMenuItem turnoutItem = new JMenuItem(rb.getString("SignalsAtTurnout")+"...");
         toolsMenu.add(turnoutItem);
@@ -3231,6 +3255,48 @@ public class LayoutEditor extends JmriJFrame {
 			}
 		}
 	}
+	// accessor routines for turnout size parameters	
+	public void setTurnoutBX(double bx) {
+		turnoutBX = bx;
+		panelChanged = true;
+	}
+	public double getTurnoutBX() {return turnoutBX;}
+	public void setTurnoutCX(double cx) {
+		turnoutCX = cx;
+		panelChanged = true;
+	}
+	public double getTurnoutCX() {return turnoutCX;}
+	public void setTurnoutWid(double wid) {
+		turnoutWid = wid;
+		panelChanged = true;
+	}
+	public double getTurnoutWid() {return turnoutWid;}
+	public void setXOverLong(double lg) {
+		xOverLong = lg;
+		panelChanged = true;
+	}
+	public double getXOverLong() {return xOverLong;}
+	public void setXOverHWid(double hwid) {
+		xOverHWid =  hwid;
+		panelChanged = true;
+	}
+	public double getXOverHWid() {return xOverHWid;}
+	public void setXOverShort(double sh) {
+		xOverShort =  sh;
+		panelChanged = true;
+	}
+	public double getXOverShort() {return xOverShort;}
+	// reset turnout sizes to program defaults
+	private void resetTurnoutSize() {
+		turnoutBX = turnoutBXDefault;
+		turnoutCX = turnoutCXDefault;
+		turnoutWid = turnoutWidDefault;
+		xOverLong = xOverLongDefault;
+		xOverHWid = xOverHWidDefault;
+		xOverShort = xOverShortDefault;
+		panelChanged = true;
+	}
+		
 	// final initialization routine for loading a LayoutEditor
 	public void setConnections() {
 		// initialize TrackSegments if any
