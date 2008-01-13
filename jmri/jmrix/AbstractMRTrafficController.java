@@ -26,7 +26,7 @@ import java.util.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.43 $
+ * @version			$Revision: 1.44 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -737,18 +737,15 @@ abstract public class AbstractMRTrafficController {
 				replyInDispatch = false;
 				if (allowUnexpectedReply == true) {
 					if (log.isDebugEnabled())
-						log
-								.debug("Error suppressed: reply complete in unexpected state: "
-										+ mCurrentState
-										+ " was "
-										+ msg.toString());
+						log.debug("Error suppressed: reply complete in unexpected state: "
+							+ mCurrentState	+ " was " + msg.toString());
 				} else {
 					log.error("reply complete in unexpected state: "
 							+ mCurrentState + " was " + msg.toString());
 				}
 			}
 			}
-			// Unsolicated message
+		// Unsolicited message
 		} else {
 			replyInDispatch = false;
 		}
