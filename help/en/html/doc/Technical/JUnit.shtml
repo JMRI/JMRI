@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: JUnit.shtml,v 1.4 2008-01-13 16:46:25 jacobsen Exp $ -->
+<!-- $Id: JUnit.shtml,v 1.5 2008-01-13 16:56:35 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -72,7 +72,7 @@ can run that directly with the "runtest" script:
 </PRE>
 </CODE>
 The first line compiles all the test code, and the second
-runs a specific test.
+runs a specific test or test suite.
 
 <a id="nightly">
 <h2>Nightly Builds</h2></a>
@@ -85,7 +85,7 @@ normal checkout is run.  This
 <LI>updates from the developer CVS
 <LI>cleans out any existing compilations, etc
 <LI>rebuilds from scratch with the debug target
-<LI>runs the jmri.HeadLessTest app, which in turn runs a large subset of the JUnit tests.
+<LI>runs the jmri.HeadLessTest app, which in turn runs the JUnit tests.
 </ol>
 <P>
 If any of these steps fail, including logging any warning or error messages, 
@@ -104,7 +104,7 @@ to see past logs.
 
 
 By convention, we have a "test" class shadowing 
-each real class.  
+(almost) every real class.  
 The "test" directory contains a tree of package
 directories parallel to the "src" tree.
 Each test class has the same name
