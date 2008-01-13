@@ -12,19 +12,19 @@ package jmri.jmrix.grapevine;
  *              nn is the node address (0-127)
  *              xxx is a bit number of the input or output bit (001-999)
  *              nnxxx = (node address x 1000) + bit number
- *      examples: CT2 (node address 0, bit 2), CS1003 (node address 1, bit 3), 
- *              CL11234 (node address 11, bit234)
+ *      examples: GT2 (node address 0, bit 2), GS1003 (node address 1, bit 3), 
+ *              GL11234 (node address 11, bit234)
  *   GtnnnBxxxx 
  *      where:  t is the type code, 'T' for turnouts, 'S' for sensors,
  *                      'H' for signals and 'L' for lights
  *              nnn is the node address of the input or output bit (0-127)
  *              xxxx is a bit number of the input or output bit (1-2048)
- *      examples: CT0B2 (node address 0, bit 2), CS1B3 (node address 1, bit 3), 
- *              CL11B234 (node address 11, bit234)
+ *      examples: GT0B2 (node address 0, bit 2), GS1B3 (node address 1, bit 3), 
+ *              GL11B234 (node address 11, bit234)
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004
- * @author  Bob Jacobsen, Copyright (C) 2006, 2007
- * @version     $Revision: 1.1 $
+ * @author  Bob Jacobsen, Copyright (C) 2006, 2007, 2008
+ * @version     $Revision: 1.2 $
  */
 public class SerialAddress {
 
@@ -123,7 +123,7 @@ public class SerialAddress {
             }
         }
         else {
-            // This is a OLnnBxxxx address
+            // This is a GLnnBxxxx address
             try {
                 n = Integer.parseInt(systemName.substring(k,systemName.length()));
             }
@@ -243,14 +243,14 @@ public class SerialAddress {
         if ( ( type=='T' ) || (type=='L') ) {
             if ( ( bit <= 0 ) || ( bit > SerialNode.outputBits[node.nodeType] ) ) {
                 // The bit is not valid for this defined Serial node
-                log.warn(systemName+" invalid; bad bit number");
+                log.warn(systemName+" invalid; bad bit number "+bit+" > "+SerialNode.outputBits[node.nodeType] );
                 return false;
             }
         }
         else if ( type=='S' ) {
             if ( ( bit <= 0 ) || ( bit > SerialNode.inputBits[node.nodeType] ) ) {
                 // The bit is not valid for this defined Serial node
-                log.warn(systemName+" invalid; bad bit number");
+                log.warn(systemName+" invalid; bad bit number "+bit+" > "+SerialNode.outputBits[node.nodeType]);
                 return false;
             }
         }
@@ -337,14 +337,14 @@ public class SerialAddress {
             }
         }
         if (noB) {
-            // This is a OLnnnxxx address
+            // This is a GLnnnxxx address
             int num = Integer.valueOf(systemName.substring(2)).intValue();
             int nAddress = num/1000;
             int bitNum = num - (nAddress*1000);
             nName = systemName.substring(0,2)+Integer.toString((nAddress*1000)+bitNum);
         }
         else {
-            // This is a OLnnnBxxxx address 
+            // This is a GLnnnBxxxx address 
             int nAddress = Integer.valueOf(s).intValue();
             int bitNum = Integer.parseInt(systemName.substring(k,systemName.length()));
             nName = systemName.substring(0,2)+Integer.toString(nAddress)+"B"+
