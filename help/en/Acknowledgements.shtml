@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.2 2008-01-13 06:03:46 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.3 2008-01-13 18:26:27 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -87,6 +87,7 @@
 	of USS panel icons for PanelPro, worked on the PanelPro logo,
 	created fantastic clinics on PanelPro,
 	and made numerous improvements to the Simple Signal Logic.
+    <li>Stephen Brooks, who did all the initial testing of the Grapevine support
 	<LI>Bill Brown, whose layout was used for the first NCE tests
 	<LI>Bob Byck, who did extensive testing of test release 1.7.3
 	<LI>Allen Byrne, who has systematically made improvements in the syntax and structure of the JMRI code
@@ -194,6 +195,7 @@
 	good ideas and loaning equipment
 	<LI>The good people at MindVision, who are letting us use their excellant Installer Vise
 	to build our Windows installer
+    <li>Mike Moir, who provided a lot of information on how <a href="http://protrak.cc/">Grapevine</a> works.
 	<LI>Michael Mosher, who helped identify the way Digitrax decoder models are organized,
 	has done a lot of work to improve the decoder definitions for NCE, Soundtraxx 
 	and Atlas decoders, provided new definitions for TCS, MRC and (lots of!) QSI 
