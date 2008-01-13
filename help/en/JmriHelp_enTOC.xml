@@ -69,5 +69,6 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
          </tocitem>
       </tocitem>
    </tocitem>
+   <tocitem text="Hardware Support" target="html.hardware.index"/>
 
 </toc>
