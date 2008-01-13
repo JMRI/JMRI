@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Help.shtml,v 1.1 2008-01-03 02:36:58 jacobsen Exp $ -->
+<!-- $Id: Help.shtml,v 1.2 2008-01-13 02:55:47 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -115,6 +115,12 @@ and put in in your project's help/en directory, then expand it.
 It should create a jhelpdev.jar file, and a lib directory 
 containing additional .jar files.  
 These files don't show up in CVS, for various reasons.
+
+<li>It's important that you update the configuration files
+from CVS before running the tool.  The configuration info is 
+complicated, and a CVS merge may not go well later.
+<br/>
+<code>cvs -q update Map.jhm *.xml</code>
 
 <LI>Start the tool by clicking on the jhelpdev.jar file.
 
