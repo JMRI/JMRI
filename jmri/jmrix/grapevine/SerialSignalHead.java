@@ -13,7 +13,7 @@ import jmri.SignalHead;
  *
  * Description:		extend jmri.AbstractSignalHead for grapevine serial signals
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SerialSignalHead extends DefaultSignalHead {
 
@@ -54,6 +54,15 @@ public class SerialSignalHead extends DefaultSignalHead {
             return;
         }
 
+        int output = (tBit-1) % 24; /// 0 to 23 range for individual bank
+        boolean high = (output>=12);
+        if (high) output = output-12;
+        int bank = (tBit-1)/24;  
+        if ( (bank<0)||(bank>4) ) {
+            log.error("invalid bank "+bank+" for signal "+getSystemName());
+            bank = 0;
+        }
+
         // sort out states
         int cmd;
         if (mLit) 
@@ -72,12 +81,22 @@ public class SerialSignalHead extends DefaultSignalHead {
         else 
             cmd = 4; // set dark if not lit
             
-        SerialMessage m = new SerialMessage();
-        m.setElement(0,tNode.getNodeAddress()|0x80);  // address 1
-        m.setElement(1, (tBit<<3)| cmd);  // 
-        m.setElement(2,tNode.getNodeAddress()|0x80);  // address 2
-        m.setElement(3, 0<<4); // bank zero
-        m.setParity();
+
+
+        SerialMessage m = new SerialMessage(high?8:4);
+        int i = 0;
+        if (high) {
+            m.setElement(i++,tNode.getNodeAddress()|0x80);  // address 1
+            m.setElement(i++,122);   // shift command
+            m.setElement(i++,tNode.getNodeAddress()|0x80);  // address 2
+            m.setElement(i++,0x10);  // bank 1
+            m.setParity(i-4);
+        }
+        m.setElement(i++,tNode.getNodeAddress()|0x80);  // address 1
+        m.setElement(i++, (output<<3)|cmd);
+        m.setElement(i++,tNode.getNodeAddress()|0x80);  // address 2
+        m.setElement(i++, bank<<4); // bank is most significant bits
+        m.setParity(i-4);
         SerialTrafficController.instance().sendSerialMessage(m, null);
     }
         
@@ -89,8 +108,8 @@ public class SerialSignalHead extends DefaultSignalHead {
     public void stopFlash() {}
     
     // data members
-    String tSystemName; // System Name of this turnout
-    int tBit;          // bit number of turnout control in Serial node
+    String tSystemName; // System Name of this signal head
+    int tBit;          // bit number of head control in Serial node
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialSignalHead.class.getName());
 }
