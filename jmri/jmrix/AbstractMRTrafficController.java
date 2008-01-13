@@ -26,7 +26,7 @@ import java.util.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.42 $
+ * @version			$Revision: 1.43 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -688,64 +688,71 @@ abstract public class AbstractMRTrafficController {
         }
         
         if (!msg.isUnsolicited()) {
-        	// effect on transmit:
-        	switch (mCurrentState) {
-        	case WAITMSGREPLYSTATE: {
-        		// update state, and notify to continue
-        		synchronized (xmtRunnable) {
-        			mCurrentState = NOTIFIEDSTATE;
-        			replyInDispatch = false;
-        			xmtRunnable.notify();
-        		}
-        		break;
-        	}
-        	case WAITREPLYINPROGMODESTATE: {
-        		// entering programming mode
-        		mCurrentMode = PROGRAMINGMODE;
-        		replyInDispatch = false;
-        		
-        		// check to see if we need to delay to allow decoders to become responsive
-        		int warmUpDelay = enterProgModeDelayTime();
-        		if (warmUpDelay != 0) {
-        			try {
-        				synchronized (xmtRunnable) {
-        					xmtRunnable.wait(warmUpDelay);
-        				}
-        			} catch (InterruptedException e) { }
-        		}
-        		// update state, and notify to continue
-        		synchronized (xmtRunnable) {
-        			mCurrentState = OKSENDMSGSTATE;
-        			xmtRunnable.notify();
-        		}
-        		break;
-        	}
-        	case WAITREPLYINNORMMODESTATE: {
-        		// entering normal mode
-        		mCurrentMode = NORMALMODE;
-        		replyInDispatch = false;
-        		// update state, and notify to continue
-        		synchronized (xmtRunnable) {
-        			mCurrentState = OKSENDMSGSTATE;
-        			xmtRunnable.notify();
-        		}
-        		break;
-        	}
-        	default: {
-        		replyInDispatch = false;
-        		if(allowUnexpectedReply==true) {
-        			if(log.isDebugEnabled()) log.debug("Error suppressed: reply complete in unexpected state: "
-        					+mCurrentState
-        					+" was "+msg.toString());
-        		} else {
-        			log.error("reply complete in unexpected state: "
-        					+mCurrentState
-        					+" was "+msg.toString());
-        		}
-        	}
-        	}
-        }
-    }
+			// effect on transmit:
+			switch (mCurrentState) {
+			case WAITMSGREPLYSTATE: {
+				// update state, and notify to continue
+				synchronized (xmtRunnable) {
+					mCurrentState = NOTIFIEDSTATE;
+					replyInDispatch = false;
+					xmtRunnable.notify();
+				}
+				break;
+			}
+			case WAITREPLYINPROGMODESTATE: {
+				// entering programming mode
+				mCurrentMode = PROGRAMINGMODE;
+				replyInDispatch = false;
+
+				// check to see if we need to delay to allow decoders to become
+				// responsive
+				int warmUpDelay = enterProgModeDelayTime();
+				if (warmUpDelay != 0) {
+					try {
+						synchronized (xmtRunnable) {
+							xmtRunnable.wait(warmUpDelay);
+						}
+					} catch (InterruptedException e) {
+					}
+				}
+				// update state, and notify to continue
+				synchronized (xmtRunnable) {
+					mCurrentState = OKSENDMSGSTATE;
+					xmtRunnable.notify();
+				}
+				break;
+			}
+			case WAITREPLYINNORMMODESTATE: {
+				// entering normal mode
+				mCurrentMode = NORMALMODE;
+				replyInDispatch = false;
+				// update state, and notify to continue
+				synchronized (xmtRunnable) {
+					mCurrentState = OKSENDMSGSTATE;
+					xmtRunnable.notify();
+				}
+				break;
+			}
+			default: {
+				replyInDispatch = false;
+				if (allowUnexpectedReply == true) {
+					if (log.isDebugEnabled())
+						log
+								.debug("Error suppressed: reply complete in unexpected state: "
+										+ mCurrentState
+										+ " was "
+										+ msg.toString());
+				} else {
+					log.error("reply complete in unexpected state: "
+							+ mCurrentState + " was " + msg.toString());
+				}
+			}
+			}
+			// Unsolicated message
+		} else {
+			replyInDispatch = false;
+		}
+	}
 
     // Override the finalize method for this class
     protected void finalize() {
