@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: JUnit.shtml,v 1.3 2008-01-13 03:35:49 jacobsen Exp $ -->
+<!-- $Id: JUnit.shtml,v 1.4 2008-01-13 16:46:25 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -27,9 +27,9 @@
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
-	<div id="mainContent">
+<div id="mainContent">
 
-	    <H1>JMRI: Unit testing with JUnit</H1>
+<H1>JMRI: Unit testing with JUnit</H1>
 
 JUnit is a system for building "unit tests" of software.  
 Unit tests are small tests that make sure that individual
@@ -51,8 +51,9 @@ when you have to figure out what somebodys code does
 (the test documents exactly what should happen!),
 and when you track down a bug (make sure it doesn't come back).
 
-<A ID="run"/>
-<h2>Running the Tests</h2>
+<A ID="run">
+<h2>Running the Tests</h2></a>
+
 To run the existing tests, say
 <CODE>
 <PRE>
@@ -73,7 +74,9 @@ can run that directly with the "runtest" script:
 The first line compiles all the test code, and the second
 runs a specific test.
 
-<h2>Nightly Builds</h2>
+<a id="nightly">
+<h2>Nightly Builds</h2></a>
+
 
 Every night about 1:45AM Pacific time, the "nightlybuild.csh" script from a 
 normal checkout is run.  This
@@ -96,8 +99,9 @@ to see past logs.
 <P>
 (When the build succeeds, nothing is mailed, to cut down on traffic)
 
-<A ID="write"/>
-<h2>Writing Tests</h2>
+<A ID="write">
+<h2>Writing Tests</h2></a>
+
 
 By convention, we have a "test" class shadowing 
 each real class.  
