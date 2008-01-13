@@ -22,6 +22,11 @@
 <ul></ul>
 </li>
    
+<li>
+<a href="Acknowledgements.shtml">Acknowledgements</a>
+<ul></ul>
+</li>
+   
 <li>DecoderPro Manual<ul>
       
 <li>
@@ -263,11 +268,6 @@
 <ul></ul>
 </li>
    
-<li>
-<a href="Acknowledgements.html">Acknowledgements</a>
-<ul></ul>
-</li>
-   
 <li>System-Specific<ul>
       
 <li>Digitrax<ul>
@@ -291,6 +291,11 @@
 </li>
    
 </ul>
+</li>
+   
+<li>
+<a href="html/hardware/index.shtml">Hardware Support</a>
+<ul></ul>
 </li>
 
 

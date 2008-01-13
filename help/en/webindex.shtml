@@ -18,7 +18,7 @@
 
    
 <li>
-<a href="Acknowledgements.html">Acknowledgements</a>
+<a href="Acknowledgements.shtml">Acknowledgements</a>
 <ul></ul>
 </li>
    
@@ -112,6 +112,80 @@
 <li>
 <a href="package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">DS64</a>
 <ul></ul>
+</li>
+   
+<li>
+<a href="html/hardware/index.shtml">Hardware</a>
+<ul>
+      
+<li>
+<a href="html/hardware/cmri/CMRI.shtml">C/MRI</a>
+<ul>
+         
+<li>
+<a href="html/hardware/cmri/Signals.shtml">Signals</a>
+<ul></ul>
+</li>
+      
+</ul>
+</li>
+      
+<li>
+<a href="html/hardware/loconet/Digitrax.shtml">Digitrax LocoNet</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/easydcc/EasyDCC.shtml">EasyDCC</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/grapevine/Names.shtml">Grapevine</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/XPressNet/index.shtml">Lenz XpressNet</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/tmcc/index.shtml">Lionel TMCC</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/nce/NCE.shtml">NCE</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/oaktree/OakTree.shtml">Oak Tree Systems</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/sprog/SPROG.shtml">SPROG</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/loconet/Uhlenbrock.shtml">Uhlenbrock Intelllibox</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/zimo/Zimo.shtml">Zimo</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/hardware/XPressNet/index.shtml">ZTC</a>
+<ul></ul>
+</li>
+   
+</ul>
 </li>
    
 <li>
