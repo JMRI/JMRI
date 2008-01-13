@@ -46,7 +46,7 @@ import java.io.*;
  * :0000
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -64,6 +64,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements jmri.jm
 	private int consistNumVerify;					// which consist number we're checking
 	private int engineVerify;						// engine number being verified
 	private int engineDir;							// mid engine direction
+	private int engNum;								// report engine alreay in use
 	private static final int MID_NONE = 0;			// not mid engine being verified 
 	private static final int MID_FWD = 1;			// mid engine foward being verified
 	private static final int MID_REV = 2;			// mid engine reverse being verified
@@ -560,6 +561,10 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 			consistReply.setText("waiting");
 		}
 		
+		// if busy don't request
+		if (waiting > 0)
+			return cN;
+		
 		byte[] bl = readConsistMemory (cN, 0);
 		sendNceMessage(bl, REPLY_16);
 		
@@ -686,10 +691,14 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 						if (consistNumVerify != consistNum) {
 							engineSearch = false;
 							consistReply.setText("error");
-							int engNum = rC & 0x3FFF;
-							JOptionPane.showMessageDialog(NceConsistEditFrame.this,
-									"Loco address "+ engNum + " is part of consist " + consistNumVerify, "NCE Consist",
-									JOptionPane.ERROR_MESSAGE);
+							engNum = rC & 0x3FFF;
+							// Bad to stop receive thread with JOptionPane error message
+							// so start up a new thread to report error
+				            Thread errorThread = new Thread(new Runnable() {
+				                public void run() { reportError(); }
+				            });
+				            errorThread.setName("Report Error");
+				            errorThread.start();
 							return;
 						}
 					}
@@ -1170,6 +1179,13 @@ public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 		engTextField.setMaximumSize(new Dimension(engTextField
 				.getMaximumSize().width,
 				engTextField.getPreferredSize().height));
+    }
+    
+    public void reportError(){
+		JOptionPane.showMessageDialog(NceConsistEditFrame.this,
+				"Loco address "+ engNum + " is part of consist " + consistNumVerify, "NCE Consist",
+				JOptionPane.ERROR_MESSAGE);
+
     }
    
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceConsistEditFrame.class.getName());	
