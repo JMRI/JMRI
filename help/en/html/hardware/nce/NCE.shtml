@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: NCE.shtml,v 1.1 2008-01-13 05:05:41 jacobsen Exp $ -->
+<HTML LANG="en">
+<HEAD>
+<TITLE>JMRI: NCE</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META CONTENT="Bob Jacobsen" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI help NCE">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H2>NCE</H2>
+
+<P>JMRI supports three NCE layout connections, PowerHouse via serial
+cable, PowerHouse via network connection, and USB via serial cable. They
+are shown in the preferences menu as NCE, NCE via network, and NCE USB
+respectively.</P>
+
+<a id="phpro"/>
+<H3>PowerHouse Pro</H3>
+This section discusses JMRI's support for the NCE PowerHouse Pro.
+
+<H4>Setup</H4>
+
+<OL>
+	<LI>To connect your computer to an NCE Powerhouse Pro system, you can usually
+	just connect the command station to the computer's serial port using a
+	9-pin serial cable.</LI>
+	<LI>Then go to the preferences panel of a JMRI-based program. This
+	opens automatically the first time a program is run, or you can select
+	it from the "Edit" menu.</LI>
+	<LI>Select "NCE" from the top selection box. You can then select
+	the proper serial port in the second selection box.</LI>
+	<LI>If given the option to select a baud rate, 19,200 is probably
+	your best bet. If that selection is fixed (due to using an older
+	EPROM), don't worry.</LI>
+	<LI>Now set the baud rate in the NCE command station to be the
+	same. Use a ProCab to select "Set Cmd Sta" by pressing the Prog/Esc
+	button 5 times. Then press the Enter button 15 times to select baud
+	rates. Finally, select a baud rate (#2 is 19,200 baud), and press esc
+	to exit.</LI>
+	<LI>The series of radio buttons labelled "GUI style" allows you to
+	select how the program will look. "Metal" is the native Java look
+	available on all types. Other choices will vary with your computer
+	type. "Motif", "Windows", "MacOS" and "MacOS Adaptive" look native on
+	Linux, Windows, MacOS "Classic" and MacOS X respectively.</LI>
+	<LI>In the bottom selection box, you can pick the default
+	programmer format. You can override this each time you open the
+	programmer, so this is here just for convenience.</LI>
+	<LI>Click "Save". You'll be asked if it's OK for the program to
+	quit, click "Yes".</LI>
+	<LI>Restart the program. You should be up and running.</LI>
+</OL>
+<P>For reliable operation, we recommend that you disable "AIU
+broadcast", and set the baud rate to 9600. These are the normal defaults
+for NCE. Both of these parameters can be found in your NCE user's manual
+under "Setup Command Station".</P>
+
+<H4>EPROM Versions</H4>
+
+<P>The NCE Powerhouse Pro command station uses an "EPROM" to contain
+it's software. NCE has made several of these available to it's users.
+JMRI has been updated to work with these as they come out. To determine
+which ROM version you have, go to the 'setup command station' menu on
+the ProCab. The first screen will show you the EPROM version currently
+installed.</P>
+<UL>
+	<LI>December 2004 EPROM - JMRI 1.6.1 or any JMRI 1.7 version or
+	later should work fine.</LI>
+	<LI>2007 EPROM - you need JMRI 1.7.6 or later.</LI>
+	<LI>Various "beta test" versions from early 2006 - ask NCE to send
+	you an update to the 2007 EPROM, then use JMRI 1.7.6 or later</LI>
+</UL>
+
+<P>If you wish to use MONITORING for turnout feedback, you must
+upgrade your command station to the Mar 1 2007A EPROM or newer. The
+release in the first half of 2007 had a problem with odd turnout status.
+Every other odd accessory shared the same status bit. JMRI checks the
+revision number at startup, and will send a warning to the console
+window if it finds the early 2007 EPROM. If you're not sure if you have
+the latest, you can perform a simple test. First normal accessory 1 and
+5 using the "Select Accy" button on your ProCab. Then using the "Select
+Accy" button, change accessory 1 to REV. Then check accessory 5, and if
+NOW = REV for accessory 5, you have the earlier revision with the known
+problem. If you have the early 2007 EPROM and wish to use MONITORING for
+feedback, contact NCE for an EPROM upgrade.</P>
+
+<a id="AIU"/>
+<H4>AIU Numbering</H4>
+The NCE "AIU" device allows the NCE command station to check the status
+of inputs from the layout. These are referenced in JMRI as "Sensors"
+with names like "NS785". "NS" means "NCE Sensor", and 785 is the number
+of a specific sensor input.
+<P>The sensor number can be found by using the following formula:</P>
+<P>Sensor ID = (AIU Cab Address - 1) * 16 + (Pin Number On AIU) -1</P>
+<P>For example: The AIU cab address is set to 50 and one of the
+BD20s is connected to pin 2. Therefore the Sensor ID would be:</P>
+<P>Sensor ID = (50 - 1) * 16 + (2) -1</P>
+<P>Sensor ID = 785</P>
+
+<H4>Limitations</H4>
+
+<P>A very small number of early NCE Powerhouse Pro command stations
+have an "optional analog control circuit". (If you don't recall special
+ordering this, you probably don't need to read the rest of this
+paragraph!) In these, pins 5, 6, and 9 are used with an analog voltage
+as a separate throttle. If you have one of these command stations, a
+normal 9-pin serial cable will not work! You'll need to make a custom
+cable that just connects the "send data", "receive data" and "ground"
+pins. See your NCE manual for details.</P>
+
+<A ID="powercab" />
+
+<H3>USB</H3>
+
+<P>The NCE USB can be connected to three NCE systems, PowerCab, SB3
+(SmartBooster) or PowerHouse. You must select the correct system from
+the preference menu for reliable operation.</P>
+
+
+<H4>USB Limitations</H4>
+
+<P>The NCE USB doesn't support all of the current JMRI features and
+functions. Some of the restrictions are based on the type of system
+the USB is connected to. The USB can't get information from AIUs, so
+they can't be used to get feedback from the layout. The turnout feedback
+mode MONITORING isn't available when using a USB, and the Clock
+functions found in tools are also not available. The USB when connected
+to a PowerHouse system doesn't support any type of loco programming, and
+when connected to a SB3 only operation mode (no program track) is
+available for loco programming. Most functions and features that are not
+supported by the NCE USB are disabled or grayed out in the JMRI program.</P>
+
+<P>The USB when connected to a PowerCab or SB3 can only address
+accessories (turnouts) between 1 and 250. There isn't a limitation when
+connected to a PowerHouse.</P>
+
+
+<H4>USB Limitation Summary</H4>
+
+<DL>
+	<DT>All systems:</DT>
+	<DD>No AIU support, No Turnout MONITORING, No Clock functions.</DD>
+
+	<DT>PowerCab and SB3:</DT>
+	<DD>Can only access accessory addresses between 1 and 250.</DD>
+
+	<DT>SB3:</DT>
+	<DD>No programming track support, operation mode only.</DD>
+
+	<DT>PowerHouse:</DT>
+	<DD>No loco programming</DD>
+</DL>
+
+<H3>Other Information</H3>
+
+<P><A HREF="http://www.ncedcc.com/catalog2.html">NCE Systems and
+Cabs Catalog</A></P>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

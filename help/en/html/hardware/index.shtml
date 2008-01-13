@@ -1,9 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.1 2008-01-13 02:52:28 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.2 2008-01-13 05:05:52 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
- 	JMRI: Hardware compatability
+ 	JMRI: Hardware Support
   </TITLE>
 
 <!-- Style -->
@@ -20,9 +20,11 @@
 <BODY>
 <!--#include virtual="/Header" -->
 
-      <!-- Page Body -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
         <H2>
-		JMRI: Hardware compatability
+		JMRI: Hardware Support
         </H2>
 
 	<p>JMRI supports a wide range of DCC "command station"-style products
@@ -33,12 +35,12 @@
 	<dl>
 	    <dt class="im">
 		<a href="http://www.atlasrr.com/">
-		<img src="../images/atlas_logo.gif" width="44" height="34" alt="Atlas"></a>
+		<img src="images/atlas_logo.gif" width="44" height="34" alt="Atlas"></a>
 	    </dt>
 	    <dt>Atlas</dt>
 	    <dd>
 		<p class="dl">Configure: Atlas Commander-For Control - Item #330 via
-		<A HREF="./XPressNet/">Lenz LI100, LI101F, LIUSB or GenLi XPressNet interfaces, or an XPA and Hayes compatible modem</a></p> 
+		<A HREF="XPressNet/index.shtml">Lenz LI100, LI101F, LIUSB or GenLi XPressNet interfaces, or an XPA and Hayes compatible modem</a></p> 
 		
 		<p>Note: you can not program decoders with this configuration</p>
 
@@ -46,54 +48,54 @@
 
 	    <dt class="im">
 		<a href="http://www.digitrax.com/">
-		<img src="../images/Digitrax-logo.jpg" width="44" height="34" alt="Digitrax"></a></dt>
+		<img src="images/Digitrax-logo.jpg" width="44" height="34" alt="Digitrax"></a></dt>
 	    <dt>Digitrax</dt>
 	    <dd>
 	        <p class="dl">Configure: Digitrax command stations via 
-		<A HREF="./loconet/Digitrax.html">LocoBuffer-USB, LocoBuffer-II, LocoBuffer or MS100 LocoNet interfaces</a>.</p>
+		<A HREF="loconet/Digitrax.shtml">LocoBuffer-USB, LocoBuffer-II, LocoBuffer or MS100 LocoNet interfaces</a>.</p>
 	        <p class="dl">Configuring the 
-		<A HREF="./LocoNetSim.shtml">LocoNet Simulator for use when disconnected from a layout</a>.</p>
+		<A HREF="loconet/LocoNetSim.shtml">LocoNet Simulator for use when disconnected from a layout</a>.</p>
 	        <p class="dl">Configure: Remote connection to a LocoNet via
-		<A HREF="./LocoNetServer.html">JMRI LocoNet Server</a>.</p>
+		<A HREF="loconet/LocoNetServer.shtml">JMRI LocoNet Server</a>.</p>
 	        <p class="dl">Configure: Remote connection to a LocoNet via
-		<A HREF="./LbServer.html">LbServer</a>.</p>
-		<A HREF="LocoNetworking.html">More information on connecting multiple computers to a single LocoNet</a>
+		<A HREF="loconet/LbServer.shtml">LbServer</a>.</p>
+		<A HREF="loconet/LocoNetworking.shtml">More information on connecting multiple computers to a single LocoNet</a>
 	    </dd>
 
 	    <dt class="im"><a href="http://www.jlcenterprises.net/">C/MRI</a></dt>
 	    <dt>C/MRI</dt>
 	    <dd>
-	        <p class="dl">Configure: <A HREF="./CMRI.html">Bruce Chubb's C/MRI control system</a></p>
+	        <p class="dl">Configure: <A HREF="cmri/CMRI.shtml">Bruce Chubb's C/MRI control system</a></p>
 	    </dd>
 
 	    <dt class="im">
 		<a href="http://www.cvpusa.com/">
-		<img src="../images/ico-cvp.gif" width="44" height="34" alt="CVP"></a>
+		<img src="images/ico-cvp.gif" width="44" height="34" alt="CVP"></a>
 	    </dt>
 	    <dt>CVP Products</dt>
 	    <dd><p class="dl">Configure: EasyDCC command station via
-		<A HREF="./EasyDCC.html">Serial</a> or 
-		<A HREF="./TerminalServer.html">Terminal Server</a></p>
+		<A HREF="easydcc/EasyDCC.shtml">Serial</a> or 
+		<A HREF="TerminalServer.shtml">Terminal Server</a></p>
 		<p>&nbsp;</p>
 	    </dd>
 
 	    <dt class="im">
 		<a href="http://www.fleischmann.de/">
-		<img src="../images/ico-fl.gif" width="54" height="34" alt="Fleischmann"></a>
+		<img src="images/ico-fl.gif" width="54" height="34" alt="Fleischmann"></a>
 	    </dt>
 	    <dt>Fleischmann</dt>
 	    <dd><p class="dl">Configure: Twin Centre via the
-	        <A href="Fleischmann.html">serial connection</a></p> 
+	        <A href="loconet/Fleischmann.shtml">serial connection</a></p> 
 	    </dd>
 
 	    <dt class="im">
 		<a href="http://www.lenz.com/">
-		<img src="../images/ico-lenz.gif" width="44" height="34" alt="Lenz"></a>
+		<img src="images/ico-lenz.gif" width="44" height="34" alt="Lenz"></a>
 	    </dt>
 	    <dt>Lenz</dt>
 	    <dd>
 	        <p class="dl">Configure:
-		<A HREF="./XPressNet/">Lenz LI100, LI101F, or LIUSB XPressNet interfaces, or an XPA and Hayes compatible modem</a></p> 
+		<A HREF="XPressNet/index.shtml">Lenz LI100, LI101F, or LIUSB XPressNet interfaces, or an XPA and Hayes compatible modem</a></p> 
 
 		<p>Please check the notes above for system specific restrictions on what JMRI can do</p>
 
@@ -104,7 +106,7 @@
 	    <dt>Lionel TMCC</dt>
 	    <dd>
 		<p>Connection: Serial cable</p>
-	        <p class="dl">Configure: <A HREF="tmcc/index.html">TMCC Command Base</a></p>
+	        <p class="dl">Configure: <A HREF="tmcc/index.shtml">TMCC Command Base</a></p>
 	    </dd>
 
 
@@ -113,19 +115,19 @@
 	    <dt>NCE</dt>
 	    <dd>
 		Configure connection to a Powerhouse Pro via 
-		<A HREF="./NCE.html#phpro">serial link</a> or
-		<A HREF="./TerminalServer.html">Terminal Server</a>.
+		<A HREF="nce/NCE.shtml#phpro">serial link</a> or
+		<A HREF="TerminalServer.shtml">Terminal Server</a>.
 		<br>
 		Configure connection to a PowerCab via 
-		<A HREF="./NCE.html#powercab">NCE USB adapter</a>.
+		<A HREF="nce/NCE.shtml#powercab">NCE USB adapter</a>.
 		</dd>
 		
 	    <dt class="im"><a href="http://www.oaktreesystems.com/">
-	    <IMG src="../images/otslogosmall.gif" width="37" height="50" alt="NCE"/></a></dt>
+	    <IMG src="images/otslogosmall.gif" width="37" height="50" alt="NCE"/></a></dt>
 	    </a></dt>
 	    <dt>Oak Tree Systems</dt>
 	    <dd>
-	        <p class="dl">Configure connection to <A href="OakTree.html">Oak Tree's Railroad Control Interface</a>, including
+	        <p class="dl">Configure connection to <A href="oaktree/OakTree.shtml">Oak Tree's Railroad Control Interface</a>, including
 	        the <A HREF="http://www.oaktreesystems.com/io-24_card.htm">IO-24</A>, 
 	        <A HREF="http://www.oaktreesystems.com/HTML/io-48_card.htm">IO-48</A> 
 	        and <A HREF="http://www.oaktreesystems.com/HTML/o-48_card.htm">O-48</a> interface cards 
@@ -137,7 +139,7 @@
 	    <dt>Roco</dt>
 	    <dd>
 	        <p class="dl">Configure: Roco LocoMaus 2 (Roco Part number 10760) via
-		<A HREF="./XPressNet/">Lenz LI100, LI101F, or LIUSB XPressNet interfaces, or an XPA and Hayes compatible modem</a>
+		<A HREF="XPressNet/index.shtml">Lenz LI100, LI101F, or LIUSB XPressNet interfaces, or an XPA and Hayes compatible modem</a>
 		</p>
 		<p>Please check the notes above for system specific restrictions on what JMRI can do</p>
 		</dd>
@@ -145,7 +147,7 @@
 
 	    <dt class="im"><a href="http://www.sprog-dcc.co.uk/">SPROG</a></dt>
 	    <dt>Andrew Crosland</dt>
-	    <dd><p class="dl">Configure: <A HREF="./SPROG.html">SPROG</a></p></dd>
+	    <dd><p class="dl">Configure: <A HREF="sprog/SPROG.shtml">SPROG</a></p></dd>
 
 	    <dt class="im"><a href="http://www.uhlenbrock.de/">
 	    <IMG src="http://www.uhlenbrock.de/3/I867CF3D-009.apd/Ur.gif" width="44" height="34" alt="Uhlenbrock"/></a></dt>
@@ -154,11 +156,11 @@
 	    LocoNet connections, or via its own serial port.:
 	    
 	    <p class="dl">Configure: Uhlenbrock Intellibox via
-		<A HREF="./Digitrax.html">MS100 or LocoBuffer LocoNet interfaces</a></p>
+		<A HREF="loconet/Digitrax.shtml">MS100 or LocoBuffer LocoNet interfaces</a></p>
 		</p>
 
 	    <p class="dl">Configure: Uhlenbrock Intellibox via
-		<A href="Uhlenbrock.html">built-in serial port</a></p>
+		<A href="loconet/Uhlenbrock.shtml">built-in serial port</a></p>
 		</p>
 
 	    </dd>
@@ -167,23 +169,23 @@
 	    <dt>Wangrow</dt>
 	    <dd>
 		<p>Connection: Wangrow Serial Port</p>
-	        <p class="dl">Configure: <A HREF="./Wangrow.html">System One</a></p></dd>
+	        <p class="dl">Configure: <A HREF="nce/Wangrow.shtml">System One</a></p></dd>
 
 	    <dt class="im"><a href="http://w3.zimo.at/">Zimo</a></dt>
 	    <dt>Zimo</dt>
 	    <dd>
-	    	<p class="dl">Configure: <A HREF="./Zimo.html">Zimo MX-1</a> </p>
+	    	<p class="dl">Configure: <A HREF="zimo/Zimo.shtml">Zimo MX-1</a> </p>
 	    </dd>
 
 	    <dt class="im">
 	        <a href="http://ztccontrols.com/">
-		<img src="../images/ztclogo.gif" width="44" height="34" alt="ZTC"></a>
+		<img src="images/ztclogo.gif" width="44" height="34" alt="ZTC"></a>
 		</dt>
 
 	    <dt>ZTC Controls</dt>
 	    <dd>
 	    	<p class="dl">Configure: ZTC Controls ZTC511, ZTC Controls ZTC521 via
-		<A HREF="./XPressNet/">Lenz LI100, LI101F, or LIUSB XPressNet interfaces, or an XPA and Hayes compatible modem</a>
+		<A HREF="XPressNet/index.shtml">Lenz LI100, LI101F, or LIUSB XPressNet interfaces, or an XPA and Hayes compatible modem</a>
 		(requires XPressNet V3.0 software)
 		</p>
 		<p>Please check the notes above for system specific restrictions on what JMRI can do</p>
@@ -198,18 +200,18 @@
 	<dl>
 	<dt class=left>Macintosh</dt>
 	<dd>
-		<p><a href="./MacintoshSerialPorts.html">Mac Mini-DIN8 connector</a></p>
-		<p><a href="./USBtoSerial.html">Via a USB to Serial adapter</a></p>
+		<p><a href="MacintoshSerialPorts.shtml">Mac Mini-DIN8 connector</a></p>
+		<p><a href="USBtoSerial.shtml">Via a USB to Serial adapter</a></p>
 	</dd>
 
 	<dt class=left>PC</dt>
 	<dd>
-		<p><a href="./USBtoSerial.html">Via a USB to Serial adapter</a></p>
+		<p><a href="USBtoSerial.shtml">Via a USB to Serial adapter</a></p>
 	</dd>
 
 	<dt class=left>Terminal Server</dt>
 	<dd>
-		<p><a href="./TerminalServer.html">EasyDCC via a Lantronics Terminal Server</a></p>
+		<p><a href="TerminalServer.shtml">EasyDCC via a Lantronics Terminal Server</a></p>
 	</dd>
 
 	</dl>
@@ -218,7 +220,7 @@
 		JMRI: General hardware info
         </H2>
 	<dl>
-	<dt class=left><a href="../doc/Technical/TurnoutFeedback.html">Turnout feedback</a></dt>
+	<dt class=left><a href="../doc/Technical/TurnoutFeedback.shtml">Turnout feedback</a></dt>
 	<dd>
         If your layout uses some feedback mechanism to sense the actual
         positions of turnouts, for example a microswitch connected to the 
@@ -226,39 +228,10 @@
         JMRI can use that to keep track of what's actually happening 
         on the layout.  We call this "Feedback", and how to configure and
         use it is described on
-        <A HREF="../doc/Technical/TurnoutFeedback.html">another page</>.
+        <A HREF="../doc/Technical/TurnoutFeedback.shtml">another page</>.
 	</dd>
 
 	</dl>
-
-
-<!-- Footer -->
-    <hr class="hide">
-    <div id="footer">
-	<ul id="bn">
-	<li><a href="/sitemap/">Site Map</a></li>
-	<li><a href="/contact/">Contact Us</a></li>
-	</ul>
-
-	<p>Thanks and congratulations to
-	   <A href="/community/" title="Who is JMRI">
-	   	all who contributed</A>! </p>
-
-	<p>Copyright &copy; 1997 - 2004 JMRI Community. 
-	<P>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
-	<P><A href="/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a></p>
-    
-       <BR/>Site hosted by: <BR/>
-        <A href="http://sourceforge.net"> 
-        <IMG src="http://sourceforge.net/sflogo.php?group_id=26788&amp;type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A> 
-
-
-    </div>
-<!-- /Footer -->
-
-      </div><!-- closes #mainContent-->
-    </div> <!-- closes #mBody-->
-  </div> <!-- closes #container -->
 
 <!--#include virtual="/Footer" -->
 </body>
