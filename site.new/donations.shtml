@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: donations.shtml,v 1.2 2008-01-02 01:23:01 jacobsen Exp $ -->
+<!-- $Id: donations.shtml,v 1.3 2008-01-13 18:29:20 jacobsen Exp $ -->
 <html lang="en">
 
 <head>
@@ -78,11 +78,11 @@ will take you to a PayPal page for making a donation.
 <p>
 Thanks!
 <p>
-Previously, use used the SourceForge donation system
+We use the SourceForge donation system
 for handling donations to JMRI.  Unfortunately, 
 in December 2007 they changed to requiring that people create a SourceForge account
-before using that system to donate, which made it 
-significantly more complicated to use their system to make a donation.
+before directly using that system to donate, which made it 
+significantly more complicated to make a donation.
 If you have a SourceForge account and want to use that system,
 <a href="http://sourceforge.net/account/login.php" target="_blank">click here to login</a> to your account, and then
 <a href="http://sourceforge.net/donate/index.php?group_id=26788">click here to get to the JMRI donation page</a>.
