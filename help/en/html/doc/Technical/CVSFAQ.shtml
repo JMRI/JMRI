@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CVSFAQ.shtml,v 1.1 2008-01-03 02:36:58 jacobsen Exp $ -->
+<!-- $Id: CVSFAQ.shtml,v 1.2 2008-01-13 03:35:49 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -37,7 +37,7 @@ we use it with JMRI.
 
 <P>
 See also the 
-<A HREF="index.html">Technical index</a>
+<A HREF="index.shtml">Technical index</a>
 for more information on maintaining JMRI code.
 
 
@@ -71,9 +71,9 @@ On other computers, you can type them directly on the command line.
 
 <P>
 For more information, see the page on 
-<A HREF="getcode.html">getting your own copy of the source code</a>.
+<A HREF="getcode.shtml">getting your own copy of the source code</a>.
 
-<h3>What are those lines like <i>$Revision: 1.1 $</i> and <i>$Id: CVSFAQ.shtml,v 1.1 2008-01-03 02:36:58 jacobsen Exp $</i>?</h3>
+<h3>What are those lines like <i>$Revision: 1.2 $</i> and <i>$Id: CVSFAQ.shtml,v 1.2 2008-01-13 03:35:49 jacobsen Exp $</i>?</h3>
 <A id="refid"/>
 
 Those are automatically updated by CVS every time a new version of the 

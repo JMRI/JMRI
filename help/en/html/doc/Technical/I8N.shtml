@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: I8N.shtml,v 1.1 2008-01-03 02:36:58 jacobsen Exp $ -->
+<!-- $Id: I8N.shtml,v 1.2 2008-01-13 03:35:49 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -106,7 +106,7 @@ To get a clean copy of the properties files from CVS, do:
    cvs checkout properties
 </PRE>
 (For more info on using CVS, please see the 
-<A HREF="getcode.html">page on getting a copy of the code</a>.)
+<A HREF="getcode.shtml">page on getting a copy of the code</a>.)
 <P>
 Then, make copies of the files with suffix for your
 new locale.  On a Unix machine, this would be:
@@ -119,7 +119,7 @@ and so on.  You can then edit those files to enter text in
 your own language. Please don't edit the lines in the 
 file that contain things like $Release: $; those are used 
 by 
-<A HREF="CVSFAQ.html">CVS</a> 
+<A HREF="CVSFAQ.shtml">CVS</a> 
 to keep track of the history of changeds.
 <P>
 Languages that involve non-roman letters require some
@@ -218,7 +218,7 @@ in the same directory as the jmri.jar file.
 <LI>
 You can get these by checking out the "properties" module from
 cvs with "cvs checkout properties" (see the
-<A HREF="index.html#cvs">CVS information</a> on the
+<A HREF="index.shtml#cvs">CVS information</a> on the
 technical page for background on how to use CVS if you're not 
 familiar with it.  The steps are:
 <ol>

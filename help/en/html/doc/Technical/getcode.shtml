@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: getcode.shtml,v 1.1 2008-01-03 02:36:59 jacobsen Exp $ -->
+<!-- $Id: getcode.shtml,v 1.2 2008-01-13 03:35:49 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -85,7 +85,7 @@ menu and select "command line" to get a place to type these commands.
 On other computers, you can type them directly on the command line.
 <P>
 See also the 
-<A HREF="CVSFAQ.html">CVS FAQ page</a>.
+<A HREF="CVSFAQ.shtml">CVS FAQ page</a>.
 <P>
 After the checkout is complete, you'll find directories called
 "xml", "resources", "jython", "help", "lib", "java" and others.
@@ -101,7 +101,7 @@ Once you're working with the code, you'll probably create some improvements
 you'd like to contribute back to the project.  This is where CVS has tremendous
 advantages; with the appropriate permissions and commands, you can merge your
 changes back into the common source automagically.  Contact us when you're ready to
-do that or see the <A HREF="index.html#contributing">info on contributing</a>.
+do that or see the <A HREF="index.shtml#contributing">info on contributing</a>.
 
 <!--#include virtual="/Footer" -->
 

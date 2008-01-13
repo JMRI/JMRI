@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XmlUsage.shtml,v 1.1 2008-01-03 02:36:59 jacobsen Exp $ -->
+<!-- $Id: XmlUsage.shtml,v 1.2 2008-01-13 03:35:49 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -78,7 +78,7 @@ Early XML files used both; the program itself could generate
 either depending on the circumstances.
 <li>JMRI 1.9.2 through 2.0 provide a more powerful DTD search
 procedure using the 
-<a href="/JavaDoc/doc/jmri/util/JmriLocalResolver.html">jmri.util.JmriLocalResolver</a>
+<a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/util/JmriLocalEntityResolver.html">jmri.util.JmriLocalEntityResolver</a>
 class. It parses the
 reference in the DOCTYPE and handles it in several ways:
     <ul>

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Logging.shtml,v 1.1 2008-01-03 02:36:58 jacobsen Exp $ -->
+<!-- $Id: Logging.shtml,v 1.2 2008-01-13 03:35:49 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -38,7 +38,7 @@ JMRI logs error, status and debugging information.
 
 <P>
 For other details on JMRI internals, please see the
-<A HREF="../Technical/index.html" NAME="technical pages">technical pages</A>.
+<A HREF="../Technical/index.shtml" NAME="technical pages">technical pages</A>.
 
 <P>
 JMRI uses the Jakarta
