@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.1.shtml,v 1.2 2008-01-07 00:52:46 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.1.shtml,v 1.3 2008-01-13 02:28:42 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -73,16 +73,13 @@ see our
 
 <h3>New warnings for this version:</h3>
 
-<p>
-The starting location of file chooser windows used to determine which file to 
-open or where to save a file have been updated to (hopefully) more useful initial places.  They now retain their location from one use to the next, so you don't have to keep navigating back to the same place.  Please let us know (via a comment on the jmriusers list) if these two changes are an improvement or not.
+JMRI is moving toward requiring Java 1.4 or later.  Certain new features may not work if you are using an earlier
+version of Java.  To see JMRI's future plans for this and other compatibility issues, please see the JMRI
+<a href="http://jmri.sourceforge.net/doc/Technical/TechRoadMap.shtml">technology roadmap</a>.
 
 <h3>Warnings from older versions:</h3>
 
-<p>
-The NCE support has been revamped so that "NCE USB" is a new choice in the preferences window. Note that this support is still experimental, and will likely evolve as NCE adds features to the adapter.
-
-<p>This version of JMRI no longer supports NCE AIU broadcasts. This change was needed so that JMRI could reliably read certain CV values. We recommend that if you use NCE AIUs, that you upgrade the command station EPROM to version 2007 or newer and turn off AIU broadcasts. Code has been added to detect if AIU broadcasts are enabled, and a warning message will appear at startup requesting that AIU broadcasts be turned off for proper operation of the JMRI programs.
+<p>JMRI no longer supports NCE AIU broadcasts. This change was needed so that JMRI could reliably read certain CV values. We recommend that if you use NCE AIUs, that you upgrade the command station EPROM to version 2007 or newer and turn off AIU broadcasts. Code has been added to detect if AIU broadcasts are enabled, and a warning message will appear at startup requesting that AIU broadcasts be turned off for proper operation of the JMRI programs.
 
 <p>This version of JMRI requires Java 1.3 or later.  To see JMRI's plans for which Java versions will be required when, please see our
 <A HREF="../doc/Technical/TechRoadMap.shtml">technological roadmap page</a>.
@@ -132,6 +129,14 @@ David Duchamp and Ken Cameron continue to improve the fast clock support
 <p>
 David Duchamp made it possible to build layout editor panel backgrounds from multiple images, so for example you can build a USS CTC panel of any width from the provided slices
 
+<p>
+(Most) windows can be closed via keyboard shortcut.
+
+<p>
+Dan Boudreau added a new feature to consisting to allow the user to get a locomotive from the roster.  He also added a verify checkbox that confirms that the loco address isn't a lead or rear loco. 
+
+<p>
+Dan Bodreau improved how communications is handled, which should greatly reduce the number of timeouts on slow computers
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
