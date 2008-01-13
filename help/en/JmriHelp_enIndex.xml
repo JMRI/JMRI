@@ -29,6 +29,22 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       </indexitem>
    </indexitem>
    <indexitem text="DS64" target="package.jmri.jmrix.loconet.ds64.DS64Frame"/>
+   <indexitem text="Hardware" target="html.hardware.index">
+      <indexitem text="C/MRI" target="html.hardware.cmri.CMRI">
+         <indexitem text="Signals" target="html.hardware.cmri.Signals"/>
+      </indexitem>
+      <indexitem text="Digitrax LocoNet" target="html.hardware.loconet.Digitrax"/>
+      <indexitem text="EasyDCC" target="html.hardware.easydcc.EasyDCC"/>
+      <indexitem text="Grapevine" target="html.hardware.grapevine.Names"/>
+      <indexitem text="Lenz XpressNet" target="html.hardware.XPressNet.index"/>
+      <indexitem text="Lionel TMCC" target="html.hardware.tmcc.index"/>
+      <indexitem text="NCE" target="html.hardware.nce.NCE"/>
+      <indexitem text="Oak Tree Systems" target="html.hardware.oaktree.OakTree"/>
+      <indexitem text="SPROG" target="html.hardware.sprog.SPROG"/>
+      <indexitem text="Zimo" target="html.hardware.zimo.Zimo"/>
+      <indexitem text="ZTC" target="html.hardware.XPressNet.index"/>
+      <indexitem text="Uhlenbrock Intelllibox" target="html.hardware.loconet.Uhlenbrock"/>
+   </indexitem>
    <indexitem text="Light" target="html.Lights">
       <indexitem text="Add Light" target="package.jmri.jmrit.beantable.LightAddEdit"/>
       <indexitem text="Edit Light" target="package.jmri.jmrit.beantable.LightAddEdit"/>

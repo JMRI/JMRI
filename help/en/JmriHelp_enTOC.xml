@@ -7,6 +7,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
 <toc version="1.0"> 
 
    <tocitem text="JMRI Help Main Page" target="index"/>
+   <tocitem text="Acknowledgements" target="Acknowledgements"/>
    <tocitem text="DecoderPro Manual">
       <tocitem text="Getting Started" target="DecoderProManual.Getting_Started"/>
       <tocitem text="Basic Decoder Programming" target="DecoderProManual.Basic_Programming"/>
@@ -60,7 +61,6 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
       <tocitem text="Layout Editor" target="package.jmri.jmrit.display.LayoutEditor"/>
    </tocitem>
    <tocitem text="Names" target="html.doc.Technical.Names"/>
-   <tocitem text="Acknowledgements" target="Acknowledgements"/>
    <tocitem text="System-Specific">
       <tocitem text="Digitrax">
          <tocitem text="Sound">
