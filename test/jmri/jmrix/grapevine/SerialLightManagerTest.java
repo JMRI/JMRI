@@ -6,13 +6,15 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import jmri.*;
+import jmri.jmrix.AbstractMRMessage;
+import jmri.jmrix.AbstractMRListener;
 
 /**
  * SerialTurnoutManagerTest.java
  *
  * Description:	    tests for the SerialLightManager class
  * @author			Bob Jacobsen Copyright 2004, 2007, 2008
- * @version  $Revision: 1.1 $
+ * @version  $Revision: 1.2 $
  */
 public class SerialLightManagerTest extends jmri.AbstractLightMgrTest  {
 
@@ -25,6 +27,7 @@ public class SerialLightManagerTest extends jmri.AbstractLightMgrTest  {
 	            setInstance();
 	            return this;
 	        }
+	        synchronized protected void sendMessage(AbstractMRMessage m, AbstractMRListener reply) {}
 	    }.test();
 		t.registerSerialNode(new SerialNode(1, SerialNode.NODE2002V6));
 		// create and register the manager object

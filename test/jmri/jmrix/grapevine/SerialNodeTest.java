@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the SerialNode class
  * @author		Bob Jacobsen  Copyright 2003, 2007, 2008
  * @author		Dave Duchamp  multi-node extensions 2003
- * @version		$Revision: 1.4 $
+ * @version		$Revision: 1.5 $
  */
 public class SerialNodeTest extends TestCase {
 		
@@ -41,7 +41,7 @@ public class SerialNodeTest extends TestCase {
     public void testInitialization1() {
         // no initialization in this protocol
         SerialMessage m = b.createInitPacket();
-        Assert.assertEquals("initpacket null", null, m );
+        Assert.assertEquals("initpacket", "81 72 81 1C 81 71 81 0F", m.toString() );
     }
 
     public void testOutputBits1() {

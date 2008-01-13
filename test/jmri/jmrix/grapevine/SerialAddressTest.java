@@ -13,7 +13,7 @@ import jmri.util.JUnitAppender;
  * JUnit tests for the SerialAddress utility class.
  * @author	Dave Duchamp Copyright 2004
  * @author  Bob Jacobsen Copyright 2007, 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SerialAddressTest extends TestCase {
 
@@ -117,38 +117,38 @@ public class SerialAddressTest extends TestCase {
             Assert.assertTrue("valid config GL10011", SerialAddress.validSystemNameConfig("GL10011",'L') );
             Assert.assertTrue("valid config GL10B06", SerialAddress.validSystemNameConfig("GL10B06",'L') );
 
-            Assert.assertTrue("invalid config GL10033", !SerialAddress.validSystemNameConfig("GL10033",'L') );
-            JUnitAppender.assertWarnMessage("GL10033 invalid; bad bit number");
+            Assert.assertTrue("invalid config GL10133", !SerialAddress.validSystemNameConfig("GL10133",'L') );
+            JUnitAppender.assertWarnMessage("GL10133 invalid; bad bit number 133 > 96");
 
-            Assert.assertTrue("invalid config GL10B33", !SerialAddress.validSystemNameConfig("GL10B33",'L') );
-            JUnitAppender.assertWarnMessage("GL10B33 invalid; bad bit number");
+            Assert.assertTrue("invalid config GL10B133", !SerialAddress.validSystemNameConfig("GL10B133",'L') );
+            JUnitAppender.assertWarnMessage("GL10B133 invalid; bad bit number 133 > 96");
 
             Assert.assertTrue("valid config GS10006", SerialAddress.validSystemNameConfig("GS10006",'S') );
             Assert.assertTrue("valid config GS10B06", SerialAddress.validSystemNameConfig("GS10B06",'S') );
 
             Assert.assertTrue("invalid config GS10517", !SerialAddress.validSystemNameConfig("GS10517",'S') );
-            JUnitAppender.assertWarnMessage("GS10517 invalid; bad bit number");
+            JUnitAppender.assertWarnMessage("GS10517 invalid; bad bit number 517 > 96");
 
             Assert.assertTrue("invalid config GS10B547", !SerialAddress.validSystemNameConfig("GS10B547",'S') );
-            JUnitAppender.assertWarnMessage("GS10B547 invalid; bad bit number");
+            JUnitAppender.assertWarnMessage("GS10B547 invalid; bad bit number 547 > 96");
 
             Assert.assertTrue("valid config GT4006", SerialAddress.validSystemNameConfig("GT4006",'T') );
             Assert.assertTrue("valid config GT4B6", SerialAddress.validSystemNameConfig("GT4B6",'T') );
 
             Assert.assertTrue("invalid config GT4317", !SerialAddress.validSystemNameConfig("GT4317",'T') );
-            JUnitAppender.assertWarnMessage("GT4317 invalid; bad bit number");
+            JUnitAppender.assertWarnMessage("GT4317 invalid; bad bit number 317 > 96");
 
             Assert.assertTrue("invalid config GT4317", !SerialAddress.validSystemNameConfig("GT4B317",'T') );
-            JUnitAppender.assertWarnMessage("GT4B317 invalid; bad bit number");
+            JUnitAppender.assertWarnMessage("GT4B317 invalid; bad bit number 317 > 96");
 
             Assert.assertTrue("valid config GS4008", SerialAddress.validSystemNameConfig("GS4008",'S') );
             Assert.assertTrue("valid config GS4B8", SerialAddress.validSystemNameConfig("GS4B8",'S') );
 
             Assert.assertTrue("invalid config GS4309", !SerialAddress.validSystemNameConfig("GS4309",'S') );
-            JUnitAppender.assertWarnMessage("GS4309 invalid; bad bit number");
+            JUnitAppender.assertWarnMessage("GS4309 invalid; bad bit number 309 > 96");
 
             Assert.assertTrue("invalid config GS4B309", !SerialAddress.validSystemNameConfig("GS4B309",'S') );
-            JUnitAppender.assertWarnMessage("GS4B309 invalid; bad bit number");
+            JUnitAppender.assertWarnMessage("GS4B309 invalid; bad bit number 309 > 96");
 
             Assert.assertTrue("invalid config GL11007", !SerialAddress.validSystemNameConfig("GL11007",'L') );
             JUnitAppender.assertWarnMessage("GL11007 invalid; no such node");
