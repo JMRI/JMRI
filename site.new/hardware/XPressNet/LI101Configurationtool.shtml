@@ -1,7 +1,26 @@
-<html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
 <head>
-<title>The JMRI LI101F Configuration Utility</title>
-<body>
+<!-- $Id: LI101Configurationtool.shtml,v 1.1 2008-01-13 04:23:35 jacobsen Exp $ -->
+
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
 <H2>The JMRI LI101F Configuration Utility</H2>
 <img src="images/LI101ConfigurationUtility.jpg" alt="LI101 Configuration Tool Image">
 <P>
@@ -34,7 +53,7 @@ any information to the LI101F.
 <hr>
 Paul Bender<BR>
 paul.bender@acm.org
+
+<!--#include virtual="/Footer" -->
 </body>
 </html>
-
-

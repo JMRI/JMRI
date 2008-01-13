@@ -1,0 +1,188 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: Digitrax.shtml,v 1.1 2008-01-13 04:24:44 jacobsen Exp $ -->
+<html lang="en">
+<head>
+ <TITLE>
+      JMRI Hardware Guide: Digitrax DCC
+ </TITLE>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+      <h1> 
+      JMRI Hardware Guide: Digitrax DCC
+      </h1>
+
+	<h2>Supported Command Stations</h2>
+	<p>DecoderPro works with your Digitrax command station to program
+	decoders.  To do this, it communicates with the command station
+	over the LocoNet using one of several types of LocoNet adapter.</p>
+	<P>DecoderPro will work with all the following command stations:</p>
+	<ul>
+	  <li>Zephyr Starter Set</li>
+	  <li>Super Empire Builder Set</li>
+	  <li>Super Chief Set</li>
+	  <li>DCS50 Command Station/Booster/Throttle </li>
+	  <li>DB150 Command Station/Booster</li>
+	  <li>DCS100 Command Station/Booster</li>
+	  <li>DCS200 Command Station/Booster</li>
+	  <li><a href="http://www.uhlenbrock.de/3/index.htm">Intellibox: The Uhlenbrock Central Unit</a></li>
+    </ul>
+    
+    <P>To connect your computer to the LocoNet, and hence to the command
+    station, you need one of the following adapters:</P>
+	  <li><a href="LocoBufferUSB.shtml">LocoBuffer-USB</a></li>
+	  <li><a href="LocoBufferII.shtml">LocoBuffer II</a></li>
+	  <li><a href="LocoBuffer.shtml">LocoBuffer</a></li>
+	  <li><a href="MS100.shtml">MS-100</a></li>
+	</ul>
+	<P>Generally, any of these can be used with any type of computer
+	to communicate with any type of command station.  It is strongly
+	recommended, however, that you use a LocoBuffer-style device in preference 
+	to an MS100.  The MS100 does not provide reliable communications,
+	and cannot be used at all if your computer is a Macintosh running
+	MacOS X.
+	  
+	<h2>Setup</h2>
+
+	  <p>To connect your computer to a Digitrax DCC system, you need a
+	  <a href="LocoBufferII.shtml">LocoBuffer II</a>,
+	  <a href="LocoBuffer.shtml">LocoBuffer</a> or
+	  <a href="MS100.shtml">MS-100</a> to act as an adapter.
+      See below for more
+	  information on these.  The LocoBuffer II is highly recommended.</p>
+
+	  <P> Note that these are LocoNet interfaces, not standalone
+	  programmers like the Digitrax PR1.  Neither of them will let you
+	  read CVs if you have an Empire Builder!  For that you need a
+	  Chief or Zephyr command station.  (We're working on PR1 support,
+	  and would welcome help).</p>
+	  	  
+	  <ol>
+	  <li>Connect
+	  your adapter to the LocoNet, and connect your
+	  computer to it with the appropriate serial cable.</li>
+
+	  <li> Then go to the preferences panel of a JMRI-based program.
+	  This opens automatically the first time a program is run, or you
+	  can select it from the "Edit" menu.  </li>
+
+	  <li> Select "Digitrax MS100" or "Digitrax LocoBuffer" from the top
+	  selection box. You can then select the proper serial port in the
+	  second selection box.  </li>
+
+	  <li> The baud rate box will be fixed if you've selected an MS100.
+	  There are two choices for the LocoBuffer; select the one the
+	  corresponds to the jumper settings on the LocoBuffer board. We
+	  recommend that you start with the 19,200 choice for the
+	  LocoBuffer and LocoBuffer II;
+	  see the
+	  <a href="LocoBufferII.shtml">LocoBuffer II</a> and
+	  <a href="LocoBuffer.shtml">LocoBuffer</a>
+	  pages	for more information.</li>
+
+	  <li> The fourth box should be left on "hardware flow control"
+	  unless you later consistently get a message about the LocoBuffer
+	  control leads being improperly set up, in which case you might
+	  want to try to bypass that by selecting "no flow control".  This
+	  box will be blank if you've selected MS100.</li>
+
+	  <li> In the fifth box, select the type of command station you
+	  have.  Note that this program can't read decoder CVs if you have
+	  an Empire Builder (DB150); that's due to the Empire Builder
+	  hardware, and there's nothing we can do about it.</li>
+
+	  <li> The series of radio buttons labelled "GUI style" allows you
+	  to select how the program will look.  "Metal" is the native Java
+	  look available on all types.  Other choices will vary with your
+	  computer type. "Motif", "Windows", "MacOS" and "MacOS Adaptive"
+	  look native on Linux, Windows, MacOS "Classic" and MacOS X
+	  respectively.</li>
+
+	  <li> In the bottom selection box, you can pick the default
+	  programmer format. You can override this each time you open the
+	  programmer, so this is here just for convenience.</li>
+
+	  <li> Click "Save".  You'll be asked if it's OK for the program to
+	  quit, click "Yes".</li>
+
+	  <li> Restart the program. You should be up and running.</li>
+	  </ol>
+    <P>
+    If you are going to control turnouts, signals or other devices
+    on your layout from JMRI or another program, we recommend
+    that you set the command station's "Meter Switch Commands"
+    option off.  When on, this option greatly reduces the number 
+    of commands the LocoNet can handle each second, which can cause
+    significant delays when you're controlling signals, etc. To turn
+    it off, you can use the "Configure Command Station" tool in the LocoNet
+    menu to set Option Switch 31 to "T" (thrown), or set it
+    directly in the command station using a Digitrax throttle.
+    
+    <h2>Network Connections</h2>
+    There are several methods available to connect multiple 
+    computers to a single LocoNet.  These communicate
+    via standard TCP/IP protocols, and can even work 
+    remotely.
+    <A HREF="LocoNetworking.shtml">For more information ...</a>
+
+	<h2>Limitations</h2>
+	<P><b>PR-1 not currently supported</b> - Note that DecoderPro
+	cannot directly program decoders via a PR1 programmer.  You have to
+	use one of the command stations above.</p>
+
+	<P><b>MacOS X and the MS100</b> - Because MacOS X can't communicate
+	at the special baud rate used by the MS100, the MS100 won't work 
+	with MacOS X.  You should get a LocoBufffer II instead.
+	
+	<p><b>Serial ports on older Macintoshes and the MS100</B> - 
+	A standard Macintosh RS422 serial port will not work directly with
+	an MS100. Since it doesn't have two output status lines (DTR and
+	RTS), it can't provide correct power to the MS100.  It may be
+	possible to provide external power; if you're interested in trying
+	this, we'd be happy to help work out a solution. A LocoBuffer will
+	work fine with a standard Macintosh RS422 serial port.</p>
+
+	<P><b>Apple USB connections</B> -
+	  DecoderPro is tested with both a MS100 and a LocoBuffer on a
+	  USB Macintosh using a Keyspan PDA Adapter to provide the serial
+	  port; for information please see <a
+	  href="http://jmri.sourceforge.net/DigiTrax/KeyspanAdapters/KeyspanUSB.shtml">http://jmri.sourceforge.net/DigiTrax/KeyspanAdapters/KeyspanUSB.shtml</a>.
+	  Note that we've had a report that certain models of the PDA
+	  adapter don't work at 57,600 baud with the LocoBuffer,  so please
+	  try 19,200 baud if you're having trouble. </p>
+	    See our page on 
+	    <A HREF="../hardware/USBtoSerial.shtml">USB adapters</a>
+	    for more information
+
+	<P><b>Uhlenbrock Intellibox</B> - The Intellibox has two
+	  LocoNet connections, called LocoNet-T and LocoNet-B.  
+	  The LocoNet-T connection can drive more devices, but does
+	  not provide the Rail-Synch signals that some LocoNet devices
+	  (particularly the BDL-16, -162 and -168) require.  A
+	  LocoBuffer II should be connected to the LocoNet-T connection
+	  if it is configured to take power from the LocoNet.
+	  </p>
+
+
+	<h2>Debugging</h2>
+
+	<p><a href="http://www.digitrax.com/pdfdocs.htm">Digitrax Manuals</a></p>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

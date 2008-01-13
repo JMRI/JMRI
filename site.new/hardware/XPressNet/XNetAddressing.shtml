@@ -1,12 +1,26 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
 <html>
 <head>
+<!-- $Id: XNetAddressing.shtml,v 1.1 2008-01-13 04:23:35 jacobsen Exp $ -->
    <title>Lenz Feedback Bus Addressing</title>
-</head>
-<body>
 
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
 
-<IMG SRC="../images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
+<BODY>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
 <h1>Lenz Feedback Bus Addressing</h1>
 
 On Lenz systems, feedback from input devices is handled by the Feedback Bus.
@@ -93,5 +107,7 @@ programs will automatically assign an XS prefix for you.
 <hr>
 Paul Bender<BR>
 paul.bender@acm.org
+
+<!--#include virtual="/Footer" -->
 </body>
 </html>
