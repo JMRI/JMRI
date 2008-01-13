@@ -35,7 +35,7 @@ import jmri.util.JmriJFrame;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.24 $
+ * @version     $Revision: 1.25 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -497,6 +497,8 @@ public class LightTableAction extends AbstractTableAction {
     void createPressed(ActionEvent e) {
         String suName = (systemName.getText().toUpperCase()).trim();
         String uName = userName.getText();
+        if (uName.equals("")) uName=null;   // a blank field means no user name
+
         // Does System Name have a valid format
         if (!InstanceManager.lightManagerInstance().validSystemNameFormat(suName)) {
             // Invalid System Name format
@@ -531,13 +533,15 @@ public class LightTableAction extends AbstractTableAction {
             }
         }
         // check if a Light with the same user name exists
-        g = InstanceManager.lightManagerInstance().getByUserName(uName);
-        if (g!=null) {
-            // Light with this user name already exists
-            status1.setText( rb.getString("LightError8") );
-            status2.setText( rb.getString("LightError9") );
-            status2.setVisible(true);
-            return;
+        if (uName != null) {
+            g = InstanceManager.lightManagerInstance().getByUserName(uName);
+            if (g!=null) {
+                // Light with this user name already exists
+                status1.setText( rb.getString("LightError8") );
+                status2.setText( rb.getString("LightError9") );
+                status2.setVisible(true);
+                return;
+            }
         }
         // Does System Name correspond to configured hardware
         if (!InstanceManager.lightManagerInstance().validSystemNameConfig(sName)) {
