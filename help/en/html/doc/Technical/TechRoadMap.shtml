@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TechRoadMap.shtml,v 1.1 2008-01-03 02:36:58 jacobsen Exp $ -->
+<!-- $Id: TechRoadMap.shtml,v 1.2 2008-01-13 02:28:25 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -46,19 +46,18 @@ plans for JMRI releases in the future.
 <tr><th>Release</th><th>Description</th><th>Date</th><td>JRE</td><td>JDK</td></tr>
 <tr><td>1.8</td><td>Production version, culmination of 1.7.* series </td><td>July 2007 <b>(done)</b></td>  <td></td><td></td></tr>
 <tr><td>1.9.*</td><td>Development series </td><td></td>                           <td>1.3</td><td>1.4</td></tr>
-<tr><td>2.0</td><td>Production version, culmination of 1.9.* series </td><td>December 2007</td>     <td>1.3</td><td>1.4</td></tr>
+<tr><td>2.0</td><td>Production version, culmination of 1.9.* series </td><td>December 2007 <b>(done)</b></td>     <td>1.3</td><td>1.4</td></tr>
 <tr><td>2.1.*</td><td>Development series </td><td></td>                           <td>1.4</td><td>1.5</td></tr>
 <tr><td>2.2</td><td>Production version, culmination of 2.1.* series </td><td>August 2008</td>       <td>1.4</td><td>1.5</td></tr>
 <tr><td>2.3.*</td><td>Development series </td><td></td>                           <td>1.5</td><td>1.6</td></tr>
-<tr><td>2.4</td><td>Production version, culmination of 2.3.* series </td><td>August 2009</td>       <td>1.5</td><td>1.6</td></tr>
+<tr><td>2.4</td><td>Production version, culmination of 2.3.* series </td><td>August 2009 (tentative)</td>       <td>1.5</td><td>1.6</td></tr>
 <tr><td>2.5.*</td><td>Development series</td><td></td>                                              <td>?</td><td>?</td></tr>
 
 </table>
 
 <h4>JMRI 1.9, 2.0</h4>
 
-The JMRI 1.9 development series moves forward to JRE 1.3, JDK 1.4.  This permits use of
-(subject to verification):
+The JMRI 1.9 development series moved forward to JRE 1.3, JDK 1.4.  This permitted use of:
 
 <ul>
 <LI>Collections in java.util instead of com.sun
@@ -66,8 +65,6 @@ The JMRI 1.9 development series moves forward to JRE 1.3, JDK 1.4.  This permits
 <LI>Annotations (we need to develop conventions for their use)
 <LI>JDOM 1.0 - Simplifies XML code, allows use of XSLT for dynamic combination
 <LI>JUnit 3.8 - Minor improvements to test writing ease
-<LI>XML catalog resolver (to be confirmed) - fixes problems finding DTDs on some systems,
-allows use of XML schema
 <LI>Fewer jar files included in distribution
 <LI>The Jakarta regexp regular expression library. (At some later
 point, we'll have to move that forward to java.util.regexp, but that
@@ -76,7 +73,7 @@ won't be available until Java 1.4 in a later JMRI release)
 
 <P>
 JMRI 1.9 and 2.0 will run on Windows 95 and later, all versions of MacOS X, and 
-(almost all?) versions of Linux.
+all versions of Linux.
 <P>
 To build JMRI 1.9 and 2.0, you will need Windows 98 1st Ed or later, any version of
 MacOS X, or (almost any?) version of Linux.
@@ -100,7 +97,7 @@ The JMRI 2.1 development series moves forward to JRE 1.4, JDK 1.5.  This permits
 <P>
 JMRI 2.1 and 2.2 will run on Windows 98 1st Ed or later, 
 any version of MacOS X, 
-or (almost any?) version of Linux.
+or version of Linux.
 <P>
 To build JMRI 2.1 and 2.2, you will need Windows 98 2nd Ed or later,
 MacOS X 10.4 or later, 
