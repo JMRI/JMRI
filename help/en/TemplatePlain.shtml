@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: TemplatePlain.shtml,v 1.2 2008-01-10 08:15:56 jacobsen Exp $ -->
+<!-- $Id: TemplatePlain.shtml,v 1.3 2008-01-13 05:08:42 jacobsen Exp $ -->
 <title>JMRI: ???Page Title</title>
 
 <!-- Style -->
@@ -18,6 +18,12 @@
 <BODY>
 <!--#include virtual="/Header" -->
 
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+
+
+
 <h2> 
 JMRI: Page Title???
 </h2>
@@ -26,6 +32,10 @@ Content????
 
 This file shows the top and bottom matter for a plain page, without
 a side menu (on the web)
+
+
+
+
     
 <!--#include virtual="/Footer" -->
 </body>
