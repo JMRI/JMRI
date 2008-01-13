@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Names.shtml,v 1.1 2008-01-03 02:36:58 jacobsen Exp $ -->
+<!-- $Id: Names.shtml,v 1.2 2008-01-13 02:29:42 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -39,7 +39,7 @@ how user-readable names are used.
 
 <h2>What's in a name?</h2>
 
-Why do we need names at all, rather than pointers?
+Why do we need names at all, rather than just references within the code?
 There are several important uses:
 <OL>
 <LI>When working with user input, e.g. typing a number in a field, 
@@ -55,6 +55,7 @@ in a symbolic form. Names are a convenient way to connect objects
 and object references in that kind of configuration.
 </OL>
 
+<a id="type"/>
 <H2>Items with names</h2>
 There are lots of things that might need names:
 <UL>
@@ -72,7 +73,13 @@ There are lots of things that might need names:
 </UL>
 
 Some of these are associated with a specific hardware device, e.g. a particular
-turnout.  Others are more virtual, e.g. a signal aspect.
+turnout.  Others are more virtual, e.g. a route, which is a collection on control
+information within the program.
+
+<p>
+JMRI identifies a particular type of device with a "type letter", capitalized
+in the list above.  For example, a Turnout device will have a "type letter" of "T" in
+it's name.
 
 <P>
 In all cases, we want users to be able to call things what they want.
@@ -113,7 +120,7 @@ Note that some of these are placeholders, and have no underlying implementation.
 <LI>C C/MRI serial
 <LI>D (reserved for Direct-packet-drive)
 <LI>E EasyDCC
-<LI>G (Reserved for Grapevine (ProTrak))
+<LI>G ProTrak Grapevine
 <LI>I Internal, e.g. objects with no associated hardware
 <LI>L LocoNet
 <LI>M MRRLCB
@@ -124,6 +131,7 @@ Note that some of these are placeholders, and have no underlying implementation.
 <LI>R RS232 (e.g. serial port) used for direct sensors
 <LI>S SPROG
 <LI>T Lionel TMCC
+<li>U (reserved for ESU eCos)
 <LI>V TracTronics SECSI
 <LI>W (reserved for Wangrow, but that's currently still combined with NCE)
 <LI>X XpressNet
@@ -135,9 +143,11 @@ Each different hardware system can specify the "string" that follows the system 
 letters.  Generally, these are small numbers, but their exact meaning is very system-specific.
 For more information, please see the specific pages for
 <UL>
-<LI><A HREF="../../hardware/CMRI.html">C/MRI</a>
-<LI><A HREF="loconet/Addressing.shtml">Digitrax</a>
-<LI><A HREF="../../hardware/NCE.html#names">NCE</a>
+<LI><A HREF="../../hardware/CMRI.shtml#names">C/MRI</a>
+<LI><A HREF="../../loconet/Addressing.html">Digitrax</a>
+<LI><A HREF="../../hardware/Grapevine.shtml#names">Grapevine</a>
+<LI><A HREF="../../hardware/NCE.shtml#names">NCE</a>
+</UL>
 </UL>
 
 <P>
