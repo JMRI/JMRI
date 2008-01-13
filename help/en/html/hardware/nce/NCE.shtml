@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NCE.shtml,v 1.1 2008-01-13 05:05:41 jacobsen Exp $ -->
+<!-- $Id: NCE.shtml,v 1.2 2008-01-13 06:54:20 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: NCE</TITLE>
@@ -29,9 +29,9 @@
 <P>JMRI supports three NCE layout connections, PowerHouse via serial
 cable, PowerHouse via network connection, and USB via serial cable. They
 are shown in the preferences menu as NCE, NCE via network, and NCE USB
-respectively.</P>
+respectively.
 
-<a id="phpro"/>
+<a id="phpro"></a>
 <H3>PowerHouse Pro</H3>
 This section discusses JMRI's support for the NCE PowerHouse Pro.
 
@@ -100,7 +100,7 @@ NOW = REV for accessory 5, you have the earlier revision with the known
 problem. If you have the early 2007 EPROM and wish to use MONITORING for
 feedback, contact NCE for an EPROM upgrade.</P>
 
-<a id="AIU"/>
+<a id="AIU"></a>
 <H4>AIU Numbering</H4>
 The NCE "AIU" device allows the NCE command station to check the status
 of inputs from the layout. These are referenced in JMRI as "Sensors"
@@ -124,7 +124,7 @@ normal 9-pin serial cable will not work! You'll need to make a custom
 cable that just connects the "send data", "receive data" and "ground"
 pins. See your NCE manual for details.</P>
 
-<A ID="powercab" />
+<A ID="powercab"></a>
 
 <H3>USB</H3>
 
