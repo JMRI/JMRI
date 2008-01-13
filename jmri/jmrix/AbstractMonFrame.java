@@ -10,11 +10,16 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 import javax.swing.text.*;
 
 import jmri.util.JmriJFrame;
@@ -22,7 +27,7 @@ import jmri.util.JmriJFrame;
 /**
  * Abstact base class for Frames displaying communications monitor information
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
 public abstract class AbstractMonFrame extends JmriJFrame  {
 
@@ -52,6 +57,8 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
     protected JCheckBox rawCheckBox = new JCheckBox();
     protected JCheckBox timeCheckBox = new JCheckBox();
     protected JButton openFileChooserButton = new JButton();
+    protected JTextField entryField = new JTextField();
+    protected JButton enterButton = new JButton();
 
     // to find and remember the log file
     final javax.swing.JFileChooser logFileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
@@ -71,9 +78,15 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
         freezeButton.setVisible(true);
         freezeButton.setToolTipText("Stop display scrolling");
 
+        enterButton.setText("Add Message");
+        enterButton.setVisible(true);
+        enterButton.setToolTipText("Add a text message to the log");
+
         monTextPane.setVisible(true);
         monTextPane.setToolTipText("Command and reply monitoring information appears here");
         monTextPane.setEditable(false);
+
+        entryField.setToolTipText("Enter text here, then click button to include it in log");
 
         // fix a width for current character set
         JTextField t = new JTextField(80);
@@ -112,6 +125,7 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
 
         JPanel paneA = new JPanel();
 	paneA.setLayout(new BoxLayout(paneA, BoxLayout.Y_AXIS));
+	
         JPanel pane1 = new JPanel();
 	pane1.setLayout(new BoxLayout(pane1, BoxLayout.X_AXIS));
         pane1.add(clearButton);
@@ -126,6 +140,13 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
         pane2.add(startLogButton);
         pane2.add(stopLogButton);
 	paneA.add(pane2);
+
+       JPanel pane3 = new JPanel();
+	    pane3.setLayout(new BoxLayout(pane3, BoxLayout.X_AXIS));
+        pane3.add(enterButton);
+        pane3.add(entryField);
+	    paneA.add(pane3);
+
         getContentPane().add(paneA);
 
         // connect actions to buttons
@@ -147,6 +168,12 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
         openFileChooserButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     openFileChooserButtonActionPerformed(e);
+                }
+            });
+
+        enterButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    enterButtonActionPerformed(e);
                 }
             });
 
@@ -291,6 +318,10 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
         }
     }
 
+    public void enterButtonActionPerformed(java.awt.event.ActionEvent e) {
+        nextLine(entryField.getText(), "");
+    }
+    
     public synchronized String getFrameText() {
         return new String(linesBuffer);
     }
