@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.4 2008-01-13 18:30:25 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.5 2008-01-13 18:47:00 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -31,7 +31,7 @@
     <P>
     In addition, a large number of people have donated to the 
     project.  For more information, or to donate, please see
-    <A HREF="http://jmri.sf.net/donations.html"> http://jmri.sf.net/donations.html</a>.
+    <A HREF="http://jmri.sf.net/donations.shtml"> http://jmri.sf.net/donations.shtml</a>.
 <UL>
 
 <A ID="A"></A>

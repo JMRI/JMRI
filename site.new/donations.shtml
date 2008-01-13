@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: donations.shtml,v 1.3 2008-01-13 18:29:20 jacobsen Exp $ -->
+<!-- $Id: donations.shtml,v 1.4 2008-01-13 18:47:00 jacobsen Exp $ -->
 <html lang="en">
 
 <head>
@@ -28,7 +28,7 @@
  
 JMRI runs entirely on volunteer labor. We have an 
 impressive list of 
-<a href="../community/index.html">people who have worked on JMRI</a>.
+<a href="/help/en/Acknowledgements.shtml">people who have worked on JMRI</a>.
 <P>
 
 However, JMRI also needs contributions of money. We use them to cover the costs of providing the software,
