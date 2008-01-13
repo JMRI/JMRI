@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.1.shtml,v 1.5 2008-01-13 18:46:33 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.1.shtml,v 1.6 2008-01-13 19:00:25 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -140,6 +140,18 @@ David Duchamp updated the Layout Editor to allow the user to resize turnouts.
 
 <p>
 Jeff Schmalz provided a decoder definition for the Zimo M69 and M690 decoders.
+
+<p>
+Bug fixed so that you can now enter multiple Light definitions with blank user names
+
+<p>
+Added a feature to let you insert lines in a communication monitor log, e.g. so you can make notes on what you're doing next.
+
+<p>
+(Internal item) Fixed JUnit tests so you can now reload the classes without quitting the GUI.
+
+<p>
+Several updates to the TrakTronix SECSI code, looking for beta testers!
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
