@@ -9,7 +9,7 @@ import jmri.util.StringUtil;
  * packet.
  * 
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008
- * @version   $Revision: 1.7 $
+ * @version   $Revision: 1.8 $
  */
 
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
@@ -123,7 +123,14 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
      * Format the reply as human-readable text.
      */
     public String format() {
-        return staticFormat(getElement(0)&0xff, getElement(1)&0xff, getElement(2)&0xff, getElement(3)&0xff);
+        if (getNumDataElements() == 8) {
+            String result = "(2-part) ";
+            result += staticFormat(getElement(0)&0xff, getElement(1)&0xff, getElement(2)&0xff, getElement(3)&0xff);
+            result += "; ";
+            result += staticFormat(getElement(4)&0xff, getElement(5)&0xff, getElement(6)&0xff, getElement(7)&0xff);
+            return result;
+        }
+        else return staticFormat(getElement(0)&0xff, getElement(1)&0xff, getElement(2)&0xff, getElement(3)&0xff);
     }
 
     /**
@@ -184,7 +191,10 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
                 +" 0x"+StringUtil.twoHexFromInt(b4)
                 +" => ";
         
-        if ( (b2 == b4) && (b2==0x77)) {
+        if ( (b2 == 122) && ((b4&0x70)==0x10)) {
+            result += "Shift to high 24 outputs";
+            return result;
+        } else if ( (b2 == b4) && (b2==0x77)) {
             result += "software version query";
             return result;
         } else // check various bank forms 
