@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRMessage;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class SerialNode {
 
@@ -46,7 +46,7 @@ public class SerialNode {
     public static final String[] boardNames = new String[]{"2002 node, version 6 or later",
                                                            "2002 node, pre version 6", 
                                                            "2000 (original) node"};
-    public static final int[] outputBits = new int[]{12,12,12};
+    public static final int[] outputBits = new int[]{96,96,96};
     public static final int[] inputBits = new int[]{250,250,250};
     
     // node definition instance variables (must persist between runs)
@@ -202,11 +202,33 @@ public class SerialNode {
 
     /**
      * Public Method to create an Initialization packet (SerialMessage) for this node.
-     * There are currently no Grapevine boards that need an init message, so this
-     * returns null.
+     * The message consists of multiple sub-parts:
+     * <ul>
+     * <li>Turn on the 2nd parallel port
+     * <li>Turn on the ASD input
+     * </ul>
+     * Eventually, it should also request input values, once we know 
+     * what message does that.
      */
     public SerialMessage createInitPacket() {
-        return null;
+        SerialMessage m = new SerialMessage(4*2); // two subparts
+        int i= 0;
+
+        // turn on 2nd parallel inputs        
+        m.setElement(i++, nodeAddress | 0x80);  // address
+        m.setElement(i++, 0x72);  // command
+        m.setElement(i++, nodeAddress | 0x80);  // address
+        m.setElement(i++, 0x10);  // bank and parity
+        m.setParity(i-4);
+        
+        // turn on ASD
+        m.setElement(i++, nodeAddress | 0x80);  // address
+        m.setElement(i++, 0x71);  // command
+        m.setElement(i++, nodeAddress | 0x80);  // address
+        m.setElement(i++, 0x00);  // bank and parity
+        m.setParity(i-4);
+        
+        return m;
     }
     
     /**
