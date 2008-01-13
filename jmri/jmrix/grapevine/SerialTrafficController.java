@@ -27,7 +27,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003, 2006, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -214,28 +214,24 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
      *      from within the running thread
      */
     protected synchronized AbstractMRMessage pollMessage() {
-        return null;
+        // ensure validity of call
+        if (numNodes<=0) return null;
         
-        // for now, not being done
-        
-/*         // ensure validity of call */
-/*         if (numNodes<=0) return null; */
-/*          */
-/*         // move to a new node */
-/*         curSerialNodeIndex ++; */
-/*         if (curSerialNodeIndex>=numNodes) { */
-/*             curSerialNodeIndex = 0; */
-/*         } */
-/*         // ensure that each node is initialized         */
-/*         if (mustInit[curSerialNodeIndex]) { */
-/*             mustInit[curSerialNodeIndex] = false; */
-/*             SerialMessage m = nodeArray[curSerialNodeIndex].createInitPacket(); */
-/*             if (m!=null) { // Grapevine boards don't need this yet */
-/*                 log.debug("send init message: "+m); */
-/*                 m.setTimeout(2000);  // wait for init to finish (milliseconds) */
-/*                 return m; */
-/*             }   // else fall through to continue */
-/*         } */
+        // move to a new node
+        curSerialNodeIndex ++;
+        if (curSerialNodeIndex>=numNodes) {
+            curSerialNodeIndex = 0;
+        }
+        // ensure that each node is initialized        
+        if (mustInit[curSerialNodeIndex]) {
+            mustInit[curSerialNodeIndex] = false;
+            SerialMessage m = nodeArray[curSerialNodeIndex].createInitPacket();
+            if (m!=null) { 
+                log.debug("send init message: "+m);
+                m.setTimeout(50);  // wait for init to finish (milliseconds)
+                return m;
+            }   // else fall through to continue
+        }
 /*         // send Output packet if needed */
 /*         if (nodeArray[curSerialNodeIndex].mustSend()) { */
 /*             log.debug("request write command to send"); */
@@ -256,7 +252,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
 /*             // no Sensors (inputs) are active for this node */
 /*             return null; */
 /*         } */
-
+        return null;
     }
 
     protected void handleTimeout(AbstractMRMessage m) {
@@ -455,7 +451,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
      * @return Number of bytes
      */
     protected int lengthOfByteStream(AbstractMRMessage m) {
-        return 4; // All are 4 bytes long
+        return m.getNumDataElements(); // All are same length as message
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTrafficController.class.getName());
