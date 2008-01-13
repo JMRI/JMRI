@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.0 on Mon Dec 31 09:56:43 PST 2007 $Id: decoderIndex.xml,v 1.112 2008-01-03 15:06:49 crosland Exp $-->
-  <decoderIndex version="133">
+  <!--Written by JMRI version 2.1.1 on Sun Jan 13 07:25:06 PST 2008 $Id: decoderIndex.xml,v 1.113 2008-01-13 15:27:16 jacobsen Exp $-->
+  <decoderIndex version="134">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -72,9 +72,9 @@
       <manufacturer mfg="Rock Junction Controls" mfgID="149" />
       <manufacturer mfg="Roco Modelspielwaren" mfgID="161" />
       <manufacturer mfg="S Helper Service" mfgID="23" />
+      <manufacturer mfg="SPROG DCC" mfgID="44" />
       <manufacturer mfg="Sanda Kan Industrial" mfgID="95" />
       <manufacturer mfg="Signaling Solution" mfgID="119" />
-      <manufacturer mfg="SPROG DCC" mfgID="44" />
       <manufacturer mfg="T4T - Technology for Trains GmbH" mfgID="20" />
       <manufacturer mfg="Tams Elektronik GmbH" mfgID="62" />
       <manufacturer mfg="Team Digital, LLC" mfgID="25" />
@@ -3416,6 +3416,77 @@
           <output name="7" label="not present" connection="unspecified" />
           <output name="8" label="on L version" connection="unspecified" />
         </model>
+      </family>
+      <family name="Zimo MX69 MX690" mfg="Zimo" type="locomotive" file="Zimo_MX69MX690.xml">
+        <model model="MX69L" maxInputVolts="24 V" maxMotorCurrent="2 A (peak 8 A)" maxTotalCurrent="2 A (peak 8 A)" numOuts="8" numFns="14" formFactor="G" connector="other" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <size length="55" width="26" height="14" units="mm" />
+          <output name="1" label="Front light" comment="pin-6,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="2" label="Rear light " comment="pin-11, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="3" label="   FO  1   " comment="pin-14, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="4" label="   FO  2   " comment="pin-7,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="5" label="   FO  3   " comment="pin-13, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="6" label="   FO  4   " comment="pin-9,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="7" label="   FO  5   " comment="pin-12, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="8" label="   FO  6   " comment="pin-8,  left" maxcurrent="1.5 A total per group" connection="plug" />
+        </model>
+        <model model="MX69S" maxInputVolts="24 V" maxMotorCurrent="3 A (peak 8 A)" maxTotalCurrent="3 A (peak 8 A)" numOuts="8" numFns="14" formFactor="G" connector="other" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <size length="55" width="26" height="16" units="mm" />
+          <output name="1" label="Front light" comment="pin-6,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="2" label="Rear light " comment="pin-11, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="3" label="   FO  1   " comment="pin-14, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="4" label="   FO  2   " comment="pin-7,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="5" label="   FO  3   " comment="pin-13, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="6" label="   FO  4   " comment="pin-9,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="7" label="   FO  5   " comment="pin-12, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="8" label="   FO  6   " comment="pin-8,  left" maxcurrent="1.5 A total per group" connection="plug" />
+        </model>
+        <model model="MX69V" maxInputVolts="24 V" maxMotorCurrent="4-5 A (peak 8 A)" maxTotalCurrent="4-5 A (peak 8 A)" numOuts="14" numFns="14" formFactor="G" connector="other" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <size length="55" width="26" height="18" units="mm" />
+          <output name="1" label="Front light" comment="pin-6,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="2" label="Rear light " comment="pin-11, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="3" label="   FO  1   " comment="pin-14, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="4" label="   FO  2   " comment="pin-7,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="5" label="   FO  3   " comment="pin-13, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="6" label="   FO  4   " comment="pin-9,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="7" label="   FO  5   " comment="pin-12, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="8" label="   FO  6   " comment="pin-8,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="9" label="   FO  7   " comment="pin-12, right" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="10" label="   FO  8   " comment="pin-13, right" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="11" label="   FO  9   " comment="pin-14, right" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="12" label="   FO 10   " comment="pin-8,  right" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="13" label="   FO 11   " comment="pin-15, right" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="14" label="   FO 12   " comment="pin-16, right" maxcurrent="1.5 A total per group" connection="plug" />
+        </model>
+        <!-- Begin sound-only models -->
+        <model model="MX690S" maxInputVolts="24 V" maxMotorCurrent="3 A (peak 8 A)" maxTotalCurrent="3 A (peak 8 A)" numOuts="8" numFns="14" formFactor="G" connector="other" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <size length="55" width="26" height="16" units="mm" />
+          <output name="1" label="Front light" comment="pin-6,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="2" label="Rear light " comment="pin-11, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="3" label="   FO  1   " comment="pin-14, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="4" label="   FO  2   " comment="pin-7,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="5" label="   FO  3   " comment="pin-13, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="6" label="   FO  4   " comment="pin-9,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="7" label="   FO  5   " comment="pin-12, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="8" label="   FO  6   " comment="pin-8,  left" maxcurrent="1.5 A total per group" connection="plug" />
+        </model>
+        <model model="MX690V" maxInputVolts="24 V" maxMotorCurrent="4-5 A (peak 8 A)" maxTotalCurrent="4-5 A (peak 8 A)" numOuts="14" numFns="14" formFactor="G" connector="other" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <size length="55" width="26" height="18" units="mm" />
+          <output name="1" label="Front light" comment="pin-6,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="2" label="Rear light " comment="pin-11, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="3" label="   FO  1   " comment="pin-14, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="4" label="   FO  2   " comment="pin-7,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="5" label="   FO  3   " comment="pin-13, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="6" label="   FO  4   " comment="pin-9,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="7" label="   FO  5   " comment="pin-12, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="8" label="   FO  6   " comment="pin-8,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="9" label="   FO  7   " comment="pin-12, right" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="10" label="   FO  8   " comment="pin-13, right" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="11" label="   FO  9   " comment="pin-14, right" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="12" label="   FO 10   " comment="pin-8,  right" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="13" label="   FO 11   " comment="pin-15, right" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="14" label="   FO 12   " comment="pin-16, right" maxcurrent="1.5 A total per group" connection="plug" />
+        </model>
+        <!-- End sound-only models -->
       </family>
     </familyList>
   </decoderIndex>
