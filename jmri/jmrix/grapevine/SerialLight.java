@@ -15,7 +15,7 @@ import jmri.Turnout;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SerialLight extends AbstractLight {
 
@@ -83,10 +83,10 @@ public class SerialLight extends AbstractLight {
         SerialNode mNode = SerialAddress.getNodeFromSystemName(mSystemName);
         if (mNode!=null) {
             if (newState==ON) {
-                mNode.setOutputBit(mBit,false);
+                sendMessage(false);
             }
             else if (newState==OFF) {
-                mNode.setOutputBit(mBit,true);
+                sendMessage(true);
             }
             else {
                 log.warn("illegal state requested for Light: "+getSystemName());
@@ -98,6 +98,38 @@ public class SerialLight extends AbstractLight {
             // notify listeners, if any
             firePropertyChange("KnownState", new Integer(oldState), new Integer(newState));
 		}
+    }
+
+    protected void sendMessage(boolean closed) {
+        SerialNode tNode = SerialAddress.getNodeFromSystemName(getSystemName());
+        if (tNode == null) {
+            // node does not exist, ignore call
+            log.error("Can't find node for "+getSystemName()+", command ignored");
+            return;
+        }
+        int output = (mBit-1) % 24; /// 0 to 23 range for individual bank
+        boolean high = (output>=12);
+        if (high) output = output-12;
+        int bank = (mBit-1)/24;  
+        if ( (bank<0)||(bank>4) ) {
+            log.error("invalid bank "+bank+" for Turnout "+getSystemName());
+            bank = 0;
+        }
+        SerialMessage m = new SerialMessage(high?8:4);
+        int i = 0;
+        if (high) {
+            m.setElement(i++,tNode.getNodeAddress()|0x80);  // address 1
+            m.setElement(i++,122);   // shift command
+            m.setElement(i++,tNode.getNodeAddress()|0x80);  // address 2
+            m.setElement(i++,0x10);  // bank 1
+            m.setParity(i-4);
+        }
+        m.setElement(i++,tNode.getNodeAddress()|0x80);  // address 1
+        m.setElement(i++, (output<<3)|(closed ? 0 : 6));  // closed is green, thrown is red
+        m.setElement(i++,tNode.getNodeAddress()|0x80);  // address 2
+        m.setElement(i++, bank<<4); // bank is most significant bits
+        m.setParity(i-4);
+        SerialTrafficController.instance().sendSerialMessage(m, null);
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialLight.class.getName());
