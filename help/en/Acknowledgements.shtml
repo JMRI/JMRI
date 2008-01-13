@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.html,v 1.3 2007-12-26 17:26:17 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.1 2008-01-13 05:32:56 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -73,14 +73,16 @@
     updated the NCE-USB support, and fixed a lot of details in the NCE support.
 	<LI>Dave Boydston of Serialio.com, who helped with the Windows
 	connection to an MS100.  Check out their great Java serial library!
-	<LI>Peter Brandenburg, for many CT Electronik decoder definitions, definitions for Haber &amp; Koenig decoders, and for creating the SPROG web page
+	<LI>Peter Brandenburg, for many CT Electronik decoder definitions, definitions for Haber &amp; Koenig decoders, 
+	and for creating the SPROG web page
 	<LI>Jerry Britton, who acquired and maintained the domain registration 
 	for decoderpro.com, despite Matt Katzer's
-	<a href="/k/UDRP/index.shtml">despicable behavior</a>,
+	<a href="http://jmri.sf.net/k/UDRP/index.shtml">despicable behavior</a>,
 	and wrote a scripting example page
 	<LI>Dick Bronson, who created the great LocoBuffer-II and worked hard
 	to make sure it worked well with JMRI. He also contributed sets
 	of USS panel icons for PanelPro, worked on the PanelPro logo,
+	created fantastic clinics on PanelPro,
 	and made numerous improvements to the Simple Signal Logic.
 	<LI>Bill Brown, whose layout was used for the first NCE tests
 	<LI>Bob Byck, who did extensive testing of test release 1.7.3
@@ -168,7 +170,7 @@
 	<LI>Tony Koester, who helped with signalling
 	<LI>Ross Kudlick researched options switches on Digitrax command stations
 	<LI>Nick Kulp, who helped test much of the C/MRI and signaling logic, presented
-	<A href="clinics/NickKulpMarch2004/">a nice clinic</a> on
+	<A href="http://jmri.sf.net/clinics/NickKulpMarch2004/">a nice clinic</a> on
 	how to start making panels, and contributed numerous icons
 <A ID="L"></A>
 	<LI>Al Lautenslager of CVP Products, who loaned some EasyDCC hardware
