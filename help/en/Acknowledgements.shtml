@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.1 2008-01-13 05:32:56 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.2 2008-01-13 06:03:46 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -20,7 +20,10 @@
 <!-- /Style -->
 </head>
 
-<body>
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
 
 <H2>Acknowledgements: People who've contributed to JMRI</H2>
     A number have people have contributed their effort to JMRI.  
@@ -267,6 +270,7 @@
 
 </UL>
 
+<!--#include virtual="/Footer" -->
 </body>
 </html>
 
