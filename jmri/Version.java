@@ -3,7 +3,7 @@ package jmri;
 /**
  * Defines a simple place to get the JMRI version string.
  *<P>
- * These JavaDocs are for Version 2.0 of JMRI.
+ * These JavaDocs are for Version 2.1.1 of JMRI.
  *
  * <hr>
  * This file is part of JMRI.
@@ -18,8 +18,8 @@ package jmri;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
  * <P>
- * @author  Bob Jacobsen   Copyright 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007
- * @version $Revision: 1.76 $
+ * @author  Bob Jacobsen   Copyright 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008
+ * @version $Revision: 1.77 $
  */
 
 public class Version {
@@ -31,5 +31,5 @@ public class Version {
      *
      * @return The current version string
      */
-    static public String name() { return "2.0"; }
+    static public String name() { return "2.1.1"; }
 }
