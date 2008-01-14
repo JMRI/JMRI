@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.html,v 1.1 2007-04-08 04:43:11 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.1 2008-01-14 05:27:08 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -10,15 +10,20 @@
     <META name="keywords" content="JMRI help General Tools">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
 <body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
 <H2>General Tools
 </H2>
     
@@ -94,7 +99,6 @@
     will take you a little time to get used to it, in the end it provides
     a lot of power to control your layout anyway you'd like.
 
-
+<!--#include virtual="/Footer" -->
 </body>
 </html>
-

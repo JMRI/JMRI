@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: Names.shtml,v 1.3 2008-01-11 16:51:53 jacobsen Exp $ -->
+<!-- $Id: Names.shtml,v 1.4 2008-01-14 05:27:07 jacobsen Exp $ -->
 <title>JMRI: Grapevine System Names</title>
 
 <!-- Style -->
@@ -114,8 +114,26 @@ Each of these can be used as a JMRI
 or 
 <a href="../../tools/Signals.shtml">Signal</a>.
 
+<h4>Turnouts</h4>
+
+Grapevine outputs can be use to control turnout switch motors.
+In that case, they should be referenced as JMRI 
+<a href="../../tools/Turnouts.shtml">Turnouts</a>, with
+names like GT98001 for the 1st output from the 1st driver card on 
+node 98.
+
+<h4>Lights</h4>
+
+Grapevine outputs can be used to control lights on the layout, in
+which case they should be references as JMRI 
+<a href="../../tools/Lights.shtml">Lights</a>.
+System names for lights start with GL, for example GL54025 for the 
+1st output on the 2nd driver card on node 54.
+
 <h4>Signals</h4>
-To use a Grapevine output as a signal, capable of displaying
+To use a Grapevine output as a JMRI 
+<a href="../../tools/Signals.shtml">signal</a>, 
+capable of displaying
 red/yellow/green and associated flashing aspects, 
 you must define it as a "Grapevine Signal Head" using the
 <a href="../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml">Add...</a> button in the 
