@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.24 $ -->
+<!-- Revision $Revision: 1.25 $ -->
 
 <project name="JMRI" basedir="." default="none">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -102,6 +102,9 @@
     <cvs command="export" quiet="true" package="help" dest="Windows/JMRI" tag="${release}"/>
     <cvs command="export" quiet="true" package="jython" dest="Windows/JMRI" tag="${release}"/>
     <cvs command="export" quiet="true" package="scripts" dest="Windows/JMRI" tag="${release}"/>
+    <delete>
+        <fileset dir="Windows/JMRI" includes="**/.cvsignore"/>
+    </delete>
     <move todir="Windows/JMRI">
 		<fileset dir="Windows/JMRI/scripts" >
       		<include name="*.bat"/>
@@ -146,6 +149,9 @@
     </copy>
     <delete dir="MacOSX/JMRI/lib" />
     <cvs command="export" quiet="true" package="lib" dest="MacOSX/JMRI" tag="${release}"/>
+    <delete>
+        <fileset dir="MacOSX/JMRI" includes="**/.cvsignore"/>
+    </delete>
     <delete file="MacOSX/JMRI/lib/junit.jar" />
     <delete file="MacOSX/JMRI/lib/jh.1.1.2.jar" />
     <delete file="MacOSX/JMRI/lib/Serialio.jar" />
@@ -176,6 +182,9 @@
     </copy>
     <delete dir="Linux/JMRI/lib" />
     <cvs command="export" quiet="true" package="lib" dest="Linux/JMRI" tag="${release}"/>
+    <delete>
+        <fileset dir="Linux/JMRI" includes="**/.cvsignore"/>
+    </delete>
     <delete file="Linux/JMRI/lib/junit.jar" />
     <delete file="Linux/JMRI/lib/Serialio.jar" />
     <delete dir="Linux/JMRI/xml" />
