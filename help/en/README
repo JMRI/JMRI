@@ -29,3 +29,12 @@ The build.xml and format.xsl files are used to create the webtoc.html
 and webindex.html files automatically. Those use Server-Side Includes
 to display the standard JMRI header and footer, and also some 
 explanatory content from the tocheader and indexheader files.
+
+
+TO DO:
+
+The html/tools directory is only partially converted - get it from
+the main web site.
+
+html/hardware needs to be carefully checked
+
