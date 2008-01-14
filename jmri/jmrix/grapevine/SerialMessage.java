@@ -9,7 +9,7 @@ import jmri.util.StringUtil;
  * packet.
  * 
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008
- * @version   $Revision: 1.8 $
+ * @version   $Revision: 1.9 $
  */
 
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
@@ -210,7 +210,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
             return result;
         } else if ( (b4&0xF0) == 0x40 ) {
             // bank 4 - new serial sensor message
-            result += "serial sensor bit "+(((b2&0x7E)>>1) +1)+" is "+(((b2&0x01)!=0)?"active":"inactive");
+            result += "serial sensor bit "+(((b2&0x7E)>>1) +1)+" is "+(((b2&0x01)==0)?"active":"inactive");
             return result;
         } else if ( (b4&0xF0) == 0x50 ) {
             // bank 5 - sensor message

@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRMessage;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class SerialNode {
 
@@ -216,7 +216,7 @@ public class SerialNode {
 
         // turn on 2nd parallel inputs        
         m.setElement(i++, nodeAddress | 0x80);  // address
-        m.setElement(i++, 0x72);  // command
+        m.setElement(i++, 0x70);  // command
         m.setElement(i++, nodeAddress | 0x80);  // address
         m.setElement(i++, 0x10);  // bank and parity
         m.setParity(i-4);
@@ -286,7 +286,7 @@ public class SerialNode {
     
         if (l.isFromNewSerialSensor()) {
             // Serial sensor has only one bit. Extract value, then address
-            boolean input = ((l.getElement(1)&0x01)!=0);
+            boolean input = ((l.getElement(1)&0x01)==0);
             int card = ((l.getElement(1)&0x60)>>5); // number from 0
             boolean motion = (l.getElement(1)&0x10) !=0;
             int number = ((l.getElement(1)&0x0E)>>1) +1;
