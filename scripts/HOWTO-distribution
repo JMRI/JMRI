@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.62 $)
+distribution.  ($Revision: 1.63 $)
 
 Start with a directory, typically called "Distributions", that
 contains "scripts" and "java" (from CVS) as subdirectories, and:
@@ -27,6 +27,8 @@ Make sure everything is up-to-date:
     Make sure file is saved with Unix line ends.
     Commit.
     
+( ) Update the help/en/Acknowledgements.html help page with any recent changes
+
 ( ) Check if the help has changed since the previous tag
     If so, remake the help index  (need a command line approach, so can put in ant!)
     open ~/Documents/JMRI/JavaHelpStuff/jhelpdev/jhelpdev.jar
@@ -41,8 +43,6 @@ Make sure everything is up-to-date:
     
     Commit any changed files.
     
-( ) Update the help/en/Acknowledgements.html help page from the site community/index page
-
 ( ) the default.lcf file for releases is taken from Distribution/scripts/; 
     the one for normal development is from Distribution/java/.  Make sure
     the one in scripts/ is the one you want.
