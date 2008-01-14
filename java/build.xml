@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.17 $ -->
+<!-- Revision $Revision: 1.18 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -327,6 +327,7 @@
 
   <target name="javadoc" depends="init" description="create JavaDocs">
     <javadoc packagenames="jmri.*, apps.*"
+           maxmemory="512m"
            sourcepath="${source}"
            overview="src/jmri/overview.html"
            defaultexcludes="yes"
@@ -368,7 +369,6 @@
  <!-- Note production builds should use compile, not debug, prereq  -->
  <target name="dist" depends="clean, init, debug, rmic, jar"
  		 description="create a distribution jar file"/>
-	<echo message="jar built with debug contents"/>
 
 </project>
 
