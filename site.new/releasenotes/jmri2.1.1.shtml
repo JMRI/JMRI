@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.1.shtml,v 1.7 2008-01-14 16:18:13 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.1.shtml,v 1.8 2008-01-14 16:41:55 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -118,7 +118,7 @@ Dan Boudreau updated the NCE consist support to fix a bug that would cause multi
 The "invert" option is now available for NCE sensors.
 
 <p>
-David Duchamp and Ken Cameron continue to improve the fast clock support
+David Duchamp and Ken Cameron fixed important bugs in the fast clock support and made some additional improvements.
 
 <p>
 David Duchamp made it possible to build layout editor panel backgrounds from multiple images, so for example you can build a USS CTC panel of any width from the provided slices
