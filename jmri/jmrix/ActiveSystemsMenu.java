@@ -19,7 +19,7 @@ import javax.swing.JMenuBar;
  * @see SystemsMenu
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 public class ActiveSystemsMenu extends JMenu {
     public ActiveSystemsMenu(String name) {
@@ -55,12 +55,14 @@ public class ActiveSystemsMenu extends JMenu {
             m.add(getMenu("jmri.jmrix.nce.NceMenu"));
         if (jmri.jmrix.oaktree.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.oaktree.OakTreeMenu"));
-        if (jmri.jmrix.tmcc.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.tmcc.TMCCMenu"));
+        if (jmri.jmrix.qsi.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.qsi.QSIMenu"));
         if (jmri.jmrix.sprog.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.sprog.SPROGMenu"));
         if (jmri.jmrix.sprog.ActiveFlagCS.isActive())
             m.add(getMenu("jmri.jmrix.sprog.SPROGCSMenu"));
+        if (jmri.jmrix.tmcc.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.tmcc.TMCCMenu"));
         if (jmri.jmrix.wangrow.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.wangrow.WangrowMenu"));
         if (jmri.jmrix.lenz.ActiveFlag.isActive())
@@ -74,8 +76,8 @@ public class ActiveSystemsMenu extends JMenu {
         
         if (jmri.jmrix.direct.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.direct.DirectMenu"));
-        if (jmri.jmrix.qsi.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.qsi.QSIMenu"));
+        if (jmri.jmrix.powerline.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.powerline.SystemMenu"));
     }
 
     static public void addItems(JMenuBar m) {
@@ -127,6 +129,9 @@ public class ActiveSystemsMenu extends JMenu {
 
         if (jmri.jmrix.direct.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.direct.DirectMenu"));
+
+        if (jmri.jmrix.powerline.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.powerline.SystemMenu"));
 
     }
 

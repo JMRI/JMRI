@@ -15,7 +15,7 @@ import javax.swing.JMenu;
  *
  * @see ActiveSystemsMenu
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 public class SystemsMenu extends JMenu {
     public SystemsMenu(String name) {
@@ -46,6 +46,7 @@ public class SystemsMenu extends JMenu {
         add(new javax.swing.JSeparator());
         addMenu("jmri.jmrix.direct.DirectMenu");
         addMenu("jmri.jmrix.qsi.QSIMenu");
+        addMenu("jmri.jmrix.powerline.SystemMenu");
 
     }
 
