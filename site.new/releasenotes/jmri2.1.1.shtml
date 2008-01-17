@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.1.shtml,v 1.8 2008-01-14 16:41:55 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.1.shtml,v 1.9 2008-01-17 15:17:42 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -109,7 +109,7 @@ version of Java.  To see JMRI's future plans for this and other compatibility is
 <h3>Changes since production version 2.0:</h3>
 
 <p>
-Initial support for Protrak Grapevine systems, with thanks to Stephen Brooks and Jim Muir.
+Initial support for Protrak Grapevine systems, with thanks to Stephen Brooks and Jim Moir.
 
 <p>
 Dan Boudreau updated the NCE consist support to fix a bug that would cause multiple locomotives to be improperly consisted when the "replace" button was used
