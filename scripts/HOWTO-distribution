@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.64 $)
+distribution.  ($Revision: 1.65 $)
 
 Start with a directory, typically called "Distributions", that
 contains "scripts" and "java" (from CVS) as subdirectories, and:
@@ -20,6 +20,12 @@ This probably already exists.
 
 Make sure everything is up-to-date:
 
+( ) If it's a new year, update copyright dates:
+    * build.xml (2) in the javadoc instructions
+    * site/Copyright.html
+    * decoder index master
+    * (grep -r for the previous year in the web site, xml)
+    
 ( ) Check if the decoder definitions have changed since the previous tag
     If so, remake the decoder index. 
     Copy the new file from preferences into the CVS tree.
