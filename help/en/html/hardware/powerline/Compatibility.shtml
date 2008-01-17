@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: Compatibility.shtml,v 1.1 2008-01-17 14:33:55 jacobsen Exp $ -->
+<!-- $Id: Compatibility.shtml,v 1.2 2008-01-17 16:40:10 jacobsen Exp $ -->
 <title>JMRI: Powerline Controllers</title>
 
 <!-- Style -->
@@ -36,9 +36,52 @@ needed to configure JMRI.
 See also the main page on 
 <a href="index.shtml">configuring JMRI for powerline controllers</a>.
 
+<h3>Table</h3>
+
+<!-- start table of types -->
+<table border="1">
+
+<!-- header row -->
+<tr>
+  <th>Manufacturer</th>
+  <th>Model</th>
+  <th>Image</th>
+  <th></th>  <!-- Comment -->
+  <th>JMRI Type</th>
+</tr>
+
+<!-- row containing one mode -->
+<!-- sample! -->
+<tr>
+  <td><a href="http://www.x10.com">X10.com</td> <!-- Manufacturer -->
+  <td>CM15A</td> <!-- Model -->
+  <td><img src="http://graphics.x10.com/images_ahp//cm15a_c.gif" width="125" height="150"/></td> <!-- Image -->
+  <td>Wow, that web site is ugly</td>  <!-- Comment -->
+  <td>CM123</td> <!-- Type -->
+</tr>
+
+<!-- row containing one mode -->
+<!-- sample! -->
+<tr>
+  <td><a href="http://www.radioshack.com">Radio Shack<a/></td> <!-- Manufacturer -->
+  <td>Little Cheap Box</td> <!-- Model -->
+  <td><img src="http://RSK.imageg.net/graphics/product_images/pRS1C-2265405t98.jpg" height="113" width="98"/></td> <!-- Image -->
+  <td>Yes, we know it's not really an interface, but you get it for free when you buy batteries!</td>  <!-- Comment -->
+  <td>CM321</td> <!-- Type -->
+</tr>
+
+<!-- row containing one mode -->
+<tr>
+  <td><a href="">???</a></td> <!-- Manufacturer -->
+  <td></td> <!-- Model -->
+  <td><img src="">???</a></td> <!-- Image -->
+  <td></td>  <!-- Comment -->
+  <td></td> <!-- Type -->
+</tr>
 
 
-
+</table>
+<!-- end of table of types -->
     
 <!--#include virtual="/Footer" -->
 </body>
