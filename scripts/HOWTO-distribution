@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.63 $)
+distribution.  ($Revision: 1.64 $)
 
 Start with a directory, typically called "Distributions", that
 contains "scripts" and "java" (from CVS) as subdirectories, and:
@@ -43,11 +43,14 @@ Make sure everything is up-to-date:
     
     Commit any changed files.
     
+( ) This is a good place to check that the JavaDocs generate without errors
+
 ( ) the default.lcf file for releases is taken from Distribution/scripts/; 
     the one for normal development is from Distribution/java/.  Make sure
     the one in scripts/ is the one you want.
     
-( ) Check that the Version.java file has been updated and committed
+( ) Check that the Version.java file has been updated (both version
+    number in two places and copyright date) and committed
 
 ( ) Edit the "manifest" file in your development directory, and make sure that the
     version number is correct in four places (this file comes from java/, not scripts/)
@@ -106,6 +109,8 @@ change that (temporarily) for production versions
 	cvs -q tag -F Release-X-Y-Z
     cd ..
     
+    
+--- This next step should be updated to take the content from CVS ---
 ( ) Update the MacOS X bundles:
 
     bbedit ../MacOSX/JMRI/*.app/Contents/Info.plist
