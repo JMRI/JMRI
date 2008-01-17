@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- $Id: index.shtml,v 1.1 2008-01-17 14:33:55 jacobsen Exp $ -->
+<title>JMRI: Powerline Controllers</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+
+<h2> 
+JMRI:  Powerline Controllers
+</h2>
+
+(This page talks about how to configure JMRI to talk
+to powerline controllers, e.g. X10)
+
+<p>
+See also the associated
+<a href="Compatibility.shtml">compatibility page</a>.
+
+
+    
+<!--#include virtual="/Footer" -->
+</body>
+</html>
