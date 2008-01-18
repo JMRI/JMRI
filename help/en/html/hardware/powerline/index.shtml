@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: index.shtml,v 1.1 2008-01-17 14:33:55 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.2 2008-01-18 03:04:31 ken_c Exp $ -->
 <title>JMRI: Powerline Controllers</title>
 
 <!-- Style -->
@@ -28,10 +28,17 @@ JMRI:  Powerline Controllers
 
 (This page talks about how to configure JMRI to talk
 to powerline controllers, e.g. X10)
+<p>
+Currently we are using the X10 CM11A serial device as our test implementation.
+Once that is working, we expect to add more of the other interfaces.
+Eventually the Insteon device family will be supported once we have a developer
+who buys one of those interfaces.
+</p>
 
 <p>
 See also the associated
-<a href="Compatibility.shtml">compatibility page</a>.
+<a href="Compatibility.shtml">compatibility page</a> to see what interfaces
+have been supported.
 
 
     
