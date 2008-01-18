@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import javax.swing.*;
 import javax.swing.border.Border;
 
+import jmri.jmrix.grapevine.ActiveFlag;
 import jmri.jmrix.grapevine.SerialTrafficController;
 import jmri.jmrix.grapevine.SerialNode;
 import jmri.jmrix.grapevine.SerialSensorManager;
@@ -16,7 +17,7 @@ import jmri.jmrix.grapevine.SerialSensorManager;
  * Frame for user configuration of serial nodes
  * @author	Bob Jacobsen   Copyright (C) 2004, 2007
  * @author	Dave Duchamp   Copyright (C) 2004, 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -29,6 +30,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     protected javax.swing.JButton addButton = new javax.swing.JButton(rb.getString("ButtonAdd"));
     protected javax.swing.JButton editButton = new javax.swing.JButton(rb.getString("ButtonEdit"));
     protected javax.swing.JButton deleteButton = new javax.swing.JButton(rb.getString("ButtonDelete"));
+    protected javax.swing.JButton initButton = new javax.swing.JButton(rb.getString("ButtonInit"));
     protected javax.swing.JButton doneButton = new javax.swing.JButton(rb.getString("ButtonDone"));
     protected javax.swing.JButton updateButton = new javax.swing.JButton(rb.getString("ButtonUpdate"));
     protected javax.swing.JButton cancelButton = new javax.swing.JButton(rb.getString("ButtonCancel"));
@@ -146,6 +148,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                     deleteButtonActionPerformed();
                 }
             });
+
         panel4.add(doneButton);
         doneButton.setText(rb.getString("ButtonDone"));
         doneButton.setVisible(true);
@@ -156,6 +159,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                     doneButtonActionPerformed();
                 }
             });
+
         panel4.add(updateButton);
         updateButton.setText(rb.getString("ButtonUpdate"));
         updateButton.setVisible(true);
@@ -166,7 +170,20 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                     updateButtonActionPerformed();
                 }
             });
-        updateButton.setVisible(false);
+        updateButton.setVisible(false);			
+
+        panel4.add(initButton);
+        initButton.setText(rb.getString("ButtonInit"));
+        initButton.setVisible(true);
+        initButton.setToolTipText(rb.getString("TipInitButton"));
+        panel4.add(initButton);
+        initButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    initButtonActionPerformed();
+                }
+            });
+        initButton.setVisible(ActiveFlag.isActive());
+
         panel4.add(cancelButton);
         cancelButton.setText(rb.getString("ButtonCancel"));
         cancelButton.setVisible(true);
@@ -178,6 +195,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                 }
             });
         cancelButton.setVisible(false);			
+
         contentPane.add(panel4);
 
         // add help menu to window
@@ -266,6 +284,26 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         statusText3.setText(editStatus3);
     }
 
+    /**
+     * Method to handle init button 
+     */        
+    public void initButtonActionPerformed() {
+        // Find Serial Node address
+        int nodeAddress = readNodeAddress();
+        if (nodeAddress < 0) return;
+        // get the SerialNode corresponding to this node address
+        curNode = SerialTrafficController.instance().getNodeFromAddress(nodeAddress);
+        if (curNode == null) {
+            statusText1.setText(rb.getString("Error4"));
+            statusText1.setVisible(true);
+            errorInStatus1 = true;
+            resetNotes2();
+            return;
+        }
+        // ok, do thie init
+        SerialTrafficController.instance().sendSerialMessage(curNode.createInitPacket(), null);
+    }
+    
     /**
      * Method to handle delete button 
      */        
