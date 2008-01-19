@@ -9,7 +9,7 @@ import junit.framework.*;
  * Tests for the jmri.jmrix.grapevine.SerialLight class,
  * low address.
  * @author			Bob Jacobsen
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SerialLightTest extends AbstractLightTest {
 
@@ -28,12 +28,12 @@ public class SerialLightTest extends AbstractLightTest {
 
 	public void checkOffMsgSent() {
 		Assert.assertTrue("message sent", tcis.outbound.size()>0);
-		Assert.assertEquals("content", "81 18 81 0C", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
+		Assert.assertEquals("content", "81 1C 81 04", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
 	}
 
 	public void checkOnMsgSent() {
 		Assert.assertTrue("message sent", tcis.outbound.size()>0);
-		Assert.assertEquals("content", "81 1E 81 00", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // THROWN message
+		Assert.assertEquals("content", "81 18 81 0C", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // THROWN message
 	}
 
 	// from here down is testing infrastructure

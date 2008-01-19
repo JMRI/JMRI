@@ -7,15 +7,15 @@ import jmri.Sensor;
 import jmri.Turnout;
 
 /**
- * SerialLight.java
- *
- * Implementation of the Light Object
+ * Implementation of the Light interface using Grapevine
+ * signal ports.  
  * <P>
- *  Based in part on SerialTurnout.java
+ * The "On" state results in sending a "green" setting to the hardware
+ * port; the "Off" state results in sending a "dark" setting to the hardware.
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @author      Bob Jacobsen Copyright (C) 2006, 2007
- * @version     $Revision: 1.2 $
+ * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
+ * @version     $Revision: 1.3 $
  */
 public class SerialLight extends AbstractLight {
 
@@ -83,10 +83,10 @@ public class SerialLight extends AbstractLight {
         SerialNode mNode = SerialAddress.getNodeFromSystemName(mSystemName);
         if (mNode!=null) {
             if (newState==ON) {
-                sendMessage(false);
+                sendMessage(true);
             }
             else if (newState==OFF) {
-                sendMessage(true);
+                sendMessage(false);
             }
             else {
                 log.warn("illegal state requested for Light: "+getSystemName());
@@ -100,7 +100,7 @@ public class SerialLight extends AbstractLight {
 		}
     }
 
-    protected void sendMessage(boolean closed) {
+    protected void sendMessage(boolean on) {
         SerialNode tNode = SerialAddress.getNodeFromSystemName(getSystemName());
         if (tNode == null) {
             // node does not exist, ignore call
@@ -125,7 +125,7 @@ public class SerialLight extends AbstractLight {
             m.setParity(i-4);
         }
         m.setElement(i++,tNode.getNodeAddress()|0x80);  // address 1
-        m.setElement(i++, (output<<3)|(closed ? 0 : 6));  // closed is green, thrown is red
+        m.setElement(i++, (output<<3)|(on ? 0 : 4));  // on is green, off is dark
         m.setElement(i++,tNode.getNodeAddress()|0x80);  // address 2
         m.setElement(i++, bank<<4); // bank is most significant bits
         m.setParity(i-4);
