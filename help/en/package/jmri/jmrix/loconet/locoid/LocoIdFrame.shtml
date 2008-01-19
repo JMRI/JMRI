@@ -1,5 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LocoIdFrame.shtml,v 1.1 2007-12-06 06:15:49 jacobsen Exp $ -->
+<!-- $Id: LocoIdFrame.shtml,v 1.2 2008-01-19 06:32:05 jacobsen Exp $ -->
+<!-- Copyright Bob Jacobsen 2008 -->
 <html lang="en">
 <head>
  <TITLE>
@@ -24,7 +25,25 @@
 <H2>Configure LocoNet ID
 </H2>
     
-This is the help/jmri/jmrix/loconet/locoid/LocoIdFrame help page
+If you're using UR91 radio receiver(s) on your LocoNet, you've got 
+a LocoNet ID.  The radio throttles and UR91 receiver(s) use this to 
+make sure they're talking to each other, instead of some other 
+radio device.
+
+<p>
+If there are several LocoNets in close proximity, for example at
+a train show, they need to have different LocoNet IDs or they will
+interfere. This tool lets you read and change the ID.
+
+<p>
+Note that the ID is stored in the UR91 radio receivers, so 
+if you don't have any of those, this tool won't be able to 
+read or write values.
+
+<p>
+For more information on the UR91 and radio operation, see
+the corresponding 
+<a href="http://digitrax.com/menu_wireless.php">Digitrax page</a>.
 
 <!--#include virtual="/Footer" -->
 </body>
