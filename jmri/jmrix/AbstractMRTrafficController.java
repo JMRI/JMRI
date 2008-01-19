@@ -26,7 +26,7 @@ import java.util.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.44 $
+ * @version			$Revision: 1.45 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -84,7 +84,8 @@ abstract public class AbstractMRTrafficController {
                 }
                 catch (Exception e)
                     {
-                        log.warn("notify: During dispatch to "+client+"\nException "+e);
+                        log.warn("notify: During message dispatch to "+client+"\nException "+e);
+                        e.printStackTrace();
                     }
             }
         }
@@ -172,7 +173,8 @@ abstract public class AbstractMRTrafficController {
             }
             catch (Exception e)
                 {
-                    log.warn("notify: During dispatch to "+client+"\nException "+e);
+                    log.warn("notify: During reply dispatch to "+client+"\nException "+e);
+                    e.printStackTrace();
                 }
         }
 
