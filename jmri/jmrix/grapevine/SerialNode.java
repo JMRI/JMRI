@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRMessage;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class SerialNode {
 
@@ -100,6 +100,7 @@ public class SerialNode {
         hasActiveSensors = false;
         // register this node
         SerialTrafficController.instance().registerSerialNode(this);
+        if (log.isDebugEnabled()) log.debug("new serial node "+this);
     }
 
     	    	
@@ -322,52 +323,25 @@ public class SerialNode {
             markBit(b2, number+2);
             markBit(b3, number+3);
         }
-        
-/*         try { */
-/*             for (int i=0; i<=lastUsedSensor; i++) { */
-/*                 if (sensorArray[i] == null) continue; // skip ones that don't exist */
-/*                 int loc = i/8; */
-/*                 int bit = i%8; */
-/*                 boolean value = (((l.getElement(loc+2)>>bit)&0x01) == 1) ^ sensorArray[i].getInverted();  // byte 2 is first of data */
-/*                 // if (log.isDebugEnabled()) log.debug("markChanges loc="+loc+" bit="+bit+" is "+value); */
-/*                 if ( value ) { */
-/*                     // bit set, considered ACTIVE */
-/*                     if (    ( (sensorTempSetting[i] == Sensor.ACTIVE) ||  */
-/*                                 (sensorTempSetting[i] == Sensor.UNKNOWN) ) && */
-/*                             ( sensorLastSetting[i] != Sensor.ACTIVE) ) { */
-/*                         sensorLastSetting[i] = Sensor.ACTIVE; */
-/*                         sensorArray[i].setKnownState(Sensor.ACTIVE); */
-/*                     } */
-/*                     // save for next time */
-/*                     sensorTempSetting[i] = Sensor.ACTIVE; */
-/*                 } else { */
-/*                     // bit reset, considered INACTIVE */
-/*                     if (    ( (sensorTempSetting[i] == Sensor.INACTIVE)  ||  */
-/*                                 (sensorTempSetting[i] == Sensor.UNKNOWN) ) && */
-/*                             ( sensorLastSetting[i] != Sensor.INACTIVE) ) { */
-/*                         sensorLastSetting[i] = Sensor.INACTIVE; */
-/*                         sensorArray[i].setKnownState(Sensor.INACTIVE); */
-/*                     } */
-/*                     // save for next time */
-/*                     sensorTempSetting[i] = Sensor.INACTIVE; */
-/*                 } */
-/*             } */
-/*         } catch (JmriException e) { log.error("exception in markChanges: "+e); } */
     }
 
     /**
      * Mark and act on a single input bit.
      * @param input True if sensor says active
-     * @param sensorNum from 0 to lastUsedSensor on this node
+     * @param sensorNum from 1 to lastUsedSensor+1 on this node
      */
     void markBit(boolean input, int sensorNum) {
         if (log.isDebugEnabled()) log.debug("Mark bit "+sensorNum+" "+input+" in node "+getNodeAddress());
         if (sensorArray[sensorNum] == null) {
             log.info("Try to create sensor "+sensorNum+" on node "+getNodeAddress()+", since sensor doesn't exist");
-            // try to make the sensor
-            sensorArray[sensorNum] = jmri.InstanceManager
-                                        .sensorManagerInstance()
-                                        .provideSensor("GS"+(getNodeAddress()*1000+sensorNum));
+            // try to make the sensor, which will also register it
+            jmri.InstanceManager.sensorManagerInstance()
+                              .provideSensor("GS"+(getNodeAddress()*1000+sensorNum));
+            if (sensorArray[sensorNum] == null) {
+                log.error("Creating sensor GS"+(getNodeAddress()*1000+sensorNum)+" failed unexpectedly");
+                log.debug("node should be "+this);
+                return;
+            }
         }
         
         boolean value = input ^ sensorArray[sensorNum].getInverted(); 
@@ -390,14 +364,17 @@ public class SerialNode {
     }
     
     /**
-     * The numbers here are 0 to MAXSENSORS, not 1 to MAXSENSORS.
-     * @param s - Sensor object
-     * @param i - 0 to MAXSENSORS number of sensor's input bit on this node
+     * The numbers here are 0 to MAXSENSORS, not 1 to MAXSENSORS. 
+     * E.g. the integer argument is one less than the name of the sensor object.
+     * @param s Sensor object
+     * @param i bit number corresponding, a 1-based value corresponding to the low 
+     *          digits of the system name
      */
     public void registerSensor(Sensor s, int i) {
+        if (log.isDebugEnabled()) log.debug("Register sensor "+s.getSystemName()+" index "+i);
         // validate the sensor ordinal
         if ( (i<0) || (i> (inputBits[nodeType] - 1)) || (i>MAXSENSORS) ) {
-            log.error("Unexpected sensor ordinal in registerSensor: "+Integer.toString(i+1));
+            log.error("Unexpected sensor ordinal in registerSensor: "+Integer.toString(i));
             return;
         }
         hasActiveSensors = true;
@@ -409,6 +386,7 @@ public class SerialNode {
         }
         else {
             // multiple registration of the same sensor
+            new Exception("mult reg "+i+" S:"+s.getSystemName()).printStackTrace();
             log.warn("multiple registration of same sensor: GS"+
                      Integer.toString((nodeAddress*SerialSensorManager.SENSORSPERNODE) + i) );
         }
