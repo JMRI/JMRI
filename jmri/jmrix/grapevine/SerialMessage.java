@@ -9,7 +9,7 @@ import jmri.util.StringUtil;
  * packet.
  * 
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008
- * @version   $Revision: 1.9 $
+ * @version   $Revision: 1.10 $
  */
 
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
@@ -197,6 +197,12 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         } else if ( (b2 == b4) && (b2==0x77)) {
             result += "software version query";
             return result;
+        } else if ( (b2 == 0x70) && ((b4&0xF0) == 0x10)) {
+            result += "Initialize parallel sensors";
+            return result;
+        } else if ( (b2 == 0x71) && ((b4&0xF0) == 0x00)) {
+            result += "Initialize ASD sensors";
+            return result;
         } else // check various bank forms 
         if ( (b4&0xF0) <= 0x30 ) {
             // Bank 0-3 - signal command
@@ -216,7 +222,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
             // bank 5 - sensor message
             if ((b2&0x20) == 0) {
                 // parallel sensor
-                if ((b2&0x40) == 0) result += "2nd connector ";
+                if ((b2&0x40) != 0) result += "2nd connector ";
                 result += "parallel sensor "+((b2&0x10)!=0 ? "high" : "low")+" nibble:";
             } else {
                 // old serial sensor
