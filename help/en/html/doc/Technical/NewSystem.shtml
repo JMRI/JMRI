@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NewSystem.shtml,v 1.1 2008-01-11 18:22:20 jacobsen Exp $ -->
+<!-- $Id: NewSystem.shtml,v 1.2 2008-01-19 06:07:10 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -147,7 +147,7 @@
             </dd>
 
 
-		<h3>Connect to Rest of System</h3>
+		<h3>Connect Basics to Rest of System</h3>
 
             <dt>Connect to configuration menus</dt>
             <dd>
@@ -179,13 +179,21 @@
             Speeds, etc, in powerline/serialdriver/SerialDriverAdapter.java.
             </dd>
 
-            <dt>Get send/receive up</dt>
+            <dt>Get send/receive communications working</dt>
             <dd>
             The first step is to get communications working so that
             you can send a message from the "Send Command" window, 
             and see it and the response in the "Monitor" window.
             </dd>
 
+
+
+		<h3>Make It Easy to Use</h3>
+
+		    <dt>Add Possible Startup Items</dt>
+		    <dd>
+			<p>Edit src/apps/ActionListBundle.properties to add appropriate items.</p>
+		    </dd>
 
 
 		<h3>Complete the documentation</h3>
@@ -201,6 +209,12 @@
 			<p>Create the JavaDocs, and fix any new (or old) problems.</p>
 		    </dd>
 
+		    <dt>Add the system to the "hardware" web pages</dt>
+		    <dd>
+			<p>Edit help/en/html/hardware/index.shtml</p>
+		    </dd>
+
+    
 		</dl>
 		</div>
 
