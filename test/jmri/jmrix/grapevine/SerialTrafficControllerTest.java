@@ -18,7 +18,7 @@ import jmri.jmrix.AbstractMRReply;
 /**
  * JUnit tests for the SerialTrafficController class
  * @author			Bob Jacobsen Copyright 2005, 2007, 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class SerialTrafficControllerTest extends TestCase {
 
@@ -42,7 +42,7 @@ public class SerialTrafficControllerTest extends TestCase {
         DataInputStream i = new DataInputStream(new ByteArrayInputStream(
                             new byte[]{1,2,3,4}));
         
-        c.doNextStep(null,i);
+        c.doNextStep(new SerialReply(),i);
         
         jmri.util.JUnitAppender.assertWarnMessage("1st byte not address: 1");
         Assert.assertEquals("not invoked", false, invoked);
@@ -61,7 +61,7 @@ public class SerialTrafficControllerTest extends TestCase {
         DataInputStream i = new DataInputStream(new ByteArrayInputStream(
                             new byte[]{(byte)128,(byte)129,3,4}));
         
-        c.doNextStep(null,i);
+        c.doNextStep(new SerialReply(),i);
         
         jmri.util.JUnitAppender.assertWarnMessage("2nd byte HOB set: 129, going to state 1");
         Assert.assertEquals("not invoked", false, invoked);
@@ -80,7 +80,7 @@ public class SerialTrafficControllerTest extends TestCase {
         DataInputStream i = new DataInputStream(new ByteArrayInputStream(
                             new byte[]{(byte)128,(byte)12,1,4}));
         
-        c.doNextStep(null,i);
+        c.doNextStep(new SerialReply(),i);
         
         jmri.util.JUnitAppender.assertWarnMessage("addresses don't match: 128, 1, going to state 1");
         Assert.assertEquals("not invoked", false, invoked);
@@ -99,7 +99,7 @@ public class SerialTrafficControllerTest extends TestCase {
         DataInputStream i = new DataInputStream(new ByteArrayInputStream(
                             new byte[]{(byte)128,(byte)12,(byte)128,(byte)129}));
         
-        c.doNextStep(null,i);
+        c.doNextStep(new SerialReply(),i);
         
         jmri.util.JUnitAppender.assertWarnMessage("3rd byte HOB set: 129, going to state 1");
         Assert.assertEquals("not invoked", false, invoked);
@@ -118,7 +118,7 @@ public class SerialTrafficControllerTest extends TestCase {
         DataInputStream i = new DataInputStream(new ByteArrayInputStream(
                             new byte[]{(byte)129,(byte)90,(byte)129,(byte)32}));
         
-        c.doNextStep(null,i);
+        c.doNextStep(new SerialReply(),i);
         
         jmri.util.JUnitAppender.assertWarnMessage("parity mismatch: 18, going to state 2 with content 129,32");
         Assert.assertEquals("not invoked", false, invoked);
@@ -137,7 +137,7 @@ public class SerialTrafficControllerTest extends TestCase {
         DataInputStream i = new DataInputStream(new ByteArrayInputStream(
                             new byte[]{(byte)129,(byte)90,(byte)129,(byte)31}));
         
-        c.doNextStep(null,i);
+        c.doNextStep(new SerialReply(),i);
         
         Assert.assertEquals("invoked", true, invoked);
         Assert.assertEquals("byte 0", (byte)129, testBuffer[0]);
@@ -159,7 +159,7 @@ public class SerialTrafficControllerTest extends TestCase {
         DataInputStream i = new DataInputStream(new ByteArrayInputStream(
                             new byte[]{(byte)0xE2,(byte)119,(byte)0xE2,(byte)119}));
         
-        c.doNextStep(null,i);
+        c.doNextStep(new SerialReply(),i);
         
         Assert.assertEquals("invoked", true, invoked);
         Assert.assertEquals("byte 0", (byte)0xE2, testBuffer[0]);
@@ -181,7 +181,7 @@ public class SerialTrafficControllerTest extends TestCase {
         DataInputStream i = new DataInputStream(new ByteArrayInputStream(
                             new byte[]{(byte)0xE2,(byte)13,(byte)0xE2,(byte)88}));
         
-        c.doNextStep(null,i);
+        c.doNextStep(new SerialReply(),i);
         
         Assert.assertEquals("invoked", true, invoked);
         Assert.assertEquals("byte 0", (byte)0xE2, testBuffer[0]);
@@ -203,7 +203,7 @@ public class SerialTrafficControllerTest extends TestCase {
         DataInputStream i = new DataInputStream(new ByteArrayInputStream(
                             new byte[]{(byte)0xE2,(byte)14,(byte)0xE2,(byte)86}));
         
-        c.doNextStep(null,i);
+        c.doNextStep(new SerialReply(),i);
         
         Assert.assertEquals("invoked", true, invoked);
         Assert.assertEquals("byte 0", (byte)0xE2, testBuffer[0]);
@@ -225,7 +225,7 @@ public class SerialTrafficControllerTest extends TestCase {
         DataInputStream i = new DataInputStream(new ByteArrayInputStream(
                             new byte[]{(byte)0xE2,(byte)15,(byte)0xE2,(byte)84}));
         
-        c.doNextStep(null,i);
+        c.doNextStep(new SerialReply(),i);
         
         Assert.assertEquals("invoked", true, invoked);
         Assert.assertEquals("byte 0", (byte)0xE2, testBuffer[0]);
@@ -247,8 +247,8 @@ public class SerialTrafficControllerTest extends TestCase {
         DataInputStream i = new DataInputStream(new ByteArrayInputStream(
                             new byte[]{12,(byte)129,(byte)90,(byte)129,(byte)31}));
         
-        c.doNextStep(null,i);
-        c.doNextStep(null,i);
+        c.doNextStep(new SerialReply(),i);
+        c.doNextStep(new SerialReply(),i);
         
         jmri.util.JUnitAppender.assertWarnMessage("1st byte not address: 12");
         Assert.assertEquals("invoked", true, invoked);
@@ -271,8 +271,8 @@ public class SerialTrafficControllerTest extends TestCase {
         DataInputStream i = new DataInputStream(new ByteArrayInputStream(
                             new byte[]{(byte)129,(byte)129,(byte)90,(byte)129,(byte)31}));
         
-        c.doNextStep(null,i);
-        c.doNextStep(null,i);
+        c.doNextStep(new SerialReply(),i);
+        c.doNextStep(new SerialReply(),i);
         
         jmri.util.JUnitAppender.assertWarnMessage("2nd byte HOB set: 129, going to state 1");
         Assert.assertEquals("invoked", true, invoked);
@@ -295,8 +295,8 @@ public class SerialTrafficControllerTest extends TestCase {
         DataInputStream i = new DataInputStream(new ByteArrayInputStream(
                             new byte[]{(byte)128,(byte)12,(byte)129,(byte)90,(byte)129,(byte)31}));
         
-        c.doNextStep(null,i);
-        c.doNextStep(null,i);
+        c.doNextStep(new SerialReply(),i);
+        c.doNextStep(new SerialReply(),i);
         
         jmri.util.JUnitAppender.assertWarnMessage("addresses don't match: 128, 129, going to state 1");
         Assert.assertEquals("invoked", true, invoked);
@@ -319,8 +319,9 @@ public class SerialTrafficControllerTest extends TestCase {
         DataInputStream i = new DataInputStream(new ByteArrayInputStream(
                             new byte[]{(byte)129,(byte)12,(byte)129,(byte)90,(byte)129,(byte)31}));
         
-        c.doNextStep(null,i);
-        c.doNextStep(null,i);
+        
+        c.doNextStep(new SerialReply(),i);
+        c.doNextStep(new SerialReply(),i);
         
         jmri.util.JUnitAppender.assertWarnMessage("parity mismatch: 25, going to state 2 with content 129,90");
         Assert.assertEquals("invoked", true, invoked);
