@@ -27,7 +27,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003, 2006, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -37,9 +37,9 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         logDebug = log.isDebugEnabled();
         
         // not polled at all, so allow unexpected messages, and
-        // poll only slowly to know the link is alive
+        // use poll delay just to spread out startup
         setAllowUnexpectedReply(true);
-        mWaitBeforePoll = 2000;  // default = 25
+        mWaitBeforePoll = 100;  // default = 25
 
         // clear the array of SerialNodes
         for (int i=0; i<=MAXNODE; i++) {
@@ -101,7 +101,8 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
      */
      public void registerSerialNode(SerialNode node) {
         synchronized (this) {
-            // no validity checking because at this point the node may not be fully defined
+            // no node validity checking because at this point the node may not be fully defined
+            // eventually, should check for duplicate node numbers, which is a bad error
             nodeArray[numNodes] = node;
             mustInit[numNodes] = true;
             numNodes++;
