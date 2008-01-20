@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.5 2008-01-13 18:47:00 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.6 2008-01-20 05:34:10 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -59,8 +59,8 @@
 	<LI>Thomas Beutel, who helped with the early EasyDCC tests
 	<LI>Ian Birchenough, who contributed (with Phil Grainger) six
 	ZTC decoder definition files
-	<LI>Bob Blackwell, who moderates the jmriusers mailing list and is
-	accumulating the decoder ID info
+	<LI>Bob Blackwell, who moderates the jmriusers mailing list,
+	accumulating the decoder ID info, and updated the DecoderPro manual
 	<LI>Don Borden, who loaned a Soundtraxx decoder for testing the
 	dual-decoder support
 	<LI>Joseph T. Bore, who contributed the code upon which we built the
@@ -86,7 +86,7 @@
 	of USS panel icons for PanelPro, worked on the PanelPro logo,
 	created fantastic clinics on PanelPro,
 	and made numerous improvements to the Simple Signal Logic.
-    <li>Stephen Brooks, who did all the initial testing of the Grapevine support
+    <li>Stephen Brooks, who did the initial testing of the Grapevine support
 	<LI>Bill Brown, whose layout was used for the first NCE tests
 	<LI>Bob Byck, who did extensive testing of test release 1.7.3
 	<LI>Allen Byrne, who has systematically made improvements in the syntax and structure of the JMRI code
@@ -227,27 +227,28 @@
 	groups on his 
 	<A HREF="http://www.dcc-portal.net/">http://www.dcc-portal.net/</a> website.
 <A ID="S"></A>
+	<LI>Joe Salemi, who contributed the Atlas 345 decoder definition and
+	updated the TCS Tx definition.
     <LI>Jeff Schmaltz, who contributed a decoder definition for the Massoth LGB decoder
+    <LI>Mark Schutzer, who helped debug some significant NCE improvements
+    and contributed the Lenz Gold decoder definition
 	<LI>Jim Scorse, who gave generously of his time to answer questions about NCE details
 	<LI>Brett Scott contributed the scripts for programming DCC Specialties products
 	<LI>Jack Shall, who cleaned up the XML files, contributed decoder definitions
 	and added a huge number of tooltips to DecoderPro
+    <li>Bruce Shanks, who offered corrections for the DecoderPro manual
 	<LI>Alex Shepherd, who helped move development to JBuilder, a much better tool, and
 	created the client/server implementation for LocoNet. He's also improved
 	the LocoNet monitor formatting.
-    <LI>Mark Schutzer, who helped debug some significant NCE improvements
-    and contributed the Lenz Gold decoder definition
+	<LI>Al Silverstein, who helped figure out the format of some LocoNet messages and provided
+	decoder information on several models
+	<LI>Don Smith, who ran down some NCE decoder information
+	<LI>Alfredo Sola provides the Spanish translation
 	<LI>The good people at 
 	<A HREF="http://www.sf.net">SourceForge</a> 
 	who provide site hosting, download servers and computing resources
 	for JMRI development
-	<LI>Al Silverstein, who helped figure out the format of some LocoNet messages and provided
-	decoder information on several models
 	<LI>Ron Sommer, who provided the PanelPro icon for Windows
-	<LI>Don Smith, who ran down some NCE decoder information
-	<LI>Alfredo Sola provides the Spanish translation
-	<LI>Joe Salemi, who contributed the Atlas 345 decoder definition and
-	updated the TCS Tx definition.
 <A ID="T"></A>
 	<LI>Francois Taburet, who provided the French translation for DecoderPro
 	<LI>Walter Thompson, who provided the ID information for the Lionel
