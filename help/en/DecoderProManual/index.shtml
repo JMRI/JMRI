@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: index.shtml,v 1.6 2008-01-20 05:02:22 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.7 2008-01-20 06:08:22 jacobsen Exp $ -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -28,7 +28,7 @@
 <h1>DecoderPro Manual Index</h1>
 
 DecoderPro&reg; is one of the 
-<a href="http://jmri.sf.net">JMRI</a>&trade; 
+<a href="http://jmri.sf.net">JMRI</a>
 applications for model railroaders.
 DecoderPro makes it easier to configure the DCC decoders in your
 locomotives, allowing you to use all the neat features in modern decoders.
@@ -50,8 +50,6 @@ in some layout details, they will be essentially the same.
 correspond to DecoderPro 1.3, and the HTML verified 
 using HTML4 and Cascading Style Sheets. 
 If the formatting looks odd, you might need to update your browser. </span>
-<h1>
-<a NAME="index"></a>Index</h1>
 
 <div align="right">
 <p><a href="Archive.zip" target="_blank">
@@ -63,6 +61,7 @@ Download a .ZIP archive<br>of this entire manual.</a>
 Download a .PDF file<br>of this entire manual.</a>
 </div>
 
+<a NAME="index"></a>
 <h4>
 <a NAME="Getting Started"></a><a href="Getting_Started.shtml#Top">Getting
 started</a></h4>
