@@ -27,19 +27,102 @@
 <ul></ul>
 </li>
    
-<li>DecoderPro Manual<ul>
+<li>
+<a href="DecoderProManual/index.shtml">DecoderPro Manual</a>
+<ul>
       
 <li>
 <a href="DecoderProManual/Getting_Started.shtml">Getting Started</a>
+<ul>
+         
+<li>
+<a href="DecoderProManual/Getting_Started.shtml#What is DCC">What is DCC?</a>
 <ul></ul>
+</li>
+         
+<li>
+<a href="DecoderProManual/Getting_Started.shtml#DCC systems">DCC Systems</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="DecoderProManual/Getting_Started.shtml#DCC Hardware">DCC Hardware</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="DecoderProManual/Getting_Started.shtml#Start">Setting Preferences</a>
+<ul></ul>
+</li>
+      
+</ul>
 </li>
       
 <li>
-<a href="DecoderProManual/Basic_Programming.shtml">Basic Decoder Programming</a>
+<a href="DecoderProManual/Basic_Programming.shtml">Using DecoderPro</a>
+<ul>
+         
+<li>
+<a href="DecoderProManual/Basic_Programming.shtml#Setting Up">Set Up</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="DecoderProManual/Basic_Programming.shtml#Select Decoder">Choose Decoder</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="DecoderProManual/Basic_Programming.shtml#Programming Modes">Programming Modes</a>
 <ul></ul>
 </li>
       
-<li>Comprehensive Panel<ul>
+</ul>
+</li>
+      
+<li>
+<a href="DecoderProManual/Basic_Programming.shtml#Basic Programmer">Basic Programmer</a>
+<ul>
+         
+<li>
+<a href="DecoderProManual/Basic_Programming.shtml#Roster">Using the Roster</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="DecoderProManual/Basic_Programming.shtml#Basic 2">The Basic Programmer</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="DecoderProManual/Basic_Programming.shtml#Read Data">Reading Data</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="DecoderProManual/Basic_Programming.shtml#Enter/Edit data">Entering and Editing Data</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="DecoderProManual/Basic_Programming.shtml#Write Data">Writing to Decoder</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="DecoderProManual/Basic_Programming.shtml#Save Data">Saving to a File</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="DecoderProManual/Basic_Programming.shtml#Do More">What Next?</a>
+<ul></ul>
+</li>
+      
+</ul>
+</li>
+      
+<li>Comprehensive Programmer<ul>
          
 <li>
 <a href="DecoderProManual/Comp_Setup_Roster.shtml">Setup and Roster Panes</a>
@@ -52,12 +135,12 @@
 </li>
          
 <li>
-<a href="DecoderProManual/Comp_Speed.shtml">Speed Control Pane</a>
+<a href="DecoderProManual/Comp_Motor.shtml">Motor Control Pane</a>
 <ul></ul>
 </li>
          
 <li>
-<a href="DecoderProManual/Comp_Motor.shtml">Motor Control Pane</a>
+<a href="DecoderProManual/Comp_Speed.shtml">Speed Control Pane</a>
 <ul></ul>
 </li>
          
@@ -72,17 +155,7 @@
 </li>
          
 <li>
-<a href="DecoderProManual/Comp_ManfSpecific.shtml">Manufacturer Specific Data Pane</a>
-<ul></ul>
-</li>
-         
-<li>
-<a href="DecoderProManual/Comp_SoundLevels.shtml">Sound Levels Pane</a>
-<ul></ul>
-</li>
-         
-<li>
-<a href="DecoderProManual/Comp_SoundFX.shtml">Sound FX Pane</a>
+<a href="DecoderProManual/Comp_Consist.shtml">Consisting Functions Pane</a>
 <ul></ul>
 </li>
          
@@ -92,17 +165,27 @@
 </li>
          
 <li>
-<a href="DecoderProManual/Comp_PrintData.shtml">Printing Decoder Data</a>
+<a href="DecoderProManual/Comp_SoundFX.shtml">Sound FX Pane</a>
 <ul></ul>
 </li>
          
 <li>
-<a href="DecoderProManual/Comp_Consist.shtml">Consisting Functions Pane</a>
+<a href="DecoderProManual/Comp_SoundLevels.shtml">Sound Levels Pane</a>
 <ul></ul>
 </li>
          
 <li>
 <a href="DecoderProManual/Comp_GlobalCVs.shtml">Global CV Listing Pane</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="DecoderProManual/Comp_ManfSpecific.shtml">Manufacturer Specific Data Pane</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="DecoderProManual/Comp_PrintData.shtml">Printing Decoder Data</a>
 <ul></ul>
 </li>
       
