@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: Comp_SoundFX.html,v 1.3 2007-01-21 23:50:18 jacobsen Exp $ -->
+<!-- $Id: Comp_SoundLevels.shtml,v 1.1 2008-01-20 02:29:43 jacobsen Exp $ -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -8,7 +8,7 @@
 <meta name="Revised_By" content="Bob Blakcwell - afticarr@sympatico.ca">
 <meta name="Revision_Date" content="January 21, 2007">
 <meta name="Revision" content="Stylesheet format update to permit printing without background colours">
-<title>Comprehensive Programmer - Sound FX Pane</title>
+<title>Comprehensive Programmer - Sound Levels Pane</title>
 <link rel="stylesheet" title="default" type="text/css" href=" DecoderPro.css" media="screen">
 <link rel="stylesheet" title="default" type="text/css" href="DecoderPro_Print.css" media="print">
 </head>
@@ -19,35 +19,31 @@
 <img SRC="Pix/Logo.gif" ALT="JMRI DecoderPro Logo" BORDER=10 height=117 width=163 vspace="15"></h1>
 
 
-
 <h1>DecoderPro Comprehensive Programmer</h1>
-<h1>Sound FX Pane</h1></center>
+<h1>Sound Levels Pane</h1>
 
 <div align=right>
-<p><a href="Comp_Advanced.html">Back to Previous Section</a>
+<p><a href="Comp_SoundFX.html">Back to Previous Section</a>
 <p><a href="index.html#Advanced Programmer">Back to Index</a>
 </div>
 
 <hr>
-<p>Soundtraxx has a number of decoders available that include sound with
-their functions. This pane is designed to control those CVs. The screen
-shot below is one from a programmer for one of their steam sound decoders.
-They also have diesel sound decoders available.
 <p>
-These sounds can be coordinated with the mechanism of the locomotive,
-and appropriate sounds can be triggered from the function keys of the throttle.
-Others can be set to be triggered at startup or to run in the background.
+Here are the CVs for the relative volume levels and timing nuances
+of the sound decoder. Again, this is an example of one implementation.
+See your decoder documentation and the specific decoder programmer for
+details applicable to your equipment. Above all, don't be afraid to play
+with these settings and those in the previous pane until you get sound
+you like. It's much easier to do here than it is to try to program these
+using a throttle!
 
-<h1><img SRC="Pix/Comp_09_Sound.png" ALT="Comprehensive Programmer - Sound Functions" BORDER=5 height=474 width=651></h1>
+<h1><img SRC="Pix/Comp_10_Sound_Levels.png" ALT="Comprehensive Programmer - Sound Levels" NOSAVE BORDER=5 height=474 width=651></h1>
 
-<p>
-For specific function options, see your decoder documentation and the
-programmer for the specific decoder.
 <p>
 <hr>
 
 <div align=right>
-<p><a href="Comp_SoundLevels.html">On to Next Section</a>
+<p><a href="Comp_GlobalCVs.html">On to Next Section</a>
 <p><a href="index.html#Advanced Programmer">Back to Index</a>
 </div>
 

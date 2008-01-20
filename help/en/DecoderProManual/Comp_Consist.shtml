@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: Comp_ManfSpecific.html,v 1.3 2007-01-21 23:50:18 jacobsen Exp $ -->
+<!-- $Id: Comp_Consist.shtml,v 1.1 2008-01-20 02:29:42 jacobsen Exp $ -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -8,7 +8,7 @@
 <meta name="Revised_By" content="Bob Blakcwell - afticarr@sympatico.ca">
 <meta name="Revision_Date" content="January 21, 2007">
 <meta name="Revision" content="Stylesheet format update to permit printing without background colours">
-<title>Comprehensive Programmer - Manufacturer Specific Data Pane</title>
+<title>Comprehensive Programmer - Consisting Functions Pane</title>
 <link rel="stylesheet" title="default" type="text/css" href=" DecoderPro.css" media="screen">
 <link rel="stylesheet" title="default" type="text/css" href="DecoderPro_Print.css" media="print">
 </head>
@@ -19,34 +19,33 @@
 <img SRC="Pix/Logo.gif" ALT="JMRI DecoderPro Logo" BORDER=10 height=117 width=163 vspace="15"></h1>
 
 
+
 <h1>DecoderPro Comprehensive Programmer</h1>
-<h1>Manufacturer Specific Data Pane</h1>
+<h1>Consisting Functions Pane</h1></center>
 
 <div align=right>
-<p><a href="index.html#Advanced Programmer">Back to Index</a>
-<p><a href="Comp_GlobalCVs.html">Back to Previous Section</a>
-</div>
-
-<hr>
-<p>
-This pane in the <b>Comprehensive Programmer</b> provides programming
-for function that are specific to an individual manufacturer, but outside
-the realm of the DCC standard. While items like <b>Transponding</b> may eventually find a place in the NMRA DCC standard, and are therefore in the Advanced pane, these items are obviously beyond that category.
-
-<h1><img SRC="Pix/Comp_12_Manufacturer.png" ALT="Comprehensive Programmer - Manufacturer Specifc Data" BORDER=5 height=475 width=772></h1>
-
-<p>
-These items will, by definition, vary greatly between manufacturers.
-Once again, your best resource is the documentation for the specific decoder
-you are programming and this pane in the programmer for that decoder.
-
-<p>
-<hr>
-<div ALIGN=right>
-<p><a href="Comp_PrintData.html">On to Next Section</a>
+<p><a href="Comp_LightFX.html">Back to Previous Section</a>
 <p><a href="index.html#Advanced Programmer">Back to Index</a>
 </div>
 
+<hr>
+
+<h1><img SRC="Pix/Comp_07_Consisting.png" ALT="Comprehensive Programmer - Consisting Functions" BORDER=5 height=475 width=676></h1>
+
+<p>
+The Advanced Consist Address is for <b>EPF</b> (<b>Extended
+Packet Format</b>, as defined by the NMRA Recommended Practices for DCC) or
+"<b>decoder assisted</b>" consisting. This CV can be set manually to create a
+multiple engine group that will all respond to the same address, and is used in some systems to create consists. Think of it as an MU specific locomotive address.
+<p>
+If you've had your locomotives on another layout and ran them together, but can't get them to run seperately on your home system,  check this to see if it's been set! Personally, on my Digitrax system I prefer to MU my locomotives from the throttle using their <b>UniVersal Consisting</b> (which is done in the command station, not the decoder), as do most of the people I know. However, the capability is there to do it manually if you need it.
+
+<hr>
+
+<div align=right>
+<p><a href="Comp_Advanced.html">On to Next Section</a>
+<p><a href="index.html#Advanced Programmer">Back to Index</a>
+</div>
 
 This site is hosted by
 <br>
