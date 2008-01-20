@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: CVsummary.xsl,v 1.4 2007-09-21 05:49:30 jacobsen Exp $ -->
+<!-- $Id: CVsummary.xsl,v 1.5 2008-01-20 16:37:05 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert JMRI decoder definitions to -->
 <!-- a huge HTML table of CV values -->
@@ -68,11 +68,13 @@
 	<!-- fill table rows -->	
 	<xsl:for-each select="family">
 		<xsl:variable name="filename" select="@file" />
-		<xsl:for-each select="document(@file)/decoder-config/decoder/family">
+		<xsl:if test="not( @file = '0NMRA_test.xml' )" >
+		  <xsl:for-each select="document(concat('pages/',@file))/decoder-config/decoder/family">
 			<xsl:call-template name="doFileFamily">
 				<xsl:with-param name="file" select="$filename"/>
 			</xsl:call-template>
-		</xsl:for-each>
+		  </xsl:for-each>
+		</xsl:if> 
 	</xsl:for-each>
 	
 	<!-- end table -->
@@ -106,7 +108,7 @@
 	<xsl:param name="fileIn" select="'foo'"/>
 	<xsl:param name="cv"/>
 		<td bgcolor="#eeeeee" valign="top" align="center">
-		<xsl:for-each select="document($fileIn)/decoder-config/decoder/variables/variable">
+		<xsl:for-each select="document(concat('pages/',$fileIn))/decoder-config/decoder/variables/variable">
 			<xsl:if test="$cv = @CV">
 				<!-- here current element is to be displayed, -->
 				<!-- as it defines our CV -->
