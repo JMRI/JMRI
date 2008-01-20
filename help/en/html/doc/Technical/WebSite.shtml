@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: WebSite.shtml,v 1.1 2008-01-03 02:36:58 jacobsen Exp $ -->
+<!-- $Id: WebSite.shtml,v 1.2 2008-01-20 20:49:44 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -33,8 +33,33 @@
 
 This page discusses technical aspects of the JMRI web site.
 
-<P>
-Formatting is done using CSS, originally set up by John Plocher.
+<h2>Structure of Information</h2>
+
+We distinguish between three types of information on the main web site:
+<ol>
+<li>User information which is useful at run time.  
+This is made available both via our <A HREF="Help.shtml">JavaHelp</a>,
+and also directly by placing those files on the web.
+<li>User information which is either not useful at run time, such as
+instructions for installing the software, or is too large for inclusion
+in releases, e.g. video clinic files.
+<li>Reference information from releases, such as decoder definitions, copies of scripts,
+etc.
+</ol>
+
+We provide these separately:
+<ol>
+<li>Run-time user information is made available by putting the help system
+on the web site.
+<li>Other user information is stored in CVS as the site.new module, and
+placed directly on the web site.
+<li>Reference information is put on the web site from their own CVS modules.
+</ol>
+
+<h2>Technology</h2>
+Page formatting is done using CSS, originally set up by John Plocher.
+All pages should reference the CSS files for screen and printing
+from the "/css" directory.
 
 <P>
 We are moving toward using
@@ -45,8 +70,11 @@ content between the web and the JavaHelp system
 used by the program itself. Each page will contain just content,
 plus includes for files named "Header", "Sidebar" and "Footer"
 which contain the navigation information.
+Eventually, all but a few index pages will have
+".shtml" extensions. (The remaining index.html pages keep that name
+so that people who request just a directory URL will be served something useful)
 
-<h2>Organization</h2>
+<h2>Directory Organization</h2>
 
 The web site contains several separate areas, which translate to different 
 CVS modules:
@@ -58,22 +86,30 @@ directly.
 structure described below and on our
 <A HREF="Help.shtml">JavaHelp</a>
 page.
-<P>
+</ul>
 The rest are from the site.new CVS module, and are checked out at 
 the root of the web server.
-<P>
-<LI>apps - 
-<LI>releasenotes - 
-<LI>install - 
-<LI>community - 
-<li>doc - 
-<LI>tools - 
-<LI>hardware - 
-<li>images - 
+<ul>
+<LI>releasenotes - Specific information on each test and production release
+<LI>install - Information on how to install the JMRI software on various kinds of computers
+<LI>community - Clinics, web pages, and other community-contributed information
+<li>images - (Images used by web pages)
 <li>contact - 
 <li>sitemap - 
 </ul>
-
+The following directories still contain content in site.new, but are
+in the process of being moved into the JavaHelp pages for use
+both on the web and in the program:
+<ul>
+<LI>apps - 
+<li>doc - 
+<li>hardware - 
+<LI>tools - 
+</ul>
+As part of the migration, a number of directories remain that contain
+only redirects and/or obsolete files:
+<ul>
+</ul>
 <H2>Local Web Site: MacOS X</H2>
 
 If you want to host a copy of the JMRI web site on your local
