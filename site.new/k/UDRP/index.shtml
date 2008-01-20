@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.2 2008-01-04 06:45:08 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.3 2008-01-20 05:41:50 jacobsen Exp $ -->
 <html lang="en">
 
 <head>
@@ -22,11 +22,6 @@
 <p class="skipLink"><a href="#mainContent" accesskey="2">Skip to main content</a></p>
 
 <!--#include virtual="/Header" -->
-
-<hr class="hide">
-
-<div id="mBody">
-
 <!--#include virtual="/k/Sidebar" -->
 
  <hr class="hide"> 

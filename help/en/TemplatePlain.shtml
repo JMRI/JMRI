@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Me 2008 -->
-<!-- $Id: TemplatePlain.shtml,v 1.4 2008-01-20 02:42:15 jacobsen Exp $ -->
+<!-- $Id: TemplatePlain.shtml,v 1.5 2008-01-20 05:41:50 jacobsen Exp $ -->
 <title>JMRI: ???Page Title</title>
 
 <!-- Style -->
@@ -18,7 +18,6 @@
 
 <BODY>
 <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
