@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: index.shtml,v 1.2 2008-01-20 02:36:00 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.3 2008-01-20 02:41:31 jacobsen Exp $ -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -207,5 +207,6 @@ are best submitted to the
 <a href="http://groups.yahoo.com/group/jmriusers/">
 JMRI Users home page on YahooGroups</a></div>
 
+<!--#include virtual="/Footer" -->
 </body>
 </html>
