@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: Comp_Consist.shtml,v 1.4 2008-01-20 03:02:43 jacobsen Exp $ -->
+<!-- $Id: Comp_Consist.shtml,v 1.5 2008-01-20 03:21:31 jacobsen Exp $ -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -34,8 +34,6 @@
 <p><a href="index.shtml#Advanced Programmer">Back to Index</a>
 </div>
 
-<hr>
-
 <h1><img SRC="Pix/Comp_07_Consisting.png" ALT="Comprehensive Programmer - Consisting Functions" BORDER=5 height=475 width=676></h1>
 
 <p>
@@ -45,8 +43,6 @@ Packet Format</b>, as defined by the NMRA Recommended Practices for DCC) or
 multiple engine group that will all respond to the same address, and is used in some systems to create consists. Think of it as an MU specific locomotive address.
 <p>
 If you've had your locomotives on another layout and ran them together, but can't get them to run seperately on your home system,  check this to see if it's been set! Personally, on my Digitrax system I prefer to MU my locomotives from the throttle using their <b>UniVersal Consisting</b> (which is done in the command station, not the decoder), as do most of the people I know. However, the capability is there to do it manually if you need it.
-
-<hr>
 
 <div align=right>
 <p><a href="Comp_Advanced.shtml">On to Next Section</a>

@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: Getting_Started.shtml,v 1.4 2008-01-20 03:02:43 jacobsen Exp $ -->
+<!-- $Id: Getting_Started.shtml,v 1.5 2008-01-20 03:21:31 jacobsen Exp $ -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -80,8 +80,6 @@ interface may be required.
 <p><a href="index.shtml#Getting Started">Back to Index</a>
 </div>
 
-<hr>
-
 <h3><a NAME="DCC Hardware"></a>What hardware do I need?</h3>
 <p>
 You will need, at minimum, a command station/booster for your DCC system,
@@ -97,8 +95,6 @@ program.
 <div align=right>
 <p><a href="index.shtml#Getting Started">Back to Index</a>
 </div>
-
-<hr>
 
 <h3><a NAME="Start"></a>How do I start the program?</h3>
 <p>
@@ -122,8 +118,6 @@ for your particular configuration.
 <div align=right>
 <p><a href="index.shtml#Getting Started">Back to Index</a>
 </div>
-
-<hr>
 
 <h3><a NAME="Preferences"></a>How do I set up my preferences?</h3>
 <p>
@@ -182,8 +176,6 @@ you can enter it here.
 to save typing when entering your locomotive roster
 </ul>
 
-<p>
-<hr>
 <div align=right>
 <p><a href="Basic_Programming.shtml">On to the Basic Programmer</a>
 <p><a href="index.shtml#Getting Started">Back to Index</a>

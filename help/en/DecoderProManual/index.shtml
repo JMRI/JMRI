@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: index.shtml,v 1.4 2008-01-20 03:02:43 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.5 2008-01-20 03:21:31 jacobsen Exp $ -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -34,7 +34,6 @@
 A Java-based cross-platform application for the programming of Digital
 Command Control (DCC) decoders for model railroad use.</h3>
 
-<hr>
 <p>
 DecoderPro is one of a set of cross-platform applications for model railroaders.
 It can run on any computer system that will run Java 1.1.8, whether it
@@ -52,8 +51,7 @@ Note that all screen shots in this manual are from a Windows machine using the
  "Metal" User Interface option<!--off of a Macintosh, using the
 Mac Graphic User Interface option-->. While your screens will probably differ
 in some layout details, they will be essentially the same.</span>
-<br>
-<hr>
+
 <p><span class="UPDATE">Note: This entire manual has been updated to correspond to DecoderPro 1.1.9, and the HTML verified using HTML4 and Cascading Style Sheets. If the formatting looks odd, you probably need to update your browser. </span>
 <h1>
 <a NAME="index"></a>Index</h1>
@@ -191,7 +189,6 @@ covered, or make suggestions for improvements to the manual or the software,
 join us on the JMRI Users mailing list at <a href="http://groups.yahoo.com/group/jmriusers/">
 http://groups.yahoo.com/group/jmriusers/</a>
 
-<hr>
 <p>
 I've prepared this manual for several reasons. First, I'm not a programmer,
 but I heartily support the efforts that Bob Jacobsen and the rest of the
@@ -208,8 +205,7 @@ are best submitted to the
 <br>Joe Ellis
 <br>CEO, Bethlehem-Ares Railroad, a 1:160 Corporation
 <br>09/04/2002
-<p>
-<hr>
+
 <div align=right>Go to the
 <a href="http://groups.yahoo.com/group/jmriusers/">
 JMRI Users home page on YahooGroups</a></div>

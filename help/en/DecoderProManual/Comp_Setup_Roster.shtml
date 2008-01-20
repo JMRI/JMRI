@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: Comp_Setup_Roster.shtml,v 1.4 2008-01-20 03:02:43 jacobsen Exp $ -->
+<!-- $Id: Comp_Setup_Roster.shtml,v 1.5 2008-01-20 03:21:31 jacobsen Exp $ -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -33,7 +33,6 @@
 <p><a href="index.shtml#Advanced Programmer">Back to Index</a>
 </div>
 
-<hr>
 <p>
 Returning to the decoder programmer selection pane
 (<a href="Basic_Programming.shtml#Setting Up">Tab Programmer Setup</a>),
@@ -68,7 +67,6 @@ Programmer</a>. If you're ready to move on to bigger and better things,
 let's go to the next tab, the <a href="Comp_Basic.shtml">(expanded) Basic
 Tab.</a>
 
-<hr>
 <div align=right>
 <p><a href="Comp_Basic.shtml">On to Next Section</a>
 <p><a href="index.shtml#Advanced Programmer">Back to Index</a>

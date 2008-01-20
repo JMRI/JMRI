@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: Comp_GlobalCVs.shtml,v 1.4 2008-01-20 03:02:43 jacobsen Exp $ -->
+<!-- $Id: Comp_GlobalCVs.shtml,v 1.5 2008-01-20 03:21:31 jacobsen Exp $ -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -34,7 +34,6 @@
 <p><a href="index.shtml#Advanced Programmer">Back to Index</a>
 </div>
 
-<hr>
 <p>
 For the hard-core programmer, this pane is a listing of the raw CV
 data by CV number, with data in <span class="ACCENT">decimal format</span>.
@@ -52,8 +51,7 @@ is the same as a <b>Read all</b> or <b>Write all</b>. <span class="ACCENT">Again
 <h1><img SRC="Pix/Comp_11_CV.png" ALT="Comprehensive Programmer - Global CV Listing" BORDER=5 height=538 width=772></h1>
 <p>
 One thing to keep in mind about the <b>CV</b> listing on this pane - anything you can do here you can do from one of the other panes in DecoderPro, without having to know the <b>CV</b> number or how to compile the values to get the desired effect. This pane is meant for advanced users of DCC used to crunching the numbers themselves. Those new to DCC can safely ignore this panel without losing any capability at all.
-<p>
-<hr>
+
 <div align=right>
 <p><a href="Comp_ManfSpecific.shtml">On to Next Section</a>
 <p><a href="index.shtml#Advanced Programmer">Back to Index</a>

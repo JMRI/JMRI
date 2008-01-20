@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: Comp_Basic.shtml,v 1.4 2008-01-20 03:02:43 jacobsen Exp $ -->
+<!-- $Id: Comp_Basic.shtml,v 1.5 2008-01-20 03:21:31 jacobsen Exp $ -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -34,7 +34,6 @@
 <p><a href="index.shtml#Advanced Programmer">Back to Index</a>
 </div>
 
-<hr>
 <p>
 One of the first things you will notice about the expanded Basic Pane
 in the Comprehensive Programmer is that there are a lot more options than
@@ -75,8 +74,6 @@ marking your equipment. I always use these CVs, even though I have custom-painte
 <p><a href="index.shtml#Advanced Programmer">Back to Index</a>
 </div>
 
-<hr>
-
 <h2>The Read and Write Buttons</h2>
 <p>
 At the bottom of the programmer pane you will find two rows of buttons, as shown in the excerpt below.
@@ -103,7 +100,6 @@ Below the two rows of buttons is a text line that shows what the current <b>prog
 <p>
 Finally, the bottom line of the pane is a monitor that tells you exactly what the system is doing. It shows "<b>idle</b>" in these screen shots because I was not actively programming decoders when they were made.
 
-<hr>
 <div align=right>
 <p><a href="Comp_Motor.shtml">On to Next Section</a>
 <p><a href="index.shtml#Advanced Programmer">Back to Index</a>
