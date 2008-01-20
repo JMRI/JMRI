@@ -12,7 +12,7 @@ import javax.swing.*;
  * Swing action to display the JMRI context for the user
  *
  * @author	    Bob Jacobsen    Copyright (C) 2007
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 public class ReportContextAction extends AbstractAction {
 
@@ -25,6 +25,7 @@ public class ReportContextAction extends AbstractAction {
 		JFrame frame = new jmri.util.JmriJFrame(){};  // JmriJFrame to ensure fits on screen
 		
         pane = new javax.swing.JTextArea();
+        pane.append("\n"); // add a little space at top
         pane.setEditable(false);
  
         JScrollPane  scroll = new JScrollPane(pane);
@@ -69,8 +70,15 @@ public class ReportContextAction extends AbstractAction {
         addProperty("user.home");
         addProperty("user.dir");
 
+        pane.append("\n"); // add a little space at bottom
 
 		frame.pack();
+
+        // start scrolled to top
+        JScrollBar b = scroll.getVerticalScrollBar();
+        b.setValue(b.getMaximum());
+
+        // show
 		frame.setVisible(true);
 	
 	}
