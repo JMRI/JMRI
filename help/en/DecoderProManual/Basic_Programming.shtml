@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: Basic_Programming.shtml,v 1.1 2008-01-20 02:29:42 jacobsen Exp $ -->
+<!-- $Id: Basic_Programming.shtml,v 1.2 2008-01-20 02:36:00 jacobsen Exp $ -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -21,8 +21,8 @@
 <h1>Using Decoder Pro</h1>
 
 <div align=right>
-<p><a href="Getting_Started.html#Getting Started">Back to Previous Section</a>
-<p><a href="index.html#Basic Programmer">Back to Index</a>
+<p><a href="Getting_Started.shtml#Getting Started">Back to Previous Section</a>
+<p><a href="index.shtml#Basic Programmer">Back to Index</a>
 </div>
 
 
@@ -31,7 +31,7 @@
 <h2><a NAME="Setting Up"></a>Setting Up the Programmer</h2>
 <p>
 We shall assume you've been through the previous section
-(<a href="Getting_Started.html#Top">Getting Started</a>) , have your computer hooked up to your command station/booster
+(<a href="Getting_Started.shtml#Top">Getting Started</a>) , have your computer hooked up to your command station/booster
 with any necessary interface device, and are now ready to actually program
 a decoder.
 
@@ -50,7 +50,7 @@ Since it's highly unlikely that you'd have gotten this far if you were a quitter
 <h1><img SRC="Pix/Set_Up.png" ALT="Set Up Screen" BORDER=5 height=565 width=420></h1>
 
 <div align=right>
-<p><a href="index.html#Basic Programmer">Back to Index</a>
+<p><a href="index.shtml#Basic Programmer">Back to Index</a>
 </div>
 <hr>
 <br>
@@ -89,7 +89,7 @@ Once you've selected a decoder, or DecoderPro has done it for you, the
 to the next step.
 
 <div align=right>
-<p><a href="index.html#Basic Programmer">Back to Index</a>
+<p><a href="index.shtml#Basic Programmer">Back to Index</a>
 </div>
 <hr>
 <br>
@@ -151,7 +151,7 @@ Click on the appropriate radio button to change programming modes. Simple, isn't
 </div>
 
 <div align=right>
-<p><a href="index.html#Basic Programmer">Back to Index</a>
+<p><a href="index.shtml#Basic Programmer">Back to Index</a>
 </div>
 <hr>
 <br>
@@ -199,12 +199,12 @@ to the computer, you will be prompted to do so when you close the programming
 pane. You may elect not to do so.
 <a NAME="Do More"></a>
 <p>
-Now, let's explore the <a href="Comp_Setup_Roster.html">Comprehensive
+Now, let's explore the <a href="Comp_Setup_Roster.shtml">Comprehensive
 Programmer</a>!
 
 <div align=right>
-<p><a href="Comp_Setup_Roster.html">On to next section</a>
-<p><a href="index.html#Basic Programmer">Back to Index</a>
+<p><a href="Comp_Setup_Roster.shtml">On to next section</a>
+<p><a href="index.shtml#Basic Programmer">Back to Index</a>
 </div>
 
 <hr>

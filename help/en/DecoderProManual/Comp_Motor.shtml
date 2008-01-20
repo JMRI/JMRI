@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: Comp_Motor.shtml,v 1.1 2008-01-20 02:29:43 jacobsen Exp $ -->
+<!-- $Id: Comp_Motor.shtml,v 1.2 2008-01-20 02:36:00 jacobsen Exp $ -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -23,8 +23,8 @@
 <h1>Motor Control Pane</h1>
 
 <div align=right>
-<p><a href="Comp_Basic.html">Back to Previous Section</a>
-<p><a href="index.html#Advanced Programmer">Back to Index</a>
+<p><a href="Comp_Basic.shtml">Back to Previous Section</a>
+<p><a href="index.shtml#Advanced Programmer">Back to Index</a>
 </div>
 
 <hr>
@@ -76,8 +76,8 @@ Finally, set the <b>Mid Volts</b> value about half-way between <b>Start Volts</b
 
 <hr>
 <div align=right>
-<p><a href="Comp_Speed.html">On to Next Section</a>
-<p><a href="index.html#Advanced Programmer">Back to Index</a>
+<p><a href="Comp_Speed.shtml">On to Next Section</a>
+<p><a href="index.shtml#Advanced Programmer">Back to Index</a>
 </div>
 
 This site is hosted by

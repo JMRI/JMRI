@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: Comp_LightFX.shtml,v 1.1 2008-01-20 02:29:43 jacobsen Exp $ -->
+<!-- $Id: Comp_LightFX.shtml,v 1.2 2008-01-20 02:36:00 jacobsen Exp $ -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -24,8 +24,8 @@
 <h1>Lighting and FX Functions Pane</h1>
 
 <div align=right>
-<p><a href="Comp_FMap.html">Back to Previous Section</a>
-<p><a href="index.html#Advanced Programmer">Back to Index</a>
+<p><a href="Comp_FMap.shtml">Back to Previous Section</a>
+<p><a href="index.shtml#Advanced Programmer">Back to Index</a>
 </div>
 
 <hr>
@@ -76,8 +76,8 @@ satisfying of all the capabilities of the decoders!
 <p>
 <hr>
 <div align=right>
-<p><a href="Comp_Consist.html">On to Next Section</a>
-<p><a href="index.html#Advanced Programmer">Back to Index</a>
+<p><a href="Comp_Consist.shtml">On to Next Section</a>
+<p><a href="index.shtml#Advanced Programmer">Back to Index</a>
 </div>
 
 This site is hosted by

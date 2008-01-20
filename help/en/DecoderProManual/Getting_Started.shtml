@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: Getting_Started.shtml,v 1.1 2008-01-20 02:29:43 jacobsen Exp $ -->
+<!-- $Id: Getting_Started.shtml,v 1.2 2008-01-20 02:36:00 jacobsen Exp $ -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -21,7 +21,7 @@
 <h1>Getting Started with DecoderPro</h1>
 
 <div align=right>
-<p><a href="index.html#Getting Started">Back to Index</a>
+<p><a href="index.shtml#Getting Started">Back to Index</a>
 </div>
 
 <hr>
@@ -53,7 +53,7 @@ a programming set for a decoder myself.
 <p>
 
 <div align=right>
-<p><a href="index.html#Getting Started">Back to Index</a>
+<p><a href="index.shtml#Getting Started">Back to Index</a>
 </div>
 
 <hr>
@@ -74,7 +74,7 @@ Depending on the specifics of your system and computer, some kind of hardware
 interface may be required.
 
 <div align=right>
-<p><a href="index.html#Getting Started">Back to Index</a>
+<p><a href="index.shtml#Getting Started">Back to Index</a>
 </div>
 
 <hr>
@@ -92,7 +92,7 @@ from Digitrax is a stand-alone programmer and is <span class="ACCENT">not</span>
 program.
 
 <div align=right>
-<p><a href="index.html#Getting Started">Back to Index</a>
+<p><a href="index.shtml#Getting Started">Back to Index</a>
 </div>
 
 <hr>
@@ -117,7 +117,7 @@ screen will also come up automatically to allow you to set up the system
 for your particular configuration.
 
 <div align=right>
-<p><a href="index.html#Getting Started">Back to Index</a>
+<p><a href="index.shtml#Getting Started">Back to Index</a>
 </div>
 
 <hr>
@@ -182,8 +182,8 @@ to save typing when entering your locomotive roster
 <p>
 <hr>
 <div align=right>
-<p><a href="Basic_Programming.html">On to the Basic Programmer</a>
-<p><a href="index.html#Getting Started">Back to Index</a>
+<p><a href="Basic_Programming.shtml">On to the Basic Programmer</a>
+<p><a href="index.shtml#Getting Started">Back to Index</a>
 </div>
 
 <br>

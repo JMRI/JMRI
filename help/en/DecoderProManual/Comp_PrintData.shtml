@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: Comp_PrintData.shtml,v 1.1 2008-01-20 02:29:43 jacobsen Exp $ -->
+<!-- $Id: Comp_PrintData.shtml,v 1.2 2008-01-20 02:36:00 jacobsen Exp $ -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -23,8 +23,8 @@
 <h1>Printing Decoder Data</h1>
 
 <div align=right>
-<p><a href="Comp_Consist.html">Back to Previous Section</a>
-<p><a href="index.html#Advanced Programmer">Back to Index</a>
+<p><a href="Comp_Consist.shtml">Back to Previous Section</a>
+<p><a href="index.shtml#Advanced Programmer">Back to Index</a>
 </div>
 
 <hr>
@@ -40,9 +40,9 @@ print only the numeric list of CVs and their values.
 <p>
 The three images below are samples of the "<b>All</b>" printout from the SD40-2 I have been using as an example throughout this manual. Click on the page to see a larger image in a new window.
 <a NAME="Print"></a>
-<h1><a href="Comp_PrintData_a.html" target="_blank"><img SRC="Pix/Comp_09a_PrintData.png" ALT="Comprehensive Programmer - Advanced Features"  BORDER=5 height=247 width=191 hspace="20"></a>
-<a href="Comp_PrintData_b.html" target="_blank"><img SRC="Pix/Comp_09b_PrintData.png" ALT="Comprehensive Programmer - Advanced Features"  BORDER=5 height=247 width=191 hspace="20"></a>
-<a href="Comp_PrintData_c.html" target="_blank"><img SRC="Pix/Comp_09c_PrintData.png" ALT="Comprehensive Programmer - Advanced Features"  BORDER=5 height=247 width=191 hspace="20"></a></h1>
+<h1><a href="Comp_PrintData_a.shtml" target="_blank"><img SRC="Pix/Comp_09a_PrintData.png" ALT="Comprehensive Programmer - Advanced Features"  BORDER=5 height=247 width=191 hspace="20"></a>
+<a href="Comp_PrintData_b.shtml" target="_blank"><img SRC="Pix/Comp_09b_PrintData.png" ALT="Comprehensive Programmer - Advanced Features"  BORDER=5 height=247 width=191 hspace="20"></a>
+<a href="Comp_PrintData_c.shtml" target="_blank"><img SRC="Pix/Comp_09c_PrintData.png" ALT="Comprehensive Programmer - Advanced Features"  BORDER=5 height=247 width=191 hspace="20"></a></h1>
 
 <p>
 OK, That's it! You now know how to use DecoderPro to program your decoders. Now let's run trains!
@@ -50,7 +50,7 @@ OK, That's it! You now know how to use DecoderPro to program your decoders. Now 
 
 <hr>
 <div align=right>
-<p><a href="index.html#Advanced Programmer">Back to Index</a>
+<p><a href="index.shtml#Advanced Programmer">Back to Index</a>
 </div>
 
 

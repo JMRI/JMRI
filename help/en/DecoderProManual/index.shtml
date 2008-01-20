@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: index.shtml,v 1.1 2008-01-20 02:29:43 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.2 2008-01-20 02:36:00 jacobsen Exp $ -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -62,72 +62,72 @@ Download a .PDF file<br>of this entire manual.</a>
 </div>
 
 <h4>
-<a NAME="Getting Started"></a><a href="Getting_Started.html#Top">Getting
+<a NAME="Getting Started"></a><a href="Getting_Started.shtml#Top">Getting
 started</a></h4>
 
 <ol>
 <li>
-<a href="Getting_Started.html#What is DCC">What is DCC?</a></li>
+<a href="Getting_Started.shtml#What is DCC">What is DCC?</a></li>
 
 <li>
-<a href="Getting_Started.html#DCC systems">What DCC systems will DecoderPro
+<a href="Getting_Started.shtml#DCC systems">What DCC systems will DecoderPro
 work with?</a></li>
 
 <li>
-<a href="Getting_Started.html#DCC Hardware">What hardware do I need?</a></li>
+<a href="Getting_Started.shtml#DCC Hardware">What hardware do I need?</a></li>
 
 <li>
-<a href="Getting_Started.html#Start">How do I start the program?</a></li>
+<a href="Getting_Started.shtml#Start">How do I start the program?</a></li>
 
 <li>
-<a href="Getting_Started.html#Preferences">How do I set up my preferences?</a></li>
+<a href="Getting_Started.shtml#Preferences">How do I set up my preferences?</a></li>
 </ol>
 
 <h4>
-<a NAME="Setting up"></a><a href="Basic_Programming.html#Top">Using DecoderPro</a></h4>
+<a NAME="Setting up"></a><a href="Basic_Programming.shtml#Top">Using DecoderPro</a></h4>
 
 <ol>
 <li>
-<a href="Basic_Programming.html#Setting Up">How do I set up to program
+<a href="Basic_Programming.shtml#Setting Up">How do I set up to program
 a decoder?</a></li>
 
 <li>
-<a href="Basic_Programming.html#Select Decoder">How do I choose the decoder
+<a href="Basic_Programming.shtml#Select Decoder">How do I choose the decoder
 type?</a></li>
 
 <li>
-<a href="Basic_Programming.html#Programming Modes">What are the Programming
+<a href="Basic_Programming.shtml#Programming Modes">What are the Programming
 Modes?</a></li>
 </ol>
 
 <h4>
 <a NAME="Basic Programmer"></a>
-<a href="Basic_Programming.html#Basic Programmer">The Basic Programmer</a></h4>
+<a href="Basic_Programming.shtml#Basic Programmer">The Basic Programmer</a></h4>
 
 <ol>
 <li>
-<a href="Basic_Programming.html#Roster">Entering locomotives in
+<a href="Basic_Programming.shtml#Roster">Entering locomotives in
 the "Roster"</a></li>
 
 <li>
-<a href="Basic_Programming.html#Basic 2">The basic programmer</a></li>
+<a href="Basic_Programming.shtml#Basic 2">The basic programmer</a></li>
 
 <li>
-<a href="Basic_Programming.html#Read Data">Reading the data from the decoder</a></li>
+<a href="Basic_Programming.shtml#Read Data">Reading the data from the decoder</a></li>
 
 <li>
-<a href="Basic_Programming.html#Enter/Edit data">Entering and editing new
+<a href="Basic_Programming.shtml#Enter/Edit data">Entering and editing new
 data</a></li>
 
 <li>
-<a href="Basic_Programming.html#Write Data">Writing the new data to the
+<a href="Basic_Programming.shtml#Write Data">Writing the new data to the
 decoder</a></li>
 
 <li>
-<a href="Basic_Programming.html#Save Data">Saving the new data to a file</a></li>
+<a href="Basic_Programming.shtml#Save Data">Saving the new data to a file</a></li>
 
 <li>
-<a href="Basic_Programming.html#Do More">What if I need to do more?</a></li>
+<a href="Basic_Programming.shtml#Do More">What if I need to do more?</a></li>
 </ol>
 
 <h4>
@@ -135,43 +135,43 @@ decoder</a></li>
 
 <ol>
 <li>
-<a href="Comp_Setup_Roster.html">The Set-up and Roster Panes</a></li>
+<a href="Comp_Setup_Roster.shtml">The Set-up and Roster Panes</a></li>
 
 <li>
-<a href="Comp_Basic.html">The Basic Pane</a></li>
+<a href="Comp_Basic.shtml">The Basic Pane</a></li>
 
 <li>
-<a href="Comp_Motor.html">The Motor Control Pane</a></li>
+<a href="Comp_Motor.shtml">The Motor Control Pane</a></li>
 
 <li>
-<a href="Comp_Speed.html">The Speed Control Pane</a></li>
+<a href="Comp_Speed.shtml">The Speed Control Pane</a></li>
 
 <li>
-<a href="Comp_FMap.html">The Function Mapping Pane</a></li>
+<a href="Comp_FMap.shtml">The Function Mapping Pane</a></li>
 
 <li>
-<a href="Comp_LightFX.html">The Light Pane</a></li>
+<a href="Comp_LightFX.shtml">The Light Pane</a></li>
 
 <li>
-<a href="Comp_Consist.html">The Consisting Pane</a></li>
+<a href="Comp_Consist.shtml">The Consisting Pane</a></li>
 
 <li>
-<a href="Comp_Advanced.html">The Advanced Functions Pane</a></li>
+<a href="Comp_Advanced.shtml">The Advanced Functions Pane</a></li>
 
 <li>
-<a href="Comp_SoundFX.html">The Sound Pane</a></li>
+<a href="Comp_SoundFX.shtml">The Sound Pane</a></li>
 
 <li>
-<a href="Comp_SoundLevels.html">The Sound Levels Pane</a></li>
+<a href="Comp_SoundLevels.shtml">The Sound Levels Pane</a></li>
 
 <li>
-<a href="Comp_GlobalCVs.html">The Global CV Pane</a></li>
+<a href="Comp_GlobalCVs.shtml">The Global CV Pane</a></li>
 
 <li>
-<a href="Comp_ManfSpecific.html">The Manufacturer-Specific Pane</a></li>
+<a href="Comp_ManfSpecific.shtml">The Manufacturer-Specific Pane</a></li>
 
 <li>
-<a href="Comp_PrintData.html">Printing the Decoder Data</a></li>
+<a href="Comp_PrintData.shtml">Printing the Decoder Data</a></li>
 </ol>
 
 <p>
