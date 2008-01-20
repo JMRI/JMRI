@@ -30,79 +30,79 @@
 <li>DecoderPro Manual<ul>
       
 <li>
-<a href="DecoderProManual/Getting_Started.html">Getting Started</a>
+<a href="DecoderProManual/Getting_Started.shtml">Getting Started</a>
 <ul></ul>
 </li>
       
 <li>
-<a href="DecoderProManual/Basic_Programming.html">Basic Decoder Programming</a>
+<a href="DecoderProManual/Basic_Programming.shtml">Basic Decoder Programming</a>
 <ul></ul>
 </li>
       
 <li>Comprehensive Panel<ul>
          
 <li>
-<a href="DecoderProManual/Comp_Setup_Roster.html">Setup and Roster Panes</a>
+<a href="DecoderProManual/Comp_Setup_Roster.shtml">Setup and Roster Panes</a>
 <ul></ul>
 </li>
          
 <li>
-<a href="DecoderProManual/Comp_Basic.html">Basic Pane</a>
+<a href="DecoderProManual/Comp_Basic.shtml">Basic Pane</a>
 <ul></ul>
 </li>
          
 <li>
-<a href="DecoderProManual/Comp_Speed.html">Speed Control Pane</a>
+<a href="DecoderProManual/Comp_Speed.shtml">Speed Control Pane</a>
 <ul></ul>
 </li>
          
 <li>
-<a href="DecoderProManual/Comp_Motor.html">Motor Control Pane</a>
+<a href="DecoderProManual/Comp_Motor.shtml">Motor Control Pane</a>
 <ul></ul>
 </li>
          
 <li>
-<a href="DecoderProManual/Comp_FMap.html">Function Mapping Pane</a>
+<a href="DecoderProManual/Comp_FMap.shtml">Function Mapping Pane</a>
 <ul></ul>
 </li>
          
 <li>
-<a href="DecoderProManual/Comp_LightFX.html">Lighting Functions and FX Pane</a>
+<a href="DecoderProManual/Comp_LightFX.shtml">Lighting Functions and FX Pane</a>
 <ul></ul>
 </li>
          
 <li>
-<a href="DecoderProManual/Comp_ManfSpecific.html">Manufacturer Specific Data Pane</a>
+<a href="DecoderProManual/Comp_ManfSpecific.shtml">Manufacturer Specific Data Pane</a>
 <ul></ul>
 </li>
          
 <li>
-<a href="DecoderProManual/Comp_SoundLevels.html">Sound Levels Pane</a>
+<a href="DecoderProManual/Comp_SoundLevels.shtml">Sound Levels Pane</a>
 <ul></ul>
 </li>
          
 <li>
-<a href="DecoderProManual/Comp_SoundFX.html">Sound FX Pane</a>
+<a href="DecoderProManual/Comp_SoundFX.shtml">Sound FX Pane</a>
 <ul></ul>
 </li>
          
 <li>
-<a href="DecoderProManual/Comp_Advanced.html">Advanced Features Pane</a>
+<a href="DecoderProManual/Comp_Advanced.shtml">Advanced Features Pane</a>
 <ul></ul>
 </li>
          
 <li>
-<a href="DecoderProManual/Comp_PrintData.html">Printing Decoder Data</a>
+<a href="DecoderProManual/Comp_PrintData.shtml">Printing Decoder Data</a>
 <ul></ul>
 </li>
          
 <li>
-<a href="DecoderProManual/Comp_Consist.html">Consisting Functions Pane</a>
+<a href="DecoderProManual/Comp_Consist.shtml">Consisting Functions Pane</a>
 <ul></ul>
 </li>
          
 <li>
-<a href="DecoderProManual/Comp_GlobalCVs.html">Global CV Listing Pane</a>
+<a href="DecoderProManual/Comp_GlobalCVs.shtml">Global CV Listing Pane</a>
 <ul></ul>
 </li>
       
@@ -110,7 +110,7 @@
 </li>
       
 <li>
-<a href="DecoderProManual/index.html">More Information</a>
+<a href="DecoderProManual/index.shtml">More Information</a>
 <ul></ul>
 </li>
    
@@ -118,7 +118,7 @@
 </li>
    
 <li>
-<a href="html/tools/index.html">Tools</a>
+<a href="html/tools/index.shtml">Tools</a>
 <ul>
       
 <li>
