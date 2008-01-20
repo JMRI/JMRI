@@ -1,6 +1,6 @@
 <!-- an ANT build.xml file for JMRI XSLT -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2005 -->
-<!-- Revision $Revision: 1.15 $ -->
+<!-- Revision $Revision: 1.16 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -123,13 +123,16 @@
     		out="pages/decoderpower.csv"
     	>
 	</style>
-<!--    <style  basedir="${target}"   -->
-<!--    		destdir="${target}"    -->
-<!--    		style="CSVsummary.xsl"    -->
-<!--    		in="pages/decoderIndex.xml"   -->
-<!--    		out="pages/cvsummary.csv"    -->
-<!--    	>       -->
-<!--	</style>    -->
+  <!-- the following no longer works because it runs out of memeory making the page -->
+  <!-- which is supposed to contain every CV for every decoder.  Maybe switch to -->
+  <!-- a more column oriented form, showing who uses each CV on one page? -->
+<!--    <style  basedir="${target}" -->
+<!--    		destdir="${target}" -->
+<!--    		style="CSVsummary.xsl" -->
+<!--    		in="pages/decoderIndex.xml" -->
+<!--    		out="pages/cvsummary.csv" -->
+<!--    	> -->
+<!--	</style> -->
   </target>
   
   <target name="index" depends="init, copyDTD, copyXML" 
@@ -156,8 +159,12 @@
 	</style>
   </target>
   
+  <!-- the following no longer works because it runs out of memeory making the page -->
+  <!-- which is supposed to contain every CV for every decoder.  Maybe switch to -->
+  <!-- a more column oriented form, showing who uses each CV on one page? -->
   <target name="cvsummary" depends="init, copyDTD, copyXML" 
   			description="create HTML page listing CVs available on all decoders">
+    <echo message="setenv ANT_OPTS -Xmx1000M"/>
     <style  basedir="${target}"
     		destdir="${target}"
     		style="CVsummary.xsl"
@@ -226,7 +233,7 @@
   </target>
   
 
-  <target name="xslt" depends="init, models, index, selection, csv, id"
+  <target name="xslt" depends="init, models, index, selection, csv, id, properties"
   		description="run the whole sequence of processing" />
   		
   <target name="upload" description="Upload existing results to web site" >
@@ -243,5 +250,3 @@
   </target>
 
 </project>
-
-
