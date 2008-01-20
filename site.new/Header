@@ -12,7 +12,7 @@
 	   <li><a href="/hardware/"  title="What hardware does JMRI support">Hardware</a></li>
 	   <li><a href="/doc/Manual/"   title="Trouble-shooting, and FAQs">Manual</a></li>
 	   <li><a href="/doc/Technical/index.shtml" title="Developing and extending JMRI">Developers</a></li>
-	   <li><A href="/community/" title="Who is JMRI">Acknowledgements</a></li>
+	   <li><A href="/help/en/Acknowledgements.shtml" title="Who is JMRI">Acknowledgements</a></li>
 	</ul>
 
 	<div id="searchform"> <!--  Search Form -->
