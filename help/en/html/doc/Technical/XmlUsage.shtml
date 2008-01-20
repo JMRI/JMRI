@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XmlUsage.shtml,v 1.2 2008-01-13 03:35:49 jacobsen Exp $ -->
+<!-- $Id: XmlUsage.shtml,v 1.3 2008-01-20 20:54:33 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -167,7 +167,35 @@ a copy of the stylesheet in the same directory as the
 file you want to display, and then edit the xml-stylesheet line to point
 to that directly.
 
+<h2>Standards and Future Work</h2>
 
+Once JMRI has moved forward to Java 1.4, we will 
+consider moving from DTDs (which have issues of name reuse, localization, etc)
+to schema for defining our formats.
+
+<p>
+The 
+<a href="http://www.oasis-open.org/">OASIS collaboration</a>
+defines a number of schema and schema elements that have become 
+well-known standards. Were possible, we should use those 
+<a href="http://www.oasis-open.org/specs/index.php">standard elements</a>
+to improve inter-operability. Perhaps the first ones of interest are:
+<ul>
+<li><a href="http://docbook.org/">DockBook</a> defines elements for several concepts we use:
+    <ul>
+    <li>author
+    <li>address
+    </ul>
+<li><a href="http://www.oasis-open.org/committees/ubl/faq.php">UBL</a>, 
+though aimed at business 
+transactions, defines elements to represent parties (companies, people), 
+devices, model numbers, etc.
+<li><a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=office">OpenDocument</a> (OODF) defines a set of elements and structures for 
+computations as part of its spreadsheet module.
+</ul>
+Learning to use these will require some work, as 
+we can't assume that computers using JMRI have internet access,
+so can't just reference the entire schema as remote entities.
 
 <!--#include virtual="/Footer" -->
 
