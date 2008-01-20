@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.2.shtml,v 1.1 2008-01-14 16:28:57 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.2.shtml,v 1.2 2008-01-20 20:50:52 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -116,6 +116,12 @@ More updates to Grapevine and SECSI access; this version is highly recommended f
 
 <p>
 Many additions to the help files, which have unfortunately made the download even larger.
+
+<p>
+Mark Waters provided decoder definitions for the various versions of the Zimo MX620 decoder.
+
+<p>
+Fixed bug that would misposition the license and context windows on small screens.
 
 
 <hr class="hide">
