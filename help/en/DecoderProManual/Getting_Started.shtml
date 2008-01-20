@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: Getting_Started.shtml,v 1.5 2008-01-20 03:21:31 jacobsen Exp $ -->
+<!-- $Id: Getting_Started.shtml,v 1.6 2008-01-20 05:02:22 jacobsen Exp $ -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -67,11 +67,15 @@ DecoderPro will work with the following DCC systems:
 
 <ul>
 <li>Easy DCC</li>
-<li>Lenz/Atlas</li>
-<li>Loconet (Digitrax and Intellibox)</li>
+<li>Lenz/Atlas/Roco</li>
+<li>Loconet (Digitrax/Intellibox/Fleischmann)</li>
 <li>NCE/Wangrow</li>
+<li>SPROG</li>
+<li>Zimo</li>
 </ul>
 
+For more information on compatibility, please see the
+<a href="../html/hardware/index.shtml">JMRI hardware pages</a>.
 <p>
 Depending on the specifics of your system and computer, some kind of hardware
 interface may be required.
@@ -87,7 +91,8 @@ and a programming track set up according to the manufacturer's instructions.
 For some systems, you will also need an additional hardware interface to
 send the commands from your computer to the command station, and from there
 on to the decoder in the locomotive. For a Digitrax system, for example,
-you will need either the <b>MS100 interface</b> or a <b>LocoBuffer</b>. The <b>PR1</b> device
+you will need either the <b>MS100 interface</b>, <b>LocoBuffer</b> or <b>PR2</b>. 
+The <b>PR1</b> device
 from Digitrax is a stand-alone programmer and is <span class="ACCENT">not</span> usable with this software.
 <p>You will also need, of course, some correctly installed decoders to
 program.

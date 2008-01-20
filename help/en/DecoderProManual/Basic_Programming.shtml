@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: Basic_Programming.shtml,v 1.5 2008-01-20 03:21:31 jacobsen Exp $ -->
+<!-- $Id: Basic_Programming.shtml,v 1.6 2008-01-20 05:02:22 jacobsen Exp $ -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -45,8 +45,9 @@ On opening the software, you'll see the splash page again, and be given
 three options:
 
 <ol>
-     <li><b>Use programming track</b> - Program the locomotive on the dedicated programming track. Not all command stations support a dedicated programming track, and some will only "broadcast" programming commands, which can mean every locomotive on the layout gets the same programming! If in doubt, check your documentation.
-     <li><b>Program on main track</b> - Also known as "<b>service mode</b>" or "<b>ops mode</b>" programming, this lets you program a specifc decoder on the layout, even while it is operating. However, because it addresses a specific decoder, you cannot  change a decoder's address using this method!
+     <li><b>Service Mode (Programming Track)</b> - Program the locomotive on the dedicated programming track. Not all command stations support a dedicated programming track, and some will only "broadcast" programming commands, which can mean every locomotive on the layout gets the same programming! If in doubt, check your documentation.
+     <li><b>Operations Mode (Main Track)</b> - Also known as 
+     "programming on the main", "POM", or "ops mode" programming, this lets you program a specific decoder on the layout, even while it is operating. However, because it addresses a specific decoder, you cannot  change a decoder's address using this method!
      <li><b>Quit</b> - Rather obviously, exit the program.
 </ol>
 <p>
