@@ -28,7 +28,7 @@ import org.jdom.output.XMLOutputter;
  * We implement this using our own EntityResolved, the jmri.util.JmriLocalEntityResolver class
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.31 $
+ * @version	$Revision: 1.32 $
  */
 public abstract class XmlFile {
 
@@ -278,20 +278,33 @@ public abstract class XmlFile {
      *               pathname for either the xml or preferences directory.
      */
     public void makeBackupFile(String name) {
-        File file = findFile(name);
-        if (file!=null) {
-            file.renameTo(new File(backupFileName(file.getAbsolutePath())));
-        }
-        else log.info("No "+name+" file to backup");
-    }
+		File file = findFile(name);
+		String backupName = backupFileName(file.getAbsolutePath());
+		File backupFile = findFile(backupName);
+		if (file != null) {
+			if (backupFile != null) {
+				if (backupFile.delete())
+					log.debug("deleted backup file " + backupName);
+			}
+			if (file.renameTo(new File(backupName)))
+				log.debug("created new backup file " + backupName);
+			else
+				log.error("could not create backup file " + backupName);
+		} else
+			log.info("No " + name + " file to backup");
+	}
 
     /**
-     * Return the name of a new, unique backup file. This is here so it can
-     * be overridden during tests. File to be backed-up must be within the
-     * preferences directory tree.
-     * @param name Filename without preference path information, e.g. "decoders/Mine.xml".
-     * @return Complete filename, including path information into preferences directory
-     */
+	 * Return the name of a new, unique backup file. This is here so it can be
+	 * overridden during tests. File to be backed-up must be within the
+	 * preferences directory tree.
+	 * 
+	 * @param name
+	 *            Filename without preference path information, e.g.
+	 *            "decoders/Mine.xml".
+	 * @return Complete filename, including path information into preferences
+	 *         directory
+	 */
     public String backupFileName(String name) {
         String f = name+".bak";
         if (log.isDebugEnabled()) log.debug("backup file name is "+f);
@@ -341,7 +354,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.31 2007-12-25 22:37:04 jacobsen Exp $";
+                        +" $Id: XmlFile.java,v 1.32 2008-01-21 18:48:10 dan_boudreau Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }
