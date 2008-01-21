@@ -41,7 +41,7 @@ import org.jdom.ProcessingInstruction;
  * sort is done manually each time an entry is added.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001;  Dennis Miller Copyright 2004
- * @version	$Revision: 1.32 $
+ * @version	$Revision: 1.33 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -460,7 +460,7 @@ public class Roster extends XmlFile {
         resetInstance();
     }
 
-    static String getFileLocation() { return fileLocation; }
+    public static String getFileLocation() { return fileLocation; }
 
     /**
      * Absolute path to roster file location.
