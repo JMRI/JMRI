@@ -1,0 +1,67 @@
+<!-- Defines XML documenting a consist roster -->
+<!-- $Id: consist-roster-config.dtd,v 1.1 2008-01-21 22:55:22 dan_boudreau Exp $ -->
+
+<!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!ELEMENT consist-roster-config (roster*)>
+
+<!ELEMENT roster (consist*)>
+
+<!ELEMENT consist (eng1*)>
+<!ELEMENT consist (eng2*)>
+<!ELEMENT consist (eng3*)>
+<!ELEMENT consist (eng4*)>
+<!ELEMENT consist (eng5*)>
+<!ELEMENT consist (eng6*)>
+
+
+<!-- Key used in lists, etc - User identification for this loco -->
+<!ATTLIST consist id	CDATA #REQUIRED>          
+
+<!ATTLIST consist groupName  CDATA #IMPLIED>        
+
+<!-- The identification attributes must be kept the same as the ones in the consist DTD -->
+<!-- The copy in the consist file is used if we have to import an existing file into a roster -->
+
+<!-- Manual identification -->
+<!ATTLIST consist id			CDATA #REQUIRED>          
+<!ATTLIST consist consistNumber	CDATA #IMPLIED>          
+<!ATTLIST consist roadNumber	CDATA #IMPLIED> 
+<!ATTLIST consist roadName		CDATA #IMPLIED>                   
+<!ATTLIST consist comment		CDATA #IMPLIED>
+
+<!ATTLIST eng1 dccLocoAddress	CDATA #IMPLIED>          
+<!ATTLIST eng1 longAddress		( yes | no) "yes">          
+<!ATTLIST eng1 locoDir			CDATA #IMPLIED>      
+
+<!ATTLIST eng2 dccLocoAddress	CDATA #IMPLIED>          
+<!ATTLIST eng2 longAddress		( yes | no) "yes">          
+<!ATTLIST eng2 locoDir			CDATA #IMPLIED>       
+
+<!ATTLIST eng3 dccLocoAddress	CDATA #IMPLIED>          
+<!ATTLIST eng3 longAddress		( yes | no) "yes">          
+<!ATTLIST eng3 locoDir			CDATA #IMPLIED>       
+
+<!ATTLIST eng4 dccLocoAddress	CDATA #IMPLIED>          
+<!ATTLIST eng4 longAddress		( yes | no) "yes">          
+<!ATTLIST eng4 locoDir			CDATA #IMPLIED>       
+
+<!ATTLIST eng5 dccLocoAddress	CDATA #IMPLIED>          
+<!ATTLIST eng5 longAddress		( yes | no) "yes">          
+<!ATTLIST eng5 locoDir			CDATA #IMPLIED>       
+
+<!ATTLIST eng6 dccLocoAddress	CDATA #IMPLIED>          
+<!ATTLIST eng6 longAddress		( yes | no) "yes">          
+<!ATTLIST eng6 locoDir			CDATA #IMPLIED>          
+
+
