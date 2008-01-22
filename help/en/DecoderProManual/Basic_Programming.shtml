@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: Basic_Programming.shtml,v 1.6 2008-01-20 05:02:22 jacobsen Exp $ -->
+<!-- $Id: Basic_Programming.shtml,v 1.7 2008-01-22 02:19:04 jacobsen Exp $ -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -51,10 +51,27 @@ three options:
      <li><b>Quit</b> - Rather obviously, exit the program.
 </ol>
 <p>
-Since it's highly unlikely that you'd have gotten this far if you were a quitter, click on either of the programming buttons. You'll see this screen:
+Since it's highly unlikely that you'd have gotten this far if you were a quitter, 
+click on the "Service Mode" programming button. You'll see this screen:
 
 <h1><img SRC="Pix/Set_Up.png" ALT="Set Up Screen" BORDER=5 height=565 width=420></h1>
 
+There are several parts to this window.
+<ul>
+<li>The first lets you set the programming mode that will be 
+used by your DCC system to talk to decoders.  We'll describe
+this later, and you can leave it alone for now.
+<li>The next lets you select the settings for an existing locomotive
+on your layout.  Since you're just starting to use DecoderPro,
+you can also leave this alone for now.
+<li>Below that is the large, light-colored box where 
+you can select the particular type of decoder in a locomotive.
+We'll discuss how that works next.
+<li>Below that is a place where you select a particular 
+format for the programming tool you'll soon be using, an
+"Open" button to proceed, and a space for status messages.
+We'll cover all those later in this walk-through.
+</ul>
 <div align=right>
 <p><a href="index.shtml#Basic Programmer">Back to Index</a>
 </div>
