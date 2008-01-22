@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: Basic_Programming.shtml,v 1.7 2008-01-22 02:19:04 jacobsen Exp $ -->
+<!-- $Id: Basic_Programming.shtml,v 1.8 2008-01-22 02:30:08 jacobsen Exp $ -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -59,8 +59,9 @@ click on the "Service Mode" programming button. You'll see this screen:
 There are several parts to this window.
 <ul>
 <li>The first lets you set the programming mode that will be 
-used by your DCC system to talk to decoders.  We'll describe
-this later, and you can leave it alone for now.
+used by your DCC system to talk to decoders.  We'll 
+<a href="#progmode">describe this later</a>, 
+and you can leave it alone for now.
 <li>The next lets you select the settings for an existing locomotive
 on your layout.  Since you're just starting to use DecoderPro,
 you can also leave this alone for now.
@@ -118,18 +119,21 @@ to the next step.
 
 <h2><a NAME="Roster"></a>The Roster Entry Screen</h2>
 <p>
-A <b>roster</b> is a simply a database of all locomotives that your installation
-of DecoderPro has programmed. It includes the information seen in the screen
+The DecoderPro <b>roster</b> is a simply a database of all locomotives that your installation
+of DecoderPro has programmed. DecoderPro stores the configuration information
+for each of your locomotives in the roster along with the additional
+information seen in the screen
 below:
 
 <h1><img SRC="Pix/Basic_Roster.png" ALT="Basic Programmer Roster Tab" BORDER=5 height=468 width=655></h1>
 
 <p>
 Most of these fields are self-explanatory. However, note that the first
-field (<b>ID</b>) becomes the file name for the locomotive. I like to use
+field (<b>ID</b>) becomes the file name for the locomotive. 
+Some people like to use
 the locomotive number, two spaces, and then the locomotive type for this
-field. In the event I want to look something up later or restore some data
-that got corrupted it makes things easier. The "<b>Comment</b>" field is
+field. In the event you want to look something up later or restore some data
+that got corrupted this makes things easier. The "<b>Comment</b>" field is
 a good place to put the date you purchased the locomotive, price, or any
 other information you might feel is important to record.
 <p>
@@ -142,16 +146,19 @@ computer</span> to those that would be in the decoder as shipped from
 the factory. It does <span class="ACCENT">not</span> write
 those values to the decoder! To do so, you would have to press either the
 "<b>Write Sheet</b>" or "<b>Write All</b>" buttons.
-<p>
-At the bottom of the window there are several programming mode options:
-<b>Paged mode</b>, <b>Direct bit</b>, <b>Direct byte</b>,
-<b>Register mode</b>, and <b>Address mode</b>. For most newer decoders, stay with"<b>Paged mode</b>" or whichever <b>Direct</b> mode your
-Command Station supports. Your decoder documentation <span class="ACCENT">should</span> let you know if programming in some other mode is necessary... but if you are having problems, experiment.
 
 <div class="BOXIT">
-<h3>
+<a id="progmode"><h3>
 <a NAME="Programming Modes"></a>Some brief comments on Programming Modes
-</h3>
+</h3></a>
+At the bottom of the window there are several programming mode options:
+<b>Paged mode</b>, <b>Direct bit</b>, <b>Direct byte</b>,
+<b>Register mode</b>, and <b>Address mode</b>. 
+For most newer decoders, stay with"<b>Paged mode</b>" or whichever <b>Direct</b> mode your
+Command Station supports (modes your command station doesn't support will be disabled
+and "greyed out" visually). 
+Your decoder documentation <span class="ACCENT">should</span> let you know if programming 
+in some other mode is necessary... but if you are having problems, experiment.
 <p>
 <b>Address Mode</b> is an outdated programming method that is included here for the sake of full compliance with the NMRA DCC standard. <b>Register Mode</b> is an expanded form of Address Mode, and is still used by some older and/or lower end decoders, particularly some from MRC and Wangrow. It is inherently limited in its ability to access all CVs in a decoder. <b>Paged Mode</b> is an expansion of Register mode that gives full access to all decoder CVs. <b>Direct Mode</b> is another method, not yet supported by all decoders, that allows full access.  There are two ways of implementing <b>Direct Mode</b>. The radio button(s) for the method(s) your command station supports will be activated.
 <p>
