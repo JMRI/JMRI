@@ -88,5 +88,18 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
       </tocitem>
    </tocitem>
    <tocitem text="Hardware Support" target="html.hardware.index"/>
+   <tocitem text="Technical Info" target="html.doc.Technical.index">
+      <tocitem text="Getting the Source Code">
+         <tocitem text="Via CVS" target="html.doc.Technical.getcode"/>
+         <tocitem text="CVS FAQs" target="html.doc.Technical.CVSFAQ"/>
+      </tocitem>
+      <tocitem text="Building Your Own Copy of JMRI">
+         <tocitem text="Building with Ant" target="html.doc.Technical.NetBeans"/>
+         <tocitem text="Building with NetBeans" target="html.doc.Technical.NetBeans"/>
+      </tocitem>
+      <tocitem text="How We Do Stuff">
+         <tocitem text="The Website" target="html.doc.Technical.WebSite"/>
+      </tocitem>
+   </tocitem>
 
 </toc>
