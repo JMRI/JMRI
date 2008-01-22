@@ -28,7 +28,7 @@ import org.jdom.output.XMLOutputter;
  * We implement this using our own EntityResolved, the jmri.util.JmriLocalEntityResolver class
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.32 $
+ * @version	$Revision: 1.33 $
  */
 public abstract class XmlFile {
 
@@ -279,9 +279,11 @@ public abstract class XmlFile {
      */
     public void makeBackupFile(String name) {
 		File file = findFile(name);
-		String backupName = backupFileName(file.getAbsolutePath());
-		File backupFile = findFile(backupName);
-		if (file != null) {
+		if (file == null) {
+			log.info("No " + name + " file to backup");
+		} else {
+			String backupName = backupFileName(file.getAbsolutePath());
+			File backupFile = findFile(backupName);
 			if (backupFile != null) {
 				if (backupFile.delete())
 					log.debug("deleted backup file " + backupName);
@@ -290,8 +292,7 @@ public abstract class XmlFile {
 				log.debug("created new backup file " + backupName);
 			else
 				log.error("could not create backup file " + backupName);
-		} else
-			log.info("No " + name + " file to backup");
+		}
 	}
 
     /**
@@ -354,7 +355,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.32 2008-01-21 18:48:10 dan_boudreau Exp $";
+                        +" $Id: XmlFile.java,v 1.33 2008-01-22 05:54:23 dan_boudreau Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }
