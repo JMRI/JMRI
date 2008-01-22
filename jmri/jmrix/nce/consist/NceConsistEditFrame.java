@@ -44,7 +44,7 @@ import java.util.List;
  * mid eng4) :0000
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
@@ -60,7 +60,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 	private static final int LOC_ADR_REPLACE = 0x3FFF; 	// dummy loco address
 														// used when replacing
 														// lead or rear loco
-	private int consistNum = 127; 				// consist being worked
+	private int consistNum = 0; 				// consist being worked
 	private boolean newConsist = true; 			// new consist is displayed
 	private int engineNum = 0; 					// which engine, 0 = lead, 1 = rear, 2 = mid
 	private static final int LEAD = 0;
@@ -241,7 +241,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		getButton.setVisible(true);
 		getButton.setToolTipText("Read consist from NCE CS");
 
-		consistTextField.setText(Integer.toString(consistNum));
+		consistTextField.setText(Integer.toString(CONSIST_MAX));
 		consistTextField.setToolTipText("Enter consist 1 to 127");
 		consistTextField.setMaximumSize(new Dimension(consistTextField
 				.getMaximumSize().width,
@@ -322,12 +322,12 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		addItem(previousButton, 1, 1);
 		addItem(consistTextField, 2, 1);
 		addItem(nextButton, 3, 1);
-		addItem(checkBoxEmpty, 4, 1);
+		addItem(checkBoxEmpty, 5, 1);
 		// row 2
 		addItem(textReply, 0, 2);
 		addItem(consistReply, 1, 2);
 		addItem(getButton, 2, 2);
-		addItem(checkBoxVerify, 4, 2);
+		addItem(checkBoxVerify, 5, 2);
 		// row 3
 		addItem(space3, 1, 3);
 		// row 4
@@ -336,7 +336,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		addItem(conRosterBox, 1, 5);
 		addItem (textConRoadName, 2, 5);
 		addItem (textConRoadNumber, 3, 5);
-		addItem(checkBoxConsist, 4, 5);
+		addItem(checkBoxConsist, 5, 5);
 		initConsistRoster(conRosterBox);
 
 		// row 6 padding for looks
@@ -446,7 +446,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 			if (JOptionPane.showConfirmDialog(null,
 					"Are you sure you want to delete consist "
 							+ conRosterBox.getSelectedItem().toString()
-							+ " from roster?", "Delete consist?",
+							+ " from roster?", "Delete consist from roster?",
 					JOptionPane.OK_CANCEL_OPTION) != JOptionPane.OK_OPTION) {
 				return;
 			}
@@ -872,19 +872,73 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		dirButton6.setEnabled(true);
 	}
 	
-	// checks to see if all engine addresses in consist match roster 
+	/**
+	 * checks to see if all engine addresses in NCE consist match roster
+	 * updates road name, road number, and loco direction fields
+	 * @return true if match
+	 */
 	private boolean consistRosterMatch (ConsistRosterEntry cre){
-		if (engTextField1.getText().equals(cre.getEng1DccAddress())
+		if (consistTextField.getText().equals(cre.getConsistNumber()) 
+				&& engTextField1.getText().equals(cre.getEng1DccAddress())
 				&& engTextField2.getText().equals(cre.getEng2DccAddress())
 				&& engTextField3.getText().equals(cre.getEng3DccAddress())
 				&& engTextField4.getText().equals(cre.getEng4DccAddress())
 				&& engTextField5.getText().equals(cre.getEng5DccAddress())
 				&& engTextField6.getText().equals(cre.getEng6DccAddress())
 						){
+			// match!  Only load the elements needed
+			textConRoadName.setText(cre.getRoadName());
+			textConRoadNumber.setText(cre.getRoadNumber());	
+			dirButton1.setText(directionWord(cre.getEng1Direction()));
+			dirButton2.setText(directionWord(cre.getEng2Direction()));
+			dirButton3.setText(directionWord(cre.getEng3Direction()));
+			dirButton4.setText(directionWord(cre.getEng4Direction()));
+			dirButton5.setText(directionWord(cre.getEng5Direction()));
+			dirButton6.setText(directionWord(cre.getEng6Direction()));
 			return true;
 		} else {
 			return false;
 		}
+	}
+	
+	private boolean enablePartialMatch = true;
+	
+	/**
+	 * checks to see if some engine addresses in NCE consist match roster
+	 * updates road name, road number, and loco direction fields
+	 * @return true if there was at least one match
+	 */
+	private boolean consistRosterPartialMatch (ConsistRosterEntry cre){
+		boolean rFlag = false;
+		if (!enablePartialMatch)
+			return rFlag;
+		// does eng1 match?
+		if (consistTextField.getText().equals(cre.getConsistNumber()) 
+				&& engTextField1.getText().equals(cre.getEng1DccAddress())){
+			dirButton1.setText(directionWord(cre.getEng1Direction()));
+			rFlag = true;
+		} else {
+			return rFlag;
+		}
+		if (engTextField2.getText().equals(cre.getEng2DccAddress())){
+			dirButton2.setText(directionWord(cre.getEng2Direction()));
+		}
+		if (engTextField3.getText().equals(cre.getEng3DccAddress())){
+			dirButton3.setText(directionWord(cre.getEng3Direction()));
+		}
+		if (engTextField4.getText().equals(cre.getEng4DccAddress())){
+			dirButton4.setText(directionWord(cre.getEng4Direction()));
+		}
+		if (engTextField5.getText().equals(cre.getEng5DccAddress())){
+			dirButton5.setText(directionWord(cre.getEng5Direction()));
+		}
+		if (engTextField6.getText().equals(cre.getEng6DccAddress())){
+			dirButton6.setText(directionWord(cre.getEng6Direction()));
+		}
+
+		textConRoadName.setText("Modified!");
+		textConRoadNumber.setText(EMPTY);	
+		return rFlag;
 	}
 
 	protected List consistList = new ArrayList();
@@ -928,8 +982,8 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 			// if it doesn't match, do we want to modify it?
 			if (consistList.isEmpty()) {
 				if (JOptionPane.showConfirmDialog(null, "Consist " + id
-						+ " already exists, update?", "Modify consist?",
-						JOptionPane.OK_CANCEL_OPTION) != JOptionPane.OK_OPTION) {
+						+ " already exists, update?" + getRosterText(cre),
+						"Modify roster?", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
 					return false;
 				}
 			}
@@ -1039,6 +1093,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		if (rosterDisplay) {
 			clearButton.setText(CANCEL);
 			clearButton.setToolTipText(ToolTipCancel);
+			clearButton.setEnabled(true);
 			saveButton.setText(LOAD);
 			saveButton.setToolTipText(ToolTipLoad);
 		} else {
@@ -1046,8 +1101,9 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 			clearButton.setToolTipText(ToolTipClear);
 			saveButton.setText(SAVE);
 			saveButton.setToolTipText(ToolTipSave);
+			clearButton.setEnabled(!engTextField1.getText().equals(EMPTY));
 		}
-		clearButton.setEnabled(true);
+		
 
 		// toggle (on if we're loading a consist from roster)
 		deleteButton.setEnabled(rosterDisplay);
@@ -1286,7 +1342,8 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 			if (engineNum == LEAD) {
 				boolean eng1exists = updateLocoFields(r, 0, locoRosterBox1,
 						engTextField1, adrButton1, dirButton1, cmdButton1);
-				clearButton.setEnabled(eng1exists);
+				if (clearButton.getText().equals(CLEAR))
+					clearButton.setEnabled(eng1exists);
 
 				// load rear engine
 			} else if (engineNum == REAR) {
@@ -1320,28 +1377,27 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 			return;
 		if (!verifyRosterMatch)
 			cre = ConsistRoster.instance().entryFromTitle(engTextField1.getText());
-		if (cre == null)
+		if (cre == null){
+			if (checkBoxConsist.isSelected())
+				textConRoadName.setText(UNKNOWN);
+			else
+				textConRoadName.setText(EMPTY);
+			textConRoadNumber.setText(EMPTY);	
 			return;
+		}
 		if (consistRosterMatch(cre)){
-			// match!  Only load the elements needed
-			textConRoadName.setText(cre.getRoadName());
-			textConRoadNumber.setText(cre.getRoadNumber());	
-			dirButton1.setText(directionWord(cre.getEng1Direction()));
-			dirButton2.setText(directionWord(cre.getEng2Direction()));
-			dirButton3.setText(directionWord(cre.getEng3Direction()));
-			dirButton4.setText(directionWord(cre.getEng4Direction()));
-			dirButton5.setText(directionWord(cre.getEng5Direction()));
-			dirButton6.setText(directionWord(cre.getEng6Direction()));
+			// exact match!
 			if (verifyRosterMatch)
 				queueError(WARN_CONSIST_ALREADY_LOADED);
 			verifyRosterMatch = false;
 		} else {
-			// no match
-			textConRoadName.setText(EMPTY);
-			textConRoadNumber.setText(EMPTY);	
-			if (verifyRosterMatch){
-				verifyRosterMatch = false;
+			// not an exact match!
+			if (verifyRosterMatch)
 				queueError(ERROR_CONSIST_DOESNT_MATCH);
+			verifyRosterMatch = false;
+			if (!consistRosterPartialMatch(cre)){
+				textConRoadName.setText(EMPTY);
+				textConRoadNumber.setText(EMPTY);	
 			}
 		}
 	}
@@ -1354,11 +1410,12 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		String locoAddr = getLocoAddr(r, index);
 		boolean locoType = getLocoAddressType(r, index); // Long or short address?
 		String locoDirection = getLocoDirection(dirButton);
+		
+		engTextField.setText(locoAddr);
+		locoRosterBox.setSelectedIndex(0);
 
-		if (locoAddr == EMPTY
-				|| locoAddr.equals(Integer.toString(LOC_ADR_REPLACE))) {
+		if (locoAddr.equals(EMPTY) || locoAddr.equals(REPLACE_LOCO)) {
 			locoRosterBox.setEnabled(true);
-			locoRosterBox.setSelectedIndex(0);
 			engTextField.setEnabled(true);
 			cmdButton.setText(ADD);
 			cmdButton.setVisible(true);
@@ -1368,34 +1425,25 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 			dirButton.setEnabled(true);
 			adrButton.setText(LONG);
 			adrButton.setEnabled(true);
-
-			if (locoAddr == EMPTY) {
-				engTextField.setText(EMPTY);
-				return false;
-			} else {
-				engTextField.setText(REPLACE_LOCO);
-				return true;
-			}
+			return false;
 		} else {
 			engTextField.setText(locoAddr);
 			locoRosterBox.setEnabled(false);
-			locoRosterBox.setSelectedIndex(0);
 			engTextField.setEnabled(false);
-
-			// can not delete lead or rear locos, but can replace
-			if (engTextField == engTextField1 || engTextField == engTextField2) {
-				cmdButton.setText(REPLACE);
-				cmdButton.setEnabled(true);
-				cmdButton.setToolTipText("Press to delete and replace this engine");
-			} else {
-				cmdButton.setText(DELETE);
-				cmdButton.setEnabled(true);
-				cmdButton.setToolTipText("Press to delete this engine from consist");
-			}
+			cmdButton.setEnabled(true);
 			dirButton.setText(locoDirection);
 			dirButton.setEnabled(false);
 			adrButton.setText((locoType) ? LONG : SHORT);
 			adrButton.setEnabled(false);
+			
+			// can not delete lead or rear locos, but can replace
+			if (engTextField == engTextField1 || engTextField == engTextField2) {
+				cmdButton.setText(REPLACE);
+				cmdButton.setToolTipText("Press to delete and replace this engine");
+			} else {
+				cmdButton.setText(DELETE);
+				cmdButton.setToolTipText("Press to delete this engine from consist");
+			}
 			return true;
 		}
 	}
@@ -1622,9 +1670,10 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		rC_l = rC_l & 0xFF;
 		rC = rC + rC_l;
 		String locoAddr = EMPTY;
-		if (rC != 0) {
+		if (rC != 0) 
 			locoAddr = Integer.toString(rC);
-		}
+		if (rC == LOC_ADR_REPLACE) 
+			locoAddr = REPLACE_LOCO;
 		return locoAddr;
 	}
 
@@ -1801,22 +1850,25 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 
 		case ERROR_NO_EMPTY_CONSIST:
 			JOptionPane.showMessageDialog(NceConsistEditFrame.this,
-							"There are no empty consists, please clear a consist and try again",
-							"NCE Consist", JOptionPane.ERROR_MESSAGE);
+					"There are no empty consists, please clear a consist and try again",
+					"NCE Consist", JOptionPane.ERROR_MESSAGE);
 			break;
 			
 		case ERROR_CONSIST_DOESNT_MATCH:
 			if (JOptionPane.showConfirmDialog(null,
-							"The roster consist does not match the consist in NCE memory, continue loading?"
-					+ "\n" +
-					"\n Lead Engine Address: " + cre.getEng1DccAddress() +
-					"\n Rear Engine Address: " + cre.getEng2DccAddress() +
-					"\n Mid1 Engine Address: " + cre.getEng3DccAddress() +
-					"\n Mid2 Engine Address: " + cre.getEng4DccAddress() +
-					"\n Mid3 Engine Address: " + cre.getEng5DccAddress() +
-					"\n Mid4 Engine Address: " + cre.getEng6DccAddress(),
-							"Continue loading consist from roster?",
-							JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+					"The roster consist does not match the consist in NCE memory, continue loading?"
+					+ getRosterText(cre),
+					"Continue loading consist from roster?",
+					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+				if (JOptionPane.showConfirmDialog(null,
+						"Consist " + cre.getId() + " was assigned NCE consist number " + cre.getConsistNumber() +
+						"\n Do you want to reset it so you can load next time?",
+						"Reset NCE consist number?",
+						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+					cre.setConsistNumber("0");
+				}
+				changeButtons (false);
+				saveButton.setEnabled(canLoad());
 				break;
 			}
 			changeButtons (true);
@@ -1830,6 +1882,18 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 			break;
 		}
 		errorCode = 0;
+	}
+	
+	private String getRosterText (ConsistRosterEntry cre) {
+		return "\n" 
+		+ "\n NCE Consist Number: "	+ cre.getConsistNumber()
+		+ "\n"
+		+ "\n Lead Engine Address: " + cre.getEng1DccAddress()
+		+ "\n Rear Engine Address: " + cre.getEng2DccAddress()
+		+ "\n Mid1 Engine Address: " + cre.getEng3DccAddress()
+		+ "\n Mid2 Engine Address: " + cre.getEng4DccAddress()
+		+ "\n Mid3 Engine Address: " + cre.getEng5DccAddress()
+		+ "\n Mid4 Engine Address: " + cre.getEng6DccAddress();
 	}
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category
