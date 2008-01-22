@@ -380,6 +380,53 @@
 <a href="html/hardware/index.shtml">Hardware Support</a>
 <ul></ul>
 </li>
+   
+<li>
+<a href="html/doc/Technical/index.shtml">Technical Info</a>
+<ul>
+      
+<li>Getting the Source Code<ul>
+         
+<li>
+<a href="html/doc/Technical/getcode.shtml">Via CVS</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="html/doc/Technical/CVSFAQ.shtml">CVS FAQs</a>
+<ul></ul>
+</li>
+      
+</ul>
+</li>
+      
+<li>Building Your Own Copy of JMRI<ul>
+         
+<li>
+<a href="html/doc/Technical/NetBeans.shtml">Building with Ant</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="html/doc/Technical/NetBeans.shtml">Building with NetBeans</a>
+<ul></ul>
+</li>
+      
+</ul>
+</li>
+      
+<li>How We Do Stuff<ul>
+         
+<li>
+<a href="html/doc/Technical/WebSite.shtml">The Website</a>
+<ul></ul>
+</li>
+      
+</ul>
+</li>
+   
+</ul>
+</li>
 
 
 </ul>
