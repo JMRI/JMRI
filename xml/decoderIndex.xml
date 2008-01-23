@@ -3,13 +3,14 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.1.1 on Sun Jan 13 07:25:06 PST 2008 $Id: decoderIndex.xml,v 1.113 2008-01-13 15:27:16 jacobsen Exp $-->
+  <!--Written by JMRI version 2.1.1 on Sun Jan 13 07:25:06 PST 2008 $Id: decoderIndex.xml,v 1.114 2008-01-23 15:46:20 jacobsen Exp $-->
   <decoderIndex version="134">
-    <mfgList>
+    <mfgList nmraListDate="2007-10-17" updated="2008-01-23">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
       <manufacturer mfg="AMW" mfgID="19" />
       <manufacturer mfg="Advanced IC Engineering, Inc." mfgID="17" />
+      <manufacturer mfg="ANE Model Co, Ltd" mfgID="45" />
       <manufacturer mfg="Aristo-Craft Trains" mfgID="34" />
       <manufacturer mfg="Arnold" mfgID="173" />
       <manufacturer mfg="Atlas" mfgID="127" />
@@ -22,6 +23,7 @@
       <manufacturer mfg="CT Elektronik" mfgID="117" />
       <manufacturer mfg="CVP Products" mfgID="135" />
       <manufacturer mfg="Computer Dialysis France" mfgID="123" />
+      <manufacturer mfg="Capecom" mfgID="47" />
       <manufacturer mfg="Con-Com GmbH" mfgID="204" />
       <manufacturer mfg="DCCconcepts" mfgID="36" />
       <manufacturer mfg="DCCdevices" mfgID="39" />
@@ -34,6 +36,7 @@
       <manufacturer mfg="Electronic Solutions Ulm GmbH" mfgID="151" />
       <manufacturer mfg="Electronik and Model Produktion" mfgID="35" />
       <manufacturer mfg="Gebr. Fleishmann GmbH Co." mfgID="155" />
+      <manufacturer mfg="GFB Designs" mfgID="46" />
       <manufacturer mfg="Haber and Koenig Electronics GmbH" mfgID="111" />
       <manufacturer mfg="Heljan A/S" mfgID="28" />
       <manufacturer mfg="Intelligent Command Control" mfgID="133" />
@@ -57,6 +60,7 @@
       <manufacturer mfg="NMRA Reserved" mfgID="238" />
       <manufacturer mfg="Nagasue System Design Office" mfgID="103" />
       <manufacturer mfg="New York Byano Limited" mfgID="71" />
+      <manufacturer mfg="Ngineering" mfgID="43" />
       <manufacturer mfg="North Coast Engineering" mfgID="11" />
       <manufacturer mfg="PSI-Dynatrol" mfgID="14" />
       <manufacturer mfg="Passmann" mfgID="41" />
