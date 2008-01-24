@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: WebSite.shtml,v 1.3 2008-01-20 21:01:53 jacobsen Exp $ -->
+<!-- $Id: WebSite.shtml,v 1.4 2008-01-24 03:03:41 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -119,9 +119,14 @@ the Apache server to do server-side includes, and then make
 a copy of the web site files available to the server.
 
 <OL>
-<LI>You need to edit the /etc/httpd/httpd.conf file using your favorite
+<LI>You need to edit the Apache web server's configuration file. 
+<ul>
+<li>On MacOS X 10.4 (Tiger), this is the /etc/httpd/httpd.conf file
+<li>On MacOS X 10.5 (Leopard), this is the /etc/apache2/httpd.conf file
+</UL>
+Once you've located the file, open it with your favorite
 editor (You'll need to authenticate with the administrator password to 
-edit this file):
+modify this file). 
     <ul>
     <LI>
     To turn on server-side includes, find the section that 
