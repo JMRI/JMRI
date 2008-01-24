@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TurnoutTable.shtml,v 1.5 2008-01-24 05:56:19 jacobsen Exp $ -->
+<!-- $Id: TurnoutTable.shtml,v 1.6 2008-01-24 06:26:43 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Turnout Table Help</TITLE>
@@ -225,7 +225,7 @@ with feedback:</P>
 	the program that the turnout is being driven by a Digitrax DS54 with
 	two microswitches attached to the switch and aux leads. For more
 	information, see the JMRI <A
-		HREF="http://jmri.sourceforge.net/doc/Technical/loconet/DS54.html">DS54</A>
+		HREF="../../../../html/hardware/loconet/DS54.shtml">DS54</A>
 	examples page on the JMRI website.</DD>
 
 </DL>
