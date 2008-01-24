@@ -43,7 +43,7 @@ import org.jdom.ProcessingInstruction;
  * 
  * @author Bob Jacobsen Copyright (C) 2001; Dennis Miller Copyright 2004
  * @author Daniel Boudreau (C) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @see ConsistRosterEntry
  */
 public class ConsistRoster extends XmlFile {
@@ -224,7 +224,7 @@ public class ConsistRoster extends XmlFile {
         // add XSLT processing instruction
         java.util.Map m = new java.util.HashMap();
         m.put("type", "text/xsl");
-        m.put("href", "http://jmri.sourceforge.net/xml/XSLT/consist-roster-config.xsl");
+        m.put("href", "http://jmri.sourceforge.net/xml/XSLT/consistRoster.xsl");
         ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
         doc.addContent(0,p);
         
