@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a consist roster -->
-<!-- $Id: consist-roster-config.dtd,v 1.1 2008-01-21 22:55:22 dan_boudreau Exp $ -->
+<!-- $Id: consist-roster-config.dtd,v 1.2 2008-01-24 18:14:48 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -38,6 +38,7 @@
 <!ATTLIST consist consistNumber	CDATA #IMPLIED>          
 <!ATTLIST consist roadNumber	CDATA #IMPLIED> 
 <!ATTLIST consist roadName		CDATA #IMPLIED>                   
+<!ATTLIST consist model			CDATA #IMPLIED>                   
 <!ATTLIST consist comment		CDATA #IMPLIED>
 
 <!ATTLIST eng1 dccLocoAddress	CDATA #IMPLIED>          
