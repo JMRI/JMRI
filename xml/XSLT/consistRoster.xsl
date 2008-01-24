@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE xsl:stylesheet SYSTEM "C:\JBuilder2007\workspace\xml\DTD\consist-roster-config.dtd">
-<!-- $Id: consistRoster.xsl,v 1.1 2008-01-24 16:06:19 dan_boudreau Exp $ -->
+<!-- $Id: consistRoster.xsl,v 1.2 2008-01-24 16:54:37 dan_boudreau Exp $ -->
 
 <!-- Stylesheet to convert a JMRI  consist roster XML file into displayable HTML -->
 
@@ -67,39 +67,39 @@ comment="<xsl:value-of select="@comment"/>"
 </xsl:template>
 
 <xsl:template match="eng1">Lead loco address: 
-number="<xsl:value-of select="@number"/>"
-longaddress="<xsl:value-of select="@longAddress"/>" 
-<p/>
+"<xsl:value-of select="@dccLocoAddress"/>"
+long address="<xsl:value-of select="@longAddress"/>"
+loco direction="<xsl:value-of select="@locoDir"/>"
 </xsl:template>
 
 <xsl:template match="eng2">Rear loco address: 
-number="<xsl:value-of select="@number"/>"
-longaddress="<xsl:value-of select="@longAddress"/>" 
-<p/>
+"<xsl:value-of select="@dccLocoAddress"/>"
+long address="<xsl:value-of select="@longAddress"/>"
+loco direction="<xsl:value-of select="@locoDir"/>" 
 </xsl:template>
 
 <xsl:template match="eng3">Mid 1 loco address: 
-number="<xsl:value-of select="@number"/>"
-longaddress="<xsl:value-of select="@longAddress"/>" 
-<p/>
+"<xsl:value-of select="@dccLocoAddress"/>"
+long address="<xsl:value-of select="@longAddress"/>"
+loco direction="<xsl:value-of select="@locoDir"/>" 
 </xsl:template>
 
 <xsl:template match="eng4">Mid 2 loco address: 
-number="<xsl:value-of select="@number"/>"
-longaddress="<xsl:value-of select="@longAddress"/>" 
-<p/>
+"<xsl:value-of select="@dccLocoAddress"/>"
+long address="<xsl:value-of select="@longAddress"/>"
+loco direction="<xsl:value-of select="@locoDir"/>" 
 </xsl:template>
 
 <xsl:template match="eng5">Mid 3 loco address: 
-number="<xsl:value-of select="@number"/>"
-longaddress="<xsl:value-of select="@longAddress"/>" 
-<p/>
+"<xsl:value-of select="@dccLocoAddress"/>"
+long address="<xsl:value-of select="@longAddress"/>"
+loco direction="<xsl:value-of select="@locoDir"/>" 
 </xsl:template>
 
 <xsl:template match="eng6">Mid 4 loco address: 
-number="<xsl:value-of select="@number"/>"
-longaddress="<xsl:value-of select="@longAddress"/>" 
-<p/>
+"<xsl:value-of select="@dccLocoAddress"/>"
+long address="<xsl:value-of select="@longAddress"/>"
+loco direction="<xsl:value-of select="@locoDir"/>" 
 </xsl:template>
 
 </xsl:stylesheet>
