@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: DS54.shtml,v 1.1 2008-01-13 04:24:44 jacobsen Exp $ -->
+<!-- $Id: DS54.shtml,v 1.2 2008-01-24 04:48:54 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -31,7 +31,7 @@
 		</p>
 The DS54 accessory decoder can be configured in a large number of
 ways.  
-(<A href="../../../apps/DecoderPro">DecoderPro</a> can help with that)
+(<A href="../../../DecoderProManual/index.shtml">DecoderPro</a> can help with that)
 
 <P>
 Walter Thompson walked through the details of this:
@@ -79,20 +79,20 @@ Configure the DS54 channel with:
  Switch A input changes, send"= "Exact turnout feedback message"
 </PRE>
 Configure the Turnout (via the Turnout Table) to use "EXACT" feedback.
-
+<P>
 Start with the turnout closed, Switch A would be Closed and Aux A open .
 Issue Thrown command from DT400; Loconet msgs b0 8 10 57 and b0 8 0 47.
-
+<P>
 Open Switch A, turnout starts to move; loconet msgs b1 8 60 26,
 Turnout 9 Switch input is Thrown (input on)
-
+<P>
 Close Aux A, turnout had reached thrown state, loconet msg b1 8 50 16.
 Turnout 9 Aux input is Closed (input off)
-
-Now i issue a Close cmd from the DT400; loconet msgs b0 8 30 77 and b0 8 20 67
+<P>
+Now issue a Close cmd from the DT400; loconet msgs b0 8 30 77 and b0 8 20 67
 Open Aux A, turnout starts to move; loconet msg b1 8 40 6
 Turnout 9 Aux input is Thrown (input on)
-
+<P>
 close Switch A, turnout had reached closed state; loconet msg b1 8 70 36.
 Turnout 9 Switch input is Closed (input off)
 
