@@ -44,7 +44,7 @@ import java.util.List;
  * mid eng4) :0000
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
@@ -397,8 +397,8 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		addCheckBoxAction(checkBoxConsist);
 
 		// set frame size for display
-		this.setSize(450, 380);
-		//this.pack(); 
+		pack();
+		if ( (getWidth()<450) && (getHeight()<380)) setSize(450, 380);
 	}
 
 	// Previous, Next, Get, Clear/Cancel, Save/Load, Delete, Restore & Backup buttons
