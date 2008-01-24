@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TurnoutTable.shtml,v 1.4 2008-01-24 04:49:47 jacobsen Exp $ -->
+<!-- $Id: TurnoutTable.shtml,v 1.5 2008-01-24 05:56:19 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Turnout Table Help</TITLE>
@@ -235,7 +235,12 @@ with feedback:</P>
 
 <P>The turnout lock feature allows you to selectively disable
 accessory (turnouts) commands from cabs and/or locally-wired pushbuttons. 
-
+The lock can be set (locked) or unset (unlocked) from 
+a button in the Turnout Table,
+from a 
+<a href="RouteAddEdit.shtml#lock">Route</a>
+or Logix, 
+or from scripts.
 <h4>Cab Lockout</h4>
 To do the cab lockout, JMRI works with the DCC system to 
 prevent people from changing the position of a locked turnout.
