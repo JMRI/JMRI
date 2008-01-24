@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE xsl:stylesheet SYSTEM "C:\JBuilder2007\workspace\xml\DTD\consist-roster-config.dtd">
-<!-- $Id: consistRoster.xsl,v 1.2 2008-01-24 16:54:37 dan_boudreau Exp $ -->
+<!-- $Id: consistRoster.xsl,v 1.3 2008-01-24 18:22:00 dan_boudreau Exp $ -->
 
 <!-- Stylesheet to convert a JMRI  consist roster XML file into displayable HTML -->
 
@@ -58,10 +58,10 @@
 <!-- Display each roster entry -->
 <xsl:template match="roster/consist">
 <h3>Consist:<xsl:value-of select="@id"/></h3>
-roadNumber="<xsl:value-of select="@roadNumber"/>"<br/>
-roadName="<xsl:value-of select="@roadName"/>"<br/>
-model="<xsl:value-of select="@model" />"<br/>
-comment="<xsl:value-of select="@comment"/>"
+Road number="<xsl:value-of select="@roadNumber"/>"<br/>
+Road name="<xsl:value-of select="@roadName"/>"<br/>
+Model="<xsl:value-of select="@model"/>"<br/>
+Comment="<xsl:value-of select="@comment"/>"
 <p/>
 <xsl:apply-templates/>
 </xsl:template>
