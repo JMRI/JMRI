@@ -17,7 +17,7 @@ import java.util.Iterator;
  * back to an explicit implementation when running on Java 1.1
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 
 public class StringUtil {
@@ -96,6 +96,23 @@ public class StringUtil {
 		return sb.toString() ;
     }
 
+
+    /**
+     * Convert a small number to eight 1/0 characters.
+     * @param msbLeft the MSB is on the left of the display
+     */
+    static public String to8Bits(int val, boolean msbLeft) {
+        String result ="";
+        for (int i=0; i<8; i++) {
+            if (msbLeft)
+                result = (((val&0x01) != 0) ? "1" : "0")+result; 
+            else
+                result = result+(((val&0x01) != 0) ? "1" : "0"); 
+            val = val>>1;
+        }
+        return result;
+    }
+    
     /**
      * Create a String containing hexadecimal values from a byte[]. 
      *
