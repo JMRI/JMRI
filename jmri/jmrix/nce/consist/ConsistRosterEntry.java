@@ -36,7 +36,7 @@ import org.jdom.Element;
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2004, 2005
  * @author Dennis Miller Copyright 2004
  * @author Daniel Boudreau (C) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @see ConsistRoster
  * 
  */
@@ -57,6 +57,7 @@ public class ConsistRosterEntry {
         // All other items are copied
         _roadName =     pEntry._roadName;
         _roadNumber =   pEntry._roadNumber;
+        _model =   pEntry._model;
         _consistNumber =   pEntry._consistNumber;
         _eng1DccAddress =   pEntry._eng1DccAddress;
         _isEng1LongAddress = pEntry._isEng1LongAddress;
@@ -90,6 +91,9 @@ public class ConsistRosterEntry {
 
     public void   setRoadNumber(String s) { _roadNumber = s; }
     public String getRoadNumber() { return _roadNumber; }
+    
+    public void   setModel(String s) { _model = s; }
+    public String getModel() { return _model; }
 
     public void   setEng1DccAddress(String s) { _eng1DccAddress = s; }
     public String getEng1DccAddress() { return _eng1DccAddress; }
@@ -162,6 +166,7 @@ public class ConsistRosterEntry {
         if ((a = e.getAttribute("consistNumber")) != null )  _consistNumber = a.getValue();
         if ((a = e.getAttribute("roadName")) != null )  _roadName = a.getValue();
         if ((a = e.getAttribute("roadNumber")) != null )  _roadNumber = a.getValue();
+        if ((a = e.getAttribute("model")) != null )  _model = a.getValue();
         if ((a = e.getAttribute("comment")) != null )  _comment = a.getValue();
 
         org.jdom.Element eng1 = e.getChild("eng1");
@@ -217,6 +222,7 @@ public class ConsistRosterEntry {
         e.setAttribute("consistNumber",getConsistNumber());
         e.setAttribute("roadNumber",getRoadNumber());
         e.setAttribute("roadName",getRoadName());
+        e.setAttribute("model",getModel());
         e.setAttribute("comment",getComment());
         
         org.jdom.Element eng1 = new org.jdom.Element("eng1");
@@ -276,6 +282,7 @@ public class ConsistRosterEntry {
         	+" "+_consistNumber
             +" "+_roadName
             +" "+_roadNumber
+            +" "+_model
             +" "+_eng1DccAddress
             +" "+_eng2DccAddress
             +" "+_eng3DccAddress
@@ -301,99 +308,104 @@ public class ConsistRosterEntry {
      *around the HardcopyWriter bug that misplaces borders
      */
     public void printEntry(Writer w) {
-		try {
-			String indent = "                      ";
-			int indentWidth = indent.length();
-			HardcopyWriter ww = (HardcopyWriter) w;
-			int textSpace = ww.getCharactersPerLine() - indentWidth - 1;
-			String newLine = "\n";
+    	try {
+    		String indent = "                      ";
+    		int indentWidth = indent.length();
+    		HardcopyWriter ww = (HardcopyWriter) w;
+    		int textSpace = ww.getCharactersPerLine() - indentWidth - 1;
+    		String newLine = "\n";
 
-			w.write(newLine, 0, 1);
-			String s = "   ID:                " + _id;
-			w.write(s, 0, s.length());
-			
-			if (!(_consistNumber.equals(""))) {
-				w.write(newLine, 0, 1);
-				s = "   Consist number:         " + _consistNumber;
-				w.write(s, 0, s.length());
-			}
-			if (!(_roadName.equals(""))) {
-				w.write(newLine, 0, 1);
-				s = "   Road name:         " + _roadName;
-				w.write(s, 0, s.length());
-			}
-			if (!(_roadNumber.equals(""))) {
-				w.write(newLine, 0, 1);
-				s = "   Road number:       " + _roadNumber;
-				w.write(s, 0, s.length());
-			}
-			if (!(_eng1DccAddress.equals(""))) {
-				w.write(newLine, 0, 1);
-				s = "   Eng1 Engine DCC Address:       " + _eng1DccAddress;
-				w.write(s, 0, s.length());
-			}
-			if (!(_eng2DccAddress.equals(""))) {
-				w.write(newLine, 0, 1);
-				s = "   Eng2 Engine DCC Address:       " + _eng2DccAddress;
-				w.write(s, 0, s.length());
-			}
-			if (!(_eng3DccAddress.equals(""))) {
-				w.write(newLine, 0, 1);
-				s = "   Eng3 Engine DCC Address:       " + _eng3DccAddress;
-				w.write(s, 0, s.length());
-			}
-			if (!(_eng3DccAddress.equals(""))) {
-				w.write(newLine, 0, 1);
-				s = "   Eng3 Engine DCC Address:       " + _eng3DccAddress;
-				w.write(s, 0, s.length());
-			}
-			if (!(_eng4DccAddress.equals(""))) {
-				w.write(newLine, 0, 1);
-				s = "   Eng4 Engine DCC Address:       " + _eng4DccAddress;
-				w.write(s, 0, s.length());
-			}
-			if (!(_eng5DccAddress.equals(""))) {
-				w.write(newLine, 0, 1);
-				s = "   Eng5 Engine DCC Address:       " + _eng5DccAddress;
-				w.write(s, 0, s.length());
-			}
-			if (!(_eng6DccAddress.equals(""))) {
-				w.write(newLine, 0, 1);
-				s = "   Eng6 Engine DCC Address:       " + _eng6DccAddress;
-				w.write(s, 0, s.length());
-			}
+    		w.write(newLine, 0, 1);
+    		String s = "   ID:                " + _id;
+    		w.write(s, 0, s.length());
 
-			// If there is a comment field, then wrap it using the new
-			// wrapCommment
-			// method and print it
-			if (!(_comment.equals(""))) {
-				Vector commentVector = wrapComment(_comment, textSpace);
+    		if (!(_consistNumber.equals(""))) {
+    			w.write(newLine, 0, 1);
+    			s = "   Consist number:         " + _consistNumber;
+    			w.write(s, 0, s.length());
+    		}
+    		if (!(_roadName.equals(""))) {
+    			w.write(newLine, 0, 1);
+    			s = "   Road name:         " + _roadName;
+    			w.write(s, 0, s.length());
+    		}
+    		if (!(_roadNumber.equals(""))) {
+    			w.write(newLine, 0, 1);
+    			s = "   Road number:       " + _roadNumber;
+    			w.write(s, 0, s.length());
+    		}
+    		if (!(_model.equals(""))) {
+    			w.write(newLine,0,1);
+    			s = "   Model:             " + _model;
+    			w.write(s,0,s.length());
+    		}
+    		if (!(_eng1DccAddress.equals(""))) {
+    			w.write(newLine, 0, 1);
+    			s = "   Eng1 Engine DCC Address:       " + _eng1DccAddress;
+    			w.write(s, 0, s.length());
+    		}
+    		if (!(_eng2DccAddress.equals(""))) {
+    			w.write(newLine, 0, 1);
+    			s = "   Eng2 Engine DCC Address:       " + _eng2DccAddress;
+    			w.write(s, 0, s.length());
+    		}
+    		if (!(_eng3DccAddress.equals(""))) {
+    			w.write(newLine, 0, 1);
+    			s = "   Eng3 Engine DCC Address:       " + _eng3DccAddress;
+    			w.write(s, 0, s.length());
+    		}
+    		if (!(_eng3DccAddress.equals(""))) {
+    			w.write(newLine, 0, 1);
+    			s = "   Eng3 Engine DCC Address:       " + _eng3DccAddress;
+    			w.write(s, 0, s.length());
+    		}
+    		if (!(_eng4DccAddress.equals(""))) {
+    			w.write(newLine, 0, 1);
+    			s = "   Eng4 Engine DCC Address:       " + _eng4DccAddress;
+    			w.write(s, 0, s.length());
+    		}
+    		if (!(_eng5DccAddress.equals(""))) {
+    			w.write(newLine, 0, 1);
+    			s = "   Eng5 Engine DCC Address:       " + _eng5DccAddress;
+    			w.write(s, 0, s.length());
+    		}
+    		if (!(_eng6DccAddress.equals(""))) {
+    			w.write(newLine, 0, 1);
+    			s = "   Eng6 Engine DCC Address:       " + _eng6DccAddress;
+    			w.write(s, 0, s.length());
+    		}
 
-				// Now have a vector of text pieces and line feeds that will all
-				// fit in the allowed space. Print each piece, prefixing the
-				// first one
-				// with the label and indenting any remainding.
-				int k = 0;
-				w.write(newLine, 0, 1);
-				s = "   Comment:           "
-						+ (String) commentVector.elementAt(k);
-				w.write(s, 0, s.length());
-				k++;
-				while (k < commentVector.size()) {
-					String token = (String) commentVector.elementAt(k);
-					if (!token.equals("\n"))
-						s = indent + token;
-					else
-						s = token;
-					w.write(s, 0, s.length());
-					k++;
-				}
-			}
+    		// If there is a comment field, then wrap it using the new
+    		// wrapCommment
+    		// method and print it
+    		if (!(_comment.equals(""))) {
+    			Vector commentVector = wrapComment(_comment, textSpace);
 
-		} catch (IOException e) {
-			log.error("Error printing ConsistRosterEntry: " + e);
-		}
-	}
+    			// Now have a vector of text pieces and line feeds that will all
+    			// fit in the allowed space. Print each piece, prefixing the
+    			// first one
+    			// with the label and indenting any remainding.
+    			int k = 0;
+    			w.write(newLine, 0, 1);
+    			s = "   Comment:           "
+    				+ (String) commentVector.elementAt(k);
+    			w.write(s, 0, s.length());
+    			k++;
+    			while (k < commentVector.size()) {
+    				String token = (String) commentVector.elementAt(k);
+    				if (!token.equals("\n"))
+    					s = indent + token;
+    				else
+    					s = token;
+    				w.write(s, 0, s.length());
+    				k++;
+    			}
+    		}
+
+    	} catch (IOException e) {
+    		log.error("Error printing ConsistRosterEntry: " + e);
+    	}
+    }
 
     /**
 	 * Take a String comment field and perform line wrapping on it. String must
@@ -476,6 +488,7 @@ public class ConsistRosterEntry {
     protected String _consistNumber = "";
     protected String _roadName = "";
     protected String _roadNumber = "";
+    protected String _model = "";
     protected String _eng1DccAddress = "";
     protected boolean _isEng1LongAddress = true;
     protected String _eng1Direction = "";
