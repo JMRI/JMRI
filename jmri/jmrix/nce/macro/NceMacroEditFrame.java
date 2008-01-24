@@ -56,7 +56,7 @@ import java.io.*;
  * FF10 = link macro 16 
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -343,7 +343,8 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
         addCheckBoxAction(checkBoxNce);
 
         // set frame size for display
-        this.setSize (400,400);
+		pack();
+		if ( (getWidth()<400) && (getHeight()<400)) setSize(400, 400);
     }
  
     // Previous, Next, Get, Save, Restore & Backup buttons
