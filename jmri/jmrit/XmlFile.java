@@ -28,7 +28,7 @@ import org.jdom.output.XMLOutputter;
  * We implement this using our own EntityResolved, the jmri.util.JmriLocalEntityResolver class
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.33 $
+ * @version	$Revision: 1.34 $
  */
 public abstract class XmlFile {
 
@@ -71,6 +71,10 @@ public abstract class XmlFile {
         try {
             InputStream stream = new BufferedInputStream(new FileInputStream(file));
             return getRootViaURI(verify, stream);
+        }
+        catch (org.jdom.input.JDOMParseException e4) {
+            // file opened, but couldn't be parsed; report that up
+            throw e4;
         }
         catch (org.jdom.JDOMException e1) {
             // 1st attempt failed, try second using deprecated method
@@ -123,7 +127,7 @@ public abstract class XmlFile {
     private Element getRootViaRelative(boolean verify, InputStream stream) throws org.jdom.JDOMException, java.io.IOException {
 
         // Invoke a utility service routine to provide the URL for DTDs
-        String dtdUrl = "file:xml"+File.separator+"DTD";
+        String dtdUrl = "file:xml"+File.separator+"DTD"+File.separator;
 
         if (log.isDebugEnabled()) log.debug("getRootViaRelative, DTD via:"+dtdUrl);
 
@@ -355,7 +359,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.33 2008-01-22 05:54:23 dan_boudreau Exp $";
+                        +" $Id: XmlFile.java,v 1.34 2008-01-24 04:15:41 jacobsen Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }
