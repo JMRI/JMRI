@@ -21,7 +21,7 @@ import java.net.URI;
  * local files within the JMRI distributions in the xml/DTD directory.
  *
  * @author Bob Jacobsen  Copyright 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 import org.xml.sax.EntityResolver;
@@ -52,7 +52,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
                     log.error("did not find type 3 DTD file: "+filename);
                     return null;  // use default, which is to find on web
                 }
-            } else if (path.startsWith("../DTD")) {
+            } else if (path != null && path.startsWith("../DTD")) {
                 // type 1
                 String filename = "xml"+File.separator+"DTD"+File.separator+path;
                 try {
@@ -61,7 +61,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
                     log.error("did not find type 1 DTD file: "+filename);
                     return null;
                 }
-            } else if (path.indexOf("/")==-1) {  // path doesn't contain "/", so is just name
+            } else if (path != null && path.indexOf("/")==-1) {  // path doesn't contain "/", so is just name
                 // type 2
                 String filename = "xml"+File.separator+"DTD"+File.separator+path;
                 try {
@@ -85,6 +85,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
             }
         } catch (Exception e1) { // was java.net.URISyntaxException, but that's not in Java 1.3.1
             log.warn(e1);
+            e1.printStackTrace();
             return null;
         } catch (NoClassDefFoundError e2) { // working on an old version of java, go with default quietly
             if (!toldYouOnce) log.info("Falling back to defailt resolver due to JVM version");
