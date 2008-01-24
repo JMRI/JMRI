@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.6 2008-01-04 06:39:48 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.7 2008-01-24 22:14:19 jacobsen Exp $ -->
 <html lang="en">
 
 <head>
@@ -47,6 +47,7 @@ chronological listing is
 <a href="docketlisting">below</a>.
 <UL>
 <LI>(Corrected) <A HREF="AppellantsBrief.pdf">JMRI Appeal Brief</a>, 12/21/2007
+<a id="amici"/>
 <LI>(Proposed) <a href="ccc_brf.pdf">Amicus Brief</a>
 by Creative Commons Corp, The Linux Foundation, The Open Source Initiative, Software Freedom Law Center, 
 Yet Another Society and Wikimedia Foundation in support of Plaintiff-Appellant Urging Reversal
