@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE xsl:stylesheet SYSTEM "C:\JBuilder2007\workspace\xml\DTD\consist-roster-config.dtd">
-<!-- $Id: consistRoster.xsl,v 1.3 2008-01-24 18:22:00 dan_boudreau Exp $ -->
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- $Id: consistRoster.xsl,v 1.4 2008-01-24 18:59:56 dan_boudreau Exp $ -->
 
 <!-- Stylesheet to convert a JMRI  consist roster XML file into displayable HTML -->
 
