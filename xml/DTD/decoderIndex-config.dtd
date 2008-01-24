@@ -1,5 +1,5 @@
 <!-- Defines XML documenting the list of available decoder definitions -->
-<!-- $Revision: 1.20 $ -->
+<!-- $Revision: 1.21 $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
 <!--                                                                        -->
@@ -21,6 +21,8 @@
 
 <!-- Match NMRA codes to manufacturer names & vice versa -->
 <!ELEMENT mfgList (manufacturer*) >
+<!ATTLIST mfgList nmraListDate	CDATA #REQUIRED>  <!-- date on the NMRA list used for last update   -->
+<!ATTLIST mfgList updated		CDATA #REQUIRED>  <!-- date the file last updated   -->
 
 <!ELEMENT manufacturer EMPTY >
 <!ATTLIST manufacturer mfg		CDATA #REQUIRED>  <!-- mfg name used for identification   -->
@@ -66,6 +68,7 @@
 <!ATTLIST model formFactor          CDATA #IMPLIED >  <!-- mfg name for specific shape, etc -->
 <!-- NMRA Conformance status -->
 <!ATTLIST model nmraWarrant  (yes|no) "no" >
+<!ATTLIST model nmraWarrantStart CDATA #IMPLIED >  <!-- issue date of current warrant, if known -->
 <!ATTLIST model nmraWarrantEnd CDATA #IMPLIED >  <!-- end date of current warrant, if any -->
 <!-- wiring specification -->
 <!ATTLIST model connector ( unspecified | NMRAsmall | 9pin |
