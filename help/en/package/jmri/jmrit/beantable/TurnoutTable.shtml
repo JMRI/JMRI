@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TurnoutTable.shtml,v 1.3 2008-01-24 04:17:24 jacobsen Exp $ -->
+<!-- $Id: TurnoutTable.shtml,v 1.4 2008-01-24 04:49:47 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Turnout Table Help</TITLE>
@@ -60,23 +60,24 @@ feedback mode, enter sensors for feedback, invert, lock, and delete it.</P>
 	<DT>Locked</DT>
 	<DD>When checked, the turnout is locked. There are two types of
 	locks supported by JMRI, cab lockout and pushbutton lockout. When a
-	turnout is locked, only turnout commands from JMRI to move a turnout
-	will work. Cabs and pushbuttons on the layout are disabled. You can
+	turnout is locked, only turnout commands from JMRI will move the turnout.
+	Cabs and/or pushbuttons on the layout are disabled. You can
 	selectively decide if you want "Both" cabs and pushbuttons locked,
 	"Cabs only", or "Pushbuttons only". Click the "Show lock information"
 	box on the lower edge of the table for the lock options. Not all
 	stationary decoders support pushbutton lockout, and not all systems
 	support cab lockout. Turnouts that can not be locked have grayed out
-	boxes and can not be checked. See <A HREF="#NCE Turnout lock feature">NCE
-	Turnout lock feature</A> below.</DD>
+	boxes and can not be checked. See 
+	<A HREF="#Turnout lock feature">Turnout lock feature</A>
+	below.</DD>
 
 	<DT>Feedback</DT>
 	<DD>This shows the known state of a turnout.</DD>
 
 	<DT>Mode</DT>
 	<DD>The pull down boxes allow you to select the method of
-	operation for a turnout. See <A HREF="#JMRI:Turnout Feedback">JMRI:
-	Turnout Feedback</A> below.</DD>
+	operation for a turnout. See 
+	<A HREF="#Turnout Feedback">Turnout Feedback</A> below.</DD>
 
 	<DT>Sensor 1</DT>
 	<DD>Shows the system name of the optional sensor that provides the
@@ -89,7 +90,7 @@ feedback mode, enter sensors for feedback, invert, lock, and delete it.</P>
 	system name of Sensor 2 for a turnout.</DD>
 
 	<DT><A NAME="Lock Mode"></A>Lock Mode</DT>
-	<DD>Shows which lockouts are active for this turnout. "Both" means
+	<DD>Shows which lockouts, if any, are active for this turnout. "Both" means
 	that cabs and pushbuttons will be locked out if the lock is active.
 	"Cabs only" means that cabs will be locked out, but pushbuttons will
 	continue to work when the lock is active. And "Pushbuttons only" means
@@ -99,11 +100,19 @@ feedback mode, enter sensors for feedback, invert, lock, and delete it.</P>
 	control CV register. You must unlock the turnout before shutting down
 	the JMRI program if you want to restore the operation of the
 	pushbuttons. Cab lockout automatically terminates when the JMRI program
-	is shut down.</DD>
+	is shut down. For more information on this, 
+	<A href="#Turnout lock feature">see below<a>.</DD>
 
-	<DT>Decoder</DT>
-	<DD>Shows which decoder the turnout is using. Currently the
-	program only supports NCE revision C and CVP accessory decoders. CVP
+	<DT><a id="decodercol">Decoder</a></DT>
+	<DD>When you're using the lock feature, the program needs
+	to know what type of DCC decoder is in use so it can handle it properly.
+	If you're not using the lock feature, 
+	don't bother with this field;
+	JMRI is capable of commanding any type of accessory decoder
+	to move back and forth.
+	<P>Currently the
+	program only supports lock mode for
+	NCE revision C and CVP accessory decoders. CVP
 	decoders support one or two pushbutton operation. Select the number of
 	pushbuttons used to operate that specific turnout. CVP_AD4_1B means one
 	button, and CVP_AD4_2B means two buttons. We recommend that you enter
@@ -123,7 +132,7 @@ feedback mode, enter sensors for feedback, invert, lock, and delete it.</P>
 
 </DL>
 
-<H3><A NAME="JMRI:Turnout Feedback"></A>JMRI: Turnout Feedback</H3>
+<H3><A NAME="Turnout Feedback"></A>Turnout Feedback</H3>
 
 <P>Model railroaders want different things when it comes to knowing
 the status of the turnouts on their layout. Some are quite happy to say
@@ -207,9 +216,9 @@ with feedback:</P>
 	<DD>Currently only available for LocoNet turnouts, this informs
 	the program that the turnout is being driven by a Digitrax DS54 with a
 	microswitch attached to the switch lead. For more information, see the
-	JMRI <A
-		HREF="http://jmri.sourceforge.net/doc/Technical/loconet/DS54.html">DS54</A>
-	examples page on the JMRI website.</DD>
+	JMRI 
+	<A HREF="../../../../html/hardware/loconet/DS54.shtml">DS54</A>
+	examples page.</DD>
 
 	<DT>EXACT</DT>
 	<DD>Currently only available for LocoNet turnouts, this informs
@@ -222,19 +231,43 @@ with feedback:</P>
 </DL>
 
 <BR>
-<H3><A NAME="NCE Turnout lock feature"></A>NCE Turnout lock feature</H3>
+<H3><A NAME="Turnout lock feature"></A>Turnout lock feature</H3>
 
 <P>The turnout lock feature allows you to selectively disable
-accessory (turnouts) commands from cabs. By locking a turnout, the JMRI
-program will monitor the turnout's accessory address and if it detects a
-change command from a cab, will cancel the command immediately by
+accessory (turnouts) commands from cabs and/or locally-wired pushbuttons. 
+
+<h4>Cab Lockout</h4>
+To do the cab lockout, JMRI works with the DCC system to 
+prevent people from changing the position of a locked turnout.
+JMRI can only do this with some DCC systems.
+To do it, the JMRI
+program monitors the turnout's accessory address and if it detects a
+change command from a cab, will cancel the command by immediately
 sending out the opposite command to the turnout.</P>
-<P>To use this feature you must select MONITORING as the feedback
+<P>To use this feature with an NCE command station, 
+you must select MONITORING as the feedback
 mode for the turnout and the NCE command station must have the 2007 or
 newer EPROM.</P>
+
+<h4>Pushbutton Lockout</h4>
+JMRI can also work with certain types of DCC accessory decoders
+to lock out their locally-wired pushbuttons. To do this, JMRI sends
+DCC commands to the decoder.  These commands are decoder-type specific, so
+the program needs to know what type of accessory decoder operates each lockable
+turnout. (There is no industry standard for the lock/messages, unlike for the messages
+to move the turnout back and forth, so we have to create the right custom ones 
+for each type)  The various types are selected in the 
+<a href="#decodercol">"Decoder" column</a>
+of the Turnout Table.
+
+
+<h4>Locking Routes</h4>
 <P>To help you select a set of turnouts to lock, a route can be
 locked. All turnouts that are being monitored by the JMRI program and
-are included in the route will be locked.</P>
+are included in the route will be locked.
+See the 
+<a href="RouteTable.shtml">Route page</a>
+for more information on this.</P>
 
 <!--#include virtual="/Footer" -->
 </BODY>

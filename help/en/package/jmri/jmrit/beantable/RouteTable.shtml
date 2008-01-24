@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: RouteTable.shtml,v 1.3 2007-11-23 06:45:57 jacobsen Exp $ -->
+<!-- $Id: RouteTable.shtml,v 1.4 2008-01-24 04:49:47 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Route Table Help</TITLE>
@@ -57,10 +57,15 @@ route.</P>
 
 	<DT>Locked</DT>
 	<DD>When checked the route is locked. This means that turnouts
+	included in the route
 	that can be locked by JMRI will not respond to commands from cabs or
-	pushbuttons to change. For more information see Turnout Table, <A
-		HREF="TurnoutTable.shtml#Lock Mode">Lock Mode</A> and <A
-		HREF="#NCE turnout lock feature"> NCE turnout lock feature</A>.</DD>
+	pushbuttons to change. For more information see the
+	    <A HREF="TurnoutTable.shtml#Lock Mode">Lock Mode section</A> 
+	    on the
+	    <A HREF="TurnoutTable.shtml">Turnout Table page</A> 
+        and the 
+        <A HREF="#Turnout lock feature">section on the turnout lock feature</A>
+	    below.</DD>
 
 	<DT>Edit</DT>
 	<DD>Push this button to edit the route. For more information see <A
@@ -73,21 +78,16 @@ route.</P>
 </DL>
 
 <BR>
-<H3><A NAME="NCE turnout lock feature">NCE turnout lock feature</A></H3>
+<H3><A NAME="Turnout lock feature">Turnout lock feature</A></H3>
 
 <P>The turnout lock feature allows you to selectively disable
-accessory (turnouts) commands from cabs. By locking a turnout, the JMRI
-program will monitor the turnout's accessory address and if it detects a
-change command from a cab, will cancel the command immediately by
-sending out the opposite command to the turnout.</P>
-<P>To help you select a set of turnouts to lock, a route can be
+accessory (turnouts) commands from cabs and/or locally-wired pushbuttons. 
+To help you select a set of turnouts to lock, a route can be
 locked. All turnouts that are being monitored by the JMRI program and
 are included in the route will be locked. In the route edit window, an
 optional lock control turnout is available. You can use the lock control
 turnout to enable or disable the locks from a panel icon. The lock
-control turnout can be an internal or external turnout. To use this new
-feature the system must be NCE using 2007 EPROM or newer, and the
-turnouts to be locked must use MONITORING for feedback.</P>
+control turnout can be an internal or external turnout. </P>
 
 <!--#include virtual="/Footer" -->
 </BODY>
