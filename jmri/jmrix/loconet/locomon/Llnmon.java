@@ -35,7 +35,7 @@ import jmri.util.StringUtil;
  * used with permission.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2003
- * @version			$Revision: 1.40 $
+ * @version			$Revision: 1.41 $
  */
 public class Llnmon {
 
@@ -1221,6 +1221,21 @@ public class Llnmon {
                     }
                     // end programming track block
 
+                } else if (slot == LnConstants.CFG_SLOT) {
+                    /**************************************************
+                     * Configuration slot, holding op switches
+                     **************************************************/
+                        logString = mode
+                            +" configuration slot: (C=1, T=0)\n"
+                            +"OpSw   1-8: "+jmri.util.StringUtil.to8Bits(l.getElement(3), false)+"\n"
+                            +"OpSw  9-16: "+jmri.util.StringUtil.to8Bits(l.getElement(4), false)+"\n"
+                            +"OpSw 17-24: "+jmri.util.StringUtil.to8Bits(l.getElement(5), false)+"\n"
+                            +"OpSw 25-32: "+jmri.util.StringUtil.to8Bits(l.getElement(6), false)+"\n"
+                            +"OpSw 33-40: "+jmri.util.StringUtil.to8Bits(l.getElement(8), false)+"\n"
+                            +"OpSw 41-48: "+jmri.util.StringUtil.to8Bits(l.getElement(9), false)+"\n"
+                            +"OpSw 49-56: "+jmri.util.StringUtil.to8Bits(l.getElement(10), false)+"\n"
+                            +"OpSw 57-64: "+jmri.util.StringUtil.to8Bits(l.getElement(11), false)+"\n";
+                            
                 } else {
                     /**************************************************
                      * normal slot read/write message - see info above *

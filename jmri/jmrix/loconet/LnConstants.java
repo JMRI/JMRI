@@ -6,8 +6,8 @@ package jmri.jmrix.loconet;
  * LnConstants.java
  *
  * Description:		Constants to represent values seen in LocoNet traffic
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version $Revision: 1.8 $
+ * @author			Bob Jacobsen   Copyright (C) 2001, 2008
+ * @version $Revision: 1.9 $
 
  * Note that the values in this class have been taken from the llnmom C program of
  * Ron W. Auld, which included some work of John Kabat.  The symbol names
@@ -168,6 +168,7 @@ public final static int GTRK_POWER        = 0x02;      /* 1=DCC packets are ON i
 
 public final static int FC_SLOT           = 0x7b;      /* Fast clock is in this slot                           */
 public final static int PRG_SLOT          = 0x7c;      /* This slot communicates with the programming track    */
+public final static int CFG_SLOT          = 0x7f;      /* This slot holds configuration bits                   */
 
 /* values and macros to decode programming messages */
 public final static int PCMD_RW           = 0x40;      /* 1 = write, 0 = read                                  */
