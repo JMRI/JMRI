@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: consistRoster.xsl,v 1.7 2008-01-25 19:27:19 dan_boudreau Exp $ -->
+<!-- $Id: consistRoster.xsl,v 1.8 2008-01-25 22:01:13 dan_boudreau Exp $ -->
 
 <!-- Stylesheet to convert a JMRI consist roster XML file into displayable HTML -->
 
@@ -95,6 +95,7 @@
 		" loco direction="
 		<xsl:value-of select="@locoDir" />
 		"
+		<br />
 	</xsl:template>
 
 </xsl:stylesheet>
