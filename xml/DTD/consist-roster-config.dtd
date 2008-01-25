@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a consist roster -->
-<!-- $Id: consist-roster-config.dtd,v 1.3 2008-01-24 18:47:31 dan_boudreau Exp $ -->
+<!-- $Id: consist-roster-config.dtd,v 1.4 2008-01-25 18:40:40 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -17,13 +17,7 @@
 
 <!ELEMENT roster (consist*)>
 
-<!ELEMENT consist (eng1*)>
-<!ELEMENT consist (eng2*)>
-<!ELEMENT consist (eng3*)>
-<!ELEMENT consist (eng4*)>
-<!ELEMENT consist (eng5*)>
-<!ELEMENT consist (eng6*)>
-
+<!ELEMENT consist (eng+)>
 
 <!-- Key used in lists, etc - User identification for this loco -->
 <!ATTLIST consist id	CDATA #REQUIRED>          
@@ -39,28 +33,7 @@
 <!ATTLIST consist model			CDATA #IMPLIED>                   
 <!ATTLIST consist comment		CDATA #IMPLIED>
 
-<!ATTLIST eng1 dccLocoAddress	CDATA #IMPLIED>          
-<!ATTLIST eng1 longAddress		( yes | no) "yes">          
-<!ATTLIST eng1 locoDir			CDATA #IMPLIED>      
-
-<!ATTLIST eng2 dccLocoAddress	CDATA #IMPLIED>          
-<!ATTLIST eng2 longAddress		( yes | no) "yes">          
-<!ATTLIST eng2 locoDir			CDATA #IMPLIED>       
-
-<!ATTLIST eng3 dccLocoAddress	CDATA #IMPLIED>          
-<!ATTLIST eng3 longAddress		( yes | no) "yes">          
-<!ATTLIST eng3 locoDir			CDATA #IMPLIED>       
-
-<!ATTLIST eng4 dccLocoAddress	CDATA #IMPLIED>          
-<!ATTLIST eng4 longAddress		( yes | no) "yes">          
-<!ATTLIST eng4 locoDir			CDATA #IMPLIED>       
-
-<!ATTLIST eng5 dccLocoAddress	CDATA #IMPLIED>          
-<!ATTLIST eng5 longAddress		( yes | no) "yes">          
-<!ATTLIST eng5 locoDir			CDATA #IMPLIED>       
-
-<!ATTLIST eng6 dccLocoAddress	CDATA #IMPLIED>          
-<!ATTLIST eng6 longAddress		( yes | no) "yes">          
-<!ATTLIST eng6 locoDir			CDATA #IMPLIED>          
-
-
+<!ATTLIST eng locoName			CDATA #IMPLIED>          
+<!ATTLIST eng dccLocoAddress	CDATA #IMPLIED>          
+<!ATTLIST eng longAddress		( yes | no) "yes">          
+<!ATTLIST eng locoDir			CDATA #IMPLIED>      
