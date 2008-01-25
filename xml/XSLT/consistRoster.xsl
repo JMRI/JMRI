@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: consistRoster.xsl,v 1.4 2008-01-24 18:59:56 dan_boudreau Exp $ -->
+<!-- $Id: consistRoster.xsl,v 1.5 2008-01-25 05:48:35 dan_boudreau Exp $ -->
 
 <!-- Stylesheet to convert a JMRI  consist roster XML file into displayable HTML -->
 
@@ -71,31 +71,31 @@ Comment="<xsl:value-of select="@comment"/>"
 long address="<xsl:value-of select="@longAddress"/>"
 loco direction="<xsl:value-of select="@locoDir"/>"
 </xsl:template>
-
+<br/>
 <xsl:template match="eng2">Rear loco address: 
 "<xsl:value-of select="@dccLocoAddress"/>"
 long address="<xsl:value-of select="@longAddress"/>"
 loco direction="<xsl:value-of select="@locoDir"/>" 
 </xsl:template>
-
+<br/>
 <xsl:template match="eng3">Mid 1 loco address: 
 "<xsl:value-of select="@dccLocoAddress"/>"
 long address="<xsl:value-of select="@longAddress"/>"
 loco direction="<xsl:value-of select="@locoDir"/>" 
 </xsl:template>
-
+<br/>
 <xsl:template match="eng4">Mid 2 loco address: 
 "<xsl:value-of select="@dccLocoAddress"/>"
 long address="<xsl:value-of select="@longAddress"/>"
 loco direction="<xsl:value-of select="@locoDir"/>" 
 </xsl:template>
-
+<br/>
 <xsl:template match="eng5">Mid 3 loco address: 
 "<xsl:value-of select="@dccLocoAddress"/>"
 long address="<xsl:value-of select="@longAddress"/>"
 loco direction="<xsl:value-of select="@locoDir"/>" 
 </xsl:template>
-
+<br/>
 <xsl:template match="eng6">Mid 4 loco address: 
 "<xsl:value-of select="@dccLocoAddress"/>"
 long address="<xsl:value-of select="@longAddress"/>"
