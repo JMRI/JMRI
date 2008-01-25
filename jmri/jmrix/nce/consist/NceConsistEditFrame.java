@@ -44,7 +44,7 @@ import java.util.List;
  * mid eng4) :0000
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 
 public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
@@ -103,8 +103,11 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 	private static final String CANCEL = "Cancel";
 	private static final String SAVE = "Save";
 	private static final String LOAD = "Load";
-	private static final String EMPTY = "";
+	
+	private static final String EMPTY = "";				// engine field values
 	private static final String REPLACE_LOCO = "NONE";
+	
+	private static final String CLEARED = "0 <cleared>";
 
 	private static final String ToolTipAdd = "Press to add engine to consist";
 	private static final String ToolTipClear = "Press to kill consist";
@@ -411,7 +414,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		if (ae.getSource() == clearCancelButton) {
 			// button can be Clear or Cancel
 			if (clearCancelButton.getText().equals(CLEAR)) {
-				updateRoster("0");
+				updateRoster(CLEARED);
 				// set refresh flag to update panel
 				refresh = true;
 				killConsist();
@@ -436,6 +439,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 				saveLoadButton.setEnabled(false);
 				return;
 			}
+			enableAllEngRows (false);
 			updateRoster(consistTextField.getText());
 			if (saveLoadButton.getText().equals(LOAD)) {
 				consistNum = validConsist(consistTextField.getText());
@@ -784,23 +788,25 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 	private void loadRosterEntry(String entry) {
 		cre = ConsistRoster.instance().entryFromTitle(entry);
 		consistTextField.setText(cre.getConsistNumber());
-		int cNum = Integer.parseInt(cre.getConsistNumber());
+		int cNum = validConsist(cre.getConsistNumber());
 
-		if (0 < cNum  && cNum < 128) {
+		if (0 < cNum) {
 			log.debug("verify consist matches roster selection");
 			verifyRosterMatch = true;
 			consistNum = getConsist();
-		} else if (cNum == 0) {
-			log.debug("search for empty consist");
-			consistTextField.setText(Integer.toString(emptyConsistSearchStart));
-			emptyConsistSearch = true;
-			consistSearchNext = true;
-			consistNum = getConsist();
-			loadFullRoster (cre);
-			saveLoadButton.setEnabled(false);
 		} else {
-			log.error("roster consist number is out of range: " + consistNum);
-			consistReply.setText(ERROR);
+			if (cre.getConsistNumber().equals(CLEARED) || cre.getConsistNumber().equals("0")){
+				log.debug("search for empty consist");
+				consistTextField.setText(Integer.toString(emptyConsistSearchStart));
+				emptyConsistSearch = true;
+				consistSearchNext = true;
+				consistNum = getConsist();
+				loadFullRoster (cre);
+				saveLoadButton.setEnabled(false);
+			} else {
+				log.error("roster consist number is out of range: " + consistNum);
+				consistReply.setText(ERROR);
+			}
 		}
 	}
 	
@@ -880,15 +886,17 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 				&& engTextField6.getText().equals(cre.getEng6DccAddress())
 						){
 			// match!  Only load the elements needed
-			textConRoadName.setText(cre.getRoadName());
-			textConRoadNumber.setText(cre.getRoadNumber());	
-			textConModel.setText(cre.getModel());	
-			dirButton1.setText(directionWord(cre.getEng1Direction()));
-			dirButton2.setText(directionWord(cre.getEng2Direction()));
-			dirButton3.setText(directionWord(cre.getEng3Direction()));
-			dirButton4.setText(directionWord(cre.getEng4Direction()));
-			dirButton5.setText(directionWord(cre.getEng5Direction()));
-			dirButton6.setText(directionWord(cre.getEng6Direction()));
+			if (newConsist){
+				textConRoadName.setText(cre.getRoadName());
+				textConRoadNumber.setText(cre.getRoadNumber());	
+				textConModel.setText(cre.getModel());	
+				dirButton1.setText(directionWord(cre.getEng1Direction()));
+				dirButton2.setText(directionWord(cre.getEng2Direction()));
+				dirButton3.setText(directionWord(cre.getEng3Direction()));
+				dirButton4.setText(directionWord(cre.getEng4Direction()));
+				dirButton5.setText(directionWord(cre.getEng5Direction()));
+				dirButton6.setText(directionWord(cre.getEng6Direction()));
+			}
 			return true;
 		} else {
 			return false;
@@ -903,9 +911,8 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 	 * @return true if there was at least one match
 	 */
 	private boolean consistRosterPartialMatch (ConsistRosterEntry cre){
-		boolean rFlag = false;
 		if (!enablePartialMatch)
-			return rFlag;
+			return false;
 		// does eng1 match?
 		if (consistTextField.getText().equals(cre.getConsistNumber()) 
 				&& engTextField1.getText().equals(cre.getEng1DccAddress())){
@@ -913,9 +920,9 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 			textConRoadName.setText(cre.getRoadName());
 			textConRoadNumber.setText(cre.getRoadNumber());	
 			textConModel.setText(cre.getModel());	
-			rFlag = true;
 		} else {
-			return rFlag;
+			consistReply.setText(UNKNOWN);
+			return false;
 		}
 		if (engTextField2.getText().equals(cre.getEng2DccAddress())){
 			dirButton2.setText(directionWord(cre.getEng2Direction()));
@@ -933,7 +940,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 			dirButton6.setText(directionWord(cre.getEng6Direction()));
 		}
 		consistReply.setText(MODIFIED);
-		return rFlag;
+		return true;
 	}
 
 	protected List consistList = new ArrayList();
@@ -979,6 +986,11 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 				if (JOptionPane.showConfirmDialog(null, "Consist " + id
 						+ " already exists, update?" + getRosterText(cre),
 						"Modify roster?", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
+					// update consist if command was to clear
+					if (consistNumber.equals(CLEARED)){
+						cre.setConsistNumber(consistNumber);
+						writeRosterFile();
+					}
 					return false;
 				}
 			}
@@ -1092,11 +1104,42 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 			dirButton5.setText(QUESTION);
 		if (engTextField6.getText().equals(EMPTY))
 			dirButton6.setText(QUESTION);
-		return true;
+		if (saveLoadButton.getText().equals(LOAD))
+			return true;
+		else if (exactMatch)
+			// no need to save, exact match!
+			return false;
+		else
+			return true;
 	}
 	
 	// mimic NCE mid engine shift when there's empties
-	private void loadShift (){
+	private void loadShift() {
+		for (int i = 0; i < 3; i++) {
+			shiftOneLine(engTextField5, adrButton5, dirButton5, engTextField6,
+					adrButton6, dirButton6);
+			shiftOneLine(engTextField4, adrButton4, dirButton4, engTextField5,
+					adrButton5, dirButton5);
+			shiftOneLine(engTextField3, adrButton3, dirButton3, engTextField4,
+					adrButton4, dirButton4);
+			shiftOneLine(engTextField2, adrButton2, dirButton2, engTextField3,
+					adrButton3, dirButton3);
+		}
+	}
+	
+	private void shiftOneLine(JTextField engTextFieldLow, JButton adrButtonLow,
+			JButton dirButtonLow, JTextField engTextFieldHigh,
+			JButton adrButtonHigh, JButton dirButtonHigh) {
+		if (engTextFieldLow.getText().equals(EMPTY) && !engTextFieldHigh.getText().equals((EMPTY))){
+			engTextFieldLow.setText(engTextFieldHigh.getText());
+			adrButtonLow.setText(adrButtonHigh.getText());
+			dirButtonLow.setText(dirButtonHigh.getText());
+			engTextFieldHigh.setText(EMPTY);
+		} else {
+			return;
+		}
+			
+				
 
 	}
 
@@ -1388,9 +1431,10 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		}
 	}
 	
+	private boolean exactMatch = false;
+	
 	private void checkForRosterMatch(){
-		if (!newConsist && !verifyRosterMatch)
-			return;
+		exactMatch = false;
 		if (!verifyRosterMatch)
 			cre = ConsistRoster.instance().entryFromTitle(engTextField1.getText());
 		if (cre == null){
@@ -1403,6 +1447,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 			return;
 		}
 		if (consistRosterMatch(cre)){
+			exactMatch = true;
 			// exact match!
 			if (verifyRosterMatch)
 				queueError(WARN_CONSIST_ALREADY_LOADED);
@@ -1795,6 +1840,31 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 			}
 		});
 	}
+	
+	private void enableAllEngRows (boolean flag){
+		enableEngRow(flag, engTextField1, locoRosterBox1,
+				adrButton1, dirButton1, cmdButton1);
+		enableEngRow(flag, engTextField2, locoRosterBox2,
+				adrButton2, dirButton2, cmdButton2);
+		enableEngRow(flag, engTextField3, locoRosterBox3,
+				adrButton3, dirButton3, cmdButton3);
+		enableEngRow(flag, engTextField4, locoRosterBox4,
+				adrButton4, dirButton4, cmdButton4);
+		enableEngRow(flag, engTextField5, locoRosterBox5,
+				adrButton5, dirButton5, cmdButton5);
+		enableEngRow(flag, engTextField6, locoRosterBox6,
+				adrButton6, dirButton6, cmdButton6);
+	}
+	
+	private void enableEngRow(boolean flag, JTextField engTextField,
+			JComboBox locoRosterBox, JButton adrButton, JButton dirButton,
+			JButton cmdButton) {
+		engTextField.setEnabled(flag);
+		locoRosterBox.setEnabled(flag);
+		adrButton.setEnabled(flag);
+		dirButton.setEnabled(flag);
+		cmdButton.setEnabled(flag);
+	}
 
 	// initialize engine fields
 	private void initEngFields() {
@@ -1934,7 +2004,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 						"\n Do you want to reset it so you can load next time?",
 						"Reset NCE consist number?",
 						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-					cre.setConsistNumber("0");
+					cre.setConsistNumber(CLEARED);
 				}
 				changeButtons (false);
 				saveLoadButton.setEnabled(canLoad());
