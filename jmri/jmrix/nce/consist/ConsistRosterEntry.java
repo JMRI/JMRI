@@ -10,6 +10,7 @@ import jmri.jmrit.symbolicprog.VariableTableModel;
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
 import jmri.util.davidflanagan.HardcopyWriter;
@@ -36,7 +37,7 @@ import org.jdom.Element;
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2004, 2005
  * @author Dennis Miller Copyright 2004
  * @author Daniel Boudreau (C) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * @see ConsistRoster
  * 
  */
@@ -169,45 +170,46 @@ public class ConsistRosterEntry {
         if ((a = e.getAttribute("model")) != null )  _model = a.getValue();
         if ((a = e.getAttribute("comment")) != null )  _comment = a.getValue();
 
-        org.jdom.Element eng1 = e.getChild("eng1");
-        if (eng1 != null){
-        	if ((a = eng1.getAttribute("dccLocoAddress")) != null )  _eng1DccAddress = a.getValue();
-        	if ((a = eng1.getAttribute("longAddress")) != null )  setEng1LongAddress (a.getValue().equals("yes"));
-        	if ((a = eng1.getAttribute("locoDir")) != null )  _eng1Direction = (a.getValue());
-        } else {
+        List elementList = e.getChildren("eng");
+        for (int i = 0; i < elementList.size(); i++){
+        	String locoName  = ((Element)(elementList.get(i))).getAttribute("locoName").getValue();
+
+        	if (locoName.equals("eng1")){
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("dccLocoAddress")) != null )  _eng1DccAddress = a.getValue();
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("longAddress")) != null )  setEng1LongAddress (a.getValue().equals("yes"));
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("locoDir")) != null )  _eng1Direction = (a.getValue());
+        	} 
+        	if (locoName.equals("eng2")){
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("dccLocoAddress")) != null )  _eng2DccAddress = a.getValue();
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("longAddress")) != null )  setEng2LongAddress (a.getValue().equals("yes"));
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("locoDir")) != null )  _eng2Direction = (a.getValue());
+        	} 
+        	if (locoName.equals("eng3")){
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("dccLocoAddress")) != null )  _eng3DccAddress = a.getValue();
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("longAddress")) != null )  setEng3LongAddress (a.getValue().equals("yes"));
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("locoDir")) != null )  _eng3Direction = (a.getValue());
+        	}
+        	if (locoName.equals("eng4")){
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("dccLocoAddress")) != null )  _eng4DccAddress = a.getValue();
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("longAddress")) != null )  setEng4LongAddress (a.getValue().equals("yes"));
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("locoDir")) != null )  _eng4Direction = (a.getValue());
+        	}
+        	if (locoName.equals("eng5")){
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("dccLocoAddress")) != null )  _eng5DccAddress = a.getValue();
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("longAddress")) != null )  setEng5LongAddress (a.getValue().equals("yes"));
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("locoDir")) != null )  _eng5Direction = (a.getValue());
+        	}
+        	if (locoName.equals("eng6")){
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("dccLocoAddress")) != null )  _eng6DccAddress = a.getValue();
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("longAddress")) != null )  setEng6LongAddress (a.getValue().equals("yes"));
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("locoDir")) != null )  _eng6Direction = (a.getValue());
+        	}
+        }
+        if (_eng1DccAddress.equals("")){
         	log.warn("no eng1 attribute in consist element when reading ConsistRoster");
         }
-        org.jdom.Element eng2 = e.getChild("eng2");
-        if (eng2 != null){
-        	if ((a = eng2.getAttribute("dccLocoAddress")) != null )  _eng2DccAddress = a.getValue();
-        	if ((a = eng2.getAttribute("longAddress")) != null )  setEng2LongAddress (a.getValue().equals("yes"));
-        	if ((a = eng2.getAttribute("locoDir")) != null )  _eng2Direction = (a.getValue());
-        } else {
+        if (_eng2DccAddress.equals("")){
         	log.warn("no eng2 attribute in consist element when reading ConsistRoster");
-        }
-        org.jdom.Element mid;
-        if ((mid = e.getChild("eng3")) != null ){
-            if ((a = mid.getAttribute("dccLocoAddress")) != null )  _eng3DccAddress = a.getValue();
-            if ((a = mid.getAttribute("longAddress")) != null )  setEng3LongAddress (a.getValue().equals("yes"));
-            if ((a = mid.getAttribute("locoDir")) != null )  _eng3Direction = (a.getValue());
-        }
-        
-        if ((mid = e.getChild("eng4")) != null ){
-            if ((a = mid.getAttribute("dccLocoAddress")) != null )  _eng4DccAddress = a.getValue();
-            if ((a = mid.getAttribute("longAddress")) != null )  setEng4LongAddress (a.getValue().equals("yes"));
-            if ((a = mid.getAttribute("locoDir")) != null )  _eng4Direction = (a.getValue());
-        }
-        
-        if ((mid = e.getChild("eng5")) != null ){
-            if ((a = mid.getAttribute("dccLocoAddress")) != null )  _eng5DccAddress = a.getValue();
-            if ((a = mid.getAttribute("longAddress")) != null )  setEng5LongAddress (a.getValue().equals("yes"));
-            if ((a = mid.getAttribute("locoDir")) != null )  _eng5Direction = (a.getValue());
-        }
-        
-        if ((mid = e.getChild("eng6")) != null ){
-            if ((a = mid.getAttribute("dccLocoAddress")) != null )  _eng6DccAddress = a.getValue();
-            if ((a = mid.getAttribute("longAddress")) != null )  setEng6LongAddress (a.getValue().equals("yes"));
-            if ((a = mid.getAttribute("locoDir")) != null )  _eng6Direction = (a.getValue());
         }
     }
 
@@ -225,20 +227,23 @@ public class ConsistRosterEntry {
         e.setAttribute("model",getModel());
         e.setAttribute("comment",getComment());
         
-        org.jdom.Element eng1 = new org.jdom.Element("eng1");
+        org.jdom.Element eng1 = new org.jdom.Element("eng");
+        eng1.setAttribute("locoName","eng1");
         eng1.setAttribute("dccLocoAddress",getEng1DccAddress());
         eng1.setAttribute("longAddress",isEng1LongAddress()?"yes":"no");
         eng1.setAttribute("locoDir",getEng1Direction());
         e.addContent(eng1);
         
-        org.jdom.Element eng2 = new org.jdom.Element("eng2");
+        org.jdom.Element eng2 = new org.jdom.Element("eng");
+        eng2.setAttribute("locoName","eng2");
         eng2.setAttribute("dccLocoAddress",getEng2DccAddress());
         eng2.setAttribute("longAddress",isEng2LongAddress()?"yes":"no");
         eng2.setAttribute("locoDir",getEng2Direction());
         e.addContent(eng2);
          
         if (!getEng3DccAddress().equals("")){
-        	org.jdom.Element eng3 = new org.jdom.Element("eng3");
+        	org.jdom.Element eng3 = new org.jdom.Element("eng");
+        	eng3.setAttribute("locoName","eng3");
         	eng3.setAttribute("dccLocoAddress",getEng3DccAddress());
         	eng3.setAttribute("longAddress",isEng3LongAddress()?"yes":"no");
         	eng3.setAttribute("locoDir",getEng3Direction());
@@ -246,7 +251,8 @@ public class ConsistRosterEntry {
         }
 
         if (!getEng4DccAddress().equals("")){
-        	org.jdom.Element eng4 = new org.jdom.Element("eng4");
+        	org.jdom.Element eng4 = new org.jdom.Element("eng");
+        	eng4.setAttribute("locoName","eng4");
         	eng4.setAttribute("dccLocoAddress",getEng4DccAddress());
         	eng4.setAttribute("longAddress",isEng4LongAddress()?"yes":"no");
         	eng4.setAttribute("locoDir",getEng4Direction());
@@ -254,7 +260,8 @@ public class ConsistRosterEntry {
         }
 
         if (!getEng5DccAddress().equals("")){
-        	org.jdom.Element eng5 = new org.jdom.Element("eng5");
+        	org.jdom.Element eng5 = new org.jdom.Element("eng");
+        	eng5.setAttribute("locoName","eng5");
         	eng5.setAttribute("dccLocoAddress",getEng5DccAddress());
         	eng5.setAttribute("longAddress",isEng5LongAddress()?"yes":"no");
         	eng5.setAttribute("locoDir",getEng5Direction());
@@ -262,7 +269,8 @@ public class ConsistRosterEntry {
         }
 
         if (!getEng6DccAddress().equals("")){
-        	org.jdom.Element eng6 = new org.jdom.Element("eng6");
+        	org.jdom.Element eng6 = new org.jdom.Element("eng");
+        	eng6.setAttribute("locoName","eng6");
         	eng6.setAttribute("dccLocoAddress",getEng6DccAddress());
         	eng6.setAttribute("longAddress",isEng6LongAddress()?"yes":"no");
         	eng6.setAttribute("locoDir",getEng6Direction());
