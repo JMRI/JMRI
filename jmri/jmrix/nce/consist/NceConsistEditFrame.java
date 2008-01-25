@@ -44,7 +44,7 @@ import java.util.List;
  * mid eng4) :0000
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 
 public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
@@ -432,21 +432,22 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 				return;
 			// check to see if user modified the roster
 			if (canLoad()){
-				loadShift (); // get rid of empty mids!
 				consistReply.setText(OKAY);
 			} else {
 				consistReply.setText(ERROR);
 				saveLoadButton.setEnabled(false);
 				return;
 			}
-			enableAllEngRows (false);
-			updateRoster(consistTextField.getText());
-			if (saveLoadButton.getText().equals(LOAD)) {
+			enableAllEngRows(false);
+			if (saveLoadButton.getText().equals(LOAD)){ 
+				loadShift (); // get rid of empty mids!
+				updateRoster(consistTextField.getText());
 				consistNum = validConsist(consistTextField.getText());
 				// load right away or verify?
 				if(!verifyAllLocoAddr())
 					fullLoad();
-			}
+			}else if (updateRoster(consistTextField.getText()))
+				saveLoadButton.setEnabled(false);
 			return;
 		}
 
@@ -512,7 +513,8 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		if (ae.getSource() == cmdButton6)
 			modifyLocoFields(locoRosterBox6, engTextField6, adrButton6,
 					dirButton6, cmdButton6);
-		updateRoster(consistTextField.getText());
+		if (updateRoster(consistTextField.getText()))
+			saveLoadButton.setEnabled(false);
 	}
 
 	// one of six loco address type buttons
@@ -1134,6 +1136,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 			engTextFieldLow.setText(engTextFieldHigh.getText());
 			adrButtonLow.setText(adrButtonHigh.getText());
 			dirButtonLow.setText(dirButtonHigh.getText());
+			dirButtonHigh.setText(QUESTION);
 			engTextFieldHigh.setText(EMPTY);
 		} else {
 			return;
