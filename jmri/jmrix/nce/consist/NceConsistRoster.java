@@ -1,4 +1,4 @@
-// ConsistRoster.java
+// NceConsistRoster.java
 
 package jmri.jmrix.nce.consist;
 
@@ -43,13 +43,13 @@ import org.jdom.ProcessingInstruction;
  * 
  * @author Bob Jacobsen Copyright (C) 2001; Dennis Miller Copyright 2004
  * @author Daniel Boudreau (C) 2008
- * @version $Revision: 1.2 $
- * @see ConsistRosterEntry
+ * @version $Revision: 1.1 $
+ * @see NceConsistRosterEntry
  */
-public class ConsistRoster extends XmlFile {
+public class NceConsistRoster extends XmlFile {
 
     /** record the single instance of Roster **/
-    private static ConsistRoster _instance = null;
+    private static NceConsistRoster _instance = null;
 
     public synchronized static void resetInstance() { _instance = null; }
 
@@ -57,11 +57,11 @@ public class ConsistRoster extends XmlFile {
      * Locate the single instance of Roster, loading it if need be
      * @return The valid Roster object
      */
-    public static synchronized ConsistRoster instance() {
+    public static synchronized NceConsistRoster instance() {
         if (_instance == null) {
             if (log.isDebugEnabled()) log.debug("ConsistRoster creating instance");
             // create and load
-            _instance = new ConsistRoster();
+            _instance = new NceConsistRoster();
             try {
                 _instance.readFile(defaultNceConsistRosterFilename());
             } catch (Exception e) {
@@ -76,12 +76,12 @@ public class ConsistRoster extends XmlFile {
      * Add a RosterEntry object to the in-memory Roster.
      * @param e Entry to add
      */
-    public void addEntry(ConsistRosterEntry e) {
+    public void addEntry(NceConsistRosterEntry e) {
         if (log.isDebugEnabled()) log.debug("Add entry "+e);
         int i = _list.size()-1;// Last valid index
         while (i>=0) {
             // compareToIgnoreCase not present in Java 1.1.8
-            if (e.getId().toUpperCase().compareTo(((ConsistRosterEntry)_list.get(i)).getId().toUpperCase()) > 0 )
+            if (e.getId().toUpperCase().compareTo(((NceConsistRosterEntry)_list.get(i)).getId().toUpperCase()) > 0 )
                 break; // I can never remember whether I want break or continue here
             i--;
         }
@@ -95,7 +95,7 @@ public class ConsistRoster extends XmlFile {
      * does not delete the file for the RosterEntry!
      * @param e Entry to remove
      */
-    public void removeEntry(ConsistRosterEntry e) {
+    public void removeEntry(NceConsistRosterEntry e) {
         if (log.isDebugEnabled()) log.debug("Remove entry "+e);
         _list.remove(_list.indexOf(e));
         setDirty(true);
@@ -131,7 +131,7 @@ public class ConsistRoster extends XmlFile {
 				eng6Address, id);
         JComboBox b = new JComboBox();
         for (int i = 0; i < l.size(); i++) {
-            ConsistRosterEntry r = (ConsistRosterEntry)_list.get(i);
+            NceConsistRosterEntry r = (NceConsistRosterEntry)_list.get(i);
             b.addItem(r.titleString());
         }
         return b;
@@ -141,7 +141,7 @@ public class ConsistRoster extends XmlFile {
         List l = matchingList(null, null, null, null, null, null, null, null, null, null);
         box.removeAllItems();
         for (int i = 0; i < l.size(); i++) {
-            ConsistRosterEntry r = (ConsistRosterEntry)_list.get(i);
+            NceConsistRosterEntry r = (NceConsistRosterEntry)_list.get(i);
             box.addItem(r.titleString());
         }
     }
@@ -149,9 +149,9 @@ public class ConsistRoster extends XmlFile {
     /**
      * Return RosterEntry from a "title" string, ala selection in matchingComboBox
      */
-    public ConsistRosterEntry entryFromTitle(String title ) {
+    public NceConsistRosterEntry entryFromTitle(String title ) {
         for (int i = 0; i < numEntries(); i++) {
-            ConsistRosterEntry r = (ConsistRosterEntry)_list.get(i);
+            NceConsistRosterEntry r = (NceConsistRosterEntry)_list.get(i);
             if (r.titleString().equals(title)) return r;
         }
         return null;
@@ -189,7 +189,7 @@ public class ConsistRoster extends XmlFile {
 			String consistNumber, String eng1Address, String eng2Address,
 			String eng3Address, String eng4Address, String eng5Address,
 			String eng6Address, String id ) {
-        ConsistRosterEntry r = (ConsistRosterEntry)_list.get(i);
+        NceConsistRosterEntry r = (NceConsistRosterEntry)_list.get(i);
         if (id != null && !id.equals(r.getId())) return false;
         if (roadName != null && !roadName.equals(r.getRoadName())) return false;
         if (roadNumber != null && !roadNumber.equals(r.getRoadNumber())) return false;
@@ -241,7 +241,7 @@ public class ConsistRoster extends XmlFile {
             //Decoder Comment fields to change any \n characters to <?p?> processor
             //directives so they can be stored in the xml file and converted
             //back when the file is read.
-            ConsistRosterEntry r = (ConsistRosterEntry) (ConsistRosterEntry)_list.get(i);
+            NceConsistRosterEntry r = (NceConsistRosterEntry) (NceConsistRosterEntry)_list.get(i);
             String tempComment = r.getComment();
             String xmlComment = new String();
 
@@ -265,7 +265,7 @@ public class ConsistRoster extends XmlFile {
         root.addContent(values = new Element("roster"));
         // add entries
         for (int i=0; i<numEntries(); i++) {
-            values.addContent(((ConsistRosterEntry)_list.get(i)).store());
+            values.addContent(((NceConsistRosterEntry)_list.get(i)).store());
         }
         writeXML(file, doc);
 
@@ -274,7 +274,7 @@ public class ConsistRoster extends XmlFile {
         //Comment and Decoder comment fields, otherwise it can cause problems in
         //other parts of the program (e.g. in copying a roster)
         for (int i=0; i<numEntries(); i++){
-            ConsistRosterEntry r = (ConsistRosterEntry) (ConsistRosterEntry)_list.get(i);
+            NceConsistRosterEntry r = (NceConsistRosterEntry) (NceConsistRosterEntry)_list.get(i);
             String xmlComment = r.getComment();
             String tempComment = new String();
 
@@ -313,14 +313,14 @@ public class ConsistRoster extends XmlFile {
             List l = root.getChild("roster").getChildren("consist");
             if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" children");
             for (int i=0; i<l.size(); i++) {
-                addEntry(new ConsistRosterEntry((Element)l.get(i)));
+                addEntry(new NceConsistRosterEntry((Element)l.get(i)));
             }
 
             //Scan the object to check the Comment and Decoder Comment fields for
             //any <?p?> processor directives and change them to back \n characters
             for (int i = 0; i < numEntries(); i++) {
                 //Get a RosterEntry object for this index
-                ConsistRosterEntry r = (ConsistRosterEntry) (ConsistRosterEntry) _list.get(i);
+                NceConsistRosterEntry r = (NceConsistRosterEntry) (NceConsistRosterEntry) _list.get(i);
 
                 //Extract the Comment field and create a new string for output
                 String tempComment = r.getComment();
@@ -361,9 +361,9 @@ public class ConsistRoster extends XmlFile {
      * Store the roster in the default place, including making a backup if needed
      */
     public static void writeRosterFile() {
-        ConsistRoster.instance().makeBackupFile(defaultNceConsistRosterFilename());
+        NceConsistRoster.instance().makeBackupFile(defaultNceConsistRosterFilename());
         try {
-            ConsistRoster.instance().writeFile(defaultNceConsistRosterFilename());
+            NceConsistRoster.instance().writeFile(defaultNceConsistRosterFilename());
         } catch (Exception e) {
             log.error("Exception while writing the new ConsistRoster file, may not be complete: "+e);
         }
@@ -415,18 +415,18 @@ public class ConsistRoster extends XmlFile {
      * Notify that the ID of an entry has changed.  This doesn't actually change the
      * ConsistRoster per se, but triggers recreation.
      */
-    public void entryIdChanged(ConsistRosterEntry r) {
+    public void entryIdChanged(NceConsistRosterEntry r) {
         log.debug("EntryIdChanged");
 
         // order may be wrong! Sort
-        ConsistRosterEntry[] rarray = new ConsistRosterEntry[_list.size()];
-        for (int i=0; i<rarray.length; i++) rarray[i] =(ConsistRosterEntry) (_list.get(i));
+        NceConsistRosterEntry[] rarray = new NceConsistRosterEntry[_list.size()];
+        for (int i=0; i<rarray.length; i++) rarray[i] =(NceConsistRosterEntry) (_list.get(i));
         jmri.util.StringUtil.sortUpperCase(rarray);
         for (int i=0; i<rarray.length; i++) _list.set(i,rarray[i]);
 
         firePropertyChange("change", null, r);
     }
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ConsistRoster.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceConsistRoster.class.getName());
 
 }

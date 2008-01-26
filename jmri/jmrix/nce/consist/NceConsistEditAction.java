@@ -30,7 +30,6 @@ public class NceConsistEditAction  extends AbstractAction {
 	
     public void actionPerformed(ActionEvent e) {
 		NceConsistEditFrame f = new NceConsistEditFrame();
-		f.addHelpMenu("package.jmri.jmrix.nce.consist.NceConsistEditFrame", true);
 		try {
 			f.initComponents();
 			}

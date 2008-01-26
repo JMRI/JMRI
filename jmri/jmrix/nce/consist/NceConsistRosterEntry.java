@@ -1,4 +1,4 @@
-// ConsistRosterEntry.java
+// NceConsistRosterEntry.java
 
 package jmri.jmrix.nce.consist;
 
@@ -37,20 +37,20 @@ import org.jdom.Element;
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2004, 2005
  * @author Dennis Miller Copyright 2004
  * @author Daniel Boudreau (C) 2008
- * @version $Revision: 1.3 $
- * @see ConsistRoster
+ * @version $Revision: 1.1 $
+ * @see NceConsistRoster
  * 
  */
-public class ConsistRosterEntry {
+public class NceConsistRosterEntry {
 
     /**
      * Construct a blank object.
      *
      */
-    public ConsistRosterEntry() {
+    public NceConsistRosterEntry() {
     }
 
-    public ConsistRosterEntry(ConsistRosterEntry pEntry, String pID) {
+    public NceConsistRosterEntry(NceConsistRosterEntry pEntry, String pID) {
         this();
         // The ID is different for this element
         _id = pID;
@@ -80,7 +80,7 @@ public class ConsistRosterEntry {
         String oldID = _id;
         _id = s;
         if (! oldID.equals(s))
-            ConsistRoster.instance().entryIdChanged(this);
+            NceConsistRoster.instance().entryIdChanged(this);
     }
     public String getId() { return _id; }
     
@@ -159,7 +159,7 @@ public class ConsistRosterEntry {
      *
      * @param e  Consist XML element
      */
-    public ConsistRosterEntry(org.jdom.Element e) {
+    public NceConsistRosterEntry(org.jdom.Element e) {
         if (log.isDebugEnabled()) log.debug("ctor from element "+e);
         org.jdom.Attribute a;
         if ((a = e.getAttribute("id")) != null )  _id = a.getValue();
@@ -329,7 +329,7 @@ public class ConsistRosterEntry {
 
     		if (!(_consistNumber.equals(""))) {
     			w.write(newLine, 0, 1);
-    			s = "   Consist number:         " + _consistNumber;
+    			s = "   Consist number:    " + _consistNumber;
     			w.write(s, 0, s.length());
     		}
     		if (!(_roadName.equals(""))) {
@@ -349,37 +349,32 @@ public class ConsistRosterEntry {
     		}
     		if (!(_eng1DccAddress.equals(""))) {
     			w.write(newLine, 0, 1);
-    			s = "   Eng1 Engine DCC Address:       " + _eng1DccAddress;
+    			s = "   Lead Address:      " + _eng1DccAddress + "  " + _eng1Direction;
     			w.write(s, 0, s.length());
     		}
     		if (!(_eng2DccAddress.equals(""))) {
     			w.write(newLine, 0, 1);
-    			s = "   Eng2 Engine DCC Address:       " + _eng2DccAddress;
+    			s = "   Rear Address:      " + _eng2DccAddress + "  " + _eng2Direction;
     			w.write(s, 0, s.length());
     		}
     		if (!(_eng3DccAddress.equals(""))) {
     			w.write(newLine, 0, 1);
-    			s = "   Eng3 Engine DCC Address:       " + _eng3DccAddress;
+    			s = "   Mid1 Address:      " + _eng3DccAddress + "  " + _eng3Direction;
     			w.write(s, 0, s.length());
-    		}
-    		if (!(_eng3DccAddress.equals(""))) {
-    			w.write(newLine, 0, 1);
-    			s = "   Eng3 Engine DCC Address:       " + _eng3DccAddress;
-    			w.write(s, 0, s.length());
-    		}
+     		}
     		if (!(_eng4DccAddress.equals(""))) {
     			w.write(newLine, 0, 1);
-    			s = "   Eng4 Engine DCC Address:       " + _eng4DccAddress;
+    			s = "   Mid2 Address:      " + _eng4DccAddress + "  " + _eng4Direction;
     			w.write(s, 0, s.length());
     		}
     		if (!(_eng5DccAddress.equals(""))) {
     			w.write(newLine, 0, 1);
-    			s = "   Eng5 Engine DCC Address:       " + _eng5DccAddress;
+    			s = "   Mid3 Address:      " + _eng5DccAddress + "  " + _eng5Direction;
     			w.write(s, 0, s.length());
     		}
     		if (!(_eng6DccAddress.equals(""))) {
     			w.write(newLine, 0, 1);
-    			s = "   Eng6 Engine DCC Address:       " + _eng6DccAddress;
+    			s = "   Mid4 Address:      " + _eng6DccAddress + "  " + _eng6Direction;
     			w.write(s, 0, s.length());
     		}
 
@@ -409,7 +404,7 @@ public class ConsistRosterEntry {
     				k++;
     			}
     		}
-
+            w.write(newLine,0,1);
     	} catch (IOException e) {
     		log.error("Error printing ConsistRosterEntry: " + e);
     	}
@@ -520,6 +515,6 @@ public class ConsistRosterEntry {
 
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ConsistRosterEntry.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceConsistRosterEntry.class.getName());
 
 }

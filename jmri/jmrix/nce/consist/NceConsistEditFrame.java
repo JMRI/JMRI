@@ -43,8 +43,8 @@ import java.util.List;
  * :FAF0 (con 126 mid eng1) .. (con 126 mid eng4)(con 127 mid eng1) .. (con 127
  * mid eng4) :0000
  * 
- * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.22 $
+ * @author Dan Boudreau Copyright (C) 2007 2008
+ * @version $Revision: 1.23 $
  */
 
 public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
@@ -165,7 +165,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 	javax.swing.JLabel textConRoadNumber = new javax.swing.JLabel();
 	javax.swing.JLabel textConModel = new javax.swing.JLabel();
 	
-	javax.swing.JComboBox conRosterBox = ConsistRoster.instance().fullRosterComboBox();
+	javax.swing.JComboBox conRosterBox = NceConsistRoster.instance().fullRosterComboBox();
 
 	// for padding out panel
 	javax.swing.JLabel space1 = new javax.swing.JLabel();
@@ -398,6 +398,14 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 
 		// setup checkboxes
 		addCheckBoxAction(checkBoxConsist);
+		
+		// build menu
+		JMenuBar menuBar = new JMenuBar();
+		JMenu toolMenu = new JMenu("Tools");
+		toolMenu.add(new NceConsistRosterMenu("Roster", jmri.jmrit.roster.RosterMenu.MAINMENU, this));
+		menuBar.add(toolMenu);
+		setJMenuBar(menuBar);
+		addHelpMenu("package.jmri.jmrix.nce.consist.NceConsistEditFrame", true);
 
 		// set frame size for display
 		pack();
@@ -785,10 +793,10 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		sendNceMessage(bl, REPLY_16);
 	}
 	
-	ConsistRosterEntry cre;
+	NceConsistRosterEntry cre;
 
 	private void loadRosterEntry(String entry) {
-		cre = ConsistRoster.instance().entryFromTitle(entry);
+		cre = NceConsistRoster.instance().entryFromTitle(entry);
 		consistTextField.setText(cre.getConsistNumber());
 		int cNum = validConsist(cre.getConsistNumber());
 
@@ -812,7 +820,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		}
 	}
 	
-	private void loadFullRoster (ConsistRosterEntry cre){
+	private void loadFullRoster (NceConsistRosterEntry cre){
 		// get road name, number and model
 		textConRoadName.setText(cre.getRoadName());
 		textConRoadNumber.setText(cre.getRoadNumber());	
@@ -878,7 +886,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 	 * updates road name, road number, and loco direction fields
 	 * @return true if match
 	 */
-	private boolean consistRosterMatch (ConsistRosterEntry cre){
+	private boolean consistRosterMatch (NceConsistRosterEntry cre){
 		if (consistTextField.getText().equals(cre.getConsistNumber()) 
 				&& engTextField1.getText().equals(cre.getEng1DccAddress())
 				&& engTextField2.getText().equals(cre.getEng2DccAddress())
@@ -912,7 +920,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 	 * updates road name, road number, and loco direction fields
 	 * @return true if there was at least one match
 	 */
-	private boolean consistRosterPartialMatch (ConsistRosterEntry cre){
+	private boolean consistRosterPartialMatch (NceConsistRosterEntry cre){
 		if (!enablePartialMatch)
 			return false;
 		// does eng1 match?
@@ -961,8 +969,8 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		// need rear loco to form a consist
 		if (engTextField2.getText().equals(EMPTY))
 			return false;
-		ConsistRosterEntry cre;
-		consistList = ConsistRoster.instance().matchingList(null, null,
+		NceConsistRosterEntry cre;
+		consistList = NceConsistRoster.instance().matchingList(null, null,
 				null, null, null, null, null, null, null, id);
 		// if consist doesn't exist in roster ask user if they want to create one
 		if (consistList.isEmpty()) {
@@ -972,13 +980,13 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 				return false;
 			}
-			cre = new ConsistRosterEntry();
-			ConsistRoster.instance().addEntry(cre);
+			cre = new NceConsistRosterEntry();
+			NceConsistRoster.instance().addEntry(cre);
 			// roster entry exsists, does it match?
 		} else {
-			cre = ConsistRoster.instance().entryFromTitle(id);
+			cre = NceConsistRoster.instance().entryFromTitle(id);
 			// if all of the loco addresses match, just update without telling user
-			consistList = ConsistRoster.instance()
+			consistList = NceConsistRoster.instance()
 					.matchingList(null, null, null, engTextField1.getText(),
 							engTextField2.getText(), engTextField3.getText(),
 							engTextField4.getText(), engTextField5.getText(),
@@ -1061,15 +1069,15 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		String entry = conRosterBox.getSelectedItem().toString();
 		log.debug("remove consist " + entry + " from roster ");
 		// delete it from roster
-		ConsistRoster.instance().removeEntry(
-				ConsistRoster.instance().entryFromTitle(entry));
+		NceConsistRoster.instance().removeEntry(
+				NceConsistRoster.instance().entryFromTitle(entry));
 		writeRosterFile();
 	}
 
 	private void writeRosterFile() {
 		conRosterBox.removeActionListener(consistRosterListener);
-		ConsistRoster.writeRosterFile();
-		ConsistRoster.instance().updateComboBox(conRosterBox);
+		NceConsistRoster.writeRosterFile();
+		NceConsistRoster.instance().updateComboBox(conRosterBox);
 		conRosterBox.insertItemAt(EMPTY, 0);
 		conRosterBox.setSelectedIndex(0);
 		conRosterBox.addActionListener(consistRosterListener);
@@ -1439,7 +1447,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 	private void checkForRosterMatch(){
 		exactMatch = false;
 		if (!verifyRosterMatch)
-			cre = ConsistRoster.instance().entryFromTitle(engTextField1.getText());
+			cre = NceConsistRoster.instance().entryFromTitle(engTextField1.getText());
 		if (cre == null){
 			if (checkBoxConsist.isSelected() && !engTextField1.getText().equals(EMPTY))
 				consistReply.setText(UNKNOWN);
@@ -2026,7 +2034,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		errorCode = 0;
 	}
 	
-	private String getRosterText (ConsistRosterEntry cre) {
+	private String getRosterText (NceConsistRosterEntry cre) {
 		return "\n" 
 		+ "\n NCE Consist Number: "	+ cre.getConsistNumber()
 		+ "\n"
