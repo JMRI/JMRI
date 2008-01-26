@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a consist roster -->
-<!-- $Id: consist-roster-config.dtd,v 1.4 2008-01-25 18:40:40 dan_boudreau Exp $ -->
+<!-- $Id: consist-roster-config.dtd,v 1.5 2008-01-26 03:07:13 pbender Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -27,13 +27,16 @@
 
 <!-- Manual identification -->
 <!ATTLIST consist id			CDATA #REQUIRED>          
-<!ATTLIST consist consistNumber	CDATA #IMPLIED>          
+<!ATTLIST consist consistNumber	CDATA #IMPLIED>
+<!ATTLIST consist longAddress   ( yes | no ) "no" >          
+<!-- The consist types are CSAC (Command Station Assistated) and DAC (Decoder Assisted) -->
+<!ATTLIST consist type ( CSAC | DAC ) "DAC" > 
 <!ATTLIST consist roadNumber	CDATA #IMPLIED> 
 <!ATTLIST consist roadName		CDATA #IMPLIED>                   
 <!ATTLIST consist model			CDATA #IMPLIED>                   
 <!ATTLIST consist comment		CDATA #IMPLIED>
 
 <!ATTLIST eng locoName			CDATA #IMPLIED>          
-<!ATTLIST eng dccLocoAddress	CDATA #IMPLIED>          
-<!ATTLIST eng longAddress		( yes | no) "yes">          
-<!ATTLIST eng locoDir			CDATA #IMPLIED>      
+<!ATTLIST eng dccLocoAddress	CDATA #REQUIRED>          
+<!ATTLIST eng longAddress		( yes | no ) "yes">          
+<!ATTLIST eng locoDir			( normal | reverse | unknown ) "normal" >
