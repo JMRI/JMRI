@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: consistRoster.xsl,v 1.8 2008-01-25 22:01:13 dan_boudreau Exp $ -->
+<!-- $Id: consistRoster.xsl,v 1.9 2008-01-27 21:36:29 dan_boudreau Exp $ -->
 
 <!-- Stylesheet to convert a JMRI consist roster XML file into displayable HTML -->
 
@@ -85,9 +85,10 @@
 		<xsl:apply-templates />
 	</xsl:template>
 
-	<xsl:template match="eng">
+	<xsl:template match="loco">
 		loco name="
 		<xsl:value-of select="@locoName" />
+		<xsl:value-of select="@locoMidNumber" />
 		" loco address="
 		<xsl:value-of select="@dccLocoAddress" />
 		" long address="
