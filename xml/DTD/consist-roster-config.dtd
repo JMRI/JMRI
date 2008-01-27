@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a consist roster -->
-<!-- $Id: consist-roster-config.dtd,v 1.5 2008-01-26 03:07:13 pbender Exp $ -->
+<!-- $Id: consist-roster-config.dtd,v 1.6 2008-01-27 18:34:31 pbender Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -17,7 +17,9 @@
 
 <!ELEMENT roster (consist*)>
 
-<!ELEMENT consist (eng+)>
+<!ELEMENT consist (loco+)>
+
+<!ELEMENT loco EMPTY>
 
 <!-- Key used in lists, etc - User identification for this loco -->
 <!ATTLIST consist id	CDATA #REQUIRED>          
@@ -36,7 +38,8 @@
 <!ATTLIST consist model			CDATA #IMPLIED>                   
 <!ATTLIST consist comment		CDATA #IMPLIED>
 
-<!ATTLIST eng locoName			CDATA #IMPLIED>          
-<!ATTLIST eng dccLocoAddress	CDATA #REQUIRED>          
-<!ATTLIST eng longAddress		( yes | no ) "yes">          
-<!ATTLIST eng locoDir			( normal | reverse | unknown ) "normal" >
+<!ATTLIST loco locoName			( lead | rear | mid ) "mid" >   
+<!ATTLIST loco locoMidNumber    CDATA #IMPLIED  >       
+<!ATTLIST loco dccLocoAddress	CDATA #REQUIRED >          
+<!ATTLIST loco longAddress		( yes | no ) "yes">          
+<!ATTLIST loco locoDir			( normal | reverse | unknown ) "normal" >
