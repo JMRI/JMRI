@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NceConsistEditFrame.shtml,v 1.3 2008-01-10 17:40:30 dan_boudreau Exp $ -->
+<!-- $Id: NceConsistEditFrame.shtml,v 1.4 2008-01-28 04:09:21 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Edit NCE Consist</TITLE>
@@ -47,7 +47,7 @@ contents of the file you selected. The JMRI consist editor will check
 the contents of the file before writing the command station memory to
 verify that the file is indeed a NCE consist backup file! Note that the
 "Restore" only updates the NCE command station memory. It doesn't
-program the engines on your layout.
+program the locos on your layout.
 
 <H3>Get</H3>
 
@@ -56,39 +56,39 @@ under the heading "Consist" and press the "Get" button. This will
 retrieve the consist from the command station's memory.
 
 
-<H3>Add Engine</H3>
+<H3>Add Loco</H3>
 
-To add an engine to a consist, enter the engine's address and then press
-the "??" button until the desired direction "Forward" or "Reverse"
-appears. If you want the use the short address format press the "Long"
-button and "Short" should appear. To program the engine with the consist
-address and update the NCE command station, press the "Add" button and
-the engine will be added to the consist.
+To add a loco to a consist, enter the loco's address and then press the
+"??" button until the desired direction "Forward" or "Reverse" appears.
+If you want the use the short address format press the "Long" button and
+"Short" should appear. To program the loco with the consist address and
+update the NCE command station, press the "Add" button and the loco will
+be added to the consist.
 
-<H3>Add Engine from Roster</H3>
+<H3>Add Loco from Roster</H3>
 
-To add an engine from your roster, select the desired engine and the
-program will automatically fill in the loco address and address format.
-Select the loco direction and press "Add" to complete the operation.
+To add a loco from your locomotive roster, select the desired loco and
+the program will automatically fill in the loco address and address
+format. Select the loco direction and press "Add" to complete the
+operation.
 
 <H3>Replace</H3>
 
-To replace the lead or rear engine, press the "Replace" button. This
-will delete the selected engine from the consist. Enter the address of
-the new engine along with its direction and press "Add" to program this
-engine with the consist address. If you want a mid engine to now be a
-lead or rear engine, just enter the mid engine's address and then press
-"Add".
+To replace the lead or rear loco, press the "Replace" button. This will
+delete the selected loco from the consist. Enter the address of the new
+loco along with its direction and press "Add" to program this loco with
+the consist address. If you want a mid loco to now be a lead or rear
+loco, just enter the mid loco's address and then press "Add".
 
 <H3>Delete</H3>
 
-To delete an engine from the consist, press the "Delete" button across
-from the engine address you wish to remove.
+To delete an loco from the consist, press the "Delete" button across
+from the loco address you wish to remove.
 
 <H3>Clear</H3>
 
-To remove all engines from a consist, press the "Clear" button located
-on the bottom row.
+To remove all locos from a consist, press the "Clear" button located on
+the bottom row.
 
 
 <H3>Previous and Next</H3>
@@ -96,18 +96,67 @@ The "Previous" and "Next" buttons allow you to search for consists. If
 you're looking for an empty consist, click the "Empty Consist" box
 located in the upper right hand corner.
 
-<H3>Verify Engine Checkbox</H3>
+<H3>Verify Loco Checkbox</H3>
 
 When checked, the program will verify that the loco that you are adding
 isn't assigned as a lead or rear loco in another consist. It takes
 several seconds for the program to verify that the add loco is
 available. An error message will appear if the program determines that
 the add loco address is already in use.
-<P>However, if the add loco was previously assigned as mid engine
-loco in another consist, the program will delete the loco from the other
+<P>However, if the add loco was previously assigned as mid loco loco
+in another consist, the program will delete the loco from the other
 consist and add it to the new one without any warnings.</P>
-<P></P>
 
+<H3>Consist Roster Checkbox</H3>
+
+When checked, the program will create and manage a roster of consists. A
+consist must have a lead and rear loco before the program will create an
+entry for you to manage. Two additional buttons will appear when the
+"Consist roster" checkbox is selected, "Save" and "Delete", and the
+"Consist" pull down menu becomes enabled. If you already have a NCE
+consist that you want to add to the consist roster, simply press the
+"Clear" button when the "Consist roster" checkbox is selected and the
+program will ask you if you want to add the NCE consist to your roster.
+If you pressed "yes", the "Consist" menu should then have a new entry
+which is the address of the lead loco of your consist. To load your
+consist back into NCE memory and reprogram your locos, simply select the
+consist from the "Consist" menu and press "Load". If you don't want to
+load the consist, press "Cancel".
+
+<P>There isn't a limit to the number of consist that the consist
+roster can manage. This means those of you that are lucky enough to have
+more than 127 consists can use the NCE Consist editor to manage an
+"unlimited" number of consists.</P>
+
+<P>When managing a large number of consist, it might be useful to
+identify your consists by assigning the lowest number of your end locos
+as the lead loco. This way you can quickly select a consist by using the
+lowest number of your two end locos.</P>
+
+<H3>Save and Load button</H3>
+
+The label for this button can be "Save" or "Load". If the program
+detects that a consist has been created or changed the "Save" button
+will become enabled. The program will enable the "Save" button when
+there's at least a lead and rear loco and the direction for each has
+been selected.
+
+<P>When you select a consist to load from the "Consist" menu, the
+"Save" button becomes "Load". You must specify the loco's direction to
+enable the "Load" button. You can also modify the consist before loading
+it and the program will ask if you want to save the changes. When
+loading a consist the program will search for the first empty consist
+number in the NCE command station starting at consist number 127. If you
+select a consist from the "Consist" menu that is already in the NCE
+command station, the program will pop up a message stating that the
+consist has already been loaded. You can press "Load" to reprogram your
+locos if you wish, otherwise press the "Cancel" button.</P>
+
+<H3>Delete button</H3>
+
+To remove a consist from your roster, press the "Delete" button located
+on the bottom row. The "Delete button only becomes active after you've
+selected a consist from the "Consist" menu.
 
 </BODY>
 </HTML>
