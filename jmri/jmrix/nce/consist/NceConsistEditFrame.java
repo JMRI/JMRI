@@ -21,38 +21,38 @@ import java.util.List;
  * 
  * NCE Consists are stored in Command Station (CS) memory starting at address
  * xF500 and ending xFAFF. NCE supports up to 127 consists, numbered 1 to 127.
- * They track the lead engine, rear engine, and four mid engines in the consist
+ * They track the lead loco, rear loco, and four mid locos in the consist
  * file. NCE cabs start at consist 127 when building and reviewing consists, so
- * we also start with 127. Consist lead engines are stored in memory locations
- * xF500 through xF5FF. Consist rear engines are stored in memory locations
- * xF600 through xF6FF. Mid consist engines (four max) are stored in memory
+ * we also start with 127. Consist lead locos are stored in memory locations
+ * xF500 through xF5FF. Consist rear locos are stored in memory locations
+ * xF600 through xF6FF. Mid consist locos (four max) are stored in memory
  * locations xF700 through xFAFF. If a long address is in use, bits 6 and 7 of
  * the high byte are set. Example: Long address 3 = 0xc0 0x03 Short address 3 =
  * 0x00 0x03
  * 
  * NCE file format:
  * 
- * :F500 (con 0 lead engine) (con 1 lead engine) ....... (con 7 lead engine)
- * :F510 (con 8 lead engine) ........ (con 15 lead engine) . . :F5F0 (con 120
- * lead engine) ..... (con 127 lead engine)
+ * :F500 (con 0 lead loco) (con 1 lead loco) ....... (con 7 lead loco)
+ * :F510 (con 8 lead loco) ........ (con 15 lead loco) . . :F5F0 (con 120
+ * lead loco) ..... (con 127 lead loco)
  * 
- * :F600 (con 0 rear engine) (con 1 rear engine) ....... (con 7 rear engine) . .
- * :F6F0 (con 120 rear engine) ..... (con 127 rear engine)
+ * :F600 (con 0 rear loco) (con 1 rear loco) ....... (con 7 rear loco) . .
+ * :F6F0 (con 120 rear loco) ..... (con 127 rear loco)
  * 
- * :F700 (con 0 mid eng1) (con 0 mid eng2) (con 0 mid eng3) (con 0 mid eng4) . .
- * :FAF0 (con 126 mid eng1) .. (con 126 mid eng4)(con 127 mid eng1) .. (con 127
- * mid eng4) :0000
+ * :F700 (con 0 mid loco1) (con 0 mid loco2) (con 0 mid loco3) (con 0 mid loco4) . .
+ * :FAF0 (con 126 mid loco1) .. (con 126 mid loco4)(con 127 mid loco1) .. (con 127
+ * mid loco4) :0000
  * 
  * @author Dan Boudreau Copyright (C) 2007 2008
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 
 public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		jmri.jmrix.nce.NceListener {
 
 	private static final int CS_CONSIST_MEM = 0xF500; 	// start of NCE CS Consist memory
-	private static final int CS_CON_MEM_REAR = 0xF600; 	// start of rear consist engines
-	private static final int CS_CON_MEM_MID = 0xF700; 	// start of mid consist engines
+	private static final int CS_CON_MEM_REAR = 0xF600; 	// start of rear consist locos
+	private static final int CS_CON_MEM_MID = 0xF700; 	// start of mid consist locos
 	private static final int CONSIST_MIN = 1; 			// NCE doesn't use consist 0
 	private static final int CONSIST_MAX = 127;
 	private static final int LOC_ADR_MIN = 1; 			// loco address range
@@ -62,20 +62,20 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 	private int consistNum = 0; 				// consist being worked
 	private boolean newConsist = true; 			// new consist is displayed
 	
-	private int engineNum = LEAD; 				// which engine, 0 = lead, 1 = rear, 2 = mid
+	private int locoNum = LEAD; 				// which loco, 0 = lead, 1 = rear, 2 = mid
 	private static final int LEAD = 0;
 	private static final int REAR = 1;
 	private static final int MID = 2;
 	
-	// Verify that engine isn't already a lead or rear loco
+	// Verify that loco isn't already a lead or rear loco
 	private int consistNumVerify; 				// which consist number we're checking
-	private int [] engVerifyList = new int[6];	// list of engines to verify
+	private int [] locoVerifyList = new int[6];	// list of locos to verify
 	private int verifyType; 					// type of verification
 	private static final int VERIFY_DONE = 0;
-	private static final int VERIFY_LEAD_REAR = 1; 	// lead or rear engine  
-	private static final int VERIFY_MID_FWD = 2; 	// mid engine foward 
-	private static final int VERIFY_MID_REV = 4; 	// mid engine reverse 
-	private static final int VERIFY_ALL = 8;		// verify all engines
+	private static final int VERIFY_LEAD_REAR = 1; 	// lead or rear loco  
+	private static final int VERIFY_MID_FWD = 2; 	// mid loco foward 
+	private static final int VERIFY_MID_REV = 4; 	// mid loco reverse 
+	private static final int VERIFY_ALL = 8;		// verify all locos
 
 	private static final String WAIT = "waiting"; // NCE consist editor states
 	private static final String OKAY = "okay";
@@ -104,21 +104,22 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 	private static final String SAVE = "Save";
 	private static final String LOAD = "Load";
 	
-	private static final String EMPTY = "";				// engine field values
+	private static final String EMPTY = "";				// loco field values
 	private static final String REPLACE_LOCO = "NONE";
 	
 	private static final String CLEARED = "0 <cleared>";
 
-	private static final String ToolTipAdd = "Press to add engine to consist";
+	private static final String ToolTipAdd = "Press to add loco to consist";
 	private static final String ToolTipClear = "Press to kill consist";
 	private static final String ToolTipCancel = "Press to cancel consist load from roster";
 	private static final String ToolTipSave = "Press to save consist to roster";
-	private static final String ToolTipLoad = "Press to load consist into NCE CS and program engines";
+	private static final String ToolTipLoad = "Press to load consist into NCE CS and program locos";
+	private static final String ToolTipConsist = "Enter consist 1 to 127";
 
 	// the 16 byte reply states
 	private boolean consistSearchNext = false; 		// next search
 	private boolean consistSearchPrevious = false; 	// previous search
-	private boolean engineSearch = false; 			// when true searching for lead or rear engine in consist
+	private boolean locoSearch = false; 			// when true searching for lead or rear loco in consist
 	
 	private boolean emptyConsistSearch = false; 	// when true searching for an empty consist
 	private boolean verifyRosterMatch = false; 		// when true verify that roster matches consist in NCE CS
@@ -154,7 +155,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 	javax.swing.JTextField consistTextField = new javax.swing.JTextField(4);
 
 	// labels
-	javax.swing.JLabel textEngine = new javax.swing.JLabel();
+	javax.swing.JLabel textLocomotive = new javax.swing.JLabel();
 	javax.swing.JLabel textRoster = new javax.swing.JLabel();
 	javax.swing.JLabel textAddress = new javax.swing.JLabel();
 	javax.swing.JLabel textAddrType = new javax.swing.JLabel();
@@ -172,49 +173,49 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 	javax.swing.JLabel space2 = new javax.swing.JLabel();
 	javax.swing.JLabel space3 = new javax.swing.JLabel();
 
-	// lead engine
-	javax.swing.JLabel textEng1 = new javax.swing.JLabel();
-	javax.swing.JTextField engTextField1 = new javax.swing.JTextField(4);
+	// lead loco
+	javax.swing.JLabel textLoco1 = new javax.swing.JLabel();
+	javax.swing.JTextField locoTextField1 = new javax.swing.JTextField(4);
 	javax.swing.JComboBox locoRosterBox1 = Roster.instance().fullRosterComboBox();
 	javax.swing.JButton adrButton1 = new javax.swing.JButton();
 	javax.swing.JButton cmdButton1 = new javax.swing.JButton();
 	javax.swing.JButton dirButton1 = new javax.swing.JButton();
 
-	// rear engine
-	javax.swing.JLabel textEng2 = new javax.swing.JLabel();
-	javax.swing.JTextField engTextField2 = new javax.swing.JTextField(4);
+	// rear loco
+	javax.swing.JLabel textLoco2 = new javax.swing.JLabel();
+	javax.swing.JTextField locoTextField2 = new javax.swing.JTextField(4);
 	javax.swing.JComboBox locoRosterBox2 = Roster.instance().fullRosterComboBox();
 	javax.swing.JButton adrButton2 = new javax.swing.JButton();
 	javax.swing.JButton cmdButton2 = new javax.swing.JButton();
 	javax.swing.JButton dirButton2 = new javax.swing.JButton();
 
-	// mid engine
-	javax.swing.JLabel textEng3 = new javax.swing.JLabel();
-	javax.swing.JTextField engTextField3 = new javax.swing.JTextField(4);
+	// mid loco
+	javax.swing.JLabel textLoco3 = new javax.swing.JLabel();
+	javax.swing.JTextField locoTextField3 = new javax.swing.JTextField(4);
 	javax.swing.JComboBox locoRosterBox3 = Roster.instance().fullRosterComboBox();
 	javax.swing.JButton adrButton3 = new javax.swing.JButton();
 	javax.swing.JButton cmdButton3 = new javax.swing.JButton();
 	javax.swing.JButton dirButton3 = new javax.swing.JButton();
 
-	// mid engine
-	javax.swing.JLabel textEng4 = new javax.swing.JLabel();
-	javax.swing.JTextField engTextField4 = new javax.swing.JTextField(4);
+	// mid loco
+	javax.swing.JLabel textLoco4 = new javax.swing.JLabel();
+	javax.swing.JTextField locoTextField4 = new javax.swing.JTextField(4);
 	javax.swing.JComboBox locoRosterBox4 = Roster.instance().fullRosterComboBox();
 	javax.swing.JButton adrButton4 = new javax.swing.JButton();
 	javax.swing.JButton cmdButton4 = new javax.swing.JButton();
 	javax.swing.JButton dirButton4 = new javax.swing.JButton();
 
-	// mid engine
-	javax.swing.JLabel textEng5 = new javax.swing.JLabel();
-	javax.swing.JTextField engTextField5 = new javax.swing.JTextField(4);
+	// mid loco
+	javax.swing.JLabel textLoco5 = new javax.swing.JLabel();
+	javax.swing.JTextField locoTextField5 = new javax.swing.JTextField(4);
 	javax.swing.JComboBox locoRosterBox5 = Roster.instance().fullRosterComboBox();
 	javax.swing.JButton adrButton5 = new javax.swing.JButton();
 	javax.swing.JButton cmdButton5 = new javax.swing.JButton();
 	javax.swing.JButton dirButton5 = new javax.swing.JButton();
 
-	// mid engine
-	javax.swing.JLabel textEng6 = new javax.swing.JLabel();
-	javax.swing.JTextField engTextField6 = new javax.swing.JTextField(4);
+	// mid loco
+	javax.swing.JLabel textLoco6 = new javax.swing.JLabel();
+	javax.swing.JTextField locoTextField6 = new javax.swing.JTextField(4);
 	javax.swing.JComboBox locoRosterBox6 = Roster.instance().fullRosterComboBox();
 	javax.swing.JButton adrButton6 = new javax.swing.JButton();
 	javax.swing.JButton cmdButton6 = new javax.swing.JButton();
@@ -249,13 +250,13 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		getButton.setToolTipText("Read consist from NCE CS");
 
 		consistTextField.setText(Integer.toString(CONSIST_MAX));
-		consistTextField.setToolTipText("Enter consist 1 to 127");
+		consistTextField.setToolTipText(ToolTipConsist);
 		consistTextField.setMaximumSize(new Dimension(consistTextField
 				.getMaximumSize().width,
 				consistTextField.getPreferredSize().height));
 
-		textEngine.setText("Engine");
-		textEngine.setVisible(true);
+		textLocomotive.setText("Locomotive");
+		textLocomotive.setVisible(true);
 		textRoster.setText("Roster");
 		textRoster.setVisible(true);
 		textAddress.setText("Address");
@@ -297,19 +298,19 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		restoreButton.setVisible(true);
 		restoreButton.setToolTipText("Restore all consists from a file");
 
-		checkBoxEmpty.setText("Empty Consist");
+		checkBoxEmpty.setText("Empty consist");
 		checkBoxEmpty.setVisible(true);
 		checkBoxEmpty.setToolTipText("Check to search for empty consists");
 
-		checkBoxVerify.setText("Verify engine");
+		checkBoxVerify.setText("Verify loco     ");
 		checkBoxVerify.setVisible(true);
 		checkBoxVerify.setSelected(true);
 		checkBoxVerify
-				.setToolTipText("Verify that add engine isn't already a consist lead or rear engine");
+				.setToolTipText("Verify that add loco isn't already a consist lead or rear loco");
 
 		checkBoxConsist.setText("Consist roster");
 		checkBoxConsist.setVisible(true);
-		checkBoxConsist.setSelected(false);
+		checkBoxConsist.setSelected(true);
 		checkBoxConsist.setToolTipText("Check to build a consist roster");
 
 		space1.setText("            ");
@@ -319,7 +320,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		space3.setText(" ");
 		space3.setVisible(true);
 
-		initEngFields();
+		initLocoFields();
 
 		setTitle("Edit NCE Consist");
 		getContentPane().setLayout(new GridBagLayout());
@@ -352,29 +353,29 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		// row 6 padding for looks
 		addItem(space1, 1, 6);
 		// row 7 labels
-		addItem(textEngine, 0, 7);
+		addItem(textLocomotive, 0, 7);
 		addItem(textRoster, 1, 7);
 		addItem(textAddress, 2, 7);
 		addItem(textAddrType, 3, 7);
 		addItem(textDirection, 4, 7);
 
-		// row 8 Lead Engine
-		addEngRow(textEng1, locoRosterBox1, engTextField1, adrButton1,
+		// row 8 Lead Locomotive
+		addLocoRow(textLoco1, locoRosterBox1, locoTextField1, adrButton1,
 				dirButton1, cmdButton1, 8);
-		// row 9 Rear Engine
-		addEngRow(textEng2, locoRosterBox2, engTextField2, adrButton2,
+		// row 9 Rear Locomotive
+		addLocoRow(textLoco2, locoRosterBox2, locoTextField2, adrButton2,
 				dirButton2, cmdButton2, 9);
-		// row 10 Mid Engine
-		addEngRow(textEng3, locoRosterBox3, engTextField3, adrButton3,
+		// row 10 Mid Locomotive
+		addLocoRow(textLoco3, locoRosterBox3, locoTextField3, adrButton3,
 				dirButton3, cmdButton3, 10);
-		// row 11 Mid Engine
-		addEngRow(textEng4, locoRosterBox4, engTextField4, adrButton4,
+		// row 11 Mid Locomotive
+		addLocoRow(textLoco4, locoRosterBox4, locoTextField4, adrButton4,
 				dirButton4, cmdButton4, 11);
-		// row 12 Mid Engine
-		addEngRow(textEng5, locoRosterBox5, engTextField5, adrButton5,
+		// row 12 Mid Locomotive
+		addLocoRow(textLoco5, locoRosterBox5, locoTextField5, adrButton5,
 				dirButton5, cmdButton5, 12);
-		// row 13 Mid Engine
-		addEngRow(textEng6, locoRosterBox6, engTextField6, adrButton6,
+		// row 13 Mid Locomotive
+		addLocoRow(textLoco6, locoRosterBox6, locoTextField6, adrButton6,
 				dirButton6, cmdButton6, 13);
 
 		// row 15 padding for looks
@@ -398,6 +399,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 
 		// setup checkboxes
 		addCheckBoxAction(checkBoxConsist);
+		checkBoxConsist ();
 		
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
@@ -415,7 +417,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 	// Previous, Next, Get, Clear/Cancel, Save/Load, Delete, Restore & Backup buttons
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		// if we're searching ignore user
-		if (consistSearchNext || consistSearchPrevious || engineSearch)
+		if (consistSearchNext || consistSearchPrevious || locoSearch)
 			return;
 
 		// clear or cancel button
@@ -446,7 +448,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 				saveLoadButton.setEnabled(false);
 				return;
 			}
-			enableAllEngRows(false);
+			enableAllLocoRows(false);
 			if (saveLoadButton.getText().equals(LOAD)){ 
 				loadShift (); // get rid of empty mids!
 				updateRoster(consistTextField.getText());
@@ -499,27 +501,27 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 	// One of six loco command buttons, add, replace or delete
 	public void buttonActionCmdPerformed(java.awt.event.ActionEvent ae) {
 		// if we're searching ignore user
-		if (consistSearchNext || consistSearchPrevious || engineSearch)
+		if (consistSearchNext || consistSearchPrevious || locoSearch)
 			return;
 		if (consistChanged())
 			return;
 		if (ae.getSource() == cmdButton1)
-			modifyLocoFields(locoRosterBox1, engTextField1, adrButton1,
+			modifyLocoFields(locoRosterBox1, locoTextField1, adrButton1,
 					dirButton1, cmdButton1);
 		if (ae.getSource() == cmdButton2)
-			modifyLocoFields(locoRosterBox2, engTextField2, adrButton2,
+			modifyLocoFields(locoRosterBox2, locoTextField2, adrButton2,
 					dirButton2, cmdButton2);
 		if (ae.getSource() == cmdButton3)
-			modifyLocoFields(locoRosterBox3, engTextField3, adrButton3,
+			modifyLocoFields(locoRosterBox3, locoTextField3, adrButton3,
 					dirButton3, cmdButton3);
 		if (ae.getSource() == cmdButton4)
-			modifyLocoFields(locoRosterBox4, engTextField4, adrButton4,
+			modifyLocoFields(locoRosterBox4, locoTextField4, adrButton4,
 					dirButton4, cmdButton4);
 		if (ae.getSource() == cmdButton5)
-			modifyLocoFields(locoRosterBox5, engTextField5, adrButton5,
+			modifyLocoFields(locoRosterBox5, locoTextField5, adrButton5,
 					dirButton5, cmdButton5);
 		if (ae.getSource() == cmdButton6)
-			modifyLocoFields(locoRosterBox6, engTextField6, adrButton6,
+			modifyLocoFields(locoRosterBox6, locoTextField6, adrButton6,
 					dirButton6, cmdButton6);
 		if (updateRoster(consistTextField.getText()))
 			saveLoadButton.setEnabled(false);
@@ -528,35 +530,35 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 	// one of six loco address type buttons
 	public void buttonActionAdrPerformed(java.awt.event.ActionEvent ae) {
 		// if we're searching ignore user
-		if (consistSearchNext || consistSearchPrevious || engineSearch)
+		if (consistSearchNext || consistSearchPrevious || locoSearch)
 			return;
 		if (consistChanged())
 			return;
 		if (ae.getSource() == adrButton1)
-			toggleAdrButton(engTextField1, adrButton1);
+			toggleAdrButton(locoTextField1, adrButton1);
 		if (ae.getSource() == adrButton2)
-			toggleAdrButton(engTextField2, adrButton2);
+			toggleAdrButton(locoTextField2, adrButton2);
 		if (ae.getSource() == adrButton3)
-			toggleAdrButton(engTextField3, adrButton3);
+			toggleAdrButton(locoTextField3, adrButton3);
 		if (ae.getSource() == adrButton4)
-			toggleAdrButton(engTextField4, adrButton4);
+			toggleAdrButton(locoTextField4, adrButton4);
 		if (ae.getSource() == adrButton5)
-			toggleAdrButton(engTextField5, adrButton5);
+			toggleAdrButton(locoTextField5, adrButton5);
 		if (ae.getSource() == adrButton6)
-			toggleAdrButton(engTextField6, adrButton6);
+			toggleAdrButton(locoTextField6, adrButton6);
 	}
 
-	private void toggleAdrButton(JTextField engTextField, JButton adrButton) {
-		if (validLocoAdr(engTextField.getText()) < 0)
+	private void toggleAdrButton(JTextField locoTextField, JButton adrButton) {
+		if (validLocoAdr(locoTextField.getText()) < 0)
 			return;
-		if (engTextField.getText().equals(EMPTY)) {
+		if (locoTextField.getText().equals(EMPTY)) {
 			JOptionPane.showMessageDialog(NceConsistEditFrame.this,
 					"Enter loco address before changing address type",
 					"NCE Consist", JOptionPane.ERROR_MESSAGE);
 			return;
 		} else {
 			if (adrButton.getText() == LONG) {
-				if (Integer.parseInt(engTextField.getText()) < 128) {
+				if (Integer.parseInt(locoTextField.getText()) < 128) {
 					adrButton.setText(SHORT);
 				}
 			} else {
@@ -568,30 +570,30 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 	// one of six loco direction buttons
 	public void buttonActionDirPerformed(java.awt.event.ActionEvent ae) {
 		// if we're searching ignore user
-		if (consistSearchNext || consistSearchPrevious || engineSearch)
+		if (consistSearchNext || consistSearchPrevious || locoSearch)
 			return;
 		if (consistChanged())
 			return;
 		if (ae.getSource() == dirButton1)
-			toggleDirButton(engTextField1, dirButton1, cmdButton1);
+			toggleDirButton(locoTextField1, dirButton1, cmdButton1);
 		if (ae.getSource() == dirButton2)
-			toggleDirButton(engTextField2, dirButton2, cmdButton2);
+			toggleDirButton(locoTextField2, dirButton2, cmdButton2);
 		if (ae.getSource() == dirButton3)
-			toggleDirButton(engTextField3, dirButton3, cmdButton3);
+			toggleDirButton(locoTextField3, dirButton3, cmdButton3);
 		if (ae.getSource() == dirButton4)
-			toggleDirButton(engTextField4, dirButton4, cmdButton4);
+			toggleDirButton(locoTextField4, dirButton4, cmdButton4);
 		if (ae.getSource() == dirButton5)
-			toggleDirButton(engTextField5, dirButton5, cmdButton5);
+			toggleDirButton(locoTextField5, dirButton5, cmdButton5);
 		if (ae.getSource() == dirButton6)
-			toggleDirButton(engTextField6, dirButton6, cmdButton6);
+			toggleDirButton(locoTextField6, dirButton6, cmdButton6);
 		saveLoadButton.setEnabled(canLoad());
 	}
 
-	private void toggleDirButton(JTextField engTextField, JButton dirButton,
+	private void toggleDirButton(JTextField locoTextField, JButton dirButton,
 			JButton cmdButton) {
-		if (validLocoAdr(engTextField.getText()) < 0)
+		if (validLocoAdr(locoTextField.getText()) < 0)
 			return;
-		if (engTextField.getText().equals(EMPTY)) {
+		if (locoTextField.getText().equals(EMPTY)) {
 			JOptionPane.showMessageDialog(NceConsistEditFrame.this,
 					"Enter loco address before changing loco direction",
 					"NCE Consist", JOptionPane.ERROR_MESSAGE);
@@ -605,36 +607,36 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		}
 	}
 
-	// one of six roster select, load engine number and address length
+	// one of six roster select, load loco number and address length
 	public void locoSelected(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == locoRosterBox1)
-			rosterBoxSelect(locoRosterBox1, engTextField1, adrButton1);
+			rosterBoxSelect(locoRosterBox1, locoTextField1, adrButton1);
 		if (ae.getSource() == locoRosterBox2)
-			rosterBoxSelect(locoRosterBox2, engTextField2, adrButton2);
+			rosterBoxSelect(locoRosterBox2, locoTextField2, adrButton2);
 		if (ae.getSource() == locoRosterBox3)
-			rosterBoxSelect(locoRosterBox3, engTextField3, adrButton3);
+			rosterBoxSelect(locoRosterBox3, locoTextField3, adrButton3);
 		if (ae.getSource() == locoRosterBox4)
-			rosterBoxSelect(locoRosterBox4, engTextField4, adrButton4);
+			rosterBoxSelect(locoRosterBox4, locoTextField4, adrButton4);
 		if (ae.getSource() == locoRosterBox5)
-			rosterBoxSelect(locoRosterBox5, engTextField5, adrButton5);
+			rosterBoxSelect(locoRosterBox5, locoTextField5, adrButton5);
 		if (ae.getSource() == locoRosterBox6)
-			rosterBoxSelect(locoRosterBox6, engTextField6, adrButton6);
+			rosterBoxSelect(locoRosterBox6, locoTextField6, adrButton6);
 	}
 	// load a loco from roster
 	private void rosterBoxSelect(JComboBox locoRosterBox,
-			JTextField engTextField, JButton adrButton) {
+			JTextField locoTextField, JButton adrButton) {
 		String rosterEntryTitle = locoRosterBox.getSelectedItem().toString();
 		if (rosterEntryTitle == EMPTY)
 			return;
 		RosterEntry entry = Roster.instance().entryFromTitle(rosterEntryTitle);
 		DccLocoAddress a = entry.getDccLocoAddress();
 		if (a != null) {
-			engTextField.setText("" + a.getNumber());
+			locoTextField.setText("" + a.getNumber());
 			if (a.isLongAddress())
 				adrButton.setText(LONG);
 			else
 				adrButton.setText(SHORT);
-			// if lead engine get road number and name
+			// if lead loco get road number and name
 			if (locoRosterBox == locoRosterBox1){
 				textConRoadName.setText(entry.getRoadName());
 				textConRoadNumber.setText(entry.getRoadNumber());
@@ -645,7 +647,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 
 	// load a consist from roster
 	public void consistRosterSelected(java.awt.event.ActionEvent ae) {
-		if (consistSearchNext || consistSearchPrevious || engineSearch)
+		if (consistSearchNext || consistSearchPrevious || locoSearch)
 			return;
 		String entry = EMPTY;
 		try {
@@ -665,22 +667,25 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 
 	// checkbox modified
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
-		if (ae.getSource() == checkBoxConsist) {
-			if (checkBoxConsist.isSelected()) {
-				conRosterBox.setEnabled(true);
-				saveLoadButton.setVisible(true);
-				saveLoadButton.setEnabled(canLoad());
-				deleteButton.setVisible(true);
-			} else {
-				conRosterBox.setEnabled(false);
-				conRosterBox.removeActionListener(consistRosterListener);
-				conRosterBox.setSelectedIndex(0);
-				conRosterBox.addActionListener(consistRosterListener);
-				saveLoadButton.setVisible(false);
-				saveLoadButton.setEnabled(false);
-				deleteButton.setVisible(false);
-				deleteButton.setEnabled(false);
-			}
+		if (ae.getSource() == checkBoxConsist) 
+			checkBoxConsist ();
+	}
+	
+	private void checkBoxConsist () {
+		if (checkBoxConsist.isSelected()) {
+			conRosterBox.setEnabled(true);
+			saveLoadButton.setVisible(true);
+			saveLoadButton.setEnabled(canLoad());
+			deleteButton.setVisible(true);
+		} else {
+			conRosterBox.setEnabled(false);
+			conRosterBox.removeActionListener(consistRosterListener);
+			conRosterBox.setSelectedIndex(0);
+			conRosterBox.addActionListener(consistRosterListener);
+			saveLoadButton.setVisible(false);
+			saveLoadButton.setEnabled(false);
+			deleteButton.setVisible(false);
+			deleteButton.setEnabled(false);
 		}
 	}
 
@@ -724,7 +729,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		if (cN == -1) {
 			consistReply.setText(ERROR);
 			JOptionPane.showMessageDialog(NceConsistEditFrame.this,
-					"Enter consist number 1 to 127", "NCE Consist",
+					ToolTipConsist, "NCE Consist",
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
@@ -779,11 +784,11 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 	}
 
 	/**
-	 * Reads 16 bytes of NCE consist memory based on consist number and engine
+	 * Reads 16 bytes of NCE consist memory based on consist number and loco
 	 * number 0=lead 1=rear 2=mid
 	 */
 	private void readConsistMemory(int consistNum, int eNum) {
-		engineNum = eNum;
+		locoNum = eNum;
 		int nceMemAddr = (consistNum * 2) + CS_CONSIST_MEM;
 		if (eNum == REAR)
 			nceMemAddr = (consistNum * 2) + CS_CON_MEM_REAR;
@@ -827,85 +832,85 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		textConModel.setText(cre.getModel());	
 		
 		// load lead loco
-		engTextField1.setText(cre.getEng1DccAddress());
-		adrButton1.setText(cre.isEng1LongAddress() ? LONG : SHORT);
-		dirButton1.setText(directionWord(cre.getEng1Direction()));
+		locoTextField1.setText(cre.getLoco1DccAddress());
+		adrButton1.setText(cre.isLoco1LongAddress() ? LONG : SHORT);
+		dirButton1.setText(convertDTD(cre.getLoco1Direction()));
 		locoRosterBox1.setEnabled(true);
-		engTextField1.setEnabled(true);
+		locoTextField1.setEnabled(true);
 		adrButton1.setEnabled(true);
 		dirButton1.setEnabled(true);
 
 		// load rear loco
-		engTextField2.setText(cre.getEng2DccAddress());
-		adrButton2.setText(cre.isEng2LongAddress() ? LONG : SHORT);
-		dirButton2.setText(directionWord(cre.getEng2Direction()));
+		locoTextField2.setText(cre.getLoco2DccAddress());
+		adrButton2.setText(cre.isLoco2LongAddress() ? LONG : SHORT);
+		dirButton2.setText(convertDTD(cre.getLoco2Direction()));
 		locoRosterBox2.setEnabled(true);
-		engTextField2.setEnabled(true);
+		locoTextField2.setEnabled(true);
 		adrButton2.setEnabled(true);
 		dirButton2.setEnabled(true);
 
 		// load Mid1 loco
-		engTextField3.setText(cre.getEng3DccAddress());
-		adrButton3.setText(cre.isEng3LongAddress() ? LONG : SHORT);
-		dirButton3.setText(directionWord(cre.getEng3Direction()));
+		locoTextField3.setText(cre.getLoco3DccAddress());
+		adrButton3.setText(cre.isLoco3LongAddress() ? LONG : SHORT);
+		dirButton3.setText(convertDTD(cre.getLoco3Direction()));
 		locoRosterBox3.setEnabled(true);
-		engTextField3.setEnabled(true);
+		locoTextField3.setEnabled(true);
 		adrButton3.setEnabled(true);
 		dirButton3.setEnabled(true);
 
 		// load Mid2 loco
-		engTextField4.setText(cre.getEng4DccAddress());
-		adrButton4.setText(cre.isEng4LongAddress() ? LONG : SHORT);
-		dirButton4.setText(directionWord(cre.getEng4Direction()));
+		locoTextField4.setText(cre.getLoco4DccAddress());
+		adrButton4.setText(cre.isLoco4LongAddress() ? LONG : SHORT);
+		dirButton4.setText(convertDTD(cre.getLoco4Direction()));
 		locoRosterBox4.setEnabled(true);
-		engTextField4.setEnabled(true);
+		locoTextField4.setEnabled(true);
 		adrButton4.setEnabled(true);
 		dirButton4.setEnabled(true);
 
 		// load Mid3 loco
-		engTextField5.setText(cre.getEng5DccAddress());
-		adrButton5.setText(cre.isEng5LongAddress() ? LONG : SHORT);
-		dirButton5.setText(directionWord(cre.getEng5Direction()));
+		locoTextField5.setText(cre.getLoco5DccAddress());
+		adrButton5.setText(cre.isLoco5LongAddress() ? LONG : SHORT);
+		dirButton5.setText(convertDTD(cre.getLoco5Direction()));
 		locoRosterBox5.setEnabled(true);
-		engTextField5.setEnabled(true);
+		locoTextField5.setEnabled(true);
 		adrButton5.setEnabled(true);
 		dirButton5.setEnabled(true);
 
 		// load Mid4 loco
-		engTextField6.setText(cre.getEng6DccAddress());
-		adrButton6.setText(cre.isEng6LongAddress() ? LONG : SHORT);
-		dirButton6.setText(directionWord(cre.getEng6Direction()));
+		locoTextField6.setText(cre.getLoco6DccAddress());
+		adrButton6.setText(cre.isLoco6LongAddress() ? LONG : SHORT);
+		dirButton6.setText(convertDTD(cre.getLoco6Direction()));
 		locoRosterBox6.setEnabled(true);
-		engTextField6.setEnabled(true);
+		locoTextField6.setEnabled(true);
 		adrButton6.setEnabled(true);
 		dirButton6.setEnabled(true);
 	}
 	
 	/**
-	 * checks to see if all engine addresses in NCE consist match roster
+	 * checks to see if all loco addresses in NCE consist match roster
 	 * updates road name, road number, and loco direction fields
 	 * @return true if match
 	 */
 	private boolean consistRosterMatch (NceConsistRosterEntry cre){
 		if (consistTextField.getText().equals(cre.getConsistNumber()) 
-				&& engTextField1.getText().equals(cre.getEng1DccAddress())
-				&& engTextField2.getText().equals(cre.getEng2DccAddress())
-				&& engTextField3.getText().equals(cre.getEng3DccAddress())
-				&& engTextField4.getText().equals(cre.getEng4DccAddress())
-				&& engTextField5.getText().equals(cre.getEng5DccAddress())
-				&& engTextField6.getText().equals(cre.getEng6DccAddress())
+				&& locoTextField1.getText().equals(cre.getLoco1DccAddress())
+				&& locoTextField2.getText().equals(cre.getLoco2DccAddress())
+				&& locoTextField3.getText().equals(cre.getLoco3DccAddress())
+				&& locoTextField4.getText().equals(cre.getLoco4DccAddress())
+				&& locoTextField5.getText().equals(cre.getLoco5DccAddress())
+				&& locoTextField6.getText().equals(cre.getLoco6DccAddress())
 						){
 			// match!  Only load the elements needed
 			if (newConsist){
 				textConRoadName.setText(cre.getRoadName());
 				textConRoadNumber.setText(cre.getRoadNumber());	
 				textConModel.setText(cre.getModel());	
-				dirButton1.setText(directionWord(cre.getEng1Direction()));
-				dirButton2.setText(directionWord(cre.getEng2Direction()));
-				dirButton3.setText(directionWord(cre.getEng3Direction()));
-				dirButton4.setText(directionWord(cre.getEng4Direction()));
-				dirButton5.setText(directionWord(cre.getEng5Direction()));
-				dirButton6.setText(directionWord(cre.getEng6Direction()));
+				dirButton1.setText(convertDTD(cre.getLoco1Direction()));
+				dirButton2.setText(convertDTD(cre.getLoco2Direction()));
+				dirButton3.setText(convertDTD(cre.getLoco3Direction()));
+				dirButton4.setText(convertDTD(cre.getLoco4Direction()));
+				dirButton5.setText(convertDTD(cre.getLoco5Direction()));
+				dirButton6.setText(convertDTD(cre.getLoco6Direction()));
 			}
 			return true;
 		} else {
@@ -916,17 +921,17 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 	private boolean enablePartialMatch = true;
 	
 	/**
-	 * checks to see if some engine addresses in NCE consist match roster
+	 * checks to see if some loco addresses in NCE consist match roster
 	 * updates road name, road number, and loco direction fields
 	 * @return true if there was at least one match
 	 */
 	private boolean consistRosterPartialMatch (NceConsistRosterEntry cre){
 		if (!enablePartialMatch)
 			return false;
-		// does eng1 match?
+		// does loco1 match?
 		if (consistTextField.getText().equals(cre.getConsistNumber()) 
-				&& engTextField1.getText().equals(cre.getEng1DccAddress())){
-			dirButton1.setText(directionWord(cre.getEng1Direction()));
+				&& locoTextField1.getText().equals(cre.getLoco1DccAddress())){
+			dirButton1.setText(convertDTD(cre.getLoco1Direction()));
 			textConRoadName.setText(cre.getRoadName());
 			textConRoadNumber.setText(cre.getRoadNumber());	
 			textConModel.setText(cre.getModel());	
@@ -934,20 +939,20 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 			consistReply.setText(UNKNOWN);
 			return false;
 		}
-		if (engTextField2.getText().equals(cre.getEng2DccAddress())){
-			dirButton2.setText(directionWord(cre.getEng2Direction()));
+		if (locoTextField2.getText().equals(cre.getLoco2DccAddress())){
+			dirButton2.setText(convertDTD(cre.getLoco2Direction()));
 		}
-		if (engTextField3.getText().equals(cre.getEng3DccAddress())){
-			dirButton3.setText(directionWord(cre.getEng3Direction()));
+		if (locoTextField3.getText().equals(cre.getLoco3DccAddress())){
+			dirButton3.setText(convertDTD(cre.getLoco3Direction()));
 		}
-		if (engTextField4.getText().equals(cre.getEng4DccAddress())){
-			dirButton4.setText(directionWord(cre.getEng4Direction()));
+		if (locoTextField4.getText().equals(cre.getLoco4DccAddress())){
+			dirButton4.setText(convertDTD(cre.getLoco4Direction()));
 		}
-		if (engTextField5.getText().equals(cre.getEng5DccAddress())){
-			dirButton5.setText(directionWord(cre.getEng5Direction()));
+		if (locoTextField5.getText().equals(cre.getLoco5DccAddress())){
+			dirButton5.setText(convertDTD(cre.getLoco5Direction()));
 		}
-		if (engTextField6.getText().equals(cre.getEng6DccAddress())){
-			dirButton6.setText(directionWord(cre.getEng6Direction()));
+		if (locoTextField6.getText().equals(cre.getLoco6DccAddress())){
+			dirButton6.setText(convertDTD(cre.getLoco6Direction()));
 		}
 		consistReply.setText(MODIFIED);
 		return true;
@@ -961,13 +966,13 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 	private boolean updateRoster(String consistNumber) {
 		if (!checkBoxConsist.isSelected())
 			return false;
-		String id = engTextField1.getText(); // lead loco is the consist id
+		String id = locoTextField1.getText(); // lead loco is the consist id
 		if (id.equals(EMPTY)) {
 			log.debug("Attempt to modify consist without valid id");
 			return false;
 		}
 		// need rear loco to form a consist
-		if (engTextField2.getText().equals(EMPTY))
+		if (locoTextField2.getText().equals(EMPTY))
 			return false;
 		NceConsistRosterEntry cre;
 		consistList = NceConsistRoster.instance().matchingList(null, null,
@@ -987,10 +992,10 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 			cre = NceConsistRoster.instance().entryFromTitle(id);
 			// if all of the loco addresses match, just update without telling user
 			consistList = NceConsistRoster.instance()
-					.matchingList(null, null, null, engTextField1.getText(),
-							engTextField2.getText(), engTextField3.getText(),
-							engTextField4.getText(), engTextField5.getText(),
-							engTextField6.getText(), id);
+					.matchingList(null, null, null, locoTextField1.getText(),
+							locoTextField2.getText(), locoTextField3.getText(),
+							locoTextField4.getText(), locoTextField5.getText(),
+							locoTextField6.getText(), id);
 			// if it doesn't match, do we want to modify it?
 			if (consistList.isEmpty()) {
 				if (JOptionPane.showConfirmDialog(null, "Consist " + id
@@ -1013,53 +1018,70 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		cre.setRoadNumber(textConRoadNumber.getText());
 		cre.setModel(textConModel.getText());
 		// save lead loco
-		cre.setEng1DccAddress(engTextField1.getText());
-		cre.setEng1LongAddress(adrButton1.getText().equals(LONG));
-		cre.setEng1Direction(directionLetter(dirButton1));
+		cre.setLoco1DccAddress(locoTextField1.getText());
+		cre.setLoco1LongAddress(adrButton1.getText().equals(LONG));
+		cre.setLoco1Direction(directionDTD(dirButton1));
 		// save rear loco
-		cre.setEng2DccAddress(engTextField2.getText());
-		cre.setEng2LongAddress(adrButton2.getText().equals(LONG));
-		cre.setEng2Direction(directionLetter(dirButton2));
+		cre.setLoco2DccAddress(locoTextField2.getText());
+		cre.setLoco2LongAddress(adrButton2.getText().equals(LONG));
+		cre.setLoco2Direction(directionDTD(dirButton2));
 		// save Mid1 loco
-		cre.setEng3DccAddress(engTextField3.getText());
-		cre.setEng3LongAddress(adrButton3.getText().equals(LONG));
-		cre.setEng3Direction(directionLetter(dirButton3));
+		cre.setLoco3DccAddress(locoTextField3.getText());
+		cre.setLoco3LongAddress(adrButton3.getText().equals(LONG));
+		cre.setLoco3Direction(directionDTD(dirButton3));
 		// save Mid2 loco
-		cre.setEng4DccAddress(engTextField4.getText());
-		cre.setEng4LongAddress(adrButton4.getText().equals(LONG));
-		cre.setEng4Direction(directionLetter(dirButton4));
+		cre.setLoco4DccAddress(locoTextField4.getText());
+		cre.setLoco4LongAddress(adrButton4.getText().equals(LONG));
+		cre.setLoco4Direction(directionDTD(dirButton4));
 		// save Mid3 loco
-		cre.setEng5DccAddress(engTextField5.getText());
-		cre.setEng5LongAddress(adrButton5.getText().equals(LONG));
-		cre.setEng5Direction(directionLetter(dirButton5));
+		cre.setLoco5DccAddress(locoTextField5.getText());
+		cre.setLoco5LongAddress(adrButton5.getText().equals(LONG));
+		cre.setLoco5Direction(directionDTD(dirButton5));
 		// save Mid4 loco
-		cre.setEng6DccAddress(engTextField6.getText());
-		cre.setEng6LongAddress(adrButton6.getText().equals(LONG));
-		cre.setEng6Direction(directionLetter(dirButton6));
+		cre.setLoco6DccAddress(locoTextField6.getText());
+		cre.setLoco6LongAddress(adrButton6.getText().equals(LONG));
+		cre.setLoco6Direction(directionDTD(dirButton6));
 
 		writeRosterFile();
 		return true;
 	}
+	
+	// DTD format for loco direction
+	private static final String DTD_NORMAL = "normal";
+	private static final String DTD_REVERSE = "reverse";
+	private static final String DTD_UNKNOWN = "unknown";
 
 	/**
-	 * @return F or R based on the eng direction button
+	 * @return DTD direction format based on the loco direction button
 	 */
-	private String directionLetter(JButton dirButton) {
-		String letter = EMPTY;
+	private String directionDTD(JButton dirButton) {
+		String formatDTD = DTD_UNKNOWN;
 		if (dirButton.getText().equals(FWD))
-			letter = "F";
+			formatDTD = DTD_NORMAL;
 		if (dirButton.getText().equals(REV))
-			letter = "R";
-		return letter;
+			formatDTD = DTD_REVERSE;
+		return formatDTD;
 	}
 	/**
-	 * @return converts F to FWD and R to REV
+	 * @return converts DTD direction to FWD, REV, and ??
 	 */
-	private String directionWord(String letter) {
+	private String convertDTD(String formatDTD) {
 		String word = QUESTION;
-		if (letter.equals("F"))
+		if (formatDTD.equals(DTD_NORMAL))
 			word = FWD;
-		if (letter.equals("R"))
+		if (formatDTD.equals(DTD_REVERSE))
+			word = REV;
+		return word;
+	}
+	
+	/**
+	 * @return converts DTD direction to FWD, REV, and ""
+	 */
+	private String shortHandConvertDTD(String formatDTD) {
+		String word = EMPTY;
+		if (formatDTD.equals(DTD_NORMAL))
+			word = FWD;
+		if (formatDTD.equals(DTD_REVERSE))
 			word = REV;
 		return word;
 	}
@@ -1085,34 +1107,34 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 
 	// can the consist be loading into NCE memory?
 	private boolean canLoad() {
-		if (engTextField1.getText().equals(EMPTY))
+		if (locoTextField1.getText().equals(EMPTY))
 			return false;
 		if (dirButton1.getText().equals(QUESTION))
 			return false;
-		if (engTextField2.getText().equals(EMPTY))
+		if (locoTextField2.getText().equals(EMPTY))
 			return false;
 		if (dirButton2.getText().equals(QUESTION))
 			return false;
-		if (!engTextField3.getText().equals(EMPTY)
+		if (!locoTextField3.getText().equals(EMPTY)
 				& dirButton3.getText().equals(QUESTION))
 			return false;
-		if (!engTextField4.getText().equals(EMPTY)
+		if (!locoTextField4.getText().equals(EMPTY)
 				& dirButton4.getText().equals(QUESTION))
 			return false;
-		if (!engTextField5.getText().equals(EMPTY)
+		if (!locoTextField5.getText().equals(EMPTY)
 				& dirButton5.getText().equals(QUESTION))
 			return false;
-		if (!engTextField6.getText().equals(EMPTY)
+		if (!locoTextField6.getText().equals(EMPTY)
 				& dirButton6.getText().equals(QUESTION))
 			return false;
 		// okay to load, clean up empty loco fields
-		if (engTextField3.getText().equals(EMPTY))
+		if (locoTextField3.getText().equals(EMPTY))
 			dirButton3.setText(QUESTION);
-		if (engTextField4.getText().equals(EMPTY))
+		if (locoTextField4.getText().equals(EMPTY))
 			dirButton4.setText(QUESTION);
-		if (engTextField5.getText().equals(EMPTY))
+		if (locoTextField5.getText().equals(EMPTY))
 			dirButton5.setText(QUESTION);
-		if (engTextField6.getText().equals(EMPTY))
+		if (locoTextField6.getText().equals(EMPTY))
 			dirButton6.setText(QUESTION);
 		if (saveLoadButton.getText().equals(LOAD))
 			return true;
@@ -1123,35 +1145,32 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 			return true;
 	}
 	
-	// mimic NCE mid engine shift when there's empties
+	// mimic NCE mid loco shift when there's empties
 	private void loadShift() {
 		for (int i = 0; i < 3; i++) {
-			shiftOneLine(engTextField5, adrButton5, dirButton5, engTextField6,
+			shiftOneLine(locoTextField5, adrButton5, dirButton5, locoTextField6,
 					adrButton6, dirButton6);
-			shiftOneLine(engTextField4, adrButton4, dirButton4, engTextField5,
+			shiftOneLine(locoTextField4, adrButton4, dirButton4, locoTextField5,
 					adrButton5, dirButton5);
-			shiftOneLine(engTextField3, adrButton3, dirButton3, engTextField4,
+			shiftOneLine(locoTextField3, adrButton3, dirButton3, locoTextField4,
 					adrButton4, dirButton4);
-			shiftOneLine(engTextField2, adrButton2, dirButton2, engTextField3,
+			shiftOneLine(locoTextField2, adrButton2, dirButton2, locoTextField3,
 					adrButton3, dirButton3);
 		}
 	}
 	
-	private void shiftOneLine(JTextField engTextFieldLow, JButton adrButtonLow,
-			JButton dirButtonLow, JTextField engTextFieldHigh,
+	private void shiftOneLine(JTextField locoTextFieldLow, JButton adrButtonLow,
+			JButton dirButtonLow, JTextField locoTextFieldHigh,
 			JButton adrButtonHigh, JButton dirButtonHigh) {
-		if (engTextFieldLow.getText().equals(EMPTY) && !engTextFieldHigh.getText().equals((EMPTY))){
-			engTextFieldLow.setText(engTextFieldHigh.getText());
+		if (locoTextFieldLow.getText().equals(EMPTY) && !locoTextFieldHigh.getText().equals((EMPTY))){
+			locoTextFieldLow.setText(locoTextFieldHigh.getText());
 			adrButtonLow.setText(adrButtonHigh.getText());
 			dirButtonLow.setText(dirButtonHigh.getText());
 			dirButtonHigh.setText(QUESTION);
-			engTextFieldHigh.setText(EMPTY);
+			locoTextFieldHigh.setText(EMPTY);
 		} else {
 			return;
 		}
-			
-				
-
 	}
 
 	// change button operation during load consist from roster
@@ -1167,7 +1186,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 			clearCancelButton.setToolTipText(ToolTipClear);
 			saveLoadButton.setText(SAVE);
 			saveLoadButton.setToolTipText(ToolTipSave);
-			clearCancelButton.setEnabled(!engTextField1.getText().equals(EMPTY));
+			clearCancelButton.setEnabled(!locoTextField1.getText().equals(EMPTY));
 		}
 
 		// toggle (on if we're loading a consist from roster)
@@ -1190,13 +1209,13 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 	}
 
 	/**
-	 * Kills consist using lead engine address
+	 * Kills consist using lead loco address
 	 */
 	private void killConsist() {
-		if (validLocoAdr(engTextField1.getText()) < 0)
+		if (validLocoAdr(locoTextField1.getText()) < 0)
 		// special case where lead or rear loco was being replaced
 			return;
-		int locoAddr = getLocoAddr (engTextField1, adrButton1);
+		int locoAddr = getLocoAddr (locoTextField1, adrButton1);
 		sendNceBinaryCommand(locoAddr, NceBinaryCommand.LOCO_CMD_KILL_CONSIST,
 				(byte) 0);
 	}
@@ -1234,7 +1253,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 			int recChar = r.getElement(0);
 			log.debug ("command reply: " + recChar);
 			if (recChar == '!') {
-				if (engineSearch && waiting == 0) {
+				if (locoSearch && waiting == 0) {
 					readConsistMemory(consistNumVerify, LEAD);
 					consistReply.setText(VERIFY);
 					return;
@@ -1254,8 +1273,8 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 
 		// Consist memory read
 		if (replyLen == REPLY_16) {
-			// are we verifying that engine isn't already part of a consist?
-			if (engineSearch) {
+			// are we verifying that loco isn't already part of a consist?
+			if (locoSearch) {
 				// search the 16 bytes for a loco match
 				for (int i = 0; i < 16;) {
 					int rC = r.getElement(i++);
@@ -1263,18 +1282,18 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 					int rC_l = r.getElement(i++);
 					rC_l = rC_l & 0xFF;
 					rC = rC + rC_l;
-					// does it match any of the engines?
-					for (int j = 0; j < engVerifyList.length; j++){
-						if (engVerifyList[j] == 0)	// done searching?
+					// does it match any of the locos?
+					for (int j = 0; j < locoVerifyList.length; j++){
+						if (locoVerifyList[j] == 0)	// done searching?
 							break;
-						if (rC == engVerifyList[j]) {
+						if (rC == locoVerifyList[j]) {
 							// ignore matching the consist that we're adding the
 							// loco
 							if (consistNumVerify != consistNum) {
-								engineSearch = false; // quit the search
+								locoSearch = false; // quit the search
 								consistReply.setText(ERROR);
-								engNumInUse = rC & 0x3FFF;
-								queueError (ERROR_MID_ENG_IN_USE);
+								locoNumInUse = rC & 0x3FFF;
+								queueError (ERROR_LOCO_IN_USE);
 								return;
 							}
 						}
@@ -1282,13 +1301,13 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 					consistNumVerify++;
 				}
 				if (consistNumVerify > CONSIST_MAX) {
-					if (engineNum == LEAD) {
+					if (locoNum == LEAD) {
 						// now verify the rear loco consist
-						engineNum = REAR;
+						locoNum = REAR;
 						consistNumVerify = 0;
 					} else {
 						// verify complete, loco address is unique
-						engineSearch = false;
+						locoSearch = false;
 						consistReply.setText(OKAY);
 						// determine the type of verification
 						if (verifyType == VERIFY_LEAD_REAR){
@@ -1298,11 +1317,11 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 								readConsistMemory(consistNum, LEAD);
 							}
 						} else if (verifyType == VERIFY_MID_FWD) {
-							sendNceBinaryCommand(engVerifyList[0],
+							sendNceBinaryCommand(locoVerifyList[0],
 									NceBinaryCommand.LOCO_CMD_FWD_CONSIST_MID,
 									(byte) consistNum);
 						} else if (verifyType == VERIFY_MID_REV){
-							sendNceBinaryCommand(engVerifyList[0],
+							sendNceBinaryCommand(locoVerifyList[0],
 									NceBinaryCommand.LOCO_CMD_REV_CONSIST_MID,
 									(byte) consistNum);
 						} else if (verifyType == VERIFY_ALL){
@@ -1315,7 +1334,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 					}
 				}
 				// continue verify
-				readConsistMemory(consistNumVerify, engineNum);
+				readConsistMemory(consistNumVerify, locoNum);
 				return;
 			}
 			// are we searching?
@@ -1327,43 +1346,48 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 					rC = (rC << 8) & 0xFF00;
 					rC = rC + rC_l;
 
-					if (checkBoxEmpty.isSelected() || emptyConsistSearch) {
-						if (rC == 0 && consistCount > 0) {
+					if (emptyConsistSearch){
+						if( rC == 0 ){
 							// found an empty consist!
 							consistSearchNext = false;
-							if (emptyConsistSearch) {
-								// no update, roster was loaded in panel
-								emptyConsistSearch = false;
-								consistReply.setText(OKAY);
-								saveLoadButton.setEnabled(canLoad());
-								return;
-							} else {
-								// update the panel
-								readConsistMemory(consistNum, LEAD);
-								return;
-							}
+							emptyConsistSearch = false;
+							consistReply.setText(OKAY);
+							saveLoadButton.setEnabled(canLoad());
+							return;
 						}
-					} else {
-						if (rC != 0 && consistCount > 0) {
+					}
+					else if (checkBoxEmpty.isSelected()) {
+						if( rC == 0 && consistCount > 0) {
+							// found an empty consist!
 							consistSearchNext = false;
+							// update the panel
 							readConsistMemory(consistNum, LEAD);
 							return;
 						}
 					}
+					else if (rC != 0 && consistCount > 0) {
+						// found a consist!	
+						consistSearchNext = false;
+						readConsistMemory(consistNum, LEAD);
+						return;
+					}
 					if (++consistCount > CONSIST_MAX) {
+						// could not find a consist
 						consistSearchNext = false;
 						consistReply.setText(NONE);
 						if (emptyConsistSearch) {
-							emptyConsistSearch = false;;
+							emptyConsistSearch = false;
 							queueError(ERROR_NO_EMPTY_CONSIST);
 						}
 						return;		// don't update panel
 					}
+					// look for next consist
 					consistNum--;
 					if (consistNum < CONSIST_MIN)
 						consistNum = CONSIST_MAX;
 					consistTextField.setText(Integer.toString(consistNum));
 					if (consistNum == CONSIST_MAX) {
+						// we need to read NCE memory to continue
 						break;
 					}
 				}
@@ -1400,7 +1424,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 					if (consistNum > CONSIST_MAX)
 						consistNum = CONSIST_MIN;
 					consistTextField.setText(Integer.toString(consistNum));
-					// have we wraped? if yes, need to read the next group
+					// have we wraped? if yes, need to read NCE memory
 					if (consistNum == CONSIST_MIN)
 						break;
 				}
@@ -1408,36 +1432,36 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 				return;
 			}
 
-			// load lead engine
-			if (engineNum == LEAD) {
-				boolean eng1exists = updateLocoFields(r, 0, locoRosterBox1,
-						engTextField1, adrButton1, dirButton1, cmdButton1);
+			// Panel update, load lead loco
+			if (locoNum == LEAD) {
+				boolean loco1exists = updateLocoFields(r, 0, locoRosterBox1,
+						locoTextField1, adrButton1, dirButton1, cmdButton1);
 				if (clearCancelButton.getText().equals(CLEAR))
-					clearCancelButton.setEnabled(eng1exists);
+					clearCancelButton.setEnabled(loco1exists);
 
-				// load rear engine
-			} else if (engineNum == REAR) {
-				updateLocoFields(r, 0, locoRosterBox2, engTextField2,
+				// load rear loco
+			} else if (locoNum == REAR) {
+				updateLocoFields(r, 0, locoRosterBox2, locoTextField2,
 						adrButton2, dirButton2, cmdButton2);
 
-				// load mid engines
+				// load mid locos
 			} else {
-				updateLocoFields(r, 0, locoRosterBox3, engTextField3,
+				updateLocoFields(r, 0, locoRosterBox3, locoTextField3,
 						adrButton3, dirButton3, cmdButton3);
-				updateLocoFields(r, 2, locoRosterBox4, engTextField4,
+				updateLocoFields(r, 2, locoRosterBox4, locoTextField4,
 						adrButton4, dirButton4, cmdButton4);
-				updateLocoFields(r, 4, locoRosterBox5, engTextField5,
+				updateLocoFields(r, 4, locoRosterBox5, locoTextField5,
 						adrButton5, dirButton5, cmdButton5);
-				updateLocoFields(r, 6, locoRosterBox6, engTextField6,
+				updateLocoFields(r, 6, locoRosterBox6, locoTextField6,
 						adrButton6, dirButton6, cmdButton6);
 				consistReply.setText(OKAY);
 				checkForRosterMatch();
 				saveLoadButton.setEnabled(canLoad());
 			}
-			// read the next consist engine number
-			if (engineNum == LEAD || engineNum == REAR) {
-				engineNum++;
-				readConsistMemory(consistNum, engineNum);
+			// read the next loco number in the consist
+			if (locoNum == LEAD || locoNum == REAR) {
+				locoNum++;
+				readConsistMemory(consistNum, locoNum);
 			}
 		}
 	}
@@ -1447,9 +1471,9 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 	private void checkForRosterMatch(){
 		exactMatch = false;
 		if (!verifyRosterMatch)
-			cre = NceConsistRoster.instance().entryFromTitle(engTextField1.getText());
+			cre = NceConsistRoster.instance().entryFromTitle(locoTextField1.getText());
 		if (cre == null){
-			if (checkBoxConsist.isSelected() && !engTextField1.getText().equals(EMPTY))
+			if (checkBoxConsist.isSelected() && !locoTextField1.getText().equals(EMPTY))
 				consistReply.setText(UNKNOWN);
 			else
 			textConRoadName.setText(EMPTY);
@@ -1478,19 +1502,19 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 
 	// update loco fields, returns false if loco address is null
 	private boolean updateLocoFields(NceReply r, int index,
-			JComboBox locoRosterBox, JTextField engTextField,
+			JComboBox locoRosterBox, JTextField locoTextField,
 			JButton adrButton, JButton dirButton, JButton cmdButton) {
 		// index = 0 for lead and rear locos, 0,2,4,6 for mid
 		String locoAddrText = getLocoAddrText(r, index);
 		boolean locoType = getLocoAddressType(r, index); // Long or short address?
 		String locoDirection = getLocoDirection(dirButton);
 		
-		engTextField.setText(locoAddrText);
+		locoTextField.setText(locoAddrText);
 		locoRosterBox.setSelectedIndex(0);
 
 		if (locoAddrText.equals(EMPTY) || locoAddrText.equals(REPLACE_LOCO)) {
 			locoRosterBox.setEnabled(true);
-			engTextField.setEnabled(true);
+			locoTextField.setEnabled(true);
 			cmdButton.setText(ADD);
 			cmdButton.setVisible(true);
 			cmdButton.setEnabled(false);
@@ -1501,9 +1525,9 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 			adrButton.setEnabled(true);
 			return false;
 		} else {
-			engTextField.setText(locoAddrText);
+			locoTextField.setText(locoAddrText);
 			locoRosterBox.setEnabled(false);
-			engTextField.setEnabled(false);
+			locoTextField.setEnabled(false);
 			cmdButton.setEnabled(true);
 			dirButton.setText(locoDirection);
 			dirButton.setEnabled(false);
@@ -1511,12 +1535,12 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 			adrButton.setEnabled(false);
 			
 			// can not delete lead or rear locos, but can replace
-			if (engTextField == engTextField1 || engTextField == engTextField2) {
+			if (locoTextField == locoTextField1 || locoTextField == locoTextField2) {
 				cmdButton.setText(REPLACE);
-				cmdButton.setToolTipText("Press to delete and replace this engine");
+				cmdButton.setToolTipText("Press to delete and replace this loco");
 			} else {
 				cmdButton.setText(DELETE);
-				cmdButton.setToolTipText("Press to delete this engine from consist");
+				cmdButton.setToolTipText("Press to delete this loco from consist");
 			}
 			return true;
 		}
@@ -1524,14 +1548,14 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 
 	// modify loco fields because an add, replace, delete button has been pressed
 	private void modifyLocoFields(JComboBox locoRosterBox,
-			JTextField engTextField, JButton adrButton, JButton dirButton,
+			JTextField locoTextField, JButton adrButton, JButton dirButton,
 			JButton cmdButton) {
-		if (validLocoAdr(engTextField.getText()) < 0)
+		if (validLocoAdr(locoTextField.getText()) < 0)
 			return;
 		byte cN = (byte) validConsist(consistTextField.getText());
 		if (cN < 0)
 			return;
-		if (engTextField.getText().equals(EMPTY)) {
+		if (locoTextField.getText().equals(EMPTY)) {
 			JOptionPane.showMessageDialog(NceConsistEditFrame.this,
 					"Enter loco address before pressing add", "NCE Consist",
 					JOptionPane.ERROR_MESSAGE);
@@ -1539,7 +1563,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		}
 		// set reflesh flag to update panel
 		refresh = true;
-		int locoAddr = getLocoAddr (engTextField, adrButton);
+		int locoAddr = getLocoAddr (locoTextField, adrButton);
 
 		if (cmdButton.getText() == DELETE) {
 			sendNceBinaryCommand(locoAddr,
@@ -1553,8 +1577,8 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 			// allow user to add loco to lead or rear consist
 
 			locoRosterBox.setEnabled(true);
-			engTextField.setText(EMPTY);
-			engTextField.setEnabled(true);
+			locoTextField.setText(EMPTY);
+			locoTextField.setEnabled(true);
 			adrButton.setText(LONG);
 			adrButton.setEnabled(true);
 			dirButton.setText(QUESTION);
@@ -1564,7 +1588,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 
 			// now update CS memory in case user doesn't use the Add button
 			// this will also allow us to delete the loco from the layout
-			if (engTextField == engTextField1) {
+			if (locoTextField == locoTextField1) {
 				// replace lead loco
 				sendNceBinaryCommand(LOC_ADR_REPLACE,
 						NceBinaryCommand.LOCO_CMD_FWD_CONSIST_LEAD, cN);
@@ -1599,7 +1623,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 
 			// now we need to determine if lead, rear, or mid loco
 			// lead loco?
-			if (engTextField == engTextField1) {
+			if (locoTextField == locoTextField1) {
 				if (dirButton.getText() == FWD) {
 					sendNceBinaryCommand(locoAddr,
 							NceBinaryCommand.LOCO_CMD_FWD_CONSIST_LEAD, cN);
@@ -1609,7 +1633,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 							NceBinaryCommand.LOCO_CMD_REV_CONSIST_LEAD, cN);
 				}
 			// rear loco?
-			} else if (engTextField == engTextField2) {
+			} else if (locoTextField == locoTextField2) {
 				if (dirButton.getText() == FWD) {
 					sendNceBinaryCommand(locoAddr,
 							NceBinaryCommand.LOCO_CMD_FWD_CONSIST_REAR, cN);
@@ -1621,7 +1645,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 			// must be mid loco
 			} else {
 				// wait for verify to complete before updating mid loco
-				if (engineSearch) {
+				if (locoSearch) {
 					if (dirButton.getText() == FWD)
 						verifyType = VERIFY_MID_FWD;
 					else
@@ -1643,43 +1667,43 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 	
 	private void fullLoad(){
 		refresh = true;
-		loadOneLine(locoRosterBox1, engTextField1, adrButton1,
+		loadOneLine(locoRosterBox1, locoTextField1, adrButton1,
 				dirButton1, cmdButton1);
-		loadOneLine(locoRosterBox2, engTextField2, adrButton2,
+		loadOneLine(locoRosterBox2, locoTextField2, adrButton2,
 				dirButton2, cmdButton2);
-		loadOneLine(locoRosterBox3, engTextField3, adrButton3,
+		loadOneLine(locoRosterBox3, locoTextField3, adrButton3,
 				dirButton3, cmdButton3);
-		loadOneLine(locoRosterBox4, engTextField4, adrButton4,
+		loadOneLine(locoRosterBox4, locoTextField4, adrButton4,
 				dirButton4, cmdButton4);
-		loadOneLine(locoRosterBox5, engTextField5, adrButton5,
+		loadOneLine(locoRosterBox5, locoTextField5, adrButton5,
 				dirButton5, cmdButton5);
-		loadOneLine(locoRosterBox6, engTextField6, adrButton6,
+		loadOneLine(locoRosterBox6, locoTextField6, adrButton6,
 				dirButton6, cmdButton6);
 		changeButtons(false);
 	}
 
 	/**
-	 * updates NCE CS based on the engine line supplied
+	 * updates NCE CS based on the loco line supplied
 	 * called by load button
 	 * @param locoRosterBox
-	 * @param engTextField
+	 * @param locoTextField
 	 * @param adrButton
 	 * @param dirButton
 	 * @param cmdButton
 	 */
-	private void loadOneLine(JComboBox locoRosterBox, JTextField engTextField,
+	private void loadOneLine(JComboBox locoRosterBox, JTextField locoTextField,
 			JButton adrButton, JButton dirButton, JButton cmdButton) {
-		if (engTextField.getText().equals(EMPTY))
+		if (locoTextField.getText().equals(EMPTY))
 			return;
-		if (validLocoAdr(engTextField.getText()) < 0)
+		if (validLocoAdr(locoTextField.getText()) < 0)
 			return;
 		byte cN = (byte) validConsist(consistTextField.getText());
 		if (cN < 0)
 			return;
 
-		int locoAddr = getLocoAddr (engTextField, adrButton);
+		int locoAddr = getLocoAddr (locoTextField, adrButton);
 
-		// ADD engine to consist
+		// ADD loco to consist
 		if (dirButton.getText() == QUESTION) {
 			JOptionPane.showMessageDialog(NceConsistEditFrame.this,
 					"Set loco direction before loading consist", "NCE Consist",
@@ -1692,7 +1716,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 				NceBinaryCommand.LOCO_CMD_DELETE_LOCO_CONSIST, (byte) 0);
 		// now we need to determine if lead, rear, or mid loco
 		// lead loco?
-		if (engTextField == engTextField1) {
+		if (locoTextField == locoTextField1) {
 			// kill the consist first to clear NCE CS memory
 			sendNceBinaryCommand(locoAddr,
 					NceBinaryCommand.LOCO_CMD_FWD_CONSIST_LEAD, cN);
@@ -1708,7 +1732,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 						NceBinaryCommand.LOCO_CMD_REV_CONSIST_LEAD, cN);
 			}
 			// rear loco?
-		} else if (engTextField == engTextField2) {
+		} else if (locoTextField == locoTextField2) {
 			if (dirButton.getText() == FWD) {
 				sendNceBinaryCommand(locoAddr,
 						NceBinaryCommand.LOCO_CMD_FWD_CONSIST_REAR, cN);
@@ -1730,8 +1754,8 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		}
 	}
 	
-	private int getLocoAddr (JTextField engTextField, JButton adrButton){
-		int locoAddr = Integer.parseInt(engTextField.getText());
+	private int getLocoAddr (JTextField locoTextField, JButton adrButton){
+		int locoAddr = Integer.parseInt(locoTextField.getText());
 		if (locoAddr >= 128)
 			locoAddr += 0xC000;
 		else if (adrButton.getText() == LONG)
@@ -1782,9 +1806,9 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 	private void verifyLocoAddr(int locoAddr) {
 		verifyType = VERIFY_LEAD_REAR;
 		if (checkBoxVerify.isSelected()) {
-			engVerifyList[0] = locoAddr;
-			engVerifyList[1] = 0;		// end of list
-			engineSearch = true;
+			locoVerifyList[0] = locoAddr;
+			locoVerifyList[1] = 0;		// end of list
+			locoSearch = true;
 			consistNumVerify = 0;
 		}
 	}
@@ -1794,21 +1818,21 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		verifyType = VERIFY_ALL;
 		if (checkBoxVerify.isSelected()) {
 			int i = 0;
-			if (!engTextField1.getText().equals(EMPTY) && validLocoAdr(engTextField1.getText()) > 0)
-				engVerifyList[i++] = getLocoAddr (engTextField1, adrButton1);
-			if (!engTextField2.getText().equals(EMPTY) && validLocoAdr(engTextField2.getText()) > 0)
-				engVerifyList[i++] = getLocoAddr (engTextField2, adrButton2);
-			if (!engTextField3.getText().equals(EMPTY) && validLocoAdr(engTextField3.getText()) > 0)
-				engVerifyList[i++] = getLocoAddr (engTextField3, adrButton3);
-			if (!engTextField4.getText().equals(EMPTY) && validLocoAdr(engTextField4.getText()) > 0)
-				engVerifyList[i++] = getLocoAddr (engTextField4, adrButton4);
-			if (!engTextField5.getText().equals(EMPTY) && validLocoAdr(engTextField5.getText()) > 0)
-				engVerifyList[i++] = getLocoAddr (engTextField5, adrButton5);
-			if (!engTextField6.getText().equals(EMPTY) && validLocoAdr(engTextField6.getText()) > 0)
-				engVerifyList[i++] = getLocoAddr (engTextField6, adrButton6);
+			if (!locoTextField1.getText().equals(EMPTY) && validLocoAdr(locoTextField1.getText()) > 0)
+				locoVerifyList[i++] = getLocoAddr (locoTextField1, adrButton1);
+			if (!locoTextField2.getText().equals(EMPTY) && validLocoAdr(locoTextField2.getText()) > 0)
+				locoVerifyList[i++] = getLocoAddr (locoTextField2, adrButton2);
+			if (!locoTextField3.getText().equals(EMPTY) && validLocoAdr(locoTextField3.getText()) > 0)
+				locoVerifyList[i++] = getLocoAddr (locoTextField3, adrButton3);
+			if (!locoTextField4.getText().equals(EMPTY) && validLocoAdr(locoTextField4.getText()) > 0)
+				locoVerifyList[i++] = getLocoAddr (locoTextField4, adrButton4);
+			if (!locoTextField5.getText().equals(EMPTY) && validLocoAdr(locoTextField5.getText()) > 0)
+				locoVerifyList[i++] = getLocoAddr (locoTextField5, adrButton5);
+			if (!locoTextField6.getText().equals(EMPTY) && validLocoAdr(locoTextField6.getText()) > 0)
+				locoVerifyList[i++] = getLocoAddr (locoTextField6, adrButton6);
 			else
-				engVerifyList[i] = 0;
-			engineSearch = true;
+				locoVerifyList[i] = 0;
+			locoSearch = true;
 			consistNumVerify = 0;
 			consistReply.setText(VERIFY);
 			readConsistMemory(consistNumVerify, LEAD);
@@ -1817,7 +1841,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		return false;
 	}
 
-	private void addEngRow(JComponent col1, JComponent col2, JComponent col3,
+	private void addLocoRow(JComponent col1, JComponent col2, JComponent col3,
 			JComponent col4, JComponent col5, JComponent col6, int row) {
 		addItem(col1, 0, row);
 		addItem(col2, 1, row);
@@ -1852,53 +1876,53 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		});
 	}
 	
-	private void enableAllEngRows (boolean flag){
-		enableEngRow(flag, engTextField1, locoRosterBox1,
+	private void enableAllLocoRows (boolean flag){
+		enableLocoRow(flag, locoTextField1, locoRosterBox1,
 				adrButton1, dirButton1, cmdButton1);
-		enableEngRow(flag, engTextField2, locoRosterBox2,
+		enableLocoRow(flag, locoTextField2, locoRosterBox2,
 				adrButton2, dirButton2, cmdButton2);
-		enableEngRow(flag, engTextField3, locoRosterBox3,
+		enableLocoRow(flag, locoTextField3, locoRosterBox3,
 				adrButton3, dirButton3, cmdButton3);
-		enableEngRow(flag, engTextField4, locoRosterBox4,
+		enableLocoRow(flag, locoTextField4, locoRosterBox4,
 				adrButton4, dirButton4, cmdButton4);
-		enableEngRow(flag, engTextField5, locoRosterBox5,
+		enableLocoRow(flag, locoTextField5, locoRosterBox5,
 				adrButton5, dirButton5, cmdButton5);
-		enableEngRow(flag, engTextField6, locoRosterBox6,
+		enableLocoRow(flag, locoTextField6, locoRosterBox6,
 				adrButton6, dirButton6, cmdButton6);
 	}
 	
-	private void enableEngRow(boolean flag, JTextField engTextField,
+	private void enableLocoRow(boolean flag, JTextField locoTextField,
 			JComboBox locoRosterBox, JButton adrButton, JButton dirButton,
 			JButton cmdButton) {
-		engTextField.setEnabled(flag);
+		locoTextField.setEnabled(flag);
 		locoRosterBox.setEnabled(flag);
 		adrButton.setEnabled(flag);
 		dirButton.setEnabled(flag);
 		cmdButton.setEnabled(flag);
 	}
 
-	// initialize engine fields
-	private void initEngFields() {
-		initEngRow(1, "Lead", textEng1, engTextField1, locoRosterBox1,
+	// initialize loco fields
+	private void initLocoFields() {
+		initLocoRow(1, "Lead", textLoco1, locoTextField1, locoRosterBox1,
 				adrButton1, dirButton1, cmdButton1);
-		initEngRow(2, "Rear", textEng2, engTextField2, locoRosterBox2,
+		initLocoRow(2, "Rear", textLoco2, locoTextField2, locoRosterBox2,
 				adrButton2, dirButton2, cmdButton2);
-		initEngRow(3, "Mid 1", textEng3, engTextField3, locoRosterBox3,
+		initLocoRow(3, "Mid 1", textLoco3, locoTextField3, locoRosterBox3,
 				adrButton3, dirButton3, cmdButton3);
-		initEngRow(4, "Mid 2", textEng4, engTextField4, locoRosterBox4,
+		initLocoRow(4, "Mid 2", textLoco4, locoTextField4, locoRosterBox4,
 				adrButton4, dirButton4, cmdButton4);
-		initEngRow(5, "Mid 3", textEng5, engTextField5, locoRosterBox5,
+		initLocoRow(5, "Mid 3", textLoco5, locoTextField5, locoRosterBox5,
 				adrButton5, dirButton5, cmdButton5);
-		initEngRow(6, "Mid 4", textEng6, engTextField6, locoRosterBox6,
+		initLocoRow(6, "Mid 4", textLoco6, locoTextField6, locoRosterBox6,
 				adrButton6, dirButton6, cmdButton6);
 	}
 
-	private void initEngRow(int row, String s, JLabel textEng,
-			JTextField engTextField, JComboBox locoRosterBox,
+	private void initLocoRow(int row, String s, JLabel textLoco,
+			JTextField locoTextField, JComboBox locoRosterBox,
 			JButton adrButton, JButton dirButton, JButton cmdButton) {
 
-		textEng.setText(s);
-		textEng.setVisible(true);
+		textLoco.setText(s);
+		textLoco.setVisible(true);
 
 		adrButton.setText(LONG);
 		adrButton.setVisible(true);
@@ -1914,7 +1938,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		locoRosterBox.setSelectedIndex(0);
 		locoRosterBox.setVisible(true);
 		locoRosterBox.setEnabled(false);
-		locoRosterBox.setToolTipText("Select engine from roster");
+		locoRosterBox.setToolTipText("Select loco from roster");
 		locoRosterBox.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				locoSelected(e);
@@ -1924,7 +1948,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		dirButton.setText(QUESTION);
 		dirButton.setVisible(true);
 		dirButton.setEnabled(false);
-		dirButton.setToolTipText("Press to change engine direction");
+		dirButton.setToolTipText("Press to change loco direction");
 		dirButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				buttonActionDirPerformed(e);
@@ -1941,11 +1965,11 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 			}
 		});
 
-		engTextField.setText(EMPTY);
-		engTextField.setEnabled(false);
-		engTextField.setToolTipText("Enter engine address");
-		engTextField.setMaximumSize(new Dimension(
-				engTextField.getMaximumSize().width, engTextField
+		locoTextField.setText(EMPTY);
+		locoTextField.setEnabled(false);
+		locoTextField.setToolTipText("Enter loco address");
+		locoTextField.setMaximumSize(new Dimension(
+				locoTextField.getMaximumSize().width, locoTextField
 						.getPreferredSize().height));
 	}
 
@@ -1964,11 +1988,11 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 				});
 	}
 	
-	private static final int ERROR_MID_ENG_IN_USE = 1;
+	private static final int ERROR_LOCO_IN_USE = 1;
 	private static final int ERROR_NO_EMPTY_CONSIST = 2;
 	private static final int ERROR_CONSIST_DOESNT_MATCH = 3;
 	private static final int WARN_CONSIST_ALREADY_LOADED = 4;
-	private int engNumInUse; 						// report engine alreay in use
+	private int locoNumInUse; 						// report loco alreay in use
 	private int errorCode = 0;
 	
 	private void queueError (int errorCode){
@@ -1992,9 +2016,9 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 	public void reportError() {
 		switch (errorCode){
 
-		case ERROR_MID_ENG_IN_USE: 
+		case ERROR_LOCO_IN_USE: 
 			JOptionPane.showMessageDialog(NceConsistEditFrame.this, "Loco address "
-					+ engNumInUse + " is part of consist " + consistNumVerify,
+					+ locoNumInUse + " is part of consist " + consistNumVerify,
 					"NCE Consist", JOptionPane.ERROR_MESSAGE);
 			break;
 
@@ -2038,18 +2062,18 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		return "\n" 
 		+ "\n NCE Consist Number: "	+ cre.getConsistNumber()
 		+ "\n"
-		+ "\n Lead Engine Address: " + cre.getEng1DccAddress() 
-		+" "+ cre.getEng1Direction()  
-		+ "\n Rear Engine Address: " + cre.getEng2DccAddress()
-		+" "+ cre.getEng2Direction()  
-		+ "\n Mid1 Engine Address: " + cre.getEng3DccAddress()
-		+" "+ cre.getEng3Direction()  
-		+ "\n Mid2 Engine Address: " + cre.getEng4DccAddress()
-		+" "+ cre.getEng4Direction()  
-		+ "\n Mid3 Engine Address: " + cre.getEng5DccAddress()
-		+" "+ cre.getEng5Direction()  
-		+ "\n Mid4 Engine Address: " + cre.getEng6DccAddress()
-		+" "+ cre.getEng6Direction()  ;
+		+ "\n Lead Locomotive: " + cre.getLoco1DccAddress() 
+		+" "+ shortHandConvertDTD(cre.getLoco1Direction())  
+		+ "\n Rear Locomotive: " + cre.getLoco2DccAddress()
+		+" "+ shortHandConvertDTD(cre.getLoco2Direction())  
+		+ "\n Mid1 Locomotive: " + cre.getLoco3DccAddress()
+		+" "+ shortHandConvertDTD(cre.getLoco3Direction())  
+		+ "\n Mid2 Locomotive: " + cre.getLoco4DccAddress()
+		+" "+ shortHandConvertDTD(cre.getLoco4Direction())  
+		+ "\n Mid3 Locomotive: " + cre.getLoco5DccAddress()
+		+" "+ shortHandConvertDTD(cre.getLoco5Direction())  
+		+ "\n Mid4 Locomotive: " + cre.getLoco6DccAddress()
+		+" "+ shortHandConvertDTD(cre.getLoco6Direction());
 	}
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category

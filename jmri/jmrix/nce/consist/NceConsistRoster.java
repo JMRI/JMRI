@@ -43,7 +43,7 @@ import org.jdom.ProcessingInstruction;
  * 
  * @author Bob Jacobsen Copyright (C) 2001; Dennis Miller Copyright 2004
  * @author Daniel Boudreau (C) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @see NceConsistRosterEntry
  */
 public class NceConsistRoster extends XmlFile {
@@ -186,20 +186,20 @@ public class NceConsistRoster extends XmlFile {
 	 * 
 	 */
     public boolean checkEntry(int i, String roadName, String roadNumber,
-			String consistNumber, String eng1Address, String eng2Address,
-			String eng3Address, String eng4Address, String eng5Address,
-			String eng6Address, String id ) {
+			String consistNumber, String loco1Address, String loco2Address,
+			String loco3Address, String loco4Address, String loco5Address,
+			String loco6Address, String id ) {
         NceConsistRosterEntry r = (NceConsistRosterEntry)_list.get(i);
         if (id != null && !id.equals(r.getId())) return false;
         if (roadName != null && !roadName.equals(r.getRoadName())) return false;
         if (roadNumber != null && !roadNumber.equals(r.getRoadNumber())) return false;
         if (consistNumber != null && !consistNumber.equals(r.getConsistNumber())) return false;
-        if (eng1Address != null && !eng1Address.equals(r.getEng1DccAddress())) return false;
-        if (eng2Address != null && !eng2Address.equals(r.getEng2DccAddress())) return false;
-        if (eng3Address != null && !eng3Address.equals(r.getEng3DccAddress())) return false;
-        if (eng4Address != null && !eng4Address.equals(r.getEng4DccAddress())) return false;
-        if (eng5Address != null && !eng5Address.equals(r.getEng5DccAddress())) return false;
-        if (eng6Address != null && !eng6Address.equals(r.getEng6DccAddress())) return false;
+        if (loco1Address != null && !loco1Address.equals(r.getLoco1DccAddress())) return false;
+        if (loco2Address != null && !loco2Address.equals(r.getLoco2DccAddress())) return false;
+        if (loco3Address != null && !loco3Address.equals(r.getLoco3DccAddress())) return false;
+        if (loco4Address != null && !loco4Address.equals(r.getLoco4DccAddress())) return false;
+        if (loco5Address != null && !loco5Address.equals(r.getLoco5DccAddress())) return false;
+        if (loco6Address != null && !loco6Address.equals(r.getLoco6DccAddress())) return false;
         return true;
     }
 

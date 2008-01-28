@@ -23,7 +23,7 @@ import org.jdom.Element;
  * <P>
  * The ConsistRosterEntry is the central place to find information about a
  * consists configuration, including loco address, address type, loco's
- * direction, and consist number. Up to six consist engines are currently
+ * direction, and consist number. Up to six consist locos are currently
  * tracked. ConsistRosterEntry handles persistency through the LocoFile
  * class. Creating a ConsistRosterEntry does not necessarily read the
  * corresponding file (which might not even exist), please see readFile(),
@@ -37,7 +37,7 @@ import org.jdom.Element;
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2004, 2005
  * @author Dennis Miller Copyright 2004
  * @author Daniel Boudreau (C) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @see NceConsistRoster
  * 
  */
@@ -60,18 +60,18 @@ public class NceConsistRosterEntry {
         _roadNumber =   pEntry._roadNumber;
         _model =   pEntry._model;
         _consistNumber =   pEntry._consistNumber;
-        _eng1DccAddress =   pEntry._eng1DccAddress;
-        _isEng1LongAddress = pEntry._isEng1LongAddress;
-        _eng2DccAddress =   pEntry._eng2DccAddress;
-        _isEng2LongAddress = pEntry._isEng2LongAddress;
-        _eng3DccAddress =   pEntry._eng3DccAddress;
-        _isEng3LongAddress = pEntry._isEng3LongAddress;
-        _eng4DccAddress =   pEntry._eng4DccAddress;
-        _isEng4LongAddress = pEntry._isEng4LongAddress;
-        _eng5DccAddress =   pEntry._eng5DccAddress;
-        _isEng5LongAddress = pEntry._isEng5LongAddress;
-        _eng6DccAddress =   pEntry._eng6DccAddress;
-        _isEng6LongAddress = pEntry._isEng6LongAddress;
+        _loco1DccAddress =   pEntry._loco1DccAddress;
+        _isLoco1LongAddress = pEntry._isLoco1LongAddress;
+        _loco2DccAddress =   pEntry._loco2DccAddress;
+        _isLoco2LongAddress = pEntry._isLoco2LongAddress;
+        _loco3DccAddress =   pEntry._loco3DccAddress;
+        _isLoco3LongAddress = pEntry._isLoco3LongAddress;
+        _loco4DccAddress =   pEntry._loco4DccAddress;
+        _isLoco4LongAddress = pEntry._isLoco4LongAddress;
+        _loco5DccAddress =   pEntry._loco5DccAddress;
+        _isLoco5LongAddress = pEntry._isLoco5LongAddress;
+        _loco6DccAddress =   pEntry._loco6DccAddress;
+        _isLoco6LongAddress = pEntry._isLoco6LongAddress;
  
         _comment =      pEntry._comment;
     }
@@ -96,59 +96,59 @@ public class NceConsistRosterEntry {
     public void   setModel(String s) { _model = s; }
     public String getModel() { return _model; }
 
-    public void   setEng1DccAddress(String s) { _eng1DccAddress = s; }
-    public String getEng1DccAddress() { return _eng1DccAddress; }
+    public void   setLoco1DccAddress(String s) { _loco1DccAddress = s; }
+    public String getLoco1DccAddress() { return _loco1DccAddress; }
 
-    public void   setEng1LongAddress(boolean b) { _isEng1LongAddress = b; }
-    public boolean isEng1LongAddress() { return _isEng1LongAddress; }
+    public void   setLoco1LongAddress(boolean b) { _isLoco1LongAddress = b; }
+    public boolean isLoco1LongAddress() { return _isLoco1LongAddress; }
     
-    public void   setEng1Direction(String s) { _eng1Direction = s; }
-    public String getEng1Direction() { return _eng1Direction; }
+    public void   setLoco1Direction(String s) { _loco1Direction = s; }
+    public String getLoco1Direction() { return _loco1Direction; }
 
-    public void   setEng2DccAddress(String s) { _eng2DccAddress = s; }
-    public String getEng2DccAddress() { return _eng2DccAddress; }
+    public void   setLoco2DccAddress(String s) { _loco2DccAddress = s; }
+    public String getLoco2DccAddress() { return _loco2DccAddress; }
 
-    public void   setEng2LongAddress(boolean b) { _isEng2LongAddress = b; }
-    public boolean isEng2LongAddress() { return _isEng2LongAddress; }
+    public void   setLoco2LongAddress(boolean b) { _isLoco2LongAddress = b; }
+    public boolean isLoco2LongAddress() { return _isLoco2LongAddress; }
  
-    public void   setEng2Direction(String s) { _eng2Direction = s; }
-    public String getEng2Direction() { return _eng2Direction; }
+    public void   setLoco2Direction(String s) { _loco2Direction = s; }
+    public String getLoco2Direction() { return _loco2Direction; }
 
-    public void   setEng3DccAddress(String s) { _eng3DccAddress = s; }
-    public String getEng3DccAddress() { return _eng3DccAddress; }
+    public void   setLoco3DccAddress(String s) { _loco3DccAddress = s; }
+    public String getLoco3DccAddress() { return _loco3DccAddress; }
 
-    public void   setEng3LongAddress(boolean b) { _isEng3LongAddress = b; }
-    public boolean isEng3LongAddress() { return _isEng3LongAddress; }
+    public void   setLoco3LongAddress(boolean b) { _isLoco3LongAddress = b; }
+    public boolean isLoco3LongAddress() { return _isLoco3LongAddress; }
 
-    public void   setEng3Direction(String s) { _eng3Direction = s; }
-    public String getEng3Direction() { return _eng3Direction; }
+    public void   setLoco3Direction(String s) { _loco3Direction = s; }
+    public String getLoco3Direction() { return _loco3Direction; }
 
-    public void   setEng4DccAddress(String s) { _eng4DccAddress = s; }
-    public String getEng4DccAddress() { return _eng4DccAddress; }
+    public void   setLoco4DccAddress(String s) { _loco4DccAddress = s; }
+    public String getLoco4DccAddress() { return _loco4DccAddress; }
 
-    public void   setEng4LongAddress(boolean b) { _isEng4LongAddress = b; }
-    public boolean isEng4LongAddress() { return _isEng4LongAddress; }
+    public void   setLoco4LongAddress(boolean b) { _isLoco4LongAddress = b; }
+    public boolean isLoco4LongAddress() { return _isLoco4LongAddress; }
 
-    public void   setEng4Direction(String s) { _eng4Direction = s; }
-    public String getEng4Direction() { return _eng4Direction; }
+    public void   setLoco4Direction(String s) { _loco4Direction = s; }
+    public String getLoco4Direction() { return _loco4Direction; }
 
-    public void   setEng5DccAddress(String s) { _eng5DccAddress = s; }
-    public String getEng5DccAddress() { return _eng5DccAddress; }
+    public void   setLoco5DccAddress(String s) { _loco5DccAddress = s; }
+    public String getLoco5DccAddress() { return _loco5DccAddress; }
 
-    public void   setEng5LongAddress(boolean b) { _isEng5LongAddress = b; }
-    public boolean isEng5LongAddress() { return _isEng5LongAddress; }
+    public void   setLoco5LongAddress(boolean b) { _isLoco5LongAddress = b; }
+    public boolean isLoco5LongAddress() { return _isLoco5LongAddress; }
  
-    public void   setEng5Direction(String s) { _eng5Direction = s; }
-    public String getEng5Direction() { return _eng5Direction; }
+    public void   setLoco5Direction(String s) { _loco5Direction = s; }
+    public String getLoco5Direction() { return _loco5Direction; }
 
-    public void   setEng6DccAddress(String s) { _eng6DccAddress = s; }
-    public String getEng6DccAddress() { return _eng6DccAddress; }
+    public void   setLoco6DccAddress(String s) { _loco6DccAddress = s; }
+    public String getLoco6DccAddress() { return _loco6DccAddress; }
 
-    public void   setEng6LongAddress(boolean b) { _isEng6LongAddress = b; }
-    public boolean isEng6LongAddress() { return _isEng6LongAddress; }
+    public void   setLoco6LongAddress(boolean b) { _isLoco6LongAddress = b; }
+    public boolean isLoco6LongAddress() { return _isLoco6LongAddress; }
 
-    public void   setEng6Direction(String s) { _eng6Direction = s; }
-    public String getEng6Direction() { return _eng6Direction; }
+    public void   setLoco6Direction(String s) { _loco6Direction = s; }
+    public String getLoco6Direction() { return _loco6Direction; }
 
     public void   setComment(String s) { _comment = s; }
     public String getComment() { return _comment; }
@@ -170,46 +170,50 @@ public class NceConsistRosterEntry {
         if ((a = e.getAttribute("model")) != null )  _model = a.getValue();
         if ((a = e.getAttribute("comment")) != null )  _comment = a.getValue();
 
-        List elementList = e.getChildren("eng");
+        List elementList = e.getChildren("loco");
+ 
         for (int i = 0; i < elementList.size(); i++){
-        	String locoName  = ((Element)(elementList.get(i))).getAttribute("locoName").getValue();
+        	String locoName = ""; 
+        	String locoMidNumber = "";
+        	if ((a  = ((Element)(elementList.get(i))).getAttribute("locoName"))!= null ) locoName  = a.getValue();
+        	if ((a  = ((Element)(elementList.get(i))).getAttribute("locoMidNumber")) != null ) locoMidNumber =a.getValue();
 
-        	if (locoName.equals("eng1")){
-        		if ((a = ((Element)(elementList.get(i))).getAttribute("dccLocoAddress")) != null )  _eng1DccAddress = a.getValue();
-        		if ((a = ((Element)(elementList.get(i))).getAttribute("longAddress")) != null )  setEng1LongAddress (a.getValue().equals("yes"));
-        		if ((a = ((Element)(elementList.get(i))).getAttribute("locoDir")) != null )  _eng1Direction = (a.getValue());
+        	if (locoName.equals("lead")){
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("dccLocoAddress")) != null )  _loco1DccAddress = a.getValue();
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("longAddress")) != null )  setLoco1LongAddress (a.getValue().equals("yes"));
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("locoDir")) != null )  _loco1Direction = (a.getValue());
         	} 
-        	if (locoName.equals("eng2")){
-        		if ((a = ((Element)(elementList.get(i))).getAttribute("dccLocoAddress")) != null )  _eng2DccAddress = a.getValue();
-        		if ((a = ((Element)(elementList.get(i))).getAttribute("longAddress")) != null )  setEng2LongAddress (a.getValue().equals("yes"));
-        		if ((a = ((Element)(elementList.get(i))).getAttribute("locoDir")) != null )  _eng2Direction = (a.getValue());
+        	if (locoName.equals("rear")){
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("dccLocoAddress")) != null )  _loco2DccAddress = a.getValue();
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("longAddress")) != null )  setLoco2LongAddress (a.getValue().equals("yes"));
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("locoDir")) != null )  _loco2Direction = (a.getValue());
         	} 
-        	if (locoName.equals("eng3")){
-        		if ((a = ((Element)(elementList.get(i))).getAttribute("dccLocoAddress")) != null )  _eng3DccAddress = a.getValue();
-        		if ((a = ((Element)(elementList.get(i))).getAttribute("longAddress")) != null )  setEng3LongAddress (a.getValue().equals("yes"));
-        		if ((a = ((Element)(elementList.get(i))).getAttribute("locoDir")) != null )  _eng3Direction = (a.getValue());
+        	if (locoName.equals("mid") && locoMidNumber.equals ("1")){
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("dccLocoAddress")) != null )  _loco3DccAddress = a.getValue();
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("longAddress")) != null )  setLoco3LongAddress (a.getValue().equals("yes"));
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("locoDir")) != null )  _loco3Direction = (a.getValue());
         	}
-        	if (locoName.equals("eng4")){
-        		if ((a = ((Element)(elementList.get(i))).getAttribute("dccLocoAddress")) != null )  _eng4DccAddress = a.getValue();
-        		if ((a = ((Element)(elementList.get(i))).getAttribute("longAddress")) != null )  setEng4LongAddress (a.getValue().equals("yes"));
-        		if ((a = ((Element)(elementList.get(i))).getAttribute("locoDir")) != null )  _eng4Direction = (a.getValue());
+        	if (locoName.equals("mid") && locoMidNumber.equals ("2")){
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("dccLocoAddress")) != null )  _loco4DccAddress = a.getValue();
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("longAddress")) != null )  setLoco4LongAddress (a.getValue().equals("yes"));
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("locoDir")) != null )  _loco4Direction = (a.getValue());
         	}
-        	if (locoName.equals("eng5")){
-        		if ((a = ((Element)(elementList.get(i))).getAttribute("dccLocoAddress")) != null )  _eng5DccAddress = a.getValue();
-        		if ((a = ((Element)(elementList.get(i))).getAttribute("longAddress")) != null )  setEng5LongAddress (a.getValue().equals("yes"));
-        		if ((a = ((Element)(elementList.get(i))).getAttribute("locoDir")) != null )  _eng5Direction = (a.getValue());
+        	if (locoName.equals("mid") && locoMidNumber.equals ("3")){
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("dccLocoAddress")) != null )  _loco5DccAddress = a.getValue();
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("longAddress")) != null )  setLoco5LongAddress (a.getValue().equals("yes"));
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("locoDir")) != null )  _loco5Direction = (a.getValue());
         	}
-        	if (locoName.equals("eng6")){
-        		if ((a = ((Element)(elementList.get(i))).getAttribute("dccLocoAddress")) != null )  _eng6DccAddress = a.getValue();
-        		if ((a = ((Element)(elementList.get(i))).getAttribute("longAddress")) != null )  setEng6LongAddress (a.getValue().equals("yes"));
-        		if ((a = ((Element)(elementList.get(i))).getAttribute("locoDir")) != null )  _eng6Direction = (a.getValue());
+        	if (locoName.equals("mid") && locoMidNumber.equals ("4")){
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("dccLocoAddress")) != null )  _loco6DccAddress = a.getValue();
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("longAddress")) != null )  setLoco6LongAddress (a.getValue().equals("yes"));
+        		if ((a = ((Element)(elementList.get(i))).getAttribute("locoDir")) != null )  _loco6Direction = (a.getValue());
         	}
         }
-        if (_eng1DccAddress.equals("")){
-        	log.warn("no eng1 attribute in consist element when reading ConsistRoster");
+        if (_loco1DccAddress.equals("")){
+        	log.warn("no lead loco attribute in consist element when reading ConsistRoster");
         }
-        if (_eng2DccAddress.equals("")){
-        	log.warn("no eng2 attribute in consist element when reading ConsistRoster");
+        if (_loco2DccAddress.equals("")){
+        	log.warn("no rear loco attribute in consist element when reading ConsistRoster");
         }
     }
 
@@ -227,54 +231,58 @@ public class NceConsistRosterEntry {
         e.setAttribute("model",getModel());
         e.setAttribute("comment",getComment());
         
-        org.jdom.Element eng1 = new org.jdom.Element("eng");
-        eng1.setAttribute("locoName","eng1");
-        eng1.setAttribute("dccLocoAddress",getEng1DccAddress());
-        eng1.setAttribute("longAddress",isEng1LongAddress()?"yes":"no");
-        eng1.setAttribute("locoDir",getEng1Direction());
-        e.addContent(eng1);
+        org.jdom.Element loco1 = new org.jdom.Element("loco");
+        loco1.setAttribute("locoName","lead");
+        loco1.setAttribute("dccLocoAddress",getLoco1DccAddress());
+        loco1.setAttribute("longAddress",isLoco1LongAddress()?"yes":"no");
+        loco1.setAttribute("locoDir",getLoco1Direction());
+        e.addContent(loco1);
         
-        org.jdom.Element eng2 = new org.jdom.Element("eng");
-        eng2.setAttribute("locoName","eng2");
-        eng2.setAttribute("dccLocoAddress",getEng2DccAddress());
-        eng2.setAttribute("longAddress",isEng2LongAddress()?"yes":"no");
-        eng2.setAttribute("locoDir",getEng2Direction());
-        e.addContent(eng2);
+        org.jdom.Element loco2 = new org.jdom.Element("loco");
+        loco2.setAttribute("locoName","rear");
+        loco2.setAttribute("dccLocoAddress",getLoco2DccAddress());
+        loco2.setAttribute("longAddress",isLoco2LongAddress()?"yes":"no");
+        loco2.setAttribute("locoDir",getLoco2Direction());
+        e.addContent(loco2);
          
-        if (!getEng3DccAddress().equals("")){
-        	org.jdom.Element eng3 = new org.jdom.Element("eng");
-        	eng3.setAttribute("locoName","eng3");
-        	eng3.setAttribute("dccLocoAddress",getEng3DccAddress());
-        	eng3.setAttribute("longAddress",isEng3LongAddress()?"yes":"no");
-        	eng3.setAttribute("locoDir",getEng3Direction());
-        	e.addContent(eng3);
+        if (!getLoco3DccAddress().equals("")){
+        	org.jdom.Element loco3 = new org.jdom.Element("loco");
+        	loco3.setAttribute("locoName","mid");
+        	loco3.setAttribute("locoMidNumber","1");
+        	loco3.setAttribute("dccLocoAddress",getLoco3DccAddress());
+        	loco3.setAttribute("longAddress",isLoco3LongAddress()?"yes":"no");
+        	loco3.setAttribute("locoDir",getLoco3Direction());
+        	e.addContent(loco3);
         }
 
-        if (!getEng4DccAddress().equals("")){
-        	org.jdom.Element eng4 = new org.jdom.Element("eng");
-        	eng4.setAttribute("locoName","eng4");
-        	eng4.setAttribute("dccLocoAddress",getEng4DccAddress());
-        	eng4.setAttribute("longAddress",isEng4LongAddress()?"yes":"no");
-        	eng4.setAttribute("locoDir",getEng4Direction());
-        	e.addContent(eng4);
+        if (!getLoco4DccAddress().equals("")){
+        	org.jdom.Element loco4 = new org.jdom.Element("loco");
+        	loco4.setAttribute("locoName","mid");
+        	loco4.setAttribute("locoMidNumber","2");
+        	loco4.setAttribute("dccLocoAddress",getLoco4DccAddress());
+        	loco4.setAttribute("longAddress",isLoco4LongAddress()?"yes":"no");
+        	loco4.setAttribute("locoDir",getLoco4Direction());
+        	e.addContent(loco4);
         }
 
-        if (!getEng5DccAddress().equals("")){
-        	org.jdom.Element eng5 = new org.jdom.Element("eng");
-        	eng5.setAttribute("locoName","eng5");
-        	eng5.setAttribute("dccLocoAddress",getEng5DccAddress());
-        	eng5.setAttribute("longAddress",isEng5LongAddress()?"yes":"no");
-        	eng5.setAttribute("locoDir",getEng5Direction());
-        	e.addContent(eng5);
+        if (!getLoco5DccAddress().equals("")){
+        	org.jdom.Element loco5 = new org.jdom.Element("loco");
+        	loco5.setAttribute("locoName","mid");
+        	loco5.setAttribute("locoMidNumber","3");
+        	loco5.setAttribute("dccLocoAddress",getLoco5DccAddress());
+        	loco5.setAttribute("longAddress",isLoco5LongAddress()?"yes":"no");
+        	loco5.setAttribute("locoDir",getLoco5Direction());
+        	e.addContent(loco5);
         }
 
-        if (!getEng6DccAddress().equals("")){
-        	org.jdom.Element eng6 = new org.jdom.Element("eng");
-        	eng6.setAttribute("locoName","eng6");
-        	eng6.setAttribute("dccLocoAddress",getEng6DccAddress());
-        	eng6.setAttribute("longAddress",isEng6LongAddress()?"yes":"no");
-        	eng6.setAttribute("locoDir",getEng6Direction());
-        	e.addContent(eng6);
+        if (!getLoco6DccAddress().equals("")){
+        	org.jdom.Element loco6 = new org.jdom.Element("loco");
+        	loco6.setAttribute("locoName","mid");
+        	loco6.setAttribute("locoMidNumber","4");
+        	loco6.setAttribute("dccLocoAddress",getLoco6DccAddress());
+        	loco6.setAttribute("longAddress",isLoco6LongAddress()?"yes":"no");
+        	loco6.setAttribute("locoDir",getLoco6Direction());
+        	e.addContent(loco6);
         }
 
         return e;
@@ -291,12 +299,12 @@ public class NceConsistRosterEntry {
             +" "+_roadName
             +" "+_roadNumber
             +" "+_model
-            +" "+_eng1DccAddress
-            +" "+_eng2DccAddress
-            +" "+_eng3DccAddress
-            +" "+_eng4DccAddress
-            +" "+_eng5DccAddress
-            +" "+_eng6DccAddress
+            +" "+_loco1DccAddress
+            +" "+_loco2DccAddress
+            +" "+_loco3DccAddress
+            +" "+_loco4DccAddress
+            +" "+_loco5DccAddress
+            +" "+_loco6DccAddress
             +" "+_comment
             +"]";
         return out;
@@ -347,34 +355,34 @@ public class NceConsistRosterEntry {
     			s = "   Model:             " + _model;
     			w.write(s,0,s.length());
     		}
-    		if (!(_eng1DccAddress.equals(""))) {
+    		if (!(_loco1DccAddress.equals(""))) {
     			w.write(newLine, 0, 1);
-    			s = "   Lead Address:      " + _eng1DccAddress + "  " + _eng1Direction;
+    			s = "   Lead Address:      " + _loco1DccAddress + "  " + _loco1Direction;
     			w.write(s, 0, s.length());
     		}
-    		if (!(_eng2DccAddress.equals(""))) {
+    		if (!(_loco2DccAddress.equals(""))) {
     			w.write(newLine, 0, 1);
-    			s = "   Rear Address:      " + _eng2DccAddress + "  " + _eng2Direction;
+    			s = "   Rear Address:      " + _loco2DccAddress + "  " + _loco2Direction;
     			w.write(s, 0, s.length());
     		}
-    		if (!(_eng3DccAddress.equals(""))) {
+    		if (!(_loco3DccAddress.equals(""))) {
     			w.write(newLine, 0, 1);
-    			s = "   Mid1 Address:      " + _eng3DccAddress + "  " + _eng3Direction;
+    			s = "   Mid1 Address:      " + _loco3DccAddress + "  " + _loco3Direction;
     			w.write(s, 0, s.length());
      		}
-    		if (!(_eng4DccAddress.equals(""))) {
+    		if (!(_loco4DccAddress.equals(""))) {
     			w.write(newLine, 0, 1);
-    			s = "   Mid2 Address:      " + _eng4DccAddress + "  " + _eng4Direction;
+    			s = "   Mid2 Address:      " + _loco4DccAddress + "  " + _loco4Direction;
     			w.write(s, 0, s.length());
     		}
-    		if (!(_eng5DccAddress.equals(""))) {
+    		if (!(_loco5DccAddress.equals(""))) {
     			w.write(newLine, 0, 1);
-    			s = "   Mid3 Address:      " + _eng5DccAddress + "  " + _eng5Direction;
+    			s = "   Mid3 Address:      " + _loco5DccAddress + "  " + _loco5Direction;
     			w.write(s, 0, s.length());
     		}
-    		if (!(_eng6DccAddress.equals(""))) {
+    		if (!(_loco6DccAddress.equals(""))) {
     			w.write(newLine, 0, 1);
-    			s = "   Mid4 Address:      " + _eng6DccAddress + "  " + _eng6Direction;
+    			s = "   Mid4 Address:      " + _loco6DccAddress + "  " + _loco6Direction;
     			w.write(s, 0, s.length());
     		}
 
@@ -466,7 +474,7 @@ public class NceConsistRosterEntry {
               textVector.addElement(newLine);
               startIndex += endIndex;
             }
-            //Check the remaining piece to see if it fits -Eng2rtIndex now points
+            //Check the remaining piece to see if it fits -Loco2rtIndex now points
             //to the start of the next piece
             if (commentToken.substring(startIndex).length() < textSpace)
             {
@@ -492,24 +500,24 @@ public class NceConsistRosterEntry {
     protected String _roadName = "";
     protected String _roadNumber = "";
     protected String _model = "";
-    protected String _eng1DccAddress = "";
-    protected boolean _isEng1LongAddress = true;
-    protected String _eng1Direction = "";
-    protected String _eng2DccAddress = "";
-    protected boolean _isEng2LongAddress = true;
-    protected String _eng2Direction = "";
-    protected String _eng3DccAddress = "";
-    protected boolean _isEng3LongAddress = true;
-    protected String _eng3Direction = "";
-    protected String _eng4DccAddress = "";
-    protected boolean _isEng4LongAddress = true;
-    protected String _eng4Direction = "";
-    protected String _eng5DccAddress = "";
-    protected boolean _isEng5LongAddress = true;
-    protected String _eng5Direction = "";
-    protected String _eng6DccAddress = "";
-    protected boolean _isEng6LongAddress = true;
-    protected String _eng6Direction = "";
+    protected String _loco1DccAddress = "";
+    protected boolean _isLoco1LongAddress = true;
+    protected String _loco1Direction = "";
+    protected String _loco2DccAddress = "";
+    protected boolean _isLoco2LongAddress = true;
+    protected String _loco2Direction = "";
+    protected String _loco3DccAddress = "";
+    protected boolean _isLoco3LongAddress = true;
+    protected String _loco3Direction = "";
+    protected String _loco4DccAddress = "";
+    protected boolean _isLoco4LongAddress = true;
+    protected String _loco4Direction = "";
+    protected String _loco5DccAddress = "";
+    protected boolean _isLoco5LongAddress = true;
+    protected String _loco5Direction = "";
+    protected String _loco6DccAddress = "";
+    protected boolean _isLoco6LongAddress = true;
+    protected String _loco6Direction = "";
  
     protected String _comment = "";
 
