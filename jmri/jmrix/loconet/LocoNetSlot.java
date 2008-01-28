@@ -17,7 +17,8 @@ import java.util.Vector;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.15 $
+ * @author			Stephen Williams  Copyright (C) 2008
+ * @version         $Revision: 1.16 $
  */
 public class LocoNetSlot {
 
@@ -51,10 +52,11 @@ public class LocoNetSlot {
     public boolean isF8()	{ return 0!=(snd&LnConstants.SND_F8); }
 
     // loco address, speed
-    public int locoAddr()   { return addr; }
-    public int speed()      { return spd; }
-
-    public int id()			{ return id; }
+    public int locoAddr()   	{ return addr; }
+    public int speed()      	{ return spd; }
+    public int dirf() 	    	{ return dirf; }
+    public int snd()  	    	{ return snd; }
+    public int id()		{ return id; }
 
     // programmer track special case accessors
     public int pcmd()          	{ return _pcmd; }
