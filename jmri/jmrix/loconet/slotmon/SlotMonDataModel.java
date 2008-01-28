@@ -17,11 +17,12 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
+import javax.swing.JOptionPane;
 
 /**
  * Table data model for display of slot manager contents
- * @author		Bob Jacobsen   Copyright (C) 2001
- * @version		$Revision: 1.17 $
+ * @author      Bob Jacobsen   Copyright (C) 2001
+ * @version     $Revision: 1.18 $
  */
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener  {
 
@@ -120,7 +121,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         case SLOTCOLUMN:
         case ADDRCOLUMN:
         case THROTCOLUMN:
-        	return Integer.class;
+            return Integer.class;
         case SPDCOLUMN:
         case TYPECOLUMN:
         case STATCOLUMN:
@@ -160,6 +161,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
 
     public Object getValueAt(int row, int col) {
         LocoNetSlot s = SlotManager.instance().slot(slotNum(row));
+        String      t;
         if (s == null) log.error("slot pointer was null for slot row: "+row+" col: "+col);
 
         switch (col) {
@@ -170,35 +172,47 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         case ADDRCOLUMN:  //
             return new Integer(s.locoAddr());
         case SPDCOLUMN:  //
-            String t;
-            if (s.speed() == 1) t = "(estop) 1";
-            else t = "          "+s.speed();
-            return t.substring(t.length()-9, t.length()); // 9 comes from (estop)
+            switch (s.consistStatus()) {
+            case LnConstants.CONSIST_TOP:
+            case LnConstants.CONSIST_NO:
+                if (s.speed() == 1) t = "(estop) 1";
+                else t = "          "+s.speed();
+                return t.substring(t.length()-9, t.length()); // 9 comes from (estop)
+            case LnConstants.CONSIST_MID:
+            case LnConstants.CONSIST_SUB:
+                return "(consist)";
+            default:
+                return "<error>";
+            }
         case TYPECOLUMN:  //
             switch (s.decoderType()) {
-            case LnConstants.DEC_MODE_128A:	    return "128 step adv";
-            case LnConstants.DEC_MODE_28A:	    return " 28 step adv";
-            case LnConstants.DEC_MODE_128:	    return "128 step";
-            case LnConstants.DEC_MODE_14:	    return " 14 step";
-            case LnConstants.DEC_MODE_28TRI:	return " 28 step trinary";
-            case LnConstants.DEC_MODE_28:	    return " 28 step";
-            default:				            return "<unknown>";
+            case LnConstants.DEC_MODE_128A:     return "128 step adv";
+            case LnConstants.DEC_MODE_28A:      return " 28 step adv";
+            case LnConstants.DEC_MODE_128:      return "128 step";
+            case LnConstants.DEC_MODE_14:       return " 14 step";
+            case LnConstants.DEC_MODE_28TRI:    return " 28 step trinary";
+            case LnConstants.DEC_MODE_28:       return " 28 step";
+            default:                            return "<unknown>";
             }
         case STATCOLUMN:  //
             switch (s.slotStatus()) {
-            case LnConstants.LOCO_IN_USE: 	return "In Use";
-            case LnConstants.LOCO_IDLE:		return "Idle";
-            case LnConstants.LOCO_COMMON: 	return "Common";
-            case LnConstants.LOCO_FREE: 	return "Free";
-            default: 	                        return "<error>";
+            case LnConstants.LOCO_IN_USE:       return "In Use";
+            case LnConstants.LOCO_IDLE:         return "Idle";
+            case LnConstants.LOCO_COMMON:       return "Common";
+            case LnConstants.LOCO_FREE:         return "Free";
+            default:                            return "<error>";
             }
         case CONSCOLUMN:  //
             switch (s.consistStatus()) {
-            case LnConstants.CONSIST_MID:	return "mid";
-            case LnConstants.CONSIST_TOP:	return "top";
-            case LnConstants.CONSIST_SUB:	return "sub";
-            case LnConstants.CONSIST_NO:	return "none";
-            default: 	                        return "<error>";
+            case LnConstants.CONSIST_MID:
+                t = "mid(" + s.speed() + ")";
+                return t;
+            case LnConstants.CONSIST_TOP:       return "top";
+            case LnConstants.CONSIST_SUB:
+                t = "sub("+s.speed()+")";
+                return t;
+            case LnConstants.CONSIST_NO:        return "none";
+            default:                            return "<error>";
             }
         case DISPCOLUMN:  //
             return "Free";          // will be name of button in default GUI
@@ -277,6 +291,18 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 log.error("slot pointer was null for slot row: "+row+" col: "+col);
                 return;
             }
+            if ((s.consistStatus() == LnConstants.CONSIST_SUB) ||
+                (s.consistStatus() == LnConstants.CONSIST_MID)) {
+                Object[] options = { "OK", "Cancel" };
+                int result =
+                    JOptionPane.showOptionDialog (null,
+                                                  "E-Stopping a consist MID or SUB will mess up the consist.\n\nAre you sure you want to do that?",
+                                                  "Warning",
+                                                  JOptionPane.DEFAULT_OPTION,
+                                                  JOptionPane.WARNING_MESSAGE,
+                                                  null, options, options[1]);
+                if (result == 1) return;
+            }
             LocoNetMessage msg = new LocoNetMessage(4);
             msg.setOpCode(LnConstants.OPC_LOCO_SPD);
             msg.setElement(1, s.getSlot());
@@ -293,6 +319,23 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 return;
             }
             if (s.slotStatus()!=LnConstants.LOCO_FREE) {
+                if (s.consistStatus() != LnConstants.CONSIST_NO) {
+                    // Freeing a member takes it out of the consist
+                    // entirely (i.e., while the slot is LOCO_FREE, it
+                    // still reads the former consist information, but
+                    // the next time that loco is selected, it comes
+                    // back as CONSIST_NO).  Freeing the CONSIST_TOP
+                    // will kill the entire consist.
+                    Object[] options = { "OK", "Cancel" };
+                    int result =
+                        JOptionPane.showOptionDialog (null,
+                                                      "Freeing a consist member will destroy the consist.\n\nAre you sure you want to do that?",
+                                                      "Warning",
+                                                      JOptionPane.DEFAULT_OPTION,
+                                                      JOptionPane.WARNING_MESSAGE,
+                                                      null, options, options[1]);
+                    if (result == 1) return;
+                }
                 // send status to free
                 LnTrafficController.instance().sendLocoNetMessage(
                         s.writeStatus(LnConstants.LOCO_FREE
@@ -342,7 +385,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         // ensure the table rows, columns have enough room for buttons
         slotTable.setRowHeight(new JButton("  "+getValueAt(1, column)).getPreferredSize().height);
         slotTable.getColumnModel().getColumn(column)
-			.setPreferredWidth(new JButton("  "+getValueAt(1, column)).getPreferredSize().width);
+                        .setPreferredWidth(new JButton("  "+getValueAt(1, column)).getPreferredSize().width);
     }
 
     void setColumnToHoldEStopButton(JTable slotTable, int column) {
@@ -359,7 +402,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         // ensure the table rows, columns have enough room for buttons
         slotTable.setRowHeight(new JButton("  "+getValueAt(1, column)).getPreferredSize().height);
         slotTable.getColumnModel().getColumn(column)
-			.setPreferredWidth(new JButton("  "+getValueAt(1, column)).getPreferredSize().width);
+                        .setPreferredWidth(new JButton("  "+getValueAt(1, column)).getPreferredSize().width);
     }
 
     // methods to communicate with SlotManager
@@ -435,6 +478,8 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         for (int slotNum=0; slotNum<120; slotNum++) {
             LocoNetSlot s = SlotManager.instance().slot(slotNum);
             if (s.slotStatus() != LnConstants.LOCO_FREE &&
+                (s.consistStatus() == LnConstants.CONSIST_NO ||
+                 s.consistStatus() == LnConstants.CONSIST_TOP) &&
                 s.speed() != 1) {
                 // send message to estop this loco
                 LocoNetMessage msg = new LocoNetMessage(4);
