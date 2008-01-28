@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.2.shtml,v 1.3 2008-01-28 05:11:33 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.2.shtml,v 1.4 2008-01-28 06:43:10 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -140,6 +140,22 @@ For the rest of us with reasonable consist sizes,
 it allows us to define a bunch of consists and with a single pull down select, 
 reload the desired locos with a consist number and desired loco directions.  
 The program uses the lead loco as the consist ID.
+
+<p>
+Stephen Williams added a command station definition to the LocoNet TCP connection method.
+
+<p>
+Stephen Williams improved the LocoNet slot monitor's handling of consists. The "speed"
+column in the slot monitor isn't really speed for some consisted locomotives, and the
+monitor now properly shows that.  If the user presses the stop button, it's now only
+send to the correct engines in the consist; an attempt to stop a mid-consist engine
+will give a warning.  An attempt to free a slot that's in a consist will give a warning.
+
+<p>
+LocoNet throttles would occasionally go into a loop if a locomotive was addressed
+by two JMRI throttles or a JMRI throttle and a physical throttle. Stephen Williams
+has fixed this.
+
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
