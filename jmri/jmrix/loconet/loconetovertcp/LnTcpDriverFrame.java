@@ -6,14 +6,14 @@ import javax.swing.JOptionPane;
 
 /**
  * Frame to control and connect to a LocoNet via LocoNetOverTcp protocol.
- * @author			Bob Jacobsen   Copyright (C) 2003
- * @version			$Revision: 1.3 $
+ * @author                      Bob Jacobsen   Copyright (C) 2003
+ * @version                     $Revision: 1.4 $
  */
 public class LnTcpDriverFrame extends jmri.jmrix.SerialPortFrame {
 
     public LnTcpDriverFrame() {
         super("Open LocoNetOverTcp network connection");
-        adapter = new LnTcpDriverAdapter();
+        adapter = LnTcpDriverAdapter.instance();
     }
 
     public void openPortButtonActionPerformed(java.awt.event.ActionEvent e) throws jmri.jmrix.SerialConfigException {

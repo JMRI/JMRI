@@ -23,7 +23,7 @@ import org.jdom.Element;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -40,10 +40,10 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         ConnectionConfig c = (ConnectionConfig)o;
         Element e = new Element("connection");
 
-        e.setAttribute("port", c.host.getText());
-        e.setAttribute("option1", c.port.getText());
-
         e.setAttribute("class", this.getClass().getName());
+        e.setAttribute("hostname",c.host.getText());
+        e.setAttribute("port",c.port.getText());
+        e.setAttribute("cmd-station",(String) c.commandStation.getSelectedItem());
 
         return e;
     }
@@ -53,8 +53,9 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
       */
     public void load(Element e) {
         // configure port name
-        String hostName = e.getAttribute("port").getValue();
-        String portNumber = e.getAttribute("option1").getValue();
+        String hostName   = e.getAttribute("hostname").getValue();
+        String portNumber = e.getAttribute("port").getValue();
+        String cmdStation = e.getAttribute("cmd-station").getValue();
 
         // notify
         JFrame f = new JFrame("LocoNetOverTcp network connection");
@@ -64,7 +65,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
         // slightly different, as not based on a serial port...
         // create the adapter
-        LnTcpDriverAdapter client = new LnTcpDriverAdapter();
+        LnTcpDriverAdapter client = LnTcpDriverAdapter.instance();
 
         // start the connection
         try {
@@ -74,6 +75,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         }
 
         // configure the other instance objects
+        client.setCommandStationType(cmdStation);
         client.configure();
 
         f.setVisible(false);

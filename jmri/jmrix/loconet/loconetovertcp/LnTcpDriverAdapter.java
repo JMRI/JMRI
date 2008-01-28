@@ -15,9 +15,9 @@ import java.util.Vector;
  * a Loconet via a telnet connection.
  * Normally controlled by the LnTcpDriverFrame class.
  *
- * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
+ * @author      Bob Jacobsen   Copyright (C) 2001, 2002, 2003
  * @author      Alex Shepherd Copyright (C) 2003, 2006
- * @version	$Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 
 public class LnTcpDriverAdapter extends LnPortController {
@@ -56,6 +56,23 @@ public class LnTcpDriverAdapter extends LnPortController {
         }
     }
 
+    public DataOutputStream getOutputStream() {
+        if (!opened) log.error("getOutputStream called before load(), stream not available");
+        try {
+            return new DataOutputStream(socket.getOutputStream());
+        }
+        catch (java.io.IOException e) {
+            log.error("getOutputStream exception: "+e);
+        }
+        return null;
+    }
+
+    public boolean status() {return opened;}
+
+    // private control members
+    private boolean opened = false;
+    private Socket socket = null;
+
     public void connect(String host, int port) {
         try {
             socket = new Socket(host, port);
@@ -65,29 +82,11 @@ public class LnTcpDriverAdapter extends LnPortController {
         }
     }
 
-    public DataOutputStream getOutputStream() {
-        if (!opened) log.error("getOutputStream called before load(), stream not available");
-        try {
-            return new DataOutputStream(socket.getOutputStream());
-        }
-     	catch (java.io.IOException e) {
-            log.error("getOutputStream exception: "+e);
-     	}
-     	return null;
-    }
-
-    public boolean status() {return opened;}
-
-    // private control members
-    private boolean opened = false;
-
-    static public LnTcpDriverAdapter instance() {
+    static private LnTcpDriverAdapter mInstance = null;
+    static public synchronized LnTcpDriverAdapter instance() {
         if (mInstance == null) mInstance = new LnTcpDriverAdapter();
         return mInstance;
     }
-    static LnTcpDriverAdapter mInstance = null;
-
-    Socket socket;
 
     public Vector getPortNames() {
         log.error("Unexpected call to getPortNames");
@@ -101,6 +100,9 @@ public class LnTcpDriverAdapter extends LnPortController {
         log.error("Unexpected call to validBaudRates");
         return null;
     }
+
+    public String[] getCommandStationNames() { return commandStationNames; }
+    public String   getCurrentCommandStation() { return commandStationName; }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnTcpDriverAdapter.class.getName());
 
