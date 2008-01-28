@@ -10,10 +10,10 @@ import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetMessage;
 
 /**
- * Programming SVÕs
+ * Programming SV's
  *
- *     The SVÕs in LocoIO can be programmed using Loconet OPC_PEER_XFER messages.
- *     Commands for setting SVÕs
+ *     The SV's in LocoIO can be programmed using Loconet OPC_PEER_XFER messages.
+ *     Commands for setting SV's
  *
  *     PC to LocoIO loconet message (OPC_PEER_XFER)
  *
