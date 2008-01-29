@@ -10,7 +10,7 @@ package jmri.jmrix.lenz;
  * to the a Lenz Command Station, on an XPressNet network.
  *
  * @author			Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
- * @version			$Revision: 2.5 $
+ * @version			$Revision: 2.6 $
  */
 public class LenzCommandStation implements jmri.jmrix.DccCommandStation,jmri.CommandStation {
 
@@ -138,6 +138,16 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation,jmri.Com
      * Remember whether or not in service mode
      **/
     boolean mInServiceMode = false;
+
+    /**
+     * XPressNet command station does provide Ops Mode
+     * We should make this return false based on what command station
+     * we're using but for now, we'll return true
+     */
+    public boolean isOpsModePossible() {
+        if(cmdStationType==0x01 || cmdStationType==0x02) return false;
+          else return true;
+    }
 
     // A few utility functions
     
