@@ -10,27 +10,27 @@ import jmri.DccLocoAddress;
  * XpressnetNet connection.
  * @author  Paul Bender (C) 2002-2007
  * @author  Giorgio Terdina (C) 2007
- * @version    $Revision: 2.17 $
+ * @version    $Revision: 2.18 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
 {
-    private boolean isAvailable;  // Flag  stating if the throttle is in 
+    protected boolean isAvailable;  // Flag  stating if the throttle is in 
                                   // use or not.
-    private javax.swing.Timer statTimer; // Timer used to periodically get 
+    protected javax.swing.Timer statTimer; // Timer used to periodically get 
                                          // current status of the throttle 
                                          // when throttle not available.
-    static final int statTimeoutValue = 1000; // Interval to check the 
+    protected static final int statTimeoutValue = 1000; // Interval to check the 
     // status of the throttle
     
-    static final int THROTTLEIDLE=0;  // Idle Throttle
-    static final int THROTTLESTATSENT=1;  // Sent Status request
-    static final int THROTTLESPEEDSENT=2;  // Sent speed/dir command to locomotive
-    static final int THROTTLEFUNCSENT=4;   // Sent a function command to locomotive.
+    protected static final int THROTTLEIDLE=0;  // Idle Throttle
+    protected static final int THROTTLESTATSENT=1;  // Sent Status request
+    protected static final int THROTTLESPEEDSENT=2;  // Sent speed/dir command to locomotive
+    protected static final int THROTTLEFUNCSENT=4;   // Sent a function command to locomotive.
 
-    private int requestState=THROTTLEIDLE;
+    public int requestState=THROTTLEIDLE;
     
-    private int address;
+    protected int address;
     
     /**
      * Constructor
@@ -467,9 +467,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     }
     
     /* Since xpressnet has a seperate Opcode for emergency stop,
-     * We're setting this up as a seperate private function
+     * We're setting this up as a seperate protected function
      */
-    private void sendEmergencyStop()
+    protected void sendEmergencyStop()
     {
         /* Emergency stop sent */
         XNetMessage msg=new XNetMessage(4);
@@ -528,14 +528,14 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         return address;
     }
     
-    private int getDccAddressHigh()
+    protected int getDccAddressHigh()
     {
 	return XNetTrafficController.instance()
             .getCommandStation()
             .getDCCAddressHigh(this.address);
     }
     
-    private int getDccAddressLow()
+    protected int getDccAddressLow()
     {
 	return XNetTrafficController.instance()
             .getCommandStation()
@@ -544,7 +544,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     
     // sendStatusInformation sends a request to get the speed,direction
     // and function status from the command station
-    synchronized private void sendStatusInformationRequest()
+    synchronized protected void sendStatusInformationRequest()
     {
         /* Send the request for status */
         XNetMessage msg=XNetMessage.getLocomotiveInfoRequestMsg(this.address);
@@ -558,7 +558,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     
     // sendFunctionStatusInformation sends a request to get the status
     // of functions from the command station
-    synchronized private void sendFunctionStatusInformationRequest()
+    synchronized protected void sendFunctionStatusInformationRequest()
     {
        if(XNetTrafficController.instance()
                                .getCommandStation()
@@ -784,7 +784,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     // Used for return values from Status requests.
     
     //Get SpeedStep and availability information
-    private void parseSpeedandAvailability(int b1)
+    protected void parseSpeedandAvailability(int b1)
     {
 	/* the first data bite indicates the speed step mode, and
 	   if the locomotive is being controlled by another throttle */
@@ -830,7 +830,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     }
     
     //Get Speed and Direction information
-    private void parseSpeedandDirection(int b2)
+    protected void parseSpeedandDirection(int b2)
     {
 	/* the second byte indicates the speed and direction setting */
         
@@ -915,7 +915,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         }
     }
     
-    private void parseFunctionInformation(int b3,int b4)
+    protected void parseFunctionInformation(int b3,int b4)
     {
 	/* data byte 3 is the status of F0 F4 F3 F2 F1 */
 	if((b3 & 0x10)==0x10 && getF0()==false) {
@@ -1051,7 +1051,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	}
     }
     
-    private void parseFunctionMomentaryInformation(int b3,int b4)
+    protected void parseFunctionMomentaryInformation(int b3,int b4)
     {
 	if(log.isDebugEnabled()) log.debug("Parsing Function Momentary status, function bytes: " +b3 +" and " +b4);
 	/* data byte 3 is the momentary status of F0 F4 F3 F2 F1 */
@@ -1191,7 +1191,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     /*
      * Set the internal isAvailable property
      */ 
-    private void setIsAvailable(boolean Available) {
+    protected void setIsAvailable(boolean Available) {
         if(this.isAvailable!=Available) {
             notifyPropertyChangeListener("IsAvailable",
                                          new Boolean(this.isAvailable),
@@ -1207,7 +1207,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     /*
      * Set up the status timer, and start it.
      */
-    private void startStatusTimer() {
+    protected void startStatusTimer() {
         if(statTimer==null) {
             statTimer = new javax.swing.Timer(statTimeoutValue,new java.awt.event.ActionListener() { 
                     public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -1226,7 +1226,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     /*
      * Stop the Status Timer 
      */
-    private void stopStatusTimer() {
+    protected void stopStatusTimer() {
         if(statTimer!=null) statTimer.stop();
         //           requestState=THROTTLEIDLE;
     }

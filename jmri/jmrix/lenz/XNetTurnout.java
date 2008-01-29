@@ -95,7 +95,7 @@
  * may be necessary to poll for the feedback response data.
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001, Portions by Paul Bender Copyright (C) 2003 
- * @version			$Revision: 2.11 $
+ * @version			$Revision: 2.12 $
  */
 
 package jmri.jmrix.lenz;
@@ -177,6 +177,10 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
     // Handle a request to change state by sending an XPressNet command
     synchronized protected void forwardCommandChangeToLayout(int s) {
+        if(s!=CLOSED && s!=THROWN) {
+             log.warn("Turnout " + mNumber + ": state " + s + " not forwarded to layout.");
+             return;
+        }
         // find the command station
         LenzCommandStation cs = XNetTrafficController.instance().getCommandStation();
         // get the right packet
@@ -632,7 +636,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     }
 
     // data members
-    int mNumber;   // XPressNet turnout number
+    protected int mNumber;   // XPressNet turnout number
     XNetTurnoutStateListener _stateListener;  // Internal class object
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetTurnout.class.getName());
