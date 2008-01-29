@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.2.shtml,v 1.4 2008-01-28 06:43:10 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.2.shtml,v 1.5 2008-01-29 16:20:59 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -156,6 +156,8 @@ LocoNet throttles would occasionally go into a loop if a locomotive was addresse
 by two JMRI throttles or a JMRI throttle and a physical throttle. Stephen Williams
 has fixed this.
 
+<p>
+Paul Bender added support for the Hornby Elite command station.
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
