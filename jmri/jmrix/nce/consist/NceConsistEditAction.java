@@ -14,7 +14,6 @@ package jmri.jmrix.nce.consist;
 
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
-import jmri.jmrix.nce.NceEpromChecker;
 import jmri.jmrix.nce.NceUSB;
 
 public class NceConsistEditAction  extends AbstractAction {

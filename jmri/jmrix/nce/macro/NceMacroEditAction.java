@@ -13,7 +13,6 @@ package jmri.jmrix.nce.macro;
 
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
-import jmri.jmrix.nce.NceEpromChecker;
 import jmri.jmrix.nce.NceUSB;
 
 public class NceMacroEditAction  extends AbstractAction {
