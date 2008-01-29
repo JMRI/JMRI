@@ -9,6 +9,7 @@ import jmri.jmrix.nce.NceProgrammerManager;
 import jmri.jmrix.nce.NceSensorManager;
 import jmri.jmrix.nce.NceTrafficController;
 import jmri.jmrix.nce.NceUSB;
+import jmri.jmrix.nce.NceConnectionStatus;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -30,7 +31,7 @@ import javax.comm.SerialPort;
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Daniel Boudreau Copyright (C) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class UsbDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -131,6 +132,8 @@ public class UsbDriverAdapter extends NcePortController  implements jmri.jmrix.S
     public void configure() {
         // connect to the traffic controller
         NceTrafficController.instance().connectPort(this);
+        
+        NceConnectionStatus.setPortName (activeSerialPort.getName());
   
 		// set the system the USB is connected to
 		if (getCurrentOption1Setting().equals(validOption1()[0])) {

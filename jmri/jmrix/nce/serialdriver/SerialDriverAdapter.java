@@ -2,6 +2,7 @@
 
 package jmri.jmrix.nce.serialdriver;
 
+import jmri.jmrix.nce.NceConnectionStatus;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NcePortController;
 import jmri.jmrix.nce.NceProgrammer;
@@ -29,7 +30,7 @@ import javax.comm.SerialPort;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.30 $
+ * @version			$Revision: 1.31 $
  */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -135,6 +136,8 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
         } else {
             NceMessage.setCommandOptions(NceMessage.OPTION_2004);
         }
+        
+        NceConnectionStatus.setPortName (activeSerialPort.getName());
         
         // connect to the traffic controller
         NceTrafficController.instance().connectPort(this);

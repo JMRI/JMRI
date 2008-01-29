@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.24 $
+ * @version			$Revision: 1.25 $
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface {
 
@@ -103,7 +103,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 
 	}
 
-	NceEpromChecker pollEprom = new NceEpromChecker();
+	NceConnectionStatus pollEprom = new NceConnectionStatus();
 	NceAIUChecker pollAiuStatus = null;
 	NceTurnoutMonitor pollHandler = null;
 	

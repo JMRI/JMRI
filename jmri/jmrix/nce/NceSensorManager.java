@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractMRReply;
  * see nextAiuPoll()
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 public class NceSensorManager extends jmri.AbstractSensorManager
                             implements NceListener {
@@ -193,7 +193,7 @@ public class NceSensorManager extends jmri.AbstractSensorManager
     				if (awaitingReply) {
     					log.warn("timeout awaiting poll response for AIU "+aiuNo);
     					// slow down the poll since we're not getting responses
-    					// this lets NceEpromChecker to do its thing
+    					// this lets NceConnectionStatus to do its thing
     					delay = pollTimeout;
     				}
    

@@ -6,10 +6,14 @@ import jmri.InstanceManager;
 import jmri.util.JmriJFrame;
 import jmri.util.FileUtil;
 import jmri.jmrit.XmlFile;
+import jmri.jmrix.ConnectionStatus;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.net.URL;
 import java.text.MessageFormat;
@@ -28,9 +32,9 @@ import net.roydesign.mac.MRJAdapter;
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
  * @author  Dennis Miller  Copyright 2005
- * @version     $Revision: 1.46 $
+ * @version     $Revision: 1.47 $
  */
-public class Apps extends JPanel {
+public class Apps extends JPanel implements PropertyChangeListener{
 
     boolean onMac = (System.getProperty("mrj.version") != null);
 
@@ -78,6 +82,8 @@ public class Apps extends JPanel {
         add(statusPanel());
         log.debug("Done with statusPanel, start buttonSpace");
         add(buttonSpace());
+        
+        ConnectionStatus.instance().addPropertyChangeListener(this);
 
         log.debug("End constructor");
     }
@@ -318,23 +324,56 @@ public class Apps extends JPanel {
     protected String line3() {
         return " ";
     }
-    protected String line4() {
-        return MessageFormat.format(rb.getString("ConnectionCredit"),
-                                new String[]{prefs.getConnection1(), prefs.getPort1()});
+    
+    JLabel cs4 = new JLabel();
+    protected void buildLine4(JPanel pane2){
+        ConnectionStatus.instance().addConnection(prefs.getConnection1(), prefs.getPort1());
+        cs4.setFont(pane2.getFont());
+        updateLine4();
+        pane2.add(cs4);
     }
-    protected JComponent line5() {
-        JPanel pane2 = new JPanel();
-        pane2.setLayout(new BoxLayout(pane2, BoxLayout.Y_AXIS));
-        
-        if (!prefs.getConnection2().equals("(none)")) {
-            pane2.add(new JLabel(" "));
-            pane2.add(new JLabel(MessageFormat.format(rb.getString("ConnectionCredit"),
-                                new String[]{prefs.getConnection2(), prefs.getPort2()}
-                            )));
-        }
-        return pane2;
+    // Port 1 status line 4, upper case and red if connection is down
+    protected void updateLine4() {
+    	if (ConnectionStatus.instance().isConnectionOk(prefs.getPort1())){
+    		cs4.setForeground(Color.black);
+			cs4.setText(getConnection1());
+		} else {
+			cs4.setForeground(Color.red);
+			String cf = MessageFormat.format(rb.getString("ConnectionFailed"),
+					new String[] { prefs.getConnection1(), prefs.getPort1() });
+			cf = cf.toUpperCase();
+			cs4.setText(cf);
+		}
+	}
+    
+    JLabel cs5 = new JLabel(); 
+    protected void buildLine5(JPanel pane2){
+    	if (prefs.getConnection2().equals("(none)")){
+    		cs5.setText(" ");
+    		return;
+    	}
+        ConnectionStatus.instance().addConnection(prefs.getConnection2(), prefs.getPort2());
+        cs5.setFont(pane2.getFont());
+        updateLine5();
+        pane2.add(new JLabel(" "));
+        pane2.add(cs5);
     }
-
+    // Port 2 status line 5, upper case and red if connection is down
+    protected void updateLine5() {
+    	if (prefs.getConnection2().equals("(none)"))
+    		return;
+    	if (ConnectionStatus.instance().isConnectionOk(prefs.getPort2())){
+    		cs5.setForeground(Color.black);
+			cs5.setText(getConnection2());
+		} else {
+			cs5.setForeground(Color.red);
+			String cf = MessageFormat.format(rb.getString("ConnectionFailed"),
+					new String[] { prefs.getConnection2(), prefs.getPort2() });
+			cf = cf.toUpperCase();
+			cs5.setText(cf);
+		}
+	}
+ 
     protected String line6() {
         return " ";
     }
@@ -367,10 +406,9 @@ public class Apps extends JPanel {
         pane2.add(new JLabel(line1()));
         pane2.add(new JLabel(line2()));
         pane2.add(new JLabel(line3()));
-        pane2.add(new JLabel(line4()));
-
-        l = line5();
-        if (l!=null) pane2.add(l);
+        
+        buildLine4(pane2);
+        buildLine5(pane2);
 
         pane2.add(new JLabel(line6()));
         pane2.add(new JLabel(line7()));
@@ -518,6 +556,12 @@ public class Apps extends JPanel {
         return (program+" version "+jmri.Version.name()
                 +" starts under Java "+System.getProperty("java.version","<unknown>")
                 +" at "+(new java.util.Date()));
+    }
+    
+    public void propertyChange(PropertyChangeEvent ev){
+    	log.info("connection status changed " + ev.getNewValue());
+        updateLine4();
+        updateLine5();
     }
     
     static protected String ignore ="****** Ignore messages above this line *******";

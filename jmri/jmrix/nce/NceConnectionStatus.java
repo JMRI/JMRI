@@ -1,8 +1,10 @@
-//NceEpromChecker.java
+//NceConnectionStatus.java
 
 package jmri.jmrix.nce;
 
 import javax.swing.JOptionPane;
+
+import jmri.jmrix.ConnectionStatus;
 
 /* Continuously checks and confirms that the communication link to the
  * NCE Command Station is operational by reading the revision number of
@@ -16,11 +18,11 @@ import javax.swing.JOptionPane;
  * Also checks for March 2007 EPROM and warns user about Monitoring feedback.
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.1 $
  * 
  */
 
-public class NceEpromChecker implements NceListener {
+public class NceConnectionStatus implements NceListener {
 
 	private static final boolean JOptPane_ERROR_MESSAGES_ENABLED = true;
 	private static final boolean JOptPane_WARNING_MESSAGES_ENABLED = false;	//Disabled for headless operations!
@@ -98,13 +100,18 @@ public class NceEpromChecker implements NceListener {
 		}
 		
 		if (epromState == CHECK_OK) {
+	        ConnectionStatus.instance().setConnectionState(ncePortName, ConnectionStatus.CONNECTION_UP);
 			epromState = CHECK_STATE;
 			return null;
 		}
+		
+		if (epromState != INIT_STATE)
+			ConnectionStatus.instance().setConnectionState(ncePortName, ConnectionStatus.CONNECTION_DOWN);
 			
 		// no response from command station?
 		if (epromState == WAIT_STATE) {
 			log.warn("Incorrect or no response from NCE command station");
+
 			if (JOptPane_WARNING_MESSAGES_ENABLED)
 				JOptionPane.showMessageDialog(null,
 								"JMRI could not establish communication with NCE command station. \n"
@@ -223,6 +230,7 @@ public class NceEpromChecker implements NceListener {
 			
 			// We got a valid reply so we're done!
 			epromState = CHECK_OK;
+			log.debug ("valid reply NCE port " + ncePortName);
 						
 			// Have we already done the error checking?
 			if (epromChecked)
@@ -292,10 +300,15 @@ public class NceEpromChecker implements NceListener {
 		} else
 			log.warn("wrong number of read bytes for revision check");
 	}
+	
+	private static String ncePortName = "unknown";
+	public static void setPortName (String portName){
+		ncePortName = portName;
+	}
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category
-			.getInstance(NceEpromChecker.class.getName());
+			.getInstance(NceConnectionStatus.class.getName());
 
 }
-/* @(#)NceEpromChecker.java */
+/* @(#)NceConnectionStatus.java */
 
