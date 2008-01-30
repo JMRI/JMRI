@@ -40,6 +40,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.doc.Technical.XCode" url="html/doc/Technical/XCode.shtml" />
 	<mapID target="DecoderProManual.Comp_FMap_Top" url="DecoderProManual/Comp_FMap.shtml#Top" />
 	<mapID target="package.jmri.jmrit.speedometer.SpeedometerFrame" url="package/jmri/jmrit/speedometer/SpeedometerFrame.shtml" />
+	<mapID target="package.jmri.jmrit.display.MultiSensorIconDefaultsFrame" url="package/jmri/jmrit/display/MultiSensorIconDefaultsFrame.shtml" />
 	<mapID target="html.doc.Technical.CVSFAQ" url="html/doc/Technical/CVSFAQ.shtml" />
 	<mapID target="html.hardware.oaktree.OakTree" url="html/hardware/oaktree/OakTree.shtml" />
 	<mapID target="DecoderProManual.Getting_Started_Top" url="DecoderProManual/Getting_Started.shtml#Top" />
@@ -130,6 +131,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrix.loconet.locoio.LocoIOFrame" url="package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml" />
 	<mapID target="html.hardware.powerline.Compatibility" url="html/hardware/powerline/Compatibility.shtml" />
 	<mapID target="package.jmri.jmrit.beantable.SignalAddEdit" url="package/jmri/jmrit/beantable/SignalAddEdit.shtml" />
+	<mapID target="package.jmri.jmrit.beantable.TurnoutTable_Turnout lock feature" url="package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout lock feature" />
 	<mapID target="html.apps.PanelPro.Panels" url="html/apps/PanelPro/Panels.html" />
 	<mapID target="html.doc.Technical.I8N" url="html/doc/Technical/I8N.shtml" />
 	<mapID target="DecoderProManual.Comp_Consist" url="DecoderProManual/Comp_Consist.shtml" />
@@ -154,6 +156,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.Reporters" url="html/Reporters.html" />
 	<mapID target="DecoderProManual.Basic_Programming_Setting Up" url="DecoderProManual/Basic_Programming.shtml#Setting Up" />
 	<mapID target="html.hardware.loconet.LocoNetworking" url="html/hardware/loconet/LocoNetworking.shtml" />
+	<mapID target="package.jmri.jmrit.beantable.TurnoutTable_Turnout Feedback" url="package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout Feedback" />
 	<mapID target="html.doc.Technical.XmlUsage" url="html/doc/Technical/XmlUsage.shtml" />
 	<mapID target="package.jmri.jmrit.display.LayoutEditor_turn" url="package/jmri/jmrit/display/LayoutEditor.shtml#turn" />
 	<mapID target="package.jmri.jmrit.beantable.ConditionalAddEdit" url="package/jmri/jmrit/beantable/ConditionalAddEdit.shtml" />
@@ -170,7 +173,6 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="DecoderProManual.Comp_PrintData_b" url="DecoderProManual/Comp_PrintData_b.shtml" />
 	<mapID target="package.jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigFrame" url="package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml" />
 	<mapID target="html.hardware.loconet.LocoBufferUSB" url="html/hardware/loconet/LocoBufferUSB.shtml" />
-	<mapID target="package.jmri.jmrit.beantable.RouteTable_NCE turnout lock feature" url="package/jmri/jmrit/beantable/RouteTable.shtml#NCE turnout lock feature" />
 	<mapID target="package.jmri.jmrit.display.SetSignalsAtLevelXing" url="package/jmri/jmrit/display/SetSignalsAtLevelXing.shtml" />
 	<mapID target="package.jmri.jmrit.display.LayoutEditor_toolbar" url="package/jmri/jmrit/display/LayoutEditor.shtml#toolbar" />
 	<mapID target="package.jmri.jmrix.loconet.pm4.PM4Frame" url="package/jmri/jmrix/loconet/pm4/PM4Frame.shtml" />
@@ -190,12 +192,12 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.hardware.grapevine.Names" url="html/hardware/grapevine/Names.shtml" />
 	<mapID target="html.doc.Technical.NewSystem" url="html/doc/Technical/NewSystem.shtml" />
 	<mapID target="DecoderProManual.Getting_Started_Start" url="DecoderProManual/Getting_Started.shtml#Start" />
-	<mapID target="package.jmri.jmrit.beantable.TurnoutTable_NCE Turnout lock feature" url="package/jmri/jmrit/beantable/TurnoutTable.shtml#NCE Turnout lock feature" />
 	<mapID target="html.doc.Technical.Poll2007" url="html/doc/Technical/Poll2007.shtml" />
 	<mapID target="html.hardware.TerminalServer" url="html/hardware/TerminalServer.shtml" />
 	<mapID target="package.jmri.jmrit.display.LayoutEditor_editing" url="package/jmri/jmrit/display/LayoutEditor.shtml#editing" />
 	<mapID target="html.doc.Technical.Names" url="html/doc/Technical/Names.shtml" />
 	<mapID target="package.jmri.jmrit.simpleclock.SimpleClockFrame" url="package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml" />
+	<mapID target="package.jmri.jmrit.beantable.RouteTable_Turnout lock feature" url="package/jmri/jmrit/beantable/RouteTable.shtml#Turnout lock feature" />
 	<mapID target="DecoderProManual.Comp_Basic_Top" url="DecoderProManual/Comp_Basic.shtml#Top" />
 	<mapID target="html.doc.Technical.JUnit" url="html/doc/Technical/JUnit.shtml" />
 	<mapID target="package.jmri.jmrix.loconet.downloader.LoaderFrame" url="package/jmri/jmrix/loconet/downloader/LoaderFrame.shtml" />
@@ -225,7 +227,6 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="DecoderProManual.Comp_PrintData" url="DecoderProManual/Comp_PrintData.shtml" />
 	<mapID target="DecoderProManual.Comp_Basic" url="DecoderProManual/Comp_Basic.shtml" />
 	<mapID target="package.jmri.jmrit.display.TranslateSelection" url="package/jmri/jmrit/display/TranslateSelection.shtml" />
-	<mapID target="package.jmri.jmrit.beantable.TurnoutTable_JMRI:Turnout Feedback" url="package/jmri/jmrit/beantable/TurnoutTable.shtml#JMRI:Turnout Feedback" />
 	<mapID target="package.jmri.jmrit.display.EditTrackSegment" url="package/jmri/jmrit/display/EditTrackSegment.shtml" />
 	<mapID target="DecoderProManual.index_Advanced Programmer" url="DecoderProManual/index.shtml#Advanced Programmer" />
 	<mapID target="DecoderProManual.Comp_FMap" url="DecoderProManual/Comp_FMap.shtml" />
