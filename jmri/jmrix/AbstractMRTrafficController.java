@@ -26,7 +26,7 @@ import java.util.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.45 $
+ * @version			$Revision: 1.46 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -523,8 +523,17 @@ abstract public class AbstractMRTrafficController {
         } catch (Exception e) {
             log.error("Failed to start up communications. Error was "+e);
         }
+        portName = controller.getCurrentPortName();
     }
 
+    /**
+     * Get the port name for this connection
+     */
+    private String portName = "<unknown>";
+    public String getPortName(){
+    	return portName;
+    }
+    
     /**
      * Break connection to existing PortController object. Once broken,
      * attempts to send via "message" member will fail.

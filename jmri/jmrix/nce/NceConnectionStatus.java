@@ -18,7 +18,7 @@ import jmri.jmrix.ConnectionStatus;
  * Also checks for March 2007 EPROM and warns user about Monitoring feedback.
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * 
  */
 
@@ -100,13 +100,17 @@ public class NceConnectionStatus implements NceListener {
 		}
 		
 		if (epromState == CHECK_OK) {
-	        ConnectionStatus.instance().setConnectionState(ncePortName, ConnectionStatus.CONNECTION_UP);
+			ConnectionStatus.instance().setConnectionState(
+					NceTrafficController.instance().getPortName(),
+					ConnectionStatus.CONNECTION_UP);
 			epromState = CHECK_STATE;
 			return null;
 		}
-		
+
 		if (epromState != INIT_STATE)
-			ConnectionStatus.instance().setConnectionState(ncePortName, ConnectionStatus.CONNECTION_DOWN);
+			ConnectionStatus.instance().setConnectionState(
+					NceTrafficController.instance().getPortName(),
+					ConnectionStatus.CONNECTION_DOWN);
 			
 		// no response from command station?
 		if (epromState == WAIT_STATE) {
@@ -230,7 +234,6 @@ public class NceConnectionStatus implements NceListener {
 			
 			// We got a valid reply so we're done!
 			epromState = CHECK_OK;
-			log.debug ("valid reply NCE port " + ncePortName);
 						
 			// Have we already done the error checking?
 			if (epromChecked)
@@ -301,11 +304,6 @@ public class NceConnectionStatus implements NceListener {
 			log.warn("wrong number of read bytes for revision check");
 	}
 	
-	private static String ncePortName = "unknown";
-	public static void setPortName (String portName){
-		ncePortName = portName;
-	}
-
 	static org.apache.log4j.Category log = org.apache.log4j.Category
 			.getInstance(NceConnectionStatus.class.getName());
 

@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * connection to the layout changes.
  *
  * @author     Daniel Boudreau   Copyright (C) 2007
- * @version    $Revision: 1.1 $
+ * @version    $Revision: 1.2 $
  */
 public class ConnectionStatus {
 
@@ -52,14 +52,18 @@ public class ConnectionStatus {
 		if (!portNames.contains(portName)){
 			portNames.add(portName);
 			portStatus.add(state);
+			firePropertyChange("add", null, portName);
 		} else {
 			for (int i=0; i<portNames.size(); i++){
 				if (portName.equals(portNames.get(i))){
+					if (!state.equals(portStatus.get(i))){ 
 					portStatus.set(i, state);
+					firePropertyChange("change", null, portName);
+					break;
+					}
 				}
 			}
 		}
-		firePropertyChange("change", null, portName);
 	}
 	
 	/**
