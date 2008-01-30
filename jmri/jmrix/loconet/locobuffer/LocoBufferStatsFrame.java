@@ -20,7 +20,7 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Alex Shepherd   Copyright (C) 2003
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class LocoBufferStatsFrame extends jmri.util.JmriJFrame implements LocoNetListener {
 
@@ -86,6 +86,9 @@ public class LocoBufferStatsFrame extends jmri.util.JmriJFrame implements LocoNe
                 }
             }
         );
+
+        // add window help
+        addHelpMenu("package.jmri.jmrix.loconet.locobuffer.LocoBufferStatsFrame", true);
 
         // listen for LocoNet messages
         if (LnTrafficController.instance()!=null)

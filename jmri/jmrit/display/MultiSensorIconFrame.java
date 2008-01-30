@@ -21,12 +21,12 @@ import javax.swing.*;
  * It should be.
  *
  * @author  Bob Jacobsen  Copyright (c) 2007
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class MultiSensorIconFrame extends JmriJFrame {
     JPanel content = new JPanel();
-    JFrame defaultsFrame;
+    JmriJFrame defaultsFrame;
     MultiIconEditor defaultIcons;
     PanelEditor panelEditor = null;
 	LayoutEditor layoutEditor = null;
@@ -77,8 +77,8 @@ public class MultiSensorIconFrame extends JmriJFrame {
                 frame.pack();
             }
             JPanel self;
-            JFrame frame;
-            ActionListener init(JPanel self, JFrame frame) {
+            JmriJFrame frame;
+            ActionListener init(JPanel self, JmriJFrame frame) {
                 this.frame = frame;
                 this.self = self;
                 return this;
@@ -94,10 +94,11 @@ public class MultiSensorIconFrame extends JmriJFrame {
             defaultIcons.setIcon(1, "Inconsistent:","resources/icons/USS/plate/levers/l-unknown.gif");
             defaultIcons.setIcon(2, "Inactive:","resources/icons/USS/plate/levers/l-inconsistent.gif");
             defaultIcons.complete();
-        defaultsFrame = new JFrame("");
+        defaultsFrame = new JmriJFrame("");
             defaultsFrame.getContentPane().add(new JLabel("  Select new file, then click on icon to change  "),BorderLayout.NORTH);
             defaultsFrame.getContentPane().add(defaultIcons);
             defaultsFrame.pack();
+            defaultsFrame.addHelpMenu("package.jmri.jmrit.display.MultiSensorIconDefaultsFrame", true);
         b.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent a){
                 defaultsFrame.setVisible(true);
@@ -147,13 +148,13 @@ public class MultiSensorIconFrame extends JmriJFrame {
         JTextField sensor = new JTextField(5);
         JPanel self;
         MultiIconEditor ed = new MultiIconEditor(1);
-        JFrame edf = new JFrame("");
+        JmriJFrame edf = new JmriJFrame("");
         
         public String toString() {
             return ed.getIcon(0).toString();
         }
         
-        Entry(JPanel self, JFrame frame, String name) {
+        Entry(JPanel self, JmriJFrame frame, String name) {
             this.self = self;
             this.setLayout(new FlowLayout());
             this.add(new JLabel("Sensor:"));
@@ -184,8 +185,8 @@ public class MultiSensorIconFrame extends JmriJFrame {
                 }
                 Entry entry;
                 JPanel self;
-                JFrame frame;
-                ActionListener init(Entry entry, JPanel self, JFrame frame) {
+                JmriJFrame frame;
+                ActionListener init(Entry entry, JPanel self, JmriJFrame frame) {
                     this.entry = entry;
                     this.self = self;
                     this.frame = frame;
