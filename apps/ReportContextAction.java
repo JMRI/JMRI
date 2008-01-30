@@ -12,7 +12,7 @@ import javax.swing.*;
  * Swing action to display the JMRI context for the user
  *
  * @author	    Bob Jacobsen    Copyright (C) 2007
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 public class ReportContextAction extends AbstractAction {
 
@@ -70,6 +70,8 @@ public class ReportContextAction extends AbstractAction {
         addProperty("user.home");
         addProperty("user.dir");
 
+        addString(screenSize());
+        
         pane.append("\n"); // add a little space at bottom
 
 		frame.pack();
@@ -88,6 +90,33 @@ public class ReportContextAction extends AbstractAction {
     }
 	void addProperty(String prop) {
         addString(prop+": "+System.getProperty(prop)+"  ");	    
+    }
+    
+    /** 
+     * Provide screen - size information.  This is
+     * based on the jmri.util.JmriJFrame calculation, 
+     * but isn't refactored to there because we 
+     * also want diagnostic info
+     */
+    public String screenSize() {
+        try {
+            // Find screen size. This throws null-pointer exceptions on
+            // some Java installs, however, for unknown reasons, so be
+            // prepared to fal back.
+            JFrame dummy = new JFrame();
+            try {
+                Insets insets = dummy.getToolkit().getScreenInsets(dummy.getGraphicsConfiguration());
+                Dimension screen = dummy.getToolkit().getScreenSize();
+                return "Screen size h:"+screen.height+", w:"+screen.width+" Inset t:"+insets.top+", b:"+insets.bottom
+                        +"; l:"+insets.left+", r:"+insets.right;
+            } catch (NoSuchMethodError e) {
+                Dimension screen = dummy.getToolkit().getScreenSize();
+                return "Screen size h:"+screen.height+", w:"+screen.width+" (No Inset method available)";
+            }
+        } catch (Throwable e2) {
+            // failed, fall back to standard method
+            return "(Cannot sense screen size due to "+e2.toString()+")";
+        }
     }
 }
 
