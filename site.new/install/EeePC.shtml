@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: EeePC.shtml,v 1.1 2008-01-29 16:52:14 jacobsen Exp $ -->
+<!-- $Id: EeePC.shtml,v 1.2 2008-01-30 15:14:13 jacobsen Exp $ -->
 <html lang="en">
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
@@ -95,22 +95,22 @@ This terminal window should remain open throughout the installation procedure.
 <p>
 To start, it is necessary to install the communications libraries by typing the following commands:
 
-<pre><code>
+<code><pre>
   cd /usr/lib/jvm/java-1.5.0-sun-1.5.0.10/jre
   tar -zxvvf /home/user/My\ Documents/rxtx.tgz
   cd lib/i386
   ln -s librxtxSerial-2.0.7pre2.so librxtxSerial.so
   ln -s librxtxParallel-2.0.7pre2.so librxtxParallel.so
-</code></pre>
+</pre></code>
 
 Second step is to install the JMRI suite by typing the following commands:
 
-<pre><code>
+<code><pre>
   cd /usr/local
   tar -zxvvf /home/user/My\ Documents/JMRI.2.0.tgz
   chown -R root:root /usr/local/JMRI
   chmod -R g+rwx /usr/local/JMRI
-</code></pre>
+</pre></code>
 
 <h4>Modify the start-up scripts</h4>
 
@@ -120,30 +120,30 @@ it is necessary to modify the start-up scripts.
 <p>
 Change directory to the install directory by typing the following command:
 
-<pre><code>
+<code><pre>
   cd JMRI
-</code></pre>
+</pre></code>
 
 Modify start-up scripts to allow execution from the install directory using the command:
 
-<pre><code>
+<code><pre>
   nano DecoderPro
-</code></pre>
+</pre></code>
 
 This will now start-up a text editor in the terminal window.
 
 <p>
 Using the cursor keys, find the line that reads:
 
-<pre><code>
+<code><pre>
 #   cd /usr/local/JMRI
-</code></pre>
+</pre></code>
 
 Modify the line by removing the leading # (it should then read):
 
-<pre><code>
+<code><pre>
    cd /usr/local/JMRI
-</code></pre>
+</pre></code>
 
 Press Ctrl+O and then Enter to write-out the file.
 Press Ctrl+X to exit
@@ -151,18 +151,18 @@ Press Ctrl+X to exit
 <p>
 Repeat this modification for:
 
-<pre><code>
+<code><pre>
   PanelPro
-</code></pre>
+</pre></code>
 
 and optionally for:
 
-<pre><code>
+<code><pre>
   cornwall
   JmriDemo
   LocoTools
   PacketPro
-</code></pre>
+</pre></code>
 
 This completes the necessary start-up file modifications.
 
@@ -170,18 +170,18 @@ This completes the necessary start-up file modifications.
 
 Install the icons for the AsusLauncher menu:
 
-<pre><code>
+<code><pre>
   cd /opt/xandros/share/AsusLauncher
   tar -zxvvf /home/user/My\ Documents/easymodeicons.tgz
-</code></pre>
+</pre></code>
 
 <h4>Exit administrator shell</h4>
 
 To finalise the modifications to the AsusLauncher menu, it is necessary to leave the administrator shell by typing the following command:
 
-<pre><code>
+<code><pre>
   exit
-</code></pre>
+</pre></code>
 
 This will result in the prompt changing to '/home/user> '.
 
@@ -192,10 +192,10 @@ Before modifying the AsusLauncher menu, it needs to be determined if a user copy
 <p>
 This verification is achieved using the following commands:
 
-<pre><code>
+<code><pre>
   cd .AsusLauncher
   ls simpleui.rc
-</code></pre>
+</pre></code>
 
 If there is an error 'ls: simpleui.rc: No such file or directory', it is necessary to perform the following steps. Otherwise, skip the section 'Copy default AsusLauncher file'.
 
@@ -206,21 +206,21 @@ If there is no file 'simpleui.rc' in the '/home/user/.AsusLauncher' directory, i
 <p>
 This is achieved by using the following command:
 
-<pre><code>
+<code><pre>
   cp /opt/xandros/share/AsusLauncher/simpleui.rc simpleui.rc
-</code></pre>
+</pre></code>
 
 Confirm that the file 'simpleui.rc' exists by typing:
 
-<pre><code>
+<code><pre>
   ls simpleui.rc
-</code></pre>
+</pre></code>
 
 This should then display:
 
-<pre><code>
+<code><pre>
   simpleui.rc
-</code></pre>
+</pre></code>
 
 <h4>Make the AsusLauncher modifications</h4>
 
@@ -228,22 +228,22 @@ Now that it has been determined that a user copy of the AsusLauncher configurati
 it is necessary to modifiy this configuration.
 
 <p>
-This is achieved 
+This is achieved by entering the following command:
 
-<pre><code>
+<code><pre>
   nano simpleui.rc
-</code></pre>
+</pre></code>
 
 Scroll down to the end of the file. This should be a single line showing:
 
-<pre><code>
+<code><pre>
   &lt;/simpleui&gt;
-</code></pre>
+</pre></code>
 
 Insert the following lines before the last line (copy and paste from here, or the
 <a href="eeepc/launcheritems.txt">launcheritems.txt</a> file):
 
-<pre><code>
+<code><pre>
   &lt;parcel extraargs="/usr/bin/xterm -hold -e /usr/local/JMRI/DecoderPro"
           icon="decoderpro_norm.png"
           selected_icon="decoderpro_hi.png"
@@ -257,7 +257,7 @@ Insert the following lines before the last line (copy and paste from here, or th
           simplecat="Play"&gt;
           &lt;name lang="en"&gt;Panel Pro&lt;/name&gt;
   &lt;/parcel&gt;
-</code></pre>
+</pre></code>
 
 Press Ctrl+O and then Enter to write-out the file.
 Press Ctrl+X to exit
@@ -270,9 +270,9 @@ Note: the new icons will not show until after the EeePC has been restarted.
 
 Close the terminal window by typing the following command:
 
-<pre><code>
+<code><pre>
   exit
-</code></pre>
+</pre></code>
 
 Now, restart the EeePC by your preferred method.
 
