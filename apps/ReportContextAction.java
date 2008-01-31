@@ -12,7 +12,7 @@ import javax.swing.*;
  * Swing action to display the JMRI context for the user
  *
  * @author	    Bob Jacobsen    Copyright (C) 2007
- * @version         $Revision: 1.7 $
+ * @version         $Revision: 1.8 $
  */
 public class ReportContextAction extends AbstractAction {
 
@@ -70,7 +70,7 @@ public class ReportContextAction extends AbstractAction {
         addProperty("user.home");
         addProperty("user.dir");
 
-        addString(screenSize());
+        addScreenSize();
         
         pane.append("\n"); // add a little space at bottom
 
@@ -98,7 +98,7 @@ public class ReportContextAction extends AbstractAction {
      * but isn't refactored to there because we 
      * also want diagnostic info
      */
-    public String screenSize() {
+    public void addScreenSize() {
         try {
             // Find screen size. This throws null-pointer exceptions on
             // some Java installs, however, for unknown reasons, so be
@@ -107,16 +107,31 @@ public class ReportContextAction extends AbstractAction {
             try {
                 Insets insets = dummy.getToolkit().getScreenInsets(dummy.getGraphicsConfiguration());
                 Dimension screen = dummy.getToolkit().getScreenSize();
-                return "Screen size h:"+screen.height+", w:"+screen.width+" Inset t:"+insets.top+", b:"+insets.bottom
-                        +"; l:"+insets.left+", r:"+insets.right;
+                addString("Screen size h:"+screen.height+", w:"+screen.width+" Inset t:"+insets.top+", b:"+insets.bottom
+                        +"; l:"+insets.left+", r:"+insets.right);
             } catch (NoSuchMethodError e) {
                 Dimension screen = dummy.getToolkit().getScreenSize();
-                return "Screen size h:"+screen.height+", w:"+screen.width+" (No Inset method available)";
+                addString("Screen size h:"+screen.height+", w:"+screen.width
+                            +" (No Inset method available)");
             }
         } catch (Throwable e2) {
             // failed, fall back to standard method
-            return "(Cannot sense screen size due to "+e2.toString()+")";
+            addString("(Cannot sense screen size due to "+e2.toString()+")");
         }
+        
+        // look at context
+        Rectangle virtualBounds = new Rectangle();
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        addString("Environment max bounds: "+ge.getMaximumWindowBounds());
+        GraphicsDevice[] gs = ge.getScreenDevices();
+        for (int j = 0; j < gs.length; j++) { 
+            GraphicsDevice gd = gs[j];
+            GraphicsConfiguration[] gc = gd.getConfigurations();
+            for (int i=0; i < gc.length; i++) {
+                addString("bounds["+0+"] = "+gc[i].getBounds());
+                // virtualBounds = virtualBounds.union(gc[i].getBounds());
+            }
+        } 
     }
 }
 
