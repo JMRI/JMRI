@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ConditionalAddEdit.shtml,v 1.3 2007-11-23 06:45:56 jacobsen Exp $ -->
+<!-- $Id: ConditionalAddEdit.shtml,v 1.4 2008-01-31 19:18:02 djduchamp Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Adding/Editing Logix Conditionals</TITLE>
@@ -247,7 +247,9 @@ listed below along with information on each:</P>
 	the sensor to set by entering its name. Specify the state to set by
 	choosing Active or Inactive in the popup menu. Specify the number of
 	seconds to delay before setting the sensor by entering a number in the
-	right-most field.</LI>
+	right-most field. If this Conditional is already waiting to set this 
+	sensor, this action is ignored, and the previous action continues as 
+	originally scheduled.(see also <b>Reset Delayed Set Sensor</b> below.)</LI>
 	<LI><B>Set Light</B>: Sets the specified light to the chosen
 	state. Specify the light to set by entering its name. Specify the state
 	to set by choosing On or Off in the popup menu.</LI>
@@ -274,11 +276,42 @@ listed below along with information on each:</P>
 	the turnout to set by entering its name. Specify the state to set by
 	choosing Closed or Thrown in the popup menu. Specify the number of
 	seconds to delay before setting the turnout by entering a number in the
-	right-most field.</LI>
+	right-most field. If this Conditional is already waiting to set this 
+	turnout, this action is ignored, and the previous action continues as 
+	originally scheduled.(see also <b>Reset Delayed Set Turnout</b> below.)</LI>
 	<LI><B>Turnout Lock</B>: Locks or unlocks a turnout. Enter the
 	name for the turnout, and choose the operation from the popup menu.
 	Note, to control the type of turnout lock go to the <A
 		HREF="TurnoutTable.shtml">Turnout Table</A> and select the Lock Mode.</LI>
+	<LI><B>Reset Delayed Set Sensor</B>: Sets the specified sensor to the
+	chosen state after waiting for a specified number of seconds. Specify
+	the sensor to set by entering its name. Specify the state to set by
+	choosing Active or Inactive in the popup menu. Specify the number of
+	seconds to delay before setting the sensor by entering a number in the
+	right-most field. This action is the same as <b>Delayed Set Sensor</b>, 
+	except if this Conditional is already actively waiting to set the specified 
+	sensor, the previous wait is cancelled, and a new wait period is started. 
+	In effect, the wait time is restarted. The sensor is not set until the most 
+	recent wait period expires.</LI>
+	<LI><B>Cancel Sensor Timers</B>: Cancels all timers waiting to set the 
+	specified sensor in all Conditionals in all Logixs. Specify the sensor by 
+	entering its name. The sensor is not set; all active delayed actions for 
+	setting the specified sensor are cancelled without setting the sensor.</LI>
+	<LI><B>Reset Delayed Set Turnout</B>: Sets the specified turnout to the
+	chosen state after waiting for a specified number of seconds. Specify
+	the turnout to set by entering its name. Specify the state to set by
+	choosing Closed or Thrown in the popup menu. Specify the number of
+	seconds to delay before setting the turnout by entering a number in the
+	right-most field. This action is the same as <b>Delayed Set Turnout</b>, 
+	except if this Conditional is already actively waiting to set the specified 
+	turnout, the previous wait is cancelled, and a new wait period is started. 
+	In effect, the wait time is restarted. The turnout is not set until the most 
+	recent wait period expires.</LI>
+	<LI><B>Cancel Turnout Timers</B>: Cancels all timers waiting to set the 
+	specified turnouts in all Conditionals in all Logixs. Specify the turnout by 
+	entering its name. The turnout is not set; all active delayed actions for 
+	setting the specified turnout are cancelled without setting the turnout.</LI>
+
 </UL>
 <P></P>
 

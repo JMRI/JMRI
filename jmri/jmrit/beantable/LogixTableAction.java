@@ -46,7 +46,7 @@ import jmri.util.JmriJFrame;
  * accessed via rb.
  * 
  * @author Dave Duchamp Copyright (C) 2007
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -1464,12 +1464,15 @@ public class LogixTableAction extends AbstractTableAction {
 			}
 			break;
 		case Conditional.ACTION_DELAYED_TURNOUT:
+		case Conditional.ACTION_RESET_DELAYED_TURNOUT:
 			if (actionData[0] == Turnout.CLOSED) {
 				action1TurnoutSetBox.setSelectedIndex(0);
 			} else {
 				action1TurnoutSetBox.setSelectedIndex(1);
 			}
 			action1DataField.setText(Integer.toString(actionDelay[0]));
+			break;
+		case Conditional.ACTION_CANCEL_TURNOUT_TIMERS:
 			break;
 		case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
 			action1SignalSetBox
@@ -1483,12 +1486,15 @@ public class LogixTableAction extends AbstractTableAction {
 			}
 			break;
 		case Conditional.ACTION_DELAYED_SENSOR:
+		case Conditional.ACTION_RESET_DELAYED_SENSOR:
 			if (actionData[0] == Sensor.ACTIVE) {
 				action1SensorSetBox.setSelectedIndex(0);
 			} else {
 				action1SensorSetBox.setSelectedIndex(1);
 			}
 			action1DataField.setText(Integer.toString(actionDelay[0]));
+			break;
+		case Conditional.ACTION_CANCEL_SENSOR_TIMERS:
 			break;
 		case Conditional.ACTION_SET_LIGHT:
 			if (actionData[0] == Light.ON) {
@@ -1519,12 +1525,15 @@ public class LogixTableAction extends AbstractTableAction {
 			}
 			break;
 		case Conditional.ACTION_DELAYED_TURNOUT:
+		case Conditional.ACTION_RESET_DELAYED_TURNOUT:
 			if (actionData[1] == Turnout.CLOSED) {
 				action2TurnoutSetBox.setSelectedIndex(0);
 			} else {
 				action2TurnoutSetBox.setSelectedIndex(1);
 			}
 			action2DataField.setText(Integer.toString(actionDelay[1]));
+			break;
+		case Conditional.ACTION_CANCEL_TURNOUT_TIMERS:
 			break;
 		case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
 			action2SignalSetBox
@@ -1538,12 +1547,15 @@ public class LogixTableAction extends AbstractTableAction {
 			}
 			break;
 		case Conditional.ACTION_DELAYED_SENSOR:
+		case Conditional.ACTION_RESET_DELAYED_SENSOR:		
 			if (actionData[1] == Sensor.ACTIVE) {
 				action2SensorSetBox.setSelectedIndex(0);
 			} else {
 				action2SensorSetBox.setSelectedIndex(1);
 			}
 			action2DataField.setText(Integer.toString(actionDelay[1]));
+			break;
+		case Conditional.ACTION_CANCEL_SENSOR_TIMERS:
 			break;
 		case Conditional.ACTION_SET_LIGHT:
 			if (actionData[1] == Light.ON) {
@@ -1911,6 +1923,7 @@ public class LogixTableAction extends AbstractTableAction {
 						.setToolTipText(rbx.getString("NameHintSensor"));
 				break;
 			case Conditional.ACTION_DELAYED_SENSOR:
+			case Conditional.ACTION_RESET_DELAYED_SENSOR:
 				action1NameField.setVisible(true);
 				action1DataField.setVisible(true);
 				action1SensorSetBox.setVisible(true);
@@ -1919,7 +1932,13 @@ public class LogixTableAction extends AbstractTableAction {
 				action1DataField.setToolTipText(rbx
 						.getString("DataHintDelayedSensor"));
 				break;
+			case Conditional.ACTION_CANCEL_SENSOR_TIMERS:
+				action1NameField.setVisible(true);
+				action1NameField
+						.setToolTipText(rbx.getString("NameHintSensor"));
+				break;
 			case Conditional.ACTION_DELAYED_TURNOUT:
+			case Conditional.ACTION_RESET_DELAYED_TURNOUT:
 				action1NameField.setVisible(true);
 				action1DataField.setVisible(true);
 				action1TurnoutSetBox.setVisible(true);
@@ -1927,6 +1946,11 @@ public class LogixTableAction extends AbstractTableAction {
 						.getString("NameHintTurnout"));
 				action1DataField.setToolTipText(rbx
 						.getString("DataHintDelayedTurnout"));
+				break;
+			case Conditional.ACTION_CANCEL_TURNOUT_TIMERS:
+				action1NameField.setVisible(true);
+				action1NameField
+						.setToolTipText(rbx.getString("NameHintTurnout"));
 				break;
 			case Conditional.ACTION_SET_LIGHT:
 				action1NameField.setVisible(true);
@@ -2035,6 +2059,7 @@ public class LogixTableAction extends AbstractTableAction {
 						.setToolTipText(rbx.getString("NameHintSensor"));
 				break;
 			case Conditional.ACTION_DELAYED_SENSOR:
+			case Conditional.ACTION_RESET_DELAYED_SENSOR:
 				action2NameField.setVisible(true);
 				action2DataField.setVisible(true);
 				action2SensorSetBox.setVisible(true);
@@ -2043,7 +2068,13 @@ public class LogixTableAction extends AbstractTableAction {
 				action2DataField.setToolTipText(rbx
 						.getString("DataHintDelayedSensor"));
 				break;
+			case Conditional.ACTION_CANCEL_SENSOR_TIMERS:
+				action2NameField.setVisible(true);
+				action2NameField
+						.setToolTipText(rbx.getString("NameHintSensor"));
+				break;
 			case Conditional.ACTION_DELAYED_TURNOUT:
+			case Conditional.ACTION_RESET_DELAYED_TURNOUT:
 				action2NameField.setVisible(true);
 				action2DataField.setVisible(true);
 				action2TurnoutSetBox.setVisible(true);
@@ -2051,6 +2082,11 @@ public class LogixTableAction extends AbstractTableAction {
 						.getString("NameHintTurnout"));
 				action2DataField.setToolTipText(rbx
 						.getString("DataHintDelayedTurnout"));
+				break;
+			case Conditional.ACTION_CANCEL_TURNOUT_TIMERS:
+				action2NameField.setVisible(true);
+				action2NameField
+						.setToolTipText(rbx.getString("NameHintTurnout"));
 				break;
 			case Conditional.ACTION_SET_LIGHT:
 				action2NameField.setVisible(true);
@@ -2767,6 +2803,77 @@ public class LogixTableAction extends AbstractTableAction {
 			}
 			actionString[index] = " ";
 			break;
+		case Conditional.ACTION_RESET_DELAYED_TURNOUT:
+			Turnout txz = null;
+			// check if turnout user name was entered
+			if ((uName != null) && (uName != "")) {
+				txz = InstanceManager.turnoutManagerInstance().getByUserName(
+						uName);
+				if (txz != null) {
+					actionName[index] = uName;
+					systemNameField.setText(uName);
+				} else {
+					// check turnout system name
+					txz = InstanceManager.turnoutManagerInstance()
+							.getBySystemName(sName);
+				}
+			}
+			if (txz == null) {
+				systemNameField.setText(uName);
+				messageInvalidTurnoutName(uName, false);
+				return (false);
+			}
+			if (turnoutSetBox.getSelectedIndex() == 0)
+				actionData[index] = Turnout.CLOSED;
+			else
+				actionData[index] = Turnout.THROWN;
+			try {
+				actionDelay[index] = Integer.valueOf(dataField.getText())
+						.intValue();
+				if (actionDelay[index] <= 0) {
+					javax.swing.JOptionPane.showMessageDialog(
+							editConditionalFrame,
+							java.text.MessageFormat.format(rbx
+									.getString("Error40"),
+									new String[] { dataField.getText() }), 
+									rbx.getString("ErrorTitle"),
+							javax.swing.JOptionPane.ERROR_MESSAGE);
+					return (false);
+				}
+			} catch (Exception e) {
+				javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
+						java.text.MessageFormat.format(
+								rbx.getString("Error41"),
+								new String[] { dataField.getText() }), 
+								rbx.getString("ErrorTitle"),
+						javax.swing.JOptionPane.ERROR_MESSAGE);
+				return (false);
+			}
+			actionString[index] = " ";
+			break;
+		case Conditional.ACTION_CANCEL_TURNOUT_TIMERS:
+			Turnout tnz = null;
+			// check if turnout user name was entered
+			if ((uName != null) && (uName != "")) {
+				tnz = InstanceManager.turnoutManagerInstance().getByUserName(
+						uName);
+				if (tnz != null) {
+					actionName[index] = uName;
+					systemNameField.setText(uName);
+				} else {
+					// check sensor system name
+					tnz = InstanceManager.turnoutManagerInstance()
+							.getBySystemName(sName);
+				}
+			}
+			if (tnz == null) {
+				systemNameField.setText(uName);
+				messageInvalidTurnoutName(uName, false);
+				return (false);
+			}
+			actionData[index] = 0;
+			actionString[index] = " ";
+			break;
 		case Conditional.ACTION_LOCK_TURNOUT:
 			Turnout tl = null;
 			// check if turnout user name was entered
@@ -2937,6 +3044,77 @@ public class LogixTableAction extends AbstractTableAction {
 						javax.swing.JOptionPane.ERROR_MESSAGE);
 				return (false);
 			}
+			actionString[index] = " ";
+			break;
+		case Conditional.ACTION_RESET_DELAYED_SENSOR:
+			Sensor snxy = null;
+			// check if sensor user name was entered
+			if ((uName != null) && (uName != "")) {
+				snxy = InstanceManager.sensorManagerInstance().getByUserName(
+						uName);
+				if (snxy != null) {
+					actionName[index] = uName;
+					systemNameField.setText(uName);
+				} else {
+					// check sensor system name
+					snxy = InstanceManager.sensorManagerInstance()
+							.getBySystemName(sName);
+				}
+			}
+			if (snxy == null) {
+				systemNameField.setText(uName);
+				messageInvalidSensorName(uName, false);
+				return (false);
+			}
+			if (sensorSetBox.getSelectedIndex() == 0)
+				actionData[index] = Sensor.ACTIVE;
+			else
+				actionData[index] = Sensor.INACTIVE;
+			try {
+				actionDelay[index] = Integer.valueOf(dataField.getText())
+						.intValue();
+				if (actionDelay[index] <= 0) {
+					javax.swing.JOptionPane.showMessageDialog(
+							editConditionalFrame,
+							java.text.MessageFormat.format(rbx
+									.getString("Error28"),
+									new String[] { dataField.getText() }), 
+										rbx.getString("ErrorTitle"),
+							javax.swing.JOptionPane.ERROR_MESSAGE);
+					return (false);
+				}
+			} catch (Exception e) {
+				javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
+						java.text.MessageFormat.format(
+								rbx.getString("Error27"),
+								new String[] { dataField.getText() }), rbx
+								.getString("ErrorTitle"),
+						javax.swing.JOptionPane.ERROR_MESSAGE);
+				return (false);
+			}
+			actionString[index] = " ";
+			break;
+		case Conditional.ACTION_CANCEL_SENSOR_TIMERS:
+			Sensor snz = null;
+			// check if sensor user name was entered
+			if ((uName != null) && (uName != "")) {
+				snz = InstanceManager.sensorManagerInstance().getByUserName(
+						uName);
+				if (snz != null) {
+					actionName[index] = uName;
+					systemNameField.setText(uName);
+				} else {
+					// check sensor system name
+					snz = InstanceManager.sensorManagerInstance()
+							.getBySystemName(sName);
+				}
+			}
+			if (snz == null) {
+				systemNameField.setText(uName);
+				messageInvalidSensorName(uName, false);
+				return (false);
+			}
+			actionData[index] = 0;
 			actionString[index] = " ";
 			break;
 		case Conditional.ACTION_SET_LIGHT:
@@ -3131,6 +3309,14 @@ public class LogixTableAction extends AbstractTableAction {
 			return (rbx.getString("ActionDelayedTurnout"));
 		case Conditional.ACTION_LOCK_TURNOUT:
 			return (rbx.getString("ActionTurnoutLock"));
+		case Conditional.ACTION_RESET_DELAYED_SENSOR:
+			return (rbx.getString("ActionResetDelayedSensor"));
+		case Conditional.ACTION_CANCEL_SENSOR_TIMERS:
+			return (rbx.getString("ActionCancelSensorTimers"));
+		case Conditional.ACTION_RESET_DELAYED_TURNOUT:
+			return (rbx.getString("ActionResetDelayedTurnout"));
+		case Conditional.ACTION_CANCEL_TURNOUT_TIMERS:
+			return (rbx.getString("ActionCancelTurnoutTimers"));
 		}
 		return ("");
 	}

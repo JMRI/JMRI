@@ -33,7 +33,7 @@ package jmri;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
  * <P>
- * @author			Dave Duchamp Copyright (C) 2007
+ * @author			Dave Duchamp Copyright (C) 2007, 2008
  * @version			$Revision 1.0 $
  */
  
@@ -83,7 +83,7 @@ public interface Conditional extends NamedBean {
 	public static final int ACTION_OPTION_ON_CHANGE_TO_FALSE = 2;
 	public static final int ACTION_OPTION_ON_CHANGE = 3;
 	// action types
-	public static final int NUM_ACTION_TYPES = 18;
+	public static final int NUM_ACTION_TYPES = 22;
 	public static final int ACTION_NONE = 1;
 	public static final int ACTION_SET_TURNOUT = 2;
 	// allowed settings for turnout are Thrown and Closed (in data)
@@ -113,6 +113,16 @@ public interface Conditional extends NamedBean {
 	// allowed settings for timed turnout are Thrown and Closed (in data)
 	//   time in seconds before setting turnout should be in delay
 	public static final int ACTION_LOCK_TURNOUT = 18;
+	public static final int ACTION_RESET_DELAYED_SENSOR = 19;
+	// allowed settings for timed sensor are active and inactive (in data)
+	//   time in seconds before setting sensor should be in delay
+	public static final int ACTION_CANCEL_SENSOR_TIMERS = 20;
+	// cancels all timers delaying setting of specified sensor
+	public static final int ACTION_RESET_DELAYED_TURNOUT = 21;
+	// allowed settings for timed sensor are active and inactive (in data)
+	//   time in seconds before setting sensor should be in delay
+	public static final int ACTION_CANCEL_TURNOUT_TIMERS = 22;
+	// cancels all timers delaying setting of specified sensor
 	
 	/**
 	 * Get number of State Variables for this Conditional
@@ -226,8 +236,18 @@ public interface Conditional extends NamedBean {
 	 * Sets the state of the conditional.
 	 * Returns the calculated state of this Conditional.
 	 */
-	public int calculate (boolean logixEnabled);
-		
+	public int calculate (boolean logixEnabled);		
+	
+	/**
+	 * Stop a sensor timer if one is actively delaying setting of the specified sensor
+	 */
+	public void cancelSensorTimer (String sname);
+
+	/**
+	 * Stop a turnout timer if one is actively delaying setting of the specified turnout
+	 */
+	public void cancelTurnoutTimer (String sname);
+
     /**
      * State of the Conditional is returned.  
      * @return state value

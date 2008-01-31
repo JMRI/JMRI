@@ -9,7 +9,7 @@ import javax.swing.Timer;
  * Class providing the basic logic of the Conditional interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -548,6 +548,40 @@ public class DefaultConditional extends AbstractNamedBean
 																				actionName[i]);
 						}
 						break;
+					case Conditional.ACTION_RESET_DELAYED_TURNOUT:
+						if (mDelayTimerActive[i]) {
+							// Stop the timer if it is active
+							mDelayTimer[i].stop();
+							mDelayTimerActive[i] = false;
+						}
+						else if (mDelayTimer[i]==null) {
+							// Create a timer if one does not exist							
+							mDelayListener[i] = new TimeTurnout(i);
+							mDelayTimer[i] = new Timer(2000,mDelayListener[i]);
+							mDelayTimer[i].setRepeats(false);
+						}
+						// Start the Timer to set the turnout
+						mDelayTimer[i].setInitialDelay(actionDelay[i]*1000);
+						mDelayTimerActive[i] = true;
+						mDelayTimer[i].start();
+						break;
+					case Conditional.ACTION_CANCEL_TURNOUT_TIMERS:
+						ConditionalManager cmg = jmri.InstanceManager.conditionalManagerInstance();
+						java.util.Iterator iter = cmg.getSystemNameList().iterator();
+						while (iter.hasNext()) {
+							String sname = (String)iter.next();
+							if (sname==null) 
+								log.error("Conditional system name null during cancel turnput timers for "
+														+ actionName[i]);
+							Conditional c = cmg.getBySystemName(sname);
+							if (c==null)
+								log.error("Conditional null during cancel turnout timers for "
+														+ actionName[i]);
+							else {
+								c.cancelTurnoutTimer(actionName[i]);
+							}
+						}						
+						break;
 					case Conditional.ACTION_LOCK_TURNOUT:
 						Turnout tl = InstanceManager.turnoutManagerInstance().
 									getTurnout(actionName[i]);
@@ -657,6 +691,40 @@ public class DefaultConditional extends AbstractNamedBean
 																				actionName[i]);
 						}
 						break;
+					case Conditional.ACTION_RESET_DELAYED_SENSOR:
+						if (mDelayTimerActive[i]) {
+							// Stop the timer if it is active
+							mDelayTimer[i].stop();
+							mDelayTimerActive[i] = false;
+						}
+						else if (mDelayTimer[i]==null) {
+							// Create a timer if one does not exist							
+							mDelayListener[i] = new TimeSensor(i);
+							mDelayTimer[i] = new Timer(2000,mDelayListener[i]);
+							mDelayTimer[i].setRepeats(false);
+						}
+						// Start the Timer to set the sensor
+						mDelayTimer[i].setInitialDelay(actionDelay[i]*1000);
+						mDelayTimerActive[i] = true;
+						mDelayTimer[i].start();
+						break;
+					case Conditional.ACTION_CANCEL_SENSOR_TIMERS:
+						ConditionalManager cm = jmri.InstanceManager.conditionalManagerInstance();
+						java.util.Iterator itr = cm.getSystemNameList().iterator();
+						while (itr.hasNext()) {
+							String sname = (String)itr.next();
+							if (sname==null) 
+								log.error("Conditional system name null during cancel sensor timers for "
+														+ actionName[i]);
+							Conditional c = cm.getBySystemName(sname);
+							if (c==null)
+								log.error("Conditional null during cancel sensor timers for "
+														+ actionName[i]);
+							else {
+								c.cancelSensorTimer(actionName[i]);
+							}
+						}						
+						break;
 					case Conditional.ACTION_SET_LIGHT:
 						Light lgt = InstanceManager.lightManagerInstance().
 										getLight(actionName[i]);
@@ -708,6 +776,74 @@ public class DefaultConditional extends AbstractNamedBean
 							jmri.util.PythonInterp.runScript(actionString[i]);
 						}
 						break;
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Stop a sensor timer if one is actively delaying setting of the specified sensor
+	 */
+	public void cancelSensorTimer (String sname) {
+		// cycle over both actions
+		for (int i = 0;i<2;i++) {
+			if ( (actionType[i] == Conditional.ACTION_DELAYED_SENSOR) || 
+						(actionType[i] == Conditional.ACTION_RESET_DELAYED_SENSOR) ) {
+				if ( mDelayTimerActive[i] ) {
+					// have active set sensor timer - is it for our sensor?
+					if ( actionName[i].equals(sname) ) {
+						// yes, names match, cancel timer
+						mDelayTimer[i].stop();
+						mDelayTimerActive[i] = false;
+					}
+					else {
+						// check if same sensor by a different name
+						Sensor sn = InstanceManager.sensorManagerInstance().
+												getSensor(actionName[i]);
+						if (sn == null) {
+							log.error("Unknown sensor *"+actionName[i]+" in cancelSensorTimer.");
+						}
+						else if (sname.equals(sn.getSystemName()) || 
+												sname.equals(sn.getUserName())) {
+							// same sensor, cancel timer
+							mDelayTimer[i].stop();
+							mDelayTimerActive[i] = false;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Stop a turnout timer if one is actively delaying setting of the specified turnout
+	 */
+	public void cancelTurnoutTimer (String sname) {
+		// cycle over both actions
+		for (int i = 0;i<2;i++) {
+			if ( (actionType[i] == Conditional.ACTION_DELAYED_TURNOUT) || 
+						(actionType[i] == Conditional.ACTION_RESET_DELAYED_TURNOUT) ) {
+				if ( mDelayTimerActive[i] ) {
+					// have active set turnout timer - is it for our turnout?
+					if ( actionName[i].equals(sname) ) {
+						// yes, names match, cancel timer
+						mDelayTimer[i].stop();
+						mDelayTimerActive[i] = false;
+					}
+					else {
+						// check if same turnout by a different name
+						Turnout tn = InstanceManager.turnoutManagerInstance().
+												getTurnout(actionName[i]);
+						if (tn == null) {
+							log.error("Unknown turnout *"+actionName[i]+" in cancelTurnoutTimer.");
+						}
+						else if (sname.equals(tn.getSystemName()) || 
+												sname.equals(tn.getUserName())) {
+							// same turnout, cancel timer
+							mDelayTimer[i].stop();
+							mDelayTimerActive[i] = false;
+						}
+					}
 				}
 			}
 		}

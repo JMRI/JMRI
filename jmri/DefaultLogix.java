@@ -14,7 +14,7 @@ import java.util.Date;
  * Class providing the basic logic of the Logix interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class DefaultLogix extends AbstractNamedBean
     implements Logix, java.io.Serializable {
@@ -1007,6 +1007,7 @@ public class DefaultLogix extends AbstractNamedBean
 									break;
 								case Conditional.ACTION_SET_TURNOUT:
 								case Conditional.ACTION_DELAYED_TURNOUT:
+								case Conditional.ACTION_RESET_DELAYED_TURNOUT:
 									Turnout t = InstanceManager.turnoutManagerInstance().
 												provideTurnout(name[j]);
 									if (t!=null) {
@@ -1052,6 +1053,8 @@ public class DefaultLogix extends AbstractNamedBean
 									break;
 								case Conditional.ACTION_SET_SENSOR:
 								case Conditional.ACTION_DELAYED_SENSOR:
+								case Conditional.ACTION_RESET_DELAYED_SENSOR:
+								case Conditional.ACTION_CANCEL_SENSOR_TIMERS:
 									Sensor s = InstanceManager.sensorManagerInstance().
 												provideSensor(name[j]);
 									if (s!=null) {
