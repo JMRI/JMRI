@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.10 2008-01-29 16:57:52 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.11 2008-01-31 23:12:33 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -220,11 +220,12 @@
 	<LI>Herb Poppe, who diagnosed a problem in some Digitrax decoder definitions
 <A ID="Q"></A>
 <A ID="R"></A>
-	<LI>Wim Ros, who provide help with the direct connection to the Intellibox
+    <li>Simon Reader, who improved the throttle
 	<LI>Bill Robinson of Team Digital, who provided a schematic of their
 	MS100-equivalent level shifter, contributed the LnSendTool.py script,
 	and decoder definitions for Team Digital products
     <LI>Mark Rogerson, who provided the RXTX (Java communications library) for MacOS X machines with Intel processors
+	<LI>Wim Ros, who provide help with the direct connection to the Intellibox
 	<LI>Klaus Ruebsam, who is hosting German and English JMRI discussion
 	groups on his 
 	<A HREF="http://www.dcc-portal.net/">http://www.dcc-portal.net/</a> website.
