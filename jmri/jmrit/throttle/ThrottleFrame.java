@@ -43,7 +43,7 @@ import org.jdom.Element;
  *  directed by the interface.
  *
  * @author     Glen Oberhauser
- * @version    $Revision: 1.32 $
+ * @version    $Revision: 1.33 $
  */
 /**
  * @author DSM
@@ -102,10 +102,16 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
      */
     public void notifyThrottleFound(DccThrottle t)
 	{
-		this.throttle = t;
-		addressPanel.notifyThrottleFound(t);
-		controlPanel.notifyThrottleFound(t);
-		functionPanel.notifyThrottleFound(t);
+    	if (throttle == null){
+    		this.throttle = t;
+    		addressPanel.notifyThrottleFound(t);
+    		controlPanel.notifyThrottleFound(t);
+    		functionPanel.notifyThrottleFound(t);
+    	} else {
+    		log.debug("Notify control panel to use consist throttle");
+    		controlPanel.notifyThrottleFound(t);
+    		addressPanel.notifyConsistThrottleFound(t);
+    	}
 	}
 
     /**
