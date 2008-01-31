@@ -43,7 +43,7 @@ import org.jdom.Element;
  *  directed by the interface.
  *
  * @author     Glen Oberhauser
- * @version    $Revision: 1.33 $
+ * @version    $Revision: 1.34 $
  */
 /**
  * @author DSM
@@ -120,12 +120,17 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
      */
     public void notifyAddressChosen(int address, boolean isLong)
 	{
+                
 		boolean requestOK =
 			InstanceManager.throttleManagerInstance().requestThrottle(address, isLong, this);
 		if (!requestOK)
 		{
 			JOptionPane.showMessageDialog(this, "Address in use by another throttle.");
 		}
+                else
+                {
+                   setTitle(Integer.toString(address)); 
+	}
 	}
 
 	/**
@@ -134,6 +139,7 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
 	 */
 	public void notifyAddressReleased(int address, boolean isLong)
 	{
+                setTitle("Throttle");
 		InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
 		controlPanel.notifyThrottleDisposed();
 		functionPanel.notifyThrottleDisposed();
