@@ -35,7 +35,7 @@ import jmri.util.StringUtil;
  * used with permission.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2003
- * @version			$Revision: 1.41 $
+ * @version			$Revision: 1.42 $
  */
 public class Llnmon {
 
@@ -964,7 +964,7 @@ public class Llnmon {
                     if (showStatus) {
                         logString = mode
                             +" Fast Clock: "
-                            +((clk_cntrl & 0x20) != 0 ? "" : "(Data is Invalid - ignore)")
+                            +((clk_cntrl & 0x20) != 0 ? "" : "(SYNC reply)")
                             +"\n\t"
                                 +(clk_rate != 0 ? "Running" : "Frozen")
                                 +", rate is "+clk_rate
@@ -974,14 +974,14 @@ public class Llnmon {
                                 +((track_stat & LnConstants.GTRK_MLOK1)!=0 ? "implements LocoNet 1.1" : "is a DT-200")
                             +",\n\tTrack Status is "
                                 +((track_stat & LnConstants.GTRK_POWER)!=0  ? " On," : " Off,")
-                                +((track_stat & LnConstants.GTRK_IDLE)!=0  ? " Paused " : " Running ")
+                                +((track_stat & LnConstants.GTRK_IDLE)==0  ? " Paused " : " Running ")
                             +",\n\tProgramming Track is "
                                 +((track_stat & LnConstants.GTRK_PROG_BUSY)!=0 ? "Busy" : "Available")
                             +"\n";
                     } else {
                         logString = mode
                             +" Fast Clock: "
-                            +((clk_cntrl & 0x20) != 0 ? "" : "(Data is Invalid - ignore)")
+                            +((clk_cntrl & 0x20) != 0 ? "" : "(SYNC reply)")
                             +"\n\t"
                                 +(clk_rate != 0 ? "Frozen" : "Running")
                                 +", rate is "+clk_rate

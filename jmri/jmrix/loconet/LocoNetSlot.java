@@ -18,7 +18,7 @@ import java.util.Vector;
  * <P>
  * @author			Bob Jacobsen  Copyright (C) 2001
  * @author			Stephen Williams  Copyright (C) 2008
- * @version         $Revision: 1.16 $
+ * @version         $Revision: 1.17 $
  */
 public class LocoNetSlot {
 
@@ -188,7 +188,7 @@ public class LocoNetSlot {
     //    <ADD2> is the high 7 bits (7-13) of the 14-bit loco address
     private int spd;	// <SPD> is the current speed (0-127)
     private int dirf;	// <DIRF> is the current Direction and the setting for functions F0-F4
-    private int trk;	// <TRK> is the global track status
+    private int trk = 7;	// <TRK> is the global track status
     private int ss2;	// <SS2> is the an additional slot status
     private int snd; 	// <SND> is the settings for functions F5-F8
     private int id;		// throttle id, made from

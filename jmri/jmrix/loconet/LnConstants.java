@@ -7,7 +7,7 @@ package jmri.jmrix.loconet;
  *
  * Description:		Constants to represent values seen in LocoNet traffic
  * @author			Bob Jacobsen   Copyright (C) 2001, 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
 
  * Note that the values in this class have been taken from the llnmom C program of
  * Ron W. Auld, which included some work of John Kabat.  The symbol names
@@ -165,7 +165,6 @@ public final static int GTRK_PROG_BUSY    = 0x08;      /* 1 = programming track 
 public final static int GTRK_MLOK1        = 0x04;      /* 0 = Master is DT200, 1=Master implements LocoNet 1.1 */
 public final static int GTRK_IDLE         = 0x02;      /* 0=TRACK is PAUSED, B'cast EMERG STOP.                */
 public final static int GTRK_POWER        = 0x02;      /* 1=DCC packets are ON in MASTER, Global POWER up      */
-
 public final static int FC_SLOT           = 0x7b;      /* Fast clock is in this slot                           */
 public final static int PRG_SLOT          = 0x7c;      /* This slot communicates with the programming track    */
 public final static int CFG_SLOT          = 0x7f;      /* This slot holds configuration bits                   */
