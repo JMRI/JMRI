@@ -17,7 +17,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.roster package & jmrit.roster.Roster class.
  * @author	Bob Jacobsen     Copyright (C) 2001, 2002
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 public class RosterTest extends TestCase {
 
@@ -81,6 +81,10 @@ public class RosterTest extends TestCase {
         String contents = "stuff"+"           ";
         PrintStream p = new PrintStream (new FileOutputStream(f));
         p.println(contents);
+        p.close();
+        // delete previous backup file if there's one
+        File bf = new File(XmlFile.prefsDir()+"temp"+File.separator+"rosterBackupTest");
+        bf.delete();
 
         // now do the backup
         Roster r = new Roster() {
@@ -95,6 +99,24 @@ public class RosterTest extends TestCase {
         Assert.assertEquals("read 1 ", contents.charAt(1), in.read());
         Assert.assertEquals("read 2 ", contents.charAt(2), in.read());
         Assert.assertEquals("read 3 ", contents.charAt(3), in.read());
+        in.close();
+        
+        // now see if backup works when a backup file already exists
+        contents = "NEWER JUNK"+"           ";
+        p = new PrintStream (new FileOutputStream(f));
+        p.println(contents);
+        p.close();
+
+        // now do the backup
+        r.makeBackupFile("temp"+File.separator+"roster.xml");
+
+        // and check
+        in = new FileInputStream(new File(XmlFile.prefsDir()+"temp"+File.separator+"rosterBackupTest"));
+        Assert.assertEquals("read 4 ", contents.charAt(0), in.read());
+        Assert.assertEquals("read 5 ", contents.charAt(1), in.read());
+        Assert.assertEquals("read 6 ", contents.charAt(2), in.read());
+        Assert.assertEquals("read 7 ", contents.charAt(3), in.read());
+        in.close();
     }
 
     public void testReadWrite() throws Exception {
