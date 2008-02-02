@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.3 2008-01-19 08:16:46 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.4 2008-02-02 15:17:54 pbender Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -40,7 +40,7 @@
 	    <dt>Atlas</dt>
 	    <dd>
 		<p class="dl">Configure: Atlas Commander-For Control - Item #330 via
-		<A HREF="XPressNet/index.shtml">Lenz LI100, LI101F, LIUSB or GenLi XPressNet interfaces, or an XPA and Hayes compatible modem</a></p> 
+		<A HREF="XPressNet/index.shtml">Lenz LI100, LI101F, LIUSB or GenLi XPressNet interfaces, ZTC Controls ZTC640 interface, or an XPA and Hayes compatible modem</a></p> 
 		
 		<p>Note: you can not program decoders with this configuration</p>
 
@@ -89,13 +89,28 @@
 	    </dd>
 
 	    <dt class="im">
+		<a href="http://www.hornby.com/">
+		Hornby</a>
+	    </dt>
+	    <dt>Hornby</dt>
+	    <dd>
+	        <p class="dl">Configure: Hornby Elite via <a HREF="XPressNet/index.shtml">built in USB Port</a></p>
+                <p>class="dl">Configure: Hornby Elte or Hornby Select via
+		<A HREF="XPressNet/index.shtml">Lenz LI100, LI101F, LIUSB or GenLi XPressNet interfaces, ZTC Controls ZTC640 interface, or an XPA and Hayes compatible modem</a></p> 
+
+		<p>Please check the notes above for system specific restrictions on what JMRI can do</p>
+
+	    </dd>
+
+
+	    <dt class="im">
 		<a href="http://www.lenz.com/">
 		<img src="images/ico-lenz.gif" width="44" height="34" alt="Lenz"></a>
 	    </dt>
 	    <dt>Lenz</dt>
 	    <dd>
 	        <p class="dl">Configure:
-		<A HREF="XPressNet/index.shtml">Lenz LI100, LI101F, or LIUSB XPressNet interfaces, or an XPA and Hayes compatible modem</a></p> 
+		<A HREF="XPressNet/index.shtml">Lenz LI100, LI101F, LIUSB or GenLi XPressNet interfaces, ZTC Controls ZTC640 interface, or an XPA and Hayes compatible modem</a></p> 
 
 		<p>Please check the notes above for system specific restrictions on what JMRI can do</p>
 
@@ -138,8 +153,8 @@
 	    <dt class="im"><a href="http://www.roco.com/">Roco</a></dt>
 	    <dt>Roco</dt>
 	    <dd>
-	        <p class="dl">Configure: Roco LocoMaus 2 (Roco Part number 10760) via
-		<A HREF="XPressNet/index.shtml">Lenz LI100, LI101F, or LIUSB XPressNet interfaces, or an XPA and Hayes compatible modem</a>
+	        <p class="dl">Configure: Roco LocoMaus 2 (Roco Part number 10760) or Roco MultiMaus (Roco Part number 10810) via
+		<A HREF="XPressNet/index.shtml">Lenz LI100, LI101F, or LIUSB XPressNet interfaces, ZTC Controls ZTC640 interface, or an XPA and Hayes compatible modem</a>
 		</p>
 		<p>Please check the notes above for system specific restrictions on what JMRI can do</p>
 		</dd>
@@ -189,7 +204,7 @@
 	    <dt>ZTC Controls</dt>
 	    <dd>
 	    	<p class="dl">Configure: ZTC Controls ZTC511, ZTC Controls ZTC521 via
-		<A HREF="XPressNet/index.shtml">Lenz LI100, LI101F, or LIUSB XPressNet interfaces, or an XPA and Hayes compatible modem</a>
+		<A HREF="XPressNet/index.shtml">Lenz LI100, LI101F, or LIUSB XPressNet interfaces, ZTC Controls ZTC640 interface, or an XPA and Hayes compatible modem</a>
 		(requires XPressNet V3.0 software)
 		</p>
 		<p>Please check the notes above for system specific restrictions on what JMRI can do</p>
