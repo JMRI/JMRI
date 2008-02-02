@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.1 2008-01-13 04:23:35 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.2 2008-02-02 06:49:54 jacobsen Exp $ -->
 <html lang="en">
 <head>
 <TITLE>
@@ -69,9 +69,10 @@ this page</p>
     <dl>
     <dt class=left>Full</dt>
     <dd class=first>
-    	<H4><span class=supported>Operating</span>
-	    <span class=supported>Programming</span>
-	    <span class=supported>Feedback</span>
+
+	<h4><font color="#00FF00">Operating</font>
+	    <font color="#00FF00">Programming</font>
+	    <font color="#00FF00">Feedback</font>
 	</H4>
 	<ul>
 	    <li> Lenz LZ100 based systems (software version 3.x)</li>
@@ -81,9 +82,9 @@ this page</p>
     <dt class=left>Partial</dt>
     <dd>
 
-	<h4><span class=supported>Operating</span>
-	    <span class=supported>Programming</span>
-	    <span class=unsupported>Feedback</span>
+	<h4><font color="#00FF00">Operating</font>
+	    <font color="#00FF00">Programming</font>
+	    <font color="#FF0000"><strike>Feedback</strike></font>
 	</H4>
 	<ul>
 	    <li> Roco LocoMaus 2 (Roco Part number 10760) </li>
@@ -92,9 +93,9 @@ this page</p>
     </dd>
     <dt class=left>Minimal</dt>
     <dd>
-	<h4><span class=supported>Operating</span>
-	    <span class=unsupported>Programming</span>
-	    <span class=unsupported>Feedback</span>
+	<h4><font color="#00FF00">Operating</font>
+	    <font color="#FF0000"><strike>Programming</strike></font>
+	    <font color="#FF0000"><strike>Feedback</strike></font>
 	</H4>
 	<ul>
 	    <li> Atlas Commander</li>
@@ -102,9 +103,9 @@ this page</p>
 	    <li> Lenz LH200</li>
 	    <li>ZTC Controls ZTC511 (with Command Station Software version 4.0)</li>
 	</ul>
-	<h4><span class=unsupported>Operating</span>
-	    <span class=supported>Programming</span>
-	    <span class=unsupported>Feedback</span>
+	<h4><font color="#FF0000"><strike>Operating</strike></font>
+	    <font color="#00FF00">Programming</font>
+	    <font color="#FF0000"><strike>Feedback</strike></font>
 	</H4>
 	<ul>
 	    <li> Lenz BlackBox</li>
