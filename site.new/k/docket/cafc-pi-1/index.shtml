@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.7 2008-01-24 22:14:19 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.8 2008-02-02 06:51:32 jacobsen Exp $ -->
 <html lang="en">
 
 <head>
@@ -21,7 +21,6 @@
 
 <!--#include virtual="/Header" -->
 <!--#include virtual="/k/Sidebar" -->
- <hr class="hide"> 
  <div id="mainContent">
   <div class="list">
     <h2>JMRI Defense: Papers from the Court of Appeals for the Federal Circuit</h2>
@@ -66,6 +65,30 @@ links for minor documents may not work; if you'd like one, please
 let us know and we'll update it by hand.
 
   <table DATASRC="PACER" DATAPAGESIZE="5" width="763" border="0" cellspacing="2" cellpadding="0">
+
+<!---------------------------------------------------------------------->  
+
+<!---------------------------------------------------------------------->
+
+    <tr>
+      <td width="48" align="left" valign="top"><font size="-1"> 1/29/2008 </font></td>
+      <td width="595" align="left"><font size="-1"> Brief of Appellees                                                                                                                                                                  .  BY Kamind Associates, Inc. (d/b/a KAM Industries) and Matthew Katzer                          (Appellees       ).  SERVED BY Mail       ON 1/29/2008.
+        FILED ON 1/29/2008  .
+      
+           (NON-CONFIDENTIAL)
+        </font>
+        </td>
+      <td width="67" align="right"><font size="-10"></font></td>
+    </tr>
+     
+<!---------------------------------------------------------------------->   
+  
+<!---------------------------------------------------------------------->
+
+<!--Gov't Atty -or- Private Atty-->
+        
+    <tr>
+      <td width="186"><br />
 
 <!---------------------------------------------------------------------->  
 
@@ -124,6 +147,41 @@ let us know and we'll update it by hand.
       <td width="186"><br>
       </td>
     </tr>
+
+<!---------------------------------------------------------------------->  
+      
+
+<!----------------------------------------------------------------------> 
+
+    <tr>
+      <td width="48" align="left" valign="top"><font size="-1"> 1/25/2008 </font></td>
+      <td width="595" align="left"><font size="-1"> Brief of Amici Curiae Creative Commons Corporation, et al...in Support of Plaintiff-Appellant and Urging Reversal                                                                   .  BY Creative Commons Corporation, et al.                                                       (Amici           ).  
+      
+         SERVED BY Mail       ON 1/28/2007.
+      
+        REJECTED ON <b> 1/25/2008</b> .
+       
+           (NON-CONFIDENTIAL)
+        </font>
+        </td>
+      <td width="67" align="right"><font size="-10"></font></td>
+    </tr>
+     
+<!---------------------------------------------------------------------->
+    
+<!---------------------------------------------------------------------->
+
+<!---------------------------------------------------------------------->
+  
+<!---------------------------------------------------------------------->
+
+<!--Gov't Atty -or- Private Atty-->
+        
+    <tr>
+      <td width="186"><br />
+      </td>
+    </tr>
+
   </table>
 
 
@@ -162,11 +220,18 @@ Please Note: Motions & Actions Filed are listed first. Entries are listed last.
 
     </tr>
 
+
+    <tr>
+      <td width="100" align="left" valign="top"><font size="-1">1/22/2008</font> </td>
+      <td width="645" align="left"><font size="-1"><strong>ACTION: </strong>Entry 15 :Motion granted.                                                                                                                                                                                                              </font></td>
+    </tr>
+
 <!-- -------------------------------------------------SEPERATION-LINE---------------- -->
 
 
     <tr>
       <td width="100"><br />
+
     <tr>
       <td width="100" align="left" valign="top"><font size="-1">11/9/2007 </font>  </td>
       <td width="645" align="left"><font size="-1"><strong>MOTION: </strong>Entry 9    :by Appellant        - Motion for a (14) day enlargement of time to file opening brief.                                                                                                                                                                                           <strong>SERVICE :</strong> by Mail                 on 11/9/2007 </font></td>
@@ -188,6 +253,13 @@ Please Note: Motions & Actions Filed are listed first. Entries are listed last.
     </tr>
 
 <!-- -------------------------------------------------SEPERATION-LINE---------------- -->
+
+
+
+
+
+
+
     <td>
   <br />
   <tr>
