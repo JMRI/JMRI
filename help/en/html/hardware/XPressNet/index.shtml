@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.2 2008-02-02 06:45:31 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.3 2008-02-02 15:04:16 pbender Exp $ -->
 <html lang="en">
 <head>
 <TITLE>
@@ -51,7 +51,7 @@ JMRI: XPressNet
 <H3>Command Stations</H3>
 
 <p>The XPressNet protocol allows the DCC manufacturers that use it to 
-select what functionality they wish to provide in thier command stations.
+select what functionality they wish to provide in their command stations.
 This functionality ranges from "supports all features" to "bare bones 
 minimal".  Unfortunatly, this restricts the features you can access via 
 JMRI - if the hardware doesn't support it, it isn't there to be used by 
@@ -88,6 +88,8 @@ this page</p>
 	</H4>
 	<ul>
 	    <li> Roco LocoMaus 2 (Roco Part number 10760) </li>
+	    <li> Roco MultiMouse (Roco Part number 10810) </li>
+            <li> Hornby Elite </li>
 	</ul>
 
     </dd>
@@ -116,6 +118,7 @@ this page</p>
 	<h4>These are untested, but should be at least partially supported</h4>
 	<ul>
 	    <li>ZTC Controls ZTC521 (with XPressNet (aka X-Bus V3.0) software)</li>
+            <li>Hornby Select</li>
 	</ul>
     </dd>
     </dl>
@@ -123,8 +126,7 @@ this page</p>
 
 <H3>Computer Interfaces</H3>
 
-    <p>There are four computer interfaces that JMRI has been tested with, and
-    developed for
+    <p>There are currently 6 computer interfaces supported by JMRI:
     	<ul>
 	<li>The Lenz LI100 is Lenz's original computer interface.  It is
 	limited to a serial port speed of 9600 baud.  
@@ -137,7 +139,7 @@ this page</p>
 	configured.  The device is configured via a softwaretool provided 
 	by Lenz which runs on Windows only.  We have included a configuration 
 	tool with JMRI that will allow users of other operating systems to 
-	configure thier LI101F as well.  The LI101F supports serial port 
+	configure their LI101F as well.  The LI101F supports serial port 
 	speeds of 19,200, 38,400, 57,600, and 115,200 baud.  The factory 
 	default is 19,200 baud.
 	<li>The Lenz LIUSB is Lenz's first USB based computer interface.
@@ -152,7 +154,20 @@ this page</p>
 	relatively slow, and it only allows controlling mobile and stationary
 	decoders, but it may be perfect for someone who is interested in trying
 	out the control functions of a computer before deciding to go with a
-	full fledged interface. Note that an XPA cannot be used to program decoders!
+	full fledged interface. Note that an XPA cannot be used to program 
+        decoders!
+	<li>The ZTC Controls ZTC640 is ZTC's USB interface.  We have had limit 
+        experience with this device, though the current JMRI drivers are 
+        belived to be stable.  Operationally, the device appears to be similar 
+        to the Lenz LIUSB.  <b>NOTE: The first JMRI release supporting the 
+        ZTC640 is version 1.7.3</b>
+        <li>The Hornby Elite's Built in USB interface.  Hornby has provided 
+        limited information about how the device works, and currently only 
+        provides a USB driver for Windows, so we are unsure of it's useablity
+        with other operating systems.  As with the ZTC640, we have had limited 
+        experience with this device, though the current JMRI drivers are 
+        belived to be stable. <b>NOTE: The first JMRI release supporting the 
+        Hornby Elite USB connection is version 2.1.2</b>
 	
 	</ul></p>
 
@@ -177,7 +192,8 @@ this page</p>
 	<dd>
 	<p>The Atlas Commander provides support only for operation of 
 	equipment on a layout (running trains and throwing switches)
-	from JMRI. You cannot program decoders from a computer with the Commander.</p>
+	from JMRI. You cannot program decoders from a computer with the 
+        Commander.</p>
 
 	<p>If you have an Atlas Commander, and would like to use it 
         to control your layout from the computer, an XPA and Hayes 
@@ -232,26 +248,36 @@ this page</p>
 	supports Operations Mode Programming.</p>
 
 	<p>The LocoMaus 2 does not support feedback.</p>
+
+        <p>The Roco MultiMaus (Roco Part number 10810) has been shown to 
+        support operating equipment on a layout (running trains and throwing 
+        switches) and programming locomotives in both service and operations 
+        mode.
+
 	</dd>
 
 	<dt class=left>ZTC</dt>
 	<dd>
 	<p>The ZTC Controls ZTC511 (with Command Station software 
 	version 4.0) has been shown to support operating equipment on a 
-	layout (running trains and throwing switches).  At least when 
-	using the Lenz LI10x as an interface, the ZTC511 does not
-	appear to support any programming operations.</p>
-
-	<p>The ZTC521 (with XBus V3.0 software) has yet to be tested, so 
-	the full extent of what is supported is not known at this time.</p>
+	layout (running trains and throwing switches).  The ZTC511 does not
+	support any programming operations from XPressNet devices.</p>
 
 	<p>The onboard serial interface of the ZTC511 is not supported at 
 	this point in time.</p>
 
-	<p>You can use any of the Lenz interfaces listed above to connect 
-	to a ZTC system that supports the XPressNet (aka X-Bus V3.0) 
+	<p>The ZTC521 (with XBus V3.0 software) has yet to be tested, so 
+	the full extent of what is supported is not known at this time.</p>
+
+	<p>You can use any of the Lenz or ZTC interfaces listed above to 
+        connect to a ZTC system that supports the XPressNet (aka X-Bus V3.0) 
 	protocol.</p>
 
+	<p>If you have either a ZTC system and wish to add computer 
+        control to your layout, an XPA and Hayes Compatible Modem may 
+        be a more cost effective solution than one of the purpose built
+        interfaces.</p>
+       
 	</dd>
     	<dt class=left>XPA and Hayes Compatible Modem</dt>
 	<dd>
@@ -267,24 +293,25 @@ this page</p>
 </div>
 
 
-<H2>Connecting to an XPressNet based DCC System using a Lenz LI100 or LI101</H2>
+<H2>Connecting to an XPressNet based DCC System using a Lenz LI100, LI101F, or LI101F</H2>
 <ol>
-    <li><p> To connect your computer to one of these XPressNet based DCC systems, you
-    need a Lenz LI100 or LI101 interface unit.  Connect one of those units to your
-    DCC command station via their XpressNet connections.  Then connect the
-    LI100/LI101 to the computer's serial port using a 9-pin serial cable.</p>
+    <li><p> Connect your Lenz LI100, LI100F, or LI101F to your DCC Command
+    station via their XpressNet connections.  Then connect the
+    LI100/LI100F/LI101F to the computer's serial port using a 9-pin serial 
+    cable.</p>
 
     <li><P> Then go to the preferences panel of a JMRI-based program.  This
     opens automatically the first time a program is run, or you can
     select it from the "Edit" menu.  </p>
 
-    <li><P> Select "Lenz LI100/LI101F" from the top selection box. You can
-    then select the proper serial port in the second selection box.
+    <li><P> Select your Lenz interface (LI100,LI100F, or LI101F) from the 
+    top selection box. You can then select the proper serial port in the 
+    second selection box.
     </p>
 
-    <li><P> The baud rate selection box should be set to match your LI100
-    or LI101.  From the factory, the LI100 is set to 9600 baud, The
-    LI101 is set to 19,200 baud.</p>
+    <li><P> The baud rate selection box should be set to match your LI100,
+    or LI100F, or LI101F.  From the factory, the LI100 and LI100F are set 
+    to 9600 baud.  The LI101F is set to 19,200 baud.</p>
 
     <li><P> The fourth box should be left on "hardware flow control" unless
     you later consistently get a message about the LI100 control leads
@@ -311,10 +338,10 @@ this page</p>
     <li><P> Restart the program. You should be up and running.</p>
 </ol>
 
-<H2>Connecting to an XPressNet based DCC System using a Lenz LIUSB</H2>
+<H2>Connecting to an XPressNet based DCC System using a Lenz LIUSB.</H2>
 
 <p> <b>NOTE: The first JMRI release supporting the LI-USB is version 
-1.5.7</b> </p>
+1.5.7.</b> </p>
 <ol> 
     <li><p> To connect your computer to one of these XPressNet based DCC
     systems, you can use a Lenz LIUSB interface unit.  Connect the LIUSB 
@@ -337,9 +364,8 @@ this page</p>
     <p> Device drivers for Linux, and MacOS (8,9 and X ) and Windows are
     available from the <a href="http://www.ftdichip.com/">FTDI  website</a>.
     (A direct link to the drivers that is current as of this writing is <a 
-    href="http://www.ftdichip.com/Drivers/FT232-FT245Drivers.htm">http://www.ftdichip.com/Drivers/FT232-FT245Drivers.htm</a>)
+    href="http://www.ftdichip.com/Drivers/VCP.htm">http://www.ftdichip.com/Drivers/VCP.htm</a>)
     </P>
-
     <P> When the device drivers are installed, and the LIUSB is connected
     to both your PC and your DCC system, the LIUSB should have a Red
     LED turned on, indicating the XPressNet connection is OK, and a green 
@@ -364,6 +390,121 @@ this page</p>
     unless you later consistently get a message about the LIUSB control
     leads being improperly set up, in which case you might want to try to
     bypass that by selecting "no flow control".</p>
+
+    <li><P> Check Buffer Status when sending?  Should be set to "yes"
+    unless you are using MacOS 8 or 9.</P>
+
+    <li><P> The series of radio buttons labelled "GUI style" allows you to
+    select how the program will look.  "Metal" is the native Java look
+    available on all types.  Other choices will vary with your computer
+    type. "Motif", "Windows", "MacOS" and "MacOS Adaptive" look native
+    on Linux, Windows, MacOS "Classic" and MacOS X respectively.</p>
+
+    <li><P> In the bottom selection box, you can pick the default
+    programmer format. You can override this each time you open the
+    programmer, so this is here just for convenience.</p>
+
+    <li><P> Click "Save".  You'll be asked if it's OK for the program to  
+    quit, click "Yes".</p>
+
+    <li><P> Restart the program. You should be up and running.</p>
+</ol>
+
+<H2>Connecting to an XPressNet based DCC System using a ZTC ZTC640.</H2>
+
+<p> <b>NOTE: The first JMRI release supporting the ZTC640 is version 1.7.3.</b> </p>
+<ol> 
+    <li><p> To connect your computer to one of these XPressNet based DCC
+    systems, you can use a ZTC ZTC640 interface unit.  Connect the ZTC640 
+    to your DCC command station via their XpressNet connections.  Then
+    connect the ZTC640 to your computer's USB port using the supplied
+    cable.</p>
+
+    <li><P> In order to use the ZTC640 with JMRI, you must first install a
+    software driver on your computer.  Internally, the device contains a
+    FTDI FT232BM USB to Serial converter.  There are two drivers available
+    for this device, make sure you obtain the Virtual Comm Port (VCP)
+    driver.</P>
+
+    <P> The device drivers for Windows are included on the CD that
+    comes with the device.</p>
+
+    <p> The device drivers for Linux are included with recent versions of
+    the Linux kernel</p>
+
+    <p> Device drivers for Linux, and MacOS (8,9 and X ) and Windows are
+    available from the <a href="http://www.ftdichip.com/">FTDI  website</a>.
+    (A direct link to the drivers that is current as of this writing is <a 
+    href="http://www.ftdichip.com/Drivers/VCP.htm">http://www.ftdichip.com/Drivers/VCP.htm</a>)
+    </P>
+
+    <P> When the device drivers are installed, and the ZTC640 is connected
+    to both your PC and your DCC system, the ZTC640 should have a Red
+    LED turned on, indicating the XPressNet connection is OK, and a green 
+    LED turned on, indicating the USB connection is OK.</P>
+
+    <li><P> Once the drivers are installed, you are ready to configure
+    JMRI.  Start one of the JMRI-based programs, Then go to the
+    preferences panel. This opens automatically the first time a program
+    is run, or you can select it from the "Edit" menu.  </p>
+
+    <li><P> Select "ZTC Controls ZTC640" from the top selection box. You can
+    then select the proper serial port in the second selection box.
+    </p>
+    
+    <li><P> The baud rate selection box should be set to 19,200 baud.</p>
+    
+    <li><P> The fourth box should be left on "no flow control".</p>
+
+    <li><P> Check Buffer Status when sending?  Should be set to "yes"
+    unless you are using MacOS 8 or 9.</P>
+
+    <li><P> The series of radio buttons labelled "GUI style" allows you to
+    select how the program will look.  "Metal" is the native Java look
+    available on all types.  Other choices will vary with your computer
+    type. "Motif", "Windows", "MacOS" and "MacOS Adaptive" look native
+    on Linux, Windows, MacOS "Classic" and MacOS X respectively.</p>
+
+    <li><P> In the bottom selection box, you can pick the default
+    programmer format. You can override this each time you open the
+    programmer, so this is here just for convenience.</p>
+
+    <li><P> Click "Save".  You'll be asked if it's OK for the program to  
+    quit, click "Yes".</p>
+
+    <li><P> Restart the program. You should be up and running.</p>
+</ol>
+
+<H2>Connecting to an XPressNet based DCC System using a Lenz LIUSB, ZTC ZTC640, or the Hornby Elite's built in USB connection.</H2>
+
+<p> <b>NOTE: The first JMRI release supporting the Hornby Elite's built in USB connection is 2.1.2</b> </p>
+<ol> 
+    <li><p> To connect your computer to the Hornby Elite using it's built in USB
+    connection, connect your Hornby Elite's USB port and the computer's USB port    using the supplied cable.</p>
+
+    <li><P> In order to use the Hornby Elite's built in USB port, you must 
+    first install a software driver on your computer.  
+    <P> The device drivers for Windows are included on the CD that
+    comes with the device and from the <a href="http://www.hornby.com/customer-support/downloads/elite-driver-download-and-installation,110,HAR.html">Hornby Website</a></p>.
+
+    <p> It is unknown at this point if there are device drivers available for
+    MacOS or Linux.</p>
+
+    <p> The Hornby Elite has a Green LED that illuminates when it is 
+    recognized by the computer. </p>
+
+    <li><P> Once the drivers are installed, you are ready to configure
+    JMRI.  Start one of the JMRI-based programs, Then go to the
+    preferences panel. This opens automatically the first time a program
+    is run, or you can select it from the "Edit" menu.  </p>
+
+    <li><P> Select "Hornby Elite USB port" from the top selection box. You 
+    can then select the proper serial port in the second selection box.
+    </p>
+    
+    <li><P> The baud rate selection box should be set to 19,200 baud.</p>
+    
+    <li><P> The fourth box should be left on "no flow control".</p>
 
     <li><P> Check Buffer Status when sending?  Should be set to "yes"
     unless you are using MacOS 8 or 9.</P>
