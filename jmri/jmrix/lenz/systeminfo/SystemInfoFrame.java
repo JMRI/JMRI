@@ -21,7 +21,7 @@ import jmri.jmrix.lenz.*;
  *
  * @author			Paul Bender  Copyright (C) 2003
  * @author			Giorgio Terdina  Copyright (C) 2007
- * @version			$Revision: 2.5 $
+ * @version			$Revision: 2.6 $
  */
 public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListener {
 
@@ -49,6 +49,8 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
 
           getContentPane().add(getSystemInfoButton);
           getContentPane().add(closeButton);
+
+        addHelpMenu("package.jmri.jmrix.lenz.systeminfo.SystemInfoFrame", true);
 
         // and prep for display
         pack();

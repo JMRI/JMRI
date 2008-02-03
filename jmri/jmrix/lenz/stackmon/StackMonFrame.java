@@ -27,7 +27,7 @@ import javax.swing.JScrollPane;
  * <P>
  *
  * @author	Paul Bender   Copyright (C) 2005
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener {
 
@@ -151,6 +151,8 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
         stackPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         stackModel.initTable(stackTable,this);
         getContentPane().add(stackPane);
+
+        addHelpMenu("package.jmri.jmrix.lenz.stackmon.StackMonFrame", true);
 
         pack();
 
