@@ -17,8 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.BoxLayout;
-
-
+import javax.swing.JScrollPane;
 
 /**
  * This frame provides a method for searching the command station stack.
@@ -28,18 +27,25 @@ import javax.swing.BoxLayout;
  * <P>
  *
  * @author	Paul Bender   Copyright (C) 2005
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener {
 
     JButton nextButton  = new JButton("Next Entry");
     JButton previousButton  = new JButton("Previous Entry");
     JButton deleteButton  = new JButton("Delete Entry");
+    JButton refreshButton = new JButton("Refresh");
     JLabel CurrentStatus = new JLabel(" ");
 
     JTextField adrTextField = new javax.swing.JTextField(4);
 
+    StackMonDataModel stackModel = new StackMonDataModel(1,4);
+    javax.swing.JTable stackTable = new javax.swing.JTable(stackModel);
+
     private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.stackmon.StackMonBundle");
+
+    private boolean _getAll = false; // flag to know if get all or 
+                                     // get next/previous was pressed
 
     public StackMonFrame() {
         super();
@@ -92,8 +98,23 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 	// Set the deleteButton to visible
 	deleteButton.setVisible(true);
 
+        // add listener object to retrieve the next entry
+        refreshButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                getAllEntries();
+            }
+        });
+
+ 	// Change the text on the nextButton according to the resource 
+	// bundle
+	refreshButton.setText(rb.getString("RefreshButtonLabel"));
+
+	// Set the nextButton to visible
+	refreshButton.setVisible(true);
+
 	// Set the adrTextField to visible
 	adrTextField.setVisible(true);
+
 
         // general GUI config
         setTitle(rb.getString("StackMonitorTitle"));
@@ -103,22 +124,33 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
         JPanel pane1 = new JPanel();
         pane1.setLayout(new FlowLayout());
 
-        pane1.add(nextButton);
-        pane1.add(previousButton);
-        pane1.add(deleteButton);
-
+        pane1.add(refreshButton);
         getContentPane().add(pane1);
         //pane1.setMaximumSize(pane1.getSize());
+
+        JPanel manualPanel = new JPanel();
+        manualPanel.setLayout(new FlowLayout());
+        manualPanel.add(nextButton);
+        manualPanel.add(previousButton);
+        manualPanel.add(deleteButton);
+
+        //getContentPane().add(manualPanel);
 
 	JPanel pane2 = new JPanel();
 	pane2.setLayout(new FlowLayout());
 	pane2.add(adrTextField);
-	getContentPane().add(pane2);
+	//getContentPane().add(pane2);
 
 	JPanel pane3 = new JPanel();
 	pane3.setLayout(new FlowLayout());
 	pane3.add(CurrentStatus);
-	getContentPane().add(pane3);
+	//getContentPane().add(pane3);
+
+        // Set up the jtable in a Scroll Pane..
+        JScrollPane stackPane = new JScrollPane(stackTable);
+        stackPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        stackModel.initTable(stackTable,this);
+        getContentPane().add(stackPane);
 
         pack();
 
@@ -136,6 +168,15 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
             dimension.height += jMenuBarHeight;
             setSize(dimension);
         }
+    }
+
+    /*
+     *  Request ALL entries
+     */
+    private void getAllEntries() {
+       stackModel.clearData();
+       _getAll = true;
+       getNextEntry();
     }
 
     /*
@@ -165,38 +206,90 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
      */
     private void deleteEntry() {
 	int address=0;
-	if(!adrTextField.getText().equals(""))
+	if(!adrTextField.getText().equals("")){
 	   address=Integer.parseInt(adrTextField.getText());
-	XNetMessage msg = XNetMessage.getDeleteAddressOnStackMsg(address);
-	XNetTrafficController.instance().sendXNetMessage(msg,this);
+           XNetMessage msg = XNetMessage.getDeleteAddressOnStackMsg(address);
+           XNetTrafficController.instance().sendXNetMessage(msg,this);
+        }
     }
 
+    /*
+     * Request the status of the current address
+     */    
+    private void requestStatus()
+    {
+	int address=0;
+	if(!adrTextField.getText().equals(""))
+        {
+	   address=Integer.parseInt(adrTextField.getText());
+	   XNetMessage msg = XNetMessage.getLocomotiveInfoRequestMsg(address);
+	   XNetTrafficController.instance().sendXNetMessage(msg,this);
+        }
+    }
+
+    /*
+     * Request the momentary/continuous status of functions for the 
+     * current address.
+     */
+    private void requestFunctionStatus()
+    {
+	int address=0;
+	if(!adrTextField.getText().equals(""))
+        {
+	   address=Integer.parseInt(adrTextField.getText());
+	   XNetMessage msg = XNetMessage.getLocomotiveFunctionStatusMsg(address);
+	   XNetTrafficController.instance().sendXNetMessage(msg,this);
+        }
+    }
 
     // The XNet Listener Interface
     
     // We need to be able to recieve information from the command station
     public void message(XNetReply r) {
        if(r.getElement(0) == XNetConstants.LOCO_INFO_RESPONSE) {
+           int address=r.getThrottleMsgAddr();
+           Integer intAddress=new Integer(address);
 	   switch(r.getElement(1)) {
 		case XNetConstants.LOCO_SEARCH_RESPONSE_N:
 			CurrentStatus.setText(rb.getString("SearchNormal"));
-			adrTextField.setText("" + r.getThrottleMsgAddr());
+			adrTextField.setText("" + address);
+                        stackModel.updateData(intAddress,rb.getString("SearchNormal"));
+			// Request Address Status
+			// requestStatus();
+			// requestFunctionStatus();
+                        if(_getAll) getNextEntry();
 			break;
 		case XNetConstants.LOCO_SEARCH_RESPONSE_DH:
 			CurrentStatus.setText(rb.getString("SearchDH"));
 			adrTextField.setText("" + r.getThrottleMsgAddr());
+                        stackModel.updateData(intAddress,rb.getString("SearchNormal"));
+			// Request Address Status
+			// requestStatus();
+			// requestFunctionStatus();
+                        if(_getAll) getNextEntry();
 			break;
 		case XNetConstants.LOCO_SEARCH_RESPONSE_MU_BASE:
 			CurrentStatus.setText(rb.getString("SearchMUBase"));
 			adrTextField.setText("" + r.getThrottleMsgAddr());
+                        stackModel.updateData(intAddress,rb.getString("SearchNormal"));
+			// Request Address Status
+			// requestStatus();
+			// requestFunctionStatus();
+                        if(_getAll) getNextEntry();
 			break;
 		case XNetConstants.LOCO_SEARCH_RESPONSE_MU:
 			CurrentStatus.setText(rb.getString("SearchMU"));
 			adrTextField.setText("" + r.getThrottleMsgAddr());
+                        stackModel.updateData(intAddress,rb.getString("SearchNormal"));
+			// Request Address Status
+			// requestStatus();
+			// requestFunctionStatus();
+                        if(_getAll) getNextEntry();
 			break;
 		case XNetConstants.LOCO_SEARCH_NO_RESULT:
 			CurrentStatus.setText(rb.getString("SearchFail"));
 			adrTextField.setText("" + r.getThrottleMsgAddr());
+                        if(_getAll) _getAll=false;  //finished getting all entries
 			break;
 		default:
 			if(log.isDebugEnabled()) log.debug("not search result");
