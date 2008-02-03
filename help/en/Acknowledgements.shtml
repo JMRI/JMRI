@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.11 2008-01-31 23:12:33 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.12 2008-02-03 18:33:27 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -54,8 +54,8 @@
 	<LI>Paul Bender, who wrote the XpressNet throttle code, maintains the
 	XpressNet implementation, created the LI101 configuration tool, has
 	made important contributions to the base code, added Lenz XPA support,
-	wrote the Lenz feedback code and in general has made more contributions
-	than can be counted
+	wrote the Lenz feedback code, wrote the Lenz consisting support,
+	and in general has made more contributions than can be counted.
 	<LI>Thomas Beutel, who helped with the early EasyDCC tests
 	<LI>Ian Birchenough, who contributed (with Phil Grainger) six
 	ZTC decoder definition files
@@ -72,7 +72,8 @@
     <LI>Dan Boudreau, who added support for the new NCE turnout command
     and read-back of turnout positions, updated the "send packet" tool to send 
     NCE binary messages, added a tool to let NCE users send macro commands,
-    updated the NCE-USB support, and fixed a lot of details in the NCE support.
+    updated the NCE-USB support, fixed a lot of details in the NCE support,
+    and improved the support for NCE consists.
 	<LI>Dave Boydston of Serialio.com, who helped with the Windows
 	connection to an MS100.  Check out their great Java serial library!
 	<LI>Peter Brandenburg, for many CT Electronik decoder definitions, definitions for Haber &amp; Koenig decoders, 
@@ -93,7 +94,8 @@
 	<LI>Allen Byrne, who has systematically made improvements in the syntax and structure of the JMRI code
 <A ID="C"></A>
     <LI>Bill Carman, who located information on the MRC/Athearn F Unit and Challenger decoders
-    <LI>Ken Cameron, who wrote the NCE fast clock support
+    <LI>Ken Cameron, who wrote the NCE fast clock support, and added 
+        support for more than two systems to the preferences
 	<LI>Barry Chinn, who created the PDF file of our manual
 	<LI>Normal Clymer, who contribed a TCS definition file
 	<LI>Seth Cohen, who helped get serial sensors and NCE AIUs to work, and
@@ -232,10 +234,14 @@
 <A ID="S"></A>
 	<LI>Joe Salemi, who contributed the Atlas 345 decoder definition and
 	updated the TCS Tx definition.
-    <LI>Jeff Schmaltz, who contributed a decoder definition for the Massoth LGB decoder
+    <LI>Jeff Schmaltz, who contributed decoder definitions for 
+    the Massoth eMotion and LGB decoders,
+    the Zimo MX65, 
+    and the ESU LokPilot and LokPilotBasic decoders.
     <LI>Mark Schutzer, who helped debug some significant NCE improvements
     and contributed the Lenz Gold decoder definition
 	<LI>Jim Scorse, who gave generously of his time to answer questions about NCE details
+	and provided debug hardware
 	<LI>Brett Scott contributed the scripts for programming DCC Specialties products
 	<LI>Jack Shall, who cleaned up the XML files, contributed decoder definitions
 	and added a huge number of tooltips to DecoderPro
