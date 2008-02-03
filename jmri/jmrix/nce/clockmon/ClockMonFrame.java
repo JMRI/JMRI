@@ -30,7 +30,7 @@ import javax.swing.*;
  * contact NCE Inc for separate permission.
  *
  * @author			Ken Cameron   Copyright (C) 2007
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  *
  * derived from loconet.clockmonframe by Bob Jacobson Copyright (C) 2003
  * 
@@ -260,7 +260,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         pane2 = new JPanel();
         pane2Border = BorderFactory.createEtchedBorder();
         pane2Titled = BorderFactory.createTitledBorder(pane2Border,
-                                                       rb.getString("InterfaceSyncSelectBorderText"));
+                                                       rb.getString("InterfaceCommandBorderText"));
         pane2.setBorder(pane2Titled);
         pane2.setLayout(gLayout);
         gConstraints.gridx = 0;
@@ -276,27 +276,27 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         gConstraints.gridx++;
         pane2.add(readButton, gConstraints);
         
-        ButtonGroup modeGroup = new ButtonGroup();
-        modeGroup.add(setSyncModeInternalMaster);
-        modeGroup.add(setSyncModeNceMaster);
-        modeGroup.add(setSyncModeOff);
+        //ButtonGroup modeGroup = new ButtonGroup();
+        //modeGroup.add(setSyncModeInternalMaster);
+        //modeGroup.add(setSyncModeNceMaster);
+        //modeGroup.add(setSyncModeOff);
         
-        gConstraints.gridx = 0;
-        gConstraints.gridy++;
-        gConstraints.gridwidth = 3;
-        pane2.add(setSyncModeNceMaster, gConstraints);
-        gConstraints.gridy++;
-        pane2.add(setSyncModeInternalMaster, gConstraints);
-        gConstraints.gridy++;
-        pane2.add(setSyncModeOff, gConstraints);
-        gConstraints.gridy++;
-        pane2.add(setSyncButton, gConstraints);
+        //gConstraints.gridx = 0;
+        //gConstraints.gridy++;
+        //gConstraints.gridwidth = 3;
+        //pane2.add(setSyncModeNceMaster, gConstraints);
+        //gConstraints.gridy++;
+        //pane2.add(setSyncModeInternalMaster, gConstraints);
+        //gConstraints.gridy++;
+        //pane2.add(setSyncModeOff, gConstraints);
+        //gConstraints.gridy++;
+        //pane2.add(setSyncButton, gConstraints);
         //setSyncModeInternalMaster.setEnabled(false);
         //setSyncModeNceMaster.setEnabled(false);
-        if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE) {	// needs memory commands to sync
-            setSyncModeInternalMaster.setEnabled(false);
-            setSyncModeNceMaster.setEnabled(false);
-        }
+//        if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE) {	// needs memory commands to sync
+//            setSyncModeInternalMaster.setEnabled(false);
+//            setSyncModeNceMaster.setEnabled(false);
+//        }
         getContentPane().add(pane2);
         
         // add polling speed
@@ -315,61 +315,61 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         pane2.add(setPollingSpeedButton);
         getContentPane().add(pane2);
         
-        // add PID values
-        gLayout = new GridBagLayout();
-        gConstraints = new GridBagConstraints();
-        pane2 = new JPanel();
-        pane2Border = BorderFactory.createEtchedBorder();
-        pane2Titled = BorderFactory.createTitledBorder(pane2Border,
-                                                       rb.getString("InterfacePidBorderText"));
-        pane2.setBorder(pane2Titled);
-        pane2.setLayout(gLayout);
-        gConstraints.gridx = 0;
-        gConstraints.gridy = 0;
-        gConstraints.gridwidth = 1;
-        gConstraints.gridheight = 1;
-        gConstraints.ipadx = 10;
-        gConstraints.ipady = 1;
-        gConstraints.insets = new Insets(3, 3, 3, 3);
-        pane2.add(new JLabel(rb.getString("InterfacePidNce")), gConstraints);
-        gConstraints.gridx++;
-        pane2.add(new JLabel(rb.getString("InterfacePidGainP")), gConstraints);
-        gConstraints.gridx++;
-        pane2.add(ncePidGainP, gConstraints);
-        gConstraints.gridx++;
-        pane2.add(new JLabel(rb.getString("InterfacePidGainI")), gConstraints);
-        gConstraints.gridx++;
-        pane2.add(ncePidGainI, gConstraints);
-        gConstraints.gridx++;
-        pane2.add(new JLabel(rb.getString("InterfacePidGainD")), gConstraints);
-        gConstraints.gridx++;
-        pane2.add(ncePidGainD, gConstraints);
-        gConstraints.gridx++;
-        gConstraints.gridheight = 2;
-        pane2.add(setPidButton, gConstraints);
-        gConstraints.gridheight = 0;
-        gConstraints.gridx = 0;
-        gConstraints.gridy = 1;
-        pane2.add(new JLabel(rb.getString("InterfacePidInt")), gConstraints);
-        gConstraints.gridx++;
-        pane2.add(new JLabel(rb.getString("InterfacePidGainP")), gConstraints);
-        gConstraints.gridx++;
-        pane2.add(intPidGainP, gConstraints);
-        gConstraints.gridx++;
-        pane2.add(new JLabel(rb.getString("InterfacePidGainI")), gConstraints);
-        gConstraints.gridx++;
-        pane2.add(intPidGainI, gConstraints);
-        gConstraints.gridx++;
-        pane2.add(new JLabel(rb.getString("InterfacePidGainD")), gConstraints);
-        gConstraints.gridx++;
-        pane2.add(intPidGainD, gConstraints);
-        ncePidGainP.setText(fiveDigits.format(ncePidGainPv));
-        ncePidGainI.setText(fiveDigits.format(ncePidGainIv));
-        ncePidGainD.setText(fiveDigits.format(ncePidGainDv));
-        intPidGainP.setText(fiveDigits.format(intPidGainPv));
-        intPidGainI.setText(fiveDigits.format(intPidGainIv));
-        intPidGainD.setText(fiveDigits.format(intPidGainDv));
-        getContentPane().add(pane2);
+//        // add PID values
+//        gLayout = new GridBagLayout();
+//        gConstraints = new GridBagConstraints();
+//        pane2 = new JPanel();
+//        pane2Border = BorderFactory.createEtchedBorder();
+//        pane2Titled = BorderFactory.createTitledBorder(pane2Border,
+//                                                       rb.getString("InterfacePidBorderText"));
+//        pane2.setBorder(pane2Titled);
+//        pane2.setLayout(gLayout);
+//        gConstraints.gridx = 0;
+//        gConstraints.gridy = 0;
+//        gConstraints.gridwidth = 1;
+//        gConstraints.gridheight = 1;
+//        gConstraints.ipadx = 10;
+//        gConstraints.ipady = 1;
+//        gConstraints.insets = new Insets(3, 3, 3, 3);
+//        pane2.add(new JLabel(rb.getString("InterfacePidNce")), gConstraints);
+//        gConstraints.gridx++;
+//        pane2.add(new JLabel(rb.getString("InterfacePidGainP")), gConstraints);
+//        gConstraints.gridx++;
+//        pane2.add(ncePidGainP, gConstraints);
+//        gConstraints.gridx++;
+//        pane2.add(new JLabel(rb.getString("InterfacePidGainI")), gConstraints);
+//        gConstraints.gridx++;
+//        pane2.add(ncePidGainI, gConstraints);
+//        gConstraints.gridx++;
+//        pane2.add(new JLabel(rb.getString("InterfacePidGainD")), gConstraints);
+//        gConstraints.gridx++;
+//        pane2.add(ncePidGainD, gConstraints);
+//        gConstraints.gridx++;
+//        gConstraints.gridheight = 2;
+//        pane2.add(setPidButton, gConstraints);
+//        gConstraints.gridheight = 0;
+//        gConstraints.gridx = 0;
+//        gConstraints.gridy = 1;
+//        pane2.add(new JLabel(rb.getString("InterfacePidInt")), gConstraints);
+//        gConstraints.gridx++;
+//        pane2.add(new JLabel(rb.getString("InterfacePidGainP")), gConstraints);
+//        gConstraints.gridx++;
+//        pane2.add(intPidGainP, gConstraints);
+//        gConstraints.gridx++;
+//        pane2.add(new JLabel(rb.getString("InterfacePidGainI")), gConstraints);
+//        gConstraints.gridx++;
+//        pane2.add(intPidGainI, gConstraints);
+//        gConstraints.gridx++;
+//        pane2.add(new JLabel(rb.getString("InterfacePidGainD")), gConstraints);
+//        gConstraints.gridx++;
+//        pane2.add(intPidGainD, gConstraints);
+//        ncePidGainP.setText(fiveDigits.format(ncePidGainPv));
+//        ncePidGainI.setText(fiveDigits.format(ncePidGainIv));
+//        ncePidGainD.setText(fiveDigits.format(ncePidGainDv));
+//        intPidGainP.setText(fiveDigits.format(intPidGainPv));
+//        intPidGainI.setText(fiveDigits.format(intPidGainIv));
+//        intPidGainD.setText(fiveDigits.format(intPidGainDv));
+//        getContentPane().add(pane2);
         
         // install "read" button handler
         readButton.addActionListener( new ActionListener() {
@@ -1499,7 +1499,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
             (nceLastHour / 10) + (nceLastHour - ((nceLastHour / 10) * 10)) + rb.getString("LabelTimeSep") +
             (nceLastMinute / 10) + (nceLastMinute - ((nceLastMinute / 10) * 10)) + rb.getString("LabelTimeSep") +
             (nceLastSecond / 10) + (nceLastSecond - ((nceLastSecond / 10) * 10));
-        if (nceLast1224) {
+        if (!nceLast1224) {
             if (nceLastAmPm) {
                 txt = txt + " " + rb.getString("TagAm");
             } else {
