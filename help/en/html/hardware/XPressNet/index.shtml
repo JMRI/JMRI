@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.4 2008-02-02 15:20:33 pbender Exp $ -->
+<!-- $Id: index.shtml,v 1.5 2008-02-03 05:03:48 jacobsen Exp $ -->
 <html lang="en">
 <head>
 <TITLE>
@@ -33,14 +33,16 @@ JMRI: XPressNet
 </H1>
 
 <H2>Overview</H2>
-    <p>XPressNet is the Command Bus used by <a 
-	href="http://www.atlasrr.com">Atlas</a>, <a 
-	href="http://www.lenz.com">Lenz</a>,<a
-        href="http://www.hornby.com">Hornby</a>,<a 
-	href="http://www.ztccontrols.com">ZTC Controls</a>, and <a 
-	href="http://www.roco.co.at">Roco</a>.
-    It was developed by Lenz.  The XPressNet specification (available from
-    the Lenz website) specifies the electrical communications standards and
+    <p>XPressNet is the Command Bus used by
+	<a href="http://www.atlasrr.com">Atlas</a>,
+	<a href="http://www.lenz.com">Lenz</a>,
+    <a href="http://www.hornby.com">Hornby</a>,
+	<a href="http://www.ztccontrols.com">ZTC Controls</a>, and
+	<a href="http://www.roco.co.at">Roco</a>.
+    It was developed by Lenz.  
+    The XPressNet specification (available from
+    the <a href="http://www.lenz.com/techinfo/index.htm">Lenz website</a>) 
+    specifies the electrical communications standards and
     command set needed for devices to communicate with the command station.
     While the command stations support the same commands over the XPressNet
     connection, they do not all use the same connectors.  It may be necessary
