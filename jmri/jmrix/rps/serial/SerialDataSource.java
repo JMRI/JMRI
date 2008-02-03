@@ -22,7 +22,7 @@ import jmri.jmrix.rps.*;
  * When opened, the user must first select a serial port and click "Start".
  *
  * @author			Bob Jacobsen   Copyright (C) 2006
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SerialDataSource extends jmri.util.JmriJFrame implements ThrottleListener {
 
@@ -48,7 +48,7 @@ public class SerialDataSource extends jmri.util.JmriJFrame implements ThrottleLi
         portBox.setSelectedIndex(1);
         speedBox.setToolTipText(rb.getString("TooltipSelectBaud"));
         speedBox.setAlignmentX(JLabel.LEFT_ALIGNMENT);
-        speedBox.setSelectedItem("9600");
+        speedBox.setSelectedItem("115200");
         openPortButton.setText(rb.getString("ButtonOpen"));
         openPortButton.setToolTipText(rb.getString("TooltipOpen"));
         openPortButton.addActionListener(new java.awt.event.ActionListener() {
