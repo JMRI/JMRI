@@ -26,6 +26,9 @@ import org.jdom.Element;
  * <li> Set Font
  * <li> Set function number identity
  * </ul>
+ *
+ * @author Glen Oberhauser
+ * @author Bob Jacobsen   Copyright 2008
  */
 public class FunctionButton extends JToggleButton implements ActionListener
 {
