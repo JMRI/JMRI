@@ -7,7 +7,7 @@ import junit.framework.*;
 /**
  * Tests for classes in the jmri.jmrit.beantable package
  * @author	Bob Jacobsen  Copyright 2004
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class BeanTableTest extends TestCase {
 
@@ -39,7 +39,11 @@ public class BeanTableTest extends TestCase {
         suite.addTest(RouteTableActionTest.suite());
         return suite;
     }
-
+    
+    // The minimal setup for log4J
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(BeanTableTest.class.getName());
 
 }
