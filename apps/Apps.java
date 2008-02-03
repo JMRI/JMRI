@@ -32,7 +32,7 @@ import net.roydesign.mac.MRJAdapter;
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
  * @author  Dennis Miller  Copyright 2005
- * @version     $Revision: 1.49 $
+ * @version     $Revision: 1.50 $
  */
 public class Apps extends JPanel implements PropertyChangeListener{
 
@@ -161,11 +161,22 @@ public class Apps extends JPanel implements PropertyChangeListener{
             prefsFrame.getContentPane().setLayout(new BoxLayout(prefsFrame.getContentPane(), BoxLayout.X_AXIS));
             prefs = new AppConfigPanel(configFilename, 2);
             prefsFrame.getContentPane().add(prefs);
+            setPrefsFrameHelp(prefsFrame, "package.apps.AppConfigPanel");
             prefsFrame.pack();
         }
         prefsFrame.setVisible(true);
     }
 
+    /**
+     * Set the location of the window-specific help for 
+     * the preferences pane.  Made a separate method so
+     * if can be overridden for application specific 
+     * preferences help
+     */
+    protected void setPrefsFrameHelp(JmriJFrame f, String l) {
+        f.addHelpMenu(l, true);
+    }
+    
     protected void editMenu(JMenuBar menuBar, JFrame frame) {
         AbstractAction prefsAction = new AbstractAction(rb.getString("MenuItemPreferences")) {
             public void actionPerformed(ActionEvent e) {
@@ -488,7 +499,7 @@ public class Apps extends JPanel implements PropertyChangeListener{
     }
     static JComponent _buttonSpace = null;
 
-    static protected JFrame prefsFrame = null;
+    static protected JmriJFrame prefsFrame = null;
     static protected ResourceBundle rb;
 
     static protected AppConfigPanel prefs;
