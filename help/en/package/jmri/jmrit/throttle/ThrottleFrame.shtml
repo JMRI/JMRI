@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: ThrottleFrame.shtml,v 1.1 2008-02-03 19:07:12 jacobsen Exp $ -->
+<html lang="en">
+<head>
+ <TITLE>
+      JMRI: Throttle
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help Setup Fast Clock">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<H2>JMRI Throttle</H2>
+
+
+Until we get a better help page set up, please go to 
+<a href="http://jmri.sf.net/tools/throttle/ThrottleMain.html">http://jmri.sf.net/tools/throttle/ThrottleMain.html</a>
+in your web browser.
+
+<p>
+This is the jmri.jmrit.throttle.ThrottleFrame help page.
+    
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+
