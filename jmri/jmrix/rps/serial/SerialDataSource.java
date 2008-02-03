@@ -22,7 +22,7 @@ import jmri.jmrix.rps.*;
  * When opened, the user must first select a serial port and click "Start".
  *
  * @author			Bob Jacobsen   Copyright (C) 2006
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SerialDataSource extends jmri.util.JmriJFrame implements ThrottleListener {
 
@@ -353,7 +353,6 @@ public class SerialDataSource extends jmri.util.JmriJFrame implements ThrottleLi
             }
 
             // create the String to display (as String has .equals)
-            msg.append("\n");
             msgString = new String(msg);
 
             // return a notification via the queue to ensure end

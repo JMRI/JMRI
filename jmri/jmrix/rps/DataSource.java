@@ -21,7 +21,7 @@ import jmri.*;
  * When opened, the user must first select a serial port and click "Start".
  *
  * @author			Bob Jacobsen   Copyright (C) 2006
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class DataSource extends jmri.util.JmriJFrame implements ThrottleListener {
 
@@ -44,7 +44,8 @@ public class DataSource extends jmri.util.JmriJFrame implements ThrottleListener
         Vector v = getPortNames();
         for (int i=0; i<v.size(); i++)
             portBox.addItem(v.elementAt(i));
-        portBox.setSelectedIndex(1);
+        portBox.setSelectedIndex(3);
+        System.out.println("default set at 3");
         speedBox.setToolTipText(rb.getString("TooltipSelectBaud"));
         speedBox.setAlignmentX(JLabel.LEFT_ALIGNMENT);
         speedBox.setSelectedItem("115200");
@@ -482,7 +483,6 @@ public class DataSource extends jmri.util.JmriJFrame implements ThrottleListener
             }
 
             // create the String to display (as String has .equals)
-            msg.append("\n");
             msgString = new String(msg);
 
             // return a notification via the queue to ensure end
@@ -518,9 +518,9 @@ public class DataSource extends jmri.util.JmriJFrame implements ThrottleListener
             r = makeReading(s);
         } catch (Exception e) {
             log.error("Exception formatting input line \""+s+"\": "+e);
-            // r = new Reading(-1, new double[]{-1, -1, -1, -1} );
-            // skip handling this line
-            return;
+            e.printStackTrace();
+            // send with default contents
+            r = new Reading(-1, new double[]{-1, -1, -1, -1} );
         }
         r.setRawData(s);
         // forward
