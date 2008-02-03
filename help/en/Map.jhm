@@ -167,6 +167,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="DecoderProManual.Comp_PrintData_Print" url="DecoderProManual/Comp_PrintData.shtml#Print" />
 	<mapID target="html.hardware.loconet.Addressing" url="html/hardware/loconet/Addressing.shtml" />
 	<mapID target="TemplatePlain" url="TemplatePlain.shtml" />
+	<mapID target="package.jmri.jmrit.throttle.ThrottleFrame" url="package/jmri/jmrit/throttle/ThrottleFrame.shtml" />
 	<mapID target="package.jmri.jmrit.beantable.LightTable" url="package/jmri/jmrit/beantable/LightTable.shtml" />
 	<mapID target="index" url="index.html" />
 	<mapID target="html.Sensors" url="html/Sensors.html" />
