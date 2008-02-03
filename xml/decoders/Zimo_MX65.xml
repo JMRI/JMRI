@@ -2,8 +2,8 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
-<!-- Copyright (C) JMRI 2007 All rights reserved -->
-<!-- $Id: Zimo_MX65.xml,v 1.6 2008-02-03 18:16:51 jacobsen Exp $ -->
+<!-- Copyright (C) JMRI 2007, 2008 All rights reserved -->
+<!-- $Id: Zimo_MX65.xml,v 1.7 2008-02-03 18:25:07 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
