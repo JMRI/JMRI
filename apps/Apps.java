@@ -32,7 +32,7 @@ import net.roydesign.mac.MRJAdapter;
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
  * @author  Dennis Miller  Copyright 2005
- * @version     $Revision: 1.48 $
+ * @version     $Revision: 1.49 $
  */
 public class Apps extends JPanel implements PropertyChangeListener{
 
@@ -355,7 +355,7 @@ public class Apps extends JPanel implements PropertyChangeListener{
         ConnectionStatus.instance().addConnection(prefs.getConnection2(), prefs.getPort2());
         cs5.setFont(pane2.getFont());
         updateLine5();
-        pane2.add(new JLabel(" "));
+        //pane2.add(new JLabel(" "));
         pane2.add(cs5);
     }
     // Port 2 status line 5, upper case and red if connection is down
@@ -371,6 +371,64 @@ public class Apps extends JPanel implements PropertyChangeListener{
 					new String[] { prefs.getConnection2(), prefs.getPort2() });
 			cf = cf.toUpperCase();
 			cs5.setText(cf);
+		}
+	}
+
+    // Port 3, optional connection
+    JLabel cs5a = new JLabel(); 
+    protected void buildLine5a(JPanel pane2){
+    	if (prefs.getConnection3().equals("(none)")){
+    		cs5a.setText(" ");
+    		return;
+    	}
+        ConnectionStatus.instance().addConnection(prefs.getConnection3(), prefs.getPort3());
+        cs5a.setFont(pane2.getFont());
+        updateLine5a();
+        //pane2.add(new JLabel(" "));
+        pane2.add(cs5a);
+    }
+    // Port 3 status line 5a, upper case and red if connection is down
+    protected void updateLine5a() {
+    	if (prefs.getConnection3().equals("(none)"))
+    		return;
+    	if (ConnectionStatus.instance().isConnectionOk(prefs.getPort3())){
+    		cs5a.setForeground(Color.black);
+			cs5a.setText(getConnection3());
+		} else {
+			cs5a.setForeground(Color.red);
+			String cf = MessageFormat.format(rb.getString("ConnectionFailed"),
+					new String[] { prefs.getConnection3(), prefs.getPort3() });
+			cf = cf.toUpperCase();
+			cs5a.setText(cf);
+		}
+	}
+    
+    // Port 4, optional connection
+    JLabel cs5b = new JLabel(); 
+    protected void buildLine5b(JPanel pane2){
+    	if (prefs.getConnection4().equals("(none)")){
+    		cs5b.setText(" ");
+    		return;
+    	}
+        ConnectionStatus.instance().addConnection(prefs.getConnection4(), prefs.getPort4());
+        cs5b.setFont(pane2.getFont());
+        updateLine5b();
+        //pane2.add(new JLabel(" "));
+        pane2.add(cs5b);
+    }
+    // Port 4 status line 5b, upper case and red if connection is down
+    protected void updateLine5b() {
+    	if (prefs.getConnection4().equals("(none)"))
+    		return;
+    	if (ConnectionStatus.instance().isConnectionOk(prefs.getPort4())){
+    		cs5b.setForeground(Color.black);
+			cs5b.setText(getConnection4());
+		} else {
+			cs5b.setForeground(Color.red);
+			String cf = MessageFormat.format(rb.getString("ConnectionFailed"),
+					new String[] { prefs.getConnection4(), prefs.getPort4() });
+			cf = cf.toUpperCase();
+			cs5b.setText(cf);
 		}
 	}
  
@@ -409,6 +467,8 @@ public class Apps extends JPanel implements PropertyChangeListener{
         
         buildLine4(pane2);
         buildLine5(pane2);
+        buildLine5a(pane2);
+        buildLine5b(pane2);
 
         pane2.add(new JLabel(line6()));
         pane2.add(new JLabel(line7()));
@@ -442,6 +502,14 @@ public class Apps extends JPanel implements PropertyChangeListener{
             return MessageFormat.format(rb.getString("ConnectionCredit"),
                                 new String[]{prefs.getConnection2(), prefs.getPort2()});
     }
+    static public String getConnection3() {
+        return MessageFormat.format(rb.getString("ConnectionCredit"),
+                            new String[]{prefs.getConnection3(), prefs.getPort3()});
+}
+    static public String getConnection4() {
+        return MessageFormat.format(rb.getString("ConnectionCredit"),
+                            new String[]{prefs.getConnection4(), prefs.getPort4()});
+}
     
     static SplashWindow sp = null;
 	static java.awt.event.AWTEventListener debugListener = null;
@@ -561,6 +629,8 @@ public class Apps extends JPanel implements PropertyChangeListener{
     public void propertyChange(PropertyChangeEvent ev){
         updateLine4();
         updateLine5();
+        updateLine5a();
+        updateLine5b();
     }
     
     static protected String ignore ="****** Ignore messages above this line *******";

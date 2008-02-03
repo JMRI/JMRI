@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * Basic configuration GUI infrastructure.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.17 $
+ * @version	$Revision: 1.18 $
  */
 public class AppConfigPanel extends JPanel {
 
@@ -106,11 +106,19 @@ public class AppConfigPanel extends JPanel {
 
         // fill advanced section
         log.debug("start comm 2");
-        if (nConnections>1) {
+        if (nConnections > 1) {
             if (p2 == null) p2 = JmrixConfigPane.instance(2);
-            p2.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutAuxConnection")));
+            p2.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutAuxConnection2")));
             advancedPane.add(p2);
             clist.add(p2);
+            if (p2a == null) p2a = JmrixConfigPane.instance(3);
+            p2a.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutAuxConnection3")));
+            advancedPane.add(p2a);
+            clist.add(p2a);
+            if (p2b == null) p2b = JmrixConfigPane.instance(4);
+            p2b.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutAuxConnection4")));
+            advancedPane.add(p2b);
+            clist.add(p2b);
         }
 
         // add advanced programmer options
@@ -179,6 +187,8 @@ public class AppConfigPanel extends JPanel {
 
     static JmrixConfigPane p1 = null;
     static JmrixConfigPane p2 = null;
+    static JmrixConfigPane p2a = null;
+    static JmrixConfigPane p2b = null;
     GuiLafConfigPane p3;
 
     public Component addAndRemember(Component c) {
@@ -204,6 +214,26 @@ public class AppConfigPanel extends JPanel {
         if (p2 == null) p2 = JmrixConfigPane.instance(2);
         if (p2 == null) return "(none)";
         return p2.getCurrentProtocolInfo();
+    }
+    public static String getConnection3() {
+        if (p2a == null) p2a = JmrixConfigPane.instance(3);
+        if (p2a == null) return "(none)";
+        return p2a.getCurrentProtocolName();
+    }
+    public static String getPort3() {
+        if (p2a == null) p2a = JmrixConfigPane.instance(3);
+        if (p2a == null) return "(none)";
+        return p2a.getCurrentProtocolInfo();
+    }
+    public static String getConnection4() {
+        if (p2b == null) p2b = JmrixConfigPane.instance(4);
+        if (p2b == null) return "(none)";
+        return p2b.getCurrentProtocolName();
+    }
+    public static String getPort4() {
+        if (p2b == null) p2b = JmrixConfigPane.instance(4);
+        if (p2b == null) return "(none)";
+        return p2b.getCurrentProtocolInfo();
     }
 
     /**
