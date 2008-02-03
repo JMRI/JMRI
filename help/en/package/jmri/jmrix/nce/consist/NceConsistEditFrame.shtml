@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NceConsistEditFrame.shtml,v 1.4 2008-01-28 04:09:21 dan_boudreau Exp $ -->
+<!-- $Id: NceConsistEditFrame.shtml,v 1.5 2008-02-03 01:08:06 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Edit NCE Consist</TITLE>
@@ -157,6 +157,48 @@ locos if you wish, otherwise press the "Cancel" button.</P>
 To remove a consist from your roster, press the "Delete" button located
 on the bottom row. The "Delete button only becomes active after you've
 selected a consist from the "Consist" menu.
+
+<H3>Reply:</H3>
+
+There are many states that the NCE consist editor can be in and the
+"Reply:" field provides an indication of what is happening and whether
+the operation was successful. Listed below is a brief description of the
+various "Reply:" states.
+<DL>
+	<DT>okay</DT>
+	<DD>Operation completed successfully.</DD>
+	<DT>error</DT>
+	<DD>Operation failed. A popup error message should also appear.</DD>
+	<DT>waiting</DT>
+	<DD>The editor is waiting for the NCE command station to respond.
+	The NCE command station should respond within a couple of seconds,
+	otherwise there's a problem with the connection or command station.</DD>
+	<DT>searching</DT>
+	<DD>The editor is reading the NCE command station for the desired
+	information. Normally the state after pressing "Previous" or "Next".
+	Also when loading a consist from the roster the editor will search the
+	NCE command station memory for an empty consist number to assign to the
+	consist. Searches should complete in a few seconds, otherwise there's
+	a problem with the connection or command station.</DD>
+	<DT>none</DT>
+	<DD>The editor wasn't able to find a consist or an empty consist.
+	</DD>
+	<DT>verifying</DT>
+	<DD>The editor is reading the NCE command station memory to see if
+	a loco has already been assigned as a lead or rear loco in a consist.
+	If a loco is already assigned, a popup message will appear and "Reply:"
+	will show "error".</DD>
+	<DT>unknown</DT>
+	<DD>The initial state of the NCE consist editor. Also when the
+	"Consist roster" checkbox is selected means that the consist in the NCE
+	command station wasn't created by the editor. Therefore the editor
+	doesn't know the direction of the locos in the consists.</DD>
+	<DT>Modified!</DT>
+	<DD>The editor knows about the consist, but the consist has been
+	modified. If a loco has been added, the direction of the loco isn't
+	known. And if a loco has been deleted from the consist, the editor
+	wants you to know!</DD>
+</DL>
 
 </BODY>
 </HTML>
