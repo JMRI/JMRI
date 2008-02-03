@@ -2,10 +2,18 @@
 
 package jmri.util;
 
+import javax.swing.AbstractAction;
+import javax.swing.InputMap;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
-import java.awt.*;
+import javax.swing.JMenu;
+import javax.swing.KeyStroke;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+ 
 /**
  * JFrame extended for common JMRI use.
  * <P>
@@ -29,19 +37,22 @@ import java.awt.*;
  *
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class JmriJFrame extends JFrame implements java.awt.event.WindowListener {
 
     public JmriJFrame() {
 	    super();
+	    self = this;
         addWindowListener(this);
         synchronized (list) {
             list.add(this);
         }
 	    // Set the image for use when minimized
 	    setIconImage(getToolkit().getImage("resources/jmri32x32.gif"));
+        // set the close short cut
+        addWindowCloseShortCut();
     }
 
     public JmriJFrame(String name) {
@@ -64,9 +75,32 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener 
         // only works if no menu present?
         JMenuBar bar = getJMenuBar();
         if (bar == null) bar = new JMenuBar();
-        jmri.util.HelpUtil.helpMenu(bar, this, ref, direct);
+        JMenu menu = jmri.util.HelpUtil.helpMenu(bar, this, ref, direct);
         setJMenuBar(bar);
     }
+    
+    /**
+     * Adds a "Close Window" key short cut to close window on op-W.
+     */
+    void addWindowCloseShortCut() {
+        // modelled after code in JavaDev mailing list item by Bill Tschumy <bill@otherwise.com> 08 Dec 2004 
+        AbstractAction act = new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                // if (log.isDebugEnabled()) log.debug("keystroke requested close window "+JmriJFrame.this.getTitle());
+                JmriJFrame.this.processWindowEvent(
+                    new java.awt.event.WindowEvent(JmriJFrame.this, 
+                                                java.awt.event.WindowEvent.WINDOW_CLOSING));
+            }
+        };
+        getRootPane().getActionMap().put("close", act);
+
+        int stdMask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+        InputMap im = getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, stdMask), "close");
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "close");
+    }
+        
+    JmriJFrame self;
     
     /**
      * Provide a maximum frame size that is limited
@@ -145,7 +179,14 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener 
         mShown = true;
     }
 
+    // For marking the window as modified on MacOS X
+    // See: http://developer.apple.com/qa/qa2001/qa1146.html
+    final static String WINDOW_MODIFIED = "windowModified";
+    public void markWindowModified(boolean yes){
+        getRootPane().putClientProperty(WINDOW_MODIFIED, yes ? Boolean.TRUE : Boolean.FALSE);
+    }
     
+    // Window methods
     public void windowOpened(java.awt.event.WindowEvent e) {}
     
     public void windowActivated(java.awt.event.WindowEvent e) {}
@@ -156,15 +197,16 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener 
    /**
      * Close and dispose the window when the close box is clicked.
      *<P>
-     * Subclasses should this this method via super.windowClosing
-     * after doing necessary cleanup.
+     * Subclasses should invoke this method via super.windowClosing
+     * after doing necessary cleanup. Note that it calls dispose(),
+     * so subclasses should not do that.
      **/
     public void windowClosing(java.awt.event.WindowEvent e) {
         setVisible(false);
         synchronized (list) {
             list.remove(this);
         }
-        dispose();	// and disconnect from the SlotManager
+        dispose();	// for subclasses
     }
     
     public void windowClosed(java.awt.event.WindowEvent e) {}
