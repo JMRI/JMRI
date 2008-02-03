@@ -8,7 +8,7 @@ package jmri.jmrix.rps;
  * Immutable
  *
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class Measurement {
 
@@ -61,6 +61,14 @@ public class Measurement {
     public double getVSound(){
         return vsound;
     }
+    
+    boolean valid = true;
+    public boolean isValidPosition() { 
+        if (!valid) return false;
+        return !(Math.abs(x) > 1.E10 || Math.abs(x) > 1.E10 || Math.abs(x) > 1.E10);   
+    }
+    
+    public void setValidPosition(boolean val) { valid = val; }
  
     /**
      * Error code, defined specifically by generator
@@ -83,9 +91,17 @@ public class Measurement {
     Reading r;  // a Reading object is by definition immutable
 
     public String toString() {
-        String r = "Measurement id="+getID()+" position= "
-                    +x+", "+y+", "+z;
-        return r;
+        if (!isValidPosition()) {
+            // out-of-range
+            return "Measurement id="+getID()+" invalid position";
+        }
+        return "Measurement id="+getID()+" position= "
+                    +truncate(x)+", "+truncate(y)+", "+truncate(z);
+    }
+    
+    // provide a quick decimal truncation for formatting
+    double truncate(double x) {
+        return (double)((int)Math.round(x*10)/10.);
     }
 }
 
