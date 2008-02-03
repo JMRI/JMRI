@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.20 $ -->
+<!-- Revision $Revision: 1.21 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -133,6 +133,9 @@
 
   <target name="tests" depends="debug" description="compile test classes">
     <!-- Compile the test java code from ${source} into ${target} -->
+    <copy todir="${target}">
+        <fileset dir="test/" includes="**/*.properties"  /> 
+    </copy>
     <javac srcdir="${test}" 
            destdir="${target}"
            source="${source_version}" 
