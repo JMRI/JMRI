@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.5 2008-02-03 03:12:06 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.6 2008-02-03 05:04:19 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -39,7 +39,7 @@
 	    </dt>
 	    <dt>Atlas</dt>
 	    <dd>
-		<p class="dl">Configure: Atlas Commander-For Control - Item #330 via
+		<p class="dl">Configure: Atlas Commander via
 		<A HREF="XPressNet/index.shtml">Lenz LI100, LI101F, LIUSB or GenLi XPressNet interfaces, ZTC Controls ZTC640 interface, or an XPA and Hayes compatible modem</a></p> 
 		
 		<p>Note: you can not program decoders with this configuration</p>
@@ -56,7 +56,7 @@
 		<a href="http://www.cvpusa.com/">
 		<img src="images/ico-cvp.gif" width="44" height="34" alt="CVP"></a>
 	    </dt>
-	    <dt>CVP Products</dt>
+	    <dt>CVP Products EasyDCC</dt>
 	    <dd><p class="dl">Configure: EasyDCC command station via
 		<A HREF="easydcc/EasyDCC.shtml">Serial</a> or 
 		<A HREF="TerminalServer.shtml">Terminal Server</a></p>
@@ -126,12 +126,6 @@
 	    </dd>
 
 
-	    <dt><a href="http://www.nacservicesinc.com/">NAC Services m-RPS</a></dt>
-	    <dd>
-		Configure connection to an m-RPS position measurement via 
-		<A HREF="rps/index.shtml">serial link</a>.
-		</dd>
-		
 	    <dt class="im"><a href="http://www.ncedcc.com/">
 	    <IMG src="images/ncelogo.jpg" width="44" height="34" alt="NCE"/></a></dt>
 	    <dt>NCE</dt>
@@ -142,6 +136,13 @@
 		<br>
 		Configure connection to a PowerCab via 
 		<A HREF="nce/NCE.shtml#powercab">NCE USB adapter</a>.
+		</dd>
+		
+	    <dt class=im><a href="http://www.nacservicesinc.com/">m-RPS</a></dt>
+	    <dt><a href="http://www.nacservicesinc.com/">NAC Services</a></dt>
+	    <dd>
+		Configure connection to an m-RPS position measurement system via 
+		<A HREF="rps/index.shtml">serial link</a>.
 		</dd>
 		
 	    <dt class="im"><a href="http://www.oaktreesystems.com/">
@@ -157,6 +158,11 @@
 		</p>
 		</dd>
 
+	    <dt class="im"><a href="http://www.protrak.cc">
+	    <img src="http://www.protrak.cc/ptgif.gif"></a></dt>
+	    <dt>ProTrak Grapevine</dt>
+	    <dd><p class="dl">Configure: <A HREF="grapevine/index.shtml">Grapevine nodes</a></p></dd>
+
 	    <dt class="im"><a href="http://www.roco.com/">Roco</a></dt>
 	    <dt>Roco</dt>
 	    <dd>
@@ -165,11 +171,6 @@
 		</p>
 		<p>Please check the notes above for system specific restrictions on what JMRI can do</p>
 		</dd>
-
-	    <dt class="im"><a href="http://www.protrak.cc">
-	    <img src="http://www.protrak.cc/ptgif.gif"></a></dt>
-	    <dt>ProTrak Grapevine</dt>
-	    <dd><p class="dl">Configure: <A HREF="grapevine/index.shtml">Grapevine nodes</a></p></dd>
 
 	    <dt class="im"><a href="http://www.sprog-dcc.co.uk/">SPROG</a></dt>
 	    <dt>Andrew Crosland</dt>
