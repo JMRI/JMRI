@@ -26,6 +26,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl_NCE Turnout lock feature" url="package/jmri/jmrit/simpleturnoutctrl/SimpleTurnoutCtrl.shtml#NCE Turnout lock feature" />
 	<mapID target="DecoderProManual.Basic_Programming_Write Data" url="DecoderProManual/Basic_Programming.shtml#Write Data" />
 	<mapID target="package.jmri.jmrit.display.LayoutEditor" url="package/jmri/jmrit/display/LayoutEditor.shtml" />
+	<mapID target="html.hardware.rps.index" url="html/hardware/rps/index.shtml" />
 	<mapID target="html.doc.Technical.Jython" url="html/doc/Technical/Jython.shtml" />
 	<mapID target="package.jmri.jmrit.display.PanelEditor" url="package/jmri/jmrit/display/PanelEditor.shtml" />
 	<mapID target="package.jmri.jmrix.nce.packetgen.NcePacketGenFrame" url="package/jmri/jmrix/nce/packetgen/NcePacketGenFrame.shtml" />
@@ -95,6 +96,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="DecoderProManual.index" url="DecoderProManual/index.shtml" />
 	<mapID target="package.jmri.jmrit.display.LayoutEditor_turnouts" url="package/jmri/jmrit/display/LayoutEditor.shtml#turnouts" />
 	<mapID target="DecoderProManual.Getting_Started_Preferences" url="DecoderProManual/Getting_Started.shtml#Preferences" />
+	<mapID target="package.jmri.jmrix.loconet.locobuffer.LocoBufferStatsFrame" url="package/jmri/jmrix/loconet/locobuffer/LocoBufferStatsFrame.shtml" />
 	<mapID target="package.jmri.jmrit.powerpanel.PowerPanelFrame" url="package/jmri/jmrit/powerpanel/PowerPanelFrame.shtml" />
 	<mapID target="html.hardware.nce.Wangrow" url="html/hardware/nce/Wangrow.shtml" />
 	<mapID target="package.jmri.jmrit.beantable.LogixTable" url="package/jmri/jmrit/beantable/LogixTable.shtml" />
@@ -209,6 +211,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrit.display.PanelTarget" url="package/jmri/jmrit/display/PanelTarget.shtml" />
 	<mapID target="html.doc.Technical.JVMCapabilities" url="html/doc/Technical/JVMCapabilities.shtml" />
 	<mapID target="DecoderProManual.Comp_Advanced" url="DecoderProManual/Comp_Advanced.shtml" />
+	<mapID target="package.jmri.jmrix.lenz.systeminfo.SystemInfoFrame" url="package/jmri/jmrix/lenz/systeminfo/SystemInfoFrame.shtml" />
 	<mapID target="html.hardware.powerline.index" url="html/hardware/powerline/index.shtml" />
 	<mapID target="DecoderProManual.Comp_GlobalCVs_Top" url="DecoderProManual/Comp_GlobalCVs.shtml#Top" />
 	<mapID target="DecoderProManual.Getting_Started_What is DCC" url="DecoderProManual/Getting_Started.shtml#What is DCC" />
@@ -225,6 +228,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrix.nce.analyzer.NcePacketMonitorFrame" url="package/jmri/jmrix/nce/analyzer/NcePacketMonitorFrame.shtml" />
 	<mapID target="html.doc.Technical.RP" url="html/doc/Technical/RP.shtml" />
 	<mapID target="DecoderProManual.Comp_PrintData" url="DecoderProManual/Comp_PrintData.shtml" />
+	<mapID target="package.jmri.jmrix.lenz.stackmon.StackMonFrame" url="package/jmri/jmrix/lenz/stackmon/StackMonFrame.shtml" />
 	<mapID target="DecoderProManual.Comp_Basic" url="DecoderProManual/Comp_Basic.shtml" />
 	<mapID target="package.jmri.jmrit.display.TranslateSelection" url="package/jmri/jmrit/display/TranslateSelection.shtml" />
 	<mapID target="package.jmri.jmrit.display.EditTrackSegment" url="package/jmri/jmrit/display/EditTrackSegment.shtml" />
