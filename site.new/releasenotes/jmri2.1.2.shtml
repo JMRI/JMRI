@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.2.shtml,v 1.7 2008-02-03 18:33:44 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.2.shtml,v 1.8 2008-02-03 18:58:02 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -178,11 +178,7 @@ Ken Cameron updated the advanced preferences window so that JMRI can have up to 
 Paul Bender and Dan Boudreau continue to improve the Lenz and NCE consisting support.
 
 <p>
-Jeff Schmaltz provided updates for the Zimo MX65 decoder definition,
-
-ESU LokPilot Basic 1.0
-ESU LokPilot 2.0
-ESU LokPilot 3.0
+Jeff Schmaltz provided updated decoder definitions for the Zimo MX65 decoder, the Massoth LGB and LGB 55027, and the Massoth decoders. The updates include default values, model information, and factory reset definitins. He also provided  new definitions for the ESU LokPilot Basic 1.0, the ESU LokPilot 2.0, the ESU LokPilot 3.0 and the Massoth function decoder.
 
 <p>
 Paul Bender updated the Lenz "Stack Monitor" tool.
