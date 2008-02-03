@@ -1,14 +1,12 @@
-Todo as of 11/22/2004
+Todo as of 02/01/2008
 
    Should we ask if the consist should be cleared when the consist is 
      deleted or the window is closed?
 
-   Need to build a method to recall a consist between sessions
-     (should this be stored in XML, or recalled from the Command Station
-     if possible?)
+   Need to ensure consists are added to address selection for throttle
 
-   To go along with above, we need to find a way to insert a consist into 
-     the roster for the throttle commands.
+   Need to add code to handle front/rear/mid information currently stored 
+   in the consist file.
 
    Table in tool has a slot for roster entry, this needs to be filled in 
    or removed.

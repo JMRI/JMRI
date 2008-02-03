@@ -17,8 +17,8 @@ import java.util.ArrayList;
 /**
  * Frame object for manipulating consists.
  *
- * @author               Paul Bender Copyright (C) 2003
- * @version              $Revision: 1.20 $
+ * @author               Paul Bender Copyright (C) 2003-2008
+ * @version              $Revision: 1.21 $
  */
 public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.ConsistListener{
 
@@ -51,10 +51,20 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
 
     private int _Consist_Type = Consist.ADVANCED_CONSIST;
 
+    private ConsistFile consistFile = null;
+
     public ConsistToolFrame() {
         super();
         
   	    ConsistMan = InstanceManager.consistManagerInstance();
+
+            consistFile = new ConsistFile();
+            try{
+               consistFile.ReadFile();
+            }
+            catch(Exception e){
+               log.warn("error reading consist file: " +e);
+            }
 
         // configure items for GUI
 
@@ -310,6 +320,12 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
 	adrSelector.reset();
 	adrSelector.setEnabled(true);
         initializeConsistBox();
+        try{
+          consistFile.WriteFile(ConsistMan.getConsistList());
+        }
+        catch(Exception ex){
+           log.warn("error writing consist file: " +ex);
+        }
         resetLocoButtonActionPerformed(e);
 	canAdd();
     	}
@@ -541,6 +557,12 @@ if(((DccLocoAddress)consistAdrBox.getSelectedItem())!=adrSelector.getAddress()) 
 		canAdd();
 	}
 	consistModel.fireTableDataChanged();
+            try{
+               consistFile.WriteFile(ConsistMan.getConsistList());
+            }
+            catch(Exception e){
+               log.warn("error writing consist file: " +e);
+            }
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ConsistToolFrame.class.getName());
