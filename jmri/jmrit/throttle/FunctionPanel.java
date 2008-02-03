@@ -313,11 +313,24 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
 	}
 
 
+    /**
+     * Make sure that all function buttons are being displayed
+     */
+    public void showAllFnButtons() {
+        System.out.println("hit");
+        
+        // should show all, or just the initial ones?
+        for (int i=0; i < NUM_FUNCTION_BUTTONS; i++) {
+            functionButton[i].setDisplay(true);
+            functionButton[i].setVisible(true);
+        }
+    }
+    
 	/**
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.31 $
+	 * @version $Revision: 1.32 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter
 	{

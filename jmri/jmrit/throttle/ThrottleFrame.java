@@ -17,6 +17,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
@@ -26,8 +28,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
-
-import javax.swing.JButton;
 
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.powerpanel.PowerPane;
@@ -43,7 +43,8 @@ import org.jdom.Element;
  *  directed by the interface.
  *
  * @author     Glen Oberhauser
- * @version    $Revision: 1.34 $
+ * @author     Bob Jacobsen    Copyright 2008
+ * @version    $Revision: 1.35 $
  */
 /**
  * @author DSM
@@ -70,6 +71,7 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
 	private JCheckBoxMenuItem viewControlPanel;
 	private JCheckBoxMenuItem viewFunctionPanel;
 	private JCheckBoxMenuItem viewAddressPanel;
+    private JMenuItem viewAllButtons;
     
     private DccThrottle throttle;
 
@@ -289,9 +291,20 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
 				}
 			});
         
+        viewAllButtons = new JMenuItem("Show All Function Buttons");
+        viewAllButtons.addActionListener(
+			new AbstractAction()
+			{
+				public void actionPerformed(ActionEvent ev)
+				{
+					functionPanel.showAllFnButtons();
+				}
+			});
+        
 		viewMenu.add(viewAddressPanel);
 		viewMenu.add(viewControlPanel);
 		viewMenu.add(viewFunctionPanel);
+		viewMenu.add(viewAllButtons);
 
 		JMenu editMenu = new JMenu("Edit");
 		JMenuItem preferencesItem = new JMenuItem("Frame Properties");
@@ -351,6 +364,10 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
                     }
             );
         }
+        
+        // add help selection
+        addHelpMenu("package.jmri.jmrit.throttle.ThrottleFrame", true);
+
 	}
 
 	private void editPreferences()
