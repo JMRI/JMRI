@@ -11,7 +11,7 @@ package jmri.jmrix.rps;
  * Objects of this class are immutable once created.
  *
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class Reading {
 
@@ -65,7 +65,7 @@ public class Reading {
     public String toString() {
         String r = "Reading id="+getID()+" values=";
         for (int i = 0; i<getNSample(); i++) 
-            r+=""+getValue(i)+((i!=(getNSample()-1))?",":" ");
+            r+=""+(int)getValue(i)+((i!=(getNSample()-1))?",":" ");
         return r;
     }
     
