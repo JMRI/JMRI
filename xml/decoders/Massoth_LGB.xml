@@ -2,8 +2,8 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
-<!-- Copyright (C) JMRI 2007 All rights reserved -->
-<!-- $Id: Massoth_LGB.xml,v 1.4 2007-09-21 05:49:32 jacobsen Exp $ -->
+<!-- Copyright (C) JMRI 2007, 2008 All rights reserved -->
+<!-- $Id: Massoth_LGB.xml,v 1.5 2008-02-03 18:43:42 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -15,11 +15,15 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
+
 <decoder-config>
+		<version author="Jeff Schmaltz escopetas@comcast.net"
+			version="1.2" lastUpdated="20080127" />
 		<version author="Jeff Schmaltz escopetas@comcast.net"
 			version="1.1" lastUpdated="20070204" />
 		<version author="Jeff Schmaltz escopetas@comcast.net"
 			version="1.0" lastUpdated="20060923" />
+
 
 <!-- 
       This decoder XML is meant to be used with the "Custom" programmer format.
@@ -31,7 +35,7 @@
       I have tested this decoder file using the SPROG II interface.  The range
       of versions listed is hypothetical as the versions for all the Massoth/LGB
       decoder types overlap. The highest version I have encountered is 3.4 (in
-      both large and small on-board) and the lowest is 1.0 (in a MTS I 55020).
+      both large and small onboard) and the lowest is 1.0 (in a MTS I 55020).
 
       CV 106 is used by Massoth as "ID for decoder type" and is possibly one way
       of determining decoder type from the CV's, as the version numbers overlap.
@@ -41,11 +45,14 @@
       55020:           10
       55021:           192
       55022:           16
-      Small on-board:  65, 73, 81, 83
-      Large on-board:  129, 134
+      Small onboard:  65, 73, 81, 82, 83
+      Large onboard:  129, 134, 145
       55027:           193
-      eMOTION XL:      193 (according to manual), 200
-      eMOTION XLS      202
+      eMOTION L:       201 (according to 1.0 manual)
+      eMOTION XL:      193 (according to 1.2 manual), 200
+      eMOTION XLS:     202 (according to 1.3 manual), 203
+      eMOTION 8FL:     204 (according to 1.2 manual)
+      LED Light:       204
 
       This definition was based on the LGB document "CV description for LGB onboard
       decoders, October 5, 2004" (OnboardCVs.pdf, which seems to have disappeared
@@ -54,12 +61,13 @@
       for some locos. These are all available from the LGB website.
 
       This decoder file is most proper for the 55021 and 55022 MTS II add-on decoders
-      and the small and large on-board decoders.  It can work with the 55020 MTS I
-      add-on decoder but this decoder lacks some features, such as back-EMF. Only the
-      on-board decoders have the F2 functions.  Not all the features work with all locos.
-      Refer to the decoder and loco documentation for details.  However, some features
-      may not be documented e.g. the 2 vs. 4 chuff bit worked on a sound-equipped loco
-      where it was not mentioned in the instructions!
+      and the small and large onboard decoders.  It can work with newer 55020 MTS I
+      add-on decoders but this decoder lacks some features, such as back-EMF and long
+      (2-byte) addresses. Only the onboard decoders have the F2 functions.  Not all
+      the features work with all locos.  Refer to the decoder and loco documentation
+      for details.  However, some features may not be documented e.g. the 2 vs. 4
+      chuff bit worked on a sound-equipped loco where it was not mentioned in the
+      instructions!
 
       I tried to match DeccoderPro "item" names when I was fairly certain they were
       correct.  The "label" names tried to match the names used in the LGB
@@ -67,25 +75,69 @@
 
       Finally, I choose not to specify any "default" values (which then results in
       a default of 0) because of the different defaults in the wide variety of LGB
-      locos.
+      locos with onboard decoders.  These defaults are listed in the loco document.
+      Defaults for the add-on decoders can be found in their respective manuals.
 
       Any and all feedback on this file would be appreciated.
 
       Version History:
 
-        1.0 - 23 Sep 06
+        1.0 - 23 Sep 2006
               Initial release 
-        1.1 - 4 Feb 07
-              Minor format changes
+        1.1 - 4 Feb 2007
+              Cosmetic format changes
               Made CV 7, 8, & 106 readOnly (works correctly with 1.7.5+)
               Added CV numbers to tooltips
+        1.2 - 27 Jan 2008
+              Cosmetic changes to CV 54 including adding tooltips
+              Value for P-Update added to CV 51
+              Added individual models so attributes could be added to them
+              Removed high version
+              Implemented "factReset"
 -->
 
 
 <decoder>
 	<family name="LGB" mfg="Massoth Elektronik, GmbH">
-		<model model="LGB MTS loco decoders" lowVersionID="10" highVersionID="39"
-                   comment="includes 55021, 55022, large and small on-board decoders">
+		<model model="LGB MTS I 55020 loco decoders" lowVersionID="10"
+			maxInputVolts="24 V" maxMotorCurrent="1.5 A" maxTotalCurrent="2.0 A"
+			numOuts="3" numFns="10"
+			formFactor="G" connector="other" >
+			<size length="55" width="25" height="12" units="mm" />
+			<output name="1" label="Front light" maxcurrent="0.3 A" connection="other" />
+	   	 	<output name="2" label="Rear light " maxcurrent="0.3 A" connection="other" />
+	   	 	<output name="3" label="F1 " maxcurrent="0.3 A" connection="other" />
+		</model>
+
+<!-- 55020 currents are for the later Massoth versions,
+           the earlier Lenz versions were 1.5 motor, 0.15 per function, and 1.5 total
+-->
+		<model model="LGB MTS II 55021 loco decoders" lowVersionID="10"
+			maxInputVolts="24 V" maxMotorCurrent="1.5 A" maxTotalCurrent="2.0 A"
+			numOuts="3" numFns="10"
+			formFactor="G" connector="other" >
+			<size length="55" width="25" height="13" units="mm" />
+			<output name="1" label="Front light" maxcurrent="0.3 A" connection="other" />
+	   	 	<output name="2" label="Rear light " maxcurrent="0.3 A" connection="other" />
+	   	 	<output name="3" label="F1 " maxcurrent="0.3 A" connection="other" />
+		</model>
+		<model model="LGB MTS II 55022 small loco decoders" lowVersionID="10"
+			maxInputVolts="24 V" maxMotorCurrent="0.8 A" maxTotalCurrent="1 A"
+			numOuts="3" numFns="10"
+			formFactor="G" connector="other" >
+			<size length="28" width="14" height="13" units="mm" />
+			<output name="1" label="Front light" maxcurrent="0.05 A" connection="solder" />
+	   	 	<output name="2" label="Rear light " maxcurrent="0.05 A" connection="solder" />
+	   	 	<output name="3" label="F1 " maxcurrent="0.05 A" connection="solder" />
+		</model>
+		<model model="LGB MTS II onboard loco decoders" lowVersionID="10"
+			maxInputVolts="24 V"
+			numOuts="4" numFns="10"
+			formFactor="G" connector="other" >
+			<output name="1" label="Front light" connection="other" />
+	   	 	<output name="2" label="Rear light " connection="other" />
+	   	 	<output name="3" label="F1 " connection="other" />
+	   	 	<output name="4" label="F2 " connection="other" />
 		</model>
 	</family>
 
@@ -228,6 +280,7 @@
 				<enumChoice choice="button 6 (parallel and serial)" value="14"/>
 				<enumChoice choice="button 7 (parallel and serial)" value="15"/>
 				<enumChoice choice="button 8 (parallel and serial)" value="16"/>
+				<enumChoice choice="buttons 1-8 with fast pulse string (for 55021 with P-Update only)" value="33"/>
 				<enumChoice choice="lighting button (LGB=9, others=0) (on only when loco is reversing)" value="64"/>
 				<enumChoice choice="button 1 (on only when loco is reversing)" value="65"/>
 				<enumChoice choice="lighting button (LGB=9, others=0) (on only when loco is moving forward)" value="128"/>
@@ -289,21 +342,24 @@
 			</enumVal>
 		</variable>
 
-		<variable label="hand-over function" CV="54" mask="XXXXXXXV">
+		<variable label="hand-off function" CV="54" mask="XXXXXXXV"
+			tooltip="Determines if MTS hand-off is on or off CV54">
 			<enumVal>
 				<enumChoice choice="off"/>
 				<enumChoice choice="on"/>
 			</enumVal>
 		</variable>
 
-		<variable label="MTS Back-EMF" CV="54" mask="XXXXXXVX">
+		<variable label="MTS Back-EMF" CV="54" mask="XXXXXXVX"
+			tooltip="Determines if digital back-EMF is on or off CV54">
 			<enumVal>
 				<enumChoice choice="off"/>
 				<enumChoice choice="on"/>
 			</enumVal>
 		</variable>
 
-		<variable label="analog Back-EMF" CV="54" mask="XXXXXVXX">	
+		<variable label="analog Back-EMF" CV="54" mask="XXXXXVXX"
+			tooltip="Determines if analog back-EMF is on or off CV54">	
 			<enumVal>
 				<enumChoice choice="off"/>
 				<enumChoice choice="on"/>
@@ -311,47 +367,46 @@
 		</variable>
 
 		<!-- Bits 4-8 of "LGB Configuration" CV54 are loco dependent -->
-		<!-- I've only come across one example (21812) and would  -->
-		<!-- appreciate other examples of how these bits are used -->
+		<!-- Check your loco's manual -->
 
-		<variable label="Loco dependent bit 4" CV="54" mask="XXXXVXXX">
+		<variable label="Loco dependent bit 4" CV="54" mask="XXXXVXXX"
+			tooltip="Check your loco's manual to determine use of this bit CV54">
 			<enumVal>
-				<enumChoice choice="0 - e.g. Load-dependent chuff off"/>
-				<enumChoice choice="1 - e.g. Load-dependent chuff on"/>
+				<enumChoice choice="0 - e.g. Load-dependent sounds off"/>
+				<enumChoice choice="1 - e.g. Load-dependent sounds on"/>
 			</enumVal>
 		</variable>
 
-		<variable label="Loco dependent bit 5" CV="54" mask="XXXVXXXX">
+		<variable label="Loco dependent bit 5" CV="54" mask="XXXVXXXX"
+			tooltip="Check your loco's manual to determine use of this bit CV54">
 			<enumVal>
 				<enumChoice choice="0 - e.g. F1 permanently on"/>
 				<enumChoice choice="1 - e.g. F1 flashing"/>
 			</enumVal>
 		</variable>
 
-		<variable label="Loco dependent bit 6" CV="54" mask="XXVXXXXX">
+		<variable label="Loco dependent bit 6" CV="54" mask="XXVXXXXX"
+			tooltip="Check your loco's manual to determine use of this bit CV54">
 			<enumVal>
 				<enumChoice choice="0 - e.g. F2 permanently on"/>
 				<enumChoice choice="1 - e.g. F2 flashing"/>
 			</enumVal>
 		</variable>
 
-		<variable label="Loco dependent bit 7" CV="54" mask="XVXXXXXX">
+		<variable label="Loco dependent bit 7" CV="54" mask="XVXXXXXX"
+			tooltip="Check your loco's manual to determine use of this bit CV54">
 			<enumVal>
 				<enumChoice choice="0 - e.g. Number of chuffs 2"/>
 				<enumChoice choice="1 - e.g. Number of chuffs 4"/>
 			</enumVal>
 		</variable>
 
-		<variable label="Loco dependent bit 8" CV="54" mask="VXXXXXXX">
+		<variable label="Loco dependent bit 8" CV="54" mask="VXXXXXXX"
+			tooltip="Check your loco's manual to determine use of this bit CV54">
 			<enumVal>
 				<enumChoice choice="0 - e.g. Automatic sounds on"/>
 				<enumChoice choice="1 - e.g. Automatic sounds off"/>
 			</enumVal>
-		</variable>
-
-		<variable label="Reset Register" CV="55" 
-			tooltip="Write 55 into CV 55 to reset to factory settings CV55">
-			<decVal min="55" max="55"/>
 		</variable>
 
 		<variable label="Voltage for F2 terminal" CV="56"
@@ -459,6 +514,11 @@
 		</variable>
 
 	</variables>
+
+        <resets>
+		<factReset label="Reset to factory settings" CV="55" default="55"/>
+        </resets>
+
 </decoder>
 
 <pane name="Basic">
@@ -576,9 +636,8 @@
 
 	<pane name="Miscellaneous">
 		<column>
-			<display item="hand-over function"/>
+			<display item="hand-off function"/>
 			<display item="Half-speed mode"/>
-			<display item="Reset Register"/>
 		</column>
 	</pane>
 
