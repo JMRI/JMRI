@@ -7,12 +7,8 @@ import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
 
-import java.io.DataInputStream;
-
 /**
- * Converts Stream-based I/O to/from powerline-device serial messages.
- * <P>
- * The "SerialInterface"
+ * Converts Stream-based I/O to/from messages.  The "SerialInterface"
  * side sends/receives message objects.
  * <P>
  * The connection to
@@ -20,22 +16,22 @@ import java.io.DataInputStream;
  * of characters for transmission.     Note that this processing is
  * handled in an independent thread.
  * <P>
- * This handles the state transistions, based on the
- * necessary state in each message.
- * <P>
- * Handles initialization, polling, output, and input for multiple Serial Nodes.
+ * This maintains a list of nodes, but doesn't currently do anything
+ * with it.
  *
- * @author	Bob Jacobsen  Copyright (C) 2003, 2006, 2008
- * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.1 $
+ * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008
+ * @version			$Revision: 1.2 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
-    public SerialTrafficController() {
+	public SerialTrafficController() {
         super();
-
-        // entirely poll driven, so reduce interval
-        mWaitBeforePoll = 25;  // default = 25
+        logDebug = log.isDebugEnabled();
+        
+        // not polled at all, so allow unexpected messages, and
+        // use poll delay just to spread out startup
+        setAllowUnexpectedReply(true);
+        mWaitBeforePoll = 1000;  // can take a long time to send
 
         // clear the array of SerialNodes
         for (int i=0; i<=MAXNODE; i++) {
@@ -44,42 +40,9 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         }
     }
 
-    // The methods to implement the SerialInterface
-
-    public synchronized void addSerialListener(SerialListener l) {
-        this.addListener(l);
-    }
-
-    public synchronized void removeSerialListener(SerialListener l) {
-        this.removeListener(l);
-    }
-
-// remove this code when SerialLight is operational - obsoleted and doesn't belong here anyway
-    /**
-     * Public method to set an Output bit
-     *     Note: systemName is of format CNnnnBxxxx where
-     *              "nnn" is the serial node number (0 - 127)
-     *              "xxxx' is the bit number within that node (1 thru number of defined bits)
-     *           state is 'true' for 0, 'false' for 1
-     *     The bit is transmitted to the hardware immediately before the
-     *           next poll packet is sent.
-     */
-    public void setSerialOutput(String systemName, boolean state) {
-        // get the node and bit numbers
-        SerialNode node = SerialAddress.getNodeFromSystemName(systemName);
-        if ( node == null ) {
-            log.error("bad SerialNode specification in SerialOutput system name:"+systemName);
-            return;
-        }
-        int bit = SerialAddress.getBitFromSystemName(systemName);
-        if ( bit == 0 ) {
-            log.error("bad output bit specification in SerialOutput system name:"+systemName);
-            return;
-        }
-        // set the bit
-        node.setOutputBit(bit,state);
-    }
-// end of code to be removed
+    // have several debug statements in tight loops, e.g. every character;
+    // only want to check once
+    boolean logDebug = false;
 
     private int numNodes = 0;       // Incremented as Serial Nodes are created and registered
                                     // Corresponds to next available address in nodeArray
@@ -87,13 +50,15 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     private static int MAXNODE = 255;
     private SerialNode[] nodeArray = new SerialNode[MAXNODE+1];  // numbering from 0
     private boolean[] mustInit = new boolean[MAXNODE+1];
+    int curSerialNodeIndex = 0;   // cycles over defined nodes when pollMessage is called
 
     /**
      *  Public method to register a Serial node
      */
      public void registerSerialNode(SerialNode node) {
         synchronized (this) {
-            // no validity checking because at this point the node may not be fully defined
+            // no node validity checking because at this point the node may not be fully defined
+            // eventually, should check for duplicate node numbers, which is a bad error
             nodeArray[numNodes] = node;
             mustInit[numNodes] = true;
             numNodes++;
@@ -170,13 +135,20 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         return nodeArray[index];
     }
 
-    protected AbstractMRMessage enterProgMode() {
-        log.warn("enterProgMode doesnt make sense for powerline serial");
-        return null;
+    // The methods to implement the SerialInterface
+
+    public synchronized void addSerialListener(SerialListener l) {
+        this.addListener(l);
     }
-    protected AbstractMRMessage enterNormalMode() {
-        return null;
+
+    public synchronized void removeSerialListener(SerialListener l) {
+        this.removeListener(l);
     }
+
+	protected int enterProgModeDelayTime() {
+		// we should to wait at least a second after enabling the programming track
+		return 1000;
+	}
 
     /**
      * Forward a SerialMessage to all registered SerialInterface listeners.
@@ -186,78 +158,27 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     }
 
     /**
-     * Forward a SerialReply to all registered SerialInterface listeners.
+     * Forward a reply to all registered SerialInterface listeners.
      */
-    protected void forwardReply(AbstractMRListener client, AbstractMRReply m) {
-        ((SerialListener)client).reply((SerialReply)m);
+    protected void forwardReply(AbstractMRListener client, AbstractMRReply r) {
+        ((SerialListener)client).reply((SerialReply)r);
     }
 
     SerialSensorManager mSensorManager = null;
     public void setSensorManager(SerialSensorManager m) { mSensorManager = m; }
-
-    int curSerialNodeIndex = 0;   // cycles over defined nodes when pollMessage is called
+    public SerialSensorManager getSensorManager() { return mSensorManager; }
+    
+    
     /**
-     *  Handles initialization, output and polling
-     *      from within the running thread
-     */
-    protected synchronized AbstractMRMessage pollMessage() {
-        // ensure validity of call
-        if (numNodes<=0) return null;
-        
-        // move to a new node
-        curSerialNodeIndex ++;
-        if (curSerialNodeIndex>=numNodes) {
-            curSerialNodeIndex = 0;
-        }
-        // ensure that each node is initialized        
-        if (mustInit[curSerialNodeIndex]) {
-            mustInit[curSerialNodeIndex] = false;
-            SerialMessage m = nodeArray[curSerialNodeIndex].createInitPacket();
-            if (m!=null) { // Devices don't need this yet
-                log.debug("send init message: "+m);
-                m.setTimeout(2000);  // wait for init to finish (milliseconds)
-                return m;
-            }   // else fall through to continue
-        }
-        // send Output packet if needed
-        if (nodeArray[curSerialNodeIndex].mustSend()) {
-            log.debug("request write command to send");
-            SerialMessage m = nodeArray[curSerialNodeIndex].createOutPacket();
-            nodeArray[curSerialNodeIndex].resetMustSend();
-            m.setTimeout(500);
-            return m;
-        }
-        // poll for Sensor input
-        if ( nodeArray[curSerialNodeIndex].sensorsActive() ) {
-            // Some sensors are active for this node, issue poll
-            SerialMessage m = SerialMessage.getPoll(
-                                nodeArray[curSerialNodeIndex].getNodeAddress());
-            if (curSerialNodeIndex>=numNodes) curSerialNodeIndex = 0;
-            return m;
-        }
-        else {
-            // no Sensors (inputs) are active for this node
-            return null;
-        }
-    }
+	 * Eventually, do initialization if needed
+	 */
+	protected AbstractMRMessage pollMessage() {
+		return null;
 
-    protected void handleTimeout(AbstractMRMessage m) {
-        // inform node, and if it resets then reinitialize 
-        if (nodeArray[curSerialNodeIndex] != null)      
-            if (nodeArray[curSerialNodeIndex].handleTimeout(m)) 
-                mustInit[curSerialNodeIndex] = true;
-        else
-            log.warn("Timeout can't be handled due to missing node index="+curSerialNodeIndex);
-    }
-    
-    protected void resetTimeout(AbstractMRMessage m) {
-        // inform node
-        nodeArray[curSerialNodeIndex].resetTimeout(m);
-        
-    }
-    
+	}
+
     protected AbstractMRListener pollReplyHandler() {
-        return mSensorManager;
+        return null;
     }
 
     /**
@@ -265,6 +186,19 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
      */
     public void sendSerialMessage(SerialMessage m, SerialListener reply) {
         sendMessage(m, reply);
+    }
+
+    protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
+        if (logDebug) log.debug("forward "+m);
+        sendInterlock = ((SerialMessage)m).getInterlocked();
+        super.forwardToPort(m, reply);
+    }
+        
+    protected AbstractMRMessage enterProgMode() {
+        return null;
+    }
+    protected AbstractMRMessage enterNormalMode() {
+        return null;
     }
 
     /**
@@ -283,72 +217,30 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     static protected SerialTrafficController self = null;
     protected void setInstance() { self = this; }
 
-    protected AbstractMRReply newReply() { return new SerialReply(); }
+    protected AbstractMRReply newReply() { 
+        SerialReply reply = new SerialReply();
+        return reply;
+    }
 
+    boolean sendInterlock = false;
+    
     protected boolean endOfMessage(AbstractMRReply msg) {
-        // our version of loadChars doesn't invoke this, so it shouldn't be called
-        log.error("Not using endOfMessage, should not be called");
-        return false;
+        // messages are one byte long
+        // if the interlock is present, send it
+        if (sendInterlock) {
+            log.debug("Send interlock");
+            sendInterlock = false;
+            SerialMessage m = new SerialMessage(1);
+            m.setElement(0,0); // not really needed, but this is a slow protocol anyway
+            forwardToPort(m, null);
+            return false; // just leave in buffer
+        }
+        log.debug("end of message: "+msg);
+        return true;
     }
     
-    protected int currentAddr= -1; // at startup, can't match
-    protected int incomingLength = 0;
-    
-    protected void loadChars(AbstractMRReply msg, DataInputStream istream) throws java.io.IOException {
-        // get 1st byte, see if ending too soon
-        byte char1 = readByteProtected(istream);
-        msg.setElement(0, char1&0xFF);
-        if ( (char1&0xFF) != currentAddr) {
-            // mismatch, end early
-            return;
-        }
-        if (incomingLength <= 1) return;
-        for (int i = 1; i < incomingLength; i++) {  // reading next four bytes
-            char1 = readByteProtected(istream);
-            msg.setElement(i, char1&0xFF);
-        }
-    }
-
-    protected void waitForStartOfReply(DataInputStream istream) throws java.io.IOException {
-        // does nothing
-    }
-
-    /**
-     * Add header to the outgoing byte stream.
-     * @param msg  The output byte stream
-     * @return next location in the stream to fill
-     */
-    protected int addHeaderToOutput(byte[] msg, AbstractMRMessage m) {
-        return 0;  // Do nothing
-    }
-
-    /**
-     * Although this protocol doesn't use a trailer, 
-     * we implement this method to set the 
-     * expected reply length and address for this message.
-     *
-     * @param msg  The output byte stream
-     * @param offset the first byte not yet used
-     * @param m the original message
-     */
-    protected void addTrailerToOutput(byte[] msg, int offset, AbstractMRMessage m) {
-        incomingLength = ((SerialMessage)m).getResponseLength();
-        currentAddr = ((SerialMessage)m).getAddr();
-        return;
-    }
-
-    /**
-     * Determine how much many bytes the entire
-     * message will take, including space for header and trailer
-     * @param m  The message to be sent
-     * @return Number of bytes
-     */
-    protected int lengthOfByteStream(AbstractMRMessage m) {
-        return 5; // All are 5 bytes long
-    }
-
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTrafficController.class.getName());
 }
 
-/* @(#)SerialTrafficController.java */
 
+/* @(#)SerialTrafficController.java */
