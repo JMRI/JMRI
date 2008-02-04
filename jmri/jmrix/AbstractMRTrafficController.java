@@ -26,7 +26,7 @@ import java.util.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.48 $
+ * @version			$Revision: 1.49 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -222,27 +222,30 @@ abstract public class AbstractMRTrafficController {
             synchronized(self) {
                 if (msgQueue.size()!=0) {
                     // yes, something to do
-                    log.debug("transmit loop has something to do");
                     m = (AbstractMRMessage)msgQueue.getFirst();
                     msgQueue.removeFirst();
                     l = (AbstractMRListener)listenerQueue.getFirst();
                     listenerQueue.removeFirst();
                     mCurrentState = WAITMSGREPLYSTATE;
+                    log.debug("transmit loop has something to do: "+m);
                 }  // release lock here to proceed in parallel
             }
             // if a message has been extracted, process it
             if (m!=null) {
                 // check for need to change mode
+                if (log.isDebugEnabled()) log.debug("Start msg, state ="+mCurrentMode);
                 if (m.getNeededMode()!=mCurrentMode) {
                     AbstractMRMessage modeMsg;
                     if (m.getNeededMode() == PROGRAMINGMODE ) {
                         // change state and send message
                         modeMsg = enterProgMode();
                         mCurrentState = WAITREPLYINPROGMODESTATE;
+                        log.debug("Enter Programming Mode");
                     } else { // must be normal mode
                         // change state and send message
                         modeMsg = enterNormalMode();
                         mCurrentState = WAITREPLYINNORMMODESTATE;
+                        log.debug("Enter Normal Mode");
                     }
 		    if(modeMsg!=null) {
                        forwardToPort(modeMsg, null);
@@ -634,9 +637,10 @@ abstract public class AbstractMRTrafficController {
 		int i;
 		for (i = 0; i < msg.maxSize(); i++) {
 			byte char1 = readByteProtected(istream);
+            // log.debug("char: "+(char1&0xFF));
 			// if there was a timeout, flush any char received and start over
 			if(flushReceiveChars){
-				log.warn("timeout flushs receive buffer: "+ msg.toString());
+				log.warn("timeout flushes receive buffer: "+ msg.toString());
 				msg.flush();
 				i = 0;	// restart
 				flushReceiveChars = false;
@@ -747,7 +751,7 @@ abstract public class AbstractMRTrafficController {
 				replyInDispatch = false;
 				if (allowUnexpectedReply == true) {
 					if (log.isDebugEnabled())
-						log.debug("Error suppressed: reply complete in unexpected state: "
+						log.debug("Allowed unexpected reply received in state: "
 							+ mCurrentState	+ " was " + msg.toString());
 				} else {
 					log.error("reply complete in unexpected state: "
