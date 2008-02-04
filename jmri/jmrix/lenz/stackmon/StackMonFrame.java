@@ -27,7 +27,7 @@ import javax.swing.JScrollPane;
  * <P>
  *
  * @author	Paul Bender   Copyright (C) 2005
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener {
 
@@ -264,7 +264,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 		case XNetConstants.LOCO_SEARCH_RESPONSE_DH:
 			CurrentStatus.setText(rb.getString("SearchDH"));
 			adrTextField.setText("" + r.getThrottleMsgAddr());
-                        stackModel.updateData(intAddress,rb.getString("SearchNormal"));
+                        stackModel.updateData(intAddress,rb.getString("SearchDH"));
 			// Request Address Status
 			// requestStatus();
 			// requestFunctionStatus();
@@ -273,7 +273,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 		case XNetConstants.LOCO_SEARCH_RESPONSE_MU_BASE:
 			CurrentStatus.setText(rb.getString("SearchMUBase"));
 			adrTextField.setText("" + r.getThrottleMsgAddr());
-                        stackModel.updateData(intAddress,rb.getString("SearchNormal"));
+                        stackModel.updateData(intAddress,rb.getString("SearchMUBase"));
 			// Request Address Status
 			// requestStatus();
 			// requestFunctionStatus();
@@ -282,7 +282,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 		case XNetConstants.LOCO_SEARCH_RESPONSE_MU:
 			CurrentStatus.setText(rb.getString("SearchMU"));
 			adrTextField.setText("" + r.getThrottleMsgAddr());
-                        stackModel.updateData(intAddress,rb.getString("SearchNormal"));
+                        stackModel.updateData(intAddress,rb.getString("SearchMU"));
 			// Request Address Status
 			// requestStatus();
 			// requestFunctionStatus();
