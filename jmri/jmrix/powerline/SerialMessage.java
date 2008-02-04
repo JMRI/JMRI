@@ -7,18 +7,25 @@ package jmri.jmrix.powerline;
  * Contains the data payload of a serial
  * packet.
  * <P>
- * Note that <i>only</i> the payload, not
- * the header or trailer, nor the padding DLE characters
- * are included. These are added during transmission.
+ * The transmission protocol can come in one of several forms:
+ * <ul>
+ * <li>If the interlocked parameter is false (default),
+ * the packet is just sent.  If the response length is not zero,
+ * a reply of that length is expected.
+ * <li>If the interlocked parameter is true, the transmission
+ * will require a CRC interlock, which will be automatically added.
+ * (Design note: this is done to make sure that the messages
+ * remain atomic)
+ * </ul>
  *
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     // is this logically an abstract class?
 
-    /** Suppress the default ctor, as the response
+    /** Suppress the default ctor, as the
      * length must always be specified
      */
     private SerialMessage() {}
@@ -40,6 +47,10 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         setBinary(true);
     }
 
+    boolean interlocked = false;
+    public void setInterlocked(boolean v) { interlocked = v; }
+    public boolean getInterlocked() { return interlocked; }
+    
     /**
      * This ctor interprets the byte array as
      * a sequence of characters to send.
@@ -65,13 +76,29 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         // eventually this will have to include logic for reading 
         // various bytes on the card, but our supported 
         // cards don't require that yet
-        SerialMessage m = new SerialMessage(1);
-        m.setResponseLength(2);
-        m.setElement(0, addr);
-        m.setTimeout(SHORT_TIMEOUT);    // minumum reasonable timeout
+        // SerialMessage m = new SerialMessage(1);
+        // m.setResponseLength(2);
+        // m.setElement(0, addr);
+        //  m.setTimeout(SHORT_TIMEOUT);    // minumum reasonable timeout
+        
+        // Powerline implementation does not currently poll
+        return null;
+    }
+    static public SerialMessage getAddress(int housecode, int devicecode) {
+        SerialMessage m = new SerialMessage(2);
+        m.setInterlocked(true);
+        m.setElement(0,0x04);
+        m.setElement(1,(X10.encode(housecode)<<4)+X10.encode(devicecode));
         return m;
     }
-
+    static public SerialMessage getFunction(int housecode, int function) {
+        SerialMessage m = new SerialMessage(2);
+        m.setInterlocked(true);
+        m.setElement(0,0x06);
+        m.setElement(1,(X10.encode(housecode)<<4)+function);
+        System.out.println("gf "+housecode+" "+X10.encode(housecode));
+        return m;
+    }
 }
 
 /* @(#)SerialMessage.java */
