@@ -22,7 +22,7 @@ import javax.comm.SerialPortEventListener;
  * Provide access to Oak Tree via a serial comm port.
  * Normally controlled by the oaktree.serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2006, 2007, 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -63,7 +63,6 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 
             // set framing (end) character
             try {
-                activeSerialPort.enableReceiveFraming(0x03);
                 log.debug("Serial framing was observed as: "+activeSerialPort.isReceiveFramingEnabled()
                       +" "+activeSerialPort.getReceiveFramingByte());
             } catch (Exception ef) {
@@ -230,12 +229,12 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
      */
     protected void setSerialPort() throws javax.comm.UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = 38400;  // default, but also defaulted in the initial value of selectedSpeed
+        int baud = 4800;  // default, but also defaulted in the initial value of selectedSpeed
         for (int i = 0; i<validSpeeds.length; i++ )
             if (validSpeeds[i].equals(selectedSpeed))
                 baud = validSpeedValues[i];
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
-                                SerialPort.STOPBITS_2, SerialPort.PARITY_NONE);
+                                SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
         // set RTS high, DTR high - done early, so flow control can be configured after
         activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
