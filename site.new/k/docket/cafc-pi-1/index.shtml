@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.8 2008-02-02 06:51:32 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.9 2008-02-04 21:19:29 jacobsen Exp $ -->
 <html lang="en">
 
 <head>
@@ -45,7 +45,7 @@ key documents are interrelated.  The complete
 chronological listing is 
 <a href="docketlisting">below</a>.
 <UL>
-<LI>(Corrected) <A HREF="AppellantsBrief.pdf">JMRI Appeal Brief</a>, 12/21/2007
+<LI>(Corrected) <A HREF="AppellantsBrief.pdf">JMRI Appellant Brief</a>, 12/21/2007
 <a id="amici"/>
 <LI>(Proposed) <a href="ccc_brf.pdf">Amicus Brief</a>
 by Creative Commons Corp, The Linux Foundation, The Open Source Initiative, Software Freedom Law Center, 
@@ -53,6 +53,7 @@ Yet Another Society and Wikimedia Foundation in support of Plaintiff-Appellant U
    <ul>
    <li>Associated <a href="ccc_mtn.pdf">Motion Requesting Permission to File</a>
    </ul>
+<LI><A HREF="Appellee_brief.pdf">Katzer Appellee Brief</a>, 1/29/2008
 </UL><!-- end of summary index -->
 
 <A ID="docketlisting"/>
@@ -72,7 +73,7 @@ let us know and we'll update it by hand.
 
     <tr>
       <td width="48" align="left" valign="top"><font size="-1"> 1/29/2008 </font></td>
-      <td width="595" align="left"><font size="-1"> Brief of Appellees                                                                                                                                                                  .  BY Kamind Associates, Inc. (d/b/a KAM Industries) and Matthew Katzer                          (Appellees       ).  SERVED BY Mail       ON 1/29/2008.
+      <td width="595" align="left"><font size="-1"> <a href="Appellee_brief.pdf">Brief of Appellees</a>                                                                                                                                                                  .  BY Kamind Associates, Inc. (d/b/a KAM Industries) and Matthew Katzer                          (Appellees       ).  SERVED BY Mail       ON 1/29/2008.
         FILED ON 1/29/2008  .
       
            (NON-CONFIDENTIAL)
@@ -155,7 +156,7 @@ let us know and we'll update it by hand.
 
     <tr>
       <td width="48" align="left" valign="top"><font size="-1"> 1/25/2008 </font></td>
-      <td width="595" align="left"><font size="-1"> Brief of Amici Curiae Creative Commons Corporation, et al...in Support of Plaintiff-Appellant and Urging Reversal                                                                   .  BY Creative Commons Corporation, et al.                                                       (Amici           ).  
+      <td width="595" align="left"><font size="-1"> <a href="ccc_brf.pdf">Brief of Amici Curiae Creative Commons Corporation, et al...in Support of Plaintiff-Appellant and Urging Reversal</a>                                                                .  BY Creative Commons Corporation, et al.                                                       (Amici           ).  
       
          SERVED BY Mail       ON 1/28/2007.
       
