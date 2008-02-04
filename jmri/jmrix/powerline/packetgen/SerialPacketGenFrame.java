@@ -19,7 +19,7 @@ import javax.swing.JSeparator;
 /**
  * Frame for user input of serial messages
  * @author	Bob Jacobsen   Copyright (C) 2002, 2003, 2006, 2007, 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.powerline.SerialListener {
 
@@ -27,9 +27,9 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
+    javax.swing.JCheckBox interlockButton = new javax.swing.JCheckBox("Interlock");
 
-    javax.swing.JButton pollButton = new javax.swing.JButton("Send poll");
-    javax.swing.JTextField uaAddrField = new javax.swing.JTextField(5);
+    javax.swing.JButton pollButton = new javax.swing.JButton("Send macro");
 
     public SerialPacketGenFrame() {
         super();
@@ -58,8 +58,12 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
 
         getContentPane().add(jLabel1);
         getContentPane().add(packetTextField);
-        getContentPane().add(sendButton);
-
+        
+        JPanel p2 = new JPanel();
+        p2.setLayout(new FlowLayout());
+        p2.add(interlockButton);
+        p2.add(sendButton);
+        getContentPane().add(p2);
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -73,10 +77,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         JPanel pane3 = new JPanel();
         pane3.setLayout(new FlowLayout());
         pane3.add(new JLabel("Address:"));
-        pane3.add(uaAddrField);
         pane3.add(pollButton);
-        uaAddrField.setText("0");
-        uaAddrField.setToolTipText("Enter node address (decimal integer)");
         getContentPane().add(pane3);
 
         pollButton.addActionListener(new java.awt.event.ActionListener() {
@@ -91,7 +92,10 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     }
 
     public void pollButtonActionPerformed(java.awt.event.ActionEvent e) {
-        SerialMessage msg = SerialMessage.getPoll(Integer.valueOf(uaAddrField.getText()).intValue());
+        SerialMessage msg = new SerialMessage(7);
+        msg.setElement(0, 0x9B);
+        msg.setElement(5, 0x01);
+        msg.setElement(6, 0x60);
         SerialTrafficController.instance().sendSerialMessage(msg, this);
     }
 
@@ -102,9 +106,9 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     SerialMessage createPacket(String s) {
         // gather bytes in result
         byte b[] = StringUtil.bytesFromHexString(s);
-        if ((b.length < 4) || (b.length > 5)) return null;  // no such thing as message with other than 4 or 5 bytes
-        SerialMessage m = new SerialMessage(5);
+        SerialMessage m = new SerialMessage(b.length);
         for (int i=0; i<b.length; i++) m.setElement(i, b[i]);
+        m.setInterlocked(interlockButton.isSelected());
         return m;
     }
 
