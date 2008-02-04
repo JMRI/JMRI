@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRMessage;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SerialNode {
 
@@ -235,7 +235,9 @@ public class SerialNode {
             m.setElement(j+1, payload);
             j++;            
         }
-        return m;        
+        
+        // now, for testing, instead of sending m (the packet) we send null
+        return null;        
     }
 
     boolean warned = false;
