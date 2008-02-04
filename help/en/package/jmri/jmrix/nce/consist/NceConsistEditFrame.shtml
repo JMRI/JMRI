@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NceConsistEditFrame.shtml,v 1.5 2008-02-03 01:08:06 dan_boudreau Exp $ -->
+<!-- $Id: NceConsistEditFrame.shtml,v 1.6 2008-02-04 15:26:34 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Edit NCE Consist</TITLE>
@@ -158,12 +158,12 @@ To remove a consist from your roster, press the "Delete" button located
 on the bottom row. The "Delete button only becomes active after you've
 selected a consist from the "Consist" menu.
 
-<H3>Reply:</H3>
+<H3>Status:</H3>
 
 There are many states that the NCE consist editor can be in and the
-"Reply:" field provides an indication of what is happening and whether
+"Status:" field provides an indication of what is happening and whether
 the operation was successful. Listed below is a brief description of the
-various "Reply:" states.
+various "Status:" states.
 <DL>
 	<DT>okay</DT>
 	<DD>Operation completed successfully.</DD>
@@ -186,7 +186,7 @@ various "Reply:" states.
 	<DT>verifying</DT>
 	<DD>The editor is reading the NCE command station memory to see if
 	a loco has already been assigned as a lead or rear loco in a consist.
-	If a loco is already assigned, a popup message will appear and "Reply:"
+	If a loco is already assigned, a popup message will appear and "Status:"
 	will show "error".</DD>
 	<DT>unknown</DT>
 	<DD>The initial state of the NCE consist editor. Also when the
