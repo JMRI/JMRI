@@ -3,7 +3,7 @@
 <head>
 <!--
 
-  $Id: package.html,v 1.1 2008-01-10 17:33:24 jacobsen Exp $
+  $Id: package.html,v 1.2 2008-02-04 14:37:38 jacobsen Exp $
 
   Made with permission from the Sun version at
   http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
@@ -32,5 +32,14 @@ Other sources of documentation
 
 @since 2.1.1
 
+<h2>To Do</h2>
+<ul>
+<li>The 0x00 that's send as part of the interlocking doesn't show
+in the serial monitor
+<li>The clock setting is way too simple, see setClock in CM11AGateway.
+Also, does that have the right house code handling?  Can the interface handle 
+more than one house code?
+<li>No provision for e.g. a CM10, with it's slightly separate codes.
+</ul>
 </body>
 </html>
