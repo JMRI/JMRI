@@ -44,7 +44,7 @@ import java.util.List;
  * mid loco4) :0000
  * 
  * @author Dan Boudreau Copyright (C) 2007 2008
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 
 public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
@@ -115,7 +115,8 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 	private static final String ToolTipSave = "Press to save consist to roster";
 	private static final String ToolTipLoad = "Press to load consist into NCE CS and program locos";
 	private static final String ToolTipConsist = "Enter consist 1 to 127";
-
+	private static final String ToolTipThrottle = "Press to get a throttle for your consist";
+	
 	// the 16 byte reply states
 	private boolean consistSearchNext = false; 		// next search
 	private boolean consistSearchPrevious = false; 	// previous search
@@ -133,13 +134,14 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 
 	// member declarations
 	javax.swing.JLabel textConsist = new javax.swing.JLabel();
-	javax.swing.JLabel textReply = new javax.swing.JLabel();
-	javax.swing.JLabel consistReply = new javax.swing.JLabel();
+	javax.swing.JLabel textStatus = new javax.swing.JLabel();
+	javax.swing.JLabel consistStatus = new javax.swing.JLabel();
 
 	// major buttons
 	javax.swing.JButton previousButton = new javax.swing.JButton();
 	javax.swing.JButton nextButton = new javax.swing.JButton();
 	javax.swing.JButton getButton = new javax.swing.JButton();
+	javax.swing.JButton throttleButton = new javax.swing.JButton();
 	javax.swing.JButton clearCancelButton = new javax.swing.JButton();
 	javax.swing.JButton saveLoadButton = new javax.swing.JButton();
 	javax.swing.JButton deleteButton = new javax.swing.JButton();
@@ -231,11 +233,11 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		textConsist.setText("Consist");
 		textConsist.setVisible(true);
 
-		textReply.setText("Reply:");
-		textReply.setVisible(true);
+		textStatus.setText("Status:");
+		textStatus.setVisible(true);
 
-		consistReply.setText(UNKNOWN);
-		consistReply.setVisible(true);
+		consistStatus.setText(UNKNOWN);
+		consistStatus.setVisible(true);
 
 		previousButton.setText("Previous");
 		previousButton.setVisible(true);
@@ -274,6 +276,11 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		textConRoadNumber.setVisible(true);
 		textConModel.setText(EMPTY);
 		textConModel.setVisible(true);
+		
+		throttleButton.setText("Throttle");
+		throttleButton.setVisible(true);
+		throttleButton.setEnabled(true);
+		throttleButton.setToolTipText(ToolTipThrottle);
 
 		clearCancelButton.setText(CLEAR);
 		clearCancelButton.setVisible(true);
@@ -334,8 +341,8 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		addItem(nextButton, 3, 1);
 		addItem(checkBoxEmpty, 5, 1);
 		// row 2
-		addItem(textReply, 0, 2);
-		addItem(consistReply, 1, 2);
+		addItem(textStatus, 0, 2);
+		addItem(consistStatus, 1, 2);
 		addItem(getButton, 2, 2);
 		addItem(checkBoxVerify, 5, 2);
 		// row 3
@@ -381,6 +388,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		// row 15 padding for looks
 		addItem(space2, 2, 15);
 		// row 16
+		addItem(throttleButton, 0, 16);
 		addItem(clearCancelButton, 1, 16);
 		addItem(saveLoadButton, 2, 16);
 		addItem(deleteButton, 3, 16);
@@ -391,6 +399,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		addButtonAction(previousButton);
 		addButtonAction(nextButton);
 		addButtonAction(getButton);
+		addButtonAction(throttleButton);
 		addButtonAction(clearCancelButton);
 		addButtonAction(saveLoadButton);
 		addButtonAction(deleteButton);
@@ -414,12 +423,27 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		if ( (getWidth()<450) && (getHeight()<380)) setSize(450, 380);
 	}
 
-	// Previous, Next, Get, Clear/Cancel, Save/Load, Delete, Restore & Backup buttons
+	// Previous, Next, Get, Throttle, Clear/Cancel, Save/Load, Delete, Restore & Backup buttons
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		// if we're searching ignore user
 		if (consistSearchNext || consistSearchPrevious || locoSearch)
 			return;
-
+		// throttle button
+		if (ae.getSource() == throttleButton) {
+			int locoAddr = validLocoAdr(locoTextField1.getText());
+			boolean isLong = (adrButton1.getText() == LONG);
+			if (locoAddr < 0)
+				return;
+			consistNum = validConsist(consistTextField.getText());
+			if (consistNum < 1)
+				return;
+			jmri.jmrit.throttle.ThrottleFrame tf=
+				jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();
+			tf.notifyAddressChosen(locoAddr, isLong); 	// first notify for func button
+			tf.notifyAddressChosen(consistNum, false);	// second notify for consist address
+			tf.setVisible(true);
+			return;
+		}
 		// clear or cancel button
 		if (ae.getSource() == clearCancelButton) {
 			// button can be Clear or Cancel
@@ -442,9 +466,9 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 				return;
 			// check to see if user modified the roster
 			if (canLoad()){
-				consistReply.setText(OKAY);
+				consistStatus.setText(OKAY);
 			} else {
-				consistReply.setText(ERROR);
+				consistStatus.setText(ERROR);
 				saveLoadButton.setEnabled(false);
 				return;
 			}
@@ -700,9 +724,9 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		}
 		if (consistSearchNext || consistSearchPrevious) {
 			consistCount = 0; // used to determine if all 127 consist have been read
-			consistReply.setText(SEARCH);
+			consistStatus.setText(SEARCH);
 		} else {
-			consistReply.setText(WAIT);
+			consistStatus.setText(WAIT);
 			if (cN == consistNum) {
 				newConsist = false;
 			}
@@ -727,7 +751,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 	private boolean validConsist() {
 		int cN = validConsist(consistTextField.getText());
 		if (cN == -1) {
-			consistReply.setText(ERROR);
+			consistStatus.setText(ERROR);
 			JOptionPane.showMessageDialog(NceConsistEditFrame.this,
 					ToolTipConsist, "NCE Consist",
 					JOptionPane.ERROR_MESSAGE);
@@ -820,7 +844,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 				saveLoadButton.setEnabled(false);
 			} else {
 				log.error("roster consist number is out of range: " + consistNum);
-				consistReply.setText(ERROR);
+				consistStatus.setText(ERROR);
 			}
 		}
 	}
@@ -936,7 +960,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 			textConRoadNumber.setText(cre.getRoadNumber());	
 			textConModel.setText(cre.getModel());	
 		} else {
-			consistReply.setText(UNKNOWN);
+			consistStatus.setText(UNKNOWN);
 			return false;
 		}
 		if (locoTextField2.getText().equals(cre.getLoco2DccAddress())){
@@ -954,7 +978,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		if (locoTextField6.getText().equals(cre.getLoco6DccAddress())){
 			dirButton6.setText(convertDTD(cre.getLoco6Direction()));
 		}
-		consistReply.setText(MODIFIED);
+		consistStatus.setText(MODIFIED);
 		return true;
 	}
 
@@ -1241,7 +1265,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		waiting--;
 
 		if (r.getNumDataElements() != replyLen) {
-			consistReply.setText(ERROR);
+			consistStatus.setText(ERROR);
 			log.error("reply length error, expecting: " + replyLen + " got: "
 					+ r.getNumDataElements());
 			return;
@@ -1255,7 +1279,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 			if (recChar == '!') {
 				if (locoSearch && waiting == 0) {
 					readConsistMemory(consistNumVerify, LEAD);
-					consistReply.setText(VERIFY);
+					consistStatus.setText(VERIFY);
 					return;
 				}
 				if (refresh && waiting == 0) {
@@ -1264,9 +1288,9 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 					readConsistMemory(consistNum, LEAD);
 					return;
 				}
-				consistReply.setText(OKAY);
+				consistStatus.setText(OKAY);
 			} else {
-				consistReply.setText(ERROR);
+				consistStatus.setText(ERROR);
 			}
 			return;
 		}
@@ -1291,7 +1315,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 							// loco
 							if (consistNumVerify != consistNum) {
 								locoSearch = false; // quit the search
-								consistReply.setText(ERROR);
+								consistStatus.setText(ERROR);
 								locoNumInUse = rC & 0x3FFF;
 								queueError (ERROR_LOCO_IN_USE);
 								return;
@@ -1308,7 +1332,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 					} else {
 						// verify complete, loco address is unique
 						locoSearch = false;
-						consistReply.setText(OKAY);
+						consistStatus.setText(OKAY);
 						// determine the type of verification
 						if (verifyType == VERIFY_LEAD_REAR){
 							if (refresh && waiting == 0) {
@@ -1351,7 +1375,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 							// found an empty consist!
 							consistSearchNext = false;
 							emptyConsistSearch = false;
-							consistReply.setText(OKAY);
+							consistStatus.setText(OKAY);
 							saveLoadButton.setEnabled(canLoad());
 							return;
 						}
@@ -1374,7 +1398,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 					if (++consistCount > CONSIST_MAX) {
 						// could not find a consist
 						consistSearchNext = false;
-						consistReply.setText(NONE);
+						consistStatus.setText(NONE);
 						if (emptyConsistSearch) {
 							emptyConsistSearch = false;
 							queueError(ERROR_NO_EMPTY_CONSIST);
@@ -1416,7 +1440,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 						}
 					}
 					if (++consistCount > CONSIST_MAX) {
-						consistReply.setText(NONE);
+						consistStatus.setText(NONE);
 						consistSearchPrevious = false;
 						return;		// don't update the panel
 					}
@@ -1454,7 +1478,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 						adrButton5, dirButton5, cmdButton5);
 				updateLocoFields(r, 6, locoRosterBox6, locoTextField6,
 						adrButton6, dirButton6, cmdButton6);
-				consistReply.setText(OKAY);
+				consistStatus.setText(OKAY);
 				checkForRosterMatch();
 				saveLoadButton.setEnabled(canLoad());
 			}
@@ -1474,7 +1498,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 			cre = NceConsistRoster.instance().entryFromTitle(locoTextField1.getText());
 		if (cre == null){
 			if (checkBoxConsist.isSelected() && !locoTextField1.getText().equals(EMPTY))
-				consistReply.setText(UNKNOWN);
+				consistStatus.setText(UNKNOWN);
 			else
 			textConRoadName.setText(EMPTY);
 			textConRoadNumber.setText(EMPTY);	
@@ -1834,7 +1858,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 				locoVerifyList[i] = 0;
 			locoSearch = true;
 			consistNumVerify = 0;
-			consistReply.setText(VERIFY);
+			consistStatus.setText(VERIFY);
 			readConsistMemory(consistNumVerify, LEAD);
 			return true;
 		}
