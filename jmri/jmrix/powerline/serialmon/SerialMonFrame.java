@@ -7,10 +7,12 @@ import jmri.jmrix.powerline.SerialMessage;
 import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.SerialTrafficController;
 
+import jmri.jmrix.powerline.X10;
+
 /**
  * Frame displaying (and logging) serial command messages
  * @author	    Bob Jacobsen   Copyright (C) 2001, 2006, 2007, 2008
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
@@ -32,31 +34,36 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 
     public synchronized void message(SerialMessage l) {  // receive a message and log it
         // check for valid length
-        if (l.getNumDataElements() < 5) {
-            nextLine("Truncated message of length "+l.getNumDataElements()+"\n",
-                            l.toString());
-            return;
-        } else if (l.isPoll()) {
-            nextLine("Poll addr="+l.getAddr()+"\n", l.toString());
-        } else if (l.isXmt()) {
-            String s = "Transmit addr="+l.getAddr()
-                    +" byte "+(l.getElement(2)&0x000000ff)
-                    +" data = "+Integer.toHexString(l.getElement(3)&0xff);
-            nextLine(s+"\n", l.toString());
-        } else
-            nextLine("Unrecognized cmd: \""+l.toString()+"\"\n", l.toString());
+        int len = l.getNumDataElements();
+        String text;
+        switch (l.getElement(0)&0xFF) {
+            case 0xFB : text = "Macro load reply"; break;
+            case 0x00 : if (len == 1) {
+                    text = "OK for transmission"; break;
+                } // else fall through
+            default: text = "Message of length "+len; break;
+        }
+        nextLine(text+"\n",l.toString());
+        return;
     }
 
     public synchronized void reply(SerialReply l) {  // receive a reply message and log it
         // check for valid length
         if (l.getNumDataElements() == 1) {
-            if (l.getElement(0) == 0) 
-                nextLine("NACK\n", l.toString());
-            else
-                nextLine("Ack from node "+l.getElement(0)+"\n", l.toString());
+            String val;
+            int msg = l.getElement(0);
+            switch (msg&0xFF) {
+                case X10.POLL_REQ: val = "Data Available\n";break;
+                case X10.TIME_REQ: val = "CP11 time request\n";break;
+                case 0xA6: val = "CP10 time request\n";break;
+                case 0xF3: val = "Input Filter Failed\n";break;
+                case X10.READY_REQ: val = "Interface Ready\n";break;
+                default: val = "One byte, probably CRC\n";break;
+            }
+            nextLine(val, l.toString());
             return;
-        } else if (l.getNumDataElements() != 5) {
-            nextLine("Truncated reply of length "+l.getNumDataElements()+":"+l.toString()+"\n",
+        } else if ((l.getNumDataElements() == 2) && (l.getElement(1) == X10.READY_REQ)) {
+            nextLine("CRC 0x"+jmri.util.StringUtil.twoHexFromInt(l.getElement(0))+" and Interface Ready\n",
                 l.toString());
             return;     
         } else { // must be data reply
