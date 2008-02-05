@@ -176,6 +176,11 @@
 </li>
       
 <li>
+<a href="html/hardware/powerline/index.shtml">X10</a>
+<ul></ul>
+</li>
+      
+<li>
 <a href="html/hardware/zimo/Zimo.shtml">Zimo</a>
 <ul></ul>
 </li>
@@ -204,6 +209,21 @@
       
 <li>
 <a href="package/jmri/jmrit/beantable/LightTable.shtml">Light Table</a>
+<ul></ul>
+</li>
+   
+</ul>
+</li>
+   
+<li>LocoNet<ul>
+      
+<li>
+<a href="package/jmri/jmrix/loconet/locoid/LocoIdFrame.shtml">LocoNet ID</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrix/loconet/slotmon/SlotMonFrame.shtml">Slot Monitor</a>
 <ul></ul>
 </li>
    
@@ -256,7 +276,7 @@
 </li>
    
 <li>
-<a href="html/apps/PanelPro/Panels.html">Panels</a>
+<a href="html/apps/PanelPro/Panels.html">PanelPro</a>
 <ul>
       
 <li>
