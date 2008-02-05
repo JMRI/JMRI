@@ -18,8 +18,8 @@ import java.util.ArrayList;
  * Command Station that supports Ops Mode Programing can write this 
  * address to a Command Station that supports it.
  *
- * @author                      Paul Bender Copyright (C) 2003
- * @version                     $ Revision 1.00 $
+ * @author                      Paul Bender Copyright (C) 2003-2008
+ * @version                     $Revision 1.0 $
  */
 public class DccConsist implements Consist, ProgListener{
 
@@ -27,6 +27,11 @@ public class DccConsist implements Consist, ProgListener{
 
 	protected Hashtable ConsistDir = null; // A Hash table 
                                         // containing the directions of 
+					// each locomotive in the consist, 
+					// keyed by Loco Address.
+
+	protected Hashtable ConsistPosition = null; // A Hash table 
+                                        // containing the position of 
 					// each locomotive in the consist, 
 					// keyed by Loco Address.
 
@@ -43,6 +48,7 @@ public class DccConsist implements Consist, ProgListener{
 		ConsistAddress = new DccLocoAddress(address,false);
 		ConsistDir = new Hashtable();
 		ConsistList = new ArrayList();
+                ConsistPosition = new Hashtable();
 	}
 
 	// Initialize a consist for a specific DccLocoAddress.
@@ -51,6 +57,7 @@ public class DccConsist implements Consist, ProgListener{
 		ConsistAddress = address;
 		ConsistDir = new Hashtable();
 		ConsistList = new ArrayList();
+                ConsistPosition = new Hashtable();
 	}
 
 	// Clean Up local Storage.
@@ -231,6 +238,36 @@ public class DccConsist implements Consist, ProgListener{
 		InstanceManager.programmerManagerInstance()
                                .releaseOpsModeProgrammer(opsProg);
 	}
+
+        /*
+         *  Set the position of a locomotive within the consist
+         *  @param address is the Locomotive address
+         *  @param position is a constant representing the position within
+         *         the consist.
+         */
+        public void setPosition(DccLocoAddress address,int position){
+                ConsistPosition.put(address,new Integer(position));
+        }
+
+        /*
+         * Get the position of a locomotive within the consist
+         * @param address is the Locomotive address of interest
+         */
+        public int getPosition(DccLocoAddress address){
+             if(ConsistPosition.contains(address))
+		return(((Integer)(ConsistPosition.get(address))).intValue());
+             // if the consist order hasn't been set, we'll use default
+             // positioning based on index in the arraylist.  Lead locomotive 
+             // is position 0 in the list and the trail is the last locomtoive
+             // in the list.             
+             int index=ConsistList.indexOf(address);
+                if(index==0)
+                   return(Consist.POSITION_LEAD);
+                else if(index==(ConsistList.size()-1))
+                   return(Consist.POSITION_TRAIL);
+                else return index;
+        }
+
 
 	// data member to hold the throttle listener objects
 	final private Vector listeners = new Vector();
