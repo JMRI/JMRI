@@ -7,6 +7,8 @@ import jmri.jmrix.powerline.SerialMessage;
 import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.SerialTrafficController;
 
+import jmri.jmrix.powerline.X10;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
@@ -19,7 +21,7 @@ import javax.swing.JSeparator;
 /**
  * Frame for user input of serial messages
  * @author	Bob Jacobsen   Copyright (C) 2002, 2003, 2006, 2007, 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.powerline.SerialListener {
 
@@ -92,10 +94,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     }
 
     public void pollButtonActionPerformed(java.awt.event.ActionEvent e) {
-        SerialMessage msg = new SerialMessage(7);
-        msg.setElement(0, 0x9B);
-        msg.setElement(5, 0x01);
-        msg.setElement(6, 0x60);
+        SerialMessage msg = SerialMessage.setCM11Time(X10.encode(1)); // housecode A
         SerialTrafficController.instance().sendSerialMessage(msg, this);
     }
 
