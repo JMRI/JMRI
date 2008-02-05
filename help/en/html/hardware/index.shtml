@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.6 2008-02-03 05:04:19 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.7 2008-02-05 07:16:40 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -198,6 +198,12 @@
 		<p>Connection: Wangrow Serial Port</p>
 	        <p class="dl">Configure: <A HREF="nce/Wangrow.shtml">System One</a></p></dd>
 
+	    <dt class="im"><a href="http://www.x10.com">X10</a></dt>
+	    <dt>X10</dt>
+	    <dd>
+		<p>Connection: X10 power-line controllers</p>
+	        <p class="dl">Configure: <A HREF="powerline/index.shtml">CM11 and compatible controllers</a></p></dd>
+
 	    <dt class="im"><a href="http://w3.zimo.at/">Zimo</a></dt>
 	    <dt>Zimo</dt>
 	    <dd>
@@ -208,7 +214,6 @@
 	        <a href="http://ztccontrols.com/">
 		<img src="images/ztclogo.gif" width="44" height="34" alt="ZTC"></a>
 		</dt>
-
 	    <dt>ZTC Controls</dt>
 	    <dd>
 	    	<p class="dl">Configure: ZTC Controls ZTC511, ZTC Controls ZTC521 via
