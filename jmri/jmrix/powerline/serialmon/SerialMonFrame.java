@@ -12,7 +12,7 @@ import jmri.jmrix.powerline.X10;
 /**
  * Frame displaying (and logging) serial command messages
  * @author	    Bob Jacobsen   Copyright (C) 2001, 2006, 2007, 2008
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
@@ -38,10 +38,16 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         String text;
         switch (l.getElement(0)&0xFF) {
             case 0xFB : text = "Macro load reply"; break;
+            case 0x9B : text = "Set CM11 time"; break;
             case 0x00 : if (len == 1) {
                     text = "OK for transmission"; break;
                 } // else fall through
-            default: text = "Message of length "+len; break;
+            default: {
+                if ((l.getElement(0)&0x02) == 0x02) 
+                    text = "House "+X10.decode((l.getElement(1)>>4)&0x0F)+" function: "+X10.functionName(l.getElement(1)&0x0f);
+                else
+                    text = "House "+X10.decode((l.getElement(1)>>4)&0x0F)+" address device "+X10.decode(l.getElement(1)&0x0f);
+            }
         }
         nextLine(text+"\n",l.toString());
         return;
