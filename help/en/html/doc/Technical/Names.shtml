@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Names.shtml,v 1.4 2008-01-22 06:17:20 jacobsen Exp $ -->
+<!-- $Id: Names.shtml,v 1.5 2008-02-05 07:08:31 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -124,7 +124,7 @@ Note that some of these are placeholders, and have no underlying implementation.
 <LI>M MRRLCB
 <LI>N NCE (also Wangrow currently)
 <LI>O Oak Tree Systems
-<LI>P (Reserved for Powerline transmission, e.g. X10 and Insteon)
+<LI>P Powerline transmission, e.g. X10 and Insteon
 <LI>Q QSI programmer interface
 <LI>R RS232 (e.g. serial port) used for direct sensors
 <LI>S SPROG
