@@ -10,7 +10,7 @@ import jmri.DccLocoAddress;
  * XNetConsist class for the consists it builds
  *
  * @author                Paul Bender Copyright (C) 2004
- * @version               $Revision: 2.8 $
+ * @version               $Revision: 2.9 $
  */
 
 public class XNetConsistManager extends jmri.jmrix.AbstractConsistManager implements jmri.ConsistManager {
@@ -194,7 +194,7 @@ public class XNetConsistManager extends jmri.jmrix.AbstractConsistManager implem
                    case DHADDRESS1INFO:
                       if(log.isDebugEnabled()) log.debug("Message Recieved in DHADDRESS1INFO state.  Message is: " + l.toString());
                       if(l.getElement(0)==XNetConstants.LOCO_INFO_DH_UNIT) {
-                         DccLocoAddress firstMember=new DccLocoAddress(_lastMemberAddress,_lastMemberAddress>0);
+                         DccLocoAddress firstMember=new DccLocoAddress(_lastMemberAddress,_lastMemberAddress>99);
                          int AH=l.getElement(5);
                          int AL=l.getElement(6);
                          if(AH==0x00) {
