@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LocoIdFrame.shtml,v 1.3 2008-01-19 06:33:39 jacobsen Exp $ -->
+<!-- $Id: LocoIdFrame.shtml,v 1.4 2008-02-05 17:44:40 jacobsen Exp $ -->
 <!-- Copyright Bob Jacobsen 2008 -->
 <html lang="en">
 <head>
@@ -31,9 +31,14 @@ make sure they're talking to each other, instead of some other
 radio device.
 
 <p>
-If there are several LocoNets in close proximity, for example at
-a train show, they need to have different LocoNet IDs or they will
-interfere. This tool lets you read and change the ID.
+You only need to change the LocoNet ID when there are
+several seperate LocoNets using radio in close proximity.
+At a train show with multiple LocoNet-based layouts 
+using radio throttles, for example,
+they need to have different LocoNet IDs or their radios
+will interfere with each other.
+The LocoID tool (under the Digitrax menu) 
+lets you read and change the ID.
 
 <p>
 Note that the ID is stored in the UR91 radio receivers, so 
@@ -47,7 +52,7 @@ the corresponding
 
 <p>
 See also page 98 of the Digitrax
-<a href="http://www.digitrax.com/ftp/superchief.pdf">Super Chief manual</a>.
+<a href="http://www.digitrax.com/ftp/superchief.pdf">Super Chief manual</a>(PDF).
 
 <!--#include virtual="/Footer" -->
 </body>
