@@ -15,7 +15,7 @@ import jmri.Turnout;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SerialLight extends AbstractLight {
 
@@ -81,17 +81,32 @@ public class SerialLight extends AbstractLight {
      */
     public void setState(int newState) {
         SerialNode mNode = SerialAddress.getNodeFromSystemName(mSystemName);
-        if (mNode!=null) {
-            if (newState==ON) {
-                mNode.setOutputBit(mBit,false);
-            }
-            else if (newState==OFF) {
-                mNode.setOutputBit(mBit,true);
-            }
-            else {
-                log.warn("illegal state requested for Light: "+getSystemName());
-            }
+        if (mNode == null) {
+            // node does not exist, ignore call
+            return;
         }
+
+        int housecode = ((mBit-1)/16)+1;
+        int devicecode = ((mBit-1)%16)+1;
+        log.debug("set state "+newState+" house "+housecode+" device "+devicecode);
+        // address message, then content
+        SerialMessage m1 = SerialMessage.getAddress(housecode, devicecode);
+        int function;
+        if (newState==ON) {
+            function = X10.FUNCTION_ON;
+        }
+        else if (newState==OFF) {
+            function = X10.FUNCTION_OFF;
+        }
+        else {
+            log.warn("illegal state requested for Light: "+getSystemName());
+            return;
+        }
+        SerialMessage m2 = SerialMessage.getFunction(housecode, function);
+        // send
+        SerialTrafficController.instance().sendSerialMessage(m1, null);
+        SerialTrafficController.instance().sendSerialMessage(m2, null);
+
 		if (newState!=mState) {
 			int oldState = mState;
 			mState = newState;
