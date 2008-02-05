@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.2.shtml,v 1.8 2008-02-03 18:58:02 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.2.shtml,v 1.9 2008-02-05 05:49:59 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -182,6 +182,9 @@ Jeff Schmaltz provided updated decoder definitions for the Zimo MX65 decoder, th
 
 <p>
 Paul Bender updated the Lenz "Stack Monitor" tool.
+
+<p>
+Cmd-W now closes most windows.
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
