@@ -19,7 +19,7 @@ package jmri.jmrix.powerline;
  * </ul>
  *
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
@@ -83,6 +83,13 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         
         // Powerline implementation does not currently poll
         return null;
+    }
+    static public SerialMessage setCM11Time(int housecode) {
+        SerialMessage msg = new SerialMessage(7);
+        msg.setElement(0, 0x9B);
+        msg.setElement(5, 0x01);
+        msg.setElement(6, housecode<<4);
+        return msg;
     }
     static public SerialMessage getAddress(int housecode, int devicecode) {
         SerialMessage m = new SerialMessage(2);
