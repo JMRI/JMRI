@@ -42,6 +42,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       <indexitem text="Oak Tree Systems" target="html.hardware.oaktree.OakTree"/>
       <indexitem text="SPROG" target="html.hardware.sprog.SPROG"/>
       <indexitem text="Uhlenbrock Intelllibox" target="html.hardware.loconet.Uhlenbrock"/>
+      <indexitem text="X10" target="html.hardware.powerline.index"/>
       <indexitem text="Zimo" target="html.hardware.zimo.Zimo"/>
       <indexitem text="ZTC" target="html.hardware.XPressNet.index"/>
    </indexitem>
@@ -49,6 +50,10 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       <indexitem text="Add Light" target="package.jmri.jmrit.beantable.LightAddEdit"/>
       <indexitem text="Edit Light" target="package.jmri.jmrit.beantable.LightAddEdit"/>
       <indexitem text="Light Table" target="package.jmri.jmrit.beantable.LightTable"/>
+   </indexitem>
+   <indexitem text="LocoNet">
+      <indexitem text="LocoNet ID" target="package.jmri.jmrix.loconet.locoid.LocoIdFrame"/>
+      <indexitem text="Slot Monitor" target="package.jmri.jmrix.loconet.slotmon.SlotMonFrame"/>
    </indexitem>
    <indexitem text="Logix">
       <indexitem text="Add Logix" target="package.jmri.jmrit.beantable.LogixAddEdit"/>
@@ -61,7 +66,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       <indexitem text="Memory Table" target="package.jmri.jmrit.beantable.MemoryTable"/>
    </indexitem>
    <indexitem text="Names" target="html.doc.Technical.Names"/>
-   <indexitem text="Panels" target="html.apps.PanelPro.Panels">
+   <indexitem text="PanelPro" target="html.apps.PanelPro.Panels">
       <indexitem text="Intro" target="html.apps.PanelPro.Panels"/>
       <indexitem text="Layout Editor" target="package.jmri.jmrit.display.LayoutEditor"/>
       <indexitem text="Panel Controls" target="package.jmri.jmrit.display.PanelTarget"/>
