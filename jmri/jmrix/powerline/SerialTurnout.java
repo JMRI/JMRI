@@ -14,7 +14,7 @@ import jmri.Turnout;
  *
  * Description:		extend jmri.AbstractTurnout for powerline serial layouts
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SerialTurnout extends AbstractTurnout {
 
@@ -75,12 +75,12 @@ public class SerialTurnout extends AbstractTurnout {
             // node does not exist, ignore call
             return;
         }
-        int housecode = (tBit/16)+1;
-        int devicecode = (tBit%16);
+        int housecode = ((tBit-1)/16)+1;
+        int devicecode = ((tBit-1)%16)+1;
         log.debug("set closed "+closed+" house "+housecode+" device "+devicecode);
         // address message, then content
         SerialMessage m1 = SerialMessage.getAddress(housecode, devicecode);
-        SerialMessage m2 = SerialMessage.getFunction(housecode, closed ? X10.FUNCTION_OFF : X10.FUNCTION_ON);
+        SerialMessage m2 = SerialMessage.getFunction(housecode, closed ? X10.FUNCTION_OFF : X10.FUNCTION_BRIGHT);
         // send
         SerialTrafficController.instance().sendSerialMessage(m1, null);
         SerialTrafficController.instance().sendSerialMessage(m2, null);
