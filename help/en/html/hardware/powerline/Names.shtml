@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: Names.shtml,v 1.1 2008-02-04 15:36:35 jacobsen Exp $ -->
+<!-- $Id: Names.shtml,v 1.2 2008-02-05 07:32:41 jacobsen Exp $ -->
 <title>JMRI: Grapevine System Names</title>
 
 <!-- Style -->
@@ -42,9 +42,15 @@ JMRI configures the adapter to use House Code "A" now.
 Outputs (Turnouts, eventually Lights) are numbered with their 
 device code, e.g. PT1 is device 1, PT2 is device 2, etc.
 
+<p>
+Depending on your setup, you might be able to access other housecodes
+by adding "16"s to the number, e.g. PT17 is device 1 in housecode B,
+etc.  We'll change this numbering system to something easier to 
+follow soon.
+
 <h3>More Information</h3>
 
-More information on the Z10 hardware can be found on the
+More information on the X10 hardware can be found on the
 (admittedly obnoxious)
 <a href="http://www.x10.com">X10 web site</a>.
 

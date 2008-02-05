@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: Compatibility.shtml,v 1.3 2008-01-18 03:04:31 ken_c Exp $ -->
+<!-- $Id: Compatibility.shtml,v 1.4 2008-02-05 07:32:41 jacobsen Exp $ -->
 <title>JMRI: Powerline Controllers</title>
 
 <!-- Style -->
@@ -62,12 +62,13 @@ See also the main page on
   <td><img src="http://graphics.x10.com/images/cm11asa.gif" width="125" height="150"/></td> <!-- Image -->
   <td>
     This is the version is best identified by the 4 pin RJ-11 connection on the bottom.
-    It is the first device we are trying to support as the serial based interface
-    is most like the other command stations and devices that JMRI already supports.
     <br />
-    Last Edited: 17 Jan 2008
+    To use this with JMRI, select "Powerline Controller" in the JMRI preferences,
+    the proper serial port, and 4800 baud.
   </td>  <!-- Comment -->
-  <td>Support is being developed</td> <!-- Type -->
+  <td>Support is available starting in JMRI 2.1.2</td> <!-- Type -->
+    <br />
+    Last Edited: 4 Feb 2008
 </tr>
 <tr>
   <td><a href="http://www.x10.com">X10.com</td> <!-- Manufacturer -->
@@ -76,11 +77,12 @@ See also the main page on
   <td>
     This is the version that comes with the ActiveHome Professional.
     Best identified by the USB connection on the bottom and an attenna on the side.
-    We hope to support it, but are working on the simpler, serial based versions first.
+  </td>  <!-- Comment -->
+  <td>Not Supported (<i>yet</i>)
+  We hope to support it next, pending USB support and somebody willing to test.
     <br />
     Last Edited: 17 Jan 2008
-  </td>  <!-- Comment -->
-  <td>Not Supported (<i>yet</i>)</td> <!-- Type -->
+  </td> <!-- Type -->
 </tr>
 <tr>
   <td><a href="http://www.x10.com">X10.com</td> <!-- Manufacturer -->
@@ -89,16 +91,16 @@ See also the main page on
     <img src="http://graphics.x10.com/images6/fc_inter.jpg" width="125" height="150" />
 </td> <!-- Image -->
   <td>
-    This is the version is wireless.
-    It depends on another X10 device that is the true controller,
+    This device depends on another X10 device that is the true controller,
     typically the TM751 device.
     While it is a serial device, it uses the RTS/DTS lines instead of the data lines.
     That lets the device work while having most other serial devices work through it.
-    We hope to support it, but are working on the simpler, serial based versions first.
-    <br />
-    Last Edited: 17 Jan 2008
   </td>  <!-- Comment -->
-  <td>Not Supported (<i>yet</i>)</td> <!-- Type -->
+  <td>Not Supported (<i>yet</i>)
+  We may be able to support it eventually, 
+  but are working on the simpler, character-based versions first.
+    <br />
+    Last Edited: 17 Jan 2008</td> <!-- Type -->
 </tr>
 
 </table>
