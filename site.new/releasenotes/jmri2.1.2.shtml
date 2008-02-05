@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.2.shtml,v 1.9 2008-02-05 05:49:59 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.2.shtml,v 1.10 2008-02-05 07:33:04 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -185,6 +185,9 @@ Paul Bender updated the Lenz "Stack Monitor" tool.
 
 <p>
 Cmd-W now closes most windows.
+
+<p>
+X10 support is starting to work quite nicely. In particular, Lights and Turnouts are now available if you have a CM11 or RCA adapter for your X10 system.
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
