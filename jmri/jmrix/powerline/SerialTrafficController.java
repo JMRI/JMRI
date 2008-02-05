@@ -20,7 +20,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * with it.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -226,6 +226,12 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     
     protected boolean endOfMessage(AbstractMRReply msg) {
         // messages are one byte long
+        // check for request time
+        if ((msg.getElement(0)&0xFF)==0xA5) {
+            SerialMessage m = SerialMessage.setCM11Time(X10.encode(1));
+            forwardToPort(m, null);
+            return true;  // message done
+        }
         // if the interlock is present, send it
         if (sendInterlock) {
             log.debug("Send interlock");
