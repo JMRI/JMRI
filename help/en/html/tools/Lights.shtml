@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Lights.shtml,v 1.1 2008-01-14 05:27:07 jacobsen Exp $ -->
+<!-- $Id: Lights.shtml,v 1.2 2008-02-06 07:07:56 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -58,7 +58,7 @@ is read from a configuration file, the Light is 'activated'; it is set up
 to monitor automatically any changes in state of its control sensor, 
 turnout, or fast clock. When the controlling sensor, turnout, or clock
 changes in a user-specified way, the Light is switched on or off. Lights 
-can also be controlled by <a href="Logix.html">Logix</a>, if more 
+can also be controlled by <a href="Logix.shtml">Logix</a>, if more 
 complicated control logic is needed.</p>
 <p>The Light Table contains an 'Enabled' column. For a Light to be 
 triggered by its control sensor, the fast clock, or its control turnout,
@@ -78,10 +78,10 @@ vice versa. A Light may also be set by a fascia panel button if a sensor for
 that button is defined as the control sensor. A light may be configured to 
 follow the JMRI fast clock, on for a specified time period, then off.
 A Light may also be controlled from a 
-<a href="Logix.html">Logix</a>,
+<a href="Logix.shtml">Logix</a>,
 as the action of one of its 
 conditionals.  If you need more powerful logic to control your Light, consider 
-using a <a href="Logix.html">Logix</a>.</p>
+using a <a href="Logix.shtml">Logix</a>.</p>
 
 <p>Note that enabled/disabled applies only to a Light's automated
 control mechanism.  A 'disabled' state will not prevent a Light
