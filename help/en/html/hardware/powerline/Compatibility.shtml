@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: Compatibility.shtml,v 1.4 2008-02-05 07:32:41 jacobsen Exp $ -->
+<!-- $Id: Compatibility.shtml,v 1.5 2008-02-06 05:21:40 jacobsen Exp $ -->
 <title>JMRI: Powerline Controllers</title>
 
 <!-- Style -->
@@ -36,7 +36,7 @@ needed to configure JMRI.
 See also the main page on 
 <a href="index.shtml">configuring JMRI for powerline controllers</a>.
 
-<h3>Table</h3>
+<h3>X10 Adapters</h3>
 
 <!-- start table of types -->
 <table border="1">
@@ -61,7 +61,7 @@ See also the main page on
   </td> <!-- Model -->
   <td><img src="http://graphics.x10.com/images/cm11asa.gif" width="125" height="150"/></td> <!-- Image -->
   <td>
-    This is the version is best identified by the 4 pin RJ-11 connection on the bottom.
+    This adapter can be identified by the 4 pin RJ-11 connection on the bottom.
     <br />
     To use this with JMRI, select "Powerline Controller" in the JMRI preferences,
     the proper serial port, and 4800 baud.
@@ -75,7 +75,7 @@ See also the main page on
   <td>CM15A</td> <!-- Model -->
   <td><img src="http://graphics.x10.com/images_ahp//cm15a_c.gif" width="125" height="150"/></td> <!-- Image -->
   <td>
-    This is the version that comes with the ActiveHome Professional.
+    This is the adapter that comes with the ActiveHome Professional.
     Best identified by the USB connection on the bottom and an attenna on the side.
   </td>  <!-- Comment -->
   <td>Not Supported (<i>yet</i>)
@@ -105,6 +105,41 @@ See also the main page on
 
 </table>
 <!-- end of table of types -->
+
+<h3>Insteon Adapters</h3>
+
+<!-- start table of types -->
+<table border="1">
+
+<!-- header row -->
+<tr>
+  <th>Manufacturer</th>
+  <th>Model</th>
+  <th>Image</th>
+  <th>Identification Help</th>  <!-- Comment -->
+  <th>JMRI Type</th>
+</tr>
+
+<!-- row containing one mode -->
+<!-- sample! -->
+<tr>
+  <td><a href="http://www.smarthome.com">Smarthome.com</td> <!-- Manufacturer -->
+  <td nowrap>
+    Power Linc 2414U
+  </td> <!-- Model -->
+  <td><img src="http://www.smarthome.com/images/2414ubig.jpg" width="133" height="133"/></td> <!-- Image -->
+  <td>
+    This version can be identified by the USB connection on the bottom.
+    <br />
+  </td>  <!-- Comment -->
+  <td>This is likely to be the first Insteon adapter we support, 
+     because one of the developers has one.
+    <br />
+    Last Edited: 4 Feb 2008
+    </td> <!-- Type -->
+</tr>
+
+</table>
     
 <!--#include virtual="/Footer" -->
 </body>
