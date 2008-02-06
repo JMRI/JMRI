@@ -210,11 +210,11 @@
 </li>
       
 <li>
-<a href="html/tools/fastclock/index.html">Clocks</a>
+<a href="html/tools/fastclock/index.shtml">Clocks</a>
 <ul>
          
 <li>
-<a href="html/tools/fastclock/index.html">Introduction</a>
+<a href="html/tools/fastclock/index.shtml">Introduction</a>
 <ul></ul>
 </li>
          
@@ -224,7 +224,7 @@
 </li>
          
 <li>
-<a href="html/tools/fastclock/LocoNetClock.html">The LocoNet clock</a>
+<a href="html/tools/fastclock/LocoNetClock.shtml">The LocoNet clock</a>
 <ul></ul>
 </li>
       
@@ -232,7 +232,7 @@
 </li>
       
 <li>
-<a href="html/Lights.html">Lights</a>
+<a href="html/tools/Lights.shtml">Lights</a>
 <ul></ul>
 </li>
       
@@ -242,12 +242,12 @@
 </li>
       
 <li>
-<a href="html/Memories.html">Memories</a>
+<a href="html/tools/Memories.shtml">Memories</a>
 <ul></ul>
 </li>
       
 <li>
-<a href="html/Reporters.html">Reporters</a>
+<a href="">Reporters</a>
 <ul></ul>
 </li>
       
@@ -262,7 +262,7 @@
 </li>
       
 <li>
-<a href="html/Sensors.html">Sensors</a>
+<a href="html/tools/Sensors.shtml">Sensors</a>
 <ul></ul>
 </li>
       
@@ -322,7 +322,7 @@
 </li>
       
 <li>
-<a href="html/Turnouts.html">Turnouts</a>
+<a href="html/tools/Turnouts.shtml">Turnouts</a>
 <ul></ul>
 </li>
    

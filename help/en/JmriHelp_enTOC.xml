@@ -53,13 +53,13 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
          <tocitem text="Setting the Internal Clock" target="package.jmri.jmrit.simpleclock.SimpleClockFrame"/>
          <tocitem text="The LocoNet clock" target="html.tools.fastclock.LocoNetClock"/>
       </tocitem>
-      <tocitem text="Lights" target="html.Lights"/>
+      <tocitem text="Lights" target="html.tools.Lights"/>
       <tocitem text="Logix" target="package.jmri.jmrit.beantable.LogixTable"/>
-      <tocitem text="Memories" target="html.Memories"/>
-      <tocitem text="Reporters" target="html.Reporters"/>
+      <tocitem text="Memories" target="html.tools.Memories"/>
+      <tocitem text="Reporters" target="html.tools.Reporters"/>
       <tocitem text="Routes" target="package.jmri.jmrit.beantable.RouteTable"/>
       <tocitem text="Send DCC Packet Tool" target="package.jmri.jmrit.sendpacket.SendPacketFrame"/>
-      <tocitem text="Sensors" target="html.Sensors"/>
+      <tocitem text="Sensors" target="html.tools.Sensors"/>
       <tocitem text="Sensor Groups" target="package.jmri.jmrit.sensorgroup.SensorGroupFrame"/>
       <tocitem text="Simple Signal Logic" target="package.jmri.jmrit.blockboss.BlockBossFrame"/>
       <tocitem text="Tables">
@@ -72,7 +72,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
          <tocitem text="Memory Table" target="package.jmri.jmrit.beantable.MemoryTable"/>
          <tocitem text="Reporter Table" target="package.jmri.jmrit.beantable.ReporterTable"/>
       </tocitem>
-      <tocitem text="Turnouts" target="html.Turnouts"/>
+      <tocitem text="Turnouts" target="html.tools.Turnouts"/>
    </tocitem>
    <tocitem text="Panels" target="html.apps.PanelPro.Panels">
       <tocitem text="Panel Editor" target="package.jmri.jmrit.display.PanelEditor"/>

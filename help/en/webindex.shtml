@@ -25,12 +25,12 @@
 <li>Clock<ul>
       
 <li>
-<a href="html/tools/fastclock/index.html">Introduction</a>
+<a href="html/tools/fastclock/index.shtml">Introduction</a>
 <ul></ul>
 </li>
       
 <li>
-<a href="html/tools/fastclock/LocoNetClock.html">LocoNet Fast Clock</a>
+<a href="html/tools/fastclock/LocoNetClock.shtml">LocoNet Fast Clock</a>
 <ul></ul>
 </li>
       
@@ -194,7 +194,7 @@
 </li>
    
 <li>
-<a href="html/Lights.html">Light</a>
+<a href="html/tools/Lights.shtml">Light</a>
 <ul>
       
 <li>
@@ -254,7 +254,7 @@
 </li>
    
 <li>
-<a href="html/Memories.html">Memory</a>
+<a href="html/tools/Memories.shtml">Memory</a>
 <ul>
       
 <li>
@@ -308,7 +308,7 @@
 </li>
    
 <li>
-<a href="html/Reporters.html">Reporter</a>
+<a href="">Reporter</a>
 <ul>
       
 <li>
@@ -355,7 +355,7 @@
 </li>
    
 <li>
-<a href="html/Sensors.html">Sensor</a>
+<a href="html/tools/Sensors.shtml">Sensor</a>
 <ul>
       
 <li>
@@ -462,7 +462,7 @@
 </li>
    
 <li>
-<a href="html/Turnouts.html">Turnout</a>
+<a href="html/tools/Turnouts.shtml">Turnout</a>
 <ul>
       
 <li>

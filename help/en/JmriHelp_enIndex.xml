@@ -46,7 +46,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       <indexitem text="Zimo" target="html.hardware.zimo.Zimo"/>
       <indexitem text="ZTC" target="html.hardware.XPressNet.index"/>
    </indexitem>
-   <indexitem text="Light" target="html.Lights">
+   <indexitem text="Light" target="html.tools.Lights">
       <indexitem text="Add Light" target="package.jmri.jmrit.beantable.LightAddEdit"/>
       <indexitem text="Edit Light" target="package.jmri.jmrit.beantable.LightAddEdit"/>
       <indexitem text="Light Table" target="package.jmri.jmrit.beantable.LightTable"/>
@@ -61,7 +61,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       <indexitem text="Edit Logix" target="package.jmri.jmrit.beantable.LogixAddEdit"/>
       <indexitem text="Logix Table" target="package.jmri.jmrit.beantable.LogixTable"/>
    </indexitem>
-   <indexitem text="Memory" target="html.Memories">
+   <indexitem text="Memory" target="html.tools.Memories">
       <indexitem text="Add Memory" target="package.jmri.jmrit.beantable.MemoryAddEdit"/>
       <indexitem text="Memory Table" target="package.jmri.jmrit.beantable.MemoryTable"/>
    </indexitem>
@@ -73,7 +73,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       <indexitem text="Panel Editor" target="package.jmri.jmrit.display.PanelEditor"/>
    </indexitem>
    <indexitem text="PM4" target="package.jmri.jmrix.loconet.pm4.PM4Frame"/>
-   <indexitem text="Reporter" target="html.Reporters">
+   <indexitem text="Reporter" target="html.tools.Reporters">
       <indexitem text="Add Reporter" target="package.jmri.jmrit.beantable.ReporterAddEdit"/>
       <indexitem text="Reporter Table" target="package.jmri.jmrit.beantable.ReporterTable"/>
    </indexitem>
@@ -84,7 +84,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
    </indexitem>
    <indexitem text="SE8c" target="package.jmri.jmrix.loconet.se8.SE8Frame"/>
    <indexitem text="Send DCC Packet" target="package.jmri.jmrit.sendpacket.SendPacketFrame"/>
-   <indexitem text="Sensor" target="html.Sensors">
+   <indexitem text="Sensor" target="html.tools.Sensors">
       <indexitem text="Add Sensor" target="package.jmri.jmrit.beantable.SensorAddEdit"/>
       <indexitem text="Sensor Groups" target="package.jmri.jmrit.sensorgroup.SensorGroupFrame"/>
       <indexitem text="Sensor Table" target="package.jmri.jmrit.beantable.SensorTable"/>
@@ -108,7 +108,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       <indexitem text="Thread Table" target="package.jmri.jmrit.automat.monitor.AutomatTableFrame"/>
       <indexitem text="Turnout Table" target="package.jmri.jmrit.beantable.TurnoutTable"/>
    </indexitem>
-   <indexitem text="Turnout" target="html.Turnouts">
+   <indexitem text="Turnout" target="html.tools.Turnouts">
       <indexitem text="Add Turnout" target="package.jmri.jmrit.beantable.TurnoutAddEdit"/>
       <indexitem text="Turnout Table" target="package.jmri.jmrit.beantable.TurnoutTable"/>
    </indexitem>
