@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.1 2008-02-06 06:56:24 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.2 2008-02-06 06:59:51 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -10,15 +10,21 @@
     <META name="keywords" content="JMRI help Setup Fast Clock">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</head>
+</HEAD>
 
-<body>
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
 <H2>Setup Fast Clock
 </H2>
     
@@ -31,7 +37,7 @@ JMRI provides two kinds of fast clock capability:
 
 This help page describes the overall structure.  There
 is a separate page for 
-<a href="LocoNetClock.html">LocoNet clocks</a>.
+<a href="LocoNetClock.shtml">LocoNet clocks</a>.
 As yet, we don't have interfaces for clocks in other DCC systems.
 
 <P>
@@ -39,7 +45,7 @@ There are two different parts to consider:  A "Timebase" provides the basic
 time information, while one or more displays show you what's going on.
 <P>
 To create a timebase, use the 
-"<a href="../../../package/jmri/jmrit/simpleclock/SimpleClockFrame.html">Setup Fast Clock</a>"
+"<a href="../../../package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml">Setup Fast Clock</a>"
  item in the 
 "Clocks" submenu under the "Tools" menu.  This gives you a window
 where you can:
@@ -64,6 +70,8 @@ from the panel editor.
 
 Happy timekeeping!
 
+    
+<!--#include virtual="/Footer" -->
 </body>
 </html>
 
