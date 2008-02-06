@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: ThrottleTOC.shtml,v 1.1 2008-02-06 07:00:35 jacobsen Exp $ -->
+<html lang="en">
+<head>
+    <TITLE>
+ 	Throttle: Table of Contents
+    </TITLE>
+    <META name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro">
+	<META NAME="Description" CONTENT="Throttle documentation for JMRI project">
+	<META NAME="Keywords" CONTENT="JMRI">
+	<META NAME="Author" CONTENT="Paul Fraker (paul@frakers.com)">
+	<META NAME="Language" CONTENT="EN">
+	<META NAME="Robots" CONTENT="Index, Follow">
+	<META NAME="Revisit-After" CONTENT="7 Days">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+
+	    <H1>Table of Contents</H1>
+
+	    <dl class="toc">
+			<dt><a href="ThrottleMain.shtml" title="Introduction and table of contents (this page)">INTRODUCTION</a></dt>
+			<dir>
+			    <dt><a href="ThrottleMain.shtml" title="What is the throttle tool?">A. What Is The Throttle Tool?</a></dt>
+				<dt><a href="ThrottleMain.shtml#HowToUse" title="How to use this guide">B. How To Use This Guide</a></dt>
+			</dir>
+			
+			<br>
+			<dt><a href="ThrottleChapter1.shtml" title="Getting started with Throttle Tool">GETTING STARTED</a></dt>
+		    <dir>
+				<dt><a href="ThrottleChapter1.shtml#HowToFind" title="Where do I find the throttle tool?">A. Where Do I Find The Throttles?</a></dt>
+				<dir>
+					<dt><a href="ThrottleChapter1.shtml#MainMenu" title="The Main Menu">1. The Main (or Primary) Menu</a></dt>
+					<dt><a href="ThrottleChapter1.shtml#ThrottlesSub" title="The Throttles Sub-Menu">2. The Throttles Sub-Menu</a></dt>
+				</dir>
+			</dir>
+			
+			<br>
+			<dt><a href="ThrottleChapter2.shtml" title="Chapter 2 - Open and Configure a New Throttle Window">OPEN/CONFIGURE A NEW THROTTLE WINDOW</a></dt>
+			<dir>
+				 <dt>A.  <A HREF="ThrottleChapter2.shtml" TITLE="Open A New Throttle Window">Open A New Throttle Window</a></dt>
+				 <dir>
+				     <dt>1. <A HREF="ThrottleChapter2.shtml#StructWin" TITLE="Structure of a Throttle Window">Structure Of A Throttle Window</a></dt>
+				 </dir>
+				 <dt>B.  <A HREF="ThrottleChapter2.shtml#WinConfig" TITLE="Configure a New Throttle">Configure A New Throttle</a></dt>
+				 <dir>
+				     <dt>1. <A HREF="ThrottleChapter2.shtml#AddressPanel" TITLE="Assign a Decoder Address to a Throttle Window">Assign a Decoder Address to a Throttle Window</a></dt>
+					 <dt>2. <A HREF="ThrottleChapter2.shtml#ControlPanel" TITLE="Control Panel — Let's Run a Train">Control Panel — Let's Run a Train</a></dt>
+					 <dir>
+					 	  <dt>a. <A HREF="ThrottleChapter2.shtml#StandardActions" TITLE="The Standard Keypad Actions">Keyboard Control</a></dt>
+						  <dt>b. <A HREF="ThrottleChapter2.shtml#MouseControl" TITLE="Mouse Control">Mouse Control</a></dt>
+						  <dir>
+						      <dt>i. <A HREF="ThrottleChapter2.shtml#SliderBar" TITLE="The Slider Bar">The Slider Bar</a></dt>
+						  </dir>
+					 </dir>
+					 <dt>3. <A HREF="ThrottleChapter2.shtml#Acquiring" TITLE="Acquiring a Dispatched Locomotive">Acquiring a Dispatched Locomotive</a></dt>
+					 <dt>4. <A HREF="ThrottleChapter2.shtml#FunctionPanel" TITLE="The Function Panel">The Function Panel</a></dt>
+				 </dir>
+			</dir>
+			
+			<br>
+			<dt><a HREF="ThrottleChapter3.shtml" TITLE="Chapter 3 - Advanced Throttle Configuration">ADVANCED THROTTLE CONFIGURATION</a></dt>
+			<dir>
+				 <dt>A. <A HREF="ThrottleChapter3.shtml" TITLE="Advanced Configuration of the Function Panel">Advanced Configuration of the Function Panel</A></dt>
+				 <dt>B. <A HREF="ThrottleChapter3.shtml#WinMenuOptions" TITLE="Throttle Window Menu Options">Throttle Window Menu Options</A></dt>
+				 <dir>
+				 	  <dt>1. <A HREF="ThrottleChapter3.shtml#ViewPanels" TITLE="View (Panels)">View (Panels)</A></dt>
+					  <dt>2. <A HREF="ThrottleChapter3.shtml#EditFrameProperties" TITLE="Edit (Frame Properties)">Edit (Frame Properties)</A></dt>
+				 </dir>
+			</dir>
+			
+			<br>
+			<dt><a HREF="ThrottleChapter4.shtml" TITLE="Chapter 4 - Saving/Opening Throttle Layouts">SAVING/OPENING THROTTLE LAYOUTS</a></dt>
+			<dir>
+				 <dt>A. <A HREF="ThrottleChapter4.shtml#SaveLayout" TITLE="Saving a Throttle Layout">Saving a Throttle Layout</A></dt>
+				 <dir>
+				 	  <dt>1. <A HREF="ThrottleChapter4.shtml#SaveMultiple" TITLE="Saving Multiple Throttle Windows">Saving Multiple Throttle Windows</A></dt>
+				 </dir>
+				 <dt>B. <A HREF="ThrottleChapter4.shtml#LoadLayout" TITLE="Open/Load a Throttle Layout">Open/Load a Throttle Layout</A></dt>
+				 <dir>
+				 	  <dt>2. <A HREF="ThrottleChapter4.shtml#Merging" TITLE="Merging Throttle Windows">Merging Throttle Windows</A></dt>
+				 </dir>
+				 <dt>C. <A HREF="ThrottleChapter4.shtml#CloseThrottle" TITLE="Closing A Throttle Window">Closing a Throttle Window</A></dt>
+			</dir>
+		</dl>
+
+	<BR><BR><BR>						
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

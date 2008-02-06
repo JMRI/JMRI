@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: ThrottleChapter1.shtml,v 1.1 2008-02-06 07:00:34 jacobsen Exp $ -->
+<html lang="en">
+<head>
+    <TITLE>
+ 	Throttle: Getting Started
+    </TITLE>
+    <META name="keywords" content="JMRI decoderpro dcc nmra throttlepro">
+	<META NAME="Description" CONTENT="Throttle documentation for JMRI project">
+	<META NAME="Keywords" CONTENT="JMRI">
+	<META NAME="Author" CONTENT="Paul Fraker (paul@frakers.com)">
+	<META NAME="Language" CONTENT="EN">
+	<META NAME="Robots" CONTENT="Index, Follow">
+	<META NAME="Revisit-After" CONTENT="7 Days">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+
+		<A NAME="HowToFind"></A>
+		<H1>Where Do I Find The Throttles?</H1>
+
+		<P>Chances are, if you are reading this text, then you probably saw reference to the
+		"throttles" in the JMRI user group postings.  And the first question that probably
+		came to your mind was, "where the heck do I find these throttles?"</P>
+			
+		<P>Well you've started at the right place.  The first thing this section is going
+		to do is show you how to gain access to the throttles.  This section will also
+		touch on the menu options that are available.</P>
+			
+		<P>First, it is important to understand that the JMRI Project is a group of many
+		"<b>tools</b>" for your railroad — with many contributions from different programmers.  There are four
+		primary startup applications available</P>
+			
+		<UL>
+			<LI><B>DecoderPro</B> (the most widely and commonly known piece of the project)
+			<LI><B>JMRI Demo</B>
+			<LI><B>Loco Tools</B>
+			<LI><B>PanelPro</B>
+		</UL>
+			
+		<P>For the purposes of this user guide, the <B>JMRI Demo</B> startup application was used for the
+		purposes of writing these pages.  However, you
+		will find that many of the tools "cross over" to multiple startup applications.  The <B>Throttle Tool</B>
+		is a good example of this.  No matter which of the above mentioned applications you start with, you
+		will be able to find the throttles.</P>
+		
+		<BR><BR><BR><BR>
+
+		<A NAME="MainMenu"></A>
+		<H2>The Main (or Primary) Menu</H2>
+		
+		<DIR>
+			<P align="justify">In each of the startup applications noted above, 
+			there is always a "<I>primary</I>" main window
+			displayed on your screen (similar to that shown below in figure 1-1).  
+			Close down this window and the whole application will terminate.  This main
+			window contains a primary set of menu options.  
+			This is where you will find most of the tools and options
+			available — including the Throttles.</P>
+
+			<UL TYPE="square">
+				<LI>Click on "<BIG>Tools</BIG>".<BR>
+				<LI>This will open a sub-menu.<BR>
+				<LI>Navigate your mouse pointer down	until you locate "<BIG>Throttles</BIG>".<BR>
+				<LI>This will open another sub-menu.<BR>
+				<LI>This is the Throttles Menu (refer to figure 1-2).<BR>
+			</UL>
+
+			<P style="text-align: center; font-size: xx-small">
+			<IMG WIDTH="410" HEIGHT="228" SRC="Images/jmri010.jpg" TITLE="JMRI main menu structure" BORDER="0"><BR>
+			Figure 1-1: JMRI main menu structure
+			</P>
+		</DIR>
+
+		<BR><BR><BR><BR>
+
+		<A NAME="ThrottlesSub"></A>
+		<H2>The Throttles Sub-menu</H2>
+		
+		<DIR>
+			<P align="justify">The Throttles sub-menu (as shown in figure 1-2 below) contains the following menu options, which are defined as:</P>
+
+			<UL>
+				<LI><B>New Throttle...</B> — opens a single new throttle window with default throttle settings enabled.<BR><BR>
+				<LI><B>Save Throttle Layout</B> — saves one or more currently opened throttle windows to a user-named file on your hard drive.<BR><BR>
+				<LI><B>Load Throttle Layout</B> — opens a previously saved throttle file.  This file can contain one or more throttle windows depending on how the layout was originally saved.<BR><BR>
+				<LI><B>Edit Throttle Preferences</B> — currently reserved for future implementation.  It's purpose will allow you to set up your overall preferences for all throttle windows.
+			</UL>
+
+			<P style="text-align: center; font-size: xx-small">
+			<IMG WIDTH="445" HEIGHT="352" SRC="Images/jmri009.jpg" TITLE="JMRI Throttles sub-menu structure" BORDER="0"><BR>
+			Figure 1-2: JMRI Throttles sub-menu structure
+			</P>
+		</DIR>
+		
+		<BR><BR><BR><BR>
+
+		<P align="justify">Use the links below to advance to the next chapter to walk through the process
+		of opening up a new throttle window and setting up some of the available options, and lets not forget...run a locomotive.</P>
+			
+		<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="0">
+			<TR>
+				<TD ALIGN="right" WIDTH="40%">
+					<dt><A HREF="ThrottleMain.shtml" TITLE="Return to the previous chapter"><IMG width="18" height="18" src="Images/LeftArrow2.jpg" border="0"></A></dt>
+				</TD>
+				<TD WIDTH="5%">
+					<IMG border="0" src="images/spacer.gif" width="30" height="10">
+				</TD>
+				<TD ALIGN="center" WIDTH="10%">
+					<B><A HREF="ThrottleTOC.shtml" TITLE="Jump to the Table Of Contents page">TOC</A></B>
+				</TD>
+				<TD WIDTH="5%">
+					<IMG border="0" src="images/spacer.gif" width="30" height="10">
+				</TD>
+				<TD ALIGN="left" WIDTH="40%">
+					<B><A HREF="ThrottleChapter2.shtml" TITLE="Advance to the next chapter"><IMG width="18" height="18" src="Images/RightArrow2.jpg" border="0"></A></B>
+				</TD>
+			</TR>
+		</TABLE>
+				
+		<BR><BR><BR><BR>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
