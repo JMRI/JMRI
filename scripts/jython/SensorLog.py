@@ -1,10 +1,14 @@
-# Listen to all sensors, printing a line when they change state
+# Listen to all sensors, printing a line when they change state.
 #
-# Author: Bob Jacobsen, copyright 2005
+# Optionally, this can also speak the information through
+# your computer's speakers if you have the "speak" command 
+# installed.
+#
+# Author: Bob Jacobsen, copyright 2005, 2008
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 
 # Define routine to map status numbers to text
 def stateName(state) :
@@ -18,13 +22,23 @@ def stateName(state) :
         return "UNKNOWN"
     return "(invalid)"
     
+
 # Define the sensor listener: Print some
 # information on the status change.
 class SensorListener(java.beans.PropertyChangeListener):
   def propertyChange(self, event):
     if (event.propertyName == "KnownState") :
-        print "Sensor", event.source.systemName, "(",event.source.userName,") from", stateName(event.oldValue), "to", stateName(event.newValue)
-
+        mesg = "Sensor "+event.source.systemName
+        if (event.source.userName != None) :
+            mesg += " ("+event.source.userName+")"
+        mesg += " from "+stateName(event.oldValue)
+        mesg += " to "+stateName(event.newValue)
+        print mesg
+        # You can also speak the message by un-commenting the next line
+        #java.lang.Runtime.getRuntime().exec(["speak", mesg])
+        # For more info on the speak command, see http://espeak.sf.net/
+    return
+    
 listener = SensorListener()
 
 # Define a Manager listener.  When invoked, a new
