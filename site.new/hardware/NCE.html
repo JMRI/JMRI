@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NCE.html,v 1.16 2007-12-27 22:23:06 dan_boudreau Exp $ -->
+<!-- $Id: NCE.html,v 1.17 2008-02-06 23:18:28 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI Hardware Guide: North Coast Engineering Powerhouse
@@ -104,13 +104,13 @@ earlier" or "2006 or later" as appropriate.</P>
 	it from the "Edit" menu.</LI>
 	<LI>Select "NCE" from the top selection box. You can then select
 	the proper serial port in the second selection box.</LI>
-	<LI>If given the option to select a baud rate, 19,200 is probably
-	your best bet. If that selection is fixed (due to using an older
+	<LI>If given the option to select a baud rate choose 9,600 which is the default for NCE.
+	 If that selection is fixed (due to using an older
 	EPROM), don't worry.</LI>
 	<LI>Now set the baud rate in the NCE command station to be the
 	same. Use a ProCab to select "Set Cmd Sta" by pressing the Prog/Esc
 	button 5 times. Then press the Enter button 15 times to select baud
-	rates. Finally, select a baud rate (#2 is 19,200 baud), and press esc
+	rates. Finally, select a baud rate (#1 is 9,600 and #2 is 19,200 baud), and press esc
 	to exit.</LI>
 	<LI>The series of radio buttons labelled "GUI style" allows you to
 	select how the program will look. "Metal" is the native Java look
@@ -151,6 +151,8 @@ pins. See your NCE manual for details.</P>
 <A ID="powercab" />
 <H3>USB PowerCab</H3>
 
+<IMG src="../images/nceUSB.gif" width="37" height="50" alt="NCE USB"/></a></dt>
+
 <P>NCE provides a USB adapter to connect the PowerCab to your
 computer. Starting with JMRI 1.9.3, JMRI can use this to operate the
 PowerCab.</P>
@@ -174,7 +176,7 @@ supported by the NCE USB are disabled or grayed out in the JMRI program.</P>
 accessories (turnouts) between 1 and 250. There isn't a limitation when
 connected to a PowerHouse.</P>
 
-<H3>USB Limitation Summary</H3>
+<H3>USB Adapter Limitation Summary</H3>
 
 <UL>
 	<LI>All systems: No AUI support, No Turnout MONITORING, No
