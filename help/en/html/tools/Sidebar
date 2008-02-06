@@ -14,9 +14,9 @@
 		    <LI><dfn><a href="throttle/ThrottleMain.html">Throttles</a></dfn>
 		    <LI><dfn><a href="ConsistTool/ConsistTool.html">Consisting</a></dfn>
 		    <LI><dfn><a href="Signals.shtml">Signals</a></dfn>
-		    <LI><dfn><a href="Lights.html">Lights</a></dfn>
-		    <LI><dfn><a href="Routes.html">Routes</a></dfn>
-		    <LI><dfn><a href="Logix.html">Logix</a></dfn>
+		    <LI><dfn><a href="Lights.shtml">Lights</a></dfn>
+		    <LI><dfn><a href="Routes.shtml">Routes</a></dfn>
+		    <LI><dfn><a href="Logix.shtml">Logix</a></dfn>
 		    <LI><dfn><a href="fastclock">Fast Clocks</a></dfn>
 		    <LI><dfn><a href="../apps/Speedometer/index.html">Speedometer</a></dfn>
 		    <LI><dfn><a href="../doc/scripts/index.html">Scripting</a></dfn>
@@ -41,17 +41,13 @@
 		to running trains in the background.
 		    <UL>
 		    <LI><dfn><a href="../apps/Signalling">Signaling</a></dfn>
-		    <LI><dfn><a href="Routes.html">Routes</a></dfn>
+		    <LI><dfn><a href="Routes.shtml">Routes</a></dfn>
 		    <LI><dfn><a href="fastclock">Fast Clocks</a></dfn>
 		    <LI><dfn><a href="../doc/scripts/index.html">Scripting</a></dfn>
 		    </UL>
 		</dd>
 
 	    </dl>
-
-<a href="/donations.shtml">
- <img src="http://images.sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" ALIGN="RIGHT" alt="Donate to JMRI" />
-</a> 
 
 	</div> <!-- closes #side -->
 
