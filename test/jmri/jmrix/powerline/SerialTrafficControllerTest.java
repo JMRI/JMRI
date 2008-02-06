@@ -15,12 +15,55 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialTrafficController class
  * @author			Bob Jacobsen Copyright 2005, 2007, 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class SerialTrafficControllerTest extends TestCase {
 
     public void testCreate() {
         SerialTrafficController m = new SerialTrafficController();
+    }
+    
+    // inner class to give access to protected endOfMessage method
+    class TestSerialTC extends SerialTrafficController {
+        boolean testEndOfMessage(SerialReply r) {
+            return endOfMessage(r);
+        }
+        protected void forwardToPort(jmri.jmrix.AbstractMRMessage m, jmri.jmrix.AbstractMRListener reply){
+            System.out.println("fTP");
+        }
+    }
+    
+    public void testReceiveStates1() {
+        TestSerialTC c = new TestSerialTC();
+        SerialReply r = new SerialReply();
+
+        r.setElement(0, 0x12);
+        Assert.assertTrue("single byte reply", c.testEndOfMessage(r));
+    }
+    public void testReceiveStatesRead() {
+        TestSerialTC c = new TestSerialTC();
+        SerialReply r = new SerialReply();
+
+        r.setElement(0, 0x5A);        
+        Assert.assertTrue("wait for read", !c.testEndOfMessage(r));
+
+        r.setElement(1, 0x03);        
+        Assert.assertTrue("get count", !c.testEndOfMessage(r));
+
+        r.setElement(2, 0x01);        
+        Assert.assertTrue("1st byte", !c.testEndOfMessage(r));
+
+        r.setElement(3, 0x02);        
+        Assert.assertTrue("2nd byte", !c.testEndOfMessage(r));
+
+        r.setElement(4, 0x03);        
+        Assert.assertTrue("3rd byte", c.testEndOfMessage(r));
+    
+        // and next reply OK
+        r = new SerialReply();
+        r.setElement(0, 0x12);        
+        Assert.assertTrue("single byte reply", c.testEndOfMessage(r));
+        
     }
     
     public void testSerialNodeEnumeration() {
