@@ -12,7 +12,7 @@ import jmri.jmrix.powerline.X10;
 /**
  * Frame displaying (and logging) serial command messages
  * @author	    Bob Jacobsen   Copyright (C) 2001, 2006, 2007, 2008
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
@@ -44,9 +44,9 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                 } // else fall through
             default: {
                 if ((l.getElement(0)&0x02) == 0x02) 
-                    text = "House "+X10.decode((l.getElement(1)>>4)&0x0F)+" function: "+X10.functionName(l.getElement(1)&0x0f);
+                    text = X10.formatCommandByte(l.getElement(1)&0xFF);
                 else
-                    text = "House "+X10.decode((l.getElement(1)>>4)&0x0F)+" address device "+X10.decode(l.getElement(1)&0x0f);
+                    text = X10.formatAddressByte(l.getElement(1)&0xFF);
             }
         }
         nextLine(text+"\n",l.toString());
@@ -74,10 +74,16 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
             return;     
         } else if ((l.getElement(0)&0xFF) == X10.POLL_REQ ) { 
             // must be received data
-            String s = "Receive data, "+(l.getElement(1)&0xFF)+ "bytes ";
+            String s = "Receive data, "+(l.getElement(1)&0xFF)+ "bytes: ";
             int last = (l.getElement(1)&0xFF)+1;
-            for (int i=2; i<last; i++)
-                s+=Integer.toHexString((l.getElement(i)&0xFF)+" ";
+            int bits = (l.getElement(2)&0xFF);
+            for (int i=3; i<last; i++) {
+                if (i!=3) s+="; ";  // separate all but last command
+                if ((bits&0x01) != 0)
+                    s+=X10.formatAddressByte(l.getElement(i)&0xFF);
+                else
+                    s+=X10.formatAddressByte(l.getElement(i)&0xFF);
+            }
             nextLine(s+"\n", l.toString());
             return;
         } else {
