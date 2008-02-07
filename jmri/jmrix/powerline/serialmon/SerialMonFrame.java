@@ -12,7 +12,7 @@ import jmri.jmrix.powerline.X10;
 /**
  * Frame displaying (and logging) serial command messages
  * @author	    Bob Jacobsen   Copyright (C) 2001, 2006, 2007, 2008
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
@@ -68,14 +68,21 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
             }
             nextLine(val, l.toString());
             return;
-        } else if ((l.getNumDataElements() == 2) && (l.getElement(1) == X10.READY_REQ)) {
+        } else if ((l.getNumDataElements() == 2) && ((l.getElement(1)&0xFF) == X10.READY_REQ)) {
             nextLine("CRC 0x"+jmri.util.StringUtil.twoHexFromInt(l.getElement(0))+" and Interface Ready\n",
                 l.toString());
             return;     
-        } else { // must be data reply
-            String s = "Receive addr="+l.getAddr()+" IB=";
-            for (int i=2; i<4; i++)
-                s+=Integer.toHexString(l.getElement(i))+" ";
+        } else if ((l.getElement(0)&0xFF) == X10.POLL_REQ ) { 
+            // must be received data
+            String s = "Receive data, "+(l.getElement(1)&0xFF)+ "bytes ";
+            int last = (l.getElement(1)&0xFF)+1;
+            for (int i=2; i<last; i++)
+                s+=Integer.toHexString((l.getElement(i)&0xFF)+" ";
+            nextLine(s+"\n", l.toString());
+            return;
+        } else {
+            // don't know, just show
+            String s = "Unknown reply of length "+l.getNumDataElements()+" "+l.toString();
             nextLine(s+"\n", l.toString());
             return;
         }
