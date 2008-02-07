@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: RouteAddEdit.shtml,v 1.4 2008-01-24 05:56:18 jacobsen Exp $ -->
+<!-- $Id: RouteAddEdit.shtml,v 1.5 2008-02-07 15:55:43 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -36,13 +36,14 @@ the desired turnouts or sensor to your route. Next to the "Include" box
 is the action that the turnout or sensor can perform when the route is
 triggered. For example, if you wish the turnout to throw when the route
 is triggered select "Set Thrown" in the drop down box.</p>
-<p>Below the turnout and sensor tables are two optional features. By
-hitting the "Set" button you can add a sound file that you wish to play
-when the route is triggered, or a script file that you want to run.</p>
-<p>To trigger a route, you need to specify how the route is to be
-activated. You can select up to three sensors and one turnout. Of any of
-the sensors or turnout meets the condition that you specify, the route
-will trigger.</p>
+<p>Below the turnout and sensor tables are three optional features.  
+Playing a sound file, running a script, and specifying a sensor to go 
+active when all the turnouts specified for the route are correctly aligned. 
+Sound files and Scripts are configured by hitting the appropriate &quot;Set&quot; 
+button and selecting the sound file to be played, or the script file to be 
+run when the route is triggered.  To add a sensor which will go active 
+when the turnouts are aligned, enter the sensor system name in the box.  
+The sensor will go Active when the turnouts are correctly aligned for the route.</p>
 <p>In some cases, it might be necessary to delay or slow down the
 rate that JMRI sends commands to change turnouts on the layout. By
 entering a value in the "Added Delay" box, you can increase the amount
