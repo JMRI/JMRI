@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NCE.shtml,v 1.2 2008-01-13 06:54:20 jacobsen Exp $ -->
+<!-- $Id: NCE.shtml,v 1.3 2008-02-07 01:31:04 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: NCE</TITLE>
@@ -27,7 +27,7 @@
 <H2>NCE</H2>
 
 <P>JMRI supports three NCE layout connections, PowerHouse via serial
-cable, PowerHouse via network connection, and USB via serial cable. They
+cable, PowerHouse via network connection, and NCE USB adapter via serial cable. They
 are shown in the preferences menu as NCE, NCE via network, and NCE USB
 respectively.
 
@@ -46,13 +46,13 @@ This section discusses JMRI's support for the NCE PowerHouse Pro.
 	it from the "Edit" menu.</LI>
 	<LI>Select "NCE" from the top selection box. You can then select
 	the proper serial port in the second selection box.</LI>
-	<LI>If given the option to select a baud rate, 19,200 is probably
-	your best bet. If that selection is fixed (due to using an older
+	<LI>If given the option to select a baud rate choose 9600 which is the default for NCE.
+	If that selection is fixed (due to using an older
 	EPROM), don't worry.</LI>
-	<LI>Now set the baud rate in the NCE command station to be the
+	<LI>Now confirm that the baud rate in the NCE command station is the
 	same. Use a ProCab to select "Set Cmd Sta" by pressing the Prog/Esc
 	button 5 times. Then press the Enter button 15 times to select baud
-	rates. Finally, select a baud rate (#2 is 19,200 baud), and press esc
+	rates. Finally, select a baud rate (#1 is 9600 and #2 is 19,200 baud), and press esc
 	to exit.</LI>
 	<LI>The series of radio buttons labelled "GUI style" allows you to
 	select how the program will look. "Metal" is the native Java look
@@ -126,18 +126,20 @@ pins. See your NCE manual for details.</P>
 
 <A ID="powercab"></a>
 
-<H3>USB</H3>
+<H3>NCE USB Adapter</H3>
 
-<P>The NCE USB can be connected to three NCE systems, PowerCab, SB3
+<IMG src="../images/nceUSB.jpg" width="37" height="50" alt="NCE USB"/></a></dt>
+
+<P>The NCE USB Adapter can be connected to three NCE systems, PowerCab, SB3
 (SmartBooster) or PowerHouse. You must select the correct system from
 the preference menu for reliable operation.</P>
 
 
-<H4>USB Limitations</H4>
+<H4>NCE USB Adapter Limitations</H4>
 
-<P>The NCE USB doesn't support all of the current JMRI features and
+<P>The NCE USB Adapter doesn't support all of the current JMRI features and
 functions. Some of the restrictions are based on the type of system
-the USB is connected to. The USB can't get information from AIUs, so
+the USB Adapter is connected to. The USB can't get information from AIUs, so
 they can't be used to get feedback from the layout. The turnout feedback
 mode MONITORING isn't available when using a USB, and the Clock
 functions found in tools are also not available. The USB when connected
@@ -146,12 +148,12 @@ when connected to a SB3 only operation mode (no program track) is
 available for loco programming. Most functions and features that are not
 supported by the NCE USB are disabled or grayed out in the JMRI program.</P>
 
-<P>The USB when connected to a PowerCab or SB3 can only address
+<P>The USB Adapter when connected to a PowerCab or SB3 can only address
 accessories (turnouts) between 1 and 250. There isn't a limitation when
 connected to a PowerHouse.</P>
 
 
-<H4>USB Limitation Summary</H4>
+<H4>USB Adapter Limitation Summary</H4>
 
 <DL>
 	<DT>All systems:</DT>
