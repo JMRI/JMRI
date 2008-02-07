@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NCE.shtml,v 1.4 2008-02-07 04:35:53 dan_boudreau Exp $ -->
+<!-- $Id: NCE.shtml,v 1.5 2008-02-07 17:44:03 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: NCE</TITLE>
@@ -29,9 +29,9 @@
 <P>JMRI supports three NCE layout connections, PowerHouse via serial
 cable, PowerHouse via network connection, and NCE USB adapter via serial
 cable. They are shown in the preferences menu as NCE, NCE via network,
-and NCE USB respectively.
+and NCE USB respectively.</P>
 
-<A ID="phpro"></A></P>
+<A ID="phpro"></A>
 <H3>PowerHouse Pro</H3>
 This section discusses JMRI's support for the NCE PowerHouse Pro.
 
@@ -46,13 +46,13 @@ This section discusses JMRI's support for the NCE PowerHouse Pro.
 	it from the "Edit" menu.</LI>
 	<LI>Select "NCE" from the top selection box. You can then select
 	the proper serial port in the second selection box.</LI>
-	<LI>If given the option to select a baud rate choose 9600 which is
+	<LI>If given the option to select a baud rate choose 9,600 which is
 	the default for NCE. If that selection is fixed (due to using an older
 	EPROM), don't worry.</LI>
 	<LI>Now confirm that the baud rate in the NCE command station is
 	the same. Use a ProCab to select "Set Cmd Sta" by pressing the Prog/Esc
 	button 5 times. Then press the Enter button 15 times to select baud
-	rates. Finally, select a baud rate (#1 is 9600 and #2 is 19,200 baud),
+	rates. Finally, select a baud rate (#1 is 9,600 and #2 is 19,200 baud),
 	and press esc to exit.</LI>
 	<LI>The series of radio buttons labeled "GUI style" allows you to
 	select how the program will look. "Metal" is the native Java look
@@ -67,7 +67,7 @@ This section discusses JMRI's support for the NCE PowerHouse Pro.
 	<LI>Restart the program. You should be up and running.</LI>
 </OL>
 <P>For reliable operation, we recommend that you disable "AIU
-broadcast", and set the baud rate to 9600. These are the normal defaults
+broadcast", and set the baud rate to 9,600. These are the normal defaults
 for NCE. Both of these parameters can be found in your NCE user's manual
 under "Setup Command Station".</P>
 
@@ -128,8 +128,8 @@ pins. See your NCE manual for details.</P>
 
 <H3>NCE USB Adapter</H3>
 
-<IMG SRC="../images/nceUSB.jpg" WIDTH="55" HEIGHT="75" ALT="NCE USB" /><A></A>
-<DT></DT>
+<IMG SRC="../images/nceUSB.jpg" WIDTH="55" HEIGHT="75" ALT="NCE USB" />
+
 
 <P>The NCE USB Adapter can be connected to three NCE systems,
 PowerCab, SB3 (SmartBooster) or PowerHouse. You must select the correct
