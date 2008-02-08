@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.12 2008-02-03 18:33:27 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.13 2008-02-08 17:22:30 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -222,7 +222,7 @@
 	<LI>Herb Poppe, who diagnosed a problem in some Digitrax decoder definitions
 <A ID="Q"></A>
 <A ID="R"></A>
-    <li>Simon Reader, who improved the throttle
+    <li>Simon Reader, who improved the throttle and added a check for completed status to Routes
 	<LI>Bill Robinson of Team Digital, who provided a schematic of their
 	MS100-equivalent level shifter, contributed the LnSendTool.py script,
 	and decoder definitions for Team Digital products
