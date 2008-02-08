@@ -12,7 +12,7 @@ import jmri.jmrix.powerline.X10;
 /**
  * Frame displaying (and logging) serial command messages
  * @author	    Bob Jacobsen   Copyright (C) 2001, 2006, 2007, 2008
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
@@ -83,6 +83,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                     s+=X10.formatAddressByte(l.getElement(i)&0xFF);
                 else
                     s+=X10.formatAddressByte(l.getElement(i)&0xFF);
+                bits = bits>>1;  // shift over before next byte
             }
             nextLine(s+"\n", l.toString());
             return;
