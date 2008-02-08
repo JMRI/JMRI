@@ -30,8 +30,9 @@ import jmri.util.JmriJFrame;
  *
  * @author	Dave Duchamp    Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2007 
+ * @author Simon Reader Copyright (C) 2008
  *
- * @version     $Revision: 1.40 $
+ * @version     $Revision: 1.41 $
  */
 
 public class RouteTableAction extends AbstractTableAction {

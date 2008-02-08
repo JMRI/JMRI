@@ -18,7 +18,9 @@ import org.jdom.Element;
  *
  * @author Dave Duchamp Copyright (c) 2004
  * @author Daniel Boudreau Copyright (c) 2007
- * @version $Revision: 1.15 $
+ * @author Simon Reader Copyright (C) 2008
+ *
+ * @version $Revision: 1.16 $
  */
 public class DefaultRouteManagerXml implements XmlAdapter {
 
