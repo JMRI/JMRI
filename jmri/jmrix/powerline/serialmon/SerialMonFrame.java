@@ -12,7 +12,7 @@ import jmri.jmrix.powerline.X10;
 /**
  * Frame displaying (and logging) serial command messages
  * @author	    Bob Jacobsen   Copyright (C) 2001, 2006, 2007, 2008
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
@@ -74,13 +74,13 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
             return;     
         } else if ((l.getElement(0)&0xFF) == X10.POLL_REQ ) { 
             // must be received data
-            String s = "Receive data, "+(l.getElement(1)&0xFF)+ "bytes: ";
+            String s = "Receive data, "+(l.getElement(1)&0xFF)+ " bytes: ";
             int last = (l.getElement(1)&0xFF)+1;
             int bits = (l.getElement(2)&0xFF);
-            for (int i=3; i<last; i++) {
+            for (int i=3; i<=last; i++) {
                 if (i!=3) s+="; ";  // separate all but last command
                 if ((bits&0x01) != 0)
-                    s+=X10.formatAddressByte(l.getElement(i)&0xFF);
+                    s+=X10.formatCommandByte(l.getElement(i)&0xFF);
                 else
                     s+=X10.formatAddressByte(l.getElement(i)&0xFF);
                 bits = bits>>1;  // shift over before next byte
