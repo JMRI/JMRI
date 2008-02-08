@@ -31,7 +31,7 @@ import jmri.util.JmriJFrame;
  * @author	Dave Duchamp    Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2007 
  *
- * @version     $Revision: 1.39 $
+ * @version     $Revision: 1.40 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -264,6 +264,7 @@ public class RouteTableAction extends AbstractTableAction {
 
     JTextField soundFile = new JTextField(20);
     JTextField scriptFile = new JTextField(20);
+    JTextField turnoutsAlignedSensor = new JTextField(8);
 
     JTextField sensor1 = new JTextField(8);
     JComboBox  sensor1mode = new JComboBox(sensorInputModes);
@@ -527,6 +528,14 @@ public class RouteTableAction extends AbstractTableAction {
             p26.add(scriptFile);
             contentPane.add(p26);
             
+            //add turnouts aligned sensor
+            JPanel p27 = new JPanel();
+            p27.setLayout(new FlowLayout());
+            p27.add(new JLabel("Enter Sensor that Activates when Route Turnouts are correctly aligned (optional):"));
+            p27.add(turnoutsAlignedSensor);
+            turnoutsAlignedSensor.setToolTipText("Enter a Sensor system name or nothing");
+            contentPane.add(p27);
+            p26.setVisible(true);
            
             // add control sensor table
             JPanel p3 = new JPanel();
@@ -847,6 +856,21 @@ public class RouteTableAction extends AbstractTableAction {
                                             "' to Route '"+g.getSystemName()+"'.");
             }
         }
+        
+        //turnouts aligned sensor
+        sensorSystemName = turnoutsAlignedSensor.getText();
+        if (sensorSystemName.length() > 0) {
+            Sensor tas = InstanceManager.sensorManagerInstance().provideSensor(sensorSystemName);
+            if (tas==null){
+                log.error("Unexpected failure to add Turnouts Aligned Sensor '"+sensorSystemName+
+                                            "' to Route '"+g.getSystemName()+"'.");
+            }
+            else
+            {
+            g.setTurnoutsAlignedSensor(sensorSystemName);
+            }
+        }
+        
         // Set turnout information if there is any
         String turnoutSystemName = cTurnout.getText();
         if (turnoutSystemName.length() > 0) {
@@ -1032,6 +1056,8 @@ public class RouteTableAction extends AbstractTableAction {
         scriptFile.setText(g.getOutputScriptName());
         soundFile.setText(g.getOutputSoundName());
         
+        // get turnout aligned sensor
+        turnoutsAlignedSensor.setText(g.getTurnoutsAlignedSensor());
 
         // set up Sensors if there are any
         String[] temNames = new String[Route.MAX_CONTROL_SENSORS];

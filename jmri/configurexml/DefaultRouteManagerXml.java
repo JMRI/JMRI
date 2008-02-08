@@ -18,7 +18,7 @@ import org.jdom.Element;
  *
  * @author Dave Duchamp Copyright (c) 2004
  * @author Daniel Boudreau Copyright (c) 2007
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class DefaultRouteManagerXml implements XmlAdapter {
 
@@ -160,6 +160,13 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                 if (r.getOutputScriptName()!=null && !r.getOutputScriptName().equals("")) {
                     Element rsElem = new Element("routeScriptFile")
                                     .setAttribute("name", r.getOutputScriptName());
+                    elem.addContent(rsElem);
+                }
+                
+                // add turnouts aligned sensor if there is one
+                if (!r.getTurnoutsAlignedSensor().equals("")) {
+                    Element rsElem = new Element("turnoutsAlignedSensor")
+                                    .setAttribute("name", r.getTurnoutsAlignedSensor());
                     elem.addContent(rsElem);
                 }
                 
@@ -370,6 +377,12 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                 if (fileElement != null) {
                     r.setOutputScriptName(fileElement.getAttribute("name").getValue());
                 }
+                // load turnouts aligned sensor if there is one
+                fileElement = ((Element)(routeList.get(i))).getChild("turnoutsAlignedSensor");
+                if (fileElement != null) {
+                    r.setTurnoutsAlignedSensor(fileElement.getAttribute("name").getValue());
+                }
+                
                 // load route control sensors, if there are any
                 List routeSensorList = ((Element)(routeList.get(i))).getChildren("routeSensor");
                 if (routeSensorList.size() > 0) {

@@ -7,7 +7,7 @@ package jmri;
  *
  * @author	Dave Duchamp Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2006, 2007
- * @version     $Revision: 1.22 $
+ * @version     $Revision: 1.23 $
  */
 public class DefaultRoute extends AbstractNamedBean
     implements Route, java.io.Serializable {
@@ -40,6 +40,8 @@ public class DefaultRoute extends AbstractNamedBean
     protected String mLockControlTurnout = "";
     protected int mLockControlTurnoutState = jmri.Turnout.THROWN;
 
+    protected String mTurnoutsAlignedSensor = "";
+    
     protected String soundFilename;
     protected String scriptFilename;
     
@@ -53,10 +55,16 @@ public class DefaultRoute extends AbstractNamedBean
     protected Sensor[] mSensors = new Sensor[MAX_CONTROL_SENSORS];
     protected java.beans.PropertyChangeListener[] mSensorListener = 
                     new java.beans.PropertyChangeListener[MAX_CONTROL_SENSORS];
+    
     protected Turnout mTurnout = null;
     protected java.beans.PropertyChangeListener mTurnoutListener = null;
     protected Turnout mLockTurnout = null;
     protected java.beans.PropertyChangeListener mLockTurnoutListener = null;
+    
+    protected Turnout[] mOpTurnout = new Turnout[MAX_OUTPUT_TURNOUTS_PER_ROUTE];
+    protected java.beans.PropertyChangeListener[] mOpTurnoutListener =
+            new java.beans.PropertyChangeListener[MAX_OUTPUT_TURNOUTS_PER_ROUTE];
+    
 	private boolean busy = false;
      
     private boolean _enabled = true;
@@ -70,7 +78,7 @@ public class DefaultRoute extends AbstractNamedBean
     private boolean _locked = false;
     public boolean getLocked() { return _locked; }
     public void setLocked(boolean v) {
-        lockTurnouts (v);
+        lockTurnouts(v);
         boolean old = _locked;
         _locked = v;
         if (old != v) firePropertyChange("Locked", new Boolean(old), new Boolean(v));
@@ -199,8 +207,7 @@ public class DefaultRoute extends AbstractNamedBean
     public Turnout getOutputTurnout(int k) {
 		if (mNumOutputTurnouts<=k) {
 			return (null);
-		}
-		else {
+        } else {
 			return (InstanceManager.turnoutManagerInstance().
                                             provideTurnout(mOutputTurnout[k]));
 		}
@@ -219,8 +226,7 @@ public class DefaultRoute extends AbstractNamedBean
     public int getOutputTurnoutState(int k) {
 		if (mNumOutputTurnouts<=k) {
 			return (-1);
-		}
-		else {
+        } else {
 			return (mOutputTurnoutState[k]);
 		}
 	}
@@ -251,7 +257,7 @@ public class DefaultRoute extends AbstractNamedBean
     }
 
     /**
-     * Delete all output Turnouts from this Route
+     * Delete all output Sensors from this Route
      */
     public void clearOutputSensors() {
         mNumOutputSensors = 0;
@@ -259,7 +265,7 @@ public class DefaultRoute extends AbstractNamedBean
     
     /**
      * Method to get an ouput Sensor system name by Index
-     *  Returns null if there is no turnout with that index
+     *  Returns null if there is no sensor with that index
      */
     public String getOutputSensorByIndex(int index) {
         if ( (index >= mNumOutputSensors) || (index < 0) ) {
@@ -306,8 +312,7 @@ public class DefaultRoute extends AbstractNamedBean
     public Sensor getOutputSensor(int k) {
 		if (mNumOutputSensors<=k) {
 			return (null);
-		}
-		else {
+        } else {
 			return (InstanceManager.sensorManagerInstance().
                                             provideSensor(mOutputSensor[k]));
 		}
@@ -320,8 +325,7 @@ public class DefaultRoute extends AbstractNamedBean
     public int getOutputSensorState(int k) {
 		if (mNumOutputSensors<=k) {
 			return (-1);
-		}
-		else {
+        } else {
 			return (mOutputSensorState[k]);
 		}
 	}
@@ -355,7 +359,22 @@ public class DefaultRoute extends AbstractNamedBean
         return soundFilename;
     }
     
+    /**
+     * Method to set turnouts aligned sensor
+     */
+    public void setTurnoutsAlignedSensor(String sensorSystemName){
+        if (log.isDebugEnabled()) log.debug("setTurnoutsAlignedSensor "+getSystemName()+" "+sensorSystemName);
 
+        mTurnoutsAlignedSensor = sensorSystemName;
+    }
+    
+    /**
+     * Method to get turnouts aligned sensor
+     */
+    public String getTurnoutsAlignedSensor(){
+        
+        return mTurnoutsAlignedSensor;
+    }
     // Inputs ----------------
 
     /**
@@ -621,16 +640,16 @@ public class DefaultRoute extends AbstractNamedBean
          switch (mLockControlTurnoutState) {
          case ONCLOSED:
              if (newState == Turnout.CLOSED) setLocked(true);
-             else setLocked (false);
+                else setLocked(false);
              return;
          case ONTHROWN:
              if (newState == Turnout.THROWN) setLocked(true);
-             else setLocked (false);
+                else setLocked(false);
              return;
          case ONCHANGE:
              if (newState != oldState){
             	 if (getLocked())
-            		 setLocked (false);
+                        setLocked(false);
             	 else
             		 setLocked(true);
              }
@@ -642,10 +661,85 @@ public class DefaultRoute extends AbstractNamedBean
      }
      
     /**
+     * Method to check if the turnouts for this route are correctly aligned.
+     *  Sets turnouits aligned sensor (if there is one) to active if the turnouts are aligned.
+     *  Sets the sensor to inactive if they are not aligned
+     */
+    public void checkTurnoutAlignment(){
+        
+        //check each of the output turnouts in turn
+        //turnouts are deemed not aligned if:
+        // - commanded and known states don't agree
+        // - non-toggle turnouts known state not equal to desired state
+        // turnouts aligned sensor is then set accordingly
+        
+        if (mTurnoutsAlignedSensor!="" && mNumOutputTurnouts>0) {
+            boolean aligned = true;
+            for (int k = 0; k < DefaultRoute.MAX_OUTPUT_TURNOUTS_PER_ROUTE; k++) {
+                Turnout t = getOutputTurnout(k);
+                if (t!=null) {
+                    if (!t.isConsistentState()) {
+                        aligned= false;
+                        break;
+                    }
+                    int targetState = getOutputTurnoutState(k);
+                    if (targetState!=-1 && targetState!=Route.TOGGLE) {
+                        if (targetState!=t.getKnownState()) {
+                            aligned= false;
+                            break;
+                        }
+                    }
+                } else {
+                    break;
+                }
+            }
+            Sensor s = InstanceManager.sensorManagerInstance().provideSensor(mTurnoutsAlignedSensor);
+            if (aligned){
+                try {
+                    s.setKnownState(jmri.Sensor.ACTIVE);
+                } catch (JmriException ex) {
+                    log.warn("Exception setting sensor "+s.getSystemName()+" in route");
+                }
+            } else {
+                try {
+                    s.setKnownState(jmri.Sensor.INACTIVE);
+                } catch (JmriException ex) {
+                    log.warn("Exception setting sensor "+s.getSystemName()+" in route");
+                }
+            }
+        }
+    }
+    
+    
+    /**
      * Method to activate the Route via Sensors and control Turnout
      * Sets up for Route activation based on a list of Sensors and a control Turnout
+     * Registers to receive known state changes for output turnouts
      */
     public void activateRoute() {
+        
+        //register output turnouts to return Known State if a turnouts aligned sensor is defined
+        if (mTurnoutsAlignedSensor!="" && mNumOutputTurnouts>0) {
+            
+            for (int k = 0;k < mNumOutputTurnouts;k++) {
+                mOpTurnout[k] = InstanceManager.turnoutManagerInstance().
+                        provideTurnout(mOutputTurnout[k]);
+                if (mOpTurnout[k]!=null) {
+                    mOpTurnout[k].addPropertyChangeListener(mOpTurnoutListener[k] =
+                            new java.beans.PropertyChangeListener() {
+                        public void propertyChange(java.beans.PropertyChangeEvent e) {
+                            if (e.getPropertyName().equals("KnownState")
+                            || e.getPropertyName().equals("CommandedState")) {
+                                //check alignement of all turnouts in route
+                                checkTurnoutAlignment();
+                            }
+                        }
+                    }
+                    );
+                }
+            }
+        }         
+        
         if (mNumSensors>0) {
             for (int k = 0;k < mNumSensors;k++) {
                 mSensors[k] = InstanceManager.sensorManagerInstance().
@@ -661,8 +755,7 @@ public class DefaultRoute extends AbstractNamedBean
                                 }
                             }
                     });
-                }
-                else {
+                } else {
                     // control sensor does not exist
                     log.error("Route "+getSystemName()+" is linked to a Sensor that does not exist: "+
                                              mControlSensors[k]);
@@ -683,8 +776,7 @@ public class DefaultRoute extends AbstractNamedBean
                             }
                         }
                     });
-            }
-            else {
+            } else {
                 // control turnout does not exist
                 log.error("Route "+getSystemName()+" is linked to a Turnout that does not exist: "+
                                              mControlTurnout);
@@ -704,15 +796,17 @@ public class DefaultRoute extends AbstractNamedBean
                             }
                         }
                     });
-            }
-            else {
+            } else {
                 // control turnout does not exist
                 log.error("Route "+getSystemName()+" is linked to a Turnout that does not exist: "+
                                              mLockControlTurnout);
             }
         }
-    }
+// register for updates to the Output Turnouts
 
+        
+        
+    }
     /**
      * Internal method to check whether
      * operation of the route has been vetoed by a sensor
@@ -764,6 +858,16 @@ public class DefaultRoute extends AbstractNamedBean
             mLockTurnout.removePropertyChangeListener(mLockTurnoutListener);
             mLockTurnoutListener = null;
         }
+        
+        //remove listeners on output turnouts if there are any
+        if (mTurnoutsAlignedSensor!=""){
+            for (int k = 0;k < mNumOutputTurnouts; k++) {
+                if (mOpTurnoutListener[k]!=null) {
+                    mOpTurnout[k].removePropertyChangeListener(mOpTurnoutListener[k]);
+                    mOpTurnoutListener[k] = null;
+    }
+            }
+        }
     }
 
     /**
@@ -798,6 +902,7 @@ public class DefaultRoute extends AbstractNamedBean
         return UNKNOWN;
     }
     
+    
     /**
      * Not needed for Routes - included to complete implementation of the NamedBean interface.
      */
@@ -806,17 +911,18 @@ public class DefaultRoute extends AbstractNamedBean
         return;
     }    
     static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DefaultRoute.class.getName());
+    
+    
 }
 
 /**
  * Class providing a thread to set route turnouts
  */
-class SetRouteThread extends Thread
-{
+class SetRouteThread extends Thread {
 	/**
 	 * Constructs the thread
 	 */
-	public SetRouteThread (DefaultRoute aRoute) {
+    public SetRouteThread(DefaultRoute aRoute) {
 		r = aRoute;
 	}
 	
@@ -829,83 +935,80 @@ class SetRouteThread extends Thread
 	 * <li>Set Sensors
 	 * </UL>
 	 */
-	public void run () {
+    public void run() {
 	
-	    // run script
+        // run script defined for start of route set
 	    if ((r.getOutputScriptName() != null) && (!r.getOutputScriptName().equals(""))) {
 	        jmri.util.PythonInterp.runScript(r.getOutputScriptName());
 	    }
 	    
-	    // play sound
+        // play sound defined for start of route set
 	    if ((r.getOutputSoundName() != null) && (!r.getOutputSoundName().equals(""))) {
 	        jmri.jmrit.Sound snd = new jmri.jmrit.Sound(r.getOutputSoundName());
 	        snd.play();
 	    }
 	    
-	    
-	    // set turnouts
-		int delay = r.getRouteCommandDelay();			
-		for (int k = 0; k < DefaultRoute.MAX_OUTPUT_TURNOUTS_PER_ROUTE; k++) {
-			Turnout t = r.getOutputTurnout(k);
+        // set sensors at
+        for (int k = 0; k < DefaultRoute.MAX_OUTPUT_SENSORS_PER_ROUTE; k++) {
+            Sensor t = r.getOutputSensor(k);
 			if (t!=null) {
-				int state = r.getOutputTurnoutState(k);
+                int state = r.getOutputSensorState(k);
 				if (state!=-1) {
 					if (state==Route.TOGGLE) {
 						int st = t.getKnownState();
-						if (st==Turnout.CLOSED) {
-							state = Turnout.THROWN;
+                        if (st==Sensor.ACTIVE) {
+                            state = Sensor.INACTIVE;
+                        } else {
+                            state = Sensor.ACTIVE;
 						}
-						else {
-							state = Turnout.CLOSED;
 						}
-					}
-					t.setCommandedState(state);
 					try {
-						Thread.sleep(250 + delay);
+                        t.setKnownState(state);
+                    } catch (JmriException e) {
+                        log.warn("Exception setting sensor "+t.getSystemName()+" in route");
 					}
-					catch (InterruptedException e) {
+                    try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException e) {
 						break;
 					}
 				}
-			}
-			else {
+            } else {
 				break;
 			}
 		}
 		
-		// set sensors
-		for (int k = 0; k < DefaultRoute.MAX_OUTPUT_SENSORS_PER_ROUTE; k++) {
-			Sensor t = r.getOutputSensor(k);
+        // set turnouts
+        int delay = r.getRouteCommandDelay();
+        for (int k = 0; k < DefaultRoute.MAX_OUTPUT_TURNOUTS_PER_ROUTE; k++) {
+            Turnout t = r.getOutputTurnout(k);
 			if (t!=null) {
-				int state = r.getOutputSensorState(k);
+                int state = r.getOutputTurnoutState(k);
 				if (state!=-1) {
 					if (state==Route.TOGGLE) {
 						int st = t.getKnownState();
-						if (st==Sensor.ACTIVE) {
-							state = Sensor.INACTIVE;
+                        if (st==Turnout.CLOSED) {
+                            state = Turnout.THROWN;
+                        } else {
+                            state = Turnout.CLOSED;
 						}
-						else {
-							state = Sensor.ACTIVE;
 						}
-					}
+                    t.setCommandedState(state);
 					try {
-					    t.setKnownState(state);
-					} catch (JmriException e) {
-					    log.warn("Exception setting sensor "+t.getSystemName()+" in route");
-					}
-					try {
-						Thread.sleep(50);
-					}
-					catch (InterruptedException e) {
+                        Thread.sleep(250 + delay);
+                    } catch (InterruptedException e) {
 						break;
 					}
 				}
-			}
-			else {
+            } else {
 				break;
 			}
 		}
+        //set route not busy
 		r.setRouteNotBusy();
+        //check turnout alignment
+        r.checkTurnoutAlignment();
+        
 	}
 	
 	private DefaultRoute r;

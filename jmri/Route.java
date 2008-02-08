@@ -42,7 +42,7 @@ package jmri;
  *
  * @author			Dave Duchamp Copyright (C) 2004
  * @author			Bob Jacobsen Copyright (C) 2007
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public interface Route extends NamedBean {
 
@@ -211,7 +211,15 @@ public interface Route extends NamedBean {
      */
     public String getOutputSoundName();
     
+     /**
+     * Method to set turnouts aligned sensor
+     */
+    public void setTurnoutsAlignedSensor (String sensorSystemName);
     
+     /**
+     * Method to get system name of turnouts aligned sensor
+     */
+    public String getTurnoutsAlignedSensor();
 
     // Interface for control inputs
     
