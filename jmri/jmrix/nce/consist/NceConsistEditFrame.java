@@ -44,7 +44,7 @@ import java.util.List;
  * mid loco4) :0000
  * 
  * @author Dan Boudreau Copyright (C) 2007 2008
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 
 public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
@@ -430,13 +430,13 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 			return;
 		// throttle button
 		if (ae.getSource() == throttleButton) {
+			if (!validConsist())
+				return;
 			int locoAddr = validLocoAdr(locoTextField1.getText());
 			boolean isLong = (adrButton1.getText() == LONG);
 			if (locoAddr < 0)
 				return;
 			consistNum = validConsist(consistTextField.getText());
-			if (consistNum < 1)
-				return;
 			jmri.jmrit.throttle.ThrottleFrame tf=
 				jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();
 			tf.notifyAddressChosen(locoAddr, isLong); 	// first notify for func button
