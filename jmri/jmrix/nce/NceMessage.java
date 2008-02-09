@@ -26,7 +26,7 @@ package jmri.jmrix.nce;
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2007
- * @version     $Revision: 1.37 $
+ * @version     $Revision: 1.38 $
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 	
@@ -158,6 +158,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 		} else {
 			m.setBinary(false);
 			m.setOpCode('M');
+			m.setTimeout(SHORT_TIMEOUT);
 		}
 		return m;
 	}
@@ -185,6 +186,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         else {
             m.setBinary(false);
             m.setOpCode('X');
+            m.setTimeout(SHORT_TIMEOUT);
         }
         return m;
     }
@@ -388,6 +390,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
                 m.addIntAsTwoHex(bytes[j]&0xFF,i);
                 i = i+2;
             }
+            m.setTimeout(SHORT_TIMEOUT);
             return m;
         }
     }
