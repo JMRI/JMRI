@@ -26,7 +26,7 @@ import java.util.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.49 $
+ * @version			$Revision: 1.50 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -338,8 +338,10 @@ abstract public class AbstractMRTrafficController {
     // Dispatch control and timer
     private boolean replyInDispatch = false;			// true when reply has been received but dispatch not completed
     private int maxDispatchTime = 0;
+    private int warningMessageTime = DISPATCH_WARNING_TIME;
     private static final int DISPATCH_WAIT_INTERVAL = 100;
-    private static final int DISPATCH_WARNING_TIME = 8000;	// report warning when max dispatch time exceeded
+    private static final int DISPATCH_WARNING_TIME = 12000;	// report warning when max dispatch time exceeded
+    private static final int WARN_NEXT_TIME = 1000;			// report every second
     
     private void checkReplyInDispatch() {
 		int loopCount = 0;
@@ -355,8 +357,10 @@ abstract public class AbstractMRTrafficController {
 			int currentDispatchTime = loopCount * DISPATCH_WAIT_INTERVAL;
 			if (currentDispatchTime > maxDispatchTime) {
 				maxDispatchTime = currentDispatchTime;
-				if (maxDispatchTime > DISPATCH_WARNING_TIME)
-					log.warn("Max dispatch time is now " + maxDispatchTime);
+				if (currentDispatchTime >= warningMessageTime){
+					warningMessageTime = warningMessageTime + WARN_NEXT_TIME;
+					log.debug("Max dispatch time is now " + currentDispatchTime);
+				}
 			}
 		}
 	}
