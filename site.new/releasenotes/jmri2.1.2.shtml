@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.2.shtml,v 1.11 2008-02-05 16:10:20 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.2.shtml,v 1.12 2008-02-09 05:56:38 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -191,6 +191,12 @@ X10 support is starting to work quite nicely. In particular, Lights and Turnouts
 
 <p>
 Michael Mosher provided a decoder definition for the Digitrax SFX sound-only decoders.
+
+<p>
+Simon Reader updated Routes so they can set a sensor when all the turnouts in the Route are set properly.  This works regardless of whether they were set by the Route or separately, so can be used to check whether a particular path is lined through a set of turnouts.
+
+<p>
+Dan Boudreau adjusted the timing in the NCE interface.
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
