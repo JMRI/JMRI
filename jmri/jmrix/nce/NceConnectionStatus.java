@@ -18,7 +18,7 @@ import jmri.jmrix.ConnectionStatus;
  * Also checks for March 2007 EPROM and warns user about Monitoring feedback.
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  * 
  */
 
@@ -89,6 +89,9 @@ public class NceConnectionStatus implements NceListener {
 	private static final int mm_USB_SB161 = 5; 	// Future use, SB3 1.61, not currently used
 
 	public NceMessage NceEpromPoll() {
+		
+		if (NceMessage.getCommandOptions() <= NceMessage.OPTION_1999)
+			return null;
 		
 		if (epromState == CHECK_STATE) { // normal state for this routine
 			// are there interface timeouts?

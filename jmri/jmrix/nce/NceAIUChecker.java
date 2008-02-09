@@ -4,6 +4,8 @@ package jmri.jmrix.nce;
 
 import javax.swing.JOptionPane;
 
+import jmri.jmrix.ConnectionStatus;
+
 /* 
  * Checks to see if AIU broadcasts are enabled and warns user to 
  * disable AIU broadcast for proper operation.  NCE command station
@@ -11,7 +13,7 @@ import javax.swing.JOptionPane;
  * AIU broadcasts, 0 = disabled, 1 = enabled.
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  * 
  */
 
@@ -23,8 +25,10 @@ public class NceAIUChecker implements NceListener {
 
 	public NceMessage NceAiuPoll() {
 
-		// If USB, just return
+		if (NceMessage.getCommandOptions() <= NceMessage.OPTION_1999)
+			return null;
 		
+		// If USB, just return
 		if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE)
 			return null;
 		
@@ -59,6 +63,9 @@ public class NceAIUChecker implements NceListener {
 			}
 			if (AIUstatus == 1) {
 				log.warn("AIU broadcasts are enabled");
+				ConnectionStatus.instance().setConnectionState(
+						NceTrafficController.instance().getPortName(),
+						ConnectionStatus.CONNECTION_DOWN);
 				JOptionPane.showMessageDialog(null,
 								"JMRI has detected that AIU broadcasts are enabled. \n"
 								+ "You must disable AIU broadcasts for proper operation of this program. \n" 
