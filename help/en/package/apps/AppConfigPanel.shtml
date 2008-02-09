@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: AppConfigPanel.shtml,v 1.1 2008-02-03 23:32:22 jacobsen Exp $ -->
+<!-- $Id: AppConfigPanel.shtml,v 1.2 2008-02-09 06:14:27 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -23,6 +23,41 @@
 
 <H2>JMRI: Preferences Window</H2>
 
+The preferences window is where you 
+configure the basic operation of your JMRI application.
+There's a top part that contains the basics, and 
+a separate section for advanced preferences.
+
+<p>
+This page is under construction. 
+In the meantime, there's some more information on preferences
+on some 
+<a href="../../DecoderProManual/Getting_Started.shtml#Preferences">tutorial pages</a>.
+
+<h3>Basic Preferences</h3>
+
+<ul>
+<li>Layout Connection
+<li>GUI Style
+<li>Programmer Defaults
+</ul>
+
+<h3>Advanced Preferences</h3>
+
+To set the advanced preferences, check the "Show Advanced Preferences" box.
+
+<ul>
+<li>Auxiliary layout connections
+<li>Programmer Defaults
+<li>Locale
+<li>Do actions at startup
+<li>Create buttons on the main screen
+<li>Load panel files at startup
+<li>Run scripts at startup
+<li>Set the location of the roster
+</ul>
+
+<p>
 This is the apps.AppConfigPanel.shtml help page
 
 <!--#include virtual="/Footer" -->
