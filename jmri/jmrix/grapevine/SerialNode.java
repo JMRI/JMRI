@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRMessage;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class SerialNode {
 
@@ -202,34 +202,55 @@ public class SerialNode {
 
 
     /**
-     * Public Method to create an Initialization packet (SerialMessage) for this node.
-     * The message consists of multiple sub-parts:
+     * Public Method to create Initialization packets (SerialMessage) for this node.
+     * Initialization consists of multiple parts:
      * <ul>
-     * <li>Turn on the 2nd parallel port
      * <li>Turn on the ASD input
+     * <li>Turn on the 2nd parallel port
      * </ul>
-     * Eventually, it should also request input values, once we know 
-     * what message does that.
+     * (Eventually, it should also request input values, once we know 
+     * what message does that)
+     * <p>
+     * As an Ugly Hack to keep these separate, only the first is
+     * put in the reply from this. The other(s) are sent via
+     * the usual output methods.
      */
     public SerialMessage createInitPacket() {
-        SerialMessage m = new SerialMessage(4*2); // two subparts
-        int i= 0;
 
-        // turn on 2nd parallel inputs        
-        m.setElement(i++, nodeAddress | 0x80);  // address
-        m.setElement(i++, 0x70);  // command
-        m.setElement(i++, nodeAddress | 0x80);  // address
-        m.setElement(i++, 0x10);  // bank and parity
-        m.setParity(i-4);
+        // first, queue a timer to send 2nd message
+        javax.swing.Timer timer = new javax.swing.Timer(250, null);
+        java.awt.event.ActionListener l = new java.awt.event.ActionListener(){
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                SerialMessage m2 = new SerialMessage(4);
+                int i = 0;
+
+                // turn on 2nd parallel inputs        
+                m2.setElement(i++, nodeAddress | 0x80);  // address
+                m2.setElement(i++, 0x70);  // command
+                m2.setElement(i++, nodeAddress | 0x80);  // address
+                m2.setElement(i++, 0x10);  // bank and parity
+                m2.setParity(i-4);
+                SerialTrafficController.instance().sendSerialMessage(m2, null);
+            }
+        };
+        timer.addActionListener(l);
+        timer.setRepeats(false);
+        timer.setInitialDelay(250);
+        timer.start();
+
+        // Now, do the first message, and return it.
+
+        SerialMessage m1 = new SerialMessage(4);
+        int i = 0;
+
+        // turn on ASD     
+        m1.setElement(i++, nodeAddress | 0x80);  // address
+        m1.setElement(i++, 0x71);  // command
+        m1.setElement(i++, nodeAddress | 0x80);  // address
+        m1.setElement(i++, 0x00);  // bank and parity
+        m1.setParity(i-4);
         
-        // turn on ASD
-        m.setElement(i++, nodeAddress | 0x80);  // address
-        m.setElement(i++, 0x71);  // command
-        m.setElement(i++, nodeAddress | 0x80);  // address
-        m.setElement(i++, 0x00);  // bank and parity
-        m.setParity(i-4);
-        
-        return m;
+        return m1;
     }
     
     /**
