@@ -8,27 +8,31 @@
     <h2>Install Guides</h2>
 	<UL>
 	<LI><A href="../install/Windows.html">Windows</a>
-	<LI><A href="../install/MacOSClassic.html">MacOS "Classic"</a>
 	<LI><A href="../install/MacOSX.html">MacOS X</a>
 	<LI><A href="../install/Linux.html">Linux</a>
-	<LI><A href="../install/OS2.html">OS/2</a>
 	<LI><A href="../install/Debug.html">Debugging an installation</a>
 	</UL>
 
     <h2>Connecting to your layout</h2>
 	<ul>
-	    <li> <A HREF="../hardware/XPressNet/">Atlas Commander</a>
-	    <li> <A HREF="../hardware/CMRI.html">C/MRI</a>
-	    <li> <A HREF="../hardware/Digitrax.html">Digitrax</a>
-	    <li> <A HREF="../hardware/EasyDCC.html">EasyDCC</a>
-	    <li> <A HREF="../hardware/XPressNet/">Lenz</a>
-		<li> <A HREF="../hardware/tmcc/index.html">Lionel TMCC</a>
-	    <li> <A HREF="../hardware/NCE.html">NCE</a>
-	    <li> <A HREF="../hardware/XPressNet/">Roco LocoMaus 2</a>
-	    <li> <A HREF="../hardware/SPROG.html">SPROG</a>
-	    <li> <A HREF="../hardware/Digitrax.html">Uhlenbrock Intellibox</a>
-	    <li> <A HREF="../hardware/Wangrow.html">Wangrow</a>
-	    <li> <A HREF="../hardware/Zimo.html">Zimo MX-1</a>
+		    <li> <A HREF="/help/en/html/hardware/XPressNet/index.shtml">Atlas Commander</a>
+		    <li> <A HREF="/help/en/html/hardware/cmri/CMRI.shtml">C/MRI</a>
+		    <li> <A HREF="/help/en/html/hardware/loconet/Digitrax.shtml">Digitrax</a>
+		    <li> <A HREF="/help/en/html/hardware/easydcc/EasyDCC.shtml">EasyDCC</a>
+		    <li> <A HREF="/help/en/html/hardware/loconet/Fleischmann.shtml">Fleischmann</a>
+		    <li> <A HREF="/help/en/html/hardware/XPressNet/index.shtml">Hornby</a>
+		    <li> <A HREF="/help/en/html/hardware/XPressNet/index.shtml">Lenz</a>
+		    <li> <A HREF="/help/en/html/hardware/tmcc/index.shtml">Lionel TMCC</a>
+		    <li> <A HREF="/help/en/html/hardware/nce/NCE.shtml">NCE</a>
+		    <li> <A HREF="/help/en/html/hardware/rps/index.shtml">m-RPS</a>
+		    <li> <A HREF="/help/en/html/hardware/oaktree/OakTree.shtml">Oak Tree Systems</a>
+		    <li> <A HREF="/help/en/html/hardware/grapevine/index.shtml">Protrak Grapevine</a>
+		    <li> <A HREF="/help/en/html/hardware/XPressNet/index.shtml">Roco</a>
+		    <li> <A HREF="/help/en/html/hardware/sprog/SPROG.shtml">SPROG</a>
+		    <li> <A HREF="/help/en/html/hardware/loconet/Digitrax.shtml">Uhlenbrock Intellibox</a>
+	        <li> <A HREF="/help/en/html/hardware/nce/Wangrow.shtml">Wangrow</a>
+		    <li> <A HREF="/help/en/html/hardware/zimo/Zimo.shtml">Zimo MX-1</a>
+		    <li> <A HREF="/help/en/html/hardware/XPressNet/index.shtml">ZTC</a>
 	</ul>
 
     <H2><a href="../releasenotes/">Release Notes</a></H2>
