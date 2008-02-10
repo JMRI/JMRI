@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NCE.shtml,v 1.6 2008-02-10 15:46:28 dan_boudreau Exp $ -->
+<!-- $Id: NCE.shtml,v 1.7 2008-02-10 21:56:28 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: NCE</TITLE>
@@ -51,10 +51,10 @@ This section discusses JMRI's support for the NCE PowerHouse Pro.
 	<LI>Now confirm that the AIU broadcasts are disabled and the baud
 	rate set in the NCE command station is the same as JMRI. These are the
 	normal defaults for NCE. Use a ProCab to select "SET CMD STATION" by
-	pressing the PROG/ESC button 5 times. Then press the Enter button 14
+	pressing the PROG/ESC button 5 times. Then press the ENTER button 14
 	times to determine if AIU broadcasts are disabled. Press 0 to disable.
-	Now press Enter once more to select the baud rate. Press 1 to set the
-	baud rate to 9,600, and press PROG/ESC to exit.</LI>
+	Now press the ENTER button once more to select the baud rate. Press 1
+	to set the baud rate to 9,600, and press PROG/ESC to exit.</LI>
 	<LI>The series of radio buttons labeled "GUI style" allows you to
 	select how the program will look. "Metal" is the native Java look
 	available on all types. Other choices will vary with your computer
@@ -203,6 +203,70 @@ limitation when connected to a PowerHouse.</P>
 	<DD>No loco programming</DD>
 </DL>
 
+<H3>Trouble Shooting</H3>
+
+When the connection to your NCE is okay and your NCE system is powered
+up you should see after starting PanelPro the following image:
+<P><IMG SRC="../images/jmriMainPageOk.jpg"
+	ALT="JMRI PanelPro Main Panel" /></P>
+<P>Congratulations you are up and running. The image for DecoderPro
+is similar to PanelPro's.</P>
+<P>If you see the following image: <IMG
+	SRC="../images/jmriMainPageFail.jpg" ALT="JMRI PanelPro Main Panel" />
+</P>
+<P>You have a problem that needs your attention. The following is a
+list of potential issues that might help you resolve your problem.</P>
+<OL>
+	<LI>Confirm that your NCE Command Station is powered up.</LI>
+	<LI>Check your cables, make sure they are installed correctly.</LI>
+	<LI>If there was more than one "Serial Port" to chose from in the
+	JMRI preferences menu, try the others.</LI>
+	<LI>Recheck the baud rates selected, make sure both JMRI and the
+	NCE Command Station are set to the same rates.</LI>
+</OL>
+
+<H4>Console Window</H4>
+
+When JMRI starts, it opens a console window that provides program
+status. Below is an image of the console window when the program is
+operating normally.
+<P><IMG SRC="../images/jmriConsoleOk.jpg" ALT="JMRI Console" /></P>
+<P>If you're having problems the console window can look like the
+one below:</P>
+<P><IMG SRC="../images/jmriConsoleFail.jpg" ALT="JMRI Console" /></P>
+<P>To help you better understand what might be happening and to
+possibly resolve your problem we'll explain some of the warning and
+error messages displayed in the above console window.</P>
+<P>The very first message is an information message labeled "INFO"
+that states messages above it should be ignored. This message occurs at
+time "0" which can be found at the left side of the message. The next
+"INFO" message states the version of JMRI and JAVA that you are using.
+And the next message is the communication port that you've selected in
+preferences, the baud rate, and the status of the communication port
+control lines. Don't worry about the control line status, JMRI ignores
+them.</P>
+<P>The first warning message states that there was a timeout to
+message "AA". During startup, JMRI checks to see if your preferences
+match those in the NCE command station. Message "AA" requests the EPROM
+revision of the command station. The response is normally three
+characters, something like "6.2.1". A timeout means that JMRI asked for
+something and the command station didn't respond. When the connection is
+correct and the system is powered up, you should not see any timeout
+messages.</P>
+<P>The next warning message states that because there was a timeout,
+the program didn't get the information requested from the command
+station. The next messages continue as the program tries every 10
+seconds to read the EPROM revision by issuing the "AA" command. You can
+try and trouble shoot your connections knowing that every 10 seconds
+JMRI will retest to see if you've fixed the problem.</P>
+<P>Whenever JMRI detects a problem with the connection or NCE
+command station, it will request the EPROM revision to see if the
+connection and command station is still operational. So if you see
+timeouts and "AA" commands you have either poor or failed connection, or
+a powered down or failed command station.</P>
+<P>If you are still having problems, you should try the JMRI users
+group. There you should be able to contact JMRI users that will help you
+out.<A HREF="http://groups.yahoo.com/group/jmriusers/">jmriusers</A></P>
 <H3>Other Information</H3>
 
 <P><A HREF="http://www.ncedcc.com/catalog2.html">NCE Systems and
