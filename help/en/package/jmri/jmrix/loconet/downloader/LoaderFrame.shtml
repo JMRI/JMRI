@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LoaderFrame.shtml,v 1.1 2007-12-06 05:58:29 jacobsen Exp $ -->
+<!-- $Id: LoaderFrame.shtml,v 1.2 2008-02-10 05:39:05 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -21,10 +21,34 @@
 <body>
 <!--#include virtual="/Header" -->
 
-<H2>Digitrax Downloader
+<H2>Digitrax Firmware Downloader
 </H2>
     
-This is the help/jmri/jmrix/loconet/downloader/LoaderFrame help page
+Some Digitrax products can have new firmware (internal programs) downloaded to them.
+The firmware updates are distributed as ".dmf" (Digitrax Mangled Firmware) files.
+They contain both the code itself, and various managment information
+to make sure that it can only be downloaded into the hardware it expects.
+
+<p>
+Note that this is not the same as the 
+<a href="../soundloader/LoaderFrame.shtml">Sound Download Tool</a>, which
+is used with a PR2 to load new sound projects into a Digitrax
+sound decoder.
+
+<p>
+To use this tool:
+<ul>
+<li>Click the select button, and select the .dmf file you want to download.
+<li>Click Read File to read the file into the program and verify its contents
+<li>Only if instructed to by Digitrax, change the various values in the 
+control fields (this is usuall not needed)
+<li>Click Download to load the firmware. This will take a little while, so
+there's progress bar below the buttons.
+<li>If desired, click Verify to double-check the contents. This also takes a 
+while.
+</ul>
+<p>
+(This is the help/jmri/jmrix/loconet/downloader/LoaderFrame help page)
 
 <!--#include virtual="/Footer" -->
 </body>
