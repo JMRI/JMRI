@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.2.shtml,v 1.13 2008-02-10 03:40:59 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.2.shtml,v 1.14 2008-02-10 16:28:40 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -200,6 +200,9 @@ Dan Boudreau adjusted the timing in the NCE interface.
 
 <p>
 Dick Bronson contributed new sounds for CTC panels.
+
+<p>
+Dan Boudreau fixed problems in the support for Wangrow command stations.
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
