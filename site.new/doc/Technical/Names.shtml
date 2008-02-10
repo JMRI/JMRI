@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Names.shtml,v 1.5 2007-12-13 22:27:19 jacobsen Exp $ -->
+<!-- $Id: Names.shtml,v 1.6 2008-02-10 17:32:25 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -135,9 +135,9 @@ Each different hardware system can specify the "string" that follows the system 
 letters.  Generally, these are small numbers, but their exact meaning is very system-specific.
 For more information, please see the specific pages for
 <UL>
-<LI><A HREF="../../hardware/CMRI.html">C/MRI</a>
-<LI><A HREF="loconet/Addressing.shtml">Digitrax</a>
-<LI><A HREF="../../hardware/NCE.html#names">NCE</a>
+<LI><A HREF="/help/en/html/cmri/CMRI.html">C/MRI</a>
+<LI><A HREF="/help/en/html/hardware/loconet/Addressing.shtml">Digitrax</a>
+<LI><A HREF="/help/en/html/hardware/nce/NCE.html#names">NCE</a>
 </UL>
 
 <P>
