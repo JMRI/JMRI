@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LoaderFrame.shtml,v 1.2 2007-12-30 04:15:19 jacobsen Exp $ -->
+<!-- $Id: LoaderFrame.shtml,v 1.3 2008-02-10 06:11:21 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -35,8 +35,43 @@ Digitrax provides sample sound project files at their Sound Depot
 <a href="http://www.digitrax.com/sounddepot.php">(http://www.digitrax.com/sounddepot.php)</a>
 web site. You can also find links to documentation and additional tools there.
 
+<h3>Using the downloader</h3>
+
+When you first select the Download Sounds tool, it opens a window
+with most of the controls disabled:<br/>
+<a href="LoaderPane.gif">
+<img src="LoaderPane.gif" width="236" height="118" alt="Initial Editor Image"/></a><br/>
+(Click on any image on this page to see a larger version)
+<p>
+The status line at the bottom will walk you through the steps needed.
+<ol>
+<li>First, click "Select" and pick the .spj file you want to download.
+<li>Next, click "Read" to read the file (this is a separate step
+so you can just click "Read" multiple times if you're editing and saving
+new versions of the file).
+<p>
+If everything is OK, the file will be read into the program and verified,
+a version string from the file will be displayed, and the "Download" button
+will be enabled.<p>
+<a href="LoaderPaneReady.gif">
+<img src="LoaderPaneReady.gif" width="236" height="118" alt="Initial Editor Image"/></a><br/>
+
+<li>Click "Download" to start the download process. It will take a little
+while.
+</ol>
+<p>
+If you have more decoders to load with the same file, you can just
+connect them each in turn to the PR2 and click "Download", there's 
+no need to reload the file each time.
+
+<p>
+Also, you can use a JMRI 
+<a href="../../../../../html/tools/throttle/ThrottleMain.shtml">Throttle</a>
+to try out your new sounds via the PR2.  JMRI takes care of
+converting the PR2 from a programmer/loader into a low power command
+station to run the locomotive.
 <p>    
-This is the help/jmri/jmrix/loconet/soundloader/LoaderFrame help page
+(This is the help/jmri/jmrix/loconet/soundloader/LoaderFrame help page)
 
 <!--#include virtual="/Footer" -->
 </body>
