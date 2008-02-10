@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ThrottleFrame.shtml,v 1.1 2008-02-03 19:07:12 jacobsen Exp $ -->
+<!-- $Id: ThrottleFrame.shtml,v 1.2 2008-02-10 06:13:46 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -24,12 +24,11 @@
 <H2>JMRI Throttle</H2>
 
 
-Until we get a better help page set up, please go to 
-<a href="http://jmri.sf.net/tools/throttle/ThrottleMain.html">http://jmri.sf.net/tools/throttle/ThrottleMain.html</a>
-in your web browser.
+Until we get a better help page set up, please go to the
+<a href="../../../../html/tools/throttle/ThrottleMain.shtml">general throttle page</a>.
 
 <p>
-This is the jmri.jmrit.throttle.ThrottleFrame help page.
+(This is the jmri.jmrit.throttle.ThrottleFrame help page)
     
 <!--#include virtual="/Footer" -->
 </body>
