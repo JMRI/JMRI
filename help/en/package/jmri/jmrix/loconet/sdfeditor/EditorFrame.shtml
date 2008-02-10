@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: EditorFrame.shtml,v 1.3 2008-01-19 06:41:31 jacobsen Exp $ -->
+<!-- $Id: EditorFrame.shtml,v 1.4 2008-02-10 05:55:07 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -32,14 +32,59 @@ program is stored in a "Sound Definition" (SDF) format.
 
 <p>
 The SDF Sound File Editor allows you to make certain kinds of changes
-to the SDF information in a sound project.  It's used with the
-<a href="../soundloader/EditorFrame.shtml">SPJ downloader and editor</a>,
+to the SDF information in a sound project.  It's used with the 
+<a href="../soundloader/EditorFrame.shtml">SPJ editor</a>
 because the SDF information is stored in a Digitrax SPJ sound project file. 
+After you edit the SDF information, you can save it to a file
+from the 
+<a href="../soundloader/EditorFrame.shtml">SPJ editor</a>,
+and the download it to a Digitrax sound decoder with a Digitrax PR2 and the 
+<a href="../soundloader/LoaderFrame.shtml">JMRI sound downloader tool</a>
+or the Digitrax SoundLoader program.
 
 <p>
 Digitrax provides sample sound project files at their Sound Depot 
 <a href="http://www.digitrax.com/sounddepot.php">(http://www.digitrax.com/sounddepot.php)</a>
 web site. You can also find links to documentation and additional tools there.
+
+<p>
+When you open the SDF editor by clicking the "Edit" button
+in the 
+<a href="../soundloader/EditorFrame.shtml">SPJ editor</a>,
+a new window opens that has two parts:<br/>
+<a href="SdfInitSound.gif">
+<img src="SdfInitSound.gif" width="415" height="235" alt="SDF Editor"/></a><br/>
+On the left is a
+view of the entire SDF information as a tree of
+nested elements. On the right is a window
+that shows additional information on 
+the element that's selected on the left.
+
+<p>
+The right hand window has the "assembly" format for the
+selected element at the top, then an explanation of what
+the element does in the middle.  If an editor for that 
+particular type of element has been defined, the section at the
+bottom will have checkboxes and selection boxes for modifying the
+content of the element.
+
+<h3>Status and Future Work</h3>
+This editor tool is still very much a work in progress.
+It's good at browsing the content of the file, but it needs
+a lot more explanatory text added.
+Also, it currently only provides a way to make small changes to the 
+contents of an SDF file, but doesn't (yet)
+allow you to make larger changes to structure of the file.
+For example, if you
+selected an "Initiate Sound" element, which tells the decoder
+to start playing a sound under certain conditions, you
+can change those conditions.  But the editor (at present)
+doesn't provide a way to add new "Initiate Sound" elements.
+
+<p>
+The editor is meant to be a beginner's tool, and we need a 
+lot of explanatory text on each window so people know what the
+options do.
 
 <p>
 (This is the help/jmri/jmrix/loconet/sdfeditor/EditorFrame help page)
