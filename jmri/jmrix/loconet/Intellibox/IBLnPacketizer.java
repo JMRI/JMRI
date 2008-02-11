@@ -31,7 +31,7 @@ import jmri.jmrix.loconet.LocoNetMessageException;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.3 $
+ * @version 		$Revision: 1.4 $
  *
  */
 public class IBLnPacketizer extends LnPacketizer {
@@ -188,7 +188,7 @@ public class IBLnPacketizer extends LnPacketizer {
                     // input - now send
                     try {
                         if (ostream != null) {
-                            if (!controller.okToSend()) log.warn("LocoNet port not ready to receive");
+                            if (!controller.okToSend()) log.debug("LocoNet port not ready to receive");
                             if (debug) log.debug("start write to stream");
 
                               // The Intellibox cannot handle messges over 4 bytes without

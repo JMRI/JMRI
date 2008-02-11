@@ -29,7 +29,7 @@ import java.util.NoSuchElementException;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.18 $
+ * @version 		$Revision: 1.19 $
  *
  */
 public class LnPacketizer extends LnTrafficController {
@@ -430,7 +430,7 @@ public class LnPacketizer extends LnTrafficController {
                     // input - now send
                     try {
                         if (ostream != null) {
-                            if (!controller.okToSend()) log.warn("LocoNet port not ready to receive");
+                            if (!controller.okToSend()) log.debug("LocoNet port not ready to receive");
                             if (debug) log.debug("start write to stream  : "+jmri.util.StringUtil.hexStringFromBytes(msg));
                             ostream.write(msg);
                             if (fulldebug) log.debug("end write to stream: "+jmri.util.StringUtil.hexStringFromBytes(msg));
