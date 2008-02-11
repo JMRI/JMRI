@@ -159,6 +159,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrit.display.LayoutEditor_background" url="package/jmri/jmrit/display/LayoutEditor.shtml#background" />
 	<mapID target="html.tools.Turnouts" url="html/tools/Turnouts.shtml" />
 	<mapID target="html.doc.Technical.getcode" url="html/doc/Technical/getcode.shtml" />
+	<mapID target="package.apps.Apps" url="package/apps/Apps.shtml" />
 	<mapID target="DecoderProManual.Comp_LightFX_Top" url="DecoderProManual/Comp_LightFX.shtml#Top" />
 	<mapID target="html.tools.Routes" url="html/tools/Routes.shtml" />
 	<mapID target="html.tools.Sensors" url="html/tools/Sensors.shtml" />
@@ -219,10 +220,12 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.doc.Technical.NewSystem" url="html/doc/Technical/NewSystem.shtml" />
 	<mapID target="DecoderProManual.Getting_Started_Start" url="DecoderProManual/Getting_Started.shtml#Start" />
 	<mapID target="html.doc.Technical.Poll2007" url="html/doc/Technical/Poll2007.shtml" />
+	<mapID target="package.apps.DecoderPro.DecoderPro" url="package/apps/DecoderPro/DecoderPro.shtml" />
 	<mapID target="html.hardware.TerminalServer" url="html/hardware/TerminalServer.shtml" />
 	<mapID target="package.jmri.jmrit.display.LayoutEditor_editing" url="package/jmri/jmrit/display/LayoutEditor.shtml#editing" />
 	<mapID target="html.doc.Technical.Names" url="html/doc/Technical/Names.shtml" />
 	<mapID target="package.jmri.jmrit.simpleclock.SimpleClockFrame" url="package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml" />
+	<mapID target="package.apps.PanelPro.PanelPro" url="package/apps/PanelPro/PanelPro.shtml" />
 	<mapID target="package.jmri.jmrit.beantable.RouteTable_Turnout lock feature" url="package/jmri/jmrit/beantable/RouteTable.shtml#Turnout lock feature" />
 	<mapID target="DecoderProManual.Comp_Basic_Top" url="DecoderProManual/Comp_Basic.shtml#Top" />
 	<mapID target="html.doc.Technical.JUnit" url="html/doc/Technical/JUnit.shtml" />
@@ -275,9 +278,9 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.hardware.PDA" url="html/hardware/PDA.shtml" />
 	<mapID target="package.jmri.jmrit.display.SetSignalsAtBoundary" url="package/jmri/jmrit/display/SetSignalsAtBoundary.shtml" />
 	<mapID target="DecoderProManual.index_Basic Programmer" url="DecoderProManual/index.shtml#Basic Programmer" />
+	<mapID target="package.jmri.jmrit.beantable.SensorTable" url="package/jmri/jmrit/beantable/SensorTable.shtml" />
 	<mapID target="html.doc.Technical.index" url="html/doc/Technical/index.shtml" />
 	<mapID target="html.hardware.XPressNet.LI101Configurationtool" url="html/hardware/XPressNet/LI101Configurationtool.shtml" />
-	<mapID target="package.jmri.jmrit.beantable.SensorTable" url="package/jmri/jmrit/beantable/SensorTable.shtml" />
 	<mapID target="package.jmri.jmrit.blockboss.BlockBossFrame_start" url="package/jmri/jmrit/blockboss/BlockBossFrame.shtml#start" />
 	<mapID target="DecoderProManual.Basic_Programming_Basic 2" url="DecoderProManual/Basic_Programming.shtml#Basic 2" />
 	<mapID target="package.jmri.jmrix.loconet.bdl16.BDL16Frame" url="package/jmri/jmrix/loconet/bdl16/BDL16Frame.shtml" />
