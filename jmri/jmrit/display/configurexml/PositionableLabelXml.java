@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public class PositionableLabelXml implements XmlAdapter {
 
@@ -55,17 +55,22 @@ public class PositionableLabelXml implements XmlAdapter {
         return element;
     }
 
-
+    /**
+     * Store the text formatting information.
+     * <p>
+     * This is always stored, even if the icon isn't in text mode,
+     * because some uses (subclasses) of PositionableLabel flip
+     * back and forth between icon and text, and want to remember their
+     * formatting.
+     */
     protected void storeTextInfo(PositionableLabel p, Element element) {
-        if (p.isText() && p.getText()!=null) {
-            element.setAttribute("text", p.getText());
-            element.setAttribute("size", ""+p.getFont().getSize());
-            element.setAttribute("style", ""+p.getFont().getStyle());
-            if (!p.getForeground().equals(Color.black)) {
-                element.setAttribute("red", ""+p.getForeground().getRed());
-                element.setAttribute("green", ""+p.getForeground().getGreen());
-                element.setAttribute("blue", ""+p.getForeground().getBlue());
-            }
+        if (p.getText()!=null) element.setAttribute("text", p.getText());
+        element.setAttribute("size", ""+p.getFont().getSize());
+        element.setAttribute("style", ""+p.getFont().getStyle());
+        if (!p.getForeground().equals(Color.black)) {
+            element.setAttribute("red", ""+p.getForeground().getRed());
+            element.setAttribute("green", ""+p.getForeground().getGreen());
+            element.setAttribute("blue", ""+p.getForeground().getBlue());
         }
     }
     
