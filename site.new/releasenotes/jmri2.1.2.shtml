@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.2.shtml,v 1.14 2008-02-10 16:28:40 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.2.shtml,v 1.15 2008-02-11 15:46:56 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -203,6 +203,12 @@ Dick Bronson contributed new sounds for CTC panels.
 
 <p>
 Dan Boudreau fixed problems in the support for Wangrow command stations.
+
+<p>
+A message about "LocoNet not ready to receive" was causing some confusion, so was made into a debug statement that most users won't see.
+
+<p>
+Robin Becker helped debug and fix a problem where certain text-based panel icons, e.g. memories, lost their formatting.
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
