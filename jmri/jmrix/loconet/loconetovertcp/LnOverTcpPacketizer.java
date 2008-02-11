@@ -31,7 +31,7 @@ import java.util.StringTokenizer ;
  * contact Digitrax Inc for separate permission.
  * @author		Bob Jacobsen  Copyright (C) 2001
  * @author              Alex Shepherd Copyright (C) 2003, 2006
- * @version 		$Revision: 1.7 $
+ * @version 		$Revision: 1.8 $
  *
  */
 public class LnOverTcpPacketizer extends LnPacketizer {
@@ -187,7 +187,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                   // input - now send
                   try {
                       if (ostream != null) {
-                          if (!controller.okToSend()) log.warn("LocoNet port not ready to receive");
+                          if (!controller.okToSend()) log.warn("LocoNet port not ready to receive"); // TCP, not RS232, so message is a real warning
                           if (debug) log.debug("start write to stream");
                           StringBuffer packet = new StringBuffer(msg.length * 3 + SEND_PREFIX.length() + 2 ) ;
                           packet.append( SEND_PREFIX ) ;

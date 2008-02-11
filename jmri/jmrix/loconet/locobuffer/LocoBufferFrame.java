@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 /**
  * Frame to control and connect LocoNet via LocoBuffer interface and comm port
  * @author      Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class LocoBufferFrame extends jmri.jmrix.SerialPortFrame {
 
@@ -28,7 +28,7 @@ public class LocoBufferFrame extends jmri.jmrix.SerialPortFrame {
 				adapter.configure();
 				// check for port in OK state
 				if (!((LocoBufferAdapter)adapter).okToSend()) {
-					log.info("LocoBuffer port not ready to send");
+					log.warn("LocoBuffer port not ready to send"); // at start, so real warning
 					JOptionPane.showMessageDialog(null,
 				   		"The LocoBuffer is unable to accept data.\n"
 				   		+"Make sure its power is on, it is connected\n"
