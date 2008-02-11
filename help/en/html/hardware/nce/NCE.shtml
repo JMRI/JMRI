@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NCE.shtml,v 1.7 2008-02-10 21:56:28 dan_boudreau Exp $ -->
+<!-- $Id: NCE.shtml,v 1.8 2008-02-11 01:56:41 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: NCE</TITLE>
@@ -66,6 +66,8 @@ This section discusses JMRI's support for the NCE PowerHouse Pro.
 	<LI>Click "Save". You'll be asked if it's OK for the program to
 	quit, click "Yes".</LI>
 	<LI>Restart the program. You should be up and running.</LI>
+	<LI>If not see the <A HREF="#troubleShoot">
+	trouble shooting </A> section below.</LI>
 </OL>
 <P>For reliable operation, we recommend that you disable "AIU
 broadcast", and set the baud rate to 9,600. These are the normal
@@ -166,6 +168,8 @@ system from the preference menu for reliable operation.</P>
 	<LI>Click "Save". You'll be asked if it's OK for the program to
 	quit, click "Yes".</LI>
 	<LI>Restart the program. You should be up and running.</LI>
+	<LI>If not see the <A HREF="#troubleShoot">
+	trouble shooting </A> section below.</LI>
 </OL>
 
 <H4>NCE USB Adapter Limitations</H4>
@@ -203,17 +207,19 @@ limitation when connected to a PowerHouse.</P>
 	<DD>No loco programming</DD>
 </DL>
 
+<A ID="troubleShoot"></A>
 <H3>Trouble Shooting</H3>
 
 When the connection to your NCE is okay and your NCE system is powered
-up you should see after starting PanelPro the following image:
+up you should see after starting PanelPro the following control panel:
 <P><IMG SRC="../images/jmriMainPageOk.jpg"
 	ALT="JMRI PanelPro Main Panel" /></P>
-<P>Congratulations you are up and running. The image for DecoderPro
-is similar to PanelPro's.</P>
-<P>If you see the following image: <IMG
-	SRC="../images/jmriMainPageFail.jpg" ALT="JMRI PanelPro Main Panel" />
-</P>
+<P>If your panel looks like the above, congratulations you are up
+and running. The panel for DecoderPro is similar to PanelPro's.</P>
+<P>If you have the following control panel with the words "ERROR NCE
+USING COMx" in the right center of the panel:</P>
+<P><IMG SRC="../images/jmriMainPageFail.jpg"
+	ALT="JMRI PanelPro Main Panel" /></P>
 <P>You have a problem that needs your attention. The following is a
 list of potential issues that might help you resolve your problem.</P>
 <OL>
@@ -264,9 +270,10 @@ command station, it will request the EPROM revision to see if the
 connection and command station is still operational. So if you see
 timeouts and "AA" commands you have either poor or failed connection, or
 a powered down or failed command station.</P>
-<P>If you are still having problems, you should try the JMRI users
-group. There you should be able to contact JMRI users that will help you
-out.<A HREF="http://groups.yahoo.com/group/jmriusers/">jmriusers</A></P>
+<P>If you are still having problems, you should try the <A
+	HREF="http://groups.yahoo.com/group/jmriusers/"> JMRI users </A> group.
+There you should be able to contact other JMRI users that can help you
+out.</P>
 <H3>Other Information</H3>
 
 <P><A HREF="http://www.ncedcc.com/catalog2.html">NCE Systems and
