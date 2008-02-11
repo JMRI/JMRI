@@ -31,7 +31,7 @@ import javax.swing.JFrame;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 public class PanelPro extends Apps {
 
@@ -41,6 +41,10 @@ public class PanelPro extends Apps {
 
     protected String logo() {
         return "resources/PanelPro.gif";
+    }
+
+    protected String mainWindowHelpID() {
+            return "package.apps.PanelPro.PanelPro";
     }
 
     protected String line1() {

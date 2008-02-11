@@ -32,7 +32,7 @@ import net.roydesign.mac.MRJAdapter;
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
  * @author  Dennis Miller  Copyright 2005
- * @version     $Revision: 1.50 $
+ * @version     $Revision: 1.51 $
  */
 public class Apps extends JPanel implements PropertyChangeListener{
 
@@ -298,6 +298,9 @@ public class Apps extends JPanel implements PropertyChangeListener{
             }
             globalHelpBroker = globalHelpSet.createHelpBroker();
 
+            JMenuItem menuWindowItem = jmri.util.HelpUtil.makeHelpMenuItem(mainWindowHelpID());
+            helpMenu.add(menuWindowItem);
+            
             JMenuItem menuItem = new JMenuItem(rb.getString("MenuItemHelp"));
             helpMenu.add(menuItem);
             menuItem.addActionListener(new CSH.DisplayHelpFromSource(globalHelpBroker));
@@ -323,6 +326,13 @@ public class Apps extends JPanel implements PropertyChangeListener{
         JMenuItem context = new JMenuItem(rb.getString("MenuItemContext"));
         helpMenu.add(context);
         context.addActionListener(new apps.ReportContextAction());
+    }
+
+    /**
+     * Returns the ID for the main window's help, which is application specific
+     */
+    protected String mainWindowHelpID() {
+            return "package.apps.Apps";
     }
 
     protected String line1() {

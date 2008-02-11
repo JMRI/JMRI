@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * for more details.
  *
  * @author	Bob Jacobsen   Copyright 2003, 2004, 2007
- * @version     $Revision: 1.50 $
+ * @version     $Revision: 1.51 $
  */
 public class DecoderPro extends Apps {
 
@@ -54,6 +54,10 @@ public class DecoderPro extends Apps {
 
     protected String logo() {
         return "resources/decoderpro.gif";
+    }
+
+    protected String mainWindowHelpID() {
+            return "package.apps.DecoderPro.DecoderPro";
     }
 
     protected String line1() {
