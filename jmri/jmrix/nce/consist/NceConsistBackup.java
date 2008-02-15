@@ -39,7 +39,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * This backup routine uses the same consist data format as NCE.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 
@@ -76,6 +76,11 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 			return; // cancelled
 
 		File f = fc.getSelectedFile();
+		String fileName = f.getAbsolutePath();
+		if (!fileName.contains(".txt")){
+			fileName = fileName+".txt";
+			f = new File(fileName);
+		}
 		if (f.exists()) {
 			if(JOptionPane.showConfirmDialog(null, "File "
 					+ f.getName() + " already exists, overwrite it?",
