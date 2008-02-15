@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.14 2008-02-10 03:40:17 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.15 2008-02-15 08:12:42 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -155,6 +155,7 @@
 	<LI>Jim Hanna, who helped with instructions for NCE units
 	<LI>David Harris fixed some bugs in the Lenz decoder definitions
 	<li>Matthew Harris, who provided instructions for installing JMRI on EeePCs
+	and updated the roster pane to work on small screens
 	<LI>Phil Hartung, who provided some CTC graphics
 	<LI>Ian Havercroft, who provided the correct identification codes for ESU decoders
 	<LI>Rob Heikens, who created ESU decoder definitions and programmer pages
