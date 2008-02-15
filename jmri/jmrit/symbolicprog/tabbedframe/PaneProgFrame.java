@@ -36,7 +36,7 @@ import jmri.ProgDeferredServiceModePane;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.60 $
+ * @version   $Revision: 1.61 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -578,8 +578,12 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     protected JPanel makeInfoPane(RosterEntry r) {
         // create the identification pane (not configured by file now; maybe later?
+        
+        JPanel outer = new JPanel();
+        outer.setLayout(new BoxLayout(outer, BoxLayout.Y_AXIS));
         JPanel body = new JPanel();
         body.setLayout(new BoxLayout(body, BoxLayout.Y_AXIS));
+        JScrollPane scrollPane = new JScrollPane(body);
 
         // add roster info
         _rPane = new RosterEntryPane(r);
@@ -606,8 +610,15 @@ abstract public class PaneProgFrame extends JmriJFrame
             });
 
         store.setPreferredSize(reset.getPreferredSize());
-        body.add(store);
-        body.add(reset);
+
+        JPanel buttons = new JPanel();
+        buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS));
+        
+        buttons.add(store);
+        buttons.add(reset);
+        
+        body.add(buttons);
+        outer.add(scrollPane);
 
         // arrange for the dcc address to be updated
         java.beans.PropertyChangeListener dccNews = new java.beans.PropertyChangeListener() {
@@ -623,7 +634,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         if (addMode==null) log.debug("DCC Address monitor didnt find an Address Format variable");
         else addMode.addPropertyChangeListener(dccNews);
 
-        return body;
+        return outer;
     }
 
     // hold refs to variables to check dccAddress
