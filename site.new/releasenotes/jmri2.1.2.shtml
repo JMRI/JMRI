@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.2.shtml,v 1.15 2008-02-11 15:46:56 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.2.shtml,v 1.16 2008-02-15 17:34:54 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -209,6 +209,12 @@ A message about "LocoNet not ready to receive" was causing some confusion, so wa
 
 <p>
 Robin Becker helped debug and fix a problem where certain text-based panel icons, e.g. memories, lost their formatting.
+
+<p>
+With Jim Thompson's and Robin Becker's help, a new jython/PM4Announce.py sample script was written to show how to listen to and announce short-circuit messages from LocoNet
+
+<p>
+Matt Harris updated the roster entry pane of the DecoderPro programmer so it can be used on small screens
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
