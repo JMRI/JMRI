@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: AppConfigPanel.shtml,v 1.2 2008-02-09 06:14:27 jacobsen Exp $ -->
+<!-- $Id: AppConfigPanel.shtml,v 1.3 2008-02-15 17:34:39 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -36,26 +36,75 @@ on some
 
 <h3>Basic Preferences</h3>
 
-<ul>
-<li>Layout Connection
-<li>GUI Style
-<li>Programmer Defaults
-</ul>
+When the window first opens, it displays the 
+basic preferences.<br/>
+<a href="../../DecoderProManual/Pix/Preferences.png"/>
+<img src="../../DecoderProManual/Pix/Preferences.png" height="156" width="256"/></a>
+<dl>
+<dt>Layout Connection
+<dd>You can select any of the various JMRI layout connections here.
+For more information on how to configure this for your particular hardware,
+see the <a href="../../html/hardware/index.shtml">hardware pages</a>.
+<dt>GUI Style
+<dd>These radio boxes allow you to select how the program looks.
+The available choices depend on what kind of computer you have, and not 
+all of the following may be available:
+    <ul>
+    <li>Metal - the default Java style, usable on all computers
+    <li>CDE/Motif - A Linux/Unix form that works well with X Windows
+        screen managers.  It's also available on (almost) all computer types.
+    <li>Windows - only available on Microsoft Windows systems, this makes the
+        program look as much as possible like a regular Windows application.
+    <li>Mac OS X - only available on MacOS, this makes the program look
+        like a Macintosh application
+    </ul>
+<dt>Programmer Defaults
+<dd>The DecoderPro programmer allows you to select how much or how little
+to display of the decoder content using configurable "Programmers". You 
+can select one at the same time you 
+<a href="../../DecoderProManual/Basic_Programming.shtml">select your locomotive decoder</a>,
+but this provides a convenient place to set a default so you don't
+have to select it each time you open a decoder.
+</dl>
 
 <h3>Advanced Preferences</h3>
 
-To set the advanced preferences, check the "Show Advanced Preferences" box.
+To set the advanced preferences, check the "Show Advanced Preferences" box.<br/>
+<a href="../../DecoderProManual/Pix/Preferences2.png"/>
+<img src="../../DecoderProManual/Pix/Preferences2.png" height="222" width="256"/></a>
 
-<ul>
-<li>Auxiliary layout connections
-<li>Programmer Defaults
-<li>Locale
-<li>Do actions at startup
-<li>Create buttons on the main screen
-<li>Load panel files at startup
-<li>Run scripts at startup
-<li>Set the location of the roster
-</ul>
+<dl>
+<dt>Auxiliary layout connections
+<dd>You can have more than one layout connection active at a time.  These choices allow
+you to easily configure up to four, and more are possible.
+
+<dt>Programmer Defaults
+<dd>This section has a checkbox that lets you decide whether the DecoderPro
+programmer will display empty panes (tabs). Some people like to see them, even though they're empty,
+some people would prefer not to see them, so they don't keep trying to look at them.  We
+provide this preference so you can choose.
+
+<dt>Locale
+<dd><a href="../../Acknowledgements.shtml">Many people</a> have contributed "internationalizations"
+of JMRI.  This converts (much) of the text on the screen to a language
+other thank English.  If you select your country or region and language here,
+then save and restart the preferences, JMRI will use an internationalization
+for that country and language if it's available.  Items that have not been translated 
+will continue to appear in English, so you won't miss anything.  For
+more information on how to set this up, and particularly how to contribute
+new and improved translations, please see our
+<a href="../../html/doc/Technical/I8N.shtml">internationalization page</a>.
+
+<dt>Do actions at startup
+
+<dt>Create buttons on the main screen
+
+<dt>Load panel files at startup
+
+<dt>Run scripts at startup
+
+<dt>Set the location of the roster
+</dl>
 
 <p>
 This is the apps.AppConfigPanel.shtml help page
