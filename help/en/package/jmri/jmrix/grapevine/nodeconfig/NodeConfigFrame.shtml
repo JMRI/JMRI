@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NodeConfigFrame.shtml,v 1.1 2007-12-30 15:55:05 jacobsen Exp $ -->
+<!-- $Id: NodeConfigFrame.shtml,v 1.2 2008-02-15 08:13:05 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -44,6 +44,11 @@ If you encounter problems, please let us now so we improve the support
 for these cards.</dd>
 
 </dl>
+
+Although right now there are no additional properties, we expect 
+to eventually add more information here as we learn about 
+the capabilities of Grapevine nodes.
+
 <!--#include virtual="/Footer" -->
 </body>
 </html>
