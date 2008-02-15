@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: Names.shtml,v 1.4 2008-01-14 05:27:07 jacobsen Exp $ -->
+<!-- $Id: Names.shtml,v 1.5 2008-02-15 08:19:27 jacobsen Exp $ -->
 <title>JMRI: Grapevine System Names</title>
 
 <!-- Style -->
@@ -37,19 +37,31 @@ After that, there's a
 then a node number and a pin number.
 
 <p>
-Each Grapevine node has a number, from 1 to 127.
+The pin number is either three numeric digits ("101", "324", "004"), or starts
+with a lower-case alphabetic character ("p12", "s1").  See the
+sections on inputs and outputs below for the specific meanings
+of these various formats.
 
 <p>
-The pin number, from 001 up, defines the specific input or output 
-connection on the node. Note that a pin number is always three digits.
+The node number preceeds the pin number. If it's helpful, you can think of the node number as being the "thousands"
+part of the combined number, and the pin number as the lower three digits.
 
 <p>
 For example, the 1st Grapevine Sensor input pin on node 23 would be
-named GS23001.  The 5th Turnout on node 2 would be GT2005. 
+named GS23001 or GS23p1.  The 5th Turnout on node 2 would be GT2005. 
+
+<h3>Node Numbering</h3>
+Each Grapevine node has a number, from 1 to 127.
 
 <p>
-If it's helpful, you can think of the node number as being the "thousands"
-part of the combined number, and the pin number as the lower three digits.
+Before you can access the node in JMRI, you have to define it to 
+the program.  You can do this either from the 
+<a href="../../../package/apps/AppConfigPanel.shtml">Preferences window</a>
+(under Edit in the main menu)
+or using the 
+<a href="../../../package/jmri/jmrix/grapevine/nodeconfig/NodeConfigFrame.shtml">Configure Nodes</a>
+tool in the Grapevine menu.
+
 
 <h3>Inputs</h3>
 
@@ -60,53 +72,68 @@ Grapevine nodes have a number of possible inputs:
  </dt><dd>
     There are eight three-pin connectors on a Grapevine node
     that can be used as general inputs.  These Sensors are 
-    referenced as 001 to 008.
+    referenced as 001 to 008. The can also be referenced
+    in a shorter format (where the three full digits are not required)
+    as p1 through p8.
     <p>
     In addition, there are eight additional pins in the 
     14-pin connector that can be referenced as Sensors
-    009 to 016.
+    009 to 016 or p9 through p16, where the "p" indicates parallel input.
  </dd>
  <dt>
     Serial Occupancy Sensor Cards
  </dt><dd>
     Advanced serial occupancy sensor cards (ASCs) can be attached
     to each node.  Each one senses occupancy on up to eight track
-    segments. In addition, "occupancy" and "motion" are
+    segments, and up to three can be attached to a node.
+    In addition, "occupancy" and "motion" are
     separately detected.
     <p>
-    Sensors on these cards are numbered in groups of 20, starting
-    with 041.  With each group, the occupancy sensors are 
-    start with 1, and the motion sensors start with 10.
+    The occupancy on these cards are numbered sequentially, starting
+    with 101.  The motion sensors are also numbered sequentially,
+    starting with 201.  This means that 101 and 201 sense "occupancy"
+    and "motion" on the 1st connector of the 1st card, respectively, 
+    109 and 209 are the occupancy and motion sensors on the first 
+    connector of the second card, etc.
+    <p>
+    These can also be referenced in a shorter form via the prefix
+    letter "a", ASD occupancy sensor, or "m" for ASD motion sensor, 
+    and the 1-24 number of the connector.
     <p>
     Examples, all for node 22:
     <ul>
-    <li>GS22041 is the occupancy sensor for the first block input on the 1st ASC.
-        GS22051 is the corresponding motion sensor for the first 
+    <li>GS22a1 or GS22101 is the occupancy sensor for the first block input on the 1st ASC.<br/>
+        GS22m1 or GS22201 is the corresponding motion sensor for the first 
         block input on the 1st ASC.
-    <li>GS22061 is the occupancy sensor for the first block input on the 2nd ASC.
-        GS22071 is the corresponding motion sensor for the first 
+    <li>GS22a9 or GS22009 is the occupancy sensor for the first block input on the 2nd ASC.<br/>
+        GS22m9 or GS22009 is the corresponding motion sensor for the first 
         block input on the 2nd ASC.
-    <li>GS22088 is the occupancy sensor for the 8th block input on the 3rd ASC.
-        GS22098 is the corresponding motion sensor for the 8th 
+    <li>GS22a24 or GS124 is the occupancy sensor for the 8th block input on the 3rd ASC.<br/>
+        GS22m24 or GS224 is the corresponding motion sensor for the 8th 
         block input on the 3rd ASC.
     </ul>
  </dd>
  <dt>
     Older Occupancy Sensors
  </dt><dd>
-    A small number of nodes have older serial occupancy detectors
+    Nodes may also have older serial occupancy detectors
     attached.  If you have one of these, the sensors will appear
-    as 021 through 036.
+    as 021 through 036. These can also be referenced as "s1" through
+    "s16".
  </dd>
 </dl>
 <h3>Outputs</h3>
 
 Each Grapevine node can have up to four output cards attached to it.
-The outputs on the first card are referenced starting with 1, and
-can go up to 24 depending on the type of card.
-The outputs on the second card start at 25 and go up to 48.
-The third and fourth cards start at 49 and 73 respectively.
-
+(Some of the Grapevine and ProTrak documentation refers to these as
+four "banks".)
+The outputs on the first card are referenced starting with 101, and
+can go up to 124 depending on the type of card.
+The outputs on the second card start at 201 and go up to 224.
+The third and fourth cards start at 301 and 401 respectively.
+<p>
+If it helps, you can think of the "hundreds" digit as the card or bank 
+number, and the lowest two digits as the connector number.
 <p>
 Each of these can be used as a JMRI 
 <a href="../../tools/Turnouts.shtml">Turnout</a>, 
@@ -119,7 +146,7 @@ or
 Grapevine outputs can be use to control turnout switch motors.
 In that case, they should be referenced as JMRI 
 <a href="../../tools/Turnouts.shtml">Turnouts</a>, with
-names like GT98001 for the 1st output from the 1st driver card on 
+names like GT98201 for the 1st output from the 2nd driver card on 
 node 98.
 
 <h4>Lights</h4>
@@ -127,8 +154,8 @@ node 98.
 Grapevine outputs can be used to control lights on the layout, in
 which case they should be references as JMRI 
 <a href="../../tools/Lights.shtml">Lights</a>.
-System names for lights start with GL, for example GL54025 for the 
-1st output on the 2nd driver card on node 54.
+System names for lights start with GL, for example GL54102 for the 
+2nd output on the 1st driver card on node 54.
 
 <h4>Signals</h4>
 To use a Grapevine output as a JMRI 
@@ -143,8 +170,7 @@ output numbers.
 
 <p>
 For example, to use the 3rd connector on the 2nd driver card on node 1, 
-define a Grapevine signal head using system name GH1027.  (The 2nd driver card starts with
-number 025, so the 3rd connection is 25, 26, 27)
+define a Grapevine signal head using system name GH1203.  
 
 <h3>More Information</h3>
 
