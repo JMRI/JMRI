@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SensorAddEdit.shtml,v 1.4 2008-01-01 08:10:33 jacobsen Exp $ -->
+<!-- $Id: SensorAddEdit.shtml,v 1.5 2008-02-16 20:45:26 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Adding/Editing Sensors</TITLE>
@@ -27,9 +27,8 @@ Enter the system name for the sensor you wish to add. For example, a
 valid sensor system name for a LocoNet layout could be LS456. Another
 example, a valid internal sensor system name could be IS123. The
 optional user name can be anything you wish to describe the sensor. See
-"
-<A HREF="../../../../html/doc/Technical/Names.html">Names</A>
-" under general help for more information.
+"<A HREF="../../../../html/doc/Technical/Names.shtml">Names</A>" 
+help page for more information.
 
 <H2>Hardware Specific Information</H2>
 
