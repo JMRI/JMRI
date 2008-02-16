@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Names.shtml,v 1.5 2008-02-05 07:08:31 jacobsen Exp $ -->
+<!-- $Id: Names.shtml,v 1.6 2008-02-16 18:18:20 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -109,31 +109,32 @@ Examples:
 Note that there is no assumption of pattern to the names; they don't have
 to be assigned monotonically, nor are they restricted to a single system.
 
-<H3>Hardware system letters</h3>
+<a id="hardware">
+<H3>Hardware system letters</h3></a>
 Note that some of these are placeholders, and have no underlying implementation. 
-
+(Links are to JMRI pages with more information)
 <ul>
 <LI>A (reserved for CTI Acela)
 <LI>B (reserved for CTI Train-Brain)
-<LI>C C/MRI serial
-<LI>D (reserved for Direct-packet-drive)
-<LI>E EasyDCC
-<LI>G ProTrak Grapevine
+<LI>C <a href="../../hardware/cmri/CMRI.shtml">C/MRI serial</a>
+<LI>D (reserved for Direct-packet-drive and direct serial port sensors)
+<LI>E <a href="../../hardware/easydcc/EasyDCC.shtml">EasyDCC</a>
+<LI>G ProTrak <a href="../../hardware/grapevine/index.shtml">Grapevine</a>
 <LI>I Internal, e.g. objects with no associated hardware
-<LI>L LocoNet
+<LI>L <a href="../../hardware/loconet/Digitrax.shtml">LocoNet</a>
 <LI>M MRRLCB
-<LI>N NCE (also Wangrow currently)
-<LI>O Oak Tree Systems
-<LI>P Powerline transmission, e.g. X10 and Insteon
+<LI>N <a href="../../hardware/nce/NCE.shtml">NCE</a> (also <a href="../../hardware/nce/Wangrow.shtml">Wangrow</a> currently)
+<LI>O <a href="../../hardware/oaktree/OakTree.shtml">Oak Tree Systems</a>
+<LI>P <a href="../../hardware/powerline/index.shtml">Powerline transmission</a>, e.g. X10 and Insteon
 <LI>Q QSI programmer interface
-<LI>R RS232 (e.g. serial port) used for direct sensors
-<LI>S SPROG
-<LI>T Lionel TMCC
+<LI>R RPS system
+<LI>S <a href="../../hardware/sprog/SPROG.shtml">SPROG</a>
+<LI>T <a href="../../hardware/tmcc/index.shtml">Lionel TMCC</a>
 <li>U (reserved for ESU eCos)
-<LI>V TracTronics SECSI
+<LI>V TracTronics <a href="../../hardware/secsi/index.shtml">SECSI</a>
 <LI>W (reserved for Wangrow, but that's currently still combined with NCE)
-<LI>X XpressNet
-<LI>Z Zimo MX-1
+<LI>X <a href="../../hardware/XPressNet/index.shtml">XpressNet</a>
+<LI>Z <a href="../../hardware/zimo/Zimo.shtml">Zimo MX-1</a>
 </ul>
 
 <h3>System-specific info</H3>
