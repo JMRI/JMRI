@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2003-2008 -->
-<!-- $Id: index.shtml,v 1.2 2008-02-16 20:45:02 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.3 2008-02-16 21:01:44 jacobsen Exp $ -->
 <title>JMRI: DecoderPro Symbolic Programmer</title>
 
 <!-- Style -->
@@ -65,12 +65,12 @@ computer programmer;
 
 <H1>DecoderPro User Guide</H1>
 <dl class=toc>
-<dt><a href="./Tour.html">Quick tour</A></dt><dd/>
-<dt><a href="./MoreInfo.html">Details</A></dt><dd/>
-<dt><a HREF="./Files.html">Configuration files</a></dt><dd/>
-<dt><a HREF="./Roster.html">Working with the roster</a></dt><dd/>
-<dt><a HREF="./FAQ.html">Frequently asked questions</a></dt><dd/>
-<dt><a HREF="./Install.html">Downloading and installing DecoderPro</a></dt><dd/>
+<dt><a href="./Tour.shtml">Quick tour</A></dt>
+<dt><a href="./MoreInfo.shtml">Details</A></dt>
+<dt><a HREF="./Files.shtml">Configuration files</a></dt>
+<dt><a HREF="./Roster.shtml">Working with the roster</a></dt>
+<dt><a HREF="./FAQ.shtml">Frequently asked questions</a></dt>
+<dt><a HREF="./Install.shtml">Downloading and installing DecoderPro</a></dt>
 </dl>
 
 <P>
@@ -83,14 +83,14 @@ on DCC topics.
 <H1>More advanced information</H1>
 <dl class=toc>
 
-<dt><a HREF="./IntroXML.html">Intro to XML files</a></dt><dd/>
-<dt><a href="./CreateDecoder.html">Create your own decoder definition</a></dt><dd/>
-<dt><a href="./Programmer.html">Create a custom programmer definition</a></dt><dd/>
-<dt><a HREF="./RosterFile.html">How the roster is stored; updating it by hand</a></dt><dd/>
-<dt><a HREF="./LocoFile.html">Locomotive (roster) files</a></dt><dd/>
-<dt><a HREF="./Debug.html">Debugging</a></dt><dd/>
-<dt><a HREF="./NetworkFiles.html">Sharing Rosters Among Computers</a></dt><dd/>
-<dt><a HREF="./FileUpdate.html">Updating Decoder Definitions</a></dt><dd/>
+<dt><a HREF="./IntroXML.shtml">Intro to XML files</a></dt>
+<dt><a href="./CreateDecoder.shtml">Create your own decoder definition</a></dt>
+<dt><a href="./Programmer.shtml">Create a custom programmer definition</a></dt>
+<dt><a HREF="./RosterFile.shtml">How the roster is stored; updating it by hand</a></dt>
+<dt><a HREF="./LocoFile.shtml">Locomotive (roster) files</a></dt>
+<dt><a HREF="./Debug.shtml">Debugging</a></dt>
+<dt><a HREF="./NetworkFiles.shtml">Sharing Rosters Among Computers</a></dt>
+<dt><a HREF="./FileUpdate.shtml">Updating Decoder Definitions</a></dt>
 </dl>
 
 <H1>Decoder information</h1>
