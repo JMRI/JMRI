@@ -156,7 +156,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.tools.throttle.ThrottleChapter3" url="html/tools/throttle/ThrottleChapter3.shtml" />
 	<mapID target="package.jmri.jmrit.beantable.SignalAddEdit" url="package/jmri/jmrit/beantable/SignalAddEdit.shtml" />
 	<mapID target="package.jmri.jmrit.beantable.TurnoutTable_Turnout lock feature" url="package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout lock feature" />
-	<mapID target="html.apps.PanelPro.Panels" url="html/apps/PanelPro/Panels.html" />
+	<mapID target="html.apps.PanelPro.Panels" url="html/apps/PanelPro/Panels.shtml" />
 	<mapID target="html.doc.Technical.I8N" url="html/doc/Technical/I8N.shtml" />
 	<mapID target="DecoderProManual.Comp_Consist" url="DecoderProManual/Comp_Consist.shtml" />
 	<mapID target="html.apps.DecoderPro.CreateDecoder" url="html/apps/DecoderPro/CreateDecoder.shtml" />
