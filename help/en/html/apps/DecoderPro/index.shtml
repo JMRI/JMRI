@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright Bob Jacobsen 2003-2008 -->
+<!-- $Id: index.shtml,v 1.1 2008-02-16 19:06:09 jacobsen Exp $ -->
+<title>JMRI: DecoderPro Symbolic Programmer</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<!-- Page Body -->
+<H1>DecoderPro Symbolic Programmer</H1>
+
+<P>Modern DCC decoders are complicated beasts to program.  The simple idea
+of "put the address in CV01" doesn't cope well when you program complicated
+functions using combinations of bit patterns.  A friendlier interface is
+needed.  There are programs that provide better ways of programming
+specific decoders.  Unfortunately, they are limited to specific types of
+computers, and only their authors can customize them for new types of
+decoders.  </P>
+
+<P> The DecoderPro symbolic programmer is meant to improve this. It is
+configured using text files, so that it can be adapted to additional
+decoder types easily.  It talks to the decoders using the JMRI programming
+interface, so that it can run on any computer and layout hardware that JMRI
+has been ported to.  It's freely available for download.  And since the
+code is available via open source, if you want to improve on it you
+can.</p>
+
+<H1>What you need to use DecoderPro</H1>
+
+<p>The DecoderPro software will work on Windows, Linux, Macintosh (OS 8.6
+through 9.2 and MacOS X), and OS/2. It will probably also work on most
+other modern operating systems that have Java available; contact us for
+help if you'd like to try it on some other system. You need to have a
+serial port available, either on the computer itself, or via a 
+<A HREF="/help/en/html/hardware/USBtoSerial.html">USB adapter</a>. 
+For more information, please see the
+<A HREF="/help/en/html/download">download pages</a>.</p>
+
+<p>You also need to have a serial connection to your DCC system.
+For more information, please see the
+<A HREF="../../hardware">DCC hardware pages</a>.</p>
+
+<h1>What you can do to help</h1>
+
+DecoderPro is the creation of a large number of
+<A HREF="/help/en/Acknowledgements.shtml">volunteers</a>, model railroaders like yourself
+who've each contributed to making DecoderPro a great resource
+for all of us.  You can help too, even if you're not a 
+computer programmer; 
+<a href="../../Help.html">click here for suggestions on how</a>.
+
+<H1>DecoderPro User Guide</H1>
+<dl class=toc>
+<dt><a href="./Tour.html">Quick tour</A></dt><dd/>
+<dt><a href="./MoreInfo.html">Details</A></dt><dd/>
+<dt><a HREF="./Files.html">Configuration files</a></dt><dd/>
+<dt><a HREF="./Roster.html">Working with the roster</a></dt><dd/>
+<dt><a HREF="./FAQ.html">Frequently asked questions</a></dt><dd/>
+<dt><a HREF="./Install.html">Downloading and installing DecoderPro</a></dt><dd/>
+</dl>
+
+<P>
+DecoderPro is also covered in 
+<A HREF="http://mymemoirs.net/model-trains-set1-vol3b.php">Volume 3</a> 
+of Joe Fugate's
+<A HREF="http://mymemoirs.net/model-trains.php">series of videos<a/>
+on DCC topics.
+
+<H1>More advanced information</H1>
+<dl class=toc>
+
+<dt><a HREF="./IntroXML.html">Intro to XML files</a></dt><dd/>
+<dt><a href="./CreateDecoder.html">Create your own decoder definition</a></dt><dd/>
+<dt><a href="./Programmer.html">Create a custom programmer definition</a></dt><dd/>
+<dt><a HREF="./RosterFile.html">How the roster is stored; updating it by hand</a></dt><dd/>
+<dt><a HREF="./LocoFile.html">Locomotive (roster) files</a></dt><dd/>
+<dt><a HREF="./Debug.html">Debugging</a></dt><dd/>
+<dt><a HREF="./NetworkFiles.html">Sharing Rosters Among Computers</a></dt><dd/>
+<dt><a HREF="./FileUpdate.html">Updating Decoder Definitions</a></dt><dd/>
+</dl>
+
+<H1>Decoder information</h1>
+
+The JMRI project has compiled a lot of information about decoders from
+many manufacturers, which we make freely available in several forms.
+To learn more, see the
+<a href="XML.html">decoder information page</a>.
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
