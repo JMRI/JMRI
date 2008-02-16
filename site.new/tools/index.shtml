@@ -1,152 +1,31 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.4 2007-07-13 04:56:09 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.5 2008-02-16 18:30:46 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
  	JMRI: Tools
   </TITLE>
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-
-  <META content="Bob Jacobsen" name=Author>
-
-  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-  <meta name="keywords"
-        content="hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
-
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+<META 
+     HTTP-EQUIV="Refresh"
+     CONTENT="0; URL=index.shtml">
 </head>
-
 <body>
-  <div id="container">
+This page has been moved to
+<A HREF="index.shtml">index.shtml</a>
+as part of updating our web site.
+<P>
+Please update your bookmarks.  
+<P>
+If you got to this page from another JMRI page, 
+please let us know so we can fix it.
+<P>
+You should be redirected to the new page immediately.  
 
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
+       <BR/>Site hosted by: <BR/>
+        <A href="http://sourceforge.net"> 
+        <IMG src="http://sourceforge.net/sflogo.php?group_id=26788&amp;type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A> 
 
-    <hr class="hide">
-
-      <div id="mainContent">
-      <!-- Page Body -->
-        <H2>
-		JMRI: General Tools
-        </H2>
-
-	<P>
-	JMRI provides several tools that are optimized for 
-	specific purposes. General tools:
-	    <dl>
-
-		<dt><h3><a href="Sensors.shtml">Sensors</a></h3></dt>
-		<dd>
-		    A Sensor is JMRI's way of representing an input from the layout.
-		</dd>
-
-		<dt><h3><a href="Turnouts.shtml">Turnouts</a></h3></dt>
-		<dd>
-		    JMRI calls just about any output to the layout a "Turnout". 
-		</dd>
-
-		<dt><h3><a href="throttle/ThrottleMain.html">Throttles</a></h3></dt>
-		<dd>
-		    You can open multiple software throttles to run
-		    your DCC locomotives.
-		</dd>
-
-		<dt><h3><a href="ConsistTool/ConsistTool.html">Consisting</a></h3></dt>
-		<dd>
-		    JMRI provides tools for managing locomotive consists.
-		</dd>
-
-		<dt><h3><a href="Signals.shtml">Signals</a></h3></dt>
-		<dd>
-		    Signals (or more formally SignalHeads) are how JMRI represents
-		    and controls signal heads on a layout. 
-		    They are a specific kind of output device that can be set to various 
-		    colors: Red, Yellow, Green, Flashing Yellow, etc.
-		</dd>
-
-		<dt><h3><a href="Lights.html">Lights</a></h3></dt>
-		<dd>
-		    Lights are digital output bits that function as on/off switches. 
-		    Lights were created to provide easy control for fascia panel
-		    lights and scenery lighting. 
-		    Lights can also be used for any purpose that requires an 
-		    on/off switch. A light can be used, for example, to activate 
-		    an electromagnetic decoupler for a pre-determined time in 
-		    response to a fascia panel button.
-		</dd>
-
-		<dt><h3><a href="Routes.html">Routes</a></h3></dt>
-		<dd>
-		    Routes are a tool for driving multiple turnouts when
-		    something happens on the layout.  You can have a
-		    panel switch through all the turnouts in your yard throat, 
-		    etc. They can also change the status of Sensors, 
-		    play sound files, and invoke scripts.  They
-		    have some simple logic capabilities for deciding when
-		    to set the route's outputs.
-		</dd>
-
-		<dt><h3><a href="Logix.html">Logix</a></h3></dt>
-		<dd>
-		    A Logix is a tool for entering powerful logical
-		    expressions that can control parts of a layout.
-		    Each one can monitor multiple inputs and logical
-		    operations through containing a number of Conditional
-		    expressions, each of which can take simple actions.
-		    For more powerful control, combine the logical
-		    reasoning of a Logix with the powerful output
-		    controls of a Route.
-		</dd>
-
-        <dt><h3><a href="fastclock">Fast Clocks</a></h3></dt>
-        <DD>
-            JMRI can both provide various types of fast clocks
-            on the computer screen, and also work with the
-            fast clocks already installed on your layout.
-        </dd>
-
-   		<dt><h3><a href="../apps/Speedometer/index.html">Speedometer</a></h3></dt>
-		<dd>
-		    A tool for determining the scale speed of your
-		    locomotives.  You can use this while setting them up,
-		    to catch speeders, or for whatever you'd like.
-		</dd>
-
-
-	<h2><a href="../apps/LocoTools/index.html">LocoNet-specific Tools</a></h2>
-	A set of Digitrax LocoNet-specific tools:
-		    <UL>
-		    <LI><dfn>LocoNet monitor</dfn>
-		    <LI><dfn>Slot monitor</dfn>
-		    <LI><dfn>Packet source</dfn>
-		    <LI><dfn>PM4 programmer</dfn>
-		    <LI><dfn>BDL16 programmer</dfn>
-		    <LI><dfn>SE8C programmer</dfn>
-		    <LI><dfn>LocoIO programmer</dfn>
-		    </UL>
-
-   	<h2><a href="../doc/scripts/index.html">Scripting</a></h2>
-    If there isn't a preprogrammed tool to do what you want,
-    you can almost certainly write a script that does exactly what's needed.
-    <P>
-    Instead of defining our own language, 
-    <A HREF="../doc/scripts/index.html">JMRI scripting</a>
-    uses the
-    "Python" language that's commonly used in web development.  Although it
-    will take you a little time to get used to it, in the end it provides
-    a lot of power to control your layout anyway you'd like.
-
-<!--#include virtual="/Footer" -->
-
-      </div><!-- closes #mainContent-->
-    </div> <!-- closes #mBody-->
-  </div> <!-- closes #container -->
 </body>
 </html>
 
