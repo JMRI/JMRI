@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NCE.shtml,v 1.8 2008-02-11 01:56:41 dan_boudreau Exp $ -->
+<!-- $Id: NCE.shtml,v 1.9 2008-02-16 20:43:47 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: NCE</TITLE>
@@ -104,7 +104,8 @@ problem. If you have the early 2007 EPROM and wish to use MONITORING for
 feedback, contact NCE for an EPROM upgrade.</P>
 
 <A ID="AIU"></A>
-<H4>AIU Numbering</H4>
+<A ID="names"></A>
+<H4>AIU (Input) Numbering</H4>
 The NCE "AIU" device allows the NCE command station to check the status
 of inputs from the layout. These are referenced in JMRI as "Sensors"
 with names like "NS785". "NS" means "NCE Sensor", and 785 is the number
@@ -115,6 +116,13 @@ of a specific sensor input.
 BD20s is connected to pin 2. Therefore the Sensor ID would be:</P>
 <P>Sensor ID = (50 - 1) * 16 + (2) -1</P>
 <P>Sensor ID = 785</P>
+
+<h4>Turnout Numbering</h4>
+JMRI can access accessory decoders as NCE Turnouts and Lights.
+They are addressed using the same numbers that you would use on your
+NCE throttle to throw the accessory decoder.  For example, if you
+can access turnout 21 from your throttle, JMRI would address it as 
+"NT21" or just "21".
 
 <H4>Limitations</H4>
 
