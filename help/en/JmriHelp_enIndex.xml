@@ -13,7 +13,9 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       <indexitem text="Setting The Internal Clock" target="package.jmri.jmrit.simpleclock.SimpleClockFrame"/>
    </indexitem>
    <indexitem text="Consist Tool" target="package.jmri.jmrit.consisttool.ConsistToolFrame"/>
-   <indexitem text="DecoderPro" target="DecoderProManual.Getting_Started_Top">
+   <indexitem text="DecoderPro" target="html.apps.DecoderPro.index">
+      <indexitem text="Introduction" target="html.apps.DecoderPro.index"/>
+      <indexitem text="Manual" target="DecoderProManual.Getting_Started"/>
       <indexitem text="Roster Pane" target="DecoderProManual.Comp_Setup_Roster"/>
    </indexitem>
    <indexitem text="Digitrax">

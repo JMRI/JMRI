@@ -8,43 +8,49 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
 
    <tocitem text="JMRI Help Main Page" target="index"/>
    <tocitem text="Acknowledgements" target="Acknowledgements"/>
-   <tocitem text="DecoderPro Manual" target="DecoderProManual.index">
-      <tocitem text="Getting Started" target="DecoderProManual.Getting_Started">
-         <tocitem text="What is DCC?" target="DecoderProManual.Getting_Started_What is DCC"/>
-         <tocitem text="DCC Systems" target="DecoderProManual.Getting_Started_DCC systems"/>
-         <tocitem text="DCC Hardware" target="DecoderProManual.Getting_Started_DCC Hardware"/>
-         <tocitem text="Setting Preferences" target="DecoderProManual.Getting_Started_Start"/>
+   <tocitem text="DecoderPro">
+      <tocitem text="Introduction" target="html.apps.DecoderPro.index">
+         <tocitem text="Tour" target="html.apps.DecoderPro.Tour"/>
       </tocitem>
-      <tocitem text="Using DecoderPro" target="DecoderProManual.Basic_Programming">
-         <tocitem text="Set Up" target="DecoderProManual.Basic_Programming_Setting Up"/>
-         <tocitem text="Choose Decoder" target="DecoderProManual.Basic_Programming_Select Decoder"/>
-         <tocitem text="Programming Modes" target="DecoderProManual.Basic_Programming_Programming Modes"/>
+      <tocitem text="DecoderPro Manual" target="DecoderProManual.index">
+         <tocitem text="Getting Started" target="DecoderProManual.Getting_Started">
+            <tocitem text="What is DCC?" target="DecoderProManual.Getting_Started_What is DCC"/>
+            <tocitem text="DCC Systems" target="DecoderProManual.Getting_Started_DCC systems"/>
+            <tocitem text="DCC Hardware" target="DecoderProManual.Getting_Started_DCC Hardware"/>
+            <tocitem text="Setting Preferences" target="DecoderProManual.Getting_Started_Start"/>
+         </tocitem>
+         <tocitem text="Using DecoderPro" target="DecoderProManual.Basic_Programming">
+            <tocitem text="Set Up" target="DecoderProManual.Basic_Programming_Setting Up"/>
+            <tocitem text="Choose Decoder" target="DecoderProManual.Basic_Programming_Select Decoder"/>
+            <tocitem text="Programming Modes" target="DecoderProManual.Basic_Programming_Programming Modes"/>
+         </tocitem>
+         <tocitem text="Basic Programmer" target="DecoderProManual.Basic_Programming_Basic Programmer">
+            <tocitem text="Using the Roster" target="DecoderProManual.Basic_Programming_Roster"/>
+            <tocitem text="The Basic Programmer" target="DecoderProManual.Basic_Programming_Basic 2"/>
+            <tocitem text="Reading Data" target="DecoderProManual.Basic_Programming_Read Data"/>
+            <tocitem text="Entering and Editing Data" target="DecoderProManual.Basic_Programming_Enter/Edit data"/>
+            <tocitem text="Writing to Decoder" target="DecoderProManual.Basic_Programming_Write Data"/>
+            <tocitem text="Saving to a File" target="DecoderProManual.Basic_Programming_Save Data"/>
+            <tocitem text="What Next?" target="DecoderProManual.Basic_Programming_Do More"/>
+         </tocitem>
+         <tocitem text="Comprehensive Programmer">
+            <tocitem text="Setup and Roster Panes" target="DecoderProManual.Comp_Setup_Roster"/>
+            <tocitem text="Basic Pane" target="DecoderProManual.Comp_Basic"/>
+            <tocitem text="Motor Control Pane" target="DecoderProManual.Comp_Motor"/>
+            <tocitem text="Speed Control Pane" target="DecoderProManual.Comp_Speed"/>
+            <tocitem text="Function Mapping Pane" target="DecoderProManual.Comp_FMap"/>
+            <tocitem text="Lighting Functions and FX Pane" target="DecoderProManual.Comp_LightFX"/>
+            <tocitem text="Consisting Functions Pane" target="DecoderProManual.Comp_Consist"/>
+            <tocitem text="Advanced Features Pane" target="DecoderProManual.Comp_Advanced"/>
+            <tocitem text="Sound FX Pane" target="DecoderProManual.Comp_SoundFX"/>
+            <tocitem text="Sound Levels Pane" target="DecoderProManual.Comp_SoundLevels"/>
+            <tocitem text="Global CV Listing Pane" target="DecoderProManual.Comp_GlobalCVs"/>
+            <tocitem text="Manufacturer Specific Data Pane" target="DecoderProManual.Comp_ManfSpecific"/>
+            <tocitem text="Printing Decoder Data" target="DecoderProManual.Comp_PrintData"/>
+         </tocitem>
+         <tocitem text="More Information" target="DecoderProManual.index"/>
+         <tocitem text="Getting Started" target="html.apps.DecoderPro.index"/>
       </tocitem>
-      <tocitem text="Basic Programmer" target="DecoderProManual.Basic_Programming_Basic Programmer">
-         <tocitem text="Using the Roster" target="DecoderProManual.Basic_Programming_Roster"/>
-         <tocitem text="The Basic Programmer" target="DecoderProManual.Basic_Programming_Basic 2"/>
-         <tocitem text="Reading Data" target="DecoderProManual.Basic_Programming_Read Data"/>
-         <tocitem text="Entering and Editing Data" target="DecoderProManual.Basic_Programming_Enter/Edit data"/>
-         <tocitem text="Writing to Decoder" target="DecoderProManual.Basic_Programming_Write Data"/>
-         <tocitem text="Saving to a File" target="DecoderProManual.Basic_Programming_Save Data"/>
-         <tocitem text="What Next?" target="DecoderProManual.Basic_Programming_Do More"/>
-      </tocitem>
-      <tocitem text="Comprehensive Programmer">
-         <tocitem text="Setup and Roster Panes" target="DecoderProManual.Comp_Setup_Roster"/>
-         <tocitem text="Basic Pane" target="DecoderProManual.Comp_Basic"/>
-         <tocitem text="Motor Control Pane" target="DecoderProManual.Comp_Motor"/>
-         <tocitem text="Speed Control Pane" target="DecoderProManual.Comp_Speed"/>
-         <tocitem text="Function Mapping Pane" target="DecoderProManual.Comp_FMap"/>
-         <tocitem text="Lighting Functions and FX Pane" target="DecoderProManual.Comp_LightFX"/>
-         <tocitem text="Consisting Functions Pane" target="DecoderProManual.Comp_Consist"/>
-         <tocitem text="Advanced Features Pane" target="DecoderProManual.Comp_Advanced"/>
-         <tocitem text="Sound FX Pane" target="DecoderProManual.Comp_SoundFX"/>
-         <tocitem text="Sound Levels Pane" target="DecoderProManual.Comp_SoundLevels"/>
-         <tocitem text="Global CV Listing Pane" target="DecoderProManual.Comp_GlobalCVs"/>
-         <tocitem text="Manufacturer Specific Data Pane" target="DecoderProManual.Comp_ManfSpecific"/>
-         <tocitem text="Printing Decoder Data" target="DecoderProManual.Comp_PrintData"/>
-      </tocitem>
-      <tocitem text="More Information" target="DecoderProManual.index"/>
    </tocitem>
    <tocitem text="Tools" target="html.tools.index">
       <tocitem text="Consist Tool" target="package.jmri.jmrit.consisttool.ConsistToolFrame"/>
