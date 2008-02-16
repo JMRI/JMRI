@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CMRI.shtml,v 1.1 2008-01-13 06:48:29 jacobsen Exp $ -->
+<!-- $Id: CMRI.shtml,v 1.2 2008-02-16 20:44:45 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -121,6 +121,7 @@
 	applications use the same library, it is possible to run a panel from 
 	JmriDemo, or even program a DCC decoder from PanelPro. Its just not quite as
 	easy as using the focused application.</p> 
+	
 	<p>JMRI libraries have built-in support for C/MRI serial hardware using the 
 	USIC, SUSIC and SMINI. Each SMINI, USIC or SUSIC is a serial node capable of 
 	communicating independently with a computer via serial I/O. Several C/MRI 
