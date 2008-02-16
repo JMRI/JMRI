@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Names.shtml,v 1.6 2008-02-16 18:18:20 jacobsen Exp $ -->
+<!-- $Id: Names.shtml,v 1.7 2008-02-16 20:43:34 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -74,27 +74,29 @@ Some of these are associated with a specific hardware device, e.g. a particular
 turnout.  Others are more virtual, e.g. a route, which is a collection on control
 information within the program.
 
-<p>
-JMRI identifies a particular type of device with a "type letter", capitalized
-in the list above.  For example, a Turnout device will have a "type letter" of "T" in
-it's name.
+<h2>System and User Names</h2>
+
+JMRI users both "system names" and "user names" to reference things.
 
 <P>
-In all cases, we want users to be able to call things what they want.
+We want users to be able to call things what they want.
 Names like "p(24,23)*" are not useful.  Every named item will therefore
-have a "user name", which is an entirely free-form string.
+have a "user name", which is an entirely free-form string. You can put
+whatever you want in there, so long as it's not a duplicate of the name
+given to something else.  For example, you might call a Turnout "West Yard Lead"
+or "Turnout 32" or "Green Wire from Controller" or whatever.
 
 <P>
 At the same time, we need a shorthand name, really a unique identifier, 
 to talk about specific objects.  This doesn't have to be convenient, but
 does have to have a clear mapping from name to object and back.  For example,
 we need a very specific way to identify "LocoNet Turnout 23".  We call these
-"system names".  JMRI code will map these to and form whatever information
-the hardware may need, so we can specify them here.
+"system names".  JMRI code will map these to and from whatever information
+the hardware may need.
 
-<H2>Hardware names</h2>
+<H2>System Name Format</h2>
 
-A system-name is formed from a single letter representing the hardware system, 
+A system name is formed from a single letter representing the hardware system, 
 followed by a single letter indicating the type, 
 followed by system- and type-specific string. 
 The string is meant to be related to the hardware addressing, but
@@ -103,7 +105,7 @@ is otherwise unconstrained.
 Examples:
 <UL>
 <LI>LT23 - <u>L</u>ocoNet <u>T</u>urnout <u>23</u>.  
-<LI>CS12 - The <u>12</u>th <u>C</u>/MRI <u>I</u>nput line
+<LI>CS12 - The <u>12</u>th <u>C</u>/MRI <u>S</u>ensor (input line).
 </ul>
 
 Note that there is no assumption of pattern to the names; they don't have
@@ -137,29 +139,15 @@ Note that some of these are placeholders, and have no underlying implementation.
 <LI>Z <a href="../../hardware/zimo/Zimo.shtml">Zimo MX-1</a>
 </ul>
 
-<h3>System-specific info</H3>
-Each different hardware system can specify the "string" that follows the system and type 
-letters.  Generally, these are small numbers, but their exact meaning is very system-specific.
-For more information, please see the specific pages for
-<UL>
-<LI><A HREF="../../hardware/cmri/CMRI.shtml#names">C/MRI</a>
-<LI><A HREF="../../hardware/loconet/Addressing.shtml">Digitrax</a>
-<LI><A HREF="../../hardware/grapevine/Grapevine.shtml#names">Grapevine</a>
-<LI><A HREF="../../hardware/nce/NCE.shtml#names">NCE</a>
-</UL>
-</UL>
-
-<P>
-"Internal" objects can also be addressed and manipulated, but they don't have a strict
-correspondence with some hardware on the layout.  For example, if a signal head
-is implemented as three different outputs, LT1, LT2 and LT3, the signal head object
-might be called IH3.
-
-<H3>Device type letters</h3>
+<a id="types">
+<H3>Device type letters</h3></a>
 Note that some of these are placeholders, and have no underlying implementation. Also, 
 there is no guarantee that any given hardware system will ever implement all of them.
 
 <ul>
+
+<li>B Block - A software object that keeps track of the contents of a specific block 
+of track
 
 <LI>H signal Head - One part of a signal (which may have multiple heads).  
 Also interpreted to include indicators on control panels that
@@ -188,8 +176,30 @@ detectors.
 <LI>X logiX - a set of logic equations used to control the layout
 </ul>
 
+<a id="systeminfo">
+<h3>System-specific info</H3></a>
+Each different hardware system can specify the "string" that follows the system and type 
+letters.  Generally, these are small numbers, but their exact meaning is very system-specific.
+For more information, please see the specific pages for
+<UL>
+<LI><A HREF="../../hardware/cmri/CMRI.shtml#numbers">C/MRI</a>
+<LI><A HREF="../../hardware/loconet/Addressing.shtml">Digitrax LocoNet</a>
+<LI><A HREF="../../hardware/grapevine/Names.shtml">Grapevine</a>
+<LI><A HREF="../../hardware/XPressNet/XNetAddressing.shtml ">Lenz XPressNet</a>
+<LI><A HREF="../../hardware/nce/NCE.shtml#names">NCE</a>
+<LI><A HREF="../../hardware/powerline/Names.shtml">Powerline adapters, e.g, X10</a>
+</UL>
+</UL>
 
-<H2>Naming Conventions For Automated Use</h2>
+<P>
+"Internal" objects can also be addressed and manipulated, but they don't have a strict
+correspondence with some hardware on the layout.  For example, if a signal head
+is implemented as three different outputs, LT1, LT2 and LT3, the signal head object
+might be called IH3.
+
+
+<a id="special">
+<H2>Naming Conventions For Automated Use</h2></a>
 
 Some higher-level constructs create their own items.  For example, a
 "Sensor Group"
