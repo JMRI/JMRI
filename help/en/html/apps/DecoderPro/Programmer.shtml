@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: Programmer.shtml,v 1.1 2008-02-16 19:06:09 jacobsen Exp $ -->
+<!-- $Id: Programmer.shtml,v 1.2 2008-02-16 20:45:02 jacobsen Exp $ -->
 <title>JMRI: Create a Custom DecoderPro Programmer</title>
 
 <!-- Style -->
@@ -119,7 +119,7 @@ this with other variables on the same pane.
 <li><dfn>fnmapping</dfn> - Show a function mapping grid.
 This requires variables with specific names, which
 are described on a
-<A HREF="FnMapping.html">separate page</a>.
+<A HREF="FnMapping.shtml">separate page</a>.
 <li><dfn>dccaddress</dfn> - Show a combined variable for the DCC address.  This
 consists of a checkbox that selects use of short vs long address, and
 a single text field for entering the address.  Depending on how
@@ -148,7 +148,7 @@ you're writing a very basic programmer, you might want to hide them.</p>
 <h3>How variables in a decoder file match up with the programmer file</h3>
 
 Each decoder file defines 
-<A HREF="CreateDecoder.html#variable">variables</a> that describe specific controls within the
+<A HREF="CreateDecoder.shtml#variable">variables</a> that describe specific controls within the
 decoder.  The programmer file then describes how to place those on
 panes so that the user can find and manipulate them.
 <P>

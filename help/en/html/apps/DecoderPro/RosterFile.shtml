@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: RosterFile.shtml,v 1.1 2008-02-16 19:06:09 jacobsen Exp $ -->
+<!-- $Id: RosterFile.shtml,v 1.2 2008-02-16 20:45:02 jacobsen Exp $ -->
 <title>JMRI: Roster File Details</title>
 
 <!-- Style -->
@@ -32,7 +32,7 @@ that it stays self-consistent.</p>
 <P>
 To move the entire roster to another computer, first find the 
 preferences directory using the information on
-<A HREF="Files.html#location">the "Configuration Files" page</a>. 
+<A HREF="Files.shtml#location">the "Configuration Files" page</a>. 
 
 <P>
 In the preferences directory there will be a file called "roster.xml", and 

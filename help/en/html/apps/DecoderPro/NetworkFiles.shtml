@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: NetworkFiles.shtml,v 1.1 2008-02-16 19:06:09 jacobsen Exp $ -->
+<!-- $Id: NetworkFiles.shtml,v 1.2 2008-02-16 20:45:02 jacobsen Exp $ -->
 <title>JMRI: Sharing DecoderPro Rosters Across A Network</title>
 
 <!-- Style -->
@@ -44,9 +44,9 @@ Configure the Windows machines so there's a shared directory, and then you can s
 <P>
 For more information, please see the DecoderPro pages on 
 the 
-<A HREF="http://jmri.sourceforge.net/apps/DecoderPro/RosterFile.html">roster files</a>
+<A HREF="RosterFile.html">roster files</a>
 and
-<A HREF="http://jmri.sourceforge.net/apps/DecoderPro/Files.html#location">file locations</a>.
+<A HREF="Files.html#location">file locations</a>.
 <P>
 Copy, _do not move_, the roster.xml file and roster folder to the shared folder. You must copy the _entire_ contents of the roster directory!
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: CreateDecoder.shtml,v 1.1 2008-02-16 19:06:08 jacobsen Exp $ -->
+<!-- $Id: CreateDecoder.shtml,v 1.2 2008-02-16 20:45:01 jacobsen Exp $ -->
 <title>JMRI: DecoderPro User Guide - Creating A Custom Decoder File</title>
 
 <!-- Style -->
@@ -50,7 +50,7 @@ that the decoder manufacturer uses in their documentation. </p>
 <TT>JMRI</TT> preferences directory so that the program can find it.  The
 <TT>DecoderProConfig2.xml</TT> file lives in the preferences directory, so
 you can search for that file to locate it.
-(See the <a HREF="Files.html#location"><em>configuration files page</em></a>
+(See the <a HREF="Files.shtml#location"><em>configuration files page</em></a>
 for further details
 about how to find that directory and it's contents) </p>
 
@@ -67,7 +67,7 @@ HREF="../../xml/decoders/Digitrax_1x2.xml">Digitrax_1x2.xml</a> file):
 <p class=example>
 &lt;?xml version="1.0"?&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;!DOCTYPE decoder-config SYSTEM "decoder-config.dtd"&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- $Id: CreateDecoder.shtml,v 1.1 2008-02-16 19:06:08 jacobsen Exp $ --&gt;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- $Id: CreateDecoder.shtml,v 1.2 2008-02-16 20:45:01 jacobsen Exp $ --&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;decoder-config&gt;<BR>
 </p>
 
@@ -220,7 +220,7 @@ different order.</p>
 the decoder manufacturer calls this item, even if other manufacturers or the
 NMRA use a different name for similar things.
 <li><dfn>item</dfn> - An alternative, 'standard' name. See the
-<A HREF="Programmer.html#id">discussion on the programmer definition page</a> 
+<A HREF="Programmer.shtml#id">discussion on the programmer definition page</a> 
 for more information on this.  Generally, look at the Comprehensive programmer
 to find something similar, and use the "name" attribute of that.
 <li><dfn>CV</dfn> - Which CV contains the configuration information

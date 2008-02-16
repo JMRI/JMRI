@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: Install.shtml,v 1.1 2008-02-16 19:06:09 jacobsen Exp $ -->
+<!-- $Id: Install.shtml,v 1.2 2008-02-16 20:45:02 jacobsen Exp $ -->
 <title>JMRI: Downloading and Installing DecoderPro</title>
 
 <!-- Style -->
@@ -34,13 +34,13 @@ It will probably also work on most
 other modern operating systems that have Java available; contact us for
 help if you'd like to try it on some other system. You need to have a
 serial port available, either on the computer itself, or via a 
-<A HREF="../../hardware/USBtoSerial.html">USB adapter</a>. 
+<A HREF="../../hardware/USBtoSerial.shtml">USB adapter</a>. 
 </dd>
 
 
 <dt class=left>Make sure JMRI works with your DCC system
 </dt><dd class=first>The
-<A HREF="./../hardware/index.shtml">hardware page</a>
+<A HREF="../../hardware/index.shtml">hardware page</a>
 lists the DCC systems compatible with
 DecoderPro, along with the known limitations.
 </dd>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: MoreInfo.shtml,v 1.1 2008-02-16 19:06:09 jacobsen Exp $ -->
+<!-- $Id: MoreInfo.shtml,v 1.2 2008-02-16 20:45:02 jacobsen Exp $ -->
 <title>JMRI: DecoderPro In Depth</title>
 
 <!-- Style -->
@@ -60,7 +60,7 @@ someday DCC decoder manufacturers will provide an XML description of each
 decoder they make. In the meantime, the configuration files are being
 created by volunteers. If one doesn't exist for a specific decoder you've
 got, you can
-<a href="CreateDecoder.html">create your own</a>.
+<a href="CreateDecoder.shtml">create your own</a>.
 You can also modify a file if you'd prefer
 different names, a different grouping of options, or you just never want to
 see that certain options that you don't use. A simple text editor can

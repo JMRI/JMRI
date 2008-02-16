@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Me 2008 -->
-<!-- $Id: Tour.shtml,v 1.1 2008-02-16 19:06:09 jacobsen Exp $ -->
+<!-- $Id: Tour.shtml,v 1.2 2008-02-16 20:45:02 jacobsen Exp $ -->
 <title>JMRI: DecoderPro Tour</title>
 
 <!-- Style -->
@@ -34,7 +34,7 @@
 <H2>Startup</H2>
 When you first open the programmer, you see this window.  Click the
 "Program locomotive" button to start.  (This assumes you have already
-<a href="../../hardware">connected</a> your computer to your layout and
+<a href="../../hardware/index.shtml">connected</a> your computer to your layout and
 have a locomotive on your programming track)
 </TD>
 </TR>
@@ -216,7 +216,7 @@ found on other programmer screens.</p>
 <TD VALIGN=top>
 <a href="./images/Roster75.gif" ALT="Rosters">
 <IMG SRC="./images/Roster75.gif" WIDTH="100" HEIGHT="100" ALT="Rosters"></a>
-<p>For more info, see <a href="./Roster.html">Roster Topics</A></p>
+<p>For more info, see <a href="./Roster.shtml">Roster Topics</A></p>
 </TD>
 <TD>
 <H2>Locomotive Rosters</H2>

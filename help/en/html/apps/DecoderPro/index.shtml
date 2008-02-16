@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2003-2008 -->
-<!-- $Id: index.shtml,v 1.1 2008-02-16 19:06:09 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.2 2008-02-16 20:45:02 jacobsen Exp $ -->
 <title>JMRI: DecoderPro Symbolic Programmer</title>
 
 <!-- Style -->
@@ -46,22 +46,22 @@ through 9.2 and MacOS X), and OS/2. It will probably also work on most
 other modern operating systems that have Java available; contact us for
 help if you'd like to try it on some other system. You need to have a
 serial port available, either on the computer itself, or via a 
-<A HREF="/help/en/html/hardware/USBtoSerial.html">USB adapter</a>. 
+<A HREF="../../hardware/USBtoSerial.shtml">USB adapter</a>. 
 For more information, please see the
-<A HREF="/help/en/html/download">download pages</a>.</p>
+<A HREF="http://jmri.sourceforge.net/download/index.html">download pages</a>.</p>
 
 <p>You also need to have a serial connection to your DCC system.
 For more information, please see the
-<A HREF="../../hardware">DCC hardware pages</a>.</p>
+<A HREF="../../hardware/index.shtml">DCC hardware pages</a>.</p>
 
 <h1>What you can do to help</h1>
 
 DecoderPro is the creation of a large number of
-<A HREF="/help/en/Acknowledgements.shtml">volunteers</a>, model railroaders like yourself
+<A HREF="../../../Acknowledgements.shtml">volunteers</a>, model railroaders like yourself
 who've each contributed to making DecoderPro a great resource
 for all of us.  You can help too, even if you're not a 
 computer programmer; 
-<a href="../../Help.html">click here for suggestions on how</a>.
+<a href="http://jmri.sourceforge.net//Help.html">click here for suggestions on how help</a>.
 
 <H1>DecoderPro User Guide</H1>
 <dl class=toc>

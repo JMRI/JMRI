@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: FAQ.shtml,v 1.1 2008-02-16 19:06:09 jacobsen Exp $ -->
+<!-- $Id: FAQ.shtml,v 1.2 2008-02-16 20:45:01 jacobsen Exp $ -->
 <title>JMRI: DecoderPro Frequently Asked Questions</title>
 
 <!-- Style -->
@@ -35,7 +35,7 @@ they're also available somewhere else.
 <p>
 A completely new decoder needs a new or
 updated configuration file.  You can 
-<a href="CreateDecoder.html">create your own</a>
+<a href="CreateDecoder.shtml">create your own</a>
 or ask on the 
 <a href="http://groups.yahoo.com/group/jmriusers/">JmriUsers mailing list</a>
 for somebody to create one for you.
