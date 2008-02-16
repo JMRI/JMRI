@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Sensors.shtml,v 1.1 2008-02-06 07:07:56 jacobsen Exp $ -->
+<!-- $Id: Sensors.shtml,v 1.2 2008-02-16 18:24:17 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -41,7 +41,7 @@
 <p>
 A Sensor is JMRI's way of representing an input from the layout.
 <P>
-JMRI will use a Sensor to represent the status of a block occupancy detector,
+JMRI uses a Sensor to represent the status of a block occupancy detector,
 or a pushbutton on the fascia, or just about anything else you can attach
 to an input on your DCC or C/MRI system.
 
@@ -60,11 +60,13 @@ run out to the layout and push a button or put a locomotive in a block.
 <P>
 Therefore, we let you locally change a sensor via the Sensor Table (see below), or 
 by clicking on a sensor icon on a panel (See the 
-<A HREF="">PanelPro pages</a> for more info on panels).
+<A HREF="http://jmri.sourceforge.net/apps/PanelPro/PanelPro.html">PanelPro pages</a> 
+for more info on panels).
 
 <P>
 The change takes effect immediately, but only lasts until the next time you
-change it in the program, or the next time the input hardware on the layout changes.
+change it in the program, or the next time the input hardware on the layout changes
+the value.
    
 <h3>Saving Sensor configuration to disk</h3>
 
