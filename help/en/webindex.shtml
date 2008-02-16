@@ -48,8 +48,18 @@
 </li>
    
 <li>
-<a href="DecoderProManual/Getting_Started.shtml#Top">DecoderPro</a>
+<a href="html/apps/DecoderPro/index.shtml">DecoderPro</a>
 <ul>
+      
+<li>
+<a href="html/apps/DecoderPro/index.shtml">Introduction</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="DecoderProManual/Getting_Started.shtml">Manual</a>
+<ul></ul>
+</li>
       
 <li>
 <a href="DecoderProManual/Comp_Setup_Roster.shtml">Roster Pane</a>
