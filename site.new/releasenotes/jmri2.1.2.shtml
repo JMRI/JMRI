@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.2.shtml,v 1.17 2008-02-17 03:04:19 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.2.shtml,v 1.18 2008-02-17 20:21:53 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -72,6 +72,9 @@ see our
 <a href="/Copyright.html">copyright and licensing page</a>.</p></b>
 
 <h3>New warnings for this version:</h3>
+
+<p>
+In JMRI 2.1.1, when you went to load a panel file, only files with a ".xml" filename suffix were shown by default. To see all files, you could select "All Files" in the window.  This caused some confusion because many people hadn't added the ".xml" suffix to their panel file names.  We still think having a suffix like that is valuable, but to reduce confusion in JMRI 2.1.2 when you save a panel file an ".xml" suffix is added automatically to the filename if you haven't already provided it.  This makes the filename filter work better when loading a file.  If you want to provide another suffix, or none at all, select the "All Files" option in the window before saving the file. 
 
 <h3>Warnings from older versions:</h3>
 
@@ -218,6 +221,9 @@ Matt Harris updated the roster entry pane of the DecoderPro programmer so it can
 
 <p>
 Simon Reader added the "invert" option to LocoNet turnouts.
+
+<p>
+Courtesy of Dan Boudreau, when you save a panel file an ".xml" suffix is added automatically to the filename if you haven't already provided it.  This makes the filename filter work better when loading a file.  If you want to provide another suffix, or none at all, select the "All Files" option in the window before saving the file. 
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
