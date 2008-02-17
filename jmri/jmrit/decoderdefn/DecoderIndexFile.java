@@ -32,7 +32,7 @@ import java.util.List;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.32 $
+ * @version			$Revision: 1.33 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -312,6 +312,12 @@ public class DecoderIndexFile extends XmlFile {
         Element mfgList = decoderIndex.getChild("mfgList");
         if (mfgList != null) {
 
+            Attribute a;
+            a = mfgList.getAttribute("nmraListDate");
+            if (a!=null) nmraListDate = a.getValue();
+            a = mfgList.getAttribute("updated");
+            if (a!=null) updated = a.getValue();
+            
             List l = mfgList.getChildren("manufacturer");
             if (log.isDebugEnabled()) log.debug("readMfgSection sees "+l.size()+" children");
             for (int i=0; i<l.size(); i++) {
@@ -422,6 +428,12 @@ public class DecoderIndexFile extends XmlFile {
 
         // add mfg list from existing DecoderIndexFile item
         Element mfgList = new Element("mfgList");
+        // copy dates from original mfgList element
+        if (oldIndex.nmraListDate!=null)
+            mfgList.setAttribute("nmraListDate", oldIndex.nmraListDate);
+        if (oldIndex.updated!=null)
+            mfgList.setAttribute("updated", oldIndex.updated);
+        
         // We treat "NMRA" special...
         Element mfg = new Element("manufacturer");
         mfg.setAttribute("mfg","NMRA");
@@ -469,6 +481,8 @@ public class DecoderIndexFile extends XmlFile {
         _instance = null;
     }
 
+    String nmraListDate = null;
+    String updated = null;
 
     /**
      * Return the filename String for the default decoder index file, including location.
