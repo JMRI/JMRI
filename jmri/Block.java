@@ -52,8 +52,18 @@ import java.util.ArrayList;
  * To allow independent development, it must be possible for multiple Block objects
  * to take care of a particular section of track.
  *
+ *<P>
+ * Possible state values:
+ *<ul>
+ * <li>UNKNOWN - The sensor shows UNKNOWN, so this block doesn't know if it's occupied or not.
+ * <li>INCONSISTENT - The sensor shows INCONSISTENT, so this block doesn't know if it's occupied or not.
+ * <li>OCCUPIED - This sensor went active. Note that OCCUPIED will be set
+ *              even if the logic is unable to figure out which value to take.
+ * <li>UNOCCUPIED - No content, because the sensor has determined this block is unoccupied.
+ *</ul>
+ *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class Block extends jmri.AbstractNamedBean {
 
@@ -102,6 +112,15 @@ public class Block extends jmri.AbstractNamedBean {
         firePropertyChange("state", new Integer(old), new Integer(_current));
     }
     
+    /**
+     * Set the value retained by this Block.
+     * Also used when the Block itself gathers a value from an 
+     * adjacent Block.  This can be overridden in a subclass if
+     * e.g. you want to keep track of Blocks elsewhere, but make
+     * sure you also eventually invoke the super.setValue() here.
+     * <p>
+     * @param value The new Object resident in this block, or null if none.
+     */
     public void setValue(Object value) {
         Object old = _value;
         _value = value;
