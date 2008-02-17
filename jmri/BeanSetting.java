@@ -1,13 +1,19 @@
 package jmri;
 
 /**
- * Provide simple class to maintain a Named Bean (e.g. Turnout) and specific setting for it.
- *
+ * Represent a Named Bean (e.g.&nbsp;Turnout) 
+ * and specific setting for it.
+ * These can be used e.g. to represent part of a particular
+ * path through a layout, or a condition that has to be 
+ * true as part of something.
  *<p>
- * Objects of this class are immutable.
+ * Objects of this class are immutable, in that once created
+ * the selected bean and required setting cannot be changed.
+ * However, the value of the <code><a href="#check()">check</a></code> method does
+ * change, because it's a function of the current bean setting(s).
  *
- * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.1 $
+ * @author	Bob Jacobsen  Copyright (C) 2006, 2008
+ * @version	$Revision: 1.2 $
  */
 public class BeanSetting  {
 
