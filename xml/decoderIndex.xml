@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.1.2 on Sun Feb 17 12:39:21 PST 2008 $Id: decoderIndex.xml,v 1.115 2008-02-17 20:43:01 jacobsen Exp $-->
-  <decoderIndex version="134">
+  <!--Written by JMRI version 2.1.2 on Sun Feb 17 12:39:21 PST 2008 $Id: decoderIndex.xml,v 1.116 2008-02-17 21:00:47 jacobsen Exp $-->
+  <decoderIndex version="136">
     <mfgList nmraListDate="2007-10-17" updated="2008-01-23">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
