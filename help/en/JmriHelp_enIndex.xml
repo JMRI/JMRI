@@ -99,6 +99,8 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
    <indexitem text="Simple Clock" target="package.jmri.jmrit.simpleclock.SimpleClockFrame"/>
    <indexitem text="Simple Signal Logic" target="package.jmri.jmrit.blockboss.BlockBossFrame"/>
    <indexitem text="Slot Monitor" target="package.jmri.jmrix.loconet.slotmon.SlotMonFrame"/>
+   <indexitem text="Speed Matching, Locomotive" target="html.tools.speedometer.SpeedMatch"/>
+   <indexitem text="Speedometer" target="html.tools.speedometer.index"/>
    <indexitem text="Tables">
       <indexitem text="Light Table" target="package.jmri.jmrit.beantable.LightTable"/>
       <indexitem text="Logix Table" target="package.jmri.jmrit.beantable.LogixTable"/>

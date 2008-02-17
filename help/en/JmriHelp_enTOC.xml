@@ -60,6 +60,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
          <tocitem text="The LocoNet clock" target="html.tools.fastclock.LocoNetClock"/>
       </tocitem>
       <tocitem text="Lights" target="html.tools.Lights"/>
+      <tocitem text="Locomotive Speed Matching" target="html.tools.speedometer.SpeedMatch"/>
       <tocitem text="Logix" target="package.jmri.jmrit.beantable.LogixTable"/>
       <tocitem text="Memories" target="html.tools.Memories"/>
       <tocitem text="Reporters" target="html.tools.Reporters"/>
@@ -68,6 +69,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
       <tocitem text="Sensors" target="html.tools.Sensors"/>
       <tocitem text="Sensor Groups" target="package.jmri.jmrit.sensorgroup.SensorGroupFrame"/>
       <tocitem text="Simple Signal Logic" target="package.jmri.jmrit.blockboss.BlockBossFrame"/>
+      <tocitem text="Speedometer" target="html.tools.speedometer.index"/>
       <tocitem text="Tables">
          <tocitem text="Turnout Table" target="package.jmri.jmrit.beantable.TurnoutTable"/>
          <tocitem text="Sensor Table" target="package.jmri.jmrit.beantable.SensorTable"/>
