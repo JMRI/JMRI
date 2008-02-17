@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TurnoutFeedback.shtml,v 1.2 2008-01-13 05:09:00 jacobsen Exp $ -->
+<!-- $Id: TurnoutFeedback.shtml,v 1.3 2008-02-17 15:51:14 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -122,13 +122,13 @@ and don't have this choice.</DD>
 turnouts, this informs the program that the turnout is
 being driven by a Digitrax DS54 with a microswitch attached
 to the switch lead.  For more information, see the
-<A HREF="loconet/DS54.shtml">DS54 page</a>.</DD>
+<A HREF="../../hardware/loconet/DS54.shtml">DS54 page</a>.</DD>
 
 <DT>EXACT</DT><DD>Currently only available for LocoNet
 turnouts, this informs the program that the turnout is
 being driven by a Digitrax DS54 with two microswitches attached
 to the switch and aux leads.  For more information, see the
-<A HREF="loconet/DS54.shtml">DS54 page</a>.</DD>
+<A HREF="../../hardware/loconet/DS54.shtml">DS54 page</a>.</DD>
 
 </DL>
 
@@ -141,29 +141,6 @@ devices set up to trigger from a local input, and to send sensor
 messages when that happens.  in that case, switching to "ONESENSOR" 
 or "TWOSENSOR" feedback will make everything work properly.  (DON'T 
 FORGET TO SAVE THE CONFIGURATION!)
-
-<!-- Footer -->
-    <hr class="hide">
-    <div id="footer">
-	<ul id="bn">
-	<li><a href="/sitemap/">Site Map</a></li>
-	<li><a href="/contact/">Contact Us</a></li>
-	</ul>
-
-	<p>Thanks and congratulations to
-	   <A href="/community/" title="Who is JMRI">
-	   	all who contributed</A>! </p>
-
-	<p>Copyright &copy; 1997 - 2004 JMRI Community. 
-	<P>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
-	<P><A href="/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a></p>
-    
-       <BR/>Site hosted by: <BR/>
-        <A href="http://sourceforge.net"> 
-        <IMG src="http://sourceforge.net/sflogo.php?group_id=26788&amp;type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A> 
-
-
-    </div>
 
 <!--#include virtual="/Footer" -->
 
