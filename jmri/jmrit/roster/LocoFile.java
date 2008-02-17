@@ -28,7 +28,7 @@ import java.util.List;
  * @author    Bob Jacobsen     Copyright (C) 2001, 2002
  * @author    Dennis Miller    Copyright (C) 2004
  * @author    Howard G. Penny  Copyright (C) 2005
- * @version   $Revision: 1.22 $
+ * @version   $Revision: 1.23 $
  * @see       jmri.jmrit.roster.RosterEntry
  * @see       jmri.jmrit.roster.Roster
  */
@@ -188,22 +188,8 @@ class LocoFile extends XmlFile {
 
 
             // add top-level elements
-            Element values;
-            root.addContent(new Element("locomotive")		// locomotive values are first item
-                            .setAttribute("id", r.getId())
-                            .setAttribute("roadNumber",r.getRoadNumber())
-                            .setAttribute("roadName",r.getRoadName())
-                            .setAttribute("mfg",r.getMfg())
-                            .setAttribute("model",r.getModel())
-                            .setAttribute("dccAddress",r.getDccAddress())
-                            .setAttribute("comment",xmlComment)
-                            .addContent(new Element("decoder")
-                                        .setAttribute("model",r.getDecoderModel())
-                                        .setAttribute("family",r.getDecoderFamily())
-                                        .setAttribute("comment",xmlDecoderComment)
-                                        )
-                            .addContent(values = new Element("values"))
-                );
+            Element values = r.store();   // the locomotive element from the RosterEntry
+            root.addContent(values);
 
             // Append a decoderDef element to values
             Element decoderDef;
