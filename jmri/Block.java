@@ -23,6 +23,10 @@ import java.util.ArrayList;
  * system-specific, so a system letter of 'I' is appropriate.  This leads to 
  * system names like "IB201".
  *
+ *<p>The direction of a Block is set from the direction of the incoming
+ * train. When a train is found to be coming in on a particular Path, that
+ * Path's getFromBlockDirection becomes the direction of the train in this Block.
+ *
  * <P>Issues:
  * <UL>
  * <LI> Doesn't handle a train pulling in behind another well:
@@ -37,15 +41,19 @@ import java.util.ArrayList;
  * <LI> Does not handle closely-following trains where there is only one 
  *      electrical block per signal.   To do this, it probably needs some type of
  *      "assume a train doesn't back up" logic.  A better solution is to have multiple
- *      senors and Block objects between each signal head.
+ *      sensors and Block objects between each signal head.
+ * <li> If a train reverses in a block and goes back the way it came (e.g. b1 to b2 to b1), 
+ *      the block that's re-entered will get an updated direction, but the direction of this block (b2 in the example)
+ *      is not updated.  In other words, we're not noticing that the train must have reversed to go back out.
  *</UL>
  *
- *<P>Do not assume that a Block object uniquely represents a piece of track.
+ *<P>
+ * Do not assume that a Block object uniquely represents a piece of track.
  * To allow independent development, it must be possible for multiple Block objects
  * to take care of a particular section of track.
- *<P>
- * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.3 $
+ *
+ * @author	Bob Jacobsen  Copyright (C) 2006, 2008
+ * @version	$Revision: 1.4 $
  */
 public class Block extends jmri.AbstractNamedBean {
 
@@ -158,8 +166,7 @@ public class Block extends jmri.AbstractNamedBean {
         }
         // sort on number of neighbors
         if (count == 0) log.info("Sensor ACTIVE came out of nowhere, no neighbors active for block "+getSystemName()+". Value not set.");
-        else if (count > 1) log.error("count of "+count+" ACTIVE neightbors can't be handled for block "+getSystemName());
-        else {
+        else if (count == 1) { // simple case
         
             if ((next!= null) && (next.getBlock()!=null)) {
                 // normal case, transfer value object 
@@ -168,6 +175,28 @@ public class Block extends jmri.AbstractNamedBean {
                 if (log.isDebugEnabled()) log.debug("Block "+getSystemName()+" gets new value from "+next.getBlock().getSystemName()+", direction="+next.decodeDirection(getDirection()));
             } else if (next == null) log.error("unexpected next==null processing signal in block "+getSystemName());
             else if (next.getBlock() == null) log.error("unexpected next.getBlock()=null processing signal in block "+getSystemName());
+        }
+        else {  // count > 1, check for one with proper direction
+            // this time, count ones with proper direction
+            next = null;
+            count = 0;
+            for (int i = 0; i<paths.size(); i++) {
+                Path p = (Path) paths.get(i);
+                if (p.checkPathSet() && (p.getBlock().getSensor().getState()==Sensor.ACTIVE)
+                    && (p.getBlock().getDirection() == p.getFromBlockDirection())) {
+                    count++;
+                    next = p;
+                } 
+            }       
+            if (count==1) {
+                // found one block with proper direction, assume that
+                setValue(next.getBlock().getValue());
+                setDirection(next.getFromBlockDirection());
+                if (log.isDebugEnabled()) log.debug("Block "+getSystemName()+" with direction "+Path.decodeDirection(getDirection())+" gets new value from "+next.getBlock().getSystemName()+", direction="+next.decodeDirection(getDirection()));
+            } else {
+                // no unique path with correct direction
+                log.error("count of "+count+" ACTIVE neightbors with proper direction can't be handled for block "+getSystemName());
+            }
         }
         // in any case, go OCCUPIED
         setState(OCCUPIED);

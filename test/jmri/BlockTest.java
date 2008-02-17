@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the Block class
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class BlockTest extends TestCase {
 
@@ -87,6 +87,93 @@ public class BlockTest extends TestCase {
 	    Assert.assertEquals("Value transferred", "b2 contents", b1.getValue());
 	}
 	
+    // Test going active with two neighbors, one active.
+    // b2 is between b1 and b3. b1 contains a train
+	public void testOneOfTwoGoesActive() throws JmriException {
+	    SensorManager sm = new jmri.managers.InternalSensorManager();
+
+	    Block b1 = new Block("SystemName1");
+	    Block b2 = new Block("SystemName2");
+	    Block b3 = new Block("SystemName3");
+
+        Sensor s1 = sm.provideSensor("IS1");
+        b1.setSensor(s1);
+        s1.setState(Sensor.ACTIVE);
+        b1.setValue("b1 contents");
+        
+        Sensor s2 = sm.provideSensor("IS2");
+        b2.setSensor(s2);
+        s2.setState(Sensor.INACTIVE);
+        
+        Sensor s3 = sm.provideSensor("IS3");
+        b3.setSensor(s3);
+        s3.setState(Sensor.INACTIVE);
+        
+        Path p21 = new Path();
+        p21.setBlock(b1);
+        p21.setFromBlockDirection(Path.RIGHT);
+        p21.setToBlockDirection(Path.LEFT);
+        b2.addPath(p21);
+        
+        Path p23 = new Path();
+        p23.setBlock(b3);
+        p23.setFromBlockDirection(Path.LEFT);
+        p23.setToBlockDirection(Path.RIGHT);
+        b2.addPath(p23);
+        
+        // actual test
+        b2.goingActive();
+        Assert.assertEquals("State", Block.OCCUPIED, b2.getState());
+  	    Assert.assertEquals("Value transferred", "b1 contents", b2.getValue());
+        Assert.assertEquals("Direction", Path.RIGHT, b2.getDirection());
+  	    
+	}
+	
+    // Test going active with two neighbors, both active.
+    // b2 is between b1 and b3. 
+	public void testTwoOfTwoGoesActive() throws JmriException {
+	    SensorManager sm = new jmri.managers.InternalSensorManager();
+
+	    Block b1 = new Block("SystemName1");
+	    Block b2 = new Block("SystemName2");
+	    Block b3 = new Block("SystemName3");
+
+        Sensor s1 = sm.provideSensor("IS1");
+        b1.setSensor(s1);
+        s1.setState(Sensor.ACTIVE);
+        b1.setValue("b1 contents");
+        b1.setDirection(Path.RIGHT);
+        
+        Sensor s2 = sm.provideSensor("IS2");
+        b2.setSensor(s2);
+        s2.setState(Sensor.INACTIVE);
+        
+        Sensor s3 = sm.provideSensor("IS3");
+        b3.setSensor(s3);
+        s3.setState(Sensor.ACTIVE);
+        b3.setValue("b3 contents");
+        b3.setDirection(Path.RIGHT);
+        
+        Path p21 = new Path();
+        p21.setBlock(b1);
+        p21.setFromBlockDirection(Path.RIGHT);
+        p21.setToBlockDirection(Path.LEFT);
+        b2.addPath(p21);
+        
+        Path p23 = new Path();
+        p23.setBlock(b3);
+        p23.setFromBlockDirection(Path.LEFT);
+        p23.setToBlockDirection(Path.RIGHT);
+        b2.addPath(p23);
+        
+        // actual test
+        b2.goingActive();
+        Assert.assertEquals("State", Block.OCCUPIED, b2.getState());
+  	    Assert.assertEquals("Value transferred", "b1 contents", b2.getValue());
+        Assert.assertEquals("Direction", Path.RIGHT, b2.getDirection());
+  	    
+	}
+	
     
 	// from here down is testing infrastructure
 
@@ -105,5 +192,9 @@ public class BlockTest extends TestCase {
 		TestSuite suite = new TestSuite(BlockTest.class);
 		return suite;
 	}
+
+    // The minimal setup for log4J
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 }
