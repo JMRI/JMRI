@@ -27,7 +27,7 @@ import jmri.jmrit.display.LayoutBlockManager;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.30 $
+ * @version			$Revision: 1.31 $
  */
 public class InstanceManager {
 
@@ -51,6 +51,14 @@ public class InstanceManager {
         // This must be replaced when we start registering specific implementations
         instance().signalHeadManager = new AbstractSignalHeadManager();
         return instance().signalHeadManager;
+    }
+
+    static public BlockManager blockManagerInstance()  {
+        if (instance().blockManager != null) return instance().blockManager;
+        // As a convenience, we create a default object if none was provided explicitly.
+        // This must be replaced when we start registering specific implementations
+        instance().blockManager = new BlockManager();
+        return instance().blockManager;
     }
 
     static public RouteManager routeManagerInstance()  {
@@ -217,6 +225,8 @@ public class InstanceManager {
         if (p!=signalHeadManager && signalHeadManager==null && log.isDebugEnabled()) log.debug("SignalHeadManager instance is being installed: "+p);
         signalHeadManager = p;
     }
+
+    private BlockManager blockManager = null;
 
     private RouteManager routeManager = null;
     static public void setRouteManager(RouteManager p) {
