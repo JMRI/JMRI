@@ -18,8 +18,8 @@
 		    <LI><dfn><a href="Routes.shtml">Routes</a></dfn>
 		    <LI><dfn><a href="Logix.shtml">Logix</a></dfn>
 		    <LI><dfn><a href="fastclock/index.shtml">Fast Clocks</a></dfn>
-		    <LI><dfn><a href="../apps/Speedometer/index.html">Speedometer</a></dfn>
-		    <LI><dfn><a href="../doc/scripts/index.html">Scripting</a></dfn>
+		    <LI><dfn><a href="speedometer/index.shtml">Speedometer</a></dfn>
+		    <LI><dfn><a href="scripting/index.shtml">Scripting</a></dfn>
 		    </UL>
 		</dd>
 
@@ -43,7 +43,7 @@
 		    <LI><dfn><a href="../apps/Signalling">Signaling</a></dfn>
 		    <LI><dfn><a href="Routes.shtml">Routes</a></dfn>
 		    <LI><dfn><a href="fastclock">Fast Clocks</a></dfn>
-		    <LI><dfn><a href="../doc/scripts/index.html">Scripting</a></dfn>
+		    <LI><dfn><a href="scripting/index.shtml">Scripting</a></dfn>
 		    </UL>
 		</dd>
 
