@@ -53,7 +53,7 @@ import java.util.ArrayList;
  * to take care of a particular section of track.
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class Block extends jmri.AbstractNamedBean {
 
@@ -110,7 +110,10 @@ public class Block extends jmri.AbstractNamedBean {
     public Object getValue() { return _value; }
     
     public void setDirection(int direction) {
+        int oldDirection = _direction;
         _direction = direction;
+        // this is a bound parameter
+        firePropertyChange("direction", new Integer(oldDirection), new Integer(direction));
     }
     public int getDirection() { return _direction; }
     
