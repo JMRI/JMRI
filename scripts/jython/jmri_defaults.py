@@ -11,7 +11,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.13 $
+# $Revision: 1.14 $
 
 #define shortcuts to some managers
 import jmri
@@ -22,6 +22,7 @@ dcc       = jmri.InstanceManager.commandStationInstance()
 reporters = jmri.InstanceManager.reporterManagerInstance()
 memories  = jmri.InstanceManager.memoryManagerInstance()
 routes    = jmri.InstanceManager.routeManagerInstance()
+blocks    = jmri.InstanceManager.blockManagerInstance()
 powermanager = jmri.InstanceManager.powerManagerInstance()
 programmers  = jmri.InstanceManager.programmerManagerInstance()
 
