@@ -1,9 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: BlockTable.shtml,v 1.1 2008-02-17 18:43:52 jacobsen Exp $ -->
+<!-- $Id: BlockTable.shtml,v 1.2 2008-02-17 19:10:02 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
-      JMRI: Memory Table Help
+      JMRI: Block Table Help
  </TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
