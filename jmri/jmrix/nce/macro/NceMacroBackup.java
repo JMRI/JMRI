@@ -58,7 +58,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * This backup routine uses the same macro data format as NCE.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 
@@ -94,11 +94,15 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 			return; // cancelled
 
 		File f = fc.getSelectedFile();
-		String fileName = f.getAbsolutePath();
-		if (!fileName.contains(".txt")){
-			fileName = fileName+".txt";
-			f = new File(fileName);
-		}
+        if (fc.getFileFilter() != fc.getAcceptAllFileFilter()){
+        	// append .txt to file name if needed
+        	String fileName = f.getAbsolutePath();
+        	String fileNameLC = fileName.toLowerCase();
+        	if (!fileNameLC.endsWith(".txt")){
+        		fileName = fileName+".txt";
+        		f = new File(fileName);
+        	}
+        }
 		if (f.exists()) {
 			if(JOptionPane.showConfirmDialog(null, "File "
 					+ f.getName() + " already exists, overwrite it?",
