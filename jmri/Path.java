@@ -27,7 +27,7 @@ package jmri;
  * clearly, this should be extended to a list of elements!
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class Path  {
 
@@ -145,7 +145,7 @@ public class Path  {
      * form.
      * This should eventually be internationalized.
      */
-    public String decodeDirection(int d) {
+    static public String decodeDirection(int d) {
         if ( d==NONE ) return "None";
 
         StringBuffer b = new StringBuffer();
@@ -165,7 +165,7 @@ public class Path  {
         return new String(b);
     }
 
-    private void appendOne(StringBuffer b, String t) {
+    static private void appendOne(StringBuffer b, String t) {
         if (b.length()!=0) b.append(", ");
         b.append(t);
     }
