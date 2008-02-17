@@ -3,7 +3,6 @@
 package jmri.jmrix.loconet;
 
 import jmri.AbstractTurnout;
-
 /**
  * Extend jmri.AbstractTurnout for LocoNet layouts
  * <P>
@@ -37,7 +36,7 @@ import jmri.AbstractTurnout;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */public class LnTurnout extends AbstractTurnout implements LocoNetListener {
 
     public LnTurnout(int number) {  // a human-readable turnout number must be specified!
@@ -82,6 +81,10 @@ import jmri.AbstractTurnout;
 
      // Handle a request to change state by sending a LocoNet command
      protected void forwardCommandChangeToLayout(int s) {
+         
+         //deal with inversion
+         s = adjustStateForInversion(s);
+         
          // send SWREQ for close
          LocoNetMessage l = new LocoNetMessage(4);
          l.setOpCode(LnConstants.OPC_SW_REQ);
@@ -130,13 +133,17 @@ import jmri.AbstractTurnout;
              int sw2 = l.getElement(2);
              if (myAddress(sw1, sw2)) {
                  if (log.isDebugEnabled()) log.debug("SW_REQ received with valid address");
-                 if ((sw2 & LnConstants.OPC_SW_REQ_DIR)!=0) {
-                     newCommandedState(CLOSED);
-                     if (getFeedbackMode()==MONITORING || getFeedbackMode()==DIRECT) newKnownState(CLOSED);
-                 } else {
-                     newCommandedState(THROWN);
-                     if (getFeedbackMode()==MONITORING || getFeedbackMode()==DIRECT) newKnownState(THROWN);
+                     //sort out states
+                     int state;
+                     if ((sw2 & LnConstants.OPC_SW_REQ_DIR) != 0){
+                         state = CLOSED;
+                     }else{
+                         state = THROWN;
                  }
+                     state = adjustStateForInversion(state);
+                     
+                     newCommandedState(state);
+                     if (getFeedbackMode()==MONITORING || getFeedbackMode()==DIRECT) newKnownState(state);
              }
              break;
          }
@@ -149,9 +156,12 @@ import jmri.AbstractTurnout;
                  if ((sw2 & LnConstants.OPC_SW_REP_INPUTS)==0) {
                      // LnConstants.OPC_SW_REP_INPUTS not set, these report outputs
     	        		// sort out states
-                     switch (sw2 &
-                             (LnConstants.OPC_SW_REP_CLOSED|LnConstants.OPC_SW_REP_THROWN)) {
+                         int state;
+                         state = sw2 &
+                                 (LnConstants.OPC_SW_REP_CLOSED|LnConstants.OPC_SW_REP_THROWN);
+                         state = adjustStateForInversion(state);
 
+                         switch (state) {
                      case LnConstants.OPC_SW_REP_CLOSED:
                          newCommandedState(CLOSED);
                          if (getFeedbackMode()==MONITORING || getFeedbackMode()==DIRECT) newKnownState(CLOSED);
@@ -179,10 +189,10 @@ import jmri.AbstractTurnout;
     	        	        // switch input closed (off)
     	        	        if (getFeedbackMode()==EXACT) {
     	        	            // reached closed state
-    	        	            newKnownState(CLOSED);
+                                     newKnownState(adjustStateForInversion(CLOSED));
     	        	        } else if (getFeedbackMode()==INDIRECT) {
     	        	            // reached closed state
-    	        	            newKnownState(CLOSED);
+                                     newKnownState(adjustStateForInversion(CLOSED));
     	        	        }
     	        	    } else {
     	        	        // switch input thrown (input on)
@@ -190,7 +200,7 @@ import jmri.AbstractTurnout;
     	        	            // leaving CLOSED on way to THROWN, but ignoring that for now
     	        	        } else if (getFeedbackMode()==INDIRECT) {
     	        	            // reached thrown state
-    	        	            newKnownState(THROWN);
+                                     newKnownState(adjustStateForInversion(THROWN));
     	        	        }
     	        	    }
     	        	} else {
@@ -199,7 +209,7 @@ import jmri.AbstractTurnout;
     	        	        // aux input closed (off)
     	        	        if (getFeedbackMode()==EXACT) {
     	        	            // reached thrown state
-    	        	            newKnownState(THROWN);
+                                     newKnownState(adjustStateForInversion(THROWN));
     	        	        }
     	        	    } else {
     	        	        // aux input thrown (input on)
@@ -234,6 +244,26 @@ import jmri.AbstractTurnout;
          // the "+ 1" in the following converts to throttle-visible numbering
          return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1) == _number;
      }
+     
+     //ln turnouts do support inversion
+     public boolean canInvert(){return true;}
+     
+     //method which takes a turnout state as a parameter and adjusts it  as necessary
+     //to reflect the turnout invert property
+     private int adjustStateForInversion(int rawState) {
+         
+         if (getInverted() && (rawState == CLOSED || rawState == THROWN)){
+             if (rawState == CLOSED) {
+                 return THROWN;
+             }else{
+                 return CLOSED;
+             }
+         }else{
+             return rawState;
+         }
+         
+     }
+     
      static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnTurnout.class.getName());
 
  }
