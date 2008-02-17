@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.2.shtml,v 1.18 2008-02-17 20:21:53 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.2.shtml,v 1.19 2008-02-17 21:13:29 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -224,6 +224,12 @@ Simon Reader added the "invert" option to LocoNet turnouts.
 
 <p>
 Courtesy of Dan Boudreau, when you save a panel file an ".xml" suffix is added automatically to the filename if you haven't already provided it.  This makes the filename filter work better when loading a file.  If you want to provide another suffix, or none at all, select the "All Files" option in the window before saving the file. 
+
+<p>
+The decoder index now carries the dates when it was updated from the NMRA manufacturer list.
+
+<p>
+The owner information on roster entries was lost (replaced by the default) when recreating the roster index. This is now fixed, but the information is still list; people should save their entries again once they're using 2.1.2 to make sure the information is stored properly.
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
