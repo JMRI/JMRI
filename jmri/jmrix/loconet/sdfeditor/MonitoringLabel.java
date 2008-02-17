@@ -6,10 +6,10 @@ import java.awt.FlowLayout;
 
 /**
  * Label which displays the contents of 
- * parameter mesages.
+ * parameter messages.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2007
- * @version	    $Revision: 1.1 $
+ * @version	    $Revision: 1.2 $
  */
 public class MonitoringLabel extends javax.swing.JLabel implements java.beans.PropertyChangeListener {
 
