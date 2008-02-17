@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: PanelPro.shtml,v 1.1 2008-02-16 21:14:10 jacobsen Exp $ -->
+<!-- $Id: PanelPro.shtml,v 1.2 2008-02-17 03:08:19 jacobsen Exp $ -->
 <title>JMRI: PanelPro, An Application For Making Control Panels</title>
 
 <!-- Style -->
@@ -22,16 +22,15 @@
 
 <H1>JMRI: PanelPro, An Application For Making Control Panels</H1>
 
-The 
-<A HREF="/index.html">JMRI libraries</a>
+The  JMRI libraries
 contain the PanelPro application for creating simple control panels.
 This page describes that application, and how to use it.
 Rodney Black's <a href="http://home.comcast.net/~kb0oys/">CATS</a>
 application is another tool for creating modern-style control panels.
 
 <h3>Contents of a panel</h3>
-<IMG SRC="../../images/panel.gif" ALT="Screen shot of panel" WIDTH="292" HEIGHT="107" HSPACE="0" VSPACE="0">
-<A href="Panels-Cornwall/CornwallPanelLit.gif"><IMG src="Panels-Cornwall/images/SmallCornwallPanel.gif" ALT="screen shot of Cornwall panel" WIDTH="502" HEIGHT="302" HSPACE="0" VSPACE="0"></A>
+<IMG SRC="../../../images/PiecedPanel.gif" ALT="Screen shot of panel" WIDTH="292" HEIGHT="107" HSPACE="0" VSPACE="0">
+<A href="../../../images/CornwallPanelLit.gif"><IMG src="../../../images/CornwallPanelLit.gif" ALT="screen shot of Cornwall panel" WIDTH="333" HEIGHT="200" HSPACE="0" VSPACE="0"></A>
 
 <BR>
 You can make the panel look and operate any way you want.
@@ -46,8 +45,8 @@ program (right above).
 You can use these tools to configure quite complicated panels for
 large layouts.  The example above is from 
 <A href="http://kc.pennsyrr.com/layouts/kulp/index.html">Nick Kulp's Cornwall Railroad</a>.
-There's
-<A HREF="Panels-Cornwall/Cornwall.html">another page</a>
+There's a
+<A HREF="http://jmri.sourceforge.net/apps/PanelPro/Panels-Cornwall/Cornwall.html">page on the main web site</a>
 that describes this in detail.
 For another example, see 
 <A HREF="http://jbritton.pennsyrr.com/control_panels.ws4d">Jerry Britton's page</a> describing how he's controlling his layout.
@@ -63,7 +62,7 @@ a page describing the
 <A HREF="http://www.quaker-valley.com/CTC/QV_CTC.html">older, simpler panel</a>)_
 <P>
 Also, refer to the
-<A HREF="/apps/Signalling/">signaling page</a>
+<A HREF="../../tools/signaling/index.shtml">signaling page</a>
 for information on adding logic to operate the signals on your layout
 under the control of your panel.
 
@@ -102,7 +101,7 @@ please see
 You start the editor by selecting "New panel..." from the "Panel" menu
 in the PanelPro program.  You'll get a blank control panel, plus the
 editor window:<BR>
-<IMG SRC="images/paneleditor.gif" ALT="Screen shot of panel editor" WIDTH="382" HEIGHT="320" HSPACE="0" VSPACE="0">
+<IMG SRC="../../../images/paneleditor.gif" ALT="Screen shot of panel editor" WIDTH="382" HEIGHT="320" HSPACE="0" VSPACE="0">
 <P>
 From the top, this contains:
 <UL>
@@ -120,7 +119,7 @@ slide the label around after inserting it, but you currently can't edit the text
 <LI>A button to add an icon as a label.  This is a way to add track symbols, etc. To select the
 icon, click the "edit icon..." button to pop an
 icon editor panel.<BR>
-<IMG SRC="images/iconeditor.gif" ALT="Screen shot of icon editor" WIDTH="295" HEIGHT="427" HSPACE="0" VSPACE="0"><BR>
+<IMG SRC="../../../images/iconeditor.gif" ALT="Screen shot of icon editor" WIDTH="295" HEIGHT="427" HSPACE="0" VSPACE="0"><BR>
 The current icon is shown at the top.
 To change it, use the tree in the bottom of the window to select a new one, then click on 
 the icon at the top of the icon editor panel
@@ -173,7 +172,7 @@ If you've got opinions on how this should work, please send comments!
 <P>It's also possible to create a panel where the "track" lines 
 change color to indicate whether the track is occupied.  The
 procedure for doing that is described on a 
-<A HREF="ColorTrack.html">separate page</a>.
+<A HREF="ColorTrack.shtml">separate page</a>.
 
 <h2>Manipulating Icons</h2>
 
@@ -192,21 +191,23 @@ icons from the panel with the popup menu.
 <h2>Communicating with Multiple Systems</h2>
 
 PanelPro can communicate with more than one layout control system.  For
-example, the Cornwall Railroad uses C/MRI hardware for sensing the status
+example, the Cornwall Railroad mentioned above uses C/MRI hardware for sensing the status
 of blocks and turnouts on the layout, but drives turnout positions through
 a Digitrax DCC system.
 <P>
-To configure the program to talk to multiple systems, just select them in the
-preferences panel:<BR>
-<IMG SRC="images/panelproprefs.gif" ALT="Screen shot of panel editor" WIDTH="331" HEIGHT="164" HSPACE="0" VSPACE="0">
-<BR>
+To configure the program to talk to multiple systems, just select the first one in 
+standard part of the the
+preferences panel, and the select the second in the "<a href="../../../package/apps/AppConfigPanel.shtml#advanced">Advanced Preferences</a>".
+For more information, see the preferences panel
+<a href="../../../package/apps/AppConfigPanel.shtml">help page</a>.
+<P>
 If you add a turnout, sensor or signal to a panel using just a number, e.g. "23",
 it will be assigned to the first system on the preference panel.  To
 access the 2nd system, you have to use JMRI 
-<A HREF="../../doc/Technical/Names.html">system names</a>.  For example, if the second attachment is
+<A HREF="../../doc/Technical/Names.shtml">system names</a>.  For example, if the second attachment is
 to a LocoNet system, you'd refer to a LocoNet Turnout as LT13; a LocoNet sensor
 as LS21, etc.  See the page on 
-<A href="../../doc/Technical/Names.html">names</a>
+<A href="../../doc/Technical/Names.shtml">names</a>
 for more information.
 
     

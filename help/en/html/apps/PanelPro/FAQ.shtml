@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: FAQ.shtml,v 1.1 2008-02-16 21:14:10 jacobsen Exp $ -->
+<!-- $Id: FAQ.shtml,v 1.2 2008-02-17 03:08:19 jacobsen Exp $ -->
 <title>JMRI: PanelPro Frequently Asked Questions</title>
 
 <!-- Style -->
@@ -18,13 +18,11 @@
 <!--#include virtual="/Header" -->
 
 <!--#include virtual="Sidebar" -->
-<div id="mainContent">
 
 
 <h1>JMRI: PanelPro Frequently Asked Questions</h1>
 
-<h3>How do I save my work?</h3>
-<A id="store"/>
+<A id="store"><h3>How do I save my work?</h3></a>
 
 There are several ways to save your panel.  This is because the program
 has to store both configuration (turnouts, sensors, etc) and layout (the
@@ -42,8 +40,7 @@ And save this file from the "Panels" menu, using the "Store Panels ..." item.
 This works because panels are stored with all the configuration information at 
 that same time (which guarantees they'll work when reloaded)
 
-<h3>Can I store just the configuration information?</h3>
-<A id="multifile"/>
+<A id="multifile"><h3>Can I store just the configuration information?</h3></a>
 
 You can store just the "configuration" information in a file, which
 you can save without worrying about whether your panel(s) are open, etc.
@@ -77,12 +74,12 @@ preferences pane to make sure this is stored.
 </UL>
 
 
-<A id="location"/>
-<h3>Where should I put my custom icons and other files?</h3>
+<A id="location">
+<h3>Where should I put my custom icons and other files?</h3></a>
 
 The best place to put your own files is in the program's
 preferences directory. (DecoderPro uses
-<A HREF="../DecoderPro/Files.html#location">the same directory<a/>)
+<A HREF="../DecoderPro/Files.shtml#location">the same directory<a/>)
 You should put any locally-modified
 versions of files here so they don't get overwritten by a new version
 of the program. Any files that the program writes to contain local
@@ -111,7 +108,7 @@ preferences files that store your applications settings:
 file to find this directory
 
 <P>
-<IMG SRC="images/FileTree.gif" ALT="Screen shot of file tree" ALIGN="RIGHT" WIDTH="288" HEIGHT="327" HSPACE="5" VSPACE="0"/>
+<IMG SRC="../../../images/IconFileTree.gif" ALT="Screen shot of file tree" ALIGN="RIGHT" WIDTH="288" HEIGHT="327" HSPACE="5" VSPACE="0"/>
 
 If you have created icons that you want to be able from the panel editor,
 put them in a directory called "resources" in the preferences directory.
@@ -137,9 +134,6 @@ within the JMRI distribution directory that you get when you install the program
 This is <em>not</em> recommended, because files there will likely be overwritten 
 when you install a future version.  (A newer version of a file, perhaps to fix a problem, 
 will overwrite your copy; the replacement is based on the file's date)
-
-
-	    </div> <!-- closes .list -->
 
     
 <!--#include virtual="/Footer" -->

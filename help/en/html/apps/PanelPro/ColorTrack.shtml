@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: ColorTrack.shtml,v 1.1 2008-02-16 21:14:10 jacobsen Exp $ -->
+<!-- $Id: ColorTrack.shtml,v 1.2 2008-02-17 03:08:19 jacobsen Exp $ -->
 <title>JMRI: Displaying Colored Trackwork</title>
 
 <!-- Style -->
@@ -30,14 +30,14 @@ PanelPro can do this for your panels.  There are two basic approaches:
 
 <UL>
 <LI>Use the new
-"<a href="/help/en/package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a>" 
+"<a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a>" 
 to create your panel. It allows you
 to 
-<a href="/help/en/package/jmri/jmrit/display/EditTrackSegment.shtml">draw track segments</a>
+<a href="../../../package/jmri/jmrit/display/EditTrackSegment.shtml">draw track segments</a>
 and 
-<a href="/help/en/package/jmri/jmrit/display/EditLayoutTurnout.shtml">place turnouts</a>
+<a href="../../../package/jmri/jmrit/display/EditLayoutTurnout.shtml">place turnouts</a>
 on the screen, then configure them so they 
-<a href="/help/en/package/jmri/jmrit/display/EditLayoutBlock.shtml">change color with occupancy</a>.
+<a href="../../../package/jmri/jmrit/display/EditLayoutBlock.shtml">change color with occupancy</a>.
 
 <LI>If using the original "Panel Editor", you can also configure sensor icons
 to change the color of your track.  This technique is described on this page.
@@ -73,16 +73,16 @@ Draw the basic bacground for your panel, including the trackwork.  Get the
 colors, positions, etc right, because going back to it later will require redoing
 a couple of steps.
 <br>
-<IMG src="images/WhiteTrack.gif">
+<IMG src="../../../images/tracksegments/WhiteTrack.gif">
 <LI>
 
 Take your favorite paint program and cut out the little pieces of the image that
 correspond to blocks.  If you've got mutiple blocks of the exact same
 shape and size, you don't have to make separate copies of them.
 <br>
-<IMG src="images/WhiteArc.gif">
-<IMG src="images/WhiteLine.gif">
-<IMG src="images/WhiteTO.gif">
+<IMG src="../../../images/tracksegments/WhiteArc.gif">
+<IMG src="../../../images/tracksegments/WhiteLine.gif">
+<IMG src="../../../images/tracksegments/WhiteTO.gif">
 
 <LI>
 You'll use those to make colored images to show occupancy.  For example, if
@@ -91,12 +91,12 @@ track, and red indicate errors, you need to copy those new images and create ver
 with the appropriate colors. (Note: Make sure to keep a copy of the original
 little image for any track segments that contains a turnout)
 <BR>
-<IMG src="images/YellowArc.gif">
-<IMG src="images/RedArc.gif">
-<IMG src="images/WhiteArc.gif">
+<IMG src="../../../images/tracksegments/YellowArc.gif">
+<IMG src="../../../images/tracksegments/RedArc.gif">
+<IMG src="../../../images/tracksegments/WhiteArc.gif">
 <lI>
 Now create the panel using these images, as described in the 
-<A HREF="PanelPro.html">tutorials</a>.
+<A HREF="PanelPro.shtml">tutorials</a>.
 
 </OL>
 
@@ -109,17 +109,17 @@ We need a couple more steps to do that.
 <LI>
 Create sensor images for the trackwork as described above.
 <BR>
-<IMG src="images/YellowTO.gif">
-<IMG src="images/RedTO.gif">
-<IMG src="images/WhiteTO.gif">
+<IMG src="../../../images/tracksegments/YellowTO.gif">
+<IMG src="../../../images/tracksegments/RedTO.gif">
+<IMG src="../../../images/tracksegments/WhiteTO.gif">
 <LI>
 Now, we create images that will modify those to show the turnout
 position.  We want to create images that are transparent where
 the trackwork is, except for a little more background color to 
 represent the position of the turnout.
 <BR>
-<IMG src="images/TranTOc.gif">
-<IMG src="images/TranTOt.gif">
+<IMG src="../../../images/tracksegments/TranTOc.gif">
+<IMG src="../../../images/tracksegments/TranTOt.gif">
 <BR>
 Here the gray color represents transparent parts of the image; if we put
 it over one of the sensor images, the sensor's track color will shine 
@@ -127,7 +127,7 @@ through.
 
 <lI>
 Now create the panel using these images, as described in the 
-<A HREF="PanelPro.html">tutorials</a>. The normal operation
+<A HREF="PanelPro.shtml">tutorials</a>. The normal operation
 (which we'll change below) is to have sensors in front of turnouts
 on the screen.  That means it'll be easier if you add and position
 the turnout icons first, then the sensor icons.

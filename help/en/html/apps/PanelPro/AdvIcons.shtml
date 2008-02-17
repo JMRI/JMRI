@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Me 2008 -->
-<!-- $Id: AdvIcons.shtml,v 1.1 2008-02-16 21:14:10 jacobsen Exp $ -->
+<!-- $Id: AdvIcons.shtml,v 1.2 2008-02-17 03:08:19 jacobsen Exp $ -->
 <title>JMRI: Advanced Icons in PanelPro</title>
 
 <!-- Style -->
@@ -22,9 +22,7 @@
 
 <h1>JMRI: Advanced Icons in PanelPro</h1>
 
-
-<h3>Memory Icons</h3>
-<A id="memoryicon"/>
+<A id="memoryicon"><h3>Memory Icons</h3></a>
 
 Memory objects are meant for scripting 
 control; the first implementation is a MemoryIcon that lets you put a multi-state icon 
@@ -40,8 +38,7 @@ if it's a NamedIcon.
 See xml/samples/MemoryIconExample.xml for info 
 on how to set this up.
 
-<h3>Reporter Icons</h3>
-<A id="reportericon"/>
+<A id="reportericon"><h3>Reporter Icons</h3></a>
 
 The first implementation of Reporter is Digitrax transponding.  
 By adding the appropriate elements to your panel files, you can show 
