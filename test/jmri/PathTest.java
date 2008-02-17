@@ -10,12 +10,18 @@ import junit.framework.TestSuite;
 /**
  * Tests for the Path class
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class PathTest extends TestCase {
 
 	public void testCreate() {
-	    new Path();
+	    Path p = new Path();
+	    Assert.assertTrue("default to direction", p.getToBlockDirection()==Path.NONE);
+	    Assert.assertTrue("default from direction", p.getFromBlockDirection()==Path.NONE);
+
+        // code requires, as a limitation, that NONE be zero
+	    Assert.assertTrue("NONE must be zero", 0==Path.NONE);
+        
 	}
 
     public void testLoad() {
@@ -59,6 +65,25 @@ public class PathTest extends TestCase {
         Path p = new Path();
         // no elements; always true
         Assert.assertTrue("check path set", p.checkPathSet());
+        
+    }
+    
+    public void testFormat() throws JmriException {
+        Path p = new Path();
+        // default direction
+        Assert.assertTrue("None", p.decodeDirection(Path.NONE).equals("None"));
+        Assert.assertTrue("Left", p.decodeDirection(Path.LEFT).equals("Left"));
+        Assert.assertTrue("Right", p.decodeDirection(Path.RIGHT).equals("Right"));
+        Assert.assertTrue("Up", p.decodeDirection(Path.UP).equals("Up"));
+        Assert.assertTrue("Down", p.decodeDirection(Path.DOWN).equals("Down"));
+        Assert.assertTrue("CW", p.decodeDirection(Path.CW).equals("CW"));
+        Assert.assertTrue("CCW", p.decodeDirection(Path.CCW).equals("CCW"));
+        Assert.assertTrue("East", p.decodeDirection(Path.EAST).equals("East"));
+        Assert.assertTrue("West", p.decodeDirection(Path.WEST).equals("West"));
+        Assert.assertTrue("North", p.decodeDirection(Path.NORTH).equals("North"));
+        Assert.assertTrue("South", p.decodeDirection(Path.SOUTH).equals("South"));
+        Assert.assertTrue("Unknown", p.decodeDirection(0x100000).equals("Unknown: 0x100000"));
+        Assert.assertEquals("South|Up", p.decodeDirection(Path.SOUTH|Path.UP), "South, Up");
         
     }
     
