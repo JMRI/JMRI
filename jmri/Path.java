@@ -6,9 +6,7 @@ package jmri;
  * trackwork to a Block.
  * <P>
  * Directions are defined for traffic along this path "to" the block, and
- * "from" the block. Although useful constants are defined, you don't 
- * have to restrict to those, and there's no assumption that they have
- * to be opposites; NORTH for "to" does not imply SOUTH for "from".
+ * "from" the block. 
  * Being more specific:
  *<UL>
  *<LI>The "to" direction is the direction that a train is going 
@@ -16,21 +14,33 @@ package jmri;
  *<LI>The "from" direction is the direction that a train is going 
  * when it traverses this path "from" the final block.
  *</UL>
+ * Although useful constants are defined, you don't 
+ * have to restrict to those, and there's no assumption that they have
+ * to be opposites; NORTH for "to" does not imply SOUTH for "from".
+ * This allows you to e.g. handle a piece of curved track where you
+ * can be going LEFT at one point and UP at another. The constants
+ * are defined as bits, so you can use more than one at a time, for
+ * example a direction can simultanously be EAST and RIGHT if desired.
+ * What that means needs to be defined by whatever object is using this Path.
  * <P>
  * This implementation only handles paths with zero or one elements;
  * clearly, this should be extended to a list of elements!
  *
- * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.1 $
+ * @author	Bob Jacobsen  Copyright (C) 2006, 2008
+ * @version	$Revision: 1.2 $
  */
 public class Path  {
 
+    /**
+     * Create an object with default directions of NONE, and
+     * no setting element.
+     */
     public Path() {
     }
     
     /**
      * Convenience constructor to set the destination/source block
-     * and directions in one call
+     * and directions in one call.
      */
     public Path(Block dest, int toBlockDirection, int fromBlockDirection) {
         this();
@@ -41,7 +51,7 @@ public class Path  {
 
     /**
      * Convenience constructor to set the destination/source block,
-     * directions and a single setting in one call
+     * directions and a single setting element in one call.
      */
     public Path(Block dest, int toBlockDirection, int fromBlockDirection, BeanSetting setting) {
         this(dest, toBlockDirection, fromBlockDirection);
@@ -67,6 +77,14 @@ public class Path  {
     public int getFromBlockDirection() { return _fromBlockDirection; }
     public void setFromBlockDirection(int d) { _fromBlockDirection = d; }
     
+    /**
+     * Check that the Path can be traversed.
+     * This means that any path elements are set to the 
+     * proper state, e.g. that the Turnouts on this path
+     * are set to the proper CLOSED or OPEN status.
+     * @return true if the path can be traversed; always true
+     * if no path elements are defined.
+     */
     public boolean checkPathSet() {
         // empty conditions are always set
         if (_element == null) return true;
@@ -76,38 +94,82 @@ public class Path  {
         return _element.check();
     }
     
-    public static final int NONE  =0x000;
-    public static final int NORTH =0x010;
-    public static final int SOUTH =0x020;
-    public static final int EAST  =0x040;
-    public static final int WEST  =0x080;
-
+    /**
+     * Direction not known or not specified. May also
+     * represent "stopped", in the sense of not moving in any direction.
+     */
+    public static final int NONE  =0x00000;
+    /**
+     * Northward
+     */
+    public static final int NORTH =0x00010;
+    /**
+     * Southward
+     */
+    public static final int SOUTH =0x00020;
+    /**
+     * Eastward
+     */
+    public static final int EAST  =0x00040;
+    /**
+     * Westward
+     */
+    public static final int WEST  =0x00080;
     /**
      * Clockwise
      */
-    public static final int CW    =0x100;
+    public static final int CW    =0x00100;
     /**
      * Counter-clockwise
      */
-    public static final int CCW   =0x200;
+    public static final int CCW   =0x00200;
+    /**
+     * Leftward, e.g. on a schematic diagram or CTC panel
+     */
+    public static final int LEFT  =0x00400;
+    /**
+     * Rightward, e.g. on a schematic diagram or CTC panel
+     */
+    public static final int RIGHT =0x00800;
+    /**
+     * Upward, e.g. on a schematic diagram or CTC panel
+     */
+    public static final int UP    =0x01000;
+    /**
+     * Downward, e.g. on a schematic diagram or CTC panel
+     */
+    public static final int DOWN  =0x02000;
         
     /**
      * Decode the direction constants into a human-readable
-     * form
+     * form.
+     * This should eventually be internationalized.
      */
     public String decodeDirection(int d) {
-        switch (d) {
-            case NONE:  return "None";
-            case NORTH: return "North";
-            case SOUTH: return "South";
-            case EAST:  return "East";
-            case WEST:  return "West";
-            case CW:    return "CW";
-            case CCW:   return "CCW";
-            default:    return "(Unknown: "+d+")";
-        }
+        if ( d==NONE ) return "None";
+
+        StringBuffer b = new StringBuffer();
+        if ( (d&NORTH)!=0)  appendOne(b,"North");
+        if ( (d&SOUTH)!=0)  appendOne(b,"South");
+        if ( (d&EAST)!=0)   appendOne(b,"East");
+        if ( (d&WEST)!=0)   appendOne(b,"West");
+        if ( (d&CW)!=0)     appendOne(b,"CW");
+        if ( (d&CCW)!=0)    appendOne(b,"CCW");
+        if ( (d&LEFT)!=0)   appendOne(b,"Left");
+        if ( (d&RIGHT)!=0)  appendOne(b,"Right");
+        if ( (d&UP)!=0)     appendOne(b,"Up");
+        if ( (d&DOWN)!=0)   appendOne(b,"Down");
+        final int mask = NORTH|SOUTH|EAST|WEST|CW|CCW|LEFT|RIGHT|UP|DOWN;
+        if ( (d & ~mask ) != 0)
+            appendOne(b, "Unknown: 0x"+Integer.toHexString(d&~mask));
+        return new String(b);
     }
-    
+
+    private void appendOne(StringBuffer b, String t) {
+        if (b.length()!=0) b.append(", ");
+        b.append(t);
+    }
+        
     private BeanSetting _element;
     private Block _block;
     private int _toBlockDirection;
