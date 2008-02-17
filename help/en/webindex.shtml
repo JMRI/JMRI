@@ -22,6 +22,11 @@
 <ul></ul>
 </li>
    
+<li>
+<a href="html/tools/tracker/index.shtml">Block</a>
+<ul></ul>
+</li>
+   
 <li>Clock<ul>
       
 <li>
@@ -286,11 +291,11 @@
 </li>
    
 <li>
-<a href="html/apps/PanelPro/Panels.html">PanelPro</a>
+<a href="html/apps/PanelPro/Panels.shtml">PanelPro</a>
 <ul>
       
 <li>
-<a href="html/apps/PanelPro/Panels.html">Intro</a>
+<a href="html/apps/PanelPro/Panels.shtml">Intro</a>
 <ul></ul>
 </li>
       
@@ -421,6 +426,16 @@
 <ul></ul>
 </li>
    
+<li>
+<a href="html/tools/speedometer/SpeedMatch.shtml">Speed Matching, Locomotive</a>
+<ul></ul>
+</li>
+   
+<li>
+<a href="html/tools/speedometer/index.shtml">Speedometer</a>
+<ul></ul>
+</li>
+   
 <li>Tables<ul>
       
 <li>
@@ -469,6 +484,11 @@
 </li>
    
 </ul>
+</li>
+   
+<li>
+<a href="html/tools/tracker/index.shtml">Tracker</a>
+<ul></ul>
 </li>
    
 <li>

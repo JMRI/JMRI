@@ -259,6 +259,11 @@
 </li>
       
 <li>
+<a href="html/tools/speedometer/SpeedMatch.shtml">Locomotive Speed Matching</a>
+<ul></ul>
+</li>
+      
+<li>
 <a href="package/jmri/jmrit/beantable/LogixTable.shtml">Logix</a>
 <ul></ul>
 </li>
@@ -295,6 +300,11 @@
       
 <li>
 <a href="package/jmri/jmrit/blockboss/BlockBossFrame.shtml">Simple Signal Logic</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/tools/speedometer/index.shtml">Speedometer</a>
 <ul></ul>
 </li>
       
@@ -344,6 +354,11 @@
 </li>
       
 <li>
+<a href="html/tools/tracker/index.shtml">Tracker (Blocks)</a>
+<ul></ul>
+</li>
+      
+<li>
 <a href="html/tools/Turnouts.shtml">Turnouts</a>
 <ul></ul>
 </li>
@@ -352,7 +367,7 @@
 </li>
    
 <li>
-<a href="html/apps/PanelPro/Panels.html">Panels</a>
+<a href="html/apps/PanelPro/Panels.shtml">Panels</a>
 <ul>
       
 <li>

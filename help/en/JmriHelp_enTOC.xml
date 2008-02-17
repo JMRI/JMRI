@@ -80,6 +80,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
          <tocitem text="Memory Table" target="package.jmri.jmrit.beantable.MemoryTable"/>
          <tocitem text="Reporter Table" target="package.jmri.jmrit.beantable.ReporterTable"/>
       </tocitem>
+      <tocitem text="Tracker (Blocks)" target="html.tools.tracker.index"/>
       <tocitem text="Turnouts" target="html.tools.Turnouts"/>
    </tocitem>
    <tocitem text="Panels" target="html.apps.PanelPro.Panels">
