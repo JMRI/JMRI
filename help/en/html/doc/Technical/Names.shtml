@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Names.shtml,v 1.8 2008-02-16 21:00:10 jacobsen Exp $ -->
+<!-- $Id: Names.shtml,v 1.9 2008-02-17 19:58:15 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -207,7 +207,7 @@ is really just a collection of
 Routes
 that implements the sensor group logic; there is no specific object in the
 program that implements the sensor group. Instead, when the user
-creates sensor group "my group", a series of routes with names like:
+creates sensor group "my group", a series of routes with system names like:
 <code><pre>
 SENSOR GROUP:my group:LS1
 SENSOR GROUP:my group:LS2
@@ -220,7 +220,7 @@ To make this possible, two informal rules are used:
 <LI>Users should not use the ":" or "$" characters in system or user names.
 Automatic tools should use at least one of these to make sure they don't collide
 with user-selected names.
-<LI>Tools that use this method have their tool name at the start of any names
+<LI>Tools that use this method have their tool name at the start of any system names
 they create, as "SENSOR GROUP" was used above.
 </UL>
 <P>
