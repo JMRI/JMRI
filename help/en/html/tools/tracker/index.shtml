@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.1 2008-02-06 07:07:56 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.2 2008-02-17 18:05:14 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -44,7 +44,7 @@
     that reaches a particular red signal to stop.  But you can't do that
     unless you know <i>which</i> train it is that is reaching the signal.
     <P>
-    Starting with test version 1.7.5, JMRI provides experimental
+    JMRI provides experimental
     tools for tracking trains as them move around on the layout.
 
     <h3>
@@ -80,8 +80,8 @@
     <P>
     Turnouts add an additional layer of complexity.  
     Imagine a train
-    is siting in the block next to the normal (closed) route, and another
-    is siting in the reversed (thrown) route. 
+    is sitting in the block next to the normal (closed) route, and another
+    is sitting in the reversed (thrown) route. 
     When the occupancy sensor for the turnout goes active, which train
     has entered the turnout track?  That depends on which way the
     turnout is set, so the program needs to be able to 
@@ -94,7 +94,7 @@
     JMRI provides a "Block" class to handle the tracking. 
     
     <P>
-    Note that this was first available in JMRI 1.7.5, and not
+    Note that this is test code, and not
     all features are completely present.  For example, you cannot
     store block objects in a configuration file; they must be manually
     created in your scripts.  This limitations will be removed with time.
