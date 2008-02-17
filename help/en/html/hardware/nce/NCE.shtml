@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NCE.shtml,v 1.9 2008-02-16 20:43:47 jacobsen Exp $ -->
+<!-- $Id: NCE.shtml,v 1.10 2008-02-17 18:23:49 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: NCE</TITLE>
@@ -222,8 +222,9 @@ When the connection to your NCE is okay and your NCE system is powered
 up you should see after starting PanelPro the following control panel:
 <P><IMG SRC="../images/jmriMainPageOk.jpg"
 	ALT="JMRI PanelPro Main Panel" /></P>
-<P>If your panel looks like the above, congratulations you are up
-and running. The panel for DecoderPro is similar to PanelPro's.</P>
+<P>If your are using JMRI 2.1.2 or newer and the panel looks like
+the above, congratulations you are up and running. The panel for
+DecoderPro is similar to PanelPro's.</P>
 <P>If you have the following control panel with the words "ERROR NCE
 USING COMx" in the right center of the panel:</P>
 <P><IMG SRC="../images/jmriMainPageFail.jpg"
@@ -233,7 +234,7 @@ list of potential issues that might help you resolve your problem.</P>
 <OL>
 	<LI>Confirm that your NCE Command Station is powered up.</LI>
 	<LI>Check your cables, make sure they are installed correctly.</LI>
-	<LI>If there was more than one "Serial Port" to chose from in the
+	<LI>If there was more than one "Serial Port" to choose from in the
 	JMRI preferences menu, try the others.</LI>
 	<LI>Recheck the baud rates selected, make sure both JMRI and the
 	NCE Command Station are set to the same rates.</LI>
@@ -243,7 +244,10 @@ list of potential issues that might help you resolve your problem.</P>
 
 When JMRI starts, it opens a console window that provides program
 status. Below is an image of the console window when the program is
-operating normally.
+operating normally. Note that the window size has been adjusted so we
+can read it a bit more easily. To make your console window look like the
+one below, right click the window and select "Properties". Now increase
+the Window Size Width to 125. Press OK to exit.
 <P><IMG SRC="../images/jmriConsoleOk.jpg" ALT="JMRI Console" /></P>
 <P>If you're having problems the console window can look like the
 one below:</P>
