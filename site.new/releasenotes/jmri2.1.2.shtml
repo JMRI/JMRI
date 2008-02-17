@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.2.shtml,v 1.16 2008-02-15 17:34:54 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.2.shtml,v 1.17 2008-02-17 03:04:19 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -215,6 +215,9 @@ With Jim Thompson's and Robin Becker's help, a new jython/PM4Announce.py sample 
 
 <p>
 Matt Harris updated the roster entry pane of the DecoderPro programmer so it can be used on small screens
+
+<p>
+Simon Reader added the "invert" option to LocoNet turnouts.
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
