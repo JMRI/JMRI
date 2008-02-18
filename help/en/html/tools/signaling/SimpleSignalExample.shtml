@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: SimpleSignalExample.shtml,v 1.1 2008-02-17 04:51:57 jacobsen Exp $ -->
+<!-- $Id: SimpleSignalExample.shtml,v 1.2 2008-02-18 19:47:13 jacobsen Exp $ -->
 <title>JMRI: Simple Signal Logic Example</title>
 
 <!-- Style -->
@@ -33,7 +33,7 @@ systems, etc.
 <P>
 Modeling railroad signaling on a layout can be done many different ways,
 ranging from "stoplights" to complete emulation of a particular prototype's
-signaling logic. For more information on the various posibilities,
+signaling logic. For more information on the various possibilities,
 please see the
 <A HREF="index.shtml">JMRI signaling page</A>.
 <P>
@@ -84,7 +84,7 @@ means "LocoNet Turnout with address 1".  "Turnout 1" is a "user name",
 which can be anything you want it to be.  You can edit these with the
 "Turnout Table" in the Tools menu. Signal heads and block detectors
 work similarly.  There's more information on this on the
-<A HREF="../../doc/Technical/Names.html">program page on naming</a>.
+<A HREF="../../doc/Technical/Names.shtml">program page on naming</a>.
 
 <LI>
 <IMG SRC="../../../images/SE8cExampleTrains.gif" ALIGN=RIGHT WIDTH="327" HEIGHT="138" HSPACE="0" VSPACE="0" ALT="Demo screen with two trains">
