@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.2.shtml,v 1.19 2008-02-17 21:13:29 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.2.shtml,v 1.20 2008-02-18 05:21:27 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -154,7 +154,7 @@ Stephen Williams made it possible to build the code via Ant on AMD-64 processors
 Added some screen size and inset information to the "Context" report.
 
 <p>
-Dan Boudreau added a facility for putting connection status on the main window, and put in a first version for NCE connctions.  If there are problems with the communication with the command station, the status line in the main window will turn red and the message will change.
+Dan Boudreau added a facility for putting connection status on the main window, and put in a first version for NCE connections.  If there are problems with the communication with the command station, the status line in the main window will turn red and the message will change.
 
 <p>
 David Duchamp added new action types to Logix/Conditionals to reset or cancel previous "delayed set sensor" and "delayed set turnout" actions.
@@ -230,6 +230,12 @@ The decoder index now carries the dates when it was updated from the NMRA manufa
 
 <p>
 The owner information on roster entries was lost (replaced by the default) when recreating the roster index. This is now fixed, but the information is still list; people should save their entries again once they're using 2.1.2 to make sure the information is stored properly.
+
+<p>
+Ken Cameron added a "Simple Light Control", similar to the Simple Turnout Control.
+
+<p>
+Team Digital provided a DecoderPro definition for their SMC4 stationary servo decoder.
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
