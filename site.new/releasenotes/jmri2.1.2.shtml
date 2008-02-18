@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.2.shtml,v 1.20 2008-02-18 05:21:27 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.2.shtml,v 1.21 2008-02-18 20:01:28 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -236,6 +236,9 @@ Ken Cameron added a "Simple Light Control", similar to the Simple Turnout Contro
 
 <p>
 Team Digital provided a DecoderPro definition for their SMC4 stationary servo decoder.
+
+<p>
+Simon Reader figured out how to add "invert" to C/MRI turnouts.
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
