@@ -1,8 +1,0 @@
-This is the README file for the jmri.apps.PacketPro package.
-
-This package contains the basic structure of the PacketPro application
-built from the JMRI libraries.
-
-This was originally called PacketScript, but the name was changed in
-response to a request from the NMRA.
-
