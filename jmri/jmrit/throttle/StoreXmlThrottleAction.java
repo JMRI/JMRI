@@ -1,5 +1,6 @@
 package jmri.jmrit.throttle;
 
+import jmri.configurexml.StoreXmlConfigAction;
 import jmri.jmrit.*;
 import java.awt.event.*;
 import java.io.*;
@@ -14,7 +15,7 @@ import org.jdom.output.*;
  * Save throttles to XML
  *
  * @author			Glen Oberhauser
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 public class StoreXmlThrottleAction extends AbstractAction {
 
@@ -38,11 +39,9 @@ public class StoreXmlThrottleAction extends AbstractAction {
     public void actionPerformed(ActionEvent e)
     {
         JFileChooser fileChooser = new JFileChooser(XmlFile.userFileLocationDefault());
-        int retVal = fileChooser.showSaveDialog(null);
-        if (retVal != JFileChooser.APPROVE_OPTION)
-        {
-            return;  // give up if no file selected
-        }
+        fileChooser = jmri.jmrit.XmlFile.userFileChooser("XML files", "xml");
+       	java.io.File file = StoreXmlConfigAction.getFileName(fileChooser);
+    	if (file == null) return;
 
         try
         {
@@ -67,7 +66,7 @@ public class StoreXmlThrottleAction extends AbstractAction {
             }
             root.setContent(children);
 
-            FileOutputStream o = new java.io.FileOutputStream(fileChooser.getSelectedFile());
+            FileOutputStream o = new java.io.FileOutputStream(file);
             XMLOutputter fmt = new XMLOutputter();
             fmt.setFormat(org.jdom.output.Format.getPrettyFormat());
             fmt.output(doc, o);
