@@ -259,6 +259,11 @@
 </li>
       
 <li>
+<a href="package/jmri/jmrit/simplelightctrl/SimpleLightCtrl.shtml">Light Control</a>
+<ul></ul>
+</li>
+      
+<li>
 <a href="html/tools/speedometer/SpeedMatch.shtml">Locomotive Speed Matching</a>
 <ul></ul>
 </li>
@@ -316,6 +321,11 @@
 </li>
          
 <li>
+<a href="package/jmri/jmrit/beantable/LightTable.shtml">Light Table</a>
+<ul></ul>
+</li>
+         
+<li>
 <a href="package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table</a>
 <ul></ul>
 </li>
@@ -336,17 +346,17 @@
 </li>
          
 <li>
-<a href="package/jmri/jmrit/beantable/LightTable.shtml">Light Table</a>
-<ul></ul>
-</li>
-         
-<li>
 <a href="package/jmri/jmrit/beantable/MemoryTable.shtml">Memory Table</a>
 <ul></ul>
 </li>
          
 <li>
 <a href="package/jmri/jmrit/beantable/ReporterTable.shtml">Reporter Table</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="package/jmri/jmrit/beantable/BlockTable.shtml">Block Table</a>
 <ul></ul>
 </li>
       
@@ -360,6 +370,11 @@
       
 <li>
 <a href="html/tools/Turnouts.shtml">Turnouts</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrit/simpleturnoutctrl/SimpleTurnoutCtrl.shtml">Turnout Control</a>
 <ul></ul>
 </li>
    
