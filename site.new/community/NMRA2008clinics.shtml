@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright Me 2008 -->
+<!-- $Id: NMRA2008clinics.shtml,v 1.1 2008-02-18 22:28:57 jacobsen Exp $ -->
+<title>JMRI Clinics at the NMRA 2008 Anaheim Convention</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+
+
+
+<h2> 
+JMRI Clinics at the NMRA 2008 Anaheim Convention
+</h2>
+<a href="http://www.nmra.org/2008/">
+<img src="http://www.nmra.org/2008/NMRA2008.jpg" align="right"/></a>
+
+For those planning to attend the 
+<a href="http://www.nmra.org">NMRA</a>
+<a href="http://www.nmra.org/2008/">Anaheim National Convention</a>, 
+July 13th thru July 19th, 2008, 
+six clinics and our annual user meeting have been  
+scheduled.  Two of the six clinics will be repeated.
+<p>
+For planning purposes, please note that Sunday night 7PM-11PM and  
+Monday night 7PM-11PM and Wednesday night 10PM - 11PM are the main  
+JMRI clinic times. Starting Sunday night is earlier in the meeting  
+than usual, but these are the best times we could get. 
+
+<p>
+Our JMRI User Group Meeting will be Wednesday night.
+The two introductory clinics will be presented
+on Sunday and repeated on Friday.
+
+<p>
+The following JMRI clinics have been scheduled:
+
+<table border="1">
+<tr><th>Time</th><th>Title</th><th>Presenter</th></tr>
+<tr><td>7:00 PM, Sunday, July 13th</td>
+<td>Intro to Decoder Programming with JMRI/ 
+DecoderPro</td>
+<td>Dave Duchamp
+</tr>
+
+<tr><td>8:30 PM, Sunday, July 13th</td>
+<td>Introduction to Layout Control with JMRI/ 
+PanelPro</td>
+<td>Dick Bronson
+</tr>
+
+<tr><td>10:00 PM, Sunday, July 13th</td>
+<td>Add Signals to your Layout with JMRI/ 
+PanelPro</td>
+<td>Dick Bronson
+</tr>
+
+<tr><td>7:00 PM, Monday, July 14th</td>
+<td>Advanced Decoder Programming with JMRI  
+DecoderPro</td>
+<td>Bob Jacobsen
+</tr>
+
+<tr><td>8:30 PM, Monday, July 14th</td>
+<td>Using the JMRI/PanelPro Layout Editor</td>
+<td>Dave Duchamp
+</tr>
+
+<tr><td>10:00 PM, Monday, July 14th</td>
+<td>Create a Detailed CTC Machine Model with JMRI PanelPro</td>
+<td>Dick Bronson
+</tr>
+
+<tr><td>10:00 PM, Wednesday, July 16th</td>
+<td>JMRI User Group Meeting - What's New in JMRI?</td>
+<td>Bob Jacobsen
+</tr>
+
+<tr><td>2:00 PM, Friday, July 18th</td>
+<td>Intro to Decoder Programming with JMRI DecoderPro</td>
+<td>Dave Duchamp
+</tr>
+
+<tr><td>4:00 PM, Friday, July 18th</td>
+<td>Introduction to Layout Control with JMRI PanelPro</td>
+<td>Dick Bronson
+</tr>
+</table>
+
+<p>
+More information on the NMRA Anaheim convention can be found on the  
+<a href="http://www.nmra.org/2008/">Anaheim website</a>
+(click on 
+<a href="http://www.nmra.org/2008/Clinics/Clinics.htm">Clinics</a> 
+to see 
+all clinics). 
+Many interesting clinics are listed in addition to our JMRI  
+ones.
+
+<p>
+Hope to see you there!
+    
+<!--#include virtual="/Footer" -->
+</body>
+</html>
