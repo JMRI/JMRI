@@ -1,4 +1,4 @@
-// SerialMonFrame.java
+ // SerialMonFrame.java
 
 package jmri.jmrix.powerline.serialmon;
 
@@ -12,7 +12,7 @@ import jmri.jmrix.powerline.X10;
 /**
  * Frame displaying (and logging) serial command messages
  * @author	    Bob Jacobsen   Copyright (C) 2001, 2006, 2007, 2008
- * @version         $Revision: 1.7 $
+ * @version         $Revision: 1.8 $
  */
 
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
@@ -43,10 +43,13 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                     text = "OK for transmission"; break;
                 } // else fall through
             default: {
-                if ((l.getElement(0)&0x02) == 0x02) 
-                    text = X10.formatCommandByte(l.getElement(1)&0xFF);
-                else
-                    text = X10.formatAddressByte(l.getElement(1)&0xFF);
+                if ((l.getElement(0)& 0x02) == 0x02) {
+                	text = X10.formatHeaderByte(l.getElement(0 & 0xFF)) 
+                		+ ' ' + X10.formatCommandByte(l.getElement(1)&0xFF)
+                		+ X10.formatCommandByte(l.getElement(1)&0xFF);
+                } else
+                	text = X10.formatHeaderByte(l.getElement(0 & 0xFF)) 
+            		+ ' ' + X10.formatAddressByte(l.getElement(1)&0xFF);
             }
         }
         nextLine(text+"\n",l.toString());

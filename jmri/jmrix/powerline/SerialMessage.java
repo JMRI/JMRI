@@ -19,7 +19,7 @@ package jmri.jmrix.powerline;
  * </ul>
  *
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
@@ -98,12 +98,23 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         m.setElement(1,(X10.encode(housecode)<<4)+X10.encode(devicecode));
         return m;
     }
+    static public SerialMessage getFunctionDim(int housecode, int function, int dimcode) {
+        SerialMessage m = new SerialMessage(2);
+        m.setInterlocked(true);
+        if (dimcode > 0) {
+        	m.setElement(0, 0x06 | ((dimcode & 0x1f) << 5));
+        } else {
+        	m.setElement(0, 0x06);
+        }
+        m.setElement(1,(X10.encode(housecode)<<4)+function);
+        return m;
+    }
     static public SerialMessage getFunction(int housecode, int function) {
         SerialMessage m = new SerialMessage(2);
         m.setInterlocked(true);
         m.setElement(0,0x06);
         m.setElement(1,(X10.encode(housecode)<<4)+function);
-        System.out.println("gf "+housecode+" "+X10.encode(housecode));
+        //System.out.println("gf "+housecode+" "+X10.encode(housecode));
         return m;
     }
 }

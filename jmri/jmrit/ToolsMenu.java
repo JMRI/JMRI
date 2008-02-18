@@ -11,7 +11,7 @@ import java.util.*;
  * Create a "Tools" menu containing the Jmri system-independent tools
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.21 $
+ * @version     $Revision: 1.22 $
  */
 public class ToolsMenu extends JMenu {
     public ToolsMenu(String name) {
@@ -87,7 +87,8 @@ public class ToolsMenu extends JMenu {
         add(new jmri.jmrit.blockboss.BlockBossAction(rb.getString("MenuItemSimpleSignal")));
         add(new jmri.jmrit.sensorgroup.SensorGroupAction(rb.getString("MenuItemSensorGroup")));
         add(new jmri.jmrit.speedometer.SpeedometerAction(rb.getString("MenuItemSpeedometer")));
-
+        add(new jmri.jmrit.simplelightctrl.SimpleLightCtrlAction(rb.getString("MenuItemLightControl")));
+        
         add(new JSeparator());
 
         add(new jmri.jmrit.sendpacket.SendPacketAction( rb.getString("MenuItemSendDCCPacket") ));

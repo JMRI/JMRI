@@ -15,7 +15,7 @@ import jmri.Turnout;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class SerialLight extends AbstractLight {
 
@@ -93,16 +93,16 @@ public class SerialLight extends AbstractLight {
         SerialMessage m1 = SerialMessage.getAddress(housecode, devicecode);
         int function;
         if (newState==ON) {
-            function = X10.FUNCTION_ON;
+            function = X10.FUNCTION_BRIGHT;
         }
         else if (newState==OFF) {
-            function = X10.FUNCTION_OFF;
+            function = X10.FUNCTION_DIM;
         }
         else {
             log.warn("illegal state requested for Light: "+getSystemName());
             return;
         }
-        SerialMessage m2 = SerialMessage.getFunction(housecode, function);
+        SerialMessage m2 = SerialMessage.getFunctionDim(housecode, function, 1);
         // send
         SerialTrafficController.instance().sendSerialMessage(m1, null);
         SerialTrafficController.instance().sendSerialMessage(m2, null);
