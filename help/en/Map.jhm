@@ -14,6 +14,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.hardware.USBtoSerial" url="html/hardware/USBtoSerial.shtml" />
 	<mapID target="package.jmri.jmrit.display.SetSignalsAtXoverTurnout" url="package/jmri/jmrit/display/SetSignalsAtXoverTurnout.shtml" />
 	<mapID target="package.jmri.jmrit.beantable.RouteAddEdit" url="package/jmri/jmrit/beantable/RouteAddEdit.shtml" />
+	<mapID target="package.jmri.jmrit.simplelightctrl.SimpleLightCtrl" url="package/jmri/jmrit/simplelightctrl/SimpleLightCtrl.shtml" />
 	<mapID target="package.jmri.jmrit.display.LayoutEditor_track" url="package/jmri/jmrit/display/LayoutEditor.shtml#track" />
 	<mapID target="html.tools.throttle.ThrottleChapter3_WinMenuOptions" url="html/tools/throttle/ThrottleChapter3.shtml#WinMenuOptions" />
 	<mapID target="package.jmri.jmrit.display.ScaleTrackDiagram" url="package/jmri/jmrit/display/ScaleTrackDiagram.shtml" />
