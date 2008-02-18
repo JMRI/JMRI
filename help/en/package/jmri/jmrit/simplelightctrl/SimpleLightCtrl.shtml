@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SimpleLightCtrl.shtml,v 1.1 2008-02-18 03:21:24 ken_c Exp $ -->
+<!-- $Id: SimpleLightCtrl.shtml,v 1.2 2008-02-18 19:52:01 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Light Control</TITLE>
@@ -34,7 +34,7 @@ the layout. Another example, a valid light system name could be IL123
 which is internal light number 123. Pressing Thrown or Closed will
 only change the state of the internal light and will not change a
 light on the layout. See "
-<A HREF="../../../../html/doc/Technical/Names.html">Names</A>
+<A HREF="../../../../html/doc/Technical/Names.shtml">Names</A>
 " under general help for more information.
 
 <H3>Light Control Buttons and Status</H3>
