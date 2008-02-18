@@ -18,7 +18,7 @@ import java.io.*;
  * positionable labels
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class CoordinateEdit extends JmriJFrame {
@@ -85,11 +85,13 @@ public class CoordinateEdit extends JmriJFrame {
 
 		okButton.setText("  Set  ");
 		okButton.setVisible(true);
-		okButton.setToolTipText("press to change x and y coordinates");
+// 		tool tips get in the way of using this panel		
+//		okButton.setToolTipText("press to change x and y coordinates");
 
 		cancelButton.setText(" Cancel ");
 		cancelButton.setVisible(true);
-		cancelButton.setToolTipText("press to cancel changes");
+//		tool tips get in the way of using this panel	
+//		cancelButton.setToolTipText("press to cancel changes");
 
 		setTitle("Set x & y");
 		getContentPane().setLayout(new GridBagLayout());
