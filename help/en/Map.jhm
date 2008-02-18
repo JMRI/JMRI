@@ -30,8 +30,8 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.doc.Technical.JBuilder" url="html/doc/Technical/JBuilder.shtml" />
 	<mapID target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl_NCE Turnout lock feature" url="package/jmri/jmrit/simpleturnoutctrl/SimpleTurnoutCtrl.shtml#NCE Turnout lock feature" />
 	<mapID target="DecoderProManual.Basic_Programming_Write Data" url="DecoderProManual/Basic_Programming.shtml#Write Data" />
-	<mapID target="html.tools.scripting.index" url="html/tools/scripting/index.shtml" />
 	<mapID target="html.tools.throttle.ThrottleChapter2" url="html/tools/throttle/ThrottleChapter2.shtml" />
+	<mapID target="html.tools.scripting.index" url="html/tools/scripting/index.shtml" />
 	<mapID target="package.jmri.jmrit.display.LayoutEditor" url="package/jmri/jmrit/display/LayoutEditor.shtml" />
 	<mapID target="html.hardware.rps.index" url="html/hardware/rps/index.shtml" />
 	<mapID target="html.doc.Technical.Jython" url="html/doc/Technical/Jython.shtml" />
@@ -100,6 +100,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrit.beantable.TurnoutAddEdit" url="package/jmri/jmrit/beantable/TurnoutAddEdit.shtml" />
 	<mapID target="html.hardware.sprog.SPROG" url="html/hardware/sprog/SPROG.shtml" />
 	<mapID target="package.jmri.jmrix.loconet.se8.SE8Frame" url="package/jmri/jmrix/loconet/se8/SE8Frame.shtml" />
+	<mapID target="html.apps.index" url="html/apps/index.shtml" />
 	<mapID target="html.hardware.grapevine.index" url="html/hardware/grapevine/index.shtml" />
 	<mapID target="html.doc.Technical.Threads" url="html/doc/Technical/Threads.shtml" />
 	<mapID target="package.jmri.jmrit.beantable.SignalTable" url="package/jmri/jmrit/beantable/SignalTable.shtml" />
@@ -346,6 +347,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="DecoderProManual.Comp_Setup_Roster" url="DecoderProManual/Comp_Setup_Roster.shtml" />
 	<mapID target="DecoderProManual.Comp_ManfSpecific_Top" url="DecoderProManual/Comp_ManfSpecific.shtml#Top" />
 	<mapID target="html.doc.Technical.XmlPersistance" url="html/doc/Technical/XmlPersistance.shtml" />
+	<mapID target="html.tools.programmer.messages" url="html/tools/programmer/messages.shtml" />
 	<mapID target="DecoderProManual.Comp_Setup_Roster_Top" url="DecoderProManual/Comp_Setup_Roster.shtml#Top" />
 	<mapID target="html.tools.throttle.images.get_adobe_reader" url="html/tools/throttle/images/get_adobe_reader.gif" />
 	<mapID target="images.tracksegments.TranTOt" url="images/tracksegments/TranTOt.gif" />

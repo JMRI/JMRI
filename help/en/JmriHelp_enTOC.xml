@@ -51,6 +51,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
          <tocitem text="More Information" target="DecoderProManual.index"/>
          <tocitem text="Getting Started" target="html.apps.DecoderPro.index"/>
       </tocitem>
+      <tocitem text="Error Messages" target="html.tools.programmer.messages"/>
    </tocitem>
    <tocitem text="Tools" target="html.tools.index">
       <tocitem text="Consist Tool" target="package.jmri.jmrit.consisttool.ConsistToolFrame"/>

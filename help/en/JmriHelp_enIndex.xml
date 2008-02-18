@@ -15,6 +15,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
    </indexitem>
    <indexitem text="Consist Tool" target="package.jmri.jmrit.consisttool.ConsistToolFrame"/>
    <indexitem text="DecoderPro" target="html.apps.DecoderPro.index">
+      <indexitem text="Error Messages" target="html.tools.programmer.messages"/>
       <indexitem text="Introduction" target="html.apps.DecoderPro.index"/>
       <indexitem text="Manual" target="DecoderProManual.Getting_Started"/>
       <indexitem text="Roster Pane" target="DecoderProManual.Comp_Setup_Roster"/>
