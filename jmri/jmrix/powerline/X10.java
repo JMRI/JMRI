@@ -9,7 +9,7 @@ package jmri.jmrix.powerline;
  * These might someday have to be device specific, unfortunately.
  *
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class X10 {
 
@@ -82,7 +82,7 @@ public class X10 {
      * Pretty-print an address code
      */
     public static String formatAddressByte(int b) {
-        return "House "+X10.decode((b>>4)&0x0F)
+        return "House "+ X10.decode((b>>4)&0x0F)
             +" address device "+X10.decode(b&0x0f);
     }
 
@@ -90,7 +90,7 @@ public class X10 {
      * Pretty-print a function code
      */
     public static String formatCommandByte(int b) {
-        return "House "+X10.decode((b>>4)&0x0F)
+        return "House "+ X10.decode((b>>4)&0x0F)
                 +" function: "+X10.functionName(b&0x0f);
     }
 
@@ -98,9 +98,9 @@ public class X10 {
      * Pretty-print a header code
      */
     public static String formatHeaderByte(int b) {
-        return "Dim " + ((b >> 3)& 0x0F)
-                + ((b & 0x02) != 0 ? " funct " : " addr " )
-                + ((b & 0x01) != 0 ? " ext " : " std ");
+        return "Dim: " + ((b >> 3)& 0x1F)
+                + ((b & 0x02) != 0 ? " isFunct" : " isAddr" )
+                + ((b & 0x01) != 0 ? " isExt" : " isStd");
     }
     
 }

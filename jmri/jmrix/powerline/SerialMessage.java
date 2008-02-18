@@ -19,7 +19,7 @@ package jmri.jmrix.powerline;
  * </ul>
  *
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
@@ -102,7 +102,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         SerialMessage m = new SerialMessage(2);
         m.setInterlocked(true);
         if (dimcode > 0) {
-        	m.setElement(0, 0x06 | ((dimcode & 0x1f) << 5));
+        	m.setElement(0, 0x06 | ((dimcode & 0x1f) << 3));
         } else {
         	m.setElement(0, 0x06);
         }
