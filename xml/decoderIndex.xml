@@ -3,7 +3,7 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.1.2 on Sun Feb 17 12:39:21 PST 2008 $Id: decoderIndex.xml,v 1.116 2008-02-17 21:00:47 jacobsen Exp $-->
+  <!--Written by JMRI version 2.1.2 on Sun Feb 17 21:13:05 PST 2008 $Id: decoderIndex.xml,v 1.117 2008-02-18 05:15:25 jacobsen Exp $-->
   <decoderIndex version="136">
     <mfgList nmraListDate="2007-10-17" updated="2008-01-23">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -3227,6 +3227,9 @@
       </family>
       <family name="SIC24" mfg="Team Digital" type="stationary" comment="SIC24 is not stationary decoder, but it can be programmed in the usual way" file="TD_SIC24.xml">
         <model model="SIC24" lowVersionID="12" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+      </family>
+      <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SMC4.xml">
+        <model model="SMC4" lowVersionID="1" comment="SMC4 is a stationary decoder, but it can be programmed in the usual way" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
       <family name="Stationary Decoder" mfg="Team Digital" type="stationary" comment="SMD2 is a stationary decoder, but it can be programmed in the usual way" file="TD_SMD2.xml">
         <model model="SMD2" lowVersionID="1" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
