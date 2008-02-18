@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.15 2008-02-15 08:12:42 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.16 2008-02-18 05:25:38 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -95,8 +95,9 @@
 	<LI>Allen Byrne, who has systematically made improvements in the syntax and structure of the JMRI code
 <A ID="C"></A>
     <LI>Bill Carman, who located information on the MRC/Athearn F Unit and Challenger decoders
-    <LI>Ken Cameron, who wrote the NCE fast clock support, and added 
-        support for more than two systems to the preferences
+    <LI>Ken Cameron, who wrote the NCE fast clock support, added 
+        support for more than two systems to the preferences,
+        and added the Light Control
 	<LI>Barry Chinn, who created the PDF file of our manual
 	<LI>Normal Clymer, who contribed a TCS definition file
 	<LI>Seth Cohen, who helped get serial sensors and NCE AIUs to work, and
@@ -224,7 +225,9 @@
 	<LI>Herb Poppe, who diagnosed a problem in some Digitrax decoder definitions
 <A ID="Q"></A>
 <A ID="R"></A>
-    <li>Simon Reader, who improved the throttle and added a check for completed status to Routes
+    <li>Simon Reader, who improved the throttle, 
+    added a check for completed status to Routes,
+    and added the "invert" option to LocoNet Turnouts.
 	<LI>Bill Robinson of Team Digital, who provided a schematic of their
 	MS100-equivalent level shifter, contributed the LnSendTool.py script,
 	and decoder definitions for Team Digital products
