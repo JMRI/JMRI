@@ -60,6 +60,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
          <tocitem text="The LocoNet clock" target="html.tools.fastclock.LocoNetClock"/>
       </tocitem>
       <tocitem text="Lights" target="html.tools.Lights"/>
+      <tocitem text="Light Control" target="package.jmri.jmrit.simplelightctrl.SimpleLightCtrl"/>
       <tocitem text="Locomotive Speed Matching" target="html.tools.speedometer.SpeedMatch"/>
       <tocitem text="Logix" target="package.jmri.jmrit.beantable.LogixTable"/>
       <tocitem text="Memories" target="html.tools.Memories"/>
@@ -72,16 +73,18 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
       <tocitem text="Speedometer" target="html.tools.speedometer.index"/>
       <tocitem text="Tables">
          <tocitem text="Turnout Table" target="package.jmri.jmrit.beantable.TurnoutTable"/>
+         <tocitem text="Light Table" target="package.jmri.jmrit.beantable.LightTable"/>
          <tocitem text="Sensor Table" target="package.jmri.jmrit.beantable.SensorTable"/>
          <tocitem text="Signal Table" target="package.jmri.jmrit.beantable.SignalTable"/>
          <tocitem text="Route Table" target="package.jmri.jmrit.beantable.RouteTable"/>
          <tocitem text="Logix Table" target="package.jmri.jmrit.beantable.LogixTable"/>
-         <tocitem text="Light Table" target="package.jmri.jmrit.beantable.LightTable"/>
          <tocitem text="Memory Table" target="package.jmri.jmrit.beantable.MemoryTable"/>
          <tocitem text="Reporter Table" target="package.jmri.jmrit.beantable.ReporterTable"/>
+         <tocitem text="Block Table" target="package.jmri.jmrit.beantable.BlockTable"/>
       </tocitem>
       <tocitem text="Tracker (Blocks)" target="html.tools.tracker.index"/>
       <tocitem text="Turnouts" target="html.tools.Turnouts"/>
+      <tocitem text="Turnout Control" target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl"/>
    </tocitem>
    <tocitem text="Panels" target="html.apps.PanelPro.Panels">
       <tocitem text="Panel Editor" target="package.jmri.jmrit.display.PanelEditor"/>

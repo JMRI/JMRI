@@ -52,6 +52,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
    <indexitem text="Light" target="html.tools.Lights">
       <indexitem text="Add Light" target="package.jmri.jmrit.beantable.LightAddEdit"/>
       <indexitem text="Edit Light" target="package.jmri.jmrit.beantable.LightAddEdit"/>
+      <indexitem text="Light Control" target="package.jmri.jmrit.simplelightctrl.SimpleLightCtrl"/>
       <indexitem text="Light Table" target="package.jmri.jmrit.beantable.LightTable"/>
    </indexitem>
    <indexitem text="LocoNet">
@@ -103,6 +104,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
    <indexitem text="Speed Matching, Locomotive" target="html.tools.speedometer.SpeedMatch"/>
    <indexitem text="Speedometer" target="html.tools.speedometer.index"/>
    <indexitem text="Tables">
+      <indexitem text="Block Table" target="package.jmri.jmrit.beantable.BlockTable"/>
       <indexitem text="Light Table" target="package.jmri.jmrit.beantable.LightTable"/>
       <indexitem text="Logix Table" target="package.jmri.jmrit.beantable.LogixTable"/>
       <indexitem text="Memory Table" target="package.jmri.jmrit.beantable.MemoryTable"/>
@@ -116,6 +118,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
    <indexitem text="Tracker" target="html.tools.tracker.index"/>
    <indexitem text="Turnout" target="html.tools.Turnouts">
       <indexitem text="Add Turnout" target="package.jmri.jmrit.beantable.TurnoutAddEdit"/>
+      <indexitem text="Turnout Control" target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl"/>
       <indexitem text="Turnout Table" target="package.jmri.jmrit.beantable.TurnoutTable"/>
    </indexitem>
 
