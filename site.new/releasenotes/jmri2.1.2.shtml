@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.2.shtml,v 1.22 2008-02-19 06:16:17 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.2.shtml,v 1.23 2008-02-19 16:25:24 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -76,6 +76,9 @@ see our
 
 <p>
 In JMRI 2.1.1, when you went to load a panel file, only files with a ".xml" filename suffix were shown by default. To see all files, you could select "All Files" in the window.  This caused some confusion because many people hadn't added the ".xml" suffix to their panel file names.  We still think having a suffix like that is valuable, but to reduce confusion in JMRI 2.1.2 when you save a panel file an ".xml" suffix is added automatically to the filename if you haven't already provided it.  This makes the filename filter work better when loading a file.  If you want to provide another suffix, or none at all, select the "All Files" option in the window before saving the file. 
+
+<p>
+JMRI 2.1.1 and earlier had a bug where the owner name for a locomotive was not stored in the individual locomotive file, but only in the roster index.  This meant that if you recreated the roster index, the owner information was lost.  This is fixed in this JMRI 2.1.2 version, but your locomotive files are still missing the owner information.  To make sure it's not lost sometime in the future when you might have to rebuild the roster index, please open each of your locomotives (roster entries) in DecoderPro and click the "Save" button on the roster entry pane to rewrite the file with the proper owner name.
 
 <h3>Warnings from older versions:</h3>
 
