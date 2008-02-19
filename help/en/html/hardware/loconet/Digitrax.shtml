@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Digitrax.shtml,v 1.1 2008-01-13 04:24:44 jacobsen Exp $ -->
+<!-- $Id: Digitrax.shtml,v 1.2 2008-02-19 11:41:55 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -56,7 +56,16 @@
 	to an MS100.  The MS100 does not provide reliable communications,
 	and cannot be used at all if your computer is a Macintosh running
 	MacOS X.
-	  
+	
+	<p>
+	DecoderPro can also use a 
+	<a href="PR2.shtml">Digitrax PR2</a> to program and test decoders.
+	The PR2 is a stand-alone unit which does not connect to the 
+	rest of the layout, the command station, nor to a LocoNet.
+	For more information on using a PR2 with DecoderPro, please
+	see the
+	<a href="PR2.shtml">PR2 setup page</a>.
+	
 	<h2>Setup</h2>
 
 	  <p>To connect your computer to a Digitrax DCC system, you need a

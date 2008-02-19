@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.7 2008-02-05 07:16:40 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.8 2008-02-19 11:41:54 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -77,6 +77,8 @@
 	        <p class="dl">Configure: Remote connection to a LocoNet via
 		<A HREF="loconet/LbServer.shtml">LbServer</a>.</p>
 		<A HREF="loconet/LocoNetworking.shtml">More information on connecting multiple computers to a single LocoNet</a>
+	        <p class="dl">Configure: Programming and testing decoders via a 
+		<A HREF="loconet/PR2.shtml">Digitrax PR2 interface</a>.</p>
 	    </dd>
 
 	    <dt class="im">
