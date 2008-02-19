@@ -18,7 +18,7 @@ import jmri.util.JmriJFrame;
  * <p>Time code copied in part from code for the Nixie clock by Bob Jacobsen </p>
  *
  * @author  Howard G. Penny - Copyright (C) 2005
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class AnalogClock2Display extends PositionableJComponent {
     Timebase clock;
@@ -74,7 +74,7 @@ public class AnalogClock2Display extends PositionableJComponent {
         super((JmriJFrame)parentFrame);
         clock = InstanceManager.timebaseInstance();
 
-        rate = (int) clock.getRate();
+        rate = (int) clock.userGetRate();
 
         // Load the JMRI logo and clock face
         // Icons are the original size version kept for to allow for mulitple resizing
@@ -301,10 +301,10 @@ public class AnalogClock2Display extends PositionableJComponent {
         minuteAngle = (double) minutes * 6.;
         hourAngle = (double) hours * 30. + 30. * minuteAngle / 360.;
         if (hours < 12) {
-            amPm = "AM " + (int) clock.getRate() + ":1";
+            amPm = "AM " + (int) clock.userGetRate() + ":1";
         }
         else {
-            amPm = "PM " + (int) clock.getRate() + ":1";
+            amPm = "PM " + (int) clock.userGetRate() + ":1";
         }
         if (hours == 12 && minutes == 0) {
             amPm = "Noon";
