@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.2.shtml,v 1.21 2008-02-18 20:01:28 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.2.shtml,v 1.22 2008-02-19 06:16:17 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -33,24 +33,25 @@
       Release Notes for JMRI 2.1.2 release
       </h2>
 
-	<p>Date: MMM DD, 2008</p>
+	<p>Date: February 18, 2008</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.1.2 of JMRI/DecoderPro is available for download.
 
-<br><b>This is a draft release note only; the download links do not yet work</b>
+<!-- <br><b>This is a draft release note only; the download links do not yet work</b> -->
 
 <h3>Notes:</h3>
 
-<!-- <p>This is a test release.  Please post a note if you encounter any new or old bugs!  And please back up your JMRI files before installing this, in case you want to go back to an earlier version. -->
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.
 
 <p>This is the next in a series of test versions.
 It contains 
 many new features, including:
 <ul>
-<!-- <li>Support for the ProTrak Grapevine system, -->
-<!-- <li>improved fast clock support, -->
-<!-- <li>additions to the layout editor, -->
-<!-- <li>additional sounds and graphics for creating USS CTC panels, -->
+<li>Support for the X10 power adapters,
+<li>improved consisting support,
+<li>additional sounds and graphics for creating USS CTC panels,
 <li>lots of additions to the help screens
 <li>and several decoder definitions were added and improved.
 </ul>
