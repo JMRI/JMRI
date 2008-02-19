@@ -1,5 +1,8 @@
 package jmri;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Represents a particular set of 
  * NamedBean (usually turnout) settings to put a path through 
@@ -27,7 +30,7 @@ package jmri;
  * clearly, this should be extended to a list of elements!
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class Path  {
 
@@ -63,6 +66,11 @@ public class Path  {
         _element = t;
     }
     
+    public List getSettings() {
+        ArrayList a = new ArrayList();
+        if (_element!=null) a.add(_element);
+        return a;
+    }
     public void setBlock(Block b) {
         _block = b;
     }

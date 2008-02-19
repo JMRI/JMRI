@@ -25,7 +25,7 @@ import jmri.util.JmriJFrame;
  * BlockTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class BlockTableAction extends AbstractTableAction {
@@ -103,6 +103,11 @@ public class BlockTableAction extends AbstractTableAction {
     			if (col==DIRECTIONCOL) return String.class;
     			if (col==VALUECOL) return String.class;  // not a button
     			else return super.getColumnClass(col);
+		    }
+
+    		public int getPreferredWidth(int col) {
+    			if (col==DIRECTIONCOL) return new JTextField(7).getPreferredSize().width;
+    			else return super.getPreferredWidth(col);
 		    }
 
     		public void configValueColumn(JTable table) {

@@ -1,6 +1,7 @@
 package jmri;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a particular piece of track, more informally a "Block".
@@ -63,7 +64,7 @@ import java.util.ArrayList;
  *</ul>
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class Block extends jmri.AbstractNamedBean {
 
@@ -100,6 +101,13 @@ public class Block extends jmri.AbstractNamedBean {
     ArrayList paths = new ArrayList();
     public void addPath(Path p) {
         paths.add(p);
+    }
+    
+    /**
+     * Get a copy of the list of Paths
+     */
+    public List getPaths() {
+        return new ArrayList(paths);
     }
     
     /**

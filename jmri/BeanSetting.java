@@ -13,7 +13,7 @@ package jmri;
  * change, because it's a function of the current bean setting(s).
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class BeanSetting  {
 
@@ -28,6 +28,9 @@ public class BeanSetting  {
     public boolean check(){
         return _bean.getState() == _setting;
     }
+    
+    public NamedBean getBean() { return _bean; }
+    public int getSetting() { return _setting; }
     
     private NamedBean _bean;
     private int _setting;
