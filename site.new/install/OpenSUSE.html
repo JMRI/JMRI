@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: OpenSUSE.html,v 1.5 2008-02-18 20:01:16 jacobsen Exp $ -->
+<!-- $Id: OpenSUSE.html,v 1.6 2008-02-19 15:11:26 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -138,6 +138,33 @@ instructions. If I'd loaded commapi version 2 in the first place it
 would have been fine :^) instead I just grabbed the first one I saw on
 the sun site which was version 3.
 
+</PRE>
+
+Stephen Williams added a little more info about setting permissions:
+
+<pre>
+The basic problem here is that you will need to add yourself to the
+appropriate groups both to open the serial devices (/dev/ttyS*) and to
+be able to create files in the lock file directory.  This is another
+area where the RedHat-ish distribtions (and Suse is in that camp) differ
+from the Debian/Ubuntu distributions.
+
+On your Suse system, do the following command:
+
+    stevew@wallace:~/rxtx-2.0-7pre2$ ls -l /dev/ttyS*
+    crw-rw---- 1 root dialout 4, 64 2008-02-10 17:08 /dev/ttyS0
+    crw-rw---- 1 root dialout 4, 65 2008-02-10 17:08 /dev/ttyS1
+    crw-rw---- 1 root dialout 4, 66 2008-02-10 17:08 /dev/ttyS2
+    crw-rw---- 1 root dialout 4, 67 2008-02-10 17:08 /dev/ttyS3
+
+The output is from my own machine which runs Debian.  Your system will
+likely have a different group name listed after the 'root' user.  That
+is one of the groups you need to belong to.  Then look at the
+permissions and group ownership of /var/lock (ls -al /var/lock and look
+at the entry for '.').  If there is a group other than root listed
+there, you need to belong to that group (it is often "uucp" or "lock").
+
+Hope that helps.
 </PRE>
       <hr class="hide">
       
