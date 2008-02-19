@@ -18,7 +18,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 
 import java
 import javax.swing
@@ -42,7 +42,7 @@ class PM4LnListener (jmri.jmrix.loconet.LocoNetListener) :
         
     def message(self, msg) :
         # got a LocoNet message, see if from PM4
-        if ( (msg.getElement(0)==0xD0) and ((msg.getElement(1)&0xFE)==0x72) ) :
+        if ( (msg.getElement(0)==0xD0) and ((msg.getElement(1)&0x60)==0x60) ) :
             # It's a PM4 message, decode contents
             board = (msg.getElement(1)&0x1)*128+(msg.getElement(2)&0x7F)+1
             section1 = ( (msg.getElement(4)&0x1) != 0)
