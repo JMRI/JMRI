@@ -32,7 +32,7 @@ import jmri.util.JmriJFrame;
  * @author Bob Jacobsen Copyright (C) 2007 
  * @author Simon Reader Copyright (C) 2008
  *
- * @version     $Revision: 1.41 $
+ * @version     $Revision: 1.42 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -514,20 +514,20 @@ public class RouteTableAction extends AbstractTableAction {
             });
             p25.add(ss);
             p25.add(soundFile);
-            contentPane.add(p25);
+//            contentPane.add(p25);
             
-            JPanel p26 = new JPanel();
-            p26.setLayout(new FlowLayout());
-            p26.add(new JLabel("Run script:"));
+//            JPanel p26 = new JPanel();
+//            p26.setLayout(new FlowLayout());
+            p25.add(new JLabel("Run script:"));
             ss = new JButton("Set");
             ss.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setScriptPressed();
                 }
             });
-            p26.add(ss);
-            p26.add(scriptFile);
-            contentPane.add(p26);
+            p25.add(ss);
+            p25.add(scriptFile);
+            contentPane.add(p25);
             
             //add turnouts aligned sensor
             JPanel p27 = new JPanel();
@@ -536,7 +536,6 @@ public class RouteTableAction extends AbstractTableAction {
             p27.add(turnoutsAlignedSensor);
             turnoutsAlignedSensor.setToolTipText("Enter a Sensor system name or nothing");
             contentPane.add(p27);
-            p26.setVisible(true);
            
             // add control sensor table
             JPanel p3 = new JPanel();
@@ -574,11 +573,11 @@ public class RouteTableAction extends AbstractTableAction {
             p34.add(cTurnoutStateBox);
             p3.add(p34);
 			// add added delay
-            JPanel p35 = new JPanel();
-            p35.add(new JLabel("Enter added delay between Turnout Commands (optional)"));
-            p3.add(p35);
+     //       JPanel p35 = new JPanel();
+     //      p35.add(new JLabel("Enter added delay between Turnout Commands (optional)"));
+     //       p3.add(p35);
             JPanel p36 = new JPanel();
-            p36.add(new JLabel("Added delay: "));
+            p36.add(new JLabel("Enter additional delay between Turnout Commands (optional), added delay: "));
             p36.add(timeDelay);
             timeDelay.setText("0");
             timeDelay.setToolTipText("Enter time to add to the default of 250 milliseconds between turnout commands");
