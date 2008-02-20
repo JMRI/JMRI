@@ -16,7 +16,7 @@ import jmri.util.JmriJFrame;
  *
  * <p> Time code copied from code for the Nixie clock by Bob Jacobsen</p>
  * @author                     Dennis Miller Copyright (C) 2004
- * @version                    $Revision: 1.12 $
+ * @version                    $Revision: 1.13 $
  */
 
 public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
@@ -265,10 +265,19 @@ public void paint(Graphics g){
        int minutes = now.getMinutes();
        minuteAngle = (double) minutes*6.;
        hourAngle = (double) hours*30. + 30.*minuteAngle/360.;
-       if (hours < 12) {amPm = "AM";}
-       else amPm = "PM";
-       if (hours == 12 && minutes == 0) {amPm = "Noon";}
-       if (hours == 0 && minutes == 0) {amPm = "Midnight";}
+       if (hours < 12) {
+           amPm = "AM ";
+       }
+       else {
+           amPm = "PM ";
+       }
+       if (hours == 12 && minutes == 0) {
+           amPm = "Noon";
+       }
+       if (hours == 0 && minutes == 0) {
+           amPm = "Midnight";
+       }
+       amPm = amPm + " " + (int) clock.userGetRate() + ":1";
        repaint();
    }
 
