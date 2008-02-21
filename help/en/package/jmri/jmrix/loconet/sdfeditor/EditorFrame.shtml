@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: EditorFrame.shtml,v 1.4 2008-02-10 05:55:07 jacobsen Exp $ -->
+<!-- $Id: EditorFrame.shtml,v 1.5 2008-02-21 15:35:57 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -69,6 +69,7 @@ bottom will have checkboxes and selection boxes for modifying the
 content of the element.
 
 <h3>Status and Future Work</h3>
+<img src="../../../../../images/bangdesk.gif" align="right" height="45" width="45" alt="Cute image of work"/>
 This editor tool is still very much a work in progress.
 It's good at browsing the content of the file, but it needs
 a lot more explanatory text added.
