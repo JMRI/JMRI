@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.16 2008-02-18 05:25:38 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.17 2008-02-22 03:49:35 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -195,6 +195,7 @@
 	<LI>Mark Marowicz, who provided the CT Electronik SL 51 decoder definition
 	<LI>Ron McKinnon, who fixed some problems with the lighting options in the SoundTraxx Tsunami Steam definitions
 	<LI>Larry Meaney provided decoder ID for the Digitrax DN163K0b decoder
+	<LI>Philip Middlemiss provided a decoder definition Hornby R8215 decoder.
 	<LI>Dennis Miller, who greatly improved the CV printing, added the
 	run-time help system and repackaged the window icons
 	<LI>Jon Miller, who has been doing user support and decoder testing, plus contributing 
