@@ -16,26 +16,32 @@ package jmri;
  * This class has three bound parameters:
  *<DL>
  *<DT>appearance<DD>The specific color being shown. Values are the
- * various color contants defined in the class. As yet,
- * we have no decision as to whether these are exclusive or
- * can be or'd together.
+ * various color contants defined in the class. 
+ * <p>
+ * The appearance constants form a bit mask, so they can
+ * be used with hardware that can display e.g. more than one lit
+ * color at a time.  Individual implementations may not be
+ * able to handle that, however; most of the early ones 
+ * probably won't.
  *<DT>lit<DD>Whether the head's lamps are lit or left dark.
  *<P>
  * This differs from the DARK color defined for the appearance
  * parameter, in that it's independent of that.  Lit is 
  * intended to allow you to extinquish a signal head for 
  * approach lighting, while still allowing it's color to be
- * set to a definite value.
- *<DT>held<DD>Whether the head's lamps are forced to the RED position
+ * set to a definite value for e.g. display on a panel or
+ * evaluation in higher level logic.
+ *
+ *<DT>held<DD>Whether the head's lamps should be forced to the RED position
+ * In higher-level logic.
  *<P>
  * For use in signaling systems, this is a convenient
  * way of storing whether a higher-level of control (e.g. non-vital
  * system or dispatcher) has "held" the signal at stop. It does
- * not effect how this signal head actually works; any value can
- * be set and displayed even when "held" is set.
- *
+ * not effect how this signal head actually works; any appearance can
+ * be set and will be displayed even when "held" is set.
  *</dl>
- *
+ * 
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -50,8 +56,8 @@ package jmri;
  * for more details.
  * <P>
  *
- * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.9 $
+ * @author			Bob Jacobsen Copyright (C) 2002, 2008
+ * @version			$Revision: 1.10 $
  */
 public interface SignalHead extends NamedBean {
 
