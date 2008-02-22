@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.3.shtml,v 1.3 2008-02-22 03:55:03 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.3.shtml,v 1.4 2008-02-22 05:58:25 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -33,11 +33,11 @@
       Release Notes for JMRI 2.1.3 release
       </h2>
 
-	<p>Date: MMM DD, 2008</p>
+	<p>Date: February 21, 2008</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.1.3 of JMRI/DecoderPro is available for download.
 
-<br><b>This is a draft release note only; the download links do not yet work</b>
+<!-- <br><b>This is a draft release note only; the download links do not yet work</b> -->
 
 <h3>Notes:</h3>
 
@@ -45,22 +45,25 @@
 And please back up your JMRI files before installing this, in case you want to go 
 back to an earlier version.
 
-<p>This is the next in a series of test versions.
-It contains 
-many new features, including:
-<ul>
+<p>This is the next in a series of test versions. It is a rapid replacement
+for JMRI 2.1.2, which had a problem (see below).  If you have JMRI 2.1.2
+installed, it's recommended you replace it with this version.
+
+<!-- It contains  -->
+<!-- many new features, including: -->
+<!-- <ul> -->
 <!-- <li>Support for the X10 power adapters, -->
 <!-- <li>improved consisting support, -->
 <!-- <li>additional sounds and graphics for creating USS CTC panels, -->
-<li>lots of additions to the help screens
-<li>and several decoder definitions were added and improved.
-</ul>
-along with lots of other changes.  See the complete list below.
-
-
-<p>Some of the changes involved are quite extensive.
-They may require a certain amount of experience before they are working well.  
-Therefore, this test version should be considered experimental.
+<!-- <li>lots of additions to the help screens -->
+<!-- <li>and several decoder definitions were added and improved. -->
+<!-- </ul> -->
+<!-- along with lots of other changes.  See the complete list below. -->
+<!--  -->
+<!--  -->
+<!-- <p>Some of the changes involved are quite extensive. -->
+<!-- They may require a certain amount of experience before they are working well.   -->
+<!-- Therefore, this test version should be considered experimental. -->
 
 <!-- <p>We are very pleased to announce that the 2.1 series of JMRI test releases has resulted in a  -->
 <!-- version that's good enough to be recommended for general use, including by new users.  -->
