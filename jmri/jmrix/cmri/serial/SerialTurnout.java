@@ -6,21 +6,43 @@ import jmri.AbstractTurnout;
 import jmri.Turnout;
 
 /**
- * SerialTurnout.java
- *
+ *  Turnout implementation for C/MRI serial systems.
+ * <p>
  *  This object doesn't listen to the C/MRI communications.  This is because
  *  it should be the only object that is sending messages for this turnout;
  *  more than one Turnout object pointing to a single device is not allowed.
- *
- *  Turnouts may be controlled by one or two output bits.  If a turnout is 
- *  controlled by two output bits, the output bits must be on the same node,
- *  the address must point to the first output bit, and the second output bit
- *  must follow the output bit in the address.  Valid states for the two bits
+ * <p>
+ *  Turnouts on the layout may be controlled by one or two output bits.  
+ *  To control a turnout from one Turnout object via 
+ *  two output bits, the output bits must be on the same node,
+ *  the Turnotu address must point to the first output bit, and the second output bit
+ *  must follow the output bit at the next address.  Valid states for the two bits
  *  controlling the two-bit turnout are:  ON OFF, and OFF ON for the two bits.
+ * <p>
+ *  This class can also drive pulsed outputs, which can be combined with the
+ *  two-bit option in the expected ways. 
+ * <p>
+ *   When a Turnout is configured for pulsed and two-output, a request to go to a new CommandedState
+ *   sets the desired configuration for the pulse interval, then sets both leads
+ *   to their off condition.
+ * <p>
+ *   When a Turnout is configured for pulsed and one output, a request to go to a
+ *   new CommandedState just sets the output on for the interval; it's assumed that
+ *   there's something out on the layout that converts that pulse into a "flip to other state"
+ *   operation.
+ * <p>
+ *  Finally, this implementation supports the "inverted" option. Inverted
+ *  applies to the status of the lead on the C/MRI output itself.  
+ * <p>
+ *  For example,
+ *  a pulsed, two-output, inverted turnout will have both pins set to 1 in the
+ *  resting state.  When THROWN, one lead will be set to 0 for the configured
+ *  interval, then set back to 1.
  *
- * Description:		extend jmri.AbstractTurnout for C/MRI serial layouts
- * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.13 $
+ * @author			Bob Jacobsen Copyright (C) 2003, 2007, 2008
+ * @author			David Duchamp Copyright (C) 2004, 2007
+ * @author			Dan Boudreau Copyright (C) 2007
+ * @version			$Revision: 1.14 $
  */
 public class SerialTurnout extends AbstractTurnout {
 
@@ -39,8 +61,9 @@ public class SerialTurnout extends AbstractTurnout {
 
     /**
      * Handle a request to change state by sending a turnout command
+     * @param newState desired new state, one of the Turnout class constants
      */
-    protected void forwardCommandChangeToLayout(int s) {
+    protected void forwardCommandChangeToLayout(int newState) {
         // implementing classes will typically have a function/listener to get
         // updates from the layout, which will then call
         //		public void firePropertyChange(String propertyName,
@@ -49,29 +72,30 @@ public class SerialTurnout extends AbstractTurnout {
         // _once_ if anything has changed state (or set the commanded state directly)
 
         // sort out states
-        if ( (s & Turnout.CLOSED) > 0) {
+        if ( (newState & Turnout.CLOSED) > 0) {
             // first look for the double case, which we can't handle
-            if ( (s & Turnout.THROWN) > 0) {
+            if ( (newState & Turnout.THROWN) > 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN "+s);
+                log.error("Cannot command both CLOSED and THROWN: "+newState);
                 return;
             } else {
                 // send a CLOSED command
-                sendMessage(true^getInverted());
+                sendMessage(true);
             }
         } else {
             // send a THROWN command
-            sendMessage(false^getInverted());
+            sendMessage(false);
         }
     }
     
-    // C/MRI turnouts do support inversion
+    /** C/MRI turnouts do support inversion */
     public boolean canInvert(){return true;}
 
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout){
 		if (log.isDebugEnabled()) log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock")+ " Pushbutton ");
     }
 
+    /** Null method to satisfy interface */
     public void dispose() {}  // no connections need to be broken
 
     // data members
@@ -82,6 +106,11 @@ public class SerialTurnout extends AbstractTurnout {
 	protected javax.swing.Timer mPulseThrownTimer = null;
 	protected boolean mPulseTimerOn = false;
 
+    /**
+     * Control the actual layout hardware.
+     * The request is for a particular functional setting, e.g. CLOSED or THROWN.
+     * The "inverted" status of the output leads is handled here.
+     */
     protected void sendMessage(boolean closed) {
 		// if a Pulse Timer is running, ignore the call
 		if (!mPulseTimerOn) {
@@ -89,6 +118,7 @@ public class SerialTurnout extends AbstractTurnout {
 				tNode = SerialAddress.getNodeFromSystemName(tSystemName);
 				if (tNode == null) {
 					// node does not exist, ignore call
+					log.error("Trying to set a C/MRI turnout that doesn't exist: "+tSystemName+" - ignored");
 					return;
 				}
 			}
@@ -96,27 +126,27 @@ public class SerialTurnout extends AbstractTurnout {
 				// check for pulsed control
 				if (getControlType() == 0) {
 					// steady state control, get current status of the output bit
-					if (tNode.getOutputBit(tBit) != closed) {
+					if ((tNode.getOutputBit(tBit)^getInverted()) != closed) {
 						// bit state is different from the requested state, set it
-						tNode.setOutputBit(tBit, closed);
+						tNode.setOutputBit(tBit, closed^getInverted());
 					}
 					else {
-						// bit state is the same as requested state, so no change
-						//    will occur if requested state is set.
-						// check if turnout known state is different from requested state
+						// Bit state is the same as requested state, so nothing
+						// will happen if requested state is set.
+						// Check if turnout known state is different from requested state
 						int kState = getKnownState();
 						if (closed) {
 							// CLOSED is being requested
 							if ( (kState & Turnout.THROWN) > 0) {
 								// known state is different from output bit, set output bit to be correct
 								//     for known state, then start a timer to set it to requested state
-								tNode.setOutputBit(tBit, false);
+								tNode.setOutputBit(tBit, false^getInverted());
 								// start a timer to finish setting this turnout
 								if (mPulseClosedTimer==null) {
 									mPulseClosedTimer = new javax.swing.Timer(tNode.getPulseWidth(), new 
 											java.awt.event.ActionListener() {
 										public void actionPerformed(java.awt.event.ActionEvent e) {
-											tNode.setOutputBit(tBit, true);
+											tNode.setOutputBit(tBit, true^getInverted());
 											mPulseClosedTimer.stop();
 											mPulseTimerOn = false;
 										}
@@ -131,13 +161,13 @@ public class SerialTurnout extends AbstractTurnout {
 							if ( (kState & Turnout.CLOSED) > 0) {
 								// known state is different from output bit, set output bit to be correct
 								//     for known state, then start a timer to set it to requested state
-								tNode.setOutputBit(tBit, true);
+								tNode.setOutputBit(tBit, true^getInverted());
 								// start a timer to finish setting this turnout
 								if (mPulseThrownTimer==null) {
 									mPulseThrownTimer = new javax.swing.Timer(tNode.getPulseWidth(), new 
 											java.awt.event.ActionListener() {
 										public void actionPerformed(java.awt.event.ActionEvent e) {
-											tNode.setOutputBit(tBit, false);
+											tNode.setOutputBit(tBit, false^getInverted());
 											mPulseThrownTimer.stop();
 											mPulseTimerOn = false;								
 										}
@@ -158,13 +188,13 @@ public class SerialTurnout extends AbstractTurnout {
 							(!closed && ((kState & Turnout.CLOSED) > 0)) ) {
 						// known and requested are different, a change is requested
 						//   Pulse the line, first turn bit on
-						tNode.setOutputBit(tBit,false);
+						tNode.setOutputBit(tBit,false^getInverted());
 						// Start a timer to return bit to off state
 						if (mPulseClosedTimer==null) {
 							mPulseClosedTimer = new javax.swing.Timer(iTime, new 
 										java.awt.event.ActionListener() {
 								public void actionPerformed(java.awt.event.ActionEvent e) {
-									tNode.setOutputBit(tBit, true);
+									tNode.setOutputBit(tBit, true^getInverted());
 									mPulseClosedTimer.stop();
 									mPulseTimerOn = false;
 								}
@@ -179,24 +209,24 @@ public class SerialTurnout extends AbstractTurnout {
 				// two output bits
 				if (getControlType() == 0) {
 					// Steady state control e.g. stall motor turnout control
-					tNode.setOutputBit(tBit,closed);
-					tNode.setOutputBit(tBit+1,!closed);
+					tNode.setOutputBit(tBit,closed^getInverted());
+					tNode.setOutputBit(tBit+1,!(closed^getInverted()));
 				}
 				else {
-					// Pulse control
+					// Pulse control, 2-bits
 					int iTime = tNode.getPulseWidth();
 					// Get current known state of turnout
 					int kState = getKnownState();
 					if (closed && ((kState & Turnout.THROWN) > 0)) {
 						// CLOSED is requested, currently THROWN - Pulse first bit
 						//   Turn bit on
-						tNode.setOutputBit(tBit,false);
+						tNode.setOutputBit(tBit,false^getInverted());
 						// Start a timer to return bit to off state
 						if (mPulseClosedTimer==null) {
 							mPulseClosedTimer = new javax.swing.Timer(iTime, new 
 										java.awt.event.ActionListener() {
 								public void actionPerformed(java.awt.event.ActionEvent e) {
-									tNode.setOutputBit(tBit, true);
+									tNode.setOutputBit(tBit, true^getInverted());
 									mPulseClosedTimer.stop();
 									mPulseTimerOn = false;
 								}
@@ -208,13 +238,13 @@ public class SerialTurnout extends AbstractTurnout {
 					else if (!closed && ((kState & Turnout.CLOSED) > 0)) {
 						// THROWN is requested, currently CLOSED - Pulse second bit
 						//   Turn bit on
-						tNode.setOutputBit(tBit+1,false);
+						tNode.setOutputBit(tBit+1,false^getInverted());
 						// Start a timer to return bit to off state
 						if (mPulseThrownTimer==null) {
 							mPulseThrownTimer = new javax.swing.Timer(iTime, new 
 										java.awt.event.ActionListener() {
 								public void actionPerformed(java.awt.event.ActionEvent e) {
-									tNode.setOutputBit(tBit+1, true);
+									tNode.setOutputBit(tBit+1, true^getInverted());
 									mPulseThrownTimer.stop();
 									mPulseTimerOn = false;								
 								}
