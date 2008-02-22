@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: WindowsLocations.shtml,v 1.1 2007-11-18 07:06:18 jacobsen Exp $ -->
+<!-- $Id: WindowsLocations.shtml,v 1.2 2008-02-22 03:57:02 jacobsen Exp $ -->
 <html lang="en">
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
@@ -61,9 +61,9 @@ Program directory: C:\Program Files\JMRI
 </pre>
 
 For more information follow these links:
-<a href="http://jmri.sourceforge.net/apps/DecoderPro/Files.html">Files</a>,
-<a href="http://jmri.sourceforge.net/apps/DecoderPro/RosterFile.html">Roster</a>,
-<a href="http://jmri.sourceforge.net/apps/DecoderPro/NetworkFiles.html">Network files</a>.
+<a href="/help/en/html/apps/DecoderPro/Files.shtml">Files</a>,
+<a href="/help/en/html/apps/DecoderPro/RosterFile.shtml">Roster</a>,
+<a href="/help/en/html/apps/DecoderPro/NetworkFiles.shtml">Network files</a>.
 
 
 <!--#include virtual="/Footer" -->

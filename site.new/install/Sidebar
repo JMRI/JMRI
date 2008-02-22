@@ -10,7 +10,7 @@
 	<LI><A href="../install/Windows.html">Windows</a>
 	<LI><A href="../install/MacOSX.html">MacOS X</a>
 	<LI><A href="../install/Linux.html">Linux</a>
-	<LI><A href="../install/Debug.html">Debugging an installation</a>
+	<LI><A href="../install/Debug.shtml">Debugging an installation</a>
 	</UL>
 
     <h2>Connecting to your layout</h2>
@@ -39,39 +39,47 @@
 	<ul>
 	<li>Production Versions</li>
 	    <UL>
-	    <LI><A href="../releasenotes/jmri1.6.1.html">JMRI 1.6.1</a>
-	    <LI><A href="../releasenotes/jmri1.6.html">JMRI 1.6</a>
-	    <LI><A href="../releasenotes/jmri1.4.html">JMRI 1.4</a>
-	    <LI><A href="../releasenotes/jmri1.2.5.html">JMRI 1.2.5</a>
+            <LI><A href="../releasenotes/jmri2.0.shtml">JMRI 2.0</a>
+            <LI><A href="../releasenotes/jmri1.8.shtml">JMRI 1.8</a>
+            <LI><A href="../releasenotes/jmri1.6.1.html">JMRI 1.6.1</a>
+            <LI><A href="../releasenotes/jmri1.6.html">JMRI 1.6</a>
+            <LI><A href="../releasenotes/jmri1.4.html">JMRI 1.4</a>
+            <LI><A href="../releasenotes/jmri1.2.5.html">JMRI 1.2.5</a>
 	    </UL>
 	<li>Development Versions</li>
 	    <UL>
-	    <LI><A href="../releasenotes/jmri1.7.7.html">JMRI 1.7.7</a>
-	    <LI><A href="../releasenotes/jmri1.7.6.html">JMRI 1.7.6</a>
-	    <LI><A href="../releasenotes/jmri1.7.5.html">JMRI 1.7.5</a>
-	    <LI><A href="../releasenotes/jmri1.7.4.html">JMRI 1.7.4</a>
-	    <LI><A href="../releasenotes/jmri1.7.3.html">JMRI 1.7.3</a>
-	    <LI><A href="../releasenotes/jmri1.7.2.html">JMRI 1.7.2</a>
-	    <LI><A href="../releasenotes/jmri1.7.1.html">JMRI 1.7.1</a>
-	    <LI><A href="../releasenotes/jmri1.5.8.html">JMRI 1.5.8</a>
-	    <LI><A href="../releasenotes/jmri1.5.7.html">JMRI 1.5.7</a>
-	    <LI><A href="../releasenotes/jmri1.5.6.html">JMRI 1.5.6</a>
-	    <LI><A href="../releasenotes/jmri1.5.5.html">JMRI 1.5.5</a>
-	    <LI><A href="../releasenotes/jmri1.5.4.html">JMRI 1.5.4</a>
-	    <LI><A href="../releasenotes/jmri1.5.3.html">JMRI 1.5.3</a>
-	    <LI><A href="../releasenotes/jmri1.5.2.html">JMRI 1.5.2</a>
-	    <LI><A href="../releasenotes/jmri1.3.13.html">JMRI 1.3.13</a>
-	    <LI><A href="../releasenotes/jmri1.3.12.html">JMRI 1.3.12</a>
-	    <LI><A href="../releasenotes/jmri1.3.11.html">JMRI 1.3.11</a>
-	    <LI><A href="../releasenotes/jmri1.3.10.html">JMRI 1.3.10</a>
-	    <LI><A href="../releasenotes/jmri1.3.9.html">JMRI 1.3.9</a>
-	    <LI><A href="../releasenotes/jmri1.3.8.html">JMRI 1.3.8</a>
-	    <LI><A href="../releasenotes/jmri1.1.14.html">JMRI 1.1.14</a>
+           <LI><A href="../releasenotes/jmri2.1.2.shtml">JMRI 2.1.2</a>
+            <LI><A href="../releasenotes/jmri2.1.1.shtml">JMRI 2.1.1</a>
+            <LI><A href="../releasenotes/jmri1.9.3.shtml">JMRI 1.9.3</a>
+            <LI><A href="../releasenotes/jmri1.9.2.shtml">JMRI 1.9.2</a>
+            <LI><A href="../releasenotes/jmri1.9.1.shtml">JMRI 1.9.1</a>
+            <LI><A href="../releasenotes/jmri1.7.8.shtml">JMRI 1.7.8</a>
+            <LI><A href="../releasenotes/jmri1.7.7.html">JMRI 1.7.7</a>
+            <LI><A href="../releasenotes/jmri1.7.6.html">JMRI 1.7.6</a>
+            <LI><A href="../releasenotes/jmri1.7.5.html">JMRI 1.7.5</a>
+            <LI><A href="../releasenotes/jmri1.7.4.html">JMRI 1.7.4</a>
+            <LI><A href="../releasenotes/jmri1.7.3.html">JMRI 1.7.3</a>
+            <LI><A href="../releasenotes/jmri1.7.2.html">JMRI 1.7.2</a>
+            <LI><A href="../releasenotes/jmri1.7.1.html">JMRI 1.7.1</a>
+            <LI><A href="../releasenotes/jmri1.5.8.html">JMRI 1.5.8</a>
+            <LI><A href="../releasenotes/jmri1.5.7.html">JMRI 1.5.7</a>
+            <LI><A href="../releasenotes/jmri1.5.6.html">JMRI 1.5.6</a>
+            <LI><A href="../releasenotes/jmri1.5.5.html">JMRI 1.5.5</a>
+            <LI><A href="../releasenotes/jmri1.5.4.html">JMRI 1.5.4</a>
+            <LI><A href="../releasenotes/jmri1.5.3.html">JMRI 1.5.3</a>
+            <LI><A href="../releasenotes/jmri1.5.2.html">JMRI 1.5.2</a>
+            <LI><A href="../releasenotes/jmri1.3.13.html">JMRI 1.3.13</a>
+            <LI><A href="../releasenotes/jmri1.3.12.html">JMRI 1.3.12</a>
+            <LI><A href="../releasenotes/jmri1.3.11.html">JMRI 1.3.11</a>
+            <LI><A href="../releasenotes/jmri1.3.10.html">JMRI 1.3.10</a>
+            <LI><A href="../releasenotes/jmri1.3.9.html">JMRI 1.3.9</a>
+            <LI><A href="../releasenotes/jmri1.3.8.html">JMRI 1.3.8</a>
+            <LI><A href="../releasenotes/jmri1.1.14.html">JMRI 1.1.14</a>
 	    </UL>
 	<li>(Tentative) Next Version</li>
 	    <UL>
-	    <LI><A href="../releasenotes/jmri1.7.7.html">JMRI 1.7.7</a>
-        </ul>
+           <LI><A href="../releasenotes/jmri2.1.3.shtml">JMRI 2.1.3</a>
+         </ul>
 	</ul>
 
     <h2>User Guides</h2>
