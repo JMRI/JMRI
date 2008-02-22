@@ -15,7 +15,7 @@ import jmri.Turnout;
  *  Turnouts on the layout may be controlled by one or two output bits.  
  *  To control a turnout from one Turnout object via 
  *  two output bits, the output bits must be on the same node,
- *  the Turnotu address must point to the first output bit, and the second output bit
+ *  the Turnout address must point to the first output bit, and the second output bit
  *  must follow the output bit at the next address.  Valid states for the two bits
  *  controlling the two-bit turnout are:  ON OFF, and OFF ON for the two bits.
  * <p>
@@ -38,11 +38,14 @@ import jmri.Turnout;
  *  a pulsed, two-output, inverted turnout will have both pins set to 1 in the
  *  resting state.  When THROWN, one lead will be set to 0 for the configured
  *  interval, then set back to 1.
- *
+ * <p>
+ *  For more discussion of this, please see the 
+ *  <a href="http://jmri.sf.net/help/en/html/hardware/cmri/CMRI.shtml#options">documentation page</a>.
+ * 
  * @author			Bob Jacobsen Copyright (C) 2003, 2007, 2008
  * @author			David Duchamp Copyright (C) 2004, 2007
  * @author			Dan Boudreau Copyright (C) 2007
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class SerialTurnout extends AbstractTurnout {
 
