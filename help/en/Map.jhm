@@ -37,6 +37,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.doc.Technical.Jython" url="html/doc/Technical/Jython.shtml" />
 	<mapID target="package.jmri.jmrit.display.PanelEditor" url="package/jmri/jmrit/display/PanelEditor.shtml" />
 	<mapID target="package.jmri.jmrix.nce.packetgen.NcePacketGenFrame" url="package/jmri/jmrix/nce/packetgen/NcePacketGenFrame.shtml" />
+	<mapID target="html.hardware.loconet.PR2" url="html/hardware/loconet/PR2.shtml" />
 	<mapID target="DecoderProManual.Basic_Programming_Enter/Edit data" url="DecoderProManual/Basic_Programming.shtml#Enter/Edit data" />
 	<mapID target="DecoderProManual.Basic_Programming_Programming Modes" url="DecoderProManual/Basic_Programming.shtml#Programming Modes" />
 	<mapID target="package.jmri.jmrit.beantable.ReporterAddEdit" url="package/jmri/jmrit/beantable/ReporterAddEdit.shtml" />
@@ -211,8 +212,8 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="TemplatePlain" url="TemplatePlain.shtml" />
 	<mapID target="package.jmri.jmrit.throttle.ThrottleFrame" url="package/jmri/jmrit/throttle/ThrottleFrame.shtml" />
 	<mapID target="html.apps.DecoderPro.FAQ" url="html/apps/DecoderPro/FAQ.shtml" />
-	<mapID target="html.apps.DecoderPro.FnMapping" url="html/apps/DecoderPro/FnMapping.shtml" />
 	<mapID target="html.tools.throttle.ThrottleChapter1_MainMenu" url="html/tools/throttle/ThrottleChapter1.shtml#MainMenu" />
+	<mapID target="html.apps.DecoderPro.FnMapping" url="html/apps/DecoderPro/FnMapping.shtml" />
 	<mapID target="html.apps.DecoderPro.NetworkFiles" url="html/apps/DecoderPro/NetworkFiles.shtml" />
 	<mapID target="package.jmri.jmrit.beantable.LightTable" url="package/jmri/jmrit/beantable/LightTable.shtml" />
 	<mapID target="html.tools.throttle.ThrottleChapter1_HowToFind" url="html/tools/throttle/ThrottleChapter1.shtml#HowToFind" />
