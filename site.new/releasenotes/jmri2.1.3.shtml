@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.3.shtml,v 1.4 2008-02-22 05:58:25 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.3.shtml,v 1.5 2008-02-22 06:07:28 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -119,7 +119,7 @@ version of Java.  To see JMRI's future plans for this and other compatibility is
 
 
 
-<h3>Changes since test version 2.1.1:</h3>
+<h3>Changes since test version 2.1.2:</h3>
 
 <p>
 David Duchamp fixed a bug that was causing the analog fast clock to display the wrong rate.
