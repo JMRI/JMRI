@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: RouteTable.shtml,v 1.4 2008-01-24 04:49:47 jacobsen Exp $ -->
+<!-- $Id: RouteTable.shtml,v 1.5 2008-02-22 16:51:00 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Route Table Help</TITLE>
@@ -81,13 +81,24 @@ route.</P>
 <H3><A NAME="Turnout lock feature">Turnout lock feature</A></H3>
 
 <P>The turnout lock feature allows you to selectively disable
-accessory (turnouts) commands from cabs and/or locally-wired pushbuttons. 
-To help you select a set of turnouts to lock, a route can be
-locked. All turnouts that are being monitored by the JMRI program and
-are included in the route will be locked. In the route edit window, an
-optional lock control turnout is available. You can use the lock control
-turnout to enable or disable the locks from a panel icon. The lock
-control turnout can be an internal or external turnout. </P>
+accessory (turnouts) commands from cabs and/or locally-wired pushbuttons. JMRI
+disables pushbuttons by sending pushbutton disable commands to the
+turnout decoders when the route is locked, and enables the pushbuttons
+when the route is unlocked. When locking a turnout from cab commands,
+the JMRI program will monitor the turnout's accessory address and if it
+detects a change command from a cab, will cancel the command immediately
+by sending out the opposite command to the turnout. All turnouts that
+are being monitored by the JMRI program and are included in the route
+will be locked.</P>
+<P>To help you select a set of turnouts to lock or unlock, a route
+can be locked or unlocked. In the route edit window, an optional lock
+control turnout is available. You can use the lock control turnout to
+enable or disable the route lock function from a panel turnout icon, a
+layout turnout or a phantom turnout. A phantom turnout is a turnout that
+can be accessed by your cab but doesn't actually exist on your layout.</P>
+<P>For more information on how to set turnouts to be lockable,
+please see the <A HREF="TurnoutTable.shtml#Turnout%20lock%20feature">Turnout
+Table page</A>.</P>
 
 <!--#include virtual="/Footer" -->
 </BODY>
