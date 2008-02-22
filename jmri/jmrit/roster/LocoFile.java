@@ -28,7 +28,7 @@ import java.util.List;
  * @author    Bob Jacobsen     Copyright (C) 2001, 2002
  * @author    Dennis Miller    Copyright (C) 2004
  * @author    Howard G. Penny  Copyright (C) 2005
- * @version   $Revision: 1.23 $
+ * @version   $Revision: 1.24 $
  * @see       jmri.jmrit.roster.RosterEntry
  * @see       jmri.jmrit.roster.Roster
  */
@@ -52,6 +52,15 @@ class LocoFile extends XmlFile {
         CvValue cvObject;
         // get the CVs and load
         Element values = loco.getChild("values");
+        
+        // Ugly hack because of bug 1898971 in JMRI 2.1.2 - contents may be directly inside the 
+        // locomotive element, instead of in a nested values element
+        if (values == null) {
+            // check for non-nested content, in which case use loco element
+            List elementList = loco.getChildren("CVvalue");
+            if (elementList != null) values = loco;
+        }
+        
         if (values != null) {
             // get the CV values and load
             List elementList = values.getChildren("CVvalue");
@@ -188,8 +197,10 @@ class LocoFile extends XmlFile {
 
 
             // add top-level elements
-            Element values = r.store();   // the locomotive element from the RosterEntry
-            root.addContent(values);
+            Element locomotive = r.store();   // the locomotive element from the RosterEntry
+            root.addContent(locomotive);
+            Element values = new Element("values");
+            locomotive.addContent(values);
 
             // Append a decoderDef element to values
             Element decoderDef;
