@@ -1,6 +1,6 @@
 <!-- Defines XML documenting on a locomotive, esp. information -->
 <!-- on how it is programmed. -->
-<!-- $Id: locomotive-config.dtd,v 1.17 2007-09-21 05:49:29 jacobsen Exp $ -->
+<!-- $Id: locomotive-config.dtd,v 1.18 2008-02-22 01:54:47 jacobsen Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
 <!--                                                                        -->
@@ -21,8 +21,10 @@
 <!-- decoder must be kept the same as the ones in the roster DTD -->
 <!-- This copy is used if we have to import an existing file into a roster -->
 
-<!ELEMENT locomotive (decoder, values*) >
+<!ELEMENT locomotive (decoder, locoaddress*, values*) >
 <!ATTLIST locomotive id		      CDATA #REQUIRED>          
+<!ATTLIST locomotive fileName	CDATA #IMPLIED>  
+<!ATTLIST locomotive groupName  CDATA #IMPLIED>        
 <!ATTLIST locomotive roadName	  CDATA #IMPLIED>          
 <!ATTLIST locomotive roadNumber	CDATA #IMPLIED>          
 <!ATTLIST locomotive mfg	      CDATA #IMPLIED>
@@ -36,6 +38,14 @@
 <!ATTLIST decoder model   CDATA #REQUIRED>  <!-- used for identification -->
 <!ATTLIST decoder family  CDATA #REQUIRED>  <!-- used for identification   -->
 <!ATTLIST decoder comment CDATA #IMPLIED>
+
+<!-- define general locomotive address -->
+<!ELEMENT locoaddress (dcclocoaddress) >
+
+<!-- define DCC locomotive address -->
+<!ELEMENT dcclocoaddress EMPTY >
+<!ATTLIST dcclocoaddress number      CDATA #IMPLIED>
+<!ATTLIST dcclocoaddress longaddress ( yes | no) "no">
 
 <!-- The values section defines values for CVs and/or variables -->
 <!ELEMENT values (decoderDef, (CVvalue | varValue)*, indexedCVvalue* )>

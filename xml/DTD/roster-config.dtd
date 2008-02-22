@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a locomotive roster -->
-<!-- $Id: roster-config.dtd,v 1.9 2007-09-21 05:49:30 jacobsen Exp $ -->
+<!-- $Id: roster-config.dtd,v 1.10 2008-02-22 01:54:47 jacobsen Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007.                  -->
 <!--                                                                        -->
@@ -33,7 +33,6 @@
 <!-- The copy in the locomotive file is used if we have to import an existing file into a roster -->
 
 <!-- Manual identification -->
-<!ATTLIST locomotive id			CDATA #REQUIRED>          
 <!ATTLIST locomotive roadName	CDATA #IMPLIED>          
 <!ATTLIST locomotive roadNumber	CDATA #IMPLIED>          
 <!ATTLIST locomotive mfg			CDATA #IMPLIED>
