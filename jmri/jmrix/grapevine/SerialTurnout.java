@@ -6,15 +6,14 @@ import jmri.AbstractTurnout;
 import jmri.Turnout;
 
 /**
- * SerialTurnout.java
- *
+ *  Implement Turnout for Grapevine.
+ * 
  *  This object doesn't listen to the Grapevine serial communications.  This is because
  *  it should be the only object that is sending messages for this turnout;
  *  more than one Turnout object pointing to a single device is not allowed.
  *
- * Description:		extend jmri.AbstractTurnout for grapevine serial layouts
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SerialTurnout extends AbstractTurnout {
 
@@ -63,7 +62,7 @@ public class SerialTurnout extends AbstractTurnout {
 		if (log.isDebugEnabled()) log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock")+ " Pushbutton");
     }
 
-    public void dispose() {}  // no connections need to be broken
+    // public void dispose() {}  // no connections need to be broken
 
     // data members
     String tSystemName; // System Name of this turnout

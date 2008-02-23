@@ -13,7 +13,7 @@ import jmri.Sensor;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author          Dave Duchamp, multi node extensions, 2004
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SerialSensorManager extends jmri.AbstractSensorManager
                             implements SerialListener {
@@ -44,9 +44,17 @@ public class SerialSensorManager extends jmri.AbstractSensorManager
     public void dispose() {
     }
 
+    /*
+     * Normalize names
+     */
+    protected String normalizeSystemName(String sysName) {
+        return SerialAddress.normalizeSystemName(sysName);
+    }
+
     /**
      * Create a new sensor if all checks are passed
      *    System name is normalized to ensure uniqueness.
+     * @return null if sensor already exists by that name or an alternate
      */
     public Sensor createNewSensor(String systemName, String userName) {
         if (log.isDebugEnabled()) log.debug("createNewSensor "+systemName+" "+userName);

@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialSensorManager class.
  * @author	Bob Jacobsen  Copyright 2003, 2007, 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class SerialSensorManagerTest extends TestCase {
 
@@ -55,6 +55,10 @@ public class SerialSensorManagerTest extends TestCase {
         Assert.assertTrue("4th UA 1", n1.sensorsActive() );
         Assert.assertTrue("4th UA 2", n2.sensorsActive() );
         Assert.assertTrue("4th UA 3", n3.sensorsActive() );
+        
+        // some equality tests
+        Assert.assertTrue("GS1p7 == GS1007", s.getSensor("GS1p7")==s.getSensor("GS1007"));
+        Assert.assertTrue("GS1B7 == GS1007", s.getSensor("GS1B7")==s.getSensor("GS1007"));
     }
 
     // from here down is testing infrastructure

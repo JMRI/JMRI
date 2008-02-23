@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRMessage;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class SerialNode {
 
@@ -47,7 +47,7 @@ public class SerialNode {
                                                            "2002 node, pre version 6", 
                                                            "2000 (original) node"};
     public static final int[] outputBits = new int[]{96,96,96};
-    public static final int[] inputBits = new int[]{250,250,250};
+    public static final int[] inputBits = new int[]{224,224,224};
     
     // node definition instance variables (must persist between runs)
     public int nodeAddress = 0;                 // Node address, 1-127 allowed
@@ -293,6 +293,12 @@ public class SerialNode {
     	log.warn(s);
     }
 
+    // Define addressing offsets
+    static final int offsetA = 100; // 'a' advanced occ sensors start at 100+1
+    static final int offsetM = 200; // 'm' advanced movement sensors start at 200+1
+    static final int offsetP = 0;   // 'p' parallel sensors start at 200+1
+    static final int offsetS = 20;  // 's' serial occupancy sensors start at 200+1
+    
     /**
      * Use the contents of a reply from the Grapevine to mark changes
      * in the sensors on the layout.
@@ -312,7 +318,7 @@ public class SerialNode {
             int card = ((l.getElement(1)&0x60)>>5); // number from 0
             boolean motion = (l.getElement(1)&0x10) !=0;
             int number = ((l.getElement(1)&0x0E)>>1) +1;
-            int sensor = card*20+(motion?10:0)+number+40;
+            int sensor = card*20+(motion?offsetM:offsetA)+number;
             // Update
             markBit(input, sensor);
         } else if (l.isFromOldSerialSensor()) {
@@ -324,7 +330,7 @@ public class SerialNode {
             boolean b1 = (byte1 & 0x02) == 0;
             boolean b2 = (byte1 & 0x04) == 0;
             boolean b3 = (byte1 & 0x08) == 0;
-            int number = 1 + (highNibble ? 4 : 0) + (altPort ? 8 : 0) + 20;
+            int number = 1 + (highNibble ? 4 : 0) + (altPort ? 8 : 0) + offsetS;
             markBit(b0, number);
             markBit(b1, number+1);
             markBit(b2, number+2);
@@ -338,7 +344,7 @@ public class SerialNode {
             boolean b1 = (byte1 & 0x02) == 0;
             boolean b2 = (byte1 & 0x04) == 0;
             boolean b3 = (byte1 & 0x08) == 0;
-            int number = 1 + (highNibble ? 4 : 0) + (altPort ? 8 : 0);
+            int number = 1 + (highNibble ? 4 : 0) + (altPort ? 8 : 0) + offsetP;
             markBit(b0, number);
             markBit(b1, number+1);
             markBit(b2, number+2);

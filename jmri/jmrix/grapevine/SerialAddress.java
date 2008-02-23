@@ -2,10 +2,13 @@
 
 package jmri.jmrix.grapevine;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Utility Class supporting parsing and testing of addresses
  * <P>
- * Two address formats are supported:
+ * Multiple address formats are supported:
  *   Gtnnnxxx 
  *      where:  t is the type code, 'T' for turnouts, 'S' for sensors, 
  *                      'H' for signals and 'L' for lights
@@ -14,21 +17,148 @@ package jmri.jmrix.grapevine;
  *              nnxxx = (node address x 1000) + bit number
  *      examples: GT2 (node address 0, bit 2), GS1003 (node address 1, bit 3), 
  *              GL11234 (node address 11, bit234)
- *   GtnnnBxxxx 
+ *   Gtnnnaxxxx 
  *      where:  t is the type code, 'T' for turnouts, 'S' for sensors,
  *                      'H' for signals and 'L' for lights
  *              nnn is the node address of the input or output bit (0-127)
  *              xxxx is a bit number of the input or output bit (1-2048)
+ *              a is a subtype-specific letter:
+ *                  'B' for a bit number (e.g. GT12B3 is a shorter form of GT12003)
+ *                  'a' is for advanced serial occupancy sensors
+ *                  'm' is for advanced serial motion sensors
+ *                  'p' is for parallel sensors
+ *                  's' is for serial occupancy sensors
+ *
  *      examples: GT0B2 (node address 0, bit 2), GS1B3 (node address 1, bit 3), 
  *              GL11B234 (node address 11, bit234)
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004
  * @author  Bob Jacobsen, Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class SerialAddress {
 
     public SerialAddress() {
+    }
+
+    /** 
+     * Regular expression used to parse Turnout names.
+     *<p>
+     * Groups:
+     * <ul>
+     * <li>1 - System letter
+     * <li>2 - Type letter
+     * <li>3 - suffix, if of nnnAnnn form
+     * <li>4 - node number in nnnAnnn form
+     * <li>5 - address type in nnnAnnn form
+     * <li>6 - bit number in nnnAnnn form
+     * <li>7 - combined number in nnnnnn form
+     *</ul>
+     */
+    static final String turnoutRegex = "^(G)(T)(?:((\\d++)(B)(\\d++))|(\\d++))$";
+    static Pattern turnoutPattern = null;
+    static Pattern getTurnoutPattern() {
+        if (turnoutPattern == null) turnoutPattern = Pattern.compile(turnoutRegex);
+        return turnoutPattern;
+    }
+    
+    /** 
+     * Regular expression used to parse Light names.
+     *<p>
+     * Groups:
+     * <ul>
+     * <li>1 - System letter
+     * <li>2 - Type letter
+     * <li>3 - suffix, if of nnnAnnn form
+     * <li>4 - node number in nnnAnnn form
+     * <li>5 - address type in nnnAnnn form
+     * <li>6 - bit number in nnnAnnn form
+     * <li>7 - combined number in nnnnnn form
+     *</ul>
+     */
+    static final String lightRegex = "^(G)(L)(?:((\\d++)(B)(\\d++))|(\\d++))$";
+    static Pattern lightPattern = null;
+    static Pattern getLightPattern() {
+        if (lightPattern == null) lightPattern = Pattern.compile(lightRegex);
+        return lightPattern;
+    }
+    
+    /** 
+     * Regular expression used to parse signalHead names.
+     *<p>
+     * Groups:
+     * <ul>
+     * <li>1 - System letter
+     * <li>2 - Type letter
+     * <li>3 - suffix, if of nnnAnnn form
+     * <li>4 - node number in nnnAnnn form
+     * <li>5 - address type in nnnAnnn form
+     * <li>6 - bit number in nnnAnnn form
+     * <li>7 - combined number in nnnnnn form
+     *</ul>
+     */
+    static final String headRegex = "^(G)(H)(?:((\\d++)(B)(\\d++))|(\\d++))$";
+    static Pattern headPattern = null;
+    static Pattern getHeadPattern() {
+        if (headPattern == null) headPattern = Pattern.compile(headRegex);
+        return headPattern;
+    }
+    
+    /** 
+     * Regular expression used to parse Sensor names.
+     *<p>
+     * Groups:
+     * <ul>
+     * <li>1 - System letter
+     * <li>2 - Type letter
+     * <li>3 - suffix, if of nnnAnnn form
+     * <li>4 - node number in nnnAnnn form
+     * <li>5 - address type in nnnAnnn form
+     * <li>6 - bit number in nnnAnnn form
+     * <li>7 - combined number in nnnnnn form
+     *</ul>
+     */
+    static final String sensorRegex = "^(G)(S)(?:((\\d++)([BbAaMmPpSs])(\\d++))|(\\d++))$";
+    static Pattern sensorPattern = null;
+    static Pattern getSensorPattern() {
+        if (sensorPattern == null) sensorPattern = Pattern.compile(sensorRegex);
+        return sensorPattern;
+    }
+    
+    /** 
+     * Regular expression used to parse from any type of name.
+     *<p>
+     * Groups:
+     * <ul>
+     * <li>1 - System letter
+     * <li>2 - Type letter
+     * <li>3 - suffix, if of nnnAnnn form
+     * <li>4 - node number in nnnAnnn form
+     * <li>5 - address type in nnnAnnn form
+     * <li>6 - bit number in nnnAnnn form
+     * <li>7 - combined number in nnnnnn form
+     *</ul>
+     */
+    static final String allRegex = "^(G)([SHLT])(?:((\\d++)([BbAaMmPpSs])(\\d++))|(\\d++))$";
+    static Pattern allPattern = null;
+    static Pattern getAllPattern() {
+        if (allPattern == null) allPattern = Pattern.compile(allRegex);
+        return allPattern;
+    }
+    
+    /** 
+     * Parse for secondary letters.
+     * @return offset for type letter, or -1 if none
+     */
+    static int typeOffset(String type) {
+        switch (type.toUpperCase().charAt(0)) {
+        case 'B': return 0;
+        case 'A': return SerialNode.offsetA;
+        case 'M': return SerialNode.offsetM;
+        case 'P': return SerialNode.offsetP;
+        case 'S': return SerialNode.offsetS;
+        default: return -1;
+        }
     }
 
     /**
@@ -36,51 +166,33 @@ public class SerialAddress {
      *  Note:  Returns 'NULL' if illegal systemName format or if the node is not found
      */
     public static SerialNode getNodeFromSystemName(String systemName) {
-        // validate the system Name leader characters
-        if ( (systemName.charAt(0) != 'G') || 
-                ( (systemName.charAt(1) != 'L') && (systemName.charAt(1) != 'H') &&
-                (systemName.charAt(1) != 'S') && (systemName.charAt(1) != 'T') ) ) {
+        // validate the System Name leader characters
+        Matcher matcher = getAllPattern().matcher(systemName);
+        if (!matcher.matches()) {
             // here if an illegal format 
-            log.error("illegal character in header field of system name: "+systemName);
+            log.error("illegal system name format: "+systemName);
             return (null);
         }
-        String s = "";
-        boolean noB = true;
-        for (int i = 2; (i<systemName.length()) && noB; i++) {
-            if (systemName.charAt(i) == 'B') {
-                s = systemName.substring(2,i);
-                noB = false;
-            }
-        }
+
+        // start decode
         int ua;
-        if (noB) {
-            // This is a GLnnxxx address
-            int num = Integer.valueOf(systemName.substring(2)).intValue();
+        if (matcher.group(7)!=null) {
+            // This is a Gtnnxxx address
+            int num = Integer.valueOf(matcher.group(7)).intValue();
             if (num>0) {
                 ua = num/1000;
             }
             else {
-                log.error("invalid system name: "+systemName);
+                log.error("invalid value in system name: "+systemName);
                 return (null);
             }
         }
         else {
-            if (s.length()==0) {
-                log.error("no node address before 'B' in system name: "+systemName);
-                return (null);
-            }
-            else {
-                try {
-                    ua = Integer.parseInt(s); // ua 1 is 1st node
-                }
-                catch (Exception e) {
-                    log.error("illegal character in system name: "+systemName);
-                    return (null);
-                }
-            }
+            ua = Integer.valueOf(matcher.group(4)).intValue();
         }
         return (SerialTrafficController.instance().getNodeFromAddress(ua));
     }
+    
     
     /**
      * Public static method to parse a system name and return the bit number
@@ -88,50 +200,30 @@ public class SerialAddress {
      *          If an error is found, 0 is returned.
      */
     public static int getBitFromSystemName(String systemName) {
-        // validate the system Name leader characters
-        if ( (systemName.charAt(0) != 'G') || 
-                ( (systemName.charAt(1) != 'L') && (systemName.charAt(1) != 'H') &&
-                (systemName.charAt(1) != 'S') && (systemName.charAt(1) != 'T') ) ) {
+        // validate the System Name leader characters
+        Matcher matcher = getAllPattern().matcher(systemName);
+        if (!matcher.matches()) {
             // here if an illegal format 
-            log.error("illegal character in header field of system name: "+systemName);
-            return (0);
+            log.error("illegal system name format: "+systemName);
+            return 0;
         }
-        // Find the beginning of the bit number field
-        int k = 0;
-        for (int i = 2; ( (i<systemName.length()) && (k==0) ); i++) {
-            if (systemName.charAt(i) == 'B') {
-                k=i+1;
-            }
-        }
+
+        // start decode
         int n = 0;
-        if (k==0) {
-            // here if 'B' not found, name must be GLnnxxx format
-            int num;
-            try {
-                num = Integer.valueOf(systemName.substring(2)).intValue();
-            }
-            catch (Exception e) {
-                log.error("illegal character in number field of system name: "+systemName);
-                return (0);
-            }
+        if (matcher.group(7)!=null) {
+            // name in be Gtnnxxx format
+            int num = Integer.valueOf(matcher.group(7)).intValue();
             if (num>0) {
-                n = num - ((num/1000)*1000);
+                n = num % 1000;
             }
             else {
-                log.error("invalid system name: "+systemName);
+                log.error("invalid value in system name: "+systemName);
                 return (0);
             }
         }
         else {
-            // This is a GLnnBxxxx address
-            try {
-                n = Integer.parseInt(systemName.substring(k,systemName.length()));
-            }
-            catch (Exception e) {
-                log.error("illegal character in bit number field system name: "
-                                                    +systemName);
-                return (0);
-            }
+            // This is a Gtnnaxxxx address
+            n = Integer.valueOf(matcher.group(6)).intValue();
         }
         return (n);
     }
@@ -139,86 +231,121 @@ public class SerialAddress {
     /**
      * Public static method to validate system name format
      * @return 'true' if system name has a valid format, else returns 'false'
-     * @param type Letter indicating device type expected
+     * @param systemName name to check
+     * @param type expected device type letter
      */
     public static boolean validSystemNameFormat(String systemName,char type) {
-        // validate the system Name leader characters
-        if ( (systemName.charAt(0) != 'G') || (systemName.charAt(1) != type) ) {
+        // validate the System Name leader characters
+        Matcher matcher = getAllPattern().matcher(systemName);
+        if (!matcher.matches()) {
             // here if an illegal format 
-            log.error("illegal character in header field system name: "
-                                                                +systemName);
+            log.error("illegal system name format: "+systemName);
+            return false;
+        }
+        if (matcher.group(2).charAt(0) != type ) {
+            log.error("type in "+systemName+" does not match "+type);
+            return false;
+        }
+        Pattern p;
+        if (type=='L')
+            p = getLightPattern();
+        else if (type=='T')
+            p = getTurnoutPattern();
+        else if (type=='H')
+            p = getHeadPattern();
+        else if (type=='S')
+            p = getSensorPattern();
+        else {
+            log.error("cannot match type in "+systemName+", which is unexpected");
+            return false;
+        }
+
+        // check format
+        Matcher m2 = p.matcher(systemName);
+        if (!m2.matches()) {
+            // here if cannot parse specifically
+            log.error("illegal system name format: "+systemName+" for type "+type);
             return (false);
         }
-        // check for the presence of a 'B' to differentiate the two address formats
-        String s = "";
-        int k = 0;
-        boolean noB = true;
-        for (int i = 2; (i<systemName.length()) && noB; i++) {
-            if (systemName.charAt(i) == 'B') {
-                s = systemName.substring(2,i);
-                k = i+1;
-                noB = false;
+        
+
+        // check for the two different formats
+        int node = -1;
+        int bit = -1;
+        if (matcher.group(7)!=null) {
+            // name in be Gtnnxxx format
+            int num = Integer.valueOf(matcher.group(7)).intValue();
+            if (num>0) {
+                node = num/1000;
+                bit = num%1000;
             }
-        }
-        if (noB) {
-            // This is a GLnnnxxx address
-            int num;
-            try {
-                num = Integer.valueOf(systemName.substring(2)).intValue();
-            }
-            catch (Exception e) {
-                log.error("illegal character in number field system name: "
-                                                    +systemName);
-                return (false);
-            }
-            if ( (num < 1) || (num >=256000) ) {
-                log.error("number field out of range in system name: "
-                                                    +systemName);
-                return (false);
-            }
-            if ( (num - ((num/1000)*1000)) == 0) {
-                log.error("bit number not in range 1 - 999 in system name: "
-                                                    +systemName);
-                return (false);
+            else {
+                log.error("invalid value in system name: "+systemName);
+                return false;
             }
         }
         else {
-            // This is a OLnnnBxxxx address - validate the node address field
-            if (s.length()==0) {
-                log.error("no node address before 'B' in system name: "
-                                                    +systemName);
-                return (false);
-            }
-            int num;
-            try {
-                num = Integer.valueOf(s).intValue();
-            }
-            catch (Exception e) {
-                log.error("illegal character in node address field of system name: "
-                                                    +systemName);
-                return (false);
-            }
-            if ( (num < 0) || (num > 127) ) {
-                log.error("node address field out of range in system name: "
-                                                    +systemName);
-                return (false);
-            }
-            // validate the bit number field
-            try {
-                num = Integer.parseInt(systemName.substring(k,systemName.length()));
-            }
-            catch (Exception e) {
-                log.error("illegal character in bit number field of system name: "
-                                                    +systemName);
-                return (false);
-            }
-            if ( (num < 1) || (num > 2048) ) {
-                log.error("bit number field out of range in system name: "
-                                                    +systemName);
-                return (false);
-            }
+            // This is a Gtnnaxxxx address, get values
+            node = Integer.valueOf(matcher.group(4)).intValue();
+            bit = Integer.valueOf(matcher.group(6)).intValue();
+            
+        }
+
+        // check values
+        if ( (node<1) || (node>127) ){
+            log.error("invalid node number "+node+" in "+systemName);
+            return false;
         }
         
+        // check bit numbers
+        if (type=='L') {
+            if ( (bit<1) || (bit>96) ){
+                log.error("invalid bit number "+bit+" in "+systemName);
+                return false;
+            }
+        } else if (type=='T') {
+            if ( (bit<1) || (bit>96) ){
+                log.error("invalid bit number "+bit+" in "+systemName);
+                return false;
+            }
+        } else if (type=='H') {
+            if ( (bit<1) || (bit>96) ){
+                log.error("invalid bit number "+bit+" in "+systemName);
+                return false;
+            }
+        } else if (type=='S') {
+            // sort on subtype
+            String subtype = matcher.group(5);
+            if (subtype == null) { // no subtype, just look at total
+                if ( (bit<1) || (bit>224) ){
+                    log.error("invalid bit number "+bit+" in "+systemName);
+                    return false;
+                } else return true;
+            }
+            subtype = subtype.toUpperCase();
+            if (subtype == "A") // advanced serial occ
+                if ( (bit<1) || (bit>24) ){
+                    log.error("invalid bit number "+bit+" in "+systemName);
+                    return false;
+                }
+            else if (subtype == "M") // advanced serial motion
+                if ( (bit<1) || (bit>24) ){
+                    log.error("invalid bit number "+bit+" in "+systemName);
+                    return false;
+                }
+            else if (subtype == "S") // old serial
+                if ( (bit<1) || (bit>24) ){
+                    log.error("invalid bit number "+bit+" in "+systemName);
+                    return false;
+                }
+            if (subtype == "P") // parallel
+                if ( (bit<1) || (bit>96) ){
+                    log.error("invalid bit number "+bit+" in "+systemName);
+                    return false;
+                }
+        }
+        
+        // finally, return true
         return true;
     }
 
@@ -230,7 +357,7 @@ public class SerialAddress {
     public static boolean validSystemNameConfig(String systemName,char type) {
         if ( !validSystemNameFormat(systemName,type) ) {
             // No point in trying if a valid system name format is not present
-            log.warn(systemName+" invalid; bad format");
+            log.warn(systemName+" invalid");
             return false;
         }
         SerialNode node = getNodeFromSystemName(systemName);
@@ -243,14 +370,14 @@ public class SerialAddress {
         if ( ( type=='T' ) || (type=='L') ) {
             if ( ( bit <= 0 ) || ( bit > SerialNode.outputBits[node.nodeType] ) ) {
                 // The bit is not valid for this defined Serial node
-                log.warn(systemName+" invalid; bad bit number "+bit+" > "+SerialNode.outputBits[node.nodeType] );
+                log.warn(systemName+" invalid; bad output bit number "+bit+" > "+SerialNode.outputBits[node.nodeType] );
                 return false;
             }
         }
         else if ( type=='S' ) {
             if ( ( bit <= 0 ) || ( bit > SerialNode.inputBits[node.nodeType] ) ) {
                 // The bit is not valid for this defined Serial node
-                log.warn(systemName+" invalid; bad bit number "+bit+" > "+SerialNode.outputBits[node.nodeType]);
+                log.warn(systemName+" invalid; bad input bit number "+bit+" > "+SerialNode.outputBits[node.nodeType]);
                 return false;
             }
         }
@@ -263,8 +390,8 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to convert one format system name for the alternate
-     *      format.
+     * Public static method to convert any format system name for the alternate
+     *      format (nnBnn)
      * If the supplied system name does not have a valid format, or if there is
      *      no representation in the alternate naming scheme, an empty string is 
      *      returned.
@@ -272,40 +399,21 @@ public class SerialAddress {
     public static String convertSystemNameToAlternate(String systemName) {
         // ensure that input system name has a valid format
         if ( !validSystemNameFormat(systemName,systemName.charAt(1)) ) {
-            // No point in trying if a valid system name format is not present
+            // No point in normalizing if a valid system name format is not present
             return "";
         }
-        String altName = "";
-        // check for the presence of a 'B' to differentiate the two address formats
-        String s = "";
-        int k = 0;
-        boolean noB = true;
-        for (int i = 2; (i<systemName.length()) && noB; i++) {
-            if (systemName.charAt(i) == 'B') {
-                s = systemName.substring(2,i);
-                k = i+1;
-                noB = false;
-            }
+
+        Matcher matcher = getAllPattern().matcher(systemName);
+        matcher.matches(); // known to work, just need values
+        // check format
+        if (matcher.group(7)!=null) {
+            int num = Integer.valueOf(matcher.group(7)).intValue();
+            return matcher.group(1)+matcher.group(2)+(num/1000)+"B"+(num%1000);
+        } else {
+            int node = Integer.valueOf(matcher.group(4)).intValue();
+            int bit = Integer.valueOf(matcher.group(6)).intValue();
+           return matcher.group(1)+matcher.group(2)+node+"B"+bit;        
         }
-        if (noB) {
-            // This is a OLnnnxxx address
-            int num = Integer.valueOf(systemName.substring(2)).intValue();
-            int nAddress = num/1000;
-            int bitNum = num - (nAddress*1000);
-            altName = systemName.substring(0,2)+Integer.toString(nAddress)+"B"+
-                                                Integer.toString(bitNum);
-        }
-        else {
-            // This is a OLnnnBxxxx address 
-            int nAddress = Integer.valueOf(s).intValue();
-            int bitNum = Integer.parseInt(systemName.substring(k,systemName.length()));
-            if (bitNum>999) {
-                // bit number is out-of-range for a CLnnnxxx address
-                return "";
-            }
-            altName = systemName.substring(0,2)+Integer.toString((nAddress*1000)+bitNum);
-        }        
-        return altName;
     }
         
     /**
@@ -324,33 +432,21 @@ public class SerialAddress {
             // No point in normalizing if a valid system name format is not present
             return "";
         }
-        String nName = "";
-        // check for the presence of a 'B' to differentiate the two address formats
-        String s = "";
-        int k = 0;
-        boolean noB = true;
-        for (int i = 2; (i<systemName.length()) && noB; i++) {
-            if (systemName.charAt(i) == 'B') {
-                s = systemName.substring(2,i);
-                k = i+1;
-                noB = false;
-            }
+
+        Matcher matcher = getAllPattern().matcher(systemName);
+        matcher.matches(); // known to work, just need values
+        
+        // check format
+        if (matcher.group(7)!=null) {
+            int num = Integer.valueOf(matcher.group(7)).intValue();
+            return matcher.group(1)+matcher.group(2)+num;
+        } else {
+            // there are alternate forms...
+            int offset = typeOffset(matcher.group(5));
+            int node = Integer.valueOf(matcher.group(4)).intValue();
+            int bit = Integer.valueOf(matcher.group(6)).intValue();
+           return matcher.group(1)+matcher.group(2)+(node*1000+bit+offset);        
         }
-        if (noB) {
-            // This is a GLnnnxxx address
-            int num = Integer.valueOf(systemName.substring(2)).intValue();
-            int nAddress = num/1000;
-            int bitNum = num - (nAddress*1000);
-            nName = systemName.substring(0,2)+Integer.toString((nAddress*1000)+bitNum);
-        }
-        else {
-            // This is a GLnnnBxxxx address 
-            int nAddress = Integer.valueOf(s).intValue();
-            int bitNum = Integer.parseInt(systemName.substring(k,systemName.length()));
-            nName = systemName.substring(0,2)+Integer.toString(nAddress)+"B"+
-                                                Integer.toString(bitNum);
-        }        
-        return nName;
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialAddress.class.getName());

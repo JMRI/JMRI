@@ -5,10 +5,12 @@ package jmri.jmrix.grapevine;
 import jmri.AbstractSensor;
 
 /**
- * Extend jmri.AbstractSensor for serial systems
+ * Implement AbstractSensor for Grapevine. Really doesn't
+ * do much, because the abstract class and the SerialSensorManager
+ * do all the work in a node-based system.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007
- * @version     $Revision: 1.1 $
+ * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
+ * @version     $Revision: 1.2 $
  */
 public class SerialSensor extends AbstractSensor {
 
@@ -34,8 +36,6 @@ public class SerialSensor extends AbstractSensor {
      */
     public void requestUpdateFromLayout() {
     }
-
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialSensor.class.getName());
 
 }
 
