@@ -5,7 +5,7 @@ package jmri;
 /**
  * Abstract base implementation of the SensorManager interface.
  * @author			Bob Jacobsen Copyright (C) 2001, 2003
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public abstract class AbstractSensorManager extends AbstractManager implements SensorManager {
 
@@ -15,10 +15,10 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
         Sensor t = getSensor(name);
         if (t!=null) return t;
 		String sName = name.toUpperCase();
-        if (sName.startsWith(""+systemLetter()+typeLetter()))
-            return newSensor(sName, null);
-        else
+        if (isNumber(name))
             return newSensor(makeSystemName(sName), null);
+        else
+            return newSensor(sName, null);
     }
 
     public Sensor getSensor(String name) {
@@ -28,8 +28,15 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
         return getBySystemName(name);
     }
 
+    static final java.util.regex.Matcher numberMatcher = java.util.regex.Pattern.compile("\\d++").matcher("");
+    boolean isNumber(String s) {
+        return numberMatcher.reset(s).matches();
+    }
+    
     public Sensor getBySystemName(String key) {
-		String name = key.toUpperCase();
+        if (isNumber(key))
+            key = makeSystemName(key);
+		String name = normalizeSystemName(key);
         return (Sensor)_tsys.get(name);
     }
 
@@ -37,8 +44,12 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
         return (Sensor)_tuser.get(key);
     }
 
+    protected String normalizeSystemName(String sysName) {
+        return sysName.toUpperCase();
+    }
+    
     public Sensor newSensor(String sysName, String userName) {
-		String systemName = sysName.toUpperCase();
+		String systemName = normalizeSystemName(sysName);
         if (log.isDebugEnabled()) log.debug("newSensor:"
                                             +( (systemName==null) ? "null" : systemName)
                                             +";"+( (userName==null) ? "null" : userName));
