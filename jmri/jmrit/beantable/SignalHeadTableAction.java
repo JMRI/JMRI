@@ -2,14 +2,14 @@
 
 // This file is part of JMRI.
 //
-// JMRI is free software; you can redistribute it and/or modify it under 
-// the terms of version 2 of the GNU General Public License as published 
+// JMRI is free software; you can redistribute it and/or modify it under
+// the terms of version 2 of the GNU General Public License as published
 // by the Free Software Foundation. See the "COPYING" file for a copy
 // of this license.
-// 
-// JMRI is distributed in the hope that it will be useful, but WITHOUT 
-// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
-// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+//
+// JMRI is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 // for more details.
 
 package jmri.jmrit.beantable;
@@ -39,7 +39,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.25 $
+ * @version     $Revision: 1.26 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -88,7 +88,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
     			if (col==LITCOL) return true;
     			else if (col==HELDCOL) return true;
     			else return super.isCellEditable(row,col);
-			}    		
+			}
     		public Object getValueAt(int row, int col) {
     		    String name = (String)sysNameList.get(row);
                 SignalHead s = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
@@ -102,7 +102,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 					return new Boolean(val);
     			}
 				else return super.getValueAt(row, col);
-			}    		
+			}
     		public void setValueAt(Object value, int row, int col) {
     			String name = (String)sysNameList.get(row);
                 SignalHead s = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
@@ -117,7 +117,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
     			}
     			else super.setValueAt(value, row, col);
     		}
-    		
+
             public String getValue(String name) {
                 SignalHead s = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
                 if (s==null) return "<lost>"; // if due to race condition, the device is going away
@@ -206,24 +206,25 @@ public class SignalHeadTableAction extends AbstractTableAction {
     String virtualHead = rb.getString("StringVirtual");
     String grapevine = rb.getString("StringGrapevine");
     String lsDec = rb.getString("StringLsDec");
-    
+    String dccSignalDecoder = rb.getString("StringDccSigDec");
+
     int turnoutStateFromBox(JComboBox box) {
         String mode = (String)box.getSelectedItem();
         int result = jmri.util.StringUtil.getStateFromName(mode, turnoutStateValues, turnoutStates);
-        
+
         if (result<0) {
             log.warn("unexpected mode string in turnoutMode: "+mode);
             throw new IllegalArgumentException();
         }
         return result;
     }
-    
+
     /**
      * Provide GUI for adding a new SignalHead.
      * <P>
      * Because there are multiple options,
      * each of which requires different inputs,
-     * we directly manipulate which parts of the 
+     * we directly manipulate which parts of the
      * GUI are displayed when the selected type is
      * changed.
      */
@@ -233,8 +234,8 @@ public class SignalHeadTableAction extends AbstractTableAction {
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             addFrame.getContentPane().add(typeBox = new JComboBox(new String[]{
-                tripleTurnout, doubleTurnout, virtualHead, 
-                se8c4Aspect, lsDec
+                tripleTurnout, doubleTurnout, virtualHead,
+                se8c4Aspect, lsDec, dccSignalDecoder
             }));
             if (jmri.jmrix.grapevine.ActiveFlag.isActive()) typeBox.addItem(grapevine);
             typeBox.addActionListener(new ActionListener(){
@@ -249,7 +250,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             addFrame.getContentPane().add(p);
 
             // create seven boxes for input information, and put into pane
-            
+
             p = new JPanel(); p.setLayout(new FlowLayout());
             p.add(v1Label);
             p.add(to1);
@@ -267,25 +268,25 @@ public class SignalHeadTableAction extends AbstractTableAction {
             p.add(to3);
             p.add(s3Box);
             addFrame.getContentPane().add(p);
-            
+
             p = new JPanel(); p.setLayout(new FlowLayout());
             p.add(v4Label);
             p.add(to4);
             p.add(s4Box);
             addFrame.getContentPane().add(p);
-            
+
             p = new JPanel(); p.setLayout(new FlowLayout());
             p.add(v5Label);
             p.add(to5);
             p.add(s5Box);
             addFrame.getContentPane().add(p);
-            
+
             p = new JPanel(); p.setLayout(new FlowLayout());
             p.add(v6Label);
             p.add(to6);
             p.add(s6Box);
             addFrame.getContentPane().add(p);
-            
+
             p = new JPanel(); p.setLayout(new FlowLayout());
             p.add(v7Label);
             p.add(to7);
@@ -318,16 +319,16 @@ public class SignalHeadTableAction extends AbstractTableAction {
             to3.setVisible(false);
             s3Box.setVisible(false);
             v4Label.setVisible(false);
-            to4.setVisible(false);    
+            to4.setVisible(false);
             s4Box.setVisible(false);
             v5Label.setVisible(false);
-            to5.setVisible(false);    
+            to5.setVisible(false);
             s5Box.setVisible(false);
             v6Label.setVisible(false);
-            to6.setVisible(false);    
+            to6.setVisible(false);
             s6Box.setVisible(false);
             v7Label.setVisible(false);
-            to7.setVisible(false);    
+            to7.setVisible(false);
             s7Box.setVisible(false);
 
         } else if (grapevine.equals(typeBox.getSelectedItem())) {
@@ -343,16 +344,16 @@ public class SignalHeadTableAction extends AbstractTableAction {
             to3.setVisible(false);
             s3Box.setVisible(false);
             v4Label.setVisible(false);
-            to4.setVisible(false);    
+            to4.setVisible(false);
             s4Box.setVisible(false);
             v5Label.setVisible(false);
-            to5.setVisible(false);    
+            to5.setVisible(false);
             s5Box.setVisible(false);
             v6Label.setVisible(false);
-            to6.setVisible(false);    
+            to6.setVisible(false);
             s6Box.setVisible(false);
             v7Label.setVisible(false);
-            to7.setVisible(false);    
+            to7.setVisible(false);
             s7Box.setVisible(false);
 
         } else if (tripleTurnout.equals(typeBox.getSelectedItem())) {
@@ -370,18 +371,18 @@ public class SignalHeadTableAction extends AbstractTableAction {
             to3.setVisible(true);
             s3Box.setVisible(false);
             v4Label.setVisible(false);
-            to4.setVisible(false);    
+            to4.setVisible(false);
             s4Box.setVisible(false);
             v5Label.setVisible(false);
-            to5.setVisible(false);    
+            to5.setVisible(false);
             s5Box.setVisible(false);
             v6Label.setVisible(false);
-            to6.setVisible(false);    
+            to6.setVisible(false);
             s6Box.setVisible(false);
             v7Label.setVisible(false);
-            to7.setVisible(false);    
+            to7.setVisible(false);
             s7Box.setVisible(false);
-            
+
         } else if (doubleTurnout.equals(typeBox.getSelectedItem())) {
             nameLabel.setText(rb.getString("LabelSystemName"));
             v1Label.setText(rb.getString("LabelGreenTurnoutNumber"));
@@ -396,16 +397,16 @@ public class SignalHeadTableAction extends AbstractTableAction {
             to3.setVisible(false);
             s3Box.setVisible(false);
             v4Label.setVisible(false);
-            to4.setVisible(false);    
+            to4.setVisible(false);
             s4Box.setVisible(false);
             v5Label.setVisible(false);
-            to5.setVisible(false);    
+            to5.setVisible(false);
             s5Box.setVisible(false);
             v6Label.setVisible(false);
-            to6.setVisible(false);    
+            to6.setVisible(false);
             s6Box.setVisible(false);
             v7Label.setVisible(false);
-            to7.setVisible(false);    
+            to7.setVisible(false);
             s7Box.setVisible(false);
 
         } else if (virtualHead.equals(typeBox.getSelectedItem())) {
@@ -420,16 +421,16 @@ public class SignalHeadTableAction extends AbstractTableAction {
             to3.setVisible(false);
             s3Box.setVisible(false);
             v4Label.setVisible(false);
-            to4.setVisible(false);    
+            to4.setVisible(false);
             s4Box.setVisible(false);
             v5Label.setVisible(false);
-            to5.setVisible(false);    
+            to5.setVisible(false);
             s5Box.setVisible(false);
             v6Label.setVisible(false);
-            to6.setVisible(false);    
+            to6.setVisible(false);
             s6Box.setVisible(false);
             v7Label.setVisible(false);
-            to7.setVisible(false);    
+            to7.setVisible(false);
             s7Box.setVisible(false);
 
         } else if (lsDec.equals(typeBox.getSelectedItem())) {
@@ -462,8 +463,32 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v7Label.setVisible(true);
             to7.setVisible(true);
             s7Box.setVisible(true);
+          } else if (dccSignalDecoder.equals(typeBox.getSelectedItem())) {
+              nameLabel.setText(rb.getString("LabelSystemName"));
+              v1Label.setVisible(false);
+              to1.setVisible(false);
+              s1Box.setVisible(false);
+              v2Label.setVisible(false);
+              to2.setVisible(false);
+              s2Box.setVisible(false);
+              v3Label.setVisible(false);
+              to3.setVisible(false);
+              s3Box.setVisible(false);
+              v4Label.setVisible(false);
+              to4.setVisible(false);
+              s4Box.setVisible(false);
+              v5Label.setVisible(false);
+              to5.setVisible(false);
+              s5Box.setVisible(false);
+              v6Label.setVisible(false);
+              to6.setVisible(false);
+              s6Box.setVisible(false);
+              v7Label.setVisible(false);
+              to7.setVisible(false);
+              s7Box.setVisible(false);
+
         } else log.error("Unexpected type in typeChanged: "+typeBox.getSelectedItem());
-        
+
         // make sure size OK
         addFrame.pack();
     }
@@ -545,6 +570,11 @@ public class SignalHeadTableAction extends AbstractTableAction {
             }
             s = new jmri.LsDecSignalHead(name.getText(), t1, s1, t2, s2, t3, s3, t4, s4, t5, s5, t6, s6, t7, s7);
             InstanceManager.signalHeadManagerInstance().register(s);
+          } else if (dccSignalDecoder.equals(typeBox.getSelectedItem())) {
+              String addrStr = name.getText() ;
+              int number ;
+              s = new jmri.DccSignalHead(name.getText());
+              InstanceManager.signalHeadManagerInstance().register(s);
         } else log.error("Unexpected type: "+typeBox.getSelectedItem());
     }
 
