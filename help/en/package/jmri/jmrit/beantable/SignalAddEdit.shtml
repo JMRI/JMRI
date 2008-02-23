@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SignalAddEdit.shtml,v 1.5 2008-02-23 22:29:33 jacobsen Exp $ -->
+<!-- $Id: SignalAddEdit.shtml,v 1.6 2008-02-23 23:01:46 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -70,7 +70,8 @@ Types of signals:
   In the text field, enter the appropriate address as a number.  For example,
   the 1st signal head on the 1st SE8c, as configured from the Digitrax
   factory, is addressed by putting a "257" here. See e.g. page
-  5 of the Digitrax SE8c manual (http://www.digitrax.com/ftp/se8c.pdf).
+  5 of the Digitrax SE8c manual 
+  (<a href="http://www.digitrax.com/ftp/se8c.pdf">http://www.digitrax.com/ftp/se8c.pdf</a>).
   </dd>
 
 <dt>LDT LS-DEC</dt>
@@ -88,7 +89,10 @@ Types of signals:
 <dt>DCC Signal Decoder</dt>
   <dd>
   This type controls signals attached to a 
-  decoder that uses the DCC signal packets defined by the NMRA.
+  decoder that uses the 
+  <a href="http://www.nmra.org/standards/DCC/standards_rps/rp921.html#Extended%20Accessory%20Decoder%20Control%20Packet%20Format">DCC signal packets</a>
+  defined by the 
+  <a href="http://www.nmra.org/standards/DCC/DCCHome.html">NMRA DCC Working Group</a>.
   </dd>
 
 <dt>Grapevine</dt>
