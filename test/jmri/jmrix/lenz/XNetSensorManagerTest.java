@@ -12,14 +12,18 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.lenz.XNetSensorManager class.
  * @author	Paul Bender Copyright (c) 2003
- * @version     $Revision: 2.2 $
+ * @version     $Revision: 2.3 $
  */
 public class XNetSensorManagerTest extends TestCase  {
 
     public void testXNetSensorCreate() {
         // prepare an interface
         XNetInterfaceScaffold xnis = new XNetInterfaceScaffold(new LenzCommandStation());
-        // create and register the manager object
+
+		// create and register the manager object in a new instance manager
+		new jmri.InstanceManager() {
+		    protected void init() { super.init(); root = null; }
+		};
         XNetSensorManager l = new XNetSensorManager();
         jmri.InstanceManager.setSensorManager(l);
 
@@ -76,7 +80,10 @@ public class XNetSensorManagerTest extends TestCase  {
 	}
 
 	public void testAsAbstractFactory () {
-		// create and register the manager object
+		// create and register the manager object in a new instance manager
+		new jmri.InstanceManager() {
+		    protected void init() { super.init(); root = null; }
+		};
 		XNetSensorManager l = new XNetSensorManager();
 		jmri.InstanceManager.setSensorManager(l);
 

@@ -12,13 +12,14 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.LnSensorManagerTurnout class.
  * @author	Bob Jacobsen  Copyright 2001
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class LnSensorManagerTest extends TestCase  {
 
     public void testLnSensorCreate() {
         // prepare an interface
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
+
         // create and register the manager object
         LnSensorManager l = new LnSensorManager();
         jmri.InstanceManager.setSensorManager(l);
@@ -28,7 +29,11 @@ public class LnSensorManagerTest extends TestCase  {
     public void testByAddress() {
         // prepare an interface
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
-        // create and register the manager object
+
+		// create and register the manager object in a new instance manager
+		new jmri.InstanceManager() {
+		    protected void init() { super.init(); root = null; }
+		};
         LnSensorManager l = new LnSensorManager();
 
         // sample turnout object
@@ -74,7 +79,10 @@ public class LnSensorManagerTest extends TestCase  {
 	}
 
 	public void testAsAbstractFactory () {
-		// create and register the manager object
+		// create and register the manager object in a new instance manager
+		new jmri.InstanceManager() {
+		    protected void init() { super.init(); root = null; }
+		};
 		LnSensorManager l = new LnSensorManager();
 		jmri.InstanceManager.setSensorManager(l);
 
