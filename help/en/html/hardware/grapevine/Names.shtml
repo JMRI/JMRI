@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: Names.shtml,v 1.5 2008-02-15 08:19:27 jacobsen Exp $ -->
+<!-- $Id: Names.shtml,v 1.6 2008-02-23 22:27:59 jacobsen Exp $ -->
 <title>JMRI: Grapevine System Names</title>
 
 <!-- Style -->
@@ -105,8 +105,8 @@ Grapevine nodes have a number of possible inputs:
     <li>GS22a1 or GS22101 is the occupancy sensor for the first block input on the 1st ASC.<br/>
         GS22m1 or GS22201 is the corresponding motion sensor for the first 
         block input on the 1st ASC.
-    <li>GS22a9 or GS22009 is the occupancy sensor for the first block input on the 2nd ASC.<br/>
-        GS22m9 or GS22009 is the corresponding motion sensor for the first 
+    <li>GS22a9 or GS22109 is the occupancy sensor for the first block input on the 2nd ASC.<br/>
+        GS22m9 or GS22209 is the corresponding motion sensor for the first 
         block input on the 2nd ASC.
     <li>GS22a24 or GS124 is the occupancy sensor for the 8th block input on the 3rd ASC.<br/>
         GS22m24 or GS224 is the corresponding motion sensor for the 8th 
