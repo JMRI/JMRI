@@ -25,7 +25,7 @@ import jmri.util.JmriJFrame;
  * BlockTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class BlockTableAction extends AbstractTableAction {
@@ -59,7 +59,16 @@ public class BlockTableAction extends AbstractTableAction {
         	static public final int DIRECTIONCOL = NUMCOLUMN;
 
             public String getValue(String name) {
-            	Object m = InstanceManager.blockManagerInstance().getBySystemName(name).getValue();
+                if (name == null) {
+                    log.warn("requested getValue(null)");
+                    return "(no name)";
+                }
+            	Block b = InstanceManager.blockManagerInstance().getBySystemName(name);
+                if (b == null) {
+                    log.warn("requested getValue(\""+name+"\"), Block doesn't exist");
+                    return "(no Block)";
+                }
+            	Object m = b.getValue();
             	if (m!=null)
                 	return m.toString();
                 else
