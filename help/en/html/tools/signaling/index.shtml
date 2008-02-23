@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: index.shtml,v 1.1 2008-02-17 04:51:57 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.2 2008-02-23 22:29:18 jacobsen Exp $ -->
 <title>JMRI: Signaling</title>
 
 <!-- Style -->
@@ -168,7 +168,9 @@ machine logic or Logix to say "Don't change this signal head from red, even if i
 would be safe to do so, because I want to hold a train here".
 </UL>
 <A href="../../../images/SigAdd.gif"><IMG SRC="../../../images/SigAdd.gif" ALIGN=RIGHT WIDTH="181" HEIGHT="218" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
-<P>To define a new signal, click on the <b>Add New Signal</b> button.  It will
+<P>To define a new signal, click on the 
+<a href="../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml"><b>Add New Signal</b></a>
+button.  It will
 prompt you for the signal type (controlled by turnout outputs; SE8c; etc), and
 whatever setup information is needed for your choice.
 <P> This information is saved with the configuration in an XML file, along

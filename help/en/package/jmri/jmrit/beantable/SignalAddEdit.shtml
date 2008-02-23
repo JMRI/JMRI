@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SignalAddEdit.shtml,v 1.4 2008-01-01 08:10:33 jacobsen Exp $ -->
+<!-- $Id: SignalAddEdit.shtml,v 1.5 2008-02-23 22:29:33 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -24,6 +24,7 @@
 <H2>Adding/Editing Signals
 </H2>
     
+<A href="../../../../images/SigAdd.gif"><IMG SRC="../../../../images/SigAdd.gif" ALIGN=RIGHT WIDTH="181" HEIGHT="218" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
 This is the package/jmri/jmrit/beantable/SignalAddEdit help page
 
 <p>
@@ -84,6 +85,12 @@ Types of signals:
   the appropriate text fields.
   </dd>
   
+<dt>DCC Signal Decoder</dt>
+  <dd>
+  This type controls signals attached to a 
+  decoder that uses the DCC signal packets defined by the NMRA.
+  </dd>
+
 <dt>Grapevine</dt>
   <dd>
   This type controls signals attached to a
