@@ -41,7 +41,7 @@ package jmri;
  * <P>
  *
  * @author      Bob Jacobsen Copyright (C) 2001, 2003
- * @version     $Revision: 1.23 $
+ * @version     $Revision: 1.24 $
  */
 public class NmraPacket {
 
@@ -491,6 +491,35 @@ public class NmraPacket {
         return retVal;
     }
 
+    public static byte[] initThreeBytePacket(int address, boolean longAddr,
+                            byte arg1, byte arg2, byte arg3) {
+        if (!addressCheck(address, longAddr)) {
+            return null;  // failed!
+        }
+
+        // end sanity check, format output
+        byte[] retVal;
+        if (longAddr) {
+            // long address form
+            retVal = new byte[6];
+            retVal[0] = (byte) (192+((address/256)&0x3F));
+            retVal[1] = (byte) (address&0xFF);
+            retVal[2] = (byte) arg1;
+            retVal[3] = (byte) arg2;
+            retVal[4] = (byte) arg3;
+            retVal[5] = (byte) (retVal[0]^retVal[1]^retVal[2]^retVal[3]^retVal[4]);
+        } else {
+            // short address form
+            retVal = new byte[5];
+            retVal[0] = (byte) (address&0xFF);
+            retVal[1] = (byte) arg1;
+            retVal[2] = (byte) arg2;
+            retVal[3] = (byte) arg3;
+            retVal[4] = (byte) (retVal[0]^retVal[1]^retVal[2]^retVal[3]);
+        }
+        return retVal;
+    }
+    
     public static byte[] function13Through20Packet(int address, boolean longAddr,
                         boolean f13, boolean f14, boolean f15, boolean f16,
                         boolean f17, boolean f18, boolean f19, boolean f20 ) {
