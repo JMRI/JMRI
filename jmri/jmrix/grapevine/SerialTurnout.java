@@ -13,7 +13,7 @@ import jmri.Turnout;
  *  more than one Turnout object pointing to a single device is not allowed.
  *
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SerialTurnout extends AbstractTurnout {
 
@@ -30,6 +30,11 @@ public class SerialTurnout extends AbstractTurnout {
         tBit = SerialAddress.getBitFromSystemName(systemName)-1; // bit one is address zero
     }
 
+    /**
+     * Grapevine turnouts can invert their outputs
+     */
+    public boolean canInvert(){return true;}
+    
     /**
      * Handle a request to change state by sending a turnout command
      */
