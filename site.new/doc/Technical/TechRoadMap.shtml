@@ -1,174 +1,19 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TechRoadMap.shtml,v 1.10 2007-11-01 17:51:10 jacobsen Exp $ -->
+<!-- $Id: TechRoadMap.shtml,v 1.11 2008-02-24 02:19:19 jacobsen Exp $ -->
 <html lang="en">
-<head>
-    <TITLE>
- 	JMRI: Technology Road Map
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="JMRI technical code road map">
-
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+<head><TITLE>JMRI: Redirected Page</TITLE>
+<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+<META HTTP-EQUIV="Refresh" CONTENT="0; URL=../../help/en/html/doc/Technical/TechRoadMap.shtml ">
 </head>
-
-
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
-
-	<div id="mainContent">
-
-	    <H1>JMRI: Technology Road Map</H1>
-
-This page is the road map for JMRI's future use of 
-Java technologies.  It is maintained and updated through
-continuing discussion on the jmri-developers mailing list.
-
-<h2>JMRI Releases</h2>
-
-This section describes the (notional)
-plans for JMRI releases in the future.
-<P>
-
-<table border="1">
-<tr><th>Release</th><th>Description</th><th>Date</th><td>JRE</td><td>JDK</td></tr>
-<tr><td>1.8</td><td>Production version, culmination of 1.7.* series </td><td>July 2007 <b>(done)</b></td>  <td></td><td></td></tr>
-<tr><td>1.9.*</td><td>Development series </td><td></td>                           <td>1.3</td><td>1.4</td></tr>
-<tr><td>2.0</td><td>Production version, culmination of 1.9.* series </td><td>December 2007</td>     <td>1.3</td><td>1.4</td></tr>
-<tr><td>2.1.*</td><td>Development series </td><td></td>                           <td>1.4</td><td>1.5</td></tr>
-<tr><td>2.2</td><td>Production version, culmination of 2.1.* series </td><td>August 2008</td>       <td>1.4</td><td>1.5</td></tr>
-<tr><td>2.3.*</td><td>Development series </td><td></td>                           <td>1.5</td><td>1.6</td></tr>
-<tr><td>2.4</td><td>Production version, culmination of 2.3.* series </td><td>August 2009</td>       <td>1.5</td><td>1.6</td></tr>
-<tr><td>2.5.*</td><td>Development series</td><td></td>                                              <td>?</td><td>?</td></tr>
-
-</table>
-
-<h4>JMRI 1.9, 2.0</h4>
-
-The JMRI 1.9 development series moves forward to JRE 1.3, JDK 1.4.  This permits use of
-(subject to verification):
-
-<ul>
-<LI>Collections in java.util instead of com.sun
-<LI>Java2D, along with the associated printing support
-<LI>Annotations (we need to develop conventions for their use)
-<LI>JDOM 1.0 - Simplifies XML code, allows use of XSLT for dynamic combination
-<LI>JUnit 3.8 - Minor improvements to test writing ease
-<LI>XML catalog resolver (to be confirmed) - fixes problems finding DTDs on some systems,
-allows use of XML schema
-<LI>Fewer jar files included in distribution
-<LI>The Jakarta regexp regular expression library. (At some later
-point, we'll have to move that forward to java.util.regexp, but that
-won't be available until Java 1.4 in a later JMRI release)
-</UL>
-
-<P>
-JMRI 1.9 and 2.0 will run on Windows 95 and later, all versions of MacOS X, and 
-(almost all?) versions of Linux.
-<P>
-To build JMRI 1.9 and 2.0, you will need Windows 98 1st Ed or later, any version of
-MacOS X, or (almost any?) version of Linux.
-
-<h4>JMRI 2.1, 2.2</h4>
-
-The JMRI 2.1 development series moves forward to JRE 1.4, JDK 1.5.  This permits use of
-(subject to verification):
-
-<ul>
-<LI>SwingWorker (and associated updates of threading)
-<LI>JUnit 4.0
-<LI>Java3D
-<LI>JavaHelp update
-<LI>Drag and Drop
-<LI>Annotations (we'll have to develop conventions for these)
-<LI>JavaMail
-<LI>Java regular expressions (java.util.regexp)
-</UL>
-
-<P>
-JMRI 2.1 and 2.2 will run on Windows 98 1st Ed or later, 
-any version of MacOS X, 
-or (almost any?) version of Linux.
-<P>
-To build JMRI 2.1 and 2.2, you will need Windows 98 2nd Ed or later,
-MacOS X 10.4 or later, 
-or (which?) version of Linux.
-
-
-<h4>JMRI 2.3, 2.4</h4>
-
-The JMRI 2.1 development series moves forward to JRE 1.5, JDK 1.6
-(pending availability of development kits on all relevant platforms).  
-This permits use of
-(subject to verification):
-
-<UL>
-<LI>JSpinner (and removal of our replacement in jmri.util)
-<LI>Enums (we'll need to make decisions about interface updates, e.g. Turnout.CLOSED)
-<LI>printf, Formatter
-<LI>generics (subject to decisions about conventions and interface updates)
-</UL>
-
-<P>
-JMRI 2.3 and 2.4 will run on Windows 98 2nd Ed or later, 
-MacOS X 10.4 or later, 
-or (almost any?) version of Linux.
-<P>
-To build JMRI 2.3 and 2.5, you will need Windows XP or later, 
-MacOS X 10.5 or later (10.4 might be possible, depending on future developments), 
-or (which?) version of Linux.
-
-
-<h3>Java Release and Operating System Support</h3>
-
-This section describes the
-implications on operating system support of
-the (notional) plans for the development and runtime Java versions for JMRI.
-The dates refer to when the last supported release is expected.
-Of course, that code will be around for a very, very long time
-after that, both for running (JRE - Java Runtime Environment) and for building
-individual copies (JDK - Java Development Kit).
-<P>
-
-<h3>Remainging Issues</h3>
-
-We currently use Log4J for logging. At some future point, there
-may be good reasons to migrate to ava Logging API. It was introduced
-in JDK 1.4, and has some nice localization and formating features
-in SDK 1.6.  This version of the plan doesn't discuss this migration,
-however.
-
-<P>
-We currently distribute the crimson.jar XML parser with JMRI.
-At some point, we should revisit that.
-
-
-<table border="1">
-<tr><th>JMRI Versions</th><th>Expected<br>end date</th>
-        <th>JRE</th><th>Oldest OS</th>
-        <th>JDK</th><th>Oldest OS</th></tr>
-        </tr>
-<tr><td>1.9.*<br>2.0</td>    <td>Dec 2007</td><td>1.3</td><td>Windows 95</td><td>1.4</td><td>Windows 98 1st Ed</td></tr>
-<tr><td>2.1.*<br>2.2</td>    <td>Aug 2008</td><td>1.4</td><td>Windows 98 1st Ed</td><td>1.5</td><td>Windows 98 2nd Ed<br>MacOS X 10.4</td></tr>
-<tr><td>2.3.*<br>2.4</td>    <td>Aug 2009</td><td>1.5</td><td>Windows 98 2nd Ed<br>MacOS X 10.4</td><td>1.6</td><td>Windows XP<br>MacOS X 10.5</td></td></tr>
-</table>
-
-<!--#include virtual="/Footer" -->
-
-	  </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+<body>
+This page has been moved to another location
+(<A HREF="../../help/en/html/doc/Technical/TechRoadMap.shtml">../../help/en/html/doc/Technical/TechRoadMap.shtml</a>)
+as part of updating our web site.
+<P>Please update your bookmarks.  
+<P>If you got to this page from another JMRI page, please let us know so we can fix it.
+<P>You should be redirected to the new page immediately.  
+<BR/>Site hosted by: <BR/>
+<A href="http://sourceforge.net"> 
+<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&amp;type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A> 
 </body>
 </html>
-

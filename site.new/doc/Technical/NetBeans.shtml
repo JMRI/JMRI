@@ -1,161 +1,19 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NetBeans.shtml,v 1.2 2007-07-13 04:55:23 jacobsen Exp $ -->
+<!-- $Id: NetBeans.shtml,v 1.3 2008-02-24 02:19:19 jacobsen Exp $ -->
 <html lang="en">
-<head>
-    <TITLE>
- 	JMRI: Building with NetBeans
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="JMRI technical code NetBeans">
-
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+<head><TITLE>JMRI: Redirected Page</TITLE>
+<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+<META HTTP-EQUIV="Refresh" CONTENT="0; URL=../../help/en/html/doc/Technical/NetBeans.shtml ">
 </head>
-
-
-    <p class="skipLink"><a href="#mainContent" accesskey="2">Skip to main content</a></p>
-
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
-
-	<div id="mainContent">
-	    <!-- -------- -->
-	    <!--  Teaser  --> <!-- Optional -->
-	    <!-- -------- -->
-
-
-	    <H1>JMRI: Building with NetBeans</H1>
-
-    <p>NetBeans 5.5 (available at <a href="http://www.netbeans.org">www.netbeans.org</a>) 
-    makes a great platform for working with JMRI.
-    The JMRI code is setup to work with NetBeans with almost no
-    additional setup.
-    (The description below is accurate for the MacOS X version of NetBeans 5.5. 
-    NetBeans is <i>supposed</i> to be identical across platforms, but this hasn't 
-    been checked on anything else). </p>
-    <p>NetBeans is a very powerful Integrated Development Environment (IDE),
-    which can make working with the JMRI code pretty easy.  But it takes a little
-    getting used to, and reading the tutorials on the 
-    <A HREF="http://www.netbeans.org/kb/55/quickstart.html">NetBeans web site<a/>
-    will be helpful.
-    </p>
-
-    <h2>Checking out code</h2>
-    
-    The easiest way to get the initial copy of the code is to 
-    directly check it out from CVS.  Once you've done that, it's
-    easy to get NetBeans to use it. We provide brief instructions here,
-    but if you want to know more about CVS or get a copy of it for your
-    computer, please see our 
-    <a href="getcode.html">"getting the code via CVS" page</a>.
-
-    <P>
-    You can download the most recent source code via CVS using:
-<PRE>
-cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri login
-cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri co all 
-</PRE>
-(If asked for a password, just hit return)
-<P>
-This will create a number of subdirectories, including one named "java"
-that we'll reference below.
-      
-    </ul>
-
-    <p>The first time you build JMRI with NetBeans, you have to
-    tell it how to find the "JMRI Project", which contains the code.
-    After that, you can just reopen the project from the "Open Recent
-    Projects" list in the File menu, or the list of projects in the 
-    Projects window pane.
-    
-    </p>
-    <ul>
-      <li>Start NetBeans</li>
-      <li>From the "File" menu, select "Open Project"</li>
-      <li>A file-selector window opens</li>
-      <li>In the "File Format:" box at the bottom, select "Project Folder"</li>
-      <li>Navigate to the "java" folder created above, which will have a slightly different icon.
-          Select it, but don't double click it to open it.</li>
-      <li>Click "Open Project Folder"</li>
-    </ul>
-
-    <P>The project is now open and available for use.</P>
-    
-    <h2>Building and Running JMRI</h2>
-
-    To build and run DecoderPro, all you have to do is select
-    "Run Main Project" from the Run menu, or click the Run icon in the tool bar.
-    <P>
-    If you want to run the program under the NetBeans debugger, 
-    select "Debug Main Project" from the "Run" menu.
-    
-    <h2>Updating the code from CVS</h2>
-
-    <p>From time to time, you can update the code to match the current 
-    repository contents. To do this, select the "Update All Files" from the 
-    CVS menu.</p>
-
-    <h2>Making a Jar File</h2>
-
-    Most of the code in a normal JMRI installation lives in a file called
-    jmri.jar.  If you want to replace this with your updated version, you
-    need to create a new jmri.jar file from your modified code.  
-    <P>
-    To do this,
-    ctrl-click (or right-click) on the name of the "java" project in the
-    "Navigator" window.  This will open a pop-up menu, on which you'll
-    find "Make Jar FIle". Select that, and a new jmri.jar file will be
-    produced in the project's main directory.
-    
-    <A ID="patch"/>
-    <h2>Making a Patch File</h2>
-    
-    A "diff patch file" is an easy way to gather up all your changes, even
-    if they span multiple files, into one file that you can then send to us.
-    It's also easy to merge in with the rest of the code, so we greatly 
-    prefer that you use this.
-    
-    <P>
-    To create the file:
-    <UL>
-    <LI>Start NetBeans and open your project
-    <LI>In the code navigation tree to the left, select
-        the top level "JMRI" project folder
-    <LI>From the "CVS" menu, select "Export "JMRI" Diff Patch ..."
-    <LI>A file select directory will open; enter a new file name
-        in your preferred location and hit "Save" or "Open", 
-        depending on what the dialog shows. 
-        <P>
-        (Note:  On some 
-        Java versions, there's a bug that only allows you to
-        select <em>existing files</em> whose name ends in ".diff".
-        If that happens, cancel the save dialog, use an editor to 
-        create an empty file of that name, and try again)
-    <LI>After a little while, the file you selected will contain
-        the patches, along with an information header.
-    </UL>
-
-<!--#include virtual="/Footer" -->
-
-      </div>
-      <!-- closes #mainContent-->
-    </div>
-    <!-- closes #mBody-->
-
+<body>
+This page has been moved to another location
+(<A HREF="../../help/en/html/doc/Technical/NetBeans.shtml">../../help/en/html/doc/Technical/NetBeans.shtml</a>)
+as part of updating our web site.
+<P>Please update your bookmarks.  
+<P>If you got to this page from another JMRI page, please let us know so we can fix it.
+<P>You should be redirected to the new page immediately.  
+<BR/>Site hosted by: <BR/>
+<A href="http://sourceforge.net"> 
+<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&amp;type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A> 
 </body>
-
-</body>
-
 </html>
