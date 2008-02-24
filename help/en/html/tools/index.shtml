@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.2 2008-02-06 07:07:56 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.3 2008-02-24 22:40:38 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -131,12 +131,12 @@
 		    <LI><dfn>LocoIO programmer</dfn>
 		    </UL>
 
-   	<h2><a href="../doc/scripts/index.html">Scripting</a></h2>
+   	<h2><a href="scripting/index.shtml">Scripting</a></h2>
     If there isn't a preprogrammed tool to do what you want,
     you can almost certainly write a script that does exactly what's needed.
     <P>
     Instead of defining our own language, 
-    <A HREF="../doc/scripts/index.html">JMRI scripting</a>
+    <A HREF="scripting/index.shtml">JMRI scripting</a>
     uses the
     "Python" language that's commonly used in web development.  Although it
     will take you a little time to get used to it, in the end it provides
