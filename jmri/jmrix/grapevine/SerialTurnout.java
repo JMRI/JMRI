@@ -13,7 +13,7 @@ import jmri.Turnout;
  *  more than one Turnout object pointing to a single device is not allowed.
  *
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SerialTurnout extends AbstractTurnout {
 
@@ -27,7 +27,10 @@ public class SerialTurnout extends AbstractTurnout {
         // Save system Name
         tSystemName = systemName;
         // Extract the Bit from the name
-        tBit = SerialAddress.getBitFromSystemName(systemName)-1; // bit one is address zero
+        int num = SerialAddress.getBitFromSystemName(systemName); // bit one is address zero
+        // num is 101-124, 201-224, 301-324, 401-424
+        output = (num%100)-1; // 0-23
+        bank = (num/100)-1;  // 0 - 3
     }
 
     /**
@@ -71,7 +74,8 @@ public class SerialTurnout extends AbstractTurnout {
 
     // data members
     String tSystemName; // System Name of this turnout
-    int tBit;          // bit number of turnout control in Serial node
+    int output;         // output connector number, 0-23
+    int bank;           // bank number, 0-3
 
     protected void sendMessage(boolean closed) {
         SerialNode tNode = SerialAddress.getNodeFromSystemName(tSystemName);
@@ -80,10 +84,8 @@ public class SerialTurnout extends AbstractTurnout {
             log.error("Can't find node for "+tSystemName+", command ignored");
             return;
         }
-        int output = tBit % 24; /// 0 to 23 range for individual bank
         boolean high = (output>=12);
         if (high) output = output-12;
-        int bank = tBit/24;  
         if ( (bank<0)||(bank>4) ) {
             log.error("invalid bank "+bank+" for Turnout "+getSystemName());
             bank = 0;

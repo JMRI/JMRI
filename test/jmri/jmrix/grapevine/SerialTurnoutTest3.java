@@ -9,7 +9,7 @@ import junit.framework.*;
  * Tests for the jmri.jmrix.grapevine.SerialTurnout class,
  * high card and high port on card
  * @author			Bob Jacobsen
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SerialTurnoutTest3 extends AbstractTurnoutTest {
 
@@ -21,7 +21,7 @@ public class SerialTurnoutTest3 extends AbstractTurnoutTest {
 		tcis = new SerialTrafficControlScaffold();
         tcis.registerSerialNode(new SerialNode(1, SerialNode.NODE2002V6));
         
-		t = new SerialTurnout("GT1088","t4");
+		t = new SerialTurnout("GT1416","t4");
 	}
 
 	public int numListeners() { return tcis.numListeners(); }

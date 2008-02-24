@@ -12,7 +12,7 @@ import jmri.*;
  *
  * Description:	    tests for the SerialTurnoutManager class
  * @author			Bob Jacobsen Copyright 2004, 2007, 2008
- * @version  $Revision: 1.2 $
+ * @version  $Revision: 1.3 $
  */
 public class SerialTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 
@@ -38,17 +38,17 @@ public class SerialTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 
 	public void testAsAbstractFactory () {
 		// ask for a Turnout, and check type
-		Turnout o = l.newTurnout("GT1005", "my name");
+		Turnout o = l.newTurnout("GT1105", "my name");
 
 
 		if (log.isDebugEnabled()) log.debug("received turnout value "+o);
 		assertTrue( null != (SerialTurnout)o);
 
 		// make sure loaded into tables
-		if (log.isDebugEnabled()) log.debug("by system name: "+l.getBySystemName("GT1005"));
+		if (log.isDebugEnabled()) log.debug("by system name: "+l.getBySystemName("GT1105"));
 		if (log.isDebugEnabled()) log.debug("by user name:   "+l.getByUserName("my name"));
 
-		assertTrue(null != l.getBySystemName("GT1005"));
+		assertTrue(null != l.getBySystemName("GT1105"));
 		assertTrue(null != l.getByUserName("my name"));
 
 	}
@@ -57,8 +57,8 @@ public class SerialTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 	 * Number of turnout to test.  
 	 * Use 9th output on node 1.
 	 */
-	protected int getNumToTest1() { return 1009; }
-	protected int getNumToTest2() { return 1007; }
+	protected int getNumToTest1() { return 1109; }
+	protected int getNumToTest2() { return 1107; }
 
 	// from here down is testing infrastructure
 

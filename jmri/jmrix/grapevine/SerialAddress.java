@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004
  * @author  Bob Jacobsen, Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class SerialAddress {
 
@@ -298,18 +298,13 @@ public class SerialAddress {
         }
         
         // check bit numbers
-        if (type=='L') {
-            if ( (bit<1) || (bit>96) ){
-                log.error("invalid bit number "+bit+" in "+systemName);
-                return false;
-            }
-        } else if (type=='T') {
-            if ( (bit<1) || (bit>96) ){
-                log.error("invalid bit number "+bit+" in "+systemName);
-                return false;
-            }
-        } else if (type=='H') {
-            if ( (bit<1) || (bit>96) ){
+        if ( (type=='T') ||  (type=='H') ||  (type=='L') ) {
+            if ( ! (
+                    (bit>=101 && bit<=124) ||
+                    (bit>=201 && bit<=224) ||
+                    (bit>=301 && bit<=324) ||
+                    (bit>=401 && bit<=424)
+                    ) ){
                 log.error("invalid bit number "+bit+" in "+systemName);
                 return false;
             }
@@ -377,7 +372,7 @@ public class SerialAddress {
         else if ( type=='S' ) {
             if ( ( bit <= 0 ) || ( bit > SerialNode.inputBits[node.nodeType] ) ) {
                 // The bit is not valid for this defined Serial node
-                log.warn(systemName+" invalid; bad input bit number "+bit+" > "+SerialNode.outputBits[node.nodeType]);
+                log.warn(systemName+" invalid; bad input bit number "+bit+" > "+SerialNode.inputBits[node.nodeType]);
                 return false;
             }
         }

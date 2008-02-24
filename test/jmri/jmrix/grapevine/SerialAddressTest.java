@@ -16,7 +16,7 @@ import java.util.regex.Matcher;
  * JUnit tests for the SerialAddress utility class.
  * @author	Dave Duchamp Copyright 2004
  * @author  Bob Jacobsen Copyright 2007, 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class SerialAddressTest extends TestCase {
 
@@ -145,14 +145,14 @@ public class SerialAddressTest extends TestCase {
             SerialNode d = new SerialNode(14,SerialNode.NODE2002V6);
             SerialNode c = new SerialNode(17,SerialNode.NODE2002V1);
             SerialNode b = new SerialNode(127,SerialNode.NODE2002V1);
-            Assert.assertEquals("node of GL14007", d,  SerialAddress.getNodeFromSystemName("GL14007") );
-            Assert.assertEquals("node of GL14B7", d,   SerialAddress.getNodeFromSystemName("GL14B7") );
-            Assert.assertEquals("node of GL127007", b, SerialAddress.getNodeFromSystemName("GL127007") );
-            Assert.assertEquals("node of GL127B7", b,  SerialAddress.getNodeFromSystemName("GL127B7") );
-            Assert.assertEquals("node of GL17007", c,  SerialAddress.getNodeFromSystemName("GL17007") );
-            Assert.assertEquals("node of GL17B7", c,   SerialAddress.getNodeFromSystemName("GL17B7") );
-            Assert.assertEquals("node of GL11007", null, SerialAddress.getNodeFromSystemName("GL11007") );
-            Assert.assertEquals("node of GL11B7", null,  SerialAddress.getNodeFromSystemName("GL11B7") );
+            Assert.assertEquals("node of GL14107", d,  SerialAddress.getNodeFromSystemName("GL14107") );
+            Assert.assertEquals("node of GL14B107", d,   SerialAddress.getNodeFromSystemName("GL14B107") );
+            Assert.assertEquals("node of GL127107", b, SerialAddress.getNodeFromSystemName("GL127107") );
+            Assert.assertEquals("node of GL127B107", b,  SerialAddress.getNodeFromSystemName("GL127B107") );
+            Assert.assertEquals("node of GL17107", c,  SerialAddress.getNodeFromSystemName("GL17107") );
+            Assert.assertEquals("node of GL17B107", c,   SerialAddress.getNodeFromSystemName("GL17B107") );
+            Assert.assertEquals("node of GL11107", null, SerialAddress.getNodeFromSystemName("GL11107") );
+            Assert.assertEquals("node of GL11B107", null,  SerialAddress.getNodeFromSystemName("GL11B107") );
         }
 
     
@@ -164,8 +164,8 @@ public class SerialAddressTest extends TestCase {
     }
     
 	public void testValidateSystemNameFormat() {
-            checkValidSystemNameFormatName("GL1002",'L', true);
-            checkValidSystemNameFormatName("GL1B2",'L', true);
+            checkValidSystemNameFormatName("GL1302",'L', true);
+            checkValidSystemNameFormatName("GL1B302",'L', true);
             checkValidSystemNameFormatName("GL",'L', false);
             JUnitAppender.assertErrorMessage("illegal system name format: GL");
             
@@ -173,10 +173,10 @@ public class SerialAddressTest extends TestCase {
             checkValidSystemNameFormatName("GLB2",'L', false);
             JUnitAppender.assertErrorMessage("illegal system name format: GLB2");
 
-            checkValidSystemNameFormatName("GL2005",'L', true);
-            checkValidSystemNameFormatName("GL2B5",'L', true);
-            checkValidSystemNameFormatName("GT2005",'T', true);
-            checkValidSystemNameFormatName("GT2B5",'T', true);
+            checkValidSystemNameFormatName("GL2305",'L', true);
+            checkValidSystemNameFormatName("GL2B105",'L', true);
+            checkValidSystemNameFormatName("GT2105",'T', true);
+            checkValidSystemNameFormatName("GT2B205",'T', true);
             checkValidSystemNameFormatName("GS2005",'S', true);
             checkValidSystemNameFormatName("GS2B5",'S', true);
 
@@ -186,8 +186,8 @@ public class SerialAddressTest extends TestCase {
             checkValidSystemNameFormatName("GY2B5",'L', false);
             JUnitAppender.assertErrorMessage("illegal system name format: GY2B5");
 
-            checkValidSystemNameFormatName("GL22001",'L', true);
-            checkValidSystemNameFormatName("GL22B1",'L', true);
+            checkValidSystemNameFormatName("GL22101",'L', true);
+            checkValidSystemNameFormatName("GL22B301",'L', true);
 
             checkValidSystemNameFormatName("GL22000",'L', false);
             JUnitAppender.assertErrorMessage("invalid bit number 0 in GL22000");
@@ -195,18 +195,18 @@ public class SerialAddressTest extends TestCase {
             checkValidSystemNameFormatName("GL22B0",'L', false);
             JUnitAppender.assertErrorMessage("invalid bit number 0 in GL22B0");
 
-            checkValidSystemNameFormatName("GS2201",'S', true);
-            checkValidSystemNameFormatName("GL2B048",'L', true);
+            checkValidSystemNameFormatName("GS2001",'S', true);
+            checkValidSystemNameFormatName("GL2B0118",'L', true);
 
             checkValidSystemNameFormatName("GL2B2049",'L', false);
             JUnitAppender.assertErrorMessage("invalid bit number 2049 in GL2B2049");
 
-            checkValidSystemNameFormatName("GL127019",'L', true);
+            checkValidSystemNameFormatName("GL127419",'L', true);
 
             checkValidSystemNameFormatName("GL128000",'L', false);
             JUnitAppender.assertErrorMessage("invalid node number 128 in GL128000");
 
-            checkValidSystemNameFormatName("GL127B7",'L', true);
+            checkValidSystemNameFormatName("GL127B407",'L', true);
 
             checkValidSystemNameFormatName("GL128B7",'L', false);
             JUnitAppender.assertErrorMessage("invalid node number 128 in GL128B7");
@@ -222,20 +222,20 @@ public class SerialAddressTest extends TestCase {
 	}
 
 	public void testGetBitFromSystemName() {
-            Assert.assertEquals("GL2", 2, SerialAddress.getBitFromSystemName("GL2") );
-            Assert.assertEquals("GL2002", 2, SerialAddress.getBitFromSystemName("GL2002") );
-            Assert.assertEquals("GL1", 1, SerialAddress.getBitFromSystemName("GL1") );
-            Assert.assertEquals("GL2001", 1, SerialAddress.getBitFromSystemName("GL2001") );
-            Assert.assertEquals("GL999", 999, SerialAddress.getBitFromSystemName("GL999") );
-            Assert.assertEquals("GL2999", 999, SerialAddress.getBitFromSystemName("GL2999") );
+            Assert.assertEquals("GL102", 102, SerialAddress.getBitFromSystemName("GL102") );
+            Assert.assertEquals("GS2002", 2, SerialAddress.getBitFromSystemName("GS2002") );
+            Assert.assertEquals("GS101", 101, SerialAddress.getBitFromSystemName("GS101") );
+            Assert.assertEquals("GS2001", 1, SerialAddress.getBitFromSystemName("GS2001") );
+            Assert.assertEquals("GL9109", 109, SerialAddress.getBitFromSystemName("GL9109") );
+            Assert.assertEquals("GS2009", 9, SerialAddress.getBitFromSystemName("GS2009") );
 
             Assert.assertEquals("GL29O9", 0, SerialAddress.getBitFromSystemName("GL29O9") );
             JUnitAppender.assertErrorMessage("illegal system name format: GL29O9");
 
-            Assert.assertEquals("GL1B7", 7, SerialAddress.getBitFromSystemName("GL1B7") );
-            Assert.assertEquals("GL2B7", 7, SerialAddress.getBitFromSystemName("GL2B7") );
-            Assert.assertEquals("GL1B1", 1, SerialAddress.getBitFromSystemName("GL1B1") );
-            Assert.assertEquals("GL2B1", 1, SerialAddress.getBitFromSystemName("GL2B1") );
+            Assert.assertEquals("GL1B107", 107, SerialAddress.getBitFromSystemName("GL1B107") );
+            Assert.assertEquals("GL2B107", 107, SerialAddress.getBitFromSystemName("GL2B107") );
+            Assert.assertEquals("GL1B101", 101, SerialAddress.getBitFromSystemName("GL1B101") );
+            Assert.assertEquals("GL2B101", 101, SerialAddress.getBitFromSystemName("GL2B101") );
             Assert.assertEquals("GL1B2048", 2048, SerialAddress.getBitFromSystemName("GL1B2048") );
             Assert.assertEquals("GL11B2048", 2048, SerialAddress.getBitFromSystemName("GL11B2048") );
         }
@@ -243,12 +243,12 @@ public class SerialAddressTest extends TestCase {
 	public void testValidSystemNameConfig() {
             SerialNode d = new SerialNode(4,SerialNode.NODE2002V6);
             SerialNode c = new SerialNode(10,SerialNode.NODE2002V1);
-            Assert.assertTrue("valid config GL4007",  SerialAddress.validSystemNameConfig("GL4007",'L') );
-            Assert.assertTrue("valid config GL4B7",   SerialAddress.validSystemNameConfig("GL4B7",'L') );
+            Assert.assertTrue("valid config GL4107",  SerialAddress.validSystemNameConfig("GL4107",'L') );
+            Assert.assertTrue("valid config GL4B307",   SerialAddress.validSystemNameConfig("GL4B307",'L') );
             Assert.assertTrue("valid config GS10007", SerialAddress.validSystemNameConfig("GS10007",'S') );
-            Assert.assertTrue("valid config GS10B7",  SerialAddress.validSystemNameConfig("GS10B7",'S') );
-            Assert.assertTrue("valid config GL10011", SerialAddress.validSystemNameConfig("GL10011",'L') );
-            Assert.assertTrue("valid config GL10B06", SerialAddress.validSystemNameConfig("GL10B06",'L') );
+            Assert.assertTrue("valid config GS10B07",  SerialAddress.validSystemNameConfig("GS10B07",'S') );
+            Assert.assertTrue("valid config GL10311", SerialAddress.validSystemNameConfig("GL10311",'L') );
+            Assert.assertTrue("valid config GL10B206", SerialAddress.validSystemNameConfig("GL10B206",'L') );
 
             Assert.assertTrue("invalid config GL10133", !SerialAddress.validSystemNameConfig("GL10133",'L') );
             JUnitAppender.assertErrorMessage("invalid bit number 133 in GL10133");
@@ -266,18 +266,18 @@ public class SerialAddressTest extends TestCase {
             JUnitAppender.assertWarnMessage("GS10517 invalid");
 
             Assert.assertTrue("invalid config GS10B547", !SerialAddress.validSystemNameConfig("GS10B547",'S') );
-            JUnitAppender.assertWarnMessage("GS10B547 invalid; bad input bit number 547 > 96");
+            JUnitAppender.assertWarnMessage("GS10B547 invalid; bad input bit number 547 > 224");
 
-            Assert.assertTrue("valid config GT4006", SerialAddress.validSystemNameConfig("GT4006",'T') );
-            Assert.assertTrue("valid config GT4B6", SerialAddress.validSystemNameConfig("GT4B6",'T') );
+            Assert.assertTrue("valid config GT4106", SerialAddress.validSystemNameConfig("GT4106",'T') );
+            Assert.assertTrue("valid config GT4B106", SerialAddress.validSystemNameConfig("GT4B106",'T') );
 
-            Assert.assertTrue("invalid config GT4317", !SerialAddress.validSystemNameConfig("GT4317",'T') );
-            JUnitAppender.assertErrorMessage("invalid bit number 317 in GT4317");
-            JUnitAppender.assertWarnMessage("GT4317 invalid");
+            Assert.assertTrue("invalid config GT4517", !SerialAddress.validSystemNameConfig("GT4517",'T') );
+            JUnitAppender.assertErrorMessage("invalid bit number 517 in GT4517");
+            JUnitAppender.assertWarnMessage("GT4517 invalid");
 
-            Assert.assertTrue("invalid config GT4317", !SerialAddress.validSystemNameConfig("GT4B317",'T') );
-            JUnitAppender.assertErrorMessage("invalid bit number 317 in GT4B317");
-            JUnitAppender.assertWarnMessage("GT4B317 invalid");
+            Assert.assertTrue("invalid config GT4299", !SerialAddress.validSystemNameConfig("GT4299",'T') );
+            JUnitAppender.assertErrorMessage("invalid bit number 299 in GT4299");
+            JUnitAppender.assertWarnMessage("GT4299 invalid");
 
             Assert.assertTrue("valid config GS4008", SerialAddress.validSystemNameConfig("GS4008",'S') );
             Assert.assertTrue("valid config GS4B8", SerialAddress.validSystemNameConfig("GS4B8",'S') );
@@ -287,37 +287,37 @@ public class SerialAddressTest extends TestCase {
             JUnitAppender.assertWarnMessage("GS4309 invalid");
 
             Assert.assertTrue("invalid config GS4B309", !SerialAddress.validSystemNameConfig("GS4B309",'S') );
-            JUnitAppender.assertWarnMessage("GS4B309 invalid; bad input bit number 309 > 96");
+            JUnitAppender.assertWarnMessage("GS4B309 invalid; bad input bit number 309 > 224");
 
-            Assert.assertTrue("invalid config GL11007", !SerialAddress.validSystemNameConfig("GL11007",'L') );
-            JUnitAppender.assertWarnMessage("GL11007 invalid; no such node");
+            Assert.assertTrue("invalid config GL11107", !SerialAddress.validSystemNameConfig("GL11107",'L') );
+            JUnitAppender.assertWarnMessage("GL11107 invalid; no such node");
 
-            Assert.assertTrue("invalid config GL11B7", !SerialAddress.validSystemNameConfig("GL11B7",'L') );
-            JUnitAppender.assertWarnMessage("GL11B7 invalid; no such node");
+            Assert.assertTrue("invalid config GL11B107", !SerialAddress.validSystemNameConfig("GL11B107",'L') );
+            JUnitAppender.assertWarnMessage("GL11B107 invalid; no such node");
 
         }        
         
 	public void testConvertSystemNameToAlternate() {
-            Assert.assertEquals("convert GL14007",  "GL14B7", SerialAddress.convertSystemNameToAlternate("GL14007") );
-            Assert.assertEquals("convert GS1007",   "GS1B7", SerialAddress.convertSystemNameToAlternate("GS1B7") );
-            Assert.assertEquals("convert GT4007",   "GT4B7", SerialAddress.convertSystemNameToAlternate("GT4007") );
-            Assert.assertEquals("convert GL14B7",   "GL14B7", SerialAddress.convertSystemNameToAlternate("GL14B7") );
-            Assert.assertEquals("convert GL1B7",    "GL1B7", SerialAddress.convertSystemNameToAlternate("GL1B7") );
-            Assert.assertEquals("convert GS4B7",    "GS4B7", SerialAddress.convertSystemNameToAlternate("GS4B7") );
-            Assert.assertEquals("convert GL14B8",   "GL14B8", SerialAddress.convertSystemNameToAlternate("GL14B8") );
+            Assert.assertEquals("convert GL14107",  "GL14B107", SerialAddress.convertSystemNameToAlternate("GL14107") );
+            Assert.assertEquals("convert GS1107",   "GS1B107", SerialAddress.convertSystemNameToAlternate("GS1B107") );
+            Assert.assertEquals("convert GT4107",   "GT4B107", SerialAddress.convertSystemNameToAlternate("GT4107") );
+            Assert.assertEquals("convert GL14B307",   "GL14B307", SerialAddress.convertSystemNameToAlternate("GL14B307") );
+            Assert.assertEquals("convert GL1B207",    "GL1B207", SerialAddress.convertSystemNameToAlternate("GL1B207") );
+            Assert.assertEquals("convert GS4B207",    "GS4B207", SerialAddress.convertSystemNameToAlternate("GS4B207") );
+            Assert.assertEquals("convert GL14B308",   "GL14B308", SerialAddress.convertSystemNameToAlternate("GL14B308") );
 
             Assert.assertEquals("convert GL128B7", "", SerialAddress.convertSystemNameToAlternate("GL128B7") );
             JUnitAppender.assertErrorMessage("invalid node number 128 in GL128B7");
         }
         
 	public void testNormalizeSystemName() {
-            Assert.assertEquals("normalize GL14007",    "GL14007", SerialAddress.normalizeSystemName("GL14007") );
-            Assert.assertEquals("normalize GL01007",    "GL1007", SerialAddress.normalizeSystemName("GL01007") );
-            Assert.assertEquals("normalize GL004007",   "GL4007", SerialAddress.normalizeSystemName("GL004007") );
-            Assert.assertEquals("normalize GL14B7",     "GL14007", SerialAddress.normalizeSystemName("GL14B7") );
-            Assert.assertEquals("normalize GL001B7",    "GL1007", SerialAddress.normalizeSystemName("GL001B7") );
-            Assert.assertEquals("normalize GL004B7",    "GL4007", SerialAddress.normalizeSystemName("GL004B7") );
-            Assert.assertEquals("normalize GL014B0008", "GL14008", SerialAddress.normalizeSystemName("GL014B0008") );
+            Assert.assertEquals("normalize GL14107",    "GL14107", SerialAddress.normalizeSystemName("GL14107") );
+            Assert.assertEquals("normalize GL01107",    "GL1107", SerialAddress.normalizeSystemName("GL01107") );
+            Assert.assertEquals("normalize GL004107",   "GL4107", SerialAddress.normalizeSystemName("GL004107") );
+            Assert.assertEquals("normalize GL14B207",     "GL14207", SerialAddress.normalizeSystemName("GL14B207") );
+            Assert.assertEquals("normalize GL001B00307",    "GL1307", SerialAddress.normalizeSystemName("GL001B00307") );
+            Assert.assertEquals("normalize GL004B107",    "GL4107", SerialAddress.normalizeSystemName("GL004B107") );
+            Assert.assertEquals("normalize GL014B0108", "GL14108", SerialAddress.normalizeSystemName("GL014B0108") );
 
             // alternate sensor names
             Assert.assertEquals("normalize GS1a1",   "GS1101",  SerialAddress.normalizeSystemName("GS1a1") );

@@ -15,7 +15,7 @@ import jmri.Turnout;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class SerialLight extends AbstractLight {
 
@@ -47,8 +47,13 @@ public class SerialLight extends AbstractLight {
     private void initializeLight(String systemName) {
         // Save system name
         mSystemName = systemName;
+
         // Extract the Bit from the name
-        mBit = SerialAddress.getBitFromSystemName(systemName);
+        int num = SerialAddress.getBitFromSystemName(systemName); // bit one is address zero
+        // num is 101-124, 201-224, 301-324, 401-424
+        output = (num%100)-1; // 0-23
+        bank = (num/100)-1;  // 0 - 3
+
         // Set initial state
         setState( OFF );
         // Set defaults for all other instance variables
@@ -65,7 +70,8 @@ public class SerialLight extends AbstractLight {
      */
     String mSystemName = "";     // system name 
     protected int mState = OFF;  // current state of this light
-    int mBit = 0;                // bit within the node
+    int output;         // output connector number, 0-23
+    int bank;           // bank number, 0-3
 
     /**
      *  Return the current state of this Light
@@ -107,10 +113,8 @@ public class SerialLight extends AbstractLight {
             log.error("Can't find node for "+getSystemName()+", command ignored");
             return;
         }
-        int output = (mBit-1) % 24; /// 0 to 23 range for individual bank
         boolean high = (output>=12);
         if (high) output = output-12;
-        int bank = (mBit-1)/24;  
         if ( (bank<0)||(bank>4) ) {
             log.error("invalid bank "+bank+" for Turnout "+getSystemName());
             bank = 0;

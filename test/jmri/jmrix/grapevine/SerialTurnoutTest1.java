@@ -9,7 +9,7 @@ import junit.framework.*;
  * Tests for the jmri.jmrix.grapevine.SerialTurnout class,
  * middle bank.
  * @author			Bob Jacobsen
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SerialTurnoutTest1 extends AbstractTurnoutTest {
 
@@ -21,7 +21,7 @@ public class SerialTurnoutTest1 extends AbstractTurnoutTest {
 		tcis = new SerialTrafficControlScaffold();
         tcis.registerSerialNode(new SerialNode(1, SerialNode.NODE2002V6));
         
-		t = new SerialTurnout("GT1052","t4");
+		t = new SerialTurnout("GT1304","t4");
 	}
 
 	public int numListeners() { return tcis.numListeners(); }

@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractMRListener;
  *
  * Description:	    tests for the SerialLightManager class
  * @author			Bob Jacobsen Copyright 2004, 2007, 2008
- * @version  $Revision: 1.2 $
+ * @version  $Revision: 1.3 $
  */
 public class SerialLightManagerTest extends jmri.AbstractLightMgrTest  {
 
@@ -41,17 +41,17 @@ public class SerialLightManagerTest extends jmri.AbstractLightMgrTest  {
 
 	public void testAsAbstractFactory () {
 		// ask for a Light, and check type
-		Light o = l.newLight("GL1005", "my name");
+		Light o = l.newLight("GL1105", "my name");
 
 
 		if (log.isDebugEnabled()) log.debug("received light value "+o);
 		assertTrue( null != (SerialLight)o);
 
 		// make sure loaded into tables
-		if (log.isDebugEnabled()) log.debug("by system name: "+l.getBySystemName("GL1005"));
+		if (log.isDebugEnabled()) log.debug("by system name: "+l.getBySystemName("GL1105"));
 		if (log.isDebugEnabled()) log.debug("by user name:   "+l.getByUserName("my name"));
 
-		assertTrue(null != l.getBySystemName("GL1005"));
+		assertTrue(null != l.getBySystemName("GL1105"));
 		assertTrue(null != l.getByUserName("my name"));
 
 	}
@@ -60,8 +60,8 @@ public class SerialLightManagerTest extends jmri.AbstractLightMgrTest  {
 	 * Number of light to test.  
 	 * Use 9th output on node 1.
 	 */
-	protected int getNumToTest1() { return 1009; }
-	protected int getNumToTest2() { return 1007; }
+	protected int getNumToTest1() { return 1109; }
+	protected int getNumToTest2() { return 1107; }
 
 	// from here down is testing infrastructure
 

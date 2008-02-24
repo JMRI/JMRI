@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRMessage;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class SerialNode {
 
@@ -46,7 +46,7 @@ public class SerialNode {
     public static final String[] boardNames = new String[]{"2002 node, version 6 or later",
                                                            "2002 node, pre version 6", 
                                                            "2000 (original) node"};
-    public static final int[] outputBits = new int[]{96,96,96};
+    public static final int[] outputBits = new int[]{424, 424, 424};
     public static final int[] inputBits = new int[]{224,224,224};
     
     // node definition instance variables (must persist between runs)
@@ -56,8 +56,8 @@ public class SerialNode {
     // operational instance variables  (should not be preserved between runs)
     protected boolean needSend = true;          // 'true' if something has changed in the outputByte array since
                                                 //    the last send to the hardware node
-    protected byte[] outputArray = new byte[256]; // current values of the output bits for this node
-    protected boolean[] outputByteChanged = new boolean[256];
+    protected byte[] outputArray = new byte[500]; // current values of the output bits for this node
+    protected boolean[] outputByteChanged = new boolean[500];
     
     protected boolean hasActiveSensors = false; // 'true' if there are active Sensors for this node
     protected int lastUsedSensor = 0;           // grows as sensors defined
