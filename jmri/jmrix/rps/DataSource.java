@@ -21,7 +21,7 @@ import jmri.*;
  * When opened, the user must first select a serial port and click "Start".
  *
  * @author			Bob Jacobsen   Copyright (C) 2006
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class DataSource extends jmri.util.JmriJFrame implements ThrottleListener {
 
@@ -241,7 +241,7 @@ public class DataSource extends jmri.util.JmriJFrame implements ThrottleListener
         if (bsci.isSelected()) {
             jmri.DccLocoAddress a = (jmri.DccLocoAddress) throttle.getLocoAddress();
             jmri.CommandStation c = InstanceManager.commandStationInstance();
-            byte[] result = jmri.NmraPacket.initThreeBytePacket(
+            byte[] result = jmri.NmraPacket.threeBytePacket(
                                 a.getNumber(), a.isLongAddress(), 
                                 (byte)0xEC, (byte)0x00, (byte)0xFF);
             if (c != null) 
