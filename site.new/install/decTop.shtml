@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright (Author) 2008 -->
+<!-- $Id: decTop.shtml,v 1.1 2008-02-24 14:49:32 jacobsen Exp $ -->
+
+    <TITLE>
+ 	JMRI: Installing on a decTOP small form factor computer
+    </TITLE>
+    <META content="YOUR NAME HERE" name=Author>
+    <meta name="keywords" content="SOME KEYWORDS">
+
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+	    <!-- ------------- -->
+	    <!-- Page Contents --> <!-- Required -->
+	    <!-- ------------- -->
+
+	    <H1>Installing on a decTOP small form factor computer</H1>
+
+<a href="https://store.dataevolution.com/photos/DT-7001-2.jpg"/>
+<img src="https://store.dataevolution.com/photos/DT-7001-2.jpg" width="250" height="167" align="right" alt="decTop image"/>
+</a>
+The decTOP is a "small form factor computer" (SFF)
+that provides a complete system in a small, low-cost, rugged box.
+The goal of our project is to see if it would make a good JMRI
+layout controller, suitable for e.g. driving a couple modules or a medium size
+layout.
+<p>
+decTop specifications:
+<ul>
+<li>Processor subsystem -- AMD Geode GX processor, with CS5535 companion device
+<li>Memory -- 128 MB DDR SDRAM, upgradable
+<li>Hard drive -- internal 10 GB 2.5-inch drive
+<li>Display interface -- VGA 1600 x 1200 resolution, at 85 Hz
+<li>Four USB 1.1 ports (2 front, 2 rear)
+<li>LAN interface -- 10/100 Mbps Ethernet (via Ethernet-USB adapter that uses one port)
+<li>Modem -- internal 56 Kbps ITU v.92 Fax/Modem
+<li>Sound -- AC'97 audio with stereo in/out jacks
+<li>Size -- 8.5 x 5.5 x 2.5 inches
+<li>Weight -- approx. 3 pounds 
+<li>Power -- about 8 watts, separate power adapter
+</ul>
+<a href="http://pclab.nectec.or.th/wiki/images/7/70/Amd-pic-setup.jpg">
+<img src="http://pclab.nectec.or.th/wiki/images/7/70/Amd-pic-setup.jpg" align="right" height="115" width="175" alt="System view"/></a>
+You can get one for
+about $99 (plus an exorbitant $40 for reasonable-speed shipping) 
+from the Data Evolution online store (February 2008).
+It comes with a USB mouse, USB keyboard (poor) and the Ethernet adapter.
+You also need to
+provide your own monitor and either a USB CD drive or USB flash drive
+for use during (at least) setup.
+<p>
+It was at one point known as the 
+"<a href="http://www.amd.com/us-en/ConnectivitySolutions/ProductInformation/0,,50_2330_12264_12262,00.html">AMD PIC</a>".
+
+<h2>Installing Linux</h2>
+Step one, install Xubuntu 7.10, chosen to be recent, but 
+work on hardware with small memory.
+<p>
+
+<h2>Installing Java 1.5</h2>
+
+<h2>Installing JMRI</h2>
+
+<h2>Installing RXTX and drivers for USB-serial adapters</h2>
+
+
+<h2>More information</h2>
+<a href="http://www.dataevolution.com/dectop%20info%202.htm">Vendor page</a><br>
+<a href="https://store.dataevolution.com/ProductDetails.asp?ProductCode=DT%2D7001">Product listing</a><br/>
+<a href="https://store.dataevolution.com/ProductDetails.asp?ProductCode=DT%2D7001&Show=TechSpecs">Specifications</a><br/>
+
+<p>
+<a href="http://pair.offshore.ai/pic/">Photos of PIC internals</a>
+
+<p>
+Pages describing software installs:
+<p>
+<a href="http://jsco.org/dectop/">Ubuntu 6.06</a> (no audio?)<br>
+<a href="http://librenix.com/?inode=11001">Another Ubuntu 6.06</a><br>
+These recommend sticking with Ubuntu 6.06 unless the memory has been updated.
+
+<p>
+<a href="http://www.entropicblur.com/dectop/guide.html">Install Xubuntu 7.10</a>,
+recommends 256MB RAM for Ubuntu or Kubuntu.
+(<a href="http://www.entropicblur.com/dectop/guide704.html">Earlier 7.04 install guide</a>)
+
+
+<p>
+Use Java 1.5 -- 
+http://www.linuxquestions.org/questions/linux-newbie-8/java-runtime-enviroment-plugin-wont-work-with-firefox-in-xubuntu-616663/
+
+<p>
+ACPI power saving --
+http://www.lesswatts.org/projects/acpi/
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+
