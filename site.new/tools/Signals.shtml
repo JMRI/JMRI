@@ -1,135 +1,19 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Signals.shtml,v 1.3 2007-07-13 04:56:09 jacobsen Exp $ -->
+<!-- $Id: Signals.shtml,v 1.4 2008-02-24 02:31:49 jacobsen Exp $ -->
 <html lang="en">
-<head>
-  <TITLE>
- 	JMRI: Turnout Documentation
-  </TITLE>
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-
-  <META content="Bob Jacobsen" name=Author>
-
-  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-  <meta name="keywords"
-        content="turnout model railroad JMRI decoderpro panelpro">
-
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+<head><TITLE>JMRI: Redirected Page</TITLE>
+<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+<META HTTP-EQUIV="Refresh" CONTENT="0; URL=../help/en/html/tools/Signals.shtml ">
 </head>
-
 <body>
-  <div id="container">
-
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
-
-    <hr class="hide">
-
-      <div id="mainContent">
-      <!-- Page Body -->
-        <H2>
-		JMRI: Signals Documentation
-        </H2>
-
-<!-- This page needs to be kept consistent with -->
-<!-- help/en/package/jmri/jmrit/beantable/SignalTable.html -->
-<!-- help/en/package/jmri/jmrit/beantable/SignalAddEdit.html -->
-
-<h3>What are Signals?</h3>
-
-<p>
-Signals (or more formally SignalHeads) are how JMRI represents and 
-controls signal heads on a layout.  They are a specific kind of
-output device that can be set to various colors:  Red, Yellow, Green, Flashing Yellow, etc.
-</p>
-
-<A ID="table"><h3>The Signal Table</h3></a>
-
-<A href="./images/SigTable.gif"><IMG SRC="./images/SigTable.gif" ALIGN=RIGHT WIDTH="149" HEIGHT="179" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
-<!-- The following section is taken from, and should be kept consistent with -->
-<!-- help/en/package/jmri/jmrit/beantable/SignalTable.html -->
-
-All the signals that JMRI knows about can be referenced
-using the "Signal Table" tool in the Tools menu of most JMRI programs.
-There are five columns in the table:
-<UL>
-<LI>The system name is assigned to the signal when it's created, 
-and can't be changed.
-<LI>If you're interested in having your signals carry "human readable"
-names, you can click in the "user name" column and change that information
-to whatever you want.
-<LI>As the signal changes, for whatever reason, the current
-appearance will show in the table.  You can also click on the
-appearance button to cycle through the avilable appearances:
-red, yellow, green, flashing red, flashing yellow, flashing green, and dark.
-<LI>The check box in the "Lit" column lets you control whether the
-signal head on the layout is lit (checked) or stays dark (unchecked).
-<LI>The check box in the "Held" column shows the "held" property of the
-signal, and allows you to change it.  This property is used by e.g. CTC
-machine logic to say "Don't change this signal head from red, even if it 
-would be safe to do so, because I want to hold a train here".
-</UL>
-<P>To define a new signal, click on the 
-"<A HREF="#SignalAddEdit">Add.." button<a/>.
-It will
-prompt you for the type (run off turnout outputs; SE8c; etc), and
-whatever setup information is needed.
-<P> This information is saved with the configuration in an XML file, along
-with control panel setup and similar stuff.  For more information
-on creating and displaying panels, including how to show signals
-on your panels,
-please see the 
-<A HREF="../apps/PanelPro/Panels.html">Panels pages</a>.
-
-<A ID="add"><h3>Creating a Signal</h3></a>
-<A href="./images/SigAdd.gif"><IMG SRC="./images/SigAdd.gif" ALIGN=RIGHT WIDTH="181" HEIGHT="218" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
-
-<!-- The following section is taken from, and should be kept consistent with -->
-<!-- help/en/package/jmri/jmrit/beantable/SignalAddEdit.html -->
-
-<P>To define a new signal, click on the <b>Add New Signal</b> button in the Signal Table.  
-It will
-prompt you for the signal type (controlled by turnout outputs; SE8c; etc), and
-whatever setup information is needed for your choice.
-
-<A ID="edit"><h3>Editing an Existing Signal</h3>
-
-<P>Once a signal has been defined, you currently can't change
-it's type directly from the program.  
-This is a requested
-capability, and someday somebody will probably write it.
-In the meantime, you can just ignore signals that you've defined 
-and don't want to use; they don't hurt anything.
-Or you can edit your saved configuration files to remove the entire
-line containing the signal definition; look for the name of the signal
-to locate the right line.  Note that you need to remove the entire line, and
-not leave any part of it, especially the opening and closing brackets. Save
-a copy of the file as a backup first!
-
-<P>
-
-<h3>Controlling a Signal</h3>
-
-   
-<h3>Saving and Reloading Configuration</h3>
-
-
-<ol>
-	<li>
-	
-</ol>
-
-<!--#include virtual="/Footer" -->
-
-      </div><!-- closes #mainContent-->
-    </div> <!-- closes #mBody-->
-  </div> <!-- closes #container -->
+This page has been moved to another location
+(<A HREF="../help/en/html/tools/Signals.shtml">../help/en/html/tools/Signals.shtml</a>)
+as part of updating our web site.
+<P>Please update your bookmarks.  
+<P>If you got to this page from another JMRI page, please let us know so we can fix it.
+<P>You should be redirected to the new page immediately.  
+<BR/>Site hosted by: <BR/>
+<A href="http://sourceforge.net"> 
+<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&amp;type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A> 
 </body>
 </html>
-
-
