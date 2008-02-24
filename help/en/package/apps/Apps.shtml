@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Apps.shtml,v 1.1 2008-02-11 01:45:12 jacobsen Exp $ -->
+<!-- $Id: Apps.shtml,v 1.2 2008-02-24 03:55:42 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -32,6 +32,13 @@ Help for specific main windows:
 <li><a href="DecoderPro/DecoderPro.shtml">DecoderPro</a>
 <li><a href="PanelPro/PanelPro.shtml">PanelPro</a>
 </ol>
+
+<p>
+Help on specific menus:
+<ul>
+<li>Edit - (<a href="AppConfigPanel.shtml">Preferences</a>)
+<li><a href="../../package/jmri/jmrit/ToolsMenu.shtml">Tools</a>
+</ul>
 
 <p>
 This is the apps.Apps.shtml help page
