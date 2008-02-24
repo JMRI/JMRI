@@ -283,8 +283,23 @@
 <ul></ul>
 </li>
       
+<li>Programmers<ul>
+         
 <li>
-<a href="">Reporters</a>
+<a href="package/jmri/jmrit/simpleprog/SimpleProgFrame.shtml">Single CV Programmer</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="DecoderProManual/Basic_Programming.shtml">DecoderPro programmer</a>
+<ul></ul>
+</li>
+      
+</ul>
+</li>
+      
+<li>
+<a href="html/tools/Reporters.shtml">Reporters</a>
 <ul></ul>
 </li>
       

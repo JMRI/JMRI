@@ -65,6 +65,10 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
       <tocitem text="Locomotive Speed Matching" target="html.tools.speedometer.SpeedMatch"/>
       <tocitem text="Logix" target="package.jmri.jmrit.beantable.LogixTable"/>
       <tocitem text="Memories" target="html.tools.Memories"/>
+      <tocitem text="Programmers">
+         <tocitem text="Single CV Programmer" target="package.jmri.jmrit.simpleprog.SimpleProgFrame"/>
+         <tocitem text="DecoderPro programmer" target="DecoderProManual.Basic_Programming"/>
+      </tocitem>
       <tocitem text="Reporters" target="html.tools.Reporters"/>
       <tocitem text="Routes" target="package.jmri.jmrit.beantable.RouteTable"/>
       <tocitem text="Send DCC Packet Tool" target="package.jmri.jmrit.sendpacket.SendPacketFrame"/>
