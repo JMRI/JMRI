@@ -14,7 +14,7 @@ import jmri.ProgListener;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2007
  * @author  Giorgio Terdina Copyright (C) 2007
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgListener {
 
@@ -125,6 +125,9 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
 		// disable read button if non-functional
         if (modePane.getProgrammer()!= null)
 			readButton.setEnabled(modePane.getProgrammer().getCanRead());
+
+        // add help menu to window
+    	addHelpMenu("package.jmri.jmrit.simpleprog.SimpleProgFrame", true);
 
         pack();
     }
