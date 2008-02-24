@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright (Author) 2008 -->
+<!-- $Id: template.shtml,v 1.1 2008-02-24 13:45:28 jacobsen Exp $ -->
+
+    <TITLE>
+ 	JMRI: ... TITLE ...
+    </TITLE>
+    <META content="YOUR NAME HERE" name=Author>
+    <meta name="keywords" content="SOME KEYWORDS">
+
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+	    <!-- -------- -->
+	    <!--  Teaser  --> <!-- Optional -->
+	    <!-- -------- -->
+
+	    <div id="teaser">
+		<h1>Optional Teaser</h1>
+		    <p>A teaser is some text on the top of a page that describes something
+		    interesting - maybe a What's New item or other important anouncement
+		    dealt with in detail later on on this page... </p>
+
+		    <p class=important>
+		    	Check out the
+				<a href="../css">CSS examples page</a>
+			for more markup examples
+		    </p>
+	    </div> <!-- closes #teaser-->
+
+	    <!-- -------- -->
+	    <!-- Page TOC --> <!-- Optional -->
+	    <!-- -------- -->
+
+	    <H1>Optional Table of Contents </H1>
+	    <p> For a complicated page - like a user guide or technical reference </p>
+	    <dl class=toc>
+		<dt><a href="#topic1">TOC entry 1</a></dt>
+		<dt><a href="#topic2">TOC entry 2</a></dt>
+		<dd>Some descriptive info about this TOC entry</dd>
+		<dt><a href="#topic3">TOC entry 3</a></dt>
+		<dd>
+		    <ol>
+		    <li> a list of sub items </li>
+		    <li> a list of sub items </li>
+		    <li> a list of sub items </li>
+		    <li> a list of sub items </li>
+		    </ol>
+		</dd>
+		<dt><a href="#topic4">TOC entry 4</a></dt>
+		<dd>Some info about this TOC entry</dd>
+	    </dl>
+	    <p>Alternatively, a simpler page may only need a simple TOC:</p>
+	    <ul class=snav>
+		<li><a href="#topic1">TOC entry 1</a></li>
+		<li><a href="#topic2">TOC entry 2</a></li>
+		<li><a href="#topic3">TOC entry 3</a></li>
+		<li><a href="#topic4">TOC entry 4</a></li>
+	    </ul>
+	    <p>Choose one (or neither) ...</p>
+
+	    <!-- ------------- -->
+	    <!-- Page Contents --> <!-- Required -->
+	    <!-- ------------- -->
+
+	    <H1>Page TITLE repeated here</H1>
+		<p class=subtitle>
+		    subtitles are used as the first paragraph under a main
+		    heading - if at all
+		</p>
+
+		<div class=para>
+		<p>Random text Random text Random text Random text Random text</p>
+		<p>Random text Random text Random text Random text Random text</p>
+		<p>Random text Random text Random text Random text Random text</p>
+		<p>Random text Random text Random text Random text Random text</p>
+		</div>
+
+		<div class=para>
+		<p>Random text Random text Random text Random text Random text</p>
+		<p>Random text Random text Random text Random text Random text</p>
+		<p>Random text Random text Random text Random text Random text</p>
+		<p>Random text Random text Random text Random text Random text</p>
+		</div>
+
+		<div class=section>
+		    <h2>Examples</h2>
+
+		    <div class=para>
+		    <p>Sections are used for indenting and outlines</p>
+		    <p>H2 Content</p>
+		    <p>Random text Random text Random text Random text Random text</p>
+		    <p>Random text Random text Random text Random text Random text</p>
+		    <p>Random text Random text Random text Random text Random text</p>
+		    <p>Random text Random text Random text Random text Random text</p>
+		    </div>
+
+		    <div class=para>
+			<p class=example>Use a p.example with kbd tags to show examples
+<kbd class=command>
+@files = getfilenames($dir);
+foreach $f (@files) {
+	processfile($f);
+}
+</kbd></p>
+
+			<p class=mice>mice text is for editorial comments and the like</p>
+			<p class=remark>Remarks get stuff before and after.</p>
+			<p class=note> Notes get a "Note:" prepended.</p>
+
+		    </div>
+
+		    <div class=section>
+			<H3> H3 Section Title </H3>
+			<div class=para>
+			    <p>H3 Content</p>
+			    <p> ... etc ... </p>
+			</div>
+			<div class=section>
+			    <H4> H4 Section Title </H4>
+			    <div class=section>
+				<H5> H5 Section Title </H5>
+			    </div>
+			</div>
+		    </div>
+		</div>
+
+		<div class=list>
+		<h1>List header</h1>
+		<p> Lists are used to display single level outlines that benefit from
+		    a "topic and discussion" type of display.</p>
+		<dl>
+		    <dt class="left">Topic</dt>
+		    <dd class=first>
+			<p>discussion</p>
+		    </dd>
+
+		    <dt class="left">Topic</dt>
+		    <dd>
+			<p> Lists can have sections in them as well...</p>
+
+			<H1> Section Title </H1>
+			H1 Content
+			<div class=section>
+			    <H2> Section Title </H2>
+			    H2 Content
+			    <div class=section>
+				<H3> Section Title </H3>
+				H3 Content ... etc ...
+			    </div>
+			</div>
+		    </dd>
+
+		</dl>
+		</div>
+
+    
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+
