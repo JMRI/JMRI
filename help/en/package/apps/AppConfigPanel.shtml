@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: AppConfigPanel.shtml,v 1.5 2008-02-21 15:36:11 jacobsen Exp $ -->
+<!-- $Id: AppConfigPanel.shtml,v 1.6 2008-02-24 03:54:22 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -98,19 +98,80 @@ more information on how to set this up, and particularly how to contribute
 new and improved translations, please see our
 <a href="../../html/doc/Technical/I8N.shtml">internationalization page</a>.
 
-<dt>Do actions at startup
+<a id="actions">
+<dt>Do actions at startup</a>
+<dd>
+This section lets you have the program automatically
+execute various menu selections at startup.  For example,
+you can have the Turnout Table automatically open, or 
+automatically open a window for programming on the main.
+<P>
+For example, to automatically open the Turnout Table, 
+click the "Add Action" button in this section of the advanced preferences. 
+From the list that's presented, select "Open Turnout Table". 
+Don't forget
+to save your updated preferences with the button at the bottom of the screen!
 
 <dt>Create buttons on the main screen
+<dd>
+This allows you to add extra buttons to the main JMRI window
+that are connected to specific menu choices.
+<P>
+For example, to add a button that will open the Power Control when clicked, 
+click the "Add Action" button in this section of the advanced preferences.  
+From the list that's presented, select "Open Turnout Table". Don't forget
+to save your updated preferences with the button at the bottom of the screen!
+From the list that's presented, select "Open Power Control". 
+Don't forget
+to save your updated preferences with the button at the bottom of the screen!
+The button will appear when you next start the program.
 
 <dt>Load panel files at startup
+<dd>
+This section lets you automatically load panel files when the program
+starts up.  The previous sections will have already executed, so any actions
+they're configured for will have taken place.  You can load
+as many panel files as you'd like; each will be completely loaded before the next
+is started.
+<p>
+Click "Add File", which will open a file section window in which you can select the 
+desired file.  If you later want to stop loading the file at startup, 
+click the "Remove" button next to the filename.
 
 <dt>Run scripts at startup
+<dd>
+This section lets you automatically run a script file when the program
+starts up.  The previous sections will have already executed, so any actions
+they're configured for will have taken place
+and all panel files will have been loaded.  
+You can run as many script files
+as you'd like; each will be run to the end of the file before the next
+is started.
+<p>
+Click "Add File", which will open a file section window in which you can select the 
+desired file.  If you later want to stop executing a particular script at startup, 
+click the "Remove" button next to the filename.
 
 <dt>Set the location of the roster
-</dl>
-
+<dd>
+Normally, the roster is stored in a standard location
+as part of the
+<a href="../../html/apps/DecoderPro/Files.shtml">preferences directory</a>.
+This option lets you move that somewhere else.
 <p>
-This is the apps.AppConfigPanel.shtml help page
+To configure it, click the "Set..." button and follow the directions.
+<p>
+The "Reset" button restores it to the default location. Note that
+this just changes where the program looks.  If you've stored roster
+information elsewhere and want it back in the default location, you have
+to move the files there yourself.
+<p>
+You can also enter a default value for the "Owner" field in DecoderPro
+roster entries here.  This fills in the value for new entries, which 
+can save you a little bit of typing. It has no effect on 
+existing entries, even if changed.
+
+</dl>
 
 <!--#include virtual="/Footer" -->
 </body>
