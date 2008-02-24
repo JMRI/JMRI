@@ -1,3 +1,4 @@
+
 // NmraPacket.java
 
 package jmri;
@@ -25,7 +26,12 @@ package jmri;
  * Range and value checking is intended to be aggressive; if we can check, we
  * should.  Problems are reported as warnings.
  *<P>
- *
+ * The basic function is to build a packet with proper addressing, etc:
+ * <UL>
+ * <li>threeBytePacket
+ * <li>threeBytePacket
+ * </ul>
+ * On top of those are built various special-purpose packet formats.
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -41,10 +47,106 @@ package jmri;
  * <P>
  *
  * @author      Bob Jacobsen Copyright (C) 2001, 2003
- * @version     $Revision: 1.24 $
+ * @version     $Revision: 1.25 $
  */
 public class NmraPacket {
 
+    /**
+     * Create a packet containing a two-byte instruction.
+     */
+    public static byte[] twoBytePacket(int address, boolean longAddr,
+                            byte arg1, byte arg2) {
+        if (!addressCheck(address, longAddr)) {
+            return null;  // failed!
+        }
+
+        // end sanity check, format output
+        byte[] retVal;
+        if (longAddr) {
+            // long address form
+            retVal = new byte[5];
+            retVal[0] = (byte) (192+((address/256)&0x3F));
+            retVal[1] = (byte) (address&0xFF);
+            retVal[2] = (byte) arg1;
+            retVal[3] = (byte) arg2;
+            retVal[4] = (byte) (retVal[0]^retVal[1]^retVal[2]^retVal[3]);
+        } else {
+            // short address form
+            retVal = new byte[4];
+            retVal[0] = (byte) (address&0xFF);
+            retVal[1] = (byte) arg1;
+            retVal[2] = (byte) arg2;
+            retVal[3] = (byte) (retVal[0]^retVal[1]^retVal[2]);
+        }
+        return retVal;
+    }
+    
+    /**
+     * Create a packet containing a three-byte instruction.
+     */
+    public static byte[] threeBytePacket(int address, boolean longAddr,
+                            byte arg1, byte arg2, byte arg3) {
+        if (!addressCheck(address, longAddr)) {
+            return null;  // failed!
+        }
+
+        // end sanity check, format output
+        byte[] retVal;
+        if (longAddr) {
+            // long address form
+            retVal = new byte[6];
+            retVal[0] = (byte) (192+((address/256)&0x3F));
+            retVal[1] = (byte) (address&0xFF);
+            retVal[2] = (byte) arg1;
+            retVal[3] = (byte) arg2;
+            retVal[4] = (byte) arg3;
+            retVal[5] = (byte) (retVal[0]^retVal[1]^retVal[2]^retVal[3]^retVal[4]);
+        } else {
+            // short address form
+            retVal = new byte[5];
+            retVal[0] = (byte) (address&0xFF);
+            retVal[1] = (byte) arg1;
+            retVal[2] = (byte) arg2;
+            retVal[3] = (byte) arg3;
+            retVal[4] = (byte) (retVal[0]^retVal[1]^retVal[2]^retVal[3]);
+        }
+        return retVal;
+    }
+    
+    /**
+     * Create a packet containing a four-byte instruction.
+     */
+    public static byte[] fourBytePacket(int address, boolean longAddr,
+                            byte arg1, byte arg2, byte arg3, byte arg4) {
+        if (!addressCheck(address, longAddr)) {
+            return null;  // failed!
+        }
+
+        // end sanity check, format output
+        byte[] retVal;
+        if (longAddr) {
+            // long address form
+            retVal = new byte[7];
+            retVal[0] = (byte) (192+((address/256)&0x3F));
+            retVal[1] = (byte) (address&0xFF);
+            retVal[2] = (byte) arg1;
+            retVal[3] = (byte) arg2;
+            retVal[4] = (byte) arg3;
+            retVal[5] = (byte) arg4;
+            retVal[6] = (byte) (retVal[0]^retVal[1]^retVal[2]^retVal[3]^retVal[4]^retVal[5]);
+        } else {
+            // short address form
+            retVal = new byte[6];
+            retVal[0] = (byte) (address&0xFF);
+            retVal[1] = (byte) arg1;
+            retVal[2] = (byte) arg2;
+            retVal[3] = (byte) arg3;
+            retVal[4] = (byte) arg4;
+            retVal[5] = (byte) (retVal[0]^retVal[1]^retVal[2]^retVal[3]^retVal[4]);
+        }
+        return retVal;
+    }
+    
 
     public static byte[] accDecoderPkt(int addr, int active, int outputChannel) {
         // From the NMRA RP:
@@ -491,35 +593,6 @@ public class NmraPacket {
         return retVal;
     }
 
-    public static byte[] initThreeBytePacket(int address, boolean longAddr,
-                            byte arg1, byte arg2, byte arg3) {
-        if (!addressCheck(address, longAddr)) {
-            return null;  // failed!
-        }
-
-        // end sanity check, format output
-        byte[] retVal;
-        if (longAddr) {
-            // long address form
-            retVal = new byte[6];
-            retVal[0] = (byte) (192+((address/256)&0x3F));
-            retVal[1] = (byte) (address&0xFF);
-            retVal[2] = (byte) arg1;
-            retVal[3] = (byte) arg2;
-            retVal[4] = (byte) arg3;
-            retVal[5] = (byte) (retVal[0]^retVal[1]^retVal[2]^retVal[3]^retVal[4]);
-        } else {
-            // short address form
-            retVal = new byte[5];
-            retVal[0] = (byte) (address&0xFF);
-            retVal[1] = (byte) arg1;
-            retVal[2] = (byte) arg2;
-            retVal[3] = (byte) arg3;
-            retVal[4] = (byte) (retVal[0]^retVal[1]^retVal[2]^retVal[3]);
-        }
-        return retVal;
-    }
-    
     public static byte[] function13Through20Packet(int address, boolean longAddr,
                         boolean f13, boolean f14, boolean f15, boolean f16,
                         boolean f17, boolean f18, boolean f19, boolean f20 ) {
