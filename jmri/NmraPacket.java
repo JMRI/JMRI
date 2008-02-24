@@ -28,8 +28,10 @@ package jmri;
  *<P>
  * The basic function is to build a packet with proper addressing, etc:
  * <UL>
+ * <li>oneBytePacket
+ * <li>twoBytePacket
  * <li>threeBytePacket
- * <li>threeBytePacket
+ * <li>fourBytePacket
  * </ul>
  * On top of those are built various special-purpose packet formats.
  * <hr>
@@ -47,10 +49,38 @@ package jmri;
  * <P>
  *
  * @author      Bob Jacobsen Copyright (C) 2001, 2003
- * @version     $Revision: 1.25 $
+ * @version     $Revision: 1.26 $
  */
 public class NmraPacket {
 
+    /**
+     * Create a packet containing a one-byte instruction.
+     */
+    public static byte[] oneBytePacket(int address, boolean longAddr,
+                            byte arg1) {
+        if (!addressCheck(address, longAddr)) {
+            return null;  // failed!
+        }
+
+        // end sanity check, format output
+        byte[] retVal;
+        if (longAddr) {
+            // long address form
+            retVal = new byte[4];
+            retVal[0] = (byte) (192+((address/256)&0x3F));
+            retVal[1] = (byte) (address&0xFF);
+            retVal[2] = (byte) arg1;
+            retVal[3] = (byte) (retVal[0]^retVal[1]^retVal[2]);
+        } else {
+            // short address form
+            retVal = new byte[3];
+            retVal[0] = (byte) (address&0xFF);
+            retVal[1] = (byte) arg1;
+            retVal[2] = (byte) (retVal[0]^retVal[1]);
+        }
+        return retVal;
+    }
+    
     /**
      * Create a packet containing a two-byte instruction.
      */
@@ -826,7 +856,7 @@ public class NmraPacket {
      */
 
     private NmraPacket() {}
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NmraPacket.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NmraPacket.class.getName());
 }
 
 
