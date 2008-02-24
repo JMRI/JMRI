@@ -21,7 +21,7 @@ import jmri.*;
  * When opened, the user must first select a serial port and click "Start".
  *
  * @author			Bob Jacobsen   Copyright (C) 2006
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class DataSource extends jmri.util.JmriJFrame implements ThrottleListener {
 
@@ -44,7 +44,6 @@ public class DataSource extends jmri.util.JmriJFrame implements ThrottleListener
         Vector v = getPortNames();
         for (int i=0; i<v.size(); i++)
             portBox.addItem(v.elementAt(i));
-        portBox.setSelectedIndex(3);
         System.out.println("default set at 3");
         speedBox.setToolTipText(rb.getString("TooltipSelectBaud"));
         speedBox.setAlignmentX(JLabel.LEFT_ALIGNMENT);
@@ -84,6 +83,7 @@ public class DataSource extends jmri.util.JmriJFrame implements ThrottleListener
         p3.add(new JLabel("On time: "));
         p3.add(onTime);
         onTime.setText("100");
+        p3.add(bsci);
         p3.add(poll);
         poll.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
@@ -106,6 +106,8 @@ public class DataSource extends jmri.util.JmriJFrame implements ThrottleListener
     }
     
     JCheckBox poll = new JCheckBox("Poll");
+
+    JCheckBox bsci = new JCheckBox("BSCI");
 
     JTextField addr1 = new JTextField(5);
     int num1 = -1;
@@ -170,17 +172,17 @@ public class DataSource extends jmri.util.JmriJFrame implements ThrottleListener
                 pollThread.interrupt();
                 // release throttle
                 if (throttle1!=null) {
-                    throttle1.setF2(false);
+                    if (!bsci.isSelected()) throttle1.setF2(false);
                     throttle1.release();
                     throttle1 = null;
                 }
                 if (throttle2!=null) {
-                    throttle2.setF2(false);
+                    if (!bsci.isSelected()) throttle2.setF2(false);
                     throttle2.release();
                     throttle2 = null;
                 }
                 if (throttle3!=null) {
-                    throttle3.setF2(false);
+                    if (!bsci.isSelected()) throttle3.setF2(false);
                     throttle3.release();
                     throttle3 = null;
                 }
@@ -235,6 +237,27 @@ public class DataSource extends jmri.util.JmriJFrame implements ThrottleListener
             startpoll();
     }
     
+    void setOn(DccThrottle throttle) {
+        if (bsci.isSelected()) {
+            jmri.DccLocoAddress a = (jmri.DccLocoAddress) throttle.getLocoAddress();
+            jmri.CommandStation c = InstanceManager.commandStationInstance();
+            byte[] result = jmri.NmraPacket.initThreeBytePacket(
+                                a.getNumber(), a.isLongAddress(), 
+                                (byte)0xEC, (byte)0x00, (byte)0xFF);
+            if (c != null) 
+                c.sendPacket(result,1);
+             else
+                log.error("No CommandStation implementation?");
+        } else
+            throttle.setF2(true);  // send nothing
+    }
+    
+    void setOff(DccThrottle throttle) {
+        if (!bsci.isSelected())
+            throttle.setF2(false);
+        // don't need to do anything if sending BSCI
+    }
+    
     void startpoll() {
         log.debug("start poll");
         // time to start operation
@@ -245,27 +268,27 @@ public class DataSource extends jmri.util.JmriJFrame implements ThrottleListener
                         if (throttle1 != null) {
                             polledAddress = num1;
                             if (log.isDebugEnabled()) log.debug("Set polledAddress = "+polledAddress);
-                            throttle1.setF2(true);
+                            setOn(throttle1);
                             synchronized (this) { wait(onDelay); }
-                            throttle1.setF2(false);
+                            setOff(throttle1);
                             synchronized (this) { wait(offDelay); }
                         }
                         
                         if (throttle2 !=null) {
                             polledAddress = num2;
                             if (log.isDebugEnabled()) log.debug("Set polledAddress = "+polledAddress);
-                            throttle2.setF2(true);
+                            setOn(throttle2);
                             synchronized (this) { wait(onDelay); }
-                            throttle2.setF2(false);
+                            setOff(throttle2);
                             synchronized (this) { wait(offDelay); }
                         }
                         
                         if (throttle3 != null ) {
                             polledAddress = num3;
                             if (log.isDebugEnabled()) log.debug("Set polledAddress = "+polledAddress);
-                            throttle3.setF2(true);
+                            setOn(throttle3);
                             synchronized (this) { wait(onDelay); }
-                            throttle3.setF2(false);
+                            setOn(throttle3);
                             synchronized (this) { wait(offDelay); }
                         }
                     }
