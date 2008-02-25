@@ -21,7 +21,7 @@ import jmri.*;
  * When opened, the user must first select a serial port and click "Start".
  *
  * @author			Bob Jacobsen   Copyright (C) 2006
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class DataSource extends jmri.util.JmriJFrame implements ThrottleListener {
 
@@ -243,7 +243,7 @@ public class DataSource extends jmri.util.JmriJFrame implements ThrottleListener
             jmri.CommandStation c = InstanceManager.commandStationInstance();
             byte[] result = jmri.NmraPacket.threeBytePacket(
                                 a.getNumber(), a.isLongAddress(), 
-                                (byte)0xEC, (byte)0x00, (byte)0xFF);
+                                (byte)0xC0, (byte)0xA5, (byte)0xFE);
             if (c != null) 
                 c.sendPacket(result,1);
              else
@@ -253,9 +253,18 @@ public class DataSource extends jmri.util.JmriJFrame implements ThrottleListener
     }
     
     void setOff(DccThrottle throttle) {
-        if (!bsci.isSelected())
-            throttle.setF2(false);
-        // don't need to do anything if sending BSCI
+        if (bsci.isSelected()) {
+            jmri.DccLocoAddress a = (jmri.DccLocoAddress) throttle.getLocoAddress();
+            jmri.CommandStation c = InstanceManager.commandStationInstance();
+            byte[] result = jmri.NmraPacket.threeBytePacket(
+                                a.getNumber(), a.isLongAddress(), 
+                                (byte)0xC0, (byte)0x25, (byte)0xFE);
+            if (c != null) 
+                c.sendPacket(result,1);
+             else
+                log.error("No CommandStation implementation?");
+        } else
+            throttle.setF2(false);  // send nothing
     }
     
     void startpoll() {
