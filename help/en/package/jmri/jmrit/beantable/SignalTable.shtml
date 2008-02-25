@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SignalTable.shtml,v 1.4 2007-12-30 16:21:52 jacobsen Exp $ -->
+<!-- $Id: SignalTable.shtml,v 1.5 2008-02-25 18:25:58 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -54,7 +54,7 @@ with control panel setup and similar stuff.  For more information
 on creating and displaying panels, including how to show signals
 on your panels,
 please see the 
-<A HREF="../../../../html/apps/PanelPro/Panels.html">Panels pages</a>.
+<A HREF="../../../../html/apps/PanelPro/Panels.shtml">Panels pages</a>.
 
 <!--#include virtual="/Footer" -->
 </body>
