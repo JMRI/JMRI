@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PanelEditor.shtml,v 1.4 2007-12-29 15:56:13 jacobsen Exp $ -->
+<!-- $Id: PanelEditor.shtml,v 1.5 2008-02-25 17:52:49 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Panel Editor Help</TITLE>
@@ -204,7 +204,7 @@ information for your second connection.</P>
 <P>If you add a turnout, sensor or signal to a panel using just a
 number, e.g. "23", it will be assigned to the first system on the
 preference panel. To access the second system, you have to use JMRI <A
-	HREF="../../../../html/doc/Technical/Names.html">system names</A>. For
+	HREF="../../../../html/doc/Technical/Names.shtml">system names</A>. For
 example, if the second attachment is to a LocoNet system, you'd refer to
 a LocoNet Turnout as LT13; a LocoNet sensor as LS21, etc.</P>
 
