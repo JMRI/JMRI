@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.4.shtml,v 1.5 2008-02-26 17:25:39 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.4.shtml,v 1.6 2008-02-26 22:09:34 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -136,6 +136,12 @@ and Grapevine turnouts can now have their outputs inverted in the Turnout table.
 <p>
 Bill Chown provided a decoder definition for the MRC 1644 decoder and updated the MRC 1645 definition.
 
+<p>
+Tables (sensor table, route table, etc) should now open as a more reasonable size, so that their contents are fully visible if possible.
+
+<p>
+Dan Boudreau fixed a bug where JMRI reported "ERROR NCE USING COMx" when the NCE EPROM revision was 6.2.0.
+This is the 2007 March EPROM that was quickly replaced because NCE mapped odd turnouts into the same memory bits.  The NCE status connection status incorrectly reports this as an error and should only have reported it as a warning. 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
 
