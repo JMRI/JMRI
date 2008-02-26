@@ -7,10 +7,10 @@
  <div id="side">
     <h2>LocoNet Tools</h2>
 	<UL>
-	<LI><A href="index.html#locomon">LocoNet Monitor</a>
-	<LI><A href="index.html#slotmon">Slot Monitor</a>
-	<LI><A href="index.html#sendpkt">Packet Source</a>
-	<LI><A href="index.html#pm4">BDL16, BDL162, BDL168 and PM4 programmers</a>
+	<LI><A href="index.shtml#locomon">LocoNet Monitor</a>
+	<LI><A href="index.shtml#slotmon">Slot Monitor</a>
+	<LI><A href="index.shtml#sendpkt">Packet Source</a>
+	<LI><A href="index.shtml#pm4">BDL16, BDL162, BDL168 and PM4 programmers</a>
 	<LI><A href="LocoIO.shtml">LocoIO Programmer</a>
 	</UL>
 
