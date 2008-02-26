@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.4.shtml,v 1.6 2008-02-26 22:09:34 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.4.shtml,v 1.7 2008-02-26 23:16:05 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -139,9 +139,18 @@ Bill Chown provided a decoder definition for the MRC 1644 decoder and updated th
 <p>
 Tables (sensor table, route table, etc) should now open as a more reasonable size, so that their contents are fully visible if possible.
 
-<p>
-Dan Boudreau fixed a bug where JMRI reported "ERROR NCE USING COMx" when the NCE EPROM revision was 6.2.0.
-This is the 2007 March EPROM that was quickly replaced because NCE mapped odd turnouts into the same memory bits.  The NCE status connection status incorrectly reports this as an error and should only have reported it as a warning. 
+
+
+
+
+<p>Dan Boudreau fixed a bug where JMRI reported "ERROR NCE USING
+COMx" when the NCE EPROM revision was 6.2.0. Revision 6.2.0 is the 2007
+March EPROM that was quickly replaced because NCE mapped odd turnouts
+into the same command station memory bits. JMRI incorrectly reported
+this as an error and should only have reported it as a warning. We
+recommend that you upgrade to the 2007A NCE EPROM (revision 6.2.1) or
+newer if you have any intention of using MONITORING feedback for
+turnouts.
 <hr class="hide">
 <!--#include virtual="/Footer" -->
 
