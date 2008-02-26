@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XmlPersistance.shtml,v 1.2 2008-01-22 06:17:20 jacobsen Exp $ -->
+<!-- $Id: XmlPersistance.shtml,v 1.3 2008-02-26 05:41:46 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -54,6 +54,88 @@ It's quite hackish, and not very cleanly factored. There's a fair amount of
 code duplication, but that might be because it comes from a C++ background and 
 the developer keeps wishing 
 for templates and mixin classes.  But it works!
+
+<h3>Example</h3>
+
+A LightManager knows about Lights.
+<p>
+There are lots of concrete classes implementing the Light interface:
+<ul>
+<li>jmri.jmrix.loconet.LnLight
+<li>jmri.jmrix.cmri.serial.SerialLight
+<li>jmri.jmrix.powerline.SerialLight
+</ul>
+These have their own internal information, which is not always the
+same.
+<p>
+There are also multiple LightManager concrete classes to handle them:
+<ul>
+<li>jmri.jmrix.loconet.LnLightManager
+<li>jmri.jmrix.cmri.serial.SerialLightManager
+<li>jmri.jmrix.powerline.SerialLightManager
+</ul>
+
+<p>
+Each type of manager is stored and loaded via a persistance class, 
+who is found by looking the a class with "Xml" appended to the name, in a 
+"configurexml" direct subpackage:
+<ul>
+<li>jmri.jmrix.loconet.configurexml.LnLightManagerXml
+<li>jmri.jmrix.cmri.serial.configurexml.SerialLightManagerXml
+<li>jmri.jmrix.powerline.configurexml.SerialLightManagerXml
+</ul>
+
+<p>
+In the case of Light concrete classes, the code for persisting the
+managers directly stores and loads the individual lights.  This is
+because (so far) a given manager only has one type of Light (e.g. 
+LnLightManager only has to worry about LnLight).  In cases where this
+is not true, e.g. SignalHeads which have multiple classes, there
+are persistance classes for the individual objects in addition to the manager.
+
+<h3>Added More Information To A Class</h3>
+
+If you want to store more state information, find the persisting class
+and add code to it to create and read attributes or elements.
+<p>
+Perhaps the easiest way to do this is to create a sample panel file
+with the objects you want to store in it:
+
+<p>
+<pre>
+  &lt;sensors class="jmri.jmrix.cmri.serial.configurexml.SerialSensorManagerXml" /&gt;
+    &lt;sensor systemName="CS3001" /&gt;
+  &lt;/sensor&gt;
+  &lt;sensors class="jmri.managers.configurexml.InternalSensorManagerXml" /&gt;
+   &lt;sensor systemName="IS21" /&gt;
+  &lt;/sensors&gt;
+  &lt;signalheads class="jmri.configurexml.AbstractSignalHeadManagerXml"&gt;
+    &lt;signalhead class="jmri.configurexml.DoubleTurnoutSignalHeadXml" systemName="IH1P"&gt;
+      &lt;turnout systemName="CT10" userName="1-bit pulsed green" /&gt;
+      &lt;turnout systemName="CT2" userName="1-bit pulsed red" /&gt;
+    &lt;/signalhead&gt;
+  &lt;/signalheads&gt;
+</pre>
+
+<p>
+Note the "class" attributes. They give the fully-qualified name
+of the class that can load or store that particular element. In the 
+case of Sensors, we see there are two managers in use: One for C/MRI, and
+one for internal Sensors.  For SignalHeads, there's only one manager,
+jmri.configurexml.AbstractSignalHeadManager persisted by jmri.configurexml.AbstractSignalHeadManager, 
+but each particular SignalHead implementing class has it's own persisting class.
+
+<p>
+To e.g. add more data to a sensor, the jmri.jmrix.cmri.serial.configurexml.SerialSensorManagerXml
+and jmri.managers.configurexml.InternalSensorManagerXml classes would have to be
+modified.
+
+<p>
+Note that in some cases, there's an inheritance relationship amoung the
+persisting classes that can help.  For example, the LocoNet LnSensorManagerXml
+inherits from jmri.configurexml.AbstractSensorManagerConfigXML, which does
+almost all the work of storing and loading sensors.
+
 
 <!--#include virtual="/Footer" -->
 
