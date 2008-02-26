@@ -1,14 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright (Author) 2008 -->
-<!-- $Id: decTop.shtml,v 1.1 2008-02-24 14:49:32 jacobsen Exp $ -->
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: decTop.shtml,v 1.2 2008-02-26 01:09:39 jacobsen Exp $ -->
 
     <TITLE>
- 	JMRI: Installing on a decTOP small form factor computer
+ 	Running JMRI on a decTOP small form factor computer
     </TITLE>
-    <META content="YOUR NAME HERE" name=Author>
-    <meta name="keywords" content="SOME KEYWORDS">
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI decTOP SFF Ubuntu Xubuntu">
 
 
 <!-- Style -->
@@ -30,18 +30,40 @@
 	    <!-- Page Contents --> <!-- Required -->
 	    <!-- ------------- -->
 
-	    <H1>Installing on a decTOP small form factor computer</H1>
+	    <H1>Running JMRI on a decTOP small form factor computer</H1>
 
 <a href="https://store.dataevolution.com/photos/DT-7001-2.jpg"/>
 <img src="https://store.dataevolution.com/photos/DT-7001-2.jpg" width="250" height="167" align="right" alt="decTop image"/>
 </a>
 The decTOP is a "small form factor computer" (SFF)
 that provides a complete system in a small, low-cost, rugged box.
+<p>
 The goal of our project is to see if it would make a good JMRI
 layout controller, suitable for e.g. driving a couple modules or a medium size
-layout.
+layout. 
 <p>
-decTop specifications:
+As an example, imagine a large modular layout at a show.  
+A number of clubs bring their modules together to create the overall 
+layout. A common LocoNet backbone can be shared by all, but the addresses
+of devices on individual modules have to be carefully managed.  It doesn't 
+work if both the Northville and Southville clubs bring modules that are
+configured to use address 120.
+<p>
+If sufficiently low cost &amp; reliable hardware was available,
+JMRI could resolve this, 
+without having to manage huge numbers of addresses or reconfigure lots of hardware.
+Each club could put a small computer running a JMRI application as the gateway
+between the common LocoNet (LayoutNet) and a LocoNet that only runs to 
+their modules (LocalNet).  JMRI would then translate addresses as 
+LocoNet messages move back and forth, so that address 120 on each of the LocalNet modular
+sections becomes 220 and 430 on the global LayoutNet. At the same time, JMRI could continue
+to provide local control panes, signaling and automation, and all the other thimgs.
+<p>
+All we need to make something like this work is sufficently cheap and robust
+hardware, that can make two layout connections.
+<p>
+The decTop seems to meet the cheap and rugged criteria, 
+so seems to have enough horsepower:
 <ul>
 <li>Processor subsystem -- AMD Geode GX processor, with CS5535 companion device
 <li>Memory -- 128 MB DDR SDRAM, upgradable
@@ -54,6 +76,7 @@ decTop specifications:
 <li>Size -- 8.5 x 5.5 x 2.5 inches
 <li>Weight -- approx. 3 pounds 
 <li>Power -- about 8 watts, separate power adapter
+<li>Software -- none, but can run several forms of Linux and Java
 </ul>
 <a href="http://pclab.nectec.or.th/wiki/images/7/70/Amd-pic-setup.jpg">
 <img src="http://pclab.nectec.or.th/wiki/images/7/70/Amd-pic-setup.jpg" align="right" height="115" width="175" alt="System view"/></a>
@@ -63,34 +86,129 @@ from the Data Evolution online store (February 2008).
 It comes with a USB mouse, USB keyboard (poor) and the Ethernet adapter.
 You also need to
 provide your own monitor and either a USB CD drive or USB flash drive
-for use during (at least) setup.
+for use during (at least) setup. 
 <p>
-It was at one point known as the 
-"<a href="http://www.amd.com/us-en/ConnectivitySolutions/ProductInformation/0,,50_2330_12264_12262,00.html">AMD PIC</a>".
+You'll also need 
+USB adapter(s) to connect to your layout.  There are four 
+USB ports available for use with a LocoBuffer USB, LI-USB or
+USB - serial adapter. Note that normally three of those ports are
+used for the keybooard, mouse and Ethernet adapter, leaving one available
+for a layout connection.
 
-<h2>Installing Linux</h2>
+<p>
+The decTOP was previously known as the 
+"<a href="http://www.amd.com/us-en/ConnectivitySolutions/ProductInformation/0,,50_2330_12264_12262,00.html">AMD PIC</a>".
+More information is available under that name.
+
+<h2>Set Up</h2>
+This section describes how we got our test machine 
+up and running with Linux Xubuntu 7.10, Java 1.6 and JMRI 2.1.3.
+
+<h3>Preparations</h3>
+We followed 
+<a href="http://www.entropicblur.com/dectop/guide.html">this page of instructions</a>,
+which is written for installation via Xubuntu.
+(See <a href="#links">Links section</a> below for other approaches)
+<p>
+We're actually using a MacBook Pro and VMWare, 
+which in turn provided a Xubuntu 7.10 machine for creating the 
+USB stick.
+<p>
+Using the Ubuntu appliance from http://bagside.com/bagvapp/
+(Alternately, download and install the "Xubuntu 7.10 Tribe 2" VMWare appliance 
+from http://bagside.com/bagvapp/)
+<p>
+USB devices connect to the VMware machine if it has focus when the
+flash drive is plugged in.
+Mine mounted as /media/KINGSTON
+<pre>
+/etc/mtab:/dev/sdb1 /media/KINGSTON vfat rw,nosuid,nodev,shortname=mixed,uid=1000,utf8,umask=077,usefree 0 0
+</pre>
+(/dev/sda1 is c:, /dev/sda4 is z:, according to /etc/mtools.conf)
+
+
+<h3>Installing Linux</h3>
 Step one, install Xubuntu 7.10, chosen to be recent, but 
 work on hardware with small memory.
 <p>
+Made flash drive, did copy steps on MacOS X
+<p>
+Make sure USB Ethernet plugged in, cabled (e.g. you need a hard-wire Ethernet
+connection to do this)
+<p>
+Say "no" to detect keyboard, select US twice (with one they sent).
+<P>
+Give it a network name: decTOP
+<p>
+Partition disks - select the second option, all files in one partition, then select "yes"
+for the next options
+<p>
+User long name: JMRI User<br/>
+Short name: jmri<br/>
+Pwd: jmripwd<br/>
+<p>
+Do the kernal install - this requires network access via the Ethernet adapter,
+which in turn requires DCHP.
+<p>
+LONG wait at "Configuring language-pack-en-base 1%"
+<p>
+When asked what to install, select OpenSSH server and Xubuntu desktop.
+<p>
+Select and install software failed! (In Large Red Letters)
+<p>
+Retry, with just the xubuntu desktop; it gets to end OK.
+<p>
+During reboot into single user mode, lots of pretty colors!
+<p>
+Consult author of web page...
+<p>
 
-<h2>Installing Java 1.5</h2>
+Do what's in the web page, with 1280x1024 mode line (2nd at end).
+<p>
+Boots! Though slowly...  And video is still off somewhat, taking up
+just a corner of the screen.
+<p>
 
-<h2>Installing JMRI</h2>
+http://gentoo-wiki.com/TIP_Getting_modelines
+read-edit
+get-edid | parse-edid
 
-<h2>Installing RXTX and drivers for USB-serial adapters</h2>
+<h3>Installing Java 1.5</h3>
 
+https://jdk-distros.dev.java.net/ubuntu.html
+
+<h3>Installing JMRI</h3>
+
+We do this first to make sure it will actually come up at
+all, before spending time on RXTX.
+
+Using JMRI 2.1.3
+
+<h3>Installing RXTX and drivers for USB-serial adapters</h3>
+
+Eventually, the LocoBuffer-USB.
+Eventually, the Lenz LI-USB.
+
+<h3>Move back to a bootable flash drive</h3>
 
 <h2>More information</h2>
+
+<a id="links">
+<h3>Links</h3></a>
+
+<h4>Data Evolution</h4>
 <a href="http://www.dataevolution.com/dectop%20info%202.htm">Vendor page</a><br>
 <a href="https://store.dataevolution.com/ProductDetails.asp?ProductCode=DT%2D7001">Product listing</a><br/>
 <a href="https://store.dataevolution.com/ProductDetails.asp?ProductCode=DT%2D7001&Show=TechSpecs">Specifications</a><br/>
 
-<p>
+<h4>Hardware Info</h4>
 <a href="http://pair.offshore.ai/pic/">Photos of PIC internals</a>
 
 <p>
-Pages describing software installs:
-<p>
+<a href="http://www.lesswatts.org/projects/acpi/">ACPI power saving</a>
+
+<h4>Other Software Installs</h4>
+
 <a href="http://jsco.org/dectop/">Ubuntu 6.06</a> (no audio?)<br>
 <a href="http://librenix.com/?inode=11001">Another Ubuntu 6.06</a><br>
 These recommend sticking with Ubuntu 6.06 unless the memory has been updated.
@@ -101,14 +219,13 @@ recommends 256MB RAM for Ubuntu or Kubuntu.
 (<a href="http://www.entropicblur.com/dectop/guide704.html">Earlier 7.04 install guide</a>)
 
 
-<p>
-Use Java 1.5 -- 
-http://www.linuxquestions.org/questions/linux-newbie-8/java-runtime-enviroment-plugin-wont-work-with-firefox-in-xubuntu-616663/
+<h4>Java</h4>
+
+<a href="http://www.linuxquestions.org/questions/linux-newbie-8/java-runtime-enviroment-plugin-wont-work-with-firefox-in-xubuntu-616663/:">Post recommending Java 1.5</a>
 
 <p>
-ACPI power saving --
-http://www.lesswatts.org/projects/acpi/
-
+<a href="images/DecTopSuccess.jpg">
+<img src="images/DecTopSuccess.jpg" height="240" width="320" alt="JMRI on decTOP"/></a>
 <!--#include virtual="/Footer" -->
 </body>
 </html>
