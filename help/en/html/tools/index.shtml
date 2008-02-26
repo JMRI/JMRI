@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.3 2008-02-24 22:40:38 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.4 2008-02-26 00:47:06 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -119,7 +119,7 @@
 		</dd>
 
 
-	<h2><a href="../apps/LocoTools/index.html">LocoNet-specific Tools</a></h2>
+	<h2><a href="../apps/LocoTools/index.shtml">LocoNet-specific Tools</a></h2>
 	A set of Digitrax LocoNet-specific tools:
 		    <UL>
 		    <LI><dfn>LocoNet monitor</dfn>
