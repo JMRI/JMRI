@@ -18,7 +18,7 @@ import jmri.jmrix.ConnectionStatus;
  * Also checks for March 2007 EPROM and warns user about Monitoring feedback.
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  * 
  */
 
@@ -33,18 +33,19 @@ public class NceConnectionStatus implements NceListener {
 	
 	private static final int INIT_STATE = 0;	//Initial state
 	private static final int WAIT_STATE = 1;	//Waiting for reply
-	private static final int ERROR_STATE = 2;	//Serial interface is not functioning properly
-	private static final int CHECK_OK = 4;		//Valid response
-	private static final int CHECK_STATE = 8;	//Normal state
+	private static final int CHECK_OK = 2;		//Valid response
+	private static final int CHECK_STATE = 4;	//Normal state
+	
+	private static final int WARN1_STATE = 8;	//Serial interface is not functioning properly
+	private static final int WARN2_STATE = 9;
 	
 	// all of the error states below display a JOptionPane error message
-	private static final int ERROR1_STATE = 8;	
-	private static final int ERROR2_STATE = 9;
-	private static final int ERROR3_STATE = 10;
-	private static final int ERROR4_STATE = 11;
-	private static final int ERROR5_STATE = 12;
-	private static final int ERROR6_STATE = 13;
-	private static final int ERROR7_STATE = 14;
+	private static final int ERROR1_STATE = 16;	
+	private static final int ERROR2_STATE = 17;
+	private static final int ERROR4_STATE = 19;
+	private static final int ERROR5_STATE = 20;
+	private static final int ERROR6_STATE = 21;
+	private static final int ERROR7_STATE = 22;
 	
 	private static int epromState = INIT_STATE;	//Eprom state
 	private static boolean epromChecked = false;
@@ -126,11 +127,11 @@ public class NceConnectionStatus implements NceListener {
 										+ "Confirm cabling and that the NCE system is powered up.",
 								"Warning", JOptionPane.WARNING_MESSAGE);
 
-			epromState = ERROR_STATE;
+			epromState = WARN1_STATE;
 		}
 		
 		// still no response from command station?
-		else if (epromState == ERROR_STATE){
+		else if (epromState == WARN1_STATE){
 			log.warn("No response from NCE command station");
 		}
 		
@@ -154,14 +155,17 @@ public class NceConnectionStatus implements NceListener {
 			return null;
 		}
 
-		if (epromState == ERROR3_STATE) {
-			// if (JOptPane_ERROR_MESSAGES_ENABLED)
-			// Need to add checkbox "Do not show this message again" otherwise
-			// the message can be a pain.
-			// JOptionPane.showMessageDialog(null, "The 2007 March EPROM doesn't
-			// provide reliable feedback," +
-			// " contact NCE if you want to use MONITORING feedback ",
-			// "Warning", JOptionPane.INFORMATION_MESSAGE);
+		if (epromState == WARN2_STATE) {
+			log.warn("Detected 2007 March EPROM which doesn't provide reliable MONITORING feedback for turnouts");
+			if (JOptPane_WARNING_MESSAGES_ENABLED)
+				// Need to add checkbox "Do not show this message again" otherwise
+				// the message can be a pain.
+				JOptionPane.showMessageDialog(null, "The 2007 March EPROM doesn't provide reliable feedback," +
+						" contact NCE if you want to use MONITORING feedback ",
+						"Warning", JOptionPane.INFORMATION_MESSAGE);
+			ConnectionStatus.instance().setConnectionState(
+					NceTrafficController.instance().getPortName(),
+					ConnectionStatus.CONNECTION_UP);
 			epromState = CHECK_STATE;
 			return null;
 		}
@@ -207,7 +211,7 @@ public class NceConnectionStatus implements NceListener {
 		}
 
 		// go ahead and read the EPROM revision
-		if (epromState != ERROR_STATE) // stay in error state until reply
+		if (epromState != WARN1_STATE) // stay in error state until reply
 			epromState = WAIT_STATE;
 
 		byte[] bl = NceBinaryCommand.getNceEpromRev();
@@ -247,6 +251,12 @@ public class NceConnectionStatus implements NceListener {
 			log.info("NCE EPROM revision = " + Integer.toHexString(VV & 0xFF)
 					+ "." + Integer.toHexString(MM & 0xFF) + "."
 					+ Integer.toHexString(mm & 0xFF));
+			
+			// Warn about the March 2007 CS EPROM	
+			if (VV == VV_2007 && MM == MM_2007 && mm == mm_2007) {
+				nceEpromMarch2007 = true;
+				epromState = WARN2_STATE;
+			}
 
 			// Confirm that user selected correct revision of EPROM, check for old EPROM installed, new EPROM preferences
 			if ((VV <= VV_2007 && MM < MM_2007)
@@ -269,12 +279,6 @@ public class NceConnectionStatus implements NceListener {
 								+ Integer.toHexString(mm & 0xFF)
 								+ ") of the NCE Command Station EPROM selected in Preferences");
 				epromState = ERROR2_STATE;
-			}
-
-			// Warn about the March 2007 CS EPROM	
-			if (VV == VV_2007 && MM == MM_2007 && mm == mm_2007) {
-				nceEpromMarch2007 = true;
-				epromState = ERROR3_STATE;
 			}
 
 			// Check that layout connection is correct

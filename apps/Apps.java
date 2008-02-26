@@ -32,7 +32,7 @@ import net.roydesign.mac.MRJAdapter;
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
  * @author  Dennis Miller  Copyright 2005
- * @version     $Revision: 1.51 $
+ * @version     $Revision: 1.52 $
  */
 public class Apps extends JPanel implements PropertyChangeListener{
 
@@ -82,8 +82,6 @@ public class Apps extends JPanel implements PropertyChangeListener{
         add(statusPanel());
         log.debug("Done with statusPanel, start buttonSpace");
         add(buttonSpace());
-        
-        ConnectionStatus.instance().addPropertyChangeListener(this);
 
         log.debug("End constructor");
     }
@@ -486,6 +484,8 @@ public class Apps extends JPanel implements PropertyChangeListener{
         pane2.add(new JLabel(line2()));
         pane2.add(new JLabel(line3()));
         
+        // add listerner for Com port updates
+        ConnectionStatus.instance().addPropertyChangeListener(this);
         buildLine4(pane2);
         buildLine5(pane2);
         buildLine5a(pane2);
@@ -648,6 +648,7 @@ public class Apps extends JPanel implements PropertyChangeListener{
     }
     
     public void propertyChange(PropertyChangeEvent ev){
+//   	log.info("property change: comm port status update");
         updateLine4();
         updateLine5();
         updateLine5a();
