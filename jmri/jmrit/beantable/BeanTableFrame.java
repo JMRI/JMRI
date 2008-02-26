@@ -20,10 +20,21 @@ import jmri.util.davidflanagan.HardcopyWriter;
 
 
 /**
- * Frame providing a table of NamedBeans.
- *
+ * Provide a JFrame to display a table of NamedBeans.
+ * <P>
+ * This frame includes the table itself at the top,
+ * plus a "bottom area" for things like an Add... button
+ * and checkboxes that control display options.
+ * <p>
+ * The usual menus are also provided here.
+ * <p>
+ * Specific uses are customized via the BeanTableDataModel
+ * implementation they provide, and by 
+ * providing a {@see #extras} implementation
+ * that can in turn invoke {@see #addToBottomBox} as needed.
+ * 
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
 public class BeanTableFrame extends jmri.util.JmriJFrame {
 
@@ -44,7 +55,7 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
         dataTable	= JTableUtil.sortableDataModel(dataModel);
         dataScroll	= new JScrollPane(dataTable);
 
-        // give system name column a smarter sorter and use it initially
+        // give system name column as smarter sorter and use it initially
         try {
             TableSorter tmodel = ((TableSorter)dataTable.getModel());
             tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
@@ -101,22 +112,32 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
         addHelpMenu(helpTarget,true);
 
         // install items in GUI
-        JPanel pane1 = new JPanel();
         getContentPane().add(dataScroll);
         bottomBox = Box.createHorizontalBox();
         bottomBox.add(Box.createHorizontalGlue());	// stays at end of box
         bottomBoxIndex = 0;
         
         getContentPane().add(bottomBox);
-        pack();
-        pane1.setMaximumSize(pane1.getSize());
-
+        
         // add extras, if desired by subclass
         extras();
 
-        pack();
+        // set Viewport preferred size from size of table
+        java.awt.Dimension dataTableSize = dataTable.getPreferredSize();
+        // width is right, but if table is empty, it's not high
+        // enough to reserve much space.
+        dataTableSize.height = Math.max(dataTableSize.height, 400);
+        dataScroll.getViewport().setPreferredSize(dataTableSize);
+ 	    
+        // set preferred scrolling options
+        dataScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        dataScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
     }
 
+    /**
+     * Hook to allow sub-types to install more items in GUI
+     */
 	void extras() {}
 	    
     protected Box getBottomBox() { return bottomBox; };
