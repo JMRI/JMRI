@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: StartUpScripts.shtml,v 1.1 2008-02-27 06:53:50 jacobsen Exp $ -->
+<title>JMRI: Startup Scripts</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1>JMRI: Startup Scripts</h1>
+
+This page describes the scripts used to start up JMRI
+
+<h2>Common Aspects</h2>
+
+The basic things needed are:
+<ul>
+<li>Form and provide a classpath
+<li>Provide system options and workarounds<br>
+    -noverify<br>
+    -Dsun.java2d.noddraw
+<li>Configure the security manager
+<li>Configure RMI
+<li>Finally, invoke the appropriate main entry point.
+</ul>
+
+<h3>Classpath</h3>
+
+(See also the 
+<a href="plugins.shtml">plugins page</a>)
+
+<h2>Linux</h2>
+
+<h2>MacOS X</h2>
+
+(Setting property for menu bar)
+
+<h2>Windows</h2>
+    
+(How do icons and desktop shortcuts work?)
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
