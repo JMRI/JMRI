@@ -12,7 +12,7 @@ import javax.swing.*;
  * Swing action to display the JMRI context for the user
  *
  * @author	    Bob Jacobsen    Copyright (C) 2007
- * @version         $Revision: 1.9 $
+ * @version         $Revision: 1.10 $
  */
 public class ReportContextAction extends AbstractAction {
 
@@ -37,8 +37,8 @@ public class ReportContextAction extends AbstractAction {
 
         addString("Connection one: "+Apps.getConnection1()+"  ");
         addString("Connection two: "+Apps.getConnection2()+"  ");
-        addString("Connection two: "+Apps.getConnection3()+"  ");
-        addString("Connection two: "+Apps.getConnection4()+"  ");
+        addString("Connection three: "+Apps.getConnection3()+"  ");
+        addString("Connection four: "+Apps.getConnection4()+"  ");
 
         String prefs = jmri.jmrit.XmlFile.prefsDir();
         addString("Preferences directory: "+prefs+"  ");
