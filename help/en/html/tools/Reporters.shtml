@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Reporters.shtml,v 1.1 2008-02-24 06:01:49 jacobsen Exp $ -->
+<!-- $Id: Reporters.shtml,v 1.2 2008-02-27 19:50:44 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -36,7 +36,7 @@
 		JMRI: Reporter Documentation
         </H2>
 
-<h3>What are Sensors?</h3>
+<h3>Reporter</h3>
 
 <p>
 A Reporter is JMRI's way of representing information reported back from the layout.
