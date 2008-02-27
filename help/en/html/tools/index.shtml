@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.4 2008-02-26 00:47:06 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.5 2008-02-27 19:31:14 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -51,13 +51,13 @@
 		    JMRI calls just about any output to the layout a "Turnout". 
 		</dd>
 
-		<dt><h3><a href="throttle/ThrottleMain.html">Throttles</a></h3></dt>
+		<dt><h3><a href="throttle/ThrottleMain.shtml">Throttles</a></h3></dt>
 		<dd>
 		    You can open multiple software throttles to run
 		    your DCC locomotives.
 		</dd>
 
-		<dt><h3><a href="ConsistTool/ConsistTool.html">Consisting</a></h3></dt>
+		<dt><h3><a href="ConsistTool/ConsistTool.shtml">Consisting</a></h3></dt>
 		<dd>
 		    JMRI provides tools for managing locomotive consists.
 		</dd>
@@ -111,7 +111,7 @@
             fast clocks already installed on your layout.
         </dd>
 
-   		<dt><h3><a href="../apps/Speedometer/index.html">Speedometer</a></h3></dt>
+   		<dt><h3><a href="speedometer/index.shtml">Speedometer</a></h3></dt>
 		<dd>
 		    A tool for determining the scale speed of your
 		    locomotives.  You can use this while setting them up,
