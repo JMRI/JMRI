@@ -37,7 +37,7 @@ import java.awt.event.KeyEvent;
  *
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class JmriJFrame extends JFrame implements java.awt.event.WindowListener {
@@ -117,19 +117,46 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener 
         try {
             // Try our own alorithm.  This throws null-pointer exceptions on
             // some Java installs, however, for unknown reasons, so be
-            // prepared to fal back.
+            // prepared to fall back.
             try {
-                Insets insets = getToolkit().getScreenInsets(this.getGraphicsConfiguration());
+                // First, ask for the physical screen size
                 Dimension screen = getToolkit().getScreenSize();
-                return new Dimension(screen.width-(insets.right+insets.left),
-                    screen.height-(insets.top+insets.bottom));
+
+                // Next, ask for any insets on the screen.
+                Insets insets = getToolkit().getScreenInsets(this.getGraphicsConfiguration());
+                int widthInset = insets.right+insets.left;
+                int heightInset = insets.top+insets.bottom;
+                
+                // If insets are zero, guess based on system type
+                if (widthInset == 0 && heightInset == 0) {
+                    String type = System.getProperty("os.name","");
+                    if (type.equals("Linux")) {
+                        // Linux generally has a bar across the top and/or bottom
+                        // of the screen, but lets you have the full width.
+                        heightInset = 70;
+                    }
+                }
+                
+                // Insets may also be provided as system parameters
+                String sw = System.getProperty("jmri.inset.width");
+                if (sw!=null) try {
+                    widthInset = Integer.parseInt(sw);
+                } catch (Exception e1) {log.error("Error parsing jmri.inset.width: "+e1);}
+                String sh = System.getProperty("jmri.inset.height");
+                if (sh!=null) try {
+                    heightInset = Integer.parseInt(sh);
+                } catch (Exception e1) {log.error("Error parsing jmri.inset.height: "+e1);}
+                           
+                // calculate size as screen size minus space needed for offsets
+                return new Dimension(screen.width-widthInset, screen.height-heightInset);
+                
             } catch (NoSuchMethodError e) {
                 Dimension screen = getToolkit().getScreenSize();
                 return new Dimension(screen.width,
                     screen.height-45);  // approximate this...
             }
         } catch (Exception e2) {
-            // failed, fall back to standard method
+            // failed completely, fall back to standard method
             return super.getMaximumSize();
         }
     }
@@ -210,4 +237,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener 
     }
     
     public void windowClosed(java.awt.event.WindowEvent e) {}
+    
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(JmriJFrame.class.getName());
+
 }
