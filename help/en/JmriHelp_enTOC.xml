@@ -54,7 +54,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
       <tocitem text="Error Messages" target="html.tools.programmer.messages"/>
    </tocitem>
    <tocitem text="Tools" target="html.tools.index">
-      <tocitem text="Consist Tool" target="package.jmri.jmrit.consisttool.ConsistToolFrame"/>
+      <tocitem text="Consist Tool" target="html.tools.consisttool.ConsistTool"/>
       <tocitem text="Clocks" target="html.tools.fastclock.index">
          <tocitem text="Introduction" target="html.tools.fastclock.index"/>
          <tocitem text="Setting the Internal Clock" target="package.jmri.jmrit.simpleclock.SimpleClockFrame"/>
@@ -97,13 +97,20 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
    </tocitem>
    <tocitem text="Names" target="html.doc.Technical.Names"/>
    <tocitem text="System-Specific">
-      <tocitem text="Digitrax">
-         <tocitem text="LocoNet ID" target="package.jmri.jmrix.loconet.locoid.LocoIdFrame"/>
-         <tocitem text="Sound">
-            <tocitem text="Sound Loader" target="package.jmri.jmrix.loconet.soundloader.LoaderFrame"/>
-            <tocitem text="Sound Editor" target="package.jmri.jmrix.loconet.soundloader.EditorFrame"/>
-         </tocitem>
-      </tocitem>
+   	<tocitem text="Digitrax">
+   		<tocitem text="LocoNet ID" target="package.jmri.jmrix.loconet.locoid.LocoIdFrame" />
+   		<tocitem text="Sound">
+   			<tocitem text="Sound Loader" target="package.jmri.jmrix.loconet.soundloader.LoaderFrame" />
+   			<tocitem text="Sound Editor" target="package.jmri.jmrix.loconet.soundloader.EditorFrame" />
+   		</tocitem>
+   	</tocitem>
+   	<tocitem text="NCE">
+ 		<tocitem text="Send Command" target="package.jmri.jmrix.nce.packetgen.NcePacketGenFrame"/>
+ 		<tocitem text="Edit Macro" target="package.jmri.jmrix.nce.macro.NceMacroEditFrame"/>
+  		<tocitem text="Edit Consist" target="package.jmri.jmrix.nce.consist.NceConsistEditFrame"/>
+ 		<tocitem text="DCC Packet Analyzer" target="package.jmri.jmrix.nce.analyzer.NcePacketMonitorFrame"/>
+ 		<tocitem text="Monitor Clock" target="package.jmri.jmrix.nce.clockmon.ClockMonFrame"/>
+   	</tocitem>
    </tocitem>
    <tocitem text="Hardware Support" target="html.hardware.index"/>
    <tocitem text="Technical Info" target="html.doc.Technical.index">
