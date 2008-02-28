@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Windows.html,v 1.13 2008-02-18 20:01:16 jacobsen Exp $ -->
+<!-- $Id: Windows.html,v 1.14 2008-02-28 08:10:12 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -51,14 +51,14 @@
 <!-- /Header -->
 
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
-      <H2> 
-      JMRI Install Guide: Windows
-      </H2>
+<div class="nomenu" id="mBody">
+<div id="mainContent">
+<H2> 
+JMRI Install Guide: Windows
+</H2>
 
-      <OL>
-        <LI>Determine if your hardware supports Java and JMRI</LI>
+<OL>
+    <LI>Determine if your hardware supports Java and JMRI</LI>
       
 	<P>We have had a report that a 100MHz Pentium is too slow to use, and
 	another that a 120MHz Pentium II is fine, so somewhere around there is
@@ -163,8 +163,31 @@
 	Start menu.
 
 	<LI>Notes:</LI>
-	<H4>Windows Themes and Skins</H4>
+	
+	<a id="largewindow"/>
+	<h4>Large Windows</h4>
+	<img src="images/TaskbarOptions.png" height="228" width="202" align="right" alt="control panel"/>
+	Depending on what it wants to display, JMRI can open up very large
+	windows.  Generally, JMRI uses the size of the screen and 
+	information about fixed things like the start bar to decide the
+	maximum size for an opening window so that e.g. the corners can't 
+	be reached to resize the window.
 	<p>
+	Depending your Windows display operation, large JMRI windows
+	will either resize to stay on the large part of the screen, clear
+	of start bars and menu bars, or will be displayed at the full size of 
+	the screen, appearing under the start bar and menu bars.
+	<p>
+	This is controlled by the 
+	<a href="images/TaskbarOptions.png">Taskbar and Start Menu Properties</a>
+	control panel.
+	JMRI windows can open to the full screen size if the
+	'Keep the taskbar on top of other windows' option is de-selected.
+
+    Also, they can open to the full screen size if the 'Auto hide the taskbar' 
+    option is selected
+	
+	<H4>Windows Themes and Skins</H4>
 	If you're using a "skinning" utility which changes the appearance of
 	programs running on your computer, you should tell it to ignore 
 	the "java.exe" program.  That's how JMRI and DecoderPro will appear to
