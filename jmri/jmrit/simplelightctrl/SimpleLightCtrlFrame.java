@@ -6,8 +6,11 @@ import jmri.InstanceManager;
 import jmri.Light;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.text.DecimalFormat;
 
+import javax.swing.BoxLayout;
 import javax.swing.JMenuBar;
+import javax.swing.JPanel;
 
 /**
  * Frame controlling a single light
@@ -16,22 +19,43 @@ import javax.swing.JMenuBar;
  * 
  * @author	Ken Cameron   Copyright (C) 2008
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
 	
 	private static final String LOCKED = "Locked";
 	private static final String UNLOCKED = "Normal";
 
+    DecimalFormat threeDigits = new DecimalFormat("000");
+    DecimalFormat oneDigits = new DecimalFormat("0");
+
     // GUI member declarations
     javax.swing.JLabel textAdrLabel = new javax.swing.JLabel();
     javax.swing.JTextField adrTextField = new javax.swing.JTextField(3);
+    javax.swing.JButton statusButton = new javax.swing.JButton();
 
     javax.swing.JButton onButton = new javax.swing.JButton();
     javax.swing.JButton offButton = new javax.swing.JButton();
 
     javax.swing.JLabel textStateLabel = new javax.swing.JLabel();
     javax.swing.JLabel nowStateLabel = new javax.swing.JLabel();
+    javax.swing.JLabel dimStatusLabel = new javax.swing.JLabel();
+
+    javax.swing.JLabel dimTextLabel1 = new javax.swing.JLabel();
+    javax.swing.JTextField dimTextField = new javax.swing.JTextField(4);
+    javax.swing.JLabel dimTextLabel2 = new javax.swing.JLabel();
+    javax.swing.JButton dimButton = new javax.swing.JButton();
+    
+    javax.swing.JLabel dimEnabledLabel = new javax.swing.JLabel();
+    javax.swing.JCheckBox dimEnabledCheckBox = new javax.swing.JCheckBox();
+    javax.swing.JLabel dimMinTextLabel = new javax.swing.JLabel();
+    javax.swing.JTextField dimMinTextField = new javax.swing.JTextField(4);
+    javax.swing.JLabel dimMaxTextLabel = new javax.swing.JLabel();
+    javax.swing.JTextField dimMaxTextField = new javax.swing.JTextField(4);
+    javax.swing.JLabel dimRateTextLabel = new javax.swing.JLabel();
+    javax.swing.JTextField dimRateTextField = new javax.swing.JTextField(4);
+    
+    javax.swing.JButton applyButton = new javax.swing.JButton();
     
     public SimpleLightCtrlFrame() {
         super();
@@ -44,6 +68,20 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
         adrTextField.setVisible(true);
         adrTextField.setToolTipText("light number being controlled");
 
+        statusButton.setText("Get Status");
+        statusButton.setVisible(true);
+        statusButton.setToolTipText("Press to get current status");
+        statusButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    statusButtonActionPerformed(e);
+                }
+            });
+
+        textStateLabel.setText(" current state: ");
+        textStateLabel.setVisible(true);
+        nowStateLabel.setText("<unknown>");
+        nowStateLabel.setVisible(true);
+        
         onButton.setText("On");
         onButton.setVisible(true);
         onButton.setToolTipText("Press to turn light on/bright");
@@ -62,29 +100,100 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
                 }
             });
 
-        textStateLabel.setText(" current state: ");
-        textStateLabel.setVisible(true);
+        dimEnabledLabel.setText("Enable Dimming: ");
+        dimEnabledCheckBox.setSelected(false);
+        dimEnabledCheckBox.setVisible(true);
+        
+        dimTextLabel1.setText("Dim:");
+        dimTextLabel1.setVisible(true);
+        dimTextField.setText(oneDigits.format(0));
+        dimTextField.setVisible(true);
+        dimTextLabel2.setText("%");
+        dimTextField.setToolTipText("dim setting");
+        
+        dimMinTextLabel.setText("Min Dim: ");
+        dimMinTextField.setText(oneDigits.format(0));
+        dimMinTextField.setVisible(true);
+        dimMinTextField.setToolTipText("Max for a dim setting, 0% to 100%");
+        dimMaxTextLabel.setText("Max Dim: ");
+        dimMaxTextField.setText(oneDigits.format(0));
+        dimMaxTextField.setVisible(true);
+        dimMaxTextField.setToolTipText("Max for a dim setting, 0% to 100%");
+        dimRateTextLabel.setText("Change Rate: ");
+        dimRateTextField.setText(oneDigits.format(0));
+        dimRateTextField.setVisible(true);
+        dimRateTextField.setEnabled(false);
+        dimRateTextField.setToolTipText("Speed of dimming, fast minutes for 0% to 100%");
+        dimButton.setText("Dim");
+        dimButton.setVisible(true);
+        dimButton.setToolTipText("Press to set dim level");
+        dimButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    dimButtonActionPerformed(e);
+                }
+            });
 
-        nowStateLabel.setText("<unknown>");
-        nowStateLabel.setVisible(true);
+        applyButton.setText("Apply");
+        applyButton.setVisible(true);
+        applyButton.setToolTipText("Press to apply settings");
+        applyButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				applyButtonActionPerformed(e);
+			}
+		});
         
         // general GUI config
         setTitle("Light Control");
-        getContentPane().setLayout(new GridLayout(8,2));
+        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         // install items in GUI
-        getContentPane().add(textAdrLabel);
-        getContentPane().add(adrTextField);
+        JPanel pane2 = new JPanel();
+        pane2.add(textAdrLabel);
+        pane2.add(adrTextField);
+        pane2.add(statusButton);
+        getContentPane().add(pane2);
 
-        getContentPane().add(textStateLabel);
-        getContentPane().add(nowStateLabel);
-        
-        getContentPane().add(onButton);
-        getContentPane().add(offButton);
-              
+        pane2 = new JPanel();
+        pane2.add(textStateLabel);
+        pane2.add(nowStateLabel);
+        getContentPane().add(pane2);
+
+        pane2 = new JPanel();
+        pane2.add(onButton);
+        pane2.add(offButton);
+        getContentPane().add(pane2);
+
+        pane2 = new JPanel();
+        pane2.add(dimTextLabel1);
+        pane2.add(dimTextField);
+        pane2.add(dimTextLabel2);
+        pane2.add(dimButton);
+        getContentPane().add(pane2);
+
+        pane2 = new JPanel();
+        pane2.add(dimStatusLabel);
+        pane2.add(dimEnabledLabel);
+        pane2.add(dimEnabledCheckBox);
+        getContentPane().add(pane2);
+
+        pane2 = new JPanel();
+        pane2.add(dimMinTextLabel);
+        pane2.add(dimMinTextField);
+        pane2.add(dimMaxTextLabel);
+        pane2.add(dimMaxTextField);
+        pane2.add(dimRateTextLabel);
+        pane2.add(dimRateTextField);
+        getContentPane().add(pane2);
+
+        pane2 = new JPanel();
+        pane2.add(applyButton);
+        getContentPane().add(pane2);
+
         // add help menu to window
     	addHelpMenu("package.jmri.jmrit.simplelightctrl.SimpleLightCtrl", true);
 
+        setMinimumSize(new Dimension(200, 200));
+        setSize(300, 300);
         pack();
 
     }
@@ -102,17 +211,14 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
 						+ " is not available");
 			} else {
 				light.addPropertyChangeListener(this);
-				updateLightStatusFields();
-				if (light.getState() == light.OFF) {
-					nowStateLabel.setText("OFF");
-				}
 				if (log.isDebugEnabled())
 					log.debug("about to command CLOSED");
 				// and set commanded state to CLOSED
 				light.setState(Light.OFF);
+				dimTextField.setText(oneDigits.format(light.getDimRequest() * 100));
 			}
 		} catch (Exception ex) {
-			log.error("closeButtonActionPerformed, exception: "
+			log.error("offButtonActionPerformed, exception: "
 							+ ex.toString());
 			nowStateLabel.setText("ERROR");
 		}
@@ -131,20 +237,98 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
 						+ " is not available");
 			} else {
 				light.addPropertyChangeListener(this);
-				updateLightStatusFields();
-				if (light.getState() == light.ON) {
-					nowStateLabel.setText("ON");
-				}
 				if (log.isDebugEnabled())
 					log.debug("about to command ON");
 				// and set commanded state to ON
 				light.setState(Light.ON);
+				dimTextField.setText(oneDigits.format(light.getDimRequest() * 100));
 			}
 		} catch (Exception ex) {
-			log.error("lightButtonActionPerformed, exception: "
+			log.error("onButtonActionPerformed, exception: "
 							+ ex.toString());
 			nowStateLabel.setText("ERROR");
 		}
+	}
+
+    public void dimButtonActionPerformed(java.awt.event.ActionEvent e) {
+		// load address from switchAddrTextField
+		try {
+			if (light != null)
+				light.removePropertyChangeListener(this);
+			light = InstanceManager.lightManagerInstance().provideLight(
+					adrTextField.getText());
+
+			if (light == null) {
+				log.error("Light " + adrTextField.getText()
+						+ " is not available");
+			} else {
+				light.addPropertyChangeListener(this);
+				if (log.isDebugEnabled())
+					log.debug("about to command DIM");
+				// and set commanded state to DIM
+				light.setDimRequest(Double.parseDouble(dimTextField.getText().trim()) / 100);
+			}
+		} catch (Exception ex) {
+			log.error("dimButtonActionPerformed, exception: "
+							+ ex.toString());
+			nowStateLabel.setText("ERROR");
+		}
+	}
+    
+    /**
+     * handle changes for dimmable enable/disable, etc...
+     */
+    public void applyButtonActionPerformed(java.awt.event.ActionEvent e) {
+		// load address from switchAddrTextField
+    	try {
+			light = InstanceManager.lightManagerInstance().provideLight(adrTextField.getText());
+	
+			if (light == null) {
+				nowStateLabel.setText("Light " + adrTextField.getText() + " is not available");
+			} else {
+				if (dimEnabledCheckBox.isSelected()) {
+					if (!light.isCanDim()) {
+						light.setCanDim(true);
+					}
+				} else {
+					if (light.isCanDim()) {
+						light.setCanDim(false);
+					}
+				}
+				double min = Double.parseDouble(dimMinTextField.getText());
+				double max = Double.parseDouble(dimMaxTextField.getText());
+				log.debug("setting min: " + min + " max: " + max);
+				light.setDimMin(min);
+				light.setDimMax(max);
+				updateLightStatusFields();
+			}
+    	} catch (Exception ex) {
+			log.error("applyButtonActionPerformed, exception: "
+					+ ex.toString());
+			nowStateLabel.setText("ERROR");
+    	}
+    }
+
+    /**
+     * handles request to update status
+     * @param e
+     */
+    public void statusButtonActionPerformed(java.awt.event.ActionEvent e) {
+		// load address from switchAddrTextField
+    	try {
+			light = InstanceManager.lightManagerInstance().provideLight(adrTextField.getText());
+	
+			if (light == null) {
+				nowStateLabel.setText("Light " + adrTextField.getText() + " is not available");
+			} else {
+				dimTextField.setText(oneDigits.format(light.getDimRequest() * 100));
+				updateLightStatusFields();
+			}
+    	} catch (Exception ex) {
+			log.error("LockButtonActionPerformed, exception: "
+					+ ex.toString());
+			nowStateLabel.setText("ERROR");
+    	}
 	}
 
 	public void lockButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -160,7 +344,6 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
 						+ " is not available");
 			} else {
 				light.addPropertyChangeListener(this);
-				updateLightStatusFields();
 
 			}
 		} catch (Exception ex) {
@@ -183,7 +366,6 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
 						+ " is not available");
 			} else {
 				light.addPropertyChangeListener(this);
-				updateLightStatusFields();
 				
 			}
 		} catch (Exception ex) {
@@ -193,27 +375,27 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
 		}
 	}
 
-
     // update state field in GUI as state of light changes
     public void propertyChange(java.beans.PropertyChangeEvent e) {
     	// If the Commanded State changes, show transition state as "<inconsistent>" 
      	if (e.getPropertyName().equals("CommandedState")){
     		nowStateLabel.setText("<inconsistent>");
  		}
-        if (e.getPropertyName().equals("KnownState")) {
-            int now = ((Integer) e.getNewValue()).intValue();
-            switch (now) {
-            case Light.OFF:
-                nowStateLabel.setText("OFF");
-                return;
-            case Light.ON:
-                nowStateLabel.setText("ON");
-                return;
-            default:
-                nowStateLabel.setText("<inconsistent>");
-                return;
-            }
-        }
+     	updateLightStatusFields();
+//        if (e.getPropertyName().equals("KnownState")) {
+//            int now = ((Integer) e.getNewValue()).intValue();
+//            switch (now) {
+//            case Light.OFF:
+//                nowStateLabel.setText("OFF");
+//                return;
+//            case Light.ON:
+//                nowStateLabel.setText("ON");
+//                return;
+//            default:
+//                nowStateLabel.setText("<inconsistent>");
+//                return;
+//            }
+//        }
      }
     
     private void updateLightStatusFields(){
@@ -222,14 +404,26 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
         switch (knownState) {
         case Light.OFF:
             nowStateLabel.setText("OFF");
-            return;
+            break;
         case Light.ON:
             nowStateLabel.setText("ON");
-            return;
+            break;
         default:
             nowStateLabel.setText("<inconsistent>");
-            return;
+            break;
         }
+        String txt = "";
+        if (light.isCanDim()) {
+        	dimEnabledCheckBox.setSelected(true);
+            txt = "Dim ";
+            txt = txt + oneDigits.format(light.getDimRequest() * 100) + "% / " + oneDigits.format(light.getDimCurrent() * 100) + "%";
+        } else {
+        	dimEnabledCheckBox.setSelected(false);
+        }
+        dimStatusLabel.setText(txt);
+        dimRateTextField.setText(oneDigits.format(light.getDimRate()));
+        dimMinTextField.setText(oneDigits.format(light.getDimMin() * 100));
+        dimMaxTextField.setText(oneDigits.format(light.getDimMax() * 100));
       }
 
     Light light = null;

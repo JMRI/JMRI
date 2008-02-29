@@ -9,7 +9,7 @@ package jmri;
  * Light objects require a number of instance variables.  Since 
  *     Light objects are created using the standard JMRI 
  *     systemName/userName concept, accessor routines are provided
- *     for setting and editting these instance variables.
+ *     for setting and editing these instance variables.
  * <P>
  * Light objects are implemented in a hardware system independent
  *     manner.  The initial system implementation is SerialLight in
@@ -31,7 +31,8 @@ package jmri;
  * for more details.
  * <P>
  * @author			Dave Duchamp Copyright (C) 2004
- * @version			$Revision: 1.8 $
+ * @author			Ken Cameron Copyright (C) 2008
+ * @version			$Revision: 1.9 $
  */
 public interface Light extends NamedBean {
 
@@ -60,25 +61,47 @@ public interface Light extends NamedBean {
     public void setControlType(int controlType);
     
     /**
+     * for a dimmable light, uses true and false
+     */
+    public boolean isDimSupported();	// true if dimmable light
+    public boolean isCanDim();	// true if dimmable light
+    public void setCanDim(boolean flag);	// sets light as dimmiable
+    public double getDimRequest();			// dim is zero to 1, returns requested dim, will differ from current when rate in effect
+    public double getDimCurrent();			// dim is zero to 1
+    public void setDimRequest(double v);	// dim is zero to 1
+    public int getDimRate();		// time in fast minutes to go 0 to 1, 0 being immediate
+    public void setDimRate(int fastMinutes);		// time in fast minutes to go 0 to 1, 0 being immediate
+    public boolean hasBeenDimmed();	// init is false, triggers dim init first time a setDim is used
+    public void setDimMin(double v);	// sets minimum dim level
+    public double getDimMin();	// sets minimum dim level
+    public void setDimMax(double v);	// sets maximum dim level
+    public double getDimMax();	// sets maximum dim level
+    
+    /**
      * Control type information, valid by control type
      */
     public String getControlSensorName(); // controlling Sensor if SENSOR_CONTROL
     public int getControlSensorSense();         // sense of Sensor for Light ON
+    
     public int getFastClockOnHour();            // on Hour if FAST_CLOCK_CONTROL
     public int getFastClockOnMin();             // on Minute if FAST_CLOCK_CONTROL
     public int getFastClockOffHour();           // off Hour if FAST_CLOCK_CONTROL
     public int getFastClockOffMin();            // off Minute if FAST_CLOCK_CONTROL
+    
     public String getControlTurnoutName(); // turnout whose status is shown if TURNOUT_STATUS_CONTROL
     public int getControlTurnoutState();        // turnout state corresponding to this Light ON
+    
 	public String getControlTimedOnSensorName(); // trigger Sensor if TIMED_ON_CONTROL
 	public int getTimedOnDuration();            // duration (milliseconds) if TIMED_ON_CONTROL
 
     public void setControlSensor(String sensorSystemName);  // controlling Sensor if SENSOR_CONTROL
     public void setControlSensorSense(int sense);       // sense of Sensor for Light ON
-         // Set the On/Off Schedule if FAST_CLOCK_CONTROL
+    // Set the On/Off Schedule if FAST_CLOCK_CONTROL
     public void setFastClockControlSchedule(int onHour,int onMin,int offHour, int offMin);
+    
     public void setControlTurnout(String turnoutSystemName); // turnout whose status is shown if TURNOUT_STATUS_CONTROL
     public void setControlTurnoutState(int ts);         // turnout state corresponding to this Light ON
+    
 	public void setControlTimedOnSensor(String sensorSystemName); // trigger Sensor if TIMED_ON_CONTROL
 	public void setTimedOnDuration(int duration);   // duration (milliseconds) if TIMED_ON_CONTROL
 

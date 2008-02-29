@@ -21,7 +21,7 @@ import java.util.Date;
  * Based in concept on AbstractSignalHead.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public abstract class AbstractLight extends AbstractNamedBean
     implements Light, java.io.Serializable {
@@ -48,6 +48,21 @@ public abstract class AbstractLight extends AbstractNamedBean
     protected int mTurnoutState = Turnout.CLOSED;
     protected String mTimedSensorName = "";
 	protected int mTimeOnDuration = 0;
+	
+	/**
+	 * new internal values for dimmable lights
+	 */
+	protected boolean mSupportsDimmable = false;
+	protected boolean mIsDimmable = false;
+	protected int mRequestedDimValue = 0;
+	protected int mCurrentDimValue = 0;
+	protected double mCurrentDimRate = 0;
+	protected Date mLastDimChangeStart;
+	protected int mDawnDurration = 0;
+	protected int mDuskDurration = 0;
+	protected double mMinDimValue = 0;
+	protected double mMaxDimValue = 0;
+	protected boolean mDimInit = false;
     
     /**
      *  System independent operational instance variables (not saved between runs)
@@ -80,6 +95,68 @@ public abstract class AbstractLight extends AbstractNamedBean
         boolean old = mEnabled;
         mEnabled = v;
         if (old != v) firePropertyChange("Enabled", new Boolean(old), new Boolean(v));
+    }
+
+    /**
+     * for a dimmable light, uses true and false
+     */
+    public boolean isDimSupported() {
+    	return(mSupportsDimmable);
+    }
+    public boolean isCanDim() {
+    	return(mIsDimmable);
+    }
+    public void setCanDim(boolean flag) {
+    	boolean old = mIsDimmable;
+    	mIsDimmable = flag;
+    	if (old != flag) {
+    		firePropertyChange("isDimmable", new Boolean(old), new Boolean(flag));
+    	}
+    }
+    public boolean hasBeenDimmed() {
+    	return(mDimInit);
+    }
+    
+    /**
+     * Dim rate is for number of fast minutes to go from 0 to 100%
+     */
+    public void setDimRate(int newRate) {
+    	mRequestedDimValue = newRate;
+    	mCurrentDimValue = newRate;
+    }
+    
+    /**
+     * sets the minimum output for a dimmed light 
+     */
+    public void setDimMin(double v) {
+    	if (v > 1 || v < 0) {
+    		return;
+    	}
+    	mMinDimValue = v;
+    }
+
+    /**
+     * gets the minimum output for a dimmed light 
+     */
+    public double getDimMin() {
+    	return(mMinDimValue);
+    }
+
+    /**
+     * sets the minimum output for a dimmed light 
+     */
+    public void setDimMax(double v) {
+    	if (v > 1 || v < 0) {
+    		return;
+    	}
+    	mMaxDimValue = v;
+    }
+
+    /**
+     * gets the minimum output for a dimmed light 
+     */
+    public double getDimMax() {
+    	return(mMaxDimValue);
     }
     
     /**
@@ -169,8 +246,7 @@ public abstract class AbstractLight extends AbstractNamedBean
         if ( (offMin >= 0) && (offMin <= 59) ) {
             // legal value, set it
             mFastClockOffMin = offMin;
-        }
-        else {
+        } else {
             log.error("Light time off minute not 0 - 59, but is "+offMin);
             mFastClockOffMin = 0;
         }

@@ -22,7 +22,7 @@ import org.jdom.Element;
  * Based on AbstractSensorManagerConfigXML.java
  *
  * @author Dave Duchamp Copyright (c) 2004
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public abstract class AbstractLightManagerConfigXML implements XmlAdapter {
 
@@ -71,6 +71,14 @@ public abstract class AbstractLightManagerConfigXML implements XmlAdapter {
                 else if (type==Light.TIMED_ON_CONTROL) {
                     elem.setAttribute("timedControlSensor", lgt.getControlTimedOnSensorName() );
                     elem.setAttribute("duration", ""+lgt.getTimedOnDuration() );
+                }
+                // dimmable light support
+                boolean canDim = lgt.isCanDim();
+                elem.setAttribute("canDim", "" + canDim);
+                if (canDim) {
+                	elem.setAttribute("rateDim", "" + lgt.getDimRate());
+                	elem.setAttribute("minDim", "" + lgt.getDimMin());
+                	elem.setAttribute("maxDim", "" + lgt.getDimMax());
                 }
                 log.debug("store light "+sname+":"+uname);
                 lights.addContent(elem);
@@ -171,6 +179,14 @@ public abstract class AbstractLightManagerConfigXML implements XmlAdapter {
 						lgt.setTimedOnDuration( Integer.parseInt(((Element)(lightList.get(i))).
                                                     getAttribute("duration").getValue()) );
 					}
+                }
+                // dimmable light support
+                boolean canDim = Boolean.parseBoolean(((Element)(lightList.get(i))).getAttribute("canDim").getValue());
+                lgt.setCanDim(canDim);
+                if (canDim) {
+                	lgt.setDimRate(Integer.parseInt(((Element)(lightList.get(i))).getAttribute("rateDim").getValue()));
+                	lgt.setDimMin(Double.parseDouble(((Element)(lightList.get(i))).getAttribute("minDim").getValue()));
+                	lgt.setDimMax(Double.parseDouble(((Element)(lightList.get(i))).getAttribute("maxDim").getValue()));
                 }
 				lgt.activateLight();
             }

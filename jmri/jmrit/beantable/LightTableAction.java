@@ -14,6 +14,7 @@ import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Dimension;
+import java.text.DecimalFormat;
 
 import javax.swing.BoxLayout;
 import javax.swing.border.Border;
@@ -25,6 +26,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
+import javax.swing.JCheckBox;
 
 import jmri.util.JmriJFrame;
 
@@ -35,11 +37,11 @@ import jmri.util.JmriJFrame;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.25 $
+ * @version     $Revision: 1.26 $
  */
 
 public class LightTableAction extends AbstractTableAction {
-
+	
     /**
      * Create an action with a specific title.
      * <P>
@@ -66,17 +68,21 @@ public class LightTableAction extends AbstractTableAction {
     void createModel() {
         m = new BeanTableDataModel() {
 		    static public final int ENABLECOL = NUMCOLUMN;
-		    static public final int EDITCOL = ENABLECOL+1;
+		    static public final int DIMCOL = ENABLECOL+1;
+		    static public final int EDITCOL = DIMCOL+1;
 			protected String enabledString = rb.getString("ColumnHeadEnabled");
-    		public int getColumnCount( ){ return NUMCOLUMN+2;}
+			protected String dimString = rb.getString("ColumnHeadDimmable");
+    		public int getColumnCount( ){ return NUMCOLUMN+3;}
     		public String getColumnName(int col) {
     			if (col==EDITCOL) return "";    // no heading on "Edit"
     			if (col==ENABLECOL) return enabledString;
+    			if (col==DIMCOL) return dimString;
     			else return super.getColumnName(col);
 		    }
     		public Class getColumnClass(int col) {
     			if (col==EDITCOL) return JButton.class;
     			if (col==ENABLECOL) return Boolean.class;
+    			if (col==DIMCOL) return Boolean.class;
     			else return super.getColumnClass(col);
 		    }
 			public int getPreferredWidth(int col) {
@@ -84,11 +90,13 @@ public class LightTableAction extends AbstractTableAction {
 				if (col==USERNAMECOL) return new JTextField(16).getPreferredSize().width;
     			if (col==EDITCOL) return new JTextField(6).getPreferredSize().width;
     			if (col==ENABLECOL) return new JTextField(6).getPreferredSize().width;
+    			if (col==DIMCOL) return new JTextField(7).getPreferredSize().width;
 				else return super.getPreferredWidth(col);
 			}
     		public boolean isCellEditable(int row, int col) {
     			if (col==EDITCOL) return true;
     			if (col==ENABLECOL) return true;
+    			if (col==DIMCOL) return true;
     			else return super.isCellEditable(row,col);
 			}    		
             public String getValue(String name) {
@@ -106,6 +114,9 @@ public class LightTableAction extends AbstractTableAction {
     			else if (col==ENABLECOL) {
     				return new Boolean(((Light)getBySystemName((String)getValueAt(row, SYSNAMECOL))).getEnabled());
     			}
+    			else if (col==DIMCOL) {
+    				return new Boolean(((Light)getBySystemName((String)getValueAt(row, SYSNAMECOL))).isCanDim());
+    			}
 				else return super.getValueAt(row, col);
 			}    		
     		public void setValueAt(Object value, int row, int col) {
@@ -120,6 +131,12 @@ public class LightTableAction extends AbstractTableAction {
                     Light l = (Light)getBySystemName((String)getValueAt(row, SYSNAMECOL));
                     boolean v = l.getEnabled();
                     l.setEnabled(!v);
+    			}
+    			else if (col==DIMCOL) {
+                    // alternate
+                    Light l = (Light)getBySystemName((String)getValueAt(row, SYSNAMECOL));
+                    boolean v = l.isCanDim();
+                    l.setCanDim(!v);
     			}
     			else super.setValueAt(value, row, col);
     		}
@@ -179,6 +196,7 @@ public class LightTableAction extends AbstractTableAction {
         return "package.jmri.jmrit.beantable.LightTable";
     }
 
+    DecimalFormat oneDigit = new DecimalFormat("0");
     JmriJFrame addFrame = null;
     Light curLight = null;
     boolean lightCreated = false;
@@ -229,10 +247,21 @@ public class LightTableAction extends AbstractTableAction {
 
     JLabel status1 = new JLabel( rb.getString("LightCreateInst") );
     JLabel status2 = new JLabel( rb.getString("LightEditInst") );
+    
+    // parts for supporting dimmable lights
+    JPanel paneDimSettings;
+    JLabel labelCanDim = new JLabel( rb.getString("LightCanDim") + "  " );
+    JCheckBox checkBoxCanDim = new JCheckBox();	// enables dimmable features
+    JLabel labelMinDim = new JLabel( rb.getString("LightMinDim") + "  " );
+    JTextField fieldMinDim = new JTextField(3);	// minimum dimmed level
+    JLabel labelMaxDim = new JLabel( rb.getString("LightMaxDim") + "  " );
+    JTextField fieldMaxDim = new JTextField(3);	// maximum dimmed level
+    JLabel labelRateDim = new JLabel( rb.getString("LightRateDim") + "  " );
+    JTextField fieldRateDim = new JTextField(5);	// rate of dim change
         
     void addPressed(ActionEvent e) {
 		if (inEditMode) {
-			// cancel Edit and reactivate the editted light
+			// cancel Edit and reactivate the edited light
 			cancelPressed(null);
 		}
         if (addFrame==null) {
@@ -325,6 +354,52 @@ public class LightTableAction extends AbstractTableAction {
             Border panel4Border = BorderFactory.createEtchedBorder();
             panel4.setBorder(panel4Border);
             contentPane.add(panel4);
+
+            JPanel paneDim = new JPanel();
+            paneDim.setLayout(new BoxLayout(paneDim, BoxLayout.Y_AXIS));
+            Border paneDimBorder = BorderFactory.createEtchedBorder();
+            Border paneDimTitled = BorderFactory.createTitledBorder(paneDimBorder,
+                    rb.getString("LightDimBorder") );
+            paneDim.setBorder(paneDimTitled);
+            
+            JPanel paneDimCheck = new JPanel();
+            paneDimCheck.setLayout(new BoxLayout(paneDimCheck, BoxLayout.X_AXIS));
+            paneDimCheck.add(labelCanDim);
+            paneDimCheck.add(new JLabel("  "));
+            paneDimCheck.add(checkBoxCanDim);
+            checkBoxCanDim.setToolTipText(rb.getString("LightCanDimHint"));
+            checkBoxCanDim.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    changeCanDim(e);
+                }
+            });
+            paneDim.add(paneDimCheck);
+
+            paneDimSettings = new JPanel();
+            paneDimSettings.setLayout(new BoxLayout(paneDimSettings, BoxLayout.X_AXIS));
+            Border paneDimSettingBorder = BorderFactory.createEtchedBorder();
+            Border paneDimSettingTitled = BorderFactory.createTitledBorder(paneDimSettingBorder,
+                    rb.getString("LightDimSettingBorder") );
+            paneDimSettings.setBorder(paneDimSettingTitled);
+            paneDimSettings.add(labelMinDim);
+            fieldMinDim.setToolTipText(rb.getString("LightMinDimHint"));
+            fieldMinDim.setText("0");
+            paneDimSettings.add(fieldMinDim);
+            paneDimSettings.add(new JLabel(" %  "));
+            paneDimSettings.add(labelMaxDim);
+            fieldMaxDim.setToolTipText(rb.getString("LightMaxDimHint"));
+            fieldMaxDim.setText("100");
+            paneDimSettings.add(fieldMaxDim);
+            paneDimSettings.add(new JLabel(" %  "));
+            //paneDimCheck.add(new JLabel("  "));
+            //paneDimSettings.add(labelRateDim);
+            //fieldRateDim.setEditable(false);
+            //fieldRateDim.setToolTipText(rb.getString("LightRateDimHint"));
+            //paneDimCheck.add(new JLabel("  "));
+            //paneDimSettings.add(fieldRateDim);
+            paneDimSettings.setVisible(false);
+            paneDim.add(paneDimSettings);
+            contentPane.add(paneDim);
 
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
@@ -598,6 +673,12 @@ public class LightTableAction extends AbstractTableAction {
             g.activateLight();
             lightCreated = true;
         }
+        // deal with dimmable stuff
+        if (g.isDimSupported()) {
+        	g.setCanDim(checkBoxCanDim.isSelected());
+        	g.setDimMin(Double.parseDouble(fieldMinDim.getText()) / 100);
+        	g.setDimMax(Double.parseDouble(fieldMaxDim.getText()) / 100);
+        }
     }
     
     /**
@@ -687,6 +768,20 @@ public class LightTableAction extends AbstractTableAction {
                 stateBox.setSelectedIndex(sensorActiveIndex);
                 break;
         }
+        // deal with dimmable lights
+        if (g.isDimSupported()) {
+        	if (g.isCanDim()) {
+        		if (!checkBoxCanDim.isSelected()) {
+        			checkBoxCanDim.doClick();
+        		}
+        	} else {
+        		if (checkBoxCanDim.isSelected()) {
+        			checkBoxCanDim.doClick();
+        		}
+        	}
+        	fieldMinDim.setText(oneDigit.format(g.getDimMin() * 100));
+        	fieldMaxDim.setText(oneDigit.format(g.getDimMax() * 100));
+        }
         cancel.setVisible(true);
         update.setVisible(true);
         edit.setVisible(false);
@@ -721,6 +816,12 @@ public class LightTableAction extends AbstractTableAction {
                                                     " "+g.getSystemName()+", "+uName);
             status2.setText( rb.getString("LightEditInst") );
             status2.setVisible(true);
+        }
+        // deal with dimmable lights
+        if (g.isDimSupported()) {
+        	g.setCanDim(checkBoxCanDim.isSelected());
+        	g.setDimMin(Double.parseDouble(fieldMinDim.getText()) / 100);
+        	g.setDimMax(Double.parseDouble(fieldMaxDim.getText()) / 100);
         }
         cancel.setVisible(false);
         update.setVisible(false);
@@ -1015,6 +1116,29 @@ public class LightTableAction extends AbstractTableAction {
         // reactivate the light
         curLight.activateLight();
 		inEditMode = false;
+    }
+    
+    /**
+     * handle show/hide dim settings
+     */
+    void changeCanDim(ActionEvent e) {
+    	log.debug("changeCanDim: " + checkBoxCanDim.isSelected());
+    	if (checkBoxCanDim.isSelected()) {
+    		paneDimSettings.setVisible(true);
+    	} else {
+    		paneDimSettings.setVisible(false);
+    	}
+    }
+    
+    /**
+     * show all the dim settings
+     */
+    void showHideDimSettings(boolean flag) {
+		labelMinDim.setVisible(flag);
+		fieldMinDim.setVisible(flag);
+		labelMaxDim.setVisible(flag);
+		fieldMaxDim.setVisible(flag);
+    	
     }
     static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LightTableAction.class.getName());
 }
