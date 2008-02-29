@@ -7,6 +7,7 @@ import jmri.Light;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.text.DecimalFormat;
+import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
 import javax.swing.JMenuBar;
@@ -19,10 +20,12 @@ import javax.swing.JPanel;
  * 
  * @author	Ken Cameron   Copyright (C) 2008
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
-	
+
+    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.simplelightctrl.SimpleLightCtrlBundle");
+    
 	private static final String LOCKED = "Locked";
 	private static final String UNLOCKED = "Normal";
 
@@ -61,81 +64,82 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
         super();
         
         // configure items for GUI
-        textAdrLabel.setText(" light:");
+        textAdrLabel.setText(rb.getString("LightAdrLabel"));
         textAdrLabel.setVisible(true);
 
         adrTextField.setText("");
         adrTextField.setVisible(true);
-        adrTextField.setToolTipText("light number being controlled");
+        adrTextField.setToolTipText(rb.getString("LightAdrTextToolTip"));
 
-        statusButton.setText("Get Status");
+        statusButton.setText(rb.getString("LightGetStatusButton"));
         statusButton.setVisible(true);
-        statusButton.setToolTipText("Press to get current status");
+        statusButton.setToolTipText(rb.getString("LightGetStatusToolTip"));
         statusButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     statusButtonActionPerformed(e);
                 }
             });
 
-        textStateLabel.setText(" current state: ");
+        textStateLabel.setText(rb.getString("LightStatusLabel"));
         textStateLabel.setVisible(true);
-        nowStateLabel.setText("<unknown>");
+        nowStateLabel.setText(rb.getString("LightStatusTextDefault"));
         nowStateLabel.setVisible(true);
         
-        onButton.setText("On");
+        onButton.setText(rb.getString("LightOnButton"));
         onButton.setVisible(true);
-        onButton.setToolTipText("Press to turn light on/bright");
+        onButton.setToolTipText(rb.getString("LightOnButtonToolTip"));
         onButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     onButtonActionPerformed(e);
                 }
             });
 
-        offButton.setText("Off");
+        offButton.setText(rb.getString("LightOffButton"));
         offButton.setVisible(true);
-        offButton.setToolTipText("Press to turn light off/dim");
+        offButton.setToolTipText(rb.getString("LightOffButtonToolTip"));
         offButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     offButtonActionPerformed(e);
                 }
             });
 
-        dimEnabledLabel.setText("Enable Dimming: ");
+        dimEnabledLabel.setText(rb.getString("LightEnableDimLabel"));
         dimEnabledCheckBox.setSelected(false);
         dimEnabledCheckBox.setVisible(true);
+        dimEnabledCheckBox.setToolTipText(rb.getString("LightDimEnabledToolTip"));
         
-        dimTextLabel1.setText("Dim:");
+        dimTextLabel1.setText(rb.getString("LightDimTextLabel"));
         dimTextLabel1.setVisible(true);
         dimTextField.setText(oneDigits.format(0));
         dimTextField.setVisible(true);
         dimTextLabel2.setText("%");
-        dimTextField.setToolTipText("dim setting");
+        dimTextField.setToolTipText(rb.getString("LightDimTextToolTip"));
         
-        dimMinTextLabel.setText("Min Dim: ");
+        dimMinTextLabel.setText(rb.getString("LightMinDimLabel"));
         dimMinTextField.setText(oneDigits.format(0));
         dimMinTextField.setVisible(true);
-        dimMinTextField.setToolTipText("Max for a dim setting, 0% to 100%");
-        dimMaxTextLabel.setText("Max Dim: ");
+        dimMinTextField.setToolTipText(rb.getString("LightMinDimToolTip"));
+        dimMaxTextLabel.setText(rb.getString("LightMaxDimLabel"));
         dimMaxTextField.setText(oneDigits.format(0));
         dimMaxTextField.setVisible(true);
-        dimMaxTextField.setToolTipText("Max for a dim setting, 0% to 100%");
-        dimRateTextLabel.setText("Change Rate: ");
+        dimMaxTextField.setToolTipText(rb.getString("LightMinDimToolTip"));
+        dimRateTextLabel.setText(rb.getString("LightRateDimLabel"));
         dimRateTextField.setText(oneDigits.format(0));
         dimRateTextField.setVisible(true);
         dimRateTextField.setEnabled(false);
-        dimRateTextField.setToolTipText("Speed of dimming, fast minutes for 0% to 100%");
-        dimButton.setText("Dim");
+        dimRateTextField.setToolTipText(rb.getString("LightRateDimToolTip"));
+        dimButton.setText(rb.getString("LightDimButton"));
         dimButton.setVisible(true);
-        dimButton.setToolTipText("Press to set dim level");
+        dimButton.setToolTipText(rb.getString("LightDimButtonToolTip"));
         dimButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     dimButtonActionPerformed(e);
                 }
             });
 
-        applyButton.setText("Apply");
+        applyButton.setText(rb.getString("LightApplyButton"));
         applyButton.setVisible(true);
-        applyButton.setToolTipText("Press to apply settings");
+        applyButton.setToolTipText(rb.getString("LightApplyButtonToolTip"));
         applyButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				applyButtonActionPerformed(e);
@@ -143,7 +147,7 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
 		});
         
         // general GUI config
-        setTitle("Light Control");
+        setTitle(rb.getString("LightBorder"));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         // install items in GUI

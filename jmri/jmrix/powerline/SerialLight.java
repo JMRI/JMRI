@@ -16,7 +16,7 @@ import java.util.Date;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class SerialLight extends AbstractLight {
 
@@ -188,10 +188,6 @@ public class SerialLight extends AbstractLight {
     
     /**
      *  Set the current state of this Light
-     *     This routine requests the hardware to change.
-     *     If this is really a change in state of this 
-     *         bit (tested in SerialNode), a Transmit packet
-     *         will be sent before this Node is next polled.
      */
     public void setState(int newState) {
     	if (log.isDebugEnabled()) {
@@ -203,6 +199,146 @@ public class SerialLight extends AbstractLight {
             return;
         }
 
+        double newDim;
+    	if (newState == ON) {
+    		newDim = 1;
+    	} else {
+    		newDim = 0;
+    	}
+        if (mIsDimmable) {
+        	sendDimCommand(newDim);
+        } else {
+	        sendOnOffCommand(newState);
+        }
+	
+		if (newState != mState || newDim != mRequestedDim || newDim != mCurrentDim) {
+			int oldState = mState;
+			double oldDim = mRequestedDim;
+			if (oldState != newState) {
+				mState = newState;
+	            // notify listeners, if any
+	            firePropertyChange("KnownState", new Integer(oldState), new Integer(newState));
+			}
+			if (oldDim != newDim) {
+				mCurrentDim = newDim;
+				mRequestedDim = newDim;
+				firePropertyChange("KnownDim", new Double(oldDim), new Double(newDim));
+			}
+		}
+    }
+
+    /**
+     *  Set the current dim of this Light
+     */
+    public void setDimRequest(double newDim) {
+    	if (log.isDebugEnabled()) {
+    		log.debug("setDim(" + newDim + ") mRequestedDim: " + mRequestedDim);
+    	}
+        SerialNode mNode = SerialAddress.getNodeFromSystemName(mSystemName);
+        if (mNode == null) {
+            // node does not exist, ignore call
+            return;
+        }
+        if (newDim < 0 || newDim > 1) {
+        	return ;
+        }
+        if (newDim < mMinDimValue) {
+        	newDim = mMinDimValue;
+        }
+        if (newDim > mMaxDimValue) {
+        	newDim = mMaxDimValue;
+        }
+        int newState;
+    	if (newDim <= 0) {
+    		newState = OFF;
+    	} else {
+    		newState = ON;
+    	}
+        
+        if (!mIsDimmable) {
+        	sendOnOffCommand(newState);
+        } else {
+	        sendDimCommand(newDim);
+        }
+	
+		if (newDim != mRequestedDim) {
+			double oldDim = mRequestedDim;
+			int oldState = mState;
+			mRequestedDim = newDim;
+			mCurrentDim = newDim;
+			if (newDim > 0) {
+				mState = ON;
+			} else {
+				mState = OFF;
+			}
+            // notify listeners, if any
+			if (oldState != mState) {
+	            firePropertyChange("KnownState", new Integer(oldState), new Integer(mState));
+			}
+            firePropertyChange("KnownDim", new Double(oldDim), new Double(newDim));
+        }
+    }
+
+    /**
+     * Send a Dim/Bright Command to the hardware
+     */
+    private void sendDimCommand(double newDim) {
+    	if (log.isDebugEnabled()) {
+    		log.debug("sendDimCommand(" + newDim + ") mRequestedDim: " + mRequestedDim);
+    	}
+        SerialNode mNode = SerialAddress.getNodeFromSystemName(mSystemName);
+        if (mNode == null) {
+            // node does not exist, ignore call
+            return;
+        }
+        
+        // figure out the function code
+        int function;
+        if (newDim >= mCurrentDim) {
+            function = X10.FUNCTION_BRIGHT;
+        	log.debug("function bright");
+        }
+        else if (newDim < mCurrentDim) {
+            function = X10.FUNCTION_DIM;
+        	log.debug("function dim");
+        }
+        else {
+            log.warn("illegal state requested for Light: " + getSystemName());
+            return;
+        }
+        int housecode = ((mBit-1)/16)+1;
+        int devicecode = ((mBit-1)%16)+1;
+        double diffDim = newDim - mRequestedDim;
+        int deltaDim = (int)(22 * Math.abs(diffDim));
+        if (deltaDim != 0) {
+	        // address message, then function
+	        SerialMessage m1 = SerialMessage.getAddress(housecode, devicecode);
+	        SerialMessage m2 = SerialMessage.getFunctionDim(housecode, function, deltaDim);
+	        // send
+	        SerialTrafficController.instance().sendSerialMessage(m1, null);
+	        SerialTrafficController.instance().sendSerialMessage(m2, null);
+        }
+    	if (log.isDebugEnabled()) {
+    		log.debug("sendDimCommand(" + newDim + ")/" + mRequestedDim + " house " + housecode + " device " + devicecode + " deltaDim: " + deltaDim + " funct: " + function);
+        }
+    }
+
+    /**
+     *  Send a On/Off Command to the hardware
+     */
+    private void sendOnOffCommand(int newState) {
+    	if (log.isDebugEnabled()) {
+    		log.debug("sendOnOff(" + newState + ")\nCurrent: " + mState);
+    	}
+        SerialNode mNode = SerialAddress.getNodeFromSystemName(mSystemName);
+        if (mNode == null) {
+            // node does not exist, ignore call
+            return;
+        }
+
+        if (mDimInit) {
+        	mDimInit = false;
+        }
         // figure out command 
         int function;
         double newDim;
@@ -218,123 +354,19 @@ public class SerialLight extends AbstractLight {
             log.warn("illegal state requested for Light: "+getSystemName());
             return;
         }
-        if (mIsDimmable) {
-        	setDimRequest(newDim);
-        } else {
-	        // reset the dimInit
-	        if (mDimInit) {
-	        	mDimInit = false;
-	        	log.debug("turn off diminit");
-	        }
-	        int housecode = ((mBit-1)/16)+1;
-	        int devicecode = ((mBit-1)%16)+1;
-	        log.debug("set state "+newState+" house "+housecode+" device "+devicecode);
-	        // address message, then content
-	        SerialMessage m1 = SerialMessage.getAddress(housecode, devicecode);
-	        SerialMessage m2 = SerialMessage.getFunction(housecode, function);
-	        // send
-	        SerialTrafficController.instance().sendSerialMessage(m1, null);
-	        SerialTrafficController.instance().sendSerialMessage(m2, null);
-	
-			if (newState != mState || newDim != mRequestedDim || newDim != mCurrentDim) {
-		        if (log.isDebugEnabled()) {
-		        	log.debug("setState(" + newState + ")/" + mState + " function: " + function + " newDim: " + newDim + "/" + mRequestedDim);
-		        }
-				int oldState = mState;
-				double oldDim = mRequestedDim;
-				if (oldState != newState) {
-					mState = newState;
-		            // notify listeners, if any
-		            firePropertyChange("KnownState", new Integer(oldState), new Integer(newState));
-				}
-				if (oldDim != newDim) {
-					mCurrentDim = newDim;
-					mRequestedDim = newDim;
-					firePropertyChange("KnownDim", new Double(oldDim), new Double(newDim));
-				}
-			}
-        }
-    }
 
-    /**
-     *  Set the current dim of this Light
-     *     This routine requests the hardware to change.
-     *     If this is really a change in state of this 
-     *         bit (tested in SerialNode), a Transmit packet
-     *         will be sent before this Node is next polled.
-     */
-    public void setDimRequest(double newDim) {
+        int housecode = ((mBit-1)/16)+1;
+        int devicecode = ((mBit-1)%16)+1;
+        log.debug("set state "+newState+" house "+housecode+" device "+devicecode);
+        // address message, then content
+        SerialMessage m1 = SerialMessage.getAddress(housecode, devicecode);
+        SerialMessage m2 = SerialMessage.getFunction(housecode, function);
+        // send
+        SerialTrafficController.instance().sendSerialMessage(m1, null);
+        SerialTrafficController.instance().sendSerialMessage(m2, null);
+        
     	if (log.isDebugEnabled()) {
-    		log.debug("setDim(" + newDim + ") mRequestedDim: " + mRequestedDim);
-    	}
-        SerialNode mNode = SerialAddress.getNodeFromSystemName(mSystemName);
-        if (mNode == null) {
-            // node does not exist, ignore call
-            return;
-        }
-        if (newDim < 0 || newDim > 1) {
-        	return ;
-        }
-        if (!mIsDimmable) {
-        	log.debug("setDim passing to setState since dim isn't enabled");
-        	if (newDim <= 0) {
-        		setState(OFF);
-        	} else {
-        		setState(ON);
-        	}
-        } else {
-	        if (!mDimInit) {
-	        	initDimUse();
-	        }
-	
-	        // figure out the function code
-	        int function;
-	        if (newDim >= mCurrentDim) {
-	            function = X10.FUNCTION_BRIGHT;
-	        	log.debug("function bright");
-	        }
-	        else if (newDim < mCurrentDim) {
-	            function = X10.FUNCTION_DIM;
-	        	log.debug("function dim");
-	        }
-	        else {
-	            log.warn("illegal state requested for Light: " + getSystemName());
-	            return;
-	        }
-	        if (newDim < mMinDimValue) {
-	        	newDim = mMinDimValue;
-	        }
-	        if (newDim > mMaxDimValue) {
-	        	newDim = mMaxDimValue;
-	        }
-	        int housecode = ((mBit-1)/16)+1;
-	        int devicecode = ((mBit-1)%16)+1;
-	        double diffDim = newDim - mRequestedDim;
-	        int deltaDim = (int)(22 * Math.abs(diffDim));
-	        if (deltaDim != 0) {
-		        // address message, then check status, then function
-		        SerialMessage m1 = SerialMessage.getAddress(housecode, devicecode);
-		        SerialMessage m2 = SerialMessage.getFunctionDim(housecode, function, deltaDim);
-		        // send
-		        SerialTrafficController.instance().sendSerialMessage(m1, null);
-		        SerialTrafficController.instance().sendSerialMessage(m2, null);
-	        }
-	
-			if (newDim != mRequestedDim) {
-		    	if (log.isDebugEnabled()) {
-		    		log.debug("setDim(" + newDim + ")/" + mRequestedDim + " house " + housecode + " device " + devicecode + " deltaDim: " + deltaDim + " funct: " + function);
-		        }
-				double oldDim = mRequestedDim;
-				mRequestedDim = newDim;
-				mCurrentDim = newDim;
-				if (newDim > 0) {
-					mState = ON;
-				} else {
-					mState = OFF;
-				}
-	            // notify listeners, if any
-	            firePropertyChange("KnownDim", new Double(oldDim), new Double(newDim));
-			}
+    		log.debug("sendOnOff(" + newDim + ")/" + mRequestedDim + " house " + housecode + " device " + devicecode + " funct: " + function);
         }
     }
 
