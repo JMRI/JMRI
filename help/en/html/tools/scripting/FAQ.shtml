@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: FAQ.shtml,v 1.1 2008-02-17 04:52:52 jacobsen Exp $ -->
+<!-- $Id: FAQ.shtml,v 1.2 2008-02-29 03:42:55 jacobsen Exp $ -->
 <title>JMRI: Scripting FAQ</title>
 
 <!-- Style -->
@@ -150,6 +150,36 @@
             Note that turnouts, etc, do have "System Names" that look like 
             "LT12".  You'll see those occasionally, but that's something 
             different from the variable names in a script file.		   
+            </div>
+
+		</div>
+		<a id="windows">
+		<div class=section></a>
+		    <h2>Can a script access the JMRI application windows?</h2>
+
+		    <div class=para>
+            Your scripts can change the properties of all the main 
+            JMRI windows. They're all jmri.util.JmriJFrame objects,
+            so they have all the various methods of a Swing JFrame.
+            For example, this code snippet
+            <p>
+            <code>
+            window = jmri.util.JmriJFrame.getFrameList()[1]<br/>
+            window.setLocation(java.awt.Point(0,0))
+            </code>
+            <p>
+            locates the application's main window, and sets its 
+            location to the upper left corner of the screen.
+            <p>
+            The <code>jmri.util.JmriJFrame.getFrameList()</code>
+            call in the first line returns a list of the existing 
+            windows. The [0] element of this list is the original
+            splash screen and the [1] element is the main window;
+            after that, they're the various windows in the order they
+            are created.  To find a particular one, you can
+            index through the list checking e.g. the window's title
+            with the <code>getTitle()</code> method.
+            
             </div>
 
 		</div>
