@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.4.shtml,v 1.7 2008-02-26 23:16:05 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.1.4.shtml,v 1.8 2008-03-01 04:37:56 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -134,14 +134,10 @@ Grapevine support has been updated with
 and Grapevine turnouts can now have their outputs inverted in the Turnout table.
 
 <p>
-Bill Chown provided a decoder definition for the MRC 1644 decoder and updated the MRC 1645 definition.
+Bill Chown provided a decoder definition for the MRC 1644, 1650 and Big Boy decoders and updated the MRC 1645 definition.
 
 <p>
 Tables (sensor table, route table, etc) should now open as a more reasonable size, so that their contents are fully visible if possible.
-
-
-
-
 
 <p>Dan Boudreau fixed a bug where JMRI reported "ERROR NCE USING
 COMx" when the NCE EPROM revision was 6.2.0. Revision 6.2.0 is the 2007
@@ -151,6 +147,18 @@ this as an error and should only have reported it as a warning. We
 recommend that you upgrade to the 2007A NCE EPROM (revision 6.2.1) or
 newer if you have any intention of using MONITORING feedback for
 turnouts.
+
+<p>
+The method for deciding how big windows can be when they open has been improved.
+Very large windows could sometimes end up being stuck underneath the command bars
+at the top and/or bottom of various kinds of screens.  This shouldn't happen anymore,
+and even if it does we've added some startup options to fix it easily.
+
+<p>
+Ken Cameron made Lights able to dim, so long as the associated hardware supports it.
+A first implementation for this is present for powerline (X10) devices. 
+There were associated changes in the Light table, the Light Control, and various internals.
+
 <hr class="hide">
 <!--#include virtual="/Footer" -->
 
