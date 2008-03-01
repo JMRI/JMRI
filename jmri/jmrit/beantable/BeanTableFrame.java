@@ -30,11 +30,11 @@ import jmri.util.davidflanagan.HardcopyWriter;
  * <p>
  * Specific uses are customized via the BeanTableDataModel
  * implementation they provide, and by 
- * providing a {@see #extras} implementation
- * that can in turn invoke {@see #addToBottomBox} as needed.
+ * providing a {@link #extras} implementation
+ * that can in turn invoke {@link #addToBottomBox} as needed.
  * 
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.17 $
+ * @version	$Revision: 1.18 $
  */
 public class BeanTableFrame extends jmri.util.JmriJFrame {
 
