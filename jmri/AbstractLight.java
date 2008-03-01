@@ -21,7 +21,7 @@ import java.util.Date;
  * Based in concept on AbstractSignalHead.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 public abstract class AbstractLight extends AbstractNamedBean
     implements Light, java.io.Serializable {
@@ -164,7 +164,45 @@ public abstract class AbstractLight extends AbstractNamedBean
     public double getDimMax() {
     	return(mMaxDimValue);
     }
-    
+  
+  /*
+   * get the current dim request value
+   * override in concrete class if light supports dimming
+   */ 
+  public double getDimRequest() {
+        if (getState() == OFF) {
+                return(0);
+        } else {
+                return(1);
+        }
+    }
+
+  /*
+   * get the current dim value
+   * override in concrete class if light supports dimming
+   */ 
+   public double getDimCurrent() {
+        if (getState() == OFF) {
+                return(0);
+        } else {
+                return(1);
+        }
+   }
+
+  /*
+   * set the current dim value
+   * override in concrete class if light supports dimming
+   */ 
+    public void setDimRequest(double v) {
+        if (v > 0) {
+                setState(ON);
+        } else {
+                setState(OFF);
+        }
+    }
+
+
+ 
     /**
      *  Return the control type of this Light
      */    
