@@ -16,7 +16,7 @@ import jmri.Turnout;
  *  Based in part on SerialLight.java
  *
  * @author      Dave Duchamp Copyright (C) 2006
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class LnLight extends AbstractLight {
 
@@ -106,6 +106,29 @@ public class LnLight extends AbstractLight {
 		}
     }
 
+    // added dummy methods for dimmable stuff
+    public double getDimRequest() {
+    	if (mState == OFF) {
+    		return(0);
+    	} else {
+    		return(1);
+        }
+    }
+    public double getDimCurrent() {
+    	if (mState == OFF) {
+    		return(0);
+    	} else {
+    		return(1);
+        }
+    }
+    public void setDimRequest(double v) {
+    	if (v > 0) {
+    		setState(ON);
+    	} else {
+    		setState(OFF);
+    	}
+    }
+    
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnLight.class.getName());
 }
 

@@ -15,7 +15,7 @@ import jmri.Turnout;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class SerialLight extends AbstractLight {
 
@@ -136,6 +136,29 @@ public class SerialLight extends AbstractLight {
         SerialTrafficController.instance().sendSerialMessage(m, null);
     }
 
+    // added dummy methods for dimmable stuff
+    public double getDimRequest() {
+    	if (mState == OFF) {
+    		return(0);
+    	} else {
+    		return(1);
+        }
+    }
+    public double getDimCurrent() {
+    	if (mState == OFF) {
+    		return(0);
+    	} else {
+    		return(1);
+        }
+    }
+    public void setDimRequest(double v) {
+    	if (v > 0) {
+    		setState(ON);
+    	} else {
+    		setState(OFF);
+    	}
+    }
+    
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialLight.class.getName());
 }
 

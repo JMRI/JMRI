@@ -21,7 +21,7 @@ import java.util.Date;
  * Based in concept on AbstractSignalHead.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 public abstract class AbstractLight extends AbstractNamedBean
     implements Light, java.io.Serializable {
@@ -120,9 +120,15 @@ public abstract class AbstractLight extends AbstractNamedBean
     /**
      * Dim rate is for number of fast minutes to go from 0 to 100%
      */
-    public void setDimRate(int newRate) {
-    	mRequestedDimValue = newRate;
-    	mCurrentDimValue = newRate;
+    public void setDimRate(double newRate) {
+    	mCurrentDimRate = newRate;
+    }
+
+    /**
+     *  Return the current dim rate of this Light
+     */
+    public double getDimRate() {
+    	return mCurrentDimRate;
     }
     
     /**

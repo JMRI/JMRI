@@ -16,7 +16,7 @@ import java.util.Date;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class SerialLight extends AbstractLight {
 
@@ -92,7 +92,7 @@ public class SerialLight extends AbstractLight {
     double mCurrentDim = 0;			// 
     double mRequestedDim = 0;
     Date mLastDimChange = null;
-    int mDimRate = 0;
+    double mDimRate = 0;
     boolean mIsDimmable = true;
     boolean mDimInit = false;
     double mMinDimValue = 0;
@@ -137,15 +137,15 @@ public class SerialLight extends AbstractLight {
     /**
      *  Return the current dim rate of this Light
      */
-    public int getDimRate() {
+    public double getDimRate() {
     	return mDimRate;
     }
-    public void setDimRate(int newRate) {
+    public void setDimRate(double newRate) {
 		if (newRate != mDimRate) {
-	    	int oldRate = mDimRate;
+	    	double oldRate = mDimRate;
 	    	mDimRate = newRate;
             // notify listeners, if any
-            firePropertyChange("KnownDimRate", new Integer(oldRate), new Integer(newRate));
+            firePropertyChange("KnownDimRate", new Double(oldRate), new Double(newRate));
 		}
     }
     public boolean hasBeenDimmed() {

@@ -32,7 +32,7 @@ package jmri;
  * <P>
  * @author			Dave Duchamp Copyright (C) 2004
  * @author			Ken Cameron Copyright (C) 2008
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public interface Light extends NamedBean {
 
@@ -69,8 +69,8 @@ public interface Light extends NamedBean {
     public double getDimRequest();			// dim is zero to 1, returns requested dim, will differ from current when rate in effect
     public double getDimCurrent();			// dim is zero to 1
     public void setDimRequest(double v);	// dim is zero to 1
-    public int getDimRate();		// time in fast minutes to go 0 to 1, 0 being immediate
-    public void setDimRate(int fastMinutes);		// time in fast minutes to go 0 to 1, 0 being immediate
+    public double getDimRate();		// time in fast minutes to go 0 to 1, 0 being immediate
+    public void setDimRate(double fastMinutes);		// time in fast minutes to go 0 to 1, 0 being immediate
     public boolean hasBeenDimmed();	// init is false, triggers dim init first time a setDim is used
     public void setDimMin(double v);	// sets minimum dim level
     public double getDimMin();	// sets minimum dim level
