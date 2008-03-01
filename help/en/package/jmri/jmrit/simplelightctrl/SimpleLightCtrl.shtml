@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SimpleLightCtrl.shtml,v 1.2 2008-02-18 19:52:01 jacobsen Exp $ -->
+<!-- $Id: SimpleLightCtrl.shtml,v 1.3 2008-03-01 14:24:02 ken_c Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Light Control</TITLE>
@@ -55,9 +55,31 @@ light on the layout. See "
 <BR>
 <h3>Powerline Devices</h3>
 
-Powerline devices have defined On as a increase brightness by one unit.
-Off is defined as dim by one unit.
-This is a temporary feature until we decide how to deal with dimmable settings.
+Powerline devices may support dimming in addition to just on and off.
+If a powerline interface supports dimming, an option will be available to enable and
+disable dimming for the light.
+
+<DL>
+	<DT>Enable Dimming:</DT>
+	<DD>If checked, will cause all commands to the light to use dim settings instead of on and off.</DD>
+	<DD>If not checked, will cause all commands to the light to use on and off.</DD>
+	<BR>
+	<DD><B>NOTE:</B>Changing the enable dimming setting may cause an 'blink' the first time a dim command
+	is sent to the light. It may quickly get bright then return to the proper dim setting.
+	This is a function
+	of the device and we have not found a way around this for all devices.</DD>
+	<BR>
+	
+	<DT>Minimum Dim:</DT>
+	<DD>A value 0 to 100 (percent) that sets the lowest amount of light that
+	will be output by a dim command.</DD>
+	<BR>
+	
+	<DT>Maximum Dim:</DT>
+	<DD>A value 0 to 100 (percent) that sets the highest amount of light that
+	will be output by a dim command.</DD>
+	<BR>
+</DL>
 
 <!--#include virtual="/Footer" -->
 </BODY>
