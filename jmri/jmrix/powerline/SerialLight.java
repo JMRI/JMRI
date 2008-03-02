@@ -17,7 +17,7 @@ import java.util.Date;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class SerialLight extends AbstractVariableLight {
 
@@ -42,9 +42,9 @@ public class SerialLight extends AbstractVariableLight {
     }
         
     /**
-     * Sets up system dependent instance variables and sets system
-     *    independent instance variables to default values
-     * Note: most instance variables are in AbstractLight.java
+     * Invoked from constructors to set up details.
+     * Note: most instance variables are in AbstractLight and
+     * AbstractVariableLight base classes.
      */
     private void initializeLight() {
         // Extract the Bit from the name
@@ -58,6 +58,11 @@ public class SerialLight extends AbstractVariableLight {
         setControlTurnoutState( Turnout.CLOSED );
     }
 
+    /**
+     * Not sure what this does.  Seems to be invoked
+     * the first time intensity is set, and then
+     * again after any on/off operation.
+     */
     private void initIntensity() {
         // Set initial state
         // address message, then function
@@ -87,10 +92,10 @@ public class SerialLight extends AbstractVariableLight {
 
     int mBit = 0;                // bit within the node
 
-    boolean mDimInit = false;    // entering dimming mode, send init
+    boolean mDimInit = false;    // if false, initIntensity will be invoked later
         
     /**
-     *  Request from superclass to set the current state of this Light
+     *  Request from superclass to set the current state of this Light.
      */
 	protected void doNewState(int oldState, int newState) {
     	if (log.isDebugEnabled()) {
@@ -103,20 +108,12 @@ public class SerialLight extends AbstractVariableLight {
         }
 
         double newIntensity = getTargetIntensity();
-    	if (newState == ON) {
-    		newIntensity = getMaxIntensity();
-    	} else if (newState == OFF) {
-    		newIntensity = getMinIntensity();
-    	} else {
-    	    // really should not happen
-    	    throw new IllegalArgumentException("invalid state request "+newState);
-        }
-    	
+
         if ( newIntensity!=1.0 && newIntensity!=0.0) {
-            // dim to value
+            // dim to value not at end of range
         	updateIntensity(newIntensity);
         } else {
-            // just go straight
+            // go to full on or full off
 	        sendOnOffCommand(newState);
         }
 	
@@ -147,11 +144,12 @@ public class SerialLight extends AbstractVariableLight {
     }
 
     /**
-     * Send a Dim/Bright commands to the hardware
+     * Send a Dim/Bright commands to the X10 hardware 
+     * to reach a specific intensity.
      */
     private void updateIntensity(double intensity) {
     	if (log.isDebugEnabled()) {
-    		log.debug("sendDimCommand(" + intensity + ")");
+    		log.debug("updateIntensity(" + intensity + ")");
     	}
         SerialNode mNode = SerialAddress.getNodeFromSystemName(getSystemName());
         if (mNode == null) {
