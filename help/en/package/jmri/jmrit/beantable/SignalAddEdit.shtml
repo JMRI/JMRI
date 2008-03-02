@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SignalAddEdit.shtml,v 1.6 2008-02-23 23:01:46 jacobsen Exp $ -->
+<!-- $Id: SignalAddEdit.shtml,v 1.7 2008-03-02 17:15:45 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -28,7 +28,13 @@
 This is the package/jmri/jmrit/beantable/SignalAddEdit help page
 
 <p>
-Types of signals:
+JMRI needs to know how a signal head on the layout
+is connected to the electrical hardware.  Once it knows that,
+it can send the right commands to control the appearance of the
+signal head.
+<p>
+The "Add Signal" dialog gives you a number of different 
+choices for how the signal head is connected:
 <dl>
 <dt>Triple Turnout</dt>
   <dd>
@@ -36,22 +42,44 @@ Types of signals:
   One goes to a green lamp/LED, one to a yellow one, 
   and the third to a red one.
   <p>
+  These connections are controlled via the JMRI Turnout
+  logic, and therefore appear in the Turnout Table.
+  They're not really connected to switch motors, though,
+  they're just electrical outputs.
+  <p>
   For each connection, enter the appropriate JMRI
-  turnout, either as a number (1,2,3) or as a JMRI
+  turnout for the electrical connection on the layout,
+  either as a number (1,2,3) or as a JMRI
   name (LT1, CT3, XT3).
-  They need not be consecutive, or in any particular order.
+  They need not be consecutive or in any particular order.
+  <p>
+  If you need to debug one of these signal heads, start by
+  checking whether the Turnout connections work. Setting e.g.
+  the turnout on the "green" connection Thrown should light the
+  green lamp.
   </dd>
 
 <dt>Double Turnout</dt>
   <dd>
-  This type controls a signal via two electrical connections.
+  This type controls a signal head via two electrical connections.
   One goes to a green lamp/LED, and the other to a red one.
   Yellow is created by turning them both on at the same time.
   <p>
+  These connections are controlled via the JMRI Turnout
+  logic, and therefore appear in the Turnout Table.
+  They're not really connected to switch motors, though,
+  they're just electrical outputs.
+  <p>
   For each connection, enter the appropriate JMRI
-  turnout, either as a number (1,2) or as a JMRI
+  turnout for the electrical connection on the layout, 
+  either as a number (1,2) or as a JMRI
   name (LT1, CT2). 
-  They need not be consecutive, or in any particular order.
+  They need not be consecutive or in any particular order.
+  <p>
+  If you need to debug one of these signal heads, start by
+  checking whether the Turnout connections work. Setting e.g.
+  the turnout on the "green" connection Thrown should light the
+  green lamp.
   </dd>
 
 <dt>Virtual</dt>
@@ -63,7 +91,7 @@ Types of signals:
 
 <dt>SE8c 4 Aspect</dt>
   <dd>
-  This type controls signals attached to a 
+  This type controls signal heads attached to a 
   <a href="http://www.digitrax.com">Digitrax</a>
   <a href="http://www.digitrax.com/prd_statdec_se8c.php">SE8c signal driver card</a>.
   <p>
@@ -76,7 +104,7 @@ Types of signals:
 
 <dt>LDT LS-DEC</dt>
   <dd>
-  This type controls signals attached to a
+  This type controls signal heads attached to a
   <a href="http://www.ldt-infocenter.com/english/home_frame_e.htm">Littfinski DatenTechnik (LDT)</a>
   <A href="http://www.ldt-infocenter.com/english/lsdec_sb_e.htm">LS-DEC signal decoder</a>.
   <p>
@@ -88,7 +116,7 @@ Types of signals:
   
 <dt>DCC Signal Decoder</dt>
   <dd>
-  This type controls signals attached to a 
+  This type controls signal heads attached to a 
   decoder that uses the 
   <a href="http://www.nmra.org/standards/DCC/standards_rps/rp921.html#Extended%20Accessory%20Decoder%20Control%20Packet%20Format">DCC signal packets</a>
   defined by the 
@@ -97,14 +125,14 @@ Types of signals:
 
 <dt>Grapevine</dt>
   <dd>
-  This type controls signals attached to a
+  This type controls signal heads attached to a
   <a href="http://www.protrak.cc/">ProTrak</a>
   <A href="http://www.protrak.cc/signals.htm">Grapevine node</a>.
   <p>
   In the text field, enter a system name for a Grapevine
-  signal head, e.g. GH4 for the 4th connector on the 1st node
-  or GH1003 for the 3rd signal connector on the 
-  second node.
+  signal head, e.g. GH1204 for the 4th connector on the 2nd bank connector of the 1st node.
+  For more information on how those names are generated, see the 
+  <a href="../../../../html/hardware/grapevine/Names.shtml">page on Grapevine names</a>.
   </dd>
 
 </dl>
