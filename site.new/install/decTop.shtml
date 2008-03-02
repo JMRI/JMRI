@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: decTop.shtml,v 1.2 2008-02-26 01:09:39 jacobsen Exp $ -->
+<!-- $Id: decTop.shtml,v 1.3 2008-03-02 07:26:59 jacobsen Exp $ -->
 
     <TITLE>
  	Running JMRI on a decTOP small form factor computer
@@ -49,6 +49,8 @@ of devices on individual modules have to be carefully managed.  It doesn't
 work if both the Northville and Southville clubs bring modules that are
 configured to use address 120.
 <p>
+<a href="images/modulecontrols.gif">
+<img src="images/modulecontrols.gif" align="right" width="479" height="220"></a><br/>
 If sufficiently low cost &amp; reliable hardware was available,
 JMRI could resolve this, 
 without having to manage huge numbers of addresses or reconfigure lots of hardware.
@@ -62,8 +64,11 @@ to provide local control panes, signaling and automation, and all the other thim
 All we need to make something like this work is sufficently cheap and robust
 hardware, that can make two layout connections.
 <p>
-The decTop seems to meet the cheap and rugged criteria, 
-so seems to have enough horsepower:
+The 
+<a href="http://www.dataevolution.com/dectop%20info%202.htm">decTop</a> 
+small form-factor computer
+seems to meet the cheap and rugged criteria, 
+and seems to have enough horsepower:
 <ul>
 <li>Processor subsystem -- AMD Geode GX processor, with CS5535 companion device
 <li>Memory -- 128 MB DDR SDRAM, upgradable
@@ -82,7 +87,9 @@ so seems to have enough horsepower:
 <img src="http://pclab.nectec.or.th/wiki/images/7/70/Amd-pic-setup.jpg" align="right" height="115" width="175" alt="System view"/></a>
 You can get one for
 about $99 (plus an exorbitant $40 for reasonable-speed shipping) 
-from the Data Evolution online store (February 2008).
+from the 
+<a href="s://store.dataevolution.com/ProductDetails.asp?ProductCode=DT%2D7001">Data Evolution online store</a> 
+(February 2008).
 It comes with a USB mouse, USB keyboard (poor) and the Ethernet adapter.
 You also need to
 provide your own monitor and either a USB CD drive or USB flash drive
@@ -109,89 +116,135 @@ We followed
 <a href="http://www.entropicblur.com/dectop/guide.html">this page of instructions</a>,
 which is written for installation via Xubuntu.
 (See <a href="#links">Links section</a> below for other approaches)
+It's really helpful to print the instructions out so you can make 
+notes as you go along.
 <p>
+Those instructions describe using Linux to 
+create the bootable USB stick that's used to load the decTOP.
+There are 
+<a href="http://jsco.org/dectop/">similar instructions for Windows</a>.
 We're actually using a MacBook Pro and VMWare, 
 which in turn provided a Xubuntu 7.10 machine for creating the 
-USB stick.
-<p>
-Using the Ubuntu appliance from http://bagside.com/bagvapp/
-(Alternately, download and install the "Xubuntu 7.10 Tribe 2" VMWare appliance 
-from http://bagside.com/bagvapp/)
-<p>
-USB devices connect to the VMware machine if it has focus when the
-flash drive is plugged in.
-Mine mounted as /media/KINGSTON
-<pre>
-/etc/mtab:/dev/sdb1 /media/KINGSTON vfat rw,nosuid,nodev,shortname=mixed,uid=1000,utf8,umask=077,usefree 0 0
-</pre>
-(/dev/sda1 is c:, /dev/sda4 is z:, according to /etc/mtools.conf)
+USB stick.  There are some more 
+details on that at the
+<a href="#mac">end of this page</a>.
 
+<p>
+You'll also need an Ethernet connection with DHCP to connect
+the initialized machine to the Internet to download
+updates. Make sure it's plugged in and active!
 
 <h3>Installing Linux</h3>
-Step one, install Xubuntu 7.10, chosen to be recent, but 
-work on hardware with small memory.
+
+Follow the 
+<a href="http://www.entropicblur.com/dectop/guide.html">directions to install Xubuntu 7.10</a>.
+
 <p>
-Made flash drive, did copy steps on MacOS X
-<p>
-Make sure USB Ethernet plugged in, cabled (e.g. you need a hard-wire Ethernet
-connection to do this)
-<p>
-Say "no" to detect keyboard, select US twice (with one they sent).
+When asked if you want to "detect keyboard", say "No", because the selection
+process takes forever. After saying no, select "US" twice (with one the included keyboard),
+and you'll be all set.
 <P>
-Give it a network name: decTOP
+When asked for a network name, give it something simple
+and unique. We used "decTOP".
 <p>
-Partition disks - select the second option, all files in one partition, then select "yes"
+When asked to partition disks, 
+select the second option, all files in one partition, then select "yes"
 for the next options
 <p>
+When asked to create a user account, we used:</br>
 User long name: JMRI User<br/>
 Short name: jmri<br/>
 Pwd: jmripwd<br/>
 <p>
-Do the kernal install - this requires network access via the Ethernet adapter,
-which in turn requires DCHP.
+Do the kernel install as described in the 
+instructions.
+This requires network access via the Ethernet adapter,
+which you connected above.
 <p>
-LONG wait at "Configuring language-pack-en-base 1%"
+There was a LONG delay at "Configuring language-pack-en-base 1%".
+Just wait for it to complete.
 <p>
-When asked what to install, select OpenSSH server and Xubuntu desktop.
+When asked what to install, just select Xubuntu desktop.
 <p>
-Select and install software failed! (In Large Red Letters)
-<p>
-Retry, with just the xubuntu desktop; it gets to end OK.
-<p>
-During reboot into single user mode, lots of pretty colors!
-<p>
-Consult author of web page...
-<p>
+At this point, you should be able to just reboot
+into single user mode to continue the install.  In our
+case, our LCD display came up full of pretty colors.
+The decTOP video setup is a little fussy, and doesn't
+always come up exactly right with LCD panels.
+See our page on
+<a href="decTOPvideo.shtml">video problems</a> 
+for more info.  In our case, we just attached a CRT monitor and it
+came right up, though slowly.
 
-Do what's in the web page, with 1280x1024 mode line (2nd at end).
+
+<h3>Installing Updates</h3>
+
+Next, we allowed Linux to update itself to current levels.
+To do this, pull down "Applications" at the top left of the screen,
+then "System", then "Update Manager".  It took a few minutes to 
+check for updates.  We told it to install everything, which took about 
+an hour to download and install.
+
+<h3>Installing Java 1.6</h3>
+
+Lore has it that it's better to install Sun's
+Software Development Kit (SDK) version of Java
+rather than just the Java Runtime Environment (JRE).
 <p>
-Boots! Though slowly...  And video is still off somewhat, taking up
-just a corner of the screen.
+Pull down "Applications" at the top left of the screen,
+then "System", then "Synaptic Package Manager".
 <p>
-
-http://gentoo-wiki.com/TIP_Getting_modelines
-read-edit
-get-edid | parse-edid
-
-<h3>Installing Java 1.5</h3>
-
-https://jdk-distros.dev.java.net/ubuntu.html
+Click "Search", 
+enter "sun-java" into the search box to find the SDK package, 
+and then install it.  It will bring along a couple other packages too.
 
 <h3>Installing JMRI</h3>
 
-We do this first to make sure it will actually come up at
+We did this first to make sure it will actually come up at
 all, before spending time on RXTX.
+<p>
 
-Using JMRI 2.1.3
+Downloading and installing JMRI 2.1.3 went OK.
+We did some simple tests with the "LocoNet Simulator" preference
+setting at this point.  Startup was very slow, about 35 seconds
+from click to display of the main window, but the program seemed
+fast enough once it was running.
 
-<h3>Installing RXTX and drivers for USB-serial adapters</h3>
+<h3>Installing RXTX communication library</h3>
 
-Eventually, the LocoBuffer-USB.
-Eventually, the Lenz LI-USB.
+The 
+<a href="Ubuntu.shtml#rxtx">instructions for installing RXTX</a>
+on the 
+<a href="Ubuntu.shtml">JMRI Ubuntu page</a>
+worked well.  
+<p>
+The install location was "/usr/lib/jvm/java-6-sun-1.6.0.03".
 
-<h3>Move back to a bootable flash drive</h3>
+<h3>Installing drivers for USB-serial adapters</h3>
+
+Originally, we'd thought that we'd have to 
+spend some time installing drivers for our USB-serial adapter
+and 
+<a href="http://www.rr-cirkits.com">LocoBuffer-USB</a>.
+That wasn't needed, however.  They just plugged in and worked.
+
+<p>
+We did have to make a minor edit
+to the DecoderPro startup scripts, but that change 
+will be available by default in JMRI 2.1.4.
+
+<h3>Success!</h3>
+<a href="images/DecTopSuccess.jpg">
+<img src="images/DecTopSuccess.jpg" height="240" width="320" alt="JMRI on decTOP"/></a>
+<br/>
+The decTOP system works, and runs JMRI quite well.
+<p>
+As a general purpose computer, however, it's very slow. More memory would likely help.
 
 <h2>More information</h2>
+
+The rest of this page contains various info that 
+might be useful.
 
 <a id="links">
 <h3>Links</h3></a>
@@ -207,25 +260,48 @@ Eventually, the Lenz LI-USB.
 <p>
 <a href="http://www.lesswatts.org/projects/acpi/">ACPI power saving</a>
 
-<h4>Other Software Installs</h4>
+<h4>Other Software Install Instructions</h4>
 
 <a href="http://jsco.org/dectop/">Ubuntu 6.06</a> (no audio?)<br>
 <a href="http://librenix.com/?inode=11001">Another Ubuntu 6.06</a><br>
 These recommend sticking with Ubuntu 6.06 unless the memory has been updated.
-
+Our test used Xubuntu 7.10, a varient with a smaller memory footprint.
 <p>
-<a href="http://www.entropicblur.com/dectop/guide.html">Install Xubuntu 7.10</a>,
+Instructions to
+<a href="http://www.entropicblur.com/dectop/guide.html">install Xubuntu 7.10</a>,
 recommends 256MB RAM for Ubuntu or Kubuntu.
 (<a href="http://www.entropicblur.com/dectop/guide704.html">Earlier 7.04 install guide</a>)
 
+<a id="mac">
+<h3>Using MacOS X</h3></a>
 
-<h4>Java</h4>
+The bootable USB stick for this project was actually created using
+an Apple MacBook Pro running MacOS X.  In turn, that was running
+VMWare, which hosted a copy of Ubuntu Linux.
+<p>
+The Linux version used was the Ubuntu appliance from 
+<a href="http://bagside.com/bagvapp/">http://bagside.com/bagvapp/</a>
+(Alternately, download and install the "Xubuntu 7.10 Tribe 2" VMWare appliance 
+from that same location; it's a little smaller and faster)
+<p>
+USB devices connect to the VMware machine if it has focus when the
+flash drive is plugged in.
+Make sure VMware is at the front on your screen before plugging it in.
+In our case, it mounted as /media/KINGSTON, specifically:
+<pre>
+/etc/mtab:/dev/sdb1 /media/KINGSTON vfat rw,nosuid,nodev,shortname=mixed,uid=1000,utf8,umask=077,usefree 0 0
+</pre>
+<p>
+After that, the process just went through as described
+in the Linux instructions.
+
+
+<h3>Java</h3>
 
 <a href="http://www.linuxquestions.org/questions/linux-newbie-8/java-runtime-enviroment-plugin-wont-work-with-firefox-in-xubuntu-616663/:">Post recommending Java 1.5</a>
-
 <p>
-<a href="images/DecTopSuccess.jpg">
-<img src="images/DecTopSuccess.jpg" height="240" width="320" alt="JMRI on decTOP"/></a>
+<a href="https://jdk-distros.dev.java.net/ubuntu.html">More on Java distributions for Linux</a>.
+
 <!--#include virtual="/Footer" -->
 </body>
 </html>

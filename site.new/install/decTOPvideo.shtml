@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright (Author) 2008 -->
-<!-- $Id: decTOPvideo.shtml,v 1.1 2008-02-26 01:09:39 jacobsen Exp $ -->
+<!-- $Id: decTOPvideo.shtml,v 1.2 2008-03-02 07:26:59 jacobsen Exp $ -->
 
     <TITLE>
  	JMRI: Dealing with decTOP video
@@ -32,15 +32,15 @@
 
 	    <H1>Dealing with decTOP video</H1>
 
-<a href="https://store.dataevolution.com/photos/DT-7001-2.jpg"/>
-<img src="https://store.dataevolution.com/photos/DT-7001-2.jpg" width="250" height="167" align="right" alt="decTop image"/>
-</a>
 The decTOP is a "small form factor computer" (SFF)
 that provides a complete system in a small, low-cost, rugged box.
 The goal of our project is to see if it would make a good JMRI
 layout controller, suitable for e.g. driving a couple modules or a medium size
 layout.
 <p>
+<a href="images/BadVideoOnLCD.jpg"/>
+<img src="images/BadVideoOnLCD.jpg" width="320" height="240" align="right" alt="decTop image"/>
+<br/>
 On the 
 <a href="decTop.shtml">main page</a>,
 we discuss installing Linux, Java and JMRI
@@ -81,6 +81,10 @@ we tried it.  Just in case:
 will install the package, followed by trying to invoke it.
 The parse-edid command is meant to format the results
 so they can be cut & pasted into xorg.conf.
+<p>
+Link for 
+<a href="http://gentoo-wiki.com/TIP_Getting_modelines">more info on modelines</a>.
+</dl>
 
 
 <!--#include virtual="/Footer" -->
