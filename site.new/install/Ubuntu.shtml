@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: Ubuntu.shtml,v 1.2 2008-02-26 01:16:59 jacobsen Exp $ -->
+<!-- $Id: Ubuntu.shtml,v 1.3 2008-03-02 07:26:34 jacobsen Exp $ -->
 <html lang="en">
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
@@ -102,7 +102,8 @@ You'll probably be told that a number of other packages will
 also be loaded. That's OK.
 </P>
 
-<H3>3.2 RxTx</H3>
+<a id="rxtx">
+<H3>3.2 RxTx</H3></a>
 
 <P>A problem here is that the RxTx in the Ubuntu
 repositories does not work with JMRI! It appears that &quot;2.0.7pre2&quot;
