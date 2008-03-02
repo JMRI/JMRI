@@ -260,7 +260,19 @@
       
 <li>
 <a href="html/tools/Lights.shtml">Lights</a>
+<ul>
+         
+<li>
+<a href="package/jmri/jmrit/beantable/LightAddEdit.shtml">Add/Edit Light</a>
 <ul></ul>
+</li>
+         
+<li>
+<a href="package/jmri/jmrit/beantable/LightTable.shtml">Light Table</a>
+<ul></ul>
+</li>
+      
+</ul>
 </li>
       
 <li>
@@ -274,13 +286,37 @@
 </li>
       
 <li>
-<a href="package/jmri/jmrit/beantable/LogixTable.shtml">Logix</a>
+<a href="html/tools/Logix.shtml">Logix</a>
+<ul>
+         
+<li>
+<a href="package/jmri/jmrit/beantable/LogixTable.shtml">Add/Edit Logix</a>
 <ul></ul>
+</li>
+         
+<li>
+<a href="package/jmri/jmrit/beantable/LogixAddEdit.shtml">Logix Table</a>
+<ul></ul>
+</li>
+      
+</ul>
 </li>
       
 <li>
 <a href="html/tools/Memories.shtml">Memories</a>
+<ul>
+         
+<li>
+<a href="package/jmri/jmrit/beantable/MemoryAddEdit.shtml">Add/Edit Memories</a>
 <ul></ul>
+</li>
+         
+<li>
+<a href="package/jmri/jmrit/beantable/MemoryTable.shtml">Memory Table</a>
+<ul></ul>
+</li>
+      
+</ul>
 </li>
       
 <li>Programmers<ul>
@@ -300,12 +336,36 @@
       
 <li>
 <a href="html/tools/Reporters.shtml">Reporters</a>
+<ul>
+         
+<li>
+<a href="package/jmri/jmrit/beantable/ReporterAddEdit.shtml">Add/Edit Reporter</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="package/jmri/jmrit/beantable/ReporterTable.shtml">Reporter Table</a>
 <ul></ul>
 </li>
       
+</ul>
+</li>
+      
 <li>
-<a href="package/jmri/jmrit/beantable/RouteTable.shtml">Routes</a>
+<a href="html/tools/Routes.shtml">Routes</a>
+<ul>
+         
+<li>
+<a href="package/jmri/jmrit/beantable/RouteAddEdit.shtml">Adding/Editing Routes</a>
 <ul></ul>
+</li>
+         
+<li>
+<a href="package/jmri/jmrit/beantable/RouteTable.shtml">Route Table</a>
+<ul></ul>
+</li>
+      
+</ul>
 </li>
       
 <li>
@@ -315,12 +375,41 @@
       
 <li>
 <a href="html/tools/Sensors.shtml">Sensors</a>
+<ul>
+         
+<li>
+<a href="package/jmri/jmrit/beantable/SignalAddEdit.shtml">Sensor Add/Edit</a>
 <ul></ul>
+</li>
+         
+<li>
+<a href="package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table</a>
+<ul></ul>
+</li>
+      
+</ul>
 </li>
       
 <li>
 <a href="package/jmri/jmrit/sensorgroup/SensorGroupFrame.shtml">Sensor Groups</a>
 <ul></ul>
+</li>
+      
+<li>
+<a href="html/tools/signaling/index.shtml">Signals</a>
+<ul>
+         
+<li>
+<a href="package/jmri/jmrit/beantable/SignalAddEdit.shtml">Adding Signals</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="package/jmri/jmrit/beantable/SignalTable.shtml">Signal Table</a>
+<ul></ul>
+</li>
+      
+</ul>
 </li>
       
 <li>
@@ -384,13 +473,30 @@
 </li>
       
 <li>
+<a href="html/tools/throttle/ThrottleMain.shtml">Throttles</a>
+<ul></ul>
+</li>
+      
+<li>
 <a href="html/tools/tracker/index.shtml">Tracker (Blocks)</a>
 <ul></ul>
 </li>
       
 <li>
 <a href="html/tools/Turnouts.shtml">Turnouts</a>
+<ul>
+         
+<li>
+<a href="package/jmri/jmrit/beantable/TurnoutAddEdit.shtml">Turnout Add/Edit</a>
 <ul></ul>
+</li>
+         
+<li>
+<a href="package/jmri/jmrit/beantable/TurnoutAddEdit.shtml">Turnout Table</a>
+<ul></ul>
+</li>
+      
+</ul>
 </li>
       
 <li>
@@ -424,59 +530,59 @@
 </li>
    
 <li>System-Specific<ul>
-   	
+      
 <li>Digitrax<ul>
-   		
+         
 <li>
 <a href="package/jmri/jmrix/loconet/locoid/LocoIdFrame.shtml">LocoNet ID</a>
 <ul></ul>
 </li>
-   		
+         
 <li>Sound<ul>
-   			
+            
 <li>
 <a href="package/jmri/jmrix/loconet/soundloader/LoaderFrame.shtml">Sound Loader</a>
 <ul></ul>
 </li>
-   			
+            
 <li>
 <a href="package/jmri/jmrix/loconet/soundloader/EditorFrame.shtml">Sound Editor</a>
 <ul></ul>
 </li>
-   		
+         
 </ul>
 </li>
-   	
+      
 </ul>
 </li>
-   	
+      
 <li>NCE<ul>
- 		
+         
 <li>
 <a href="package/jmri/jmrix/nce/packetgen/NcePacketGenFrame.shtml">Send Command</a>
 <ul></ul>
 </li>
- 		
+         
 <li>
 <a href="package/jmri/jmrix/nce/macro/NceMacroEditFrame.shtml">Edit Macro</a>
 <ul></ul>
 </li>
-  		
+         
 <li>
 <a href="package/jmri/jmrix/nce/consist/NceConsistEditFrame.shtml">Edit Consist</a>
 <ul></ul>
 </li>
- 		
+         
 <li>
 <a href="package/jmri/jmrix/nce/analyzer/NcePacketMonitorFrame.shtml">DCC Packet Analyzer</a>
 <ul></ul>
 </li>
- 		
+         
 <li>
 <a href="package/jmri/jmrix/nce/clockmon/ClockMonFrame.shtml">Monitor Clock</a>
 <ul></ul>
 </li>
-   	
+      
 </ul>
 </li>
    

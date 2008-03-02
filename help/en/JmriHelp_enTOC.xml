@@ -60,20 +60,42 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
          <tocitem text="Setting the Internal Clock" target="package.jmri.jmrit.simpleclock.SimpleClockFrame"/>
          <tocitem text="The LocoNet clock" target="html.tools.fastclock.LocoNetClock"/>
       </tocitem>
-      <tocitem text="Lights" target="html.tools.Lights"/>
+      <tocitem text="Lights" target="html.tools.Lights">
+         <tocitem text="Add/Edit Light" target="package.jmri.jmrit.beantable.LightAddEdit"/>
+         <tocitem text="Light Table" target="package.jmri.jmrit.beantable.LightTable"/>
+      </tocitem>
       <tocitem text="Light Control" target="package.jmri.jmrit.simplelightctrl.SimpleLightCtrl"/>
       <tocitem text="Locomotive Speed Matching" target="html.tools.speedometer.SpeedMatch"/>
-      <tocitem text="Logix" target="package.jmri.jmrit.beantable.LogixTable"/>
-      <tocitem text="Memories" target="html.tools.Memories"/>
+      <tocitem text="Logix" target="html.tools.Logix">
+         <tocitem text="Add/Edit Logix" target="package.jmri.jmrit.beantable.LogixTable"/>
+         <tocitem text="Logix Table" target="package.jmri.jmrit.beantable.LogixAddEdit"/>
+      </tocitem>
+      <tocitem text="Memories" target="html.tools.Memories">
+         <tocitem text="Add/Edit Memories" target="package.jmri.jmrit.beantable.MemoryAddEdit"/>
+         <tocitem text="Memory Table" target="package.jmri.jmrit.beantable.MemoryTable"/>
+      </tocitem>
       <tocitem text="Programmers">
          <tocitem text="Single CV Programmer" target="package.jmri.jmrit.simpleprog.SimpleProgFrame"/>
          <tocitem text="DecoderPro programmer" target="DecoderProManual.Basic_Programming"/>
       </tocitem>
-      <tocitem text="Reporters" target="html.tools.Reporters"/>
-      <tocitem text="Routes" target="package.jmri.jmrit.beantable.RouteTable"/>
+      <tocitem text="Reporters" target="html.tools.Reporters">
+         <tocitem text="Add/Edit Reporter" target="package.jmri.jmrit.beantable.ReporterAddEdit"/>
+         <tocitem text="Reporter Table" target="package.jmri.jmrit.beantable.ReporterTable"/>
+      </tocitem>
+      <tocitem text="Routes" target="html.tools.Routes">
+         <tocitem text="Adding/Editing Routes" target="package.jmri.jmrit.beantable.RouteAddEdit"/>
+         <tocitem text="Route Table" target="package.jmri.jmrit.beantable.RouteTable"/>
+      </tocitem>
       <tocitem text="Send DCC Packet Tool" target="package.jmri.jmrit.sendpacket.SendPacketFrame"/>
-      <tocitem text="Sensors" target="html.tools.Sensors"/>
+      <tocitem text="Sensors" target="html.tools.Sensors">
+         <tocitem text="Sensor Add/Edit" target="package.jmri.jmrit.beantable.SignalAddEdit"/>
+         <tocitem text="Sensor Table" target="package.jmri.jmrit.beantable.SensorTable"/>
+      </tocitem>
       <tocitem text="Sensor Groups" target="package.jmri.jmrit.sensorgroup.SensorGroupFrame"/>
+      <tocitem text="Signals" target="html.tools.signaling.index">
+         <tocitem text="Adding Signals" target="package.jmri.jmrit.beantable.SignalAddEdit"/>
+         <tocitem text="Signal Table" target="package.jmri.jmrit.beantable.SignalTable"/>
+      </tocitem>
       <tocitem text="Simple Signal Logic" target="package.jmri.jmrit.blockboss.BlockBossFrame"/>
       <tocitem text="Speedometer" target="html.tools.speedometer.index"/>
       <tocitem text="Tables">
@@ -87,8 +109,12 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
          <tocitem text="Reporter Table" target="package.jmri.jmrit.beantable.ReporterTable"/>
          <tocitem text="Block Table" target="package.jmri.jmrit.beantable.BlockTable"/>
       </tocitem>
+      <tocitem text="Throttles" target="html.tools.throttle.ThrottleMain"/>
       <tocitem text="Tracker (Blocks)" target="html.tools.tracker.index"/>
-      <tocitem text="Turnouts" target="html.tools.Turnouts"/>
+      <tocitem text="Turnouts" target="html.tools.Turnouts">
+         <tocitem text="Turnout Add/Edit" target="package.jmri.jmrit.beantable.TurnoutAddEdit"/>
+         <tocitem text="Turnout Table" target="package.jmri.jmrit.beantable.TurnoutAddEdit"/>
+      </tocitem>
       <tocitem text="Turnout Control" target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl"/>
    </tocitem>
    <tocitem text="Panels" target="html.apps.PanelPro.Panels">
@@ -97,20 +123,20 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
    </tocitem>
    <tocitem text="Names" target="html.doc.Technical.Names"/>
    <tocitem text="System-Specific">
-   	<tocitem text="Digitrax">
-   		<tocitem text="LocoNet ID" target="package.jmri.jmrix.loconet.locoid.LocoIdFrame" />
-   		<tocitem text="Sound">
-   			<tocitem text="Sound Loader" target="package.jmri.jmrix.loconet.soundloader.LoaderFrame" />
-   			<tocitem text="Sound Editor" target="package.jmri.jmrix.loconet.soundloader.EditorFrame" />
-   		</tocitem>
-   	</tocitem>
-   	<tocitem text="NCE">
- 		<tocitem text="Send Command" target="package.jmri.jmrix.nce.packetgen.NcePacketGenFrame"/>
- 		<tocitem text="Edit Macro" target="package.jmri.jmrix.nce.macro.NceMacroEditFrame"/>
-  		<tocitem text="Edit Consist" target="package.jmri.jmrix.nce.consist.NceConsistEditFrame"/>
- 		<tocitem text="DCC Packet Analyzer" target="package.jmri.jmrix.nce.analyzer.NcePacketMonitorFrame"/>
- 		<tocitem text="Monitor Clock" target="package.jmri.jmrix.nce.clockmon.ClockMonFrame"/>
-   	</tocitem>
+      <tocitem text="Digitrax">
+         <tocitem text="LocoNet ID" target="package.jmri.jmrix.loconet.locoid.LocoIdFrame"/>
+         <tocitem text="Sound">
+            <tocitem text="Sound Loader" target="package.jmri.jmrix.loconet.soundloader.LoaderFrame"/>
+            <tocitem text="Sound Editor" target="package.jmri.jmrix.loconet.soundloader.EditorFrame"/>
+         </tocitem>
+      </tocitem>
+      <tocitem text="NCE">
+         <tocitem text="Send Command" target="package.jmri.jmrix.nce.packetgen.NcePacketGenFrame"/>
+         <tocitem text="Edit Macro" target="package.jmri.jmrix.nce.macro.NceMacroEditFrame"/>
+         <tocitem text="Edit Consist" target="package.jmri.jmrix.nce.consist.NceConsistEditFrame"/>
+         <tocitem text="DCC Packet Analyzer" target="package.jmri.jmrix.nce.analyzer.NcePacketMonitorFrame"/>
+         <tocitem text="Monitor Clock" target="package.jmri.jmrix.nce.clockmon.ClockMonFrame"/>
+      </tocitem>
    </tocitem>
    <tocitem text="Hardware Support" target="html.hardware.index"/>
    <tocitem text="Technical Info" target="html.doc.Technical.index">
