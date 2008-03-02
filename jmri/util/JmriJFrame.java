@@ -37,7 +37,7 @@ import java.awt.event.KeyEvent;
  *
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class JmriJFrame extends JFrame implements java.awt.event.WindowListener {
@@ -134,6 +134,15 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener 
                         // Linux generally has a bar across the top and/or bottom
                         // of the screen, but lets you have the full width.
                         heightInset = 70;
+                    }
+                    // Windows generally has values, but not always,
+                    // so we provide observed values just in case
+                    else if (type.equals("Windows XP")) {
+                        heightInset = 28;  // bottom 28
+                    } else if (type.equals("Windows 98")) {
+                        heightInset = 28;  // bottom 28
+                    } else if (type.equals("Windows 2000")) {
+                        heightInset = 28;  // bottom 28
                     }
                 }
                 
