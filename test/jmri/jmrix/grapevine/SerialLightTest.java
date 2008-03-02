@@ -9,7 +9,7 @@ import junit.framework.*;
  * Tests for the jmri.jmrix.grapevine.SerialLight class,
  * low address.
  * @author			Bob Jacobsen
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SerialLightTest extends AbstractLightTest {
 
@@ -21,7 +21,7 @@ public class SerialLightTest extends AbstractLightTest {
 		tcis = new SerialTrafficControlScaffold();
         tcis.registerSerialNode(new SerialNode(1, SerialNode.NODE2002V6));
         
-		t = new SerialLight("GL1004","t4");
+		t = new SerialLight("GL1104","t4");
 	}
 
 	public int numListeners() { return tcis.numListeners(); }

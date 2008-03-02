@@ -17,11 +17,23 @@ import java.util.Date;
  *    system dependent categories.  System independent instance
  *    variables are defined here, and their accessor routines are
  *    implemented here.
- * <P>
- * Based in concept on AbstractSignalHead.java
+ *
+ * <p>
+ * This implementation provides a notional implementation of 
+ * intensity and transitions.  The user can set intensity
+ * so long as it's at least the max value (default 1.0) or
+ * no more than the minimum value (default 0.0). In that case,
+ * the setTargetIntensity operations become a setState to ON
+ * or OFF.  Setting a target intensity between the min and max
+ * is an error, because this type of Light does not support
+ * a true analog intensity.
+ * Transitions never happen, and setting a TransitionTime
+ * greater than 0.0 gives an exception.
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.13 $
+ * @author	Ken Cameron Copyright (C) 2008
+ * @author	Bob Jacobsen Copyright (C) 2008
+ * @version     $Revision: 1.14 $
  */
 public abstract class AbstractLight extends AbstractNamedBean
     implements Light, java.io.Serializable {
@@ -49,21 +61,9 @@ public abstract class AbstractLight extends AbstractNamedBean
     protected String mTimedSensorName = "";
 	protected int mTimeOnDuration = 0;
 	
-	/**
-	 * new internal values for dimmable lights
-	 */
-	protected boolean mSupportsDimmable = false;
-	protected boolean mIsDimmable = false;
-	protected int mRequestedDimValue = 0;
-	protected int mCurrentDimValue = 0;
-	protected double mCurrentDimRate = 0;
-	protected Date mLastDimChangeStart;
-	protected int mDawnDurration = 0;
-	protected int mDuskDurration = 0;
-	protected double mMinDimValue = 0;
-	protected double mMaxDimValue = 0;
-	protected boolean mDimInit = false;
-    
+	protected double mMaxIntensity = 1.0;
+	protected double mMinIntensity = 0.0;
+	
     /**
      *  System independent operational instance variables (not saved between runs)
      */
@@ -83,6 +83,9 @@ public abstract class AbstractLight extends AbstractNamedBean
 	protected java.awt.event.ActionListener mTimedControlListener = null;
 	protected boolean mLightOnTimerActive = false;
     protected boolean mEnabled = true;
+    
+    protected double mCurrentIntensity = 0.0;
+    protected int mState = OFF;
 
     /**
      * Get enabled status
@@ -97,112 +100,212 @@ public abstract class AbstractLight extends AbstractNamedBean
         if (old != v) firePropertyChange("Enabled", new Boolean(old), new Boolean(v));
     }
 
-    /**
-     * for a dimmable light, uses true and false
-     */
-    public boolean isDimSupported() {
-    	return(mSupportsDimmable);
+    /** Check if this object can handle variable intensity.
+     * <P>
+     * @return false, as this abstract class does not implement
+     * variable intensity. See e.g. {@link AbstractVariableLight} for 
+     * an abstract implementation of variable intensity.
+    */
+    public boolean isIntensityVariable() {
+        return false;
     }
-    public boolean isCanDim() {
-    	return(mIsDimmable);
-    }
-    public void setCanDim(boolean flag) {
-    	boolean old = mIsDimmable;
-    	mIsDimmable = flag;
-    	if (old != flag) {
-    		firePropertyChange("isDimmable", new Boolean(old), new Boolean(flag));
-    	}
-    }
-    public boolean hasBeenDimmed() {
-    	return(mDimInit);
+    
+   /** Set the intended new intensity value for the Light.
+    *  If transitions are in use, they will be applied.
+    *  <p>
+    *  Bound property between 0 and 1. 
+    *  <p>
+    *  A value of 0.0 corresponds to full off, and 
+    *  a value of 1.0 corresponds to full on.
+    *  <p>
+    *  Values at or below
+    *  the minIntensity property will result in the Light going
+    *  to the OFF state immediately. 
+    *  Values at or above the maxIntensity property
+    *  will result in the Light going to the ON state immediately.  
+    *  <p>
+    *  All others result in an exception, instead of the
+    *  INTERMEDIATE state, because this class does not implement analog intensity
+    *  <P>
+    *  @throws IllegalArgumentException when intensity is less than 0.0 or more than 1.0
+    *  @throws IllegalArgumentException when intensity is more than MinIntensity and less than MaxIntensity
+    */
+    public void setTargetIntensity(double intensity) {
+        if (intensity<0.0 || intensity>1.0) 
+            throw new IllegalArgumentException("Target intensity value "+intensity+" not in legal range");
+
+        // move directly to target, if possible
+        if (intensity >= mMaxIntensity) {
+            updateIntensityHigh(intensity);
+        } else if (intensity <= mMinIntensity) {
+            updateIntensityLow(intensity);
+        } else {
+            updateIntensityIntermediate(intensity);
+        }
     }
     
     /**
-     * Dim rate is for number of fast minutes to go from 0 to 100%
+     * Method for further implementation of 
+     * setTargetIntensity at or below the minimum
      */
-    public void setDimRate(double newRate) {
-    	mCurrentDimRate = newRate;
-    }
-
-    /**
-     *  Return the current dim rate of this Light
-     */
-    public double getDimRate() {
-    	return mCurrentDimRate;
+    protected void updateIntensityLow(double intensity) {
+        double oldValue = mCurrentIntensity;
+        // set to minimum, so go to OFF state
+        mCurrentIntensity = intensity;
+        if (oldValue != intensity)
+            firePropertyChange("TargetIntensity", new Double(oldValue), new Double(intensity));
+        setState(OFF);
     }
     
     /**
-     * sets the minimum output for a dimmed light 
+     * Method for further implementation of 
+     * setTargetIntensity between min and max
      */
-    public void setDimMin(double v) {
-    	if (v > 1 || v < 0) {
-    		return;
-    	}
-    	mMinDimValue = v;
+    protected void updateIntensityIntermediate(double intensity) {
+        // not in value range!
+        throw new IllegalArgumentException("intensity value "+intensity+" between min "+mMinIntensity+" and max "+mMaxIntensity);
     }
-
+    
     /**
-     * gets the minimum output for a dimmed light 
+     * Method for further implementation of 
+     * setTargetIntensity at or above the maximum
      */
-    public double getDimMin() {
-    	return(mMinDimValue);
+    protected void updateIntensityHigh(double intensity) {
+        double oldValue = mCurrentIntensity;
+        // set to maximum, so go to ON state
+        mCurrentIntensity = intensity;
+        if (oldValue != intensity)
+            firePropertyChange("TargetIntensity", new Double(oldValue), new Double(intensity));
+        setState(ON);
     }
+    
+    /** Get the current intensity value.
+     * If the Light is currently transitioning, this may be either
+     * an intermediate or final value.
+     * <p>
+     * A value of 0.0 corresponds to full off, and 
+     * a value of 1.0 corresponds to full on.
+    */
+    public double getCurrentIntensity() {
+        return mCurrentIntensity;
+    }
+    
+    /** Get the target intensity value for the 
+     * current transition, if any. If the Light is not currently
+     * transitioning, this is the current intensity value.
+     * <p>
+     * A value of 0.0 corresponds to full off, and 
+     * a value of 1.0 corresponds to full on.
+     * <p>
+     * Bound property
+    */
+    public double  getTargetIntensity() {
+        return mCurrentIntensity;
+    }
+    
+    /** Set the value of the maxIntensity property.
+     * <p>
+     * Bound property between 0 and 1. 
+     * <p>
+     * A value of 0.0 corresponds to full off, and 
+     * a value of 1.0 corresponds to full on.
+     * @throws IllegalArgumentException when intensity is less than 0.0 or more than 1.0
+     * @throws IllegalArgumentException when intensity is not greater than the current value of the minIntensity property
+    */
+    public void setMaxIntensity(double intensity) {
+        if (intensity<0.0 || intensity>1.0) 
+            throw new IllegalArgumentException("Illegal intensity value: "+intensity);
+        if (intensity <= mMinIntensity) 
+            throw new IllegalArgumentException("Requested intensity "+intensity+" not less than minIntensity "+mMinIntensity);
 
-    /**
-     * sets the minimum output for a dimmed light 
+        double oldValue = mMaxIntensity;
+        mMaxIntensity = intensity;
+        if (oldValue != intensity)
+            firePropertyChange("MaxIntensity", new Double(oldValue), new Double(intensity));
+    }
+    
+    /** Get the current value of the maxIntensity property.
+     * <p>
+     * A value of 0.0 corresponds to full off, and 
+     * a value of 1.0 corresponds to full on.
+    */
+    public double getMaxIntensity() {
+        return mMaxIntensity;
+    }
+    
+    /** Set the value of the minIntensity property.
+     * <p>
+     * Bound property between 0 and 1. 
+     * <p>
+     * A value of 0.0 corresponds to full off, and 
+     * a value of 1.0 corresponds to full on.
+     * @throws IllegalArgumentException when intensity is less than 0.0 or more than 1.0
+     * @throws IllegalArgumentException when intensity is not less than the current value of the maxIntensity property
+    */
+    public void setMinIntensity(double intensity) {
+        if (intensity<0.0 || intensity>1.0) 
+            throw new IllegalArgumentException("Illegal intensity value: "+intensity);
+        if (intensity >= mMaxIntensity) 
+            throw new IllegalArgumentException("Requested intensity "+intensity+" not more than maxIntensity "+mMaxIntensity);
+
+        double oldValue = mMinIntensity;
+        mMinIntensity = intensity;
+        if (oldValue != intensity)
+            firePropertyChange("MinIntensity", new Double(oldValue), new Double(intensity));
+    }
+    
+    /** 
+     * Get the current value of the minIntensity property.
+     * <p>
+     * A value of 0.0 corresponds to full off, and 
+     * a value of 1.0 corresponds to full on.
      */
-    public void setDimMax(double v) {
-    	if (v > 1 || v < 0) {
-    		return;
-    	}
-    	mMaxDimValue = v;
+    public double getMinIntensity() {
+        return mMinIntensity;
     }
-
-    /**
-     * gets the minimum output for a dimmed light 
+    
+    /** 
+     * Can the Light change it's intensity setting slowly?
+     * <p>
+     * If true, this Light supports a non-zero value of the 
+     * transitionTime property, which controls how long the Light
+     * will take to change from one intensity level to another.
+     * <p>
+     * Unbound property
      */
-    public double getDimMax() {
-    	return(mMaxDimValue);
+    public boolean isTransitionAvailable() { return false; }
+    
+    /** 
+     * Set the fast-clock duration for a 
+     * transition from full ON to full OFF or vice-versa.
+     * <P>
+     * This class does not implement transitions, so this property
+     * cannot be set from zero.
+     * <p>
+     * Bound property
+     * <p>
+     * @throws IllegalArgumentException if minutes is not 0.0
+     */
+    public void setTransitionTime(double minutes) {
+        if (minutes != 0.0) throw new IllegalArgumentException("Illegal transition time: "+minutes);
     }
-  
-  /*
-   * get the current dim request value
-   * override in concrete class if light supports dimming
-   */ 
-  public double getDimRequest() {
-        if (getState() == OFF) {
-                return(0);
-        } else {
-                return(1);
-        }
-    }
+    
+    /** 
+     * Get the number of fastclock minutes taken by a transition from
+     * full ON to full OFF or vice versa.
+     * <p>
+     * @return 0.0 if the output intensity transition is instantaneous
+     */
+    public double getTransitionTime() { return 0.0; }
+    
+    /** 
+     * Convenience method for checking if the intensity of the light is currently
+     * changing due to a transition.
+     * <p>
+     * Bound property so that listeners can conveniently learn when the transition is over.
+     */
+    public boolean isTransitioning() { return false; }
 
-  /*
-   * get the current dim value
-   * override in concrete class if light supports dimming
-   */ 
-   public double getDimCurrent() {
-        if (getState() == OFF) {
-                return(0);
-        } else {
-                return(1);
-        }
-   }
-
-  /*
-   * set the current dim value
-   * override in concrete class if light supports dimming
-   */ 
-    public void setDimRequest(double v) {
-        if (v > 0) {
-                setState(ON);
-        } else {
-                setState(OFF);
-        }
-    }
-
-
- 
     /**
      *  Return the control type of this Light
      */    
@@ -349,7 +452,36 @@ public abstract class AbstractLight extends AbstractNamedBean
 		mTimeOnDuration = duration;
 	}
 
-	abstract public void setState(int value);
+	public void setState(int newState) {
+	    int oldState = mState;
+	    if ( newState != ON && newState != OFF) 
+	        throw new IllegalArgumentException("cannot set state value "+newState);
+	    double intensity = getTargetIntensity();
+	    if (newState == ON && intensity < getMaxIntensity() ) {
+	        setTargetIntensity(getMaxIntensity());
+	        // stop if state change was done as part of setTargetIntensity
+	        if (getState() == ON) return;
+	    }
+	    if (newState == OFF && intensity > getMinIntensity() ) {
+	        setTargetIntensity(getMinIntensity());
+	        // stop if state change was done as part of setTargetIntensity
+	        if (getState() == OFF) return;
+        }
+        // do the state change
+	    mState = newState;
+	    doNewState(oldState, newState);
+	    if (oldState!=newState)
+	        firePropertyChange("KnownState", new Integer(oldState), new Integer(newState));
+	}
+	
+	/**
+	 * Implement the specific change of state needed by hardware
+	 */
+	protected void doNewState(int oldState, int newState) {}
+
+	public int getState() {
+	    return mState;
+	}
 
     /**
 	 *  Updates the status of a Light under FAST_CLOCK_CONTROL.  This
@@ -658,6 +790,7 @@ public abstract class AbstractLight extends AbstractNamedBean
             mActive = false;
         }    
     }
+
 	/**
 	 *	Class for defining ActionListener for TIMED_ON_CONTROL
 	 */

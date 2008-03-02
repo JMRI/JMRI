@@ -2,7 +2,7 @@
 
 package jmri.jmrix.powerline;
 
-import jmri.AbstractLight;
+import jmri.AbstractVariableLight;
 import jmri.Sensor;
 import jmri.Turnout;
 import java.util.Date;
@@ -12,13 +12,14 @@ import java.util.Date;
  *
  * Implementation of the Light Object
  * <P>
- *  Based in part on SerialTurnout.java
+ * Uses X10 dimming commands to set intensity unless
+ * the value is 0 or 1, in which case it uses on/off commands.
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
-public class SerialLight extends AbstractLight {
+public class SerialLight extends AbstractVariableLight {
 
     /**
      * Create a Light object, with only system name.
@@ -28,7 +29,7 @@ public class SerialLight extends AbstractLight {
     public SerialLight(String systemName) {
         super(systemName);
         // Initialize the Light
-        initializeLight(systemName);
+        initializeLight();
     }
     /**
      * Create a Light object, with both system and user names.
@@ -37,7 +38,7 @@ public class SerialLight extends AbstractLight {
      */
     public SerialLight(String systemName, String userName) {
         super(systemName, userName);
-        initializeLight(systemName);
+        initializeLight();
     }
         
     /**
@@ -45,11 +46,9 @@ public class SerialLight extends AbstractLight {
      *    independent instance variables to default values
      * Note: most instance variables are in AbstractLight.java
      */
-    private void initializeLight(String systemName) {
-        // Save system name
-        mSystemName = systemName;
+    private void initializeLight() {
         // Extract the Bit from the name
-        mBit = SerialAddress.getBitFromSystemName(systemName);
+        mBit = SerialAddress.getBitFromSystemName(getSystemName());
         // Set defaults for all other instance variables
         setControlType( NO_CONTROL );
         setControlSensor( null );
@@ -57,10 +56,9 @@ public class SerialLight extends AbstractLight {
         setFastClockControlSchedule( 0,0,0,0 );
         setControlTurnout( null );
         setControlTurnoutState( Turnout.CLOSED );
-        setCanDim(false);
     }
 
-    private void initDimUse() {
+    private void initIntensity() {
         // Set initial state
         // address message, then function
         int housecode = ((mBit-1)/16)+1;
@@ -71,234 +69,105 @@ public class SerialLight extends AbstractLight {
         // send
         SerialTrafficController.instance().sendSerialMessage(m1, null);
         SerialTrafficController.instance().sendSerialMessage(m2, null);
-        log.debug("initDimUse: sent off");
+        log.debug("initIntensity: sent off");
         // then set all dim
         m1 = SerialMessage.getAddress(housecode, devicecode);
         m2 = SerialMessage.getFunctionDim(housecode, X10.FUNCTION_DIM, 22);
         // send
         SerialTrafficController.instance().sendSerialMessage(m1, null);
         SerialTrafficController.instance().sendSerialMessage(m2, null);
-        log.debug("initDimUse: sent dim reset");
+        log.debug("initIntensity: sent dim reset");
         mDimInit = true;
-    	log.debug("turn on diminit");
+    	log.debug("init done");
     }
     
     /**
-     *  System dependent instance variables
+     *  System-dependent instance variables
      */
-    String mSystemName = "";     // system name 
-    protected int mState = OFF;  // current state of this light
+
     int mBit = 0;                // bit within the node
-    double mCurrentDim = 0;			// 
-    double mRequestedDim = 0;
-    Date mLastDimChange = null;
-    double mDimRate = 0;
-    boolean mIsDimmable = true;
-    boolean mDimInit = false;
-    double mMinDimValue = 0;
-    double mMaxDimValue = 1;
 
+    boolean mDimInit = false;    // entering dimming mode, send init
+        
     /**
-     * set whether to dim or just on/off
+     *  Request from superclass to set the current state of this Light
      */
-    public void setCanDim(boolean state) {
-    	if (mIsDimmable != state) {
-    		log.debug("change dimmable to " + state);
-    	}
-    	mIsDimmable = state;
-    }
-    
-    /**
-     * return is light is set to dim or just on/off
-     */
-    public boolean isCanDim() {
-    	return(mIsDimmable);
-    }
-    /**
-     *  Return the current state of this Light
-     */
-    public int getState() { return mState; }
-    
-    /**
-     *  Return the last requested dim of this Light
-     */
-    public double getDimRequest() { return mRequestedDim; }
-
-    /**
-     *  Return the current dim of this Light, will differ from request when dim rate in effect
-     */
-    public double getDimCurrent() { return mCurrentDim; }
-
-    /**
-     *  This Light implementation supports dimming
-     */
-    public boolean isDimSupported() { return true; }
-
-    /**
-     *  Return the current dim rate of this Light
-     */
-    public double getDimRate() {
-    	return mDimRate;
-    }
-    public void setDimRate(double newRate) {
-		if (newRate != mDimRate) {
-	    	double oldRate = mDimRate;
-	    	mDimRate = newRate;
-            // notify listeners, if any
-            firePropertyChange("KnownDimRate", new Double(oldRate), new Double(newRate));
-		}
-    }
-    public boolean hasBeenDimmed() {
-    	return(mDimInit);
-    }
-
-    /**
-     * sets the minimum output for a dimmed light 
-     */
-    public void setDimMin(double v) {
-    	if (v > 1 || v < 0) {
-    		return;
-    	}
-    	mMinDimValue = v;
-    }
-
-    /**
-     * gets the minimum output for a dimmed light 
-     */
-    public double getDimMin() {
-    	return(mMinDimValue);
-    }
-
-    /**
-     * sets the minimum output for a dimmed light 
-     */
-    public void setDimMax(double v) {
-    	if (v > 1 || v < 0) {
-    		return;
-    	}
-    	mMaxDimValue = v;
-    }
-
-    /**
-     * gets the minimum output for a dimmed light 
-     */
-    public double getDimMax() {
-    	return(mMaxDimValue);
-    }
-    
-    /**
-     *  Set the current state of this Light
-     */
-    public void setState(int newState) {
+	protected void doNewState(int oldState, int newState) {
     	if (log.isDebugEnabled()) {
-    		log.debug("setState(" + newState + ")\nCurrent: " + mState);
+    		log.debug("doNewState(" +oldState+","+newState+")");
     	}
-        SerialNode mNode = SerialAddress.getNodeFromSystemName(mSystemName);
+        SerialNode mNode = SerialAddress.getNodeFromSystemName(getSystemName());
         if (mNode == null) {
             // node does not exist, ignore call
             return;
         }
 
-        double newDim;
+        double newIntensity = getTargetIntensity();
     	if (newState == ON) {
-    		newDim = 1;
+    		newIntensity = getMaxIntensity();
+    	} else if (newState == OFF) {
+    		newIntensity = getMinIntensity();
     	} else {
-    		newDim = 0;
-    	}
-        if (mIsDimmable) {
-        	sendDimCommand(newDim);
+    	    // really should not happen
+    	    throw new IllegalArgumentException("invalid state request "+newState);
+        }
+    	
+        if ( newIntensity!=1.0 && newIntensity!=0.0) {
+            // dim to value
+        	updateIntensity(newIntensity);
         } else {
+            // just go straight
 	        sendOnOffCommand(newState);
         }
 	
-		if (newState != mState || newDim != mRequestedDim || newDim != mCurrentDim) {
-			int oldState = mState;
-			double oldDim = mRequestedDim;
-			if (oldState != newState) {
-				mState = newState;
-	            // notify listeners, if any
-	            firePropertyChange("KnownState", new Integer(oldState), new Integer(newState));
-			}
-			if (oldDim != newDim) {
-				mCurrentDim = newDim;
-				mRequestedDim = newDim;
-				firePropertyChange("KnownDim", new Double(oldDim), new Double(newDim));
-			}
-		}
     }
 
     /**
-     *  Set the current dim of this Light
+     * Request from superclass to set intensity above max
      */
-    public void setDimRequest(double newDim) {
+    protected void updateIntensityHigh(double intensity) {
+        updateIntensity(intensity);
+        super.updateIntensityHigh(intensity);
+    }
+
+    /**
+     * Request from superclass to set intensity between min and max
+     */
+    protected void updateIntensityIntermediate(double intensity) {
+        updateIntensity(intensity);
+        super.updateIntensityIntermediate(intensity);
+    }
+
+    /**
+     * Request from superclass to set intensity below min
+     */
+    protected void updateIntensityLow(double intensity) {
+        updateIntensity(intensity);
+        super.updateIntensityLow(intensity);
+    }
+
+    /**
+     * Send a Dim/Bright commands to the hardware
+     */
+    private void updateIntensity(double intensity) {
     	if (log.isDebugEnabled()) {
-    		log.debug("setDim(" + newDim + ") mRequestedDim: " + mRequestedDim);
+    		log.debug("sendDimCommand(" + intensity + ")");
     	}
-        SerialNode mNode = SerialAddress.getNodeFromSystemName(mSystemName);
+        SerialNode mNode = SerialAddress.getNodeFromSystemName(getSystemName());
         if (mNode == null) {
             // node does not exist, ignore call
             return;
         }
-        if (newDim < 0 || newDim > 1) {
-        	return ;
-        }
-        if (newDim < mMinDimValue) {
-        	newDim = mMinDimValue;
-        }
-        if (newDim > mMaxDimValue) {
-        	newDim = mMaxDimValue;
-        }
-        int newState;
-    	if (newDim <= 0) {
-    		newState = OFF;
-    	} else {
-    		newState = ON;
-    	}
         
-        if (!mIsDimmable) {
-        	sendOnOffCommand(newState);
-        } else {
-	        sendDimCommand(newDim);
-        }
-	
-		if (newDim != mRequestedDim) {
-			double oldDim = mRequestedDim;
-			int oldState = mState;
-			mRequestedDim = newDim;
-			mCurrentDim = newDim;
-			if (newDim > 0) {
-				mState = ON;
-			} else {
-				mState = OFF;
-			}
-            // notify listeners, if any
-			if (oldState != mState) {
-	            firePropertyChange("KnownState", new Integer(oldState), new Integer(mState));
-			}
-            firePropertyChange("KnownDim", new Double(oldDim), new Double(newDim));
-        }
-    }
-
-    /**
-     * Send a Dim/Bright Command to the hardware
-     */
-    private void sendDimCommand(double newDim) {
-    	if (log.isDebugEnabled()) {
-    		log.debug("sendDimCommand(" + newDim + ") mRequestedDim: " + mRequestedDim);
-    	}
-        SerialNode mNode = SerialAddress.getNodeFromSystemName(mSystemName);
-        if (mNode == null) {
-            // node does not exist, ignore call
-            return;
-        }
+        if (!mDimInit) initIntensity();
         
         // figure out the function code
         int function;
-        if (newDim >= mCurrentDim) {
+        if (intensity >= getCurrentIntensity()) {
             function = X10.FUNCTION_BRIGHT;
         	log.debug("function bright");
         }
-        else if (newDim < mCurrentDim) {
+        else if (intensity < getCurrentIntensity()) {
             function = X10.FUNCTION_DIM;
         	log.debug("function dim");
         }
@@ -308,7 +177,7 @@ public class SerialLight extends AbstractLight {
         }
         int housecode = ((mBit-1)/16)+1;
         int devicecode = ((mBit-1)%16)+1;
-        double diffDim = newDim - mRequestedDim;
+        double diffDim = intensity - getCurrentIntensity();
         int deltaDim = (int)(22 * Math.abs(diffDim));
         if (deltaDim != 0) {
 	        // address message, then function
@@ -319,7 +188,7 @@ public class SerialLight extends AbstractLight {
 	        SerialTrafficController.instance().sendSerialMessage(m2, null);
         }
     	if (log.isDebugEnabled()) {
-    		log.debug("sendDimCommand(" + newDim + ")/" + mRequestedDim + " house " + housecode + " device " + devicecode + " deltaDim: " + deltaDim + " funct: " + function);
+    		log.debug("sendDimCommand(" + intensity + ") house " + housecode + " device " + devicecode + " deltaDim: " + deltaDim + " funct: " + function);
         }
     }
 
@@ -330,15 +199,15 @@ public class SerialLight extends AbstractLight {
     	if (log.isDebugEnabled()) {
     		log.debug("sendOnOff(" + newState + ")\nCurrent: " + mState);
     	}
-        SerialNode mNode = SerialAddress.getNodeFromSystemName(mSystemName);
+        SerialNode mNode = SerialAddress.getNodeFromSystemName(getSystemName());
         if (mNode == null) {
             // node does not exist, ignore call
             return;
         }
 
-        if (mDimInit) {
-        	mDimInit = false;
-        }
+        // force reinit at next dim operation
+        mDimInit = false;
+
         // figure out command 
         int function;
         double newDim;
@@ -366,7 +235,7 @@ public class SerialLight extends AbstractLight {
         SerialTrafficController.instance().sendSerialMessage(m2, null);
         
     	if (log.isDebugEnabled()) {
-    		log.debug("sendOnOff(" + newDim + ")/" + mRequestedDim + " house " + housecode + " device " + devicecode + " funct: " + function);
+    		log.debug("sendOnOff(" + newDim + ")  house " + housecode + " device " + devicecode + " funct: " + function);
         }
     }
 

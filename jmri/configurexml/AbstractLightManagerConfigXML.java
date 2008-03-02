@@ -22,7 +22,7 @@ import org.jdom.Element;
  * Based on AbstractSensorManagerConfigXML.java
  *
  * @author Dave Duchamp Copyright (c) 2004
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public abstract class AbstractLightManagerConfigXML implements XmlAdapter {
 
@@ -72,14 +72,14 @@ public abstract class AbstractLightManagerConfigXML implements XmlAdapter {
                     elem.setAttribute("timedControlSensor", lgt.getControlTimedOnSensorName() );
                     elem.setAttribute("duration", ""+lgt.getTimedOnDuration() );
                 }
-                // dimmable light support
-                boolean canDim = lgt.isCanDim();
-                elem.setAttribute("canDim", "" + canDim);
-                if (canDim) {
-                	elem.setAttribute("rateDim", "" + lgt.getDimRate());
-                	elem.setAttribute("minDim", "" + lgt.getDimMin());
-                	elem.setAttribute("maxDim", "" + lgt.getDimMax());
-                }
+
+                // write variable intensity attributes
+                elem.setAttribute("minIntensity", "" + lgt.getMinIntensity());
+                elem.setAttribute("maxIntensity", "" + lgt.getMaxIntensity());
+
+                // write transition attribute
+                elem.setAttribute("transitionTime", "" + lgt.getTransitionTime());
+
                 log.debug("store light "+sname+":"+uname);
                 lights.addContent(elem);
 
@@ -180,14 +180,13 @@ public abstract class AbstractLightManagerConfigXML implements XmlAdapter {
                                                     getAttribute("duration").getValue()) );
 					}
                 }
-                // dimmable light support
-                boolean canDim = Boolean.parseBoolean(((Element)(lightList.get(i))).getAttribute("canDim").getValue());
-                lgt.setCanDim(canDim);
-                if (canDim) {
-                	lgt.setDimRate(Integer.parseInt(((Element)(lightList.get(i))).getAttribute("rateDim").getValue()));
-                	lgt.setDimMin(Double.parseDouble(((Element)(lightList.get(i))).getAttribute("minDim").getValue()));
-                	lgt.setDimMax(Double.parseDouble(((Element)(lightList.get(i))).getAttribute("maxDim").getValue()));
-                }
+                // variable intensity, transition attributes
+
+                lgt.setMinIntensity(Double.parseDouble(((Element)(lightList.get(i))).getAttribute("minIntensity").getValue()));
+                lgt.setMaxIntensity(Double.parseDouble(((Element)(lightList.get(i))).getAttribute("maxIntensity").getValue()));
+                lgt.setTransitionTime(Double.parseDouble(((Element)(lightList.get(i))).getAttribute("transitionTime").getValue()));
+                
+                // done, start it working
 				lgt.activateLight();
             }
             else {

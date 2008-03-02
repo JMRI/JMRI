@@ -16,7 +16,7 @@ import jmri.Turnout;
  *  Based in part on SerialLight.java
  *
  * @author      Dave Duchamp Copyright (C) 2006
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class LnLight extends AbstractLight {
 
@@ -46,8 +46,6 @@ public class LnLight extends AbstractLight {
      * Note: most instance variables are in AbstractLight.java
      */
     private void initializeLight(String systemName) {
-        // Save system name
-        mSystemName = systemName;
         // Extract the Bit from the name
         mBit = LnLightManager.instance().getBitFromSystemName(systemName);
         // Set initial state
@@ -64,20 +62,13 @@ public class LnLight extends AbstractLight {
     /**
      *  System dependent instance variables
      */
-    String mSystemName = "";     // system name 
-    protected int mState = OFF;  // current state of this light
     int mBit = 0;                // address bit
-
-    /**
-     *  Return the current state of this Light
-     */
-    public int getState() { return mState; }
 
     /**
      *  Set the current state of this Light
      *     This routine requests the hardware to change.
      */
-    public void setState(int newState) {
+	protected void doNewState(int oldState, int newState) {
 		LocoNetMessage l = new LocoNetMessage(4);
 		l.setOpCode(LnConstants.OPC_SW_REQ);
 		// compute address fields
@@ -98,12 +89,6 @@ public class LnLight extends AbstractLight {
 		l.setElement(1,loadr);
 		l.setElement(2,hiadr);
 		LnTrafficController.instance().sendLocoNetMessage(l);
-		if (newState!=mState) {
-			int oldState = mState;
-			mState = newState;
-            // notify listeners, if any
-            firePropertyChange("KnownState", new Integer(oldState), new Integer(newState));
-		}
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnLight.class.getName());

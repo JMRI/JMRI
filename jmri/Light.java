@@ -32,13 +32,61 @@ package jmri;
  * <P>
  * @author			Dave Duchamp Copyright (C) 2004
  * @author			Ken Cameron Copyright (C) 2008
- * @version			$Revision: 1.10 $
+ * @author			Bob Jacobsen Copyright (C) 2008
+ * @version			$Revision: 1.11 $
  */
 public interface Light extends NamedBean {
 
-    // states
+    /** State value indicating output intensity is at or above maxIntensity */
     public static final int ON          = 0x01;
+    
+    /** State value indicating output intensity is at or below minIntensity */
     public static final int OFF         = 0x00;
+    
+    /** State value indicating output intensity is
+     * less than maxIntensity and more than minIntensity, 
+     * and no transition is in progress */
+    public static final int INTERMEDIATE         = 0x02;
+    
+    
+    /** State value indicating output intensity is currently changing toward higher intensity, and will
+        continue until full ON is reached */
+    public static final int TRANSITIONINGTOFULLON   = 0x38;
+    
+    /** State value indicating output intensity is currently changing toward higher intensity. The current
+        transition will stop before full ON is reached. */
+    public static final int TRANSITIONINGHIGHER 	      = 0x28;
+    
+    /** State value indicating output intensity is currently changing toward lower intensity. The current
+        transition will stop before full OFF is reached. */
+    public static final int TRANSITIONINGLOWER        = 0x18;
+    
+    /** State value indicating output intensity is currently changing toward lower intensity, and will
+        continue until full OFF is reached */
+    public static final int TRANSITIONINGTOFULLOFF = 0x08;
+    
+    /** State value mask representing status where output is changing due to a request to transition. */
+    public static final int TRANSITIONING         = 0x08;
+    
+    
+    /**
+     * Set the demanded output state. Valid values are ON and OFF.
+     * ON corresponds to the maxIntensity setting, and OFF
+     * corresponds to minIntensity.
+     * <p>
+     * Bound parameter.
+     * <p>
+     * Note that the state may have other values, such as INTERMEDIATE
+     * or a form of transitioning, but that these may not be directly set.
+     * <p>
+     * @throws IllegalArgumentException if invalid newState provided
+    */
+    public void setState(int newState);
+    
+    /**
+       Get the current state of the Light's output.
+    */
+    public int getState();
     
     // control types - initially 3 types defined
     public static final int SENSOR_CONTROL          = 0x01;
@@ -46,12 +94,6 @@ public interface Light extends NamedBean {
     public static final int TURNOUT_STATUS_CONTROL  = 0x03;
     public static final int TIMED_ON_CONTROL		= 0x04;
     public static final int NO_CONTROL              = 0x00;
-
-    /**
-     * State is a bound parameter. Value values are ON and OFF
-     */
-    public int getState();
-    public void setState(int newState);
     
     /** 
      * Control type is an instance variable.  Its value is one of the
@@ -60,22 +102,141 @@ public interface Light extends NamedBean {
     public int getControlType();
     public void setControlType(int controlType);
     
-    /**
-     * for a dimmable light, uses true and false
-     */
-    public boolean isDimSupported();	// true if dimmable light
-    public boolean isCanDim();	// true if dimmable light
-    public void setCanDim(boolean flag);	// sets light as dimmiable
-    public double getDimRequest();			// dim is zero to 1, returns requested dim, will differ from current when rate in effect
-    public double getDimCurrent();			// dim is zero to 1
-    public void setDimRequest(double v);	// dim is zero to 1
-    public double getDimRate();		// time in fast minutes to go 0 to 1, 0 being immediate
-    public void setDimRate(double fastMinutes);		// time in fast minutes to go 0 to 1, 0 being immediate
-    public boolean hasBeenDimmed();	// init is false, triggers dim init first time a setDim is used
-    public void setDimMin(double v);	// sets minimum dim level
-    public double getDimMin();	// sets minimum dim level
-    public void setDimMax(double v);	// sets maximum dim level
-    public double getDimMax();	// sets maximum dim level
+    /** Check if this object can handle variable intensity.
+        <P>
+        Unbound property.
+        @return false if only ON/OFF is available.
+    */
+    public boolean isIntensityVariable();
+    
+   /** Set the intended new intensity value for the Light.
+    *  If transitions are in use, they will be applied.
+    *  <p>
+    *  Bound property between 0 and 1. 
+    *  <p>
+    *  A value of 0.0 corresponds to full off, and 
+    *  a value of 1.0 corresponds to full on.
+    *  <p>
+    *  Values at or below
+    *  the MinIntensity property will result in the Light going
+    *  to the OFF state at the end of the transition. 
+    *  Values at or above the MaxIntensity property
+    *  will result in the Light going to the ON state at the end
+    *  of the transition.  
+    * <p>
+    *  All others result in the INTERMEDIATE state. 
+    * <p>
+    *  Light implementations
+    *  with isIntensityVariable false may not have their TargetIntensity
+    *  set to values between MinIntensity and MaxIntensity, which would
+    *  result in the INTERMEDIATE state, as that is invalid for them.
+    *  <P>
+    *  If a non-zero value is set in the transitionTime property,
+    *  the state will be one of TRANSITIONTOFULLON, TRANSITIONHIGHER, TRANSITIONLOWER
+    *  or TRANSITIONTOFULLOFF until the transition is complete.
+    *  <P>
+    *  @throws IllegalArgumentException when intensity is less than 0.0 or more than 1.0
+    *  @throws IllegalArgumentException if isIntensityVariable is false 
+    *       and the new value is between MaxIntensity and MinIntensity
+    */
+    public void setTargetIntensity(double intensity);
+    
+    /** Get the current intensity value.
+     * If the Light is currently transitioning, this may be either
+     * an intermediate or final value.
+     * <p>
+     * A value of 0.0 corresponds to full off, and 
+     * a value of 1.0 corresponds to full on.
+    */
+    public double getCurrentIntensity();
+    
+    /** Get the target intensity value for the 
+     * current transition, if any. If the Light is not currently
+     * transitioning, this is the current intensity value.
+     * <p>
+     * A value of 0.0 corresponds to full off, and 
+     * a value of 1.0 corresponds to full on.
+     * <p>
+     * Bound property
+    */
+    public double  getTargetIntensity();
+    
+    
+    /** Set the value of the maxIntensity property.
+     * <p>
+     * Bound property between 0 and 1. 
+     * <p>
+     * A value of 0.0 corresponds to full off, and 
+     * a value of 1.0 corresponds to full on.
+     * @throws IllegalArgumentException when intensity is less than 0.0 or more than 1.0
+     * @throws IllegalArgumentException when intensity is not greater than the current value of the minIntensity property
+    */
+    public void setMaxIntensity(double intensity);
+    
+    /** Get the current value of the maxIntensity property.
+     * <p>
+     * A value of 0.0 corresponds to full off, and 
+     * a value of 1.0 corresponds to full on.
+    */
+    public double getMaxIntensity();
+    
+    /** Set the value of the minIntensity property.
+     * <p>
+     * Bound property between 0 and 1. 
+     * <p>
+     * A value of 0.0 corresponds to full off, and 
+     * a value of 1.0 corresponds to full on.
+     * @throws IllegalArgumentException when intensity is less than 0.0 or more than 1.0
+     * @throws IllegalArgumentException when intensity is not less than the current value of the maxIntensity property
+    */
+    public void setMinIntensity(double intensity);
+    
+    /** Get the current value of the minIntensity property.
+        <p>
+        A value of 0.0 corresponds to full off, and 
+        a value of 1.0 corresponds to full on.
+    */
+    public double getMinIntensity();
+    
+    /** Can the Light change it's intensity setting slowly?
+        <p>
+        If true, this Light supports a non-zero value of the 
+        transitionTime property, which controls how long the Light
+        will take to change from one intensity level to another.
+        <p>
+        Unbound property
+    */
+    public boolean isTransitionAvailable();
+    
+    /** Set the fast-clock duration for a 
+        transition from full ON to full OFF or vice-versa.
+        <P>
+        Note there is no guarantee of how this scales when other
+        changes in intensity take place.  In particular, some Light implementations
+        will change at a constant fraction per fastclock minute and some will take
+        a fixed duration regardless of the size of the intensity change.
+        <p>
+        Bound property
+        <p>
+        @throws IllegalArgumentException if isTransitionAvailable() is false and minutes is not 0.0
+        @throws IllegalArgumentException if minutes is negative
+    */
+    public void setTransitionTime(double minutes);
+    
+    /** Get the number of fastclock minutes taken by a transition from
+        full ON to full OFF or vice versa.
+        <p>
+        @return 0.0 if the output intensity transition is instantaneous
+    */
+    public double getTransitionTime();
+    
+    /** 
+        Convenience method for checking if the intensity of the light is currently
+        changing due to a transition.
+        <p>
+        Bound property so that listeners can conveniently learn when the transition is over.
+    */
+    public boolean isTransitioning();
     
     /**
      * Control type information, valid by control type

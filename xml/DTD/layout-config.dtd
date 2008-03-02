@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.82 2008-02-08 07:56:32 jacobsen Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.83 2008-03-02 02:09:53 jacobsen Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
 <!--                                                                        -->
@@ -129,6 +129,9 @@
     <!ATTLIST light turnoutState	CDATA #IMPLIED>
     <!ATTLIST light timedControlSensor	CDATA #IMPLIED>
     <!ATTLIST light duration		CDATA #IMPLIED>
+    <!ATTLIST light minIntensity		CDATA #IMPLIED>
+    <!ATTLIST light maxIntensity		CDATA #IMPLIED>
+    <!ATTLIST light transitionTime		CDATA #IMPLIED>
 
 <!ELEMENT reporters (reporter*)>
   <!ATTLIST reporters class		CDATA #REQUIRED>

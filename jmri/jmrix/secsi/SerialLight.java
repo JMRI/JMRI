@@ -10,12 +10,10 @@ import jmri.Turnout;
  * SerialLight.java
  *
  * Implementation of the Light Object
- * <P>
- *  Based in part on SerialTurnout.java
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class SerialLight extends AbstractLight {
 
@@ -45,8 +43,6 @@ public class SerialLight extends AbstractLight {
      * Note: most instance variables are in AbstractLight.java
      */
     private void initializeLight(String systemName) {
-        // Save system name
-        mSystemName = systemName;
         // Extract the Bit from the name
         mBit = SerialAddress.getBitFromSystemName(systemName);
         // Set initial state
@@ -63,14 +59,7 @@ public class SerialLight extends AbstractLight {
     /**
      *  System dependent instance variables
      */
-    String mSystemName = "";     // system name 
-    protected int mState = OFF;  // current state of this light
     int mBit = 0;                // bit within the node
-
-    /**
-     *  Return the current state of this Light
-     */
-    public int getState() { return mState; }
 
     /**
      *  Set the current state of this Light
@@ -79,8 +68,8 @@ public class SerialLight extends AbstractLight {
      *         bit (tested in SerialNode), a Transmit packet
      *         will be sent before this Node is next polled.
      */
-    public void setState(int newState) {
-        SerialNode mNode = SerialAddress.getNodeFromSystemName(mSystemName);
+	protected void doNewState(int oldState, int newState) {
+        SerialNode mNode = SerialAddress.getNodeFromSystemName(getSystemName());
         if (mNode!=null) {
             if (newState==ON) {
                 mNode.setOutputBit(mBit,false);
@@ -92,12 +81,6 @@ public class SerialLight extends AbstractLight {
                 log.warn("illegal state requested for Light: "+getSystemName());
             }
         }
-		if (newState!=mState) {
-			int oldState = mState;
-			mState = newState;
-            // notify listeners, if any
-            firePropertyChange("KnownState", new Integer(oldState), new Integer(newState));
-		}
     }
     
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialLight.class.getName());

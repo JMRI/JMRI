@@ -15,7 +15,7 @@ import jmri.Turnout;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class SerialLight extends AbstractLight {
 
@@ -45,17 +45,15 @@ public class SerialLight extends AbstractLight {
      * Note: most instance variables are in AbstractLight.java
      */
     private void initializeLight(String systemName) {
-        // Save system name
-        mSystemName = systemName;
-
         // Extract the Bit from the name
         int num = SerialAddress.getBitFromSystemName(systemName); // bit one is address zero
         // num is 101-124, 201-224, 301-324, 401-424
         output = (num%100)-1; // 0-23
         bank = (num/100)-1;  // 0 - 3
 
-        // Set initial state
+        // Set initial state to OFF internally and on layout
         setState( OFF );
+
         // Set defaults for all other instance variables
         setControlType( NO_CONTROL );
         setControlSensor( null );
@@ -68,15 +66,8 @@ public class SerialLight extends AbstractLight {
     /**
      *  System dependent instance variables
      */
-    String mSystemName = "";     // system name 
-    protected int mState = OFF;  // current state of this light
     int output;         // output connector number, 0-23
     int bank;           // bank number, 0-3
-
-    /**
-     *  Return the current state of this Light
-     */
-    public int getState() { return mState; }
 
     /**
      *  Set the current state of this Light
@@ -85,8 +76,8 @@ public class SerialLight extends AbstractLight {
      *         bit (tested in SerialNode), a Transmit packet
      *         will be sent before this Node is next polled.
      */
-    public void setState(int newState) {
-        SerialNode mNode = SerialAddress.getNodeFromSystemName(mSystemName);
+	protected void doNewState(int oldState, int newState) {
+        SerialNode mNode = SerialAddress.getNodeFromSystemName(getSystemName());
         if (mNode!=null) {
             if (newState==ON) {
                 sendMessage(true);
@@ -98,12 +89,6 @@ public class SerialLight extends AbstractLight {
                 log.warn("illegal state requested for Light: "+getSystemName());
             }
         }
-		if (newState!=mState) {
-			int oldState = mState;
-			mState = newState;
-            // notify listeners, if any
-            firePropertyChange("KnownState", new Integer(oldState), new Integer(newState));
-		}
     }
 
     protected void sendMessage(boolean on) {
@@ -116,7 +101,7 @@ public class SerialLight extends AbstractLight {
         boolean high = (output>=12);
         if (high) output = output-12;
         if ( (bank<0)||(bank>4) ) {
-            log.error("invalid bank "+bank+" for Turnout "+getSystemName());
+            log.error("invalid bank "+bank+" for Light "+getSystemName());
             bank = 0;
         }
         SerialMessage m = new SerialMessage(high?8:4);
