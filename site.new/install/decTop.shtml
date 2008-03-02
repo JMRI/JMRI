@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: decTop.shtml,v 1.3 2008-03-02 07:26:59 jacobsen Exp $ -->
+<!-- $Id: decTop.shtml,v 1.4 2008-03-02 23:50:22 jacobsen Exp $ -->
 
     <TITLE>
  	Running JMRI on a decTOP small form factor computer
@@ -173,9 +173,17 @@ The decTOP video setup is a little fussy, and doesn't
 always come up exactly right with LCD panels.
 See our page on
 <a href="decTOPvideo.shtml">video problems</a> 
-for more info.  In our case, we just attached a CRT monitor and it
+for more info.  In our case, we just attached a borrowed CRT monitor and it
 came right up, though slowly.
-
+<p>
+Once Linux was up and running, we logged on with the
+account created earlier.  Everything seemed to work.
+<p>
+To get the LCD monitor working, we created a setting
+with the right resolution and frame rate in the "Screens and Graphics"
+settings, then selected it in the "Display Settings" (both 
+in the "Applications" - "Settings" menu). Once that was done,
+we could plug the LCD monitor back in and it worked fine.
 
 <h3>Installing Updates</h3>
 
