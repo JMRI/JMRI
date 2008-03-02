@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: MacOSX.html,v 1.20 2008-02-18 20:01:15 jacobsen Exp $ -->
+<!-- $Id: MacOSX.html,v 1.21 2008-03-02 23:49:56 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -72,8 +72,8 @@
 
 	    <p>You will need MacOS X drivers for the serial hardware you're using.
 	      We test using a Keyspan PDA Adapter; those drivers are available at
-	      <a href="http://www.keyspan.com/support/macosx">
-	      http://www.keyspan.com/support/macosx</a>. Some device drivers will list
+	      <a href="http://www.keyspan.com/downloads/">
+	      http://www.keyspan.com/downloads/</a>. Some device drivers will list
 	      each port under several names, e.g. starting with "/dev/tty" or
 	      "/dev/cu", for example "/dev/tty.KeyUSA19181.1". In that case, you
 	      must select the one that starts with "cu", e.g.
@@ -82,11 +82,18 @@
 	    adapter that works with MacOS X.  Their technical support
 	    has confirmed that they don't (yet) have MacOS X drivers for
 	    their adapters.  
+	    <p>There's a MacOS X driver for USB-serial adapters
+	    based on the Prolific PL2303 chipset 
+	    <a href="http://osx-pl2303.sourceforge.net/">available here</a>.
+	    If you can't access your USB dongle and it seems to use that
+	    chipset (you can check in the USB tab of System Profiler), 
+	    this driver will make it available as /dev/cu.PL2303-xxx.
+	     
 	    <P>Note that because of baud rate limitations in MacOS X itself,
 	    it's not possible to use a Digitrax MS100 currently.
 	    <P>
 	    See our page on 
-	    <A HREF="/help/en/html/hardware/USBtoSerial.html">USB adapters</a>
+	    <A HREF="/help/en/html/hardware/USBtoSerial.shtml">USB adapters</a>
 	    for more information
       
 	<LI>Install the serial communications libraries</LI>
