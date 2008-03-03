@@ -9,7 +9,7 @@ package jmri.jmrix.powerline;
  * These might someday have to be device specific, unfortunately.
  *
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class X10 {
 
@@ -99,8 +99,8 @@ public class X10 {
      */
     public static String formatHeaderByte(int b) {
         return "Dim: " + ((b >> 3)& 0x1F)
-                + ((b & 0x02) != 0 ? " isFunct" : " isAddr" )
-                + ((b & 0x01) != 0 ? " isExt" : " isStd");
+                + ((b & 0x02) != 0 ? " function" : " address " )
+                + ((b & 0x01) != 0 ? " extended" : " ");
     }
     
 }
