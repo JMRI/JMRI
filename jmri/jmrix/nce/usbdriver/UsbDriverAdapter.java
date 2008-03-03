@@ -30,7 +30,7 @@ import javax.comm.SerialPort;
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Daniel Boudreau Copyright (C) 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class UsbDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -202,7 +202,7 @@ public class UsbDriverAdapter extends NcePortController  implements jmri.jmrix.S
     /**
      * Option 1 system type.
      */
-    public String[] validOption1() { return new String[]{"PowerCab", "Smart Booster SB3", "PowerHouse"}; }
+    public String[] validOption1() { return new String[]{"Power Cab", "Smart Booster SB3", "Power Pro"}; }
 
     /**
      * Get a String that says what Option 1 represents

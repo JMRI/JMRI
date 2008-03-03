@@ -17,9 +17,9 @@ package jmri.jmrix.nce;
  * <P>
  * The USB interface when configured for Power Cab Ver 1.28 returns software
  * version 6.3.0. When configured for the SB3 V1.28 it returns version 6.3.1.
- * (SB3 doesn't have a program track) And when configured for the PowerHouse
+ * (SB3 doesn't have a program track) And when configured for the Power Pro
  * 2007 it returns version 6.3.2. Not all binary commands are useful or
- * available with the PowerCab, SB3, or PowerHouse. PowerCab/SB3/PowerHouse
+ * available with the PowerCab, SB3, or Power Pro. PowerCab/SB3/Power Pro
  * commands supported below:
  * <P>
  * *************************************************************************
@@ -227,7 +227,7 @@ package jmri.jmrix.nce;
  * <P>
  * 
  * @author Daniel Boudreau Copyright (C) 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class NceUSB  {
 	

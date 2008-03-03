@@ -18,7 +18,7 @@ import jmri.jmrix.ConnectionStatus;
  * Also checks for March 2007 EPROM and warns user about Monitoring feedback.
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  * 
  */
 
@@ -184,7 +184,7 @@ public class NceConnectionStatus implements NceListener {
 			if (JOptPane_ERROR_MESSAGES_ENABLED)
 				JOptionPane.showMessageDialog(null,
 								"Wrong NCE layout connection selected in Preferences. "
-										+ "Change the layout connection to \"NCE USB\" and the system to \"PowerCab\".",
+										+ "Change the layout connection to \"NCE USB\" and the system to \"Power Cab\".",
 								"Error", JOptionPane.ERROR_MESSAGE);
 			epromState = CHECK_STATE;
 			return null;
@@ -204,7 +204,7 @@ public class NceConnectionStatus implements NceListener {
 			if (JOptPane_ERROR_MESSAGES_ENABLED)
 				JOptionPane.showMessageDialog(null,
 								"Wrong NCE layout connection selected in Preferences. "
-										+ "Change the layout connection to \"NCE USB\" and the system to \"PowerHouse\".",
+										+ "Change the layout connection to \"NCE USB\" and the system to \"Power Pro\".",
 								"Error", JOptionPane.ERROR_MESSAGE);
 			epromState = CHECK_STATE;
 			return null;
@@ -286,7 +286,7 @@ public class NceConnectionStatus implements NceListener {
 			if (VV == VV_1999 || (VV == VV_2004 && MM == MM_2004) || (VV == VV_2007 && MM == MM_2007))
 				// make sure system connection is not NCE USB
 				if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE) {
-					log.error("Layout connection is incorrect, detected PowerHouse");
+					log.error("Layout connection is incorrect, detected Power Pro");
 					epromState = ERROR4_STATE;
 				}
 
@@ -302,7 +302,7 @@ public class NceConnectionStatus implements NceListener {
 					epromState = ERROR6_STATE;
 				}
 				if (mm == mm_USB_PH && NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_POWERHOUSE) {
-					log.error("Layout connection is incorrect, detected USB connected to a PowerHouse");
+					log.error("Layout connection is incorrect, detected USB connected to a Power Pro");
 					epromState = ERROR7_STATE;
 				}
 			}
