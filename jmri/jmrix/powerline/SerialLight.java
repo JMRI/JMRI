@@ -14,10 +14,13 @@ import java.util.Date;
  * <P>
  * Uses X10 dimming commands to set intensity unless
  * the value is 0 or 1, in which case it uses on/off commands.
+ * <p>
+ * Keeps track of the controller's "dim count", and if 
+ * not certain forces it to zero to be sure.
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class SerialLight extends AbstractVariableLight {
 
@@ -57,33 +60,56 @@ public class SerialLight extends AbstractVariableLight {
         setControlTurnout( null );
         setControlTurnoutState( Turnout.CLOSED );
     }
-
+    
     /**
-     * Not sure what this does.  Seems to be invoked
-     * the first time intensity is set, and then
-     * again after any on/off operation.
+     * Force control to a known "dim count".
+     * Invoked
+     * the first time intensity is set.
      */
-    private void initIntensity() {
+    private void initIntensity(double intensity) {
         // Set initial state
         // address message, then function
         int housecode = ((mBit-1)/16)+1;
         int devicecode = ((mBit-1)%16)+1;
-        // first set off
-        SerialMessage m1 = SerialMessage.getAddress(housecode, devicecode);
-        SerialMessage m2 = SerialMessage.getFunction(housecode, X10.FUNCTION_OFF);
-        // send
-        SerialTrafficController.instance().sendSerialMessage(m1, null);
-        SerialTrafficController.instance().sendSerialMessage(m2, null);
-        log.debug("initIntensity: sent off");
-        // then set all dim
-        m1 = SerialMessage.getAddress(housecode, devicecode);
-        m2 = SerialMessage.getFunctionDim(housecode, X10.FUNCTION_DIM, 22);
-        // send
-        SerialTrafficController.instance().sendSerialMessage(m1, null);
-        SerialTrafficController.instance().sendSerialMessage(m2, null);
-        log.debug("initIntensity: sent dim reset");
-        mDimInit = true;
-    	log.debug("init done");
+            
+        // see if going to stabilize at on or off
+        if (intensity<= 0.5) {
+            // going to low, first set off
+            SerialMessage m1 = SerialMessage.getAddress(housecode, devicecode);
+            SerialMessage m2 = SerialMessage.getFunction(housecode, X10.FUNCTION_OFF);
+            // send
+            SerialTrafficController.instance().sendSerialMessage(m1, null);
+            SerialTrafficController.instance().sendSerialMessage(m2, null);
+            log.debug("initIntensity: sent off");
+            // then set to full dim
+            m1 = SerialMessage.getAddress(housecode, devicecode);
+            m2 = SerialMessage.getFunctionDim(housecode, X10.FUNCTION_DIM, 22);
+            // send
+            SerialTrafficController.instance().sendSerialMessage(m1, null);
+            SerialTrafficController.instance().sendSerialMessage(m2, null);
+            
+            lastOutputStep = 0;
+            
+            log.debug("initIntensity: sent dim reset");
+        } else {
+            // going to high, first set on
+            SerialMessage m1 = SerialMessage.getAddress(housecode, devicecode);
+            SerialMessage m2 = SerialMessage.getFunction(housecode, X10.FUNCTION_ON);
+            // send
+            SerialTrafficController.instance().sendSerialMessage(m1, null);
+            SerialTrafficController.instance().sendSerialMessage(m2, null);
+            log.debug("initIntensity: sent off");
+            // then set to full dim
+            m1 = SerialMessage.getAddress(housecode, devicecode);
+            m2 = SerialMessage.getFunctionDim(housecode, X10.FUNCTION_BRIGHT, 22);
+            // send
+            SerialTrafficController.instance().sendSerialMessage(m1, null);
+            SerialTrafficController.instance().sendSerialMessage(m2, null);
+            
+            lastOutputStep = 22;
+            
+            log.debug("initIntensity: sent bright reset");
+        }
     }
     
     /**
@@ -92,8 +118,9 @@ public class SerialLight extends AbstractVariableLight {
 
     int mBit = 0;                // bit within the node
 
-    boolean mDimInit = false;    // if false, initIntensity will be invoked later
-        
+    // current output step 0 to 22
+    int lastOutputStep = -1;  // -1 means unknown
+    
     /**
      *  Request from superclass to set the current state of this Light.
      */
@@ -148,6 +175,7 @@ public class SerialLight extends AbstractVariableLight {
      * to reach a specific intensity.
      */
     private void updateIntensity(double intensity) {
+        
     	if (log.isDebugEnabled()) {
     		log.debug("updateIntensity(" + intensity + ")");
     	}
@@ -157,36 +185,54 @@ public class SerialLight extends AbstractVariableLight {
             return;
         }
         
-        if (!mDimInit) initIntensity();
+        // if we don't know the dim count, force it to a value.
+        if (lastOutputStep < 0) initIntensity(intensity);
+
+        // find the new correct dim count
+        int newStep = (int)Math.round(intensity*22.);  // 22 is full on, 0 is full off, etc
+        
+        // check for errors
+        if (newStep <0 || newStep>22)
+            log.error("newStep wrong: "+newStep+" intensity: "+intensity);
+
+        // find the number to send
+        int sendSteps = newStep-lastOutputStep; // + for bright, - for dim
         
         // figure out the function code
         int function;
-        if (intensity >= getCurrentIntensity()) {
+        if (sendSteps == 0) {
+            // nothing to do!
+            log.debug("intensity "+intensity+" within current step, return");
+            return;
+        
+        } else if (sendSteps >0) {
             function = X10.FUNCTION_BRIGHT;
         	log.debug("function bright");
         }
-        else if (intensity < getCurrentIntensity()) {
+        else {
             function = X10.FUNCTION_DIM;
         	log.debug("function dim");
         }
-        else {
-            log.warn("illegal state requested for Light: " + getSystemName());
-            return;
-        }
+
+        // check for errors
+        if (sendSteps <-22 || sendSteps>22)
+            log.error("sendSteps wrong: "+sendSteps+" intensity: "+intensity);
+            
         int housecode = ((mBit-1)/16)+1;
         int devicecode = ((mBit-1)%16)+1;
-        double diffDim = intensity - getCurrentIntensity();
-        int deltaDim = (int)(22 * Math.abs(diffDim));
-        if (deltaDim != 0) {
-	        // address message, then function
-	        SerialMessage m1 = SerialMessage.getAddress(housecode, devicecode);
-	        SerialMessage m2 = SerialMessage.getFunctionDim(housecode, function, deltaDim);
-	        // send
-	        SerialTrafficController.instance().sendSerialMessage(m1, null);
-	        SerialTrafficController.instance().sendSerialMessage(m2, null);
-        }
+        int deltaDim = Math.abs(sendSteps);
+
+        lastOutputStep = newStep;
+        
+        // address message, then function
+        SerialMessage m1 = SerialMessage.getAddress(housecode, devicecode);
+        SerialMessage m2 = SerialMessage.getFunctionDim(housecode, function, deltaDim);
+        // send
+        SerialTrafficController.instance().sendSerialMessage(m1, null);
+        SerialTrafficController.instance().sendSerialMessage(m2, null);
+
     	if (log.isDebugEnabled()) {
-    		log.debug("sendDimCommand(" + intensity + ") house " + housecode + " device " + devicecode + " deltaDim: " + deltaDim + " funct: " + function);
+    		log.debug("updateIntensity(" + intensity + ") house " + housecode + " device " + devicecode + " deltaDim: " + deltaDim + " funct: " + function);
         }
     }
 
@@ -202,9 +248,6 @@ public class SerialLight extends AbstractVariableLight {
             // node does not exist, ignore call
             return;
         }
-
-        // force reinit at next dim operation
-        mDimInit = false;
 
         // figure out command 
         int function;
