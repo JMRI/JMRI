@@ -1,9 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.1 2008-02-03 03:19:57 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.2 2008-03-03 01:06:16 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
-      JMRI Hardware Guide: NAC Services m-RPS
+      JMRI Hardware Guide: NAC Services RPS
  </TITLE>
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -23,7 +23,7 @@
     <div id="mainContent">
 
       <h1> 
-      JMRI Hardware Guide: NAC Services m-RPS
+      JMRI Hardware Guide: NAC Services RPS
       </h1>
 
 	<h2>Supported Systems</h2>
@@ -32,7 +32,7 @@
     	  
 	<h2>Setup</h2>
 
-	  <p>First, connect your computer's serial port to the m-RPS
+	  <p>First, connect your computer's serial port to the RPS
 	  central unit using a serial cable.  This should be a "straight-through"
 	  or "modem" cable, <I>not</I>a "crossover" or "null-modem" cable.
 	  if your computer doesn't have a built-in serial port, you can
@@ -47,11 +47,11 @@
 	  This opens automatically the first time a program is run, or you
 	  can select it from the "Edit" menu.  </li>
 
-	  <li> Select "m-RPS Serial" from the top
+	  <li> Select "RPS Serial" from the top
 	  selection box.</li>
 	  
 	  <LI>In the second selection box, pick the name of the 
-	  serial port that you have connected to the m-RPS system.</li>
+	  serial port that you have connected to the RPS system.</li>
 
 	  <li> If the baud rate doesn't show a fixed value, set it to 
 	  115200 baud.</li>
