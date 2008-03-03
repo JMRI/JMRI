@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: decTop.shtml,v 1.4 2008-03-02 23:50:22 jacobsen Exp $ -->
+<!-- $Id: decTop.shtml,v 1.5 2008-03-03 03:54:25 jacobsen Exp $ -->
 
     <TITLE>
  	Running JMRI on a decTOP small form factor computer
@@ -88,7 +88,7 @@ and seems to have enough horsepower:
 You can get one for
 about $99 (plus an exorbitant $40 for reasonable-speed shipping) 
 from the 
-<a href="s://store.dataevolution.com/ProductDetails.asp?ProductCode=DT%2D7001">Data Evolution online store</a> 
+<a href="https://store.dataevolution.com/ProductDetails.asp?ProductCode=DT%2D7001">Data Evolution online store</a> 
 (February 2008).
 It comes with a USB mouse, USB keyboard (poor) and the Ethernet adapter.
 You also need to
