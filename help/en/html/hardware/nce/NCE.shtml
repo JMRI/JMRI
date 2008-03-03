@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NCE.shtml,v 1.11 2008-02-29 18:39:10 dan_boudreau Exp $ -->
+<!-- $Id: NCE.shtml,v 1.12 2008-03-03 02:46:46 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: NCE</TITLE>
@@ -26,19 +26,19 @@
 
 <H2>NCE</H2>
 
-<P>JMRI supports three NCE layout connections, PowerHouse via serial
-cable, PowerHouse via network connection, and NCE USB adapter via serial
+<P>JMRI supports three NCE layout connections, Power Pro (PowerHouse) via serial
+cable, Power Pro (PowerHouse) via network connection, and NCE USB adapter via serial
 cable. They are shown in the preferences menu as NCE, NCE via network,
 and NCE USB respectively.</P>
 
 <A ID="phpro"></A>
-<H3>PowerHouse Pro</H3>
-This section discusses JMRI's support for the NCE PowerHouse Pro.
+<H3>Power Pro</H3>
+This section discusses JMRI's support for the NCE Power Pro and PowerHouse.
 
 <H4>Setup</H4>
 
 <OL>
-	<LI>To connect your computer to an NCE Powerhouse Pro system, you
+	<LI>To connect your computer to an NCE Power Pro or PowerHouse system, you
 	can usually just connect the command station to the computer's serial
 	port using a 9-pin serial cable.</LI>
 	<LI>Then go to the preferences panel of a JMRI-based program. This
@@ -76,7 +76,7 @@ user's manual under "Setup Command Station".</P>
 
 <H4>EPROM Versions</H4>
 
-<P>The NCE Powerhouse Pro command station uses an "EPROM" to contain
+<P>The NCE Power Pro command station uses an "EPROM" to contain
 it's software. NCE has made several of these available to it's users.
 JMRI has been updated to work with these as they come out. To determine
 which ROM version you have, go to the 'setup command station' menu on
@@ -126,7 +126,7 @@ can access turnout 21 from your throttle, JMRI would address it as
 
 <H4>Limitations</H4>
 
-<P>A very small number of early NCE Powerhouse Pro command stations
+<P>A very small number of early NCE Power Pro (PowerHouse) command stations
 have an "optional analog control circuit". (If you don't recall special
 ordering this, you probably don't need to read the rest of this
 paragraph!) In these, pins 5, 6, and 9 are used with an analog voltage
@@ -143,7 +143,7 @@ pins. See your NCE manual for details.</P>
 
 
 <P>The NCE USB Adapter can be connected to three NCE systems,
-PowerCab, SB3 (SmartBooster) or PowerHouse. You must select the correct
+Power Cab, SB3 (SmartBooster) or Power Pro. You must select the correct
 system from the preference menu for reliable operation.</P>
 
 <H4>Setup</H4>
@@ -160,7 +160,7 @@ system from the preference menu for reliable operation.</P>
 	<LI>If given the option to select a baud rate choose 9,600 which
 	is the default for NCE.</LI>
 	<LI>Select the type of system that you are connecting the USB
-	adaptor to, PowerCab, SB3, or PowerHouse. The default is PowerCab, no
+	adaptor to, Power Cab, SB3, or Power Pro (PowerHouse). The default is Power Cab, no
 	jumpers installed.</LI>
 	<LI>Now confirm that the adaptor's baud rate is also set for 9,600
 	by removing jumper #1. Installing jumper #1 sets the baud rate to
@@ -188,15 +188,15 @@ of system the USB Adapter is connected to. The USB can't get information
 from AIUs, so they can't be used to get feedback from the layout. The
 turnout feedback mode MONITORING isn't available when using a USB, and
 the Clock functions found in tools are also not available. The USB when
-connected to a PowerHouse system doesn't support any type of loco
+connected to a Power Pro system doesn't support any type of loco
 programming, and when connected to a SB3 only operation mode (no program
 track) is available for loco programming. Most functions and features
 that are not supported by the NCE USB are disabled or grayed out in the
 JMRI program.</P>
 
-<P>The USB Adapter when connected to a PowerCab or SB3 can only
+<P>The USB Adapter when connected to a Power Cab or SB3 can only
 address accessories (turnouts) between 1 and 250. There isn't a
-limitation when connected to a PowerHouse.</P>
+limitation when connected to a Power Pro.</P>
 
 
 <H4>USB Adapter Limitation Summary</H4>
@@ -205,13 +205,13 @@ limitation when connected to a PowerHouse.</P>
 	<DT>All systems:</DT>
 	<DD>No AIU support, No Turnout MONITORING, No Clock functions.</DD>
 
-	<DT>PowerCab and SB3:</DT>
+	<DT>Power Cab and SB3:</DT>
 	<DD>Can only access accessory addresses between 1 and 250.</DD>
 
 	<DT>SB3:</DT>
 	<DD>No programming track support, operation mode only.</DD>
 
-	<DT>PowerHouse:</DT>
+	<DT>Power Pro:</DT>
 	<DD>No loco programming</DD>
 </DL>
 
