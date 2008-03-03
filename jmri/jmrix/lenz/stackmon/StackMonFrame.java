@@ -27,7 +27,7 @@ import javax.swing.JScrollPane;
  * <P>
  *
  * @author	Paul Bender   Copyright (C) 2005
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener {
 
@@ -193,6 +193,14 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
     }
 
     /*
+     *  Request the next entry
+     */
+    private void getNextEntry(int address) {
+	XNetMessage msg = XNetMessage.getNextAddressOnStackMsg(address,true);
+	XNetTrafficController.instance().sendXNetMessage(msg,this);
+    }
+
+    /*
      * Request the previous entry
      */
     private void getPreviousEntry(){	
@@ -259,7 +267,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 			// Request Address Status
 			// requestStatus();
 			// requestFunctionStatus();
-                        if(_getAll) getNextEntry();
+                        if(_getAll) getNextEntry(address);
 			break;
 		case XNetConstants.LOCO_SEARCH_RESPONSE_DH:
 			CurrentStatus.setText(rb.getString("SearchDH"));
@@ -268,7 +276,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 			// Request Address Status
 			// requestStatus();
 			// requestFunctionStatus();
-                        if(_getAll) getNextEntry();
+                        if(_getAll) getNextEntry(address);
 			break;
 		case XNetConstants.LOCO_SEARCH_RESPONSE_MU_BASE:
 			CurrentStatus.setText(rb.getString("SearchMUBase"));
@@ -277,7 +285,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 			// Request Address Status
 			// requestStatus();
 			// requestFunctionStatus();
-                        if(_getAll) getNextEntry();
+                        if(_getAll) getNextEntry(address);
 			break;
 		case XNetConstants.LOCO_SEARCH_RESPONSE_MU:
 			CurrentStatus.setText(rb.getString("SearchMU"));
@@ -286,7 +294,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 			// Request Address Status
 			// requestStatus();
 			// requestFunctionStatus();
-                        if(_getAll) getNextEntry();
+                        if(_getAll) getNextEntry(address);
 			break;
 		case XNetConstants.LOCO_SEARCH_NO_RESULT:
 			CurrentStatus.setText(rb.getString("SearchFail"));
