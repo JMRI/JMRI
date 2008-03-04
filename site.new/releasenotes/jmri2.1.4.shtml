@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.4.shtml,v 1.8 2008-03-01 04:37:56 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.4.shtml,v 1.9 2008-03-04 05:13:28 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -158,6 +158,11 @@ and even if it does we've added some startup options to fix it easily.
 Ken Cameron made Lights able to dim, so long as the associated hardware supports it.
 A first implementation for this is present for powerline (X10) devices. 
 There were associated changes in the Light table, the Light Control, and various internals.
+
+<p>
+JMRI tries to make sure that it's windows don't open behind any of the other menu and tool bars on the window. 
+This algorithm is tricky, because of all the ways that logical and physical screens can be arranged.  We've improved it some,
+and would like to hear of cases where it's still not doing the right thing.
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
