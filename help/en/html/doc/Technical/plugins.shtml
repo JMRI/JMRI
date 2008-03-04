@@ -1,6 +1,6 @@
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: plugins.shtml,v 1.2 2008-01-22 06:17:20 jacobsen Exp $ -->
+<!-- $Id: plugins.shtml,v 1.3 2008-03-04 05:13:44 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -48,7 +48,7 @@ DecoderPro et al are run via a java command which sets the CLASSPATH and
 various options.  How that's actually done varies with the platform:  csh
 scripts on Unix, bat files on Windows, application bundles on MacOS X, etc.
 <P>
-To make it easy to add plug-ins, these will include the files "jmriplugins.jar"
+To make it easy to add plug-ins, these include the files "jmriplugins.jar"
 and "lib/jmriplugins.jar" in their CLASSPATH.  
 <P>
 If you use that name for the jar file including your code, it will automatically
@@ -56,7 +56,12 @@ be found. You can also put your classes in the "classes" directory of the
 startup directory, which is searched first.
 <P>
 If some other jar file is necessary, you'll have to edit the startup as needed.
-
+<p>
+Starting with JMRI 2.1.4, these scripts will include early in the CLASSPATH
+any .jar file that's found in the JMRI distribution directory.
+Files in the lib/ subdirectory are added at the end of the CLASSPATH.
+For more information, see the 
+<a href="http://jmri.sourceforge.net/install/ShellScripts.shtml">page on startup scripts</a>.
 
 <LI>Replacement of existing classes
 <P>
