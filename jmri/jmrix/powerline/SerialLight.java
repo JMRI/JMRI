@@ -28,7 +28,7 @@ import java.util.Date;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public class SerialLight extends AbstractVariableLight {
 
@@ -249,7 +249,7 @@ public class SerialLight extends AbstractVariableLight {
      */
     private void sendOnOffCommand(int newState) {
     	if (log.isDebugEnabled()) {
-    		log.debug("sendOnOff(" + newState + ")\nCurrent: " + mState);
+    		log.debug("sendOnOff(" + newState + ") Current: " + mState);
     	}
         SerialNode mNode = SerialAddress.getNodeFromSystemName(getSystemName());
         if (mNode == null) {
