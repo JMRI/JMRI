@@ -1,23 +1,93 @@
 #! /bin/sh
 #
-# Short script to start LocoTools in java
+# Script to start a JMRI application
 #
-# Assumes that the program is being run from the distribution directory.
-# Uncomment and change the following to match the JMRI
-# install directory if you would like to run this script 
-# without cd'ing into the install directory.
-#   cd /usr/local/JMRI
+# If you want to be able to move this anywhere and run it,
+# set the JMRI_HOME environment variable to the absolute pathname
+# to the JMRI install directory, e.g. 
+# JMRI_HOME=/usr/opt/jmri
 #
 # If you need to add any additional Java options or defines,
 # include them in the JMRI_OPTIONS environment variable
 #
-# Use the following to eliminate warnings about meta keys
+# You can run separate instances of the program with their
+# own preferences and setup if you either
+# *) Provide the name of a configuration file as the 1st argument
+# or
+# *) Copy and rename this script.
+#
+# If you rename the script to e.g. JmriNew, it will use "JmriNewConfig2.xml"
+# as it's configuration file.  You can then set and save the preferences for
+# the next time you rerun the script.
+#
+# If you are getting X11 warnings about meta keys, uncomment the next line
 # xprop -root -remove _MOTIF_DEFAULT_BINDINGS
 #
-# $Revision: 1.4 $ (CVS maintains this line, do not edit please)
+# For more information, please see
+# http://jmri.sourceforge.net/install/ShellScripts.shtml
+#
+# $Revision: 1.5 $ (CVS maintains this line, do not edit please)
 
-java -noverify -Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw \
-     -cp .:java/classes:jmriplugins.jar:lib/jmriplugins.jar:jmri.jar:lib/log4j.jar:lib/jhall.jar:lib/crimson.jar:lib/jdom.jar:lib/jython.jar:lib/javacsv.jar:lib/MRJAdapter.jar:lib/jakarta-regexp-1.5.jar:lib/vecmath.jar \
-     $JMRI_OPTIONS \
-     apps.LocoTools.LocoTools
+# define the class to be invoked
+CLASSNAME=apps.LocoTools.LocoTools
+
+# set DEBUG to anything to see debugging output
+# DEBUG=yes
+
+# if JMRI_HOME is defined, go there, else
+# change directory to where the script is located
+if test ${JMRI_HOME}; then
+    cd ${JAVA_HOME};
+else 
+    cd `dirname $0`;
+fi
+if test ${DEBUG}; then echo PWD: ${PWD}; fi
+
+# build classpath dynamically
+CP=".:classes:java/classes"
+# list of jar files in home, not counting jmri.jar
+LOCALJARFILES=`ls *.jar | grep -v jmri.jar | tr "\n" ":"`
+if test ${LOCALJARFILES}; then CP=${CP}:${LOCALJARFILES}; fi
+# add jmri.jar
+CP=${CP}:jmri.jar
+# and contents of lib
+CP=${CP}:`ls -m lib/*.jar | tr -d " \n" | tr "," ":"`
+if test ${DEBUG}; then echo CLASSPATH: ${CP}; fi
+
+# configuration file name is 1st argument. 
+# If not provided, build config file name dynamically
+APPNAME=`basename $0`
+if test $1; then 
+    CONFIGFILE=$1;
+else
+    CONFIGFILE=${APPNAME}Config2.xml;
+fi
+if test ${DEBUG}; then echo CONFIGFILE: ${CONFIGFILE}; fi
+
+# create the option string
+#
+# JVM and RMI options
+OPTIONS="${OPTIONS} -noverify"
+OPTIONS="${OPTIONS} -Djava.security.policy=lib/security.policy"
+OPTIONS="${OPTIONS} -Djava.rmi.server.codebase=file:java/classes/"
+# ddraw is disabled to get around Swing performance problems in Java 1.5.0
+OPTIONS="${OPTIONS} -Dsun.java2d.noddraw"
+# memory start and max limits
+OPTIONS="${OPTIONS} -Xms10m"
+OPTIONS="${OPTIONS} -Xmx60m"
+# MacOS X specific options
+OPTIONS="${OPTIONS} -Dapple.laf.useScreenMenuBar=true"
+OPTIONS="${OPTIONS} -Dcom.apple.macos.useScreenMenuBar=true"
+OPTIONS="${OPTIONS} -Dcom.apple.mrj.application.apple.menu.about.name=${APPNAME}"
+# RXTX options (only works in some versions)
+OPTIONS="${OPTIONS} -Djavax.comm.rxtx.NoVersionOutput=true"
+if test ${DEBUG}; then echo OPTIONS: ${OPTIONS}; fi
+
+# locate alternate serial ports
+ALTPORTS=`ls -fm /dev/ttyUSB* /dev/ttyACM* 2>/dev/null | tr -d " \n" | tr "," ":"`
+if test ${ALTPORTS}; then ALTPORTS=-Djavax.comm.rxtx.SerialPorts=${ALTPORTS}; fi
+if test ${DEBUG}; then echo ALTPORTS: ${ALTPORTS}; fi
+
+java ${OPTIONS} ${ALTPORTS} -cp ${CP} ${CLASSNAME} ${CONFIGFILE}
+
 
