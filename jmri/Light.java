@@ -5,18 +5,46 @@ package jmri;
 /**
  * Represent a single visible Light on the physical
  *     layout. 
+ * <p>
+ * Lights have a state and an intensity.  
+ * <p>
+ * The intensity
+ * of the hardware output is represented by the range from 0.0
+ * to 1.0, with 1.0 being brightest.  
+ * <p>
+ * The primary states are:
+ * <ul>
+ * <li>ON, corresponding to maximum intensity
+ * <LI>INTERMEDIATE, some value between maximum and minimum
+ * <li>OFF, corresponding to minimum intensity
+ * </ul>
+ * The underlying hardware may provide just the ON/OFF two levels,
+ * or have a semi-continuous intensity setting with some number of steps.
+ * <p>
+ * The light has a TargetIntensity property which can be set directly.
+ * In addition, it has a CurrentIntensity property which may differ 
+ * from TargetIntensity while the Light is being moved from one intensity to another.
+ * <p>
+ * Intensity is limited by MinIntensity and MaxIntensity parameters.
+ * Setting the state to ON sets the TargetIntensity to MinIntensity, and 
+ * to OFF sets the TargetIntensity to MaxIntensity. Attempting to
+ * directly set the TargetIntensity outside the values of MinIntensity and MaxIntensity
+ * (inclusive) will result in the TargetIntensity being set to the relevant limit.
+ * <p>
+ * Because the actual light hardware has only finite resolution, the
+ * intensity value is mapped to the nearest setting.
+ * For example, in the special case of a two-state (on/off) Light, 
+ * setting a TargetIntensity of more than 0.5 will turn the Light on, 
+ * less than 0.5 will turn the light off.
+ * <p>
+ * Specific implementations will describe how the settings map to the
+ * particular hardware commands.
+ *
  * <P>
  * Light objects require a number of instance variables.  Since 
  *     Light objects are created using the standard JMRI 
  *     systemName/userName concept, accessor routines are provided
  *     for setting and editing these instance variables.
- * <P>
- * Light objects are implemented in a hardware system independent
- *     manner.  The initial system implementation is SerialLight in
- *     the C/MRI system.
- * <P>
- * Based in part on SignalHead.java
- *
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -33,7 +61,7 @@ package jmri;
  * @author			Dave Duchamp Copyright (C) 2004
  * @author			Ken Cameron Copyright (C) 2008
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public interface Light extends NamedBean {
 
@@ -117,10 +145,14 @@ public interface Light extends NamedBean {
     *  A value of 0.0 corresponds to full off, and 
     *  a value of 1.0 corresponds to full on.
     *  <p>
-    *  Values at or below
+    *  Attempting to set a value below the MinIntensity property value
+    *  will result in MinIntensity being set. Similarly, setting a value
+    *  above MaxIntensity will result in MaxINtensity being set.
+    * <p>
+    *  Setting the intensity to the value of
     *  the MinIntensity property will result in the Light going
     *  to the OFF state at the end of the transition. 
-    *  Values at or above the MaxIntensity property
+    *  Similarly, setting the intensity to the MaxIntensity value
     *  will result in the Light going to the ON state at the end
     *  of the transition.  
     * <p>

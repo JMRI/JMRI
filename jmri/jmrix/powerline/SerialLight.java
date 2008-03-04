@@ -13,14 +13,22 @@ import java.util.Date;
  * Implementation of the Light Object
  * <P>
  * Uses X10 dimming commands to set intensity unless
- * the value is 0 or 1, in which case it uses on/off commands.
+ * the value is 0.0 or 1.0, in which case it uses on/off commands only.
+ * <p>
+ * Since the dim/bright step of the hardware is unknown then the Light
+ * object is first create, the first time the intensity (not state)
+ * is set, the lamp is run to it's maximum dim or bright step so
+ * that we know the count is right.
  * <p>
  * Keeps track of the controller's "dim count", and if 
  * not certain forces it to zero to be sure.
+ * <p>
+ * 
+ *
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class SerialLight extends AbstractVariableLight {
 
@@ -98,7 +106,7 @@ public class SerialLight extends AbstractVariableLight {
             // send
             SerialTrafficController.instance().sendSerialMessage(m1, null);
             SerialTrafficController.instance().sendSerialMessage(m2, null);
-            log.debug("initIntensity: sent off");
+            log.debug("initIntensity: sent on");
             // then set to full dim
             m1 = SerialMessage.getAddress(housecode, devicecode);
             m2 = SerialMessage.getFunctionDim(housecode, X10.FUNCTION_BRIGHT, 22);
