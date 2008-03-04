@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.65 $)
+distribution.  ($Revision: 1.66 $)
 
 Start with a directory, typically called "Distributions", that
 contains "scripts" and "java" (from CVS) as subdirectories, and:
@@ -78,7 +78,7 @@ Add something about copyright notices on changed files
 To actually create the distribution:
 
 ( ) Go to your working directory and
-	cvs -q tag -F Release-X-Y-Z 
+	cvs -Q tag -F Release-X-Y-Z 
 
 ( ) Create a new working directory, if you haven't already:
     
@@ -119,9 +119,9 @@ change that (temporarily) for production versions
 --- This next step should be updated to take the content from CVS ---
 ( ) Update the MacOS X bundles:
 
-    bbedit ../MacOSX/JMRI/*.app/Contents/Info.plist
+    bbedit MacOSX/JMRI/*.app/Contents/Info.plist
     (three versions, two copyright years)
-    bbedit ../MacOSX/JMRI/*.app/Contents/Resources/MRJApp.properties
+    bbedit MacOSX/JMRI/*.app/Contents/Resources/MRJApp.properties
     (Version number)
 
     Then check to make sure they still work.
@@ -164,6 +164,9 @@ change that (temporarily) for production versions
     Create and test installer as above.  Copy the .exe back
     to the Distributions directory
     	
+(The following step should be automated in the next release by including
+it in the JavaDoc step following)
+
 ( ) Any time after release1 is complete, create and upload the XSLT pages. 
     
     cd Release-1-2-3/xml/XLST
