@@ -33,7 +33,7 @@ import java.util.Date;
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Ken Cameron Copyright (C) 2008
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 public abstract class AbstractLight extends AbstractNamedBean
     implements Light, java.io.Serializable {
@@ -134,6 +134,10 @@ public abstract class AbstractLight extends AbstractNamedBean
         if (intensity<0.0 || intensity>1.0) 
             throw new IllegalArgumentException("Target intensity value "+intensity+" not in legal range");
 
+        // limit
+        if (intensity > mMaxIntensity ) intensity = mMaxIntensity;
+        if (intensity < mMinIntensity ) intensity = mMinIntensity;
+        
         // move directly to target, if possible
         if (intensity >= mMaxIntensity) {
             updateIntensityHigh(intensity);
