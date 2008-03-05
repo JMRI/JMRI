@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NCE.shtml,v 1.12 2008-03-03 02:46:46 dan_boudreau Exp $ -->
+<!-- $Id: NCE.shtml,v 1.13 2008-03-05 16:45:38 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: NCE</TITLE>
@@ -139,7 +139,7 @@ pins. See your NCE manual for details.</P>
 
 <H3>NCE USB Adapter</H3>
 
-<IMG SRC="../images/nceUSB.jpg" WIDTH="85" HEIGHT="85" ALT="NCE USB" />
+<IMG SRC="../images/nceUSB.jpg" WIDTH="85" HEIGHT="85" ALT="NCE USB" >
 
 
 <P>The NCE USB Adapter can be connected to three NCE systems,
@@ -221,14 +221,14 @@ limitation when connected to a Power Pro.</P>
 When the connection to your NCE is okay and your NCE system is powered
 up you should see after starting PanelPro the following control panel:
 <P><IMG SRC="../images/jmriMainPageOk.jpg"
-	ALT="JMRI PanelPro Main Panel" /></P>
+	ALT="JMRI PanelPro Main Panel" ></P>
 <P>If your are using JMRI 2.1.2 or newer and the panel looks like
 the above, congratulations you are up and running. The panel for
 DecoderPro is similar to PanelPro's.</P>
 <P>If you have the following control panel with the words "ERROR NCE
 USING COMx" in the right center of the panel:</P>
 <P><IMG SRC="../images/jmriMainPageFail.jpg"
-	ALT="JMRI PanelPro Main Panel" /></P>
+	ALT="JMRI PanelPro Main Panel" ></P>
 <P>You have a problem that needs your attention. The following is a
 list of potential issues that might help you resolve your problem.</P>
 <OL>
@@ -248,10 +248,10 @@ operating normally. Note that the window size has been adjusted so we
 can read it a bit more easily. To make your console window look like the
 one below, right click the window and select "Properties". Now increase
 the Window Size Width to 125. Press OK to exit.
-<P><IMG SRC="../images/jmriConsoleOk.jpg" ALT="JMRI Console" /></P>
+<P><IMG SRC="../images/jmriConsoleOk.jpg" ALT="JMRI Console" ></P>
 <P>If you're having problems the console window can look like the
 one below:</P>
-<P><IMG SRC="../images/jmriConsoleFail.jpg" ALT="JMRI Console" /></P>
+<P><IMG SRC="../images/jmriConsoleFail.jpg" ALT="JMRI Console" ></P>
 <P>To help you better understand what might be happening and to
 possibly resolve your problem we'll explain some of the warning and
 error messages displayed in the above console window.</P>
@@ -288,7 +288,7 @@ There you should be able to contact other JMRI users that can help you
 out.</P>
 <H3>Other Information</H3>
 
-<P><A HREF="http://www.ncedcc.com/catalog2.html">NCE Systems and
+<P><A HREF="http://www.ncedcc.com/">NCE Systems and
 Cabs Catalog</A></P>
 
 <!--#include virtual="/Footer" --></DIV>
