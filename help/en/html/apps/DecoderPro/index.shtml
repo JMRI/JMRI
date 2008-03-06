@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2003-2008 -->
-<!-- $Id: index.shtml,v 1.3 2008-02-16 21:01:44 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.4 2008-03-06 14:23:48 jacobsen Exp $ -->
 <title>JMRI: DecoderPro Symbolic Programmer</title>
 
 <!-- Style -->
@@ -39,7 +39,25 @@ has been ported to.  It's freely available for download.  And since the
 code is available via open source, if you want to improve on it you
 can.</p>
 
-<H1>What you need to use DecoderPro</H1>
+<h2>Quick Introduction to Using DecoderPro</h2>
+
+The 
+<a href="./Tour.shtml">Quick Tour</A>
+page will given you more information on how DecoderPro looks
+and the basics of how to use it. 
+From there, you can go to the 
+<a href="../../../DecoderProManual/index.shtml">full DecoderPro manual</a>
+for more information on how to use it, or look at the 
+<a href="#guide">User Guide</a> for more
+information on how it works.
+<P>
+DecoderPro is also covered in 
+<A HREF="http://mymemoirs.net/model-trains-set1-vol3b.php">Volume 3</a> 
+of Joe Fugate's
+<A HREF="http://mymemoirs.net/model-trains.php">series of videos<a/>
+on DCC topics.
+
+<H2>What You Need to Use DecoderPro</H2>
 
 <p>The DecoderPro software will work on Windows, Linux, Macintosh (OS 8.6
 through 9.2 and MacOS X), and OS/2. It will probably also work on most
@@ -54,7 +72,7 @@ For more information, please see the
 For more information, please see the
 <A HREF="../../hardware/index.shtml">DCC hardware pages</a>.</p>
 
-<h1>What you can do to help</h1>
+<h2>What you can do to help</h2>
 
 DecoderPro is the creation of a large number of
 <A HREF="../../../Acknowledgements.shtml">volunteers</a>, model railroaders like yourself
@@ -63,9 +81,20 @@ for all of us.  You can help too, even if you're not a
 computer programmer; 
 <a href="http://jmri.sourceforge.net//Help.html">click here for suggestions on how help</a>.
 
-<H1>DecoderPro User Guide</H1>
+<a id="guide">
+<H2>DecoderPro User Guide</H2></a>
+
+These User Guide sections follow the
+<a href="./Tour.shtml">Quick Tour</A>
+with more information on how DecoderPro works and how to
+install and adapt it.
+<p>
+See also the 
+<a href="../../../DecoderProManual/index.shtml">DecoderPro manual</a>
+for more information on how to use DecoderPro.
+<p>
+The User Guide pages:
 <dl class=toc>
-<dt><a href="./Tour.shtml">Quick tour</A></dt>
 <dt><a href="./MoreInfo.shtml">Details</A></dt>
 <dt><a HREF="./Files.shtml">Configuration files</a></dt>
 <dt><a HREF="./Roster.shtml">Working with the roster</a></dt>
@@ -73,14 +102,8 @@ computer programmer;
 <dt><a HREF="./Install.shtml">Downloading and installing DecoderPro</a></dt>
 </dl>
 
-<P>
-DecoderPro is also covered in 
-<A HREF="http://mymemoirs.net/model-trains-set1-vol3b.php">Volume 3</a> 
-of Joe Fugate's
-<A HREF="http://mymemoirs.net/model-trains.php">series of videos<a/>
-on DCC topics.
 
-<H1>More advanced information</H1>
+<H2>More advanced information</H2>
 <dl class=toc>
 
 <dt><a HREF="./IntroXML.shtml">Intro to XML files</a></dt>
@@ -93,12 +116,12 @@ on DCC topics.
 <dt><a HREF="./FileUpdate.shtml">Updating Decoder Definitions</a></dt>
 </dl>
 
-<H1>Decoder information</h1>
+<H2>Decoder information</h2>
 
 The JMRI project has compiled a lot of information about decoders from
 many manufacturers, which we make freely available in several forms.
 To learn more, see the
-<a href="XML.html">decoder information page</a>.
+<a href="http://jmri.sourceforge.net/xml/XSLT/">decoder information page</a>.
 
 <!--#include virtual="/Footer" -->
 </body>
