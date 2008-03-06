@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: SelectionGuide.xsl,v 1.3 2007-09-21 05:49:30 jacobsen Exp $ -->
+<!-- $Id: SelectionGuide.xsl,v 1.4 2008-03-06 01:13:42 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI decoder definition index and -->
 <!-- definition files into an HTML selection guide page -->
@@ -83,6 +83,7 @@ Family</h2></A>
 			<th bgcolor="#cccccc">Mfg</th>
 			<th bgcolor="#cccccc">Model</th>
 			<th bgcolor="#cccccc">Family</th>
+			<th bgcolor="#cccccc">NMRA Warrant</th>
 			<th bgcolor="#cccccc">Length</th>
 			<th bgcolor="#cccccc">Width</th>
 			<th bgcolor="#cccccc">Height</th>
@@ -99,6 +100,9 @@ Family</h2></A>
 				<td bgcolor="#eeeeee" valign="top" align="center"><xsl:value-of select="../@mfg"/></td>
 				<td bgcolor="#eeeeee" valign="top" align="center"><xsl:value-of select="@model"/></td>
 				<td bgcolor="#eeeeee" valign="top" align="center"><xsl:value-of select="../@name"/></td>
+				<td bgcolor="#eeeeee" valign="top" align="center">
+				    <xsl:if test="( @nmraWarrant = 'yes' )" >yes</xsl:if>
+				</td>
 				<td bgcolor="#eeeeee" valign="top" align="center"><xsl:value-of select="size/@length"/></td>
 				<td bgcolor="#eeeeee" valign="top" align="center"><xsl:value-of select="size/@width"/></td>
 				<td bgcolor="#eeeeee" valign="top" align="center"><xsl:value-of select="size/@height"/></td>
@@ -125,6 +129,7 @@ Family</h2></A>
 			<th bgcolor="#cccccc">Max Motor Current</th>
 			<th bgcolor="#cccccc">Max Total Current</th>
 			<th bgcolor="#cccccc">Connector</th>
+			<th bgcolor="#cccccc">NMRA Warrant</th>
 		</tr>
 
 		<xsl:for-each select="/decoderIndex-config/decoderIndex/familyList/family">
@@ -139,6 +144,9 @@ Family</h2></A>
 				<td bgcolor="#eeeeee" valign="top" align="center"><xsl:value-of select="@maxMotorCurrent"/></td>
 				<td bgcolor="#eeeeee" valign="top" align="center"><xsl:value-of select="@maxTotalCurrent"/></td>
 				<td bgcolor="#eeeeee" valign="top" align="center"><xsl:value-of select="@connector"/></td>
+				<td bgcolor="#eeeeee" valign="top" align="center">
+				    <xsl:if test="( @nmraWarrant = 'yes' )" >yes</xsl:if>
+				</td>
 			</tr>
 
 			</xsl:for-each>
