@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
  * <P>
  *
  * @author	Dave Duchamp   Copyright (C) 2007
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class NewPanelAction extends AbstractAction {
 
@@ -42,7 +42,13 @@ public class NewPanelAction extends AbstractAction {
 					rbx.getString("PanelEditor")},
 					rbx.getString("PanelEditor"));
 		if (response == 1) {
-			LayoutEditor panel = new LayoutEditor();
+			String name = "My Layout";
+			for (int i = 2; i < 100; i++){
+				if(jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(name)){
+					name = "My Layout " +i;
+				}
+			}
+			LayoutEditor panel = new LayoutEditor(name);
 			panel.pack();
 			panel.show();
 			panel.setEditMode(true);
@@ -50,7 +56,13 @@ public class NewPanelAction extends AbstractAction {
 		}
 		else if (response == 2) {
 			PanelEditor panel = new PanelEditor();
-			JmriJFrame targetFrame = panel.makeFrame("Panel");
+			String name = "Panel";
+			for (int i = 2; i < 100; i++){
+				if(jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(name)){
+					name = "Panel " +i;
+				}
+			}
+			JmriJFrame targetFrame = panel.makeFrame(name);
 			jmri.jmrit.display.PanelMenu.instance().addPanelEditorPanel(panel);
 			targetFrame.setLocation(20,20);
         
@@ -63,4 +75,6 @@ public class NewPanelAction extends AbstractAction {
 			panel.setVisible(true);
 		}
 	}
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NewPanelAction.class.getName());
+
 }

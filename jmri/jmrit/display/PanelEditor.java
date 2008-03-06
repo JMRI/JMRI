@@ -47,7 +47,7 @@ import java.util.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003, 2007
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.77 $
+ * @version $Revision: 1.78 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -164,7 +164,12 @@ public class PanelEditor extends JmriJFrame {
                     // prompt for name
                     String newName = JOptionPane.showInputDialog(target, rb.getString("PromptNewName"));
                     if (newName==null) return;  // cancelled
-
+                    
+                    if (jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(newName)){
+                    	JOptionPane.showMessageDialog(null, rb.getString("CanNotRename"), rb.getString("PanelExist"),
+                    			JOptionPane.ERROR_MESSAGE);
+                    	return;
+                    }
                     if (getTarget().getTopLevelAncestor()!=null) ((JFrame)getTarget().getTopLevelAncestor()).setTitle(newName);
                     setTitle();
 					jmri.jmrit.display.PanelMenu.instance().renamePanelEditorPanel(self);

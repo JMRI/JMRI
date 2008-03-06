@@ -21,7 +21,7 @@ import java.util.ArrayList;
  *
  * @author	Bob Jacobsen   Copyright 2003, 2004
  * @author  Dave Duchamp   Copyright 2007
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class PanelMenu extends JMenu {
     public PanelMenu() {
@@ -184,6 +184,32 @@ public class PanelMenu extends JMenu {
 			}
 		}
 	}
+	/**
+	 * Determine if named panel already exists
+	 * returns true if named panel already loaded
+	 */
+	public boolean isPanelNameUsed (String name) {
+		if (panelsList.size()==0) return false;
+		boolean found = false;
+		for (int i = 0; (i<panelsList.size()) && !found ; i++) {
+			try{
+				PanelEditor pe = (PanelEditor)panelsList.get(i);
+				if (pe.getFrame().getTitle().equals(name)) {
+					found = true;
+				}
+			} catch(Exception e){
+			}
+			try{
+				LayoutEditor le = (LayoutEditor)panelsList.get(i);
+				if (le.getTitle().equals(name)) {
+					found = true;
+				}
+			} catch(Exception e){
+			}
+		}
+		return found;
+	}
+	
 }
 
 

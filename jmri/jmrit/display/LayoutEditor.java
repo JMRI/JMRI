@@ -47,7 +47,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -528,6 +528,10 @@ public class LayoutEditor extends JmriJFrame {
 		
         // register the resulting panel for later configuration
         InstanceManager.configureManagerInstance().registerUser(this);
+        // confirm that panel hasn't already been loaded
+        if(jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(name)){
+        	log.warn("File contains a panel with the same name as an existing panel");
+        }
 		jmri.jmrit.display.PanelMenu.instance().addLayoutEditorPanel(this);
 		thisPanel = this;
 		resetDirty();
@@ -735,6 +739,11 @@ public class LayoutEditor extends JmriJFrame {
                     String newName = JOptionPane.showInputDialog(targetPanel, 
 											rb.getString("EnterTitle")+":");
                     if (newName==null) return;  // cancelled
+                    if (jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(newName)){
+                    	JOptionPane.showMessageDialog(null, rb.getString("CanNotRename"), rb.getString("PanelExist"),
+                    			JOptionPane.ERROR_MESSAGE);
+                    	return;
+                    }
                     setTitle(newName);
                     layoutName = newName;
 					jmri.jmrit.display.PanelMenu.instance().renameLayoutEditorPanel(thisPanel);
