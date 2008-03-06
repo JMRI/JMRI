@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id: Lenz_Gold.xml,v 1.7 2007-09-21 05:49:31 jacobsen Exp $ -->
+<!-- $Id: Lenz_Gold.xml,v 1.8 2008-03-06 03:30:41 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -36,6 +36,7 @@
 			<output name="2" label="B - Yellow" />
 		</model>
 		<model model="Gold" numOuts="4" numFns="12" lowVersionID="61"
+		    nmraWarrant="yes" nmraWarrantStart="200604"
 			maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO">
 			<output name="1" label="A - White" />
 			<output name="2" label="B - Yellow" />

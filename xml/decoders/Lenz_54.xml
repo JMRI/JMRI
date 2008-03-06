@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
-<!-- $Id: Lenz_54.xml,v 1.12 2008-03-06 02:53:55 jacobsen Exp $ -->
+<!-- $Id: Lenz_54.xml,v 1.13 2008-03-06 03:30:41 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -42,12 +42,14 @@
 			<output name="2" label="B - Yellow" />
 			<output name="3" label="C - Green" />
 			<output name="4" label="D - Violet" /></model>
-		<model model="LE0521W" numOuts="2" >
+		<model model="LE0521W" numOuts="2"
+		    nmraWarrant="yes" nmraWarrantStart="200506">
 			<output name="1" label="A - White" />
 			<output name="2" label="B - Yellow" />
 			<size length="0.51" width="0.36" height="0.14" units="inches" />
 			</model>
-		<model model="LE0521D" numOuts="2" >
+		<model model="LE0521D" numOuts="2"
+		    nmraWarrant="yes" nmraWarrantStart="200506">
 			<output name="1" label="A - White" />
 			<output name="2" label="B - Yellow" />
 			<size length="0.51" width="0.36" height="0.14" units="inches" />

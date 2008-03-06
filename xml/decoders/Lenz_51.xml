@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
-<!-- $Id: Lenz_51.xml,v 1.5 2007-09-21 05:49:31 jacobsen Exp $ -->
+<!-- $Id: Lenz_51.xml,v 1.6 2008-03-06 03:30:41 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -54,7 +54,8 @@
 			<size length="1.12" width="0.83" height="0.22" units="inches" />
 		   </model>
 		<model model="LE230" maxInputVolts="26V" maxMotorCurrent="2.5A"
-		 maxTotalCurrent="2.5A" numOuts="8" formFactor="Large Scale" >
+		        nmraWarrant="yes" nmraWarrantStart="200506"
+		        maxTotalCurrent="2.5A" numOuts="8" formFactor="Large Scale" >
 			<output name="1" label="A - Terminal L1" />
 			<output name="2" label="B - Terminal L2" />
 			<output name="3" label="C - S1: Yellow" />

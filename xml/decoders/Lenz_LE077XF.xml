@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2003 All rights reserved -->
-<!-- $Id: Lenz_LE077XF.xml,v 1.18 2007-12-03 16:01:03 jacobsen Exp $ -->
+<!-- $Id: Lenz_LE077XF.xml,v 1.19 2008-03-06 03:30:41 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -31,7 +31,8 @@
 
 <decoder>
 	<family name="Lenz XF, precision glide decoders" mfg="Lenz" lowVersionID="44" highVersionID="45">
-		<model model="LE062XF" numOuts="2" >
+		<model model="LE062XF" numOuts="2"
+		    nmraWarrant="yes" nmraWarrantStart="200506">
 			<output name="1" label="A - White" />
 			<output name="2" label="B - Yellow" /></model>
 		<model model="LE063XF" numOuts="2" >

@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
-<!-- $Id: Lenz_LE1000.xml,v 1.8 2008-03-06 02:53:55 jacobsen Exp $ -->
+<!-- $Id: Lenz_LE1000.xml,v 1.9 2008-03-06 03:30:41 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -25,6 +25,7 @@
 	<family name="Lenz Value Line decoders" mfg="Lenz" 
 			lowVersionID="10" highVersionID="10">
 		<model model="LE1000A" numOuts="2" numFns="0"
+		        nmraWarrant="yes" nmraWarrantStart="200401">
 			lowVersionID="10" highVersionID="10"
 		       nmraWarrant="yes" nmraWarrantStart="2004" nmraWarrantEnd="200901">
 		    <size length="0.9" width=".63" height=".13" units="inches"/>

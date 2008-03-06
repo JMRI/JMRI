@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
-<!-- $Id: Lenz_UltraDrive.xml,v 1.7 2007-12-06 04:46:04 jacobsen Exp $ -->
+<!-- $Id: Lenz_UltraDrive.xml,v 1.8 2008-03-06 03:30:41 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -27,7 +27,7 @@
 	<family name="Lenz Ultra-Drive decoders" mfg="Lenz" lowVersionID="1"
 		comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" >
 		<model model="LE1035" numOuts="4" numFns="8"
-		   nmraWarrant="yes" nmraWarrantStart="2004">
+		   nmraWarrant="yes" nmraWarrantStart="200404">
 			<output name="1" label="A - White" />
 			<output name="2" label="B - Yellow" />
 			<output name="3" label="C - Green" />
