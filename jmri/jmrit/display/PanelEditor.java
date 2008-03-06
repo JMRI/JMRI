@@ -47,7 +47,7 @@ import java.util.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003, 2007
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.78 $
+ * @version $Revision: 1.79 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -989,6 +989,10 @@ public class PanelEditor extends JmriJFrame {
     void targetWindowClosing(java.awt.event.WindowEvent e) {
         this.setVisible(false);   // doesn't remove the editor!
 		jmri.jmrit.display.PanelMenu.instance().updatePanelEditorPanel(self);
+		String name = "Panel";
+		if (getTarget().getTopLevelAncestor()!=null) name=((JFrame)getTarget().getTopLevelAncestor()).getTitle();
+		JOptionPane.showMessageDialog(null,"\""	+ name+ "\" " + rb.getString("PanelHidden")
+								+ "\n" + java.text.MessageFormat.format(rb.getString("PanelHiddenHelp"),new String[]{name}));
     }
 
     public void setTitle() {
