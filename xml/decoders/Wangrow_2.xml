@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
-<!-- $Id: Wangrow_2.xml,v 1.4 2007-09-21 05:49:35 jacobsen Exp $ -->
+<!-- $Id: Wangrow_2.xml,v 1.5 2008-03-06 02:53:55 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -20,6 +20,14 @@
 
 <decoder>
 	<family name="Wangrow basic decoders" mfg="Wangrow">
+
+    <model model="DH-154"  numOuts="4" connector="NMRAmedium" 
+                maxMotorCurrent="1.0A" formFactor="HO" nmraWarrant="yes" nmraWarrantStart="200506">
+                        <output name="1" label="White" connection="plug" maxcurrent="100 mA" /> 
+                        <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" /> 
+                        <output name="3" label="Violet or Brown" connection="wire" maxcurrent="100 mA" /> 
+                        <output name="4" label="Brown" connection="wire" maxcurrent="100 mA" />
+                </model>
 
     <model model="DH-155"  numOuts="3" connector="NMRAmedium" 
                 maxMotorCurrent="1.5A" formFactor="HO">

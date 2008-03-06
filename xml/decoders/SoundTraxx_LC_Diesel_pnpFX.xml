@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
-<!-- $Id: SoundTraxx_LC_Diesel_pnpFX.xml,v 1.9 2007-09-21 05:49:33 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_LC_Diesel_pnpFX.xml,v 1.10 2008-03-06 02:53:55 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -33,7 +33,8 @@
 <decoder>
 	<family name="LC Diesel PNP + FX decoders" mfg="Throttle-Up (SoundTraxx)">
 
-		<model model="C628LC Diesel" numOuts="4" numFns="10">
+		<model model="C628LC Diesel" numOuts="4" numFns="10"
+		        nmraWarrant="yes" nmraWarrantStart="200305">
 			<versionCV lowVersionID="37"/>
 			<output name="Horn"/> 
 			<output name="Bell"/> 

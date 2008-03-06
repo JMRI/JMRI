@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
-<!-- $Id: Lenz_54.xml,v 1.11 2007-09-21 05:49:31 jacobsen Exp $ -->
+<!-- $Id: Lenz_54.xml,v 1.12 2008-03-06 02:53:55 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -29,13 +29,15 @@
 
 <decoder>
 	<family name="Lenz 5th gen BEMF decoders" mfg="Lenz" lowVersionID="54">
-		<model model="LE010XF" numOuts="2" >
+		<model model="LE010XF" numOuts="2"
+		    nmraWarrant="yes" nmraWarrantStart="200506">
 			<output name="1" label="A - White" />
 			<output name="2" label="B - Yellow" /></model>
 		<model model="LE011XF" numOuts="2" >
 			<output name="1" label="A - White" />
 			<output name="2" label="B - Yellow" /></model>
-		<model model="LE130XF" numOuts="4" >
+		<model model="LE130XF" numOuts="4"
+		    nmraWarrant="yes" nmraWarrantStart="200506">
 			<output name="1" label="A - White" />
 			<output name="2" label="B - Yellow" />
 			<output name="3" label="C - Green" />
@@ -50,7 +52,8 @@
 			<output name="2" label="B - Yellow" />
 			<size length="0.51" width="0.36" height="0.14" units="inches" />
 			</model>
-		<model model="LE1024"  numOuts="4" >
+		<model model="LE1024"  numOuts="4"
+		    nmraWarrant="yes" nmraWarrantStart="200506">
 			<output name="1" label="A - White" />
 			<output name="2" label="B - Yellow" />
 			<output name="3" label="C - Green" />
@@ -60,7 +63,8 @@
 			<output name="2" label="B - Yellow" />
 			<output name="3" label="C - Green" />
 			<output name="4" label="D - Violet" /></model>
-		<model model="LE4024"  numOuts="4" >
+		<model model="LE4024"  numOuts="4" 
+		    nmraWarrant="yes" nmraWarrantStart="200506">
 			<output name="1" label="A - White" />
 			<output name="2" label="B - Yellow" />
 			<output name="3" label="C - Green" />

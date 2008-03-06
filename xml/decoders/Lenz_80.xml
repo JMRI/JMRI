@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
-<!-- $Id: Lenz_80.xml,v 1.7 2007-09-21 05:49:31 jacobsen Exp $ -->
+<!-- $Id: Lenz_80.xml,v 1.8 2008-03-06 02:53:55 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -27,7 +27,8 @@
 
 <decoder>
 	<family name="Lenz SilentDrive decoders" mfg="Lenz" lowVersionID="60">
-		<model model="LE080XS" numOuts="4" >
+		<model model="LE080XS" numOuts="4"
+		    nmraWarrant="yes" nmraWarrantStart="200506">
 			<output name="1" label="A - White" />
 			<output name="2" label="B - Yellow" />
 			<output name="3" label="C - Green" />

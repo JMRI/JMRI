@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
-<!-- $Id: Lenz_LE1000.xml,v 1.7 2007-12-06 04:45:32 jacobsen Exp $ -->
+<!-- $Id: Lenz_LE1000.xml,v 1.8 2008-03-06 02:53:55 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -26,7 +26,7 @@
 			lowVersionID="10" highVersionID="10">
 		<model model="LE1000A" numOuts="2" numFns="0"
 			lowVersionID="10" highVersionID="10"
-		       nmraWarrant="yes" nmraWarrantStart="2004" nmraWarrantEnd="01/2009">
+		       nmraWarrant="yes" nmraWarrantStart="2004" nmraWarrantEnd="200901">
 		    <size length="0.9" width=".63" height=".13" units="inches"/>
 		</model>
 	</family>

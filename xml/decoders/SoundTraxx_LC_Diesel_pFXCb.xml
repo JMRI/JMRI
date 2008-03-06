@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2003 All rights reserved -->
-<!-- $Id: SoundTraxx_LC_Diesel_pFXCb.xml,v 1.8 2007-09-21 05:49:33 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_LC_Diesel_pFXCb.xml,v 1.9 2008-03-06 02:53:55 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -26,7 +26,8 @@
 	<family name="LC Diesel PNP Cab Unit decoders" mfg="Throttle-Up (SoundTraxx)">
 	<!--note: this file does not support the FX2 output for the LL100LC-->
 
-		<model model="LL100LC Diesel" numOuts="4" numFns="10">
+		<model model="LL100LC Diesel" numOuts="4" numFns="10"
+		    nmraWarrant="yes" nmraWarrantStart="200305">
 		<!-- note: The LL100LC has a headlight but no backup light -->
 		<!-- note: The LL100LC has an FX2 output but no FX1 output -->
 		<!-- but the headlight can be set to respond to FX1 mapping -->

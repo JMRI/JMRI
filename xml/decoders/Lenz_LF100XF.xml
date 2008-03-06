@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2003 All rights reserved -->
-<!-- $Id: Lenz_LF100XF.xml,v 1.6 2007-09-21 05:49:31 jacobsen Exp $ -->
+<!-- $Id: Lenz_LF100XF.xml,v 1.7 2008-03-06 02:53:55 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -23,7 +23,8 @@
 
 <decoder>
 	<family name="Function Decoder" mfg="Lenz" lowVersionID="10">
-		<model model="LF100XF" numOuts="4" numFns="12" >
+		<model model="LF100XF" numOuts="4" numFns="12"
+		    nmraWarrant="yes" nmraWarrantStart="200506">
 			<output name="1" label="A - White" />
 			<output name="2" label="B - Yellow" />
 			<output name="3" label="C - Green" />

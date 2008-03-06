@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
-<!-- $Id: SoundTraxx_LC_Steam.xml,v 1.17 2007-09-21 05:49:33 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_LC_Steam.xml,v 1.18 2008-03-06 02:53:55 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -26,7 +26,8 @@
 
 <decoder>
 	<family name="LC steam decoders" mfg="Throttle-Up (SoundTraxx)">
-		<model model="100LC Steam" numOuts="4" numFns="10">
+		<model model="100LC Steam" numOuts="4" numFns="10"
+		        nmraWarrant="yes" nmraWarrantStart="200305">
 			<versionCV lowVersionID="32"/>
 			<output name="Whistle"/>
 			<output name="Bell"/> 
