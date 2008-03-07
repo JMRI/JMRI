@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: ShellScripts.shtml,v 1.1 2008-03-04 05:14:27 jacobsen Exp $ -->
+<!-- $Id: ShellScripts.shtml,v 1.2 2008-03-07 16:51:59 jacobsen Exp $ -->
 <html lang="en">
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
@@ -89,8 +89,12 @@ copying and renaming a startup script.
 <dt>Java options
 <dd>
 The program sets a number of options for the JVM.  This includes
-the necessary program settings, setting memory limits, and 
+the necessary program settings, setting memory limits, and various
+symbols to control operation.
 
+<p>
+For simplicity, we also set some options here that are only used
+on MacOS X.  This lets us use the same scripts on Linux and MacOS X.
 
 <dt>Alternate port names
 <dd>
