@@ -47,7 +47,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -530,7 +530,7 @@ public class LayoutEditor extends JmriJFrame {
         InstanceManager.configureManagerInstance().registerUser(this);
         // confirm that panel hasn't already been loaded
         if(jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(name)){
-        	log.warn("File contains a panel with the same name as an existing panel");
+        	log.warn("File contains a panel with the same name (" + name + ") as an existing panel");
         }
 		jmri.jmrit.display.PanelMenu.instance().addLayoutEditorPanel(this);
 		thisPanel = this;
