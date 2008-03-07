@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.4.shtml,v 1.10 2008-03-07 16:35:07 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.4.shtml,v 1.11 2008-03-07 16:48:34 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -79,6 +79,12 @@ Starting in this version, panels should not have duplicate names.
 The program assigns a unique default name to newly created panels, and will prevent you from renaming a panel to an existing name.
 If you read a file containing a panel with a name that duplicates an existing panel's name, you'll get a warning message.
 Depending on user reaction, this may become a dialog box that asks if you want to continue.
+
+<p>
+The scripts used to start the JMRI applications on Linux have been extensively reworked.  
+The new ones should do everything the old ones do, plus
+<a href="http://jmri.sourceforge.net/install/ShellScripts.shtml">more</a>.  
+Please keep an eye out for new problems, however, and don't hesitate to report them to the list.
 
 <h3>Warnings from older versions:</h3>
 
@@ -169,6 +175,10 @@ and would like to hear of cases where it's still not doing the right thing.
 
 <p>
 Added Wangrow DH-154 decoder.
+
+<p>
+Shell scripts used to start JMRI on Linux have been updated to add 
+<a href="http://jmri.sourceforge.net/install/ShellScripts.shtml">new function</a>.
 
 <p>
 Dan Boudreau added a default name to newly created panels, and protection against creating duplicate panel names when renaming a panel.

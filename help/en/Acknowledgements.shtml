@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.18 2008-02-26 17:25:25 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.19 2008-03-07 16:44:45 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -59,6 +59,9 @@
 	<LI>Thomas Beutel, who helped with the early EasyDCC tests
 	<LI>Ian Birchenough, who contributed (with Phil Grainger) six
 	ZTC decoder definition files
+    <li>Rodney Black, who has worked on refining the JMRI interfaces as
+    part of creating his
+    <a href="http://home.comcast.net/~kb0oys/">CATS</a> system.
 	<LI>Bob Blackwell, who moderates the jmriusers mailing list,
 	accumulating the decoder ID info, and updated the DecoderPro manual
 	<LI>Don Borden, who loaned a Soundtraxx decoder for testing the
@@ -73,7 +76,8 @@
     and read-back of turnout positions, updated the "send packet" tool to send 
     NCE binary messages, added a tool to let NCE users send macro commands,
     updated the NCE-USB support, fixed a lot of details in the NCE support,
-    and improved the support for NCE consists.
+    and improved the support for NCE consists. He also worked on
+    improving the way we read and write our panel files.
 	<LI>Dave Boydston of Serialio.com, who helped with the Windows
 	connection to an MS100.  Check out their great Java serial library!
 	<LI>Peter Brandenburg, for many CT Electronik decoder definitions, definitions for Haber &amp; Koenig decoders, 
@@ -128,11 +132,13 @@
 	    and has done a fantastic job on the manual
 	<LI>Wayne Eric, who provided the MRC AD370 decoder definition
 <A ID="F"></A>
-	<LI>Dave Falkenburg has contributed his work on the DecoderPro appplication.
+	<LI>Dave Falkenburg created the original DecoderPro application (and
+	found the perfect name for it!)
 	He created our
 	Mac Classic and MacOS X icons and worked on the PanelPro logo.
 	He also updated the NCE support to work with new NCE EPROMs
 	that require binary commands, and made it work with TCS decoders.
+	He's helped with networking and various Macintosh issues.
     <LI>Don Fiehmann provided MRC decoders for testing
 	<LI>Marco Forcone, who sacrified two turnouts motors to the cause of
 	debugging XPressNet turnout support
@@ -170,7 +176,7 @@
 <A ID="J"></A>
 	<LI>John Jabour, who created the excellent LocoBuffer and thereby made 
 	reliable LocoNet communications routine
-	<LI>Bob Jacobsen, who wrote a lot of early code and is doing packaging and user support
+	<LI>Bob Jacobsen, who wrote some of the early code and does packaging and user support
 	<LI>Robert Johnson, who provided info on the DZ123 decoder
 	<LI>Colin Jones, who first recognized the LocoButter
 	<LI>Randy Jones, who provided identification info for several Quantum decoders
@@ -200,8 +206,10 @@
 	<LI>Dennis Miller, who greatly improved the CV printing, added the
 	run-time help system and repackaged the window icons
 	<LI>Jon Miller, who has been doing user support and decoder testing, plus contributing 
-	good ideas and loaning equipment
-	<LI>The good people at MindVision, who are letting us use their excellant Installer Vise
+	good ideas and loaning equipment for testing on sound decoders, Linux and 
+	small form factor computers.
+	<LI>The good people at 
+	<a href="http://www.mindvision.com/">MindVision</a>, who are letting us use their excellant Installer Vise
 	to build our Windows installer
     <li>Mike Moir, who provided a lot of information on how <a href="http://www.protrak.cc/">Grapevine</a> works.
 	<LI>Michael Mosher, who helped identify the way Digitrax decoder models are organized,
@@ -209,7 +217,7 @@
 	and Atlas decoders, provided new definitions for TCS, MRC and (lots of!) QSI 
 	and Zimo decoders; a real hero of decoder definition distinction
 <A ID="N"></A>
-	<LI>Bill Nanney, who tenaciously worked to help find a bug were certain
+	<LI>Bill Nanney, who tenaciously worked to help find a bug where certain
 	decoders wouldn't read and write all sheets
 	<LI>Seth Neumann, who provided information on Wangrow decoders
 <A ID="O"></A>
@@ -255,7 +263,8 @@
     <li>Bruce Shanks, who offered corrections for the DecoderPro manual
 	<LI>Alex Shepherd, who helped move development to JBuilder, a much better tool, and
 	created the client/server implementation for LocoNet. He's also improved
-	the LocoNet monitor formatting.
+	the LocoNet monitor formatting and added support for a new 
+	type of accessory decoder.
 	<LI>Al Silverstein, who helped figure out the format of some LocoNet messages and provided
 	decoder information on several models
 	<LI>Don Smith, who ran down some NCE decoder information
