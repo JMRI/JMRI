@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.4.shtml,v 1.9 2008-03-04 05:13:28 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.4.shtml,v 1.10 2008-03-07 16:35:07 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -75,13 +75,16 @@ see our
 
 <h3>New warnings for this version:</h3>
 
-(none yet)
+Starting in this version, panels should not have duplicate names.  
+The program assigns a unique default name to newly created panels, and will prevent you from renaming a panel to an existing name.
+If you read a file containing a panel with a name that duplicates an existing panel's name, you'll get a warning message.
+Depending on user reaction, this may become a dialog box that asks if you want to continue.
 
 <h3>Warnings from older versions:</h3>
 
-This release was created shortly after JMRI 2.1.2 to fix a bad new bug accidentally introduced in 2.1.2: If you save a roster entry, you can't read the values back in.  This new 2.1.3 version both corrects the problem, so that files are properly written out, and is able to read the corrupted files that 2.1.2 writes.
+JMRI 2.1.3 was created shortly after JMRI 2.1.2 to fix a bad new bug accidentally introduced in 2.1.2: If you save a roster entry, you can't read the values back in.  This new 2.1.3 version both corrects the problem, so that files are properly written out, and is able to read the corrupted files that 2.1.2 writes.
 If you did not install JMRI 2.1.2, there's nothing to worry about.
-If you did install JMRI 2.1.2, please install this release promptly.
+If you did install JMRI 2.1.2, please install either 2.1.3 or this 2.1.4 release to correct the problem.
 
 <p>
 In JMRI 2.1.1, when you went to load a panel file, only files with a ".xml" filename suffix were shown by default. To see all files, you could select "All Files" in the window.  This caused some confusion because many people hadn't added the ".xml" suffix to their panel file names.  We still think having a suffix like that is valuable, but to reduce confusion in JMRI 2.1.2 when you save a panel file an ".xml" suffix is added automatically to the filename if you haven't already provided it.  This makes the filename filter work better when loading a file.  If you want to provide another suffix, or none at all, select the "All Files" option in the window before saving the file. 
@@ -163,6 +166,14 @@ There were associated changes in the Light table, the Light Control, and various
 JMRI tries to make sure that it's windows don't open behind any of the other menu and tool bars on the window. 
 This algorithm is tricky, because of all the ways that logical and physical screens can be arranged.  We've improved it some,
 and would like to hear of cases where it's still not doing the right thing.
+
+<p>
+Added Wangrow DH-154 decoder.
+
+<p>
+Dan Boudreau added a default name to newly created panels, and protection against creating duplicate panel names when renaming a panel.
+He also added a warning to the program when loading panels with existing names; depending on how user reaction goes, this might become a dialog box on whether to continue.
+
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
