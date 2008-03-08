@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.4.shtml,v 1.11 2008-03-07 16:48:34 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.4.shtml,v 1.12 2008-03-08 06:40:07 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -164,9 +164,15 @@ at the top and/or bottom of various kinds of screens.  This shouldn't happen any
 and even if it does we've added some startup options to fix it easily.
 
 <p>
+Philip Middlemiss provided a definition for the Hornby R8215 decoder.
+
+<p>
 Ken Cameron made Lights able to dim, so long as the associated hardware supports it.
 A first implementation for this is present for powerline (X10) devices. 
 There were associated changes in the Light table, the Light Control, and various internals.
+
+<p>
+Ian Birchenough provided updated decoder definitions for the ZTC 255 and 4007 decoders.
 
 <p>
 JMRI tries to make sure that it's windows don't open behind any of the other menu and tool bars on the window. 
