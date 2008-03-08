@@ -3,9 +3,9 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.1.2 on Thu Feb 21 21:02:59 PST 2008 $Id: decoderIndex.xml,v 1.119 2008-03-06 01:13:24 jacobsen Exp $-->
-  <decoderIndex version="138">
-    <mfgList nmraListDate="2007-10-17" updated="2008-01-23">
+  <!--Written by JMRI version 2.1.4 on Sat Mar 08 14:53:39 PST 2008 $Id: decoderIndex.xml,v 1.120 2008-03-08 22:55:33 jacobsen Exp $-->
+  <decoderIndex version="140">
+    <mfgList nmraListDate="2007-10-17" updated="2008-02-28">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
       <manufacturer mfg="AMW" mfgID="19" />
@@ -160,7 +160,7 @@
         </model>
       </family>
       <family name="Bachmann E-Z Command decoders" mfg="Bachmann Trains" type="locomotive" file="Bachmann_EZDCC.xml">
-        <model model="E-Z Command Locomotives" numOuts="2" numFns="0" lowVersionID="46" nmraWarrant="yes" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified" />
+        <model model="E-Z Command Locomotives" numOuts="2" numFns="0" lowVersionID="46" nmraWarrant="yes" nmraWarrantStart="2006-04" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified" />
       </family>
       <family name="Bachmann 4-function decoders" mfg="Bachmann Trains" type="locomotive" file="Bachmann_EZDCC_4fn.xml">
         <model model="Bachmann 4-function decoders" numOuts="4" numFns="8" lowVersionID="46" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
@@ -315,7 +315,7 @@
         </model>
       </family>
       <family name="AD4" mfg="CVP Products" lowVersionID="40" highVersionID="65" type="stationary" file="CVProducts_AD4.xml">
-        <model model="AD4" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+        <model model="AD4" nmraWarrant="yes" nmraWarrantStart="2005-06" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified" />
       </family>
       <family name="Enhanced AD4" mfg="CVP Products" lowVersionID="6" highVersionID="6" type="stationary" file="CVProducts_AD4LC.xml">
         <model model="AD4LC" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
@@ -810,7 +810,7 @@
         </model>
       </family>
       <family name="ESU LokPilot Silent BEMF decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="21" type="locomotive" file="ESU_LokPilotDCC.xml">
-        <model model="ESU_LokPilotDCC" numOuts="6" numFns="8" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="ESU_LokPilotDCC" numOuts="6" numFns="8" nmraWarrant="yes" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
           <output name="1" label="Front Lights" connection="unspecified" />
           <output name="2" label="Back Lights" connection="unspecified" />
           <output name="3" label="Aux1" connection="unspecified" />
@@ -942,7 +942,7 @@
           <output name="3" label="C - Green" connection="unspecified" />
           <size length="1.12" width="0.83" height="0.22" units="inches" />
         </model>
-        <model model="LE230" maxInputVolts="26V" maxMotorCurrent="2.5A" maxTotalCurrent="2.5A" numOuts="8" formFactor="Large Scale" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="LE230" maxInputVolts="26V" maxMotorCurrent="2.5A" nmraWarrant="yes" nmraWarrantStart="200506" maxTotalCurrent="2.5A" numOuts="8" formFactor="Large Scale" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
           <output name="1" label="A - Terminal L1" connection="unspecified" />
           <output name="2" label="B - Terminal L2" connection="unspecified" />
           <output name="3" label="C - S1: Yellow" connection="unspecified" />
@@ -955,7 +955,7 @@
         </model>
       </family>
       <family name="Lenz 5th gen BEMF decoders" mfg="Lenz" lowVersionID="54" type="locomotive" file="Lenz_54.xml">
-        <model model="LE010XF" numOuts="2" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="LE010XF" numOuts="2" nmraWarrant="yes" nmraWarrantStart="200506" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
           <output name="1" label="A - White" connection="unspecified" />
           <output name="2" label="B - Yellow" connection="unspecified" />
         </model>
@@ -963,23 +963,23 @@
           <output name="1" label="A - White" connection="unspecified" />
           <output name="2" label="B - Yellow" connection="unspecified" />
         </model>
-        <model model="LE130XF" numOuts="4" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="LE130XF" numOuts="4" nmraWarrant="yes" nmraWarrantStart="200506" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
           <output name="1" label="A - White" connection="unspecified" />
           <output name="2" label="B - Yellow" connection="unspecified" />
           <output name="3" label="C - Green" connection="unspecified" />
           <output name="4" label="D - Violet" connection="unspecified" />
         </model>
-        <model model="LE0521W" numOuts="2" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="LE0521W" numOuts="2" nmraWarrant="yes" nmraWarrantStart="200506" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
           <output name="1" label="A - White" connection="unspecified" />
           <output name="2" label="B - Yellow" connection="unspecified" />
           <size length="0.51" width="0.36" height="0.14" units="inches" />
         </model>
-        <model model="LE0521D" numOuts="2" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="LE0521D" numOuts="2" nmraWarrant="yes" nmraWarrantStart="200506" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
           <output name="1" label="A - White" connection="unspecified" />
           <output name="2" label="B - Yellow" connection="unspecified" />
           <size length="0.51" width="0.36" height="0.14" units="inches" />
         </model>
-        <model model="LE1024" numOuts="4" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="LE1024" numOuts="4" nmraWarrant="yes" nmraWarrantStart="200506" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
           <output name="1" label="A - White" connection="unspecified" />
           <output name="2" label="B - Yellow" connection="unspecified" />
           <output name="3" label="C - Green" connection="unspecified" />
@@ -991,7 +991,7 @@
           <output name="3" label="C - Green" connection="unspecified" />
           <output name="4" label="D - Violet" connection="unspecified" />
         </model>
-        <model model="LE4024" numOuts="4" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="LE4024" numOuts="4" nmraWarrant="yes" nmraWarrantStart="200506" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
           <output name="1" label="A - White" connection="unspecified" />
           <output name="2" label="B - Yellow" connection="unspecified" />
           <output name="3" label="C - Green" connection="unspecified" />
@@ -999,7 +999,7 @@
         </model>
       </family>
       <family name="Lenz SilentDrive decoders" mfg="Lenz" lowVersionID="60" type="locomotive" file="Lenz_80.xml">
-        <model model="LE080XS" numOuts="4" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="LE080XS" numOuts="4" nmraWarrant="yes" nmraWarrantStart="200506" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
           <output name="1" label="A - White" connection="unspecified" />
           <output name="2" label="B - Yellow" connection="unspecified" />
           <output name="3" label="C - Green" connection="unspecified" />
@@ -1007,7 +1007,7 @@
         </model>
       </family>
       <family name="Lenz Drive-Select decoders" mfg="Lenz" lowVersionID="46" highVersionID="46" type="locomotive" file="Lenz_DriveSelect.xml">
-        <model model="LE0511" numOuts="2" numFns="8" nmraWarrant="yes" nmraWarrantStart="20020615" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
+        <model model="LE0511" numOuts="2" numFns="8" nmraWarrant="yes" nmraWarrantStart="200506" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
           <size length="0.53" width="0.39" height="0.14" units="inches" />
         </model>
         <model model="LE1014" numOuts="4" numFns="8" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
@@ -1017,7 +1017,7 @@
           <output name="1" label="A - White" connection="unspecified" />
           <output name="2" label="B - Yellow" connection="unspecified" />
         </model>
-        <model model="Gold" numOuts="4" numFns="12" lowVersionID="61" maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="Gold" numOuts="4" numFns="12" lowVersionID="61" nmraWarrant="yes" nmraWarrantStart="200604" maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
           <output name="1" label="A - White" connection="unspecified" />
           <output name="2" label="B - Yellow" connection="unspecified" />
           <output name="3" label="C - Green" connection="unspecified" />
@@ -1025,7 +1025,7 @@
         </model>
       </family>
       <family name="Lenz XF, precision glide decoders" mfg="Lenz" lowVersionID="44" highVersionID="45" type="locomotive" file="Lenz_LE077XF.xml">
-        <model model="LE062XF" numOuts="2" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="LE062XF" numOuts="2" nmraWarrant="yes" nmraWarrantStart="200506" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
           <output name="1" label="A - White" connection="unspecified" />
           <output name="2" label="B - Yellow" connection="unspecified" />
         </model>
@@ -1043,23 +1043,23 @@
           <output name="2" label="B - Yellow" connection="unspecified" />
           <output name="3" label="C - Green" connection="unspecified" />
         </model>
-        <model model="LE103XF" numOuts="3" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="LE103XF" numOuts="3" nmraWarrant="yes" nmraWarrantStart="200506" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
           <output name="1" label="A - White" connection="unspecified" />
           <output name="2" label="B - Yellow" connection="unspecified" />
           <output name="3" label="C - Green" connection="unspecified" />
         </model>
-        <model model="LE104XF" numOuts="3" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="LE104XF" numOuts="3" nmraWarrant="yes" nmraWarrantStart="200506" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
           <output name="1" label="A - White" connection="unspecified" />
           <output name="2" label="B - Yellow" connection="unspecified" />
           <output name="3" label="C - Green" connection="unspecified" />
         </model>
-        <model model="LE105XF" numOuts="4" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="LE105XF" numOuts="4" nmraWarrant="yes" nmraWarrantStart="200506" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
           <output name="1" label="A - White" connection="unspecified" />
           <output name="2" label="B - Yellow" connection="unspecified" />
           <output name="3" label="C - Green" connection="unspecified" />
           <output name="4" label="D - Violet" connection="unspecified" />
         </model>
-        <model model="LE113XF" numOuts="4" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="LE113XF" numOuts="4" nmraWarrant="yes" nmraWarrantStart="200506" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
           <output name="1" label="A - White" connection="unspecified" />
           <output name="2" label="B - Yellow" connection="unspecified" />
           <output name="3" label="C - Green" connection="unspecified" />
@@ -1067,12 +1067,14 @@
         </model>
       </family>
       <family name="Lenz Value Line decoders" mfg="Lenz" lowVersionID="10" highVersionID="10" type="locomotive" file="Lenz_LE1000.xml">
-        <model model="LE1000A" numOuts="2" numFns="0" lowVersionID="10" highVersionID="10" nmraWarrant="yes" nmraWarrantStart="2004" nmraWarrantEnd="01/2009" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
+        <model model="LE1000A" numOuts="2" numFns="0" nmraWarrant="yes" nmraWarrantStart="200401" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
+          lowVersionID="10" highVersionID="10"
+		       nmraWarrant="yes" nmraWarrantStart="2004" nmraWarrantEnd="200901"&gt;
           <size length="0.9" width=".63" height=".13" units="inches" />
         </model>
       </family>
       <family name="Function Decoder" mfg="Lenz" lowVersionID="10" type="locomotive" file="Lenz_LF100XF.xml">
-        <model model="LF100XF" numOuts="4" numFns="12" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="LF100XF" numOuts="4" numFns="12" nmraWarrant="yes" nmraWarrantStart="200506" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
           <output name="1" label="A - White" connection="unspecified" />
           <output name="2" label="B - Yellow" connection="unspecified" />
           <output name="3" label="C - Green" connection="unspecified" />
@@ -1090,7 +1092,7 @@
         </model>
       </family>
       <family name="Lenz Silver with 6th gen BEMF" mfg="Lenz" highVersionID="78" lowVersionID="65" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" type="locomotive" file="Lenz_Silver.xml">
-        <model model="Silver" numOuts="4" numFns="12" lowVersionID="65" highVersionID="75" maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="Silver" numOuts="4" numFns="12" nmraWarrant="yes" nmraWarrantStart="200604" lowVersionID="65" highVersionID="75" maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
           <output name="1" label="A - White" connection="unspecified" />
           <output name="2" label="B - Yellow" connection="unspecified" />
           <output name="3" label="C - Green" connection="unspecified" />
@@ -1110,7 +1112,7 @@
         </model>
       </family>
       <family name="Lenz Ultra-Drive decoders" mfg="Lenz" lowVersionID="1" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" type="locomotive" file="Lenz_UltraDrive.xml">
-        <model model="LE1035" numOuts="4" numFns="8" nmraWarrant="yes" nmraWarrantStart="2004" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
+        <model model="LE1035" numOuts="4" numFns="8" nmraWarrant="yes" nmraWarrantStart="200404" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
           <output name="1" label="A - White" connection="unspecified" />
           <output name="2" label="B - Yellow" connection="unspecified" />
           <output name="3" label="C - Green" connection="unspecified" />
@@ -1209,10 +1211,22 @@
           <size length="70" width="9.2" height="5.8" units="mm" />
         </model>
       </family>
+      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_1644.xml">
+        <model model="Synch Diesel Sound 1644" numOuts="2" numFns="12" maxTotalCurrent="0.75A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <!-- note only F0 to F12 are NMRA compatible -->
+          <size length="90" width="14" height="4.2" units="mm" />
+        </model>
+      </family>
       <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_1645.xml">
         <model model="Synch Diesel Sound 1645" numOuts="2" numFns="12" maxTotalCurrent="0.75A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <!-- note only F0 to F12 are NMRA compatible -->
           <size length="90" width="14" height="4.2" units="mm" />
+        </model>
+      </family>
+      <family name="MRC Light Effect Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_1650.xml">
+        <model model="5 Function decoder 1650" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <!-- note All functions are NMRA compatible -->
+          <size length="25.5" width="12.3" height="4.5" units="mm" />
         </model>
       </family>
       <family name="MRC AD370 Sound decoders" mfg="MRC" comment="MRC Sound Decoders" lowVersionID="32" type="locomotive" file="MRC_AD370.xml">
@@ -1227,6 +1241,12 @@
           <output name="Mute" connection="unspecified" />
           <!-- The four electical outputs are front headlight, back -->
           <!-- headlight, F5, F6 -->
+        </model>
+      </family>
+      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="31" highVersionID="31" type="locomotive" file="MRC_BigBoy.xml">
+        <model model="Athearn Big Boy or Challenger" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <!-- note All functions are NMRA compatible -->
+          <size length="45" width="18" height="6.2" units="mm" />
         </model>
       </family>
       <family name="Athearn Genesis Challenger" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_Challenger.xml">
@@ -2469,7 +2489,7 @@
         </model>
       </family>
       <family name="LC Diesel decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_LC_Diesel.xml">
-        <model model="100LC Diesel" numOuts="4" numFns="10" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="100LC Diesel" numOuts="4" numFns="10" nmraWarrant="yes" nmraWarrantStart="200305" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
           <versionCV lowVersionID="34" />
           <output name="Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
@@ -2486,7 +2506,7 @@
       </family>
       <family name="LC Diesel PNP Cab Unit decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_LC_Diesel_pFXCb.xml">
         <!--note: this file does not support the FX2 output for the LL100LC-->
-        <model model="LL100LC Diesel" numOuts="4" numFns="10" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="LL100LC Diesel" numOuts="4" numFns="10" nmraWarrant="yes" nmraWarrantStart="200305" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
           <!-- note: The LL100LC has a headlight but no backup light -->
           <!-- note: The LL100LC has an FX2 output but no FX1 output -->
           <!-- but the headlight can be set to respond to FX1 mapping -->
@@ -2503,7 +2523,7 @@
         </model>
       </family>
       <family name="LC Diesel PNP decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_LC_Diesel_pnp.xml">
-        <model model="AT100LC/KT100LC Diesel" numOuts="4" numFns="10" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="AT100LC/KT100LC Diesel" numOuts="4" numFns="10" nmraWarrant="yes" nmraWarrantStart="200305" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
           <versionCV lowVersionID="35" />
           <output name="Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
@@ -2515,7 +2535,7 @@
           <output name="Dim" connection="unspecified" />
           <output name="Mute" connection="unspecified" />
         </model>
-        <model model="LL110LC Diesel" numOuts="4" numFns="10" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="LL110LC Diesel" numOuts="4" numFns="10" nmraWarrant="yes" nmraWarrantStart="200305" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
           <versionCV lowVersionID="35" />
           <output name="Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
@@ -2527,7 +2547,7 @@
           <output name="Dim" connection="unspecified" />
           <output name="Mute" connection="unspecified" />
         </model>
-        <model model="LL090LC Diesel" numOuts="4" numFns="10" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="LL090LC Diesel" numOuts="4" numFns="10" nmraWarrant="yes" nmraWarrantStart="200305" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
           <versionCV lowVersionID="35" />
           <output name="Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
@@ -2541,7 +2561,7 @@
         </model>
       </family>
       <family name="LC Diesel PNP + FX decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_LC_Diesel_pnpFX.xml">
-        <model model="C628LC Diesel" numOuts="4" numFns="10" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="C628LC Diesel" numOuts="4" numFns="10" nmraWarrant="yes" nmraWarrantStart="200305" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
           <versionCV lowVersionID="37" />
           <output name="Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
@@ -2555,7 +2575,7 @@
         </model>
       </family>
       <family name="LC steam decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_LC_Steam.xml">
-        <model model="100LC Steam" numOuts="4" numFns="10" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="100LC Steam" numOuts="4" numFns="10" nmraWarrant="yes" nmraWarrantStart="200305" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
           <versionCV lowVersionID="32" />
           <output name="Whistle" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
@@ -2568,7 +2588,7 @@
         </model>
       </family>
       <family name="LC Steam hyperlight decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_LC_Steam_hylt.xml">
-        <model model="090LC Steam" numOuts="4" numFns="10" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="090LC Steam" numOuts="4" numFns="10" nmraWarrant="yes" nmraWarrantStart="200305" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
           <versionCV lowVersionID="39" />
           <output name="Whistle" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
@@ -2581,7 +2601,7 @@
         </model>
       </family>
       <family name="LC Steam PNP decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_LC_Steam_pnp.xml">
-        <model model="B280LC Steam" numOuts="4" numFns="10" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="B280LC Steam" numOuts="4" numFns="10" nmraWarrant="yes" nmraWarrantStart="200305" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
           <versionCV lowVersionID="33" />
           <output name="Whistle" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
@@ -2592,7 +2612,7 @@
           <!-- The two electical outputs are front headlight, back -->
           <!-- headlight-->
         </model>
-        <model model="B3TSLC Steam" numOuts="4" numFns="10" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="B3TSLC Steam" numOuts="4" numFns="10" nmraWarrant="yes" nmraWarrantStart="200305" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
           <versionCV lowVersionID="33" />
           <output name="Whistle" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
@@ -2614,7 +2634,7 @@
           <!-- The two electical outputs are front headlight, back -->
           <!-- headlight-->
         </model>
-        <model model="LL080LC Steam" numOuts="4" numFns="10" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="LL080LC Steam" numOuts="4" numFns="10" nmraWarrant="yes" nmraWarrantStart="200305" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" connector="unspecified">
           <versionCV lowVersionID="33" />
           <output name="Whistle" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
@@ -3281,6 +3301,12 @@
         </model>
       </family>
       <family name="Wangrow basic decoders" mfg="Wangrow" type="locomotive" file="Wangrow_2.xml">
+        <model model="DH-154" numOuts="4" connector="NMRAmedium" maxMotorCurrent="1.0A" formFactor="HO" nmraWarrant="yes" nmraWarrantStart="200506" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no">
+          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+          <output name="3" label="Violet or Brown" connection="wire" maxcurrent="100 mA" />
+          <output name="4" label="Brown" connection="wire" maxcurrent="100 mA" />
+        </model>
         <model model="DH-155" numOuts="3" connector="NMRAmedium" maxMotorCurrent="1.5A" formFactor="HO" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
           <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
@@ -3350,8 +3376,8 @@
       <family name="ZTC 255" mfg="ZTC" lowVersionID="132" highVersionID="132" type="locomotive" file="ZTC_255v2.xml">
         <model model="ZTC 255" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
-      <family name="ZTC 4007" mfg="ZTC" lowVersionID="132" highVersionID="132" type="locomotive" file="ZTC_4007.xml">
-        <model model="ZTC 4007" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+      <family name="ZTC 4007" mfg="ZTC" lowVersionID="0" highVersionID="0" type="locomotive" file="ZTC_4007.xml">
+        <model model="ZTC 4007" numOuts="3" numFns="5" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
       <family name="ZTC 415" mfg="ZTC" lowVersionID="49" highVersionID="49" type="locomotive" file="ZTC_415.xml">
         <model model="ZTC 415" numOuts="4" numFns="8" lowVersionID="64" highVersionID="65" maxMotorCurrent="1.5A (peak=2A)" formFactor="Z" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
