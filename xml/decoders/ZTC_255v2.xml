@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2007 All rights reserved -->
-<!-- $Id: ZTC_255v2.xml,v 1.1 2007-12-27 08:58:08 jacobsen Exp $ -->
+<!-- $Id: ZTC_255v2.xml,v 1.2 2008-03-08 06:39:28 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,9 +16,9 @@
 <!-- for more details.                                                      -->
 
 <decoder-config>
-		<version author="Ian Birchenough" version="1" lastUpdated="20071215"/>
-		
-
+		<version author="Ian Birchenough" version="2" lastUpdated="20080229"/>
+        <version author="Ian Birchenough" version="1" lastUpdated="20071215"/>
+        
 <decoder>
 	<family name="ZTC 255" mfg="ZTC" lowVersionID="132" highVersionID="132">
 		<model model="ZTC 255" />
@@ -46,6 +46,18 @@
 						item="Decoder Version"><decVal/></variable>
 		<variable label="Manufacturer ID: " CV="8" readOnly="yes"
 						item="Manufacturer">			<decVal/></variable>
+
+		<variable label="Decoder RESET:" CV="8" 
+						item="Reset" default="132">			<decVal/></variable>
+
+		<variable label="Decoder Reset" CV="8"
+					item="resetbit" >
+			<enumVal>
+				<enumChoice choice="No" />
+				<enumChoice choice="Yes" value="8" />
+			</enumVal>
+		</variable>
+
 		<variable label="Total PWM Period" CV="9">		<decVal/></variable>
 		<variable label="Packet Time-out Value" CV="11">	<decVal/></variable>
 		<variable label="Analog Power Conversion" CV="12" mask="XXXXXXXV" readOnly="yes">
@@ -191,17 +203,138 @@
 				comment="Sets the constant Braking Distance for auto stopping 0-255">
 				<decVal/></variable>	
 
-		<variable label="OUTPUT1 Mode" CV="49"
-				comment="0= On/Off 1-38 are different pulse periods, brilliances and lighting effects">
-				<decVal/></variable>
+		<variable label="Output 1 effect generated" CV="49" mask="XXVVVVVV" minOut="3">
+			<enumVal>
+				<enumChoice choice="Output is ON or OFF"/>
+				<enumChoice choice="On/Off 8 times per second"/>
+				<enumChoice choice="On/Off 3.5 times per second"/>
+				<enumChoice choice="On/Off 2.5 times per second"/>
+				<enumChoice choice="On/Off 2 times per second"/>
+				<enumChoice choice="On/Off every second"/>
+				<enumChoice choice="On/Off every 2 seconds"/>
+				<enumChoice choice="On/Off every 4 seconds"/>
+				<enumChoice choice="On for 0.05 seconds then Off"/>
+				<enumChoice choice="On for 0.1 seconds then Off"/>
+				<enumChoice choice="On for 0.2 seconds then Off"/>
+				<enumChoice choice="On for 0.3 seconds then Off"/>
+				<enumChoice choice="On for 0.4 seconds then Off"/>
+				<enumChoice choice="On for 0.5 seconds then Off"/>
+				<enumChoice choice="On for 0.6 seconds then Off"/>
+				<enumChoice choice="On for 0.7 seconds then Off"/>
+				<enumChoice choice="On for 0.8 seconds then Off"/>
+				<enumChoice choice="On for 0.9 seconds then Off"/>
+				<enumChoice choice="On for 1 second then Off"/>
+				<enumChoice choice="Dim Level 1. This is the dimmest setting" />
+				<enumChoice choice="Dim Level 2." />
+				<enumChoice choice="Dim Level 3." />
+				<enumChoice choice="Dim Level 4." />
+				<enumChoice choice="Dim Level 5." />
+				<enumChoice choice="Dim Level 6." />
+				<enumChoice choice="Dim Level 7." />
+				<enumChoice choice="Dim Level 8." />
+				<enumChoice choice="Dim Level 9." />
+				<enumChoice choice="Dim Level 10." />
+				<enumChoice choice="Dim Level 11." />
+				<enumChoice choice="Dim Level 12." />
+				<enumChoice choice="Dim Level 13." />
+				<enumChoice choice="Dim Level 14." />
+				<enumChoice choice="Dim Level 15." />
+				<enumChoice choice="Dim Level 16. This is the brightest setting" />
+				<enumChoice choice="Mars effect" />
+				<enumChoice choice="Beacon effect" />
+				<enumChoice choice="Flame effect" />
+				<enumChoice choice="Ashpan effect" />
+			</enumVal>
+		</variable>
 
-		<variable label="OUTPUT2 Mode" CV="50"
-				comment="0= On/Off 1-38 are different pulse periods, brilliances and lighting effects">
-				<decVal/></variable>
+		<variable label="Output 2 effect generated" CV="50" mask="XXVVVVVV" minOut="3">
+			<enumVal>
+				<enumChoice choice="Output is ON or OFF"/>
+				<enumChoice choice="On/Off 8 times per second"/>
+				<enumChoice choice="On/Off 3.5 times per second"/>
+				<enumChoice choice="On/Off 2.5 times per second"/>
+				<enumChoice choice="On/Off 2 times per second"/>
+				<enumChoice choice="On/Off every second"/>
+				<enumChoice choice="On/Off every 2 seconds"/>
+				<enumChoice choice="On/Off every 4 seconds"/>
+				<enumChoice choice="On for 0.05 seconds then Off"/>
+				<enumChoice choice="On for 0.1 seconds then Off"/>
+				<enumChoice choice="On for 0.2 seconds then Off"/>
+				<enumChoice choice="On for 0.3 seconds then Off"/>
+				<enumChoice choice="On for 0.4 seconds then Off"/>
+				<enumChoice choice="On for 0.5 seconds then Off"/>
+				<enumChoice choice="On for 0.6 seconds then Off"/>
+				<enumChoice choice="On for 0.7 seconds then Off"/>
+				<enumChoice choice="On for 0.8 seconds then Off"/>
+				<enumChoice choice="On for 0.9 seconds then Off"/>
+				<enumChoice choice="On for 1 second then Off"/>
+				<enumChoice choice="Dim Level 1. This is the dimmest setting" />
+				<enumChoice choice="Dim Level 2." />
+				<enumChoice choice="Dim Level 3." />
+				<enumChoice choice="Dim Level 4." />
+				<enumChoice choice="Dim Level 5." />
+				<enumChoice choice="Dim Level 6." />
+				<enumChoice choice="Dim Level 7." />
+				<enumChoice choice="Dim Level 8." />
+				<enumChoice choice="Dim Level 9." />
+				<enumChoice choice="Dim Level 10." />
+				<enumChoice choice="Dim Level 11." />
+				<enumChoice choice="Dim Level 12." />
+				<enumChoice choice="Dim Level 13." />
+				<enumChoice choice="Dim Level 14." />
+				<enumChoice choice="Dim Level 15." />
+				<enumChoice choice="Dim Level 16. This is the brightest setting" />
+				<enumChoice choice="Mars effect" />
+				<enumChoice choice="Beacon effect" />
+				<enumChoice choice="Flame effect" />
+				<enumChoice choice="Ashpan effect" />
+			</enumVal>
+		</variable>
 
-		<variable label="OUTPUT3 Mode" CV="51"
-				comment="0= On/Off 1-38 are different pulse periods, brilliances and lighting effects">
-				<decVal/></variable>
+		<variable label="Output 3 effect generated" CV="51" mask="XXVVVVVV" minOut="3">
+			<enumVal>
+				<enumChoice choice="Output is ON or OFF"/>
+				<enumChoice choice="On/Off 8 times per second"/>
+				<enumChoice choice="On/Off 3.5 times per second"/>
+				<enumChoice choice="On/Off 2.5 times per second"/>
+				<enumChoice choice="On/Off 2 times per second"/>
+				<enumChoice choice="On/Off every second"/>
+				<enumChoice choice="On/Off every 2 seconds"/>
+				<enumChoice choice="On/Off every 4 seconds"/>
+				<enumChoice choice="On for 0.05 seconds then Off"/>
+				<enumChoice choice="On for 0.1 seconds then Off"/>
+				<enumChoice choice="On for 0.2 seconds then Off"/>
+				<enumChoice choice="On for 0.3 seconds then Off"/>
+				<enumChoice choice="On for 0.4 seconds then Off"/>
+				<enumChoice choice="On for 0.5 seconds then Off"/>
+				<enumChoice choice="On for 0.6 seconds then Off"/>
+				<enumChoice choice="On for 0.7 seconds then Off"/>
+				<enumChoice choice="On for 0.8 seconds then Off"/>
+				<enumChoice choice="On for 0.9 seconds then Off"/>
+				<enumChoice choice="On for 1 second then Off"/>
+				<enumChoice choice="Dim Level 1. This is the dimmest setting" />
+				<enumChoice choice="Dim Level 2." />
+				<enumChoice choice="Dim Level 3." />
+				<enumChoice choice="Dim Level 4." />
+				<enumChoice choice="Dim Level 5." />
+				<enumChoice choice="Dim Level 6." />
+				<enumChoice choice="Dim Level 7." />
+				<enumChoice choice="Dim Level 8." />
+				<enumChoice choice="Dim Level 9." />
+				<enumChoice choice="Dim Level 10." />
+				<enumChoice choice="Dim Level 11." />
+				<enumChoice choice="Dim Level 12." />
+				<enumChoice choice="Dim Level 13." />
+				<enumChoice choice="Dim Level 14." />
+				<enumChoice choice="Dim Level 15." />
+				<enumChoice choice="Dim Level 16. This is the brightest setting" />
+				<enumChoice choice="Mars effect" />
+				<enumChoice choice="Beacon effect" />
+				<enumChoice choice="Flame effect" />
+				<enumChoice choice="Ashpan effect" />
+			</enumVal>
+		</variable>
+
 
 		<variable label="OUTPUT4 Mode" CV="52"
 				comment="0= On/Off 1-38 are different pulse periods, brilliances and lighting effects">
@@ -272,5 +405,14 @@
 		</column></row></column>
 </pane>
 	
+<pane name="Decoder RESET">
+    	<column> <row> <column>
+			<label label=" " />
+			<display item="resetbit" />
+			<label label=" " />
+			
+	</column> </row> </column>
+</pane>
 </decoder-config>
+
 
