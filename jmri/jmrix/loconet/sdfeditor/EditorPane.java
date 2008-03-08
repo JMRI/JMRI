@@ -22,8 +22,8 @@ import java.util.List;
  * has a small detailed view of the instruction over
  * a larger detailed view.
  *
- * @author	    Bob Jacobsen   Copyright (C) 2007
- * @version	    $Revision: 1.6 $
+ * @author	    Bob Jacobsen   Copyright (C) 2007, 2008
+ * @version	    $Revision: 1.7 $
  */
 public class EditorPane extends javax.swing.JPanel implements TreeSelectionListener {
 
@@ -105,13 +105,12 @@ public class EditorPane extends javax.swing.JPanel implements TreeSelectionListe
         p.add(new JSeparator());
         
         p.add(explanation);
+        explanation.setContentType("text/html");
         explanation.setMinimumSize(new Dimension(600,200));
         explanation.setPreferredSize(new Dimension(600,200));
         explanation.setMaximumSize(new Dimension(600,200));
         explanation.setBackground(instruction.getBackground());
         explanation.setEditable(false);
-        explanation.setLineWrap(true);
-        explanation.setWrapStyleWord(true);
         
         p.add(new JSeparator());
         
@@ -122,7 +121,7 @@ public class EditorPane extends javax.swing.JPanel implements TreeSelectionListe
     }
     
     MonitoringLabel instruction = new MonitoringLabel();
-    JTextArea explanation = new JTextArea();
+    JEditorPane explanation = new JEditorPane();
     
     JComponent newInstructionPane() {
         JPanel p = new JPanel();
