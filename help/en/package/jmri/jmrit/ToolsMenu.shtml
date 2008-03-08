@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Me 2008 -->
-<!-- $Id: ToolsMenu.shtml,v 1.1 2008-02-24 03:48:33 jacobsen Exp $ -->
+<!-- $Id: ToolsMenu.shtml,v 1.2 2008-03-08 00:56:37 dan_boudreau Exp $ -->
 <title>JMRI: Tools Menu</title>
 
 <!-- Style -->
@@ -32,7 +32,7 @@ The Tools Menu gives access to the basic JMRI tools:
 <ul>
 <li>Programmers
   <ul>
-  <li>Single CV Programmer
+  <li><a href="simpleprog/SimpleProgFrame.shtml">Single CV Programmer</a>
   <li><a href="../../../DecoderProManual/Basic_Programming.shtml">DecoderPro service mode programmer</a>
   <li><a href="../../../DecoderProManual/index.shtml">DecoderPro ops-mode programmer</a>
   </ul>
@@ -48,15 +48,15 @@ The Tools Menu gives access to the basic JMRI tools:
   <li><a href="beantable/LogixTable.shtml">Logix</a>
   <li><a href="beantable/BlockTable.shtml">Blocks</a>
   </ul>
-<li><a href="../../../html/tools/throttles/ThrottleMain.shtml">Throttles</a>
-<li>Consisting Tool
-<li>Clocks
+<li><a href="../../../html/tools/throttle/ThrottleMain.shtml">Throttles</a>
+<li><a href="../../../html/tools/consisttool/ConsistTool.shtml">Consisting Tool</a>
+<li><a href="../../../html/tools/fastclock/index.shtml">Clocks</a>
 <li><a href="powerpanel/PowerPanelFrame.shtml">Power Control</a>
 <li><a href="simpleturnoutctrl/SimpleTurnoutCtrl.shtml">Turnout Control</a>
-<li>Simple Signal Logic
+<li><a href="../../../package/jmri/jmrit/blockboss/BlockBossFrame.shtml">Simple Signal Logic</a>
 <li><a href="sensorgroup/SensorGroupFrame.shtml">Sensor Groups</a>
-<li>Speedometer
-<li><a href="simplelightctrl/SimpleLightCtrl.shtml">Light Control
+<li><a href="../../../html/tools/speedometer/index.shtml">Speedometer</a>
+<li><a href="simplelightctrl/SimpleLightCtrl.shtml">Light Control</a>
 <li>Send DCC Packet
 <li>USS CTC Tools
 </ul>
