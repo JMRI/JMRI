@@ -1,112 +1,19 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: ShellScripts.shtml,v 1.2 2008-03-07 16:51:59 jacobsen Exp $ -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: ShellScripts.shtml,v 1.3 2008-03-08 19:13:55 jacobsen Exp $ -->
 <html lang="en">
-<HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
-	<TITLE>JMRI Startup Scripts</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.2  (Linux)">
-	<META NAME="CREATED" CONTENT="20070720;11550900">
-	<META NAME="CHANGEDBY" CONTENT="peter">
-	<META NAME="CHANGED" CONTENT="20070720;13070200">
-
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
-
-</HEAD>
-
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
-
-<div id="mainContent">
-
-<H1>JMRI Startup Scripts</H1>
-
-This page provides information on the shell scripts used
-to start JMRI applications on Linux.
-
-<h2>Details</h2>
-
-In this section, we briefly describe what each section of the script does.
-<dl>
-<dt>CLASSNAME
-<dd>To make the script easier to maintain, the name of the main
-class is defined near the beginning.
-
-<dt>Debug setting
-<dd>
-If the DEBUG symbol is set to anything, the script will produce
-debugging output after each section.
-
-<dt>Directory
-<dd>
-To run, JMRI needs to be able to find things in the current directory.
-This step attempts to set that directory automatically.
-<p>
-If the JMRI_HOME environment variable is defined
-and pointing to a directory that contains a jmri.jar file,
-change the current directory to there.
-<p>
-Otherwise, change the current directory to where the script file
-is located.
-
-<dt>Classpath
-<dd>
-The script builds the Java classpath automatically to contain,
-in order:
-<ul>
-<li>class files in the current directory
-<li>class files in the class subdirectory of the current directory
-<li>class files in the java/class subdirectory of the current directory
-<li>all jar files in the current directory, except jmri.jar
-<li>jmri.jar in the current directory
-<li>all jar files in the lib subdirectory of the current directory
-</ul>
-<p>
-This allows you to drop jar files into the 
-JMRI install directory for the 
-<a href="../help/en/html/doc/Technical/plugins.shtml">JMRI plug-in mechanism</a>.
-
-<dt>Configuration File
-<dd>
-If there's an argument to the script, it will be used as the name of the preferences
-file used to configure the program at startup.  If the user saves the preferences
-from the program, they'll go to this file too.
-<p>
-If no argument is provided, the configuration file name is made 
-from the name of the script, followed by "Config2.xml".  For example,
-the DecoderPro script uses DecoderProConfig2.xml as a preferences file.
-If a copy of that script is named MyJmriApp, it will use a preferences 
-file named MyJmriAppConfig2.xml. 
-<p>
-This lets you create as many specialized configurations you'd like by just
-copying and renaming a startup script.
-
-<dt>Java options
-<dd>
-The program sets a number of options for the JVM.  This includes
-the necessary program settings, setting memory limits, and various
-symbols to control operation.
-
-<p>
-For simplicity, we also set some options here that are only used
-on MacOS X.  This lets us use the same scripts on Linux and MacOS X.
-
-<dt>Alternate port names
-<dd>
-RXTX does not know about certain names for serial ports connected
-via USB.  This section looks for a few known names and adds them
-to the program if present.
-
-<dt>Java command
-<dd>Finally, the script puts all this together into a java command, which it executes.
-
-</dl>
-<!--#include virtual="/Footer" -->
-
-</BODY>
-</HTML>
+<head><TITLE>JMRI: Redirected Page</TITLE>
+<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+<META HTTP-EQUIV="Refresh" CONTENT="0; URL=../help/en/html/doc/Technical/StartUpScripts.shtml">
+</head>
+<body>
+This page has been moved to another location
+(<A HREF="../help/en/html/doc/Technical/StartUpScripts.shtml">../help/en/html/doc/Technical/StartUpScripts.shtml</a>)
+as part of updating our web site.
+<P>Please update your bookmarks.  
+<P>If you got to this page from another JMRI page, please let us know so we can fix it.
+<P>You should be redirected to the new page immediately.  
+<BR/>Site hosted by: <BR/>
+<A href="http://sourceforge.net"> 
+<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&amp;type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A> 
+</body>
+</html>

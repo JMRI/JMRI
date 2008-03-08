@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: StartUpScripts.shtml,v 1.1 2008-02-27 06:53:50 jacobsen Exp $ -->
+<!-- $Id: StartUpScripts.shtml,v 1.2 2008-03-08 19:13:54 jacobsen Exp $ -->
 <title>JMRI: Startup Scripts</title>
 
 <!-- Style -->
@@ -21,37 +21,217 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>JMRI: Startup Scripts</h1>
+<H1>JMRI Startup Scripts</H1>
 
-This page describes the scripts used to start up JMRI
-
-<h2>Common Aspects</h2>
-
-The basic things needed are:
+Although JMRI itself is constructed to "run anywhere",
+starting a JMRI application requires commands that are
+specific to the particular type of computer used.
+With each JMRI distribution, we provide 
+scripts, application bundles or batch files that
+handle the details for you. 
+Of course, you can modify these or create your own.
+<p>
+This page provides information on the tools provided with
+JMRI distributions on:
 <ul>
-<li>Form and provide a classpath
-<li>Provide system options and workarounds<br>
-    -noverify<br>
-    -Dsun.java2d.noddraw
-<li>Configure the security manager
-<li>Configure RMI
-<li>Finally, invoke the appropriate main entry point.
+<li><a href="#linux">Linux</a>
+<li><a href="#macosx">MacOS X</a>
+<li><a href="#windows">Windows</a>
 </ul>
 
-<h3>Classpath</h3>
+If you update any of these, please consider either 
+making your change on the other machines (and testing it!)
+or at least putting a comment in the others
+to describe how they now differ.
 
-(See also the 
-<a href="plugins.shtml">plugins page</a>)
+<a id="linux">
+<h2>Linux</h2></a>
 
-<h2>Linux</h2>
+JMRI distributions for Linux contain shell (bash) scripts
+for each of the main applications:  DecoderPro, PanelPro, etc.
+These are all structured the same way.
 
-<h2>MacOS X</h2>
+<h3>Details</h3>
 
-(Setting property for menu bar)
+In this section, we briefly describe what each section of the script does.
+<dl>
+<dt>CLASSNAME
+<dd>To make the script easier to maintain, the name of the main
+class is defined near the beginning.
 
-<h2>Windows</h2>
-    
-(How do icons and desktop shortcuts work?)
+<dt>Debug setting
+<dd>
+If the DEBUG symbol is set to anything, the script will produce
+debugging output after each section.
+
+<dt>Directory
+<dd>
+To run, JMRI needs to be able to find things in the current directory.
+This step attempts to set that directory automatically.
+<p>
+If the JMRI_HOME environment variable is defined
+and pointing to a directory that contains a jmri.jar file,
+change the current directory to there.
+<p>
+Otherwise, change the current directory to where the script file
+is located.
+
+<dt>Classpath
+<dd>
+The script builds the Java classpath automatically to contain,
+in order:
+<ul>
+<li>class files in the current directory
+<li>class files in the class subdirectory of the current directory
+<li>class files in the java/class subdirectory of the current directory
+<li>all jar files in the current directory, except jmri.jar
+<li>jmri.jar in the current directory
+<li>all jar files in the lib subdirectory of the current directory
+</ul>
+<p>
+This allows you to drop jar files into the 
+JMRI install directory for the 
+<a href="../help/en/html/doc/Technical/plugins.shtml">JMRI plug-in mechanism</a>.
+
+<dt>Configuration File
+<dd>
+If there's an argument to the script, it will be used as the name of the preferences
+file used to configure the program at startup.  If the user saves the preferences
+from the program, they'll go to this file too.
+<p>
+If no argument is provided, the configuration file name is made 
+from the name of the script, followed by "Config2.xml".  For example,
+the DecoderPro script uses DecoderProConfig2.xml as a preferences file.
+If a copy of that script is named MyJmriApp, it will use a preferences 
+file named MyJmriAppConfig2.xml. 
+<p>
+This lets you create as many specialized configurations you'd like by just
+copying and renaming a startup script.
+
+<dt>Java options
+<dd>
+The program sets a number of options for the JVM.  This includes
+the necessary program settings, setting memory limits, and various
+symbols to control operation.
+
+<p>
+We also set some options here that are only used
+on MacOS X.  
+This lets people use the the Linux scripts on MacOS X if they'd
+prefer shell scripts to application bundles.
+
+<dt>Alternate port names
+<dd>
+RXTX does not know about certain names for serial ports connected
+via USB.  This section looks for a few known names and adds them
+to the program if present.
+
+<dt>Java command
+<dd>Finally, the script puts all this together into a java command, which it executes.
+
+</dl>
+
+<a id="macosx">
+<h2>MacOS X</h2></a>
+JMRI distributions for MacOS X contain application bundles
+for each of the main applications:  DecoderPro, PanelPro, etc.
+These provide familiar application icons for the user.
+
+<p>
+To register the bundles with MacOS X, they need to be copied
+from the distributed disk image onto the user's disk drive.
+
+<h3>Bundle Details</h3>
+
+JMRI has registered four application signatures: 
+<dl>
+<dt>JMRD<dd>DecoderPro
+<dt>JMRP<dd>PanelPro
+<dt>JMRI<dd>JmriDemo
+<dt>JMRL<dd>LocoTools
+<dt>JMRC<dd>Cornwall demo
+</dl>
+
+<h3>Script Details</h3>
+
+Each bundle as a startup shell (Bash) script in the Contents/MacOSX
+directory what does the actual startup.
+In this section, we briefly describe what each section of that script does.
+<dl>
+<dt>CLASSNAME
+<dd>To make the script easier to maintain, the name of the main
+class is defined near the beginning.
+
+<dt>Debug setting
+<dd>
+If the DEBUG symbol is set to anything, the script will produce
+debugging output after each section.
+
+<dt>Directory
+<dd>
+To run, JMRI needs to be able to find things in the current directory.
+This step attempts to set that directory automatically.
+<p>
+If the JMRI_HOME environment variable is defined
+and pointing to a directory that contains a jmri.jar file,
+change the current directory to there.
+<p>
+Otherwise, change the current directory to where the application bundle
+is located.
+
+<dt>Classpath
+<dd>
+The script builds the Java classpath automatically to contain,
+in order:
+<ul>
+<li>class files in the current directory
+<li>class files in the class subdirectory of the current directory
+<li>class files in the java/class subdirectory of the current directory
+<li>all jar files in the current directory, except jmri.jar
+<li>jmri.jar in the current directory
+<li>all jar files in the lib subdirectory of the current directory
+</ul>
+<p>
+This allows you to drop jar files into the 
+JMRI install directory for the 
+<a href="../help/en/html/doc/Technical/plugins.shtml">JMRI plug-in mechanism</a>.
+
+<dt>Configuration File
+<dd>
+The configuration file name is made 
+from the name of the application bundle, followed by "Config2.xml".  For example,
+the DecoderPro application uses DecoderProConfig2.xml as a preferences file.
+If a copy of that application is named MyJmriApp, it will use a preferences 
+file named MyJmriAppConfig2.xml. 
+<p>
+This lets you create as many specialized configurations you'd like by just
+copying and renaming an application.
+
+<dt>Java options
+<dd>
+The program sets a number of options for the JVM.  This includes
+the necessary program settings, setting memory limits, various
+symbols to control operation, and some options specific to MacOS X.
+
+<dt>Java command
+<dd>Finally, the script puts all this together into a java command, which it executes.
+
+</dl>
+
+
+<a id="windows">
+<h2>Windows</h2></a>
+
+Currently, the Windows .bat files 
+just create a fixed java command and execute it.
+<p>
+It would be good if somebody improved these.
+
+<p>
+(This section needs information on how icons and shortcuts work.
+The InstallerVISE installer does something to associate an icon
+and to put two shortcuts on the desktop)
+
 
 <!--#include virtual="/Footer" -->
 </body>
