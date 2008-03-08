@@ -19,8 +19,8 @@ import jmri.util.JmriJFrame;
  * 
  * This handles file read/write.
  *
- * @author		Bob Jacobsen   Copyright (C) 2006
- * @version             $Revision: 1.7 $
+ * @author		Bob Jacobsen   Copyright (C) 2006, 2007, 2008
+ * @version             $Revision: 1.8 $
  */
 public class EditorFrame extends JmriJFrame {
 
@@ -96,7 +96,7 @@ public class EditorFrame extends JmriJFrame {
         
         // success, open the file
         try {
-            saveFile(chooser.getSelectedFile().getName());
+            saveFile(chooser.getSelectedFile().getPath());
         } catch (IOException e) {
             // failed, warn user
             JOptionPane.showMessageDialog(this, "Error during save: "+e, 

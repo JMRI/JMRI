@@ -9,8 +9,8 @@ import java.util.ArrayList;
  *<P>
  * This nests until the next SKEME_START.
  *
- * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.10 $
+ * @author		Bob Jacobsen  Copyright (C) 2007, 2008
+ * @version             $Revision: 1.11 $
  */
 
 public class SkemeStart extends SdfMacro {
@@ -87,7 +87,7 @@ public class SkemeStart extends SdfMacro {
     }
 
     public String toString() {
-        return "Scheme "+number;
+        return "Scheme "+number+"\n";
     }
     public String oneInstructionString() {
         return name()+' '+number+"; length="+length+'\n';

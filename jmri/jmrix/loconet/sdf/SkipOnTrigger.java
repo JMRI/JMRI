@@ -5,8 +5,8 @@ package jmri.jmrix.loconet.sdf;
 /**
  * Implement the SKIP_ON_TRIGGER macro from the Digitrax sound definition language
  *
- * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.7 $
+ * @author		Bob Jacobsen  Copyright (C) 2007, 2008
+ * @version             $Revision: 1.8 $
  */
 
 public class SkipOnTrigger extends SdfMacro {
@@ -50,9 +50,6 @@ public class SkipOnTrigger extends SdfMacro {
      * Store into a buffer.
      */
     public void loadByteArray(SdfBuffer buffer){
-        // instruction
-        buffer.setAtIndexAndInc(0x04);
-        
         // data
         buffer.setAtIndexAndInc(byte1);
         buffer.setAtIndexAndInc(byte2);

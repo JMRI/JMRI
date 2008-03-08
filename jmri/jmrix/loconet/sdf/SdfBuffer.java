@@ -22,8 +22,8 @@ import java.util.List;
  * limit containing the entire thing.
  *</UL>
  *
- * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.2 $
+ * @author		Bob Jacobsen  Copyright (C) 2007, 2008
+ * @version             $Revision: 1.3 $
  */
 
 public class SdfBuffer {
@@ -52,7 +52,7 @@ public class SdfBuffer {
 
 
     
-    private int index;
+    protected int index;
     
     public void resetIndex() { index = 0; }
     public int getAtIndex() { return buffer[index]&0xFF; }
@@ -72,6 +72,7 @@ public class SdfBuffer {
             length += ((SdfMacro)ops.get(i)).totalLength();
         }
         buffer = new byte[length];
+        log.debug("create buffer of length "+length);
         resetIndex();
         // recurse to store bytes
         for (int i = 0; i<ops.size(); i++) {

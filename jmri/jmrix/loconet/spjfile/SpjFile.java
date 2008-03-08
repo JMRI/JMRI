@@ -11,7 +11,7 @@ import jmri.jmrix.loconet.sdf.SdfBuffer;
  * Digitrax SPJ files
  *
  * @author		Bob Jacobsen  Copyright (C) 2006
- * @version             $Revision: 1.9 $
+ * @version             $Revision: 1.10 $
  */
 
 public class SpjFile {
@@ -205,6 +205,7 @@ public class SpjFile {
         
         // first, scan for things we can't handle
         for (int i = 1; i< n; i++) {
+            if (log.isDebugEnabled()) log.debug("Header "+i+" length "+headers[i].getDataLength()+" type "+headers[i].getType());
             if (headers[i].getDataLength() > headers[i].getRecordLength())
                 log.error("header "+i+" has data length "+headers[i].getDataLength()
                         +" greater than record length "+headers[i].getRecordLength());
