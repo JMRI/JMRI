@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ThrottleChapter2.shtml,v 1.1 2008-02-06 07:00:34 jacobsen Exp $ -->
+<!-- $Id: ThrottleChapter2.shtml,v 1.2 2008-03-08 17:52:53 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -51,13 +51,13 @@
 			<TR>
 				<TD WIDTH="10%" VALIGN="top" ALIGN="center">
 					<P style="text-align: center; font-size: xx-small">
-					<IMG WIDTH="163" HEIGHT="82" SRC="Images/jmri004.jpg" TITLE="New Throttle" BORDER="0"><BR>
+					<IMG WIDTH="163" HEIGHT="82" SRC="images/jmri004.jpg" TITLE="New Throttle" BORDER="0"><BR>
 					Figure 2-1: New Throttle Menu Option
 					</P>
 				</TD>
 
 				<TD WIDTH="5%">
-					<IMG WIDTH="10" HEIGHT="20" SRC="Images/spacer.gif" BORDER="0">
+					<IMG WIDTH="10" HEIGHT="20" SRC="images/spacer.gif" BORDER="0">
 				</TD>
 
 				<TD WIDTH="85%" VALIGN="top" ALIGN="left">
@@ -107,7 +107,7 @@
 			</P>
 			
 			<P style="text-align: center; font-size: xx-small">
-			<IMG WIDTH="308" HEIGHT="377" SRC="Images/jmri011.jpg" TITLE="JMRI Throttle New Default Window" BORDER="0"><BR>
+			<IMG WIDTH="308" HEIGHT="377" SRC="images/jmri011.jpg" TITLE="JMRI Throttle New Default Window" BORDER="0"><BR>
 			Figure 2-2:  New Throttle Window
 			</P>
 		</dir>
@@ -160,12 +160,12 @@
 					</TD>
 							
 					<TD>
-						<IMG WIDTH="20" HEIGHT="40" SRC="Images/spacer.gif" BORDER="0">
+						<IMG WIDTH="20" HEIGHT="40" SRC="images/spacer.gif" BORDER="0">
 					</TD>
 							
 					<TD valign="top" align="center">
 						<P style="text-align: center; font-size: xx-small">
-						<IMG WIDTH="207" HEIGHT="228" SRC="Images/jmri015.jpg" BORDER="0" TITLE="Address Selection"><BR>
+						<IMG WIDTH="207" HEIGHT="228" SRC="images/jmri015.jpg" BORDER="0" TITLE="Address Selection"><BR>
 						Figure 2-3: Address Selection
 						</P>
 					</TD>
@@ -173,7 +173,7 @@
 					
 				<TR COLSPAN=3>
 					<TD>
-						<IMG WIDTH="40" HEIGHT="40" SRC="Images/spacer.gif" BORDER="0">
+						<IMG WIDTH="40" HEIGHT="40" SRC="images/spacer.gif" BORDER="0">
 					</TD>
 				</TR>
 					
@@ -199,12 +199,12 @@
 					</TD>
 							
 					<TD WIDTH="5%">
-						<IMG WIDTH="20" HEIGHT="40" SRC="Images/spacer.gif" BORDER="0">
+						<IMG WIDTH="20" HEIGHT="40" SRC="images/spacer.gif" BORDER="0">
 					</TD>
 							
 					<TD width="10%" valign="top" align="center">
 						<P style="text-align: center; font-size: xx-small">
-						<IMG WIDTH="199" HEIGHT="129" SRC="Images/jmri032.jpg" BORDER="0" TITLE="Example of Address Panel option buttons"><BR>
+						<IMG WIDTH="199" HEIGHT="129" SRC="images/jmri032.jpg" BORDER="0" TITLE="Example of Address Panel option buttons"><BR>
 						Figure 2-4: Address Panel<BR>(with an active address)
 						</P>
 					</TD>
@@ -215,7 +215,7 @@
 		<BR><BR>
 
 		<A NAME="ControlPanel"></A>
-		<H2>Control Panel — Let's Run a Train</H2>
+		<H2>Control Panel - Let's Run a Train</H2>
 
 		<DIR>
 			<TABLE BORDER=0 WIDTH="100%" CELLPADDING=0 CELLSPACING=0>
@@ -247,12 +247,12 @@
 					</TD>
 					
 					<TD width="5%">
-						<IMG WIDTH="20" HEIGHT="40" SRC="Images/spacer.gif" BORDER="0">
+						<IMG WIDTH="20" HEIGHT="40" SRC="images/spacer.gif" BORDER="0">
 					</TD>
 						
 					<TD width="10%" valign="top" align="center" NOWRAP>
 						<P style="text-align: center; font-size: xx-small">
-						<IMG WIDTH="99" HEIGHT="330" SRC="Images/jmri033.jpg" TITLE="Example of the Control Panel" BORDER="0"><BR>
+						<IMG WIDTH="99" HEIGHT="330" SRC="images/jmri033.jpg" TITLE="Example of the Control Panel" BORDER="0"><BR>
 						Figure 2-5: Control Panel
 						</P>
 					</TD>
@@ -313,15 +313,15 @@
 				<TABLE WIDTH="100%" BORDER="2" BGCOLOR="#CCCCFF" BORDERCOLOR="#003399" CELLPADDING="2" CELLSPACING="2">
 					<TR BGCOLOR="#6699FF">
 						<TD align="center">
-							<P style="color: #000080; font: bolder; font-size: large; line-height: 1%">KEY*</P>
+							<P style="color: #000080; font: bolder; font-size: large">KEY*</P>
 						</TD>
 						<TD align="center">
-							<P style="color: #000080; font: bolder; font-size: large; line-height: 1%">ACTION</P>
+							<P style="color: #000080; font: bolder; font-size: large">ACTION</P>
 						</TD>
 					</TR>
 					<TR>
 						<TD align="center" nowrap>
-							<P style="color: #0000CD; font: bolder; font-size: large; line-height: 1%">+</P>
+							<P style="color: #0000CD; font: bolder; font-size: large">+</P>
 						</TD>
 						<TD>
 							Increase speed by 1 step of each press of the key
@@ -329,7 +329,7 @@
 					</TR>
 					<TR>
 						<TD align="center" nowrap>
-							<P style="color: #0000CD; font: bolder; font-size: large; line-height: 1%">-</P>
+							<P style="color: #0000CD; font: bolder; font-size: large">-</P>
 						</TD>
 						<TD>
 							Decrease speed by 1 step of each press of the key
@@ -337,7 +337,7 @@
 					</TR>
 					<TR>
 						<TD align="center" nowrap>
-							<P style="color: #0000CD; font: bolder; font-size: large; line-height: 1%">*</P>
+							<P style="color: #0000CD; font: bolder; font-size: large">*</P>
 						</TD>
 						<TD>
 							Idle (set speed to 0, any speed momentum is enabled)
@@ -345,7 +345,7 @@
 					</TR>
 					<TR>
 						<TD align="center" nowrap>
-							<P style="color: #0000CD; font: bolder; font-size: large; line-height: 1%">/</P>
+							<P style="color: #0000CD; font: bolder; font-size: large">/</P>
 						</TD>
 						<TD>
 							Emergency Stop! (instantly halts the locomotive)
@@ -353,7 +353,7 @@
 					</TR>
 					<TR>
 						<TD align="center" nowrap>
-							<P style="color: #0000CD; font: bolder; font-size: large; line-height: 1%">Up arrow</P>
+							<P style="color: #0000CD; font: bolder; font-size: large">Up arrow</P>
 						</TD>
 						<TD>
 							Forward direction
@@ -361,7 +361,7 @@
 					</TR>
 					<TR>
 					    <TD align="center" nowrap>
-						   <P style="color: #0000CD; font: bolder; font-size: large; line-height: 1%">Down arrow</P>
+						   <P style="color: #0000CD; font: bolder; font-size: large">Down arrow</P>
 					    </TD>
 						<TD>
 						    Reverse direction
@@ -369,7 +369,7 @@
 					</TR>
 					<TR>
 						<TD align="center" nowrap>
-							<P style="color: #0000CD; font: bolder; font-size: large; line-height: 1%">Left arrow</P>
+							<P style="color: #0000CD; font: bolder; font-size: large">Left arrow</P>
 						</TD>
 						<TD>
 							Increases speed by 1 step for each press of the key
@@ -377,7 +377,7 @@
 					</TR>
 					<TR>
 						<TD align="center" nowrap>
-							<P style="color: #0000CD; font: bolder; font-size: large; line-height: 1%">Right arrow</P>
+							<P style="color: #0000CD; font: bolder; font-size: large">Right arrow</P>
 						</TD>
 						<TD>
 							Decreases speed by 1 step for each press of the key
@@ -385,7 +385,7 @@
 					</TR>
 					<TR>
 						<TD align="center" nowrap>
-							<P style="color: #0000CD; font: bolder; font-size: large; line-height: 1%">Page Up</P>
+							<P style="color: #0000CD; font: bolder; font-size: large">Page Up</P>
 						</TD>
 						<TD>
 							Increases speed by approximately 10% for each press of the key
@@ -393,7 +393,7 @@
 					</TR>
 					<TR>
 						<TD align="center" nowrap>
-							<P style="color: #0000CD; font: bolder; font-size: large; line-height: 1%">Page Down</P>
+							<P style="color: #0000CD; font: bolder; font-size: large">Page Down</P>
 						</TD>
 						<TD>
 							Decreases speed by approximately 10% for each press of the key
@@ -443,15 +443,15 @@
 				<TABLE WIDTH="100%" BORDER="2" BGCOLOR="#CCCCFF" BORDERCOLOR="#003399" CELLPADDING="2" CELLSPACING="2">
 					<TR BGCOLOR="#6699FF">
 						<TD align="center" nowrap>
-							<P style="color: #000080; font: bolder; font-size: large; line-height: 1%">BUTTON</P>
+							<P style="color: #000080; font: bolder; font-size: large">BUTTON</P>
 						</TD>
 						<TD align="center" nowrap>
-							<P style="color: #000080; font: bolder; font-size: large; line-height: 1%">ACTION</FONT>
+							<P style="color: #000080; font: bolder; font-size: large">ACTION</FONT>
 						</TD>
 					</TR>
 					<TR>
 						<TD align="center" nowrap>
-							<P style="color: #0000CD; font: bolder; font-size: large; line-height: 1%"><B>Forward</P>
+							<P style="color: #0000CD; font: bolder; font-size: large"><B>Forward</P>
 						</TD>
 						<TD>
 							Changes the direction of the locomotive to forward.
@@ -459,7 +459,7 @@
 					</TR>
 					<TR>
 						<TD align="center" nowrap>
-							<P style="color: #0000CD; font: bolder; font-size: large; line-height: 1%"><B>Reverse</P>
+							<P style="color: #0000CD; font: bolder; font-size: large"><B>Reverse</P>
 						</TD>
 						<TD>
 							Changes the direction of the locomotive to reverse.
@@ -467,7 +467,7 @@
 					</TR>
 					<TR>
 						<TD align="center" nowrap>
-							<P style="color: #0000CD; font: bolder; font-size: large; line-height: 1%"><B>STOP!</P>
+							<P style="color: #0000CD; font: bolder; font-size: large"><B>STOP!</P>
 						</TD>
 						<TD>
 							Clicking on this button will perform an immediate physical stop of the
@@ -480,7 +480,7 @@
 					</TR>
 					<TR>
 						<TD align="center" nowrap>
-							<P style="color: #0000CD; font: bolder; font-size: large; line-height: 1%"><B>Idle</P>
+							<P style="color: #0000CD; font: bolder; font-size: large"><B>Idle</P>
 						</TD>
 						<TD>
 							Clicking on this button will set the speed of the locomotive to 0.
@@ -692,12 +692,12 @@
 					</TD>
 						
 					<TD>
-						<IMG WIDTH="20" HEIGHT="40" SRC="Images/spacer.gif" BORDER="0">
+						<IMG WIDTH="20" HEIGHT="40" SRC="images/spacer.gif" BORDER="0">
 					</TD>
 						
 					<TD valign="top" align="center">
 						<P style="text-align: center; font-size: xx-small">
-						<IMG WIDTH="201" HEIGHT="204" SRC="Images/jmri034.jpg" TITLE="Example of the Function Panel" BORDER="0"><BR>
+						<IMG WIDTH="201" HEIGHT="204" SRC="images/jmri034.jpg" TITLE="Example of the Function Panel" BORDER="0"><BR>
 						Figure 2-6: The Function Panel
 						</P>
 					</TD>
@@ -723,7 +723,7 @@
 		<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="0">
 			<TR>
 				<TD ALIGN="right" WIDTH="40%">
-					<dt><A HREF="ThrottleChapter1.shtml" TITLE="Return to the previous chapter"><IMG width="18" height="18" src="Images/LeftArrow2.jpg" border="0"></A></dt>
+					<dt><A HREF="ThrottleChapter1.shtml" TITLE="Return to the previous chapter"><IMG width="18" height="18" src="images/LeftArrow2.jpg" border="0"></A></dt>
 				</TD>
 				<TD WIDTH="5%">
 					<IMG border="0" src="images/spacer.gif" width="30" height="10">
@@ -735,7 +735,7 @@
 					<IMG border="0" src="images/spacer.gif" width="30" height="10">
 				</TD>
 				<TD ALIGN="left" WIDTH="40%">
-					<B><A HREF="ThrottleChapter3.shtml" TITLE="Advance to the next chapter"><IMG width="18" height="18" src="Images/RightArrow2.jpg" border="0"></A></B>
+					<B><A HREF="ThrottleChapter3.shtml" TITLE="Advance to the next chapter"><IMG width="18" height="18" src="images/RightArrow2.jpg" border="0"></A></B>
 				</TD>
 			</TR>
 		</TABLE>

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ThrottleChapter4.shtml,v 1.1 2008-02-06 07:00:34 jacobsen Exp $ -->
+<!-- $Id: ThrottleChapter4.shtml,v 1.2 2008-03-08 17:52:53 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -68,13 +68,13 @@
 					see figure 4-2 below).</P>
 							
 				<TD width="1%">
-					<IMG WIDTH="20" HEIGHT="20" SRC="Images/spacer.gif" BORDER="0">
+					<IMG WIDTH="20" HEIGHT="20" SRC="images/spacer.gif" BORDER="0">
 				</TD>
 						
 				<TD width="9%" align="center" valign="top">
 				    <br>
 					<P style="text-align: center; font-size: xx-small">
-					<IMG WIDTH="163" HEIGHT="82" SRC="Images/jmri006.jpg" BORDER="0" TITLE="Save Throttle Layout"><BR>
+					<IMG WIDTH="163" HEIGHT="82" SRC="images/jmri006.jpg" BORDER="0" TITLE="Save Throttle Layout"><BR>
 					Figure 4-1: Save Throttle Layout
 					</P>
 				</TD>
@@ -82,7 +82,7 @@
 		</TABLE>
 
 		<P style="text-align: center; font-size: xx-small">
-		<IMG WIDTH="327" HEIGHT="272" SRC="Images/jmri040.jpg" BORDER="0" TITLE="Save As Dialog"><BR>
+		<IMG WIDTH="327" HEIGHT="272" SRC="images/jmri040.jpg" BORDER="0" TITLE="Save As Dialog"><BR>
 		Figure 4-2: Save As Dialog
 		</P>
 
@@ -137,12 +137,12 @@
 					</TD>
 							
 					<TD width="1%">
-						<IMG WIDTH="20" HEIGHT="20" SRC="Images/spacer.gif" BORDER="0">
+						<IMG WIDTH="20" HEIGHT="20" SRC="images/spacer.gif" BORDER="0">
 					</TD>
 							
 					<TD width="9%" align="center" valign="top">
 						<P style="text-align: center; font-size: xx-small">
-						<IMG WIDTH="309" HEIGHT="187" SRC="Images/jmri036.jpg" BORDER="0" TITLE="Example of 2 active throttle windows"><BR>
+						<IMG WIDTH="309" HEIGHT="187" SRC="images/jmri036.jpg" BORDER="0" TITLE="Example of 2 active throttle windows"><BR>
 						Figure 4-3: Two Active Throttle Windows
 						</P>
 					</TD>
@@ -193,12 +193,12 @@
 				</TD>
 						
 				<TD width="1%">
-					<IMG WIDTH="20" HEIGHT="20" SRC="Images/spacer.gif" BORDER="0">
+					<IMG WIDTH="20" HEIGHT="20" SRC="images/spacer.gif" BORDER="0">
 				</TD>
 						
 				<TD width="9%" align="center" valign="top">
 					<P style="text-align: center; font-size: xx-small">
-					<IMG WIDTH="163" HEIGHT="82" SRC="Images/jmri007.jpg" BORDER="0" TITLE="Load throttle layout"><BR>
+					<IMG WIDTH="163" HEIGHT="82" SRC="images/jmri007.jpg" BORDER="0" TITLE="Load throttle layout"><BR>
 					Figure 4-4: Load Throttle Layout
 					</P>
 				</TD>
@@ -238,7 +238,7 @@
 			then the file is opened just like a simple layout opening (explained above).</P>
 
 			<P style="text-align: center; font-size: xx-small">
-			<IMG WIDTH="354" HEIGHT="125" SRC="Images/jmri035.jpg" TITLE="Merge Dialog Box" BORDER="0"><BR>
+			<IMG WIDTH="354" HEIGHT="125" SRC="images/jmri035.jpg" TITLE="Merge Dialog Box" BORDER="0"><BR>
 			Figure 4-5: Merge Dialog Box
 			</P>
 
@@ -325,7 +325,7 @@
 		<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="0">
 			<TR>
 				<TD ALIGN="right" WIDTH="40%">
-					<dt><A HREF="ThrottleChapter3.shtml" TITLE="Return to the previous chapter"><IMG width="18" height="18" src="Images/LeftArrow2.jpg" border="0"></A></dt>
+					<dt><A HREF="ThrottleChapter3.shtml" TITLE="Return to the previous chapter"><IMG width="18" height="18" src="images/LeftArrow2.jpg" border="0"></A></dt>
 				</TD>
 				<TD WIDTH="5%">
 					<IMG border="0" src="images/spacer.gif" width="30" height="10">

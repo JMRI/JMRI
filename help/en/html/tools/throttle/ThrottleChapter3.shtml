@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ThrottleChapter3.shtml,v 1.1 2008-02-06 07:00:34 jacobsen Exp $ -->
+<!-- $Id: ThrottleChapter3.shtml,v 1.2 2008-03-08 17:52:54 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -53,13 +53,13 @@
 				</TD>
 						
 				<TD width="1%">
-					<IMG WIDTH="20" HEIGHT="20" SRC="Images/spacer.gif" BORDER="0">
+					<IMG WIDTH="20" HEIGHT="20" SRC="images/spacer.gif" BORDER="0">
 				</TD>
 						
 				<TD width="9%" align="center" valign="top">
 				    <br>
 					<P style="text-align: center; font-size: xx-small">
-					<IMG WIDTH="202" HEIGHT="207" SRC="Images/jmri022.jpg" BORDER="0" TITLE="Function Button Properties"><BR>
+					<IMG WIDTH="202" HEIGHT="207" SRC="images/jmri022.jpg" BORDER="0" TITLE="Function Button Properties"><BR>
 					Figure 3-1: Function Button Properties
 					</P>
 				</TD>
@@ -73,13 +73,13 @@
 				<TD width="9%" align="left" valign="top">
 					<br>
 					<P style="text-align: center; font-size: xx-small">
-					<IMG WIDTH="180" HEIGHT="181" SRC="Images/jmri023.jpg" BORDER="0" TITLE="Edit Function Button"><BR>
+					<IMG WIDTH="180" HEIGHT="181" SRC="images/jmri023.jpg" BORDER="0" TITLE="Edit Function Button"><BR>
 					Figure 3-2: Edit Function Button
 					</P>
 				</TD>
 
 				<TD width="1%">
-					<IMG WIDTH="20" HEIGHT="20" SRC="Images/spacer.gif" BORDER="0">
+					<IMG WIDTH="20" HEIGHT="20" SRC="images/spacer.gif" BORDER="0">
 				</TD>
 
 				<TD width="90%" align="left" valign="top">
@@ -158,13 +158,13 @@
 				</TD>
 						
 				<TD width="1%">
-					<IMG WIDTH="20" HEIGHT="20" SRC="Images/spacer.gif" BORDER="0">
+					<IMG WIDTH="20" HEIGHT="20" SRC="images/spacer.gif" BORDER="0">
 				</TD>
 						
 				<TD width="9%" align="center" valign="top">
 					<br>
 					<P style="text-align: center; font-size: xx-small">
-					<IMG WIDTH="200" HEIGHT="205" SRC="Images/jmri041.jpg" BORDER="0" TITLE="Customized Function Panel"><BR>
+					<IMG WIDTH="200" HEIGHT="205" SRC="images/jmri041.jpg" BORDER="0" TITLE="Customized Function Panel"><BR>
 					Figure 3-3: Customized Function Panel
 					</P>
 				</TD>
@@ -195,13 +195,13 @@
 						</TD>
 						
 						<TD width="1%">
-							<IMG WIDTH="20" HEIGHT="20" SRC="Images/spacer.gif" BORDER="0">
+							<IMG WIDTH="20" HEIGHT="20" SRC="images/spacer.gif" BORDER="0">
 						</TD>
 						
 						<TD width="9%" align="center" valign="top">
 							<br>
 							<P style="text-align: center; font-size: xx-small">
-							<IMG WIDTH="308" HEIGHT="148" SRC="Images/jmri018.jpg" BORDER="0" TITLE="View Menu Options"><BR>
+							<IMG WIDTH="308" HEIGHT="148" SRC="images/jmri018.jpg" BORDER="0" TITLE="View Menu Options"><BR>
 							Figure 3-4: View Menu Options
 							</P>
 						</TD>
@@ -242,16 +242,16 @@
 						</TD>
 						
 						<TD width="1%">
-							<IMG WIDTH="20" HEIGHT="20" SRC="Images/spacer.gif" BORDER="0">
+							<IMG WIDTH="20" HEIGHT="20" SRC="images/spacer.gif" BORDER="0">
 						</TD>
 						
 						<TD width="9%" align="center" valign="top">
 							<br>
 							<P style="text-align: center; font-size: xx-small">
-							<IMG WIDTH="308" HEIGHT="147" SRC="Images/jmri019.jpg" BORDER="0" TITLE="Edit Frame Properties"><BR>
+							<IMG WIDTH="308" HEIGHT="147" SRC="images/jmri019.jpg" BORDER="0" TITLE="Edit Frame Properties"><BR>
 							Figure 3-5: Edit Frame Properties
 							<BR><BR><BR>
-							<IMG WIDTH="263" HEIGHT="77" SRC="Images/jmri020.jpg" BORDER="0" TITLE="Frame Properties Dialog"><BR>
+							<IMG WIDTH="263" HEIGHT="77" SRC="images/jmri020.jpg" BORDER="0" TITLE="Frame Properties Dialog"><BR>
 							Figure 3-6: Frame Properties Dialog
 							</P>
 						</TD>
@@ -280,7 +280,7 @@
 		<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="0">
 			<TR>
 				<TD ALIGN="right" WIDTH="40%">
-					<dt><A HREF="ThrottleChapter2.shtml" TITLE="Return to the previous chapter"><IMG width="18" height="18" src="Images/LeftArrow2.jpg" border="0"></A></dt>
+					<dt><A HREF="ThrottleChapter2.shtml" TITLE="Return to the previous chapter"><IMG width="18" height="18" src="images/LeftArrow2.jpg" border="0"></A></dt>
 				</TD>
 				<TD WIDTH="5%">
 					<IMG border="0" src="images/spacer.gif" width="30" height="10">
@@ -292,7 +292,7 @@
 					<IMG border="0" src="images/spacer.gif" width="30" height="10">
 				</TD>
 				<TD ALIGN="left" WIDTH="40%">
-					<B><A HREF="ThrottleChapter4.shtml" TITLE="Advance to the next chapter"><IMG width="18" height="18" src="Images/RightArrow2.jpg" border="0"></A></B>
+					<B><A HREF="ThrottleChapter4.shtml" TITLE="Advance to the next chapter"><IMG width="18" height="18" src="images/RightArrow2.jpg" border="0"></A></B>
 				</TD>
 			</TR>
 		</TABLE>

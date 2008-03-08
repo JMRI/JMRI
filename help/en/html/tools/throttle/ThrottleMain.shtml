@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ThrottleMain.shtml,v 1.2 2008-02-17 17:54:40 jacobsen Exp $ -->
+<!-- $Id: ThrottleMain.shtml,v 1.3 2008-03-08 17:52:54 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -90,7 +90,7 @@
 		</p>
 		
 		<P><A HREF="http://www.adobe.com/products/acrobat/readstep2.html" TARGET="_blank" TITLE="Click to get Acrobat Reader">
-		<IMG width="88" height="31" src="Images/get_adobe_reader.gif" border="0" align="left"></A>
+		<IMG width="88" height="31" src="images/get_adobe_reader.gif" border="0" align="left"></A>
 		This user guide is also available for download in the popular Adobe Reader (PDF) format.
 		You must have version 5.0 or better installed on your machine in order to view this document.  If you don't have it,
 		you can click on the icon shown here to go to Adobe's web site.</P>
@@ -119,7 +119,7 @@
 					<IMG border="0" src="images/spacer.gif" width="30" height="10">
 				</TD>
 				<TD ALIGN="left" WIDTH="40%">
-					<B><A HREF="ThrottleChapter1.shtml" TITLE="Advance to the next chapter"><IMG width="18" height="18" src="Images/RightArrow2.jpg" border="0"></A></B>
+					<B><A HREF="ThrottleChapter1.shtml" TITLE="Advance to the next chapter"><IMG width="18" height="18" src="images/RightArrow2.jpg" border="0"></A></B>
 				</TD>
 			</TR>
 		</TABLE>

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ThrottleChapter1.shtml,v 1.1 2008-02-06 07:00:34 jacobsen Exp $ -->
+<!-- $Id: ThrottleChapter1.shtml,v 1.2 2008-03-08 17:52:54 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -87,7 +87,7 @@
 			</UL>
 
 			<P style="text-align: center; font-size: xx-small">
-			<IMG WIDTH="410" HEIGHT="228" SRC="Images/jmri010.jpg" TITLE="JMRI main menu structure" BORDER="0"><BR>
+			<IMG WIDTH="410" HEIGHT="228" SRC="images/jmri010.jpg" TITLE="JMRI main menu structure" BORDER="0"><BR>
 			Figure 1-1: JMRI main menu structure
 			</P>
 		</DIR>
@@ -108,7 +108,7 @@
 			</UL>
 
 			<P style="text-align: center; font-size: xx-small">
-			<IMG WIDTH="445" HEIGHT="352" SRC="Images/jmri009.jpg" TITLE="JMRI Throttles sub-menu structure" BORDER="0"><BR>
+			<IMG WIDTH="445" HEIGHT="352" SRC="images/jmri009.jpg" TITLE="JMRI Throttles sub-menu structure" BORDER="0"><BR>
 			Figure 1-2: JMRI Throttles sub-menu structure
 			</P>
 		</DIR>
@@ -121,7 +121,7 @@
 		<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="0">
 			<TR>
 				<TD ALIGN="right" WIDTH="40%">
-					<dt><A HREF="ThrottleMain.shtml" TITLE="Return to the previous chapter"><IMG width="18" height="18" src="Images/LeftArrow2.jpg" border="0"></A></dt>
+					<dt><A HREF="ThrottleMain.shtml" TITLE="Return to the previous chapter"><IMG width="18" height="18" src="images/LeftArrow2.jpg" border="0"></A></dt>
 				</TD>
 				<TD WIDTH="5%">
 					<IMG border="0" src="images/spacer.gif" width="30" height="10">
@@ -133,7 +133,7 @@
 					<IMG border="0" src="images/spacer.gif" width="30" height="10">
 				</TD>
 				<TD ALIGN="left" WIDTH="40%">
-					<B><A HREF="ThrottleChapter2.shtml" TITLE="Advance to the next chapter"><IMG width="18" height="18" src="Images/RightArrow2.jpg" border="0"></A></B>
+					<B><A HREF="ThrottleChapter2.shtml" TITLE="Advance to the next chapter"><IMG width="18" height="18" src="images/RightArrow2.jpg" border="0"></A></B>
 				</TD>
 			</TR>
 		</TABLE>
