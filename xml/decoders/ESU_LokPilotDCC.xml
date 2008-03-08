@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!--Copyright (C) JMRI 2003, 2004 All rights reserved -->
-<!--$Id: ESU_LokPilotDCC.xml,v 1.8 2007-09-21 05:49:31 jacobsen Exp $ -->
+<!--$Id: ESU_LokPilotDCC.xml,v 1.9 2008-03-08 22:52:36 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -33,7 +33,8 @@
             <model
                 model = "ESU_LokPilotDCC"
                 numOuts = "6"
-                numFns = "8">
+                numFns = "8"
+                nmraWarrant="yes">
                 <output name = "1" label = "Front Lights"/>
                 <output name = "2" label = "Back Lights"/>
                 <output name = "3" label = "Aux1"/>
