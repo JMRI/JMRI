@@ -1,0 +1,85 @@
+#! /bin/sh
+#
+# Script to start a JMRI application from inside a MacOS X app bundle
+#
+# If you want to be able to move this bundle anywhere and run it,
+# set your JMRI_HOME environment variable to the absolute pathname
+# to the JMRI install directory. For information on how to do that
+# see <http://developer.apple.com/qa/qa2001/qa1067.html>
+# Add a "property" called JMRI_HOME with class "String" and value 
+# containing the location of the JMRI install directory.
+# The install directory contains this bundle and 
+# the jmri.jar file.
+#
+# If you need to add any additional Java options or defines,
+# include them in the JMRI_OPTIONS environment variable
+#
+# You can run separate instances of the program with their
+# own preferences and setup if you copy and rename the application bundle
+#
+# If you rename the bundle to e.g. JmriNew, it will use "JmriNewConfig2.xml"
+# as it's configuration file.  You can then set and save the preferences for
+# the next time you rerun the script.
+#
+# For more information, please see
+# http://jmri.sourceforge.net/install/ShellScripts.shtml
+#
+# $Revision: 1.1 $ (CVS maintains this line, do not edit please)
+
+# define the class to be invoked
+CLASSNAME=apps.DecoderPro.DecoderPro
+
+# set DEBUG to anything to see debugging output
+DEBUG=yes
+
+# if JMRI_HOME is defined, go there, 
+# else change directory to where the containing application bundle is located
+if test ${JMRI_HOME}; then
+    cd ${JAVA_HOME};
+else 
+    cd `dirname $0`/../../..;  # script is in *app/Contents/MacOS/
+fi
+if test ${DEBUG}; then echo PWD: ${PWD}; fi
+
+# build classpath dynamically
+CP=".:classes:java/classes"
+# list of jar files in home, not counting jmri.jar
+LOCALJARFILES=`ls *.jar | grep -v jmri.jar | tr "\n" ":"`
+if test ${LOCALJARFILES}; then CP=${CP}:${LOCALJARFILES}; fi
+# add jmri.jar
+CP=${CP}:jmri.jar
+# and contents of lib
+CP=${CP}:`ls -m lib/*.jar | tr -d " \n" | tr "," ":"`
+if test ${DEBUG}; then echo CLASSPATH: ${CP}; fi
+
+# build config file name dynamically based on name of application
+# bundle containing this script
+APPNAME=`dirname $0`
+APPNAME=`dirname ${APPNAME}`
+APPNAME=`dirname ${APPNAME}`
+APPNAME=`basename -s .app ${APPNAME}`
+CONFIGFILE=${APPNAME}Config2.xml;
+if test ${DEBUG}; then echo CONFIGFILE: ${CONFIGFILE}; fi
+
+# create the option string
+#
+# JVM and RMI options
+OPTIONS="${OPTIONS} -noverify"
+OPTIONS="${OPTIONS} -Djava.security.policy=lib/security.policy"
+OPTIONS="${OPTIONS} -Djava.rmi.server.codebase=file:java/classes/"
+# ddraw is disabled to get around Swing performance problems in Java 1.5.0
+OPTIONS="${OPTIONS} -Dsun.java2d.noddraw"
+# memory start and max limits
+OPTIONS="${OPTIONS} -Xms10m"
+OPTIONS="${OPTIONS} -Xmx60m"
+# MacOS X specific options
+OPTIONS="${OPTIONS} -Dapple.laf.useScreenMenuBar=true"
+OPTIONS="${OPTIONS} -Dcom.apple.macos.useScreenMenuBar=true"
+OPTIONS="${OPTIONS} -Dcom.apple.mrj.application.apple.menu.about.name=${APPNAME}"
+# RXTX options (only works in some versions)
+OPTIONS="${OPTIONS} -Djavax.comm.rxtx.NoVersionOutput=true"
+if test ${DEBUG}; then echo OPTIONS: ${OPTIONS}; fi
+
+java ${OPTIONS} -cp ${CP} ${CLASSNAME} ${CONFIGFILE}
+
+

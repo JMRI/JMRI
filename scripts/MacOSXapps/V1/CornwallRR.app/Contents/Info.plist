@@ -5,21 +5,21 @@
 	<key>CFBundleName</key>
 	<string>CornwallRR</string>
 	<key>CFBundleIdentifier</key>
-	<string>jmri.CornwallRR</string>
+	<string>jmri.cornwall</string>
 	<key>CFBundleIconFile</key>
 	<string>JMRI.icns</string>
 	<key>CFBundleSignature</key>
-	<string>????</string>
+	<string>JMRC</string>
     <key>CFBundleShortVersionString</key>
-    <string>2.1.2</string>
+    <string>2.1.4</string>
     <key>CFBundleLongVersionString</key>
-    <string>2.1.2, Copyright 1998-2008 JMRI Project</string>
+    <string>2.1.4, Copyright 1998-2008 JMRI Project</string>
     <key>CFBundleGetInfoString</key>
-    <string>Cornwall RR 2.1.2, Copyright 1998-2008 JMRI Project</string>
+    <string>CornwallRR 2.1.4, Copyright 1998-2008 JMRI Project</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleExecutable</key>
-	<string>JavaApplicationStub</string>
+	<string>StartJMRI</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleVersion</key>
