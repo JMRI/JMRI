@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: EditorFrame.shtml,v 1.5 2008-02-21 15:35:57 jacobsen Exp $ -->
+<!-- $Id: EditorFrame.shtml,v 1.6 2008-03-09 21:17:23 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -51,9 +51,9 @@ web site. You can also find links to documentation and additional tools there.
 When you open the SDF editor by clicking the "Edit" button
 in the 
 <a href="../soundloader/EditorFrame.shtml">SPJ editor</a>,
-a new window opens that has two parts:<br/>
+a new window opens that has two parts:<br>
 <a href="SdfInitSound.gif">
-<img src="SdfInitSound.gif" width="415" height="235" alt="SDF Editor"/></a><br/>
+<img src="SdfInitSound.gif" width="415" height="235" alt="SDF Editor"></a><br>
 On the left is a
 view of the entire SDF information as a tree of
 nested elements. On the right is a window
