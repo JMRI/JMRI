@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: FAQ.shtml,v 1.2 2008-02-16 20:45:01 jacobsen Exp $ -->
+<!-- $Id: FAQ.shtml,v 1.3 2008-03-09 20:27:27 jacobsen Exp $ -->
 <title>JMRI: DecoderPro Frequently Asked Questions</title>
 
 <!-- Style -->
@@ -30,7 +30,7 @@ they're also available somewhere else.
 
 <dl>
 
-<dt class=left><a id="#newdecoder"/>How can I get a new decoder type defined?</dt>
+<dt class=left><a name="newdecoder"/>How can I get a new decoder type defined?</dt></a>
 <dd class=first>
 <p>
 A completely new decoder needs a new or
@@ -48,7 +48,7 @@ have the same configuration CVs, so it's decoder definition
 would work fine.
 </dd>
 
-<dt class=left><a id="#newfile"/>What do I do with this new decoder file?</dt>
+<dt class=left><a name="newfile"/>What do I do with this new decoder file?</dt></a>
 <dd class=first>
 <p>
 For DecoderPro to use the definition of a decoder type in a 
@@ -74,8 +74,8 @@ won't have to remake the index each time you update.
 
 </dd>
 
-<dt class=left><a id="#update"/>How can I get the latest decoder
-definitions?</dt>
+<dt class=left><a name="update"/>How can I get the latest decoder
+definitions?</dt></a>
 <dd class=first>
 <p>
 The easiest way to update really is to download a new version of the program.
@@ -98,7 +98,7 @@ Note that as an anti-spam measure, you will probably have to
 <A HREF="http://groups.yahoo.com/group/jmriusers/join">join the group</a>
 to be able to download the files; that will require that you have a Yahoo account (free).
 
-<dt class=left><a id="#update"/>Why does my LocoBuffer-II not work in Windows XP?</dt>
+<dt class=left><a name="lb-xp"/>Why does my LocoBuffer-II not work in Windows XP?</dt></a>
 <dd class=first>
 <p>
 With Windows XP, your serial port parameters might not be properly set for 

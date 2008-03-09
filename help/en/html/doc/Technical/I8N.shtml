@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: I8N.shtml,v 1.3 2008-01-22 06:17:20 jacobsen Exp $ -->
+<!-- $Id: I8N.shtml,v 1.4 2008-03-09 20:27:28 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -185,8 +185,8 @@ and translate it.  Apart from being a lot of work, this would effectively
 isolate that copy from the rapid pace of improvements to the main code.
 
 
-<h2>Customizing JMRI for your own use</h2>
-<A id="custom"/>
+<A name="custom">
+<h2>Customizing JMRI for your own use</h2></a>
 
 You can use the internationalization feature to customize the program
 for your own purposes.  This section describes how to do that, assuming 
@@ -281,8 +281,7 @@ Restart a JMRI program, and see if your changes appear in the user interface.
 If that doesn't work, please get in touch so that we can help you find the
 problem and improve the instructions.
 
-<h2>Coding for Internationalization</h2>
-<A id="code"/>
+<A name="code"><h2>Coding for Internationalization</h2></a>
 
 Some web references on how to do this:
 <UL><A HREF="http://java.sun.com/docs/books/tutorial/i18n/index.html">Sun internationalization tutorial</a>(highly recommended)

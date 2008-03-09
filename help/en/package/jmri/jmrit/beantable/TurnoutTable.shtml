@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TurnoutTable.shtml,v 1.7 2008-01-25 06:06:05 dan_boudreau Exp $ -->
+<!-- $Id: TurnoutTable.shtml,v 1.8 2008-03-09 20:27:29 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Turnout Table Help</TITLE>
@@ -102,7 +102,7 @@ feedback mode, enter sensors for feedback, invert, lock, and delete it.</P>
 	the JMRI program is shut down. For more information on this, <A
 		HREF="#Turnout lock feature">see below<A>.</A></A></DD>
 
-	<DT><A ID="decodercol">Decoder</A></DT>
+	<DT><a name="decodercol">Decoder</A></DT>
 	<DD>When you're using the lock feature, the program needs to know
 	what type of DCC decoder is in use so it can handle it properly. If
 	you're not using the lock feature, don't bother with this field; JMRI

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2003-2008 -->
-<!-- $Id: index.shtml,v 1.4 2008-03-06 14:23:48 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.5 2008-03-09 20:27:27 jacobsen Exp $ -->
 <title>JMRI: DecoderPro Symbolic Programmer</title>
 
 <!-- Style -->
@@ -81,7 +81,7 @@ for all of us.  You can help too, even if you're not a
 computer programmer; 
 <a href="http://jmri.sourceforge.net//Help.html">click here for suggestions on how help</a>.
 
-<a id="guide">
+<a name="guide">
 <H2>DecoderPro User Guide</H2></a>
 
 These User Guide sections follow the

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.4 2008-03-05 03:07:29 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.5 2008-03-09 20:27:28 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -92,7 +92,7 @@ and compile it from a command line, please see the page of instructions for
 <a href="Ant.shtml">building with Ant</a>.
 
 
-<h2><A id="contributing"/>Contributing</h2>
+<h2><A name="contributing">Contributing</h2></a>
 
 We encourage contributions of code, decoder definitions, improvements to 
 web pages, etc, to the JMRI project so that 
@@ -134,7 +134,7 @@ helped with the contribution, please let us know so
 we can add them to the 
 <A HREF="../../../Acknowledgements.shtml">acknowledgements page</a>.
 
-<h2><A id="use"/>Licensing</h2>
+<h2><A name="use">Licensing</h2></a>
 
 We encourage people to build their own projects on top of JMRI.  That's the original reason
 that the project was started!

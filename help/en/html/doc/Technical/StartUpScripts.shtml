@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: StartUpScripts.shtml,v 1.2 2008-03-08 19:13:54 jacobsen Exp $ -->
+<!-- $Id: StartUpScripts.shtml,v 1.3 2008-03-09 20:27:28 jacobsen Exp $ -->
 <title>JMRI: Startup Scripts</title>
 
 <!-- Style -->
@@ -44,7 +44,7 @@ making your change on the other machines (and testing it!)
 or at least putting a comment in the others
 to describe how they now differ.
 
-<a id="linux">
+<a name="linux">
 <h2>Linux</h2></a>
 
 JMRI distributions for Linux contain shell (bash) scripts
@@ -131,7 +131,7 @@ to the program if present.
 
 </dl>
 
-<a id="macosx">
+<a name="macosx">
 <h2>MacOS X</h2></a>
 JMRI distributions for MacOS X contain application bundles
 for each of the main applications:  DecoderPro, PanelPro, etc.
@@ -219,7 +219,7 @@ symbols to control operation, and some options specific to MacOS X.
 </dl>
 
 
-<a id="windows">
+<a name="windows">
 <h2>Windows</h2></a>
 
 Currently, the Windows .bat files 

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: JUnit.shtml,v 1.5 2008-01-13 16:56:35 jacobsen Exp $ -->
+<!-- $Id: JUnit.shtml,v 1.6 2008-03-09 20:27:28 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -51,7 +51,7 @@ when you have to figure out what somebodys code does
 (the test documents exactly what should happen!),
 and when you track down a bug (make sure it doesn't come back).
 
-<A ID="run">
+<a name="run">
 <h2>Running the Tests</h2></a>
 
 To run the existing tests, say
@@ -74,7 +74,7 @@ can run that directly with the "runtest" script:
 The first line compiles all the test code, and the second
 runs a specific test or test suite.
 
-<a id="nightly">
+<a name="nightly">
 <h2>Nightly Builds</h2></a>
 
 
@@ -99,7 +99,7 @@ to see past logs.
 <P>
 (When the build succeeds, nothing is mailed, to cut down on traffic)
 
-<A ID="write">
+<a name="write">
 <h2>Writing Tests</h2></a>
 
 

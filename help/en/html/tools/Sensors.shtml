@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Sensors.shtml,v 1.5 2008-03-02 17:48:50 jacobsen Exp $ -->
+<!-- $Id: Sensors.shtml,v 1.6 2008-03-09 20:27:29 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -74,7 +74,7 @@ Configuration...</b> in the <b>File</b> menu at the top of the Light
 Table (or other tables from the Tools menu), or select <b>Store Panel...</b>
 in the <b>Panel</b> menu. 
 
-<A ID="add"><H3>Adding a new Sensor</H3></a>
+<a name="add"><H3>Adding a new Sensor</H3></a>
 <p>To create a new Sensor, follow this procedure:</p>
 <ol>
 	<li><p>Click 

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Names.shtml,v 1.10 2008-03-09 03:42:18 jacobsen Exp $ -->
+<!-- $Id: Names.shtml,v 1.11 2008-03-09 20:27:28 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -53,7 +53,7 @@ in a symbolic form. Names are a convenient way to connect objects
 and object references in that kind of configuration.
 </OL>
 
-<a id="type">
+<a name="type">
 <H2>Items with names</h2></a>
 There are lots of things that might need names:
 <UL>
@@ -111,7 +111,7 @@ Examples:
 Note that there is no assumption of pattern to the names; they don't have
 to be assigned monotonically, nor are they restricted to a single system.
 
-<a id="hardware">
+<a name="hardware">
 <H3>Hardware system letters</h3></a>
 Note that some of these are placeholders, and have no underlying implementation. 
 (Links are to JMRI pages with more information)
@@ -139,7 +139,7 @@ Note that some of these are placeholders, and have no underlying implementation.
 <LI>Z <a href="../../hardware/zimo/Zimo.shtml">Zimo MX-1</a>
 </ul>
 
-<a id="types">
+<a name="types">
 <H3>Device type letters</h3></a>
 Note that some of these are placeholders, and have no underlying implementation. Also, 
 there is no guarantee that any given hardware system will ever implement all of them.
@@ -176,7 +176,7 @@ detectors.
 <LI>X logiX - a set of logic equations used to control the layout
 </ul>
 
-<a id="systeminfo">
+<a name="systeminfo">
 <h3>System-specific info</H3></a>
 Each different hardware system can specify the "string" that follows the system and type 
 letters.  Generally, these are small numbers, but their exact meaning is very system-specific.
@@ -198,7 +198,7 @@ is implemented as three different outputs, LT1, LT2 and LT3, the signal head obj
 might be called IH3.
 
 
-<a id="special">
+<a name="special">
 <H2>Naming Conventions For Automated Use</h2></a>
 
 Some higher-level constructs create their own items.  For example, a

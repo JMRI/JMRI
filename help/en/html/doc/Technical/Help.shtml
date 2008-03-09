@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Help.shtml,v 1.5 2008-03-09 19:43:21 jacobsen Exp $ -->
+<!-- $Id: Help.shtml,v 1.6 2008-03-09 20:27:28 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -54,7 +54,7 @@ window or component.
 use in the help system.
 </UL>
 
-<a id="limitations">
+<a name="limitations">
 <h3>Limitations of JavaHelp HTML</h3></a>
 
 JavaHelp displays "plain old HTML", without providing some of the

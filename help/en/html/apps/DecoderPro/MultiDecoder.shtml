@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: MultiDecoder.shtml,v 1.1 2008-02-16 19:06:09 jacobsen Exp $ -->
+<!-- $Id: MultiDecoder.shtml,v 1.2 2008-03-09 20:27:27 jacobsen Exp $ -->
 <title>JMRI: Multi-Decoder Tool</title>
 
 <!-- Style -->
@@ -106,8 +106,8 @@ Although it's possible to use this tool in "Ops mode" (programming on the main),
 in that case it's not able to confirm operations, so one can't be 100%
 sure that the right decoder is selected.
 
-<A ID="digitraxproposal"/>
-<h2>Digitrax's Original Proposal</h2>
+<A NAME="digitraxproposal">
+<h2>Digitrax's Original Proposal</h2></a>
 
 DCC users sometimes want to install more than one decoder in a single locomotive. One common case is using separate decoders for motor control and sound.  Because these decoders often need to have their CVs configured separately, a mechanism is needed to communicate with only one at a time.
 <p>

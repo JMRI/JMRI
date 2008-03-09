@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NCE.shtml,v 1.13 2008-03-05 16:45:38 dan_boudreau Exp $ -->
+<!-- $Id: NCE.shtml,v 1.14 2008-03-09 20:27:29 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: NCE</TITLE>
@@ -31,8 +31,8 @@ cable, Power Pro (PowerHouse) via network connection, and NCE USB adapter via se
 cable. They are shown in the preferences menu as NCE, NCE via network,
 and NCE USB respectively.</P>
 
-<A ID="phpro"></A>
-<H3>Power Pro</H3>
+<a name="phpro">
+<H3>Power Pro</H3></A>
 This section discusses JMRI's support for the NCE Power Pro and PowerHouse.
 
 <H4>Setup</H4>
@@ -103,9 +103,9 @@ NOW = REV for accessory 5, you have the earlier revision with the known
 problem. If you have the early 2007 EPROM and wish to use MONITORING for
 feedback, contact NCE for an EPROM upgrade.</P>
 
-<A ID="AIU"></A>
-<A ID="names"></A>
-<H4>AIU (Input) Numbering</H4>
+<a name="AIU">
+<a name="names">
+<H4>AIU (Input) Numbering</H4></A></A>
 The NCE "AIU" device allows the NCE command station to check the status
 of inputs from the layout. These are referenced in JMRI as "Sensors"
 with names like "NS785". "NS" means "NCE Sensor", and 785 is the number
@@ -135,9 +135,8 @@ normal 9-pin serial cable will not work! You'll need to make a custom
 cable that just connects the "send data", "receive data" and "ground"
 pins. See your NCE manual for details.</P>
 
-<A ID="powercab"></A>
-
-<H3>NCE USB Adapter</H3>
+<a name="powercab">
+<H3>NCE USB Adapter</H3></A>
 
 <IMG SRC="../images/nceUSB.jpg" WIDTH="85" HEIGHT="85" ALT="NCE USB" >
 
@@ -215,8 +214,8 @@ limitation when connected to a Power Pro.</P>
 	<DD>No loco programming</DD>
 </DL>
 
-<A ID="troubleShoot"></A>
-<H3>Trouble Shooting</H3>
+<a name="troubleShoot">
+<H3>Trouble Shooting</H3></A>
 
 When the connection to your NCE is okay and your NCE system is powered
 up you should see after starting PanelPro the following control panel:

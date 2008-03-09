@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Eclipse.shtml,v 1.2 2008-01-22 06:17:20 jacobsen Exp $ -->
+<!-- $Id: Eclipse.shtml,v 1.3 2008-03-09 20:27:28 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -57,8 +57,8 @@
     Another version is available in a 
     <A HREF="http://groups.yahoo.com/group/jmriusers/message/19309">JMRIusers post</a>.
     
-    <a id="current"/>
-    <h2>Setting up Eclipse for building JMRI</h2>
+    <a name="current">
+    <h2>Setting up Eclipse for building JMRI</h2></a>
     <P>
     Unfortunately, we don't know how to properly put the Eclipse configuration
     information directly into CVS, so there are a number of manual setup steps
@@ -147,8 +147,8 @@
     </ol>
     
 
-    <a id="older"/>
-    <h1>Older version of instructions</h1>
+    <a name="older">
+    <h1>Older version of instructions</h1></a>
     <h2>Checking out code</h2>
     <ul>
       <li>Start Eclipse - it will ask you for a workspace name. You can make up 

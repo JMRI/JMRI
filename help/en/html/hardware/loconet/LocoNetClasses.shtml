@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LocoNetClasses.shtml,v 1.1 2008-01-13 04:24:44 jacobsen Exp $ -->
+<!-- $Id: LocoNetClasses.shtml,v 1.2 2008-03-09 20:27:29 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -170,7 +170,7 @@ Rather than communicate with a real LocoNet, it provides scaffolding to
 make it easy to test the transmission and receipt of messages.
 
 
-<h2><a id="startup">Startup</a></h2>
+<h2><a name="startup">Startup</a></h2>
 There are "action" classes that connect to an input source.   The main 
 program puts these in a menu, on a button, etc, so that the user can select the
 connection desired. The current (March 2002) set is:

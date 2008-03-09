@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LocoBuffer.shtml,v 1.1 2008-01-13 04:24:44 jacobsen Exp $ -->
+<!-- $Id: LocoBuffer.shtml,v 1.2 2008-03-09 20:27:28 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -83,8 +83,8 @@ Start DecoderPro or other program and configure it for:
 	  If you got your LocoBuffer chip after February 2002, this should
 	  not be a problem for you.</p>
 
-<A ID="flow"/>
-<h2>LocoBuffer flow control</h2>
+<A NAME="flow">
+<h2>LocoBuffer flow control</h2></a>
 
 	  <p>Some Windows versions, in particular Win2000, cannot handle
 	  the LocoBuffer's control leads properly.  You'll see this as

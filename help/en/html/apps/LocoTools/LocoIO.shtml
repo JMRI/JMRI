@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: LocoIO.shtml,v 1.1 2008-02-26 00:33:53 jacobsen Exp $ -->
+<!-- $Id: LocoIO.shtml,v 1.2 2008-03-09 20:27:27 jacobsen Exp $ -->
 <html lang="en">
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
@@ -79,9 +79,9 @@ To-Do list:
 </UL>
 
 
-<A ID="older"/>
+<A name="older">
 
-        <h2>Instructions for Older Programmer</h2>
+        <h2>Instructions for Older Programmer</h2></a>
 			<a href="images/locoio.gif">
 			    <img src="images/locoio.gif"
 			         width=100 height=50></a>

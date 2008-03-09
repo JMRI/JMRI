@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: SimpleSignalExample.shtml,v 1.3 2008-03-09 19:57:54 jacobsen Exp $ -->
+<!-- $Id: SimpleSignalExample.shtml,v 1.4 2008-03-09 20:27:29 jacobsen Exp $ -->
 <title>JMRI: Simple Signal Logic Example</title>
 
 <!-- Style -->
@@ -142,7 +142,7 @@ You can change any of these setting and click "OK" to put them into
 effect, then click on the example panel to see how the new settings work.
 </UL>
 
-<A ID="setup"/>
+<a name="setup"/>
 <h2>Setting up your own example</h2>
 The complete set of steps involved in creating this example were:
 <OL>
@@ -187,7 +187,7 @@ typing a filename, and hitting "Save".  (You might want to do this often!)
 <LI>If you have signal heads connected to "turnout-type" outputs,
 tell the program about those turnouts also.  (SE8c users skip this step)
 
-<A ID="definesignals"/>
+<a name="definesignals"/>
 <LI>Tell it how your signals are addressed.
 <A href="../../../images/SigTable.gif"><IMG SRC="../../../images/SigTable.gif" ALIGN=RIGHT WIDTH="170" HEIGHT="314" HSPACE="0" VSPACE="0" ALT="Signal Table Figure"></A>
 

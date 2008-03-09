@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Lights.shtml,v 1.2 2008-02-06 07:07:56 jacobsen Exp $ -->
+<!-- $Id: Lights.shtml,v 1.3 2008-03-09 20:27:29 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -98,7 +98,7 @@ in the <b>Panel</b> menu. Note that the enabled/disabled state of each Light
 is not saved in the configuration file.  When Lights are loaded from a
 configuration file, they are all enabled.
 
-<A ID="addLight"><H3>Adding a new Light</H3></a>
+<a name="addLight"><H3>Adding a new Light</H3></a>
 <p>To add a new Light, follow this procedure:</p>
 <ol>
 	<li><p>Click <b>Light Table</b> in the <b>Tools</b> menu to bring up
@@ -167,7 +167,7 @@ correct the error and click <b>Create</b> again.</p></li>
 	changes are made to the selected Light.</li>
 </ol>
 
-<A ID="lightcontrol"><H3>Automated Control Options for Lights</H3></a>
+<a name="lightcontrol"><H3>Automated Control Options for Lights</H3></a>
 
 The operation of a Light can be controlled in the following ways:
 	<ul>

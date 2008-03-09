@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: CreateDecoder.shtml,v 1.2 2008-02-16 20:45:01 jacobsen Exp $ -->
+<!-- $Id: CreateDecoder.shtml,v 1.3 2008-03-09 20:27:27 jacobsen Exp $ -->
 <title>JMRI: DecoderPro User Guide - Creating A Custom Decoder File</title>
 
 <!-- Style -->
@@ -67,7 +67,7 @@ HREF="../../xml/decoders/Digitrax_1x2.xml">Digitrax_1x2.xml</a> file):
 <p class=example>
 &lt;?xml version="1.0"?&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;!DOCTYPE decoder-config SYSTEM "decoder-config.dtd"&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- $Id: CreateDecoder.shtml,v 1.2 2008-02-16 20:45:01 jacobsen Exp $ --&gt;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- $Id: CreateDecoder.shtml,v 1.3 2008-03-09 20:27:27 jacobsen Exp $ --&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;decoder-config&gt;<BR>
 </p>
 
@@ -187,8 +187,8 @@ programmer uses this information to select the programming mode to
 use when working with a decoder.</p>
 </dd>
 
-<A id="variable"/>
-<dt class=left> File contents: Variable names</dt>
+<A name="variable">
+<dt class=left> File contents: Variable names</dt></a>
 <dd>
 <p>The next part of the file consists of a set of 'variable' elements
 defining specific variables, nested inside a 'variables' (note the

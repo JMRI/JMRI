@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: Basic_Programming.shtml,v 1.8 2008-01-22 02:30:08 jacobsen Exp $ -->
+<!-- $Id: Basic_Programming.shtml,v 1.9 2008-03-09 20:27:27 jacobsen Exp $ -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -148,7 +148,7 @@ those values to the decoder! To do so, you would have to press either the
 "<b>Write Sheet</b>" or "<b>Write All</b>" buttons.
 
 <div class="BOXIT">
-<a id="progmode"><h3>
+<a name="progmode"><h3>
 <a NAME="Programming Modes"></a>Some brief comments on Programming Modes
 </h3></a>
 At the bottom of the window there are several programming mode options:

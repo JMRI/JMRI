@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: BlockBossFrame.shtml,v 1.4 2008-03-09 19:57:55 jacobsen Exp $ -->
+<!-- $Id: BlockBossFrame.shtml,v 1.5 2008-03-09 20:27:30 jacobsen Exp $ -->
 <title>JMRI: SSL Documentation</title>
 
 <!-- Style -->
@@ -138,7 +138,7 @@ SSL is a JMRI tool to enable the rapid setup of basic ABS style signaling.
 
     <dt class="left"><a name="SSL"><h3>SSL</h3></a></dt>                                                                                          
 	<dd class="top">
-	<A id="logic"><h3>Simple Signal Logic</h3></a>
+	<A NAME="logic"><h3>Simple Signal Logic</h3></a>
 <A href="./images/SigAdd.gif"><IMG SRC="./images/SSLLogic.gif" ALIGN=RIGHT WIDTH="354" HEIGHT="364" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
 
 Much of basic ABS signaling can be boiled down to "a signal goes red when a train

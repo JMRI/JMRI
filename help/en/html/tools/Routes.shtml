@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Routes.shtml,v 1.1 2008-02-06 07:07:56 jacobsen Exp $ -->
+<!-- $Id: Routes.shtml,v 1.2 2008-03-09 20:27:29 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -69,7 +69,7 @@ contains all sensors needed.  Then select <b>Tools>Route Table</b>,
 and click the <b>Add...</b> button at the bottom of the table to 
 bring up the Add/Edit Route window.</p>
 
-<A ID="addroute"><H3>To add a new Route:</H3></a>
+<a name="addroute"><H3>To add a new Route:</H3></a>
 
 <ol>
 	<li><p>Enter a system name, such as 'IR100'--any 
@@ -238,7 +238,7 @@ in the <b>Panel</b> menu. Note that the enabled/disabled state of each Route
 is not saved in the configuration file.  When Routes are loaded from a
 configuration file, they are all enabled.
 
-<A ID="sensorlogic"><H3>Controlling Routes from Sensors</H3></a>
+<a name="sensorlogic"><H3>Controlling Routes from Sensors</H3></a>
 
 The operation of a Route can be controlled by up to three
 sensors.  These can be connected to occupancy detectors or 
@@ -285,7 +285,7 @@ non-veto state _and_ at least one of the triggering sensors or a
 triggering turnout must see the appropriate change for the 
 Route to be set.</p>    
 
-<A ID="turnoutlogic"><H3>Controlling Routes from a Turnout</H3></a>
+<a name="turnoutlogic"><H3>Controlling Routes from a Turnout</H3></a>
 <p>The setting (triggering) of a Route can be controlled from a turnout. 
 This turnout can be a real physical turnout, a 'phantom' turnout (a DCC 
 turnout number with no corresponding physical turnout), or 
