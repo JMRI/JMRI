@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SignalAddEdit.shtml,v 1.7 2008-03-02 17:15:45 jacobsen Exp $ -->
+<!-- $Id: SignalAddEdit.shtml,v 1.8 2008-03-09 19:06:12 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -104,14 +104,22 @@ choices for how the signal head is connected:
 
 <dt>LDT LS-DEC</dt>
   <dd>
-  This type controls signal heads attached to a
+  This type is particularly useful for European signaling.
+  It controls signal heads attached to a
   <a href="http://www.ldt-infocenter.com/english/home_frame_e.htm">Littfinski DatenTechnik (LDT)</a>
-  <A href="http://www.ldt-infocenter.com/english/lsdec_sb_e.htm">LS-DEC signal decoder</a>.
+  <A href="http://www.ldt-infocenter.com/english/lsdec_sb_e.htm">LS-DEC signal decoder</a>,
+  or a 
+  <A HREF="http://www.marathonmodel.cz/">Marathon Model</a>
+  DP2N decoder.
   <p>
   These controllers use seven DCC turnout (accessory decoder) addresses to specify
   the seven possible appearances of the signal.  Enter those, either as 
   numbers (1,2,3,...) or as JMRI turnout names (LT1, LT2, LT3, ...) in 
   the appropriate text fields.
+  <p>
+  For more information on configuring them, see
+  the 
+  <a href="../../../../html/tools/signaling/ldt/output.shtml">examples page</a>.
   </dd>
   
 <dt>DCC Signal Decoder</dt>
