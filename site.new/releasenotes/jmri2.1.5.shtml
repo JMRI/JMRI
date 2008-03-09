@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.5.shtml,v 1.1 2008-03-09 01:28:46 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.5.shtml,v 1.2 2008-03-09 06:05:10 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -132,6 +132,13 @@ version of Java.  To see JMRI's future plans for this and other compatibility is
 <h3>Changes since test version 2.1.4:</h3>
 
 <p>
+Robert Coleman 
+<a href="../help/en/html/hardware/acela/index.shtml">added support</a>
+for 
+<a href="http://www.cti-electronics.com/app_sw.htm">CTI Acela</a> hardware.
+
+<p>
+Fix broken JMRI_HOME option in the new Linux and MacOS X startup scripts
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->

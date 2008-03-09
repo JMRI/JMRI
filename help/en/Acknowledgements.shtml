@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.21 2008-03-09 04:03:49 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.22 2008-03-09 06:05:46 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -231,6 +231,7 @@
 	for decoders, and fixing multiple hard bugs
 	<LI>Phill Perry, who contributed a decoder definition for the New York Byano Limited locomotive
 	<LI>Bruce Petrarca, who has started offering CDs so nobody else has to burn them
+	<li>Bob Phillips provided an MRC decoder definition
 	<LI>Rob Plevier, who provided instructions for running JMRI on OpenSUSE GNU/Linux
 	<LI>John Plocher, who make good suggestions on XML DTD items,
 	created the infrastructure for this web site, and lead the construction of the demo layout for the JavaOne show.
