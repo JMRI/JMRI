@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Windows.html,v 1.14 2008-02-28 08:10:12 jacobsen Exp $ -->
+<!-- $Id: Windows.html,v 1.15 2008-03-09 06:05:31 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -216,6 +216,59 @@ JMRI Install Guide: Windows
 
 	</OL>
 
+<h2>Debugging</h2>
+Sometimes things go wrong.  The information in this section can help.
+
+<h4>The Log Screen</h4>
+
+JMRI logs information about errors to a "messages.log" file in the
+JMRI distribution directory, and to a console window. This window
+is generally white text on a black background, and is labelled either
+"Java" or "DOS".
+If something is going wrong, look there for more information.
+<p>
+If asked for a copy of the error messages, you can usually get them
+from the messages.log file.  If not, to make a copy of the 
+log window:
+
+<ol>
+<li>In the command prompt window, left-click on the JMRI icon to the
+left of the  words "DecoderPro" (or "PanelPro").  You will get a
+drop-down menu.
+
+<li>In that menu, put your cursor over "Edit" to get a sub-menu.  
+
+<li>Left-click on "Select All" in that sub-menu.  All the text in the
+window will reverse colors with the background, and the menus will
+disappear.  
+
+<p>
+Alternately, you can left click on "Mark" in that sub-menu. The
+menus will disappear.  Then, left-click and hold while dragging the
+cursor over the text to be copied.  Only the selected text will
+reverse colors with the background. 
+
+<li>Repeat Steps 1 and 2 above, then left click "Copy" on the sub-menu.
+ The text and window will revert to their original colors.  The text
+is now on XP's clipboard.
+
+<li>In your e-mail client, the Yahoo! "Post Message" pane, Notepad,
+Wordpad, favorite word processor, etc, position your cursor and
+left-click on Edit and then Paste, or press the "Ctrl" and "V" keys.
+</ol>
+
+<h4>Keeping The Log Window Open</h4>
+Usually the log window closes when the program ends, and
+that's what you want.  Sometimes, you want it to stay around
+so you can see error messages that happen during shutdown, or even caused
+the shutdown.
+<p>
+To get the window to stay open:
+<ol>
+<li>Right click and select "show properties" on the program icon
+<li>Deselect "Close window on program end"
+</ol>
+
       <hr class="hide">
 <!-- Footer -->
     <hr class="hide">
@@ -229,7 +282,7 @@ JMRI Install Guide: Windows
 	   <A href="/community/" title="Who is JMRI">
 	   	all who contributed</A>! </p>
 
-	<p>Copyright &copy; 1997 - 2004 JMRI Community. 
+	<p>Copyright &copy; 1997 - 2008 JMRI Community. 
 	<P>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
 	<P><A href="/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a></p>
     
