@@ -47,7 +47,7 @@ import java.util.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003, 2007
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.79 $
+ * @version $Revision: 1.80 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -117,6 +117,8 @@ public class PanelEditor extends JmriJFrame {
     JButton clockAdd = new JButton("Add Fast clock:");
 
     JButton backgroundAddButton = new JButton(rb.getString("ButtonAddBkg"));
+    
+    static boolean showCloseInfoMessage = true;	//display info message when closing panel
 
     public PanelEditor() { this(rb.getString("Title"));}
 
@@ -989,10 +991,20 @@ public class PanelEditor extends JmriJFrame {
     void targetWindowClosing(java.awt.event.WindowEvent e) {
         this.setVisible(false);   // doesn't remove the editor!
 		jmri.jmrit.display.PanelMenu.instance().updatePanelEditorPanel(self);
-		String name = "Panel";
-		if (getTarget().getTopLevelAncestor()!=null) name=((JFrame)getTarget().getTopLevelAncestor()).getTitle();
-		JOptionPane.showMessageDialog(null,"\""	+ name+ "\" " + rb.getString("PanelHidden")
-								+ "\n" + java.text.MessageFormat.format(rb.getString("PanelHiddenHelp"),new String[]{name}));
+		// display info message on panel close
+		if (showCloseInfoMessage) {
+			String name = "Panel";
+			if (getTarget().getTopLevelAncestor() != null)
+				name = ((JFrame) getTarget().getTopLevelAncestor()).getTitle();
+			int selectedValue = JOptionPane.showOptionDialog(null, "\""
+					+ name + "\" " + rb.getString("PanelHidden")
+					+ "\n" + java.text.MessageFormat.format(rb.getString("PanelHiddenHelp"),
+							new String[] { name }), null,
+					JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE,
+					null, new Object[] { rb.getString("ButtonOkay"),
+							rb.getString("ButtonDontShow") }, rb.getString("ButtonDontShow"));
+			if (selectedValue == 1) showCloseInfoMessage = false;
+		}
     }
 
     public void setTitle() {
