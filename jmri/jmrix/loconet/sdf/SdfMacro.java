@@ -8,6 +8,16 @@ import java.util.ArrayList;
 /**
  * Common base for all the SDF macros defined by Digitrax
  * for their sound definition language
+ * <p>
+ * Each macro has a number of descriptive forms:
+ * <dl>
+ * <dt>name()<dd>Just the name, in MPASM form.
+ * <dt>toString()<dd>A brief description, with a terminating newline
+ * <dt>oneInstructionString()<dd>The entire single instruction in MPASM from, 
+ *    with a terminating newline
+ * <dt>allInstructionString()<dd>The instruction and all those logically grouped within it.
+ * <dt>name()<dd>
+ * </dl>
  *<P>
  * SdfMacro and its subclasses don't do the notification needed
  * to be Models in an MVC edit paradyme.
@@ -24,7 +34,7 @@ import java.util.ArrayList;
  * day)
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.9 $
+ * @version             $Revision: 1.10 $
  */
 
 public abstract class SdfMacro implements SdfConstants {
