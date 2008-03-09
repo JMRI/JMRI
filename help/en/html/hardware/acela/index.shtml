@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- $Id: index.shtml,v 1.1 2008-03-09 03:33:53 jacobsen Exp $ -->
+<title>JMRI: Connecting the CTI Acela System</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+<h2> 
+JMRI: Connecting the Acela System
+</h2>
+
+
+Naming and input/output connectors are described on a 
+<a href="Names.shtml">separate page</a>.
+
+<H3>Limitations</h3>
+
+<UL>
+<LI>??
+</UL>
+
+<h3>More Information</h3>
+
+More information on the Acela hardware can be found on the
+<a href="http://www.cti-electronics.com/app_sw.htm">CTI web site</a>.
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

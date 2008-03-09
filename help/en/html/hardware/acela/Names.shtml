@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- $Id: Names.shtml,v 1.1 2008-03-09 03:33:53 jacobsen Exp $ -->
+<title>JMRI: CTI Acela System Names</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+<h2> 
+JMRI: CTI Acela System Names
+</h2>
+
+Individual inputs (Sensors)  and outputs (Turnouts and Lights)
+in JMRI are accessed via names.  
+For information on the general scheme, please see
+the 
+<a href="../../doc/Technical/Names.shtml">naming page</a>
+in the
+<a href="../../doc/Technical/index.shtml">technical documentation</a>.
+
+<p>
+For CTI Acela systems, all names start with a system letter of "A".
+After that, there's a 
+<a href="../../doc/Technical/Names.shtml#type">type letter</a>,
+then a node number and a pin number.
+
+<p>
+The pin number is either three numeric digits ("101", "324", "004"), or starts
+with a lower-case alphabetic character ("p12", "s1").  See the
+sections on inputs and outputs below for the specific meanings
+of these various formats.
+
+<p>
+The node number preceeds the pin number. If it's helpful, you can think of the node number as being the "thousands"
+part of the combined number, and the pin number as the lower three digits.
+
+<p>
+For example, the 1st Acela Sensor input pin on node 23 would be
+named AS23001 or AS23p1.  The 5th Turnout on node 2 would be AT2005. 
+
+<h3>Node Numbering</h3>
+Each Grapevine node has a number, from 1 to 127.
+
+<p>
+Before you can access the node in JMRI, you have to define it to 
+the program.  You can do this either from the 
+<a href="../../../package/apps/AppConfigPanel.shtml">Preferences window</a>
+(under Edit in the main menu)
+or using the 
+<a href="../../../package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml">Configure Nodes</a>
+tool in the Grapevine menu.
+
+
+<h3>Inputs</h3>
+
+
+
+<h3>Outputs</h3>
+
+(How to identify outputs)
+
+<p>
+Each of these can be used as a JMRI 
+<a href="../../tools/Turnouts.shtml">Turnout</a>, 
+<a href="../../tools/Lights.shtml">Light</a> 
+or 
+<a href="../../tools/Signals.shtml">Signal</a>.
+
+<h4>Turnouts</h4>
+
+
+
+<h4>Lights</h4>
+
+
+
+<h4>Signals</h4>
+
+
+
+<h3>More Information</h3>
+
+More information on the Grapevine hardware can be found on the
+<a href="http://www.protrak.cc">ProTrak web site</a>.
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
