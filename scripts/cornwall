@@ -26,7 +26,7 @@
 # For more information, please see
 # http://jmri.sourceforge.net/install/ShellScripts.shtml
 #
-# $Revision: 1.5 $ (CVS maintains this line, do not edit please)
+# $Revision: 1.6 $ (CVS maintains this line, do not edit please)
 
 # define the class to be invoked
 CLASSNAME=apps.cornwall.CornwallRR
@@ -37,7 +37,7 @@ CLASSNAME=apps.cornwall.CornwallRR
 # if JMRI_HOME is defined, go there, else
 # change directory to where the script is located
 if test ${JMRI_HOME}; then
-    cd ${JAVA_HOME};
+    cd ${JMRI_HOME};
 else 
     cd `dirname $0`;
 fi
