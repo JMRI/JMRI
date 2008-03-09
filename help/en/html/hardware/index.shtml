@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.9 2008-03-03 01:06:16 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.10 2008-03-09 04:15:57 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -50,6 +50,16 @@
 	    <dt>C/MRI</dt>
 	    <dd>
 	        <p class="dl">Configure: <A HREF="cmri/CMRI.shtml">Bruce Chubb's C/MRI control system</a></p>
+	    </dd>
+
+	    <dt class="im">
+		<a href="http://www.cvpusa.com/">
+		<img src="http://www.cti-electronics.com/banner.gif" width="75" height="17" alt="CTI"></a>
+	    </dt>
+	    <dt>CTI Electronics Acela</dt>
+	    <dd><p class="dl">Configure: CTI Electronics boards via
+		<A HREF="acela/index.shtml">Acela</a> adapter.</p>
+		<p>&nbsp;</p>
 	    </dd>
 
 	    <dt class="im">
