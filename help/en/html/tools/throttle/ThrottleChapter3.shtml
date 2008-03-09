@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ThrottleChapter3.shtml,v 1.2 2008-03-08 17:52:54 dan_boudreau Exp $ -->
+<!-- $Id: ThrottleChapter3.shtml,v 1.3 2008-03-09 00:18:26 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -59,7 +59,7 @@
 				<TD width="9%" align="center" valign="top">
 				    <br>
 					<P style="text-align: center; font-size: xx-small">
-					<IMG WIDTH="202" HEIGHT="207" SRC="images/jmri022.jpg" BORDER="0" TITLE="Function Button Properties"><BR>
+					<IMG WIDTH="206" HEIGHT="250" SRC="images/jmri022.jpg" BORDER="0" TITLE="Function Button Properties"><BR>
 					Figure 3-1: Function Button Properties
 					</P>
 				</TD>

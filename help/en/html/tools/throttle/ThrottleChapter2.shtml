@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ThrottleChapter2.shtml,v 1.2 2008-03-08 17:52:53 dan_boudreau Exp $ -->
+<!-- $Id: ThrottleChapter2.shtml,v 1.3 2008-03-09 00:18:26 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -107,7 +107,7 @@
 			</P>
 			
 			<P style="text-align: center; font-size: xx-small">
-			<IMG WIDTH="308" HEIGHT="377" SRC="images/jmri011.jpg" TITLE="JMRI Throttle New Default Window" BORDER="0"><BR>
+			<IMG WIDTH="323" HEIGHT="464" SRC="images/jmri011.jpg" TITLE="JMRI Throttle New Default Window" BORDER="0"><BR>
 			Figure 2-2:  New Throttle Window
 			</P>
 		</dir>
@@ -675,13 +675,12 @@
 			<TABLE BORDER=0 WIDTH="100%" CELLPADDING=0 CELLSPACING=0>
 				<TR>
 					<TD valign="top">
-						<P>The Function Panel has 13 function buttons available for each throttle window.  Most
-						decoders currently don't handle 13 functions.  (If there are any, please let me know.)
-						But the software is prepared for the future.  Some of the more newer hand-held throttles
-						also have 13 function buttons (including the lights), so these electronic throttles follow
-						these newer hand-helds.</P>
-					
-						<P>Clicking on the function buttons correlate to pressing the same function button on a
+			<P>The Function Panel has 28 function buttons available for each
+			throttle window. Most decoders currently don't handle 28 functions.
+			The function panel displays the buttons in two groups, press the "*" button in
+			the lower left corner to see the second set of function buttons.</P>
+
+			<P>Clicking on the function buttons correlate to pressing the same function button on a
 						hand-held throttle.  The F0 function is normally used for the lights.</P>
 					
 						<P>This is the basic functionality of the Function Panel.  All buttons function like an
@@ -697,7 +696,7 @@
 						
 					<TD valign="top" align="center">
 						<P style="text-align: center; font-size: xx-small">
-						<IMG WIDTH="201" HEIGHT="204" SRC="images/jmri034.jpg" TITLE="Example of the Function Panel" BORDER="0"><BR>
+						<IMG WIDTH="208" HEIGHT="250" SRC="images/jmri034.jpg" TITLE="Example of the Function Panel" BORDER="0"><BR>
 						Figure 2-6: The Function Panel
 						</P>
 					</TD>
