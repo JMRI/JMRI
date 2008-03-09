@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: AppConfigPanel.shtml,v 1.7 2008-02-24 04:13:30 jacobsen Exp $ -->
+<!-- $Id: AppConfigPanel.shtml,v 1.8 2008-03-09 19:46:18 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -35,7 +35,7 @@ In the meantime, there's some more information on preferences
 on some 
 <a href="../../DecoderProManual/Getting_Started.shtml#Preferences">tutorial pages</a>.
 
-<a id="basic">
+<a name="basic">
 <h3>Basic Preferences</h3></a>
 
 When the window first opens, it displays the 
@@ -69,7 +69,7 @@ but this provides a convenient place to set a default so you don't
 have to select it each time you open a decoder.
 </dl>
 
-<a id="advanced">
+<a name="advanced">
 <h3>Advanced Preferences</h3></a>
 
 To set the advanced preferences, check the "Show Advanced Preferences" box.<br/>
@@ -98,7 +98,7 @@ more information on how to set this up, and particularly how to contribute
 new and improved translations, please see our
 <a href="../../html/doc/Technical/I8N.shtml">internationalization page</a>.
 
-<a id="actions">
+<a name="actions">
 <dt>Do actions at startup</a>
 <dd>
 This section lets you have the program automatically
