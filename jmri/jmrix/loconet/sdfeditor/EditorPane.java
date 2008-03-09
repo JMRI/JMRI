@@ -1,3 +1,4 @@
+
 // EditorPane.java
 
 package jmri.jmrix.loconet.sdfeditor;
@@ -23,7 +24,7 @@ import java.util.List;
  * a larger detailed view.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2007, 2008
- * @version	    $Revision: 1.7 $
+ * @version	    $Revision: 1.8 $
  */
 public class EditorPane extends javax.swing.JPanel implements TreeSelectionListener {
 
@@ -35,12 +36,12 @@ public class EditorPane extends javax.swing.JPanel implements TreeSelectionListe
         // start to configure GUI
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
-        // set up basic layout; order matters here
-        add(newTree());
-        add(new JSeparator());
-        add(newEditPane());
+        // install left and right parts in split pane
+        split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, newTree(), newEditPane());
+        add(split);
     }
     
+    JSplitPane split;
     JTree tree;
     DefaultMutableTreeNode topNode;
     
