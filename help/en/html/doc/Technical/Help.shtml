@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Help.shtml,v 1.4 2008-01-22 06:17:20 jacobsen Exp $ -->
+<!-- $Id: Help.shtml,v 1.5 2008-03-09 19:43:21 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -67,10 +67,13 @@ In particular, there are a couple things to watch for.
 </pre></code>
 needs to be replaced by
 <code><pre>
-&lt;a id="foo"&gt;Foo!&lt;/a&gt;
+&lt;a name="foo"&gt;Foo!&lt;/a&gt;
 </pre></code>
 The indicator that you have to do this is an
 &lt; character just appearing on the rendered page.
+
+<li>Anchors also need to use the "name" attribute rather than
+the "id" attribute.  See the item above for an example.
 
 <li>You can't count on any particular location for your files
 on the local machine, so all links to other help pages need to be relative.

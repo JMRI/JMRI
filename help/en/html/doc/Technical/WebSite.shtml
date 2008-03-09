@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: WebSite.shtml,v 1.4 2008-01-24 03:03:41 jacobsen Exp $ -->
+<!-- $Id: WebSite.shtml,v 1.5 2008-03-09 19:43:21 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -60,7 +60,14 @@ or created by automated Ant scripts during release builds.
 <h2>Technology</h2>
 Page formatting is done using CSS, originally set up by John Plocher.
 All pages should reference the CSS files for screen and printing
-from the "/css" directory.
+from the "/css" directory. This also means that you should leave the
+formatting to the style sheets, and minimize the explicit formatting
+that you do in HTML directly.
+
+<p>
+Because we use our web pages in JavaHelp, there are some restrictions
+on use of tags.  See our
+<a href="Help.shtml">JavaHelp web page</a> for more on this.
 
 <P>
 We are moving toward using
