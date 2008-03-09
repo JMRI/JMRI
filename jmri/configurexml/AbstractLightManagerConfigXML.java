@@ -22,7 +22,7 @@ import org.jdom.Element;
  * Based on AbstractSensorManagerConfigXML.java
  *
  * @author Dave Duchamp Copyright (c) 2004
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public abstract class AbstractLightManagerConfigXML implements XmlAdapter {
 
@@ -181,10 +181,23 @@ public abstract class AbstractLightManagerConfigXML implements XmlAdapter {
 					}
                 }
                 // variable intensity, transition attributes
+                double value = 0.0;
+                try {
+                    value = Double.parseDouble(((Element)(lightList.get(i))).getAttribute("minIntensity").getValue());
+                } catch (Exception e1) {}
+                lgt.setMinIntensity(value);
 
-                lgt.setMinIntensity(Double.parseDouble(((Element)(lightList.get(i))).getAttribute("minIntensity").getValue()));
-                lgt.setMaxIntensity(Double.parseDouble(((Element)(lightList.get(i))).getAttribute("maxIntensity").getValue()));
-                lgt.setTransitionTime(Double.parseDouble(((Element)(lightList.get(i))).getAttribute("transitionTime").getValue()));
+                value = 1.0;
+                try {
+                    value = Double.parseDouble(((Element)(lightList.get(i))).getAttribute("maxIntensity").getValue());
+                } catch (Exception e2) {}
+                lgt.setMaxIntensity(value);
+
+                value = 0.0;
+                try {
+                    value = Double.parseDouble(((Element)(lightList.get(i))).getAttribute("transitionTime").getValue());
+                } catch (Exception e2) {}
+                lgt.setTransitionTime(value);
                 
                 // done, start it working
 				lgt.activateLight();
