@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SignalAddEdit.shtml,v 1.8 2008-03-09 19:06:12 jacobsen Exp $ -->
+<!-- $Id: SignalAddEdit.shtml,v 1.9 2008-03-09 19:57:55 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -25,7 +25,6 @@
 </H2>
     
 <A href="../../../../images/SigAdd.gif"><IMG SRC="../../../../images/SigAdd.gif" ALIGN=RIGHT WIDTH="181" HEIGHT="218" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
-This is the package/jmri/jmrit/beantable/SignalAddEdit help page
 
 <p>
 JMRI needs to know how a signal head on the layout
@@ -36,7 +35,7 @@ signal head.
 The "Add Signal" dialog gives you a number of different 
 choices for how the signal head is connected:
 <dl>
-<dt>Triple Turnout</dt>
+<dt>Triple Output</dt>
   <dd>
   This type controls a signal via three electrical connections.
   One goes to a green lamp/LED, one to a yellow one, 
@@ -50,16 +49,20 @@ choices for how the signal head is connected:
   For each connection, enter the appropriate JMRI
   turnout for the electrical connection on the layout,
   either as a number (1,2,3) or as a JMRI
-  name (LT1, CT3, XT3).
+  name (system name like LT1, CT2 or an already-defined user name). 
   They need not be consecutive or in any particular order.
   <p>
   If you need to debug one of these signal heads, start by
-  checking whether the Turnout connections work. Setting e.g.
+  checking whether the Turnout connections work. You can
+  do this by going to the 
+  <a href="TurnoutTable.shtml">Turnout Table</a> and changing the output setting
+  there.
+  Setting e.g.
   the turnout on the "green" connection Thrown should light the
   green lamp.
   </dd>
 
-<dt>Double Turnout</dt>
+<dt>Double Output</dt>
   <dd>
   This type controls a signal head via two electrical connections.
   One goes to a green lamp/LED, and the other to a red one.
@@ -73,11 +76,15 @@ choices for how the signal head is connected:
   For each connection, enter the appropriate JMRI
   turnout for the electrical connection on the layout, 
   either as a number (1,2) or as a JMRI
-  name (LT1, CT2). 
+  name (system name like LT1, CT2 or an already-defined user name). 
   They need not be consecutive or in any particular order.
   <p>
   If you need to debug one of these signal heads, start by
-  checking whether the Turnout connections work. Setting e.g.
+  checking whether the Turnout connections work. You can
+  do this by going to the 
+  <a href="TurnoutTable.shtml">Turnout Table</a> and changing the output setting
+  there.
+  Setting e.g.
   the turnout on the "green" connection Thrown should light the
   green lamp.
   </dd>
@@ -114,10 +121,11 @@ choices for how the signal head is connected:
   <p>
   These controllers use seven DCC turnout (accessory decoder) addresses to specify
   the seven possible appearances of the signal.  Enter those, either as 
-  numbers (1,2,3,...) or as JMRI turnout names (LT1, LT2, LT3, ...) in 
-  the appropriate text fields.
+  numbers (1,2,3,...) or as JMRI turnout 
+  names (system names like LT1, CT2 and/or already-defined user names),
+  in the appropriate text fields.
   <p>
-  For more information on configuring them, see
+  For more information on configuring these signals, see
   the 
   <a href="../../../../html/tools/signaling/ldt/output.shtml">examples page</a>.
   </dd>
@@ -129,6 +137,8 @@ choices for how the signal head is connected:
   <a href="http://www.nmra.org/standards/DCC/standards_rps/rp921.html#Extended%20Accessory%20Decoder%20Control%20Packet%20Format">DCC signal packets</a>
   defined by the 
   <a href="http://www.nmra.org/standards/DCC/DCCHome.html">NMRA DCC Working Group</a>.
+  <p>
+  Enter the DCC address as a number.
   </dd>
 
 <dt>Grapevine</dt>

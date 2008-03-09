@@ -37,6 +37,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       <indexitem text="C/MRI" target="html.hardware.cmri.CMRI">
          <indexitem text="Signals" target="html.hardware.cmri.Signals"/>
       </indexitem>
+      <indexitem text="CTI Acela" target="html.hardware.acela.index"/>
       <indexitem text="Digitrax LocoNet" target="html.hardware.loconet.Digitrax"/>
       <indexitem text="EasyDCC" target="html.hardware.easydcc.EasyDCC"/>
       <indexitem text="Grapevine" target="html.hardware.grapevine.Names"/>
@@ -101,6 +102,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
    <indexitem text="Sensor Groups" target="package.jmri.jmrit.sensorgroup.SensorGroupFrame"/>
    <indexitem text="Signal">
       <indexitem text="Add Signal" target="package.jmri.jmrit.beantable.SignalAddEdit"/>
+      <indexitem text="European Examples" target="html.tools.signaling.ldt.output"/>
       <indexitem text="Signal Table" target="package.jmri.jmrit.beantable.SignalTable"/>
    </indexitem>
    <indexitem text="Simple Clock" target="package.jmri.jmrit.simpleclock.SimpleClockFrame"/>

@@ -95,6 +95,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
       <tocitem text="Signals" target="html.tools.signaling.index">
          <tocitem text="Adding Signals" target="package.jmri.jmrit.beantable.SignalAddEdit"/>
          <tocitem text="Signal Table" target="package.jmri.jmrit.beantable.SignalTable"/>
+         <tocitem text="European Examples" target="html.tools.signaling.ldt.output"/>
       </tocitem>
       <tocitem text="Simple Signal Logic" target="package.jmri.jmrit.blockboss.BlockBossFrame"/>
       <tocitem text="Speedometer" target="html.tools.speedometer.index"/>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: index.shtml,v 1.2 2008-02-23 22:29:18 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.3 2008-03-09 19:57:55 jacobsen Exp $ -->
 <title>JMRI: Signaling</title>
 
 <!-- Style -->
@@ -116,14 +116,22 @@ more restrictive aspect as the next signal in the direction and route of travel.
 <p><b>Some JMRI specific SSL and Signal terms:</b><br>
 <ul><li><b>Signal Table</b> The list of signals in JMRI. Signals must first be added into 
 the Signal Table before they may be included in a SSL entry or Logix.</li>
-<li><b>Triple Turnout</b> A signal head that has each aspect of the signal directly driven 
-from an individual output (called a turnout) line. Each aspect change requires that three turnout commands be sent.</li>
 <li>
-<b>Double Turnout</b> A signal head that uses just two output lines to indicate 4 signal aspects.
-Usually these aspects will be Clear, Approach, Stop, and Dark. The output coding is such that 
+<b>Triple Output</b> A signal head that has each aspect of the signal directly driven 
+from an individual output line. 
+The individual output lines are controlled by JMRI Turnout logic, and are controlled via the
+Turnout Table.
+Each aspect change requires that three turnout commands be sent.</li>
+<li>
+<b>Double Output</b> A signal head that uses just two output lines to indicate 4 signal aspects.
+Usually these aspects will be Clear, Approach, Stop, and Dark. 
+The output lines are controlled by JMRI Turnout logic, and are controlled via the
+Turnout Table.
+The output coding is such that 
 one turnout thrown (on) controls the stop and the other thrown (on) controls the clear. 
 Both outputs thrown (on) controls the
-approach, and both closed (off) are dark. Each aspect change requires that two turnout commands be sent.</li>
+approach, and both closed (off) are dark. 
+Each aspect change requires that two turnout commands be sent.</li>
 <li>
 <b>SE8c</b> A signal head controlled by a single turnout command per aspect change. One turnout command changes between 
 stop and clear, and the second turnout command changes between approach and dark.</li>
@@ -138,7 +146,7 @@ direction and route of travel. The "protection" is to prevent a train from appro
 to control the signal. This will vary depending on your hardware, and must match your system.
 </ul>
 
-<A ID="table"/>
+<A name="table">
 <h3>Signal Table</h3></a>
 
 <A href="../../../images/SigTable.gif"><IMG SRC="../../../images/SigTable.gif" ALIGN=RIGHT WIDTH="296" HEIGHT="355" HSPACE="0" VSPACE="0"></A>
@@ -180,7 +188,7 @@ on your panels, please see the
 <A HREF="../../apps/PanelPro/Panels.shtml">Panels help pages</a>
 and the web pages on the 
 <A HREF="http://jmri.sourceforge.net/apps/PanelPro/Panels-Cornwall/Cornwall.html">Cornwall Railroad control panel</a>.	
-<A ID="logic"/>
+<A name="logic">
 <a name="intro"><h3>Introduction to Simple Signal Logic</h3></a></dt>
 
 Simple Signal Logic (SSL)
@@ -290,7 +298,7 @@ A
 <A HREF="SimpleSignalExample.shtml">worked-out example</a>
 is also available.
 
-<A id="logix"><h3>Signal Support in Logix</h3></a>
+<A name="logix"><h3>Signal Support in Logix</h3></a>
 
 A JMRI
 <A HREF="../Logix.shtml">Logix</a>
@@ -363,7 +371,7 @@ can examine and control signals.
   		</li><li><b>Run Script</b>: Starts the specified script.
 		</li></ul>
 
-<A id="automat"><h3>Automation classes</h3></a>
+<A name="automat"><h3>Automation classes</h3></a>
 
 JMRI provides classes to help you write Java code to control
 your layout.  The most powerful of these are aimed
@@ -381,7 +389,7 @@ status changes from the layout, writing desired aspect changes
 back to the layout, and even the details of "which outputs do I have
 to set to get signal Apple Siding East to show yellow?".  You can
 concentrate on just the signal logic in the code you write.
-<A id="widgets"><h3>Toolkit</h3></a>
+<A name="widgets"><h3>Toolkit</h3></a>
 The entire
 <A HREF="../../doc/Technical/index.shtml">JMRI toolkit</A>
 is available for use if you really want to do something

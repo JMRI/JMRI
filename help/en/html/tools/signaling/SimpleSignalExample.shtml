@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: SimpleSignalExample.shtml,v 1.2 2008-02-18 19:47:13 jacobsen Exp $ -->
+<!-- $Id: SimpleSignalExample.shtml,v 1.3 2008-03-09 19:57:54 jacobsen Exp $ -->
 <title>JMRI: Simple Signal Logic Example</title>
 
 <!-- Style -->
@@ -194,20 +194,26 @@ tell the program about those turnouts also.  (SE8c users skip this step)
   <UL>
   <LI>From the Tools menu, open the "Signal Table"
   	  tool.
-  <LI>Click the "Add..." button to pop a frame
-      with three choices for the type of signal driver:
+  <LI>Click the 
+      "<a href="../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml">Add...</a>"
+      button to pop a frame
+      with several choices for the type of signal driver:
       <DL>
-      <DT>Triple Turnout
+      <DT>Triple Output
       <DD>This a signal head with red/yellow/green lights that
-      are driven by three DCC turnout outputs.  
+      are driven by three separate outputs.  
+      The outputs are driven by JMRI turnout logic, and 
+      appear in the Turnout Table.
       <P>To configure one of these,
       enter the name you want to give it (typically something like IH2, etc), and
-      the names of the three turnouts that drive the lamps.
-      <DT>Double Turnout
+      the names of the three outputs that drive the lamps.
+      <DT>Double Output
       <DD>This a signal head with lights that
-      are driven by two DCC turnout outputs.  
+      are driven by two output connections. 
       The two outputs drive red and green lights separately; the program
       will turn them both on to make yellow.
+      The outputs are driven by JMRI turnout logic, and 
+      appear in the Turnout Table.
       <P>
       To configure one of these,
       enter the name you want to give it (typically something like IH2, etc), and

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: BlockBossFrame.shtml,v 1.3 2007-11-23 06:45:57 jacobsen Exp $ -->
+<!-- $Id: BlockBossFrame.shtml,v 1.4 2008-03-09 19:57:55 jacobsen Exp $ -->
 <title>JMRI: SSL Documentation</title>
 
 <!-- Style -->
@@ -60,14 +60,19 @@ more restrictive aspect as the next signal in the direction and route of travel.
 <p><b>Some JMRI specific SSL and Signal terms:</b><br>
 <ul><li><b>Signal Table</b> The list of signals in JMRI. Signals must first be added into 
 the Signal Table before they may be included in a SSL entry or Logix.</li>
-<li><b>Triple Turnout</b> A signal head that has each aspect of the signal directly driven 
-from an individual output (called a turnout) line. Each aspect change requires that three turnout commands be sent.</li>
+<li><b>Triple Output</b> 
+A signal head that has each aspect of the signal directly driven 
+from an individual output (called a turnout) line. 
+Each aspect change requires that three commands be sent.</li>
 <li>
-<b>Double Turnout</b> A signal head that uses just two output lines to indicate 4 signal aspects.
-Usually these aspects will be Clear, Approach, Stop, and Dark. The output coding is such that 
+<b>Double Output</b> 
+A signal head that uses just two output lines to indicate 4 signal aspects.
+Usually these aspects will be Clear, Approach, Stop, and Dark. 
+The output coding is such that 
 one turnout thrown (on) controls the stop and the other thrown (on) controls the clear. 
 Both outputs thrown (on) controls the
-approach, and both closed (off) are dark. Each aspect change requires that two turnout commands be sent.</li>
+approach, and both closed (off) are dark. 
+Each aspect change requires that two commands be sent.</li>
 <li>
 <b>SE8c</b> A signal head controlled by a single turnout command per aspect change. One turnout command changes between 
 stop and clear, and the second turnout command changes between approach and dark.</li>

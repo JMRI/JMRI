@@ -151,6 +151,11 @@
 </li>
       
 <li>
+<a href="html/hardware/acela/index.shtml">CTI Acela</a>
+<ul></ul>
+</li>
+      
+<li>
 <a href="html/hardware/loconet/Digitrax.shtml">Digitrax LocoNet</a>
 <ul></ul>
 </li>
@@ -425,6 +430,11 @@
       
 <li>
 <a href="package/jmri/jmrit/beantable/SignalAddEdit.shtml">Add Signal</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="html/tools/signaling/ldt/output.shtml">European Examples</a>
 <ul></ul>
 </li>
       

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LayoutEditor.shtml,v 1.5 2008-01-12 19:37:03 djduchamp Exp $ -->
+<!-- $Id: LayoutEditor.shtml,v 1.6 2008-03-09 19:57:56 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -917,7 +917,7 @@ ALIGN=CENTER WIDTH="592" HEIGHT="171" HSPACE="0" VSPACE="0"></A>
 	<b>Edit Track Segment</b> dialog for each track segment. This gave 
 	different track widths for mainline and side track.</li>
 	<li>Signal Heads were defined in the Signals Table for each of the signals 
-	to be placed on the panel. Triple turnout signal head types were used for 
+	to be placed on the panel. Triple output signal head types were used for 
 	all.</li>
 	<li>Signals were placed at turnouts using the <b>Set Signals at Turnout</b> 
 	tool in the Tools menu. For each signal head <b>Add Signal Icon to Panel</b> 

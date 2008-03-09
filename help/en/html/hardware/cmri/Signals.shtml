@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Signals.shtml,v 1.1 2008-01-13 06:48:29 jacobsen Exp $ -->
+<!-- $Id: Signals.shtml,v 1.2 2008-03-09 19:57:54 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -34,7 +34,7 @@
 For signals with separate Red/Yellow/Green diodes, the situation is 
 simple:  Connect each one to a separate output with the proper 
 polarity, have the program drive those three outputs, and it will 
-Just Work.  The "Triple Turnout" type of signal handles that type of 
+Just Work.  The "Triple Output" type of signal handles that type of 
 wiring.
 
 <P>
@@ -56,7 +56,7 @@ couple of extra resistors, and perhaps an external power supply
 involved, so that when one of the C/MRI outputs is activated, power 
 is applied to one diode and it lights, and when the other is 
 activated the other diode gets power. That makes Red and Green.  The 
-"Double Turnout" signal type handles this.
+"Double Output" signal type handles this.
 
 <P>
 To get Yellow, you have to power both LEDs.  This is easy with wiring 

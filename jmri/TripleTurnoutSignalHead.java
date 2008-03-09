@@ -5,6 +5,10 @@ package jmri;
 /**
  * Drive a single signal head via three "Turnout" objects.
  * <P>
+ * After much confusion, the user-level terminology 
+ * was changed to call these "Triple Output"; the class
+ * name remains the same to reduce recoding.
+ * <P>
  * The three Turnout objects are provided during construction,
  * and each drives a specific color (RED, YELLOW and GREEN).
  * Normally, "THROWN" is on, and "CLOSED" is off.
@@ -12,8 +16,8 @@ package jmri;
  * This class doesn't currently listen to the Turnout's to see if they've
  * been changed via some other mechanism.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.6 $
+ * @author	Bob Jacobsen Copyright (C) 2003, 2008
+ * @version	$Revision: 1.7 $
  */
 public class TripleTurnoutSignalHead extends DefaultSignalHead {
 

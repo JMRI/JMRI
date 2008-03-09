@@ -37,9 +37,9 @@ import jmri.util.JmriJFrame;
  * Swing action to create and register a
  * SignalHeadTable GUI.
  *
- * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007
+ * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.26 $
+ * @version     $Revision: 1.27 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
