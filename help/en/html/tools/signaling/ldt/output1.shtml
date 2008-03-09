@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: output1.shtml,v 1.1 2008-03-09 19:06:11 jacobsen Exp $ -->
+<!-- $Id: output1.shtml,v 1.2 2008-03-09 19:17:29 jacobsen Exp $ -->
 <title>JMRI: LDT Signaling for SBB (Swiss Federal Railways) type L Signals</title>
 
 <!-- Style -->
@@ -25,15 +25,12 @@
 JMRI: LDT Signaling for SBB (Swiss Federal Railways) type L Signals
 </H2>
 
-<H1 CLASS="western"><FONT FACE="Times New Roman, serif"><FONT SIZE=4>
-</FONT></FONT></H1>
-<H2 CLASS="western"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><B>Home
-signal with 5 or 7 lamps</B></FONT></FONT><FONT FACE="Times New Roman, serif">
+<H2><B>Home signal with 5 or 7 lamps</B>
 <IMG SRC="output1_html_m4f5f2ce4.png" NAME="obr&aacute;zky2" ALIGN=MIDDLE WIDTH=8 HEIGHT=26 BORDER=0>
-</FONT>
+
 <IMG SRC="output1_html_44a4ff16.png" NAME="obr&aacute;zky3" ALIGN=MIDDLE WIDTH=12 HEIGHT=26 BORDER=0></H2>
-<P STYLE="margin-bottom: 0in"><FONT FACE="Times New Roman, serif">decoder:
-LS-DEC-SBB</FONT></P>
+<P STYLE="margin-bottom: 0in">decoder:
+LS-DEC-SBB</P>
 <TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=3 CELLSPACING=0>
 	<COL WIDTH=40*>
 	<COL WIDTH=29*>
@@ -41,128 +38,128 @@ LS-DEC-SBB</FONT></P>
 	<COL WIDTH=153*>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16% BGCOLOR="#e6e6e6">
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2><B><SPAN STYLE="background: transparent">JMRI
-			aspect</SPAN></B></FONT></FONT></P>
+			<P><B><SPAN STYLE="background: transparent">JMRI
+			aspect</SPAN></B></P>
 		</TD>
 		<TD WIDTH=11% BGCOLOR="#e6e6e6">
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2><B><SPAN STYLE="background: transparent">turnout
-			no.</SPAN></B></FONT></FONT></P>
+			<P><B><SPAN STYLE="background: transparent">turnout
+			no.</SPAN></B></P>
 		</TD>
 		<TD WIDTH=13% BGCOLOR="#e6e6e6">
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2><B><SPAN STYLE="background: transparent">turnout
-			state</SPAN></B></FONT></FONT></P>
+			<P><B><SPAN STYLE="background: transparent">turnout
+			state</SPAN></B></P>
 		</TD>
 		<TD WIDTH=60% BGCOLOR="#e6e6e6">
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2><B><SPAN STYLE="background: transparent">signal
-			head aspect</SPAN></B></FONT></FONT></P>
+			<P><B><SPAN STYLE="background: transparent">signal
+			head aspect</SPAN></B></P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>green</FONT></FONT></P>
+			<P>green</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>1</FONT></FONT></P>
+			<P ALIGN=CENTER>1</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>thrown</FONT></FONT></P>
+			<P ALIGN=CENTER>thrown</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>1 - proceed</FONT></FONT></P>
+			<P>1 - proceed</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>yellow</FONT></FONT></P>
+			<P>yellow</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>2</FONT></FONT></P>
+			<P ALIGN=CENTER>2</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>closed</FONT></FONT></P>
+			<P ALIGN=CENTER>closed</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>2 - 40km/h</FONT></FONT></P>
+			<P>2 - 40km/h</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>red</FONT></FONT></P>
+			<P>red</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>1</FONT></FONT></P>
+			<P ALIGN=CENTER>1</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>closed</FONT></FONT></P>
+			<P ALIGN=CENTER>closed</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>H - train stop</FONT></FONT></P>
+			<P>H - train stop</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>flash green</FONT></FONT></P>
+			<P>flash green</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>3</FONT></FONT></P>
+			<P ALIGN=CENTER>3</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>closed</FONT></FONT></P>
+			<P ALIGN=CENTER>closed</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>3 - 60km/h</FONT></FONT></P>
+			<P>3 - 60km/h</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>flash yellow</FONT></FONT></P>
+			<P>flash yellow</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>4</FONT></FONT></P>
+			<P ALIGN=CENTER>4</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>thrown</FONT></FONT></P>
+			<P ALIGN=CENTER>thrown</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>6 - 40km/h</FONT></FONT></P>
+			<P>6 - 40km/h</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>flash red</FONT></FONT></P>
+			<P>flash red</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>1</FONT></FONT></P>
+			<P ALIGN=CENTER>1</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>closed</FONT></FONT></P>
+			<P ALIGN=CENTER>closed</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>H - train stop</FONT></FONT></P>
+			<P>H - train stop</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>dark</FONT></FONT></P>
+			<P>dark</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>1</FONT></FONT></P>
+			<P ALIGN=CENTER>1</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>closed</FONT></FONT></P>
+			<P ALIGN=CENTER>closed</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>H - train stop</FONT></FONT></P>
+			<P>H - train stop</P>
 		</TD>
 	</TR>
 </TABLE>
 <P STYLE="margin-bottom: 0in"><BR>
 </P>
-<H2 CLASS="western"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><B>Home
-signal with 4 lamps</B></FONT></FONT> 
+<H2><B>Home
+signal with 4 lamps</B> 
 <IMG SRC="output1_html_m55495bcc.png" NAME="obr&aacute;zky1" ALIGN=MIDDLE WIDTH=8 HEIGHT=21 BORDER=0></H2>
-<P STYLE="margin-bottom: 0in"><FONT FACE="Times New Roman, serif">decoder:
-LS-DEC-SBB</FONT></P>
+<P STYLE="margin-bottom: 0in">decoder:
+LS-DEC-SBB</P>
 <TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=3 CELLSPACING=0>
 	<COL WIDTH=40*>
 	<COL WIDTH=29*>
@@ -170,129 +167,129 @@ LS-DEC-SBB</FONT></P>
 	<COL WIDTH=153*>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16% BGCOLOR="#e6e6e6">
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2><B><SPAN STYLE="background: transparent">JMRI
-			aspect</SPAN></B></FONT></FONT></P>
+			<P><B><SPAN STYLE="background: transparent">JMRI
+			aspect</SPAN></B></P>
 		</TD>
 		<TD WIDTH=11% BGCOLOR="#e6e6e6">
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2><B><SPAN STYLE="background: transparent">turnout
-			no.</SPAN></B></FONT></FONT></P>
+			<P><B><SPAN STYLE="background: transparent">turnout
+			no.</SPAN></B></P>
 		</TD>
 		<TD WIDTH=13% BGCOLOR="#e6e6e6">
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2><B><SPAN STYLE="background: transparent">turnout
-			state</SPAN></B></FONT></FONT></P>
+			<P><B><SPAN STYLE="background: transparent">turnout
+			state</SPAN></B></P>
 		</TD>
 		<TD WIDTH=60% BGCOLOR="#e6e6e6">
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2><B><SPAN STYLE="background: transparent">signal
-			head aspect</SPAN></B></FONT></FONT></P>
+			<P><B><SPAN STYLE="background: transparent">signal
+			head aspect</SPAN></B></P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>green</FONT></FONT></P>
+			<P>green</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>1</FONT></FONT></P>
+			<P ALIGN=CENTER>1</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>thrown</FONT></FONT></P>
+			<P ALIGN=CENTER>thrown</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>1 - proceed</FONT></FONT></P>
+			<P>1 - proceed</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>yellow</FONT></FONT></P>
+			<P>yellow</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>2</FONT></FONT></P>
+			<P ALIGN=CENTER>2</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>closed</FONT></FONT></P>
+			<P ALIGN=CENTER>closed</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>2 - 40km/h</FONT></FONT></P>
+			<P>2 - 40km/h</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>red</FONT></FONT></P>
+			<P>red</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>1</FONT></FONT></P>
+			<P ALIGN=CENTER>1</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>closed</FONT></FONT></P>
+			<P ALIGN=CENTER>closed</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>H - train stop</FONT></FONT></P>
+			<P>H - train stop</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>flash green</FONT></FONT></P>
+			<P>flash green</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>3</FONT></FONT></P>
+			<P ALIGN=CENTER>3</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>closed</FONT></FONT></P>
+			<P ALIGN=CENTER>closed</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>3 - 60km/h</FONT></FONT></P>
+			<P>3 - 60km/h</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>flash yellow</FONT></FONT></P>
+			<P>flash yellow</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>2</FONT></FONT></P>
+			<P ALIGN=CENTER>2</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>closed</FONT></FONT></P>
+			<P ALIGN=CENTER>closed</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>2 - 40km/h</FONT></FONT></P>
+			<P>2 - 40km/h</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>flash red</FONT></FONT></P>
+			<P>flash red</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>1</FONT></FONT></P>
+			<P ALIGN=CENTER>1</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>closed</FONT></FONT></P>
+			<P ALIGN=CENTER>closed</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>H - train stop</FONT></FONT></P>
+			<P>H - train stop</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>dark</FONT></FONT></P>
+			<P>dark</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>1</FONT></FONT></P>
+			<P ALIGN=CENTER>1</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>closed</FONT></FONT></P>
+			<P ALIGN=CENTER>closed</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>H - train stop</FONT></FONT></P>
+			<P>H - train stop</P>
 		</TD>
 	</TR>
 </TABLE>
 <P STYLE="margin-bottom: 0in"><BR>
 </P>
-<H2 CLASS="western"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><B>Home
-signal with 3 lamps</B></FONT></FONT><FONT FACE="Times New Roman, serif">
-</FONT>
+<H2><B>Home
+signal with 3 lamps</B>
+
 <IMG SRC="output1_html_7f201b69.png" NAME="obr&aacute;zky4" ALIGN=MIDDLE WIDTH=8 HEIGHT=17 BORDER=0></H2>
-<P STYLE="margin-bottom: 0in"><FONT FACE="Times New Roman, serif">decoder:
-LS-DEC-DB</FONT></P>
+<P STYLE="margin-bottom: 0in">decoder:
+LS-DEC-DB</P>
 <TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=3 CELLSPACING=0>
 	<COL WIDTH=40*>
 	<COL WIDTH=29*>
@@ -300,130 +297,130 @@ LS-DEC-DB</FONT></P>
 	<COL WIDTH=154*>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16% BGCOLOR="#e6e6e6">
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2><B><SPAN STYLE="background: transparent">JMRI
-			aspect</SPAN></B></FONT></FONT></P>
+			<P><B><SPAN STYLE="background: transparent">JMRI
+			aspect</SPAN></B></P>
 		</TD>
 		<TD WIDTH=11% BGCOLOR="#e6e6e6">
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2><B><SPAN STYLE="background: transparent">turnout
-			no.</SPAN></B></FONT></FONT></P>
+			<P><B><SPAN STYLE="background: transparent">turnout
+			no.</SPAN></B></P>
 		</TD>
 		<TD WIDTH=13% BGCOLOR="#e6e6e6">
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2><B><SPAN STYLE="background: transparent">turnout
-			state</SPAN></B></FONT></FONT></P>
+			<P><B><SPAN STYLE="background: transparent">turnout
+			state</SPAN></B></P>
 		</TD>
 		<TD WIDTH=60% BGCOLOR="#e6e6e6">
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2><B><SPAN STYLE="background: transparent">signal
-			head aspect</SPAN></B></FONT></FONT></P>
+			<P><B><SPAN STYLE="background: transparent">signal
+			head aspect</SPAN></B></P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>green</FONT></FONT></P>
+			<P>green</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>1</FONT></FONT></P>
+			<P ALIGN=CENTER>1</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>thrown</FONT></FONT></P>
+			<P ALIGN=CENTER>thrown</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>1 - proceed</FONT></FONT></P>
+			<P>1 - proceed</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>yellow</FONT></FONT></P>
+			<P>yellow</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>2</FONT></FONT></P>
+			<P ALIGN=CENTER>2</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>thrown</FONT></FONT></P>
+			<P ALIGN=CENTER>thrown</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>2 - slow
-			approach</FONT></FONT></P>
+			<P>2 - slow
+			approach</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>red</FONT></FONT></P>
+			<P>red</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>1</FONT></FONT></P>
+			<P ALIGN=CENTER>1</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>closed</FONT></FONT></P>
+			<P ALIGN=CENTER>closed</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>H - train stop</FONT></FONT></P>
+			<P>H - train stop</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>flash green</FONT></FONT></P>
+			<P>flash green</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>1</FONT></FONT></P>
+			<P ALIGN=CENTER>1</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>thrown</FONT></FONT></P>
+			<P ALIGN=CENTER>thrown</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>1 - proceed</FONT></FONT></P>
+			<P>1 - proceed</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>flash yellow</FONT></FONT></P>
+			<P>flash yellow</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>2</FONT></FONT></P>
+			<P ALIGN=CENTER>2</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>thrown</FONT></FONT></P>
+			<P ALIGN=CENTER>thrown</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>2 - slow
-			approach</FONT></FONT></P>
+			<P>2 - slow
+			approach</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>flash red</FONT></FONT></P>
+			<P>flash red</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>1</FONT></FONT></P>
+			<P ALIGN=CENTER>1</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>closed</FONT></FONT></P>
+			<P ALIGN=CENTER>closed</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>H - train stop</FONT></FONT></P>
+			<P>H - train stop</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>dark</FONT></FONT></P>
+			<P>dark</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>1</FONT></FONT></P>
+			<P ALIGN=CENTER>1</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>closed</FONT></FONT></P>
+			<P ALIGN=CENTER>closed</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>H - train stop</FONT></FONT></P>
+			<P>H - train stop</P>
 		</TD>
 	</TR>
 </TABLE>
 <P STYLE="margin-bottom: 0in"><BR>
 </P>
-<H2 CLASS="western"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><B>Advance
-signal with 5 lamps</B></FONT></FONT><FONT FACE="Times New Roman, serif">
-<IMG SRC="output1_html_m140dd523.png" NAME="obr&aacute;zky6" ALIGN=MIDDLE WIDTH=15 HEIGHT=17 BORDER=0></FONT></H2>
-<P STYLE="margin-bottom: 0in"><FONT FACE="Times New Roman, serif">decoder:
-LS-DEC-SBB</FONT></P>
+<H2><B>Advance
+signal with 5 lamps</B>
+<IMG SRC="output1_html_m140dd523.png" NAME="obr&aacute;zky6" ALIGN=MIDDLE WIDTH=15 HEIGHT=17 BORDER=0></H2>
+<P STYLE="margin-bottom: 0in">decoder:
+LS-DEC-SBB</P>
 <TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=3 CELLSPACING=0>
 	<COL WIDTH=40*>
 	<COL WIDTH=29*>
@@ -431,128 +428,128 @@ LS-DEC-SBB</FONT></P>
 	<COL WIDTH=154*>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16% BGCOLOR="#e6e6e6">
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2><B><SPAN STYLE="background: transparent">JMRI
-			aspect</SPAN></B></FONT></FONT></P>
+			<P><B><SPAN STYLE="background: transparent">JMRI
+			aspect</SPAN></B></P>
 		</TD>
 		<TD WIDTH=11% BGCOLOR="#e6e6e6">
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2><B><SPAN STYLE="background: transparent">turnout
-			no.</SPAN></B></FONT></FONT></P>
+			<P><B><SPAN STYLE="background: transparent">turnout
+			no.</SPAN></B></P>
 		</TD>
 		<TD WIDTH=13% BGCOLOR="#e6e6e6">
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2><B><SPAN STYLE="background: transparent">turnout
-			state</SPAN></B></FONT></FONT></P>
+			<P><B><SPAN STYLE="background: transparent">turnout
+			state</SPAN></B></P>
 		</TD>
 		<TD WIDTH=60% BGCOLOR="#e6e6e6">
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2><B><SPAN STYLE="background: transparent">signal
-			head aspect</SPAN></B></FONT></FONT></P>
+			<P><B><SPAN STYLE="background: transparent">signal
+			head aspect</SPAN></B></P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>green</FONT></FONT></P>
+			<P>green</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>1</FONT></FONT></P>
+			<P ALIGN=CENTER>1</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>thrown</FONT></FONT></P>
+			<P ALIGN=CENTER>thrown</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>1 - proceed</FONT></FONT></P>
+			<P>1 - proceed</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>yellow</FONT></FONT></P>
+			<P>yellow</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>2</FONT></FONT></P>
+			<P ALIGN=CENTER>2</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>closed</FONT></FONT></P>
+			<P ALIGN=CENTER>closed</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>2 - 40km/h</FONT></FONT></P>
+			<P>2 - 40km/h</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>red</FONT></FONT></P>
+			<P>red</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>1</FONT></FONT></P>
+			<P ALIGN=CENTER>1</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>closed</FONT></FONT></P>
+			<P ALIGN=CENTER>closed</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>H - train stop</FONT></FONT></P>
+			<P>H - train stop</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>flash green</FONT></FONT></P>
+			<P>flash green</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>3</FONT></FONT></P>
+			<P ALIGN=CENTER>3</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>closed</FONT></FONT></P>
+			<P ALIGN=CENTER>closed</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>3 - 60km/h</FONT></FONT></P>
+			<P>3 - 60km/h</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>flash yellow</FONT></FONT></P>
+			<P>flash yellow</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>4</FONT></FONT></P>
+			<P ALIGN=CENTER>4</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>thrown</FONT></FONT></P>
+			<P ALIGN=CENTER>thrown</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>6 - 40km/h</FONT></FONT></P>
+			<P>6 - 40km/h</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>flash red</FONT></FONT></P>
+			<P>flash red</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>1</FONT></FONT></P>
+			<P ALIGN=CENTER>1</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>closed</FONT></FONT></P>
+			<P ALIGN=CENTER>closed</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>H - train stop</FONT></FONT></P>
+			<P>H - train stop</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>dark</FONT></FONT></P>
+			<P>dark</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>1</FONT></FONT></P>
+			<P ALIGN=CENTER>1</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>closed</FONT></FONT></P>
+			<P ALIGN=CENTER>closed</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>H - train stop</FONT></FONT></P>
+			<P>H - train stop</P>
 		</TD>
 	</TR>
 </TABLE>
 <P STYLE="margin-bottom: 0in"><BR>
 </P>
-<H2 CLASS="western"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><B>Advance
-signal with 4 lamps</B></FONT></FONT><FONT FACE="Times New Roman, serif">
-<IMG SRC="output1_html_4a835f8c.png" NAME="obr&aacute;zky5" ALIGN=MIDDLE WIDTH=15 HEIGHT=16 BORDER=0></FONT></H2>
-<P STYLE="margin-bottom: 0in"><FONT FACE="Times New Roman, serif">decoder:
-LS-DEC-DB</FONT></P>
+<H2><B>Advance
+signal with 4 lamps</B>
+<IMG SRC="output1_html_4a835f8c.png" NAME="obr&aacute;zky5" ALIGN=MIDDLE WIDTH=15 HEIGHT=16 BORDER=0></H2>
+<P STYLE="margin-bottom: 0in">decoder:
+LS-DEC-DB</P>
 <TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=3 CELLSPACING=0>
 	<COL WIDTH=40*>
 	<COL WIDTH=29*>
@@ -560,130 +557,130 @@ LS-DEC-DB</FONT></P>
 	<COL WIDTH=154*>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16% BGCOLOR="#e6e6e6">
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2><B><SPAN STYLE="background: transparent">JMRI
-			aspect</SPAN></B></FONT></FONT></P>
+			<P><B><SPAN STYLE="background: transparent">JMRI
+			aspect</SPAN></B></P>
 		</TD>
 		<TD WIDTH=11% BGCOLOR="#e6e6e6">
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2><B><SPAN STYLE="background: transparent">turnout
-			no.</SPAN></B></FONT></FONT></P>
+			<P><B><SPAN STYLE="background: transparent">turnout
+			no.</SPAN></B></P>
 		</TD>
 		<TD WIDTH=13% BGCOLOR="#e6e6e6">
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2><B><SPAN STYLE="background: transparent">turnout
-			state</SPAN></B></FONT></FONT></P>
+			<P><B><SPAN STYLE="background: transparent">turnout
+			state</SPAN></B></P>
 		</TD>
 		<TD WIDTH=60% BGCOLOR="#e6e6e6">
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2><B><SPAN STYLE="background: transparent">signal
-			head aspect</SPAN></B></FONT></FONT></P>
+			<P><B><SPAN STYLE="background: transparent">signal
+			head aspect</SPAN></B></P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>green</FONT></FONT></P>
+			<P>green</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>3</FONT></FONT></P>
+			<P ALIGN=CENTER>3</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>thrown</FONT></FONT></P>
+			<P ALIGN=CENTER>thrown</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>1 - proceed</FONT></FONT></P>
+			<P>1 - proceed</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>yellow</FONT></FONT></P>
+			<P>yellow</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>4</FONT></FONT></P>
+			<P ALIGN=CENTER>4</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>thrown</FONT></FONT></P>
+			<P ALIGN=CENTER>thrown</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>2 - slow
-			approach</FONT></FONT></P>
+			<P>2 - slow
+			approach</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>red</FONT></FONT></P>
+			<P>red</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>3</FONT></FONT></P>
+			<P ALIGN=CENTER>3</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>closed</FONT></FONT></P>
+			<P ALIGN=CENTER>closed</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>H - train stop</FONT></FONT></P>
+			<P>H - train stop</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>flash green</FONT></FONT></P>
+			<P>flash green</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>3</FONT></FONT></P>
+			<P ALIGN=CENTER>3</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>thrown</FONT></FONT></P>
+			<P ALIGN=CENTER>thrown</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>1 - proceed</FONT></FONT></P>
+			<P>1 - proceed</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>flash yellow</FONT></FONT></P>
+			<P>flash yellow</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>4</FONT></FONT></P>
+			<P ALIGN=CENTER>4</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>thrown</FONT></FONT></P>
+			<P ALIGN=CENTER>thrown</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>2 - slow
-			approach</FONT></FONT></P>
+			<P>2 - slow
+			approach</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>flash red</FONT></FONT></P>
+			<P>flash red</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>3</FONT></FONT></P>
+			<P ALIGN=CENTER>3</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>closed</FONT></FONT></P>
+			<P ALIGN=CENTER>closed</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>H - train stop</FONT></FONT></P>
+			<P>H - train stop</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>dark</FONT></FONT></P>
+			<P>dark</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>3</FONT></FONT></P>
+			<P ALIGN=CENTER>3</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>closed</FONT></FONT></P>
+			<P ALIGN=CENTER>closed</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>H - train stop</FONT></FONT></P>
+			<P>H - train stop</P>
 		</TD>
 	</TR>
 </TABLE>
 <P STYLE="margin-bottom: 0in"><BR>
 </P>
-<H2 CLASS="western"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><B>Dwarf
-signal</B></FONT></FONT><FONT FACE="Times New Roman, serif"> 
-<IMG SRC="output1_html_m5bfb00d.png" NAME="obr&aacute;zky7" ALIGN=MIDDLE WIDTH=14 HEIGHT=14 BORDER=0></FONT></H2>
-<P STYLE="margin-bottom: 0in"><FONT FACE="Times New Roman, serif">decoder:
-LS-DEC-DB</FONT></P>
+<H2><B>Dwarf
+signal</B> 
+<IMG SRC="output1_html_m5bfb00d.png" NAME="obr&aacute;zky7" ALIGN=MIDDLE WIDTH=14 HEIGHT=14 BORDER=0></H2>
+<P STYLE="margin-bottom: 0in">decoder:
+LS-DEC-DB</P>
 <TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=3 CELLSPACING=0>
 	<COL WIDTH=40*>
 	<COL WIDTH=29*>
@@ -691,125 +688,125 @@ LS-DEC-DB</FONT></P>
 	<COL WIDTH=154*>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16% BGCOLOR="#e6e6e6">
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2><B><SPAN STYLE="background: transparent">JMRI
-			aspect</SPAN></B></FONT></FONT></P>
+			<P><B><SPAN STYLE="background: transparent">JMRI
+			aspect</SPAN></B></P>
 		</TD>
 		<TD WIDTH=11% BGCOLOR="#e6e6e6">
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2><B><SPAN STYLE="background: transparent">turnout
-			no.</SPAN></B></FONT></FONT></P>
+			<P><B><SPAN STYLE="background: transparent">turnout
+			no.</SPAN></B></P>
 		</TD>
 		<TD WIDTH=13% BGCOLOR="#e6e6e6">
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2><B><SPAN STYLE="background: transparent">turnout
-			state</SPAN></B></FONT></FONT></P>
+			<P><B><SPAN STYLE="background: transparent">turnout
+			state</SPAN></B></P>
 		</TD>
 		<TD WIDTH=60% BGCOLOR="#e6e6e6">
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2><B><SPAN STYLE="background: transparent">signal
-			head aspect</SPAN></B></FONT></FONT></P>
+			<P><B><SPAN STYLE="background: transparent">signal
+			head aspect</SPAN></B></P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>green</FONT></FONT></P>
+			<P>green</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>2</FONT></FONT></P>
+			<P ALIGN=CENTER>2</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>thrown</FONT></FONT></P>
+			<P ALIGN=CENTER>thrown</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>proceed</FONT></FONT></P>
+			<P>proceed</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>yellow</FONT></FONT></P>
+			<P>yellow</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>2</FONT></FONT></P>
+			<P ALIGN=CENTER>2</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>closed</FONT></FONT></P>
+			<P ALIGN=CENTER>closed</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>slow proceed</FONT></FONT></P>
+			<P>slow proceed</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>red</FONT></FONT></P>
+			<P>red</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>1</FONT></FONT></P>
+			<P ALIGN=CENTER>1</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>closed</FONT></FONT></P>
+			<P ALIGN=CENTER>closed</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>train stop</FONT></FONT></P>
+			<P>train stop</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>flash green</FONT></FONT></P>
+			<P>flash green</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>2</FONT></FONT></P>
+			<P ALIGN=CENTER>2</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>thrown</FONT></FONT></P>
+			<P ALIGN=CENTER>thrown</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>proceed</FONT></FONT></P>
+			<P>proceed</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>flash yellow</FONT></FONT></P>
+			<P>flash yellow</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>2</FONT></FONT></P>
+			<P ALIGN=CENTER>2</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>closed</FONT></FONT></P>
+			<P ALIGN=CENTER>closed</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>slow proceed</FONT></FONT></P>
+			<P>slow proceed</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>flash red</FONT></FONT></P>
+			<P>flash red</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>1</FONT></FONT></P>
+			<P ALIGN=CENTER>1</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>closed</FONT></FONT></P>
+			<P ALIGN=CENTER>closed</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>train stop</FONT></FONT></P>
+			<P>train stop</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>dark</FONT></FONT></P>
+			<P>dark</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>1</FONT></FONT></P>
+			<P ALIGN=CENTER>1</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>closed</FONT></FONT></P>
+			<P ALIGN=CENTER>closed</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>train stop</FONT></FONT></P>
+			<P>train stop</P>
 		</TD>
 	</TR>
 </TABLE>
 <P STYLE="margin-bottom: 0in"><BR>
 </P>
-<P STYLE="margin-bottom: 0in"><FONT FACE="Times New Roman, serif">decoder:
-LS-DEC-DB</FONT></P>
+<P STYLE="margin-bottom: 0in">decoder:
+LS-DEC-DB</P>
 <TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=3 CELLSPACING=0>
 	<COL WIDTH=40*>
 	<COL WIDTH=29*>
@@ -817,118 +814,118 @@ LS-DEC-DB</FONT></P>
 	<COL WIDTH=154*>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16% BGCOLOR="#e6e6e6">
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2><B><SPAN STYLE="background: transparent">JMRI
-			aspect</SPAN></B></FONT></FONT></P>
+			<P><B><SPAN STYLE="background: transparent">JMRI
+			aspect</SPAN></B></P>
 		</TD>
 		<TD WIDTH=11% BGCOLOR="#e6e6e6">
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2><B><SPAN STYLE="background: transparent">turnout
-			no.</SPAN></B></FONT></FONT></P>
+			<P><B><SPAN STYLE="background: transparent">turnout
+			no.</SPAN></B></P>
 		</TD>
 		<TD WIDTH=13% BGCOLOR="#e6e6e6">
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2><B><SPAN STYLE="background: transparent">turnout
-			state</SPAN></B></FONT></FONT></P>
+			<P><B><SPAN STYLE="background: transparent">turnout
+			state</SPAN></B></P>
 		</TD>
 		<TD WIDTH=60% BGCOLOR="#e6e6e6">
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2><B><SPAN STYLE="background: transparent">signal
-			head aspect</SPAN></B></FONT></FONT></P>
+			<P><B><SPAN STYLE="background: transparent">signal
+			head aspect</SPAN></B></P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>green</FONT></FONT></P>
+			<P>green</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>4</FONT></FONT></P>
+			<P ALIGN=CENTER>4</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>thrown</FONT></FONT></P>
+			<P ALIGN=CENTER>thrown</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>proceed</FONT></FONT></P>
+			<P>proceed</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>yellow</FONT></FONT></P>
+			<P>yellow</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>3</FONT></FONT></P>
+			<P ALIGN=CENTER>3</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>thrown</FONT></FONT></P>
+			<P ALIGN=CENTER>thrown</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>slow proceed</FONT></FONT></P>
+			<P>slow proceed</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>red</FONT></FONT></P>
+			<P>red</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>3</FONT></FONT></P>
+			<P ALIGN=CENTER>3</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>closed</FONT></FONT></P>
+			<P ALIGN=CENTER>closed</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>train stop</FONT></FONT></P>
+			<P>train stop</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>flash green</FONT></FONT></P>
+			<P>flash green</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>4</FONT></FONT></P>
+			<P ALIGN=CENTER>4</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>thrown</FONT></FONT></P>
+			<P ALIGN=CENTER>thrown</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>proceed</FONT></FONT></P>
+			<P>proceed</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>flash yellow</FONT></FONT></P>
+			<P>flash yellow</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>3</FONT></FONT></P>
+			<P ALIGN=CENTER>3</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>thrown</FONT></FONT></P>
+			<P ALIGN=CENTER>thrown</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>slow proceed</FONT></FONT></P>
+			<P>slow proceed</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>flash red</FONT></FONT></P>
+			<P>flash red</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>3</FONT></FONT></P>
+			<P ALIGN=CENTER>3</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>closed</FONT></FONT></P>
+			<P ALIGN=CENTER>closed</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>train stop</FONT></FONT></P>
+			<P>train stop</P>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=16%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>dark</FONT></FONT></P>
+			<P>dark</P>
 		</TD>
 		<TD WIDTH=11%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>3</FONT></FONT></P>
+			<P ALIGN=CENTER>3</P>
 		</TD>
 		<TD WIDTH=13%>
-			<P ALIGN=CENTER><FONT FACE="Times New Roman, serif"><FONT SIZE=2>closed</FONT></FONT></P>
+			<P ALIGN=CENTER>closed</P>
 		</TD>
 		<TD WIDTH=60%>
-			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=2>train stop</FONT></FONT></P>
+			<P>train stop</P>
 		</TD>
 	</TR>
 </TABLE>
