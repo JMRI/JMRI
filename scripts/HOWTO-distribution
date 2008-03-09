@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.66 $)
+distribution.  ($Revision: 1.67 $)
 
 Start with a directory, typically called "Distributions", that
 contains "scripts" and "java" (from CVS) as subdirectories, and:
@@ -9,9 +9,9 @@ contains "scripts" and "java" (from CVS) as subdirectories, and:
   ln -s scripts/dist.xml dist.xml
 
   Linux
-  	JMRI (the most recent distribution)
+  	JMRI (can be empty)
   MacOSX
-  	JMRI (the most recent distribution)
+  	JMRI (can be empty)
 
   (Windows is separate, and involves a shared disk with VPC, but
    basically all the necessary stuff is in a VPC directory)
@@ -34,6 +34,8 @@ Make sure everything is up-to-date:
     Commit.
     
 ( ) Update the help/en/Acknowledgements.html help page with any recent changes
+
+( ) Check for uncommitted changes in the web site directory, these can do into help
 
 ( ) Check if the help has changed since the previous tag
     If so, remake the help index  (need a command line approach, so can put in ant!)
@@ -61,6 +63,13 @@ Make sure everything is up-to-date:
 ( ) Edit the "manifest" file in your development directory, and make sure that the
     version number is correct in four places (this file comes from java/, not scripts/)
     
+( ) Update the MacOS X bundles version numbers:
+
+    bbedit scripts/MacOSXapps/V1/*.app/Contents/Info.plist
+    (three versions, two copyright years)
+
+    Commit back to CVS
+
 ( ) To ensure that you've got the HEAD of CVS, in your test area do:
 
     cvs -q update -dA
@@ -96,12 +105,6 @@ To actually create the distribution:
     
 -----
 Notes for next section:
-
-* Clear out the Linux/JMRI directory, as it seems to have some
-extra scripts.  Add to Ant?  Also, eventually check that the
-Linux startup scripts have the executable permission bit set.
-(2.0 had some work on this, follow up)
-
     
 * NOTE THAT build.xml now creates a jar file with debug info by default;
 change that (temporarily) for production versions
@@ -116,16 +119,6 @@ change that (temporarily) for production versions
     cd ..
     
     
---- This next step should be updated to take the content from CVS ---
-( ) Update the MacOS X bundles:
-
-    bbedit MacOSX/JMRI/*.app/Contents/Info.plist
-    (three versions, two copyright years)
-    bbedit MacOSX/JMRI/*.app/Contents/Resources/MRJApp.properties
-    (Version number)
-
-    Then check to make sure they still work.
-
 ( ) Start the actual build!  In the Distributions directory:
 
 	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release1
@@ -141,6 +134,7 @@ change that (temporarily) for production versions
 	The next few steps can be done in parallel.
 	
 ( ) Upload the MacOS X and Linux files
+    (Failed recently, been doing this by hand, see note below)
 
 	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release2
 
@@ -179,6 +173,7 @@ it in the JavaDoc step following)
 	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release3
 	
 ( ) When ready to upload the Windows version:
+    (Failed recently, been doing this by hand, see note below)
 
 	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release4
 		
