@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.4.shtml,v 1.12 2008-03-08 06:40:07 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.4.shtml,v 1.13 2008-03-09 01:46:15 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -8,7 +8,7 @@
  </title>
     <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <meta content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="java model railroad JMRI 2.1.2 decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
+    <meta name="keywords" content="java model railroad JMRI 2.1.4 decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
 
 <!-- Style -->
   <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
@@ -33,11 +33,11 @@
       Release Notes for JMRI 2.1.4 release
       </h2>
 
-	<p>Date: MMM DD, 2008</p>
+	<p>Date: March 8, 2008</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.1.4 of JMRI/DecoderPro is available for download.
 
-<br><b>This is a draft release note only; the download links do not yet work</b>
+<!-- <br><b>This is a draft release note only; the download links do not yet work</b> -->
 
 <h3>Notes:</h3>
 
@@ -50,11 +50,11 @@ back to an earlier version.
 It contains 
 many new features, including:
 <ul>
-<!-- <li>Support for the X10 power adapters, -->
-<!-- <li>improved consisting support, -->
-<!-- <li>additional sounds and graphics for creating USS CTC panels, -->
-<!-- <li>lots of additions to the help screens -->
-<!-- <li>and several decoder definitions were added and improved. -->
+        <li>Several new and updated decoder definitions,
+        <li>improved addressing for the Grapevine system,
+        <li>fix to a problem with certain NCE EPROM versions,
+        <li>ability to dim lights attached via X10 systems,
+        <li>and improvements to how closed windows are handled
 </ul>
 along with lots of other changes.  See the complete list below.
 
@@ -81,7 +81,7 @@ If you read a file containing a panel with a name that duplicates an existing pa
 Depending on user reaction, this may become a dialog box that asks if you want to continue.
 
 <p>
-The scripts used to start the JMRI applications on Linux have been extensively reworked.  
+The scripts used to start the JMRI applications on Linux and MacOS X have been extensively reworked.  
 The new ones should do everything the old ones do, plus
 <a href="http://jmri.sourceforge.net/install/ShellScripts.shtml">more</a>.  
 Please keep an eye out for new problems, however, and don't hesitate to report them to the list.
@@ -190,6 +190,8 @@ Shell scripts used to start JMRI on Linux have been updated to add
 Dan Boudreau added a default name to newly created panels, and protection against creating duplicate panel names when renaming a panel.
 He also added a warning to the program when loading panels with existing names; depending on how user reaction goes, this might become a dialog box on whether to continue.
 
+<p>
+A bug that would cause the editor for Digitrax SPJ files to occasionally crash and write zero-length output files was fixed.
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
