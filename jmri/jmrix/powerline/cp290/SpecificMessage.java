@@ -21,7 +21,7 @@ import jmri.jmrix.powerline.X10Sequence;
  * </ul>
  *
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 
 public class SpecificMessage extends SerialMessage {
@@ -70,7 +70,7 @@ public class SpecificMessage extends SerialMessage {
     }
     
     public String toMonitorString() {
-        return toString();
+        return toString()+"\n";
     }
 
 

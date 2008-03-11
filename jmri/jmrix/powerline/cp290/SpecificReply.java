@@ -10,7 +10,7 @@ import jmri.jmrix.powerline.SerialReply;
  * packet.  Note that its _only_ the payload.
  *
  * @author	Bob Jacobsen  Copyright (C) 2002, 2006, 2007, 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
 
@@ -40,7 +40,7 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
     }
     
     public String toMonitorString() {
-        return toString();
+        return toString()+"\n";
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SpecificReply.class.getName());

@@ -25,7 +25,7 @@ import jmri.jmrix.powerline.SerialSensorManager;
  * with it.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SpecificTrafficController extends SerialTrafficController {
 
@@ -49,19 +49,70 @@ public class SpecificTrafficController extends SerialTrafficController {
     synchronized public void sendX10Sequence(X10Sequence s, SerialListener l) {
         s.reset();
         X10Sequence.Command c;
-        while ( (c = s.getCommand() ) !=null) {
-            SpecificMessage m;
-            if (c.isAddress()) 
-                m = SpecificMessage.getAddress(c.getHouseCode(), ((X10Sequence.Address)c).getAddress());
-            else {
-                X10Sequence.Function f = (X10Sequence.Function)c;
-                if (f.getDimCount() > 0)
-                    m = SpecificMessage.getFunctionDim(f.getHouseCode(), f.getFunction(), f.getDimCount());
-                else
-                    m = SpecificMessage.getFunction(f.getHouseCode(), f.getFunction());
+        // index through address commands
+        int devicemask=0;
+        // there should be at least one address
+        c = s.getCommand();
+        if (c==null) return;  // nothing!
+        int housecode = c.getHouseCode();
+        devicemask = setDeviceBit(devicemask, ((X10Sequence.Address)c).getAddress());
+        
+        // loop through other addresses, if any
+        while ( ((c = s.getCommand() ) !=null) && (c.isAddress()) ) {
+            if (housecode != ((X10Sequence.Address)c).getHouseCode()) {
+                log.error("multiple housecodes found: "+housecode+", "+c.getHouseCode());
+                return;
             }
-            sendSerialMessage(m, l);
+            devicemask = setDeviceBit(devicemask, ((X10Sequence.Address)c).getAddress());
         }
+        // at this point, we've picked up all the addresses, start
+        // to process functions; there should be at least one
+        if (c==null) {
+            log.warn("no command");
+            return;
+        }
+        formatAndSend(housecode, devicemask, (X10Sequence.Function)c, l);
+
+        // loop through other functions, if any
+        while ( ((c = s.getCommand() ) !=null) && (c.isFunction()) ) {
+            if (housecode != ((X10Sequence.Function)c).getHouseCode()) {
+                log.error("multiple housecodes found: "+housecode+", "+c.getHouseCode());
+                return;
+            }
+            formatAndSend(housecode, devicemask, (X10Sequence.Function)c, l);
+        }
+    }
+    
+    /**
+     * Turn a 1-16 device number into a mask bit
+     */
+    int setDeviceBit(int devicemask, int device){
+        return devicemask | (0x10000 >> device);
+    }
+
+    /**
+     * Format a message and send it
+     */
+    void formatAndSend(int housecode, int devicemask, 
+                        X10Sequence.Function c, SerialListener l) {
+        SpecificMessage m = new SpecificMessage(22);  // will be 22 bytes
+        for (int i = 0; i< 16; i++) m.setElement(i, 0xFF);
+        int level = c.getDimCount();
+        if (level>15) {
+            log.warn("can't handle dim counts > 15?");
+            level = 15;
+        }
+        int function = c.getFunction();
+        
+        m.setElement(16, 1);
+        m.setElement(17, level*16+function);
+        m.setElement(18, housecode*16+0);
+        m.setElement(19, devicemask&0xFF);
+        m.setElement(20, (devicemask>>8)&0xFF);
+        m.setElement(21, 0xFF&(m.getElement(17)+m.getElement(18)+m.getElement(19)+m.getElement(20)) ); // checksum
+               
+        sendSerialMessage(m, l);
+        
     }
     
     /**
