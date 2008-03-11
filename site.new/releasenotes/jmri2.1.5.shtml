@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.5.shtml,v 1.4 2008-03-09 19:47:52 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.5.shtml,v 1.5 2008-03-11 16:11:18 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -147,7 +147,8 @@ Bill Chown has updated the MRC Big Boy decoder definition
 and added lots more detail to the MRC 1645 definition.
 
 <p>
-Some older versions of the Java Help system couldn't follow internal links on the help pages. This is now fixed.
+Some older versions of the Java Help system couldn't follow internal links on the help pages. 
+This is now fixed.
 
 <p>
 Dan Boudreau added a "don't show again" button to info message on panel close.
@@ -156,6 +157,24 @@ Dan Boudreau added a "don't show again" button to info message on panel close.
 The "Double Turnout" and "Triple Turnout" signals are now called
 "Double Output" and "Triple Output" in an attempt to reduce confusion of new
 users.  They still work the way they used to.
+
+<p>
+The powerline adapter (X10) support has been rewritten to allow more adapter types
+to work.  This shouldn't make any visible changes, but might have accidentally introduced
+some bugs, so please keep an eye out.
+
+<p>
+Chris Zurek updated the Digitrax DH123 "Economy" decoder definition.
+
+<p>
+Ken Cameron and Bob Jacobsen added support for the CP290 house adapter
+to the 
+<a href="http://jmri.sf.net/help/en/html/hardware/powerline/Compatibility.shtml">X10 powerline support</a>.
+
+<p>
+Dan Boudreau fixed a problem that would cause a lockup if a NCE command station crashed
+while coming out of programing mode.
+
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
