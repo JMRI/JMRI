@@ -1,26 +1,17 @@
-// X10.java
+// X10Sequence.java
 
 package jmri.jmrix.powerline;
 
 
 /**
- * Constants for X10.
- * 
- * These might someday have to be device specific, unfortunately.
+ * Represent a sequence of one or more X10 commands (addresses and functions).
+ * <p>
+ * These are X10 specific, but not device/interface specific.
  *
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.1 $
  */
-public class X10 {
-
-    public static final int POLL_REQ        = 0x5a;
-    public static final int TIME_REQ        = 0xa5;
-    public static final int MACRO_INITIATED = 0x5b;
-    public static final int CHECKSUM_OK     = 0x00;
-    public static final int READY_REQ       = 0x55;
-
-    public static final int POLL_ACK        = 0xc3;
-    public static final int TIMER_DOWNLOAD  = 0x9b;
+public class X10Sequence {
 
     public static final int FUNCTION_ALL_UNITS_OFF          = 0;
     public static final int FUNCTION_ALL_LIGHTS_ON          = 1;
@@ -39,6 +30,67 @@ public class X10 {
     public static final int FUNCTION_STATUS_OFF             = 14;
     public static final int FUNCTION_STATUS_REQUEST         = 15;
 
+    private static final int MAXINDEX = 32;
+    
+    public void addFunction(int house, int function, int dimcount) {
+        if (index >= MAXINDEX) throw new IllegalArgumentException("Sequence too long");
+        cmds[index] = new Function(house, function, dimcount);
+        index++;
+    }
+
+    public void addAddress(int house, int device) {
+        if (index >= MAXINDEX) throw new IllegalArgumentException("Sequence too long");
+        cmds[index] = new Address(house, device);
+        index++;
+    }
+    
+    int index = 0;
+    Command[] cmds = new Command[MAXINDEX];  // doesn't scale, but that's for another day
+    
+    /**
+     * Next getCommand will be the first in the sequence
+     */
+    public void reset(){
+        index = 0;
+    }
+    
+    public Command getCommand() {
+        return cmds[index++];
+    }
+    
+    public interface Command {
+        public boolean isAddress();
+        public boolean isFunction();
+        public int getHouseCode();
+    }
+    public class Address implements Command {
+        public Address(int house, int device) {
+            this.house = house;
+            this.device = device;
+        }
+        int house;
+        int device;
+        public int getHouseCode() { return house; }
+        public int getAddress()  { return device; }
+        public boolean isAddress() { return true; }
+        public boolean isFunction() { return false; }
+    }
+    public class Function implements Command {
+        public Function(int house, int function, int dimcount) {
+            this.house = house;
+            this.function = function;
+            this.dimcount = dimcount;
+        }
+        int house;
+        int function;
+        int dimcount;
+        public int getHouseCode() { return house; }
+        public int getFunction()  { return function; }
+        public int getDimCount()  { return dimcount; }
+        public boolean isAddress() { return false; }
+        public boolean isFunction() { return true; }
+    }
+    
     static String[] functionNames = new String[]{
         "All Off", "All Lights On", "On", "Off",
         "Dim", "Bright", "All Lights Off", "Extended Code",
@@ -82,28 +134,19 @@ public class X10 {
      * Pretty-print an address code
      */
     public static String formatAddressByte(int b) {
-        return "House "+ X10.decode((b>>4)&0x0F)
-            +" address device "+X10.decode(b&0x0f);
+        return "House "+ X10Sequence.decode((b>>4)&0x0F)
+            +" address device "+X10Sequence.decode(b&0x0f);
     }
 
     /**
      * Pretty-print a function code
      */
     public static String formatCommandByte(int b) {
-        return "House "+ X10.decode((b>>4)&0x0F)
-                +" function: "+X10.functionName(b&0x0f);
+        return "House "+ X10Sequence.decode((b>>4)&0x0F)
+                +" function: "+X10Sequence.functionName(b&0x0f);
     }
 
-    /**
-     * Pretty-print a header code
-     */
-    public static String formatHeaderByte(int b) {
-        return "Dim: " + ((b >> 3)& 0x1F)
-                + ((b & 0x02) != 0 ? " function" : " address " )
-                + ((b & 0x01) != 0 ? " extended" : " ");
-    }
-    
 }
 
 
-/* @(#)X10.java */
+/* @(#)X10Sequence.java */

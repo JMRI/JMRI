@@ -7,7 +7,7 @@ import javax.swing.*;
 /**
  * Frame to control and connect SECSI
  * @author    Bob Jacobsen   Copyright (C) 2001, 2006, 2007, 2008
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 
 public class SerialDriverFrame extends jmri.jmrix.SerialPortFrame {
@@ -22,6 +22,7 @@ public class SerialDriverFrame extends jmri.jmrix.SerialPortFrame {
             // connect to the port
             adapter.configureBaudRate((String)baudBox.getSelectedItem());
             adapter.configureOption1((String)opt1Box.getSelectedItem());
+            
             String errCode = adapter.openPort((String) portBox.getSelectedItem(),"Powerline Device Serial");
 
             if (errCode == null)	{

@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRMessage;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SerialNode {
 
@@ -209,33 +209,6 @@ public class SerialNode {
      * Public Method to create an Transmit packet (SerialMessage)
      */
     public SerialMessage createOutPacket() {
-        if (log.isDebugEnabled()) log.debug("createOutPacket for nodeType "
-            +nodeType+" with "
-            +outputBitChanged[0]+" "+outputArray[0]+";"
-            +outputBitChanged[1]+" "+outputArray[1]+";"
-            +outputBitChanged[2]+" "+outputArray[2]+";"
-            +outputBitChanged[3]+" "+outputArray[3]+";");
-            
-        // Create a Serial message
-        // For now, always write entire node
-        SerialMessage m = new SerialMessage(1+outputBits[getNodeType()]/4);
-        m.setElement(0,nodeAddress); // node address
-
-        // Add output bytes
-        int j = 0;
-        // note bits are numbered from 1
-        for (int i = 1; i < outputBits[nodeType]; i+=4) {
-            int payload = 0;
-            if (outputArray[i+0]) payload |= 1;
-            if (outputArray[i+1]) payload |= 2;
-            if (outputArray[i+2]) payload |= 4;
-            if (outputArray[i+3]) payload |= 8;
-
-            payload |= j<<4;
-            m.setElement(j+1, payload);
-            j++;            
-        }
-        
         // now, for testing, instead of sending m (the packet) we send null
         return null;        
     }

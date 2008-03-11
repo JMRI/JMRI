@@ -22,7 +22,7 @@ import javax.comm.SerialPortEventListener;
  * Provide access to Oak Tree via a serial comm port.
  * Normally controlled by the oaktree.serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2006, 2007, 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -188,6 +188,21 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
      * connected to this port
      */
     public void configure() {
+        // set up the system connection first
+        String opt1 = getCurrentOption1Setting();
+        if (opt1.equals("CM11")) {
+            // create a CM11 port controller
+            SerialTrafficController.checkInstance(new jmri.jmrix.powerline.cm11.SpecificTrafficController());
+        } else if (opt1.equals("CP290")) {
+            // create a CP290 port controller
+            SerialTrafficController.checkInstance(new jmri.jmrix.powerline.cp290.SpecificTrafficController());
+        } else {
+            // no connection at all - warn
+            log.warn("protocol option "+opt1+" defaults to CM11");
+            // create a CM11 port controller
+            SerialTrafficController.checkInstance(new jmri.jmrix.powerline.cm11.SpecificTrafficController());
+        }    
+
         // connect to the traffic controller
         SerialTrafficController.instance().connectPort(this);
 
@@ -230,9 +245,16 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     protected void setSerialPort() throws javax.comm.UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
         int baud = 4800;  // default, but also defaulted in the initial value of selectedSpeed
-        for (int i = 0; i<validSpeeds.length; i++ )
-            if (validSpeeds[i].equals(selectedSpeed))
-                baud = validSpeedValues[i];
+        
+        // check for specific port type
+        String opt1 = getCurrentOption1Setting();
+        if (opt1.equals("CM11")) {
+            // leave as 4800 baud
+        } else if (opt1.equals("CP290")) { 
+            // set to 600 baud
+            baud = 600;
+        }
+        
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
@@ -261,27 +283,22 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         super.configureBaudRate(rate);
     }
 
-    String[] stdOption1Values = new String[]{""};
+    String[] stdOption1Values = new String[]{"CM11", "CP290"}; 
 
     /**
      * Option 1 is not used for anything
      */
-    public String[] validOption1() { return new String[]{""}; }
-    String opt1CurrentValue = null;
+    public String[] validOption1() { return stdOption1Values; }
 
     /**
      * Option 1 not used, so return a null string.
      */
-    public String option1Name() { return ""; }
+    public String option1Name() { return "Adapter"; }
 
-    /**
-     * The first port option isn't used, so just ignore this call.
-     */
-    public void configureOption1(String value) {}
-
-    protected String [] validSpeeds = new String[]{"1200", "2400", "4800", "9600", "19200", "38,400 baud"};
-    protected int [] validSpeedValues = new int[]{1200, 2400, 4800, 9600, 19200, 38400};
-    protected String selectedSpeed=validSpeeds[2];
+    
+    protected String [] validSpeeds = new String[]{"(automatic)"};
+    protected int [] validSpeedValues = new int[]{4800};
+    protected String selectedSpeed=validSpeeds[0];
 
     /**
      * Get an array of valid values for "option 2"; used to display valid options.

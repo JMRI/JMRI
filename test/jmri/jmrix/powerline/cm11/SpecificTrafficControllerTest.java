@@ -1,6 +1,6 @@
-// SerialTrafficControllerTest.java
+// SpecificTrafficControllerTest.java
 
-package jmri.jmrix.powerline;
+package jmri.jmrix.powerline.cm11;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -12,37 +12,43 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import jmri.jmrix.powerline.SerialMessage;
+import jmri.jmrix.powerline.SerialReply;
+import jmri.jmrix.powerline.SerialNode;
+import jmri.jmrix.powerline.SerialListener;
+import jmri.jmrix.powerline.SerialPortController;
+
 /**
- * JUnit tests for the SerialTrafficController class
+ * JUnit tests for the SpecificTrafficController class
  * @author			Bob Jacobsen Copyright 2005, 2007, 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.1 $
  */
-public class SerialTrafficControllerTest extends TestCase {
+public class SpecificTrafficControllerTest extends TestCase {
 
     public void testCreate() {
-        SerialTrafficController m = new SerialTrafficController();
+        SpecificTrafficController m = new SpecificTrafficController();
     }
     
     // inner class to give access to protected endOfMessage method
-    class TestSerialTC extends SerialTrafficController {
+    class TestSerialTC extends SpecificTrafficController {
         boolean testEndOfMessage(SerialReply r) {
             return endOfMessage(r);
         }
         protected void forwardToPort(jmri.jmrix.AbstractMRMessage m, jmri.jmrix.AbstractMRListener reply){
-            System.out.println("fTP");
         }
+        protected void setInstance() { self = this; }
     }
     
     public void testReceiveStates1() {
         TestSerialTC c = new TestSerialTC();
-        SerialReply r = new SerialReply();
+        SerialReply r = new SpecificReply();
 
         r.setElement(0, 0x12);
         Assert.assertTrue("single byte reply", c.testEndOfMessage(r));
     }
     public void testReceiveStatesRead() {
         TestSerialTC c = new TestSerialTC();
-        SerialReply r = new SerialReply();
+        SerialReply r = new SpecificReply();
 
         r.setElement(0, 0x5A);        
         Assert.assertTrue("wait for read", !c.testEndOfMessage(r));
@@ -60,14 +66,14 @@ public class SerialTrafficControllerTest extends TestCase {
         Assert.assertTrue("3rd byte", c.testEndOfMessage(r));
     
         // and next reply OK
-        r = new SerialReply();
+        r = new SpecificReply();
         r.setElement(0, 0x12);        
         Assert.assertTrue("single byte reply", c.testEndOfMessage(r));
         
     }
     
     public void testSerialNodeEnumeration() {
-        SerialTrafficController c = new SerialTrafficController();
+        SpecificTrafficController c = new SpecificTrafficController();
         SerialNode b = new SerialNode(1,SerialNode.DAUGHTER);
         SerialNode f = new SerialNode(3,SerialNode.CABDRIVER);
         SerialNode d = new SerialNode(2,SerialNode.CABDRIVER);
@@ -184,25 +190,25 @@ public class SerialTrafficControllerTest extends TestCase {
 
     // from here down is testing infrastructure
 
-    public SerialTrafficControllerTest(String s) {
+    public SpecificTrafficControllerTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {SerialTrafficControllerTest.class.getName()};
+        String[] testCaseName = {SpecificTrafficControllerTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(SerialTrafficControllerTest.class);
+        TestSuite suite = new TestSuite(SpecificTrafficControllerTest.class);
         return suite;
     }
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
     
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTrafficControllerTest.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SpecificTrafficControllerTest.class.getName());
 
 }

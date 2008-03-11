@@ -19,16 +19,16 @@ package jmri.jmrix.powerline;
  * </ul>
  *
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008
- * @version   $Revision: 1.6 $
+ * @version   $Revision: 1.7 $
  */
 
-public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
+abstract public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     // is this logically an abstract class?
 
     /** Suppress the default ctor, as the
      * length must always be specified
      */
-    private SerialMessage() {}
+    protected SerialMessage() {}
     
     public SerialMessage(int l) {
         super(l);
@@ -69,6 +69,8 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     public void setResponseLength(int l) { responseLength = l; }
     public int getResponseLength() { return responseLength; }
         
+    abstract public String toMonitorString();
+    
     // static methods to recognize a message
     public boolean isPoll() { return getElement(1)==48;}
     public boolean isXmt()  { return getElement(1)==17;}
@@ -86,50 +88,6 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         
         // Powerline implementation does not currently poll
         return null;
-    }
-    static public SerialMessage setCM11Time(int housecode) {
-        SerialMessage msg = new SerialMessage(7);
-        msg.setElement(0, 0x9B);
-        msg.setElement(5, 0x01);
-        msg.setElement(6, housecode<<4);
-        return msg;
-    }
-    static public SerialMessage getAddress(int housecode, int devicecode) {
-        SerialMessage m = new SerialMessage(2);
-        m.setInterlocked(true);
-        m.setElement(0,0x04);
-        m.setElement(1,(X10.encode(housecode)<<4)+X10.encode(devicecode));
-        return m;
-    }
-    static public SerialMessage getAddressDim(int housecode, int devicecode, int dimcode) {
-        SerialMessage m = new SerialMessage(2);
-        m.setInterlocked(true);
-        if (dimcode > 0) {
-        	m.setElement(0, 0x04 | ((dimcode & 0x1f) << 3));
-        } else {
-        	m.setElement(0, 0x04);
-        }
-        m.setElement(1,(X10.encode(housecode)<<4)+X10.encode(devicecode));
-        return m;
-    }
-    static public SerialMessage getFunctionDim(int housecode, int function, int dimcode) {
-        SerialMessage m = new SerialMessage(2);
-        m.setInterlocked(true);
-        if (dimcode > 0) {
-        	m.setElement(0, 0x06 | ((dimcode & 0x1f) << 3));
-        } else {
-        	m.setElement(0, 0x06);
-        }
-        m.setElement(1,(X10.encode(housecode)<<4)+function);
-        return m;
-    }
-    static public SerialMessage getFunction(int housecode, int function) {
-        SerialMessage m = new SerialMessage(2);
-        m.setInterlocked(true);
-        m.setElement(0,0x06);
-        m.setElement(1,(X10.encode(housecode)<<4)+function);
-        //System.out.println("gf "+housecode+" "+X10.encode(housecode));
-        return m;
     }
 }
 

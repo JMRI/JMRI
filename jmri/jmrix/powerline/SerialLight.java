@@ -29,7 +29,7 @@ import java.util.Date;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 public class SerialLight extends AbstractVariableLight {
 
@@ -83,37 +83,29 @@ public class SerialLight extends AbstractVariableLight {
             
         // see if going to stabilize at on or off
         if (intensity<= 0.5) {
+            // create output sequence
+            X10Sequence out = new X10Sequence();
             // going to low, first set off
-            SerialMessage m1 = SerialMessage.getAddress(housecode, devicecode);
-            SerialMessage m2 = SerialMessage.getFunction(housecode, X10.FUNCTION_OFF);
-            // send
-            SerialTrafficController.instance().sendSerialMessage(m1, null);
-            SerialTrafficController.instance().sendSerialMessage(m2, null);
-            log.debug("initIntensity: sent off");
+            out.addAddress(housecode, devicecode);
+            out.addFunction(housecode, X10Sequence.FUNCTION_OFF, 0);
             // then set to full dim
-            m1 = SerialMessage.getAddress(housecode, devicecode);
-            m2 = SerialMessage.getFunctionDim(housecode, X10.FUNCTION_DIM, 22);
+            out.addFunction(housecode, X10Sequence.FUNCTION_DIM, 22);
             // send
-            SerialTrafficController.instance().sendSerialMessage(m1, null);
-            SerialTrafficController.instance().sendSerialMessage(m2, null);
-            
+            SerialTrafficController.instance().sendX10Sequence(out, null);
+
             lastOutputStep = 0;
             
             log.debug("initIntensity: sent dim reset");
         } else {
+            // create output sequence
+            X10Sequence out = new X10Sequence();
             // going to high, first set on
-            SerialMessage m1 = SerialMessage.getAddress(housecode, devicecode);
-            SerialMessage m2 = SerialMessage.getFunction(housecode, X10.FUNCTION_ON);
-            // send
-            SerialTrafficController.instance().sendSerialMessage(m1, null);
-            SerialTrafficController.instance().sendSerialMessage(m2, null);
-            log.debug("initIntensity: sent on");
+            out.addAddress(housecode, devicecode);
+            out.addFunction(housecode, X10Sequence.FUNCTION_ON, 0);
             // then set to full dim
-            m1 = SerialMessage.getAddress(housecode, devicecode);
-            m2 = SerialMessage.getFunctionDim(housecode, X10.FUNCTION_BRIGHT, 22);
+            out.addFunction(housecode, X10Sequence.FUNCTION_BRIGHT, 22);
             // send
-            SerialTrafficController.instance().sendSerialMessage(m1, null);
-            SerialTrafficController.instance().sendSerialMessage(m2, null);
+            SerialTrafficController.instance().sendX10Sequence(out, null);
             
             lastOutputStep = 22;
             
@@ -126,7 +118,8 @@ public class SerialLight extends AbstractVariableLight {
      */
 
     int mBit = 0;                // bit within the node
-
+    SerialNode mNode;
+    
     // current output step 0 to 22
     int lastOutputStep = -1;  // -1 means unknown
     
@@ -137,8 +130,9 @@ public class SerialLight extends AbstractVariableLight {
     	if (log.isDebugEnabled()) {
     		log.debug("doNewState(" +oldState+","+newState+")");
     	}
-        SerialNode mNode = SerialAddress.getNodeFromSystemName(getSystemName());
+        if (mNode == null) mNode = SerialAddress.getNodeFromSystemName(getSystemName());
         if (mNode == null) {
+            log.warn("Node doesnt exist, Light ignores doNewState");
             // node does not exist, ignore call
             return;
         }
@@ -188,9 +182,10 @@ public class SerialLight extends AbstractVariableLight {
     	if (log.isDebugEnabled()) {
     		log.debug("updateIntensity(" + intensity + ")");
     	}
-        SerialNode mNode = SerialAddress.getNodeFromSystemName(getSystemName());
+        if (mNode == null) mNode = SerialAddress.getNodeFromSystemName(getSystemName());
         if (mNode == null) {
             // node does not exist, ignore call
+            log.warn("Node doesn't exist, Light ignores updateIntensity");
             return;
         }
         
@@ -219,11 +214,11 @@ public class SerialLight extends AbstractVariableLight {
             return;
         
         } else if (sendSteps >0) {
-            function = X10.FUNCTION_BRIGHT;
+            function = X10Sequence.FUNCTION_BRIGHT;
         	log.debug("function bright");
         }
         else {
-            function = X10.FUNCTION_DIM;
+            function = X10Sequence.FUNCTION_DIM;
         	log.debug("function dim");
         }
 
@@ -237,12 +232,12 @@ public class SerialLight extends AbstractVariableLight {
 
         lastOutputStep = newStep;
         
-        // address message, then function
-        SerialMessage m1 = SerialMessage.getAddress(housecode, devicecode);
-        SerialMessage m2 = SerialMessage.getFunctionDim(housecode, function, deltaDim);
+        // create output sequence of address, then function
+        X10Sequence out = new X10Sequence();
+        out.addAddress(housecode, devicecode);
+        out.addFunction(housecode, function, deltaDim);
         // send
-        SerialTrafficController.instance().sendSerialMessage(m1, null);
-        SerialTrafficController.instance().sendSerialMessage(m2, null);
+        SerialTrafficController.instance().sendX10Sequence(out, null);
 
     	if (log.isDebugEnabled()) {
     		log.debug("updateIntensity(" + intensity + ") house " + housecode + " device " + devicecode + " deltaDim: " + deltaDim + " funct: " + function);
@@ -256,9 +251,10 @@ public class SerialLight extends AbstractVariableLight {
     	if (log.isDebugEnabled()) {
     		log.debug("sendOnOff(" + newState + ") Current: " + mState);
     	}
-        SerialNode mNode = SerialAddress.getNodeFromSystemName(getSystemName());
+        if (mNode == null) mNode = SerialAddress.getNodeFromSystemName(getSystemName());
         if (mNode == null) {
             // node does not exist, ignore call
+            log.warn("Node doesn't exist, Light ignores sendOnOffCommand");
             return;
         }
 
@@ -266,11 +262,11 @@ public class SerialLight extends AbstractVariableLight {
         int function;
         double newDim;
         if (newState == ON) {
-        	function = X10.FUNCTION_ON;
+        	function = X10Sequence.FUNCTION_ON;
         	newDim = 1;
         }
         else if (newState==OFF) {
-        	function = X10.FUNCTION_OFF;
+        	function = X10Sequence.FUNCTION_OFF;
         	newDim = 0;
         }
         else {
@@ -281,12 +277,13 @@ public class SerialLight extends AbstractVariableLight {
         int housecode = ((mBit-1)/16)+1;
         int devicecode = ((mBit-1)%16)+1;
         log.debug("set state "+newState+" house "+housecode+" device "+devicecode);
-        // address message, then content
-        SerialMessage m1 = SerialMessage.getAddress(housecode, devicecode);
-        SerialMessage m2 = SerialMessage.getFunction(housecode, function);
+
+        // create output sequence of address, then function
+        X10Sequence out = new X10Sequence();
+        out.addAddress(housecode, devicecode);
+        out.addFunction(housecode, function, 0);
         // send
-        SerialTrafficController.instance().sendSerialMessage(m1, null);
-        SerialTrafficController.instance().sendSerialMessage(m2, null);
+        SerialTrafficController.instance().sendX10Sequence(out, null);
         
     	if (log.isDebugEnabled()) {
     		log.debug("sendOnOff(" + newDim + ")  house " + housecode + " device " + devicecode + " funct: " + function);

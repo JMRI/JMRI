@@ -1,25 +1,27 @@
-// SerialMessageTest.java
+// SpecificMessageTest.java
 
-package jmri.jmrix.powerline;
+package jmri.jmrix.powerline.cm11;
 
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import jmri.jmrix.powerline.SerialMessage;
+
 /**
- * JUnit tests for the SerialMessage class.
+ * JUnit tests for the cm11.SpecficMessage class.
  * @author	Bob Jacobsen Copyright 2003, 2007, 2008
  * @version	$Revision: 1.1 $
  */
-public class SerialMessageTest extends TestCase {
+public class SpecificMessageTest extends TestCase {
 
 	public void testCreate() {
-		SerialMessage m = new SerialMessage(4);
+		SerialMessage m = new SpecificMessage(4);
 	}
 
 	public void testBytesToString() {
-		SerialMessage m = new SerialMessage(4);
+		SerialMessage m = new SpecificMessage(4);
 		m.setOpCode(0x81);
 		m.setElement(1, (byte)0x02);
 		m.setElement(2, (byte)0xA2);
@@ -29,19 +31,19 @@ public class SerialMessageTest extends TestCase {
 
 	// from here down is testing infrastructure
 
-	public SerialMessageTest(String s) {
+	public SpecificMessageTest(String s) {
 		super(s);
 	}
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {SerialMessageTest.class.getName()};
+		String[] testCaseName = {SpecificMessageTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 
 	// test suite from all defined tests
 	public static Test suite() {
-		TestSuite suite = new TestSuite(SerialMessageTest.class);
+		TestSuite suite = new TestSuite(SpecificMessageTest.class);
 		return suite;
 	}
 

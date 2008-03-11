@@ -10,18 +10,18 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialSensorManager class.
  * @author	Bob Jacobsen  Copyright 2003, 2007, 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SerialSensorManagerTest extends TestCase {
 
     public void testSensorCreationAndRegistration() {
 	    // replace the SerialTrafficController to get clean reset
-	    SerialTrafficController t = new SerialTrafficController() {
+	    SerialTrafficController t = new jmri.jmrix.powerline.cm11.SpecificTrafficController() {
 	        SerialTrafficController test() {
 	            setInstance();
 	            return this;
 	        }
-	    }.test();
+         }.test();
 
         // construct nodes
         SerialNode n0 = new SerialNode(0,SerialNode.DAUGHTER);

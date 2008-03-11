@@ -8,17 +8,17 @@ import junit.framework.*;
 /**
  * Tests for the jmri.jmrix.powerline.SerialTurnout class
  * @author			Bob Jacobsen Copyright 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SerialTurnoutTest extends AbstractTurnoutTest {
 
-	private SerialTrafficControlScaffold tcis = null;
-        private SerialNode n = new SerialNode();
+	private SerialTrafficControlScaffold tcis = new SerialTrafficControlScaffold();
+    private SerialNode n = new SerialNode();
 
 	public void setUp() {
 		// prepare an interface
 		tcis = new SerialTrafficControlScaffold();
-
+        System.out.println("instance "+SerialTrafficController.instance());
 		t = new SerialTurnout("PT4","t4");
 	}
 

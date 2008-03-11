@@ -14,7 +14,7 @@ import jmri.Turnout;
  *
  * Description:		extend jmri.AbstractTurnout for powerline serial layouts
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SerialTurnout extends AbstractTurnout {
 
@@ -68,22 +68,25 @@ public class SerialTurnout extends AbstractTurnout {
     // data members
     String tSystemName; // System Name of this turnout
     int tBit;          // bit number of turnout control in Serial node
-
+    SerialNode tNode;
+    
     protected void sendMessage(boolean closed) {
-        SerialNode tNode = SerialAddress.getNodeFromSystemName(tSystemName);
+        if (tNode == null) 
+            tNode = SerialAddress.getNodeFromSystemName(tSystemName);
         if (tNode == null) {
             // node does not exist, ignore call
+            log.warn("node does not exist, turnout ignoring sendMessage");
             return;
         }
         int housecode = ((tBit-1)/16)+1;
         int devicecode = ((tBit-1)%16)+1;
         log.debug("set closed "+closed+" house "+housecode+" device "+devicecode);
-        // address message, then content
-        SerialMessage m1 = SerialMessage.getAddress(housecode, devicecode);
-        SerialMessage m2 = SerialMessage.getFunction(housecode, closed ? X10.FUNCTION_OFF : X10.FUNCTION_ON);
+        // create output sequence of address, then function
+        X10Sequence out = new X10Sequence();
+        out.addAddress(housecode, devicecode);
+        out.addFunction(housecode, (closed ? X10Sequence.FUNCTION_OFF : X10Sequence.FUNCTION_ON), 0);
         // send
-        SerialTrafficController.instance().sendSerialMessage(m1, null);
-        SerialTrafficController.instance().sendSerialMessage(m2, null);
+        SerialTrafficController.instance().sendX10Sequence(out, null);
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTurnout.class.getName());
