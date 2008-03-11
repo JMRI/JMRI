@@ -23,7 +23,7 @@ import jmri.jmrix.AbstractMRMessage;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -495,7 +495,7 @@ public class AcelaNode {
     /**
      * The numbers here are 0 to MAXSENSORBITS, not 1 to MAXSENSORBITS.
      * @param s - Sensor object
-     * @param i - 0 to MAXSENSORBITS number of sensor's input bit on this node
+     * @param rawaddr - 0 to MAXSENSORBITS number of sensor's input bit on this node
      */
 
     public void registerSensor(Sensor s, int rawaddr) {
