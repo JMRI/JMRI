@@ -3,7 +3,7 @@
 <head>
 <!--
 
-  $Id: package.html,v 1.3 2008-03-11 02:06:41 jacobsen Exp $
+  $Id: package.html,v 1.4 2008-03-11 03:18:21 jacobsen Exp $
 
   Made with permission from the Sun version at
   http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
@@ -15,9 +15,37 @@
 <body bgcolor="white">
 
 This package handles communications for powerline adapters, such as X10.
-<P>
-It's hoped to eventually add Insteon, and perhaps other similar
-systems, to this package.
+
+<p>
+The package structure has to take two kinds of variation into account:
+<ol>
+<li>Multiple adapters, e.g. as shown on the
+<a href="http://jmri.sf.net/help/en/html/hardware/powerline/Compatibility.shtml">compatibility page</a>.
+Each of these has its own serial protocol, including its own message format.
+<li>Multiple device families and types, starting with X10, but later including
+Insteon and perhaps others.  Individual adapters might support one or several of these.
+</ul>
+
+<p>
+Our strategy is to use explicit interfaces for each device protocol, implemented
+by a polymorphic TrafficController for each adapter type.
+<p>
+For example, the primary 
+{@link jmri.jmrix.powerline.SerialTrafficController}
+abstract class has an interface for sending 
+{@link jmri.jmrix.powerline.X10Sequence} objects.  
+An {@link jmri.jmrix.powerline.X10Sequence} encapulates just the X10 commands, not
+the particular message needed to send them.  
+When the {@link jmri.jmrix.powerline.X10Sequence} is passed
+to the specific SerialTrafficController implementation, 
+e.g. {@link jmri.jmrix.powerline.cm11.SpecificTrafficController},
+it's encapsulated in one or more {@link jmri.jmrix.powerline.cm11.SpecificMessage}
+objects, queued and sent.
+
+<p>
+The setup is done in 
+{@link jmri.jmrix.powerline.serialdriver.SerialDriverAdapter}, which keys off the 
+adapter name in option1.
 
 <h2>Related Documentation</h2>
 
