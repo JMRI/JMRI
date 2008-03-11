@@ -26,7 +26,7 @@ import java.util.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.51 $
+ * @version			$Revision: 1.52 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -40,6 +40,9 @@ abstract public class AbstractMRTrafficController {
 	    jmri.util.RuntimeUtil.addShutdownHook(new Thread(new cleanupHook(this)));
     }
 
+    // this is a local self, used here only;
+    // it's not the instance() variable, which is static
+    // and done in individual subclasses.
     AbstractMRTrafficController self;  // this is needed for synchronization
 
     // set the instance variable
