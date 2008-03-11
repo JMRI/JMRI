@@ -20,7 +20,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * with it.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 abstract public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -33,13 +33,17 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
         setAllowUnexpectedReply(true);
         mWaitBeforePoll = 1000;  // can take a long time to send
 
+        initNodes();
+    }
+
+    protected void initNodes() {
         // clear the array of SerialNodes
         for (int i=0; i<=MAXNODE; i++) {
             nodeArray[i] = null;
             mustInit[i] = true;
         }
     }
-
+    
     /**
      * Send a sequence of X10 messages
      * <p>
@@ -54,7 +58,7 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
     
     // have several debug statements in tight loops, e.g. every character;
     // only want to check once
-    boolean logDebug = false;
+    protected boolean logDebug = false;
 
     private int numNodes = 0;       // Incremented as Serial Nodes are created and registered
                                     // Corresponds to next available address in nodeArray

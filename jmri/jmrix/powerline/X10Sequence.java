@@ -7,9 +7,13 @@ package jmri.jmrix.powerline;
  * Represent a sequence of one or more X10 commands (addresses and functions).
  * <p>
  * These are X10 specific, but not device/interface specific.
+ * <p>
+ * A sequence should consist of addressing (1 or more), and then
+ * one or more commands. It can address multiple devices, but 
+ * not more than one house-code.
  *
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class X10Sequence {
 

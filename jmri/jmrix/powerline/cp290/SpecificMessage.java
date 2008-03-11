@@ -21,7 +21,7 @@ import jmri.jmrix.powerline.X10Sequence;
  * </ul>
  *
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 
 public class SpecificMessage extends SerialMessage {
@@ -49,32 +49,6 @@ public class SpecificMessage extends SerialMessage {
         super(m,l);
     }
 
-    boolean interlocked = false;
-    public void setInterlocked(boolean v) { interlocked = v; }
-    public boolean getInterlocked() { return interlocked; }
-    
-    public String toMonitorString() {
-        // check for valid length
-        int len = getNumDataElements();
-        String text;
-        switch (getElement(0)&0xFF) {
-            case 0xFB : text = "Macro load reply"; break;
-            case 0x9B : text = "Set CM11 time"; break;
-            case 0x00 : if (len == 1) {
-                    text = "OK for transmission"; break;
-                } // else fall through
-            default: {
-                if ((getElement(0)& 0x02) == 0x02) {
-                	text = Constants.formatHeaderByte(getElement(0 & 0xFF)) 
-                		+ ' ' + X10Sequence.formatCommandByte(getElement(1)&0xFF);
-                } else
-                	text = Constants.formatHeaderByte(getElement(0 & 0xFF)) 
-            		+ ' ' + X10Sequence.formatAddressByte(getElement(1)&0xFF);
-            }
-        }
-        return text+"\n";
-    }
-    
     /**
      * This ctor interprets the byte array as
      * a sequence of characters to send.
@@ -83,6 +57,22 @@ public class SpecificMessage extends SerialMessage {
     public  SpecificMessage(byte[] a, int l) {
         super(a, l);
     }
+
+    /**
+     * Find 1st byte that's not 0xFF, or -1 if none
+     */
+    int startIndex() {
+        int len = getNumDataElements();
+        for (int i = 0; i<len; i++) {
+            if ( (getElement(i)&0xFF) != 0xFF ) return i;
+        }
+        return -1;
+    }
+    
+    public String toMonitorString() {
+        return toString();
+    }
+
 
     int responseLength = -1;  // -1 is an invalid value, indicating it hasn't been set
     public void setResponseLength(int l) { responseLength = l; }
@@ -106,23 +96,14 @@ public class SpecificMessage extends SerialMessage {
         // Powerline implementation does not currently poll
         return null;
     }
-    static public SpecificMessage setCM11Time(int housecode) {
-        SpecificMessage msg = new SpecificMessage(7);
-        msg.setElement(0, 0x9B);
-        msg.setElement(5, 0x01);
-        msg.setElement(6, housecode<<4);
-        return msg;
-    }
     static public SpecificMessage getAddress(int housecode, int devicecode) {
         SpecificMessage m = new SpecificMessage(2);
-        m.setInterlocked(true);
         m.setElement(0,0x04);
         m.setElement(1,(X10Sequence.encode(housecode)<<4)+X10Sequence.encode(devicecode));
         return m;
     }
     static public SpecificMessage getAddressDim(int housecode, int devicecode, int dimcode) {
         SpecificMessage m = new SpecificMessage(2);
-        m.setInterlocked(true);
         if (dimcode > 0) {
         	m.setElement(0, 0x04 | ((dimcode & 0x1f) << 3));
         } else {
@@ -133,7 +114,6 @@ public class SpecificMessage extends SerialMessage {
     }
     static public SpecificMessage getFunctionDim(int housecode, int function, int dimcode) {
         SpecificMessage m = new SpecificMessage(2);
-        m.setInterlocked(true);
         if (dimcode > 0) {
         	m.setElement(0, 0x06 | ((dimcode & 0x1f) << 3));
         } else {
@@ -144,7 +124,6 @@ public class SpecificMessage extends SerialMessage {
     }
     static public SpecificMessage getFunction(int housecode, int function) {
         SpecificMessage m = new SpecificMessage(2);
-        m.setInterlocked(true);
         m.setElement(0,0x06);
         m.setElement(1,(X10Sequence.encode(housecode)<<4)+function);
         return m;
