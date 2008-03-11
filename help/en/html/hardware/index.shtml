@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.12 2008-03-09 04:20:01 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.13 2008-03-11 17:09:42 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -53,7 +53,6 @@
 	    </dd>
 
 	    <dt class="im">
-		<a href="http://www.cvpusa.com/">
 		<img src="http://www.cti-electronics.com/banner.gif" width="122" height="27" alt="CTI"></a>
 	    </dt>
 	    <dt>CTI Electronics Acela</dt>
@@ -130,7 +129,7 @@
 	    </dd>
 
 	    <dt class="im"><a href="http://www.lionel.com/GettingStarted/LionelTechnology/TMCC.cfm">
-	    <IMG src="images/ico-lionel.gif" width="108" height="35" alt="Lionel TMCC"/></a></dt>
+	    <IMG src="images/ico-lionel.gif" width="108" height="35" alt="Lionel TMCC"></a></dt>
 	    <dt>Lionel TMCC</dt>
 	    <dd>
 		<p>Connection: Serial cable</p>
@@ -139,7 +138,7 @@
 
 
 	    <dt class="im"><a href="http://www.ncedcc.com/">
-	    <IMG src="images/ncelogo.jpg" width="44" height="34" alt="NCE"/></a></dt>
+	    <IMG src="images/ncelogo.jpg" width="44" height="34" alt="NCE"></a></dt>
 	    <dt>NCE</dt>
 	    <dd>
 		Configure connection to a Powerhouse Pro via 
@@ -158,7 +157,7 @@
 		</dd>
 		
 	    <dt class="im"><a href="http://www.oaktreesystems.com/">
-	    <IMG src="images/otslogosmall.gif" width="37" height="50" alt="Oak Tree Systems"/>
+	    <IMG src="images/otslogosmall.gif" width="37" height="50" alt="Oak Tree Systems">
 	    </a></dt>
 	    <dt>Oak Tree Systems</dt>
 	    <dd>
@@ -189,7 +188,7 @@
 	    <dd><p class="dl">Configure: <A HREF="sprog/SPROG.shtml">SPROG</a></p></dd>
 
 	    <dt class="im"><a href="http://www.uhlenbrock.de/">
-	    <IMG src="images/ico-Ur.gif" width="44" height="34" alt="Uhlenbrock"/></a></dt>
+	    <IMG src="images/ico-Ur.gif" width="44" height="34" alt="Uhlenbrock"></a></dt>
 	    <dt>Uhlenbrock</dt>
 	    <dd>The Intellibox can be connected to JMRI programs either via its
 	    LocoNet connections, or via its own serial port.:
