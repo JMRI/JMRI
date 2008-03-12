@@ -24,20 +24,25 @@
 # For more information, please see
 # http://jmri.sourceforge.net/install/ShellScripts.shtml
 #
-# $Revision: 1.3 $ (CVS maintains this line, do not edit please)
+# $Revision: 1.4 $ (CVS maintains this line, do not edit please)
 
 # define the class to be invoked
-CLASSNAME=apps.LocoTools.LocoTools
+CLASSNAME=apps.DecoderPro.DecoderPro
 
 # set DEBUG to anything to see debugging output
+# we leave this set on MacOS X, as the Console app makes it less visible
 DEBUG=yes
+
+# label what is to follow
+if test ${DEBUG}; then echo "JMRI: Starting ${CLASSNAME} from $0"; fi
 
 # if JMRI_HOME is defined, go there, 
 # else change directory to where the containing application bundle is located
-if test ${JMRI_HOME}; then
-    cd ${JMRI_HOME};
+if test "${JMRI_HOME}"; then
+    cd "${JMRI_HOME}";
 else 
-    cd `dirname $0`/../../..;  # script is in *app/Contents/MacOS/
+    SCRIPTDIR=`dirname "$0"`;  # punctuation is for directories with spaces
+    cd "${SCRIPTDIR}/../../.."; # script is in *.app/Contents/MacOS/
 fi
 if test ${DEBUG}; then echo PWD: ${PWD}; fi
 
@@ -52,17 +57,23 @@ CP=${CP}:jmri.jar
 CP=${CP}:`ls -m lib/*.jar | tr -d " \n" | tr "," ":"`
 if test ${DEBUG}; then echo CLASSPATH: ${CP}; fi
 
-# build config file name dynamically based on name of application
-# bundle containing this script
-APPNAME=`dirname $0`
-APPNAME=`dirname ${APPNAME}`
-APPNAME=`dirname ${APPNAME}`
-APPNAME=`basename -s .app ${APPNAME}`
+# build the config file name dynamically based on name of
+# application bundle containing this script
+APPNAME=`dirname "$0"`
+APPNAME=`dirname "${APPNAME}"`
+APPNAME=`dirname "${APPNAME}"`
+APPNAME=`basename -s .app "${APPNAME}"`
+# APPNAME might have spaces, which we now remove and use only 1st word
+# because we can't set the apple.menu.about.name to contain spaces.
+# we want the menu name and config file to have the same root.
+APPNAME=`echo ${APPNAME} | awk '{print $1}'`
 CONFIGFILE=${APPNAME}Config2.xml;
 if test ${DEBUG}; then echo CONFIGFILE: ${CONFIGFILE}; fi
 
 # create the option string
 #
+# user-provided options
+if test ${JMRI_OPTIONS}; then OPTIONS=${JMRI_OPTIONS}; fi
 # JVM and RMI options
 OPTIONS="${OPTIONS} -noverify"
 OPTIONS="${OPTIONS} -Djava.security.policy=lib/security.policy"
@@ -80,6 +91,7 @@ OPTIONS="${OPTIONS} -Dcom.apple.mrj.application.apple.menu.about.name=${APPNAME}
 OPTIONS="${OPTIONS} -Djavax.comm.rxtx.NoVersionOutput=true"
 if test ${DEBUG}; then echo OPTIONS: ${OPTIONS}; fi
 
+# Finally, launch the application in Java
 java ${OPTIONS} -cp ${CP} ${CLASSNAME} ${CONFIGFILE}
 
 
