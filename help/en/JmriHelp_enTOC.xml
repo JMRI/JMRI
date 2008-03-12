@@ -139,7 +139,22 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
          <tocitem text="Monitor Clock" target="package.jmri.jmrix.nce.clockmon.ClockMonFrame"/>
       </tocitem>
    </tocitem>
-   <tocitem text="Hardware Support" target="html.hardware.index"/>
+   <tocitem text="Hardware Support" target="html.hardware.index">
+      <tocitem text="Acela" target="html.hardware.acela.index"/>
+      <tocitem text="CMRI" target="html.hardware.cmri.CMRI"/>
+      <tocitem text="EasyDCC" target="html.hardware.easydcc.EasyDCC"/>
+      <tocitem text="Grapevine (ProTrak)" target="html.hardware.grapevine.index"/>
+      <tocitem text="LocoNet (Digitrax)" target="html.hardware.loconet.Digitrax"/>
+      <tocitem text="NCE" target="html.hardware.nce.NCE"/>
+      <tocitem text="OakTree Systems" target="html.hardware.oaktree.OakTree"/>
+      <tocitem text="Powerline (X10)" target="html.hardware.powerline.index"/>
+      <tocitem text="RPS" target="html.hardware.rps.index"/>
+      <tocitem text="SECSI (TrakTronix)" target="html.hardware.secsi.index"/>
+      <tocitem text="SPROG" target="html.hardware.sprog.SPROG"/>
+      <tocitem text="TMCC (Lionel)" target="html.hardware.tmcc.index"/>
+      <tocitem text="XPressNet (Lenz)" target="html.hardware.XPressNet.index"/>
+      <tocitem text="Zimo" target="html.hardware.zimo.Zimo"/>
+   </tocitem>
    <tocitem text="Technical Info" target="html.doc.Technical.index">
       <tocitem text="Getting the Source Code">
          <tocitem text="Via CVS" target="html.doc.Technical.getcode"/>

@@ -34,10 +34,10 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
    </indexitem>
    <indexitem text="DS64" target="package.jmri.jmrix.loconet.ds64.DS64Frame"/>
    <indexitem text="Hardware" target="html.hardware.index">
+      <indexitem text="Acela (CTI)" target="html.hardware.acela.index"/>
       <indexitem text="C/MRI" target="html.hardware.cmri.CMRI">
          <indexitem text="Signals" target="html.hardware.cmri.Signals"/>
       </indexitem>
-      <indexitem text="CTI Acela" target="html.hardware.acela.index"/>
       <indexitem text="Digitrax LocoNet" target="html.hardware.loconet.Digitrax"/>
       <indexitem text="EasyDCC" target="html.hardware.easydcc.EasyDCC"/>
       <indexitem text="Grapevine" target="html.hardware.grapevine.Names"/>
