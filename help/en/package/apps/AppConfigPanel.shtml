@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: AppConfigPanel.shtml,v 1.8 2008-03-09 19:46:18 jacobsen Exp $ -->
+<!-- $Id: AppConfigPanel.shtml,v 1.9 2008-03-12 02:40:57 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -68,6 +68,13 @@ can select one at the same time you
 but this provides a convenient place to set a default so you don't
 have to select it each time you open a decoder.
 </dl>
+
+Perhaps the most important control is at the bottom of this section:
+The "Save" button!  
+<p>
+Be sure to click "Save" when leaving this window.  Your changes to the preferences
+don't take effect until the program is stopped and restarted, so the
+program will prompt you to do that after saving the preferences.
 
 <a name="advanced">
 <h3>Advanced Preferences</h3></a>
