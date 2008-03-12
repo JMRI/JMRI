@@ -2,16 +2,20 @@
 
 package jmri.jmrix.acela.serialdriver;
 
+import javax.swing.JButton;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+import jmri.jmrix.acela.nodeconfig.NodeConfigAction;
 
 /**
  * Definition of objects to handle configuring an LocoBuffer layout connection
  * via an NCE SerialDriverAdapter object.
  *
- * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.1 $
+ * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2008
+ * @version	$Revision: 1.2 $
  *
  * @author	Bob Coleman, Copyright (C) 2007, 2008
- *              Based on Mrc example, modified to establish Acela support. 
+ *              Based on MRC example, modified to establish Acela support. 
  */
 
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
@@ -29,6 +33,24 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
      */
     public ConnectionConfig() {
         super();
+    }
+
+    public void loadDetails(JPanel details) {
+    	// have to embed the usual one in a new JPanel
+    	
+    	JPanel p = new JPanel();
+        super.loadDetails(p);
+
+		details.setLayout(new BoxLayout(details,BoxLayout.Y_AXIS));
+		details.add(p);
+
+		// add another button
+		JButton b = new JButton("Configure nodes");
+
+		details.add(b);
+						
+		b.addActionListener(new NodeConfigAction());		
+        
     }
 
     public String name() { return "Acela"; }
