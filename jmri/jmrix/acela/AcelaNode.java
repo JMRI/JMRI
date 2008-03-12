@@ -23,7 +23,7 @@ import jmri.jmrix.AbstractMRMessage;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -47,6 +47,14 @@ public class AcelaNode {
     public static final byte SC = 0x05;	// SmartCab (no output bits. no input bits)
     public static final byte UN = 0x00;	// Although this may be dangerous
 
+    public static final String[] boardNames = new String[]{"<none>",
+                                        "TrainBrain (4 output bits and 4 input bits)",
+                                        "Dash-8 (8 output bits)",
+                                        "Watchman (8 input bits)",
+                                        "SignalMan (16 output bits)",
+                                        "SmartCab (no output bits. no input bits)",
+                                        "<undefined>"
+                                        };
     // node definition instance variables (must persist between runs)
     public int nodeAddress = 0;                         // Node address, 0-1024 allowed
     protected int nodeType = UN;                        // See above
