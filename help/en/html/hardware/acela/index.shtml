@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: index.shtml,v 1.1 2008-03-09 03:33:53 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.2 2008-03-12 02:44:34 jacobsen Exp $ -->
 <title>JMRI: Connecting the CTI Acela System</title>
 
 <!-- Style -->
@@ -26,6 +26,14 @@ JMRI: Connecting the Acela System
 Naming and input/output connectors are described on a 
 <a href="Names.shtml">separate page</a>.
 
+<p>
+Nodes are found automatically at startup, and can also be 
+defined manual with the 
+<a href="../../../package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml">Configure Nodes</a>
+tool. Either way, don't forget to save them with the
+"Save" button on the 
+<a href="../../../package/apps/AppConfigPanel.shtml">Preferences window</a>.
+<p>
 <H3>Limitations</h3>
 
 <UL>
