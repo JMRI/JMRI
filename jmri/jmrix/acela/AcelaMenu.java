@@ -10,7 +10,7 @@ import javax.swing.JMenu;
  * Create a "Systems" menu containing the Jmri Acela-specific tools
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  *
  * @author	Bob Coleman, Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -31,6 +31,7 @@ public class AcelaMenu extends JMenu {
 
         add(new jmri.jmrix.acela.acelamon.AcelaMonAction(rb.getString("MenuItemCommandMonitor")));
         add(new jmri.jmrix.acela.packetgen.AcelaPacketGenAction(rb.getString("MenuItemSendCommand")));
+        add(new jmri.jmrix.acela.nodeconfig.NodeConfigAction(rb.getString("MenuItemConfigNodes")));
     }
 }
 
