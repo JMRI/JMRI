@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: AppConfigPanel.shtml,v 1.9 2008-03-12 02:40:57 jacobsen Exp $ -->
+<!-- $Id: AppConfigPanel.shtml,v 1.10 2008-03-12 03:04:11 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -38,10 +38,9 @@ on some
 <a name="basic">
 <h3>Basic Preferences</h3></a>
 
-When the window first opens, it displays the 
-basic preferences.<br/>
-<a href="../../DecoderProManual/Pix/Preferences.png"/>
-<img src="../../DecoderProManual/Pix/Preferences.png" height="156" width="256" align="right" /></a>
+When the window first opens, it displays the basic preferences.<br>
+<a href="../../DecoderProManual/Pix/Preferences.png">
+<img src="../../DecoderProManual/Pix/Preferences.png" height="156" width="256" align="right"></a>
 <dl>
 <dt>Layout Connection
 <dd>You can select any of the various JMRI layout connections here.
@@ -79,9 +78,9 @@ program will prompt you to do that after saving the preferences.
 <a name="advanced">
 <h3>Advanced Preferences</h3></a>
 
-To set the advanced preferences, check the "Show Advanced Preferences" box.<br/>
-<a href="../../DecoderProManual/Pix/Preferences2.png"/>
-<img src="../../DecoderProManual/Pix/Preferences2.png" height="222" width="256" align="right" /></a>
+To set the advanced preferences, check the "Show Advanced Preferences" box.<br>
+<a href="../../DecoderProManual/Pix/Preferences2.png">
+<img src="../../DecoderProManual/Pix/Preferences2.png" height="222" width="256" align="right"></a>
 
 <dl>
 <dt>Auxiliary layout connections
