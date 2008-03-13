@@ -23,7 +23,7 @@ import org.jdom.*;
  * here directly via the class attribute in the XML.
  *
  * @author      Bob Jacobsen Copyright: Copyright (c) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  *
  * @author      Bob Coleman, Copyright (c) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -79,6 +79,9 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
             // create node (they register themselves)
             AcelaNode node = new AcelaNode(addr, type);
+            
+            // Do not poll for Acela network nodes
+            AcelaTrafficController.instance().setNeedToPollNodes(false);
             
             // Trigger initialization of this Node to reflect these parameters
             AcelaTrafficController.instance().initializeAcelaNode(node);

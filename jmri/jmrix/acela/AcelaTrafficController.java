@@ -25,7 +25,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  *
  * @author	Bob Coleman Copyright (C) 2007. 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -45,7 +45,8 @@ public class AcelaTrafficController extends AbstractMRTrafficController implemen
             mustInit[i] = false;  // Do not normally need to init Acela nodes.
         }
 
-        needToCreateNodes = true;   // Need to poll and create corresponding nodes
+        needToPollNodes = true;   // Need to poll and create corresponding nodes
+        needToInitAcelaNetwork = true;   // Need to poll and create corresponding nodes
         needToCreateNodesState = 0; // Need to initialize system and then poll
         acelaTrafficControllerState = false;                //  Flag to indicate which state we are in: 
                                                             //  false == Initiallizing Acela Network
@@ -74,7 +75,8 @@ public class AcelaTrafficController extends AbstractMRTrafficController implemen
     private boolean acelaTrafficControllerState = false;    //  Flag to indicate which state we are in: 
                                                             //  false == Initiallizing Acela Network
                                                             //  true == Polling Sensors
-    private boolean needToCreateNodes = true;   //  Flag to indicate that nodes have not yet been created
+    private boolean needToPollNodes = true;   //  Flag to indicate that nodes have not yet been created
+    private boolean needToInitAcelaNetwork = true;   //  Flag to indicate that Acela network must be initialized
     private int needToCreateNodesState = 0;     //  Need to do a few things:
                                                 //      Reset Acela Network
                                                 //      Set Acela Netwrok Online
@@ -120,6 +122,14 @@ public class AcelaTrafficController extends AbstractMRTrafficController implemen
     
     public void setAcelaSensorsState(boolean newstate) {
         acelaSensorsState = newstate;
+    }
+    
+    public boolean getNeedToPollNodes() {
+        return needToPollNodes;
+    }
+    
+    public void setNeedToPollNodes(boolean newstate) {
+        needToPollNodes = newstate;
     }
     
     /**
@@ -292,9 +302,11 @@ public class AcelaTrafficController extends AbstractMRTrafficController implemen
      *      from within the running thread
      */
     protected synchronized AbstractMRMessage pollMessage() {
-        if (needToCreateNodes) {
+        if (needToInitAcelaNetwork) {
             if (needToCreateNodesState == 0) {
-    		AcelaNode specialnode = new AcelaNode(0, AcelaNode.UN);
+                if (needToPollNodes) {
+        		AcelaNode specialnode = new AcelaNode(0, AcelaNode.UN);
+                }
                 curAcelaNodeIndex = SPECIALNODE;
                 AcelaMessage m = AcelaMessage.getAcelaResetMsg();
             	log.debug("send init message: "+m);
@@ -311,13 +323,19 @@ public class AcelaTrafficController extends AbstractMRTrafficController implemen
                 needToCreateNodesState++;
         	return m;
             }
-            if (needToCreateNodesState == 2) {
-            	AcelaMessage m = AcelaMessage.getAcelaPollNodesMsg();
-            	log.debug("send poll message: "+m);
-            	m.setTimeout(8000);  // wait for init to finish (milliseconds)
-            	mCurrentMode = NORMALMODE;
-                needToCreateNodes = false;
-            	return m;
+            if (needToPollNodes) {
+                if (needToCreateNodesState == 2) {
+                    AcelaMessage m = AcelaMessage.getAcelaPollNodesMsg();
+                    log.debug("send poll message: "+m);
+                    m.setTimeout(8000);  // wait for init to finish (milliseconds)
+                    mCurrentMode = NORMALMODE;
+                    needToInitAcelaNetwork = false;
+                    needToPollNodes = false;
+                    return m;
+                }
+            } else {
+                needToInitAcelaNetwork = false;
+                setAcelaTrafficControllerState(true); 
             }
         }
         
