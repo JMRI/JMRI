@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!-- Copyright (C) Bob Jacobsen 2007 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: decoder.xsl,v 1.13 2007-12-03 16:52:11 jacobsen Exp $ -->
+<!-- $Id: decoder.xsl,v 1.14 2008-03-13 15:27:56 jacobsen Exp $ -->
 
 
 <!-- This XSLT transform is used when a JMRI decoder definition -->
@@ -90,6 +90,10 @@ for more information.
   <!-- display model info -->
   <xsl:for-each select="decoder-config/decoder/family/model">
       <xsl:element name="hr"/><p>
+
+      <xsl:element name="a">
+        <xsl:attribute name="name"><xsl:value-of select="@model"/></xsl:attribute>
+      </xsl:element>
 
       Model: <xsl:value-of select="@model"/><br/>
       Version number low:
