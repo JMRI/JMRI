@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.25 $
+ * @version			$Revision: 1.26 $
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface {
 
@@ -178,6 +178,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 	}
 
     protected boolean endOfMessage(AbstractMRReply msg) {
+    	msg.setBinary(replyBinary);
         // first try boolean
         if (replyBinary) {
 			// Attempt to detect and correctly forward AIU broadcast from pre
