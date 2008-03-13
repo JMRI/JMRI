@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!-- Copyright (C) Bob Jacobsen 2007 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: decoder.xsl,v 1.14 2008-03-13 15:27:56 jacobsen Exp $ -->
+<!-- $Id: decoder.xsl,v 1.15 2008-03-13 15:30:11 jacobsen Exp $ -->
 
 
 <!-- This XSLT transform is used when a JMRI decoder definition -->
@@ -132,7 +132,7 @@ for more information.
       <xsl:element name="input">
         <xsl:attribute name="type">text</xsl:attribute>
         <xsl:attribute name="name"><xsl:value-of select="@model"/>-formFactor</xsl:attribute>
-        <xsl:attribute name="size">3</xsl:attribute><xsl:attribute name="value"><xsl:value-of select="@formFactor"/></xsl:attribute>
+        <xsl:attribute name="value"><xsl:value-of select="@formFactor"/></xsl:attribute>
       </xsl:element>
       form factor (manufacturer's labeling)
       
