@@ -14,7 +14,7 @@ package jmri.jmrix.acela;
  *              AL134 (bit134)
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004 - 2006
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -24,6 +24,8 @@ public class AcelaAddress {
 
     public AcelaAddress() {
     }
+
+    private static int MAXSENSORADDRESS = 1023;
 
     static protected boolean newMethod = true;         // 'true' if we want to use new method
                                                  //    temporary hack to add in new method
@@ -162,7 +164,7 @@ public class AcelaAddress {
             }
         }
         else if ( type=='S' ) {
-            if ( ( bit < 0 ) || ( bit > 1023) ) {
+            if ( ( bit < 0 ) || ( bit > MAXSENSORADDRESS) ) {
                 // The bit is not valid for this defined Acela node
                 return false;
             }
@@ -194,7 +196,7 @@ public class AcelaAddress {
             }
         }
         else if ( type=='S' ) {
-            if ( ( bit < 0 ) || ( bit > 1023) ) {
+            if ( ( bit < 0 ) || ( bit > MAXSENSORADDRESS) ) {
                 // The bit is not valid for this defined Acela node
                 return false;
             }
