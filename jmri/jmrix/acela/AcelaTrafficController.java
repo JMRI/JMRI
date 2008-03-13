@@ -25,7 +25,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  *
  * @author	Bob Coleman Copyright (C) 2007. 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -86,12 +86,26 @@ public class AcelaTrafficController extends AbstractMRTrafficController implemen
     
     private static int SPECIALNODE = 0;         //  Needed to initialize system
 
-    private static int MINNODE = 0;
-    private static int MAXNODE = 1024;
+    static final int MINNODE = 0;
+    static final int MAXNODE = 1024;     //  Artifical limit but economically reasonable
 
     private AcelaNode[] nodeArray = new AcelaNode[MAXNODE];  // numbering from 0
     private boolean[] mustInit = new boolean[MAXNODE];
 
+    /**
+     *  Public method to get minimum address of an Acela node
+     */
+    public int getMinimumNodeAddress() {
+        return MINNODE;
+    }
+    
+    /**
+     *  Public method to get maximum number of Acela nodes
+     */
+    public int getMaximumNumberOfNodes() {
+        return MAXNODE;
+    }
+    
     public boolean getAcelaTrafficControllerState() {
         return acelaTrafficControllerState;
     }

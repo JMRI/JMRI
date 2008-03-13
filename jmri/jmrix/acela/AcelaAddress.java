@@ -9,12 +9,12 @@ package jmri.jmrix.acela;
  *   Atxxxx 
  *      where:  t is the type code, 'T' for turnouts, 'S' for sensors, and
  *                      'L' for lights
- *              xxxs is a bit number of the input or output bit (000-1023)
+ *              xxxx is a bit number of the input or output bit (0-1023)
  *      examples: AT2 (bit 2), AS1003 (bit 1003), 
  *              AL134 (bit134)
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004 - 2006
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -25,11 +25,13 @@ public class AcelaAddress {
     public AcelaAddress() {
     }
 
-    private static int MAXSENSORADDRESS = 1023;
+    static final int MINSENSORADDRESS = 0;
+    static final int MAXSENSORADDRESS = 1023;   //  Artifical limit but OK until someone has
+                                                //  more than 64 sensor modules (at 16 sensors each).
+    static final int MINOUTPUTADDRESS = 0;
+    static final int MAXOUTPUTADDRESS = 1023;   //  Artifical limit but OK until someone has
+                                                //  more than 64 output modules (at 16 outputs each).
 
-    static protected boolean newMethod = true;         // 'true' if we want to use new method
-                                                 //    temporary hack to add in new method
-                                                 //    and preserve old.
 
     /**
      * Public static method to parse a Acela system name and return the Acela Node Address
@@ -158,13 +160,13 @@ public class AcelaAddress {
         }
         int bit = getBitFromSystemName(systemName);
         if ( ( type=='T' ) || (type=='L') ) {
-            if ( ( bit < 0 ) || ( bit > 1023) ) {
+            if ( ( bit < MINOUTPUTADDRESS ) || ( bit > MAXOUTPUTADDRESS) ) {
                 // The bit is not valid for this defined Acela node
                 return false;
             }
         }
         else if ( type=='S' ) {
-            if ( ( bit < 0 ) || ( bit > MAXSENSORADDRESS) ) {
+            if ( ( bit < MINSENSORADDRESS ) || ( bit > MAXSENSORADDRESS) ) {
                 // The bit is not valid for this defined Acela node
                 return false;
             }
@@ -190,13 +192,13 @@ public class AcelaAddress {
         }
         int bit = getBitFromSystemName(systemName);
         if ( ( type=='T' ) || (type=='L') ) {
-            if ( ( bit < 0 ) || ( bit > 1023) ) {
+            if ( ( bit < MINOUTPUTADDRESS ) || ( bit > MAXOUTPUTADDRESS) ) {
                 // The bit is not valid for this defined Acela node
                 return false;
             }
         }
         else if ( type=='S' ) {
-            if ( ( bit < 0 ) || ( bit > MAXSENSORADDRESS) ) {
+            if ( ( bit < MINSENSORADDRESS ) || ( bit > MAXSENSORADDRESS) ) {
                 // The bit is not valid for this defined Acela node
                 return false;
             }
@@ -271,21 +273,26 @@ public class AcelaAddress {
     public static String makeSystemName(String type,int nAddress, int bitNum) {
 	String nName = "";
 	// check the type character
-        if ( (type != "S") && (type != "L") && (type != "T") ) {
+        if ( !type.equalsIgnoreCase("S") && !type.equalsIgnoreCase("L") && !type.equalsIgnoreCase("T") ) {
             // here if an illegal type character 
             log.error("illegal type character proposed for system name");
             return (nName);
         }
 	// check the node address
-        if ( (nAddress < 0) || (nAddress > 127) ) {
+        if ( (nAddress < AcelaTrafficController.instance().getMinimumNodeAddress()) || (nAddress > AcelaTrafficController.instance().getMaximumNumberOfNodes()) ) {
             // here if an illegal node address 
             log.error("illegal node adddress proposed for system name");
             return (nName);
         }
 	// check the bit number
-        if ( (bitNum < 0) || (bitNum > 2048) ) {
+        if (type.equalsIgnoreCase("S") && ( (bitNum < 0) || (bitNum > MAXSENSORADDRESS) )) {
             // here if an illegal bit number 
-            log.error("illegal bit number proposed for system name");
+            log.error("illegal bit number proposed for Acela Sensor");
+            return (nName);
+        }
+        if ((type.equalsIgnoreCase("L") || type.equalsIgnoreCase("T")) && ( (bitNum < 0) || (bitNum > MAXOUTPUTADDRESS) )) {
+            // here if an illegal bit number 
+            log.error("illegal bit number proposed for Acela Turnout or Lighr");
             return (nName);
         }
 	// construct the address
