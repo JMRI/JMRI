@@ -17,7 +17,7 @@ import jmri.jmrix.acela.AcelaSensorManager;
  * Frame for user configuration of Acela nodes
  * @author	Bob Jacobsen   Copyright (C) 2004, 2007, 2008
  * @author	Dave Duchamp   Copyright (C) 2004, 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -80,11 +80,11 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         panel11.add(new JLabel(rb.getString("LabelNodeAddress")+" "));
         panel11.add(nodeAddrField);
         nodeAddrField.setToolTipText(rb.getString("TipNodeAddress"));
-        nodeAddrField.setText("1");
+        nodeAddrField.setText("0");
         panel11.add(nodeAddrStatic);
         nodeAddrStatic.setVisible(false);
         panel11.add(new JLabel("   "+rb.getString("LabelNodeType")+" "));
-        nodeTypeBox = new JComboBox(AcelaNode.boardNames);
+        nodeTypeBox = new JComboBox(AcelaNode.moduleNames);
         panel11.add(nodeTypeBox);
         nodeTypeBox.setToolTipText(rb.getString("TipNodeType"));
         contentPane.add(panel11);

@@ -17,7 +17,7 @@ import jmri.Sensor;
  * <P>
  * @author      Bob Jacobsen Copyright (C) 2003, 2007
  * @author      Dave Duchamp, multi node extensions, 2004
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  *
  * @author      Bob Coleman Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -125,6 +125,10 @@ public class AcelaSensorManager extends jmri.AbstractSensorManager
         
                         int nodetype;
                         switch (replynodetype) {
+                            case 0x00: {
+                                nodetype = AcelaNode.AC;  // Should never get this
+                                break;
+                            }
                             case 0x01: {
                                 nodetype = AcelaNode.TB;
                                 break;
@@ -145,8 +149,20 @@ public class AcelaSensorManager extends jmri.AbstractSensorManager
                                 nodetype = AcelaNode.SC;
                                 break;
                             }
+                            case 0x06: {
+                                nodetype = AcelaNode.SY;
+                                break;
+                            }
+                            case 0x07: {
+                                nodetype = AcelaNode.YM;
+                                break;
+                            }
+                            case 0x08: {
+                                nodetype = AcelaNode.SY;
+                                break;
+                            }
                             default: {
-                                nodetype = AcelaNode.UN;
+                                nodetype = AcelaNode.UN;  // Should never get this
                             }
                         }
                		AcelaNode node0 = new AcelaNode(i+1, nodetype);

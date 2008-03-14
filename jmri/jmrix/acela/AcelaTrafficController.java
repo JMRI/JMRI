@@ -25,7 +25,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  *
  * @author	Bob Coleman Copyright (C) 2007. 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -305,7 +305,7 @@ public class AcelaTrafficController extends AbstractMRTrafficController implemen
         if (needToInitAcelaNetwork) {
             if (needToCreateNodesState == 0) {
                 if (needToPollNodes) {
-        		AcelaNode specialnode = new AcelaNode(0, AcelaNode.UN);
+        		AcelaNode specialnode = new AcelaNode(0, AcelaNode.AC);
                 }
                 curAcelaNodeIndex = SPECIALNODE;
                 AcelaMessage m = AcelaMessage.getAcelaResetMsg();

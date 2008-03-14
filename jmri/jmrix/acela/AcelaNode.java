@@ -23,7 +23,7 @@ import jmri.jmrix.AbstractMRMessage;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -33,28 +33,36 @@ public class AcelaNode {
     /**
      * Maximum number of sensors/outputs any node of any type can carry.
      */
-    static final int MAXSENSORBITS = 8;  // Used to initialize arrays
+    static final int MAXSENSORBITS = 16;  // Used to initialize arrays
     static final int MAXOUTPUTBITS = 16;  // Used to initialize arrays
 
     private static int MAXNODE = 1024;
     private static int MAXDELAY = 65535;
 
     // class constants
+    public static final byte AC = 0x00;	// Acela Interface module (no inputs, no outputs)
+                                        // Does not really return a code of 0x00
     public static final byte TB = 0x01;	// TrainBrain (4 output bits and 4 input bits)
     public static final byte D8 = 0x02;	// Dash-8 (8 output bits)
     public static final byte WM = 0x03;	// Watchman (8 input bits)
     public static final byte SM = 0x04;	// SignalMan (16 output bits)
-    public static final byte SC = 0x05;	// SmartCab (no output bits. no input bits)
-    public static final byte UN = 0x00;	// Although this may be dangerous
+    public static final byte SC = 0x05;	// SmartCab (1 output bits. no input bits)
+    public static final byte SW = 0x06;	// SwitchMan (16 output bits. no input bits)
+    public static final byte YM = 0x07;	// YardMaster (16 output bits. no input bits)
+    public static final byte SY = 0x08;	// Sentry (no output bits. 16 input bits)
+    public static final byte UN = 0x09;	// Unidentified module -- should be FF
 
-    public static final String[] boardNames = new String[]{"<none>",
+    public static final String[] moduleNames = new String[]{"Acela",
                                         "TrainBrain (4 output bits and 4 input bits)",
-                                        "Dash-8 (8 output bits)",
-                                        "Watchman (8 input bits)",
-                                        "SignalMan (16 output bits)",
-                                        "SmartCab (no output bits. no input bits)",
-                                        "<undefined>"
+                                        "Dash-8 (8 output bits, no input bits)",
+                                        "Watchman (8 input bits, no input bits)",
+                                        "SignalMan (16 output bits, no input bits)",
+                                        "SmartCab (1 output bit, no input bits)",
+                                        "SwitchMan (16 output bits, no input bits)",
+                                        "YardMaster (16 output bits, no input bits)",
+                                        "Sentry (no output bits, 16 input bits)"
                                         };
+
     // node definition instance variables (must persist between runs)
     public int nodeAddress = 0;                         // Node address, 0-1024 allowed
     protected int nodeType = UN;                        // See above
@@ -271,6 +279,11 @@ public class AcelaNode {
         nodeType = type;
         // set default values for other instance variables
         switch (type) {
+            case AC: {
+        	outputbitsPerCard = 0;
+        	sensorbitsPerCard = 0;
+                break;
+            }
             case TB: {
         	outputbitsPerCard = 4;
         	sensorbitsPerCard = 4;
@@ -294,6 +307,21 @@ public class AcelaNode {
             case SC: {
         	outputbitsPerCard = 1;
         	sensorbitsPerCard = 0;
+                break;
+            }
+            case SW: {
+        	outputbitsPerCard = 16;
+        	sensorbitsPerCard = 0;
+                break;
+            }
+            case YM: {
+        	outputbitsPerCard = 16;
+        	sensorbitsPerCard = 0;
+                break;
+            }
+            case SY: {
+        	outputbitsPerCard = 0;
+        	sensorbitsPerCard = 16;
                 break;
             }
             case UN: {
@@ -401,7 +429,7 @@ public class AcelaNode {
             m.setBinary(true);
             return m;
     	}
-    	if (nodeType == WM) {
+    	if ((nodeType == WM) || (nodeType == SY)) {
             AcelaMessage m = new AcelaMessage(3);
             m.setElement(0, 0x01);
             m.setElement(1, 0x00);
@@ -417,7 +445,7 @@ public class AcelaNode {
             m.setBinary(true);
             return m;
     	}
-    	if (nodeType == SM) {
+    	if ((nodeType == SM) || (nodeType == SW) || (nodeType == YM)) {
             int tempsettings = outputArray[3] * 8 + outputArray[2] * 4 + outputArray[1] * 2 + outputArray[0] * 1;
             tempsettings = outputArray[7] * 128 + outputArray[6] * 64 + outputArray[5] * 32 + outputArray[4] * 16 + tempsettings;
             byte newsettings = (byte) (tempsettings);
