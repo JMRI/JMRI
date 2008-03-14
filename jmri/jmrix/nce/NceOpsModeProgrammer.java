@@ -12,7 +12,7 @@ import jmri.*;
  *
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class NceOpsModeProgrammer extends NceProgrammer  {
 
@@ -48,14 +48,15 @@ public class NceOpsModeProgrammer extends NceProgrammer  {
         // record state. COMMANDSENT is just waiting for a reply...
         useProgrammer(p);
         _progRead = false;
-        progState = COMMANDSENT;
+        progState = COMMANDSENT_2;
         _val = val;
         _cv = CV;
 
         // start the error timer
         startShortTimer();
 
-        // send it
+        // send it twice
+        controller().sendNceMessage(msg, this);
         controller().sendNceMessage(msg, this);
     }
 

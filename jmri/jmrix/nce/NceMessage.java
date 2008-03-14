@@ -26,7 +26,7 @@ package jmri.jmrix.nce;
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2007
- * @version     $Revision: 1.38 $
+ * @version     $Revision: 1.39 $
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 	
@@ -369,7 +369,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             int i = 0; // counter to make it easier to format the message
         
             m.setElement(i++, SENDn_BYTES_CMD + bytes.length);
-            m.setElement(i++, 0x02);        // send twice
+            m.setElement(i++, 0x03);        // send three times
             for (int j = 0; j<bytes.length; j++) {
                 m.setElement(i++, bytes[j]&0xFF);
             }

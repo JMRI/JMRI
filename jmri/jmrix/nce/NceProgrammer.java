@@ -15,7 +15,7 @@ import java.util.Vector;
  * This has two states:  NOTPROGRAMMING, and COMMANDSENT.  The transistions
  * to and from programming mode are now handled in the TrafficController code.
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 public class NceProgrammer extends AbstractProgrammer implements NceListener {
 
@@ -104,6 +104,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
     int progState = 0;
     static final int NOTPROGRAMMING = 0;// is notProgramming
     static final int COMMANDSENT = 2; 	// read/write command sent, waiting reply
+    static final int COMMANDSENT_2 = 4;	// ops programming mode, send msg twice
     boolean  _progRead = false;
     int _val;	// remember the value being read/written for confirmative reply
     int _cv;	// remember the cv being read/written
@@ -223,6 +224,11 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
                 // write, we're to return the original write value
                 notifyProgListenerEnd(_val, jmri.ProgListener.OK);
             }
+        
+        } else if (progState == COMMANDSENT_2) {
+            if (log.isDebugEnabled()) log.debug("first reply in COMMANDSENT_2 state");
+            // first message sent, now wait for second reply to arrive
+            progState = COMMANDSENT;
         } else {
             if (log.isDebugEnabled()) log.debug("reply in un-decoded state");
         }
