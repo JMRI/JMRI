@@ -16,7 +16,7 @@ import jmri.jmrix.powerline.SerialSensorManager;
  * Frame for user configuration of serial nodes
  * @author	Bob Jacobsen   Copyright (C) 2004, 2007, 2008
  * @author	Dave Duchamp   Copyright (C) 2004, 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -191,7 +191,12 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         // Check that a node with this address does not exist
         int nodeAddress = readNodeAddress();
         if (nodeAddress < 0) return;
+        // if this is being used during initial config, may need to
+        // create a controller
+        if (SerialTrafficController.instance() == null)
+            new jmri.jmrix.powerline.cm11.SpecificTrafficController();
         // get a SerialNode corresponding to this node address if one exists
+        
         curNode = SerialTrafficController.instance().getNodeFromAddress(nodeAddress);
         if (curNode != null) {
             statusText1.setText(rb.getString("Error1")+Integer.toString(nodeAddress)+
