@@ -7,7 +7,7 @@ package jmri.util;
  * of operating system is in use.
  *
  * @author Bob Jacobsen  Copyright 2006
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class SystemType {
@@ -16,7 +16,7 @@ public class SystemType {
     static final public int MACOSX     = 2;
     static final public int WINDOWS    = 4;
     static final public int LINUX      = 5;
-    static final public int OS2        =6;
+    static final public int OS2        = 6;
     
     
     static int type = 0;
