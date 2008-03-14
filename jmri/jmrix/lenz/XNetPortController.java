@@ -13,7 +13,7 @@ import jmri.util.SystemType;
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2008
  * @author			Paul Bender    Copyright (C) 2004
- * @version			$Revision: 2.4 $
+ * @version			$Revision: 2.5 $
  */
 public abstract class XNetPortController extends jmri.jmrix.AbstractPortController {
     // base class. Implementations will provide InputStream and OutputStream
@@ -52,7 +52,7 @@ public abstract class XNetPortController extends jmri.jmrix.AbstractPortControll
         // if first time invoked, set default
         if (mOpt2 == null) {
             switch (SystemType.getType()) {
-                case SystemType.LINUX:
+                case SystemType.MACCLASSIC:
                 case SystemType.MACOSX:
                     mOpt2="no";
                     break;
