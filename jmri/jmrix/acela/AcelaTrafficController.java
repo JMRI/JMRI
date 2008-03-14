@@ -25,7 +25,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  *
  * @author	Bob Coleman Copyright (C) 2007. 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -495,11 +495,9 @@ public class AcelaTrafficController extends AbstractMRTrafficController implemen
      * For each sensor node call markChanges.
      */
     public void updateSensorsFromPoll(AcelaReply r) {
-        int countSensorsSoFar = 0;
         for (int i=0; i< numNodes; i++) {
-            if (nodeArray[i].getSensorBitsPerCard() >= 0) {
-                nodeArray[i].markChanges(r, countSensorsSoFar, countSensorsSoFar + nodeArray[i].getSensorBitsPerCard() - 1);
-                countSensorsSoFar = countSensorsSoFar + nodeArray[i].getSensorBitsPerCard();
+            if (nodeArray[i].getSensorBitsPerCard() > 0) {
+                nodeArray[i].markChanges(r);
             }
         }
     }

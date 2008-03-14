@@ -23,7 +23,7 @@ import jmri.jmrix.AbstractMRMessage;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -482,22 +482,98 @@ public class AcelaNode {
      * Use the contents of the poll reply to mark changes
      * @param l Reply to a poll operation
      */
-    public void markChanges(AcelaReply l, int startingAbsoluteSensorAddress, int endingAbsoluteSensorAddress) {
+    public void markChanges(AcelaReply l) {
+        int numSensorstoProcess = sensorbitsPerCard;
+  
+        // We are going to get back 8 bits per byte from the poll.
+        // We have three types of sensor modules:
+        // TB with 4 sensor inputs, WM with 8 sensor inputs, SY with 16 sensor inputs
+        // The TB causes two cases: either the bits we want start at bit 0 or bit 4.
+        // The sensor bits we want for a TB will always be within one byte.
+        // The sensor bits we want for a WM could be within one byte if we start at 0,
+        //    or spread across two bytes if we start at 4.
+        // The sensor bits we want for a SY could be within two byte if we start at 0,
+        //    or spread across three bytes if we start at 4.
+        int firstByteNum = startingSensorAddress / 8;
+        int firstBitAt = startingSensorAddress % 8; // mod operator
+        int numBytes = 1;   // For TB there are only 4 sensors so always 1 byte
+
+        if (nodeType == WM) {
+            if (firstBitAt != 0) {
+                numBytes = 2;   //  8 bits, but straddling two bytes
+            }
+        }
+        
+        if (nodeType == SY) {
+            if (firstBitAt == 0) {
+                numBytes = 2;  // 16 bits, aligned in two bytes
+            } else {
+                numBytes = 3;  // 16 bits, straddling three bytes
+            }
+        }
+
+        //  Maybe unnecessary, but trying to minimize reads to getElement 
+        int rawvalue = l.getElement(firstByteNum);
+
+        int usingByteNum = 0;
+        
         try {
             for (int i=0; i<sensorbitsPerCard; i++) {
                 if (sensorArray[i] == null) continue; // skip ones that don't exist
-                int relnode = 0;
-                int k = 0;
-                while (k < startingAbsoluteSensorAddress) {
-                    k = k + 8;  // Bob C: This 8 needs to be calculated.
-                    relnode = relnode + 1;
-                }
-//              int relnode = this.nodeAddress - 11;
-                int rawvalue = l.getElement(relnode);
+
+                //  Maybe unnecessary, but trying to minimize reads to getElement 
                 int relvalue = rawvalue;
-                for (int j=0; j < i; j ++) {
+
+                //  Need a temporary counter within the byte  
+                int tempi = i;
+
+                //  If necessary, shift by four before we start  
+                if (usingByteNum == 0) {
+                    if (firstBitAt == 4) {
+                        for (int j=0; j < firstBitAt; j++) {
+                        	relvalue = relvalue >> 1;
+                        }
+                    }
+                }
+
+                //  If necessary, get next byte  
+                if (firstBitAt == 4) {
+                    if (i == 4) {
+                        usingByteNum++;
+                        //  Maybe unnecessary, but trying to minimize reads to getElement 
+                        rawvalue = l.getElement(usingByteNum + firstByteNum);
+                        relvalue = rawvalue;
+                    }
+                    if (i >= 4) {
+                        tempi = i - 4;  // tempi needs to shift down by 4
+                    }
+                    if (i == 12) {  // Will only get here if there are 16 sensors
+                        usingByteNum++;
+                        //  Maybe unnecessary, but trying to minimize reads to getElement 
+                        rawvalue = l.getElement(usingByteNum + firstByteNum);
+                        relvalue = rawvalue;
+                    }
+                    if (i >= 12) {  // Will only get here if there are 16 sensors
+                        tempi = i - 12;  // tempi needs to shift down by 12
+                    }
+                } else {
+                    if (i == 8) {  // Will only get here if there are 16 sensors
+                        usingByteNum++;
+                        //  Maybe unnecessary, but trying to minimize reads to getElement 
+                        rawvalue = l.getElement(usingByteNum + firstByteNum);
+                        relvalue = rawvalue;
+                    }
+                    if (i >= 8) {  // Will only get here if there are 16 sensors
+                        tempi = i - 8;  // tempi needs to shift down by 8
+                    }
+                }
+                
+                //  Finally we can isolate the bit from the poll
+                for (int j=0; j < tempi; j ++) {
                 	relvalue = relvalue >> 1;
                 }
+
+                // Now that we have the relvalue need to compare to last time
                 boolean nooldstate = false;
                 byte oldstate = 0x00;
                 if (sensorLastSetting[i] == Sensor.ACTIVE) {
@@ -521,8 +597,6 @@ public class AcelaNode {
                 		sensorArray[i].setKnownState(sensorLastSetting[i]);
                 	}
                 }
-                
-
             }
         } catch (JmriException e) { log.error("exception in markChanges: "+e); }
     }
