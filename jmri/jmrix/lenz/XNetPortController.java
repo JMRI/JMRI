@@ -5,13 +5,15 @@ package jmri.jmrix.lenz;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
+import jmri.util.SystemType;
+
 /**
  * Abstract base for classes representing a XNet communications port
  * <p>
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2008
  * @author			Paul Bender    Copyright (C) 2004
- * @version			$Revision: 2.3 $
+ * @version			$Revision: 2.4 $
  */
 public abstract class XNetPortController extends jmri.jmrix.AbstractPortController {
     // base class. Implementations will provide InputStream and OutputStream
@@ -46,7 +48,22 @@ public abstract class XNetPortController extends jmri.jmrix.AbstractPortControll
      * sending data
      */
     public String option2Name() { return "Check Buffer Status when sending? "; }
-    public String[] validOption2() { return validOption2; }
+    public String[] validOption2() { 
+        // if first time invoked, set default
+        if (mOpt2 == null) {
+            switch (SystemType.getType()) {
+                case SystemType.LINUX:
+                case SystemType.MACOSX:
+                    mOpt2="no";
+                    break;
+                default:
+                    mOpt2="yes";
+                    break;                
+            }
+        }
+        // return options
+        return validOption2;
+    }
     // meanings are assigned to these above, so make sure the order is consistent
     protected String [] validOption2 = new String[]{"yes", "no"};
     
