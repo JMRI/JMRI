@@ -24,10 +24,10 @@
 # For more information, please see
 # http://jmri.sourceforge.net/install/ShellScripts.shtml
 #
-# $Revision: 1.4 $ (CVS maintains this line, do not edit please)
+# $Revision: 1.5 $ (CVS maintains this line, do not edit please)
 
 # define the class to be invoked
-CLASSNAME=apps.DecoderPro.DecoderPro
+CLASSNAME=apps.PanelPro.PanelPro
 
 # set DEBUG to anything to see debugging output
 # we leave this set on MacOS X, as the Console app makes it less visible
