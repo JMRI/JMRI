@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.23 2008-03-09 20:27:27 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.24 2008-03-14 05:42:15 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -96,6 +96,7 @@
 	and made numerous improvements to the Simple Signal Logic.
     <li>Stephen Brooks, who did the initial testing of the Grapevine support
 	<LI>Bill Brown, whose layout was used for the first NCE tests
+	<LI>Graeme Brown, who helped debug the MacOS X disk images and startup scripts for 10.4
 	<LI>Bob Byck, who did extensive testing of test release 1.7.3
 	<LI>Allen Byrne, who has systematically made improvements in the syntax and structure of the JMRI code
 <a name="C"></A>
