@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.5 2008-02-03 05:03:48 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.6 2008-03-14 01:10:44 jacobsen Exp $ -->
 <html lang="en">
 <head>
 <TITLE>
@@ -321,9 +321,8 @@ this page</p>
     being improperly set up, in which case you might want to try to
     bypass that by selecting "no flow control".</p>
 
-    <li><P> Check Buffer Status when sending?  Should be set to "yes" on 
-    Windows and Linux, and "no" on MacOS 8 and 9.  If you are Using MacOSX 
-    and have installed RxTx, the setting should be "no".</P>   
+    <li><P> Check Buffer Status when sending?  Defaults to "yes" on 
+    Windows and Linux, and "no" on MacOS 8/9 and MacOS X.</P>   
 
     <li><P> The series of radio buttons labelled "GUI style" allows you to
     select how the program will look.  "Metal" is the native Java look
@@ -394,8 +393,8 @@ this page</p>
     leads being improperly set up, in which case you might want to try to
     bypass that by selecting "no flow control".</p>
 
-    <li><P> Check Buffer Status when sending?  Should be set to "yes"
-    unless you are using MacOS 8 or 9.</P>
+    <li><P> Check Buffer Status when sending?  Defaults to "yes" on 
+    Windows and Linux, and "no" on MacOS 8/9 and MacOS X.</P>   
 
     <li><P> The series of radio buttons labelled "GUI style" allows you to
     select how the program will look.  "Metal" is the native Java look
@@ -459,8 +458,8 @@ this page</p>
     
     <li><P> The fourth box should be left on "no flow control".</p>
 
-    <li><P> Check Buffer Status when sending?  Should be set to "yes"
-    unless you are using MacOS 8 or 9.</P>
+    <li><P> Check Buffer Status when sending?  Defaults to "yes" on 
+    Windows and Linux, and "no" on MacOS 8/9 and MacOS X.</P>   
 
     <li><P> The series of radio buttons labelled "GUI style" allows you to
     select how the program will look.  "Metal" is the native Java look
@@ -509,8 +508,8 @@ this page</p>
     
     <li><P> The fourth box should be left on "no flow control".</p>
 
-    <li><P> Check Buffer Status when sending?  Should be set to "yes"
-    unless you are using MacOS 8 or 9.</P>
+    <li><P> Check Buffer Status when sending?  Defaults to "yes" on 
+    Windows and Linux, and "no" on MacOS 8/9 and MacOS X.</P>   
 
     <li><P> The series of radio buttons labelled "GUI style" allows you to
     select how the program will look.  "Metal" is the native Java look
