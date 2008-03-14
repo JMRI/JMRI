@@ -26,7 +26,7 @@ import jmri.util.SerialUtil;
  * Provide access to XPressNet via a LI100 on an attached serial comm port.
  * Normally controlled by the lenz.li100.LI100Frame class.
  * @author			Bob Jacobsen   Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 
 public class LI100Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
@@ -299,21 +299,11 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
     public String option1Name() { return "LI100F connection uses "; }
     public String[] validOption1() { return validOption1; }
     
-    /**
-     * Option 2 controls if the buffer status will be checked when 
-     * sending data
-     */
-    public String option2Name() { return "Check Buffer Status when sending? "; }
-    public String[] validOption2() { return validOption2; }
-    
     protected String [] validSpeeds = new String[]{"9,600 baud","19,200 baud"};
     protected int [] validSpeedValues = new int[]{9600,19200};
     
     // meanings are assigned to these above, so make sure the order is consistent
     protected String [] validOption1 = new String[]{"hardware flow control (recommended)", "no flow control"};
-    
-    // meanings are assigned to these above, so make sure the order is consistent
-    protected String [] validOption2 = new String[]{"yes", "no"};
     
     private boolean opened = false;
     InputStream serialStream = null;

@@ -26,7 +26,7 @@ import jmri.util.SerialUtil;
  *              comm port. Normally controlled by the lenz.ztc640.ZTC640Frame 
  *              class.
  * @author			Bob Jacobsen   Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003-2006
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 
 public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
@@ -297,22 +297,12 @@ public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.Seri
      */
     public String option1Name() { return "ZTC640 connection uses "; }
     public String[] validOption1() { return validOption1; }
-    
-    /**
-     * Option 2 controls if the buffer status will be checked when 
-     * sending data
-     */
-    public String option2Name() { return "Check Buffer Status when sending? "; }
-    public String[] validOption2() { return validOption2; }
-    
+        
     protected String [] validSpeeds = new String[]{"19,200 baud"};
     protected int [] validSpeedValues = new int[]{19200};
     
     // meanings are assigned to these above, so make sure the order is consistent
     protected String [] validOption1 = new String[]{"no flow control (recommended)","hardware flow control "};
-    
-    // meanings are assigned to these above, so make sure the order is consistent
-    protected String [] validOption2 = new String[]{"yes", "no"};
     
     private boolean opened = false;
     InputStream serialStream = null;

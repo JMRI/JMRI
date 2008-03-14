@@ -11,7 +11,7 @@ import java.io.DataOutputStream;
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2008
  * @author			Paul Bender    Copyright (C) 2004
- * @version			$Revision: 2.2 $
+ * @version			$Revision: 2.3 $
  */
 public abstract class XNetPortController extends jmri.jmrix.AbstractPortController {
     // base class. Implementations will provide InputStream and OutputStream
@@ -41,6 +41,16 @@ public abstract class XNetPortController extends jmri.jmrix.AbstractPortControll
      */
     public abstract void setOutputBufferEmpty(boolean s);
     
+    /**
+     * Option 2 controls if the buffer status will be checked when 
+     * sending data
+     */
+    public String option2Name() { return "Check Buffer Status when sending? "; }
+    public String[] validOption2() { return validOption2; }
+    // meanings are assigned to these above, so make sure the order is consistent
+    protected String [] validOption2 = new String[]{"yes", "no"};
+    
+
 }
 
 

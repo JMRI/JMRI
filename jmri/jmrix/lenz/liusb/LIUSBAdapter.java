@@ -25,7 +25,7 @@ import jmri.util.SerialUtil;
  * Provide access to XPressNet via a LIUSB on an FTDI Virtual Comm Port.
  *		Normally controlled by the lenz.liusb.LIUSBFrame class.
  * @author			Paul Bender Copyright (C) 2005, Portions
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 
 public class LIUSBAdapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
@@ -298,21 +298,11 @@ public class LIUSBAdapter extends XNetPortController implements jmri.jmrix.Seria
     public String option1Name() { return "LIUSB connection uses "; }
     public String[] validOption1() { return validOption1; }
     
-    /**
-     * Option 2 controls if the buffer status will be checked when 
-     * sending data
-     */
-    public String option2Name() { return "Check Buffer Status when sending? "; }
-    public String[] validOption2() { return validOption2; }
-    
     protected String [] validSpeeds = new String[]{"57,600 baud"};
     protected int [] validSpeedValues = new int[]{57600};
     
     // meanings are assigned to these above, so make sure the order is consistent
     protected String [] validOption1 = new String[]{"hardware flow control (recommended)", "no flow control"};
-    
-    // meanings are assigned to these above, so make sure the order is consistent
-    protected String [] validOption2 = new String[]{"yes", "no"};
     
     private boolean opened = false;
     InputStream serialStream = null;
