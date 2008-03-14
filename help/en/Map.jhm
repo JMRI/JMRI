@@ -88,6 +88,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrix.loconet.locobuffer.LocoBufferStatsFrame" url="package/jmri/jmrix/loconet/locobuffer/LocoBufferStatsFrame.shtml" />
 	<mapID target="html.apps.LocoTools.LocoIO_older" url="html/apps/LocoTools/LocoIO.shtml#older" />
 	<mapID target="html.hardware.nce.Wangrow" url="html/hardware/nce/Wangrow.shtml" />
+	<mapID target="package.jmri.jmrix.grapevine.nodetable.NodeTableFrame" url="package/jmri/jmrix/grapevine/nodetable/NodeTableFrame.shtml" />
 	<mapID target="DecoderProManual.Comp_ManfSpecific" url="DecoderProManual/Comp_ManfSpecific.shtml" />
 	<mapID target="html.tools.throttle.ThrottleChapter1_ThrottlesSub" url="html/tools/throttle/ThrottleChapter1.shtml#ThrottlesSub" />
 	<mapID target="html.apps.DecoderPro.Debug" url="html/apps/DecoderPro/Debug.shtml" />
@@ -275,6 +276,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="Acknowledgements_J" url="Acknowledgements.shtml#J" />
 	<mapID target="package.jmri.jmrit.display.LayoutEditor_filemenu" url="package/jmri/jmrit/display/LayoutEditor.shtml#filemenu" />
 	<mapID target="html.hardware.loconet.LocoNetClasses" url="html/hardware/loconet/LocoNetClasses.shtml" />
+	<mapID target="package.jmri.jmrix.acela.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml" />
 	<mapID target="package.jmri.jmrit.blockboss.BlockBossFrame" url="package/jmri/jmrit/blockboss/BlockBossFrame.shtml" />
 	<mapID target="html.doc.Technical.JBuilder" url="html/doc/Technical/JBuilder.shtml" />
 	<mapID target="html.doc.Technical.Properties" url="html/doc/Technical/Properties.shtml" />
