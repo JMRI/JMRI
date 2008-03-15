@@ -12,7 +12,7 @@ import jmri.*;
  *
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class NceOpsModeProgrammer extends NceProgrammer  {
 
@@ -43,7 +43,7 @@ public class NceOpsModeProgrammer extends NceProgrammer  {
 			// create the message and fill it,
 			byte[] contents = NmraPacket.opsCvWriteByte(mAddress, mLongAddr,
 					CV, val);
-			msg = NceMessage.sendPacketMessage(contents);
+			msg = NceMessage.sendPacketMessage(contents, 5);	// retry 5 times
 		}
         // record state. COMMANDSENT is just waiting for a reply...
         useProgrammer(p);
@@ -55,7 +55,7 @@ public class NceOpsModeProgrammer extends NceProgrammer  {
         // start the error timer
         startShortTimer();
 
-        // send it twice
+        // send it twice (2x5) so NCE CS will send at least two consecutive commands to decoder
         controller().sendNceMessage(msg, this);
         controller().sendNceMessage(msg, this);
     }

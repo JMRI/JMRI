@@ -26,7 +26,7 @@ package jmri.jmrix.nce;
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2007
- * @version     $Revision: 1.39 $
+ * @version     $Revision: 1.40 $
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 	
@@ -353,6 +353,11 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     }
     
     static public NceMessage sendPacketMessage(byte[] bytes) {
+    	NceMessage m = sendPacketMessage(bytes, 2);
+    	return m;
+    }
+    
+    static public NceMessage sendPacketMessage(byte[] bytes, int retries) {
     	// this command isn't supported by the NCE USB
     	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
     		log.error("attempt to send unsupported sendPacketMessage to NCE USB");
@@ -369,7 +374,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             int i = 0; // counter to make it easier to format the message
         
             m.setElement(i++, SENDn_BYTES_CMD + bytes.length);
-            m.setElement(i++, 0x03);        // send three times
+            m.setElement(i++, retries);        // send this many retries. 
             for (int j = 0; j<bytes.length; j++) {
                 m.setElement(i++, bytes[j]&0xFF);
             }
