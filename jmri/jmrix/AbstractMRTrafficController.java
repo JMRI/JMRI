@@ -26,7 +26,7 @@ import java.util.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.53 $
+ * @version			$Revision: 1.54 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -36,14 +36,14 @@ abstract public class AbstractMRTrafficController {
         mCurrentState = IDLESTATE;
 	    allowUnexpectedReply=false;
         setInstance();
-        self = this;
+        selfLock = this;
 	    jmri.util.RuntimeUtil.addShutdownHook(new Thread(new cleanupHook(this)));
     }
 
-    // this is a local self, used here only;
+    // this is a local variable, used here only;
     // it's not the instance() variable, which is static
     // and done in individual subclasses.
-    AbstractMRTrafficController self;  // this is needed for synchronization
+    private AbstractMRTrafficController selfLock;  // this is needed for synchronization
 
     // set the instance variable
     abstract protected void setInstance();
@@ -222,7 +222,7 @@ abstract public class AbstractMRTrafficController {
             AbstractMRMessage m = null;
             AbstractMRListener l = null;
             // check for something to do
-            synchronized(self) {
+            synchronized(selfLock) {
                 if (msgQueue.size()!=0) {
                     // yes, something to do
                     m = (AbstractMRMessage)msgQueue.getFirst();
@@ -789,7 +789,7 @@ abstract public class AbstractMRTrafficController {
 	       modeMsg.setRetries(100); // set the number of retries  
 					// high, just in case the interface
 					// is busy when we try to send
-               synchronized(self) {
+               synchronized(selfLock) {
                   forwardToPort(modeMsg, null);
                   // wait for reply
                   try {
