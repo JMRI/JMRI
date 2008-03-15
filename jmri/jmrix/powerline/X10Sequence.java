@@ -11,9 +11,17 @@ package jmri.jmrix.powerline;
  * A sequence should consist of addressing (1 or more), and then
  * one or more commands. It can address multiple devices, but 
  * not more than one house-code.
+ * <p>
+ * House codes and devices within this class are sequential numbers 
+ * (1-16 for house code, 1-16 for device code).  
+ * These must be translated to line coding by other code that converts
+ * the sequence to adapter-specific messages. The {@link #encode} and
+ * {@link #decode} functions are provided to make that easier
+ * by converting to and from the standard line-code sequences, but
+ * you should check the coding of your new specific adapter before using them.
  *
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class X10Sequence {
 
@@ -34,22 +42,31 @@ public class X10Sequence {
     public static final int FUNCTION_STATUS_OFF             = 14;
     public static final int FUNCTION_STATUS_REQUEST         = 15;
 
+    // First implementation of this class uses a fixed length
+    // array to hold the sequence; there's a practical limit to how
+    // many X10 commands anybody would want to send at once!
     private static final int MAXINDEX = 32;
+    int index = 0;
+    Command[] cmds = new Command[MAXINDEX];  // doesn't scale, but that's for another day
     
+    
+    /**
+     * Append a new "do function" operation to the sequence
+     */
     public void addFunction(int house, int function, int dimcount) {
         if (index >= MAXINDEX) throw new IllegalArgumentException("Sequence too long");
         cmds[index] = new Function(house, function, dimcount);
         index++;
     }
 
+    /**
+     * Append a new "set address" operation to the sequence
+     */
     public void addAddress(int house, int device) {
         if (index >= MAXINDEX) throw new IllegalArgumentException("Sequence too long");
         cmds[index] = new Address(house, device);
         index++;
     }
-    
-    int index = 0;
-    Command[] cmds = new Command[MAXINDEX];  // doesn't scale, but that's for another day
     
     /**
      * Next getCommand will be the first in the sequence
@@ -58,15 +75,25 @@ public class X10Sequence {
         index = 0;
     }
     
+    /**
+     * Retrieve the next command in the sequence
+     */
     public Command getCommand() {
         return cmds[index++];
     }
     
+    /**
+     * Represent a single X10 command, which is
+     * either a "set address" or "do function" operation
+     */
     public interface Command {
         public boolean isAddress();
         public boolean isFunction();
         public int getHouseCode();
     }
+    /**
+     * Represent a single "set address" X10 command
+     */
     public class Address implements Command {
         public Address(int house, int device) {
             this.house = house;
@@ -79,6 +106,9 @@ public class X10Sequence {
         public boolean isAddress() { return true; }
         public boolean isFunction() { return false; }
     }
+    /**
+     * Represent a single "do function" X10 command
+     */
     public class Function implements Command {
         public Function(int house, int function, int dimcount) {
             this.house = house;
@@ -95,6 +125,11 @@ public class X10Sequence {
         public boolean isFunction() { return true; }
     }
     
+    /**
+     * Array of human readable names for X10 commands,
+     * indexed by the command numbers that are constants
+     * in this class.
+     */
     static String[] functionNames = new String[]{
         "All Off", "All Lights On", "On", "Off",
         "Dim", "Bright", "All Lights Off", "Extended Code",
@@ -103,7 +138,7 @@ public class X10Sequence {
     };
     
     /**
-     * Return a readable name for a function code
+     * Return a human-readable name for a function code
      */
     public static String functionName(int i) {
         return functionNames[i];
@@ -123,7 +158,7 @@ public class X10Sequence {
                                     0x7, 0xF, 0x3, 0xB,   0x0, 0x8, 0x4, 0xC};
 
     /**
-     * Get house (A-P) or device (1-16) from line-coded
+     * Get house (A-P as 1-16) or device (1-16) from line-coded
      * value.
      */
     public static int decode(int i) {
