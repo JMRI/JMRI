@@ -25,7 +25,7 @@ import jmri.jmrix.powerline.SerialSensorManager;
  * with it.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SpecificTrafficController extends SerialTrafficController {
 
@@ -104,9 +104,12 @@ public class SpecificTrafficController extends SerialTrafficController {
         }
         int function = c.getFunction();
         
+        // need to encode the housecode into line code
+        int lineHouseCode = X10Sequence.encode(housecode);
+        
         m.setElement(16, 1);
         m.setElement(17, level*16+function);
-        m.setElement(18, housecode*16+0);
+        m.setElement(18, lineHouseCode*16+0);
         m.setElement(19, devicemask&0xFF);
         m.setElement(20, (devicemask>>8)&0xFF);
         m.setElement(21, 0xFF&(m.getElement(17)+m.getElement(18)+m.getElement(19)+m.getElement(20)) ); // checksum
