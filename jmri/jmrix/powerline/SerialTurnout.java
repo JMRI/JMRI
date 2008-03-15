@@ -6,15 +6,17 @@ import jmri.AbstractTurnout;
 import jmri.Turnout;
 
 /**
- * SerialTurnout.java
- *
- *  This object doesn't listen to the serial communications.  This is because
- *  it should be the only object that is sending messages for this turnout;
+ *  Turnout implementation for X10.
+ *  <p>
+ *  This object doesn't listen to the serial communications.  It should
+ *  eventually, so it can track changes outside the program.
+ * <p>
+ *  Within JMRI, only one Turnout object should besending messages to a turnout address;
  *  more than one Turnout object pointing to a single device is not allowed.
  *
  * Description:		extend jmri.AbstractTurnout for powerline serial layouts
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SerialTurnout extends AbstractTurnout {
 
@@ -25,10 +27,11 @@ public class SerialTurnout extends AbstractTurnout {
      */
     public SerialTurnout(String systemName, String userName) {
         super(systemName, userName);
-        // Save system Name
-        tSystemName = systemName;
-        // Extract the Bit from the name
-        tBit = SerialAddress.getBitFromSystemName(systemName);
+        // Extract the default 1-256 address from the name
+        int tBit = SerialAddress.getBitFromSystemName(systemName);
+        // Convert to the two-part X10 address
+        housecode = ((tBit-1)/16)+1;
+        devicecode = ((tBit-1)%16)+1;
     }
 
     /**
@@ -65,21 +68,11 @@ public class SerialTurnout extends AbstractTurnout {
 
     public void dispose() {}  // no connections need to be broken
 
-    // data members
-    String tSystemName; // System Name of this turnout
-    int tBit;          // bit number of turnout control in Serial node
-    SerialNode tNode;
+    // data members holding the X10 address
+    int housecode = -1;
+    int devicecode = -1;
     
     protected void sendMessage(boolean closed) {
-        if (tNode == null) 
-            tNode = SerialAddress.getNodeFromSystemName(tSystemName);
-        if (tNode == null) {
-            // node does not exist, ignore call
-            log.warn("node does not exist, turnout ignoring sendMessage");
-            return;
-        }
-        int housecode = ((tBit-1)/16)+1;
-        int devicecode = ((tBit-1)%16)+1;
         log.debug("set closed "+closed+" house "+housecode+" device "+devicecode);
         // create output sequence of address, then function
         X10Sequence out = new X10Sequence();

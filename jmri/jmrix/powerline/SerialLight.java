@@ -8,9 +8,7 @@ import jmri.Turnout;
 import java.util.Date;
 
 /**
- * SerialLight.java
- *
- * Implementation of the Light Object
+ * Implementation of the Light Object for X10.
  * <P>
  * Uses X10 dimming commands to set intensity unless
  * the value is 0.0 or 1.0, in which case it uses on/off commands only.
@@ -29,7 +27,7 @@ import java.util.Date;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 public class SerialLight extends AbstractVariableLight {
 
@@ -59,8 +57,12 @@ public class SerialLight extends AbstractVariableLight {
      * AbstractVariableLight base classes.
      */
     private void initializeLight() {
-        // Extract the Bit from the name
-        mBit = SerialAddress.getBitFromSystemName(getSystemName());
+        // Extract the default 1-256 address from the name
+        int tBit = SerialAddress.getBitFromSystemName(getSystemName());
+        // Convert to the two-part X10 address
+        housecode = ((tBit-1)/16)+1;
+        devicecode = ((tBit-1)%16)+1;
+        
         // Set defaults for all other instance variables
         setControlType( NO_CONTROL );
         setControlSensor( null );
@@ -77,9 +79,6 @@ public class SerialLight extends AbstractVariableLight {
      */
     private void initIntensity(double intensity) {
         // Set initial state
-        // address message, then function
-        int housecode = ((mBit-1)/16)+1;
-        int devicecode = ((mBit-1)%16)+1;
             
         // see if going to stabilize at on or off
         if (intensity<= 0.5) {
@@ -113,15 +112,18 @@ public class SerialLight extends AbstractVariableLight {
         }
     }
     
-    /**
-     *  System-dependent instance variables
-     */
+    // System-dependent instance variables
 
-    int mBit = 0;                // bit within the node
-    SerialNode mNode;
+    /** 
+     * Current output step 0 to 22.
+     * <p>
+     *  -1 means unknown
+     */
+    int lastOutputStep = -1;
     
-    // current output step 0 to 22
-    int lastOutputStep = -1;  // -1 means unknown
+    // data members holding the X10 address
+    int housecode = -1;
+    int devicecode = -1;
     
     /**
      *  Request from superclass to set the current state of this Light.
@@ -130,12 +132,6 @@ public class SerialLight extends AbstractVariableLight {
     	if (log.isDebugEnabled()) {
     		log.debug("doNewState(" +oldState+","+newState+")");
     	}
-        if (mNode == null) mNode = SerialAddress.getNodeFromSystemName(getSystemName());
-        if (mNode == null) {
-            log.warn("Node doesnt exist, Light ignores doNewState");
-            // node does not exist, ignore call
-            return;
-        }
 
         double newIntensity = getTargetIntensity();
 
@@ -182,12 +178,6 @@ public class SerialLight extends AbstractVariableLight {
     	if (log.isDebugEnabled()) {
     		log.debug("updateIntensity(" + intensity + ")");
     	}
-        if (mNode == null) mNode = SerialAddress.getNodeFromSystemName(getSystemName());
-        if (mNode == null) {
-            // node does not exist, ignore call
-            log.warn("Node doesn't exist, Light ignores updateIntensity");
-            return;
-        }
         
         // are we doing intensity?
         if ( (intensity==0.0 || intensity==1.0) && (lastOutputStep < 0))
@@ -226,8 +216,6 @@ public class SerialLight extends AbstractVariableLight {
         if (sendSteps <-22 || sendSteps>22)
             log.error("sendSteps wrong: "+sendSteps+" intensity: "+intensity);
             
-        int housecode = ((mBit-1)/16)+1;
-        int devicecode = ((mBit-1)%16)+1;
         int deltaDim = Math.abs(sendSteps);
 
         lastOutputStep = newStep;
@@ -251,12 +239,6 @@ public class SerialLight extends AbstractVariableLight {
     	if (log.isDebugEnabled()) {
     		log.debug("sendOnOff(" + newState + ") Current: " + mState);
     	}
-        if (mNode == null) mNode = SerialAddress.getNodeFromSystemName(getSystemName());
-        if (mNode == null) {
-            // node does not exist, ignore call
-            log.warn("Node doesn't exist, Light ignores sendOnOffCommand");
-            return;
-        }
 
         // figure out command 
         int function;
@@ -274,8 +256,6 @@ public class SerialLight extends AbstractVariableLight {
             return;
         }
 
-        int housecode = ((mBit-1)/16)+1;
-        int devicecode = ((mBit-1)%16)+1;
         log.debug("set state "+newState+" house "+housecode+" device "+devicecode);
 
         // create output sequence of address, then function
