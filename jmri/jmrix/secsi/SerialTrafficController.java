@@ -5,7 +5,7 @@ package jmri.jmrix.secsi;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
-import jmri.jmrix.AbstractMRTrafficController;
+import jmri.jmrix.AbstractMRNodeTrafficController;
 
 import java.io.DataInputStream;
 
@@ -27,21 +27,19 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003, 2006
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
-public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
+public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
 
     public SerialTrafficController() {
         super();
 
+        // set node range
+        init (0, 255);
+        
         // entirely poll driven, so reduce interval
         mWaitBeforePoll = 25;  // default = 25
 
-        // clear the array of SerialNodes
-        for (int i=0; i<=MAXNODE; i++) {
-            nodeArray[i] = null;
-            mustInit[i] = true;
-        }
     }
 
     // The methods to implement the SerialInterface
@@ -81,24 +79,6 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     }
 // end of code to be removed
 
-    private int numNodes = 0;       // Incremented as Serial Nodes are created and registered
-                                    // Corresponds to next available address in nodeArray
-    private static int MINNODE = 0;
-    private static int MAXNODE = 255;
-    private SerialNode[] nodeArray = new SerialNode[MAXNODE+1];  // numbering from 0
-    private boolean[] mustInit = new boolean[MAXNODE+1];
-
-    /**
-     *  Public method to register a Serial node
-     */
-     public void registerSerialNode(SerialNode node) {
-        synchronized (this) {
-            // no validity checking because at this point the node may not be fully defined
-            nodeArray[numNodes] = node;
-            mustInit[numNodes] = true;
-            numNodes++;
-        }
-    }
 
     /**
      *  Public method to set up for initialization of a Serial node
@@ -106,69 +86,16 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
      public void initializeSerialNode(SerialNode node) {
         synchronized (this) {
             // find the node in the registered node list
-            for (int i=0; i<numNodes; i++) {
-                if (nodeArray[i] == node) {
+            for (int i=0; i<getNumNodes(); i++) {
+                if (getSerialNode(i) == node) {
                     // found node - set up for initialization
-                    mustInit[i] = true;
+                    setMustInit(i, true);
                     return;
                 }
             }
         }
     }
 
-    /**
-     * Public method to identify a SerialNode from its node address
-     *      Note:   'addr' is the node address, numbered from 0.
-     *              Returns 'null' if a SerialNode with the specified address
-     *                  was not found
-     */
-    public SerialNode getNodeFromAddress(int addr) {
-        for (int i=0; i<numNodes; i++) {
-            if (nodeArray[i].getNodeAddress() == addr) {
-                return(nodeArray[i]);
-            }
-        }
-    	return (null);
-    }
-
-    /**
-     *  Public method to delete a Serial node by node address
-     */
-     public synchronized void deleteSerialNode(int nodeAddress) {
-        // find the serial node
-        int index = 0;
-        for (int i=0; i<numNodes; i++) {
-            if (nodeArray[i].getNodeAddress() == nodeAddress) {
-                index = i;
-            }
-        }
-        if (index==curSerialNodeIndex) {
-            log.warn("Deleting the serial node active in the polling loop");
-        }
-        // Delete the node from the node list
-        numNodes --;
-        if (index<numNodes) {
-            // did not delete the last node, shift 
-            for (int j=index; j<numNodes; j++) {
-                nodeArray[j] = nodeArray[j+1];
-            }
-        }
-        nodeArray[numNodes] = null;
-    }
-
-    /**
-     *  Public method to return the Serial node with a given index
-     *  Note:   To cycle through all nodes, begin with index=0, 
-     *              and increment your index at each call.  
-     *          When index exceeds the number of defined nodes,
-     *              this routine returns 'null'.
-     */
-     public SerialNode getSerialNode(int index) {
-        if (index >= numNodes) {
-            return null;
-        }
-        return nodeArray[index];
-    }
 
     protected AbstractMRMessage enterProgMode() {
         log.warn("enterProgMode doesnt make sense for SECSI serial");
@@ -202,17 +129,17 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
      */
     protected synchronized AbstractMRMessage pollMessage() {
         // ensure validity of call
-        if (numNodes<=0) return null;
+        if (getNumNodes()<=0) return null;
         
         // move to a new node
         curSerialNodeIndex ++;
-        if (curSerialNodeIndex>=numNodes) {
+        if (curSerialNodeIndex>=getNumNodes()) {
             curSerialNodeIndex = 0;
         }
         // ensure that each node is initialized        
-        if (mustInit[curSerialNodeIndex]) {
-            mustInit[curSerialNodeIndex] = false;
-            SerialMessage m = nodeArray[curSerialNodeIndex].createInitPacket();
+        if (getMustInit(curSerialNodeIndex)) {
+            setMustInit(curSerialNodeIndex, false);
+            AbstractMRMessage m = getSerialNode(curSerialNodeIndex).createInitPacket();
             if (m!=null) { // SECSI boards don't need this yet
                 log.debug("send init message: "+m);
                 m.setTimeout(2000);  // wait for init to finish (milliseconds)
@@ -220,19 +147,19 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
             }   // else fall through to continue
         }
         // send Output packet if needed
-        if (nodeArray[curSerialNodeIndex].mustSend()) {
+        if (getSerialNode(curSerialNodeIndex).mustSend()) {
             log.debug("request write command to send");
-            SerialMessage m = nodeArray[curSerialNodeIndex].createOutPacket();
-            nodeArray[curSerialNodeIndex].resetMustSend();
+            AbstractMRMessage m = getSerialNode(curSerialNodeIndex).createOutPacket();
+            getSerialNode(curSerialNodeIndex).resetMustSend();
             m.setTimeout(500);
             return m;
         }
         // poll for Sensor input
-        if ( nodeArray[curSerialNodeIndex].sensorsActive() ) {
+        if ( getSerialNode(curSerialNodeIndex).sensorsActive() ) {
             // Some sensors are active for this node, issue poll
             SerialMessage m = SerialMessage.getPoll(
-                                nodeArray[curSerialNodeIndex].getNodeAddress());
-            if (curSerialNodeIndex>=numNodes) curSerialNodeIndex = 0;
+                                getSerialNode(curSerialNodeIndex).getNodeAddress());
+            if (curSerialNodeIndex>=getNumNodes()) curSerialNodeIndex = 0;
             return m;
         }
         else {
@@ -243,16 +170,16 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
 
     protected void handleTimeout(AbstractMRMessage m) {
         // inform node, and if it resets then reinitialize 
-        if (nodeArray[curSerialNodeIndex] != null)      
-            if (nodeArray[curSerialNodeIndex].handleTimeout(m)) 
-                mustInit[curSerialNodeIndex] = true;
+        if (getSerialNode(curSerialNodeIndex) != null)      
+            if (getSerialNode(curSerialNodeIndex).handleTimeout(m)) 
+                setMustInit(curSerialNodeIndex, true);
         else
             log.warn("Timeout can't be handled due to missing node index="+curSerialNodeIndex);
     }
     
     protected void resetTimeout(AbstractMRMessage m) {
         // inform node
-        nodeArray[curSerialNodeIndex].resetTimeout(m);
+        getSerialNode(curSerialNodeIndex).resetTimeout(m);
         
     }
     

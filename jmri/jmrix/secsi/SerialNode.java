@@ -5,6 +5,7 @@ package jmri.jmrix.secsi;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.jmrix.AbstractMRMessage;
+import jmri.jmrix.AbstractNode;
 
 /**
  * Models a serial node.
@@ -19,11 +20,11 @@ import jmri.jmrix.AbstractMRMessage;
  * change a state via an icon, and not have it change back the next time
  * that node is polled.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007
+ * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
-public class SerialNode {
+public class SerialNode extends AbstractNode {
 
     /**
      * Maximum number of sensors a node can carry.
@@ -48,12 +49,10 @@ public class SerialNode {
     public static final int[] inputBits = new int[]{16, 16};
     
     // node definition instance variables (must persist between runs)
-    public int nodeAddress = 0;                 // Node address, 0-127 allowed
+    // Node address, 0-127 allowed
     protected int nodeType = DAUGHTER;          // See above
 
     // operational instance variables  (should not be preserved between runs)
-    protected boolean needSend = true;          // 'true' if something has changed in the outputByte array since
-                                                //    the last send to the hardware node
     protected boolean[] outputArray = new boolean[MAXTURNOUTS+1]; // current values of the output bits for this node
     protected boolean[] outputBitChanged = new boolean[MAXTURNOUTS+1];
     
@@ -94,7 +93,7 @@ public class SerialNode {
             outputBitChanged[i] = false;
         }
         // initialize other operational instance variables
-        needSend = true;
+        setMustSend();
         hasActiveSensors = false;
         // register this node
         SerialTrafficController.instance().registerSerialNode(this);
@@ -118,7 +117,7 @@ public class SerialNode {
         
         // check for change, necessitating a send
         if (oldBit != outputArray[bitNumber]) {
-            needSend = true;
+            setMustSend();
             outputBitChanged[bitNumber] = true;
         }
     }
@@ -128,27 +127,6 @@ public class SerialNode {
      *  Note:  returns 'true' if at least one sensor is active for this node
      */
     public boolean sensorsActive() { return hasActiveSensors; }
-
-    /**
-     * Public method to return state of needSend flag.
-     */
-    public boolean mustSend() { return needSend; }
-
-    /**
-     * Public to reset state of needSend flag.
-     * Can only reset if there are no bytes that need to be
-     * sent
-     */
-    public void resetMustSend() { 
-        for (int i = 0; i < outputBits[nodeType]; i++) {
-            if (outputBitChanged[i]) return;
-        }
-        needSend = false; 
-    }
-    /**
-     * Public to set state of needSend flag.
-     */
-    public void setMustSend() { needSend = true; }
 
     /**
      * Public method to return node type
@@ -175,24 +153,10 @@ public class SerialNode {
     }
 
     /**
-     * Public method to return the node address.
+     * Check for valid node address
      */
-    public int getNodeAddress() {
-        return (nodeAddress);
-    }
-
-    /**
-     * Public method to set the node address.
-     *   address - node address set in dip switches (0 - 255)
-     */
-    public void setNodeAddress(int address) {
-        if ( (address >= 0) && (address < 128) ) {
-            nodeAddress = address;
-        }
-        else {
-            log.error("illegal node address: "+Integer.toString(address));
-            nodeAddress = 0;
-        }
+    protected boolean checkNodeAddress(int address) {
+        return (address >= 0) && (address < 128);
     }
 
 
@@ -201,14 +165,14 @@ public class SerialNode {
      * There are currently no SECSI boards that need an init message, so this
      * returns null.
      */
-    public SerialMessage createInitPacket() {
+    public AbstractMRMessage createInitPacket() {
         return null;
     }
     
     /**
      * Public Method to create an Transmit packet (SerialMessage)
      */
-    public SerialMessage createOutPacket() {
+    public AbstractMRMessage createOutPacket() {
         if (log.isDebugEnabled()) log.debug("createOutPacket for nodeType "
             +nodeType+" with "
             +outputBitChanged[0]+" "+outputArray[0]+";"
@@ -219,7 +183,7 @@ public class SerialNode {
         // Create a Serial message
         // For now, always write entire node
         SerialMessage m = new SerialMessage(1+outputBits[getNodeType()]/4);
-        m.setElement(0,nodeAddress); // node address
+        m.setElement(0,getNodeAddress()); // node address
 
         // Add output bytes
         int j = 0;
@@ -305,7 +269,7 @@ public class SerialNode {
         else {
             // multiple registration of the same sensor
             log.warn("multiple registration of same sensor: CS"+
-                    Integer.toString((nodeAddress*SerialSensorManager.SENSORSPERNODE) + i + 1) );
+                    Integer.toString((getNodeAddress()*SerialSensorManager.SENSORSPERNODE) + i + 1) );
         }
     }
 
@@ -314,13 +278,13 @@ public class SerialNode {
      *
      * @return true if initialization required
      */
-    boolean handleTimeout(AbstractMRMessage m) {
+    public boolean handleTimeout(AbstractMRMessage m) {
         timeout++;
         // normal to timeout in response to init, output
         if (m.getElement(1)!=0x50) return false;
         
         // see how many polls missed
-        if (log.isDebugEnabled()) log.warn("Timeout to poll for addr="+nodeAddress+": consecutive timeouts: "+timeout);
+        if (log.isDebugEnabled()) log.warn("Timeout to poll for addr="+getNodeAddress()+": consecutive timeouts: "+timeout);
         
         if (timeout>5) { // enough, reinit
             // reset timeout count to zero to give polls another try
@@ -331,7 +295,7 @@ public class SerialNode {
         } 
         else return false;
     }
-    void resetTimeout(AbstractMRMessage m) {
+    public void resetTimeout(AbstractMRMessage m) {
         if (timeout>0) log.debug("Reset "+timeout+" timeout count");
         timeout = 0;
     }

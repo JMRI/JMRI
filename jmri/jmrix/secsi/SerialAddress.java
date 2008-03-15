@@ -24,7 +24,7 @@ package jmri.jmrix.secsi;
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004
  * @author  Bob Jacobsen, Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SerialAddress {
 
@@ -78,7 +78,7 @@ public class SerialAddress {
                 }
             }
         }
-        return (SerialTrafficController.instance().getNodeFromAddress(ua));
+        return (SerialNode) SerialTrafficController.instance().getNodeFromAddress(ua);
     }
     
     /**

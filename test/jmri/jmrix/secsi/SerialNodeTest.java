@@ -8,11 +8,13 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import jmri.jmrix.AbstractMRMessage;
+
 /**
  * JUnit tests for the SerialNode class
  * @author		Bob Jacobsen  Copyright 2003, 2007, 2008
  * @author		Dave Duchamp  multi-node extensions 2003
- * @version		$Revision: 1.1 $
+ * @version		$Revision: 1.2 $
  */
 public class SerialNodeTest extends TestCase {
 		
@@ -40,7 +42,7 @@ public class SerialNodeTest extends TestCase {
     
     public void testInitialization1() {
         // no initialization in this protocol
-        SerialMessage m = b.createInitPacket();
+        AbstractMRMessage m = b.createInitPacket();
         Assert.assertEquals("initpacket null", null, m );
     }
 
@@ -61,7 +63,7 @@ public class SerialNodeTest extends TestCase {
         g.setOutputBit(26,false);
         g.setOutputBit(28,true);
         Assert.assertTrue("must Send on", g.mustSend() );
-        SerialMessage m = g.createOutPacket();
+        AbstractMRMessage m = g.createOutPacket();
         Assert.assertEquals("packet size", 9, m.getNumDataElements() );
         Assert.assertEquals("node address", 5, m.getElement(0) );
         Assert.assertEquals("byte 1 lo nibble", 0x02, m.getElement(1) );      
