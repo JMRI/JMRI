@@ -18,11 +18,17 @@ import jmri.jmrix.AbstractMRTrafficController;
  * <P>
  * This maintains a list of nodes, but doesn't currently do anything
  * with it.
+ * <p>
+ * This implementation is complete and can be instantiated, but
+ * is not functional.  It will be created e.g. when a default
+ * object is needed for configuring nodes, etc, during the initial
+ * configuration.  A subclass must be instantiated to actually
+ * communicate with an adapter.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
-abstract public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
+public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
 	public SerialTrafficController() {
         super();
@@ -45,16 +51,22 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
     }
     
     /**
-     * Send a sequence of X10 messages
+     * Send a sequence of X10 messages to an adapter.
      * <p>
-     * Makes them into the local messages and then queues in order
+     * Makes them into the local messages and then queues in order.
+     * <p>
+     * This is a default, null implementation, which must be overridden
+     * in an adapter-specific subclass.
      */
-    abstract public void sendX10Sequence(X10Sequence s, SerialListener l);
+    public void sendX10Sequence(X10Sequence s, SerialListener l) {}
     
     /**
      * Get a message of a specific length for filling in.
+     * <p>
+     * This is a default, null implementation, which must be overridden
+     * in an adapter-specific subclass.
      */
-    abstract public SerialMessage getSerialMessage(int length);
+    public SerialMessage getSerialMessage(int length) {return null;}
     
     // have several debug statements in tight loops, e.g. every character;
     // only want to check once
@@ -224,7 +236,8 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
      */
     static public SerialTrafficController instance() {
         if (self == null) {
-            log.error("SerialTrafficController.instance() not initialized!");
+            log.debug("Creating default SerialTrafficController instance");
+            self = new SerialTrafficController();
         }
         return self;
     }
@@ -247,8 +260,20 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
     boolean countingBytes = false; // counting remainingBytes into reply buffer
     int remainingBytes = 0;        // count of bytes _left_
     
-    abstract protected boolean endOfMessage(AbstractMRReply msg);
-        
+    /**
+     * <p>
+     * This is a default, null implementation, which must be overridden
+     * in an adapter-specific subclass.
+     */
+    protected boolean endOfMessage(AbstractMRReply msg) { return true; }
+
+    /**
+     * <p>
+     * This is a default, null implementation, which must be overridden
+     * in an adapter-specific subclass.
+     */
+    protected AbstractMRReply newReply() {return null;}
+      
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTrafficController.class.getName());
 }
 
