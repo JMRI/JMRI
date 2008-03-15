@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: Names.shtml,v 1.3 2008-02-05 15:28:30 jacobsen Exp $ -->
+<!-- $Id: Names.shtml,v 1.4 2008-03-15 17:09:51 jacobsen Exp $ -->
 <title>JMRI: Grapevine System Names</title>
 
 <!-- Style -->
@@ -49,8 +49,7 @@ device code, e.g. PT1 is device 1, PT2 is device 2, etc.
 <p>
 Depending on your setup, you might be able to access other housecodes
 by adding "16"s to the number, e.g. PT17 is device 1 in housecode B,
-etc.  (We'll likely change this numbering system to something easier to 
-follow at some point.)
+etc. 
 
 <table border="1">
 <tr><th>House code</th><th>Offset</th><th>Device 1</th><th>Device 16</th></tr>
@@ -71,6 +70,29 @@ follow at some point.)
 <tr><td>O</td><td>224</td><td>225</td><td>240</td></tr>
 <tr><td>P</td><td>240</td><td>241</td><td>256</td></tr>
 </table>
+
+<p>
+Eventually, it will be possible to use a letter-number combination
+to address X10 devices.  For example:
+<ul>
+<li>PTB3 - Device 3 on housecode B, the same as PT19
+<li>PLA12 - Device 12 on housecode A, the same as PL12
+<li>PTC02 - Device 2 on housecode C, the same as PT34
+</ul>
+This code has not yet been written, though.
+
+<h3>Insteon</h3>
+
+Insteon adapters are labelled with a four-part number that looks
+like 01.2A.B4.CD, four bytes in hexadecimal.  These are just random
+strings as part as the user and the program is concerned, and
+we don't make any effort to subdivide them.  We will accept 
+dropping of leading zeros (e.g. 01 and 1 can be used in a group, so
+both 1.2.3.4 and 01.02.03.4 are accepted). We also accept either lower
+case or upper case letters.  Extra zeros, e.g. numbers beyond 
+two digits, are not accepted.  Note that .23. is a hexadecimal 23, 
+decimal 19.  Entry of addresses in decimal form it not (yet) available.
+
 <h3>More Information</h3>
 
 More information on the X10 hardware can be found on the
