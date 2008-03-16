@@ -7,10 +7,10 @@ import jmri.jmrix.grapevine.*;
 /**
  * Basic implementation of a node for JMRI protocol support.
  * <p>
- * Integrated with {@link AbstractMRNodeTrafficManager}.
+ * Integrated with {@link AbstractMRNodeTrafficController}.
  *
  * @author Bob Jacobsen  Copyright 2008
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public abstract class AbstractNode {
     
@@ -32,7 +32,7 @@ public abstract class AbstractNode {
     /**
      * Public method to set the node address.
      *   Address range is checked in subclasses.
-     * @ throws IllegalArgumentException if out of range
+     * @throws IllegalArgumentException if out of range
      */
     public void setNodeAddress(int address) {
         if ( checkNodeAddress(address) ) {
