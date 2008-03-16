@@ -2,6 +2,7 @@
 
 package jmri.jmrix.nce.networkdriver;
 
+import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NcePortController;
 import jmri.jmrix.nce.NceProgrammer;
@@ -21,7 +22,7 @@ import java.util.Vector;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class NetworkDriverAdapter extends NcePortController {
 
@@ -49,7 +50,7 @@ public class NetworkDriverAdapter extends NcePortController {
 
         jmri.jmrix.nce.ActiveFlag.setActive();
 
-        if (getCurrentOption1Setting().equals(validOption2()[1])) {
+        if (getCurrentOption2Setting().equals(validOption2()[1])) {
             // setting binary mode
             NceMessage.setCommandOptions(NceMessage.OPTION_2006);
         } else {
@@ -78,6 +79,8 @@ public class NetworkDriverAdapter extends NcePortController {
             opened = true;
         } catch (Exception e) {
             log.error("error opening NCE network connection: "+e);
+            ConnectionStatus.instance().setConnectionState(
+            		hostName, ConnectionStatus.CONNECTION_DOWN);
         }
     }
 
@@ -88,6 +91,8 @@ public class NetworkDriverAdapter extends NcePortController {
         }
      	catch (java.io.IOException e) {
             log.error("getOutputStream exception: "+e);
+            ConnectionStatus.instance().setConnectionState(
+            		hostName, ConnectionStatus.CONNECTION_DOWN);
      	}
      	return null;
     }
@@ -125,10 +130,17 @@ public class NetworkDriverAdapter extends NcePortController {
     static NetworkDriverAdapter mInstance = null;
 
     Socket socket;
-
+    
+    String hostName = null;
+    public void setHostName (String hostName){
+    	this.hostName = hostName;
+    }
+    
+    Vector portNameVector = null;
     public Vector getPortNames() {
-        log.error("Unexpected call to getPortNames");
-        return null;
+    	portNameVector = new Vector();
+    	portNameVector.addElement(hostName);
+        return portNameVector;
     }
     public String openPort(String portName, String appName)  {
         log.error("Unexpected call to openPort");

@@ -21,7 +21,7 @@ import javax.swing.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -68,6 +68,10 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         // slightly different, as not based on a serial port...
         // create the adapter
         NetworkDriverAdapter client = new NetworkDriverAdapter();
+        
+        // load configuration
+        client.configureOption2(mode);
+        client.setHostName(hostName);
 
         // start the connection
         try {
