@@ -5,10 +5,12 @@ package jmri.jmrix;
 import jmri.jmrix.grapevine.*;
 
 /**
- * Add description of class here.
+ * Basic implementation of a node for JMRI protocol support.
+ * <p>
+ * Integrated with {@link AbstractMRNodeTrafficManager}.
  *
- * @author jake  Copyright _YEAR_
- * @version   $Revision: 1.1 $
+ * @author Bob Jacobsen  Copyright 2008
+ * @version   $Revision: 1.2 $
  */
 public abstract class AbstractNode {
     
