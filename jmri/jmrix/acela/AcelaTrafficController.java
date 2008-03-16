@@ -5,7 +5,7 @@ package jmri.jmrix.acela;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
-import jmri.jmrix.AbstractMRTrafficController;
+import jmri.jmrix.AbstractMRNodeTrafficController;
 
 import java.io.DataInputStream;
 
@@ -20,17 +20,18 @@ import java.io.DataInputStream;
  * <P>
  * This handles the state transistions, based on the
  * necessary state in each message.
+ 
  * <P>
  * Handles initialization, polling, output, and input for multiple Serial Nodes.
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  *
  * @author	Bob Coleman Copyright (C) 2007. 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
  */
-public class AcelaTrafficController extends AbstractMRTrafficController implements AcelaInterface {
+public class AcelaTrafficController extends AbstractMRNodeTrafficController implements AcelaInterface {
 
     public AcelaTrafficController() {
         super();
@@ -39,12 +40,8 @@ public class AcelaTrafficController extends AbstractMRTrafficController implemen
         mWaitBeforePoll = 25;  // default = 25
     	setAllowUnexpectedReply(true);
 
-        // clear the array of AcelaNodes
-        for (int i=0; i<MAXNODE; i++) {
-            nodeArray[i] = null;
-            mustInit[i] = false;  // Do not normally need to init Acela nodes.
-        }
-
+        super.init(0, 1024); // 1024 is an artifical limit but economically reasonable
+        
         needToPollNodes = true;   // Need to poll and create corresponding nodes
         needToInitAcelaNetwork = true;   // Need to poll and create corresponding nodes
         needToCreateNodesState = 0; // Need to initialize system and then poll
@@ -63,8 +60,6 @@ public class AcelaTrafficController extends AbstractMRTrafficController implemen
         this.removeListener(l);
     }
 
-    private int numNodes = 0;               // Incremented as Acela Nodes are created and registered
-                                            // Corresponds to next available address in nodeArray
     private int currentOutputAddress = -1;   // Incremented as Acela Nodes are created and registered
                                             // Corresponds to next available output address in nodeArray
                                             // Start at -1 to avoid issues with bit address 0
@@ -88,24 +83,18 @@ public class AcelaTrafficController extends AbstractMRTrafficController implemen
     
     private static int SPECIALNODE = 0;         //  Needed to initialize system
 
-    static final int MINNODE = 0;
-    static final int MAXNODE = 1024;     //  Artifical limit but economically reasonable
-
-    private AcelaNode[] nodeArray = new AcelaNode[MAXNODE];  // numbering from 0
-    private boolean[] mustInit = new boolean[MAXNODE];
-
     /**
      *  Public method to get minimum address of an Acela node
      */
     public int getMinimumNodeAddress() {
-        return MINNODE;
+        return minNode;
     }
     
     /**
      *  Public method to get maximum number of Acela nodes
      */
     public int getMaximumNumberOfNodes() {
-        return MAXNODE;
+        return maxNode;
     }
     
     public boolean getAcelaTrafficControllerState() {
@@ -137,37 +126,33 @@ public class AcelaTrafficController extends AbstractMRTrafficController implemen
      */
      public void registerAcelaNode(AcelaNode node) {
         synchronized (this) {
-            // no validity checking because at this point the node may not be fully defined
-            if (numNodes < MAXNODE) {
-                nodeArray[numNodes] = node;
-                mustInit[numNodes] = false;  // Do not normally need to init Acela nodes.
-                numNodes++;
-                if (node.getNumOutputBitsPerCard() == 0) {
-                    node.setStartingOutputAddress(-1);
-                    node.setEndingOutputAddress(-1);
-                } else {
-                    if (currentOutputAddress == -1) {  // Need to use -1 to correctly identify bit address 0
-                        currentOutputAddress = 0;
-                    }
-                    node.setStartingOutputAddress(currentOutputAddress);
-                    currentOutputAddress = currentOutputAddress + node.getNumOutputBitsPerCard()-1;
-                    node.setEndingOutputAddress(currentOutputAddress);
-                    currentOutputAddress = currentOutputAddress + 1;
-                }
-                if (node.getNumSensorBitsPerCard() == 0) {
-                    node.setStartingSensorAddress(-1);
-                    node.setEndingSensorAddress(-1);
-                } else {
-                    if (currentSensorAddress == -1) {  // Need to use -1 to correctly identify bit address 0
-                        currentSensorAddress = 0;
-                    }
-                    node.setStartingSensorAddress(currentSensorAddress);
-                    currentSensorAddress = currentSensorAddress + node.getNumSensorBitsPerCard()-1;
-                    node.setEndingSensorAddress(currentSensorAddress);
-                    currentSensorAddress = currentSensorAddress + 1;
-                }
+            super.registerNode(node);
+
+            // no node validity checking because at this point the node may not be fully defined
+            setMustInit(node, false);  // Do not normally need to init Acela nodes.
+            if (node.getNumOutputBitsPerCard() == 0) {
+                node.setStartingOutputAddress(-1);
+                node.setEndingOutputAddress(-1);
             } else {
-                log.warn("Trying to register too many Acela nodes");
+                if (currentOutputAddress == -1) {  // Need to use -1 to correctly identify bit address 0
+                    currentOutputAddress = 0;
+                }
+                node.setStartingOutputAddress(currentOutputAddress);
+                currentOutputAddress = currentOutputAddress + node.getNumOutputBitsPerCard()-1;
+                node.setEndingOutputAddress(currentOutputAddress);
+                currentOutputAddress = currentOutputAddress + 1;
+            }
+            if (node.getNumSensorBitsPerCard() == 0) {
+                node.setStartingSensorAddress(-1);
+                node.setEndingSensorAddress(-1);
+            } else {
+                if (currentSensorAddress == -1) {  // Need to use -1 to correctly identify bit address 0
+                    currentSensorAddress = 0;
+                }
+                node.setStartingSensorAddress(currentSensorAddress);
+                currentSensorAddress = currentSensorAddress + node.getNumSensorBitsPerCard()-1;
+                node.setEndingSensorAddress(currentSensorAddress);
+                currentSensorAddress = currentSensorAddress + 1;
             }
         }
     }
@@ -177,14 +162,7 @@ public class AcelaTrafficController extends AbstractMRTrafficController implemen
      */
      public void initializeAcelaNode(AcelaNode node) {
         synchronized (this) {
-            // find the node in the registered node list
-            for (int i=0; i<numNodes; i++) {
-                if (nodeArray[i] == node) {
-                    // found node - set up for initialization
-                    mustInit[i] = true;
-                    return;
-                }
-            }
+            setMustInit(node, true);
         }
     }
 
@@ -195,74 +173,21 @@ public class AcelaTrafficController extends AbstractMRTrafficController implemen
      *                  was not found
      */
     public int lookupAcelaNodeAddress(int bitAddress, boolean isSensor) {
-        for (int i=0; i<numNodes; i++) { 
+        for (int i=0; i<getNumNodes(); i++) { 
+            AcelaNode node = (AcelaNode) getNode(i);
             if (isSensor) {
-                if ((bitAddress >= nodeArray[i].getStartingSensorAddress())
-                    && (bitAddress <= nodeArray[i].getEndingSensorAddress())) {
+                if ((bitAddress >= node.getStartingSensorAddress())
+                    && (bitAddress <= node.getEndingSensorAddress())) {
                     return(i);
                 }
             } else {
-                if ((bitAddress >= nodeArray[i].getStartingOutputAddress())
-                    && (bitAddress <= nodeArray[i].getEndingOutputAddress())) {
+                if ((bitAddress >= node.getStartingOutputAddress())
+                    && (bitAddress <= node.getEndingOutputAddress())) {
                     return(i);
                 }
             }
         }
     	return (-1);
-    }
-
-    /**
-     * Public method to identify a AcelaNode from its node address
-     *      Note:   nodeAddress is numbered from 0.
-     *              Returns 'null' if a AcelaNode with the specified address
-     *                  was not found
-     */
-    public AcelaNode getNodeFromAddress(int nodeAddress) {
-        for (int i=0; i<numNodes; i++) {
-            if (nodeArray[i].getNodeAddress() == nodeAddress) {
-                return(nodeArray[i]);
-            }
-        }
-    	return (null);
-    }
-
-    /**
-     *  Public method to delete a AcelaNode by node address
-     */
-     public synchronized void deleteAcelaNode(int nodeAddress) {
-        // find the serial node
-        int index = 0;
-        for (int i=0; i<numNodes; i++) {
-            if (nodeArray[i].getNodeAddress() == nodeAddress) {
-                index = i;
-            }
-        }
-        if (index==curAcelaNodeIndex) {
-            log.warn("Deleting the Acela node active in the polling loop");
-        }
-        // Delete the node from the node list
-        numNodes --;
-        if (index<numNodes) {
-            // did not delete the last node, shift 
-            for (int j=index; j<numNodes; j++) {
-                nodeArray[j] = nodeArray[j+1];
-            }
-        }
-        nodeArray[numNodes] = null;
-    }
-
-    /**
-     *  Public method to return the Acela node with a given index
-     *  Note:   To cycle through all nodes, begin with index=0, 
-     *              and increment your index at each call.  
-     *          When index exceeds the number of defined nodes,
-     *              this routine returns 'null'.
-     */
-     public AcelaNode getAcelaNode(int index) {
-        if (index >= numNodes) {
-            return null;
-        }
-        return nodeArray[index];
     }
 
     protected AbstractMRMessage enterProgMode() {
@@ -340,38 +265,39 @@ public class AcelaTrafficController extends AbstractMRTrafficController implemen
         }
         
         // ensure validity of call
-        if (numNodes<=0) {
+        if (getNumNodes()<=0) {
             return null;
         }
         
         // move to a new node
         curAcelaNodeIndex ++;
-        if (curAcelaNodeIndex>=numNodes) { 
+        if (curAcelaNodeIndex>=getNumNodes()) { 
             curAcelaNodeIndex = 0;
         }
 
-        // ensure that each node is initialized        
-       if (nodeArray[curAcelaNodeIndex].hasActiveSensors) {
-            for (int s = 0; s < nodeArray[curAcelaNodeIndex].sensorbitsPerCard; s++) {
-                if (nodeArray[curAcelaNodeIndex].sensorInit[s]) {
+        // ensure that each node is initialized
+        AcelaNode node = (AcelaNode) getNode(curAcelaNodeIndex);       
+        if (node.hasActiveSensors) {
+            for (int s = 0; s < node.sensorbitsPerCard; s++) {
+                if (node.sensorInit[s]) {
                     AcelaMessage m = AcelaMessage.getAcelaConfigSensorMsg();
-                    int tempiaddr = s + nodeArray[curAcelaNodeIndex].getStartingSensorAddress();
+                    int tempiaddr = s + node.getStartingSensorAddress();
                     byte tempbaddr = (byte) (tempiaddr);
                     m.setElement(2, tempbaddr);
                     log.debug("send Config Sesnsor message: "+m);
                     m.setTimeout(2000);  // wait for init to finish (milliseconds)
                     mCurrentMode = NORMALMODE;
-                    nodeArray[curAcelaNodeIndex].sensorInit[s] = false;
+                    node.sensorInit[s] = false;
                     return m;
                 }
             }
         }
         
         // send Output packet if needed
-        if (nodeArray[curAcelaNodeIndex].mustSend()) {
+        if (getNode(curAcelaNodeIndex).mustSend()) {
             log.debug("request write command to send");
-            nodeArray[curAcelaNodeIndex].resetMustSend();
-            AcelaMessage m = nodeArray[curAcelaNodeIndex].createOutPacket(curAcelaNodeIndex);
+            getNode(curAcelaNodeIndex).resetMustSend();
+            AbstractMRMessage m = getNode(curAcelaNodeIndex).createOutPacket();
             m.setTimeout(400);  // no need to wait for output to answer
 //            m.setTimeout(200);  // no need to wait for output to answer Before adding WM
         	mCurrentMode = NORMALMODE;
@@ -395,14 +321,14 @@ public class AcelaTrafficController extends AbstractMRTrafficController implemen
     protected void handleTimeout(AbstractMRMessage m) {
         // don't use super behavior, as timeout to init, transmit message is normal
         // inform node, and if it resets then reinitialize        
-        if (nodeArray[curAcelaNodeIndex].handleTimeout(m)) 
-            mustInit[curAcelaNodeIndex] = true;
+        if (getNode(curAcelaNodeIndex).handleTimeout(m)) 
+            setMustInit(curAcelaNodeIndex, true);
     }
     
     protected void resetTimeout(AbstractMRMessage m) {
         // don't use super behavior, as timeout to init, transmit message is normal
         // and inform node
-        nodeArray[curAcelaNodeIndex].resetTimeout(m);
+        getNode(curAcelaNodeIndex).resetTimeout(m);
     }
 
     protected AbstractMRListener pollReplyHandler() {
@@ -495,9 +421,10 @@ public class AcelaTrafficController extends AbstractMRTrafficController implemen
      * For each sensor node call markChanges.
      */
     public void updateSensorsFromPoll(AcelaReply r) {
-        for (int i=0; i< numNodes; i++) {
-            if (nodeArray[i].getSensorBitsPerCard() > 0) {
-                nodeArray[i].markChanges(r);
+        for (int i=0; i< getNumNodes(); i++) {
+            AcelaNode node = (AcelaNode) getNode(i);
+            if (node.getSensorBitsPerCard() > 0) {
+                node.markChanges(r);
             }
         }
     }

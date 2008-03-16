@@ -5,6 +5,7 @@ package jmri.jmrix.acela;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.jmrix.AbstractMRMessage;
+import jmri.jmrix.AbstractNode;
 
 /**
  * Models a Acela node.
@@ -23,12 +24,12 @@ import jmri.jmrix.AbstractMRMessage;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
  */
-public class AcelaNode {
+public class AcelaNode extends AbstractNode {
 
     /**
      * Maximum number of sensors/outputs any node of any type can carry.
@@ -64,7 +65,6 @@ public class AcelaNode {
                                         };
 
     // node definition instance variables (must persist between runs)
-    public int nodeAddress = 0;                         // Node address, 0-1024 allowed
     protected int nodeType = UN;                        // See above
     protected int outputbitsPerCard = MAXOUTPUTBITS;    // See above
     protected int sensorbitsPerCard = MAXSENSORBITS;    // See above
@@ -73,8 +73,6 @@ public class AcelaNode {
     // operational instance variables  (should not be preserved between runs)
     protected boolean needInit = false;          // 'true' if this module needs to be initialized
                                                  //    used for sensors
-    protected boolean needSend = false;          // 'true' if something has changed in the outputByte array since
-                                                 //    the last send to the hardware node
     protected byte[] outputArray = new byte[MAXOUTPUTBITS]; // current values of the output bits for this node
     														  // BOB C: THis really could be a boolean array
     protected boolean hasActiveSensors = false; // 'true' if there are active Sensors for this node
@@ -125,7 +123,7 @@ public class AcelaNode {
         }
 
         // initialize other operational instance variables
-        needSend = false;
+        resetMustSend();
         needInit = false;
         hasActiveSensors = false;
 
@@ -216,7 +214,7 @@ public class AcelaNode {
 
         // check for change, necessitating a send
         if (oldbyte != outputArray[newbitNumber]) {
-            needSend = true;
+            setMustSend();
         }
     }
     	
@@ -244,26 +242,6 @@ public class AcelaNode {
     	return hasActiveSensors;
     }
 
-    /**
-     * Public method to return state of needSend flag.
-     */
-    public boolean mustSend() { 
-    	return needSend;
-    }
-
-    /**
-     * Public to reset state of needSend flag.
-     */
-    public void resetMustSend() { 
-    	needSend = false; 
-    }
-
-    /**
-     * Public to set state of needSend flag.
-     */
-    public void setMustSend() { 
-    	needSend = true;
-    }
 
     /**
      * Public method to return node type
@@ -349,23 +327,10 @@ public class AcelaNode {
 
 
     /**
-     * Public method to return the node address.
-     */
-    public int getNodeAddress() {
-        return (nodeAddress);
-    }
-
-    /**
      * Public method to set the node address.
      */
-    public void setNodeAddress(int address) {
-        if ( (address >= 0) && (address < MAXNODE) ) {
-            nodeAddress = address;
-        }
-        else {
-            log.error("illegal node address: "+Integer.toString(address));
-            nodeAddress = -1;
-        }
+    public boolean checkNodeAddress(int address) {
+        return ( (address >= 0) && (address < MAXNODE) );
     }
 
     /**
@@ -399,9 +364,14 @@ public class AcelaNode {
     }
 
     /**
+     * Create an initialization packet if needed
+     */
+    public AbstractMRMessage createInitPacket() { return null; }
+    
+    /**
      * Public Method to create an Transmit packet (SerialMessage)
      */
-    public AcelaMessage createOutPacket(int nodeindex) {
+    public AbstractMRMessage createOutPacket() {
     	byte addr = 0x00;
         Integer tempint = new Integer(startingOutputAddress);
         addr = tempint.byteValue();
@@ -637,13 +607,13 @@ public class AcelaNode {
      *
      * @return true if initialization required
      */
-    boolean handleTimeout(AbstractMRMessage m) {
+    public boolean handleTimeout(AbstractMRMessage m) {
         timeout++;
         if (log.isDebugEnabled()) log.warn("Timeout to poll for UA="+nodeAddress+": consecutive timeouts: "+timeout);
         return false;   // tells caller to NOT force init
     }
 
-    void resetTimeout(AbstractMRMessage m) {
+    public void resetTimeout(AbstractMRMessage m) {
         if (timeout>0) log.debug("Reset "+timeout+" timeout count");
         timeout = 0;
     }

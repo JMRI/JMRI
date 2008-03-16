@@ -17,7 +17,7 @@ import jmri.jmrix.acela.AcelaSensorManager;
  * Frame for user configuration of Acela nodes
  * @author	Bob Jacobsen   Copyright (C) 2004, 2007, 2008
  * @author	Dave Duchamp   Copyright (C) 2004, 2006
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -200,7 +200,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         int nodeAddress = readNodeAddress();
         if (nodeAddress < 0) return;
         // get a AcelaNode corresponding to this node address if one exists
-        curNode = AcelaTrafficController.instance().getNodeFromAddress(nodeAddress);
+        curNode = (AcelaNode) AcelaTrafficController.instance().getNodeFromAddress(nodeAddress);
         if (curNode != null) {
             statusText1.setText(rb.getString("Error1")+Integer.toString(nodeAddress)+
                         rb.getString("Error2"));
@@ -242,7 +242,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         nodeAddress = readNodeAddress();
         if (nodeAddress < 0) return;
         // get the AcelaNode corresponding to this node address
-        curNode = AcelaTrafficController.instance().getNodeFromAddress(nodeAddress);
+        curNode = (AcelaNode) AcelaTrafficController.instance().getNodeFromAddress(nodeAddress);
         if (curNode == null) {
             statusText1.setText(rb.getString("Error4"));
             statusText1.setVisible(true);
@@ -279,7 +279,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         int nodeAddress = readNodeAddress();
         if (nodeAddress < 0) return;
         // get the AcelaNode corresponding to this node address
-        curNode = AcelaTrafficController.instance().getNodeFromAddress(nodeAddress);
+        curNode = (AcelaNode) AcelaTrafficController.instance().getNodeFromAddress(nodeAddress);
         if (curNode == null) {
             statusText1.setText(rb.getString("Error4"));
             statusText1.setVisible(true);
@@ -294,7 +294,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                         javax.swing.JOptionPane.OK_CANCEL_OPTION,
                             javax.swing.JOptionPane.WARNING_MESSAGE) ) {
             // delete this node
-            AcelaTrafficController.instance().deleteAcelaNode(nodeAddress);
+            AcelaTrafficController.instance().deleteNode(nodeAddress);
             // provide user feedback
             resetNotes();
             statusText1.setText(rb.getString("FeedBackDelete")+" "+

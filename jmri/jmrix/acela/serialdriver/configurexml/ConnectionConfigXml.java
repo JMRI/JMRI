@@ -23,7 +23,7 @@ import org.jdom.*;
  * here directly via the class attribute in the XML.
  *
  * @author      Bob Jacobsen Copyright: Copyright (c) 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  *
  * @author      Bob Coleman, Copyright (c) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -39,7 +39,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
      * @param e Element being extended
      */
     protected void extendElement(Element e) {
-        AcelaNode node = AcelaTrafficController.instance().getAcelaNode(0);
+        AcelaNode node = (AcelaNode) AcelaTrafficController.instance().getNode(0);
         int index = 1;
         while (node != null) {
             // add node as an element
@@ -50,7 +50,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
             n.addContent(makeParameter("nodetype", ""+node.getNodeType()));
 
             // look for the next node
-            node = AcelaTrafficController.instance().getAcelaNode(index);
+            node = (AcelaNode) AcelaTrafficController.instance().getNode(index);
             index ++;
         }
     }

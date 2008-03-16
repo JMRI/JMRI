@@ -14,7 +14,7 @@ package jmri.jmrix.acela;
  *              AL134 (bit134)
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004 - 2006
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -81,7 +81,7 @@ public class AcelaAddress {
             // error messages have already been issued by getNodeAddressFromSystemName
             return null;
         
-        return (AcelaTrafficController.instance().getNodeFromAddress(ua));
+        return (AcelaNode)(AcelaTrafficController.instance().getNodeFromAddress(ua));
     }
     
     /**
