@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004
  * @author  Bob Jacobsen, Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class SerialAddress {
 
@@ -190,7 +190,7 @@ public class SerialAddress {
         else {
             ua = Integer.valueOf(matcher.group(4)).intValue();
         }
-        return (SerialTrafficController.instance().getNodeFromAddress(ua));
+        return (SerialNode) SerialTrafficController.instance().getNodeFromAddress(ua);
     }
     
     

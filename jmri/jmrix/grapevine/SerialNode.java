@@ -5,6 +5,7 @@ package jmri.jmrix.grapevine;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.jmrix.AbstractMRMessage;
+import jmri.jmrix.AbstractNode;
 
 /**
  * Models a serial node.
@@ -21,9 +22,9 @@ import jmri.jmrix.AbstractMRMessage;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
-public class SerialNode {
+public class SerialNode extends AbstractNode {
 
     /**
      * Maximum number of sensors a node can carry.
@@ -50,12 +51,9 @@ public class SerialNode {
     public static final int[] inputBits = new int[]{224,224,224};
     
     // node definition instance variables (must persist between runs)
-    public int nodeAddress = 0;                 // Node address, 1-127 allowed
     protected int nodeType = NODE2002V6;             // See above
 
     // operational instance variables  (should not be preserved between runs)
-    protected boolean needSend = true;          // 'true' if something has changed in the outputByte array since
-                                                //    the last send to the hardware node
     protected byte[] outputArray = new byte[500]; // current values of the output bits for this node
     protected boolean[] outputByteChanged = new boolean[500];
     
@@ -96,7 +94,7 @@ public class SerialNode {
             outputByteChanged[i] = false;
         }
         // initialize other operational instance variables
-        needSend = true;
+        setMustSend();
         hasActiveSensors = false;
         // register this node
         SerialTrafficController.instance().registerSerialNode(this);
@@ -124,7 +122,7 @@ public class SerialNode {
         else outputArray[byteNumber] |= bit;
         // check for change, necessitating a send
         if (oldByte != outputArray[byteNumber]) {
-            needSend = true;
+            setMustSend();
             outputByteChanged[byteNumber] = true;
         }
     }
@@ -136,11 +134,6 @@ public class SerialNode {
     public boolean sensorsActive() { return hasActiveSensors; }
 
     /**
-     * Public method to return state of needSend flag.
-     */
-    public boolean mustSend() { return needSend; }
-
-    /**
      * Public to reset state of needSend flag.
      * Can only reset if there are no bytes that need to be
      * sent
@@ -149,12 +142,8 @@ public class SerialNode {
         for (int i = 0; i < (outputBits[nodeType]+7)/8; i++) {
             if (outputByteChanged[i]) return;
         }
-        needSend = false; 
+        super.resetMustSend(); 
     }
-    /**
-     * Public to set state of needSend flag.
-     */
-    public void setMustSend() { needSend = true; }
 
     /**
      * Public method to return node type
@@ -180,25 +169,12 @@ public class SerialNode {
     }
 
     /**
-     * Public method to return the node address.
+     * Check for valid node address
      */
-    public int getNodeAddress() {
-        return (nodeAddress);
+     protected boolean checkNodeAddress(int address) {
+        return (address >= 1) && (address <= 127);
     }
 
-    /**
-     * Public method to set the node address.
-     * @param address Node address from 1 to 127 inclusive
-     */
-    public void setNodeAddress(int address) {
-        if ( (address >= 1) && (address <= 127) ) {
-            nodeAddress = address;
-        }
-        else {
-            log.error("illegal node address: "+Integer.toString(address));
-            nodeAddress = 1;
-        }
-    }
 
 
     /**
@@ -215,7 +191,7 @@ public class SerialNode {
      * put in the reply from this. The other(s) are sent via
      * the usual output methods.
      */
-    public SerialMessage createInitPacket() {
+    public AbstractMRMessage createInitPacket() {
 
         // first, queue a timer to send 2nd message
         javax.swing.Timer timer = new javax.swing.Timer(250, null);
@@ -225,9 +201,9 @@ public class SerialNode {
                 int i = 0;
 
                 // turn on 2nd parallel inputs        
-                m2.setElement(i++, nodeAddress | 0x80);  // address
+                m2.setElement(i++, getNodeAddress() | 0x80);  // address
                 m2.setElement(i++, 0x70);  // command
-                m2.setElement(i++, nodeAddress | 0x80);  // address
+                m2.setElement(i++, getNodeAddress() | 0x80);  // address
                 m2.setElement(i++, 0x10);  // bank and parity
                 m2.setParity(i-4);
                 SerialTrafficController.instance().sendSerialMessage(m2, null);
@@ -244,9 +220,9 @@ public class SerialNode {
         int i = 0;
 
         // turn on ASD     
-        m1.setElement(i++, nodeAddress | 0x80);  // address
+        m1.setElement(i++, getNodeAddress() | 0x80);  // address
         m1.setElement(i++, 0x71);  // command
-        m1.setElement(i++, nodeAddress | 0x80);  // address
+        m1.setElement(i++, getNodeAddress() | 0x80);  // address
         m1.setElement(i++, 0x00);  // bank and parity
         m1.setParity(i-4);
         
@@ -256,7 +232,7 @@ public class SerialNode {
     /**
      * Public Method to create an Transmit packet (SerialMessage)
      */
-    public SerialMessage createOutPacket() {
+    public AbstractMRMessage createOutPacket() {
         if (log.isDebugEnabled()) log.debug("createOutPacket for nodeType "
             +nodeType+" with "
             +outputByteChanged[0]+" "+outputArray[0]+";"
@@ -266,7 +242,7 @@ public class SerialNode {
             
         // Create a Serial message and add initial bytes
         SerialMessage m = new SerialMessage();
-        m.setElement(0,nodeAddress); // node address
+        m.setElement(0,getNodeAddress()); // node address
         m.setElement(1,17);          
         // Add output bytes
         for (int i = 0; i < (outputBits[nodeType]+7)/8; i++) {
@@ -415,7 +391,7 @@ public class SerialNode {
             // multiple registration of the same sensor
             new Exception("mult reg "+i+" S:"+s.getSystemName()).printStackTrace();
             log.warn("multiple registration of same sensor: GS"+
-                     Integer.toString((nodeAddress*SerialSensorManager.SENSORSPERNODE) + i) );
+                     Integer.toString((getNodeAddress()*SerialSensorManager.SENSORSPERNODE) + i) );
         }
     }
 
@@ -424,13 +400,13 @@ public class SerialNode {
      *
      * @return true if initialization required
      */
-    boolean handleTimeout(AbstractMRMessage m) {
+    public boolean handleTimeout(AbstractMRMessage m) {
         timeout++;
         // normal to timeout in response to init, output
         if (m.getElement(1)!=0x50) return false;
         
         // see how many polls missed
-        if (log.isDebugEnabled()) log.warn("Timeout to poll for addr="+nodeAddress+": consecutive timeouts: "+timeout);
+        if (log.isDebugEnabled()) log.warn("Timeout to poll for addr="+getNodeAddress()+": consecutive timeouts: "+timeout);
         
         if (timeout>5) { // enough, reinit
             // reset timeout count to zero to give polls another try
@@ -441,7 +417,7 @@ public class SerialNode {
         } 
         else return false;
     }
-    void resetTimeout(AbstractMRMessage m) {
+    public void resetTimeout(AbstractMRMessage m) {
         if (timeout>0) log.debug("Reset "+timeout+" timeout count");
         timeout = 0;
     }

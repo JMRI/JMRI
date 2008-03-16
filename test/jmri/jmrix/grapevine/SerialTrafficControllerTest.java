@@ -14,11 +14,12 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import jmri.jmrix.AbstractMRReply;
+import jmri.jmrix.AbstractMRMessage;
 
 /**
  * JUnit tests for the SerialTrafficController class
  * @author			Bob Jacobsen Copyright 2005, 2007, 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class SerialTrafficControllerTest extends TestCase {
 
@@ -377,7 +378,7 @@ public class SerialTrafficControllerTest extends TestCase {
         c.setSerialOutput("GL5B10",false);
         c.setSerialOutput("GL5B9",false);
         Assert.assertTrue("must Send on", g.mustSend() );
-        SerialMessage m = g.createOutPacket();
+        AbstractMRMessage m = g.createOutPacket();
         Assert.assertEquals("packet size", 4, m.getNumDataElements() );
         Assert.assertEquals("node address", 5, m.getElement(0) );
         Assert.assertEquals("packet type", 17, m.getElement(1) );  // 'T'        
