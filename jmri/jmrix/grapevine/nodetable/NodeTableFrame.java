@@ -8,12 +8,13 @@ import java.util.ResourceBundle;
 import javax.swing.*;
 import javax.swing.border.Border;
 
+import jmri.jmrix.grapevine.SerialTrafficController;
 
 /**
  * Frame for user configuration of serial nodes
  * @author	Bob Jacobsen   Copyright (C) 2004, 2007
  * @author	Dave Duchamp   Copyright (C) 2004, 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class NodeTableFrame extends jmri.util.JmriJFrame {
 
@@ -27,6 +28,8 @@ public class NodeTableFrame extends jmri.util.JmriJFrame {
     	super();
     }
 
+    NodeTablePane p;
+    
     /** 
      *  Initialize the window
      */
@@ -38,15 +41,20 @@ public class NodeTableFrame extends jmri.util.JmriJFrame {
 			
 
         // add table
-        NodeTablePane p = new NodeTablePane();
+        p = new NodeTablePane();
         p.initComponents();
         contentPane.add(p);
         
         // add help menu to window
     	addHelpMenu("package.jmri.jmrix.grapevine.nodetable.NodeTableFrame", true);
 
+        // register
+        SerialTrafficController.instance().addSerialListener(p);
         // pack for display
         pack();
     }
 
+    public void dispose() {
+        SerialTrafficController.instance().removeSerialListener(p);
+    }
 }
