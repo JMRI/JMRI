@@ -114,7 +114,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
       <tocitem text="Tracker (Blocks)" target="html.tools.tracker.index"/>
       <tocitem text="Turnouts" target="html.tools.Turnouts">
          <tocitem text="Turnout Add/Edit" target="package.jmri.jmrit.beantable.TurnoutAddEdit"/>
-         <tocitem text="Turnout Table" target="package.jmri.jmrit.beantable.TurnoutAddEdit"/>
+         <tocitem text="Turnout Table" target="package.jmri.jmrit.beantable.TurnoutTable"/>
       </tocitem>
       <tocitem text="Turnout Control" target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl"/>
    </tocitem>
