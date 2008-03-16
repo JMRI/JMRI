@@ -20,6 +20,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.tools.scripting.Examples" url="html/tools/scripting/Examples.shtml" />
 	<mapID target="html.tools.index" url="html/tools/index.shtml" />
 	<mapID target="html.tools.throttle.ThrottleChapter2_ControlPanel" url="html/tools/throttle/ThrottleChapter2.shtml#ControlPanel" />
+	<mapID target="package.jmri.jmrix.grapevine.nodetable.RenumberFrame" url="package/jmri/jmrix/grapevine/nodetable/RenumberFrame.shtml" />
 	<mapID target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl_NCE Turnout lock feature" url="package/jmri/jmrit/simpleturnoutctrl/SimpleTurnoutCtrl.shtml#NCE Turnout lock feature" />
 	<mapID target="DecoderProManual.Basic_Programming_Write Data" url="DecoderProManual/Basic_Programming.shtml#Write Data" />
 	<mapID target="html.hardware.acela.Names" url="html/hardware/acela/Names.shtml" />
