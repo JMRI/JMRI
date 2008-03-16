@@ -9,7 +9,7 @@ package jmri.jmrix;
  * Provides node management services, but no additional protocol.
  *
  * @author jake  Copyright 2008
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficController {
     
@@ -49,7 +49,16 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
      * Mark whether this node needs to have initialization data sent
      */
     protected void setMustInit(int i, boolean v) { mustInit[i] = v; }
-    
+    protected void setMustInit(AbstractNode node, boolean v) {
+        for (int i=0; i<numNodes; i++) {
+            if (nodeArray[i] == node) {
+                // found node - set up for initialization
+                mustInit[i] = v;
+                return;
+            }
+        }
+    }
+        
     /**
      * Get the number of currently registered nodes
      */
@@ -59,7 +68,7 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
     /**
      *  Public method to register a Serial node
      */
-    public void registerSerialNode(AbstractNode node) {
+    public void registerNode(AbstractNode node) {
         synchronized (this) {
             // no validity checking because at this point the node may not be fully defined
             nodeArray[numNodes] = node;
@@ -75,7 +84,7 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
      *          When index exceeds the number of defined nodes,
      *              this routine returns 'null'.
      */
-    public AbstractNode getSerialNode(int index) {
+    public AbstractNode getNode(int index) {
         if (index >= numNodes) {
             return null;
         }
@@ -91,8 +100,8 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
      */
     public AbstractNode getNodeFromAddress(int addr) {
         for (int i=0; i<numNodes; i++) {
-            if (getSerialNode(i).getNodeAddress() == addr) {
-                return(getSerialNode(i));
+            if (getNode(i).getNodeAddress() == addr) {
+                return(getNode(i));
             }
         }
     	return (null);
@@ -106,7 +115,7 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
     /**
      *  Public method to delete a Serial node by node address
      */
-     public synchronized void deleteSerialNode(int nodeAddress) {
+     public synchronized void deleteNode(int nodeAddress) {
         // find the serial node
         int index = 0;
         for (int i=0; i<numNodes; i++) {
