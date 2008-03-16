@@ -27,7 +27,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003, 2006
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
 
@@ -87,7 +87,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         synchronized (this) {
             // find the node in the registered node list
             for (int i=0; i<getNumNodes(); i++) {
-                if (getSerialNode(i) == node) {
+                if (getNode(i) == node) {
                     // found node - set up for initialization
                     setMustInit(i, true);
                     return;
@@ -139,7 +139,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         // ensure that each node is initialized        
         if (getMustInit(curSerialNodeIndex)) {
             setMustInit(curSerialNodeIndex, false);
-            AbstractMRMessage m = getSerialNode(curSerialNodeIndex).createInitPacket();
+            AbstractMRMessage m = getNode(curSerialNodeIndex).createInitPacket();
             if (m!=null) { // SECSI boards don't need this yet
                 log.debug("send init message: "+m);
                 m.setTimeout(2000);  // wait for init to finish (milliseconds)
@@ -147,18 +147,18 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
             }   // else fall through to continue
         }
         // send Output packet if needed
-        if (getSerialNode(curSerialNodeIndex).mustSend()) {
+        if (getNode(curSerialNodeIndex).mustSend()) {
             log.debug("request write command to send");
-            AbstractMRMessage m = getSerialNode(curSerialNodeIndex).createOutPacket();
-            getSerialNode(curSerialNodeIndex).resetMustSend();
+            AbstractMRMessage m = getNode(curSerialNodeIndex).createOutPacket();
+            getNode(curSerialNodeIndex).resetMustSend();
             m.setTimeout(500);
             return m;
         }
         // poll for Sensor input
-        if ( getSerialNode(curSerialNodeIndex).sensorsActive() ) {
+        if ( getNode(curSerialNodeIndex).sensorsActive() ) {
             // Some sensors are active for this node, issue poll
             SerialMessage m = SerialMessage.getPoll(
-                                getSerialNode(curSerialNodeIndex).getNodeAddress());
+                                getNode(curSerialNodeIndex).getNodeAddress());
             if (curSerialNodeIndex>=getNumNodes()) curSerialNodeIndex = 0;
             return m;
         }
@@ -170,8 +170,8 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     protected void handleTimeout(AbstractMRMessage m) {
         // inform node, and if it resets then reinitialize 
-        if (getSerialNode(curSerialNodeIndex) != null)      
-            if (getSerialNode(curSerialNodeIndex).handleTimeout(m)) 
+        if (getNode(curSerialNodeIndex) != null)      
+            if (getNode(curSerialNodeIndex).handleTimeout(m)) 
                 setMustInit(curSerialNodeIndex, true);
         else
             log.warn("Timeout can't be handled due to missing node index="+curSerialNodeIndex);
@@ -179,7 +179,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     
     protected void resetTimeout(AbstractMRMessage m) {
         // inform node
-        getSerialNode(curSerialNodeIndex).resetTimeout(m);
+        getNode(curSerialNodeIndex).resetTimeout(m);
         
     }
     

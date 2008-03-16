@@ -26,7 +26,7 @@ import jmri.jmrix.AbstractNode;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.25 $
+ * @version	$Revision: 1.26 $
  */
 public class SerialNode extends AbstractNode {
 
@@ -111,7 +111,7 @@ public class SerialNode extends AbstractNode {
         setMustSend();
         hasActiveSensors = false;
         // register this node
-        SerialTrafficController.instance().registerSerialNode(this);
+        SerialTrafficController.instance().registerNode(this);
     }
 
     public int getNum2LSearchLights() {

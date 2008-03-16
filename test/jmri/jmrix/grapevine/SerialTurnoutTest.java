@@ -9,7 +9,7 @@ import junit.framework.*;
  * Tests for the jmri.jmrix.grapevine.SerialTurnout class,
  * low address.
  * @author			Bob Jacobsen
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SerialTurnoutTest extends AbstractTurnoutTest {
 
@@ -19,7 +19,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTest {
 	public void setUp() {
 		// prepare an interface
 		tcis = new SerialTrafficControlScaffold();
-        tcis.registerSerialNode(new SerialNode(1, SerialNode.NODE2002V6));
+        tcis.registerNode(new SerialNode(1, SerialNode.NODE2002V6));
         
 		t = new SerialTurnout("GT1104","t4");
 	}

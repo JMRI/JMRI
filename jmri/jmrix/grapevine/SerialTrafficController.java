@@ -27,7 +27,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003, 2006, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
 
@@ -93,7 +93,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         synchronized (this) {
             // find the node in the registered node list
             for (int i=0; i<getNumNodes(); i++) {
-                if (getSerialNode(i) == node) {
+                if (getNode(i) == node) {
                     // found node - set up for initialization
                     setMustInit(i, true);
                     return;
@@ -150,7 +150,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         // ensure that each node is initialized        
         if (getMustInit(curSerialNodeIndex)) {
             setMustInit(curSerialNodeIndex, false);
-            SerialMessage m = (SerialMessage) (getSerialNode(curSerialNodeIndex).createInitPacket());
+            SerialMessage m = (SerialMessage) (getNode(curSerialNodeIndex).createInitPacket());
             if (m!=null) { 
                 log.debug("send init message: "+m);
                 m.setTimeout(50);  // wait for init to finish (milliseconds)
@@ -182,8 +182,8 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     protected void handleTimeout(AbstractMRMessage m) {
         // inform node, and if it resets then reinitialize 
-        if (getSerialNode(curSerialNodeIndex) != null)      
-            if (getSerialNode(curSerialNodeIndex).handleTimeout(m)) 
+        if (getNode(curSerialNodeIndex) != null)      
+            if (getNode(curSerialNodeIndex).handleTimeout(m)) 
                 setMustInit(curSerialNodeIndex, true);
         else
             log.warn("Timeout can't be handled due to missing node index="+curSerialNodeIndex);
@@ -191,7 +191,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     
     protected void resetTimeout(AbstractMRMessage m) {
         // inform node
-        getSerialNode(curSerialNodeIndex).resetTimeout(m);
+        getNode(curSerialNodeIndex).resetTimeout(m);
         
     }
     

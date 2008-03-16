@@ -16,7 +16,7 @@ import jmri.jmrix.secsi.SerialSensorManager;
  * Frame for user configuration of serial nodes
  * @author	Bob Jacobsen   Copyright (C) 2004, 2007, 2008
  * @author	Dave Duchamp   Copyright (C) 2004, 2006
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -286,7 +286,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                         javax.swing.JOptionPane.OK_CANCEL_OPTION,
                             javax.swing.JOptionPane.WARNING_MESSAGE) ) {
             // delete this node
-            SerialTrafficController.instance().deleteSerialNode(nodeAddress);
+            SerialTrafficController.instance().deleteNode(nodeAddress);
             // provide user feedback
             resetNotes();
             statusText1.setText(rb.getString("FeedBackDelete")+" "+

@@ -18,7 +18,7 @@ import jmri.jmrix.cmri.serial.SerialSensorManager;
  * Frame for user configuration of CMRI serial nodes
  * @author	Bob Jacobsen   Copyright (C) 2004
  * @author	Dave Duchamp   Copyright (C) 2004
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -501,7 +501,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                         javax.swing.JOptionPane.OK_CANCEL_OPTION,
                             javax.swing.JOptionPane.WARNING_MESSAGE) ) {
             // delete this node
-            SerialTrafficController.instance().deleteSerialNode(nodeAddress);
+            SerialTrafficController.instance().deleteNode(nodeAddress);
             // provide user feedback
             resetNotes();
             statusText1.setText(rb.getString("FeedBackDelete")+" "+

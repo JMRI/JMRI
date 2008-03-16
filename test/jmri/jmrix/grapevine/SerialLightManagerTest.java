@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractMRListener;
  *
  * Description:	    tests for the SerialLightManager class
  * @author			Bob Jacobsen Copyright 2004, 2007, 2008
- * @version  $Revision: 1.3 $
+ * @version  $Revision: 1.4 $
  */
 public class SerialLightManagerTest extends jmri.AbstractLightMgrTest  {
 
@@ -29,7 +29,7 @@ public class SerialLightManagerTest extends jmri.AbstractLightMgrTest  {
 	        }
 	        synchronized protected void sendMessage(AbstractMRMessage m, AbstractMRListener reply) {}
 	    }.test();
-		t.registerSerialNode(new SerialNode(1, SerialNode.NODE2002V6));
+		t.registerNode(new SerialNode(1, SerialNode.NODE2002V6));
 		// create and register the manager object
 		l = new SerialLightManager();
 		jmri.InstanceManager.setLightManager(l);

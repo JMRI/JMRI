@@ -12,7 +12,7 @@ import jmri.*;
  *
  * Description:	    tests for the jmri.jmrix.cmri.SerialTurnoutManager class
  * @author			Bob Jacobsen
- * @version  $Revision: 1.6 $
+ * @version  $Revision: 1.7 $
  */
 public class SerialTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 
@@ -24,7 +24,7 @@ public class SerialTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 	            return this;
 	        }
 	    }.test();
-		t.registerSerialNode(new SerialNode());
+		t.registerNode(new SerialNode());
 		// create and register the turnout manager object
 		l = new SerialTurnoutManager() {
 			public void notifyTurnoutCreationError(String conflict,int bitNum) {}

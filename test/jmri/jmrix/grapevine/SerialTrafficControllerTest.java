@@ -19,7 +19,7 @@ import jmri.jmrix.AbstractMRMessage;
 /**
  * JUnit tests for the SerialTrafficController class
  * @author			Bob Jacobsen Copyright 2005, 2007, 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class SerialTrafficControllerTest extends TestCase {
 
@@ -339,26 +339,26 @@ public class SerialTrafficControllerTest extends TestCase {
         SerialNode f = new SerialNode(3,SerialNode.NODE2002V1);
         SerialNode d = new SerialNode(2,SerialNode.NODE2002V1);
         SerialNode e = new SerialNode(6,SerialNode.NODE2002V6);
-        Assert.assertEquals("1st Node", b, c.getSerialNode(0) );
-        Assert.assertEquals("2nd Node", f, c.getSerialNode(1) );
-        Assert.assertEquals("3rd Node", d, c.getSerialNode(2) );
-        Assert.assertEquals("4th Node", e, c.getSerialNode(3) );
-        Assert.assertEquals("no more Nodes", null, c.getSerialNode(4) );
-        Assert.assertEquals("1st Node Again", b, c.getSerialNode(0) );
-        Assert.assertEquals("2nd Node Again", f, c.getSerialNode(1) );
+        Assert.assertEquals("1st Node", b, c.getNode(0) );
+        Assert.assertEquals("2nd Node", f, c.getNode(1) );
+        Assert.assertEquals("3rd Node", d, c.getNode(2) );
+        Assert.assertEquals("4th Node", e, c.getNode(3) );
+        Assert.assertEquals("no more Nodes", null, c.getNode(4) );
+        Assert.assertEquals("1st Node Again", b, c.getNode(0) );
+        Assert.assertEquals("2nd Node Again", f, c.getNode(1) );
         Assert.assertEquals("node with address 6", e, c.getNodeFromAddress(6) );
-        Assert.assertEquals("3rd Node again", d, c.getSerialNode(2) );
+        Assert.assertEquals("3rd Node again", d, c.getNode(2) );
         Assert.assertEquals("no node with address 0", null, c.getNodeFromAddress(0) );
-        c.deleteSerialNode(6);
-        Assert.assertEquals("1st Node after del", b, c.getSerialNode(0) );
-        Assert.assertEquals("2nd Node after del", f, c.getSerialNode(1) );
-        Assert.assertEquals("3rd Node after del", d, c.getSerialNode(2) );
-        Assert.assertEquals("no more Nodes after del", null, c.getSerialNode(3) );
-        c.deleteSerialNode(1);
+        c.deleteNode(6);
+        Assert.assertEquals("1st Node after del", b, c.getNode(0) );
+        Assert.assertEquals("2nd Node after del", f, c.getNode(1) );
+        Assert.assertEquals("3rd Node after del", d, c.getNode(2) );
+        Assert.assertEquals("no more Nodes after del", null, c.getNode(3) );
+        c.deleteNode(1);
         jmri.util.JUnitAppender.assertWarnMessage("Deleting the serial node active in the polling loop");
-        Assert.assertEquals("1st Node after del2", f, c.getSerialNode(0) );
-        Assert.assertEquals("2nd Node after del2", d, c.getSerialNode(1) );
-        Assert.assertEquals("no more Nodes after del2", null, c.getSerialNode(2) );        
+        Assert.assertEquals("1st Node after del2", f, c.getNode(0) );
+        Assert.assertEquals("2nd Node after del2", d, c.getNode(1) );
+        Assert.assertEquals("no more Nodes after del2", null, c.getNode(2) );        
     }
     public void testSerialOutput() {
         SerialTrafficController c = new SerialTrafficController();

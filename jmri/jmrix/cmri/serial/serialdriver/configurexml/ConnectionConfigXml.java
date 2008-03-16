@@ -19,7 +19,7 @@ import org.jdom.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -32,7 +32,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
      * @param e Element being extended
      */
     protected void extendElement(Element e) {
-        SerialNode node = (SerialNode) SerialTrafficController.instance().getSerialNode(0);
+        SerialNode node = (SerialNode) SerialTrafficController.instance().getNode(0);
         int index = 1;
         while (node != null) {
             // add node as an element
@@ -57,7 +57,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
             n.addContent(makeParameter("cardtypelocation", ""+value));
 
             // look for the next node
-            node = (SerialNode) SerialTrafficController.instance().getSerialNode(index);
+            node = (SerialNode) SerialTrafficController.instance().getNode(index);
             index ++;
         }
     }
