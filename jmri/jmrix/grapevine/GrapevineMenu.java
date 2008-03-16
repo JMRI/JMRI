@@ -10,7 +10,7 @@ import javax.swing.JMenu;
  * Create a "Systems" menu containing the Jmri Grapevine-specific tools
  *
  * @author	Bob Jacobsen   Copyright 2003, 2006, 2007
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class GrapevineMenu extends JMenu {
     public GrapevineMenu(String name) {
@@ -29,6 +29,7 @@ public class GrapevineMenu extends JMenu {
         add(new jmri.jmrix.grapevine.serialmon.SerialMonAction(rb.getString("MenuItemCommandMonitor")));
         add(new jmri.jmrix.grapevine.packetgen.SerialPacketGenAction(rb.getString("MenuItemSendCommand")));
         add(new jmri.jmrix.grapevine.nodeconfig.NodeConfigAction(rb.getString("MenuItemConfigNodes")));
+        add(new jmri.jmrix.grapevine.nodetable.NodeTableAction(rb.getString("MenuItemNodeTable")));
 
     }
 
