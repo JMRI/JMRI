@@ -18,7 +18,7 @@ import jmri.jmrix.cmri.serial.SerialSensorManager;
  * Frame for user configuration of CMRI serial nodes
  * @author	Bob Jacobsen   Copyright (C) 2004
  * @author	Dave Duchamp   Copyright (C) 2004
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -340,7 +340,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         int nodeAddress = readNodeAddress();
         if (nodeAddress < 0) return;
         // get a SerialNode corresponding to this node address if one exists
-        curNode = SerialTrafficController.instance().getNodeFromAddress(nodeAddress);
+        curNode = (SerialNode) SerialTrafficController.instance().getNodeFromAddress(nodeAddress);
         if (curNode != null) {
             statusText1.setText(rb.getString("Error1")+Integer.toString(nodeAddress)+
                         rb.getString("Error2"));
@@ -385,7 +385,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         nodeAddress = readNodeAddress();
         if (nodeAddress < 0) return;
         // get the SerialNode corresponding to this node address
-        curNode = SerialTrafficController.instance().getNodeFromAddress(nodeAddress);
+        curNode = (SerialNode) SerialTrafficController.instance().getNodeFromAddress(nodeAddress);
         if (curNode == null) {
             statusText1.setText(rb.getString("Error4"));
             statusText1.setVisible(true);
@@ -486,7 +486,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         int nodeAddress = readNodeAddress();
         if (nodeAddress < 0) return;
         // get the SerialNode corresponding to this node address
-        curNode = SerialTrafficController.instance().getNodeFromAddress(nodeAddress);
+        curNode = (SerialNode) SerialTrafficController.instance().getNodeFromAddress(nodeAddress);
         if (curNode == null) {
             statusText1.setText(rb.getString("Error4"));
             statusText1.setVisible(true);

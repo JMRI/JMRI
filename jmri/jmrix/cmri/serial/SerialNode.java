@@ -5,6 +5,7 @@ package jmri.jmrix.cmri.serial;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.jmrix.AbstractMRMessage;
+import jmri.jmrix.AbstractNode;
 
 /**
  * Models a serial C/MRI node, consisting of a (S)USIC and attached cards.
@@ -23,11 +24,11 @@ import jmri.jmrix.AbstractMRMessage;
  * USIC/SUSIC nodes can have 0-63 inputs and 0-63 output cards, but no
  * more than 64 total cards.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author	Bob Jacobsen Copyright (C) 2003, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.24 $
+ * @version	$Revision: 1.25 $
  */
-public class SerialNode {
+public class SerialNode extends AbstractNode {
 
     /**
      * Maximum number of sensors a node can carry.
@@ -50,7 +51,6 @@ public class SerialNode {
     public static final byte OUTPUT_CARD = 2;   // USIC/SUSIC output card type for specifying location
     public static final byte NO_CARD = 0;       // USIC/SUSIC unused location
     // node definition instance variables (must persist between runs)
-    public int nodeAddress = 0;                 // UA, Node address, 0-127 allowed
     protected int nodeType = SMINI;             // See above
     protected int bitsPerCard = 24;             // 24 for SMINI and USIC, 24 or 32 for SUSIC
     protected int transmissionDelay = 0;        // DL, delay between bytes on Receive (units of 10 microsec.)
@@ -64,8 +64,6 @@ public class SerialNode {
                                                 //   NO_CARD locations must be at the end of the array.  The
                                                 //   array is indexed by card address.
     // operational instance variables  (should not be preserved between runs)
-    protected boolean needSend = true;          // 'true' if something has changed in the outputByte array since
-                                                //    the last send to the hardware node
     protected byte[] outputArray = new byte[256]; // current values of the output bits for this node
     protected boolean hasActiveSensors = false; // 'true' if there are active Sensors for this node
     protected int lastUsedSensor = 0;           // grows as sensors defined
@@ -110,7 +108,7 @@ public class SerialNode {
             outputArray[i] = 0;
         }
         // initialize other operational instance variables
-        needSend = true;
+        setMustSend();
         hasActiveSensors = false;
         // register this node
         SerialTrafficController.instance().registerSerialNode(this);
@@ -171,7 +169,7 @@ public class SerialNode {
         else outputArray[byteNumber] |= bit;
         // check for change, necessitating a send
         if (oldByte != outputArray[byteNumber]) {
-            needSend = true;
+            setMustSend();
         }
     }
     	
@@ -205,20 +203,6 @@ public class SerialNode {
      *  Note:  returns 'true' if at least one sensor is active for this node
      */
     public boolean sensorsActive() { return hasActiveSensors; }
-
-    /**
-     * Public method to return state of needSend flag.
-     */
-    public boolean mustSend() { return needSend; }
-
-    /**
-     * Public to reset state of needSend flag.
-     */
-    public void resetMustSend() { needSend = false; }
-    /**
-     * Public to set state of needSend flag.
-     */
-    public void setMustSend() { needSend = true; }
 
     /**
      * Public method to return number of input cards.
@@ -316,24 +300,10 @@ public class SerialNode {
     }
 
     /**
-     * Public method to return the node address.
+     * Check valid node address, must match value in dip switches (0 - 127)
      */
-    public int getNodeAddress() {
-        return (nodeAddress);
-    }
-
-    /**
-     * Public method to set the node address.
-     *   address - node address set in dip switches (0 - 127)
-     */
-    public void setNodeAddress(int address) {
-        if ( (address >= 0) && (address < 128) ) {
-            nodeAddress = address;
-        }
-        else {
-            log.error("illegal node address: "+Integer.toString(address));
-            nodeAddress = 0;
-        }
+    protected boolean checkNodeAddress(int address) {
+        return (address >= 0) && (address < 128);
     }
 
     /**
@@ -592,7 +562,7 @@ public class SerialNode {
     /**
      * Public Method to create an Initialization packet (SerialMessage) for this node
      */
-    public SerialMessage createInitPacket() {
+    public AbstractMRMessage createInitPacket() {
         // Assemble initialization byte array from node information
         int nInitBytes = 4;
         byte[] initBytes = new byte [20];
@@ -656,7 +626,7 @@ public class SerialNode {
 
         // create a Serial message and add initialization bytes
         SerialMessage m = new SerialMessage(nInitBytes + nDLE + 2);
-        m.setElement(0,nodeAddress+65);  // node address
+        m.setElement(0,getNodeAddress()+65);  // node address
         m.setElement(1,73);     // 'I'
         // add initialization bytes
         int k = 2;
@@ -676,7 +646,7 @@ public class SerialNode {
     /**
      * Public Method to create an Transmit packet (SerialMessage)
      */
-    public SerialMessage createOutPacket() {
+    public AbstractMRMessage createOutPacket() {
         // Count the number of DLE's to be inserted
         int nOutBytes = numOutputCards() * (bitsPerCard/8);
         int nDLE = 0;
@@ -686,7 +656,7 @@ public class SerialNode {
         }
         // Create a Serial message and add initial bytes
         SerialMessage m = new SerialMessage(nOutBytes + nDLE + 2);
-        m.setElement(0,nodeAddress+65); // node address
+        m.setElement(0,getNodeAddress()+65); // node address
         m.setElement(1,84);             // 'T'
         // Add output bytes
         int k = 2;
@@ -776,7 +746,7 @@ public class SerialNode {
         else {
             // multiple registration of the same sensor
             log.warn("multiple registration of same sensor: CS"+
-                    Integer.toString((nodeAddress*SerialSensorManager.SENSORSPERUA) + i + 1) );
+                    Integer.toString((getNodeAddress()*SerialSensorManager.SENSORSPERUA) + i + 1) );
         }
     }
 
@@ -785,13 +755,13 @@ public class SerialNode {
      *
      * @return true if initialization required
      */
-    boolean handleTimeout(AbstractMRMessage m) {
+    public boolean handleTimeout(AbstractMRMessage m) {
         timeout++;
         // normal to timeout in response to init, output
         if (m.getElement(1)!=0x50) return false;
         
         // see how many polls missed
-        if (log.isDebugEnabled()) log.warn("Timeout to poll for UA="+nodeAddress+": consecutive timeouts: "+timeout);
+        if (log.isDebugEnabled()) log.warn("Timeout to poll for UA="+getNodeAddress()+": consecutive timeouts: "+timeout);
         
         if (timeout>5) { // enough, reinit
             // reset timeout count to zero to give polls another try
@@ -807,7 +777,7 @@ public class SerialNode {
                     try {
                         sensorArray[i].setKnownState(Sensor.UNKNOWN);
                     } catch (jmri.JmriException e) {
-                        log.error("unexpected exception setting sensor i="+i+" on node "+nodeAddress+"e: "+e);
+                        log.error("unexpected exception setting sensor i="+i+" on node "+getNodeAddress()+"e: "+e);
                     }
                 }
             }
@@ -815,7 +785,8 @@ public class SerialNode {
         } 
         else return false;
     }
-    void resetTimeout(AbstractMRMessage m) {
+    
+    public void resetTimeout(AbstractMRMessage m) {
         if (timeout>0) log.debug("Reset "+timeout+" timeout count");
         timeout = 0;
     }

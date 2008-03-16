@@ -5,6 +5,7 @@ package jmri.jmrix.cmri.serial;
 import jmri.AbstractLight;
 import jmri.Sensor;
 import jmri.Turnout;
+import jmri.jmrix.AbstractNode;
 
 /**
  * SerialLight.java
@@ -14,7 +15,7 @@ import jmri.Turnout;
  *  Based in part on SerialTurnout.java
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class SerialLight extends AbstractLight {
 
@@ -70,7 +71,7 @@ public class SerialLight extends AbstractLight {
      *         will be sent before this Node is next polled.
      */
 	protected void doNewState(int oldState, int newState) {
-        SerialNode mNode = SerialAddress.getNodeFromSystemName(getSystemName());
+        SerialNode mNode = (SerialNode) SerialAddress.getNodeFromSystemName(getSystemName());
         if (mNode!=null) {
             if (newState==ON) {
                 mNode.setOutputBit(mBit,false);

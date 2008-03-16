@@ -19,7 +19,7 @@ import java.lang.Integer;
 /**
  * Frame for running CMRI diagnostics
  * @author	 Dave Duchamp   Copyright (C) 2004
- * @version	 $Revision: 1.8 $
+ * @version	 $Revision: 1.9 $
  */
 public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.cmri.serial.SerialListener {
 
@@ -255,7 +255,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             return (false);
         }
         // get the SerialNode corresponding to this node address
-        node = SerialTrafficController.instance().getNodeFromAddress(ua);
+        node = (SerialNode) SerialTrafficController.instance().getNodeFromAddress(ua);
         if (node == null) {
             statusText1.setText("Error - Unknown address in Node(UA) field, please try again.");
             statusText1.setVisible(true);
@@ -425,7 +425,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         curOutByte = begOutByte;
         curOutBit = 0;
         // Send initialization message                
-        SerialTrafficController.instance().sendSerialMessage(node.createInitPacket(),curFrame);
+        SerialTrafficController.instance().sendSerialMessage((SerialMessage)node.createInitPacket(),curFrame);
         try {
             // Wait for initialization to complete
             wait (1000);    
@@ -527,7 +527,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         curOutValue = 0;
         
         // Send initialization message                
-        SerialTrafficController.instance().sendSerialMessage(node.createInitPacket(),curFrame);
+        SerialTrafficController.instance().sendSerialMessage((SerialMessage)node.createInitPacket(),curFrame);
         try {
             // Wait for initialization to complete
             wait (1000);    

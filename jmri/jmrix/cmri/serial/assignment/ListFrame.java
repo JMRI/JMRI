@@ -7,6 +7,8 @@ import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.jmrix.cmri.serial.SerialAddress;
 
+import jmri.jmrix.AbstractNode;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -24,7 +26,7 @@ import java.lang.Integer;
 /**
  * Frame for running CMRI assignment list.
  * @author	 Dave Duchamp   Copyright (C) 2006
- * @version	 $Revision: 1.4 $
+ * @version	 $Revision: 1.5 $
  */
 public class ListFrame extends jmri.util.JmriJFrame {
 
@@ -208,7 +210,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
 			configNodes[i] = null;
 		}
 		// get all configured nodes
-		SerialNode node = SerialTrafficController.instance().getSerialNode(0);
+		SerialNode node = (SerialNode) SerialTrafficController.instance().getSerialNode(0);
         int index = 1;
         while (node != null) {
 			configNodes[numConfigNodes] = node;
@@ -222,7 +224,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
 			}
 			numConfigNodes ++;		
 			// go to next node
-			node = SerialTrafficController.instance().getSerialNode(index);
+			node = (SerialNode) SerialTrafficController.instance().getSerialNode(index);
 			index ++;
 		}
     }

@@ -13,7 +13,7 @@ import jmri.Sensor;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2006
  * @author          Dave Duchamp, multi node extensions, 2004
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SerialSensorManager extends jmri.AbstractSensorManager
                             implements SerialListener {
@@ -106,7 +106,7 @@ public class SerialSensorManager extends jmri.AbstractSensorManager
      */
     public void reply(SerialReply r) {
         // determine which node
-        SerialNode node = SerialTrafficController.instance().getNodeFromAddress(r.getAddr());
+        SerialNode node = (SerialNode) SerialTrafficController.instance().getNodeFromAddress(r.getAddr());
         if (node!=null) {
             node.markChanges(r);
         }

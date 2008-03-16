@@ -8,11 +8,13 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import jmri.jmrix.AbstractMRMessage;
+
 /**
  * JUnit tests for the SerialNode class
  * @author		Bob Jacobsen  Copyright 2003
  * @author		Dave Duchamp  multi-node extensions 2003
- * @version		$Revision: 1.11 $
+ * @version		$Revision: 1.12 $
  */
 public class SerialNodeTest extends TestCase {
 		
@@ -92,7 +94,7 @@ public class SerialNodeTest extends TestCase {
     
     public void testInitialization1() {
         // simple SMINI - no oscillating 2-lead searchlights
-        SerialMessage m = b.createInitPacket();
+        AbstractMRMessage m = b.createInitPacket();
         Assert.assertEquals("packet size", 6, m.getNumDataElements() );
         Assert.assertEquals("node address", 65, m.getElement(0) );
         Assert.assertEquals("packet type", 73, m.getElement(1) );  // 'I'
@@ -121,7 +123,7 @@ public class SerialNodeTest extends TestCase {
         e.clear2LeadSearchLight(46);
         Assert.assertTrue("check searchlight bit", e.isSearchLightBit(7));
         Assert.assertTrue("check not searchlight bit", !(e.isSearchLightBit(35)) );
-        SerialMessage m = e.createInitPacket();
+        AbstractMRMessage m = e.createInitPacket();
         Assert.assertEquals("packet size", 12, m.getNumDataElements() );
         Assert.assertEquals("node address", 74, m.getElement(0) );
         Assert.assertEquals("packet type", 73, m.getElement(1) );  // 'I'
@@ -148,7 +150,7 @@ public class SerialNodeTest extends TestCase {
         p.setCardTypeByAddress (3,SerialNode.OUTPUT_CARD);
         p.setCardTypeByAddress (4,SerialNode.INPUT_CARD);
         p.setCardTypeByAddress (5,SerialNode.OUTPUT_CARD);
-        SerialMessage m = p.createInitPacket();
+        AbstractMRMessage m = p.createInitPacket();
         Assert.assertEquals("packet size", 9, m.getNumDataElements() );
         Assert.assertEquals("node address", 75, m.getElement(0) );
         Assert.assertEquals("packet type", 73, m.getElement(1) );  // 'I'
@@ -177,7 +179,7 @@ public class SerialNodeTest extends TestCase {
         g.setOutputBit(26,false);
         g.setOutputBit(48,false);
         Assert.assertTrue("must Send on", g.mustSend() );
-        SerialMessage m = g.createOutPacket();
+        AbstractMRMessage m = g.createOutPacket();
         Assert.assertEquals("packet size", 8, m.getNumDataElements() );
         Assert.assertEquals("node address", 70, m.getElement(0) );
         Assert.assertEquals("packet type", 84, m.getElement(1) );  // 'T'        

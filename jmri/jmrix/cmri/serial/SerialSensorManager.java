@@ -3,6 +3,7 @@
 package jmri.jmrix.cmri.serial;
 
 import jmri.Sensor;
+import jmri.jmrix.AbstractNode;
 
 /**
  * Manage the C/MRI serial-specific Sensor implementation.
@@ -17,7 +18,7 @@ import jmri.Sensor;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2007
  * @author                      Dave Duchamp, multi node extensions, 2004
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class SerialSensorManager extends jmri.AbstractSensorManager
                             implements SerialListener {
@@ -88,7 +89,7 @@ public class SerialSensorManager extends jmri.AbstractSensorManager
             s = new SerialSensor(sName, userName);
 
         // ensure that a corresponding Serial Node exists
-        SerialNode node = SerialAddress.getNodeFromSystemName(sName);
+        SerialNode node = (SerialNode) SerialAddress.getNodeFromSystemName(sName);
         if (node==null) {
             log.warn("Sensor " + sName + " refers to an undefined Serial Node.");
             return s;
@@ -110,7 +111,7 @@ public class SerialSensorManager extends jmri.AbstractSensorManager
      */
     public void reply(SerialReply r) {
         // determine which node
-        SerialNode node = SerialTrafficController.instance().getNodeFromAddress(r.getUA());
+        SerialNode node = (SerialNode)SerialTrafficController.instance().getNodeFromAddress(r.getUA());
         if (node!=null) {
             node.markChanges(r);
         }
@@ -124,7 +125,7 @@ public class SerialSensorManager extends jmri.AbstractSensorManager
         java.util.Iterator iter =
                                     getSystemNameList().iterator();
         // Iterate through the sensors
-        SerialNode tNode = null;
+        AbstractNode tNode = null;
         while (iter.hasNext()) {
             String sName = (String)iter.next();
             if (sName==null) {

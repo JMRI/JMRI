@@ -2,6 +2,8 @@
 
 package jmri.jmrix.cmri.serial;
 
+import jmri.jmrix.AbstractNode;
+
 /**
  * Utility Class supporting parsing and testing of addresses for C/MRI
  * <P>
@@ -23,7 +25,7 @@ package jmri.jmrix.cmri.serial;
  *              CL11B234 (node address 11, bit234)
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004 - 2006
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class SerialAddress {
 
@@ -86,7 +88,7 @@ public class SerialAddress {
      * Public static method to parse a C/MRI system name and return the Serial Node
      *  Note:  Returns 'null' if illegal systemName format or if the node is not found
      */
-    public static SerialNode getNodeFromSystemName(String systemName) {
+    public static AbstractNode getNodeFromSystemName(String systemName) {
         // get the node address
         int ua;
         ua = getNodeAddressFromSystemName(systemName);
@@ -245,7 +247,7 @@ public class SerialAddress {
             // No point in trying if a valid system name format is not present
             return false;
         }
-        SerialNode node = getNodeFromSystemName(systemName);
+        SerialNode node = (SerialNode) getNodeFromSystemName(systemName);
         if ( node==null ) {
             // The node indicated by this system address is not present
             return false;
