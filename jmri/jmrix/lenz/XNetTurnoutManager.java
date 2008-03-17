@@ -10,7 +10,7 @@ import jmri.Turnout;
  * System names are "XTnnn", where nnn is the turnout number without padding.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 2.5 $
+ * @version			$Revision: 2.6 $
  */
 public class XNetTurnoutManager extends jmri.AbstractTurnoutManager implements XNetListener {
 
@@ -106,6 +106,22 @@ public class XNetTurnoutManager extends jmri.AbstractTurnoutManager implements X
         return _instance;
     }
     static XNetTurnoutManager _instance = null;
+
+    /*
+     * Turnout operation support. Add support for Raw turnouts on Lenz systems
+     * with a Command Station interface (i.e. Lenz systems support Operations 
+     * Mode programming).
+     */
+
+    public String[] getValidOperationTypes() {
+       if(jmri.InstanceManager.commandStationInstance()!=null) {
+       	  String[] validOperationTypes = {"Sensor", "Raw", "NoFeedback"};
+	  return validOperationTypes; 
+       } else {
+       	  String[] validOperationTypes = {"Sensor", "NoFeedback"};
+	  return validOperationTypes; 
+       }
+    }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetTurnoutManager.class.getName());
 
