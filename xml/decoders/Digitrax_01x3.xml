@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2002, 2005, 2007 All rights reserved -->
-<!-- $Id: Digitrax_01x3.xml,v 1.40 2008-03-13 15:24:39 jacobsen Exp $ -->
+<!-- $Id: Digitrax_01x3.xml,v 1.41 2008-03-17 06:27:17 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,7 +16,8 @@
 <!-- for more details.                                                      -->
 
 <decoder-config>
-	<version author="Bob Jacobsen" version="24" lastUpdated="20080313"/>
+	<version author="Bob Jacobsen" version="25" lastUpdated="20080313"/>
+	<version author="Martin Gostling" version="24" lastUpdated="20080308"/>
 	<version author="Bob Jacobsen" version="23" lastUpdated="20071120"/>
 	<version author="Christopher Zurek" version="22" lastUpdated="20070831"/>
 	<version author="Bob Blackwell afticarr@sympatico.ca" version="21" lastUpdated="20070830"/>
@@ -53,7 +54,8 @@
 	<!-- Version 21 - Revised highVersionID to accomodate DN123K3. Value changed from 49 to 51. New value provided by Kent Sulivan (Bob Blackwell) -->
 	<!-- Version 22 - Removed "Rear Headlight Controlled by F4", not supported in this series of decoders  (Christopher Zurek) -->
 	<!-- Version 23 - Updated connectors from web info (Bob Jacobsen) -->
-	<!-- Version 23 - Add DN143K1, DN143K2 (Bob Jacobsen) -->
+	<!-- Version 24 - Added  DN143IP and DZ125xx decoders -->
+	<!-- Version 25 - Add DN143K1, DN143K2 (Bob Jacobsen) -->
 
 <decoder>
 	<family name="Series 3 with FX3, silent, readback" mfg="Digitrax" lowVersionID="49" highVersionID="51">
@@ -181,6 +183,12 @@
 		<model model="DN143" numOuts="4" numFns="8" maxMotorCurrent="1.25A (peak=2A)" formFactor="N" connector="9pin" >
 			<output name="4" label="Violet" connection="wire"/> 
 			<size length=".55" width=".36" height=".13" units="inches"/>
+			</model>
+		<model model="DN143IP" numOuts="4" numFns="8" lowVersionID="36" highVersionID="64" 
+		        maxMotorCurrent="1.A (peak=1.5A)" formFactor="Z" connector="NMRAmedium" >
+			<output name="3" label="Pad (Green)" connection="solder"/> 
+			<output name="4" label="Pad (Violet)" connection="solder"/> 
+			<size length="0.55" width="0.36" height="0.13" units="inches"/>
 			</model>
 		<model model="DN143K1" numOuts="4" numFns="8" maxMotorCurrent="1.25A (peak=2A)" formFactor="Kato N Locomotive" connector="9pin" >
 			<output name="4" label="Violet" connection="wire"/> 
@@ -331,9 +339,18 @@
 			<output name="6" label="Pad" connection="solder"/>
 			<size length="2.158" width="0.58" height="0.135" units="inches"/>
 			</model>
+		<model model="DN163PS" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=1.5A)" formFactor="N" connector="9pin" >
+			<output name="1" label="LED" connection="solder"/> 
+			<output name="2" label="Pad" connection="solder"/> 
+			<output name="3" label="Pad" connection="solder"/> 
+			<output name="4" label="Pad" connection="solder"/> 
+			<output name="5" label="Pad" connection="solder"/>
+			<output name="6" label="Pad" connection="solder"/>
+			<size length="2.158" width="0.58" height="0.135" units="inches"/>
+			</model>
 		<model model="DZ123" numOuts="2" numFns="8" lowVersionID="36" highVersionID="64" 
 		        maxMotorCurrent="1A (peak=2A)" formFactor="Z"  connector="9pin" >
-			<size length="0.57" width="0.38" height="0.13" units="inches"/>
+			<size length="0.55" width="0.36" height="0.13" units="inches"/>
 			</model>
 		<model model="DZ143" numOuts="4" numFns="8" lowVersionID="64" highVersionID="65" 
 		        maxMotorCurrent="1.25A (peak=2A)" formFactor="Z" connector="9pin" >
@@ -344,6 +361,18 @@
 		        maxMotorCurrent="1.25A (peak=2A)" formFactor="Z" connector="9pin" >
 			<output name="4" label="Violet" connection="wire"/> 
 			<size length="0.55" width="0.36" height="0.13" units="inches"/>
+			</model>
+		<model model="DZ125" numOuts="2" numFns="8" lowVersionID="36" highVersionID="64" 
+		        maxMotorCurrent="1A (peak=2A)" formFactor="Z"  connector="9pin" >
+			<size length="0.418" width="0.340" height="0.112" units="inches"/>
+			</model>
+		<model model="DZ125PS" numOuts="2" numFns="8" lowVersionID="36" highVersionID="64" 
+		        maxMotorCurrent="1A (peak=2A)" formFactor="Z"  connector="NMRAmedium" >
+			<size length="0.418" width="0.340" height="0.112" units="inches"/>
+			</model>
+		<model model="DZ125IN" numOuts="2" numFns="8" lowVersionID="36" highVersionID="64" 
+		        maxMotorCurrent="1A (peak=2A)" formFactor="Z"  connector="NMRAsmall" >
+			<size length="0.418" width="0.340" height="0.112" units="inches"/>
 			</model>
 	</family>
 
