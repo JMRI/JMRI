@@ -27,7 +27,7 @@ import java.util.Date;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 public class SerialLight extends AbstractVariableLight {
 
@@ -64,6 +64,8 @@ public class SerialLight extends AbstractVariableLight {
         devicecode = ((tBit-1)%16)+1;
         
         // Set defaults for all other instance variables
+        maxDimStep = SerialTrafficController.instance().maxX10DimStep();
+        
         setControlType( NO_CONTROL );
         setControlSensor( null );
         setControlSensorSense(Sensor.ACTIVE);
@@ -88,7 +90,7 @@ public class SerialLight extends AbstractVariableLight {
             out.addAddress(housecode, devicecode);
             out.addFunction(housecode, X10Sequence.FUNCTION_OFF, 0);
             // then set to full dim
-            out.addFunction(housecode, X10Sequence.FUNCTION_DIM, 22);
+            out.addFunction(housecode, X10Sequence.FUNCTION_DIM, maxDimStep);
             // send
             SerialTrafficController.instance().sendX10Sequence(out, null);
 
@@ -102,11 +104,11 @@ public class SerialLight extends AbstractVariableLight {
             out.addAddress(housecode, devicecode);
             out.addFunction(housecode, X10Sequence.FUNCTION_ON, 0);
             // then set to full dim
-            out.addFunction(housecode, X10Sequence.FUNCTION_BRIGHT, 22);
+            out.addFunction(housecode, X10Sequence.FUNCTION_BRIGHT, maxDimStep);
             // send
             SerialTrafficController.instance().sendX10Sequence(out, null);
             
-            lastOutputStep = 22;
+            lastOutputStep = maxDimStep;
             
             log.debug("initIntensity: sent bright reset");
         }
@@ -115,12 +117,19 @@ public class SerialLight extends AbstractVariableLight {
     // System-dependent instance variables
 
     /** 
-     * Current output step 0 to 22.
+     * Current output step 0 to maxDimStep.
      * <p>
      *  -1 means unknown
      */
     int lastOutputStep = -1;
     
+    /**
+     * Largest X10 dim step number available.
+     * <p>
+     * Loaded from SerialTrafficController.maxX10DimStep();
+     */
+     int maxDimStep = 0;
+     
     // data members holding the X10 address
     int housecode = -1;
     int devicecode = -1;
@@ -187,10 +196,10 @@ public class SerialLight extends AbstractVariableLight {
         if (lastOutputStep < 0) initIntensity(intensity);
 
         // find the new correct dim count
-        int newStep = (int)Math.round(intensity*22.);  // 22 is full on, 0 is full off, etc
+        int newStep = (int)Math.round(intensity*maxDimStep);  // maxDimStep is full on, 0 is full off, etc
         
         // check for errors
-        if (newStep <0 || newStep>22)
+        if (newStep <0 || newStep>maxDimStep)
             log.error("newStep wrong: "+newStep+" intensity: "+intensity);
 
         // find the number to send
@@ -213,7 +222,7 @@ public class SerialLight extends AbstractVariableLight {
         }
 
         // check for errors
-        if (sendSteps <-22 || sendSteps>22)
+        if (sendSteps <-maxDimStep || sendSteps>maxDimStep)
             log.error("sendSteps wrong: "+sendSteps+" intensity: "+intensity);
             
         int deltaDim = Math.abs(sendSteps);

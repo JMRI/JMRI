@@ -25,7 +25,7 @@ import jmri.jmrix.powerline.SerialSensorManager;
  * with it.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SpecificTrafficController extends SerialTrafficController {
 
@@ -65,13 +65,16 @@ public class SpecificTrafficController extends SerialTrafficController {
     }
     
     /**
+     * This system provides 22 dim steps
+     */
+    public int maxX10DimStep() { return 22; }
+    
+    /**
      * Get a message of a specific length for filling in.
      */
     public SerialMessage getSerialMessage(int length) {
         return new SpecificMessage(length);
     }
-
-
 
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         if (logDebug) log.debug("forward "+m);

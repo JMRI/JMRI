@@ -25,7 +25,7 @@ import jmri.jmrix.powerline.SerialSensorManager;
  * with it.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SpecificTrafficController extends SerialTrafficController {
 
@@ -119,6 +119,11 @@ public class SpecificTrafficController extends SerialTrafficController {
     }
     
     /**
+     * This system provides 16 dim steps
+     */
+    public int maxX10DimStep() { return 16; }
+    
+    /**
      * Get a message of a specific length for filling in.
      */
     public SerialMessage getSerialMessage(int length) {
@@ -135,6 +140,10 @@ public class SpecificTrafficController extends SerialTrafficController {
         return reply;
     }
     
+    /**
+     * Decide if a reply have been completely received.
+     * @return true if the reply is complete
+     */
     protected boolean endOfMessage(AbstractMRReply msg) {
         // overly simplistic, we just cut the message when
         // it gets a non-FF byte
