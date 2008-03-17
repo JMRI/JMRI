@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.24 2008-03-14 05:42:15 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.25 2008-03-17 06:33:46 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -150,6 +150,7 @@
 	<LI>Simon Ginsburg has helped with advanced consisting, provided some Digitrax 
 	definition files, and translated much of DecoderPro into German
 	<LI>Joseph Goldstone, who put together the javax.comm implementation for Mac OS X
+	<li>Martin Gostling, who provided CML and Digitrax decoder definitions
 	<LI>Phil Grainger, who wrote articles about DecoderPro in the UK press, 
 	greatly helped with ZTC decoder definitions,
 	provided the DH83FX definition, and many great suggestions

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.5.shtml,v 1.6 2008-03-17 05:23:03 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.5.shtml,v 1.7 2008-03-17 06:34:56 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -192,9 +192,18 @@ if they were moving.  Yes, that's a subtle bug, but Mark Schutzer and Dan Boudre
 tracked it down and fixed it, with help from NCE.
 
 <p>
+Dan Boudreau fixed some problems recently introduced into the "NCE over network" connection.
+
+<p>
+Martin Gostling updated the CML DAC10 decoder definition.
+
+<p>
 Paul Bender added a new Turnout operation (in the automate column of the
 Turnout Table) called "raw".  This sends raw NMRA packets to the accessory decoder, rather
 than using the command mechanisms in the DCC system.
+
+<p>
+Martin Gostling added some new models to the Digitrax FX3 decoder family.
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
