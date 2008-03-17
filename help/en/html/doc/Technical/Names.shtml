@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Names.shtml,v 1.11 2008-03-09 20:27:28 jacobsen Exp $ -->
+<!-- $Id: Names.shtml,v 1.12 2008-03-17 05:24:12 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -122,9 +122,14 @@ Note that some of these are placeholders, and have no underlying implementation.
 <LI>D (reserved for Direct-packet-drive and direct serial port sensors)
 <LI>E <a href="../../hardware/easydcc/EasyDCC.shtml">EasyDCC</a>
 <LI>G ProTrak <a href="../../hardware/grapevine/index.shtml">Grapevine</a>
+<LI>F
+<LI>G
+<LI>H
 <LI>I Internal, e.g. objects with no associated hardware
+<LI>J
+<LI>K
 <LI>L <a href="../../hardware/loconet/Digitrax.shtml">LocoNet</a>
-<LI>M MRRLCB
+<LI>M (reserved for MRRLCB)
 <LI>N <a href="../../hardware/nce/NCE.shtml">NCE</a> (also <a href="../../hardware/nce/Wangrow.shtml">Wangrow</a> currently)
 <LI>O <a href="../../hardware/oaktree/OakTree.shtml">Oak Tree Systems</a>
 <LI>P <a href="../../hardware/powerline/index.shtml">Powerline transmission</a>, e.g. X10 and Insteon
