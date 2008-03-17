@@ -1,6 +1,6 @@
 #! /bin/csh -f
 #
-# Short csh script to create JMRI MacOS X disk image ($Revision: 1.1 $)
+# Short csh script to create JMRI MacOS X disk image ($Revision: 1.2 $)
 #
 # Assumes that the program is being run from the distribution directory.
 #
@@ -17,7 +17,7 @@ rm -f temp.dmg
 rm -f JMRI.${2}.dmg
 
 # create disk image and mount
-hdiutil create -size 40MB -fs HFS+ -volname "JMRI ${2}" temp.dmg
+hdiutil create -size 40MB -fs HFS+ -layout SPUD -volname "JMRI ${2}" temp.dmg
 open temp.dmg
 
 # have to wait for disk to mount
