@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TurnoutTable.shtml,v 1.8 2008-03-09 20:27:29 jacobsen Exp $ -->
+<!-- $Id: TurnoutTable.shtml,v 1.9 2008-03-17 03:12:41 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Turnout Table Help</TITLE>
@@ -27,7 +27,7 @@
 panel. From this table you can change the state of a turnout, change the
 feedback mode, enter sensors for feedback, invert, lock, and delete it.</P>
 <BR>
-<H3>Turnout Table Buttons and Checkboxes</H3>
+<H3>Turnout Table Columns</H3>
 
 <DL>
 	<DT>System Name</DT>
@@ -88,6 +88,10 @@ feedback mode, enter sensors for feedback, invert, lock, and delete it.</P>
 	feedback for a turnout. You can also directly enter or change the
 	system name of Sensor 2 for a turnout.</DD>
 
+    <DT>Automate</DT>
+    <DD>Shows if an specific retry methods have been configured
+    for this turnout.  See the section on 
+    <A HREF="#automation">Turnout Automation</a> below.
 	<DT><A NAME="Lock Mode"></A>Lock Mode</DT>
 	<DD>Shows which lockouts, if any, are active for this turnout.
 	"Both" means that cabs and pushbuttons will be locked out if the lock
@@ -117,9 +121,16 @@ feedback mode, enter sensors for feedback, invert, lock, and delete it.</P>
 	need to specify the number of pushbuttons for NCE. Unfortunately, NCE
 	revisions A and B accessory decoders do not support pushbutton lockout.</P>
 	</DD>
+</DL>
 
-	<DT>Add</DT>
-	<DD>Pressing this button allows you to add a new turnout.</DD>
+<H3>Turnout Table Controls</H3>
+
+There are some buttons and checkboxes along the bottom of the 
+Turnout Table that control its operation.
+<DL>	
+    <DT>Add</DT>
+	<DD>Pressing this button opens a window where you can
+	<a href="TurnoutAddEdit.shtml">add a new turnout</a>.</DD>
 
 	<DT>Show feedback information</DT>
 	<DD>When checked, the optional feedback columns are shown.</DD>
@@ -226,7 +237,35 @@ with feedback:</P>
 
 </DL>
 
-<BR>
+<H3><A NAME="automation"></A>Turnout Automation</H3>
+
+JMRI can watch a turnout and automate certain operations on it.
+This was originally added to handle the case of "I usually have to 
+click that turnout a couple times to get it to throw over", but
+it can be used for other things too.
+<p>
+The two forms are:
+<dl>
+<dt>No Feedback<dd>This just repeats the messages a fixed number of
+times, with a delay in between.
+<dt>Sensor<dd>This repeats the messages, with
+a delay in between, until either the sensor feedback indicates the
+turnout has moved or a limit on the number of attempts is reached.
+</dl>
+<p>
+Normally, turnouts only throw once, which is the "Off" setting
+under "Automate".  You can set a turnout to 
+use "No Feedback" automation by selecting it in the Automate
+column for the individual turnout.  If there are feedback sensors
+defined, you can also select the "Sensor" method there.
+<p>
+You can customize the automation by selecting "Edit..."
+for an individual turnout.
+<p>
+It's also possible to set global defaults, and have turnouts use
+those.  See the "Automate" menu to edit those defaults.
+
+
 <H3><A NAME="Turnout lock feature"></A>Turnout lock feature</H3>
 
 <P>The turnout lock feature allows you to selectively disable
