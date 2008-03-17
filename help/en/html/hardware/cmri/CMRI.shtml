@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CMRI.shtml,v 1.4 2008-02-25 19:55:35 dan_boudreau Exp $ -->
+<!-- $Id: CMRI.shtml,v 1.5 2008-03-17 09:25:20 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -599,7 +599,7 @@ the opposite polarity.
    signals to C/MRI hardware (and there are a lot of them!)
    For information on how to configure your signals to the
    program, please see the 
-   <A HREF="cmri/Signals.html">C/MRI signals</a> page.   
+   <A HREF="Signals.shtml">C/MRI signals</a> page.   
 </dd>
 <dt class=left><a name=diagnostics><H3>C/MRI Diagnostics</H3></a></dt>
 <dd>
