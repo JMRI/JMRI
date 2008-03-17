@@ -159,12 +159,16 @@ public class TurnoutOperationManager {
 	 */
 	public TurnoutOperation getMatchingOperationAlways(Turnout t, int apparentMode) {
 		Iterator iter = operationTypes.iterator();
-		while (iter.hasNext()) {
+		/* The loop below always returns the FIRST operation 
+                   that matches.  This results in setting the operation
+                   to the first match whenever the feedback mode is changed 
+                   in the turnout table. */
+                /* while (iter.hasNext()) {
 			TurnoutOperation oper = (TurnoutOperation)iter.next();
 			if (oper.matchFeedbackMode(apparentMode)) {
 				return oper;
 			}	
-		}
+		}*/
 		return null;
 	}
 	
