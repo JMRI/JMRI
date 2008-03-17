@@ -37,7 +37,7 @@ import java.awt.event.KeyEvent;
  *
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class JmriJFrame extends JFrame implements java.awt.event.WindowListener {
@@ -194,6 +194,20 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener 
             returnList = new java.util.ArrayList(list);
         }
         return returnList;
+    }
+    
+    /**
+     * Get a JmriJFrame of a particular name.
+     * If more than one exists, there's no guarantee 
+     * as to which is returned.
+     */
+    public static JmriJFrame getFrame(String name) {
+        java.util.List list = getFrameList();  // needed to get synch copy
+        for (int i=0; i<list.size(); i++) {
+            JmriJFrame j = (JmriJFrame)list.get(i);
+            if (j.getTitle().equals(name)) return j;
+        }
+        return null;
     }
     
     static java.util.ArrayList list = new java.util.ArrayList();
