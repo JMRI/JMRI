@@ -7,13 +7,13 @@ package jmri;
  * NoFeedBackTurnoutOperation class - specialization of TurnoutOperation to provide
  * automatic retry for a turnout with no feedback
  * @author John Harper
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class NoFeedbackTurnoutOperation extends CommonTurnoutOperation {
 
 	// This class can deal with ANY feedback mode, although it may not be the best one
 	final int feedbackModes =
-			AbstractTurnout.DIRECT | AbstractTurnout.ONESENSOR | AbstractTurnout.TWOSENSOR;
+			AbstractTurnout.DIRECT | AbstractTurnout.ONESENSOR | AbstractTurnout.TWOSENSOR| AbstractTurnout.INDIRECT | AbstractTurnout.EXACT |AbstractTurnout.MONITORING;
 	
 	/*
 	 * Default values and constraints
