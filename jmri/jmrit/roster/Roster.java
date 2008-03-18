@@ -31,17 +31,24 @@ import org.jdom.ProcessingInstruction;
  * Multiple Roster objects don't make sense, so we use an "instance" member
  * to navigate to a single one.
  *<P>
- * This predates the "XmlFile" base class, so doesn't use it.  Not sure
- * whether it should...
- * <P>
  * The only bound property is the list of RosterEntrys; a PropertyChangedEvent
  * is fired every time that changes.
  * <P>
  * The entries are stored in an ArrayList, sorted alphabetically.  That
  * sort is done manually each time an entry is added.
+ * <p>
+ * This predates the "XmlFile" base class, so doesn't use it.  Not sure
+ * whether it should...
+ * <P>
+ * The roster is stored in a "Roster Index", which can be read or written.
+ * Each individual entry (once stored) contains a filename which can
+ * be used to retreive the locomotive information for that roster entry.
+ * Note that the RosterEntry information is duplicated in both the Roster
+ * (stored in the roster.xml file) and in the specific file for the entry.
  *
- * @author	Bob Jacobsen   Copyright (C) 2001;  Dennis Miller Copyright 2004
- * @version	$Revision: 1.33 $
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2008
+ * @author  Dennis Miller Copyright 2004
+ * @version	$Revision: 1.34 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -323,6 +330,30 @@ public class Roster extends XmlFile {
         setDirty(false);
     }
 
+    /**
+     * Name a valid filename from an entry name
+     * <p>
+     * <ul>
+     * <li>Replaces all problematic characters with "_".
+     * <li>Append .xml suffix
+     * </ul>
+     * Does not check for duplicates.
+     * @throw IllegalArgumentException if called with null or empty entry name
+     * @param entry the getId() entry name from the RosterEntry
+     * @see RosterEntry.ensureFilenameExists()
+     * @since 2.1.5
+     */
+    static public String makeValidFilename(String entry) {
+        if (entry==null) throw new IllegalArgumentException("makeValidFilename requires non-null argument");
+        if (entry.equals("")) throw new IllegalArgumentException("makeValidFilename requires non-empty argument");
+
+        // name sure there are no bogus chars in name        
+        String cleanName = entry.replaceAll("[\\W]","_");  // remove \W, all non-word (a-zA-Z0-9_) characters
+
+        // ensure suffix
+        return cleanName+".xml";
+    }
+    
     /**
      * Read the contents of a roster XML file into this object. Note that this does not
      * clear any existing entries.

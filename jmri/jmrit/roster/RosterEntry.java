@@ -36,7 +36,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.25 $
+ * @version   $Revision: 1.26 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -98,14 +98,9 @@ public class RosterEntry {
     public void ensureFilenameExists() {
         // if there isn't a filename, store using the id
         if (getFileName()==null||getFileName().equals("")) {
-            String nameWithoutSpecialChars = getId().replace(' ','_')
-                                            .replace('.', '_')
-                                            .replace('/', '-')
-                                            .replace('\\', '-')
-                                            .replace('>', '-')
-                                            .replace('<', '-')
-                                            .replace(':', '-');
-            String newFilename = nameWithoutSpecialChars+".xml";
+
+            String newFilename = Roster.makeValidFilename(getId());
+
             // we don't want to overwrite a file that exists, whether or not
             // it's in the roster
             File testFile = new File(LocoFile.getFileLocation()+newFilename);
