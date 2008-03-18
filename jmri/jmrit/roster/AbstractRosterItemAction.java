@@ -17,8 +17,8 @@ import javax.swing.JOptionPane;
  * Note that {@link DeleteRosterItemAction} is sufficiently
  * different that it doesn't use this base class.
  *
- * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.12 $
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007, 2008
+ * @version	$Revision: 1.13 $
  * @see         jmri.jmrit.XmlFile
  */
 abstract public class AbstractRosterItemAction extends AbstractAction {
@@ -98,6 +98,14 @@ abstract public class AbstractRosterItemAction extends AbstractAction {
             mToID = JOptionPane.showInputDialog(mParent, "Enter id for new roster entry:");
             if (mToID==null) return false;
 
+            // check for empty
+            if (mToID.equals("")) {
+                JOptionPane.showMessageDialog(mParent,
+                                          "The ID cannot be blank");
+                // ask again
+                continue;
+            }
+                        
             // check for duplicate
             if (0 == Roster.instance().matchingList(null, null, null, null, null, null, mToID).size()) break;
 
