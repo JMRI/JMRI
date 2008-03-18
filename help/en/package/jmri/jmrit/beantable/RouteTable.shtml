@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: RouteTable.shtml,v 1.5 2008-02-22 16:51:00 dan_boudreau Exp $ -->
+<!-- $Id: RouteTable.shtml,v 1.6 2008-03-18 02:04:04 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Route Table Help</TITLE>
@@ -26,12 +26,13 @@
 <P>A route consists of one or more turnouts or sensors that you
 would like to control. Before creating a route, you should first add
 some turnouts or sensors by using either the turnout table or sensor
-table. These tables can be found under the main menu "Tools -> Tables"</P>
+table. These tables can be found under the main menu "Tools -> Tables".
+
 <P>Once you have some turnouts or sensors to manage use the "Add"
 button in the lower left hand corner of the route table to create a new
-route.</P>
-<BR>
-<H3>Route Table Buttons and Checkboxes</H3>
+route.
+
+<H3>Route Table Columns</H3>
 
 <DL>
 	<DT>System Name</DT>
@@ -48,7 +49,15 @@ route.</P>
 
 	<DT>Delete</DT>
 	<DD>Pushing the "Delete" button will remove the route from the
-	table. To permanently delete the route you must save the panel.</DD>
+	table. 
+	<p>
+	Note that this doesn't remove the route from any files you've
+	saved that contain it.  If you load one of those files, perhaps
+	when you restart the program, the route will reappear.
+	You should use one of the "Store to file" options in the "File"
+	menu to save new versions of any files that contain this route.
+	</DD>
+
 
 	<DT>Enabled</DT>
 	<DD>To disable a route from triggering, uncheck the "Enabled" box
@@ -70,11 +79,16 @@ route.</P>
 	<DT>Edit</DT>
 	<DD>Push this button to edit the route. For more information see <A
 		HREF="RouteAddEdit.shtml">Adding/Editing Routes</A>.</DD>
+</DL>
 
+<H3>Route Table Controls</H3>
+
+There is also a button at the bottom of the Route Table
+
+<DL>	
 	<DT>Add</DT>
 	<DD>Push this button to add a new route. For more information see
 	<A HREF="RouteAddEdit.shtml">Adding/Editing Routes</A>.</DD>
-
 </DL>
 
 <BR>

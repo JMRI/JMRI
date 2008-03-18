@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TurnoutTable.shtml,v 1.9 2008-03-17 03:12:41 jacobsen Exp $ -->
+<!-- $Id: TurnoutTable.shtml,v 1.10 2008-03-18 02:04:05 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Turnout Table Help</TITLE>
@@ -25,8 +25,8 @@
 
 <P>This table contains a list of all turnouts that exist for this
 panel. From this table you can change the state of a turnout, change the
-feedback mode, enter sensors for feedback, invert, lock, and delete it.</P>
-<BR>
+feedback mode, enter sensors for feedback, invert, lock, and delete it.
+
 <H3>Turnout Table Columns</H3>
 
 <DL>
@@ -48,7 +48,15 @@ feedback mode, enter sensors for feedback, invert, lock, and delete it.</P>
 
 	<DT>Delete</DT>
 	<DD>Pushing the "Delete" button will remove the turnout from the
-	table. To permanently delete the turnout you must save the panel.</DD>
+	table. 
+	<p>
+	Note that this doesn't remove the turnout from any files you've
+	saved that contain it.  If you load one of those files, perhaps
+	when you restart the program, the turnout will reappear.
+	You should use one of the "Store to file" options in the "File"
+	menu to save new versions of any files that contain this turnout.
+	</DD>
+
 
 	<DT>Inverted</DT>
 	<DD>When checked, the turnout command and status to and from the
