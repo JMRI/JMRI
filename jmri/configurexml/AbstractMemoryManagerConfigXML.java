@@ -17,7 +17,7 @@ import org.jdom.Element;
  * specific Memory or AbstractMemory subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public abstract class AbstractMemoryManagerConfigXML implements XmlAdapter {
 
@@ -38,6 +38,10 @@ public abstract class AbstractMemoryManagerConfigXML implements XmlAdapter {
             java.util.Iterator iter =
                                     tm.getSystemNameList().iterator();
 
+            // don't return an element if there are not memories to include
+            if (!iter.hasNext()) return null;
+            
+            // store the memories
             while (iter.hasNext()) {
                 String sname = (String)iter.next();
                 if (sname==null) log.error("System name null during store");

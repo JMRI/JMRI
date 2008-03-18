@@ -15,7 +15,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class DefaultConditionalManagerXml implements XmlAdapter {
 
@@ -35,6 +35,11 @@ public class DefaultConditionalManagerXml implements XmlAdapter {
         if (tm!=null) {
             java.util.Iterator iter =
                                     tm.getSystemNameList().iterator();
+            
+            // don't return an element if there are not conditionals to include
+            if (!iter.hasNext()) return null;
+            
+            // store the conditionals
             while (iter.hasNext()) {
                 String sname = (String)iter.next();
                 if (sname==null) log.error("System name null during store");

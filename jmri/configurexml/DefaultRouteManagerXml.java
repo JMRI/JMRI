@@ -20,7 +20,7 @@ import org.jdom.Element;
  * @author Daniel Boudreau Copyright (c) 2007
  * @author Simon Reader Copyright (C) 2008
  *
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public class DefaultRouteManagerXml implements XmlAdapter {
 
@@ -41,6 +41,10 @@ public class DefaultRouteManagerXml implements XmlAdapter {
             java.util.Iterator iter =
                                     tm.getSystemNameList().iterator();
 
+            // don't return an element if there are not routes to include
+            if (!iter.hasNext()) return null;
+            
+            // store the routes
             while (iter.hasNext()) {
                 String sname = (String)iter.next();
                 if (sname==null) log.error("System name null during store");

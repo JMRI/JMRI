@@ -17,7 +17,7 @@ import org.jdom.Element;
  * specific Reporter or AbstractReporter subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public abstract class AbstractReporterManagerConfigXML implements XmlAdapter {
 
@@ -38,6 +38,10 @@ public abstract class AbstractReporterManagerConfigXML implements XmlAdapter {
             java.util.Iterator iter =
                                     tm.getSystemNameList().iterator();
 
+            // don't return an element if there are not reporters to include
+            if (!iter.hasNext()) return null;
+            
+            // store the reporters
             while (iter.hasNext()) {
                 String sname = (String)iter.next();
                 if (sname==null) log.error("System name null during store");

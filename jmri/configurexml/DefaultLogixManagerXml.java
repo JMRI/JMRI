@@ -15,7 +15,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class DefaultLogixManagerXml implements XmlAdapter {
 
@@ -35,6 +35,11 @@ public class DefaultLogixManagerXml implements XmlAdapter {
         if (tm!=null) {
             java.util.Iterator iter =
                                     tm.getSystemNameList().iterator();
+
+            // don't return an element if there are not Logix to include
+            if (!iter.hasNext()) return null;
+            
+            // store the Logix
             while (iter.hasNext()) {
                 String sname = (String)iter.next();
                 if (sname==null) log.error("System name null during store");

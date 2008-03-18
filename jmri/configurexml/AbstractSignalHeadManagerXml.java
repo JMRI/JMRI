@@ -20,7 +20,7 @@ import org.jdom.Element;
  * Based on AbstractTurnoutManagerConfigXML
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class AbstractSignalHeadManagerXml implements XmlAdapter {
 
@@ -41,6 +41,10 @@ public class AbstractSignalHeadManagerXml implements XmlAdapter {
             java.util.Iterator iter =
                                     sm.getSystemNameList().iterator();
 
+            // don't return an element if there are not signalheads to include
+            if (!iter.hasNext()) return null;
+            
+            // store the signalheads
             while (iter.hasNext()) {
                 String sname = (String)iter.next();
                 if (sname==null) log.error("System name null during store");

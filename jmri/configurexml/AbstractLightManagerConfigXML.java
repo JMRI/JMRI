@@ -22,7 +22,7 @@ import org.jdom.Element;
  * Based on AbstractSensorManagerConfigXML.java
  *
  * @author Dave Duchamp Copyright (c) 2004
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public abstract class AbstractLightManagerConfigXML implements XmlAdapter {
 
@@ -43,6 +43,10 @@ public abstract class AbstractLightManagerConfigXML implements XmlAdapter {
             java.util.Iterator iter =
                                     tm.getSystemNameList().iterator();
 
+            // don't return an element if there are not lights to include
+            if (!iter.hasNext()) return null;
+            
+            // store the lights
             while (iter.hasNext()) {
                 String sname = (String)iter.next();
                 if (sname==null) log.error("System name null during store");

@@ -19,7 +19,7 @@ import org.jdom.Element;
  * specific Sensor or AbstractSensor subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public abstract class AbstractSensorManagerConfigXML implements XmlAdapter {
 
@@ -40,6 +40,10 @@ public abstract class AbstractSensorManagerConfigXML implements XmlAdapter {
             java.util.Iterator iter =
                                     tm.getSystemNameList().iterator();
 
+            // don't return an element if there are not sensors to include
+            if (!iter.hasNext()) return null;
+            
+            // store the sensors
             while (iter.hasNext()) {
                 String sname = (String)iter.next();
                 if (sname==null) log.error("System name null during store");

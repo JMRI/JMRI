@@ -19,7 +19,7 @@ import org.jdom.Element;
  * The Block objects are not yet read in, pending a reliable write out!
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @since 2.1.2
  *
  */
@@ -52,6 +52,10 @@ public class BlockManagerXml extends AbstractMemoryManagerConfigXML {
             java.util.Iterator iter =
                                     tm.getSystemNameList().iterator();
 
+            // don't return an element if there are not blocks to include
+            if (!iter.hasNext()) return null;
+            
+            // store the blocks
             while (iter.hasNext()) {
                 String sname = (String)iter.next();
                 if (sname==null) log.error("System name null during store");
