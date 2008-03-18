@@ -33,10 +33,10 @@ import jmri.ProgDeferredServiceModePane;
 
 /**
  * Frame providing a command station programmer from decoder definition files.
- * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005
+ * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.61 $
+ * @version   $Revision: 1.62 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -1039,7 +1039,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         // mark this as a success
         variableModel.setFileDirty(false);
 
-        //and store an updated roster file
+        // and store an updated roster file
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
         Roster.writeRosterFile();
 
