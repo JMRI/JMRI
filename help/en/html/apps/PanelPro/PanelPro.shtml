@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: PanelPro.shtml,v 1.3 2008-03-19 14:22:51 jacobsen Exp $ -->
+<!-- $Id: PanelPro.shtml,v 1.4 2008-03-19 14:36:28 jacobsen Exp $ -->
 <title>JMRI: PanelPro, An Application For Making Control Panels</title>
 
 <!-- Style -->
@@ -205,6 +205,34 @@ and faster operation, as you prefer.
 change color to indicate whether the track is occupied.  The
 procedure for doing that is described on a 
 <A HREF="ColorTrack.shtml">separate page</a>.
+
+<h2>Using the Layout Editor</h2>
+
+<A href="../../../package/jmri/jmrit/display/images/EnhancedPanel.gif">
+<IMG src="../../../package/jmri/jmrit/display/images/EnhancedPanel.gif" ALIGN="right" ALT="screen shot of layout editor panel" WIDTH="296" HEIGHT="86" HSPACE="0" VSPACE="0"></A>
+
+The 
+<a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a>
+helps you create simple schematic panels, while simultaneously setting up the 
+block and signal logic needed to operate the layout.  Its strength is 
+its ability to capture how the tracks are connected, where each block is
+located and how each signal is related to blocks.  On the other hand, it
+provides only limited ability to customize how the panel appears.
+<p>
+
+<A href="../../../package/jmri/jmrit/display/images/OvalLayoutEditMode.gif">
+<IMG src="../../../package/jmri/jmrit/display/images/OvalLayoutEditMode.gif" ALIGN="right" ALT="screen shot of layout editor panel" WIDTH="271" HEIGHT="85" HSPACE="0" VSPACE="0"></A>
+
+You edit via "Edit Mode", which makes the connections between elements and
+the layout visible (See figure to the right).  For example, you can click on
+the circle in the middle of a track segment and select the associated occupancy detector (Sensor)
+on the layout. Once you've done that, the color of the track segment on the screen will change
+when the track is occupied.  You can configure the colors used, the width of the track lines, and
+other details of the presentation.
+
+<p>
+For more information, please see the 
+<a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor help page</a>.
 
 <h2>Communicating with Multiple Systems</h2>
 
