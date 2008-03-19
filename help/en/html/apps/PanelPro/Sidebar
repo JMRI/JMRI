@@ -5,10 +5,14 @@
 
 <dl class=toc>
 
-<h3>PanelPro Info</h3></dt><DD><UL>
+<dt><h3>PanelPro Info</h3></dt><DD><UL>
+<LI><a href="../../../package/jmri/jmrit/display/PanelEditor.shtml">Panel Editor</A>
+<LI><a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</A>
+<LI><a href="FAQ.shtml">FAQ</A>
 <LI><a href="FAQ.shtml">FAQ</A>
 <LI><A HREF="AdvIcons.shtml">Advanced Icons</a>
 </UL>
+
 
 <dt><h3>Other Useful Info</h3></dt><DD><UL>
 
