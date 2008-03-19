@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.5.shtml,v 1.7 2008-03-17 06:34:56 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.5.shtml,v 1.8 2008-03-19 14:07:06 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -164,6 +164,11 @@ to work.  This shouldn't make any visible changes, but might have accidentally i
 some bugs, so please keep an eye out. 
 
 <p>
+Many more help updates.  Please check it out, either in the 
+program or 
+<a href="http://jmri.sf.net/help/en/webtoc.html">on the web</a>.
+
+<p>
 Chris Zurek updated the Digitrax DH123 "Economy" decoder definition.
 
 <p>
@@ -204,6 +209,14 @@ than using the command mechanisms in the DCC system.
 
 <p>
 Martin Gostling added some new models to the Digitrax FX3 decoder family.
+
+<p>
+The panel files that the program writes now have a little less redundant information in them.
+If a particular category is empty, e.g. no Routes, the summary and manager information for that category written to the file.
+
+<p>
+You can no longer create a null Roster entry accidentally using the "Roster Copy" menu item.  If you try to copy to an invalid or empty ID, it prompts you to try again.
+Also, the handling of roster filenames with special characters has been improved.
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
