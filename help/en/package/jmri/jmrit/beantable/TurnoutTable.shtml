@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TurnoutTable.shtml,v 1.10 2008-03-18 02:04:05 jacobsen Exp $ -->
+<!-- $Id: TurnoutTable.shtml,v 1.11 2008-03-20 02:43:24 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Turnout Table Help</TITLE>
@@ -100,6 +100,7 @@ feedback mode, enter sensors for feedback, invert, lock, and delete it.
     <DD>Shows if an specific retry methods have been configured
     for this turnout.  See the section on 
     <A HREF="#automation">Turnout Automation</a> below.
+    
 	<DT><A NAME="Lock Mode"></A>Lock Mode</DT>
 	<DD>Shows which lockouts, if any, are active for this turnout.
 	"Both" means that cabs and pushbuttons will be locked out if the lock
@@ -145,6 +146,12 @@ Turnout Table that control its operation.
 
 	<DT>Show lock information</DT>
 	<DD>When checked, the optional lock columns are shown.</DD>
+
+	<DT>Automatic retry</DT>
+	<DD>When checked, enables the automate Global Default setting for
+	turnouts. Currently the Global Default does not cause retries for
+	turnouts. See the section on <A HREF="#automation">Turnout
+	Automation</a> below for more information.</DD>
 
 </DL>
 
@@ -270,7 +277,7 @@ defined, you can also select the "Sensor" method there.
 You can customize the automation by selecting "Edit..."
 for an individual turnout.
 <p>
-It's also possible to set global defaults, and have turnouts use
+It's also possible to set global defaults, and some turnouts use
 those.  See the "Automate" menu to edit those defaults.
 
 
