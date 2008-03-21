@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.25 2008-03-17 06:33:46 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.26 2008-03-21 15:40:26 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -281,6 +281,8 @@
 	<LI>Ron Sommer, who provided the PanelPro icon for Windows
 <a name="T"></A>
 	<LI>Francois Taburet, who provided the French translation for DecoderPro
+	<li>Giorgio Terdina, who provided the code for the Roco multiMaus and
+        for JMRI to connect to his <a href="http://www.terdina.net/rails/">XnTcp adapter</a>.
 	<LI>Walter Thompson, who provided the ID information for the Lionel
 	Challenger decoder and DS54 accessory decoder, is a jmriusers moderator, and 
 	updated the MRC decoder definitions
