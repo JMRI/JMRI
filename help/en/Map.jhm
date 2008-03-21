@@ -62,8 +62,8 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.hardware.tmcc.index" url="html/hardware/tmcc/index.shtml" />
 	<mapID target="html.doc.Technical.CVSFAQ_cvstool" url="html/doc/Technical/CVSFAQ.shtml#cvstool" />
 	<mapID target="DecoderProManual.Comp_SoundLevels" url="DecoderProManual/Comp_SoundLevels.shtml" />
-	<mapID target="html.hardware.XPressNet.CreateXNetLogFile" url="html/hardware/XPressNet/CreateXNetLogFile.shtml" />
 	<mapID target="package.jmri.jmrit.blockboss.BlockBossFrame_table" url="package/jmri/jmrit/blockboss/BlockBossFrame.shtml#table" />
+	<mapID target="html.hardware.XPressNet.CreateXNetLogFile" url="html/hardware/XPressNet/CreateXNetLogFile.shtml" />
 	<mapID target="html.tools.signaling.Logic_traildiv" url="html/tools/signaling/Logic.shtml#traildiv" />
 	<mapID target="html.hardware.acela.index" url="html/hardware/acela/index.shtml" />
 	<mapID target="package.jmri.jmrit.display.LayoutEditor_intro" url="package/jmri/jmrit/display/LayoutEditor.shtml#intro" />
@@ -142,6 +142,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrix.acela.packetgen.SerialPacketGenFrame" url="package/jmri/jmrix/acela/packetgen/SerialPacketGenFrame.shtml" />
 	<mapID target="html.tools.Turnouts" url="html/tools/Turnouts.shtml" />
 	<mapID target="html.tools.signaling.Logic" url="html/tools/signaling/Logic.shtml" />
+	<mapID target="package.jmri.jmrix.cmri.serial.serialmon.SerialMonFrame" url="package/jmri/jmrix/cmri/serial/serialmon/SerialMonFrame.shtml" />
 	<mapID target="html.apps.LocoTools.index_slotmon" url="html/apps/LocoTools/index.shtml#slotmon" />
 	<mapID target="html.doc.Technical.getcode" url="html/doc/Technical/getcode.shtml" />
 	<mapID target="package.apps.Apps" url="package/apps/Apps.shtml" />
@@ -152,6 +153,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.tools.Signals_edit" url="html/tools/Signals.shtml#edit" />
 	<mapID target="DecoderProManual.Basic_Programming_Top" url="DecoderProManual/Basic_Programming.shtml#Top" />
 	<mapID target="DecoderProManual.Basic_Programming_Roster" url="DecoderProManual/Basic_Programming.shtml#Roster" />
+	<mapID target="package.jmri.jmrix.cmri.serial.diagnostic.DiagnosticFrame" url="package/jmri/jmrix/cmri/serial/diagnostic/DiagnosticFrame.shtml" />
 	<mapID target="html.tools.Reporters" url="html/tools/Reporters.shtml" />
 	<mapID target="package.jmri.jmrit.beantable.TurnoutTable_Turnout Feedback" url="package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout Feedback" />
 	<mapID target="html.apps.DecoderPro.Roster" url="html/apps/DecoderPro/Roster.shtml" />
@@ -236,6 +238,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.tools.signaling.SimpleSignalExample_definesignals" url="html/tools/signaling/SimpleSignalExample.shtml#definesignals" />
 	<mapID target="package.jmri.jmrit.display.EditTrackSegment" url="package/jmri/jmrit/display/EditTrackSegment.shtml" />
 	<mapID target="package.apps.AppConfigPanel" url="package/apps/AppConfigPanel.shtml" />
+	<mapID target="package.jmri.jmrix.cmri.serial.assignment.ListFrame" url="package/jmri/jmrix/cmri/serial/assignment/ListFrame.shtml" />
 	<mapID target="Acknowledgements_W" url="Acknowledgements.shtml#W" />
 	<mapID target="html.tools.throttle.ThrottleChapter2_FunctionPanel" url="html/tools/throttle/ThrottleChapter2.shtml#FunctionPanel" />
 	<mapID target="DecoderProManual.index_index" url="DecoderProManual/index.shtml#index" />
@@ -318,6 +321,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.apps.DecoderPro.Files" url="html/apps/DecoderPro/Files.shtml" />
 	<mapID target="html.hardware.loconet.MS100" url="html/hardware/loconet/MS100.shtml" />
 	<mapID target="html.tools.tracker.index" url="html/tools/tracker/index.shtml" />
+	<mapID target="package.jmri.jmrix.cmri.serial.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/cmri/serial/nodeconfig/NodeConfigFrame.shtml" />
 	<mapID target="html.tools.throttle.ThrottleMain" url="html/tools/throttle/ThrottleMain.shtml" />
 	<mapID target="html.apps.DecoderPro.Programmer" url="html/apps/DecoderPro/Programmer.shtml" />
 	<mapID target="DecoderProManual.Comp_PrintData_b_Top" url="DecoderProManual/Comp_PrintData_b.shtml#Top" />
@@ -343,6 +347,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="DecoderProManual.Basic_Programming_Basic Programmer" url="DecoderProManual/Basic_Programming.shtml#Basic Programmer" />
 	<mapID target="DecoderProManual.index" url="DecoderProManual/index.shtml" />
 	<mapID target="html.tools.throttle.ThrottleChapter4_CloseThrottle" url="html/tools/throttle/ThrottleChapter4.shtml#CloseThrottle" />
+	<mapID target="package.jmri.jmrix.loconet.locomon.LocoMonFrame" url="package/jmri/jmrix/loconet/locomon/LocoMonFrame.shtml" />
 	<mapID target="package.jmri.jmrit.powerpanel.PowerPanelFrame" url="package/jmri/jmrit/powerpanel/PowerPanelFrame.shtml" />
 	<mapID target="package.jmri.jmrit.beantable.LogixTable" url="package/jmri/jmrit/beantable/LogixTable.shtml" />
 	<mapID target="html.hardware.USBtoSerial_MS100" url="html/hardware/USBtoSerial.shtml#MS100" />
@@ -393,6 +398,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrix.sprog.packetgen.SprogPacketGenFrame" url="package/jmri/jmrix/sprog/packetgen/SprogPacketGenFrame.shtml" />
 	<mapID target="DecoderProManual.Basic_Programming_Setting Up" url="DecoderProManual/Basic_Programming.shtml#Setting Up" />
 	<mapID target="html.hardware.loconet.LocoNetworking" url="html/hardware/loconet/LocoNetworking.shtml" />
+	<mapID target="package.jmri.jmrit.beantable.TurnoutTable_automation" url="package/jmri/jmrit/beantable/TurnoutTable.shtml#automation" />
 	<mapID target="html.doc.Technical.XmlUsage" url="html/doc/Technical/XmlUsage.shtml" />
 	<mapID target="html.tools.signaling.Logic_single" url="html/tools/signaling/Logic.shtml#single" />
 	<mapID target="package.jmri.jmrit.display.LayoutEditor_turn" url="package/jmri/jmrit/display/LayoutEditor.shtml#turn" />

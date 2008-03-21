@@ -124,6 +124,12 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
    </tocitem>
    <tocitem text="Names" target="html.doc.Technical.Names"/>
    <tocitem text="System-Specific">
+      <tocitem text="C/MRI">
+         <tocitem text="Check Pin Assignments" target="package.jmri.jmrix.cmri.serial.assignment.ListFrame"/>
+         <tocitem text="Configure Nodes" target="package.jmri.jmrix.cmri.serial.nodeconfig.NodeConfigFrame"/>
+         <tocitem text="Diagnostics" target="package.jmri.jmrix.cmri.serial.diagnostic.DiagnosticFrame"/>
+         <tocitem text="Signals" target="html.hardware.cmri.Signals"/>
+      </tocitem>
       <tocitem text="Digitrax">
          <tocitem text="LocoNet ID" target="package.jmri.jmrix.loconet.locoid.LocoIdFrame"/>
          <tocitem text="Sound">

@@ -497,7 +497,7 @@
 </li>
          
 <li>
-<a href="package/jmri/jmrit/beantable/TurnoutAddEdit.shtml">Turnout Table</a>
+<a href="package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnout Table</a>
 <ul></ul>
 </li>
       
@@ -535,6 +535,31 @@
 </li>
    
 <li>System-Specific<ul>
+      
+<li>C/MRI<ul>
+         
+<li>
+<a href="package/jmri/jmrix/cmri/serial/assignment/ListFrame.shtml">Check Pin Assignments</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="package/jmri/jmrix/cmri/serial/nodeconfig/NodeConfigFrame.shtml">Configure Nodes</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="package/jmri/jmrix/cmri/serial/diagnostic/DiagnosticFrame.shtml">Diagnostics</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="html/hardware/cmri/Signals.shtml">Signals</a>
+<ul></ul>
+</li>
+      
+</ul>
+</li>
       
 <li>Digitrax<ul>
          
