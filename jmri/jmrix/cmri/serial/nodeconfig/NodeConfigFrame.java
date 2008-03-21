@@ -18,7 +18,7 @@ import jmri.jmrix.cmri.serial.SerialSensorManager;
  * Frame for user configuration of CMRI serial nodes
  * @author	Bob Jacobsen   Copyright (C) 2004
  * @author	Dave Duchamp   Copyright (C) 2004
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -81,6 +81,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             searchlightBits[i] = false;
             firstSearchlight[i] = false;
         }
+        addHelpMenu("package.jmri.jmrix.cmri.serial.nodeconfig.NodeConfigFrame", true);
     }
 
     /** 
