@@ -1,13 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SerialMonFrame.shtml,v 1.2 2008-03-21 06:45:54 jacobsen Exp $ -->
+<!-- $Id: LocoMonFrame.shtml,v 1.1 2008-03-21 06:45:54 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
-      JMRI: Monitor Powerline Device Traffic
+      JMRI: Monitor LocoNet Traffic
  </TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help monitor powerline traffic message packet">
+    <META name="keywords" content="JMRI help monitor loconet traffic message packet">
 
 <!-- Style -->
   <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
@@ -21,10 +21,10 @@
 <body>
 <!--#include virtual="/Header" -->
 
-<H2>Monitor Powerline Device Traffic
+<H2>Monitor LocoNet Traffic
 </H2>
     
-This is the help/jmri/jmrix/powerline/serialmon/SerialMonFrame help page
+This is the help/jmri/jmrix/loconet/locomon/LocoMonFrame help page
 
 <!--#include virtual="/Footer" -->
 </body>
