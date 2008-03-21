@@ -22,7 +22,7 @@ import java.util.Vector;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class NetworkDriverAdapter extends NcePortController {
 
@@ -64,6 +64,8 @@ public class NetworkDriverAdapter extends NcePortController {
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
+            ConnectionStatus.instance().setConnectionState(
+            		hostName, ConnectionStatus.CONNECTION_DOWN);
         }
         try {
             return new DataInputStream(socket.getInputStream());
@@ -134,7 +136,8 @@ public class NetworkDriverAdapter extends NcePortController {
     String hostName = null;
     public void setHostName (String hostName){
     	this.hostName = hostName;
-    }
+        if (this.hostName.equals("")) this.hostName = "(none)";
+     }
     
     Vector portNameVector = null;
     public Vector getPortNames() {
