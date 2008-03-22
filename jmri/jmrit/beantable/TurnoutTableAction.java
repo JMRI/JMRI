@@ -42,7 +42,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.51 $
+ * @version     $Revision: 1.52 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -95,7 +95,8 @@ public class TurnoutTableAction extends AbstractTableAction {
 		    static public final int SENSOR1COL = MODECOL+1;
 		    static public final int SENSOR2COL = SENSOR1COL+1;
 		    static public final int OPSONOFFCOL = SENSOR2COL+1;
-		    static public final int LOCKOPRCOL = OPSONOFFCOL+1;
+		    static public final int OPSEDITCOL = OPSONOFFCOL+1;
+		    static public final int LOCKOPRCOL = OPSEDITCOL+1;
 		    static public final int LOCKDECCOL = LOCKOPRCOL+1;
 		    
 		    // show only lock columns, no feedback columns
@@ -106,7 +107,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     			if (showLock && showFeedback)
     				return LOCKDECCOL+1;
     		    if (showFeedback)
-    		        return OPSONOFFCOL+1;
+    		        return OPSEDITCOL+1;
     		    if (showLock)
     		    	return xLOCKDECCOL+1;
     		    else
@@ -121,6 +122,7 @@ public class TurnoutTableAction extends AbstractTableAction {
      			else if (col==SENSOR1COL) return "Sensor 1";
     			else if (col==SENSOR2COL) return "Sensor 2";
     			else if (col==OPSONOFFCOL) return "Automate";
+    			else if (col==OPSEDITCOL) return "";  
     			else if (col==LOCKOPRCOL || col==xLOCKOPRCOL) return "Lock Mode";
     			else if (col==LOCKDECCOL || col==xLOCKDECCOL) return "Decoder";
     			
@@ -136,6 +138,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     			else if (col==SENSOR1COL) return String.class;
     			else if (col==SENSOR2COL) return String.class;
     			else if (col==OPSONOFFCOL) return JComboBox.class;
+    			else if (col==OPSEDITCOL) return JButton.class;
     			else if (col==LOCKOPRCOL || col==xLOCKOPRCOL) return JComboBox.class;
     			else if (col==LOCKDECCOL || col==xLOCKDECCOL) return JComboBox.class;
     			else return super.getColumnClass(col);
@@ -163,6 +166,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     			else if (col==SENSOR1COL) return true;
     			else if (col==SENSOR2COL) return true;
     			else if (col==OPSONOFFCOL) return true;
+    			else if (col==OPSEDITCOL) return t.getTurnoutOperation()!=null;
     			else if (col==LOCKOPRCOL || col==xLOCKOPRCOL) return true;
     			else if (col==LOCKDECCOL || col==xLOCKDECCOL) return t.canLock(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT);
     			else return super.isCellEditable(row,col);
@@ -211,6 +215,8 @@ public class TurnoutTableAction extends AbstractTableAction {
                     else return "";
     			} else if (col==OPSONOFFCOL) {
     				return makeAutomationBox(t);
+    			} else if (col==OPSEDITCOL) {
+  	                        return AbstractTableAction.rb.getString("EditTurnoutOperation");
     			} else return super.getValueAt(row, col);
 			}    		
 			
@@ -243,6 +249,9 @@ public class TurnoutTableAction extends AbstractTableAction {
                     t.provideSecondFeedbackSensor(s);
     			} else if (col==OPSONOFFCOL) {
     									// do nothing as this is handled by the combo box listener
+    			} else if (col==OPSEDITCOL) {
+			     t.setInhibitOperation(false);
+		             editTurnoutOperation(t, (JComboBox)getValueAt(row,OPSONOFFCOL));
 	   			} else if (col == LOCKOPRCOL || (col==xLOCKOPRCOL && !showFeedback)) {
 					String lockOpName = (String) ((JComboBox) value)
 							.getSelectedItem();
@@ -286,6 +295,8 @@ public class TurnoutTableAction extends AbstractTableAction {
                 table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
                 table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
                 table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
+                if(showFeedback)
+		     setColumnToHoldButton(table,OPSEDITCOL,editButton());
                 super.configureTable(table);
             }
             
@@ -374,7 +385,18 @@ public class TurnoutTableAction extends AbstractTableAction {
     	});
     	return cb;    	
     }
-    
+   
+
+    /**
+     * Create a JButton to edit a turnout operation. 
+     * @return	the JButton
+     */
+    protected JButton editButton() {
+
+  	  JButton editButton = new JButton(AbstractTableAction.rb.getString("EditTurnoutOperation"));
+	   return(editButton);
+     }
+ 
     /**
      * Add the content and make the appropriate selection to a combox box for a turnout's
      * automation choices
@@ -408,12 +430,11 @@ public class TurnoutTableAction extends AbstractTableAction {
     	java.util.Collections.sort(defStrings);
     	strings.insertElementAt(new String("Off"),0);
     	strings.insertElementAt(new String("Use Global Default"),1);
-    	strings.insertElementAt(new String("Edit..."),2);
     	for (int i=0; i<defStrings.size(); ++i) {
 		try {
-    		   strings.setElementAt(defStrings.elementAt(i),i+3);
+    		   strings.setElementAt(defStrings.elementAt(i),i+2);
 		} catch(java.lang.ArrayIndexOutOfBoundsException obe){
-	           strings.insertElementAt(defStrings.elementAt(i),i+3);
+	           strings.insertElementAt(defStrings.elementAt(i),i+2);
 	        }
     	}
     	for (int i=0; i<strings.size(); ++i) {
@@ -446,10 +467,6 @@ public class TurnoutTableAction extends AbstractTableAction {
 			t.setInhibitOperation(false);
 			t.setTurnoutOperation(null);
 			break;
-		case 2:			// Edit... (use nonce)
-			t.setInhibitOperation(false);
-			editTurnoutOperation(t, cb);
-			break;
 		default:		// named operation
 			t.setInhibitOperation(false);
 			t.setTurnoutOperation(TurnoutOperationManager.getInstance().
@@ -473,7 +490,8 @@ public class TurnoutTableAction extends AbstractTableAction {
     		}
     	}
     	if (op != null) {
-    		TurnoutOperationEditor dialog = new TurnoutOperationEditor(this, f, op, t, box);
+            if (!op.isNonce()) op = op.makeNonce(t);
+    	    TurnoutOperationEditor dialog = new TurnoutOperationEditor(this, f, op, t, box);
     	} else {
 			JOptionPane.showMessageDialog(f, new String("There is no operation type suitable for this turnout"),
 					"No operation type", JOptionPane.ERROR_MESSAGE);
