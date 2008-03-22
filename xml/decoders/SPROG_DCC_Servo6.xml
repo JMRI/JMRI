@@ -1,0 +1,390 @@
+<?xml version="1.0"?>
+<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<!-- Copyright (C) JMRI 2005 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<!-- $Id: SPROG_DCC_Servo6.xml,v 1.1 2008-03-22 18:27:21 crosland Exp $ -->
+<decoder-config>
+		<version author="sprog@sprog-dcc.co.uk" version="1" lastUpdated="20080106"/>
+					
+<decoder>
+	
+	
+	
+	<family name="Servo Accessory Decoders"  mfg="SPROG DCC">
+		comment="Servo6 is an accessory decoderfor servo motors, it can be programmed via CV1... and/or CV513...">
+		<model model="Servo6" lowVersionID="10" highVersionID="10" 
+		type="stationary" >
+		</model>
+	</family>
+
+	<programming direct="yes" paged="yes" register="yes" ops="yes"></programming>
+
+	<variables>
+		<variable label="Decoder Address" CV="1" mask="XXVVVVVV" comment="Decoder address outputs A - F"
+			item="Short Address" default="01">
+			<decVal min="1" max="63"></decVal>
+			<splitVal highCV="9"/>
+		</variable>
+		
+		<variable label="Turnout_Address_Low1" CV="1" mask="XXVVVVVV" default="01">
+			<splitVal highCV="9" factor="4" offset="-3"/>
+			</variable>
+
+		<variable label="Turnout_Address_MidLow1" CV="1" mask="XXVVVVVV" default="02">
+			<splitVal highCV="9" factor="4" offset="-2"/>
+			</variable>
+
+		<variable label="Turnout_Address_MidHigh1" CV="1" mask="XXVVVVVV" default="03">
+			<splitVal highCV="9" factor="4" offset="-1"/>
+			</variable>
+
+		<variable label="Turnout_Address_High1" item="Short Address" CV="1" mask="XXVVVVVV" default="04">
+			<splitVal highCV="9" factor="4" />
+			</variable>
+
+		<variable label="Decoder Address2" CV="69" mask="XXVVVVVV" comment="Decoder address outputs G - H"
+			item="Short Address" default="02">
+			<decVal min="1" max="63"></decVal>
+			<splitVal highCV="9"/>
+		</variable>
+		
+		<variable label="Turnout_Address_Low2" CV="69" mask="XXVVVVVV" default="05">
+			<splitVal highCV="9" factor="4" offset="-3"/>
+			</variable>
+
+		<variable label="Turnout_Address_MidLow2" item="Short Address" CV="69" mask="XXVVVVVV" default="06">
+			<splitVal highCV="9" factor="4" offset="-2"/>
+			</variable>
+
+		<variable label="Outputs Active" CV="2" mask="VVVVVVVV" comment="Outputs Active"
+			 default="255" >
+			 <decVal min="1" max="255"></decVal>
+		</variable>
+		
+		<variable label="Decoder Version" CV="7" readOnly="yes" default="10" >
+			<decVal/>
+		</variable>
+					
+		<variable label="Manufacturer" CV="8" readOnly="yes" default="44">
+			<decVal/>
+		</variable>
+		
+		<variable label="Hardware Version" CV="73" readOnly="yes" default="10">
+			<decVal/>
+		</variable>
+		
+		<variable label="Firmware Version" CV="74" readOnly="yes" default="10">
+			<decVal/>
+		</variable>
+		
+		<variable label="Configuration" CV="29" readOnly="yes" default="128">
+			<decVal min="0" max = "255"></decVal>
+		</variable>
+		
+		<variable label="Output A endpoint 0" CV="33" default="145"
+			item="OutA0">
+			<decVal min="0" max = "255"></decVal>
+		</variable>
+				
+		<variable label="Output A endpoint 1" CV="34" default="145"
+			item="OutA1">
+			<decVal min="0" max = "255"></decVal>
+		</variable>
+				
+		<variable label="Output A speed" CV="35" default="3"
+			item="OutASpeed">
+			<decVal min="1" max = "7"></decVal>
+		</variable>
+				
+		<variable label="Output B endpoint 0" CV="36" default="145"
+			item="OutB0">
+			<decVal min="0" max = "255"></decVal>
+		</variable>
+				
+		<variable label="Output B endpoint 1" CV="37" default="145"
+			item="OutB1">
+			<decVal min="0" max = "255"></decVal>
+		</variable>
+				
+		<variable label="Output B speed" CV="38" default="3"
+			item="OutBSpeed">
+			<decVal min="1" max = "7"></decVal>
+		</variable>
+				
+		<variable label="Output C endpoint 0" CV="39" default="145"
+			item="OutC0">
+			<decVal min="0" max = "255"></decVal>
+		</variable>
+				
+		<variable label="Output C endpoint 1" CV="40" default="145"
+			item="OutC1">
+			<decVal min="0" max = "255"></decVal>
+		</variable>
+				
+		<variable label="Output C speed" CV="41" default="3"
+			item="OutCSpeed">
+			<decVal min="1" max = "7"></decVal>
+		</variable>
+				
+		<variable label="Output D endpoint 0" CV="42" default="145"
+			item="OutD0">
+			<decVal min="0" max = "255"></decVal>
+		</variable>
+				
+		<variable label="Output D endpoint 1" CV="43" default="145"
+			item="OutD1">
+			<decVal min="0" max = "255"></decVal>
+		</variable>
+				
+		<variable label="Output D speed" CV="44" default="3"
+			item="OutDSpeed">
+			<decVal min="1" max = "7"></decVal>
+		</variable>
+				
+		<variable label="Output E endpoint 0" CV="45" default="145"
+			item="OutE0">
+			<decVal min="0" max = "255"></decVal>
+		</variable>
+				
+		<variable label="Output E endpoint 1" CV="46" default="145"
+			item="OutE1">
+			<decVal min="0" max = "255"></decVal>
+		</variable>
+				
+		<variable label="Output E speed" CV="47" default="3"
+			item="OutESpeed">
+			<decVal min="1" max = "7"></decVal>
+		</variable>
+				
+		<variable label="Output F endpoint 0" CV="48" default="145"
+			item="OutF0">
+			<decVal min="0" max = "255"></decVal>
+		</variable>
+				
+		<variable label="Output F endpoint 1" CV="49" default="145"
+			item="OutF1">
+			<decVal min="0" max = "255"></decVal>
+		</variable>
+				
+		<variable label="Output F speed" CV="50" default="3"
+			item="OutFSpeed">
+			<decVal min="1" max = "7"></decVal>
+		</variable>
+				
+		<variable label="Local_Input_A" CV="71" mask="XXXXXXXV" default="0">
+			<enumVal>
+				<enumChoice choice="Disable"/>
+				<enumChoice choice="Enable"/>
+				</enumVal>
+			</variable>
+
+		<variable label="Local_Input_B" CV="71" mask="XXXXXXVX" default="0">
+			<enumVal>
+				<enumChoice choice="Disable"/>
+				<enumChoice choice="Enable"/>
+				</enumVal>
+			</variable>
+
+		<variable label="Local_Input_C" CV="71" mask="XXXXXVXX" default="0">
+			<enumVal>
+				<enumChoice choice="Disable"/>
+				<enumChoice choice="Enable"/>
+				</enumVal>
+			</variable>
+
+		<variable label="Local_Input_D" CV="71" mask="XXXXVXXX" default="0">
+			<enumVal>
+				<enumChoice choice="Disable"/>
+				<enumChoice choice="Enable"/>
+				</enumVal>
+			</variable>
+
+		<variable label="Local_Input_E" CV="71" mask="XXXVXXXX" default="0">
+			<enumVal>
+				<enumChoice choice="Disable"/>
+				<enumChoice choice="Enable"/>
+				</enumVal>
+			</variable>
+
+		<variable label="Local_Input_F" CV="71" mask="XXVXXXXX" default="0">
+			<enumVal>
+				<enumChoice choice="Disable"/>
+				<enumChoice choice="Enable"/>
+				</enumVal>
+			</variable>
+
+	</variables>	
+		
+	
+</decoder>
+
+<pane name="SERVO6">
+	<column>
+		<row>
+			<column>
+				<display item="Decoder Address" label="Group 1 Module Number: "
+					tooltip="Sets base address for outputs A, B, C and D" />
+				<display item="Turnout_Address_Low1" label="Output Address A: "/>
+				<display item="Turnout_Address_MidLow1" label="B: "/>
+				<display item="Turnout_Address_MidHigh1" label="C: "/>
+				<display item="Turnout_Address_High1" label="D: "/>
+				<label label=" "/>
+			</column>
+			<column>
+				<display item="Decoder Address2" label="Group 2 Module Number: "
+					tooltip="Sets base address for outputs E and F" />
+				<display item="Turnout_Address_Low2" label="Output Address E: "/>
+				<display item="Turnout_Address_MidLow2" label="F: "/>
+				<label label=" "/>
+			</column>
+		</row>
+		<separator/>
+		<row>
+			<column>
+				<row>
+					<column>
+				<display item="OutA0"
+					tooltip="Sets endpoint 0 of output A" />
+				<display item="OutA1"
+					tooltip="Sets endpoint 1 of output A" />
+				<display item="OutASpeed"
+					tooltip="Sets the speed of output A" />
+					</column>
+					<column>
+				<display item="OutA0" format="hslider" label=""
+					tooltip="Sets endpoint 0 of output A" />
+				<display item="OutA1" format="hslider" label=""
+					tooltip="Sets endpoint 1 of output A" />
+				<display item="OutASpeed" format="hslider" label=""
+					tooltip="Sets the speed of output A" />
+					</column>
+				</row>
+				<row>
+					<column>
+				<display item="OutB0"
+					tooltip="Sets endpoint 0 of output B" />
+				<display item="OutB1"
+					tooltip="Sets endpoint 1 of output B" />
+				<display item="OutBSpeed"
+					tooltip="Sets the speed of output B" />
+					</column>
+					<column>
+				<display item="OutB0" format="hslider" label=""
+					tooltip="Sets endpoint 0 of output B" />
+				<display item="OutB1" format="hslider" label=""
+					tooltip="Sets endpoint 1 of output B" />
+				<display item="OutBSpeed" format="hslider" label=""
+					tooltip="Sets the speed of output B" />
+					</column>
+				</row>
+				<row>
+					<column>
+				<display item="OutC0"
+					tooltip="Sets endpoint 0 of output C" />
+				<display item="OutC1"
+					tooltip="Sets endpoint 1 of output C" />
+				<display item="OutCSpeed"
+					tooltip="Sets the speed of output C" />
+					</column>
+					<column>
+				<display item="OutC0" format="hslider" label=""
+					tooltip="Sets endpoint 0 of output C" />
+				<display item="OutC1" format="hslider" label=""
+					tooltip="Sets endpoint 1 of output C" />
+				<display item="OutCSpeed" format="hslider" label=""
+					tooltip="Sets the speed of output C" />
+					</column>
+				</row>
+			</column>
+			<column>
+				<row>
+					<column>
+				<display item="OutD0"
+					tooltip="Sets endpoint 0 of output D" />
+				<display item="OutD1"
+					tooltip="Sets endpoint 1 of output D" />
+				<display item="OutDSpeed"
+					tooltip="Sets the speed of output D" />
+					</column>
+					<column>
+				<display item="OutD0" format="hslider" label=""
+					tooltip="Sets endpoint 0 of output D" />
+				<display item="OutD1" format="hslider" label=""
+					tooltip="Sets endpoint 1 of output D" />
+				<display item="OutDSpeed" format="hslider" label=""
+					tooltip="Sets the speed of output D" />
+					</column>
+				</row>
+				<row>
+					<column>
+				<display item="OutE0"
+					tooltip="Sets endpoint 0 of output E" />
+				<display item="OutE1"
+					tooltip="Sets endpoint 1 of output E" />
+				<display item="OutESpeed"
+					tooltip="Sets the speed of output E" />
+					</column>
+					<column>
+				<display item="OutE0" format="hslider" label=""
+					tooltip="Sets endpoint 0 of output E" />
+				<display item="OutE1" format="hslider" label=""
+					tooltip="Sets endpoint 1 of output E" />
+				<display item="OutESpeed" format="hslider" label=""
+					tooltip="Sets the speed of output E" />
+					</column>
+				</row>
+				<row>
+					<column>
+				<display item="OutF0"
+					tooltip="Sets endpoint 0 of output F" />
+				<display item="OutF1"
+					tooltip="Sets endpoint 1 of output F" />
+				<display item="OutFSpeed"
+					tooltip="Sets the speed of output F" />
+					</column>
+					<column>
+				<display item="OutF0" format="hslider" label=""
+					tooltip="Sets endpoint 0 of output F" />
+				<display item="OutF1" format="hslider" label=""
+					tooltip="Sets endpoint 1 of output F" />
+				<display item="OutFSpeed" format="hslider" label=""
+					tooltip="Sets the speed of output F" />
+					</column>
+				</row>
+			</column>
+		</row>
+		<separator/>
+		<row>
+			<column>
+				<label label=" "/>
+				<label label="   Local Input Lockout "/>
+				<label label=" "/>
+				<display item="Local_Input_A" format="checkbox" label="      Input A Disabled "
+					tooltip="Disables local control of output A" />
+				<display item="Local_Input_B" format="checkbox" label="      Input B Disabled "
+					tooltip="Disables local control of output B" />
+				<display item="Local_Input_C" format="checkbox" label="      Input C Disabled "
+					tooltip="Disables local control of output C" />
+				<display item="Local_Input_D" format="checkbox" label="      Input D Disabled "
+					tooltip="Disables local control of output D" />
+				<display item="Local_Input_E" format="checkbox" label="      Input E Disabled "
+					tooltip="Disables local control of output E" />
+				<display item="Local_Input_F" format="checkbox" label="      Input F Disabled "
+					tooltip="Disables local control of output F" />
+				<label label=" "/>
+		  	</column>
+			<column>
+				<label label=" "/>
+				<display item="Decoder Version" />
+				<display item="Manufacturer" />
+				<display item="Hardware Version" />
+				<display item="Firmware Version" />
+				<display item="Configuration" />
+				<display item="" />
+			</column>
+		</row>
+	</column>
+</pane>
+
+</decoder-config>
+
