@@ -48,7 +48,7 @@ import org.jdom.ProcessingInstruction;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008
  * @author  Dennis Miller Copyright 2004
- * @version	$Revision: 1.34 $
+ * @version	$Revision: 1.35 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -338,9 +338,9 @@ public class Roster extends XmlFile {
      * <li>Append .xml suffix
      * </ul>
      * Does not check for duplicates.
-     * @throw IllegalArgumentException if called with null or empty entry name
+     * @throws IllegalArgumentException if called with null or empty entry name
      * @param entry the getId() entry name from the RosterEntry
-     * @see RosterEntry.ensureFilenameExists()
+     * @see RosterEntry#ensureFilenameExists()
      * @since 2.1.5
      */
     static public String makeValidFilename(String entry) {
