@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: TreeFrame.shtml,v 1.1 2008-03-23 05:15:50 jacobsen Exp $ -->
+<!-- $Id: TreeFrame.shtml,v 1.2 2008-03-23 05:23:11 jacobsen Exp $ -->
 <title>JMRI: USB Controls</title>
 
 <!-- Style -->
@@ -28,7 +28,7 @@
 JMRI: USB Controls
 </h2>
 
-This window lets you connect JMRI sensors and memories to USB input
+The USB Controls window lets you connect JMRI sensors and memories to USB input
 devices on your computer.  For example, you could have a JMRI sensor
 go ACTIVE when when you type a key or press a joystick button.
 You can then use 
