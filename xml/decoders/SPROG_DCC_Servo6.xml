@@ -1,17 +1,27 @@
 <?xml version="1.0"?>
-<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: SPROG_DCC_Servo6.xml,v 1.1 2008-03-22 18:27:21 crosland Exp $ -->
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
+
+<!-- Copyright (C) JMRI 2002, 2004 All rights reserved -->
+<!-- $Id: SPROG_DCC_Servo6.xml,v 1.2 2008-03-23 04:34:39 jacobsen Exp $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
 <decoder-config>
 		<version author="sprog@sprog-dcc.co.uk" version="1" lastUpdated="20080106"/>
 					
 <decoder>
 	
-	
-	
 	<family name="Servo Accessory Decoders"  mfg="SPROG DCC">
-		comment="Servo6 is an accessory decoderfor servo motors, it can be programmed via CV1... and/or CV513...">
+		comment="Servo6 is an accessory decoder for servo motors, it can be programmed via CV1... and/or CV513...">
 		<model model="Servo6" lowVersionID="10" highVersionID="10" 
 		type="stationary" >
 		</model>
