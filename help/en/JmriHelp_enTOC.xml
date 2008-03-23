@@ -177,5 +177,6 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
          <tocitem text="The Website" target="html.doc.Technical.WebSite"/>
       </tocitem>
    </tocitem>
+   <tocitem text="USB" target="package.jmri.jmrix.jinput.treemodel.TreeFrame"/>
 
 </toc>
