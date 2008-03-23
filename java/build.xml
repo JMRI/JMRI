@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.21 $ -->
+<!-- Revision $Revision: 1.22 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -60,7 +60,7 @@
     <pathelement location="../lib/javacsv.jar" />
     <pathelement location="../lib/MRJAdapter.jar" />
     <pathelement location="../lib/vecmath.jar" />
-    <pathelement location="../lib/jakarta-regexp-1.5.jar" />
+    <pathelement location="../lib/jinput.jar" />
     <pathelement location="${target}/" />  <!-- last to check for name collisions -->
   </path>
 
@@ -157,6 +157,7 @@
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
+       <sysproperty key="java.library.path" value=".:lib/"/>       
        <jvmarg value="-Xms10m"/>
        <!-- <jvmarg value="-Xmx60m"/> -->
        <!-- <jvmarg value="-verbose"/> -->
@@ -174,6 +175,7 @@
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
+       <sysproperty key="java.library.path" value=".:lib/"/>       
        <arg value="${antargline}"/>
     </java>
  </target>
@@ -185,6 +187,7 @@
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
+       <sysproperty key="java.library.path" value=".:lib/"/>       
     </java>
   </target>
 
@@ -195,6 +198,7 @@
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
+       <sysproperty key="java.library.path" value=".:lib/"/>       
     </java>
  </target>
 
@@ -205,6 +209,7 @@
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
+       <sysproperty key="java.library.path" value=".:lib/"/>       
     </java>
  </target>
 
@@ -216,6 +221,7 @@
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
+       <sysproperty key="java.library.path" value=".:lib/"/>       
        <sysproperty key="user.language" value="tlh"/>  <!-- klingon -->
        <sysproperty key="user.country" value="001"/> 
        <arg line="LocaleTestConfig2.xml"/>
@@ -227,17 +233,6 @@
     </java>
   </target>
 
-  <target name="local" depends="debug" description="build and run decoderpro from local config file">
-    <java classname="apps.DecoderPro.DecoderPro"
-          dir=".." 
-	  fork="yes" >
-       <classpath refid="project.class.path"    />
-       <sysproperty key="java.security.policy" value="lib/security.policy"/> 
-       <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
-       <arg line="/Users/jake/Documents/Trains/JMRI/projects/HEAD/ConfigLocal.xml"/>
-    </java>
- </target>
-
   <target name="faceless" depends="debug" description="build and run faceless app">
     <java classname="apps.FacelessApp"
           dir=".." 
@@ -245,16 +240,9 @@
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
+       <sysproperty key="java.library.path" value=".:lib/"/>       
     </java>
- </target>
-
-  <!-- this really doesn't work, as it doesn't hook up stdin right -->
-  <target name="packetpro" depends="debug" description="build and run PacketPro app">
-    <exec executable="csh" dir="${jartarget}">
-      <arg value="PacketPro.csh"/>
-    </exec>
- </target>
-
+  </target>
 
   <target name="profile" depends="debug" description="build and run JmriDemo app with profiling">
     <java classname="apps.JmriDemo.JMRIdemo"
@@ -272,6 +260,7 @@
 	  fork="yes" >
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
+       <sysproperty key="java.library.path" value=".:lib/"/>       
     </java>
   </target>
 
@@ -286,6 +275,7 @@
             <classpath refid="project.class.path"    />
             <sysproperty key="java.security.policy" value="lib/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <sysproperty key="java.library.path" value=".:lib/"/>       
             <jvmarg value="-Xms10m"/>
             <!-- <jvmarg value="-Xmx60m"/> -->
             <!-- <jvmarg value="-verbose"/> -->
@@ -313,6 +303,7 @@
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
+       <sysproperty key="java.library.path" value=".:lib/"/>       
        <jvmarg value="${profiler.info.jvmargs.agent}"/>
        <jvmarg value="-Xms10m"/>
        <!-- <jvmarg value="-Xmx60m"/> -->
