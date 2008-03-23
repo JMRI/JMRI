@@ -368,6 +368,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.doc.Technical.Names_systeminfo" url="html/doc/Technical/Names.shtml#systeminfo" />
 	<mapID target="package.jmri.jmrix.loconet.soundloader.EditorFrame" url="package/jmri/jmrix/loconet/soundloader/EditorFrame.shtml" />
 	<mapID target="package.jmri.jmrit.blockboss.BlockBossFrame_contents" url="package/jmri/jmrit/blockboss/BlockBossFrame.shtml#contents" />
+	<mapID target="package.jmri.jmrix.loconet.locogen.LocoGenFrame" url="package/jmri/jmrix/loconet/locogen/LocoGenFrame.shtml" />
 	<mapID target="html.tools.Turnouts_add" url="html/tools/Turnouts.shtml#add" />
 	<mapID target="html.doc.Technical.Ant" url="html/doc/Technical/Ant.shtml" />
 	<mapID target="html.tools.throttle.ThrottleChapter2_StandardActions" url="html/tools/throttle/ThrottleChapter2.shtml#StandardActions" />
