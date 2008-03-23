@@ -41,5 +41,9 @@ junit.jar
  version 3.8.2
  from <junit.org>
 
+jinput (including jinput.jar, three jinput DLLs, and two libjinputs)
+  from <https://jinput.dev.java.net/>
+  2008-01-09 combined binaries (most recent as of 3/20/2008)
+
 Older:
 JMRI 1.9/2.0 had the jakarta-regexp-1.5.jar present in this directory
