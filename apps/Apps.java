@@ -32,7 +32,7 @@ import net.roydesign.mac.MRJAdapter;
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
  * @author  Dennis Miller  Copyright 2005
- * @version     $Revision: 1.52 $
+ * @version     $Revision: 1.53 $
  */
 public class Apps extends JPanel implements PropertyChangeListener{
 
@@ -235,6 +235,7 @@ public class Apps extends JPanel implements PropertyChangeListener{
         d.add(new JSeparator());
         d.add(new jmri.jmrix.pricom.PricomMenu());
         d.add(new jmri.jmrix.rps.RpsMenu());
+        d.add(new jmri.jmrix.jinput.treecontrol.TreeAction());
     }
 
     protected void scriptMenu(JMenuBar menuBar, JFrame frame) {
