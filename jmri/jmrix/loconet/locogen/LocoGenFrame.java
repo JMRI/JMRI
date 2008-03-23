@@ -22,7 +22,7 @@ import javax.swing.*;
  * <LI>When the timer trips, repeat if buttons still down.
  * </UL>
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class LocoGenFrame extends jmri.util.JmriJFrame implements LocoNetListener {
 
@@ -105,6 +105,8 @@ public class LocoGenFrame extends jmri.util.JmriJFrame implements LocoNetListene
                 }
             });
 
+        addHelpMenu("package.jmri.jmrix.loconet.locogen.LocoGenFrame", true);
+        
         // pack to cause display
         pack();
     }
