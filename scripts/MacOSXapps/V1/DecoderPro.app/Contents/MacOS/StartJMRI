@@ -24,7 +24,7 @@
 # For more information, please see
 # http://jmri.sourceforge.net/install/ShellScripts.shtml
 #
-# $Revision: 1.3 $ (CVS maintains this line, do not edit please)
+# $Revision: 1.4 $ (CVS maintains this line, do not edit please)
 
 # define the class to be invoked
 CLASSNAME=apps.DecoderPro.DecoderPro
@@ -78,6 +78,7 @@ if test ${JMRI_OPTIONS}; then OPTIONS=${JMRI_OPTIONS}; fi
 OPTIONS="${OPTIONS} -noverify"
 OPTIONS="${OPTIONS} -Djava.security.policy=lib/security.policy"
 OPTIONS="${OPTIONS} -Djava.rmi.server.codebase=file:java/classes/"
+OPTIONS="${OPTIONS} -Djava.library.path=.:lib"
 # ddraw is disabled to get around Swing performance problems in Java 1.5.0
 OPTIONS="${OPTIONS} -Dsun.java2d.noddraw"
 # memory start and max limits
