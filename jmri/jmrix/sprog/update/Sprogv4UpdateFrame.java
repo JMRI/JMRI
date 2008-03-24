@@ -7,10 +7,12 @@ import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
 import jmri.jmrix.sprog.SprogTrafficController;
 
+import javax.swing.*;
+
 /**
  * Frame for SPROG firmware update utility.
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class Sprogv4UpdateFrame
     extends SprogUpdateFrame
@@ -93,6 +95,8 @@ public class Sprogv4UpdateFrame
 
       }
       else {
+        JOptionPane.showMessageDialog(null, "Bad reply to set boot command", 
+                                        "SPROG v4 Bootloader", JOptionPane.ERROR_MESSAGE);
         log.error("Bad reply to SETBOOT request");
         bootState = IDLE;
         tc.setSprogState(SprogTrafficController.NORMAL);
@@ -272,7 +276,7 @@ public class Sprogv4UpdateFrame
 
     setSprogModeButton.setVisible(false);
 
-    setCSModeButton.setVisible(false);
+//    setCSModeButton.setVisible(false);
 
   }
 

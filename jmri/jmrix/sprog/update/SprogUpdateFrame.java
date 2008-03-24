@@ -13,7 +13,7 @@ import jmri.jmrix.sprog.SprogTrafficController;
 /**
  * Frame for SPROG firmware update utility.
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class SprogUpdateFrame
     extends jmri.util.JmriJFrame
@@ -24,13 +24,13 @@ public class SprogUpdateFrame
   protected JButton programButton = new JButton();
   protected JButton openFileChooserButton = new JButton();
   protected JButton setSprogModeButton = new JButton();
-  protected JButton setCSModeButton = new JButton();
+//  protected JButton setCSModeButton = new JButton();
 
   // to find and remember the hex file
   final javax.swing.JFileChooser hexFileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
 
   JLabel statusBar = new JLabel();
-  SprogAlertDialog ad;
+//  SprogAlertDialog ad;
 
   // File to hold name of hex file
   SprogHexFile hexFile = null;
@@ -121,10 +121,10 @@ public class SprogUpdateFrame
     setSprogModeButton.setEnabled(false);
     setSprogModeButton.setToolTipText("Click here to set SPROG II in SPROG mode");
 
-    setCSModeButton.setText("Set Command Station Mode");
-    setCSModeButton.setVisible(true);
-    setCSModeButton.setEnabled(false);
-    setCSModeButton.setToolTipText("Click here to set SPROG II in Command Station mode");
+//    setCSModeButton.setText("Set Command Station Mode");
+//    setCSModeButton.setVisible(true);
+//    setCSModeButton.setEnabled(false);
+//    setCSModeButton.setToolTipText("Click here to set SPROG II in Command Station mode");
 
     statusBar.setVisible(true);
     statusBar.setText(" ");
@@ -146,7 +146,7 @@ public class SprogUpdateFrame
     JPanel buttons2 = new JPanel();
     buttons2.setLayout(new BoxLayout(buttons2, BoxLayout.X_AXIS));
     buttons2.add(setSprogModeButton);
-    buttons2.add(setCSModeButton);
+//    buttons2.add(setCSModeButton);
 
     JPanel status = new JPanel();
     status.setLayout(new BoxLayout(status, BoxLayout.X_AXIS));
@@ -184,11 +184,11 @@ public class SprogUpdateFrame
       }
     });
 
-    setCSModeButton.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent e) {
-        setCSModeButtonActionPerformed(e);
-      }
-    });
+//    setCSModeButton.addActionListener(new java.awt.event.ActionListener() {
+//      public void actionPerformed(java.awt.event.ActionEvent e) {
+//        setCSModeButtonActionPerformed(e);
+//      }
+//    });
 
     // connect to data source
     init();
@@ -213,7 +213,9 @@ public class SprogUpdateFrame
       hexFile = new SprogHexFile(hexFileChooser.getSelectedFile().getPath());
       if (log.isDebugEnabled()) log.debug("hex file chosen: " + hexFile.getName());
       if ((hexFile.getName().indexOf("sprog") < 0)) {
-        SprogAlertDialog ad = new SprogAlertDialog(this, "Hex File Select", "File does not appear to be a valid SPROG II hex file");
+//        SprogAlertDialog ad = new SprogAlertDialog(this, "Hex File Select", "File does not appear to be a valid SPROG II hex file");
+        JOptionPane.showMessageDialog(this, "File does not appear to be a valid SPROG II hex file", 
+                                        "Hex File Select", JOptionPane.ERROR_MESSAGE);
         hexFile = null;
       } else {
         hexFile.openRd();
@@ -230,9 +232,9 @@ public class SprogUpdateFrame
       ActionEvent e) {
   }
 
-  public void setCSModeButtonActionPerformed(java.awt.event.
-      ActionEvent e) {
-  }
+//  public void setCSModeButtonActionPerformed(java.awt.event.
+//      ActionEvent e) {
+//  }
 
   /**
    * Internal routine to handle a timeout
