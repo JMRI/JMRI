@@ -245,7 +245,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
         alt1Button.setToolTipText("Push for alternate set of function keys");
         alt1Button.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				buttonActionCmdPerformed(e);
+				buttonActionCmdPerformed();
 			}
 		});
         mainPanel.add(alt1Button);
@@ -291,7 +291,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
     }
     
     // activated when alt1Button is pressed or released
-    public void buttonActionCmdPerformed(java.awt.event.ActionEvent ae) {
+    public void buttonActionCmdPerformed(){
 		// swap f3 through f15 with f16 through f28
 		for (int i = 3; i < NUM_FUNCTION_BUTTONS; i++) {
 
@@ -317,20 +317,22 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
      * Make sure that all function buttons are being displayed
      */
     public void showAllFnButtons() {
-        System.out.println("hit");
-        
-        // should show all, or just the initial ones?
-        for (int i=0; i < NUM_FUNCTION_BUTTONS; i++) {
-            functionButton[i].setDisplay(true);
-            functionButton[i].setVisible(true);
-        }
+    	System.out.println("hit");
+
+    	// should show all, or just the initial ones?
+    	for (int i=0; i < NUM_FUNCTION_BUTTONS; i++) {
+    		functionButton[i].setDisplay(true);
+    		if (i<3)
+    			functionButton[i].setVisible(true);
+    	}
+    	buttonActionCmdPerformed();
     }
     
 	/**
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.32 $
+	 * @version $Revision: 1.33 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter
 	{
