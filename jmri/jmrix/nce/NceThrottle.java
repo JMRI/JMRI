@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractThrottle;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 public class NceThrottle extends AbstractThrottle
 {
@@ -24,6 +24,7 @@ public class NceThrottle extends AbstractThrottle
     public NceThrottle(DccLocoAddress address)
     {
         super();
+        super.speedStepMode = SpeedStepMode128;
 
         // cache settings. It would be better to read the
         // actual state, but I don't know how to do this
@@ -242,41 +243,63 @@ public class NceThrottle extends AbstractThrottle
 	 */
     public void setSpeedSetting(float speed) {
 		this.speedSetting = speed;
-		int value = (int) ((127 - 1) * speed); // -1 for rescale to avoid estop
-		if (value > 0)
-			value = value + 1; // skip estop
-		if (value > 127)
-			value = 127; // max possible speed
 		
 		// The NCE USB doesn't support the NMRA packet format
 		if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE) {
+			
+	        byte[] bl;
+	        int value;
 			int locoAddr = address.getNumber();
 			if (address.isLongAddress())
 				locoAddr += 0xC000;
-			byte[] bl;
-			// speed or estop?
-			if (value >= 0) {
-				bl = NceBinaryCommand.nceLocoCmd(locoAddr,
+            value = (int)((126-1)*speed);     // -1 for rescale to avoid estop
+            if (value>0) value = value+1;  // skip estop
+            if (value>126) value = 126;    // max possible speed, 127 can crash PowerCab! 
+			
+			// emergency stop?
+			if (value < 0){
+			
+			bl = NceBinaryCommand.nceLocoCmd(locoAddr,
+					(isForward ? NceBinaryCommand.LOCO_CMD_FWD_ESTOP
+							: NceBinaryCommand.LOCO_CMD_REV_ESTOP),
+					(byte) 0);
+			
+			} else if (super.speedStepMode == SpeedStepMode128) {
+           		bl = NceBinaryCommand.nceLocoCmd(locoAddr,
 						(isForward ? NceBinaryCommand.LOCO_CMD_FWD_128SPEED
 								: NceBinaryCommand.LOCO_CMD_REV_128SPEED),
 						(byte) value);
-			// estop
 			} else {
-				bl = NceBinaryCommand.nceLocoCmd(locoAddr,
-						(isForward ? NceBinaryCommand.LOCO_CMD_FWD_ESTOP
-								: NceBinaryCommand.LOCO_CMD_REV_ESTOP),
-						(byte) 0);
+				// 28 speed step mode
+           		bl = NceBinaryCommand.nceLocoCmd(locoAddr,
+						(isForward ? NceBinaryCommand.LOCO_CMD_FWD_28SPEED
+								: NceBinaryCommand.LOCO_CMD_REV_28SPEED),
+						(byte) value);
 			}
 			NceMessage m = NceMessage.createBinaryMessage(bl);
 			NceTrafficController.instance().sendNceMessage(m, null);
 
 		// This code can be eliminated once we confirm that the NCE 0xA2 commands work properly
 		} else {
-			if (value < 0)
-				value = 1; // skip emergency stop
-			byte[] result = jmri.NmraPacket.speedStep128Packet(address
-					.getNumber(), address.isLongAddress(), value, isForward);
-			NceMessage m = NceMessage.queuePacketMessage(result);
+	        byte[] bl;
+	        int value;
+	        
+	        if (super.speedStepMode == SpeedStepMode128) {
+	            value = (int)((127-1)*speed);     // -1 for rescale to avoid estop
+	            if (value>0) value = value+1;  // skip estop
+	            if (value>127) value = 127;    // max possible speed
+	            if (value<0) value = 1;        // emergency stop
+				bl = jmri.NmraPacket.speedStep128Packet(address.getNumber(),
+						address.isLongAddress(), value, isForward);
+			} else {
+		        value = (int)((31)*speed);     // -1 for rescale to avoid estop
+		        if (value>0) value = value+1;  	// skip estop
+		        if (value>31) value = 31;    	// max possible speed
+		        if (value<0) value = 1;        	// emergency stop
+				bl = jmri.NmraPacket.speedStep28Packet(address.getNumber(),
+						address.isLongAddress(), value, isForward);
+			}
+			NceMessage m = NceMessage.queuePacketMessage(bl);
 			NceTrafficController.instance().sendNceMessage(m, null);
 		}
     }

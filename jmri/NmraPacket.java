@@ -49,7 +49,7 @@ package jmri;
  * <P>
  *
  * @author      Bob Jacobsen Copyright (C) 2001, 2003
- * @version     $Revision: 1.26 $
+ * @version     $Revision: 1.27 $
  */
 public class NmraPacket {
 
@@ -429,19 +429,6 @@ public class NmraPacket {
         // get the packet
         return NmraPacket.accDecPktOpsModeLegacy(aBits, cvNum, data);
     }
-    static byte[] locoSpeed14S(int address, int speedStep, boolean F0 ) {
-        if (log.isDebugEnabled()) log.debug("create "+address+" "+speedStep+" "+F0);
-        if (speedStep < 0 || speedStep>14) {
-            log.error("invalid speedStep "+speedStep);
-            return null;
-        }
-        if (address < 0 || address>14) {
-            log.error("invalid address "+speedStep);
-            return null;
-        }
-        log.error("locoSpeed14S not fully implemented");
-        return new byte[2];
-    }
 
     public static byte[] opsCvWriteByte(int address, boolean longAddr, int cvNum, int data ) {
         if (log.isDebugEnabled()) log.debug("opswrite "+address+" "+cvNum+" "+data);
@@ -521,7 +508,52 @@ public class NmraPacket {
         }
         return retVal;
     }
+    
+    public static byte[] speedStep28Packet(int address, boolean longAddr, int speed, boolean fwd ) {
+        if (log.isDebugEnabled()) log.debug("28 step packet "+address+" "+speed);
 
+        if (!addressCheck(address, longAddr)) {
+            return null;  // failed!
+        }
+
+        if (speed<0 || speed>31) {
+            log.error("invalid speed "+speed);
+            return null;
+        }
+
+        // end sanity checks, format output
+        byte[] retVal;
+        int arg1 = (fwd ? 0x60 : 0x40)| speed&0x1F;
+
+        if (longAddr) {
+            // long address form
+            retVal = new byte[4];
+            retVal[0] = (byte) (192+((address/256)&0x3F));
+            retVal[1] = (byte) (address&0xFF);
+            retVal[2] = (byte) arg1;
+            retVal[3] = (byte) (retVal[0]^retVal[1]^retVal[2]^retVal[3]);
+        } else {
+            // short address form
+            retVal = new byte[3];
+            retVal[0] = (byte) (address&0xFF);
+            retVal[1] = (byte) arg1;
+            retVal[2] = (byte) (retVal[0]^retVal[1]^retVal[2]);
+        }
+        return retVal;
+    }
+    
+    public static byte[] speedStep14Packet(int address, boolean longAddr, int speed, boolean fwd ) {
+        if (log.isDebugEnabled()) log.debug("14 step packet "+address+" "+speed);
+
+        if (speed<0 || speed>15) {
+            log.error("invalid speed "+speed);
+            return null;
+        }
+        byte[] retVal = speedStep28Packet (address, longAddr, speed, fwd);
+
+        return retVal;
+    }
+    
     public static byte[] function0Through4Packet(int address, boolean longAddr,
                         boolean f0, boolean f1, boolean f2, boolean f3, boolean f4 ) {
         if (log.isDebugEnabled()) log.debug("f0 through f4 packet "+address);

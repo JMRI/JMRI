@@ -1,5 +1,6 @@
 package jmri.jmrix.nce;
 
+import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 
@@ -9,7 +10,7 @@ import jmri.jmrix.AbstractThrottleManager;
  * NCE implementation of a ThrottleManager.
  * <P>
  * @author	    Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 public class NceThrottleManager extends AbstractThrottleManager {
 
@@ -46,6 +47,10 @@ public class NceThrottleManager extends AbstractThrottleManager {
      * Are there any ambiguous addresses (short vs long) on this system?
      */
     public boolean addressTypeUnique() { return false; }
+    
+    public int supportedSpeedModes() {
+    	return(DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28);
+        }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceThrottleManager.class.getName());
 
