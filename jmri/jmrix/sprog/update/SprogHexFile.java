@@ -28,8 +28,6 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
   private static final int ADDRL = 2;
   private static final int TYPE = 3;
 
-  SprogAlertDialog ad;
-
   public SprogHexFile(String fileName) {
     name = fileName;
     file = new File(fileName);
@@ -141,7 +139,9 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
       }
     }
     catch (IOException e) {
-      ad = new SprogAlertDialog(this, "I/O Error reading hex file!", e.toString());
+//      ad = new SprogAlertDialog(this, "I/O Error reading hex file!", e.toString());
+      JOptionPane.showMessageDialog(this, "I/O Error reading hex file!", 
+                                        "Hex File", JOptionPane.ERROR_MESSAGE);
       if (log.isDebugEnabled()) log.debug("I/O Error reading hex file!" + e.toString());
     }
     // length of data
@@ -205,13 +205,17 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
       } else if ((b >= 'a') && (b <= 'f')) {
         b = b - 'a' + 10;
       } else {
-        ad = new SprogAlertDialog(this, "Format Error!", "Invalid hex digit at line " + lineNo);
+//        ad = new SprogAlertDialog(this, "Format Error!", "Invalid hex digit at line " + lineNo);
+        JOptionPane.showMessageDialog(this, "Invalid hex digit at line " + lineNo, 
+                                        "Hex File", JOptionPane.ERROR_MESSAGE);
         log.error("Format Error! Invalid hex digit at line " + lineNo);
         b = 16;
       }
     }
     catch (IOException e) {
-      ad = new SprogAlertDialog(this, "I/O Error reading hex file!", e.toString());
+//      ad = new SprogAlertDialog(this, "I/O Error reading hex file!", e.toString());
+      JOptionPane.showMessageDialog(this, "I/O Error reading hex file!", 
+                                        "Hex File", JOptionPane.ERROR_MESSAGE);
       log.error("I/O Error reading hex file!" + e.toString());
     }
     return (byte)b;
