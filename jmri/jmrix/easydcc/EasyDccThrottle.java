@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractThrottle;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, modified 2004 by Kelly Loyd
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class EasyDccThrottle extends AbstractThrottle
 {
@@ -25,6 +25,7 @@ public class EasyDccThrottle extends AbstractThrottle
     public EasyDccThrottle(DccLocoAddress address)
     {
         super();
+        super.speedStepMode = SpeedStepMode128;
 
         // cache settings. It would be better to read the
         // actual state, but I don't know how to do this
@@ -138,13 +139,24 @@ public class EasyDccThrottle extends AbstractThrottle
      */
     public void setSpeedSetting(float speed) {
         this.speedSetting = speed;
-        int value = (int)((127-1)*speed);     // -1 for rescale to avoid estop
-        if (value>0) value = value+1;  // skip estop
-        if (value>127) value = 127;    // max possible speed
-        if (value<0) value = 1;        // emergency stop
 
-        byte[] result = jmri.NmraPacket.speedStep128Packet(address.getNumber(), 
-                                         address.isLongAddress(), value, isForward);
+        byte[] result;
+ 
+        if (super.speedStepMode == SpeedStepMode128) {
+            int value = (int)((127-1)*speed);     // -1 for rescale to avoid estop
+            if (value>0) value = value+1;  // skip estop
+            if (value>127) value = 127;    // max possible speed
+            if (value<0) value = 1;        // emergency stop
+			result = jmri.NmraPacket.speedStep128Packet(address.getNumber(),
+					address.isLongAddress(), value, isForward);
+		} else {
+	        int value = (int)((31)*speed);     // -1 for rescale to avoid estop
+	        if (value>0) value = value+1;  	// skip estop
+	        if (value>31) value = 31;    	// max possible speed
+	        if (value<0) value = 1;        	// emergency stop
+			result = jmri.NmraPacket.speedStep28Packet(address.getNumber(),
+					address.isLongAddress(), value, isForward);
+		}
 
         EasyDccMessage m = new EasyDccMessage(1+3*result.length);
         // for EasyDCC, sending a speed command involves:
