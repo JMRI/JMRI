@@ -13,7 +13,7 @@
     <path>[lib/comm.jar]</path>
     <path>[lib/jython.jar]</path>
     <path>[lib/MRJAdapter.jar]</path>
-    <path>[lib/jakarta-regexp-1.5.jar]</path>
+    <path>[lib/jinput.jar]</path>
     <path>[lib/vecmath.jar]</path>
     <path>src/resources</path>
   </class>
