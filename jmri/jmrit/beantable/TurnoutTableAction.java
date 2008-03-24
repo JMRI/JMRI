@@ -42,7 +42,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.52 $
+ * @version     $Revision: 1.53 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -432,9 +432,9 @@ public class TurnoutTableAction extends AbstractTableAction {
     	strings.insertElementAt(new String("Use Global Default"),1);
     	for (int i=0; i<defStrings.size(); ++i) {
 		try {
-    		   strings.setElementAt(defStrings.elementAt(i),i+2);
+    		   strings.insertElementAt(defStrings.elementAt(i),i+2);
 		} catch(java.lang.ArrayIndexOutOfBoundsException obe){
-	           strings.insertElementAt(defStrings.elementAt(i),i+2);
+//	           strings.insertElementAt(defStrings.elementAt(i),i+2);
 	        }
     	}
     	for (int i=0; i<strings.size(); ++i) {
