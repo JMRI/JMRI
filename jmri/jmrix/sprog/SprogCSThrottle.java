@@ -18,7 +18,7 @@ import jmri.jmrix.sprog.SprogSlotManager;
  * <P>
  *
  * @author	Andrew Crosland  Copyright (C) 2006
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SprogCSThrottle extends AbstractThrottle
 {
@@ -99,6 +99,7 @@ public class SprogCSThrottle extends AbstractThrottle
 
     public void setIsForward(boolean forward) {
         isForward = forward;
+        setSpeedSetting(speedSetting);  // Update the speed setting
     }
 
     /**
