@@ -175,7 +175,12 @@
 <ul>
          
 <li>
-<a href="html/hardware/cmri/Signals.shtml">Signals</a>
+<a href="package/jmri/jmrix/cmri/serial/assignment/ListFrame.shtml">Check Pin Assignments</a>
+<ul></ul>
+</li>
+         
+<li>
+<a href="package/jmri/jmrix/cmri/serial/nodeconfig/NodeConfigFrame.shtml">Configure Nodes</a>
 <ul></ul>
 </li>
          
@@ -185,12 +190,7 @@
 </li>
          
 <li>
-<a href="package/jmri/jmrix/cmri/serial/assignment/ListFrame.shtml">Check Pin Assignments</a>
-<ul></ul>
-</li>
-         
-<li>
-<a href="package/jmri/jmrix/cmri/serial/nodeconfig/NodeConfigFrame.shtml">Configure Nodes</a>
+<a href="html/hardware/cmri/Signals.shtml">Signals</a>
 <ul></ul>
 </li>
       
@@ -258,6 +258,11 @@
 </li>
    
 </ul>
+</li>
+   
+<li>
+<a href="html/tools/signaling/ldt/output.shtml">LDT signals</a>
+<ul></ul>
 </li>
    
 <li>
