@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.5.shtml,v 1.10 2008-03-23 08:08:31 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.5.shtml,v 1.11 2008-03-25 04:43:20 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -225,6 +225,25 @@ This lets JMRI connect to a remote layout using XPressNet.
 
 <p>
 Andrew Crosland provided a decoder definition for the Servo6 decoder.
+
+<p>
+There is new, experimental support for 
+<a href="../help/en/package/jmri/jmrix/jinput/treemodel/TreeFrame.shtml">connecting JMRI to USB input devices</a>
+such as joysticks.  They're input values are copied to
+Sensors and Memories, so that Routes and Logix can then use those
+values to cause actions on the layout. For now, this feature is 
+available from the Debug menu.
+
+<p>
+Dan Boudreau fixed a problem with the turnout automation display options
+and updated the help information for that option.
+
+<p>
+Andrew Crosland updated the tool for downloading new code to an SPROG unit.
+
+<p>
+Dan Boudreau fixed the way the throttle handles "Display All Functions Buttons",
+since there are now 28 buttons.
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
