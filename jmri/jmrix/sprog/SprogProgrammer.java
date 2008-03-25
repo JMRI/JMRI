@@ -2,6 +2,9 @@
 
 package jmri.jmrix.sprog;
 
+import jmri.InstanceManager;
+import jmri.JmriException;
+import jmri.PowerManager;
 import jmri.Programmer;
 import jmri.jmrix.AbstractProgrammer;
 
@@ -13,7 +16,7 @@ import java.util.Vector;
  * Implements the jmri.Programmer interface via commands for the Sprog programmer.
  *
  * @author      Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class SprogProgrammer extends AbstractProgrammer implements SprogListener {
 
@@ -236,6 +239,15 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
                 }
                 startShortTimer();
                 controller().sendSprogMessage(SprogMessage.getExitProgMode(), this);
+            }
+            
+            // SPROG always leaves power off after programming so we inform the
+            // power manager of the new state
+            try {
+                ((SprogPowerManager)InstanceManager.powerManagerInstance()).notePowerState(PowerManager.OFF);
+            }
+            catch (JmriException e) {
+                log.error("Exception trying to turn power off " +e);
             }
         } else if (progState == RETURNSENT) {
             if (log.isDebugEnabled()) log.debug("reply in RETURNSENT state");
