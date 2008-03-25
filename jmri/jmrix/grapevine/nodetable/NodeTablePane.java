@@ -33,7 +33,7 @@ import jmri.util.table.ButtonRenderer;
  
  * @author	Bob Jacobsen   Copyright (C) 2004, 2007
  * @author	Dave Duchamp   Copyright (C) 2004, 2006
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grapevine.SerialListener {
 
@@ -263,7 +263,7 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
             case EDITCOL:
                 NodeConfigFrame f = new NodeConfigFrame();
                 f.initComponents();
-                f.setNodeAddress(r+1);
+                f.setNodeAddress(r);
                 f.setVisible(true);
                 return;
             default:
