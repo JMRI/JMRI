@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.23 $ -->
+<!-- Revision $Revision: 1.24 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -157,7 +157,7 @@
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
-       <sysproperty key="java.library.path" value=".:lib"/>       
+       <sysproperty key="java.library.path" path=".:lib/"/>
        <jvmarg value="-Xms10m"/>
        <!-- <jvmarg value="-Xmx60m"/> -->
        <!-- <jvmarg value="-verbose"/> -->
@@ -175,7 +175,7 @@
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
-       <sysproperty key="java.library.path" value=".:lib"/>       
+       <sysproperty key="java.library.path" path=".:lib/"/>       
        <arg value="${antargline}"/>
     </java>
  </target>
@@ -187,7 +187,7 @@
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
-       <sysproperty key="java.library.path" value=".:lib"/>       
+       <sysproperty key="java.library.path" path=".:lib/"/>       
     </java>
   </target>
 
@@ -198,7 +198,7 @@
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
-       <sysproperty key="java.library.path" value=".:lib"/>       
+       <sysproperty key="java.library.path" path=".:lib/"/>       
     </java>
  </target>
 
@@ -209,7 +209,7 @@
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
-       <sysproperty key="java.library.path" value=".:lib"/>       
+       <sysproperty key="java.library.path" path=".:lib/"/>       
     </java>
  </target>
 
@@ -221,7 +221,7 @@
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
-       <sysproperty key="java.library.path" value=".:lib"/>       
+       <sysproperty key="java.library.path" path=".:lib/"/>       
        <sysproperty key="user.language" value="tlh"/>  <!-- klingon -->
        <sysproperty key="user.country" value="001"/> 
        <arg line="LocaleTestConfig2.xml"/>
@@ -240,7 +240,7 @@
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
-       <sysproperty key="java.library.path" value=".:lib"/>       
+       <sysproperty key="java.library.path" path=".:lib/"/>       
     </java>
   </target>
 
@@ -260,7 +260,7 @@
 	  fork="yes" >
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
-       <sysproperty key="java.library.path" value=".:lib"/>       
+       <sysproperty key="java.library.path" path=".:lib/"/>       
     </java>
   </target>
 
@@ -275,7 +275,7 @@
             <classpath refid="project.class.path"    />
             <sysproperty key="java.security.policy" value="lib/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
-            <sysproperty key="java.library.path" value=".:lib"/>       
+            <sysproperty key="java.library.path" path=".:lib/"/>       
             <jvmarg value="-Xms10m"/>
             <!-- <jvmarg value="-Xmx60m"/> -->
             <!-- <jvmarg value="-verbose"/> -->
@@ -303,7 +303,7 @@
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
-       <sysproperty key="java.library.path" value=".:lib"/>       
+       <sysproperty key="java.library.path" path=".:lib/"/>       
        <jvmarg value="${profiler.info.jvmargs.agent}"/>
        <jvmarg value="-Xms10m"/>
        <!-- <jvmarg value="-Xmx60m"/> -->
