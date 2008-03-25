@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: output.shtml,v 1.1 2008-03-09 19:06:11 jacobsen Exp $ -->
+<!-- $Id: output.shtml,v 1.2 2008-03-25 21:36:21 jacobsen Exp $ -->
 <title>JMRI: Examples of LDT Signaling</title>
 
 <!-- Style -->
@@ -38,6 +38,27 @@ head. There are examples of signals from several systems:
 </ul>
 Examples are based on connection examples published on 
 manufacturer's website.     
+
+<h3>JMRI Configuration</h3>
+<a href="Panel.png">
+<img src="Panel.png" align="right" height="191" width="183" alt="LDT add panel"></a>
+<p>
+You have to add each LDT signal using the 
+<a href="../../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml">Signal Add/Edit Window</a>
+from the 
+<a href="../../../../package/jmri/jmrit/beantable/SignalTable.shtml">Signal Table</a>.
+Select "LDT LS-DEC" for the signal type, and the window
+will show seven lines for configuring which turnout command
+JMRI sends to the decoder for each of the JMRI signal appearances.
+<p>
+The LDT decoders present a particular set of output lights 
+depending on what turnout command is received, so this panel
+lets you connect what JMRI wants (e.g. "Green", indicating clear to proceed)
+with the railway-specific appearance on the LDT decoder ("1 thrown", 
+which lights the "1-proceed" aspect for SBB 7-lamp signals, for example).
+<p>
+The example links at the top of the page give you examples of how to fill out this form 
+to get the right appearances for various railroads.
 
 <h3>Supported Decoders</h3>
 <P>The JMRI LDT LS-DEC signal head can be configured for following decoders.
