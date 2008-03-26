@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id: ESU_LokSoundV3_5.xml,v 1.9 2007-09-21 05:49:31 jacobsen Exp $ -->
+<!-- $Id: ESU_LokSoundV3_5.xml,v 1.10 2008-03-26 17:30:07 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -29,6 +29,9 @@
       	<!-- ver4 still more light effects (as found in LokProg S/W, not in the manual) - Michael Mosher -->
 		<version author="Michael Mosher mjmx@comcast.net"
 			version="4" lastUpdated="20061204"/>
+      	<!-- ver5 changed mask for CV's to accept 16 in Sound Slot -->
+		<version author="wsthompson@earthlink.net"
+			version="5" lastUpdated="20080324"/>
 
 <decoder>
 	<family name="ESU LokSound V3.5 Silent BEMF/Sound decoders"
@@ -747,193 +750,193 @@
 			item="ACmax" > <decVal/>
 			</variable>
 		
-		<variable label="Stop Fwd" CV="131" mask="XXXXVVVV"
+		<variable label="Stop Fwd" CV="131" mask="XXXVVVVV"
 			item="Soundkey1" >
 			<decVal max="16"/>
 		</variable>
 
-		<variable label="Stop Rev" CV="134" mask="XXXXVVVV"
+		<variable label="Stop Rev" CV="134" mask="XXXVVVVV"
 			item="Soundkey2" >
 			<decVal max="16"/>
 		</variable>
 		
-		<variable label="Run Fwd" CV="137" mask="XXXXVVVV"
+		<variable label="Run Fwd" CV="137" mask="XXXVVVVV"
 			item="Soundkey3" >
 			<decVal max="16"/>
 		</variable>
 
-		<variable label="Run Rev" CV="140" mask="XXXXVVVV"
+		<variable label="Run Rev" CV="140" mask="XXXVVVVV"
 			item="Soundkey4" >
 			<decVal max="16"/>
 		</variable>
 		
-	<variable label="F0 Fwd" CV="143" mask="XXXXVVVV"
+	<variable label="F0 Fwd" CV="143" mask="XXXVVVVV"
 			item="Soundkey5" >
 			<decVal max="16"/>
 		</variable>
 
-		<variable label="F0 Rev" CV="146" mask="XXXXVVVV"
+		<variable label="F0 Rev" CV="146" mask="XXXVVVVV"
 			item="Soundkey6" >
 			<decVal max="16"/>
 		</variable>
 		
-	<variable label="F1 Fwd" CV="149" mask="XXXXVVVV"
+	<variable label="F1 Fwd" CV="149" mask="XXXVVVVV"
 			item="Soundkey7" >
 			<decVal max="16"/>
 		</variable>
 
-		<variable label="F1 Rev" CV="152" mask="XXXXVVVV"
+		<variable label="F1 Rev" CV="152" mask="XXXVVVVV"
 			item="Soundkey8" >
 			<decVal max="16"/>
 		</variable>
-	<variable label="F2 Fwd" CV="155" mask="XXXXVVVV"
+	<variable label="F2 Fwd" CV="155" mask="XXXVVVVV"
 			item="Soundkey9" >
 			<decVal max="16"/>
 		</variable>
 
-		<variable label="F2 Rev" CV="158" mask="XXXXVVVV"
+		<variable label="F2 Rev" CV="158" mask="XXXVVVVV"
 			item="Soundkey10" >
 			<decVal max="16"/>
 		</variable>
-	<variable label="F3 Fwd" CV="161" mask="XXXXVVVV"
+	<variable label="F3 Fwd" CV="161" mask="XXXVVVVV"
 			item="Soundkey11" >
 			<decVal max="16"/>
 		</variable>
 
-		<variable label="F3 Rev" CV="164" mask="XXXXVVVV"
+		<variable label="F3 Rev" CV="164" mask="XXXVVVVV"
 			item="Soundkey12" >
 			<decVal max="16"/>
 		</variable>
-	<variable label="F4 Fwd" CV="167" mask="XXXXVVVV"
+	<variable label="F4 Fwd" CV="167" mask="XXXVVVVV"
 			item="Soundkey13" >
 			<decVal max="16"/>
 		</variable>
 
-		<variable label="F4 Rev" CV="170" mask="XXXXVVVV"
+		<variable label="F4 Rev" CV="170" mask="XXXVVVVV"
 			item="Soundkey14" >
 			<decVal max="16"/>
 		</variable>
-	<variable label="F5 Fwd" CV="173" mask="XXXXVVVV"
+	<variable label="F5 Fwd" CV="173" mask="XXXVVVVV"
 			item="Soundkey15" >
 			<decVal max="16"/>
 		</variable>
 
-		<variable label="F5 Rev" CV="176" mask="XXXXVVVV"
+		<variable label="F5 Rev" CV="176" mask="XXXVVVVV"
 			item="Soundkey16" >
 			<decVal max="16"/>
 		</variable>
-	<variable label="F6 Fwd" CV="179" mask="XXXXVVVV"
+	<variable label="F6 Fwd" CV="179" mask="XXXVVVVV"
 			item="Soundkey17" >
 			<decVal max="16"/>
 		</variable>
 
-		<variable label="F6 Rev" CV="182" mask="XXXXVVVV"
+		<variable label="F6 Rev" CV="182" mask="XXXVVVVV"
 			item="Soundkey18" >
 			<decVal max="16"/>
 		</variable>
-	<variable label="F7 Fwd" CV="185" mask="XXXXVVVV"
+	<variable label="F7 Fwd" CV="185" mask="XXXVVVVV"
 			item="Soundkey19" >
 			<decVal max="16"/>
 		</variable>
 
-		<variable label="F7 Rev" CV="188" mask="XXXXVVVV"
+		<variable label="F7 Rev" CV="188" mask="XXXVVVVV"
 			item="Soundkey20" >
 			<decVal max="16"/>
 		</variable>
-	<variable label="F8 Fwd" CV="191" mask="XXXXVVVV"
+	<variable label="F8 Fwd" CV="191" mask="XXXVVVVV"
 			item="Soundkey21" >
 			<decVal max="16"/>
 		</variable>
 
-		<variable label="F8 Rev" CV="194" mask="XXXXVVVV"
+		<variable label="F8 Rev" CV="194" mask="XXXVVVVV"
 			item="Soundkey22" >
 			<decVal max="16"/>
 		</variable>
-	<variable label="F9 Fwd" CV="197" mask="XXXXVVVV"
+	<variable label="F9 Fwd" CV="197" mask="XXXVVVVV"
 			item="Soundkey23" >
 			<decVal max="16"/>
 		</variable>
 
-		<variable label="F9 Rev" CV="200" mask="XXXXVVVV"
+		<variable label="F9 Rev" CV="200" mask="XXXVVVVV"
 			item="Soundkey24" >
 			<decVal max="16"/>
 		</variable>
-	<variable label="F10 Fwd" CV="203" mask="XXXXVVVV"
+	<variable label="F10 Fwd" CV="203" mask="XXXVVVVV"
 			item="Soundkey25" >
 			<decVal max="16"/>
 		</variable>
 
-		<variable label="F10 Rev" CV="206" mask="XXXXVVVV"
+		<variable label="F10 Rev" CV="206" mask="XXXVVVVV"
 			item="Soundkey26" >
 			<decVal max="16"/>
 		</variable>
 	
-	<variable label="F11 Fwd" CV="209" mask="XXXXVVVV"
+	<variable label="F11 Fwd" CV="209" mask="XXXVVVVV"
 			item="Soundkey27" >
 			<decVal max="16"/>
 		</variable>
 
-		<variable label="F11 Rev" CV="212" mask="XXXXVVVV"
+		<variable label="F11 Rev" CV="212" mask="XXXVVVVV"
 			item="Soundkey28" >
 			<decVal max="16"/>
 		</variable>
 		
-	<variable label="F12 Fwd" CV="215" mask="XXXXVVVV"
+	<variable label="F12 Fwd" CV="215" mask="XXXVVVVV"
 			item="Soundkey29" >
 			<decVal max="16"/>
 		</variable>
 
-		<variable label="F12 Rev" CV="218" mask="XXXXVVVV"
+		<variable label="F12 Rev" CV="218" mask="XXXVVVVV"
 			item="Soundkey30" >
 			<decVal max="16"/>
 		</variable>
 
-	<variable label="F13 Fwd" CV="221" mask="XXXXVVVV"
+	<variable label="F13 Fwd" CV="221" mask="XXXVVVVV"
 			item="Soundkey31" >
 			<decVal max="16"/>
 		</variable>
 
-		<variable label="F13 Rev" CV="224" mask="XXXXVVVV"
+		<variable label="F13 Rev" CV="224" mask="XXXVVVVV"
 			item="Soundkey32" >
 			<decVal max="16"/>
 		</variable>
 
-	<variable label="F14 Fwd" CV="227" mask="XXXXVVVV"
+	<variable label="F14 Fwd" CV="227" mask="XXXVVVVV"
 			item="Soundkey33" >
 			<decVal max="16"/>
 		</variable>
 
-		<variable label="F14 Rev" CV="230" mask="XXXXVVVV"
+		<variable label="F14 Rev" CV="230" mask="XXXVVVVV"
 			item="Soundkey34" >
 			<decVal max="16"/>
 		</variable>
 
-	<variable label="F15 Fwd" CV="233" mask="XXXXVVVV"
+	<variable label="F15 Fwd" CV="233" mask="XXXVVVVV"
 			item="Soundkey35" >
 			<decVal max="16"/>
 		</variable>
 
-		<variable label="F15 Rev" CV="236" mask="XXXXVVVV"
+		<variable label="F15 Rev" CV="236" mask="XXXVVVVV"
 			item="Soundkey36" >
 			<decVal max="16"/>
 		</variable>
 
-	<variable label="Sensor1 Fwd" CV="239" mask="XXXXVVVV"
+	<variable label="Sensor1 Fwd" CV="239" mask="XXXVVVVV"
 			item="Soundkey37" >
 			<decVal max="16"/>
 		</variable>
 
-		<variable label="Sensor1 Rev" CV="242" mask="XXXXVVVV"
+		<variable label="Sensor1 Rev" CV="242" mask="XXXVVVVV"
 			item="Soundkey38" >
 			<decVal max="16"/>
 		</variable>
 		
-	<variable label="Sensor2 Fwd" CV="245" mask="XXXXVVVV"
+	<variable label="Sensor2 Fwd" CV="245" mask="XXXVVVVV"
 			item="Soundkey39" >
 			<decVal max="16"/>
 		</variable>
 
-		<variable label="Sensor2 Rev" CV="248" mask="XXXXVVVV"
+		<variable label="Sensor2 Rev" CV="248" mask="XXXVVVVV"
 			item="Soundkey40" >
 			<decVal max="16"/>
 		</variable>
