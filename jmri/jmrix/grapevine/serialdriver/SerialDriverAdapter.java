@@ -22,7 +22,7 @@ import javax.comm.SerialPortEventListener;
  * Provide access to ProTrak Grapevine via a serial comm port.
  * Normally controlled by the serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2006, 2007
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -61,16 +61,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
             }
 
 
-            // set framing (end) character
-            try {
-                activeSerialPort.enableReceiveFraming(0x03);
-                log.debug("Serial framing was observed as: "+activeSerialPort.isReceiveFramingEnabled()
-                      +" "+activeSerialPort.getReceiveFramingByte());
-            } catch (Exception ef) {
-                log.info("failed to set serial framing: "+ef);
-            }
-
-            // set timeout; framing should work before this anyway
+            // set timeout; no framing in Grapevine
             try {
                 activeSerialPort.enableReceiveTimeout(10);
                 log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
