@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SlotMonFrame.shtml,v 1.1 2007-12-06 05:48:37 jacobsen Exp $ -->
+<!-- $Id: SlotMonFrame.shtml,v 1.2 2008-03-26 19:04:52 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -24,7 +24,18 @@
 <H2>LocoNet Slot Monitor
 </H2>
     
-This is the help/jmri/jmrix/loconet/slotmon/SlotMonFrame help page
+<a href="../../../../../html/apps/LocoTools/images/SlotMon.gif">
+    <img src="../../../../../html/apps/LocoTools/images/SlotMon.gif"
+         width="300" height="150"
+         alt="Command Station Slot Monitor" align="right"></a>
+<br>
+The Slot Monitor tool displays a table of the "command
+station slots'" contents. Slots are used to control
+individual locomotives and consists. The display
+includes the decoder's speed step format, current speed
+and function settings, consist information and status.
+You can choose to show either all slots or just the
+ones being actively used.
 
 <!--#include virtual="/Footer" -->
 </body>

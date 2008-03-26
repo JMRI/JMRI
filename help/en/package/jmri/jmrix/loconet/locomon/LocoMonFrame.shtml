@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LocoMonFrame.shtml,v 1.1 2008-03-21 06:45:54 jacobsen Exp $ -->
+<!-- $Id: LocoMonFrame.shtml,v 1.2 2008-03-26 19:04:52 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -24,7 +24,18 @@
 <H2>Monitor LocoNet Traffic
 </H2>
     
-This is the help/jmri/jmrix/loconet/locomon/LocoMonFrame help page
+<a href="../../../../../html/apps/LocoTools/images/LocoMonFrame.gif">
+    <img src="../../../../../html/apps/LocoTools/images/LocoMonFrame.gif"
+         width="300" height="150"
+         alt="Command Station Slot Monitor" align="right"></a>
+<br>
+The LocoNet Monitor tool displays LocoNet traffic in a
+human-readable form. The last 20 messages are available
+in a scrolling window. Optionally, you can include the
+time the message was received, and/or the raw packet
+bytes. The log information can also be stored in a text
+file.
+
 
 <!--#include virtual="/Footer" -->
 </body>

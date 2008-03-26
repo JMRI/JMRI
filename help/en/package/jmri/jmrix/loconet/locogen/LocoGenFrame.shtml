@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LocoGenFrame.shtml,v 1.1 2008-03-23 17:57:11 jacobsen Exp $ -->
+<!-- $Id: LocoGenFrame.shtml,v 1.2 2008-03-26 19:04:52 jacobsen Exp $ -->
 <!-- Copyright Bob Jacobsen 2008 -->
 <html lang="en">
 <head>
@@ -25,6 +25,12 @@
 <H2>Send LocoNet Packet
 </H2>
     
+<a href="../../../../../html/apps/LocoTools/images/SendPkt.gif">
+    <img src="../../../../../html/apps/LocoTools/images/SendPkt.gif"
+         width="200" height="100"
+         alt="Command Station Slot Monitor" align="right"></a>
+<br>
+
 The "Send LocoNet Packet" tool lets you
 directly command LocoNet devices.
 
