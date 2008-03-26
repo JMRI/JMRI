@@ -30,6 +30,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       <indexitem text="DS64" target="package.jmri.jmrix.loconet.ds64.DS64Frame"/>
       <indexitem text="LocoNet ID" target="package.jmri.jmrix.loconet.locoid.LocoIdFrame"/>
       <indexitem text="PM4" target="package.jmri.jmrix.loconet.pm4.PM4Frame"/>
+      <indexitem text="PR2" target="html.hardware.loconet.PR2"/>
       <indexitem text="SE8c" target="package.jmri.jmrix.loconet.se8.SE8Frame"/>
       <indexitem text="Slot Monitor" target="package.jmri.jmrix.loconet.slotmon.SlotMonFrame"/>
       <indexitem text="Sound">
@@ -68,8 +69,14 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       <indexitem text="Light Table" target="package.jmri.jmrit.beantable.LightTable"/>
    </indexitem>
    <indexitem text="LocoNet">
+      <indexitem text="Command Station Configuration Tool" target="package.jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigFrame"/>
+      <indexitem text="DS54" target="html.hardware.loconet.DS54"/>
+      <indexitem text="DS64" target="package.jmri.jmrix.loconet.ds64.DS64Frame"/>
+      <indexitem text="Fast Clock" target="package.jmri.jmrix.loconet.clockmon.ClockMonFrame"/>
       <indexitem text="LocoNet ID" target="package.jmri.jmrix.loconet.locoid.LocoIdFrame"/>
+      <indexitem text="SE8c" target="package.jmri.jmrix.loconet.se8.SE8Frame"/>
       <indexitem text="Slot Monitor" target="package.jmri.jmrix.loconet.slotmon.SlotMonFrame"/>
+      <indexitem text="Tools" target="html.apps.LocoTools.index"/>
    </indexitem>
    <indexitem text="Logix">
       <indexitem text="Add Logix" target="package.jmri.jmrit.beantable.LogixAddEdit"/>
@@ -89,6 +96,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       <indexitem text="Panel Editor" target="package.jmri.jmrit.display.PanelEditor"/>
    </indexitem>
    <indexitem text="PM4" target="package.jmri.jmrix.loconet.pm4.PM4Frame"/>
+   <indexitem text="PR2" target="html.hardware.loconet.PR2"/>
    <indexitem text="Programmers">
       <indexitem text="DecoderPro programmer" target="DecoderProManual.Basic_Programming_Basic Programmer"/>
       <indexitem text="Single CV Programmer" target="package.jmri.jmrit.simpleprog.SimpleProgFrame"/>
