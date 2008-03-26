@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PR2.shtml,v 1.1 2008-02-19 11:41:58 jacobsen Exp $ -->
+<!-- $Id: PR2.shtml,v 1.2 2008-03-26 18:49:30 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -72,14 +72,21 @@ To set up DecoderPro to use the PR2:
 <LI>
 Start DecoderPro.
 <li>
-Open the Preferences window from the Edit menu and configure it for:
+Open the Preferences window from the Edit menu and configure the connection by:
 <UL>
-<LI>LocoNet PR2 and
-<LI>Select the serial port that's connected to the PR2.
+<LI>Select LocoNet PR2
+<LI>Select the serial port that's connected to the PR2
+<li>The speed will be fixed at 57,600 baud; don't try to change this 
+in your computer's settings
+<li>The "Flow Control" option defaults to "Use Hardware Flow Control", which
+uses the status leads in the serial connection to determine when the PR2
+is ready to send and receive.  You should try that first, as it is the most
+reliable mode.  
+Only if you can't program decoders using that choice, 
+and only after checking that you're using the right port, should you select "None" for 
+this preference and try again.
 </UL>
-The speed will be fixed at 57,600 baud; don't try to change this 
-in your computer's settings.
-<li>Save, quit the program and restart.
+<li>Click Save at the bottom of the preferences window, quit the program and restart.
 </UL>
 
 <h2>Usage suggestions</h2>
