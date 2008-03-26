@@ -10,7 +10,7 @@ import javax.comm.SerialPort;
  * refers to the switch settings on the new Digitrax PR2
  
  * @author			Bob Jacobsen   Copyright (C) 2004, 2005, 2006
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class PR2Adapter extends LocoBufferAdapter {
 
@@ -38,6 +38,8 @@ public class PR2Adapter extends LocoBufferAdapter {
 
         // configure flow control to always on
         int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; 
+        if (mOpt1.equals(validOption1[1]))
+            flow = SerialPort.FLOWCONTROL_NONE;
         activeSerialPort.setFlowControlMode(flow);
         log.debug("Found flow control "+activeSerialPort.getFlowControlMode()
                   +" RTSCTS_OUT="+SerialPort.FLOWCONTROL_RTSCTS_OUT
@@ -102,14 +104,12 @@ public class PR2Adapter extends LocoBufferAdapter {
     protected int [] validSpeedValues = new int[]{57600};
 
     /**
-     * Since option 1 is not used for this, return an array with one empty element
+     * Option 1 controls flow control option
      */
-    public String[] validOption1() { return new String[]{""}; }
-
-    /**
-     * Option 1 not used, so return a null string.
-     */
-    public String option1Name() { return ""; }
+    public String option1Name() { return "LocoBuffer connection uses "; }
+    public String[] validOption1() { return validOption1; }
+    // meanings are assigned to these above, so make sure the order is consistent
+    protected String [] validOption1 = new String[]{"hardware flow control (recommended)", "no flow control"};
 
     /**
      * The PR2 is itself a command station, so fix that choice
