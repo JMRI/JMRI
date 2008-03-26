@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
-<!-- $Id: NCE_D13SR_TC.xml,v 1.11 2007-09-21 05:49:32 jacobsen Exp $ -->
+<!-- $Id: NCE_D13SR_TC.xml,v 1.12 2008-03-26 17:08:59 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,6 +16,7 @@
 <!-- for more details.                                                      -->
 
 <decoder-config>
+      <version author="Michael Mosher" version="8" lastUpdated="20080319"/>
       <version author="Michael Mosher" version="7" lastUpdated="20070813"/>
       <version author="Michael Mosher" version="6" lastUpdated="20060918"/>
       <version author="Michael Mosher" version="5" lastUpdated="20060912"/>
@@ -30,6 +31,7 @@
       			plus D13SR & D13SRP now have 4 functions (Michael Mosher) -->
 	  <!-- Version 6 - use factory reset feature -->
 	  <!-- Version 7 - high Ver ID 36 -->
+	  <!-- Version 8 - added D408SR V3.6 which has different function mapping then V3.5 -->
       
 <decoder>
   <family name="Silent Running w/ Torque Compensation" mfg="North Coast Engineering" 
@@ -178,6 +180,18 @@
 			<output name="7" label="Yellow" connection="wire" maxcurrent="80 mA" /> 
 			<output name="8" label="Pad 8" connection="solder" maxcurrent="500 mA" /> 
 			<output name="9" label="Pad 9" connection="solder" maxcurrent="500 mA" /> 
+			<size length="2.3" width="1.2" height="0.375" units="inches" />
+		</model>
+    <model model="D408SR V3.6" numOuts="8" numFns="14" connector="9pin"
+    		maxMotorCurrent="4A (peak=10A)" formFactor="O/G">
+			<output name="1" label="Wht" connection="wire" maxcurrent="1000 mA" /> 
+			<output name="2" label="Yel" connection="wire" maxcurrent="500 mA" />
+			<output name="3" label="Grn" connection="wire" maxcurrent="500 mA" />
+			<output name="4" label="Vlt" connection="wire" maxcurrent="500 mA" />
+			<output name="5" label="brn" connection="wire" maxcurrent="500 mA" />
+			<output name="6" label="Wht/yel" connection="wire" maxcurrent="500 mA" />
+			<output name="7" label="Wht/grn" connection="wire" maxcurrent="500 mA" /> 
+			<output name="8" label="Pad 8" connection="solder" maxcurrent="1000 mA" /> 
 			<size length="2.3" width="1.2" height="0.375" units="inches" />
 		</model>
     <model model="D808SR" numOuts="8" numFns="14" 
