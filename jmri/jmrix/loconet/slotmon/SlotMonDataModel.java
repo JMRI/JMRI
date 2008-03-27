@@ -11,6 +11,8 @@ import jmri.jmrix.loconet.LocoNetSlot;
 import jmri.jmrix.loconet.SlotListener;
 import jmri.jmrix.loconet.SlotManager;
 
+import jmri.util.StringUtil;
+
 import javax.swing.*;
 import java.awt.event.*;
 import javax.swing.JLabel;
@@ -22,7 +24,7 @@ import javax.swing.JOptionPane;
 /**
  * Table data model for display of slot manager contents
  * @author      Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener  {
 
@@ -120,13 +122,13 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         switch (col) {
         case SLOTCOLUMN:
         case ADDRCOLUMN:
-        case THROTCOLUMN:
             return Integer.class;
         case SPDCOLUMN:
         case TYPECOLUMN:
         case STATCOLUMN:
         case CONSCOLUMN:
         case DIRCOLUMN:
+        case THROTCOLUMN:
             return String.class;
         case ESTOPCOLUMN:
         case DISPCOLUMN:
@@ -237,7 +239,9 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         case F8COLUMN:  //
             return (s.isF8() ? True : False);
         case THROTCOLUMN:
-            return new Integer(s.id());
+            int upper = (s.id()>>7)&0x7F;
+            int lower = s.id()&0x7F;
+            return StringUtil.twoHexFromInt(upper)+" "+StringUtil.twoHexFromInt(lower);
 
         default:
             log.error("internal state inconsistent with table requst for "+row+" "+col);
