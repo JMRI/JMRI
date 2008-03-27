@@ -12,7 +12,7 @@ import javax.swing.*;
  * Swing action to display the JMRI context for the user
  *
  * @author	    Bob Jacobsen    Copyright (C) 2007
- * @version         $Revision: 1.10 $
+ * @version         $Revision: 1.11 $
  */
 public class ReportContextAction extends AbstractAction {
 
@@ -123,17 +123,26 @@ public class ReportContextAction extends AbstractAction {
         
         // look at context
         Rectangle virtualBounds = new Rectangle();
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        addString("Environment max bounds: "+ge.getMaximumWindowBounds());
-        GraphicsDevice[] gs = ge.getScreenDevices();
-        for (int j = 0; j < gs.length; j++) { 
-            GraphicsDevice gd = gs[j];
-            GraphicsConfiguration[] gc = gd.getConfigurations();
-            for (int i=0; i < gc.length; i++) {
-                addString("bounds["+0+"] = "+gc[i].getBounds());
-                // virtualBounds = virtualBounds.union(gc[i].getBounds());
+        try {
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            addString("Environment max bounds: "+ge.getMaximumWindowBounds());
+            
+            try {
+                GraphicsDevice[] gs = ge.getScreenDevices();
+                for (int j = 0; j < gs.length; j++) { 
+                    GraphicsDevice gd = gs[j];
+                    GraphicsConfiguration[] gc = gd.getConfigurations();
+                    for (int i=0; i < gc.length; i++) {
+                        addString("bounds["+0+"] = "+gc[i].getBounds());
+                        // virtualBounds = virtualBounds.union(gc[i].getBounds());
+                    }
+                } 
+            } catch (Exception e2) {
+                addString("Exception getting device bounds "+e2.getMessage());
             }
-        } 
+        } catch (Exception e1) {
+            addString("Exception getting max window bounds "+e1.getMessage());
+        }
     }
 }
 
