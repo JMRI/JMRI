@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SlotMonFrame.shtml,v 1.2 2008-03-26 19:04:52 jacobsen Exp $ -->
+<!-- $Id: SlotMonFrame.shtml,v 1.3 2008-03-27 04:47:43 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -36,6 +36,39 @@ includes the decoder's speed step format, current speed
 and function settings, consist information and status.
 You can choose to show either all slots or just the
 ones being actively used.
+
+<p>
+The checkboxes at the top allow you to show just the active (in use) slots,
+or all locomotive slots.  You can also choose whether to show the "system" slots,
+which don't carry locomotive information.  The "Estop all" button sets the
+speed of all the locomotives to "Emergency Stop" very quickly.
+
+<p>
+The columns are:
+<dl>
+<dt>Slot<dd>The number of the slot
+<dt>E Stop<dd>Click this button to set the speed of the decoder to emergency stop
+<dt>Address<dd>The address of the locomotive the slot controls
+<dt>Speed<dd>For unconsisted locomotives and addresses that are the top 
+of a consist, this is the current speed setting.  It's an internal value
+for consisted slots.
+<dt>Decoder Type<dd>The format of the commands being sent to the decoder, 
+typically either 128 step or 28 step, though other valuesa re possible.
+<dt>Status<dd>One of the four possible states:
+    <dl>
+    <dt>Free<dd>Not reserved for any particular use, no contents
+    <dt>Idle<dd>Not reserved for any particular use, no contents
+    <dt>Common<dd>Not in use at the moment, but still contains valid data for the last decoder to use it
+    <dt>In Use<dd>Currently controlling a decoder
+    </dl>
+<dt>Free<dd>Click this button to free the slot, so it can be reused for another locomotive
+<dt>Consisted<dd>Displays the consist status of the slot, whether it's not consisted,
+the top of a consist, included in a consist, etc.
+<dt>Throttle ID<dd>The ID of the throttle using this slot.  It's displayed as two hexadecimal bytes.
+The second pair can be configured into the throttle, see the Digitrax instructions.
+<dt>Direction<dd>Whether the decoder is currently being commanded to go Forward or Reverse
+<dt>F0-F8<dd>The current function settings
+</dd>
 
 <!--#include virtual="/Footer" -->
 </body>
