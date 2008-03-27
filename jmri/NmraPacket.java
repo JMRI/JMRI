@@ -49,7 +49,7 @@ package jmri;
  * <P>
  *
  * @author      Bob Jacobsen Copyright (C) 2001, 2003
- * @version     $Revision: 1.28 $
+ * @version     $Revision: 1.29 $
  */
 public class NmraPacket {
 
@@ -531,14 +531,20 @@ public class NmraPacket {
             return null;  // failed!
         }
 
-        if (speed<0 || speed>31) {
+        if (speed<0 || speed>28) {
             log.error("invalid speed "+speed);
             return null;
         }
+        int speedC = (speed&0x1F) >> 1;
+        if (speed > 0)
+        	speedC = speedC +1;
+        int c = (speed&0x01) << 4;	// intermediate speed step
 
+        speedC = speedC + c;
+ 
         // end sanity checks, format output
         byte[] retVal;
-        int arg1 = (fwd ? 0x60 : 0x40)| speed&0x1F;
+        int arg1 = (fwd ? 0x60 : 0x40)| speedC;
 
         if (longAddr) {
             // long address form
@@ -567,11 +573,31 @@ public class NmraPacket {
 			log.error("invalid speed " + speed);
 			return null;
 		}
+
+        int speedC = (speed&0xF);
+
+        if (F0)
+			speedC = speedC + 0x10;
+ 
+        // end sanity checks, format output
+        byte[] retVal;
+        int arg1 = (fwd ? 0x60 : 0x40)| speedC;
+
+        if (longAddr) {
+            // long address form
+            retVal = new byte[4];
+            retVal[0] = (byte) (192+((address/256)&0x3F));
+            retVal[1] = (byte) (address&0xFF);
+            retVal[2] = (byte) arg1;
+            retVal[3] = (byte) (retVal[0]^retVal[1]^retVal[2]^retVal[3]);
+        } else {
+            // short address form
+            retVal = new byte[3];
+            retVal[0] = (byte) (address&0xFF);
+            retVal[1] = (byte) arg1;
+            retVal[2] = (byte) (retVal[0]^retVal[1]^retVal[2]);
+        }
 		
-		if (F0)
-			speed = speed + 0x10;
-		
-		byte[] retVal = speedStep28Packet(address, longAddr, speed, fwd);
 
 		return retVal;
 	}

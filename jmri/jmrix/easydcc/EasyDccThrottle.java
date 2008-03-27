@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractThrottle;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, modified 2004 by Kelly Loyd
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class EasyDccThrottle extends AbstractThrottle
 {
@@ -150,9 +150,9 @@ public class EasyDccThrottle extends AbstractThrottle
 			result = jmri.NmraPacket.speedStep128Packet(address.getNumber(),
 					address.isLongAddress(), value, isForward);
 		} else {
-	        int value = (int)((31)*speed);     // -1 for rescale to avoid estop
+	        int value = (int)((28)*speed);     // -1 for rescale to avoid estop
 	        if (value>0) value = value+1;  	// skip estop
-	        if (value>31) value = 31;    	// max possible speed
+	        if (value>28) value = 28;    	// max possible speed
 	        if (value<0) value = 1;        	// emergency stop
 			result = jmri.NmraPacket.speedStep28Packet(address.getNumber(),
 					address.isLongAddress(), value, isForward);
