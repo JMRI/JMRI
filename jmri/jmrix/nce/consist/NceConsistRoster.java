@@ -43,7 +43,7 @@ import org.jdom.ProcessingInstruction;
  * 
  * @author Bob Jacobsen Copyright (C) 2001; Dennis Miller Copyright 2004
  * @author Daniel Boudreau (C) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * @see NceConsistRosterEntry
  */
 public class NceConsistRoster extends XmlFile {
@@ -303,7 +303,7 @@ public class NceConsistRoster extends XmlFile {
         // find root
         Element root = rootFromName(name);
         if (root==null) {
-            log.warn("ConsistRoster file could not be read");
+            log.debug("ConsistRoster file could not be read");
             return;
         }
         if (log.isDebugEnabled()) XmlFile.dumpElement(root);
