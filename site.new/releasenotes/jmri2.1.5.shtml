@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.5.shtml,v 1.12 2008-03-26 19:04:28 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.5.shtml,v 1.13 2008-03-27 14:19:53 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -262,6 +262,10 @@ decoder definitions that prevented large values being selected for some CVs.
 The Digitrax PR2 connection now has an option to disable flow control for those
 Windows machines that can't do it properly.
 
+<P>
+Marshall Wales and Bruce Shanks investigated how ID numbers are assigned to
+Digitrax throttles, and figured out how to display them in the LocoNet Slot Monitor
+so that it looks similar to what appeared on the throttle.
 
 <hr class="hide">
 <!--#include virtual="/Footer" -->
