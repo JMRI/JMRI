@@ -49,7 +49,7 @@ package jmri;
  * <P>
  *
  * @author      Bob Jacobsen Copyright (C) 2001, 2003
- * @version     $Revision: 1.27 $
+ * @version     $Revision: 1.28 $
  */
 public class NmraPacket {
 
@@ -509,6 +509,21 @@ public class NmraPacket {
         return retVal;
     }
     
+    /**
+     * From NMRA RP 9.2.1
+	 * A speed and direction instruction is used send information to motors
+	 * connected to Multi Function Digital Decoders. Instruction "010" indicates
+	 * a Speed and Direction Instruction for reverse operation and instruction
+	 * "011" indicates a Speed and Direction Instruction for forward operation.
+	 * In these instructions the data is used to control speed with bits 0-3
+	 * being defined exactly as in S-9.2 Section B. If Bit 1 of CV#29 has a
+	 * value of one (1), then bit 4 is used as an intermediate speed step, as
+	 * defined in S-9.2, Section B. If Bit 1 of CV#29 has a value of zero (0),
+	 * then bit 4 shall 230 be used to control FL4. In this mode, Speed U0000 is
+	 * stop, speed U0001 is emergency stop, speed U0010 is the first speed step
+	 * and speed U1111 is full speed. This provides 14 discrete speed steps in
+	 * each direction.
+	 */
     public static byte[] speedStep28Packet(int address, boolean longAddr, int speed, boolean fwd ) {
         if (log.isDebugEnabled()) log.debug("28 step packet "+address+" "+speed);
 
@@ -542,17 +557,24 @@ public class NmraPacket {
         return retVal;
     }
     
-    public static byte[] speedStep14Packet(int address, boolean longAddr, int speed, boolean fwd ) {
-        if (log.isDebugEnabled()) log.debug("14 step packet "+address+" "+speed);
+ 
+    public static byte[] speedStep14Packet(int address, boolean longAddr,
+			int speed, boolean fwd, boolean F0) {
+		if (log.isDebugEnabled())
+			log.debug("14 step packet " + address + " " + speed + " " + F0);
 
-        if (speed<0 || speed>15) {
-            log.error("invalid speed "+speed);
-            return null;
-        }
-        byte[] retVal = speedStep28Packet (address, longAddr, speed, fwd);
+		if (speed < 0 || speed > 15) {
+			log.error("invalid speed " + speed);
+			return null;
+		}
+		
+		if (F0)
+			speed = speed + 0x10;
+		
+		byte[] retVal = speedStep28Packet(address, longAddr, speed, fwd);
 
-        return retVal;
-    }
+		return retVal;
+	}
     
     public static byte[] function0Through4Packet(int address, boolean longAddr,
                         boolean f0, boolean f1, boolean f2, boolean f3, boolean f4 ) {
