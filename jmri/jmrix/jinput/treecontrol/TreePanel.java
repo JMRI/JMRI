@@ -32,7 +32,7 @@ import net.java.games.input.*;
  * <P>
  *
  * @author			Bob Jacobsen  Copyright 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class TreePanel extends JPanel {
     public TreePanel() {
@@ -104,6 +104,16 @@ public class TreePanel extends JPanel {
         p = new JPanel(); p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS)); 
         p.add(new JLabel("Identifier: "));
         p.add(componentId);
+        p.add(Box.createHorizontalGlue());
+        p2.add(p);
+        
+        p2.add(new JSeparator(JSeparator.HORIZONTAL), BorderLayout.NORTH);
+        
+        p = new JPanel(); p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS)); 
+        p.add(new JLabel("Analog: "));
+        p.add(componentAnalog);
+        p.add(new JLabel("  Relative: "));
+        p.add(componentRelative);
         p.add(Box.createHorizontalGlue());
         p2.add(p);
         
@@ -206,10 +216,15 @@ public class TreePanel extends JPanel {
         if (currentNode.getComponent() != null) {
             componentName.setText(currentNode.getComponent().getName());
             componentId.setText(currentNode.getComponent().getIdentifier().toString());
-            if (currentNode.getComponent().isAnalog())
+            if (currentNode.getComponent().isAnalog()) {
+                componentAnalog.setText("Yes");
                 componentValue.setText(""+currentNode.getValue());
-            else
+                componentRelative.setText(currentNode.getComponent().isRelative()?"Yes":"No");
+            } else {
+                componentAnalog.setText("No");
+                componentRelative.setText("");
                 componentValue.setText((currentNode.getValue() > 0.0) ? "Yes" : "No");
+            }
             if ( (currentNode.getAttachedSensor()!=null) && (!currentNode.getAttachedSensor().equals(""))) {
                 sensorName.setText(currentNode.getAttachedSensor());
                 sensorName.setEditable(false);
@@ -231,6 +246,8 @@ public class TreePanel extends JPanel {
         } else {
             componentName.setText("");
             componentId.setText("");
+            componentAnalog.setText("No");
+            componentRelative.setText("No");
             componentValue.setText("");
             sensorName.setText("");
             sensorName.setEditable(true);
@@ -245,6 +262,8 @@ public class TreePanel extends JPanel {
     JLabel controllerType = new JLabel();
     JLabel componentName = new JLabel();
     JLabel componentId = new JLabel();
+    JLabel componentAnalog = new JLabel();
+    JLabel componentRelative = new JLabel();
     JLabel componentValue = new JLabel();
     JCheckBox sensorBox = new JCheckBox("Copy to JMRI Sensor  ");
     JTextField sensorName = new JTextField(25);
