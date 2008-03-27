@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.26 2008-03-21 15:40:26 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.27 2008-03-27 04:27:25 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -266,6 +266,7 @@
 	<LI>Jack Shall, who cleaned up the XML files, contributed decoder definitions
 	and added a huge number of tooltips to DecoderPro
     <li>Bruce Shanks, who offered corrections for the DecoderPro manual
+    and investigated how to display the throttle ID in the LocoNet Slot Monitor
 	<LI>Alex Shepherd, who helped move development to JBuilder, a much better tool, and
 	created the client/server implementation for LocoNet. He's also improved
 	the LocoNet monitor formatting and added support for a new 
@@ -289,7 +290,8 @@
 <a name="U"></A>
 <a name="V"></A>
 <a name="W"></A>
-	<LI>Jack Walton, who created the Lenz LE080 decoder definition
+    <LI>Marshall Wales investigated how to display the throttle ID in the LocoNet Slot Monitor
+    <LI>Jack Walton, who created the Lenz LE080 decoder definition
 	<LI>Mark Waters, who provided numerous Zimo decoder definitions
 	<LI>Jim Wells, who created our logos
     <LI>Donn Welton, who provided info on configuring a PowerBook for DecoderPro
