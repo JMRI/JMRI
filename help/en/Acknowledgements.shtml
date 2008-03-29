@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.27 2008-03-27 04:27:25 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.28 2008-03-29 20:17:53 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -238,6 +238,7 @@
 	<LI>John Plocher, who make good suggestions on XML DTD items,
 	created the infrastructure for this web site, and lead the construction of the demo layout for the JavaOne show.
 	<LI>Herb Poppe, who diagnosed a problem in some Digitrax decoder definitions
+	<li>Gerry Pruss, who provided information on connecting to the QSI Programmer
 <a name="Q"></A>
 <a name="R"></A>
     <li>Simon Reader, who improved the throttle, 
