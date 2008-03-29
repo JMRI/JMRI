@@ -1,9 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: OsIndicatorFrame.shtml,v 1.3 2008-03-29 02:23:48 jacobsen Exp $ -->
+<!-- $Id: CodeButtonFrame.shtml,v 1.1 2008-03-29 02:23:48 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
-      JMRI: OS Indicator Help
+      JMRI: Code Button Help
  </TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
@@ -21,16 +21,23 @@
 <body>
 <!--#include virtual="/Header" -->
 
-<H2>OS Indicator
+<H2>Code Button
 </H2>
-  
-This tool makes it easy to drive an occupancy indicator lamp on a 
-CTC panel from an occupancy sensor, while allowing
-for the indicator to be forced on when the track section is
-unlocked into manual mode.
+
+<b>This is not fully implemented yet</b><p>
+
+A code button on a USS CTC panel starts the activity 
+for one section.
+
+<p>
+Inputs and outputs for this tool:
+<dl>
+<dt>Button<dd>Sensor that goes ACTIVE when the button is pressed.
+<dt>Lamp<dd>Turnout that is set THROWN while the code is being processed.
+</dl>
 
 <p>  
-This is the help/jmri/jmrit/ussctc/OsIndicatorFrame help page
+This is the help/jmri/jmrit/ussctc/CodeButtonFrame help page
 
 <!--#include virtual="/Footer" -->
 </body>
