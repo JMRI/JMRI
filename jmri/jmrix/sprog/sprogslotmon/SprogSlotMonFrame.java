@@ -28,9 +28,10 @@ import jmri.util.JTableUtil;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
  *              Andrew Crosland          (C) 2006 ported to SPROG
- * @version	$Revision: 1.1 $
+ *                                           2008 Use JmriJframe
+ * @version	$Revision: 1.2 $
  */
-public class SprogSlotMonFrame extends javax.swing.JFrame {
+public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
 
     /**
      * Controls whether not-in-use slots are shown
@@ -42,11 +43,12 @@ public class SprogSlotMonFrame extends javax.swing.JFrame {
     JTable			slotTable;
     JScrollPane 		slotScroll;
 
-    JTextArea                  status = new JTextArea("Iout: ---A");
+    JTextArea                   status = new JTextArea("Track Current: ---A");
 
 
     public SprogSlotMonFrame() {
-
+      super();
+      
       slotTable = JTableUtil.sortableDataModel(slotModel);
       slotScroll = new JScrollPane(slotTable);
 
@@ -101,6 +103,10 @@ public class SprogSlotMonFrame extends javax.swing.JFrame {
 
       getContentPane().add(pane1);
       getContentPane().add(slotScroll);
+      
+      // add help menu to window
+      addHelpMenu("package.jmri.jmrix.sprog.sprogslotmon.SprogSlotMonFrame", true);
+      
       pack();
       pane1.setMaximumSize(pane1.getSize());
       pack();
@@ -121,7 +127,7 @@ public class SprogSlotMonFrame extends javax.swing.JFrame {
     }
 
     public void updateStatus(String a) {
-      status.setText("Iout: "+a+" A");
+      status.setText("Track Current: "+a+" A");
     }
 
     private boolean mShown = false;

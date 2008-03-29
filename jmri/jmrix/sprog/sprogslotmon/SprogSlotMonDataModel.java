@@ -20,7 +20,7 @@ import javax.swing.table.TableColumnModel;
  * Table data model for display of slot manager contents
  * @author		Bob Jacobsen   Copyright (C) 2001
  *                      Andrew Crosland          (C) 2006 ported to SPROG
- * @version		$Revision: 1.1 $
+ * @version		$Revision: 1.2 $
  */
 public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel implements SprogSlotListener  {
 
@@ -57,7 +57,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
         return nMax;
       }
       int n = 0;
-      int nMin = 1;
+      int nMin = 0;
       for (int i=nMin; i<nMax; i++) {
         SprogSlot s = SprogSlotManager.instance().slot(i);
         if (s.isFree() != true) n++;
