@@ -24,7 +24,7 @@ import jmri.jmrix.sprog.sprogslotmon.*;
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
  *              Andrew Crosland         (C) 2006 ported to SPROG
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SprogSlotManager extends SprogCommandStation implements SprogListener, CommandStation, Runnable {
 
@@ -278,10 +278,13 @@ public class SprogSlotManager extends SprogCommandStation implements SprogListen
                 int i = s.indexOf('h');
 //                float volts = Integer.decode("0x"+s.substring(i+1, i+5)).intValue();
                 int milliAmps = ((Integer.decode("0x"+s.substring(i+7, i+11)).intValue())*488)/47;
-                statusA[statusIdx] = milliAmps;
-                statusIdx = (statusIdx+1)%4;
-                String voltString, ampString;
-                ampString = Float.toString((float)((statusA[0] + statusA[1] + statusA[2] + statusA[3])/4)/1000);
+//                statusA[statusIdx] = milliAmps;
+//                statusIdx = (statusIdx+1)%4;
+//                String voltString, ampString;
+//                ampString = Float.toString((float)((statusA[0] + statusA[1] + statusA[2] + statusA[3])/4)/1000);
+                statusA[0] = milliAmps;
+                String ampString;
+                ampString = Float.toString((float)statusA[0]/1000);
                 SprogSlotMonFrame.instance().updateStatus(ampString);
               }
               state = 0;
@@ -347,7 +350,7 @@ public class SprogSlotManager extends SprogCommandStation implements SprogListen
 
 
     public void message(SprogMessage m) {
-        log.error("message received unexpectedly: "+m.toString());
+//        log.error("message received unexpectedly: "+m.toString());
     }
 
     private SprogReply replyForMe;

@@ -12,7 +12,7 @@ import java.util.Vector;
  * changes in values will result in notification.
  * <P>
  * @author			Andrew Crosland Copyright (C) 2006
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
  public class SprogSlot {
 
@@ -84,6 +84,7 @@ import java.util.Vector;
        status = SprogConstants.SLOT_FREE;
        length = 3;
        addr = 0;
+       spd = 0;
        payload[0] = 0;
        payload[1] = 0;
        payload[2] = 0;
