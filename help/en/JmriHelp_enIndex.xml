@@ -147,5 +147,12 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
       <indexitem text="Turnout Table" target="package.jmri.jmrit.beantable.TurnoutTable"/>
    </indexitem>
    <indexitem text="USB" target="package.jmri.jmrix.jinput.treemodel.TreeFrame"/>
+   <indexitem text="USS CTC Tools" target="html.tools.uss.index">
+      <indexitem text="Code  Button" target="package.jmri.jmrit.ussctc.CodeButtonFrame"/>
+      <indexitem text="Follower" target="package.jmri.jmrit.ussctc.FollowerFrame"/>
+      <indexitem text="OS Indicator" target="package.jmri.jmrit.ussctc.OsIndicatorFrame"/>
+      <indexitem text="Signal Lever" target="package.jmri.jmrit.ussctc.SignalLeverFrame"/>
+      <indexitem text="Turnout Lever" target="package.jmri.jmrit.ussctc.TurnoutLeverFrame"/>
+   </indexitem>
 
 </index>

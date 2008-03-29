@@ -117,6 +117,13 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
          <tocitem text="Turnout Table" target="package.jmri.jmrit.beantable.TurnoutTable"/>
       </tocitem>
       <tocitem text="Turnout Control" target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl"/>
+      <tocitem text="USS CTC Tools" target="html.tools.uss.index">
+         <tocitem text="Turnout Lever" target="package.jmri.jmrit.ussctc.TurnoutLeverFrame"/>
+         <tocitem text="Signal Lever" target="package.jmri.jmrit.ussctc.SignalLeverFrame"/>
+         <tocitem text="Code Button" target="package.jmri.jmrit.ussctc.CodeButtonFrame"/>
+         <tocitem text="OS Indicator" target="package.jmri.jmrit.ussctc.OsIndicatorFrame"/>
+         <tocitem text="Follower" target="package.jmri.jmrit.ussctc.FollowerFrame"/>
+      </tocitem>
    </tocitem>
    <tocitem text="Panels" target="html.apps.PanelPro.Panels">
       <tocitem text="Panel Editor" target="package.jmri.jmrit.display.PanelEditor"/>
