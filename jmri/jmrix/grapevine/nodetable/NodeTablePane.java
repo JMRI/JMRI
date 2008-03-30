@@ -33,7 +33,7 @@ import jmri.util.table.ButtonRenderer;
  
  * @author	Bob Jacobsen   Copyright (C) 2004, 2007
  * @author	Dave Duchamp   Copyright (C) 2004, 2006
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grapevine.SerialListener {
 
@@ -235,24 +235,24 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
         }
 
         public Object getValueAt (int r,int c) {
-            // r is row number, from 1, and also therefore node number
+            // r is row number, from 0, and therefore r+1 is node number
             switch (c) {
             case ADDRCOL:
-                return new Integer(r);
+                return new Integer(r+1);
             case STATUSCOL:
                 // see if node exists
-                if (SerialTrafficController.instance().getNodeFromAddress(r)!=null)
+                if (SerialTrafficController.instance().getNodeFromAddress(r+1)!=null)
                     return rb.getString("StatusConfig");
                 else {
                     // see if seen in scan
-                    if (scanSeen[r])
+                    if (scanSeen[r+1])
                         return rb.getString("StatusPresent");
                     else
                         return rb.getString("StatusAbsent");
                 }
             case EDITCOL:
                 // see if node exists
-                if (SerialTrafficController.instance().getNodeFromAddress(r)!=null)
+                if (SerialTrafficController.instance().getNodeFromAddress(r+1)!=null)
                     return rb.getString("ButtonEdit");
                 else
                     return rb.getString("ButtonAdd");
@@ -266,7 +266,7 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
             case EDITCOL:
                 NodeConfigFrame f = new NodeConfigFrame();
                 f.initComponents();
-                f.setNodeAddress(r);
+                f.setNodeAddress(r+1);
                 f.setVisible(true);
                 return;
             default:
