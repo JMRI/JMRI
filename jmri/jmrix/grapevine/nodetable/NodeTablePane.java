@@ -33,7 +33,7 @@ import jmri.util.table.ButtonRenderer;
  
  * @author	Bob Jacobsen   Copyright (C) 2004, 2007
  * @author	Dave Duchamp   Copyright (C) 2004, 2006
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grapevine.SerialListener {
 
@@ -176,6 +176,9 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
             status.setText(rb.getString("StatusRunning"));
         // is this a software version reply?
         if (m.getNumDataElements() != 2) return;
+        // does it have a real value?
+        // (getting 0x77 is just the original request)
+        if ((m.getElement(1)&0xFF)==0x77) return;
         // yes, extract node number
         int num = m.getElement(0)&0x7F;
         // mark as seen
