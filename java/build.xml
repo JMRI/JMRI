@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.24 $ -->
+<!-- Revision $Revision: 1.25 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -49,6 +49,7 @@
   <property name="doctarget" value="doc"/>
   
   <path id="project.class.path">
+    <pathelement location=".." />
     <pathelement location="../lib/crimson.jar" />
     <pathelement location="../lib/comm.jar" />
     <pathelement location="../lib/jdom.jar" />
@@ -61,6 +62,7 @@
     <pathelement location="../lib/MRJAdapter.jar" />
     <pathelement location="../lib/vecmath.jar" />
     <pathelement location="../lib/jinput.jar" />
+    <pathelement location="../lib/ch.ntb.usb.jar" />
     <pathelement location="${target}/" />  <!-- last to check for name collisions -->
   </path>
 
