@@ -51,7 +51,8 @@ libusb-jar (ch.ntb.usb.jar)
         libusb installers from "TWAIN SANE" http://www.ellert.se/twain-sane/
         
   version 0.5.7
-  libusbJava.jnilib is MacOS X
+  libusbJava.jnilib for MacOS X
+  LibusbJava.dll for Windows is 0.2.3.0 (Feb 18, 2008)
   
 Older:
 JMRI 1.9/2.0 had the jakarta-regexp-1.5.jar present in this directory
