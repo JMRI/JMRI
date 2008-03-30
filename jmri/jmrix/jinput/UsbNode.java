@@ -16,23 +16,24 @@ import net.java.games.input.*;
  * Can be connected to a JMRI Sensor or Memory.
  * 
  * @author			Bob Jacobsen  Copyright 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class UsbNode extends DefaultMutableTreeNode {
     String name;
-    String longName;
     Controller controller;
     Component component;
     
-    UsbNode(String name, String longName, Controller controller, Component component) {
+    UsbNode(String name, Controller controller, Component component) {
         super(name);
         this.name = name;
-        this.longName = longName;
         this.controller = controller;
         this.component = component;
     }
     
-    public int hashCode() { return longName.hashCode(); }
+    public int hashCode() { 
+        if (component != null) return component.hashCode();
+        else return controller.hashCode();
+    }
     
     public Controller getController() { return controller;}
     public Component getComponent() { return component; }
@@ -40,9 +41,9 @@ public class UsbNode extends DefaultMutableTreeNode {
     public boolean equals(Object a) {
         if (! (a.getClass().equals(UsbNode.class))) return false;
         UsbNode opp = (UsbNode) a;
-        
-        return (name.equals(opp.name))&&(longName.equals(opp.longName));
+        return (name.equals(opp.name))&&(controller==opp.controller)&&(component==opp.component);
     }
+
     public void setValue(float val) { 
         this.val = val;
         // if attached, set value
@@ -82,11 +83,14 @@ public class UsbNode extends DefaultMutableTreeNode {
      * to ensure that node objects for a given 
      * USB object are unique.
      */
-    static UsbNode getNode(String name, String longName, Controller controller, Component component) {
-        Object temp = map.get(longName);
+    static UsbNode getNode(String name, Controller controller, Component component) {
+        Object key = controller;
+        if (component != null) key = component;
+        
+        Object temp = map.get(key);
         if (temp!=null) return (UsbNode) temp;
-        UsbNode node = new UsbNode(name, longName, controller, component);
-        map.put(longName, node);
+        UsbNode node = new UsbNode(name, controller, component);
+        map.put(key, node);
         return node;
     }
 

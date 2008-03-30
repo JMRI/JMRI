@@ -23,7 +23,7 @@ import net.java.games.input.*;
  * </ol>
  *
  * @author			Bob Jacobsen  Copyright 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class TreeModel extends DefaultTreeModel {
     public TreeModel() {
@@ -36,7 +36,7 @@ public class TreeModel extends DefaultTreeModel {
         
         // If you don't call loadSystem, the following line was 
         // needed to get the display to start
-        // insertNodeInto(new UsbNode("System", "System2", null, null), dRoot, 0);
+        // insertNodeInto(new UsbNode("System", null, null), dRoot, 0);
         
         // start the USB gathering
         (new Runner()).start();
@@ -160,12 +160,12 @@ public class TreeModel extends DefaultTreeModel {
         public void run() {
             // ensure controller node exists directly under root
             String cname = controller.getName()+" ["+controller.getType().toString()+"]";
-            UsbNode cNode = UsbNode.getNode(cname, cname, controller, null);
+            UsbNode cNode = UsbNode.getNode(cname, controller, null);
             cNode = (UsbNode)insertNode(cNode, dRoot);
             
             // Device (component) node
             String dname = component.getName()+" ["+component.getIdentifier().toString()+"]";
-            UsbNode dNode = UsbNode.getNode(dname, cname+"/"+dname, controller, component);
+            UsbNode dNode = UsbNode.getNode(dname, controller, component);
             dNode = (UsbNode)insertNode(dNode, cNode);
             
             dNode.setValue(value); 
@@ -178,11 +178,12 @@ public class TreeModel extends DefaultTreeModel {
     void loadSystem() {
         // Get a list of the controllers JInput knows about and can interact with
         Controller[] ca = ControllerEnvironment.getDefaultEnvironment().getControllers();
+        System.out.println("Found "+ca.length+" controllers");
 
         for(int i =0;i<ca.length;i++){
-
             // Get this controllers components (buttons and axis)
             Component[] components = ca[i].getComponents();
+            System.out.println("Controller "+ca[i].getName()+" has "+components.length+" components"); 
             for (int j=0;j<components.length;j++){
                 
                 Controller controller = ca[i];
@@ -190,12 +191,12 @@ public class TreeModel extends DefaultTreeModel {
 
                 // ensure controller node exists directly under root
                 String cname = controller.getName()+" ["+controller.getType().toString()+"]";
-                UsbNode cNode = UsbNode.getNode(cname, cname, controller, null);
+                UsbNode cNode = UsbNode.getNode(cname, controller, null);
                 cNode = (UsbNode)insertNode(cNode, dRoot);
                 
                 // Device (component) node
                 String dname = component.getName()+" ["+component.getIdentifier().toString()+"]";
-                UsbNode dNode = UsbNode.getNode(dname, cname+"/"+dname, controller, component);
+                UsbNode dNode = UsbNode.getNode(dname, controller, component);
                 dNode = (UsbNode)insertNode(dNode, cNode);
                 
                 dNode.setValue(0.0f); 
