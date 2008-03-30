@@ -45,5 +45,13 @@ jinput (including jinput.jar, three jinput DLLs, and two libjinputs)
   from <https://jinput.dev.java.net/>
   2008-01-09 combined binaries (most recent as of 3/20/2008)
 
+libusb-jar (ch.ntb.usb.jar)
+        http://inf.ntb.ch/infoportal/help/index.jsp?topic=/ch.ntb.infoportal/tools.html
+        http://libusb.wiki.sourceforge.net/
+        libusb installers from "TWAIN SANE" http://www.ellert.se/twain-sane/
+        
+  version 0.5.7
+  libusbJava.jnilib is MacOS X
+  
 Older:
 JMRI 1.9/2.0 had the jakarta-regexp-1.5.jar present in this directory
