@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.28 2008-03-29 20:17:53 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.29 2008-03-30 21:27:55 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -297,6 +297,8 @@
 	<LI>Jim Wells, who created our logos
     <LI>Donn Welton, who provided info on configuring a PowerBook for DecoderPro
     <LI>Ken Weygandt, who provided the default values for the SoundTraxx Tsunami decoder definition and 45-degree icons for panels
+    <li>Denny Whitaker, who wrote a great 
+            <a href="http://www.mgbrr.org/Tips/Lessons%20Learned%20on%20Hares-Wabbits%20v1.pdf">description of how to program Hare and Wabbit controllers</a> using JMRI.
 	<LI>Rich White II, who provided the images for our small Nixie tube clock
     <li>Stephen Williams, who improved the LocoNet slot monitor, fixed a nasty problem with looping LocoNet throttles, and 
     added a command station option to the TCP connection.

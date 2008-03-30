@@ -158,6 +158,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
    <tocitem text="Hardware Support" target="html.hardware.index">
       <tocitem text="Acela" target="html.hardware.acela.index"/>
       <tocitem text="CMRI" target="html.hardware.cmri.CMRI"/>
+      <tocitem text="DCC Specialties" target="html.hardware.misc.DccSpecialties"/>
       <tocitem text="EasyDCC" target="html.hardware.easydcc.EasyDCC"/>
       <tocitem text="Grapevine (ProTrak)" target="html.hardware.grapevine.index"/>
       <tocitem text="LocoNet (Digitrax)" target="html.hardware.loconet.Digitrax"/>

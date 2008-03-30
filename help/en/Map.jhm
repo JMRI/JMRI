@@ -464,6 +464,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.hardware.USBtoSerial_LI100" url="html/hardware/USBtoSerial.shtml#LI100" />
 	<mapID target="DecoderProManual.Comp_Motor" url="DecoderProManual/Comp_Motor.shtml" />
 	<mapID target="package.jmri.jmrix.jinput.treemodel.TreeFrame" url="package/jmri/jmrix/jinput/treemodel/TreeFrame.shtml" />
+	<mapID target="html.hardware.misc.DccSpecialties" url="html/hardware/misc/DccSpecialties.shtml" />
 	<mapID target="html.tools.Memories" url="html/tools/Memories.shtml" />
 	<mapID target="html.doc.Technical.StartUpScripts_linux" url="html/doc/Technical/StartUpScripts.shtml#linux" />
 	<mapID target="html.doc.Technical.CATS" url="html/doc/Technical/CATS.shtml" />

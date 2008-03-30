@@ -48,6 +48,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
          <indexitem text="Diagnostics" target="package.jmri.jmrix.cmri.serial.diagnostic.DiagnosticFrame"/>
          <indexitem text="Signals" target="html.hardware.cmri.Signals"/>
       </indexitem>
+      <indexitem text="DCC Specialties" target="html.hardware.misc.DccSpecialties"/>
       <indexitem text="Digitrax LocoNet" target="html.hardware.loconet.Digitrax"/>
       <indexitem text="EasyDCC" target="html.hardware.easydcc.EasyDCC"/>
       <indexitem text="Grapevine" target="html.hardware.grapevine.Names"/>

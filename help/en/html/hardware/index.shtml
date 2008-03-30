@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.13 2008-03-11 17:09:42 dan_boudreau Exp $ -->
+<!-- $Id: index.shtml,v 1.14 2008-03-30 21:27:55 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -69,6 +69,16 @@
 	    <dd><p class="dl">Configure: EasyDCC command station via
 		<A HREF="easydcc/EasyDCC.shtml">Serial</a> or 
 		<A HREF="TerminalServer.shtml">Terminal Server</a></p>
+		<p>&nbsp;</p>
+	    </dd>
+
+	    <dt class="im">
+		<a href="http://www.dccspecialties.com">
+		<img src="http://www.dccspecialties.com/common/top-logo.gif" width="60" height="26" alt="CVP"></a>
+	    </dt>
+	    <dt>DCC Specialties</dt>
+	    <dd><p class="dl">Configure:  
+		<A HREF="misc/DccSpecialties.shtml">Hare, Wabbit, Block Watcher or PSX family products</a>.</p>
 		<p>&nbsp;</p>
 	    </dd>
 
