@@ -53,6 +53,7 @@ libusb-jar (ch.ntb.usb.jar)
   version 0.5.7
   libusbJava.jnilib for MacOS X
   LibusbJava.dll for Windows is 0.2.3.0 (Feb 18, 2008)
+  libusbJava.so for Linux was built on Ubuntu 7.10 w libusb 2:0.1.12-7
   
 Older:
 JMRI 1.9/2.0 had the jakarta-regexp-1.5.jar present in this directory
