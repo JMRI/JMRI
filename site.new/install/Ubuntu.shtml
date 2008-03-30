@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: Ubuntu.shtml,v 1.4 2008-03-30 02:53:16 jacobsen Exp $ -->
+<!-- $Id: Ubuntu.shtml,v 1.5 2008-03-30 07:12:45 jacobsen Exp $ -->
 <html lang="en">
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
@@ -94,8 +94,7 @@ instead of just the runtime environment (JRE).
 We recommend installing from the
 repositories. 
 </P>
-<P>System &gt; Administration &gt; Sympatic Package
-Manager.</P>
+<P>System &gt; Administration &gt; Synaptic Package Manager
 <P>Then search for sun-java6-jdk (or later version). 
 Once you've found it, mark it to be loaded, and click apply.
 You'll probably be told that a number of other packages will 
