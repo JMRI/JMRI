@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- $Id: USB.shtml,v 1.1 2008-03-30 07:13:41 jacobsen Exp $ -->
+<html lang="en">
+<HEAD>
+        <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+        <TITLE>JMRI Install Guide: USB Components</TITLE>
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+
+</HEAD>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+<div id="mainContent">
+
+<H2> 
+JMRI Install Guide: USB Components
+</H2>
+
+To provide direct access to USB devices....
+
+<h3>JInput</h3>
+
+<h3>LibUSB</h3>
+
+libusb-Java requires Java 1.5 or later. (It might be possible to make
+small modifications and compile it with Java 1.4, but we haven't done that)
+
+<p>
+Windows XP and later: Download and install
+the 
+<a href="http://downloads.sourceforge.net/libusb-win32/libusb-win32-filter-bin-0.1.12.1.exe?modtime=1174387137&big_mirror=0">libusb-win32 installer</a>.
+
+<p>
+Ubuntu Linux: Start by opening<p>
+System &gt; Administration &gt; Synaptic Package Manager<p>
+and search for "libusb". There are four packages that start with that name;
+install them all.
+
+<p>
+Packages for MacOS X, see
+<a href="http://www.ellert.se/twain-sane/">here</a>
+(you don't need the TWAIN or others, just LibUSB).
+
+<table>
+<tr class="even">
+<th></th>
+<td>Version</td>
+<td>Package Type</td>
+<td>Panther (10.3.x)</td>
+<td>Tiger (10.4.x)</td>
+<td>Leopard (10.5.x)</td>
+<td>Sources</td>
+<td>Project Homepage</td>
+</tr>
+
+<th rowspan="2">libusb</th>
+<td rowspan="2">0.1.13 beta 2008-02-02</td>
+<td>binary</td>
+<td><a href="http://www.ellert.se/PKGS/libusb-2008-02-02/10.3/libusb.pkg.tar.gz"><img src="http://www.ellert.se/pkg.png"></a></td>
+<td><a href="http://www.ellert.se/PKGS/libusb-2008-02-02/10.4/libusb.pkg.tar.gz"><img src="http://www.ellert.se/pkg.png"></a></td>
+<td><a href="http://www.ellert.se/PKGS/libusb-2008-02-02/10.5/libusb.pkg.tar.gz"><img src="http://www.ellert.se/pkg.png"></a></td>
+<td rowspan="2"><a href="http://www.ellert.se/PKGS/libusb-2008-02-02/src/libusb-2008-02-02-svn-macosx.tar.gz"><img src="http://www.ellert.se/gz.png"></a></td>
+<td rowspan="2"><a href="http://libusb.sourceforge.net/">http://libusb.sourceforge.net/</a></td>
+</tr>
+
+</table>
+
+<!--#include virtual="/Footer" -->
+
+</BODY>
+</HTML>
