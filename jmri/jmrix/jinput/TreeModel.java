@@ -23,7 +23,7 @@ import net.java.games.input.*;
  * </ol>
  *
  * @author			Bob Jacobsen  Copyright 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class TreeModel extends DefaultTreeModel {
     public TreeModel() {
@@ -74,7 +74,7 @@ public class TreeModel extends DefaultTreeModel {
     }
 
     static private TreeModel instanceValue = null;
-
+    
     class Runner extends Thread {
         
         /**
@@ -84,7 +84,6 @@ public class TreeModel extends DefaultTreeModel {
             while(true) {
                 Controller[] controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
                 if(controllers.length==0) {
-                    System.out.println("Found no controllers.");
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) { return; }  // interrupt kills the thread
