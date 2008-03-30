@@ -21,7 +21,7 @@ import java.lang.Integer;
 /**
  * Frame for controlling JInput access to USN
  * @author	 Bob Jacobsen   Copyright (C) 2008
- * @version	 $Revision: 1.1 $
+ * @version	 $Revision: 1.2 $
  */
 public class TreeFrame extends jmri.util.JmriJFrame {
 
@@ -36,7 +36,7 @@ public class TreeFrame extends jmri.util.JmriJFrame {
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
         // add only content pane 
-        add(new TreePanel());
+        contentPane.add(new TreePanel());
         
         // add help menu
         addHelpMenu("package.jmri.jmrix.jinput.treecontrol.TreeFrame", true);
