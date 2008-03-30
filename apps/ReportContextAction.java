@@ -12,7 +12,7 @@ import javax.swing.*;
  * Swing action to display the JMRI context for the user
  *
  * @author	    Bob Jacobsen    Copyright (C) 2007
- * @version         $Revision: 1.11 $
+ * @version         $Revision: 1.12 $
  */
 public class ReportContextAction extends AbstractAction {
 
@@ -137,10 +137,10 @@ public class ReportContextAction extends AbstractAction {
                         // virtualBounds = virtualBounds.union(gc[i].getBounds());
                     }
                 } 
-            } catch (Exception e2) {
+            } catch (Throwable e2) {
                 addString("Exception getting device bounds "+e2.getMessage());
             }
-        } catch (Exception e1) {
+        } catch (Throwable e1) {
             addString("Exception getting max window bounds "+e1.getMessage());
         }
     }
