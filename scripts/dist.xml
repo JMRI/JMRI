@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.28 $ -->
+<!-- Revision $Revision: 1.29 $ -->
 
 <project name="JMRI" basedir="." default="none">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -96,7 +96,10 @@
     <cvs command="export" reallyquiet="true" package="lib" dest="Windows/JMRI" tag="${release}"/>
     <move todir="Windows/JMRI" file="Windows/JMRI/lib/Serialio.jar"/>
     <delete file="Windows/JMRI/lib/junit.jar" />
-    <delete file="Windows/JMRI/lib/jh.1.1.2.jar" />
+    <delete file="Windows/JMRI/lib/libjinput-linux.so" />
+    <delete file="Windows/JMRI/lib/libjinput-osx.jnilib" />
+    <delete file="Windows/JMRI/lib/libusbJava.jnilib" />
+    <delete file="Windows/JMRI/lib/libusbJava.so" />
     <cvs command="export" reallyquiet="true" package="xml" dest="Windows/JMRI" tag="${release}"/>
     <cvs command="export" reallyquiet="true" package="resources" dest="Windows/JMRI" tag="${release}"/>
     <cvs command="export" reallyquiet="true" package="help" dest="Windows/JMRI" tag="${release}"/>
@@ -131,6 +134,12 @@
       		<include name="jhall.jar"/>
       		<include name="jython.jar"/>
       		<include name="log4j.jar"/>
+      		<include name="jinput.jar"/>
+      		<include name="jinput-wintab.dll"/>
+      		<include name="jinput-raw.dll"/>
+      		<include name="jinput-dx8.dll"/>
+      		<include name="ch.ntb.usb.jar"/>
+      		<include name="LibusbJava.dll"/>
       		<include name="MRJAdapter.jar"/>
       		<include name="Serialio.jar"/>
       		<include name="vecmath.jar"/>
@@ -151,8 +160,13 @@
     <delete dir="MacOSX/JMRI/lib" />
     <cvs command="export" reallyquiet="true" package="lib" dest="MacOSX/JMRI" tag="${release}"/>
     <delete file="MacOSX/JMRI/lib/junit.jar" />
-    <delete file="MacOSX/JMRI/lib/jh.1.1.2.jar" />
     <delete file="MacOSX/JMRI/lib/Serialio.jar" />
+    <delete file="MacOSX/JMRI/lib/libjinput-linux.so" />
+    <delete file="MacOSX/JMRI/lib/jinput-wintab.dll" />
+    <delete file="MacOSX/JMRI/lib/jinput-raw.dll" />
+    <delete file="MacOSX/JMRI/lib/jinput-dx8.dll" />
+    <delete file="MacOSX/JMRI/lib/LibusbJava.dll" />
+    <delete file="MacOSX/JMRI/lib/libusbJava.so" />
     <delete dir="MacOSX/JMRI/xml" />
     <cvs command="export" reallyquiet="true" package="xml" dest="MacOSX/JMRI" tag="${release}"/>
     <delete dir="MacOSX/JMRI/resources" />
@@ -199,6 +213,12 @@
     <cvs command="export" reallyquiet="true" package="lib" dest="Linux/JMRI" tag="${release}"/>
     <delete file="Linux/JMRI/lib/junit.jar" />
     <delete file="Linux/JMRI/lib/Serialio.jar" />
+    <delete file="Linux/JMRI/lib/libjinput-osx.jnilib" />
+    <delete file="Linux/JMRI/lib/jinput-wintab.dll" />
+    <delete file="Linux/JMRI/lib/jinput-raw.dll" />
+    <delete file="Linux/JMRI/lib/jinput-dx8.dll" />
+    <delete file="Linux/JMRI/lib/LibusbJava.dll" />
+    <delete file="Linux/JMRI/lib/libusbJava.jnilib" />
     <delete dir="Linux/JMRI/xml" />
     <cvs command="export" reallyquiet="true" package="xml" dest="Linux/JMRI" tag="${release}"/>
     <delete dir="Linux/JMRI/resources" />
@@ -212,14 +232,11 @@
     <!-- ensure scripts are executable -->
     <chmod perm="ugo+rx">
 		<fileset dir="Linux/JMRI/scripts" >
-      		<include name="*.csh"/>
       		<include name="cornwall"/>
       		<include name="DecoderPro"/>
       		<include name="JmriDemo"/>
       		<include name="LocoTools"/>
-      		<include name="PacketPro"/>
       		<include name="PanelPro"/>
-       		<include name="jmrithon"/>
       	</fileset>
     </chmod>
     <move todir="Linux/JMRI">
