@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: RenumberFrame.shtml,v 1.1 2008-03-16 04:50:11 jacobsen Exp $ -->
+<!-- $Id: RenumberFrame.shtml,v 1.2 2008-03-30 01:12:40 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -21,20 +21,17 @@
 <body>
 <!--#include virtual="/Header" -->
 
-<H2>Renumber Grapevine Node
+<H2>Change Grapevine Board Address
 </H2>
     
-This is the help/jmri/jmrix/grapevine/nodetable/RenumberFrame help page
-
+This tool lets you change the address of a Grapevine board.
 <p>
-This tool lets you change the address of a Grapevine node.
-<p>
-The node remembers the change, even through power off/on cycles, 
+The board remembers the change, even through power off/on cycles, 
 until you change it again.
 
 <p>
 Enter the original node number, the new node number, and 
-press "Change".
+press "Change The Node Number".
 
 <p>
 You might want to open the 
