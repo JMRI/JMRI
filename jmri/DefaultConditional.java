@@ -9,7 +9,7 @@ import javax.swing.Timer;
  * Class providing the basic logic of the Conditional interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -775,6 +775,19 @@ public class DefaultConditional extends AbstractNamedBean
 						if (!(actionString[i].equals(""))) {
 							jmri.util.PythonInterp.runScript(actionString[i]);
 						}
+						break;
+					case Conditional.ACTION_SET_FAST_CLOCK_TIME:
+						Date date = InstanceManager.timebaseInstance().getTime();
+						date.setHours(actionData[i]/60);
+						date.setMinutes(actionData[i] - ((actionData[i]/60)*60));
+						date.setSeconds(0);
+						InstanceManager.timebaseInstance().userSetTime(date);
+						break;
+					case Conditional.ACTION_START_FAST_CLOCK:
+						InstanceManager.timebaseInstance().setRun(true);
+						break;
+					case Conditional.ACTION_STOP_FAST_CLOCK:
+						InstanceManager.timebaseInstance().setRun(false);
 						break;
 				}
 			}

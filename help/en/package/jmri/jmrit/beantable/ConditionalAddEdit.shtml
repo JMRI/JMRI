@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ConditionalAddEdit.shtml,v 1.4 2008-01-31 19:18:02 djduchamp Exp $ -->
+<!-- $Id: ConditionalAddEdit.shtml,v 1.5 2008-03-30 15:08:50 djduchamp Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Adding/Editing Logix Conditionals</TITLE>
@@ -311,6 +311,14 @@ listed below along with information on each:</P>
 	specified turnouts in all Conditionals in all Logixs. Specify the turnout by 
 	entering its name. The turnout is not set; all active delayed actions for 
 	setting the specified turnout are cancelled without setting the turnout.</LI>
+	<LI><B>Set Fast Clock Time</B>: Sets the time on the fast clock to the entered 
+	time. The time is entered as <i>hh:mm</i> where <i>hh</i> is hours and <i>mm</i> 
+	is minutes on a 24-hour clock. This action sets the fast clock to the specified
+	time regardless of whether the fast clock is running or stopped.</LI>
+	<LI><B>Start Fast Clock</B>: Starts the JMRI fast clock running. If the fast 
+	clock is already running, this action has no effect.</LI>
+	<LI><B>Stop Fast Clock</B>: Pauses the JMRI fast clock. If the fast 
+	clock is not running, this action has no effect.</LI>
 
 </UL>
 <P></P>

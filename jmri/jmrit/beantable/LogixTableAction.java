@@ -46,7 +46,7 @@ import jmri.util.JmriJFrame;
  * accessed via rb.
  * 
  * @author Dave Duchamp Copyright (C) 2007
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -1515,6 +1515,13 @@ public class LogixTableAction extends AbstractTableAction {
 		case Conditional.ACTION_RUN_SCRIPT:
 			action1DataField.setText(actionString[0]);
 			break;
+		case Conditional.ACTION_SET_FAST_CLOCK_TIME:
+			action1DataField.setText(formatTime(actionData[0] / 60,
+							actionData[0] - ((actionData[0] / 60) * 60)));
+			break;
+		case Conditional.ACTION_START_FAST_CLOCK:
+		case Conditional.ACTION_STOP_FAST_CLOCK:	
+			break;
 		}
 		switch (actionType[1]) {
 		case Conditional.ACTION_SET_TURNOUT:
@@ -1575,6 +1582,13 @@ public class LogixTableAction extends AbstractTableAction {
 		case Conditional.ACTION_PLAY_SOUND:
 		case Conditional.ACTION_RUN_SCRIPT:
 			action2DataField.setText(actionString[1]);
+			break;
+		case Conditional.ACTION_SET_FAST_CLOCK_TIME:
+			action2DataField.setText(formatTime(actionData[1] / 60,
+										actionData[1] - ((actionData[1] / 60) * 60)));
+			break;
+		case Conditional.ACTION_START_FAST_CLOCK:
+		case Conditional.ACTION_STOP_FAST_CLOCK:
 			break;
 		}
 	}
@@ -1992,6 +2006,14 @@ public class LogixTableAction extends AbstractTableAction {
 				action1NameField.setToolTipText(rbx
 						.getString("NameHintTurnout"));
 				break;
+			case Conditional.ACTION_SET_FAST_CLOCK_TIME:
+				action1DataField.setVisible(true);
+				action1DataField.setText("00:00");
+				action1DataField.setToolTipText(rbx.getString("DataHintTime"));
+				break;
+			case Conditional.ACTION_START_FAST_CLOCK:
+			case Conditional.ACTION_STOP_FAST_CLOCK:
+				break;
 			}
 		} else if (actionNum == 2) {
 			// get new Action type
@@ -2127,6 +2149,14 @@ public class LogixTableAction extends AbstractTableAction {
 				action2LockSetBox.setVisible(true);
 				action2NameField.setToolTipText(rbx
 						.getString("NameHintTurnout"));
+				break;
+			case Conditional.ACTION_SET_FAST_CLOCK_TIME:
+				action2DataField.setVisible(true);
+				action2DataField.setText("00:00");
+				action2DataField.setToolTipText(rbx.getString("DataHintTime"));
+				break;
+			case Conditional.ACTION_START_FAST_CLOCK:
+			case Conditional.ACTION_STOP_FAST_CLOCK:
 				break;
 			}
 		}
@@ -3199,6 +3229,22 @@ public class LogixTableAction extends AbstractTableAction {
 			actionData[index] = 0;
 			actionString[index] = dataField.getText();
 			break;
+		case Conditional.ACTION_SET_FAST_CLOCK_TIME:
+			actionName[index] = " ";
+			actionData[index] = parseTime(dataField.getText());
+			if (actionData[index]<0) {
+				// error in entry of time - message already sent
+				actionData[index] = 0;
+				return (false);
+			}
+			actionString[index] = " ";
+			break;
+		case Conditional.ACTION_START_FAST_CLOCK:
+		case Conditional.ACTION_STOP_FAST_CLOCK:
+			actionName[index] = " ";
+			actionData[index] = 0;
+			actionString[index] = " ";
+			break;
 		}
 		return (true);
 	}
@@ -3317,6 +3363,12 @@ public class LogixTableAction extends AbstractTableAction {
 			return (rbx.getString("ActionResetDelayedTurnout"));
 		case Conditional.ACTION_CANCEL_TURNOUT_TIMERS:
 			return (rbx.getString("ActionCancelTurnoutTimers"));
+		case Conditional.ACTION_SET_FAST_CLOCK_TIME:
+			return (rbx.getString("ActionSetFastClockTime"));
+		case Conditional.ACTION_START_FAST_CLOCK:
+			return (rbx.getString("ActionStartFastClock"));
+		case Conditional.ACTION_STOP_FAST_CLOCK:
+			return (rbx.getString("ActionStopFastClock"));			
 		}
 		return ("");
 	}

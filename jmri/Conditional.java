@@ -83,7 +83,7 @@ public interface Conditional extends NamedBean {
 	public static final int ACTION_OPTION_ON_CHANGE_TO_FALSE = 2;
 	public static final int ACTION_OPTION_ON_CHANGE = 3;
 	// action types
-	public static final int NUM_ACTION_TYPES = 22;
+	public static final int NUM_ACTION_TYPES = 25;
 	public static final int ACTION_NONE = 1;
 	public static final int ACTION_SET_TURNOUT = 2;
 	// allowed settings for turnout are Thrown and Closed (in data)
@@ -123,6 +123,12 @@ public interface Conditional extends NamedBean {
 	//   time in seconds before setting sensor should be in delay
 	public static final int ACTION_CANCEL_TURNOUT_TIMERS = 22;
 	// cancels all timers delaying setting of specified sensor
+	public static final int ACTION_SET_FAST_CLOCK_TIME = 23;
+	// sets the fast clock time to the time specified
+	public static final int ACTION_START_FAST_CLOCK = 24;
+	// starts the fast clock
+	public static final int ACTION_STOP_FAST_CLOCK = 25;
+	// stops the fast clock
 	
 	/**
 	 * Get number of State Variables for this Conditional

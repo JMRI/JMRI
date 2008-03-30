@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Logix.shtml,v 1.1 2008-02-06 07:07:56 jacobsen Exp $ -->
+<!-- $Id: Logix.shtml,v 1.2 2008-03-30 15:05:59 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -536,6 +536,54 @@
 		Click <b>Set</b> to bring up a file selection dialog for finding the
 		file. Navigate to your script file, then click your script file's name 
 		in the dialog to copy it (including its path) to the field.
+		<LI><B>Delayed Set Turnout</B>: Sets the specified turnout to the
+		chosen state after waiting for a specified number of seconds. Specify
+		the turnout to set by entering its name. Specify the state to set by
+		choosing Closed or Thrown in the popup menu. Specify the number of
+		seconds to delay before setting the turnout by entering a number in the
+		right-most field. If this Conditional is already waiting to set this 
+		turnout, this action is ignored, and the previous action continues as 
+		originally scheduled.(see also <b>Reset Delayed Set Turnout</b> below.)</LI>
+		<LI><B>Turnout Lock</B>: Locks or unlocks a turnout. Enter the
+		name for the turnout, and choose the operation from the popup menu.
+		Note, to control the type of turnout lock go to the <A
+		HREF="TurnoutTable.shtml">Turnout Table</A> and select the Lock Mode.</LI>
+		<LI><B>Reset Delayed Set Sensor</B>: Sets the specified sensor to the
+		chosen state after waiting for a specified number of seconds. Specify
+		the sensor to set by entering its name. Specify the state to set by
+		choosing Active or Inactive in the popup menu. Specify the number of
+		seconds to delay before setting the sensor by entering a number in the
+		right-most field. This action is the same as <b>Delayed Set Sensor</b>, 
+		except if this Conditional is already actively waiting to set the specified 
+		sensor, the previous wait is cancelled, and a new wait period is started. 
+		In effect, the wait time is restarted. The sensor is not set until the most 
+		recent wait period expires.</LI>
+		<LI><B>Cancel Sensor Timers</B>: Cancels all timers waiting to set the 
+		specified sensor in all Conditionals in all Logixs. Specify the sensor by 
+		entering its name. The sensor is not set; all active delayed actions for 
+		setting the specified sensor are cancelled without setting the sensor.</LI>
+		<LI><B>Reset Delayed Set Turnout</B>: Sets the specified turnout to the
+		chosen state after waiting for a specified number of seconds. Specify
+		the turnout to set by entering its name. Specify the state to set by
+		choosing Closed or Thrown in the popup menu. Specify the number of
+		seconds to delay before setting the turnout by entering a number in the
+		right-most field. This action is the same as <b>Delayed Set Turnout</b>, 
+		except if this Conditional is already actively waiting to set the specified 
+		turnout, the previous wait is cancelled, and a new wait period is started. 
+		In effect, the wait time is restarted. The turnout is not set until the most 
+		recent wait period expires.</LI>
+		<LI><B>Cancel Turnout Timers</B>: Cancels all timers waiting to set the 
+		specified turnouts in all Conditionals in all Logixs. Specify the turnout by 
+		entering its name. The turnout is not set; all active delayed actions for 
+		setting the specified turnout are cancelled without setting the turnout.</LI>
+		<LI><B>Set Fast Clock Time</B>: Sets the time on the fast clock to the entered 
+		time. The time is entered as <i>hh:mm</i> where <i>hh</i> is hours and <i>mm</i> 
+		is minutes on a 24-hour clock. This action sets the fast clock to the specified
+		time regardless of whether the fast clock is running or stopped.</LI>
+		<LI><B>Start Fast Clock</B>: Starts the JMRI fast clock running. If the fast 
+		clock is already running, this action has no effect.</LI>
+		<LI><B>Stop Fast Clock</B>: Pauses the JMRI fast clock. If the fast 
+		clock is not running, this action has no effect.</LI>
 		</ul>
 	</dd>    
 	<dt class=left><a name=notes><H3>Additional Notes</H3></a></dt>
