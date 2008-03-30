@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
  * Create a JInput control window.
  *
  * @author   Bob Jacobsen Copyright 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class TreeAction extends jmri.util.JmriJFrameAction {
 
@@ -17,7 +17,7 @@ public class TreeAction extends jmri.util.JmriJFrameAction {
     }
 
     public TreeAction() {
-        this("USB Controls");
+        this("USB Input Control");
     }
 
     public String getName() {
