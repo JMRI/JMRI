@@ -24,7 +24,7 @@
 # For more information, please see
 # http://jmri.sourceforge.net/install/ShellScripts.shtml
 #
-# $Revision: 1.6 $ (CVS maintains this line, do not edit please)
+# $Revision: 1.7 $ (CVS maintains this line, do not edit please)
 
 # define the class to be invoked
 CLASSNAME=apps.JmriDemo.JMRIdemo
@@ -55,6 +55,8 @@ if test ${LOCALJARFILES}; then CP=${CP}:${LOCALJARFILES}; fi
 CP=${CP}:jmri.jar
 # and contents of lib
 CP=${CP}:`ls -m lib/*.jar | tr -d " \n" | tr "," ":"`
+# and MacOS X system library
+CP=${CP}:/System/Library/Java
 if test ${DEBUG}; then echo CLASSPATH: ${CP}; fi
 
 # build the config file name dynamically based on name of
