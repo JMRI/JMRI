@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LoaderFrame.shtml,v 1.3 2008-02-10 06:11:21 jacobsen Exp $ -->
+<!-- $Id: LoaderFrame.shtml,v 1.4 2008-03-31 03:17:52 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -57,7 +57,25 @@ will be enabled.<p>
 <img src="LoaderPaneReady.gif" width="236" height="118" alt="Initial Editor Image"/></a><br/>
 
 <li>Click "Download" to start the download process. It will take a little
-while.
+while. The progress is described in the status line:
+    <dl>
+    <dt>"Starting download; erase flash"<dd>The first step is to erase
+        the decoders memory so it can take new data.  This will take 
+        up to about 30 secondx, depending on the specific decoder.
+    <dt>"Sending initialization message"<dd>Set up the decoder to accept data
+        after being erased.  This should only take a fraction of a second.
+    <dt>"Send SDF data"<dd>Load the Sound Definition data into the decoder, which
+        should only take a few seconds
+    <dt>"Send WAV data"<dd>The sound data is being downloaded.  As
+        each block is sent you'll get an update:  "Send WAV data block 1", then
+        2, then 3, etc.
+    <dt>"Done"<dd>The downloadload completed OK.
+    </dl>
+    If something goes wrong, the final status will be "Download aborted".
+    The most common reason is that the PR2 couldn't handle the data that was
+    being send, which is listed as "PR2 not ready".  If this happens repeatedly,
+    make sure that the serial port and cable that the PR2 is using as the control
+    leads properly connected. An intermitted cable can cause problems here.
 </ol>
 <p>
 If you have more decoders to load with the same file, you can just
@@ -70,8 +88,7 @@ Also, you can use a JMRI
 to try out your new sounds via the PR2.  JMRI takes care of
 converting the PR2 from a programmer/loader into a low power command
 station to run the locomotive.
-<p>    
-(This is the help/jmri/jmrix/loconet/soundloader/LoaderFrame help page)
+
 
 <!--#include virtual="/Footer" -->
 </body>
