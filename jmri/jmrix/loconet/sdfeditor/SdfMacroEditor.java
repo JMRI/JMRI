@@ -14,7 +14,7 @@ import javax.swing.tree.*;
  * Common base for all the SDF macro editors.
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 
 public abstract class SdfMacroEditor extends JPanel {
@@ -23,7 +23,7 @@ public abstract class SdfMacroEditor extends JPanel {
         this.inst = inst;
         
         // add a default behavior
-        add(new JLabel("No editor defined for this instruction yet"));
+        add(new JLabel("This instruction has no options to set."));
     }
     
     SdfMacro inst;

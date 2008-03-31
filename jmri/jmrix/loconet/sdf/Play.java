@@ -6,7 +6,7 @@ package jmri.jmrix.loconet.sdf;
  * Implement the PLAY macro from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 
 public class Play extends SdfMacro {
@@ -66,7 +66,7 @@ public class Play extends SdfMacro {
     }
 
     public String toString() {
-        return "Play fragment "+handleVal()+'\n';
+        return "Play Fragment "+handleVal()+'\n';
     }
     public String oneInstructionString() {
         return name()+' '+handleVal()+','+brkVal()+','+wavebrkFlagsVal()+'\n';

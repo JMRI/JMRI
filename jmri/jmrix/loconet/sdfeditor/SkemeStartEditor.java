@@ -2,8 +2,6 @@
 
 package jmri.jmrix.loconet.sdfeditor;
 
-import java.util.ArrayList;
-
 import jmri.jmrix.loconet.sdf.SdfMacro;
 
 /**
@@ -12,13 +10,14 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
  * This nests until the next SKEME_START.
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 
 class SkemeStartEditor extends SdfMacroEditor {
 
     public SkemeStartEditor(SdfMacro inst) {
         super(inst);
+        // No editor needed, leave default message in place.
     }
 }
 

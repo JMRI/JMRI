@@ -11,7 +11,7 @@ import jmri.jmrix.loconet.spjfile.SpjFile;
  * into a Digitrax SFX decoder.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2006
- * @version	    $Revision: 1.4 $
+ * @version	    $Revision: 1.5 $
  */
 public class LoaderEngine {
     static java.util.ResourceBundle res = java.util.ResourceBundle.getBundle("jmri.jmrix.loconet.soundloader.Loader");
@@ -50,6 +50,7 @@ public class LoaderEngine {
             // start
             notify(res.getString("EngineSendInit"));
             controller.sendLocoNetMessage(getInitMessage());
+            protectedWait(250);
             
             // send SDF info
             sendSDF();
@@ -146,7 +147,7 @@ public class LoaderEngine {
      * doesn't back up.
      */
     void throttleOutbound(LocoNetMessage m) throws DelayException {
-        protectedWait(3);  // minimum wait to clear
+        protectedWait(15);  // minimum wait to clear
         
         // wait up to 1 sec in 10mSec chunks for isXmtBusy to clear
         for (int i=1; i<100; i++) {

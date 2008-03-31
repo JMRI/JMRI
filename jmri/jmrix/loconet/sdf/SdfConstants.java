@@ -12,7 +12,7 @@ package jmri.jmrix.loconet.sdf;
 /**
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public interface SdfConstants {
     
@@ -252,6 +252,45 @@ final static String[] triggerNames = new String[]{
         "T_SPD_DEC_SP1", "T_SPD_DEC_SP2", "T_SPD_DIR_CHNG"
 
 };
+
+/**
+ * Human-readable form of trigger constants for use in SdfEditor
+ */
+final static String[] editorTriggerNames = new String[]{
+        "TRIG_NEVER", "TRIG_MODE_CHNG", "TRIG_MATH", "TRIG_DISTANCE",
+        "TRIG_SPD_INC", "TRIG_SPD_DEC", "TRIG_CAM", "TRIG_NOT_TRIG",
+        
+        "Function 0 On", "Function 1 On", "Function 2 On", "Function 3 On",
+        "Function 4 On", "Function 5 On", "Function 6 On", "Function 7 On",
+        "Function 8 On", "Function 9 On", "Function 10 On", "Function 11 On",
+        "Function 12 On", "Function 13 On", "Function 14 On", "Function 15 On",
+        "Function 16 On", "Function 17 On", "Function 18 On", "Function 19 On",
+        "Function 20 On",
+         
+        "TRIG_DIRNOW_CHNG", "TRIG_MOVING", "TRIG_SND_ACTV11",
+
+        "Function 21 On", "Function 22 On", "Function 23 On", "Function 24 On",
+        "Function 25 On", "Function 26 On", "Function 27 On", "Function 28 On",
+
+        "TRIG_BSC0", "TRIG_BSC1", "TRIG_BSC2", "TRIG_BSC3",
+
+        "TRIG_BSC4", "TRIG_BSC5", "TRIG_BSC6", "TRIG_BSC7",
+
+        "TRIG_IN_0", "TRIG_IN_1", "TRIG_IN_2", "TRIG_IN_3", 
+        "TRIG_IN_4", "TRIG_IN_5", "TRIG_IN_6", "TRIG_IN_7", 
+
+        "TRIG_NOTCH_CHNG", "TRIG_TIME_16PPS", "TRIG_FACTORY_CVRESET", "TRIG_OPSPROGWR_CV",
+        "TRIG_SCAT0", "TRIG_SCAT1", "TRIG_SCAT2", "TRIG_SCAT3",
+        "TRIG_SCAT4", "TRIG_SCAT5", "TRIG_SCAT6", "TRIG_SCAT7",
+
+        "T_SPD_MUTE", "T_SPD_TURNON", "T_SPD_IDLE", "T_SPD_ACCEL1",
+        "T_SPD_ACC_CHNG", "T_SPD_ACCEL2", "T_SPD_IDLEXIT", "T_SPD_RUN",
+        "T_SPD_DECEL1", "T_SPD_DEC_CHNG", "T_SPD_DECEL2",
+        "T_SPD_DEC_IDLE", "T_SPD_TURNOFF", 
+        "T_SPD_DEC_SP1", "T_SPD_DEC_SP2", "T_SPD_DIR_CHNG"
+
+};
+
 
 ///============================BREAK/LOOP logic during a .WAV playback==================
 

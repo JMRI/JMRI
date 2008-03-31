@@ -13,7 +13,7 @@ import javax.swing.*;
  * Editor panel for the INITIATE_SOUND macro.
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 
 class InitiateSoundEditor extends SdfMacroEditor {
@@ -30,8 +30,8 @@ class InitiateSoundEditor extends SdfMacroEditor {
         JPanel p = new JPanel();
         p.setLayout(new FlowLayout());
         
-        p.add(new JLabel("Trigger On: "));
-        box = new JComboBox(SdfConstants.triggerNames);
+        p.add(new JLabel("Start sequence when: "));
+        box = new JComboBox(SdfConstants.editorTriggerNames);
 
         // find & set index of selected value
         update();
@@ -51,7 +51,7 @@ class InitiateSoundEditor extends SdfMacroEditor {
                 // have to convert back from string to 
                 // trigger value
                 String trigger = (String)box.getSelectedItem();
-                int value = jmri.util.StringUtil.getStateFromName(trigger, SdfConstants.triggerCodes, SdfConstants.triggerNames);
+                int value = jmri.util.StringUtil.getStateFromName(trigger, SdfConstants.triggerCodes, SdfConstants.editorTriggerNames);
                 ((InitiateSound)InitiateSoundEditor.this.inst).setTrigger(value);
                 // buttons
                 int prempt = 0;

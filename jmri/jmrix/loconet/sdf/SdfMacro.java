@@ -34,7 +34,7 @@ import java.util.ArrayList;
  * day)
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.10 $
+ * @version             $Revision: 1.11 $
  */
 
 public abstract class SdfMacro implements SdfConstants {
@@ -53,7 +53,10 @@ public abstract class SdfMacro implements SdfConstants {
     
     /**
      * Provide a single-line simplified representation, 
-     * including the trailing newline.
+     * including the trailing newline. This is used
+     * e.g. in the tree format section of the 
+     * {@link jmri.jmrix.loconet.sdfeditor.SdfEditorFrame}.
+     *
      * @return newline-terminated string; never null
      */
     abstract public String toString();

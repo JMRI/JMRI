@@ -3,6 +3,7 @@
 package jmri.jmrix.loconet.sdfeditor;
 
 import jmri.jmrix.loconet.sdf.SdfMacro;
+import javax.swing.JLabel;
 
 /**
  * Editor panel for the generic four-byte macros from the Digitrax sound definition language
@@ -13,13 +14,19 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
  * escape claus for unrecognized content.
  *
  * @author		Bob Jacobsen  Copyright (C) 2007, 2008
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 
 class FourByteMacroEditor extends SdfMacroEditor {
 
     public FourByteMacroEditor(SdfMacro inst) {
         super(inst);
+
+        // remove default message from SdfMacroEditor
+        this.removeAll();
+        
+        // and set up our own
+        add(new JLabel("No editor defined for this instruction yet."));
     }
 }
 
