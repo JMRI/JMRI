@@ -20,20 +20,20 @@ import javax.swing.table.TableColumnModel;
  * Table data model for display of slot manager contents
  * @author		Bob Jacobsen   Copyright (C) 2001
  *                      Andrew Crosland          (C) 2006 ported to SPROG
- * @version		$Revision: 1.2 $
+ * @version		$Revision: 1.3 $
  */
 public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel implements SprogSlotListener  {
 
     static public final int SLOTCOLUMN = 0;
-    static public final int ESTOPCOLUMN = 1;
-    static public final int ADDRCOLUMN = 2;
-    static public final int SPDCOLUMN  = 3;
-    static public final int STATCOLUMN = 4;  // status: free, common, etc
-    static public final int DISPCOLUMN = 5;  // originally "dispatch" button, now "free"
-    static public final int CONSCOLUMN = 6;  // consist state
-    static public final int DIRCOLUMN  = 7;
+//    static public final int ESTOPCOLUMN = 1;
+    static public final int ADDRCOLUMN = 1;
+    static public final int SPDCOLUMN  = 2;
+    static public final int STATCOLUMN = 3;  // status: free, common, etc
+//    static public final int DISPCOLUMN = 5;  // originally "dispatch" button, now "free"
+//    static public final int CONSCOLUMN = 4;  // consist state
+    static public final int DIRCOLUMN  = 4;
 
-    static public final int NUMCOLUMN = 8;
+    static public final int NUMCOLUMN = 5;
 
     SprogSlotMonDataModel(int row, int column) {
       // connect to SprogSlotManager for updates
@@ -71,13 +71,13 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
     public String getColumnName(int col) {
         switch (col) {
         case SLOTCOLUMN: return "Slot";
-        case ESTOPCOLUMN: return "";     // no heading, as button is clear
+//        case ESTOPCOLUMN: return "";     // no heading, as button is clear
         case ADDRCOLUMN: return "Address";
         case SPDCOLUMN: return "Speed";
         case STATCOLUMN: return "Use";
-        case CONSCOLUMN: return "Consisted";
+//        case CONSCOLUMN: return "Consisted";
         case DIRCOLUMN: return "Dir";
-        case DISPCOLUMN: return "";     // no heading, as button is clear
+//        case DISPCOLUMN: return "";     // no heading, as button is clear
         default: return "unknown";
         }
     }
@@ -88,12 +88,12 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
         case ADDRCOLUMN:
         case SPDCOLUMN:
         case STATCOLUMN:
-        case CONSCOLUMN:
+//        case CONSCOLUMN:
         case DIRCOLUMN:
             return String.class;
-        case ESTOPCOLUMN:
-        case DISPCOLUMN:
-            return JButton.class;
+//        case ESTOPCOLUMN:
+//        case DISPCOLUMN:
+//            return JButton.class;
         default:
             return null;
         }
@@ -101,9 +101,9 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
 
     public boolean isCellEditable(int row, int col) {
         switch (col) {
-        case ESTOPCOLUMN:
-        case DISPCOLUMN:
-            return true;
+//        case ESTOPCOLUMN:
+//        case DISPCOLUMN:
+//            return true;
         default:
             return false;
         }
@@ -119,8 +119,8 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
         switch (col) {
         case SLOTCOLUMN:  // slot number
             return new Integer(slotNum(row));
-        case ESTOPCOLUMN:  //
-            return "E Stop";          // will be name of button in default GUI
+//        case ESTOPCOLUMN:  //
+//            return "E Stop";          // will be name of button in default GUI
         case ADDRCOLUMN:  //
             return new Integer(s.locoAddr());
         case SPDCOLUMN:  //
@@ -134,12 +134,12 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
             case SprogConstants.SLOT_FREE: 	return "Free";
             default: 	                        return "<error>";
             }
-        case CONSCOLUMN:  //
-            return "<n/a>";
-        case DISPCOLUMN:  //
-            return "Free";          // will be name of button in default GUI
+//        case CONSCOLUMN:  //
+//            return "<n/a>";
+//        case DISPCOLUMN:  //
+//            return "Free";          // will be name of button in default GUI
         case DIRCOLUMN:  //
-            return (s.isForward() ? "F" : "R");
+            return (s.isForward() ? "Fwd" : "Rev");
 
         default:
             log.error("internal state inconsistent with table requst for "+row+" "+col);
@@ -151,20 +151,20 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
         switch (col) {
         case SLOTCOLUMN:
             return new JTextField(3).getPreferredSize().width;
-        case ESTOPCOLUMN:
-            return new JButton("E Stop").getPreferredSize().width;
+//        case ESTOPCOLUMN:
+//            return new JButton("E Stop").getPreferredSize().width;
         case ADDRCOLUMN:
             return new JTextField(5).getPreferredSize().width;
         case SPDCOLUMN:
             return new JTextField(6).getPreferredSize().width;
         case STATCOLUMN:
             return new JTextField(6).getPreferredSize().width;
-        case CONSCOLUMN:
-            return new JTextField(4).getPreferredSize().width;
+//        case CONSCOLUMN:
+//            return new JTextField(4).getPreferredSize().width;
         case DIRCOLUMN:
             return new JTextField(3).getPreferredSize().width;
-        case DISPCOLUMN:
-            return new JButton("Free").getPreferredSize().width;
+//        case DISPCOLUMN:
+//            return new JButton("Free").getPreferredSize().width;
         default:
             return new JLabel(" <unknown> ").getPreferredSize().width;
         }
@@ -177,14 +177,14 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
             log.error("slot pointer was null for slot row: "+row+" col: "+col);
             return;
         }
-        if (col == ESTOPCOLUMN) {
-            log.debug("Start estop in slot "+row);
-            SprogSlotManager.instance().estopSlot(row);
-        }
-        else if (col == DISPCOLUMN) {
-            log.debug("Start freeing slot "+row);
-            fireTableRowsUpdated(row,row);
-        }
+//        if (col == ESTOPCOLUMN) {
+//            log.debug("Start estop in slot "+row);
+//            SprogSlotManager.instance().estopSlot(row);
+//        }
+//        else if (col == DISPCOLUMN) {
+//            log.debug("Start freeing slot "+row);
+//            fireTableRowsUpdated(row,row);
+//        }
     }
 
     /**
@@ -207,42 +207,42 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
         }
         slotTable.sizeColumnsToFit(-1);
 
-        // install a button renderer & editor in the "DISP" column for freeing a slot
-        setColumnToHoldButton(slotTable, SprogSlotMonDataModel.DISPCOLUMN);
-
-        // install a button renderer & editor in the "ESTOP" column for stopping a loco
-        setColumnToHoldEStopButton(slotTable, SprogSlotMonDataModel.ESTOPCOLUMN);
+//        // install a button renderer & editor in the "DISP" column for freeing a slot
+//        setColumnToHoldButton(slotTable, SprogSlotMonDataModel.DISPCOLUMN);
+//
+//        // install a button renderer & editor in the "ESTOP" column for stopping a loco
+//        setColumnToHoldEStopButton(slotTable, SprogSlotMonDataModel.ESTOPCOLUMN);
     }
 
-    void setColumnToHoldButton(JTable slotTable, int column) {
-        TableColumnModel tcm = slotTable.getColumnModel();
-        // install the button renderers & editors in this column
-        ButtonRenderer buttonRenderer = new ButtonRenderer();
-        tcm.getColumn(column).setCellRenderer(buttonRenderer);
-        TableCellEditor buttonEditor = new ButtonEditor(new JButton());
-        tcm.getColumn(column).setCellEditor(buttonEditor);
-        // ensure the table rows, columns have enough room for buttons
-        slotTable.setRowHeight(new JButton("  "+getValueAt(1, column)).getPreferredSize().height);
-        slotTable.getColumnModel().getColumn(column)
-			.setPreferredWidth(new JButton("  "+getValueAt(1, column)).getPreferredSize().width);
-    }
-
-    void setColumnToHoldEStopButton(JTable slotTable, int column) {
-        TableColumnModel tcm = slotTable.getColumnModel();
-        // install the button renderers & editors in this column
-        ButtonRenderer buttonRenderer = new ButtonRenderer();
-        tcm.getColumn(column).setCellRenderer(buttonRenderer);
-        TableCellEditor buttonEditor = new ButtonEditor(new JButton()){
-            public void mousePressed(MouseEvent e) {
-                stopCellEditing();
-            }
-        };
-        tcm.getColumn(column).setCellEditor(buttonEditor);
-        // ensure the table rows, columns have enough room for buttons
-        slotTable.setRowHeight(new JButton("  "+getValueAt(1, column)).getPreferredSize().height);
-        slotTable.getColumnModel().getColumn(column)
-			.setPreferredWidth(new JButton("  "+getValueAt(1, column)).getPreferredSize().width);
-    }
+//    void setColumnToHoldButton(JTable slotTable, int column) {
+//        TableColumnModel tcm = slotTable.getColumnModel();
+//        // install the button renderers & editors in this column
+//        ButtonRenderer buttonRenderer = new ButtonRenderer();
+//        tcm.getColumn(column).setCellRenderer(buttonRenderer);
+//        TableCellEditor buttonEditor = new ButtonEditor(new JButton());
+//        tcm.getColumn(column).setCellEditor(buttonEditor);
+//        // ensure the table rows, columns have enough room for buttons
+//        slotTable.setRowHeight(new JButton("  "+getValueAt(1, column)).getPreferredSize().height);
+//        slotTable.getColumnModel().getColumn(column)
+//			.setPreferredWidth(new JButton("  "+getValueAt(1, column)).getPreferredSize().width);
+//    }
+//
+//    void setColumnToHoldEStopButton(JTable slotTable, int column) {
+//        TableColumnModel tcm = slotTable.getColumnModel();
+//        // install the button renderers & editors in this column
+//        ButtonRenderer buttonRenderer = new ButtonRenderer();
+//        tcm.getColumn(column).setCellRenderer(buttonRenderer);
+//        TableCellEditor buttonEditor = new ButtonEditor(new JButton()){
+//            public void mousePressed(MouseEvent e) {
+//                stopCellEditing();
+//            }
+//        };
+//        tcm.getColumn(column).setCellEditor(buttonEditor);
+//        // ensure the table rows, columns have enough room for buttons
+//        slotTable.setRowHeight(new JButton("  "+getValueAt(1, column)).getPreferredSize().height);
+//        slotTable.getColumnModel().getColumn(column)
+//			.setPreferredWidth(new JButton("  "+getValueAt(1, column)).getPreferredSize().width);
+//    }
 
     // methods to communicate with SprogSlotManager
     public synchronized void notifyChangedSlot(SprogSlot s) {
