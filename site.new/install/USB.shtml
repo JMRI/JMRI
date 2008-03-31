@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: USB.shtml,v 1.1 2008-03-30 07:13:41 jacobsen Exp $ -->
+<!-- $Id: USB.shtml,v 1.2 2008-03-31 05:46:43 jacobsen Exp $ -->
 <html lang="en">
 <HEAD>
         <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
@@ -37,6 +37,7 @@ small modifications and compile it with Java 1.4, but we haven't done that)
 Windows XP and later: Download and install
 the 
 <a href="http://downloads.sourceforge.net/libusb-win32/libusb-win32-filter-bin-0.1.12.1.exe?modtime=1174387137&big_mirror=0">libusb-win32 installer</a>.
+This is called the "filter mode driver", and it's the one you want.
 
 <p>
 Ubuntu Linux: Start by opening<p>
