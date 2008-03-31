@@ -7,7 +7,7 @@
 # Adapted from <http://www.oreilly.com/pub/a/mac/2003/02/25/apple_scripting.html>
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 #
 #
 
@@ -20,7 +20,10 @@ import com.apple.cocoa.foundation.NSMutableDictionary
 # "untitled folder" on the Desktop.  Yes, that's not an important thing
 # to do, but it's a good example.
 
-script = "tell application \"Finder\"\n make new folder at desktop\nend tell\n"
+script = \
+"tell application \"Finder\"\n"+ \
+"  make new folder at desktop\n"+ \
+"end tell\n"
 
 # Create an NSAppleScript object to execute our script
 myScript = com.apple.cocoa.foundation.NSAppleScript(script);
