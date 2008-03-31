@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.29 2008-03-30 21:27:55 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.30 2008-03-31 15:29:43 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -226,6 +226,8 @@
 	<LI>Seth Neumann, who provided information on Wangrow decoders
 <a name="O"></A>
 	<LI>Glen Oberhauser, who added LocoNet throttles
+	<li>David Phillip Oster provided key information and a useful tool
+	    to help get USB working on MacOS X
 <a name="P"></A>
 	<LI>Howard G. Penny provided info on the NCE D14SR decoder, then went on to 
 	become an active developer, including providing the code for indexed CVs (ala QSI),
