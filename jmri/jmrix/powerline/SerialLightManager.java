@@ -6,15 +6,13 @@ import jmri.AbstractLightManager;
 import jmri.Light;
 
 /**
- * Implement light manager for SECSI serial systems
+ * Implement light manager for powerline serial systems
  * <P>
- * System names are "TLnnn", where nnn is the bit number without padding.
- * <P>
- * Based in part on SerialTurnoutManager.java
+ * System names are "PLnnn", where nnn is the bit number without padding.
  *
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SerialLightManager extends AbstractLightManager {
 
