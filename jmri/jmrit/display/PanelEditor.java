@@ -2,6 +2,8 @@ package jmri.jmrit.display;
 
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JmriJFrame;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -47,7 +49,7 @@ import java.util.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003, 2007
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.80 $
+ * @version $Revision: 1.81 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -62,6 +64,7 @@ public class PanelEditor extends JmriJFrame {
     final public static Integer SIGNALS   = new Integer(9);
     final public static Integer SENSORS   = new Integer(10);
     final public static Integer CLOCK     = new Integer(10);
+    final public static Integer MARKERS   = new Integer(10); 		
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
     static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
@@ -683,6 +686,8 @@ public class PanelEditor extends JmriJFrame {
 
         setNextLocation(l);
         putTurnout(l);
+        // always allow new items to be moved
+        l.setPositionable(true);
         moveToFront(l);
     }
     void addTurnoutL() {
@@ -698,9 +703,37 @@ public class PanelEditor extends JmriJFrame {
 
         setNextLocation(l);
         putTurnout(l);
+        // always allow new items to be moved
+        l.setPositionable(true);
         moveToFront(l);
     }
     public void putTurnout(TurnoutIcon l) {
+        l.invalidate();
+        target.add(l, l.getDisplayLevel());
+        configureItem(l);
+        contents.add(l);
+        // reshow the panel
+        target.validate();
+    }
+    
+    void addLocoIcon(){
+    	String name = JOptionPane.showInputDialog("Enter loco ID", "");
+    	addLocoIcon(name);
+    }
+    
+    void addLocoIcon (String name){
+    	LocoIcon l = new LocoIcon();
+        setNextLocation(l);
+        putLocoIcon(l, name);
+        // always allow new items to be moved
+        l.setPositionable(true);
+        moveToFront(l);
+     }
+    
+    public void putLocoIcon(LocoIcon l, String name) {
+    	l.setText(name);
+        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
+        l.setHorizontalTextPosition(SwingConstants.CENTER);
         l.invalidate();
         target.add(l, l.getDisplayLevel());
         configureItem(l);
@@ -739,6 +772,8 @@ public class PanelEditor extends JmriJFrame {
         l.setSensor(nextSensor.getText());
         setNextLocation(l);
         putSensor(l);
+        // always allow new items to be moved
+        l.setPositionable(true);
         moveToFront(l);
     }
     public void putSensor(SensorIcon l) {
@@ -766,6 +801,8 @@ public class PanelEditor extends JmriJFrame {
     public void addMultiSensor(MultiSensorIcon l) {
         setNextLocation(l);
         putMultiSensor(l);
+        // always allow new items to be moved
+        l.setPositionable(true);
         moveToFront(l);
     }
     // invoked to install the sensor
@@ -794,6 +831,8 @@ public class PanelEditor extends JmriJFrame {
         l.setSignalHead(nextSignalHead.getText());
         setNextLocation(l);
         putSignal(l);
+        // always allow new items to be moved
+        l.setPositionable(true);
         moveToFront(l);
     }
     public void putSignal(SignalHeadIcon l) {
@@ -815,6 +854,8 @@ public class PanelEditor extends JmriJFrame {
         l.setDisplayLevel(CLOCK);
         setNextLocation(l);
         putClock(l);
+        // always allow new items to be moved
+        l.setPositionable(true);
         moveToFront(l);
     }
     public void putClock(AnalogClock2Display c) {
@@ -838,6 +879,8 @@ public class PanelEditor extends JmriJFrame {
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(LABELS);
         putLabel(l);
+        // always allow new items to be moved
+        l.setPositionable(true);
         moveToFront(l);
     }
     public void putLabel(PositionableLabel l) {
@@ -855,6 +898,8 @@ public class PanelEditor extends JmriJFrame {
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(MEMORIES);
         putLabel(l);
+        // always allow new items to be moved
+        l.setPositionable(true);
         moveToFront(l);
     }
     
@@ -865,6 +910,8 @@ public class PanelEditor extends JmriJFrame {
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(REPORTERS);
         putLabel(l);
+        // always allow new items to be moved
+        l.setPositionable(true);
         moveToFront(l);
     }
     
@@ -874,6 +921,8 @@ public class PanelEditor extends JmriJFrame {
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(SENSORS);
         putLabel(l);
+        // always allow new items to be moved
+        l.setPositionable(true);
         moveToFront(l);
     }
     
@@ -886,6 +935,8 @@ public class PanelEditor extends JmriJFrame {
         setNextLocation(l);
         l.setDisplayLevel(ICONS);
         putLabel(l);
+        // always allow new items to be moved
+        l.setPositionable(true);
         moveToFront(l);
     }
 
@@ -1098,9 +1149,7 @@ public class PanelEditor extends JmriJFrame {
         return editableBox.isSelected();
     }
     public boolean isPositionable() {
-    	// always allow new panel items to be repositioned
-    	return true;
- //       return positionableBox.isSelected();
+        return positionableBox.isSelected();
     }
     public boolean isShowCoordinates() {
         return showCoordinatesBox.isSelected();
@@ -1199,6 +1248,20 @@ public class PanelEditor extends JmriJFrame {
                 }
             });
         targetFrame.setJMenuBar(menuBar);
+        // add maker menu
+        JMenu markerMenu = new JMenu(rb.getString("MenuMarker"));
+        menuBar.add(markerMenu);
+        markerMenu.add(new AbstractAction(rb.getString("AddLoco")){
+        	public void actionPerformed(ActionEvent e) {
+        		addLocoIcon();
+            }
+        });
+        markerMenu.add(new AbstractAction(rb.getString("AddLocoRoster")){
+        	public void actionPerformed(ActionEvent e) {
+        		locoMarkerFromRoster();
+            }
+        });
+         
         targetFrame.addHelpMenu("package.jmri.jmrit.display.PanelTarget", true);
 
         // show menubar?
@@ -1212,6 +1275,40 @@ public class PanelEditor extends JmriJFrame {
         return targetFrame;
 
     }
+    
+    javax.swing.JLabel text = new javax.swing.JLabel();
+    javax.swing.JComboBox rosterBox = Roster.instance().fullRosterComboBox();
+	
+    public void locoMarkerFromRoster(){
+    	JmriJFrame rf = new JmriJFrame();
+    	rf.setLayout(new FlowLayout());
+    	rf.setTitle("Loco Marker from Roster");
+    	text.setText ("Select loco:");
+    	rf.add(text);
+		rosterBox.insertItemAt("", 0);
+		rosterBox.setSelectedIndex(0);
+    	rosterBox.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				selectLoco();
+			}
+		});
+    	rf.add(rosterBox);
+    	rf.pack();
+    	rf.setLocationRelativeTo(null);
+    	rf.setVisible(true);	
+    	
+    }
+    
+    public void selectLoco(){
+		String rosterEntryTitle = rosterBox.getSelectedItem().toString();
+		if (rosterEntryTitle == "")
+			return;
+		RosterEntry entry = Roster.instance().entryFromTitle(rosterEntryTitle);
+		String rn = entry.getRoadNumber();
+		if (rn != null) {
+			addLocoIcon(rn);
+		}
+     }
 
     /**
      * Internal method to move a component to the front
