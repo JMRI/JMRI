@@ -12,7 +12,6 @@
 	<classpathentry kind="lib" path="lib/junit.jar"/>
 	<classpathentry kind="lib" path="lib/jython.jar"/>
 	<classpathentry kind="lib" path="lib/MRJAdapter.jar"/>
-	<classpathentry kind="lib" path="/System/Library/Java"/>
 	<classpathentry kind="lib" path="lib/jinput.jar"/>
 	<classpathentry kind="lib" path="lib/ch.ntb.usb.jar"/>
 	<classpathentry kind="lib" path="lib/Serialio.jar"/>
