@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.5.shtml,v 1.17 2008-04-02 16:24:05 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.5.shtml,v 1.18 2008-04-02 17:44:31 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -298,7 +298,7 @@ Following a suggestion from James Lefevre and David Duchamp,
 added AppleScript capability on MacOS X.
 
 <p>
-Dan Boudreau fixed a bug with regards to the "all panel items can be repositioned" checkbox.  Unfortunately in JMRI 2.0 the program stores
+Dan Boudreau fixed a bug with regards to the "all panel items can be repositioned" checkbox.  Unfortunately starting with JMRI 2.0 the program stores
 the checkbox as always enabled.  Therefore the next time you load the panel
 you would find the checkbox enabled. This is now fixed, so that the status of the checkbox
 is properly stored.  To fix it in existing files, just load and store the file again.
