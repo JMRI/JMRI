@@ -49,7 +49,7 @@ import java.util.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003, 2007
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.81 $
+ * @version $Revision: 1.82 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -716,11 +716,6 @@ public class PanelEditor extends JmriJFrame {
         target.validate();
     }
     
-    void addLocoIcon(){
-    	String name = JOptionPane.showInputDialog("Enter loco ID", "");
-    	addLocoIcon(name);
-    }
-    
     void addLocoIcon (String name){
     	LocoIcon l = new LocoIcon();
         setNextLocation(l);
@@ -1253,7 +1248,7 @@ public class PanelEditor extends JmriJFrame {
         menuBar.add(markerMenu);
         markerMenu.add(new AbstractAction(rb.getString("AddLoco")){
         	public void actionPerformed(ActionEvent e) {
-        		addLocoIcon();
+        		locoMarkerFromInput();
             }
         });
         markerMenu.add(new AbstractAction(rb.getString("AddLocoRoster")){
@@ -1276,10 +1271,19 @@ public class PanelEditor extends JmriJFrame {
 
     }
     
+    /**
+     * Internal method to move a component to the front
+     * of it's level, used when each item is added.
+     */
+    void moveToFront(Component l) {
+        target.moveToFront(l);
+        target.revalidate();
+    }
+    
     javax.swing.JLabel text = new javax.swing.JLabel();
     javax.swing.JComboBox rosterBox = Roster.instance().fullRosterComboBox();
 	
-    public void locoMarkerFromRoster(){
+    void locoMarkerFromRoster(){
     	JmriJFrame rf = new JmriJFrame();
     	rf.setLayout(new FlowLayout());
     	rf.setTitle("Loco Marker from Roster");
@@ -1294,31 +1298,49 @@ public class PanelEditor extends JmriJFrame {
 		});
     	rf.add(rosterBox);
     	rf.pack();
-    	rf.setLocationRelativeTo(null);
     	rf.setVisible(true);	
-    	
     }
     
-    public void selectLoco(){
+    javax.swing.JLabel textId = new javax.swing.JLabel();
+    javax.swing.JButton okay = new javax.swing.JButton();
+    javax.swing.JTextField locoId = new javax.swing.JTextField(7);
+    
+    void locoMarkerFromInput(){
+    	JmriJFrame f = new JmriJFrame();
+    	f.setLayout(new FlowLayout());
+    	f.setTitle("Enter Loco Marker");
+    	textId.setText ("Loco ID:");
+    	f.add(textId);
+    	f.add(locoId);
+    	okay.setText("OK");
+       	okay.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				inputLoco();
+			}
+		});
+    	f.add(okay);
+    	f.pack();
+    	f.setVisible(true);
+    }
+    
+    void selectLoco(){
 		String rosterEntryTitle = rosterBox.getSelectedItem().toString();
 		if (rosterEntryTitle == "")
 			return;
 		RosterEntry entry = Roster.instance().entryFromTitle(rosterEntryTitle);
+		// try getting road number, else use DCC address
 		String rn = entry.getRoadNumber();
-		if (rn != null) {
+		if (rn.equals("")) 
+			rn = entry.getDccAddress();
+		if (rn != null)
 			addLocoIcon(rn);
-		}
+     }
+    
+    void inputLoco(){
+    	String name = locoId.getText();
+    	addLocoIcon(name);
      }
 
-    /**
-     * Internal method to move a component to the front
-     * of it's level, used when each item is added.
-     */
-    void moveToFront(Component l) {
-        target.moveToFront(l);
-        target.revalidate();
-    }
-    
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PanelEditor.class.getName());
 }
