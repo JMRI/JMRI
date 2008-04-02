@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.4.shtml,v 1.13 2008-03-09 01:46:15 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.4.shtml,v 1.14 2008-04-02 15:59:25 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -97,7 +97,7 @@ In JMRI 2.1.1, when you went to load a panel file, only files with a ".xml" file
 
 <p>JMRI is moving toward requiring Java 1.4 or later.  Certain new features may not work if you are using an earlier
 version of Java.  To see JMRI's future plans for this and other compatibility issues, please see the JMRI
-<a href="http://jmri.sourceforge.net/doc/Technical/TechRoadMap.shtml">technology roadmap</a>.
+<a href="http://jmri.sourceforge.net/help/en/html/doc/Technical/TechRoadMap.shtml">technology roadmap</a>.
 
 <p>JMRI no longer supports NCE AIU broadcasts. This change was needed so that JMRI could reliably read certain CV values. We recommend that if you use NCE AIUs, that you upgrade the command station EPROM to version 2007 or newer and turn off AIU broadcasts. Code has been added to detect if AIU broadcasts are enabled, and a warning message will appear at startup requesting that AIU broadcasts be turned off for proper operation of the JMRI programs.
 
