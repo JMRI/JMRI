@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.5.shtml,v 1.16 2008-04-02 15:59:16 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.5.shtml,v 1.17 2008-04-02 16:24:05 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -297,8 +297,16 @@ decoders, which take longer to erase.
 Following a suggestion from James Lefevre and David Duchamp, 
 added AppleScript capability on MacOS X.
 
+<p>
+Dan Boudreau fixed a bug with regards to the "all panel items can be repositioned" checkbox.  Unfortunately in JMRI 2.0 the program stores
+the checkbox as always enabled.  Therefore the next time you load the panel
+you would find the checkbox enabled. This is now fixed, so that the status of the checkbox
+is properly stored.  To fix it in existing files, just load and store the file again.
 
-<hr class="hide">
+<p>
+Dan Boudreau added a new menu item called markers to panels. This allows a user to display an icon representing, for example, a locomotive and the move it around to indicate the locomotive's current position.  The user can either directly name the loco icon, or use their roster to get the loco road number.  This icon is different then other panel elements in that it currently doesn’t get saved, and is always movable.  There are four color choices for the icon itself, and the text can be colored and resized as desired.
+
+
 <!--#include virtual="/Footer" -->
 
    </div><!-- closes #mainContent-->
