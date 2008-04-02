@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: USBtoSerial.shtml,v 1.4 2008-04-01 14:59:45 jacobsen Exp $ -->
+<!-- $Id: USBtoSerial.shtml,v 1.5 2008-04-02 16:16:42 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI Hardware Guide: Use of USB to Serial adapters</TITLE>
@@ -63,8 +63,9 @@ can't provide. It also requires power to be supplied via the RS232
 control leads.
 <P>The Keyspan 19HS adapters are known to work with the MS100. We've
 gotten reports of success from Windows 98, Windows XP, and MacOS 9
-users. (Note that the MS100 doesn't work with MacOS X; this is not a USB
-adapter issue) You'll have to get a special cable to connect the 9-pin
+users. 
+(Note that the MS100 doesn't work with MacOS X or many Windows Vista machines; 
+this is not a USB adapter issue) You'll have to get a special cable to connect the 9-pin
 connector on the Keyspan adapter to the 25-pin connector on the MS100.</P>
 <P>Note that using a LocoBuffer is highly recommended instead of
 trying to get a MS100 to work!</P>

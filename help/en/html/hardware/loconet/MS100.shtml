@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: MS100.shtml,v 1.1 2008-01-13 04:24:44 jacobsen Exp $ -->
+<!-- $Id: MS100.shtml,v 1.2 2008-04-02 16:16:43 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -49,11 +49,11 @@ company, based in part on the original LocoBuffer design.
 	  <p>In MS100 mode, the program attempts to open the port at 16600
 	  baud, the LocoNet rate.  If this fails, it attempts to open the
 	  port at 16457 baud, which is a standard rate that's close enough
-	  to work.  If this also fails, the program pops a dialog box to
-	  tell you that it can't set the port to a usable baud rate.  This
-	  will always happen on MacOS X, which is why the <b>MS100 can't be
-	  used with MacOS X</b>.  It has also happened on some computers with
-	  Intel-based hardware.  Because we can't be sure your computer
+	  to work.  If this also fails, the won't be able to talk to the 
+	  LocoNet through the MS100.
+	  Because neither of these rates are available, <b>the MS100 can't be
+	  used with MacOS X or most Windows Vista machines</b>.  
+	  Because we can't be sure your computer
 	  will be able to talk to a MS100 without trying it, you should
 	  test this before spending money on the MS100. To do that:</p>
 	  <UL>
