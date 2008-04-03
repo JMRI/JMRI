@@ -25,10 +25,12 @@ import jmri.jmrix.powerline.SerialSensorManager;
  * with it.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SpecificTrafficController extends SerialTrafficController {
 
+	private boolean cmdOutstanding;
+	
 	public SpecificTrafficController() {
         super();
         logDebug = log.isDebugEnabled();
@@ -115,6 +117,7 @@ public class SpecificTrafficController extends SerialTrafficController {
         m.setElement(21, 0xFF&(m.getElement(17)+m.getElement(18)+m.getElement(19)+m.getElement(20)) ); // checksum
                
         sendSerialMessage(m, l);
+        cmdOutstanding = true;
         
     }
     
@@ -145,11 +148,38 @@ public class SpecificTrafficController extends SerialTrafficController {
      * @return true if the reply is complete
      */
     protected boolean endOfMessage(AbstractMRReply msg) {
-        // overly simplistic, we just cut the message when
-        // it gets a non-FF byte
-        if ( (msg.getElement(msg.getNumDataElements()-1)&0xFF) == 0xFF) return false;
-        log.debug("end of message: "+msg);
-        return true;
+        // count number of FF bytes
+        // if 16 FF, byte 17 is 0x01, expect total of 22 bytes, direct msg
+    	// if 16 FF, byte 17 is 0x02, expect total of 21 bytes, clock msg
+    	// if 16 FF, byte 17 is 0x03, expect total of 28 bytes, timer msg
+    	// if 16 FF, byte 17 is 0x03, expect total of 22 bytes, graphic msg
+    	// if 16 FF, byte 17 is 0x04, expect total of 18 bytes, time/housecode msg
+    	// if 6 FF, byte 7 is 0x00, means AC line was off
+    	// if 6 FF, byte 7 is 0x01, means Ack of cmd, if command just sent
+    	// if 6 FF, byte 7 is 0x01 or 0x00, but 12 bytes total is record of command on AC line
+		int syncCount = 0;
+		for (int i = 0; i < msg.getNumDataElements(); i++) {
+			if ((msg.getElement(i) & 0xFF) == 0xFF) {
+				syncCount++;
+			} else {
+				break;
+			}
+		}
+    	if (cmdOutstanding) {
+    		if (syncCount == 6) {
+        		if (msg.getNumDataElements() == 7) {
+        			cmdOutstanding = false;
+        			return true;
+        		}
+    		}
+    	} else {
+    		if (syncCount == 6) {
+        		if (msg.getNumDataElements() == 12) {
+        			return true;
+        		}
+    		}
+    	}
+        return false;
     }
     
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SpecificTrafficController.class.getName());

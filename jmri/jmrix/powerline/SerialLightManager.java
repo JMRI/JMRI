@@ -12,7 +12,7 @@ import jmri.Light;
  *
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SerialLightManager extends AbstractLightManager {
 
@@ -27,9 +27,7 @@ public class SerialLightManager extends AbstractLightManager {
     
     /**
      * Method to create a new Light based on the system name
-     * Returns null if the system name is not in a valid format or
-     *    if the system name does not correspond to a configured
-     *    C/MRI digital output bit
+     * Returns null if the system name is not in a valid format
      * Assumes calling method has checked that a Light with this
      *    system name does not already exist
      */
