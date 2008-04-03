@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PanelTarget.shtml,v 1.4 2008-04-02 18:57:06 dan_boudreau Exp $ -->
+<!-- $Id: PanelTarget.shtml,v 1.5 2008-04-03 18:21:19 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Panel Help</TITLE>
@@ -85,18 +85,19 @@ responds with the known state of the turnout.</P>
 The panel menu includes an item called "Marker". You can use a marker to
 represent a locomotive or other device on your panel. You can move the
 marker around the panel to show the locomotive's current position.
-Markers are always moveable, and their popup menus are always active.
-However, markers don't get saved when you store your panels. To create a
-marker, select "Add loco" or "Add loco from roster" from the "Marker"
-menu. The "Add loco from roster" will use the road number from your
-roster file as the label; if the road number wasn't entered when you
-created your roster, the program will display the DCC address of the
-loco. 
-<P>
-The marker's popup menu allows you to change the marker's color,
-font size, style, and  color. The menu also allows you to remove the marker
-from the panel.
+Markers are always moveable, and their popup menus are always active. To
+create a marker, select "Add loco" or "Add loco from roster" from the
+"Marker" menu. The "Add loco from roster" will use the road number from
+your roster file as the label; if the road number wasn't entered when
+you created your roster, the program will display the DCC address of the
+loco. To remove markers from your panel, use the "Remove markers" menu
+item.
+<P>The marker's popup menu allows you to change the marker's color,
+font size, style, and color. The menu also allows you to remove the
+marker from the panel.
 
+<P>If you want to keep your markers between operating sesssions, you
+can save the panel and the markers will be saved to your panel file. 
 
 <!--#include virtual="/Footer" -->
 </BODY>
