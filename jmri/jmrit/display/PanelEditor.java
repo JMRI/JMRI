@@ -49,7 +49,7 @@ import java.util.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003, 2007
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.82 $
+ * @version $Revision: 1.83 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -719,16 +719,16 @@ public class PanelEditor extends JmriJFrame {
     void addLocoIcon (String name){
     	LocoIcon l = new LocoIcon();
         setNextLocation(l);
-        putLocoIcon(l, name);
+        l.setText(name);
+        putLocoIcon(l);
         // always allow new items to be moved
         l.setPositionable(true);
         moveToFront(l);
      }
     
-    public void putLocoIcon(LocoIcon l, String name) {
-    	l.setText(name);
-        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
+    public void putLocoIcon(LocoIcon l) {
         l.setHorizontalTextPosition(SwingConstants.CENTER);
+    	l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.invalidate();
         target.add(l, l.getDisplayLevel());
         configureItem(l);
@@ -1256,6 +1256,11 @@ public class PanelEditor extends JmriJFrame {
         		locoMarkerFromRoster();
             }
         });
+        markerMenu.add(new AbstractAction(rb.getString("RemoveMarkers")){
+        	public void actionPerformed(ActionEvent e) {
+        		removeMarkers();
+            }
+        });
          
         targetFrame.addHelpMenu("package.jmri.jmrit.display.PanelTarget", true);
 
@@ -1279,6 +1284,27 @@ public class PanelEditor extends JmriJFrame {
         target.moveToFront(l);
         target.revalidate();
     }
+    
+    /**
+     * Remove marker icons from panel
+     */
+    void removeMarkers() {
+		log.debug("Remove markers");
+		for (int i = 0; i < contents.size(); i++) {
+			try {
+				LocoIcon il = (LocoIcon) contents.get(i);
+				if (il != null) {
+					if (il.isActive()) {
+						il.remove();
+						il.dispose();
+					}
+				}
+			} catch (Exception e) {
+
+			}
+
+		}
+	}
     
     javax.swing.JLabel text = new javax.swing.JLabel();
     javax.swing.JComboBox rosterBox = Roster.instance().fullRosterComboBox();
