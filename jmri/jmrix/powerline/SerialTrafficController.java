@@ -26,7 +26,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * communicate with an adapter.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -127,7 +127,10 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
                 return(nodeArray[i]);
             }
         }
-    	return (null);
+        // as a temporary measure, if all else fails, return node 0
+        if (nodeArray[0] == null) 
+        registerSerialNode(new SerialNode());
+        return nodeArray[0];
     }
 
     /**

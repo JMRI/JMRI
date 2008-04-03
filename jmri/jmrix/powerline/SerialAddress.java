@@ -23,15 +23,15 @@ import java.util.regex.*;
  * @author	Dave Duchamp, Copyright (C) 2004
  * @author  Bob Jacobsen, Copyright (C) 2006, 2007, 2008
  * @author Ken Cameron, Copyright (C) 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class SerialAddress {
 
 	private static  Matcher hCodes = Pattern.compile("^P[LTS]([A-P])(\\d++)$").matcher("");
 	private static	Matcher nCodes = Pattern.compile("^P[LTS](\\d++)$").matcher("");
 	private static	Matcher aCodes = Pattern.compile("^P[LTS].*$").matcher("");
-	private static	Character minHouseCode = 'A';
-	private static	Character maxHouseCode = 'P';
+	private static	char minHouseCode = 'A';
+	private static	char maxHouseCode = 'P';
 
     public SerialAddress() {
     }
@@ -41,49 +41,7 @@ public class SerialAddress {
      *  Note:  Returns 'NULL' if illegal systemName format or if the node is not found
      */
     public static SerialNode getNodeFromSystemName(String systemName) {
-        // validate the system Name leader characters
-    	if ( !aCodes.reset(systemName).matches() ) {
-            // here if an illegal format 
-            log.error("illegal character in header field of system name: " + systemName);
-            return (null);
-        }
-        int ua = -1;
-        if (nCodes.reset(systemName).matches() && nCodes.groupCount() == 1) {
-            // This is a PLxxx address
-            int num = Integer.parseInt(nCodes.group(1)) - 1;
-            if (num > 0) {
-                ua = num / 16;
-            } else {
-                log.error("invalid system name: " + systemName);
-                return (null);
-            }
-        }
-        if (hCodes.reset(systemName).matches() && hCodes.groupCount() == 2) {
-        	String s = hCodes.group(1);
-            if (s.length() == 0) {
-                log.error("no house code in system name: " + systemName);
-                return (null);
-            }
-            if (s.length() != 1) {
-                log.error("house code too big in system name: " + systemName);
-                return (null);
-            }
-            if ((int)s.charAt(0) >= (int)minHouseCode && (int) s.charAt(0) <= (int)maxHouseCode) {
-                log.error("house code: " + s.charAt(0) + " invalid in system name: " + systemName);
-            	return (null);
-            }
-            try {
-                ua = (int)s.charAt(0) - (int)minHouseCode;
-            }
-            catch (Exception e) {
-                log.error("illegal character in system name: " + systemName);
-                return (null);
-            }
-        }
-        if (ua < 0 || ua > 15) {
-        	log.error("House Code out of range: " + systemName);
-        }
-        return (SerialTrafficController.instance().getNodeFromAddress(ua));
+        return (SerialTrafficController.instance().getNodeFromAddress(0));
     }
     
     /**
@@ -102,7 +60,7 @@ public class SerialAddress {
         if (nCodes.reset(systemName).matches() && nCodes.groupCount() == 1) {
             // name must be PLnnn format
             try {
-                num = (Integer.parseInt(nCodes.group(1)) - 1) & 0x0F;
+                num = (Integer.parseInt(nCodes.group(1)));
             }
             catch (Exception e) {
                 log.error("illegal character in unit number field of system name: " + systemName);
@@ -112,14 +70,14 @@ public class SerialAddress {
         if (hCodes.reset(systemName).matches() && hCodes.groupCount() == 2){
             // This is a PLaxx address
             try {
-                num = (Integer.parseInt(hCodes.group(2)) - 1) & 0x0F;
+                num = 16*(hCodes.group(1).charAt(0)-minHouseCode) + ((Integer.parseInt(hCodes.group(2))) & 0x0F);
             }
             catch (Exception e) {
                 log.error("illegal character in unit number field system name: " + systemName);
                 return (0);
             }
         }
-        if (num < 0 || num > 15) {
+        if (num < 1 || num > 256) {
             log.error("invalid system name: " + systemName);
             return (0);
         }
@@ -164,14 +122,14 @@ public class SerialAddress {
             }
             int num;
             try {
-                num = Integer.parseInt(hCodes.group(2)) - 1;
+                num = Integer.parseInt(hCodes.group(2));
             }
             catch (Exception e) {
                 log.error("illegal character in unit address field of system name: "
                                                     + systemName);
                 return (false);
             }
-            if ( (num < 0) || (num > 15) ) {
+            if ( (num < 1) || (num > 16) ) {
                 log.error("unit address field out of range in system name: "
                                                     + systemName);
                 return (false);
@@ -193,31 +151,25 @@ public class SerialAddress {
             log.warn(systemName+" invalid; bad format");
             return false;
         }
-        SerialNode node = getNodeFromSystemName(systemName);
-        if ( node==null ) {
-            log.warn(systemName+" invalid; no such node");
-            // The node indicated by this system address is not present
-            return false;
-        }
-        int bit = getBitFromSystemName(systemName);
-        if ( ( type=='T' ) || (type=='L') ) {
-            if ( ( bit <= 0 ) || ( bit > SerialNode.outputBits[node.nodeType] ) ) {
-                // The bit is not valid for this defined Serial node
-                log.warn(systemName+" invalid; bad bit number");
-                return false;
-            }
-        }
-        else if ( type=='S' ) {
-            if ( ( bit <= 0 ) || ( bit > SerialNode.inputBits[node.nodeType] ) ) {
-                // The bit is not valid for this defined Serial node
-                log.warn(systemName+" invalid; bad bit number");
-                return false;
-            }
-        }
-        else {
-            log.error("Invalid type specification in validSystemNameConfig call");
-            return false;
-        }
+/*         int bit = getBitFromSystemName(systemName); */
+/*         if ( ( type=='T' ) || (type=='L') ) { */
+/*             if ( ( bit <= 0 ) || ( bit > SerialNode.outputBits[node.nodeType] ) ) { */
+/*                 // The bit is not valid for this defined Serial node */
+/*                 log.warn(systemName+" invalid; bad bit number"); */
+/*                 return false; */
+/*             } */
+/*         } */
+/*         else if ( type=='S' ) { */
+/*             if ( ( bit <= 0 ) || ( bit > SerialNode.inputBits[node.nodeType] ) ) { */
+/*                 // The bit is not valid for this defined Serial node */
+/*                 log.warn(systemName+" invalid; bad bit number"); */
+/*                 return false; */
+/*             } */
+/*         } */
+/*         else { */
+/*             log.error("Invalid type specification in validSystemNameConfig call"); */
+/*             return false; */
+/*         } */
         // System name has passed all tests
         return true;
     }
