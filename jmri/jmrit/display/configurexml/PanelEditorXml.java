@@ -13,7 +13,7 @@ import org.jdom.*;
  * Handle configuration for {@link PanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 public class PanelEditorXml implements XmlAdapter {
 
@@ -164,6 +164,10 @@ public class PanelEditorXml implements XmlAdapter {
 
         // register the resulting panel for later configuration
         InstanceManager.configureManagerInstance().registerUser(panel);
+
+        // reset the size and position, in case the display caused it to change
+        panel.getFrame().setLocation(x,y);
+        panel.getFrame().setSize(width,height);
 
     }
 
