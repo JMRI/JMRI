@@ -49,7 +49,7 @@ import java.util.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003, 2007
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.83 $
+ * @version $Revision: 1.84 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -1311,10 +1311,10 @@ public class PanelEditor extends JmriJFrame {
 	
     void locoMarkerFromRoster(){
     	JmriJFrame rf = new JmriJFrame();
-    	rf.setLayout(new FlowLayout());
+    	rf.getContentPane().setLayout(new FlowLayout());
     	rf.setTitle("Loco Marker from Roster");
     	text.setText ("Select loco:");
-    	rf.add(text);
+    	rf.getContentPane().add(text);
 		rosterBox.insertItemAt("", 0);
 		rosterBox.setSelectedIndex(0);
     	rosterBox.addActionListener(new java.awt.event.ActionListener() {
@@ -1322,7 +1322,7 @@ public class PanelEditor extends JmriJFrame {
 				selectLoco();
 			}
 		});
-    	rf.add(rosterBox);
+    	rf.getContentPane().add(rosterBox);
     	rf.pack();
     	rf.setVisible(true);	
     }
@@ -1333,18 +1333,18 @@ public class PanelEditor extends JmriJFrame {
     
     void locoMarkerFromInput(){
     	JmriJFrame f = new JmriJFrame();
-    	f.setLayout(new FlowLayout());
+    	f.getContentPane().setLayout(new FlowLayout());
     	f.setTitle("Enter Loco Marker");
     	textId.setText ("Loco ID:");
-    	f.add(textId);
-    	f.add(locoId);
+    	f.getContentPane().add(textId);
+    	f.getContentPane().add(locoId);
     	okay.setText("OK");
        	okay.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				inputLoco();
 			}
 		});
-    	f.add(okay);
+    	f.getContentPane().add(okay);
     	f.pack();
     	f.setVisible(true);
     }
