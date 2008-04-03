@@ -29,7 +29,7 @@ import javax.swing.JRadioButtonMenuItem;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.36 $
+ * @version $Revision: 1.37 $
  */
 
 public class PositionableLabel extends JLabel
@@ -141,6 +141,9 @@ public class PositionableLabel extends JLabel
             // update object postion by how far dragged
             int xObj = getX()+(e.getX()-xClick);
             int yObj = getY()+(e.getY()-yClick);
+            // don't allow negative placement, icon can become unreachable
+            if (xObj < 0) xObj = 0;
+            if (yObj < 0) yObj = 0;
             this.setLocation(xObj, yObj);
             // and show!
             this.repaint();
