@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: index.shtml,v 1.2 2008-03-12 02:44:34 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.3 2008-04-04 15:17:53 rcoleman Exp $ -->
 <title>JMRI: Connecting the CTI Acela System</title>
 
 <!-- Style -->
@@ -23,22 +23,68 @@ JMRI: Connecting the Acela System
 </h2>
 
 
-Naming and input/output connectors are described on a 
+Naming of CTI Acela inputs and outputs are described on a 
 <a href="Names.shtml">separate page</a>.
 
 <p>
-Nodes are found automatically at startup, and can also be 
-defined manual with the 
+If the hardware is connected, nodes (CTI modules) are found automatically at startup.  Nodes can also be 
+defined manually with the 
 <a href="../../../package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml">Configure Nodes</a>
 tool. Either way, don't forget to save them with the
 "Save" button on the 
-<a href="../../../package/apps/AppConfigPanel.shtml">Preferences window</a>.
-<p>
+<a href="../../../package/apps/AppConfigPanel.shtml">Preferences window</a>
+(under Edit in the main menu).
+
+<H3>CTI Modules</h3>
+
+
+As described in the Acela documentation on the 
+<a href="http://www.cti-electronics.com/app_sw.htm">CTI web site</a>, 
+there are several CTI modules available:
+<UL>
+<LI>A CTI Acela module (currently only released with a serial interface) that performs most of the low-level CTI network management.
+<LI>A CTI SmartCAB module which when used on a non-DCC model railroad, controls the trains in a traditional CAB system.  The CTI SmartCAB module is not supported by JMRI.
+<LI>A CTI TrainBrain (4 output bits and 4 input bits).
+<LI>A CTI Dash-8 (8 output bits, no input bits).
+<LI>A CTI Watchman (8 input bits, no output bits).
+<LI>A CTI SignalMan (16 output bits, no input bits).
+<LI>A CTI SwitchMan (16 output bits, no input bits).
+<LI>A CTI YardMaster (16 output bits, no input bits).
+<LI>A CTI Sentry (no output bits, 16 input bits).
+</UL>
+ 
 <H3>Limitations</h3>
 
 <UL>
-<LI>??
+<LI>A CTI network is usually connected to a computer via a CTI to serial (or CTI to USB) interface.  In this configuration all of the CTI network management must be performed by the computer.  CTI also offers an Acela module (currently only released with a serial interface) that performs most of the low-level CTI network management.  JMRI only supports the CTI Acela interface (it does not support the direct serial -- nor USB interface).
+<LI>A CTI network can be used on either a non-DCC or a DCC model railroad.  When used on a non-DCC model railroad, CTI uses SmartCAB modules to control the trains in a traditional CAB system.  JMRI only supports the CTI system when used on a DCC railroad and does not support SmartCAB modules.
+<LI>CTI input sensor modules (Train-Brain, Watchman, Sentry) support five different types of input sensors: Infrared, Current Detection, Push-Button, Magnetic Reed Switches, and Photocell.  JMRI currently only supports Infrared sensors -- but this is just a matter of designer priorities.
+<LI>CTI input sensor modules support unique configuration of each sensor (inverted, debounce, threshold).  JMRI currently has this hardcoded -- but this is just a matter of designer priorities.
 </UL>
+
+<h3>Background Information</h3>
+
+The CTI Acela network is a true token passing ring network.
+<p>
+Each module has two "four wire phone jacks".  One labelled with a RED circle and the other labelled with a GREEN circle.  To complete the ring, you should connect a straight through four wire cable from the GREEN jack in one module to the RED jack in the next module.  The last cable should connect the GREEN jack in the last module back to the RED jack in the first module. 
+<p>
+The CTI Acela module has the same RED and GREEN jacks as well as a third YELLOW jack.  The CTI Acela module should be placed somewhere in the ring just as any other CTI module.
+<p>
+For the CTI Acela module a special four wire cable should be connected from the YELLOW jack into the serial port of the controlling computer (or a serial to USB converter).
+<p>
+Once powered on and started, if the red LEDs on each module are not 
+flashing then the ring is broken (either no power to one or more modules or a 
+bad cable or the cables are dasiy chained wrong or a cable has become loose).
+<p>
+For completeness, on power up, each CTI module has a solid RED led. 
+<p>
+Once the Acela network is up, the red LED on each module will flash as a packet 
+passes by (so you basically see all of the nodes flashing rapidly -- almost in sync).
+<p>
+The Acela module itself is different in that it always flashes a 
+green LED to indicate that it is happy (whether the ring is happy or 
+not).
+
 
 <h3>More Information</h3>
 
