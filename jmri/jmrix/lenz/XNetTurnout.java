@@ -95,7 +95,7 @@
  * may be necessary to poll for the feedback response data.
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001, Portions by Paul Bender Copyright (C) 2003 
- * @version			$Revision: 2.12 $
+ * @version			$Revision: 2.13 $
  */
 
 package jmri.jmrix.lenz;
@@ -209,7 +209,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
        // address in for the address. after the message is returned.
        XNetMessage msg = XNetMessage.getFeedbackRequestMsg(mNumber,
                                                  (mNumber%4)<2); 
-       XNetTrafficController.instance().sendXNetMessage(msg, this);
+       XNetTrafficController.instance().sendXNetMessage(msg, null);
     }
 
 
@@ -425,7 +425,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                          XNetMessage msg = XNetMessage.getFeedbackRequestMsg(
                                             mNumber, ((mNumber%4)<=1));
                          XNetTrafficController.instance()
-                                            .sendXNetMessage(msg, this);
+                                            .sendXNetMessage(msg, null);
                       } else {
                          if(log.isDebugEnabled()) log.debug("Turnout " + mNumber + " EXACT feedback mode - state change from feedback, CommandedState!=KnownState - motion complete"); 
                          // If the motion is completed, behave as though 
