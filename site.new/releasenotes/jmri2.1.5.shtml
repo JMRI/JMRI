@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.5.shtml,v 1.19 2008-04-03 18:25:32 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.1.5.shtml,v 1.20 2008-04-04 05:26:57 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -298,13 +298,14 @@ Following a suggestion from James Lefevre and David Duchamp,
 added AppleScript capability on MacOS X.
 
 <p>
-Dan Boudreau fixed a bug with regards to the "all panel items can be repositioned" checkbox.  Unfortunately starting with JMRI 2.0 the program stores
-the checkbox as always enabled.  Therefore the next time you load the panel
-you would find the checkbox enabled. This is now fixed, so that the status of the checkbox
-is properly stored.  To fix it in existing files, just load and store the file again.
+Dan Boudreau fixed a bug with regards to the "all panel items can be repositioned" checkbox.  Unfortunately starting with JMRI 2.0 the program stores the checkbox as always enabled.  
+Therefore the next time you load the panel you would find the checkbox enabled.
+This is now fixed, so that the status of the checkbox is properly stored.  To fix it in existing files, just load and store the file again.
 
 <p>
-Dan Boudreau added a new menu item called markers to panels. This allows a user to display an icon representing, for example, a locomotive and the move it around to indicate the locomotive's current position.  The user can either directly name the loco icon, or use their roster to get the loco road number.  This icon is different from other panel items as it is always movable.  There are four color choices for the icon itself, and the text can be colored and resized as desired.
+Dan Boudreau added a new menu item called markers to panels.
+This allows a user to display an icon representing, for example, a locomotive and then move it around to indicate the locomotive's current position.  
+The user can either directly name the loco icon, or use their roster to get the loco road number.  This icon is different from other panel items as it is always movable.  There are four color choices for the icon itself, and the text can be colored and resized as desired.
 
 
 <!--#include virtual="/Footer" -->
