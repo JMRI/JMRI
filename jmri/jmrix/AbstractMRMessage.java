@@ -2,15 +2,17 @@
 
 package jmri.jmrix;
 
+import jmri.util.StringUtil;
+
 /**
  * Abstract base class for messages in a message/reply protocol.
  *
  * Carries a sequence of characters, with accessors.
  *
  * @author	        Bob Jacobsen  Copyright (C) 2003
- * @version             $Revision: 1.9 $
+ * @version             $Revision: 1.10 $
  */
-abstract public class AbstractMRMessage {
+abstract public class AbstractMRMessage extends AbstractMessage {
 
     public AbstractMRMessage() {
         setBinary(false);
@@ -53,9 +55,6 @@ abstract public class AbstractMRMessage {
     public String getOpCodeHex() { return "0x"+Integer.toHexString(getOpCode()); }
 
     // accessors to the bulk data
-    public int getNumDataElements() {return _nDataChars;}
-    public int getElement(int n) {return _dataChars[n];}
-    public void setElement(int n, int v) { _dataChars[n] = v; }
 
     // state info
     int mNeededMode;
@@ -101,22 +100,8 @@ abstract public class AbstractMRMessage {
     public int getRetries() { return mRetries; }
 
     // display format
-    public String toString() {
-        String s = "";
-        for (int i=0; i<_nDataChars; i++) {
-            if (_isBinary) {
-                if (i!=0) s+=" ";
-                s = jmri.util.StringUtil.appendTwoHexFromInt(_dataChars[i]&0xFF, s);
-            } else {
-                s+=(char)_dataChars[i];
-            }
-        }
-        return s;
-    }
 
     // contents (private)
-    private int _nDataChars = 0;
-    private int _dataChars[] = null;
 
     public void addIntAsThree(int val, int offset) {
         String s = ""+val;
@@ -161,6 +146,20 @@ abstract public class AbstractMRMessage {
         return;
     }
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractMRMessage.class.getName());
+
+    public String toString() {
+        String s = "";
+        for (int i = 0; i < _nDataChars; i++) {
+            if (_isBinary) {
+                if (i != 0)
+                    s += " ";
+                s = StringUtil.appendTwoHexFromInt(_dataChars[i] & 255, s);
+            } else {
+                s += (char) _dataChars[i];
+            }
+        }
+        return s;
+    }
 
 }
 

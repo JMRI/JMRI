@@ -8,9 +8,9 @@ package jmri.jmrix;
  * Handles the character manipulation.
  *
  * @author		Bob Jacobsen  Copyright (C) 2003
- * @version             $Revision: 1.9 $
+ * @version             $Revision: 1.10 $
  */
-abstract public class AbstractMRReply {
+abstract public class AbstractMRReply extends AbstractMessage {
     // is this logically an abstract class?
 
     // create a new one
@@ -40,12 +40,6 @@ abstract public class AbstractMRReply {
     public int getOpCode() {return _dataChars[0];}
 
     // accessors to the bulk data
-    public int getNumDataElements() {return _nDataChars;}
-    public int getElement(int n) {return _dataChars[n];}
-    public void setElement(int n, int v) {
-        _dataChars[n] = (char) v;
-        _nDataChars = Math.max(_nDataChars, n+1);
-    }
     public void flush(){
     	_nDataChars = 0;
     }
@@ -126,8 +120,6 @@ abstract public class AbstractMRReply {
     static public final int DEFAULTMAXSIZE = 120;
 
     // contents (private)
-    protected int _nDataChars = 0;
-    private char _dataChars[] = new char[DEFAULTMAXSIZE];
     private boolean unsolicited;
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractMRReply.class.getName());
