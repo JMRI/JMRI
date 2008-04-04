@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.5.shtml,v 1.21 2008-04-04 05:35:46 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.5.shtml,v 1.22 2008-04-04 16:26:27 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -256,7 +256,7 @@ Another round of improvements to the
 Andrew Crosland updated the SPROG support so that it properly handles track power after programming.
 
 <p>
-Dan Boudreau added 28-function support for NCE.
+Dan Boudreau added 28-step throttle support for NCE and EasyDCC.
 
 <P>
 Mike Mosher added a definition for the V3.6 version of the NCE D408SR decoder.
