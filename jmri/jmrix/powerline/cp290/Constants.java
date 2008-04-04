@@ -7,7 +7,7 @@ package jmri.jmrix.powerline.cp290;
  * Constants and functions specific to the CP290 interface
  *
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class Constants {
 	
@@ -139,6 +139,12 @@ public class Constants {
 		return(stat);
 	}
 	
+        /**
+         * Format a message nicely
+         */
+        public static String toMonitorString(jmri.jmrix.Message m) {
+            return "1st char of "+m.getNumDataElements()+" is "+m.getElement(0);
+        }
 }
 
 /* @(#)Constants.java */

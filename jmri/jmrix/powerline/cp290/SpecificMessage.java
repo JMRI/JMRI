@@ -22,7 +22,7 @@ import jmri.jmrix.powerline.cp290.Constants;
  * </ul>
  *
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 
 public class SpecificMessage extends SerialMessage {
@@ -74,6 +74,7 @@ public class SpecificMessage extends SerialMessage {
 	 * Translate packet to text
 	 */
     public String toMonitorString() {
+        String test = Constants.toMonitorString(this);
         // check for valid length
     	String val = "???";
     	int len = getNumDataElements();

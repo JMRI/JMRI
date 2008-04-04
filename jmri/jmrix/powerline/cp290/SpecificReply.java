@@ -11,7 +11,7 @@ import jmri.jmrix.powerline.cp290.Constants;
  * packet.  Note that its _only_ the payload.
  *
  * @author	Bob Jacobsen  Copyright (C) 2002, 2006, 2007, 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
 
@@ -44,6 +44,7 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
 	 * Translate packet to text
 	 */
     public String toMonitorString() {
+        String test = Constants.toMonitorString(this);
         // check for valid length
     	String val = "???";
     	int len = getNumDataElements();
