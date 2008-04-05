@@ -6,9 +6,12 @@ package jmri.jmrix;
  * Abstract base class for replies in a message/reply protocol.
  * <P>
  * Handles the character manipulation.
+ * <p>
+ * This is a variable length reply, which can grow as
+ * needed.  The length is given by the largest index written so far.
  *
  * @author		Bob Jacobsen  Copyright (C) 2003
- * @version             $Revision: 1.10 $
+ * @version             $Revision: 1.11 $
  */
 abstract public class AbstractMRReply extends AbstractMessage {
     // is this logically an abstract class?
@@ -17,6 +20,7 @@ abstract public class AbstractMRReply extends AbstractMessage {
     public  AbstractMRReply() {
         setBinary(false);
         unsolicited = false;
+        _dataChars = new int[DEFAULTMAXSIZE];
     }
 
     // copy one
@@ -36,6 +40,12 @@ abstract public class AbstractMRReply extends AbstractMessage {
             _dataChars[i] = s.charAt(i);
     }
 
+    // keep track of length
+    public void setElement(int n, int v) {
+        _dataChars[n] = (char) v;
+        _nDataChars = Math.max(_nDataChars, n+1);
+    }
+          
     public void setOpCode(int i) { _dataChars[0]= (char)i;}
     public int getOpCode() {return _dataChars[0];}
 
