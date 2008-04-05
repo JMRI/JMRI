@@ -14,7 +14,7 @@ import jmri.jmrit.MemoryContents;
 /**
  * Pane for downloading .hex files
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.11 $
+ * @version	    $Revision: 1.12 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -409,7 +409,7 @@ public class LoaderPane extends javax.swing.JPanel {
     void sendOne(int pxct2, int d1, int d2, int d3, int d4,
                 int d5, int d6, int d7, int d8) {
         LocoNetMessage m = new LocoNetMessage(16);
-        m.setOpCode(0xE5);  // OPC_PEER_XFR
+        m.setOpCode(LnConstants.OPC_PEER_XFER);
         m.setElement( 1, 0x10);
         m.setElement( 2, 0x7F);
         m.setElement( 3, 0x7F);

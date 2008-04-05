@@ -33,7 +33,7 @@ import java.util.Vector;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.39 $
+ * @version     $Revision: 1.40 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
@@ -145,7 +145,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
         // send info request
         LocoNetMessage m = new LocoNetMessage(4);
-        m.setOpCode(0xBF);  // OPC_LOCO_ADR
+        m.setOpCode(LnConstants.OPC_LOCO_ADR);  // OPC_LOCO_ADR
         m.setElement(1, (i/128)&0x7F);
         m.setElement(2, i&0x7F);
         LnTrafficController.instance().sendLocoNetMessage(m);
@@ -755,9 +755,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
         LocoNetMessage m = new LocoNetMessage(14);
 
-        m.setOpCode(0xEF);
+        m.setOpCode(LnConstants.OPC_WR_SL_DATA);
         m.setElement(1, 0x0E);
-        m.setElement(2, 0x7C);
+        m.setElement(2, LnConstants.PRG_SLOT);
 
         m.setElement(3, pcmd);
 
@@ -921,7 +921,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      */
     public void sendReadSlot(int slot) {
         LocoNetMessage m = new LocoNetMessage(4);
-        m.setOpCode(0xBB);  // OPC_RQ_SL_DATA
+        m.setOpCode(LnConstants.OPC_RQ_SL_DATA);
         m.setElement(1, slot&0x7F);
         m.setElement(2, 0);
         LnTrafficController.instance().sendLocoNetMessage(m);

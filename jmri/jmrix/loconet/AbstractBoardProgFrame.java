@@ -3,6 +3,7 @@
 package jmri.jmrix.loconet;
 
 import jmri.jmrix.loconet.LnTrafficController;
+import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 
@@ -32,7 +33,7 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author  Bob Jacobsen   Copyright (C) 2004, 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 abstract public class AbstractBoardProgFrame extends jmri.util.JmriJFrame implements LocoNetListener {
 
@@ -149,7 +150,7 @@ abstract public class AbstractBoardProgFrame extends jmri.util.JmriJFrame implem
             // read op
             status.setText("Reading opsw "+state);
             LocoNetMessage l = new LocoNetMessage(6);
-            l.setOpCode(0xD0);
+            l.setOpCode(LnConstants.OPC_MULTI_SENSE);
             int element = 0x62;
             if ( (address&0x80) != 0 ) element|= 1;
             l.setElement(1, element);
@@ -163,7 +164,7 @@ abstract public class AbstractBoardProgFrame extends jmri.util.JmriJFrame implem
             //write op
             status.setText("Writing opsw "+state);
             LocoNetMessage l = new LocoNetMessage(6);
-            l.setOpCode(0xD0);
+            l.setOpCode(LnConstants.OPC_MULTI_SENSE);
             int element = 0x72;
             if ( (address&0x80) != 0 ) element|= 1;
             l.setElement(1, element);

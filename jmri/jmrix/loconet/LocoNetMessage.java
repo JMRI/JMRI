@@ -3,6 +3,7 @@
 package jmri.jmrix.loconet;
 
 import java.io.Serializable;
+import jmri.jmrix.loconet.LnConstants;
 
 /**
  * Represents a single command or response on the LocoNet.
@@ -28,7 +29,7 @@ import java.io.Serializable;
  * <P>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.23 $
+ * @version			$Revision: 1.24 $
  * @see             jmri.jmrix.nce.NceMessage
  *
  */
@@ -220,7 +221,7 @@ public class LocoNetMessage implements Serializable {
      */
     static public LocoNetMessage makePeerXfr(int src, int dst, int[] d, int code) {
         LocoNetMessage msg = new LocoNetMessage(16);
-        msg.setOpCode(0xE5);
+        msg.setOpCode(LnConstants.OPC_PEER_XFER);
         msg.setElement(1, 0x10);  // 2nd part of op code
 
         // accumulate the pxct1,2 bytes

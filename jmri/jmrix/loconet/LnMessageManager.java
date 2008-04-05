@@ -3,6 +3,7 @@
 package jmri.jmrix.loconet;
 
 import jmri.JmriException;
+import jmri.jmrix.loconet.LnConstants;
 
 /**
  * Provide access to throttle-messaging on a LocoNet.
@@ -14,7 +15,7 @@ import jmri.JmriException;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class LnMessageManager implements LocoNetListener {
 
@@ -31,7 +32,7 @@ public class LnMessageManager implements LocoNetListener {
     public void sendMessage(int id, String text) {
         LocoNetMessage l = new LocoNetMessage(16);
         String localText = text+"        "; // insure at least 8 characters
-        l.setOpCode(0xE5);
+        l.setOpCode(LnConstants.OPC_PEER_XFER);
         l.setElement(1, 0x10);
         l.setElement(2, 0x7F);   // throttle message
         l.setElement(3, id&0x7F);
