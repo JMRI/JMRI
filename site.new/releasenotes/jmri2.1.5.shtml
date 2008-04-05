@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.5.shtml,v 1.22 2008-04-04 16:26:27 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.1.5.shtml,v 1.23 2008-04-05 16:39:03 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -311,6 +311,8 @@ The user can either directly name the loco icon, or use their roster to get the 
 On some computers, a saved control panel gets a few pixels bigger when reloaded.
 We believe this is now fixed. Panels should now stay the same size when saved again.
 
+<p>
+Steve Williams made several improvement to the LocoNet code.
 
 <!--#include virtual="/Footer" -->
 
