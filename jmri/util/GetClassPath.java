@@ -8,12 +8,12 @@ import java.io.*;
  * Creates a classpath for JMRI from directories
  *
  * @author	Bob Jacobsen, Copyright (C) 2008
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class GetClassPath {
 
-    // Main entry point
-    static public void main(String[] args) {
+    // static provide the class path
+    static public String getClassPath() {
         File programdir = new File(".");
         File libdir = new File("lib");
         
@@ -46,9 +46,15 @@ public class GetClassPath {
             // OK, it should
             classpath = classpath+":lib/"+entry;
         }
-
+        
+        // return the result
+        return classpath;
+    }
+    
+    // Main entry point
+    static public void main(String[] args) {
         // display result
-        System.out.println(classpath);
+        System.out.println(getClassPath());
     }
     
 }
