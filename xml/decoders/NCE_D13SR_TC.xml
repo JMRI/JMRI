@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
-<!-- $Id: NCE_D13SR_TC.xml,v 1.12 2008-03-26 17:08:59 jacobsen Exp $ -->
+<!-- $Id: NCE_D13SR_TC.xml,v 1.13 2008-04-05 16:41:58 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,6 +16,7 @@
 <!-- for more details.                                                      -->
 
 <decoder-config>
+      <version author="Michael Mosher" version="9" lastUpdated="20080331"/>
       <version author="Michael Mosher" version="8" lastUpdated="20080319"/>
       <version author="Michael Mosher" version="7" lastUpdated="20070813"/>
       <version author="Michael Mosher" version="6" lastUpdated="20060918"/>
@@ -32,6 +33,7 @@
 	  <!-- Version 6 - use factory reset feature -->
 	  <!-- Version 7 - high Ver ID 36 -->
 	  <!-- Version 8 - added D408SR V3.6 which has different function mapping then V3.5 -->
+	  <!-- Version 9 - added Factory Direct Trains Trackmobile -->
       
 <decoder>
   <family name="Silent Running w/ Torque Compensation" mfg="North Coast Engineering" 
@@ -314,6 +316,8 @@
 			<output name="3" label="Pad 3" connection="solder" maxcurrent="50 mA" />
 			<output name="4" label="Pad 4" connection="solder" maxcurrent="50 mA" />
 			<size length="0.57" width="0.34" height="0.13" units="inches" />
+		</model>
+    <model model="FDT Trackmobile" numOuts="0" numFns="0" >
 		</model>
   </family>
 
@@ -651,7 +655,7 @@
 			</variable>
 
 		<variable label="Ditch light hold time" CV="118" mask="VVVVVVVV"
-					item="Global lighting option 1" default="20"
+					item="Global lighting option 1" default="20"  minFn="1"
 					tooltip="Value in 1/4 second increments after F2 goes off" >
 			<decVal/>
 			</variable>
