@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.30 2008-03-31 15:29:43 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.31 2008-04-05 16:38:16 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -302,7 +302,9 @@
     <li>Denny Whitaker, who wrote a great 
             <a href="http://www.mgbrr.org/Tips/Lessons%20Learned%20on%20Hares-Wabbits%20v1.pdf">description of how to program Hare and Wabbit controllers</a> using JMRI.
 	<LI>Rich White II, who provided the images for our small Nixie tube clock
-    <li>Stephen Williams, who improved the LocoNet slot monitor, fixed a nasty problem with looping LocoNet throttles, and 
+    <li>Stephen Williams, who improved the LocoNet slot monitor,
+    made multiple small improvements to LocoNet internals, especially including the LocoNet monitor, 
+    fixed a nasty problem with looping LocoNet throttles, and 
     added a command station option to the TCP connection.
 <a name="X"></A>
 <a name="Y"></A>
