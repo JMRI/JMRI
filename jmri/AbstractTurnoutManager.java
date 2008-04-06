@@ -7,7 +7,7 @@ package jmri;
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.22 $
+ * @version			$Revision: 1.23 $
  */
 public abstract class AbstractTurnoutManager extends AbstractManager
     implements TurnoutManager {
@@ -132,13 +132,18 @@ public abstract class AbstractTurnoutManager extends AbstractManager
     abstract protected Turnout createNewTurnout(String systemName, String userName);
     
     /*
-     * Turnout operation support. Overrideable function to return the acceptable
-     * turnout operation types for this system's turnouts. Order is important because
+     * Provide list of supported operation types.
+     * <p>
+     * Order is important because
      * they will be tried in the order specified.
      */
-    String[] validOperationTypes = {"Sensor", "NoFeedback"};
-    
-    public String[] getValidOperationTypes() { return validOperationTypes; }
+    public String[] getValidOperationTypes() {
+        if (jmri.InstanceManager.commandStationInstance()!=null) {
+            return new String[]{"Sensor", "Raw", "NoFeedback"};
+       } else {
+       	    return new String[]{"Sensor", "NoFeedback"};
+       }
+    }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractTurnoutManager.class.getName());
 }
