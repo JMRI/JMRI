@@ -37,7 +37,7 @@ import jmri.Turnout;
  * <P>
  * Description:		Implement turnout manager for loconet
  * @author			Bob Jacobsen Copyright (C) 2001, 2007
- * @version         $Revision: 1.18 $
+ * @version         $Revision: 1.19 $
  */
 
 public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements LocoNetListener {
@@ -128,23 +128,6 @@ public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements Loc
 				t.message(l);
 			}
 	    }
-    }
-
-    /**
-     * Provide operation types for LocoNet.
-     * <ul>
-     * <li>Sensor, NoFeedback are generally available
-     * <li>Raw is also useful if the CommandStation is available
-     * </ul>
-     */
-    public String[] getValidOperationTypes() {
-       if(jmri.InstanceManager.commandStationInstance()!=null) {
-       	  String[] validOperationTypes = {"Sensor", "Raw", "NoFeedback"};
-	  return validOperationTypes; 
-       } else {
-       	  String[] validOperationTypes = {"Sensor", "NoFeedback"};
-	  return validOperationTypes; 
-       }
     }
 
     private int address(int a1, int a2) {
