@@ -9,21 +9,22 @@ package jmri;
  * to the turnout.
  * This class is based on the NoTurnoutOperation class.
  * @author Paul Bender 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class RawTurnoutOperation extends CommonTurnoutOperation {
 
 	// This class should only be used with DIRECT, ONESENSOR or TWOSENSOR 
         // feedback modes.
 	final int feedbackModes =
-			AbstractTurnout.DIRECT | AbstractTurnout.ONESENSOR | AbstractTurnout.TWOSENSOR;
+			  Turnout.DIRECT | Turnout.EXACT | Turnout.INDIRECT 
+			| Turnout.ONESENSOR | Turnout.TWOSENSOR;
 	
 	/*
 	 * Default values and constraints
 	 */
 	
 	static public final int defaultInterval = 300;
-	static public final int defaultMaxTries = 2;
+	static public final int defaultMaxTries = 1;
 	
 	public RawTurnoutOperation(String n, int i, int mt) {
 		super(n, i, mt);
