@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: PanelPro.shtml,v 1.5 2008-04-06 06:17:56 jacobsen Exp $ -->
+<!-- $Id: PanelPro.shtml,v 1.6 2008-04-06 06:47:39 jacobsen Exp $ -->
 <title>JMRI: PanelPro, An Application For Making Control Panels</title>
 
 <!-- Style -->
@@ -51,6 +51,8 @@ application is another tool for creating modern-style control panels.
 Please see our
 <a href="http://jmri.sf.net/apps/PanelPro/Gallery.shtml">gallery page</a>
 for example of how model railroaders have used this on their own layouts.
+There's also an example of using PanelPro for
+<a href="http://jmri.sf.net/apps/PanelPro/Modules.shtml">modular layouts</a>.
 
 <h2>The Panel Editor</h2>
 <IMG SRC="../../../images/PiecedPanel.gif" ALT="Screen shot of panel" WIDTH="292" HEIGHT="107" HSPACE="0" VSPACE="0">
