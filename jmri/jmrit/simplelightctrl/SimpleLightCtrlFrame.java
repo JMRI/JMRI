@@ -20,7 +20,7 @@ import javax.swing.JPanel;
  * 
  * @author	Ken Cameron   Copyright (C) 2008
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
 
@@ -34,7 +34,7 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
 
     // GUI member declarations
     javax.swing.JLabel textAdrLabel = new javax.swing.JLabel();
-    javax.swing.JTextField adrTextField = new javax.swing.JTextField(3);
+    javax.swing.JTextField adrTextField = new javax.swing.JTextField(5);
     javax.swing.JButton statusButton = new javax.swing.JButton();
 
     javax.swing.JButton onButton = new javax.swing.JButton();
@@ -281,7 +281,7 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
 				double min = Double.parseDouble(intensityMinTextField.getText())/100.;
 				double max = Double.parseDouble(intensityMaxTextField.getText())/100.;
 				double time = Double.parseDouble(transitionTimeTextField.getText());
-				log.debug("setting min: " + min + " max: " + max);
+				log.debug("setting min: " + min + " max: " + max + " transition: " + time);
 				light.setMinIntensity(min);
 				light.setMaxIntensity(max);
 				light.setTransitionTime(time);
