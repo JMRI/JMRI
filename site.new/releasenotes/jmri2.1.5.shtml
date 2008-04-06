@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.5.shtml,v 1.24 2008-04-05 16:53:56 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.5.shtml,v 1.25 2008-04-06 03:54:05 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -320,6 +320,10 @@ Michael Mosher added a decoder definition for the Factory Direct Trains Trackmob
 <p>
 Mark Waters updated the decoder definitions for the several versions of the
 ZImo XM620 decoder so they contain the right CVs.
+
+<p>
+Paul Bender updated how commands are sent to turnouts by XPressNet command stations.
+
 
 <!--#include virtual="/Footer" -->
 
