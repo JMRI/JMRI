@@ -23,7 +23,7 @@ import java.util.regex.*;
  * @author	Dave Duchamp, Copyright (C) 2004
  * @author  Bob Jacobsen, Copyright (C) 2006, 2007, 2008
  * @author Ken Cameron, Copyright (C) 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class SerialAddress {
 
@@ -220,15 +220,22 @@ public class SerialAddress {
             return "";
         }
         String nName = "";
+        boolean nMatch = nCodes.reset(systemName).matches();
+        int nCount = nCodes.groupCount();
+        boolean hMatch = hCodes.reset(systemName).matches();
+        int hCount = hCodes.groupCount();
         // check for the presence of a char to differentiate the two address formats
-        if (nCodes.reset(systemName).matches() && nCodes.groupCount() == 1) {
+        if (nMatch && nCount == 1) {
             // This is a PLnnn address
             nName = systemName.substring(0,2) + Integer.toString(Integer.parseInt(nCodes.group(1)));
         }
-        if (hCodes.reset(systemName).matches() && hCodes.groupCount() == 1) {
+        if ( hMatch && hCount == 2) {
             // This is a PLaxx address 
-            nName = systemName.substring(0,3) + Integer.toString(Integer.parseInt(nCodes.group(2)));
-        }        
+            nName = systemName.substring(0,3) + Integer.toString(Integer.parseInt(hCodes.group(2)));
+        }
+        if (nName == "") {
+        	log.debug("valid name doesn't normalize: " + systemName + " nMatch: " + nMatch + " nCount: " + nCount + " hMatch: " + hMatch + " hCount: " + hCount);
+        }
         return nName;
     }
 
