@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.31 2008-04-05 16:38:16 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.32 2008-04-07 21:14:12 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -110,7 +110,7 @@
 	<LI>Seth Cohen, who helped get serial sensors and NCE AIUs to work, and
 	wrote the speedometer web page
 	<LI>Glen Colbert, who contributed the MRC AD370 decoder definition
-	<LI>Robert Coleman added the CTI Acela support
+	<LI>Bob Coleman added the CTI Acela support
 	<LI>Andrew Crossland, for the SPROG implementation, SPROG programming
 	tools, and his generous contributions of time for the SPROG users
 <a name="D"></A>
