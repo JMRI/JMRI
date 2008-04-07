@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TurnoutTable.shtml,v 1.11 2008-03-20 02:43:24 dan_boudreau Exp $ -->
+<!-- $Id: TurnoutTable.shtml,v 1.12 2008-04-07 00:03:57 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Turnout Table Help</TITLE>
@@ -210,8 +210,8 @@ with feedback:</P>
 <P>Available feedback modes are:</P>
 <DL>
 	<DT>DIRECT</DT>
-	<DD>The default in many cases, and also the original behavior of
-	the program. When something tells the turnout to change, it's just
+	<DD>The default in many cases.
+	When something tells the turnout to change, it's just
 	immediately assumed that it actually did it.</DD>
 
 	<DT>ONESENSOR</DT>
@@ -239,16 +239,16 @@ with feedback:</P>
 	<DD>Currently only available for LocoNet turnouts, this informs
 	the program that the turnout is being driven by a Digitrax DS54 with a
 	microswitch attached to the switch lead. For more information, see the
-	JMRI <A HREF="../../../../html/hardware/loconet/DS54.shtml">DS54</A>
+	<A HREF="../../../../html/hardware/loconet/DS54.shtml">DS54</A>
 	examples page.</DD>
 
 	<DT>EXACT</DT>
 	<DD>Currently only available for LocoNet turnouts, this informs
 	the program that the turnout is being driven by a Digitrax DS54 with
 	two microswitches attached to the switch and aux leads. For more
-	information, see the JMRI <A
-		HREF="../../../../html/hardware/loconet/DS54.shtml">DS54</A> examples
-	page on the JMRI website.</DD>
+	information, see the
+	<A HREF="../../../../html/hardware/loconet/DS54.shtml">DS54</A>
+	examples page on the JMRI website.</DD>
 
 </DL>
 
@@ -259,13 +259,23 @@ This was originally added to handle the case of "I usually have to
 click that turnout a couple times to get it to throw over", but
 it can be used for other things too.
 <p>
-The two forms are:
+The three forms are:
 <dl>
 <dt>No Feedback<dd>This just repeats the messages a fixed number of
 times, with a delay in between.
 <dt>Sensor<dd>This repeats the messages, with
 a delay in between, until either the sensor feedback indicates the
 turnout has moved or a limit on the number of attempts is reached.
+<dt>Raw<dd>This sends raw DCC packets to command the turnout to 
+move over, instead of working through the usual
+mechanisms for the specific system. 
+This mode is intended as a way of getting around certain kinds of incompatibility
+between DCC components. 
+(Note: This is not available with MONITORING feedback, because
+that relies on system-specific messages that aren't used in this  mode.
+It's also not available for systems that don't have a DCC command station present
+to send the raw messages)
+
 </dl>
 <p>
 Normally, turnouts only throw once, which is the "Off" setting
