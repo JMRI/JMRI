@@ -12,9 +12,9 @@ import jmri.Light;
  *
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
-public class SerialLightManager extends AbstractLightManager {
+abstract public class SerialLightManager extends AbstractLightManager {
 
     public SerialLightManager() {
         _instance = this;
@@ -35,7 +35,7 @@ public class SerialLightManager extends AbstractLightManager {
         Light lgt = null;
         // Validate the systemName
         if ( SerialAddress.validSystemNameFormat(systemName,'L') ) {
-            lgt = new SerialLight(systemName,userName); 
+            lgt = createNewSpecificLight(systemName,userName); 
             if (!SerialAddress.validSystemNameConfig(systemName,'L')) {
                 log.warn("Light system Name does not refer to configured hardware: "
                                                             +systemName);
@@ -47,6 +47,11 @@ public class SerialLightManager extends AbstractLightManager {
         return lgt;
     }    
 
+    /** 
+     * Create light of a specific type for the interface
+     */
+    abstract protected Light createNewSpecificLight(String systemName, String userName);
+    
     /**
      * Public method to validate system name format
      *   returns 'true' if system name has a valid format, else returns 'false'
@@ -88,7 +93,12 @@ public class SerialLightManager extends AbstractLightManager {
      * Allow access to SerialLightManager
      */
     static public SerialLightManager instance() {
-        if (_instance == null) _instance = new SerialLightManager();
+        if (_instance == null) {
+            log.error("instance called without manager loaded");
+            _instance = new SerialLightManager(){
+                protected Light createNewSpecificLight(String systemName, String userName){return null;}
+            };
+        }
         return _instance;
     }
     static SerialLightManager _instance = null;

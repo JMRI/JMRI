@@ -27,9 +27,9 @@ import java.util.Date;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
-public class SerialLight extends AbstractVariableLight {
+abstract public class SerialLight extends AbstractVariableLight {
 
     /**
      * Create a Light object, with only system name.
@@ -56,7 +56,7 @@ public class SerialLight extends AbstractVariableLight {
      * Note: most instance variables are in AbstractLight and
      * AbstractVariableLight base classes.
      */
-    private void initializeLight() {
+    protected void initializeLight() {
         // Extract the default 1-256 address from the name
         int tBit = SerialAddress.getBitFromSystemName(getSystemName());
         // Convert to the two-part X10 address
@@ -64,8 +64,6 @@ public class SerialLight extends AbstractVariableLight {
         devicecode = ((tBit-1)%16)+1;
         
         // Set defaults for all other instance variables
-        maxDimStep = SerialTrafficController.instance().maxX10DimStep();
-        
         setControlType( NO_CONTROL );
         setControlSensor( null );
         setControlSensorSense(Sensor.ACTIVE);
@@ -75,64 +73,17 @@ public class SerialLight extends AbstractVariableLight {
     }
     
     /**
-     * Force control to a known "dim count".
-     * Invoked
-     * the first time intensity is set.
-     */
-    private void initIntensity(double intensity) {
-        // Set initial state
-            
-        // see if going to stabilize at on or off
-        if (intensity<= 0.5) {
-            // create output sequence
-            X10Sequence out = new X10Sequence();
-            // going to low, first set off
-            out.addAddress(housecode, devicecode);
-            out.addFunction(housecode, X10Sequence.FUNCTION_OFF, 0);
-            // then set to full dim
-            out.addFunction(housecode, X10Sequence.FUNCTION_DIM, maxDimStep);
-            // send
-            SerialTrafficController.instance().sendX10Sequence(out, null);
-
-            lastOutputStep = 0;
-            
-            log.debug("initIntensity: sent dim reset");
-        } else {
-            // create output sequence
-            X10Sequence out = new X10Sequence();
-            // going to high, first set on
-            out.addAddress(housecode, devicecode);
-            out.addFunction(housecode, X10Sequence.FUNCTION_ON, 0);
-            // then set to full dim
-            out.addFunction(housecode, X10Sequence.FUNCTION_BRIGHT, maxDimStep);
-            // send
-            SerialTrafficController.instance().sendX10Sequence(out, null);
-            
-            lastOutputStep = maxDimStep;
-            
-            log.debug("initIntensity: sent bright reset");
-        }
-    }
-    
-    // System-dependent instance variables
-
-    /** 
-     * Current output step 0 to maxDimStep.
+     * Optionally, force control to a known "dim count".
      * <p>
-     *  -1 means unknown
-     */
-    int lastOutputStep = -1;
-    
-    /**
-     * Largest X10 dim step number available.
+     * Invoked the first time intensity is set.
      * <p>
-     * Loaded from SerialTrafficController.maxX10DimStep();
+     * Default implementation doesn't do anything.
      */
-     int maxDimStep = 0;
-     
+    protected void initIntensity(double intensity) {}
+         
     // data members holding the X10 address
-    int housecode = -1;
-    int devicecode = -1;
+    protected int housecode = -1;
+    protected int devicecode = -1;
     
     /**
      *  Request from superclass to set the current state of this Light.
@@ -182,69 +133,12 @@ public class SerialLight extends AbstractVariableLight {
      * Send a Dim/Bright commands to the X10 hardware 
      * to reach a specific intensity.
      */
-    private void updateIntensity(double intensity) {
+    abstract protected void updateIntensity(double intensity);
         
-    	if (log.isDebugEnabled()) {
-    		log.debug("updateIntensity(" + intensity + ")");
-    	}
-        
-        // are we doing intensity?
-        if ( (intensity==0.0 || intensity==1.0) && (lastOutputStep < 0))
-            return; // no, so let on/off handle this
-            
-        // if we don't know the dim count, force it to a value.
-        if (lastOutputStep < 0) initIntensity(intensity);
-
-        // find the new correct dim count
-        int newStep = (int)Math.round(intensity*maxDimStep);  // maxDimStep is full on, 0 is full off, etc
-        
-        // check for errors
-        if (newStep <0 || newStep>maxDimStep)
-            log.error("newStep wrong: "+newStep+" intensity: "+intensity);
-
-        // find the number to send
-        int sendSteps = newStep-lastOutputStep; // + for bright, - for dim
-        
-        // figure out the function code
-        int function;
-        if (sendSteps == 0) {
-            // nothing to do!
-            log.debug("intensity "+intensity+" within current step, return");
-            return;
-        
-        } else if (sendSteps >0) {
-            function = X10Sequence.FUNCTION_BRIGHT;
-        	log.debug("function bright");
-        }
-        else {
-            function = X10Sequence.FUNCTION_DIM;
-        	log.debug("function dim");
-        }
-
-        // check for errors
-        if (sendSteps <-maxDimStep || sendSteps>maxDimStep)
-            log.error("sendSteps wrong: "+sendSteps+" intensity: "+intensity);
-            
-        int deltaDim = Math.abs(sendSteps);
-
-        lastOutputStep = newStep;
-        
-        // create output sequence of address, then function
-        X10Sequence out = new X10Sequence();
-        out.addAddress(housecode, devicecode);
-        out.addFunction(housecode, function, deltaDim);
-        // send
-        SerialTrafficController.instance().sendX10Sequence(out, null);
-
-    	if (log.isDebugEnabled()) {
-    		log.debug("updateIntensity(" + intensity + ") house " + housecode + " device " + devicecode + " deltaDim: " + deltaDim + " funct: " + function);
-        }
-    }
-
     /**
      *  Send a On/Off Command to the hardware
      */
-    private void sendOnOffCommand(int newState) {
+    protected void sendOnOffCommand(int newState) {
     	if (log.isDebugEnabled()) {
     		log.debug("sendOnOff(" + newState + ") Current: " + mState);
     	}

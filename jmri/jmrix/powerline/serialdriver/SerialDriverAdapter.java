@@ -22,7 +22,7 @@ import javax.comm.SerialPortEventListener;
  * Provide access to Oak Tree via a serial comm port.
  * Normally controlled by the oaktree.serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2006, 2007, 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -193,9 +193,11 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         if (opt1.equals("CM11")) {
             // create a CM11 port controller
             SerialTrafficController.checkInstance(new jmri.jmrix.powerline.cm11.SpecificTrafficController());
+            jmri.InstanceManager.setLightManager(new jmri.jmrix.powerline.cm11.SpecificLightManager());
         } else if (opt1.equals("CP290")) {
             // create a CP290 port controller
             SerialTrafficController.checkInstance(new jmri.jmrix.powerline.cp290.SpecificTrafficController());
+            jmri.InstanceManager.setLightManager(new jmri.jmrix.powerline.cp290.SpecificLightManager());
         } else {
             // no connection at all - warn
             log.warn("protocol option "+opt1+" defaults to CM11");
@@ -207,7 +209,6 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         SerialTrafficController.instance().connectPort(this);
 
         jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.powerline.SerialTurnoutManager());
-        jmri.InstanceManager.setLightManager(new jmri.jmrix.powerline.SerialLightManager());
 
         SerialSensorManager s;
         jmri.InstanceManager.setSensorManager(s = new jmri.jmrix.powerline.SerialSensorManager());
