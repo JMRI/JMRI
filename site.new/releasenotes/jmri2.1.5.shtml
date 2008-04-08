@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.5.shtml,v 1.27 2008-04-07 18:50:46 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.5.shtml,v 1.28 2008-04-08 17:23:25 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -219,9 +219,9 @@ You can no longer create a null Roster entry accidentally using the "Roster Copy
 Also, the handling of roster filenames with special characters has been improved.
 
 <p>
-Giorgio Terdina has made it possible for JMRI to connect to his XPressNet 
+Giorgio Terdina has made it possible for JMRI to connect to his 
 <a href="http://www.terdina.net/rails/">XnTcp adapter</a>.
-This lets JMRI connect to a remote layout using TCP/IP.
+This lets JMRI connect to a remote XPressNet-based layout using TCP/IP.
 
 <p>
 Andrew Crosland provided a decoder definition for the Servo6 decoder.
