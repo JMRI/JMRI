@@ -25,7 +25,7 @@ import jmri.jmrix.powerline.SerialSensorManager;
  * with it.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class SpecificTrafficController extends SerialTrafficController {
 
@@ -100,10 +100,12 @@ public class SpecificTrafficController extends SerialTrafficController {
         SpecificMessage m = new SpecificMessage(22);  // will be 22 bytes
         for (int i = 0; i< 16; i++) m.setElement(i, 0xFF);
         int level = c.getDimCount();
-        if (level>15) {
+        if (level > 16) {
             log.warn("can't handle dim counts > 15?");
-            level = 15;
+            level = 16;
         }
+        log.debug("dim level: " + level);
+        level = 16 - level;
         int function = c.getFunction();
         
         // need to encode the housecode into line code
@@ -118,7 +120,6 @@ public class SpecificTrafficController extends SerialTrafficController {
                
         sendSerialMessage(m, l);
         cmdOutstanding = true;
-        
     }
     
     /**
