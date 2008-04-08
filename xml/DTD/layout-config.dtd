@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.83 2008-03-02 02:09:53 jacobsen Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.84 2008-04-08 21:35:53 djduchamp Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
 <!--                                                                        -->
@@ -255,8 +255,9 @@
     <!ATTLIST layoutblock userName	CDATA #REQUIRED>
     <!ATTLIST layoutblock trackcolor	 CDATA #REQUIRED>
     <!ATTLIST layoutblock occupiedcolor  CDATA #REQUIRED>
-    <!ATTLIST layoutblock occupancysensor CDATA #REQUIRED>
-    <!ATTLIST layoutblock occupiedsense  CDATA #REQUIRED>
+    <!ATTLIST layoutblock occupancysensor CDATA #IMPLIED>
+    <!ATTLIST layoutblock occupiedsense   CDATA #REQUIRED>
+    <!ATTLIST layoutblock memory	  CDATA #IMPLIED>
    
 <!ELEMENT securityelements (securityelement*)>
   <!ATTLIST securityelements class		CDATA #REQUIRED>

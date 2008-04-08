@@ -26,11 +26,11 @@ import java.util.List;
  * example a direction can simultanously be EAST and RIGHT if desired.
  * What that means needs to be defined by whatever object is using this Path.
  * <P>
- * This implementation only handles paths with zero or one elements;
- * clearly, this should be extended to a list of elements!
+ * This implementation handles paths with a list of bean settings. This has
+ * been extended from the initial implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class Path  {
 
@@ -62,15 +62,19 @@ public class Path  {
     }
 
     public void addSetting(BeanSetting t) {
-        if (_element!=null) log.error("element already set; this implementation only handles one!");
-        _element = t;
+		_beans.add(t);
     }
     
     public List getSettings() {
-        ArrayList a = new ArrayList();
-        if (_element!=null) a.add(_element);
-        return a;
+		return _beans;
     }
+	
+	public void clearSettings() {
+		for (int i = _beans.size();i>0;i--) {
+			_beans.remove(i-1);
+		}
+	}
+	
     public void setBlock(Block b) {
         _block = b;
     }
@@ -91,15 +95,17 @@ public class Path  {
      * proper state, e.g. that the Turnouts on this path
      * are set to the proper CLOSED or OPEN status.
      * @return true if the path can be traversed; always true
-     * if no path elements are defined.
+     * if no path elements (BeanSettings) are defined.
      */
     public boolean checkPathSet() {
         // empty conditions are always set
-        if (_element == null) return true;
-        
-        // since we only have one element in this implementation, 
-        // just return it's status
-        return _element.check();
+		if (_beans.size()==0) return true;
+        // check the status of all BeanSettings 
+		for (int i = 0;i<_beans.size();i++) {
+			if (!((BeanSetting)_beans.get(i)).check()) 
+				return false;
+		}
+		return true;
     }
     
     /**
@@ -177,8 +183,8 @@ public class Path  {
         if (b.length()!=0) b.append(", ");
         b.append(t);
     }
-        
-    private BeanSetting _element;
+    
+	private ArrayList _beans = new ArrayList();
     private Block _block;
     private int _toBlockDirection;
     private int _fromBlockDirection;

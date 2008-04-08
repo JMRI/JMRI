@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * Represents a particular piece of track, more informally a "Block".
- * A trains move around the layout, a set of Block objects interact to
+ * As trains move around the layout, a set of Block objects interact to
  * keep track of which train is where, going in which direction.
  * As a result of this, the set of Block objects pass around  "token" (value)
  * Objects representing the trains.  This could be e.g. a Throttle to
@@ -64,7 +64,7 @@ import java.util.List;
  *</ul>
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class Block extends jmri.AbstractNamedBean {
 
@@ -81,15 +81,16 @@ public class Block extends jmri.AbstractNamedBean {
     
     public void setSensor(Sensor sensor) {
         if (_sensor!=null) {
-            log.error("Sensor already set for Block "+getSystemName());
-            // this is bad because we don't have a way to remove the listener
-        }
-        
-        _sensor = sensor;        
-        
+			// remove sensor listener
+			if (_sensorListener != null) {
+				_sensor.removePropertyChangeListener(_sensorListener);
+				_sensorListener = null;
+			}
+        }        
+        _sensor = sensor;                
         if (_sensor != null) {
             // attach listener
-            _sensor.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            _sensor.addPropertyChangeListener(_sensorListener = new java.beans.PropertyChangeListener() {
                 public void propertyChange(java.beans.PropertyChangeEvent e) { handleSensorChange(e); }
             });
         }
@@ -101,6 +102,14 @@ public class Block extends jmri.AbstractNamedBean {
     ArrayList paths = new ArrayList();
     public void addPath(Path p) {
         paths.add(p);
+    }
+    public void removePath(Path p) {
+		int j = -1;
+		for (int i = 0; i<paths.size(); i++) {
+			if (p == (Path) paths.get(i))
+				j = i;
+		}
+		if (j>-1) paths.remove(j);
     }
     
     /**
@@ -147,6 +156,7 @@ public class Block extends jmri.AbstractNamedBean {
     // internal data members
     private int _current; // state
     private Sensor _sensor;
+	private java.beans.PropertyChangeListener _sensorListener = null;
     private Object _value;
     private int _direction;
     
@@ -208,6 +218,7 @@ public class Block extends jmri.AbstractNamedBean {
         }
         else {  // count > 1, check for one with proper direction
             // this time, count ones with proper direction
+			if (log.isDebugEnabled()) log.debug ("Block "+getSystemName()+"- count of active linked blocks = "+count);
             next = null;
             count = 0;
             for (int i = 0; i<paths.size(); i++) {
@@ -224,8 +235,8 @@ public class Block extends jmri.AbstractNamedBean {
                 setDirection(next.getFromBlockDirection());
                 if (log.isDebugEnabled()) log.debug("Block "+getSystemName()+" with direction "+Path.decodeDirection(getDirection())+" gets new value from "+next.getBlock().getSystemName()+", direction="+next.decodeDirection(getDirection()));
             } else {
-                // no unique path with correct direction
-                log.error("count of "+count+" ACTIVE neightbors with proper direction can't be handled for block "+getSystemName());
+                // no unique path with correct direction - this happens frequently from noise in block detectors!!
+                log.debug("count of "+count+" ACTIVE neightbors with proper direction can't be handled for block "+getSystemName());
             }
         }
         // in any case, go OCCUPIED

@@ -4,6 +4,7 @@ package jmri.jmrit.display;
 
 import jmri.InstanceManager;
 import jmri.util.JmriJFrame;
+import jmri.Path;
 
 import java.awt.*;
 import java.awt.geom.*;
@@ -20,18 +21,32 @@ import jmri.Sensor;
 import jmri.AbstractNamedBean;
 
 /**
- * A LayoutBlock is a group of track segments and turnouts on a layout 
- *       corresponding to a 'block'. LayoutBlock is an extension of the normal
- *       Block object, with its occupancy sensor added. 
+ * A LayoutBlock is a group of track segments and turnouts on a LayoutEditor panel 
+ *      corresponding to a 'block'. LayoutBlock is a LayoutEditor specific extension 
+ *		of the JMRI Block object. 
  * <P>
  * LayoutBlocks may have an occupancy Sensor. The getOccupancy method returns 
  *		the occupancy state of the LayoutBlock - OCCUPIED, EMPTY, or UNKNOWN.
- *		If no occupancy sensor is provided, UNKNOWN is returned.
+ *		If no occupancy sensor is provided, UNKNOWN is returned. The occupancy sensor
+ *      if there is one, is the same as the occupancy sensor of the corresponding 
+ *      JMRI Block.
  * <P>
- * The name of each Layout Block is the same as that of the corresponding Block.
+ * The name of each Layout Block is the same as that of the corresponding block as
+ *		defined in Layout Editor . A corresponding JMRI Block object is created when a
+ *		LayoutBlock is created. The JMRI Block uses the name of the block defined in
+ *      Layout Editor as its user name and a unique IBnnn system name. The JMRI Block 
+ *		object and its associated Path objects are useful in tracking a train around 
+ *      the layout. Blocks may be viewed in the Block Table.
+ * <P>
+ * A LayoutBlock may have an associated Memory object. This Memory object contains a 
+ *		string representing the current "value" of the corresponding JMRI Block object. 
+ *		If the value contains a train name, for example, displaying Memory objects 
+ *		associated with LayoutBlocks, and displayed near each Layout Block can 
+ *		follow a train around the layout, displaying its name when it is in the
+ *.		LayoutBlock.
  * <P>
  * LayoutBlocks are "cross-panel", similar to sensors and turnouts.  A LayoutBlock
- *		may be used by more than one panel simultaneously.  As a consequence, 
+ *		may be used by more than one Layout Editor panel simultaneously.  As a consequence, 
  *		LayoutBlocks are saved with the configuration, not with a panel.
  * <P>
  * LayoutBlocks are used by TrackSegments, LevelXings, and LayoutTurnouts.
@@ -40,12 +55,12 @@ import jmri.AbstractNamedBean;
  *			except for double crossovers which can have up to four.
  * <P>
  * LayoutBlocks carry a use count.  The use count counts the number of track
- *		segments, layout turnouts, and levelcrossings which use the layout block.
+ *		segments, layout turnouts, and levelcrossings which use the LayoutBlock.
  *		Only LayoutBlocks which have a use count greater than zero are saved when
  *		the configuration is saved.
  * <P>
- * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.4 $
+ * @author Dave Duchamp Copyright (c) 2004-2008
+ * @version $Revision: 1.5 $
  */
 
 public class LayoutBlock extends AbstractNamedBean
@@ -57,21 +72,22 @@ public class LayoutBlock extends AbstractNamedBean
 	// constants
 	public static final int OCCUPIED = jmri.Block.OCCUPIED;
 	public static final int EMPTY = jmri.Block.UNOCCUPIED;
-	public static final int UNKNOWN = 0x08;  // must be a different bit from the above two
-
+	public static final int UNKNOWN = jmri.Sensor.UNKNOWN;  // must be a different bit
 	// operational instance variables (not saved to disk)
 	private int useCount = 0;
 	private Sensor occupancySensor = null;
+	private jmri.Memory memory = null;
 	private jmri.Block block = null;
 	private int maxBlockNumber = 0;
 	private LayoutBlock _instance = null;
     private ArrayList panels = new ArrayList();  // panels using this block
-	
-	private java.beans.PropertyChangeListener mSensorListener = null;
+	private java.beans.PropertyChangeListener mBlockListener = null;
+	private	int jmriblknum = 1;
 
 	// persistent instances variables (saved between sessions)
 	public String blockName = "";
 	public String occupancySensorName = "";
+	public String memoryName = "";
 	public int occupiedSense = Sensor.ACTIVE;
 	public Color blockTrackColor = Color.black;
 	public Color blockOccupiedColor = Color.black;
@@ -80,11 +96,36 @@ public class LayoutBlock extends AbstractNamedBean
 		super (sName,uName);
 		_instance = this;
 		blockName = uName;
+		// get/create a jmri.Block object corresponding to this LayoutBlock
+		block = InstanceManager.blockManagerInstance().getByUserName(uName);
+		if (block==null) {
+			// not found, create a new jmri.Block
+			String s = "";
+			boolean found = true;
+			// create a unique system name
+			while (found) {
+				s = "IB"+jmriblknum;
+				jmriblknum ++;
+				block = InstanceManager.blockManagerInstance().getBySystemName(s);
+				if (block == null) found = false;
+			}
+			block = InstanceManager.blockManagerInstance().createNewBlock(s,uName);
+			if (block==null) log.error("Failure to get/create Block: "+s+","+uName);
+		}
+		if (block!=null) {
+			// attach a listener for changes in the Block
+			block.addPropertyChangeListener(mBlockListener = 
+								new java.beans.PropertyChangeListener() {
+					public void propertyChange(java.beans.PropertyChangeEvent e) {
+						handleBlockChange(e);
+					}
+				});
+		}
 	}
 	
 	/**
 	 * Accessor methods
-	*/
+	 */
 	public String getID() {return blockName;}	
 	public Color getBlockTrackColor() {return blockTrackColor;};
 	public void setBlockTrackColor(Color color) {blockTrackColor = color;};	
@@ -178,14 +219,12 @@ public class LayoutBlock extends AbstractNamedBean
 		// ensure that this sensor is unique among defined Layout Blocks
 		Sensor savedSensor = occupancySensor;
 		String savedName = occupancySensorName;
-		deactivateSensor();
 		occupancySensor = null;
 		LayoutBlock b = InstanceManager.layoutBlockManagerInstance().
 											getBlockWithSensorAssigned(s);
 		if (b!=null) {
 			// new sensor is not unique, return to the old one
 			occupancySensor = savedSensor;
-			if (occupancySensor!=null) activateSensor();
 			JOptionPane.showMessageDialog(openFrame,
 					java.text.MessageFormat.format(rb.getString("Error6"),
 					new String[]{sensorName,b.getID()}),
@@ -195,6 +234,34 @@ public class LayoutBlock extends AbstractNamedBean
 		// sensor is unique
 		setOccupancySensorName(sensorName);
 		return s;
+	}
+
+	/**
+	 * Validates that the memory name corresponds to an existing memory.
+	 *   If valid, returns the memory. Else returns null, and notifies the user.
+	 * This method also converts the memory name to upper case if it is a system name.
+	 */
+	public jmri.Memory validateMemory(String memName, Component openFrame) {
+		// check if anything entered	
+		if (memName.length()<1) {
+			// no memory entered
+			return null;
+		}
+		// get the memory corresponding to this name
+		jmri.Memory m = InstanceManager.memoryManagerInstance().getMemory(memName);
+		if (m==null) {
+			// There is no memory corresponding to this name
+			JOptionPane.showMessageDialog(openFrame,
+					java.text.MessageFormat.format(rb.getString("Error16"),
+					new String[]{memName}),
+					rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+		if ( !(memName.equals(m.getUserName())) ) {
+			memName = memName.toUpperCase();
+		}
+		memoryName = memName;
+		return m;
 	}
 		
 	/**
@@ -211,29 +278,27 @@ public class LayoutBlock extends AbstractNamedBean
 	}
 
 	/**
-	 * Get a Block corresponding to the block id passed on construction
+	 * Get the jmri.Block corresponding to this LayoutBlock
 	 */
-	public jmri.Block getBlock() {
-		// block id cannot be null.  If so return null;
-		if (blockName == "") {
-			return null;
-		}
-		// check if block already exists.  If so, don't create a new one.
-		block = jmri.BlockManager.instance().getBlock(blockName);
-		if (block==null) {
-			// this is a normal case - Block may need to be created
-			if ( (blockName.length()>2) && (blockName.charAt(0)=='I') && 
-										(blockName.charAt(1)=='B') ) {
-				// 'id' is a system name
-				block = jmri.BlockManager.instance().createNewBlock(blockName,"");
-			}
-			else {
-				// 'id' is a user name
-				String sName = "IB" + blockName;
-				block = jmri.BlockManager.instance().createNewBlock(sName,blockName);
-			}
-		}
-		return block;
+	public jmri.Block getBlock() {return block;}
+			
+	/**
+	 * Returns Memory name
+	*/
+	public String getMemoryName() {return (memoryName);}
+			
+	/**
+	 * Returns Memory
+	*/
+	public jmri.Memory getMemory() {return (memory);}
+
+	/**
+	 * Add Memory by name
+	 */
+	public void setMemoryName(String name) {
+		memoryName = name;
+		memory = jmri.InstanceManager.memoryManagerInstance().
+                            getMemory(name);
 	}
 			
 	/**
@@ -254,11 +319,12 @@ public class LayoutBlock extends AbstractNamedBean
 	 * Add occupancy sensor by name
 	 */
 	public void setOccupancySensorName(String name) {
-		deactivateSensor();
 		occupancySensorName = name;
 		occupancySensor = jmri.InstanceManager.sensorManagerInstance().
                             getSensor(name);
-		activateSensor();
+		if (block!=null) {
+			block.setSensor(occupancySensor);
+		}
 	}
 	
 	/**
@@ -291,36 +357,145 @@ public class LayoutBlock extends AbstractNamedBean
 	// dummy for completion of NamedBean interface
 	public void setState(int i) {}
 	
+	/**
+	 * Check/Update Path objects for the attached jmri.Block
+	 */
+	public void updatePaths() {
+		if ( (block!=null) && (panels.size()>0) ) {
+			// a block is attached and this LayoutBlock is used
+			// get connectivity as defined in first Layout Editor panel
+			LayoutEditor panel = (LayoutEditor)panels.get(0);
+			ArrayList c = panel.getConnectivityList(_instance);
+			// check that this connectivity is compatible with that of other panels.
+			if (panels.size()>1) {
+				for (int i = 1;i < panels.size();i++) {
+					if ( !compareConnectivity(c,((LayoutEditor)panels.get(i)).
+									getConnectivityList(_instance)) ) {
+						// send user an error message
+// here insert error message on interpanel block incompatibility
+					}
+				}
+			}
+			// update block Paths to reflect connectivity as needed
+			updateBlockPaths(c,panel);
+		}	
+	}	
+	private void updateBlockPaths(ArrayList c, LayoutEditor panel) {
+		LayoutEditorAuxTools auxTools = new LayoutEditorAuxTools(panel);
+		java.util.List paths = block.getPaths();
+		boolean[] used = new boolean[c.size()];
+		int[] need = new int[paths.size()];
+		for (int j=0;j<c.size();j++) {used[j] = false;}
+		for (int j=0;j<paths.size();j++) {need[j] = -1;}
+		// cycle over existing Paths, checking against LayoutConnectivity
+		for (int i = 0;i<paths.size();i++) {
+			jmri.Path p = (jmri.Path)paths.get(i);
+			// cycle over LayoutConnectivity matching to this Path
+			for (int j = 0;j<c.size();j++) {
+				if (!used[j]) {
+					// this LayoutConnectivity not used yet
+					LayoutConnectivity lc = (LayoutConnectivity)c.get(j);
+					if ( (lc.getBlock1().getBlock()==p.getBlock()) ||
+								(lc.getBlock2().getBlock()==p.getBlock()) ) {
+						// blocks match - record
+						used[j] = true;
+						need[i] = j;
+					}
+				}
+			}
+		}
+		// update needed Paths
+		for (int i = 0;i<paths.size();i++) {
+			if (need[i]>=0) {
+				jmri.Path p = (jmri.Path)paths.get(i);
+				LayoutConnectivity lc = (LayoutConnectivity)c.get(need[i]);
+				if (lc.getBlock1()==_instance) {
+					p.setToBlockDirection(lc.getDirection());
+					p.setFromBlockDirection(lc.getReverseDirection());
+				}
+				else {
+					p.setToBlockDirection(lc.getReverseDirection());
+					p.setFromBlockDirection(lc.getDirection());
+				}
+				if (c.size()>2) auxTools.addBeanSettings(p,lc,_instance);
+			}
+		}	
+		// delete unneeded Paths
+		for (int i = 0;i<paths.size();i++) {
+			if (need[i]<0) {				
+				block.removePath((jmri.Path)paths.get(i));
+			}
+		}	
+		// add Paths as required
+		for (int j = 0;j<c.size();j++) {
+			if (!used[j]) {
+				// there is no corresponding Path, add one.
+				LayoutConnectivity lc = (LayoutConnectivity)c.get(j);
+				jmri.Path newp = null;
+				if (lc.getBlock1()==_instance) {
+					newp = new jmri.Path(lc.getBlock2().getBlock(),lc.getDirection(),
+									lc.getReverseDirection());
+				}
+				else {
+					newp = new jmri.Path(lc.getBlock1().getBlock(),lc.getReverseDirection(),
+									lc.getDirection());					
+				}
+				if (newp != null) block.addPath(newp);				
+				else log.error("Trouble adding Path to block '"+blockName+"'.");
+				if (c.size()>2) auxTools.addBeanSettings(newp,lc,_instance);
+			}				
+		}
+// djd debugging - lists results of automatic initialization of Paths and BeanSettings			
+//		paths = block.getPaths();
+//		for (int i = 0;i<paths.size();i++) {
+//			jmri.Path p = (jmri.Path)paths.get(i);
+//			log.error("Block "+blockName+"- Path to "+p.getBlock().getUserName()+
+//						" - "+p.decodeDirection(p.getToBlockDirection()) );
+//			java.util.List beans = p.getSettings();
+//			for (int j=0;j<beans.size();j++) {
+//				jmri.BeanSetting be = (jmri.BeanSetting)beans.get(j);
+//				log.error("   BeanSetting - "+((jmri.Turnout)be.getBean()).getSystemName()+
+//								" with state "+be.getSetting()+" (2=CLOSED,4=THROWN)");
+//			}
+//		}
+// end debugging
+	}
+	private boolean compareConnectivity(ArrayList a, ArrayList b) {
+// insert comparison code here to compare block to block connections from different panels		
+		// connectivities are compatible
+		return (true);
+	}
+	
+	/**
+	 * Handle tasks when block changes
+	 */
+	void handleBlockChange(java.beans.PropertyChangeEvent e) {
+		// Update memory object if there is one
+		if ( (memory!=null) && (block!=null) ) {
+			Object val = block.getValue();
+			if (val!=null) val = val.toString();
+			memory.setValue(val);
+		}				
+		// Redraw all Layout Editor panels using this Layout Block
+		redrawLayoutBlockPanels();
+	}
+			
 	/** 
-	 * Activate/deactivate occupancy sensor for redraw of panels on 
+	 * Deactivate block listener for redraw of panels and update of memories on 
 	 *	change of state
 	 */
-	private void activateSensor() {
-		if (occupancySensor!=null) {
-			occupancySensor.addPropertyChangeListener(mSensorListener =
-								new java.beans.PropertyChangeListener() {
-					public void propertyChange(java.beans.PropertyChangeEvent e) {
-						if (panels.size()>0) {
-							for (int i=0;i<panels.size();i++) {
-								LayoutEditor ed = (LayoutEditor)panels.get(i);
-								ed.redrawPanel();
-							}
-						}
-					}
-				});
+	private void deactivateBlock() {
+		if ( (mBlockListener!=null) && (block!=null) ) {
+			block.removePropertyChangeListener(mBlockListener);
 		}
-	}
-	private void deactivateSensor() {
-		if ( (mSensorListener!=null) && (occupancySensor!=null) ) {
-			occupancySensor.removePropertyChangeListener(mSensorListener);
-		}
-		mSensorListener = null;
+		mBlockListener = null;
 	}
 			
 	// variables for Edit Layout Block pane
 	JmriJFrame editLayoutBlockFrame = null;
 	Component callingPane;
 	JTextField sensorNameField = new JTextField(16);
+	JTextField memoryNameField = new JTextField(16);
     JComboBox senseBox = new JComboBox();
     int senseActiveIndex;
     int senseInactiveIndex;
@@ -397,7 +572,16 @@ public class LayoutBlock extends AbstractNamedBean
 			initializeColorCombo(occupiedColorBox);
 			panel7.add(occupiedColorBox);
             occupiedColorBox.setToolTipText( rb.getString("OccupiedColorHint") );
-            contentPane.add(panel7);			
+            contentPane.add(panel7);
+			// set up Memory entry (changeable)
+			contentPane.add(new JSeparator(JSeparator.HORIZONTAL));
+			JPanel panel8 = new JPanel(); 
+            panel8.setLayout(new FlowLayout());
+			JLabel memoryLabel = new JLabel( rb.getString("MemoryVariable")+":");
+            panel8.add(memoryLabel);
+            panel8.add(memoryNameField);
+            memoryNameField.setToolTipText( rb.getString("MemoryVariableTip") );
+            contentPane.add(panel8);			
 			// set up Done and Cancel buttons
 			contentPane.add(new JSeparator(JSeparator.HORIZONTAL));
             JPanel panel5 = new JPanel();
@@ -431,6 +615,7 @@ public class LayoutBlock extends AbstractNamedBean
 		}
 		setColorCombo(trackColorBox,blockTrackColor);
 		setColorCombo(occupiedColorBox,blockOccupiedColor);
+		memoryNameField.setText(memoryName);
 		editLayoutBlockFrame.addWindowListener(new java.awt.event.WindowAdapter() {
 				public void windowClosing(java.awt.event.WindowEvent e) {
 					blockEditCancelPressed(null);
@@ -471,6 +656,20 @@ public class LayoutBlock extends AbstractNamedBean
 		oldColor = blockOccupiedColor;
 		blockOccupiedColor = getSelectedColor(occupiedColorBox);
 		if (oldColor!=blockOccupiedColor) needsRedraw = true;
+		// check if Memory changed
+		if ( !memoryName.equals(memoryNameField.getText().trim()) ) {
+			// memory has changed
+			String newName = memoryNameField.getText().trim();
+			if ((memory = validateMemory(newName,editLayoutBlockFrame))==null) {
+				// invalid memory entered
+				memoryName = "";
+				memoryNameField.setText("");
+			}
+			else {
+				memoryNameField.setText(memoryName);
+				needsRedraw = true;
+			}
+		}
 		// complete
 		editOpen = false;
 		editLayoutBlockFrame.setVisible(false);
@@ -560,7 +759,7 @@ public class LayoutBlock extends AbstractNamedBean
      */
     void remove() {
 		// if an occupancy sensor has been activated, deactivate it
-		deactivateSensor();
+		deactivateBlock();
         // remove from persistance by flagging inactive
         active = false;
     }

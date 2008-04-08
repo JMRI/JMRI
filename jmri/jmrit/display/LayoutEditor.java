@@ -47,7 +47,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -207,6 +207,8 @@ public class LayoutEditor extends JmriJFrame {
 	public ArrayList pointList = new ArrayList();  // PositionablePoint list
 	public ArrayList xingList = new ArrayList();  // LevelXing list
 	public ArrayList turntableList = new ArrayList(); // Turntable list
+	// Lists not saved over sessions
+	private ArrayList conList = new ArrayList(); //LayoutConnectivity list
 	// counts used to determine unique internal names
 	private int numAnchors = 0;
 	private int numEndBumpers = 0;
@@ -559,6 +561,7 @@ public class LayoutEditor extends JmriJFrame {
     } 
 	
 	LayoutEditorTools tools = null;
+	LayoutEditorAuxTools auxTools = null;
 	void setupToolsMenu(JMenuBar menuBar) {
 		JMenu toolsMenu = new JMenu(rb.getString("MenuTools"));
 		menuBar.add(toolsMenu);
@@ -3338,8 +3341,27 @@ public class LayoutEditor extends JmriJFrame {
 				((LayoutTurnout)turnoutList.get(i)).setObjects(this);
 			}
 		}
+		// initialize connectivity
+		if (auxTools == null) {
+			auxTools = new LayoutEditorAuxTools(thisPanel);
+		}
+		conList = auxTools.initializeBlockConnectivity();
+		// reset the panel changed bit
 		resetDirty();
 	}
+	
+	// get Connectivity for a specific Layout Block
+	public ArrayList getConnectivityList(LayoutBlock blk) {
+		ArrayList retList = new ArrayList();
+		for (int i = 0;i<conList.size();i++) {
+			LayoutConnectivity lc = (LayoutConnectivity)conList.get(i);
+			if ( (lc.getBlock1() == blk) || (lc.getBlock2() == blk) ) {
+				retList.add((Object)lc);
+			}
+		}
+		return (retList);
+	}
+	
 	// utility routines
 	public static String colorToString(Color color) {
 		if(color == Color.black) return "black";

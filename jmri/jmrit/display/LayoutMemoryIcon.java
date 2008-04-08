@@ -23,11 +23,16 @@ import java.util.ResourceBundle;
  *   the hard dependence on PanelEditor in MemoryIconXml.java, without risking 
  *   compromising existing PanelEditor panels. 
  * <P>
+ * Another difference from MemoryIcon.java, is that this defaults to a text 
+ *   instead of the red X icon displayed when Panel Editor is loaded. If the
+ *   user needs to "find" the MemoryIcon, putting text into the Memory Table
+ *   is suggested.
+ * <P>
  * This module has been modified (from MemoryIcon.java) to use a resource
  *	 bundle for its user-seen text, like other LayoutEditor modules.
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.beans.PropertyChangeListener {
@@ -35,16 +40,13 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.LayoutEditorBundle");
 
     public LayoutMemoryIcon() {
-        // super ctor call to make sure this is an icon label
-        super(new NamedIcon("resources/icons/misc/X-red.gif",
-                            "resources/icons/misc/X-red.gif"));
-                            
+        // super ctor call to make sure this defaults to a text label
+        super (new String("  "));                    
         setDisplayLevel(LayoutEditor.LABELS);
         // have to do following explicitly, after the ctor
         resetDefaultIcon();
-        
-        icon = true;
-        text = false;
+		text = true;
+		icon = false;
     }
 
     private void resetDefaultIcon() {
@@ -66,6 +68,7 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
 	}
 	
 	NamedIcon defaultIcon = null;
+	String defaultText = "  ";
 
     // the associated Memory object
     Memory memory = null;
@@ -131,7 +134,7 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
         if (log.isDebugEnabled()) log.debug("property change: "
                                             +e.getPropertyName()
                                             +" is now "+e.getNewValue());
-	if (e.getPropertyName().equals("value")) {
+		if (e.getPropertyName().equals("value")) {
             displayState();
         }
     }
@@ -287,10 +290,10 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
 		    }
 		} else {
 		    // If fall through to here, no Memory value, set icon to default.
-		    setIcon(defaultIcon);
-            setText(null);
-            text = false;
-            icon = true;
+		    setIcon(null);
+            setText(defaultText);
+            text = true;
+            icon = false;
     		updateSize();
         }
     }

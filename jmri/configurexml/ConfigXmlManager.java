@@ -21,7 +21,7 @@ import java.util.List;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -329,6 +329,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         }
 		// all loaded, initialize objects as necessary
 		InstanceManager.logixManagerInstance().activateAllLogixs();
+		InstanceManager.layoutBlockManagerInstance().initializeLayoutBlockPaths();
         return result;
     }
 
