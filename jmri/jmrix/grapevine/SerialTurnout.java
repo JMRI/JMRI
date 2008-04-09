@@ -13,7 +13,7 @@ import jmri.Turnout;
  *  more than one Turnout object pointing to a single device is not allowed.
  *
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class SerialTurnout extends AbstractTurnout {
 
@@ -85,11 +85,13 @@ public class SerialTurnout extends AbstractTurnout {
             return;
         }
         boolean high = (output>=12);
-        if (high) output = output-12;
+        int tOut = output;
+        if (high) tOut = output-12;
         if ( (bank<0)||(bank>4) ) {
             log.error("invalid bank "+bank+" for Turnout "+getSystemName());
             bank = 0;
         }
+
         SerialMessage m = new SerialMessage(high?8:4);
         int i = 0;
         if (high) {
@@ -100,7 +102,7 @@ public class SerialTurnout extends AbstractTurnout {
             m.setParity(i-4);
         }
         m.setElement(i++,tNode.getNodeAddress()|0x80);  // address 1
-        m.setElement(i++, (output<<3)|(closed ? 0 : 6));  // closed is green, thrown is red
+        m.setElement(i++, (tOut<<3)|(closed ? 0 : 6));  // closed is green, thrown is red
         m.setElement(i++,tNode.getNodeAddress()|0x80);  // address 2
         m.setElement(i++, bank<<4); // bank is most significant bits
         m.setParity(i-4);
