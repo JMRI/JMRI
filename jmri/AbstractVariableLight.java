@@ -17,7 +17,7 @@ import jmri.jmrix.powerline.SerialTrafficController;
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Ken Cameron Copyright (C) 2008
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public abstract class AbstractVariableLight extends AbstractLight
     implements java.io.Serializable {
@@ -72,8 +72,11 @@ public abstract class AbstractVariableLight extends AbstractLight
     }
     
     private void newInternalMinute() {
+    	double origCurrent = mCurrentIntensity;
     	if ((mCurrentIntensity != mTransitionTargetIntensity) && (mTransitionDuration > 0)) {
-    		log.debug("before Target: " + mTransitionTargetIntensity + " Current: " + mCurrentIntensity);
+    		if (log.isDebugEnabled()) {
+    			log.debug("before Target: " + mTransitionTargetIntensity + " Current: " + mCurrentIntensity);
+    		}
     		Date now = internalClock.getTime();
     		int steps = SerialTrafficController.instance().maxX10DimStep();
         	double stepsPerMinute = steps / mTransitionDuration;
@@ -83,42 +86,29 @@ public abstract class AbstractVariableLight extends AbstractLight
         	double stepSize = 1 / (double)steps;
         	double stepsNeeded = absIntensityDiff / stepSize;
         	double intensityDiffPerMinute = stepSize * stepsPerMinute;
-    		if ((stepsPerMinute >= 1) || (stepsNeeded < stepsPerMinute)) {
-    			if (stepsNeeded > stepsPerMinute) {
-    				if (mTransitionTargetIntensity > mCurrentIntensity) {
-    					mCurrentIntensity = mCurrentIntensity + intensityDiffPerMinute;
-    				} else {
-    					mCurrentIntensity = mCurrentIntensity - intensityDiffPerMinute;
-    				}
-    			} else {
-    				mCurrentIntensity = mTransitionTargetIntensity;
-    			}
-				mNextTransitionTs = 0;
-    		} else {
-    			if (mNextTransitionTs == 0) {
-    				mNextTransitionTs = now.getTime() + (long)(60 * 1000 * stepsPerMinute);
-    				if (mTransitionTargetIntensity > mCurrentIntensity) {
-    					mCurrentIntensity = mCurrentIntensity + intensityDiffPerMinute;
-    				} else {
-    					mCurrentIntensity = mCurrentIntensity - intensityDiffPerMinute;
-    				}
-    			} else {
-    				if (mNextTransitionTs < now.getTime()) {
-    					if (absIntensityDiff > minutesPerStep) {
-    	    				if (mTransitionTargetIntensity > mCurrentIntensity) {
-    	    					mCurrentIntensity = mCurrentIntensity + intensityDiffPerMinute;
-    	    				} else {
-    	    					mCurrentIntensity = mCurrentIntensity - intensityDiffPerMinute;
-    	    				}
-    						mNextTransitionTs = now.getTime() + (long)(60 * 1000 * stepsPerMinute);
-    					} else {
-    	    				mCurrentIntensity = mTransitionTargetIntensity;
-    	    				mNextTransitionTs = 0;
-    					}
-    				}
-    			}
+//        	if (log.isDebugEnabled()) {
+//        		log.debug("step/min " + stepsPerMinute + " min/step " + minutesPerStep + " absDiff " + absIntensityDiff + " step " + stepSize + " steps " + stepsNeeded + " diff/min " + intensityDiffPerMinute);
+//        	}
+			if (mTransitionTargetIntensity > mCurrentIntensity) {
+				mCurrentIntensity = mCurrentIntensity + intensityDiffPerMinute;
+				if (mCurrentIntensity > mTransitionTargetIntensity) {
+					mCurrentIntensity = mTransitionTargetIntensity;
+				}
+			} else {
+				mCurrentIntensity = mCurrentIntensity - intensityDiffPerMinute;
+				if (mCurrentIntensity < mTransitionTargetIntensity) {
+					mCurrentIntensity = mTransitionTargetIntensity;
+				}
+			}
+    		if (log.isDebugEnabled()){
+        		log.debug("after Target: " + mTransitionTargetIntensity + " Current: " + mCurrentIntensity);
     		}
-    		log.debug("after Target: " + mTransitionTargetIntensity + " Current: " + mCurrentIntensity);
+    	}
+    	if (origCurrent != mCurrentIntensity) {
+            firePropertyChange("IntensityChange", new Double(origCurrent), new Double(mCurrentIntensity));
+    		if (log.isDebugEnabled()){
+        		log.debug("firePropertyChange " + origCurrent + " -> " + mCurrentIntensity);
+    		}
     	}
     }
     /** Check if this object can handle variable intensity.
@@ -145,7 +135,9 @@ public abstract class AbstractVariableLight extends AbstractLight
         mState = INTERMEDIATE;
         if (oldState!= INTERMEDIATE)
             firePropertyChange("KnownState", new Integer(oldState), new Integer(mState));
-        log.debug("change dim: " + oldValue + " to " + intensity);
+        if (log.isDebugEnabled()) {
+        	log.debug("change dim: " + oldValue + " to " + intensity);
+        }
         if (mTransitionDuration != 0) {
         	mLastTransitionDate = internalClock.getTime();
         	newInternalMinute();
