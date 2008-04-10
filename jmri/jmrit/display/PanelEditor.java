@@ -49,7 +49,7 @@ import java.util.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003, 2007
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.84 $
+ * @version $Revision: 1.85 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -716,7 +716,7 @@ public class PanelEditor extends JmriJFrame {
         target.validate();
     }
     
-    void addLocoIcon (String name){
+    private LocoIcon addLocoIcon (String name){
     	LocoIcon l = new LocoIcon();
         setNextLocation(l);
         l.setText(name);
@@ -724,6 +724,7 @@ public class PanelEditor extends JmriJFrame {
         // always allow new items to be moved
         l.setPositionable(true);
         moveToFront(l);
+        return l;
      }
     
     public void putLocoIcon(LocoIcon l) {
@@ -1012,7 +1013,15 @@ public class PanelEditor extends JmriJFrame {
         contents.clear();
         target = null;
         frame = null;
-
+        // remove marker frames
+		if (locoRosterFrame != null) {
+			locoRosterFrame.setVisible(false);
+			locoRosterFrame = null;
+		}
+		if (locoFrame != null) {
+			locoFrame.setVisible(false);
+			locoFrame = null;
+		}
         // clean up GUI aspects
         this.removeAll();
         super.dispose();
@@ -1308,45 +1317,51 @@ public class PanelEditor extends JmriJFrame {
     
     javax.swing.JLabel text = new javax.swing.JLabel();
     javax.swing.JComboBox rosterBox = Roster.instance().fullRosterComboBox();
-	
+    JmriJFrame locoRosterFrame = null;
+    
     void locoMarkerFromRoster(){
-    	JmriJFrame rf = new JmriJFrame();
-    	rf.getContentPane().setLayout(new FlowLayout());
-    	rf.setTitle("Loco Marker from Roster");
-    	text.setText ("Select loco:");
-    	rf.getContentPane().add(text);
-		rosterBox.insertItemAt("", 0);
-		rosterBox.setSelectedIndex(0);
-    	rosterBox.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				selectLoco();
-			}
-		});
-    	rf.getContentPane().add(rosterBox);
-    	rf.pack();
-    	rf.setVisible(true);	
+    	if (locoRosterFrame == null) {
+			locoRosterFrame = new JmriJFrame();
+			locoRosterFrame.getContentPane().setLayout(new FlowLayout());
+			locoRosterFrame.setTitle("Loco Marker from Roster");
+			text.setText("Select loco:");
+			locoRosterFrame.getContentPane().add(text);
+			rosterBox.insertItemAt("", 0);
+			rosterBox.setSelectedIndex(0);
+			rosterBox.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					selectLoco();
+				}
+			});
+			locoRosterFrame.getContentPane().add(rosterBox);
+			locoRosterFrame.pack();
+		}
+    	locoRosterFrame.setVisible(true);	
     }
     
     javax.swing.JLabel textId = new javax.swing.JLabel();
     javax.swing.JButton okay = new javax.swing.JButton();
     javax.swing.JTextField locoId = new javax.swing.JTextField(7);
+    JmriJFrame locoFrame = null;
     
-    void locoMarkerFromInput(){
-    	JmriJFrame f = new JmriJFrame();
-    	f.getContentPane().setLayout(new FlowLayout());
-    	f.setTitle("Enter Loco Marker");
-    	textId.setText ("Loco ID:");
-    	f.getContentPane().add(textId);
-    	f.getContentPane().add(locoId);
-    	okay.setText("OK");
-       	okay.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				inputLoco();
-			}
-		});
-    	f.getContentPane().add(okay);
-    	f.pack();
-    	f.setVisible(true);
+    void locoMarkerFromInput() {
+		if (locoFrame == null) {
+			locoFrame = new JmriJFrame();
+			locoFrame.getContentPane().setLayout(new FlowLayout());
+			locoFrame.setTitle("Enter Loco Marker");
+			textId.setText("Loco ID:");
+			locoFrame.getContentPane().add(textId);
+			locoFrame.getContentPane().add(locoId);
+			okay.setText("OK");
+			okay.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					inputLoco();
+				}
+			});
+			locoFrame.getContentPane().add(okay);
+			locoFrame.pack();
+		}
+		locoFrame.setVisible(true);
     }
     
     void selectLoco(){
@@ -1358,8 +1373,10 @@ public class PanelEditor extends JmriJFrame {
 		String rn = entry.getRoadNumber();
 		if (rn.equals("")) 
 			rn = entry.getDccAddress();
-		if (rn != null)
-			addLocoIcon(rn);
+		if (rn != null){
+			LocoIcon l = addLocoIcon(rn);
+			l.setRosterEntry(entry);
+		}
      }
     
     void inputLoco(){

@@ -5,6 +5,8 @@ import jmri.jmrit.catalog.CatalogPane;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.LocoIcon;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.roster.Roster;
 import org.jdom.Attribute;
 import org.jdom.Element;
 
@@ -12,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.LocoIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class LocoIconXml extends PositionableLabelXml {
 
@@ -39,6 +41,9 @@ public class LocoIconXml extends PositionableLabelXml {
         element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
         NamedIcon icon = (NamedIcon)p.getIcon();
         element.setAttribute("icon", icon.getName());
+        RosterEntry entry = p.getRosterEntry();
+        if (entry != null)
+        	element.setAttribute("rosterentry", entry.getId());
         
         storeTextInfo(p, element);
         
@@ -98,6 +103,14 @@ public class LocoIconXml extends PositionableLabelXml {
 			l.setIcon(CatalogPane.getIconByName(name));
 		} catch (Exception e) {
 			log.error("failed to get icon attribute");
+		}
+		
+		try{
+			String rosterId = element.getAttribute("rosterentry").getValue();
+			RosterEntry entry = Roster.instance().entryFromTitle(rosterId);
+			l.setRosterEntry(entry);
+		} catch (Exception e) {
+			log.debug("no roster entry");
 		}
         
         p.putLocoIcon(l);

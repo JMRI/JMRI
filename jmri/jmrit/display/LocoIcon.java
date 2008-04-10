@@ -3,6 +3,7 @@ package jmri.jmrit.display;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.roster.RosterEntry;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -22,7 +23,7 @@ import javax.swing.JRadioButtonMenuItem;
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class LocoIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -45,6 +46,7 @@ public class LocoIcon extends PositionableLabel implements java.beans.PropertyCh
 
 
     boolean enablePopUp = true;
+    jmri.jmrit.throttle.ThrottleFrame tf = null;
     /**
      * Pop-up only if right click and not dragged 
      */
@@ -52,6 +54,15 @@ public class LocoIcon extends PositionableLabel implements java.beans.PropertyCh
 		ours = this;
 		if (enablePopUp) {
 			popup = new JPopupMenu();
+			if (entry != null) {
+				popup.add(new AbstractAction("Throttle") {
+					public void actionPerformed(ActionEvent e) {
+						tf = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();
+						tf.notifyAddressChosen(entry.getDccLocoAddress().getNumber(), entry.getDccLocoAddress().isLongAddress());
+						tf.setVisible(true);
+					}
+				});
+			}
 			popup.add(makeLocoIconMenu());
 			popup.add(makeFontSizeMenu());
 			popup.add(makeFontStyleMenu());
@@ -122,6 +133,16 @@ public class LocoIcon extends PositionableLabel implements java.beans.PropertyCh
     		super.setIcon (red);
     		setForeground (Color.white);
     	}
+    }
+    
+    RosterEntry entry = null;
+    
+    public void setRosterEntry (RosterEntry entry){
+    	this.entry = entry;
+    }
+    
+    public RosterEntry getRosterEntry (){
+    	return entry;
     }
     
     public void mouseDragged(MouseEvent e) {
