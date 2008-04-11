@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: EditLayoutBlock.shtml,v 1.2 2007-11-23 06:45:58 jacobsen Exp $ -->
+<!-- $Id: EditLayoutBlock.shtml,v 1.3 2008-04-11 17:33:25 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -48,6 +48,32 @@ name will create a new block having the new name. After all items assigned to
 the old block are changed to the new block, the block with the old name will
 be automatically deleted (see below).</p>
 <p>
+Blocks may be viewed in the <b>Block Table</b>, that may be accessed using the 
+<b>Tools</b> menu. Block information for a Layout Editor panel is kept in two 
+parts, which are always linked together automatically. For each block, Layout 
+Editor specific information is stored and managed in a Layout Editor specific 
+part, and the generic part of the block information is stored in a JMRI Block. 
+When a Layout Editor block is created, a corresponding JMRI Block is 
+automatically created. The automatically created Block will have a system name 
+<i>IBnnn</i> (where <i>nnn</i> is a number), and a user name the same as the 
+block name mentioned above. It is the generic Blocks that are displayed in the 
+Block Table. Avoid changing the user name in the Block Table, because this 
+will break the link between the two parts of the block information.</p>
+<p>
+Of interest in the Block Table is the "Value" column. The "Value" can be used to 
+identify trains as they move around the layout. If a train is parked in 
+a Block, and train identifying text is manually entered into the "Value" entry 
+for that Block, the text will be propogated from Block to Block as the train is 
+run around the layout. When the train enters a Block, the text "Value" of the 
+block the train entered from will be
+copied into the "Value" of the entered Block; when the train exits a Block, the 
+"Value" of the now empty block will be cleared. If a Memory Variable is assigned
+to the block (see below), the "Value" of the Memory Variable will be set to the 
+"Value" of the block. So by placing a Memory Icon near the block, the identity 
+of the train in the block can be displayed in the Layout Editor panel. <b>Caution: 
+Tracking trains using this method requires smoothly running block detection 
+circuitry.</b> False or flikering block detection can easily confuse things.</p>
+<p>
 Turnout, level crossing, and track segment edit dialogs provide access to the 
 Create/Edit Block dialog where information specific to a block may be entered
 or edited. The <b>Occupancy Sensor:</b> field in the Create/Edit Block dialog 
@@ -67,6 +93,14 @@ change color as a train enters and leaves that block. To set track colors,
 select the unoccupied track color in the <b>Track Color:</b> selection box, 
 and select the occupied track color in the <b>Occupied Track Color:</b> 
 selection box.</p>
+<p>
+The <b>Memory Variable Name:</b> field in the Create/Edit Block dialog 
+shows the name of the memory variable currently assigned to the block, if there
+is one. To enter or change the memory variable, enter the name (system name or
+user name) of a memory variable in the Memory Table in the <b>Memory Variable 
+Name:</b> field. Assigning a memory variable is optional. An assigned memory 
+variable will contain as its "value" the "value" of the Block, and is useful 
+in identifying trains as they are tracked around the layout (see above).
 <p>
 Since blocks are items on the physical layout, the same block may be used in 
 more than one panel. Consequently, block information is saved in the non-
