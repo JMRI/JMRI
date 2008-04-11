@@ -66,7 +66,7 @@ import javax.swing.*;
  *		by tools, Set Signals at Turnout, and Set Signals at Double Crossover.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class LayoutTurnout
@@ -335,6 +335,40 @@ public class LayoutTurnout
 		double y = center.getY() - dispB.getY();
 		return new Point2D.Double(x,y);
 	}
+
+	// updates connectivity for blocks assigned to this turnout and connected track segments
+	private void updateBlockInfo() {
+		LayoutBlock bA = null;
+		LayoutBlock bB = null;
+		LayoutBlock bC = null;
+		LayoutBlock bD = null;
+		layoutEditor.auxTools.setBlockConnectivityChanged();
+		if (block!=null) block.updatePaths();
+		if (connectA!=null) {
+			bA = ((TrackSegment)connectA).getLayoutBlock();
+			if ((bA!=null) && (bA!=block)) bA.updatePaths();
+		}
+		if ((blockB!=null) && (blockB!=block) && (blockB!=bA)) blockB.updatePaths();
+		if (connectB!=null) {
+			bB = ((TrackSegment)connectB).getLayoutBlock();
+			if ((bB!=null) && (bB!=block) && (bB!=bA) && (bB!=blockB)) bB.updatePaths();
+		}
+		if ((blockC!=null) && (blockC!=block) && (blockC!=bA) &&
+				(blockC!=bB) && (blockC!=blockB)) blockC.updatePaths();
+		if (connectC!=null) {
+			bC = ((TrackSegment)connectC).getLayoutBlock();
+			if ((bC!=null) && (bC!=block) && (bC!=bA) && (bC!=blockB) && (bC!=bB) &&
+					(bC!=blockC)) bC.updatePaths();
+		}
+		if ((blockD!=null) && (blockD!=block) && (blockD!=bA) &&
+				(blockD!=bB) && (blockD!=blockB) && (blockD!=bC) &&
+					(blockD!=blockC)) blockD.updatePaths();
+		if (connectD!=null) {
+			bD = ((TrackSegment)connectD).getLayoutBlock();
+			if ((bD!=null) && (bD!=block) && (bD!=bA) && (bD!=blockB) && (bD!=bB) &&
+				(bD!=blockC) && (bD!=bC) && (bD!=blockD)) bD.updatePaths();
+		}
+	}	
 	
 	/**
 	 * Set default size parameters to correspond to this turnout's size
@@ -963,6 +997,7 @@ public class LayoutTurnout
 	private JButton turnoutEditBlockD;
 	private boolean editOpen = false;
 	private boolean needRedraw = false;
+	private boolean needsBlockUpdate = false;
 
     /**
      * Edit a Layout Turnout 
@@ -1114,6 +1149,7 @@ public class LayoutTurnout
         editLayoutTurnoutFrame.pack();
         editLayoutTurnoutFrame.setVisible(true);		
 		editOpen = true;
+		needsBlockUpdate = false;
 	}	
 	void turnoutEditBlockPressed(ActionEvent a) {
 		// check if a block name has been entered
@@ -1133,6 +1169,7 @@ public class LayoutTurnout
 			if ( (block!=null) && ( (block==blockB) || (block==blockC) ||
 					(block==blockD) ) ) block.decrementUse();
 			needRedraw = true;
+			needsBlockUpdate = true;
 		}
 		// check if a block exists to edit
 		if (block==null) {
@@ -1163,6 +1200,7 @@ public class LayoutTurnout
 			if ( (blockB!=null) && ( (block==blockB) || (blockB==blockC) ||
 					(blockB==blockD) ) ) blockB.decrementUse();
 			needRedraw = true;
+			needsBlockUpdate = true;
 		}
 		// check if a block exists to edit
 		if (blockB==null) {
@@ -1193,6 +1231,7 @@ public class LayoutTurnout
 			if ( (blockC!=null) && ( (block==blockC) || (blockB==blockC) ||
 					(blockC==blockD) ) ) blockD.decrementUse();
 			needRedraw = true;
+			needsBlockUpdate = true;
 		}
 		// check if a block exists to edit
 		if (blockC==null) {
@@ -1223,6 +1262,7 @@ public class LayoutTurnout
 			if ( (blockD!=null) && ( (block==blockD) || (blockB==blockD) ||
 					(blockC==blockD) ) ) blockD.decrementUse();
 			needRedraw = true;
+			needsBlockUpdate = true;
 		}
 		// check if a block exists to edit
 		if (blockD==null) {
@@ -1275,6 +1315,7 @@ public class LayoutTurnout
 			if ( (block!=null) && ( (block==blockB) || (block==blockC) ||
 					(block==blockD) ) ) block.decrementUse();
 			needRedraw = true;
+			needsBlockUpdate = true;
 		}
 		if ( (type==DOUBLE_XOVER) || (type==LH_XOVER) || (type==RH_XOVER) ) {
 			// check if Block 2 changed
@@ -1294,6 +1335,7 @@ public class LayoutTurnout
 				if ( (blockB!=null) && ( (block==blockB) || (blockB==blockC) ||
 						(blockB==blockD) ) ) blockB.decrementUse();
 				needRedraw = true;
+				needsBlockUpdate = true;
 			}
 			// check if Block 3 changed
 			if (!blockCName.equals(blockCNameField.getText().trim()) ) {
@@ -1312,6 +1354,7 @@ public class LayoutTurnout
 				if ( (blockC!=null) && ( (block==blockC) || (blockB==blockC) ||
 						(blockC==blockD) ) ) blockC.decrementUse();
 				needRedraw = true;
+				needsBlockUpdate = true;
 			}
 			// check if Block 4 changed
 			if (!blockDName.equals(blockDNameField.getText().trim()) ) {
@@ -1330,10 +1373,12 @@ public class LayoutTurnout
 				if ( (blockD!=null) && ( (block==blockD) || (blockB==blockD) ||
 						(blockC==blockD) ) ) blockD.decrementUse();
 				needRedraw = true;
+				needsBlockUpdate = true;
 			}
 		}
 		editOpen = false;
 		editLayoutTurnoutFrame.setVisible(false);
+		if (needsBlockUpdate) updateBlockInfo();
 		if (needRedraw) {
 			layoutEditor.redrawPanel();
 			layoutEditor.setDirty();
@@ -1342,6 +1387,7 @@ public class LayoutTurnout
 	void turnoutEditCancelPressed(ActionEvent a) {
 		editOpen = false;
 		editLayoutTurnoutFrame.setVisible(false);
+		if (needsBlockUpdate) updateBlockInfo();
 		if (needRedraw) {
 			layoutEditor.redrawPanel();
 			layoutEditor.setDirty();

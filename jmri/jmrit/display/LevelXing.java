@@ -37,7 +37,7 @@ import javax.swing.*;
  *		by Set Signals at Level Crossing in Tools menu.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class LevelXing 
@@ -101,25 +101,25 @@ public class LevelXing
 	public Object getConnectD() {return connectD;}
 	public void setConnectA(Object o,int type) {
 		connectA = o;
-		if (type!=LayoutEditor.TRACK) {
+		if ( (connectA!=null) && (type!=LayoutEditor.TRACK) ) {
 			log.error("unexpected type of A connection to levelXing - "+type);
 		}
 	}
 	public void setConnectB(Object o,int type) {
 		connectB = o;
-		if (type!=LayoutEditor.TRACK) {
+		if ( (connectB!=null) && (type!=LayoutEditor.TRACK) ) {
 			log.error("unexpected type of B connection to levelXing - "+type);
 		}	
 	}
 	public void setConnectC(Object o,int type) {
 		connectC = o;
-		if (type!=LayoutEditor.TRACK) {
+		if ( (connectC!=null) && (type!=LayoutEditor.TRACK) ) {
 			log.error("unexpected type of C connection to levelXing - "+type);
 		}	
 	}
 	public void setConnectD(Object o,int type) {
 		connectD = o;
-		if (type!=LayoutEditor.TRACK) {
+		if ( (connectD!=null) && (type!=LayoutEditor.TRACK) ) {
 			log.error("unexpected type of D connection to levelXing - "+type);
 		}	
 	}
@@ -176,7 +176,29 @@ public class LevelXing
 			blockNameBD = b.getID();
 		}
 	}
-	
+	private void updateBlockInfo() {
+		LayoutBlock b1 = null;
+		LayoutBlock b2 = null;
+		if (blockAC!=null) blockAC.updatePaths();
+		if (connectA!=null) {
+			b1 = ((TrackSegment)connectA).getLayoutBlock();
+			if ((b1!=null)&&(b1!=blockAC)) b1.updatePaths();
+		}
+		if (connectC!=null) {
+			b2 = ((TrackSegment)connectC).getLayoutBlock();
+			if ((b2!=null)&&(b2!=blockAC)&&(b2!=b1)) b2.updatePaths();
+		}
+		if (blockBD!=null) blockBD.updatePaths();
+		if (connectB!=null) {
+			b1 = ((TrackSegment)connectB).getLayoutBlock();
+			if ((b1!=null)&&(b1!=blockBD)) b1.updatePaths();
+		}
+		if (connectD!=null) {
+			b2 = ((TrackSegment)connectD).getLayoutBlock();
+			if ((b2!=null)&&(b2!=blockBD)&&(b2!=b1)) b2.updatePaths();
+		}
+	}	
+
 	/** 
 	 * Methods to test if mainline track or not
 	 *  Returns true if either connecting track segment is mainline
@@ -351,6 +373,7 @@ public class LevelXing
 	JButton xingEdit2Block;
 	boolean editOpen = false;
 	boolean needsRedraw = false;
+	boolean needsBlockUpdate = false;
 	
     /**
      * Edit a Level Crossing
@@ -433,7 +456,8 @@ public class LevelXing
 			});
         editLevelXingFrame.pack();
         editLevelXingFrame.setVisible(true);	
-		editOpen = true;	
+		editOpen = true;
+		needsBlockUpdate = false;	
 	}
 	void xingEdit1BlockPressed(ActionEvent a) {
 		// check if a block name has been entered
@@ -460,6 +484,8 @@ public class LevelXing
 				blockNameAC = "";
 			}
 			needsRedraw = true;
+			layoutEditor.auxTools.setBlockConnectivityChanged();
+			needsBlockUpdate = true;
 		}
 		// check if a block exists to edit
 		if (blockAC==null) {
@@ -496,6 +522,8 @@ public class LevelXing
 				blockNameBD = "";
 			}
 			needsRedraw = true;
+			layoutEditor.auxTools.setBlockConnectivityChanged();
+			needsBlockUpdate = true;
 		}
 		// check if a block exists to edit
 		if (blockBD==null) {
@@ -532,6 +560,8 @@ public class LevelXing
 				blockNameAC = "";
 			}
 			needsRedraw = true;
+			layoutEditor.auxTools.setBlockConnectivityChanged();
+			needsBlockUpdate = true;
 		}
 		if ( !blockNameBD.equals(block2Name.getText().trim()) ) {
 			// block 2 has changed, if old block exists, decrement use
@@ -556,9 +586,12 @@ public class LevelXing
 				blockNameBD = "";
 			}
 			needsRedraw = true;
+			layoutEditor.auxTools.setBlockConnectivityChanged();
+			needsBlockUpdate = true;
 		}
 		editOpen = false;
 		editLevelXingFrame.setVisible(false);
+		if (needsBlockUpdate) updateBlockInfo();
 		if (needsRedraw) {
 			layoutEditor.redrawPanel();
 			layoutEditor.setDirty();
@@ -567,6 +600,7 @@ public class LevelXing
 	void xingEditCancelPressed(ActionEvent a) {
 		editOpen = false;
 		editLevelXingFrame.setVisible(false);
+		if (needsBlockUpdate) updateBlockInfo();
 		if (needsRedraw) {
 			layoutEditor.redrawPanel();
 			layoutEditor.setDirty();

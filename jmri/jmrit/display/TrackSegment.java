@@ -27,7 +27,7 @@ import javax.swing.*;
  *		may be hidden when the panel is not in EditMode. 
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class TrackSegment 
@@ -176,6 +176,31 @@ public class TrackSegment
 	public void setLayoutBlockByName (String name) {
 		blockName = name;
 	}
+	protected void updateBlockInfo() {
+		if (block!=null) block.updatePaths();
+		LayoutBlock b1 = getBlock(connect1,type1);
+		if ((b1!=null)&&(b1!=block)) b1.updatePaths();
+		LayoutBlock b2 = getBlock(connect2,type2);
+		if ((b2!=null)&&(b2!=block)&&(b2!=b1)) b2.updatePaths();
+	}
+	private LayoutBlock getBlock (Object connect, int type) {
+		if (connect==null) return null;
+		if (type==LayoutEditor.POS_POINT) {
+			PositionablePoint p = (PositionablePoint)connect;;
+			if (p.getConnect1()!=instance) {
+				if (p.getConnect1()!=null) return (p.getConnect1().getLayoutBlock());
+				else return null;
+			}
+			else {
+				if (p.getConnect2()!=null) return (p.getConnect2().getLayoutBlock());
+				else return null;
+			}
+		}
+		else {
+			return (layoutEditor.getAffectedBlock(connect,type));
+		}
+	}
+
 
     JPopupMenu popup = null;
 
@@ -344,6 +369,8 @@ public class TrackSegment
 				blockName = "";
 			}
 			needsRedraw = true;
+			layoutEditor.auxTools.setBlockConnectivityChanged();
+			updateBlockInfo();
 		}
 		// check if a block exists to edit
 		if (block==null) {
@@ -384,6 +411,8 @@ public class TrackSegment
 				blockName = "";
 			}
 			needsRedraw = true;
+			layoutEditor.auxTools.setBlockConnectivityChanged();
+			updateBlockInfo();
 		}
 		editOpen = false;
 		editTrackSegmentFrame.setVisible(false);

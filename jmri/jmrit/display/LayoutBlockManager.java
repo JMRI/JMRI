@@ -15,7 +15,7 @@ import jmri.Sensor;
  *    from the user for the most part.
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class LayoutBlockManager extends AbstractManager {
 
@@ -126,30 +126,33 @@ public class LayoutBlockManager extends AbstractManager {
 		return null;
 	}
 	
-	private boolean initialized = false;	
 	/**
 	 * Initializes/checks the Paths of all Blocks associated with LayoutBlocks.
 	 * <P>
 	 * This routine should be called when loading panels, after all Layout Editor panels have been loaded.
 	 */
 	public void initializeLayoutBlockPaths() {
-		if (initialized) {
-			log.error ("initializeLayoutBlockPaths called an extra time");
-		}
-		else {
-			// cycle through all LayoutBlocks, updating Paths of associated jmri.Blocks
-			java.util.Iterator iter = getSystemNameList().iterator();
-			while (iter.hasNext()) {
-				String sName = (String)iter.next();
-				if (sName==null) log.error("System name null during initialization of LayoutBlocks");
-				log.debug("LayoutBlock initialization - system name = "+sName);
-				LayoutBlock b = getBySystemName(sName); 
-				b.updatePaths();
-			}
-			initialized = true;
+		// cycle through all LayoutBlocks, updating Paths of associated jmri.Blocks
+		java.util.Iterator iter = getSystemNameList().iterator();
+		while (iter.hasNext()) {
+			String sName = (String)iter.next();
+			if (sName==null) log.error("System name null during initialization of LayoutBlocks");
+			log.debug("LayoutBlock initialization - system name = "+sName);
+			LayoutBlock b = getBySystemName(sName); 
+			b.updatePaths();
 		}
 	}
-
+	
+	private boolean warnConnectivity = true;
+	/**
+	 * Controls switching off incompatible block connectivity messages
+	 * <P>
+	 * Warnings are always on when program starts up. Once stopped by the user, these messages may not
+	 *	be switched on again until program restarts.
+	 */
+	public boolean warn() {return warnConnectivity;}
+	public void turnOffWarning() {warnConnectivity = false;}
+	
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LayoutBlockManager.class.getName());
 }

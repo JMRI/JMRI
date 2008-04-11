@@ -47,7 +47,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -96,6 +96,7 @@ public class LayoutEditor extends JmriJFrame {
 	private JPanel topEditBar = null;
 	private JPanel helpBar = null;
     public ArrayList backgroundImage = new ArrayList();  // background images
+	public LayoutEditorAuxTools auxTools = null;
         
     private ButtonGroup itemGroup = null;
     private JTextField blockIDField = new JTextField(8);
@@ -207,8 +208,6 @@ public class LayoutEditor extends JmriJFrame {
 	public ArrayList pointList = new ArrayList();  // PositionablePoint list
 	public ArrayList xingList = new ArrayList();  // LevelXing list
 	public ArrayList turntableList = new ArrayList(); // Turntable list
-	// Lists not saved over sessions
-	private ArrayList conList = new ArrayList(); //LayoutConnectivity list
 	// counts used to determine unique internal names
 	private int numAnchors = 0;
 	private int numEndBumpers = 0;
@@ -537,6 +536,9 @@ public class LayoutEditor extends JmriJFrame {
 		jmri.jmrit.display.PanelMenu.instance().addLayoutEditorPanel(this);
 		thisPanel = this;
 		resetDirty();
+		// establish link to LayoutEditorAuxTools
+		auxTools = new LayoutEditorAuxTools(thisPanel);
+		if (auxTools==null) log.error("Unable to create link to LayoutEditorAuxTools"); 
 
         // when this window closes, set contents of targetPanel uneditable
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -561,7 +563,6 @@ public class LayoutEditor extends JmriJFrame {
     } 
 	
 	LayoutEditorTools tools = null;
-	LayoutEditorAuxTools auxTools = null;
 	void setupToolsMenu(JMenuBar menuBar) {
 		JMenu toolsMenu = new JMenu(rb.getString("MenuTools"));
 		menuBar.add(toolsMenu);
@@ -2314,6 +2315,7 @@ public class LayoutEditor extends JmriJFrame {
 			LayoutBlock b = provideLayoutBlock(blockIDField.getText().trim());
 			if (b!=null) {
 				newTrack.setLayoutBlock(b);
+				auxTools.setBlockConnectivityChanged();
 				// check on occupancy sensor
 				String sensorName = (blockSensor.getText().trim());
 				if (sensorName.length()>0) {
@@ -2324,7 +2326,9 @@ public class LayoutEditor extends JmriJFrame {
 						blockSensor.setText( b.getOccupancySensorName() );
 					}
 				}
+				newTrack.updateBlockInfo();
 			}
+			
 		}
 		else {
 			log.error("Failure to create a new Track Segment");
@@ -2799,37 +2803,61 @@ public class LayoutEditor extends JmriJFrame {
      * Remove a Track Segment 
      */
 	protected void removeTrackSegment(TrackSegment o) {
+		// save affected blocks
+		LayoutBlock block1 = null;
+		LayoutBlock block2 = null;
+		LayoutBlock block = o.getLayoutBlock();
 		// remove any connections
 		int type = o.getType1();
 		if (type==POS_POINT) {
 			PositionablePoint p = (PositionablePoint)(o.getConnect1());
-			if (p!=null) p.removeTrackConnection(o);
+			if (p!=null) {
+				p.removeTrackConnection(o);
+				if (p.getConnect1()!=null) 
+					block1 = p.getConnect1().getLayoutBlock();
+				else if (p.getConnect2()!=null)
+					block1 = p.getConnect2().getLayoutBlock();
+			}
 		}
 		else {
+			block1 = getAffectedBlock(o.getConnect1(),type);
 			disconnect(o.getConnect1(),type);
 		}
 		type = o.getType2();
 		if (type==POS_POINT) {
 			PositionablePoint p = (PositionablePoint)(o.getConnect2());
-			if (p!=null) p.removeTrackConnection(o);
+			if (p!=null) {
+				p.removeTrackConnection(o);
+				if (p.getConnect1()!=null) 
+					block2 = p.getConnect1().getLayoutBlock();
+				else if (p.getConnect2()!=null)
+					block2 = p.getConnect2().getLayoutBlock();
+			}
 		}
 		else {
+			block2 = getAffectedBlock(o.getConnect2(),type);
 			disconnect(o.getConnect2(),type);
 		}
-		// decrement Block use count
-		LayoutBlock b = o.getLayoutBlock();
-		if (b!=null) b.decrementUse();
 		// delete from array
 		for (int i = 0; i<trackList.size();i++) {
 			TrackSegment t = (TrackSegment)trackList.get(i);
 			if (t==o) {
 				// found object
 				trackList.remove(i);
-				panelChanged = true;
-				repaint();
-				return;
 			}
-		}	
+		}
+		// update affected blocks
+		if (block!=null) {
+			// decrement Block use count
+			block.decrementUse();
+			auxTools.setBlockConnectivityChanged();
+			block.updatePaths();
+		}
+		if ( (block1!=null) && (block1!=block) ) block1.updatePaths();	
+		if ( (block2!=null) && (block2!=block) && (block2!=block1) ) block2.updatePaths();
+		// 
+		panelChanged = true;
+		repaint();
 	}
 	
 	private void disconnect(Object o, int type) {
@@ -2864,6 +2892,31 @@ public class LayoutEditor extends JmriJFrame {
 					((LayoutTurntable)o).setRayConnect(null,type-TURNTABLE_RAY_OFFSET);
 				}					
 		}
+	}
+	
+	public LayoutBlock getAffectedBlock(Object o, int type) {
+		if (o==null) return null;
+		switch (type) {
+			case TURNOUT_A:
+				return ((LayoutTurnout)o).getLayoutBlock();
+			case TURNOUT_B:
+				return ((LayoutTurnout)o).getLayoutBlockB();
+			case TURNOUT_C:
+				return ((LayoutTurnout)o).getLayoutBlockC();
+			case TURNOUT_D:
+				return ((LayoutTurnout)o).getLayoutBlockD();
+			case LEVEL_XING_A:
+				return ((LevelXing)o).getLayoutBlockAC();
+			case LEVEL_XING_B:
+				return ((LevelXing)o).getLayoutBlockBD();
+			case LEVEL_XING_C:
+				return ((LevelXing)o).getLayoutBlockAC();
+			case LEVEL_XING_D:
+				return ((LevelXing)o).getLayoutBlockBD();
+			case TRACK:
+				return ((TrackSegment)o).getLayoutBlock();
+		}
+		return null;
 	}
 	
     /**
@@ -3341,25 +3394,10 @@ public class LayoutEditor extends JmriJFrame {
 				((LayoutTurnout)turnoutList.get(i)).setObjects(this);
 			}
 		}
-		// initialize connectivity
-		if (auxTools == null) {
-			auxTools = new LayoutEditorAuxTools(thisPanel);
-		}
-		conList = auxTools.initializeBlockConnectivity();
+		auxTools.initializeBlockConnectivity();
+		log.debug("Initializing Block Connectivity for "+layoutName);
 		// reset the panel changed bit
 		resetDirty();
-	}
-	
-	// get Connectivity for a specific Layout Block
-	public ArrayList getConnectivityList(LayoutBlock blk) {
-		ArrayList retList = new ArrayList();
-		for (int i = 0;i<conList.size();i++) {
-			LayoutConnectivity lc = (LayoutConnectivity)conList.get(i);
-			if ( (lc.getBlock1() == blk) || (lc.getBlock2() == blk) ) {
-				retList.add((Object)lc);
-			}
-		}
-		return (retList);
 	}
 	
 	// utility routines

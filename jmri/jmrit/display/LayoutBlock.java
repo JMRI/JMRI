@@ -60,7 +60,7 @@ import jmri.AbstractNamedBean;
  *		the configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class LayoutBlock extends AbstractNamedBean
@@ -359,20 +359,42 @@ public class LayoutBlock extends AbstractNamedBean
 	
 	/**
 	 * Check/Update Path objects for the attached jmri.Block
+	 * <P>
+	 * If multiple panels are present, Paths are set according to the panel with 
+	 *		the highest connectivity (most LayoutConnectivity objects);
 	 */
 	public void updatePaths() {
 		if ( (block!=null) && (panels.size()>0) ) {
 			// a block is attached and this LayoutBlock is used
-			// get connectivity as defined in first Layout Editor panel
+			// initialize connectivity as defined in first Layout Editor panel
 			LayoutEditor panel = (LayoutEditor)panels.get(0);
-			ArrayList c = panel.getConnectivityList(_instance);
-			// check that this connectivity is compatible with that of other panels.
+			ArrayList c = panel.auxTools.getConnectivityList(_instance);
+			// if more than one panel, find panel with the highest connectivity
 			if (panels.size()>1) {
 				for (int i = 1;i < panels.size();i++) {
-					if ( !compareConnectivity(c,((LayoutEditor)panels.get(i)).
-									getConnectivityList(_instance)) ) {
+					if (c.size()<((LayoutEditor)panels.get(i)).auxTools.
+										getConnectivityList(_instance).size()) {
+						panel = (LayoutEditor)panels.get(i);
+						c = panel.auxTools.getConnectivityList(_instance);
+					}
+				}
+				// check that this connectivity is compatible with that of other panels.
+				for (int j = 0;j < panels.size();j++) {
+					LayoutEditor tPanel = (LayoutEditor)panels.get(j);
+					if ( (tPanel!=panel) && InstanceManager.layoutBlockManagerInstance().
+								warn() && ( !compareConnectivity(c,
+										tPanel.auxTools.getConnectivityList(_instance)) )  ) {
 						// send user an error message
-// here insert error message on interpanel block incompatibility
+						int response = JOptionPane.showOptionDialog(null,
+								java.text.MessageFormat.format(rb.getString("Warn1"),
+								new String[]{blockName,tPanel.getLayoutName(),
+								panel.getLayoutName()}),rb.getString("WarningTitle"),
+								JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,
+								null,new Object[] {rb.getString("ButtonOK"),
+								rb.getString("ButtonOKPlus")},rb.getString("ButtonOK"));
+						if (response!=0)
+							// user elected to disable messages
+							InstanceManager.layoutBlockManagerInstance().turnOffWarning();						
 					}
 				}
 			}
@@ -446,23 +468,35 @@ public class LayoutBlock extends AbstractNamedBean
 			}				
 		}
 // djd debugging - lists results of automatic initialization of Paths and BeanSettings			
-//		paths = block.getPaths();
-//		for (int i = 0;i<paths.size();i++) {
-//			jmri.Path p = (jmri.Path)paths.get(i);
-//			log.error("Block "+blockName+"- Path to "+p.getBlock().getUserName()+
-//						" - "+p.decodeDirection(p.getToBlockDirection()) );
-//			java.util.List beans = p.getSettings();
-//			for (int j=0;j<beans.size();j++) {
-//				jmri.BeanSetting be = (jmri.BeanSetting)beans.get(j);
-//				log.error("   BeanSetting - "+((jmri.Turnout)be.getBean()).getSystemName()+
-//								" with state "+be.getSetting()+" (2=CLOSED,4=THROWN)");
-//			}
-//		}
+/*		paths = block.getPaths();
+		for (int i = 0;i<paths.size();i++) {
+			jmri.Path p = (jmri.Path)paths.get(i);
+			log.error("Block "+blockName+"- Path to "+p.getBlock().getUserName()+
+						" - "+p.decodeDirection(p.getToBlockDirection()) );
+			java.util.List beans = p.getSettings();
+			for (int j=0;j<beans.size();j++) {
+				jmri.BeanSetting be = (jmri.BeanSetting)beans.get(j);
+				log.error("   BeanSetting - "+((jmri.Turnout)be.getBean()).getSystemName()+
+								" with state "+be.getSetting()+" (2=CLOSED,4=THROWN)");
+			}
+		} */
 // end debugging
 	}
-	private boolean compareConnectivity(ArrayList a, ArrayList b) {
-// insert comparison code here to compare block to block connections from different panels		
-		// connectivities are compatible
+	private boolean compareConnectivity(ArrayList main, ArrayList test) {
+		// loop over connectivities in test list 
+		for (int i = 0;i<test.size();i++) {
+			LayoutConnectivity lc = (LayoutConnectivity)test.get(i);
+			// loop over main list to make sure the same blocks are connected
+			boolean found = false;
+			for (int j = 0;(j<main.size())&&!found;j++) {
+				LayoutConnectivity mc = (LayoutConnectivity)main.get(j);
+				if ( ((lc.getBlock1()==mc.getBlock1()) && (lc.getBlock2()==mc.getBlock2())) ||
+					((lc.getBlock1()==mc.getBlock2()) && (lc.getBlock2()==mc.getBlock1())) )
+					found = true;
+			}
+			if (!found) return false;
+		}
+		// connectivities are compatible - all connections in test are present in main
 		return (true);
 	}
 	
