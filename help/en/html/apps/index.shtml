@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: index.shtml,v 1.1 2008-02-18 19:25:31 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.2 2008-04-12 07:14:19 jacobsen Exp $ -->
 <title>JMRI: Applications</title>
 
 <!-- Style -->
@@ -44,7 +44,7 @@
 		    a Prototype dispatcher!
 		</dd>
 
-		<dt><h3>LocoNet Tools</h3></dt>
+		<dt><h3><a href="LocoTools/index.shtml">LocoNet Tools</a></h3></dt>
 		<dd> A set of Digitrax LocoNet-specific tools:
 		    <UL>
 		    <LI><dfn>LocoNet monitor</dfn>

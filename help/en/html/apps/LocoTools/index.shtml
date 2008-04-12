@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.4 2008-04-12 06:59:13 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.5 2008-04-12 07:14:19 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -137,7 +137,11 @@
 			the layout, or climb underneath the layout to push
 			buttons, as all programming is done via the board's
 			LocoNet connection.
-		    </p>
+		    <p>
+		    More on the tool for the
+		    <ul>
+		    <LI><a href="../../../package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">DS64</a>
+		    </ul>
 		    </dd>
 
 
