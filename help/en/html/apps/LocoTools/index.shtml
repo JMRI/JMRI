@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.5 2008-04-12 07:14:19 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.6 2008-04-12 07:18:51 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -44,8 +44,8 @@
 		    <dt><a HREF="#sendpkt"><dfn>Packet source</dfn></a> </dt>
 		    <dd> A tool to let you type and send packets to the LocoNet</dd>
 
-		    <dt><a HREF="#pm4"><dfn>BDL16, BDL162 and PM4 programmers</dfn></a> </dt>
-		    <dd> A tool to let help you configure BDL16, BDL162 and PM4 boards.</dd>
+		    <dt><a HREF="#pm4"><dfn>BDL16, SE8c, PM4 and DS64 programmers</dfn></a> </dt>
+		    <dd> A tool to let help you configure these boards.</dd>
 
 		    <dt><a HREF="#locoio"><dfn>LocoIO programmer</dfn></a> </dt>
 		    <dd> A tool to let help you configure a LocoIO board.</dd>
