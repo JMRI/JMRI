@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.3 2008-03-27 04:47:43 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.4 2008-04-12 06:59:13 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -120,12 +120,15 @@
 		    </dd>
 
 		    <dt class=im100w>
-			         No screen shot available
+			<a href="images/DS64.jpg">
+			    <img src="images/DS64.jpg"
+			         width=70 height=100
+			         alt="DS64"></a>
 		    </dt>
 		    <dd>
-		    <H2><a name="pm4">BDL16, BDL162 and PM4 programmers</a></H2>
+		    <H2><a name="pm4">BDL16, SE8c, PM4 and DS64 programmers</a></H2>
 		    <p>
-			The PM4 programmer and BLDL16 programmer tools provide
+			These programmer tools provide
 			a simple graphic interface for configuring Digitrax
 			power and block-occupancy boards. Each "option switch"
 			is shown as a checkbox on the screen. You can read the
