@@ -37,7 +37,7 @@ import jmri.util.JmriJFrame;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.27 $
+ * @version     $Revision: 1.28 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -249,11 +249,12 @@ public class LightTableAction extends AbstractTableAction {
     JLabel status2 = new JLabel( rb.getString("LightEditInst") );
     
     // parts for supporting variable intensity, transition
-    JPanel paneIntensitySettings;
     JLabel labelMinIntensity = new JLabel( rb.getString("LightMinIntensity") + "  " );
     JTextField fieldMinIntensity = new JTextField(3);
+    JLabel labelMinIntensityTail = new JLabel(" %   " );
     JLabel labelMaxIntensity = new JLabel( rb.getString("LightMaxIntensity") + "  " );
     JTextField fieldMaxIntensity = new JTextField(3);
+    JLabel labelMaxIntensityTail = new JLabel(" %   " );
     JLabel labelTransitionTime = new JLabel( rb.getString("LightTransitionTime") + "  " );
     JTextField fieldTransitionTime = new JTextField(5);
         
@@ -333,12 +334,32 @@ public class LightTableAction extends AbstractTableAction {
             panel3.add(panel31);
             panel3.add(panel32);
             panel3.add(panel33);
+
+            // parts for variable lights
+            JPanel panel34 = new JPanel();
+            panel34.setLayout(new BoxLayout(panel34, BoxLayout.X_AXIS));
+            panel34.add(labelMinIntensity);
+            fieldMinIntensity.setToolTipText(rb.getString("LightMinIntensityHint"));
+            fieldMinIntensity.setText("  0");
+            panel34.add(fieldMinIntensity);
+            panel34.add(labelMinIntensityTail);
+            panel34.add(labelMaxIntensity);
+            fieldMaxIntensity.setToolTipText(rb.getString("LightMaxIntensityHint"));
+            fieldMaxIntensity.setText("100");
+            panel34.add(fieldMaxIntensity);
+            panel34.add(labelMaxIntensityTail);
+            panel34.add(labelTransitionTime);
+            fieldTransitionTime.setToolTipText(rb.getString("LightTransitionTimeHint"));
+            fieldTransitionTime.setText("    0");
+            panel34.add(fieldTransitionTime);
+            panel3.add(panel34);
+            
             Border panel3Border = BorderFactory.createEtchedBorder();
             Border panel3Titled = BorderFactory.createTitledBorder(panel3Border,
                 rb.getString("LightControlBorder") );
             panel3.setBorder(panel3Titled);                
             contentPane.add(panel3);
-            
+
             JPanel panel4 = new JPanel();
             panel4.setLayout(new BoxLayout(panel4, BoxLayout.Y_AXIS));
             JPanel panel41 = new JPanel();
@@ -352,29 +373,6 @@ public class LightTableAction extends AbstractTableAction {
             Border panel4Border = BorderFactory.createEtchedBorder();
             panel4.setBorder(panel4Border);
             contentPane.add(panel4);
-
-            paneIntensitySettings = new JPanel();
-            paneIntensitySettings.setLayout(new BoxLayout(paneIntensitySettings, BoxLayout.X_AXIS));
-            Border paneIntensitySettingBorder = BorderFactory.createEtchedBorder();
-            Border paneIntensitySettingTitled = BorderFactory.createTitledBorder(paneIntensitySettingBorder,
-                    rb.getString("LightIntensitySettingBorder") );
-            paneIntensitySettings.setBorder(paneIntensitySettingTitled);
-            paneIntensitySettings.add(labelMinIntensity);
-            fieldMinIntensity.setToolTipText(rb.getString("LightMinIntensityHint"));
-            fieldMinIntensity.setText("0");
-            paneIntensitySettings.add(fieldMinIntensity);
-            paneIntensitySettings.add(new JLabel(" %  "));
-            paneIntensitySettings.add(labelMaxIntensity);
-            fieldMaxIntensity.setToolTipText(rb.getString("LightMaxIntensityHint"));
-            fieldMaxIntensity.setText("100");
-            paneIntensitySettings.add(fieldMaxIntensity);
-            paneIntensitySettings.add(new JLabel(" %  "));
-            paneIntensitySettings.add(labelTransitionTime);
-            fieldTransitionTime.setToolTipText(rb.getString("LightTransitionTimeHint"));
-            fieldTransitionTime.setText("0");
-            paneIntensitySettings.add(fieldTransitionTime);
-
-            contentPane.add(paneIntensitySettings);
 
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
@@ -450,6 +448,21 @@ public class LightTableAction extends AbstractTableAction {
 		if (nsz.width>sz.width) sz.width = nsz.width;
 		if (nsz.height>sz.height) sz.height = nsz.height;
 		addFrame.setSize(sz);
+    }
+    
+    /**
+     * Set up panel for Variable Options
+     */
+    void setupVariableDisplay(boolean showIntensity, boolean showTransition) {
+    	//paneIntensitySettings.setVisible(showIntensity);
+		labelMinIntensity.setVisible(showIntensity);
+		fieldMinIntensity.setVisible(showIntensity);
+		labelMinIntensityTail.setVisible(showIntensity);
+		labelMaxIntensity.setVisible(showIntensity);
+		fieldMaxIntensity.setVisible(showIntensity);
+		labelMaxIntensityTail.setVisible(showIntensity);
+    	labelTransitionTime.setVisible(showTransition);
+    	fieldTransitionTime.setVisible(showTransition);
     }
 
     /**
@@ -649,6 +662,7 @@ public class LightTableAction extends AbstractTableAction {
             lightCreated = true;
         }
         // variable intensity
+        setupVariableDisplay(g.isIntensityVariable(), g.isTransitionAvailable());
         String p;
         p = fieldMinIntensity.getText();
         if (p.equals("")) p = "1.0";
@@ -756,9 +770,14 @@ public class LightTableAction extends AbstractTableAction {
                 break;
         }
         // variable intensity
-        fieldMinIntensity.setText(oneDigit.format(g.getMinIntensity() * 100));
-        fieldMaxIntensity.setText(oneDigit.format(g.getMaxIntensity() * 100));
-        fieldTransitionTime.setText(oneDigit.format(g.getTransitionTime()));
+        if (g.isIntensityVariable()) {
+            fieldMinIntensity.setText(oneDigit.format(g.getMinIntensity() * 100) + "  ");
+            fieldMaxIntensity.setText(oneDigit.format(g.getMaxIntensity() * 100) + "  ");
+        	if (g.isTransitionAvailable()) {
+                fieldTransitionTime.setText(oneDigit.format(g.getTransitionTime()) + "    ");
+        	}
+        }
+        setupVariableDisplay(g.isIntensityVariable(), g.isTransitionAvailable());
 
         cancel.setVisible(true);
         update.setVisible(true);
@@ -796,9 +815,13 @@ public class LightTableAction extends AbstractTableAction {
             status2.setVisible(true);
         }
         // Variable intensity, transitions
-        g.setMinIntensity(Double.parseDouble(fieldMinIntensity.getText()) / 100);
-        g.setMaxIntensity(Double.parseDouble(fieldMaxIntensity.getText()) / 100);
-        g.setTransitionTime(Double.parseDouble(fieldTransitionTime.getText()));
+        if (g.isIntensityVariable()) {
+            g.setMinIntensity(Double.parseDouble(fieldMinIntensity.getText()) / 100);
+            g.setMaxIntensity(Double.parseDouble(fieldMaxIntensity.getText()) / 100);
+            if (g.isTransitionAvailable()) {
+                g.setTransitionTime(Double.parseDouble(fieldTransitionTime.getText()));
+            }
+        }
 
         cancel.setVisible(false);
         update.setVisible(false);
