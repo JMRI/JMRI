@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.32 2008-04-07 21:14:12 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.33 2008-04-12 01:51:52 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -220,6 +220,8 @@
 	has done a lot of work to improve the decoder definitions for NCE, Soundtraxx 
 	and Atlas decoders, provided new definitions for TCS, MRC and (lots of!) QSI 
 	and Zimo decoders; a real hero of decoder definition distinction
+	<li>Robert Myers provided 
+	<a href="http://jmri.sourceforge.net/install/OLPC_XO.shtml">instructions for installing JMRI on an OLPC XO laptop</a>
 <a name="N"></A>
 	<LI>Bill Nanney, who tenaciously worked to help find a bug where certain
 	decoders wouldn't read and write all sheets
