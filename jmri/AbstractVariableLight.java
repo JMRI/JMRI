@@ -17,7 +17,7 @@ import jmri.jmrix.powerline.SerialTrafficController;
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Ken Cameron Copyright (C) 2008
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public abstract class AbstractVariableLight extends AbstractLight
     implements java.io.Serializable {
@@ -73,7 +73,8 @@ public abstract class AbstractVariableLight extends AbstractLight
     
     private void newInternalMinute() {
     	double origCurrent = mCurrentIntensity;
-    	if ((mCurrentIntensity != mTransitionTargetIntensity) && (mTransitionDuration > 0)) {
+    	int origState = mState;
+    	if ((Math.abs(mCurrentIntensity - mTransitionTargetIntensity) > 0.009) && (mTransitionDuration > 0)) {
     		if (log.isDebugEnabled()) {
     			log.debug("before Target: " + mTransitionTargetIntensity + " Current: " + mCurrentIntensity);
     		}
@@ -90,14 +91,18 @@ public abstract class AbstractVariableLight extends AbstractLight
 //        		log.debug("step/min " + stepsPerMinute + " min/step " + minutesPerStep + " absDiff " + absIntensityDiff + " step " + stepSize + " steps " + stepsNeeded + " diff/min " + intensityDiffPerMinute);
 //        	}
 			if (mTransitionTargetIntensity > mCurrentIntensity) {
+				mState = TRANSITIONINGHIGHER;
 				mCurrentIntensity = mCurrentIntensity + intensityDiffPerMinute;
 				if (mCurrentIntensity > mTransitionTargetIntensity) {
 					mCurrentIntensity = mTransitionTargetIntensity;
+					mState = INTERMEDIATE;
 				}
 			} else {
+				mState = TRANSITIONINGLOWER;
 				mCurrentIntensity = mCurrentIntensity - intensityDiffPerMinute;
 				if (mCurrentIntensity < mTransitionTargetIntensity) {
 					mCurrentIntensity = mTransitionTargetIntensity;
+					mState = INTERMEDIATE;
 				}
 			}
     		if (log.isDebugEnabled()){
@@ -107,7 +112,13 @@ public abstract class AbstractVariableLight extends AbstractLight
     	if (origCurrent != mCurrentIntensity) {
             firePropertyChange("IntensityChange", new Double(origCurrent), new Double(mCurrentIntensity));
     		if (log.isDebugEnabled()){
-        		log.debug("firePropertyChange " + origCurrent + " -> " + mCurrentIntensity);
+        		log.debug("firePropertyChange intensity " + origCurrent + " -> " + mCurrentIntensity);
+    		}
+    	}
+    	if (origState != mState) {
+            firePropertyChange("StateChange", new Integer(origState), new Integer(mState));
+    		if (log.isDebugEnabled()){
+        		log.debug("firePropertyChange intensity " + origCurrent + " -> " + mCurrentIntensity);
     		}
     	}
     }

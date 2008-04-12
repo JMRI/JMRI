@@ -20,7 +20,7 @@ import javax.swing.JPanel;
  * 
  * @author	Ken Cameron   Copyright (C) 2008
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
 
@@ -46,6 +46,12 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
 
     javax.swing.JLabel textStateLabel = new javax.swing.JLabel();
     javax.swing.JLabel nowStateTextField = new javax.swing.JLabel();
+    javax.swing.JLabel textIsEnabledLabel = new javax.swing.JLabel();
+    javax.swing.JCheckBox statusIsEnabledCheckBox = new javax.swing.JCheckBox();
+    javax.swing.JLabel textIsVariableLabel = new javax.swing.JLabel();
+    javax.swing.JCheckBox statusIsVariableCheckBox = new javax.swing.JCheckBox();
+    javax.swing.JLabel textIsTransitionLabel = new javax.swing.JLabel();
+    javax.swing.JCheckBox statusIsTransitionCheckBox = new javax.swing.JCheckBox();
 
     javax.swing.JLabel intensityTextLabel1 = new javax.swing.JLabel();
     javax.swing.JLabel nowIntensityLabel = new javax.swing.JLabel();
@@ -89,7 +95,18 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
         textStateLabel.setVisible(true);
         nowStateTextField.setText(rb.getString("LightStatusTextDefault"));
         nowStateTextField.setVisible(true);
-        
+        textIsEnabledLabel.setText(rb.getString("LightIsEnabledLabel"));
+        textIsEnabledLabel.setVisible(true);
+        statusIsEnabledCheckBox.setVisible(true);
+        statusIsEnabledCheckBox.setEnabled(false);
+        textIsVariableLabel.setText(rb.getString("LightIsVariableLabel"));
+        textIsVariableLabel.setVisible(true);
+        statusIsVariableCheckBox.setVisible(true);
+        statusIsVariableCheckBox.setEnabled(false);
+        textIsTransitionLabel.setText(rb.getString("LightIsTransitionLabel"));
+        textIsTransitionLabel.setVisible(true);
+        statusIsTransitionCheckBox.setVisible(true);
+        statusIsTransitionCheckBox.setEnabled(false);
         
         onButton.setText(rb.getString("LightOnButton"));
         onButton.setVisible(true);
@@ -169,6 +186,12 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
         pane2 = new JPanel();
         pane2.add(textStateLabel);
         pane2.add(nowStateTextField);
+        pane2.add(textIsEnabledLabel);
+        pane2.add(statusIsEnabledCheckBox);
+        pane2.add(textIsVariableLabel);
+        pane2.add(statusIsVariableCheckBox);
+        pane2.add(textIsTransitionLabel);
+        pane2.add(statusIsTransitionCheckBox);
         getContentPane().add(pane2);
 
         pane2 = new JPanel();
@@ -208,6 +231,7 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
         pack();
 
     }
+    
 
     public void offButtonActionPerformed(java.awt.event.ActionEvent e) {
 		// load address from switchAddrTextField
@@ -402,12 +426,15 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
             case Light.ON: nowStateTextField.setText(rbean.getString("LightStateOn")); break;
             case Light.INTERMEDIATE: nowStateTextField.setText(rbean.getString("LightStateIntermediate")); break;
             case Light.OFF: nowStateTextField.setText(rbean.getString("LightStateOff")); break;
-            case Light.TRANSITIONINGTOFULLON: nowStateTextField.setText(rbean.getString("LightTransitioningToFullOn")); break;
-            case Light.TRANSITIONINGHIGHER: nowStateTextField.setText(rbean.getString("LightTransitioningHigher")); break;
-            case Light.TRANSITIONINGLOWER: nowStateTextField.setText(rbean.getString("LightTransitioningLower")); break;
-            case Light.TRANSITIONINGTOFULLOFF: nowStateTextField.setText(rbean.getString("LightTransitioningToFullOff")); break;
+            case Light.TRANSITIONINGTOFULLON: nowStateTextField.setText(rbean.getString("LightStateTransitioningToFullOn")); break;
+            case Light.TRANSITIONINGHIGHER: nowStateTextField.setText(rbean.getString("LightStateTransitioningHigher")); break;
+            case Light.TRANSITIONINGLOWER: nowStateTextField.setText(rbean.getString("LightStateTransitioningLower")); break;
+            case Light.TRANSITIONINGTOFULLOFF: nowStateTextField.setText(rbean.getString("LightStateTransitioningToFullOff")); break;
             default: nowStateTextField.setText("Unexpected value: " + knownState); break; 
         }
+        statusIsEnabledCheckBox.setSelected(light.getEnabled());
+        statusIsVariableCheckBox.setSelected(light.isIntensityVariable());
+        statusIsTransitionCheckBox.setSelected(light.isTransitionAvailable());
         nowIntensityLabel.setText(oneDigits.format(light.getCurrentIntensity() * 100));
         nowTransitionTimeLabel.setText(oneDigits.format(light.getTransitionTime()));
         nowIntensityMinLabel.setText(oneDigits.format(light.getMinIntensity() * 100));

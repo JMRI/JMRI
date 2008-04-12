@@ -29,10 +29,26 @@ import java.util.Date;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
 
+    // System-dependent instance variables
+
+    /** 
+     * Current output step 0 to maxDimStep.
+     * <p>
+     *  -1 means unknown
+     */
+    int lastOutputStep = -1;
+    
+    /**
+     * Largest X10 dim step number available.
+     * <p>
+     * Loaded from SerialTrafficController.maxX10DimStep();
+     */
+     int maxDimStep = 0;
+     
     /**
      * Create a Light object, with only system name.
      * <P>
@@ -63,30 +79,37 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
         // Set initial state
             
         // see if going to stabilize at on or off
-        if (intensity<= 0.5) {
+        if (intensity <= 0.5) {
             // create output sequence
-            X10Sequence out = new X10Sequence();
+            X10Sequence out1 = new X10Sequence();
             // going to low, first set off
-            out.addAddress(housecode, devicecode);
-            out.addFunction(housecode, X10Sequence.FUNCTION_OFF, 0);
-            // then set to full dim
-            out.addFunction(housecode, X10Sequence.FUNCTION_DIM, maxDimStep);
+            out1.addAddress(housecode, devicecode);
+            out1.addFunction(housecode, X10Sequence.FUNCTION_OFF, 0);
             // send
-            SerialTrafficController.instance().sendX10Sequence(out, null);
+            SerialTrafficController.instance().sendX10Sequence(out1, null);
+            X10Sequence out2 = new X10Sequence();
+            out2.addAddress(housecode, devicecode);
+            // then set to full dim
+            out2.addFunction(housecode, X10Sequence.FUNCTION_DIM, maxDimStep);
+            SerialTrafficController.instance().sendX10Sequence(out2, null);
 
             lastOutputStep = 0;
             
             log.debug("initIntensity: sent dim reset");
         } else {
             // create output sequence
-            X10Sequence out = new X10Sequence();
+            X10Sequence out1 = new X10Sequence();
             // going to high, first set on
-            out.addAddress(housecode, devicecode);
-            out.addFunction(housecode, X10Sequence.FUNCTION_ON, 0);
-            // then set to full dim
-            out.addFunction(housecode, X10Sequence.FUNCTION_BRIGHT, maxDimStep);
+            out1.addAddress(housecode, devicecode);
+            out1.addFunction(housecode, X10Sequence.FUNCTION_ON, 0);
             // send
-            SerialTrafficController.instance().sendX10Sequence(out, null);
+            SerialTrafficController.instance().sendX10Sequence(out1, null);
+            // then set to full dim
+            X10Sequence out2 = new X10Sequence();
+            out2.addAddress(housecode, devicecode);
+            out2.addFunction(housecode, X10Sequence.FUNCTION_BRIGHT, maxDimStep);
+            // send
+            SerialTrafficController.instance().sendX10Sequence(out2, null);
             
             lastOutputStep = maxDimStep;
             
@@ -94,22 +117,6 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
         }
     }
     
-    // System-dependent instance variables
-
-    /** 
-     * Current output step 0 to maxDimStep.
-     * <p>
-     *  -1 means unknown
-     */
-    int lastOutputStep = -1;
-    
-    /**
-     * Largest X10 dim step number available.
-     * <p>
-     * Loaded from SerialTrafficController.maxX10DimStep();
-     */
-     int maxDimStep = 0;
-     
     /**
      * Send a Dim/Bright commands to the X10 hardware 
      * to reach a specific intensity.
@@ -117,34 +124,34 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
     protected void updateIntensity(double intensity) {
         
     	if (log.isDebugEnabled()) {
-    		log.debug("updateIntensity(" + intensity + ")");
+    		log.debug("updateIntensity(" + intensity + ")" + " lastOutputStep: " + lastOutputStep + " maxDimStep: " + maxDimStep);
     	}
         
         // are we doing intensity?
-        if ( (intensity==0.0 || intensity==1.0) && (lastOutputStep < 0))
-            return; // no, so let on/off handle this
+        //if ((SerialTrafficController.instance().) && (lastOutputStep < 0))
+        //    return; // no, so let on/off handle this
             
         // if we don't know the dim count, force it to a value.
         if (lastOutputStep < 0) initIntensity(intensity);
 
         // find the new correct dim count
-        int newStep = (int)Math.round(intensity*maxDimStep);  // maxDimStep is full on, 0 is full off, etc
+        int newStep = (int)Math.round(intensity * maxDimStep);  // maxDimStep is full on, 0 is full off, etc
         
         // check for errors
-        if (newStep <0 || newStep>maxDimStep)
-            log.error("newStep wrong: "+newStep+" intensity: "+intensity);
+        if ((newStep < 0) || (newStep > maxDimStep))
+            log.error("newStep wrong: " + newStep + " intensity: " + intensity);
 
         // find the number to send
-        int sendSteps = newStep-lastOutputStep; // + for bright, - for dim
+        int sendSteps = newStep - lastOutputStep; // + for bright, - for dim
         
         // figure out the function code
         int function;
         if (sendSteps == 0) {
             // nothing to do!
-            log.debug("intensity "+intensity+" within current step, return");
+            log.debug("intensity " + intensity + " within current step, return");
             return;
         
-        } else if (sendSteps >0) {
+        } else if (sendSteps > 0) {
             function = X10Sequence.FUNCTION_BRIGHT;
         	log.debug("function bright");
         }
@@ -154,8 +161,8 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
         }
 
         // check for errors
-        if (sendSteps <-maxDimStep || sendSteps>maxDimStep)
-            log.error("sendSteps wrong: "+sendSteps+" intensity: "+intensity);
+        if ((sendSteps <- maxDimStep) || (sendSteps > maxDimStep))
+            log.error("sendSteps wrong: " + sendSteps + " intensity: " + intensity);
             
         int deltaDim = Math.abs(sendSteps);
 
