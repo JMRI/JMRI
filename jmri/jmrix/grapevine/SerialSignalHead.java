@@ -13,7 +13,7 @@ import jmri.SignalHead;
  *
  * Description:		extend jmri.AbstractSignalHead for grapevine serial signals
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SerialSignalHead extends DefaultSignalHead {
 
@@ -61,7 +61,8 @@ public class SerialSignalHead extends DefaultSignalHead {
         }
 
         boolean high = (output>=12);
-        if (high) output = output-12;
+        int tOut = output;
+        if (high) tOut = output-12;
         if ( (bank<0)||(bank>4) ) {
             log.error("invalid bank "+bank+" for signal "+getSystemName());
             bank = 0;
@@ -97,7 +98,7 @@ public class SerialSignalHead extends DefaultSignalHead {
             m.setParity(i-4);
         }
         m.setElement(i++,tNode.getNodeAddress()|0x80);  // address 1
-        m.setElement(i++, (output<<3)|cmd);
+        m.setElement(i++, (tOut<<3)|cmd);
         m.setElement(i++,tNode.getNodeAddress()|0x80);  // address 2
         m.setElement(i++, bank<<4); // bank is most significant bits
         m.setParity(i-4);

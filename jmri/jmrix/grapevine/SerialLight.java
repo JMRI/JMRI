@@ -15,7 +15,7 @@ import jmri.Turnout;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class SerialLight extends AbstractLight {
 
@@ -99,7 +99,8 @@ public class SerialLight extends AbstractLight {
             return;
         }
         boolean high = (output>=12);
-        if (high) output = output-12;
+        int tOut = output;
+        if (high) tOut = output-12;
         if ( (bank<0)||(bank>4) ) {
             log.error("invalid bank "+bank+" for Light "+getSystemName());
             bank = 0;
@@ -114,7 +115,7 @@ public class SerialLight extends AbstractLight {
             m.setParity(i-4);
         }
         m.setElement(i++,tNode.getNodeAddress()|0x80);  // address 1
-        m.setElement(i++, (output<<3)|(on ? 0 : 4));  // on is green, off is dark
+        m.setElement(i++, (tOut<<3)|(on ? 0 : 4));  // on is green, off is dark
         m.setElement(i++,tNode.getNodeAddress()|0x80);  // address 2
         m.setElement(i++, bank<<4); // bank is most significant bits
         m.setParity(i-4);
