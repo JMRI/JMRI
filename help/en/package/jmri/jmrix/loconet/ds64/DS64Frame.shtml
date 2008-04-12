@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: DS64Frame.shtml,v 1.1 2007-12-06 05:48:36 jacobsen Exp $ -->
+<!-- $Id: DS64Frame.shtml,v 1.2 2008-04-12 07:06:30 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -21,10 +21,34 @@
 <body>
 <!--#include virtual="/Header" -->
 
-<H2>Configure Digitrax DS64
-</H2>
+<H1>Configure Digitrax DS64
+</H1>
     
-This is the help/jmri/jmrix/loconet/ds64/DS64Frame help page
+<a href="../../../../../html/apps/LocoTools/images/DS64.jpg">  
+<img src="../../../../../html/apps/LocoTools/images/DS64.jpg" 
+align="right" height="271" width="245" alt="panel image"></a>
+<p>
+The JMRI DS64 programming tool lets you configure 
+the internal options of a DS64 directly from your computer.
+
+<p>
+To use it, you put the address of a DS64 board in the text field
+and click "Read from DS64".  The tool will read back the current
+state of the various options, and set the check boxes to correspond to 
+their current values.
+<p>
+You can then, if you wish, change the checkboxes and click "Write to DS64" 
+to make your changes permanent.
+
+<h3>Limitations</h3>
+
+Because of the way the DS64 board works, this tool can't change
+the basic address of the unit.
+
+<p>
+At present, DS64 routes cannot be programmed by this tool.  It's possible,
+but nobody has written the code for it yet because JMRI routes are more 
+powerful and easier to use.
 
 <!--#include virtual="/Footer" -->
 </body>
