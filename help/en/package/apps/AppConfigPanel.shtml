@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: AppConfigPanel.shtml,v 1.10 2008-03-12 03:04:11 jacobsen Exp $ -->
+<!-- $Id: AppConfigPanel.shtml,v 1.11 2008-04-12 20:37:52 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -83,12 +83,16 @@ To set the advanced preferences, check the "Show Advanced Preferences" box.<br>
 <img src="../../DecoderProManual/Pix/Preferences2.png" height="222" width="256" align="right"></a>
 
 <dl>
-<dt>Auxiliary layout connections
-<dd>You can have more than one layout connection active at a time.  These choices allow
-you to easily configure up to four, and more are possible.
-
-<dt>Programmer Defaults
-<dd>This section has a checkbox that lets you decide whether the DecoderPro
+	<dt>Auxiliary layout connections
+	
+	<dd>The auxiliary connections allow you to have more than one layout
+	connection active at a time. Most users only need one connection,
+	therefore select an auxiliary connection only if you need more than one
+	connection to the layout. Use the "Layout Connection:" at the top of
+	the Preferences Menu for your primary connection.
+	
+	<dt>Programmer Defaults
+	<dd>This section has a checkbox that lets you decide whether the DecoderPro
 programmer will display empty panes (tabs). Some people like to see them, even though they're empty,
 some people would prefer not to see them, so they don't keep trying to look at them.  We
 provide this preference so you can choose.
