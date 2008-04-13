@@ -20,7 +20,7 @@ import javax.swing.JPanel;
  * 
  * @author	Ken Cameron   Copyright (C) 2008
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
 
@@ -413,11 +413,10 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
 
     // update state field in GUI as state of light changes
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-     	updateLightStatusFields(false);
      	if (log.isDebugEnabled()) {
          	log.debug("recv propertyChange: " + e.getPropertyName() + " " + e.getOldValue() + " -> " + e.getNewValue());
      	}
-     	log.error("test");
+     	updateLightStatusFields(false);
      }
 
     private void updateLightStatusFields(boolean flag){
