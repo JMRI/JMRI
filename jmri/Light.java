@@ -61,7 +61,7 @@ package jmri;
  * @author			Dave Duchamp Copyright (C) 2004
  * @author			Ken Cameron Copyright (C) 2008
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public interface Light extends NamedBean {
 
@@ -299,13 +299,16 @@ public interface Light extends NamedBean {
 	public void setTimedOnDuration(int duration);   // duration (milliseconds) if TIMED_ON_CONTROL
 
     /**
-     * Set enabled status
+     * Set the Enabled property, which determines whether the control logic
+     * built in the light object is operating or not. Light objects are usually
+     * enabled.
      */
     public void setEnabled(boolean state);
 
     /**
-     * Get enabled status
-    */
+     * Get the Enabled property, which determines whether the control logic
+     * built in the light object is operating or not.
+     */
     public boolean getEnabled();
     
     /**
