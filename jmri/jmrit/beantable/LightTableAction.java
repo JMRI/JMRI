@@ -37,7 +37,7 @@ import jmri.util.JmriJFrame;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.28 $
+ * @version     $Revision: 1.29 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -596,7 +596,7 @@ public class LightTableAction extends AbstractTableAction {
             }
         }
         // check if a Light with the same user name exists
-        if (uName != null) {
+        if (uName != null && !uName.equals("")) {
             g = InstanceManager.lightManagerInstance().getByUserName(uName);
             if (g!=null) {
                 // Light with this user name already exists
