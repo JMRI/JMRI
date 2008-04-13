@@ -75,7 +75,12 @@
 </li>
    
 <li>
-<a href="package/jmri/jmrit/consisttool/ConsistToolFrame.shtml">Consist Tool</a>
+<a href="html/tools/consisttool/ConsistTool.shtml">Consist Tool</a>
+<ul></ul>
+</li>
+   
+<li>
+<a href="html/tools/consisttool/ConsistTool.shtml">Consisting</a>
 <ul></ul>
 </li>
    
