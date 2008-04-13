@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * Basic configuration GUI infrastructure.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.21 $
+ * @version	$Revision: 1.22 $
  */
 public class AppConfigPanel extends JPanel {
 
@@ -353,6 +353,8 @@ public class AppConfigPanel extends JPanel {
                     rb.getString("MessageLongDupsWarning"),
                     rb.getString("MessageShortDupsWarning"),
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+    		if (!dups)
+    			return;	//leave window open
     	}
     	if (dups) {
 	        saveContents();
