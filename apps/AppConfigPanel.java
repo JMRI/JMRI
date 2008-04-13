@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * Basic configuration GUI infrastructure.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  */
 public class AppConfigPanel extends JPanel {
 
@@ -273,9 +273,9 @@ public class AppConfigPanel extends JPanel {
      * It depends on all connections have the first word be the same
      * if they share the same type. So LocoNet ... is a fine example.
      */
-    private Boolean checkDups() {
+    private boolean checkDups() {
     	String c1 = getConnection1();
-    	Integer x = c1.indexOf(" ");
+    	int x = c1.indexOf(" ");
     	if (x > 0) c1 = c1.substring(0, x);
     	String p1 = getPort1();
     	String c2 = getConnection2();
@@ -340,7 +340,7 @@ public class AppConfigPanel extends JPanel {
      * box prompting the user to end the program.
      */
     public void savePressed() {
-    	Boolean dups = checkDups();
+    	boolean dups = checkDups();
     	if (!dups) {
     		dups = JOptionPane.showConfirmDialog(null,
                     rb.getString("MessageLongDupsWarning"),
