@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * Basic configuration GUI infrastructure.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.20 $
+ * @version	$Revision: 1.21 $
  */
 public class AppConfigPanel extends JPanel {
 
@@ -272,61 +272,68 @@ public class AppConfigPanel extends JPanel {
      * Detect duplicate connection types
      * It depends on all connections have the first word be the same
      * if they share the same type. So LocoNet ... is a fine example.
+     * @return true if OK, false if duplicates present.
      */
     private boolean checkDups() {
     	String c1 = getConnection1();
     	int x = c1.indexOf(" ");
     	if (x > 0) c1 = c1.substring(0, x);
     	String p1 = getPort1();
+    	
     	String c2 = getConnection2();
     	x = c2.indexOf(" ");
     	if (x > 0) c2 = c2.substring(0, x);
     	String p2 = getPort2();
+    	
     	String c3 = getConnection3();
     	x = c3.indexOf(" ");
     	if (x > 0) c3 = c3.substring(0, x);
     	String p3 = getPort3();
+    	
     	String c4 = getConnection4();
     	x = c4.indexOf(" ");
     	if (x > 0) c4 = c4.substring(0, x);
     	String p4 = getPort4();
-    	
-    	if (c1.compareToIgnoreCase(none) == 0) {
+    	    	
+    	if (c1.compareToIgnoreCase(none) != 0) {
     		if (c1.compareToIgnoreCase(c2) == 0) return false;
     		if (c1.compareToIgnoreCase(c3) == 0) return false;
     		if (c1.compareToIgnoreCase(c4) == 0) return false;
     	}
-    	if (p1.compareToIgnoreCase(none) == 0) {
+    	if (p1.compareToIgnoreCase(none) != 0) {
     		if (p1.compareToIgnoreCase(p2) == 0) return false;
     		if (p1.compareToIgnoreCase(p3) == 0) return false;
     		if (p1.compareToIgnoreCase(p4) == 0) return false;
     	}
-    	if (c2.compareToIgnoreCase(none) == 0) {
+    	
+    	if (c2.compareToIgnoreCase(none) != 0) {
     		if (c2.compareToIgnoreCase(c1) == 0) return false;
     		if (c2.compareToIgnoreCase(c3) == 0) return false;
     		if (c2.compareToIgnoreCase(c4) == 0) return false;
     	}
-    	if (p2.compareToIgnoreCase(none) == 0) {
+    	if (p2.compareToIgnoreCase(none) != 0) {
     		if (p2.compareToIgnoreCase(p1) == 0) return false;
     		if (p2.compareToIgnoreCase(p3) == 0) return false;
     		if (p2.compareToIgnoreCase(p4) == 0) return false;
     	}
-    	if (c3.compareToIgnoreCase(none) == 0) {
+    	
+    	if (c3.compareToIgnoreCase(none) != 0) {
     		if (c3.compareToIgnoreCase(c1) == 0) return false;
     		if (c3.compareToIgnoreCase(c2) == 0) return false;
     		if (c3.compareToIgnoreCase(c4) == 0) return false;
     	}
-    	if (p3.compareToIgnoreCase(none) == 0) {
+    	if (p3.compareToIgnoreCase(none) != 0) {
     		if (p3.compareToIgnoreCase(p1) == 0) return false;
     		if (p3.compareToIgnoreCase(p2) == 0) return false;
     		if (p3.compareToIgnoreCase(p4) == 0) return false;
     	}
-    	if (c4.compareToIgnoreCase(none) == 0) {
+    	
+    	if (c4.compareToIgnoreCase(none) != 0) {
     		if (c4.compareToIgnoreCase(c1) == 0) return false;
     		if (c4.compareToIgnoreCase(c2) == 0) return false;
     		if (c4.compareToIgnoreCase(c3) == 0) return false;
     	}
-    	if (p4.compareToIgnoreCase(none) == 0) {
+    	if (p4.compareToIgnoreCase(none) != 0) {
     		if (p4.compareToIgnoreCase(p1) == 0) return false;
     		if (p4.compareToIgnoreCase(p2) == 0) return false;
     		if (p4.compareToIgnoreCase(p3) == 0) return false;
