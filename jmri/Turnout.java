@@ -36,7 +36,7 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.21 $
+ * @version	$Revision: 1.22 $
  * @see         jmri.AbstractTurnout
  * @see         jmri.TurnoutManager
  * @see         jmri.InstanceManager
@@ -128,6 +128,13 @@ public interface Turnout extends NamedBean {
      * the second sensor sets the state CLOSED when ACTIVE.
      */
     public static final int TWOSENSOR     =32;
+
+    /**
+     * Constant representing "feedback for signals" .  This is DIRECT feedback,
+     * with minimal delay (for use with systems that wait for responses 
+     * returned by from the command station).
+     */
+    public static final int SIGNAL        = 64;
 
     /**
      * Get a representation of the feedback type.  This is the OR of

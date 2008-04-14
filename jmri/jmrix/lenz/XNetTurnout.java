@@ -66,6 +66,10 @@
  * message for this turnout is recieved from the command station or 
  * computer interface.
  * <P>
+ * "SIGNAL" mode is identical to "DIRECT" mode, except it skips step 2.
+ * i.e. it triggers step 3 without receiving any reply from the 
+ * command station.
+ * <P>
  * "MONITORING" mode is an extention to direct mode. In monitoring mode, 
  * a feedback response message (for a turnout with or without feedback)
  * is interpreted to set the known state of the turnout based on  
@@ -95,7 +99,7 @@
  * may be necessary to poll for the feedback response data.
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001, Portions by Paul Bender Copyright (C) 2003 
- * @version			$Revision: 2.13 $
+ * @version			$Revision: 2.14 $
  */
 
 package jmri.jmrix.lenz;
@@ -119,7 +123,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         mNumber = pNumber;
 
         /* Add additiona feedback types information */
-	_validFeedbackTypes |= MONITORING | EXACT;
+	_validFeedbackTypes |= MONITORING | EXACT |SIGNAL;
 
 	// Default feedback mode is MONITORING
 	_activeFeedbackType = MONITORING;
@@ -129,8 +133,8 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 	if(modeNames == null) {
            if (_validFeedbackNames.length != _validFeedbackModes.length)
                 log.error("int and string feedback arrays different length");
-           modeNames  = new String[_validFeedbackNames.length+2];  
-           modeValues = new int[_validFeedbackNames.length+2];
+           modeNames  = new String[_validFeedbackNames.length+3];  
+           modeValues = new int[_validFeedbackNames.length+3];
            for (int i = 0; i<_validFeedbackNames.length; i++) {
                modeNames[i] = _validFeedbackNames[i];
                modeValues[i] = _validFeedbackModes[i];
@@ -139,6 +143,8 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
            modeValues[_validFeedbackNames.length] = MONITORING;
            modeNames[_validFeedbackNames.length+1] = "EXACT";
            modeValues[_validFeedbackNames.length+1] = EXACT;  
+           modeNames[_validFeedbackNames.length+2] = "SIGNAL";
+           modeValues[_validFeedbackNames.length+2] = SIGNAL;  
         }
 
         // set the mode names and values based on the static values.
@@ -188,9 +194,16 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                                                   (s & CLOSED)!=0,
                                                   (s & THROWN)!=0,
                                                   true );
-
-        XNetTrafficController.instance().sendXNetMessage(msg, this);
-        InternalState=COMMANDSENT;
+        if(getFeedbackMode()==SIGNAL)
+        {  
+           msg.setTimeout(0); // Set the timeout to 0, so the off message can
+    			      // be sent imediately.
+           XNetTrafficController.instance().sendXNetMessage(msg, null);
+           sendOffMessage();
+         } else {
+           XNetTrafficController.instance().sendXNetMessage(msg, this);
+           InternalState=COMMANDSENT;
+         }
     }
     
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout){
