@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.5.shtml,v 1.28 2008-04-08 17:23:25 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.5.shtml,v 1.29 2008-04-14 02:43:46 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -324,6 +324,11 @@ ZImo XM620 decoder so they contain the right CVs.
 <p>
 Paul Bender updated how commands are sent to turnouts by XPressNet command stations.
 
+<p>
+Ken Cameron and Dan Boudreau added a warning message if you try to configure two connections to use the same port or the same protocol in the preferences.
+
+<p>
+Simon Ginsburg did a great job of updating the German translation.
 
 <!--#include virtual="/Footer" -->
 
