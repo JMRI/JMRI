@@ -29,7 +29,7 @@ import Serialio.SerialPortLocal;
  * Neither the baud rate configuration nor the "option 1" option are used.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.26 $
+ * @version			$Revision: 1.27 $
  */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -128,7 +128,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
             CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
             javax.comm.SerialPort activeSerialPort = null;
             try {
-                activeSerialPort = (SerialPort) portID.open(appName, 100);  // name of program, msec to wait
+                activeSerialPort = (SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
             }
             catch (PortInUseException p) {
                 return handlePortBusy(p, portName, log);

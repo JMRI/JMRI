@@ -18,7 +18,7 @@ import jmri.jmrix.ConnectionStatus;
  * Also checks for March 2007 EPROM and warns user about Monitoring feedback.
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  * 
  */
 
@@ -66,6 +66,7 @@ public class NceConnectionStatus implements NceListener {
 	private static final int mm_2007 = 0;
 
 	private static final int mm_2007a = 1; // Revision of May 2007 EPROM VV.MM.mm = 6.2.1
+	private static final int mm_2008 = 2;  // Revision of 2008 EPROM VV.MM.mm = 6.2.2
 
 	// USB -> Cab bus adapter:
 	// When used with PowerCab V1.28 - 6.3.0
