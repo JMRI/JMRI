@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.33 2008-04-12 01:51:52 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.34 2008-04-16 04:59:01 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -294,6 +294,7 @@
 	updated the MRC decoder definitions
 <a name="U"></A>
 <a name="V"></A>
+    <li>Didrik Voss, who provided the configuration information, including the default values, for the Hornby R8215 decoder
 <a name="W"></A>
     <LI>Marshall Wales investigated how to display the throttle ID in the LocoNet Slot Monitor
     <LI>Jack Walton, who created the Lenz LE080 decoder definition
