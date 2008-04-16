@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.5.shtml,v 1.29 2008-04-14 02:43:46 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.5.shtml,v 1.30 2008-04-16 05:12:42 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -328,7 +328,13 @@ Paul Bender updated how commands are sent to turnouts by XPressNet command stati
 Ken Cameron and Dan Boudreau added a warning message if you try to configure two connections to use the same port or the same protocol in the preferences.
 
 <p>
+Dan Boudreau lengthened how long the program will wait while trying to open a serial port.
+
+<p>
 Simon Ginsburg did a great job of updating the German translation.
+
+<p>
+Didrik Voss provided the configuration information, including the default values, for the Hornby R8215 decoder.
 
 <!--#include virtual="/Footer" -->
 
