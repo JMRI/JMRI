@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ConditionalAddEdit.shtml,v 1.5 2008-03-30 15:08:50 djduchamp Exp $ -->
+<!-- $Id: ConditionalAddEdit.shtml,v 1.6 2008-04-17 23:27:27 djduchamp Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Adding/Editing Logix Conditionals</TITLE>
@@ -319,6 +319,10 @@ listed below along with information on each:</P>
 	clock is already running, this action has no effect.</LI>
 	<LI><B>Stop Fast Clock</B>: Pauses the JMRI fast clock. If the fast 
 	clock is not running, this action has no effect.</LI>
+	<LI><B>Copy Memory To Memory</B>: Copies the value of a memory variable to 
+	another memory variable. Specify the memory to be copied from by entering its 
+	name in the leftmost field. Specify the memory to receive the copied value by 
+	entering its name in the rightmost field.</LI>
 
 </UL>
 <P></P>

@@ -46,7 +46,7 @@ import jmri.util.JmriJFrame;
  * accessed via rb.
  * 
  * @author Dave Duchamp Copyright (C) 2007
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -1511,6 +1511,7 @@ public class LogixTableAction extends AbstractTableAction {
 			}
 			break;
 		case Conditional.ACTION_SET_MEMORY:
+		case Conditional.ACTION_COPY_MEMORY:
 		case Conditional.ACTION_PLAY_SOUND:
 		case Conditional.ACTION_RUN_SCRIPT:
 			action1DataField.setText(actionString[0]);
@@ -1579,6 +1580,7 @@ public class LogixTableAction extends AbstractTableAction {
 			}
 			break;
 		case Conditional.ACTION_SET_MEMORY:
+		case Conditional.ACTION_COPY_MEMORY:
 		case Conditional.ACTION_PLAY_SOUND:
 		case Conditional.ACTION_RUN_SCRIPT:
 			action2DataField.setText(actionString[1]);
@@ -1979,6 +1981,14 @@ public class LogixTableAction extends AbstractTableAction {
 				action1DataField
 						.setToolTipText(rbx.getString("DataHintMemory"));
 				break;
+			case Conditional.ACTION_COPY_MEMORY:
+				action1NameField.setVisible(true);
+				action1DataField.setVisible(true);
+				action1NameField
+						.setToolTipText(rbx.getString("NameHintFromMemory"));
+				action1DataField
+						.setToolTipText(rbx.getString("DataHintToMemory"));
+				break;
 			case Conditional.ACTION_ENABLE_LOGIX:
 				action1NameField.setVisible(true);
 				action1NameField.setToolTipText(rbx.getString("NameHintLogix"));
@@ -2122,6 +2132,14 @@ public class LogixTableAction extends AbstractTableAction {
 						.setToolTipText(rbx.getString("NameHintMemory"));
 				action2DataField
 						.setToolTipText(rbx.getString("DataHintMemory"));
+				break;
+			case Conditional.ACTION_COPY_MEMORY:
+				action2NameField.setVisible(true);
+				action2DataField.setVisible(true);
+				action2NameField
+						.setToolTipText(rbx.getString("NameHintFromMemory"));
+				action2DataField
+						.setToolTipText(rbx.getString("DataHintToMemory"));
 				break;
 			case Conditional.ACTION_ENABLE_LOGIX:
 				action2NameField.setVisible(true);
@@ -3196,6 +3214,52 @@ public class LogixTableAction extends AbstractTableAction {
 			actionData[index] = 0;
 			actionString[index] = dataField.getText();
 			break;
+		case Conditional.ACTION_COPY_MEMORY:
+			m = null;
+			// check if memory user name was entered for "from" Memory
+			if ((uName != null) && (uName != "")) {
+				m = InstanceManager.memoryManagerInstance()
+						.getByUserName(uName);
+				if (m != null) {
+					actionName[index] = uName;
+					systemNameField.setText(uName);
+				} else {
+					// check memory system name
+					m = InstanceManager.memoryManagerInstance()
+							.getBySystemName(sName);
+				}
+			}
+			if (m == null) {
+				systemNameField.setText(uName);
+				messageInvalidMemoryName(uName, false);
+				return (false);
+			}
+			actionData[index] = 0;
+			// get possible user name and system name of "to" Memory
+			uName = dataField.getText().trim();
+			sName = dataField.getText().toUpperCase().trim();
+			// check if memory user name was entered
+			if ((uName != null) && (uName != "")) {
+				m = InstanceManager.memoryManagerInstance()
+						.getByUserName(uName);
+				if (m != null) {
+					actionString[index] = uName;
+					dataField.setText(uName);
+				} else {
+					// check memory system name
+					m = InstanceManager.memoryManagerInstance()
+							.getBySystemName(sName);
+					if (m != null) {
+						actionString[index] = sName;
+						dataField.setText(sName);
+					}
+				}
+			}
+			if (m == null) {
+				messageInvalidMemoryName(uName, false);
+				return (false);
+			}
+			break;
 		case Conditional.ACTION_ENABLE_LOGIX:
 		case Conditional.ACTION_DISABLE_LOGIX:
 			Logix x = null;
@@ -3369,6 +3433,8 @@ public class LogixTableAction extends AbstractTableAction {
 			return (rbx.getString("ActionStartFastClock"));
 		case Conditional.ACTION_STOP_FAST_CLOCK:
 			return (rbx.getString("ActionStopFastClock"));			
+		case Conditional.ACTION_COPY_MEMORY:
+			return (rbx.getString("ActionCopyMemory"));
 		}
 		return ("");
 	}

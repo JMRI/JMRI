@@ -9,7 +9,7 @@ import javax.swing.Timer;
  * Class providing the basic logic of the Conditional interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -743,6 +743,23 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						else {
 							m.setValue(actionString[i]);
+						}
+						break;
+					case Conditional.ACTION_COPY_MEMORY:
+						Memory mFrom = InstanceManager.memoryManagerInstance().
+										provideMemory(actionName[i]);
+						if (mFrom == null) {
+							log.error("invalid memory name in action - "+actionName[i]);
+						}
+						else {
+							Memory mTo = InstanceManager.memoryManagerInstance().
+										provideMemory(actionString[i]);
+							if (mTo == null) {
+								log.error("invalid memory name in action - "+actionString[i]);
+							}
+							else {
+								mTo.setValue(mFrom.getValue());
+							}
 						}
 						break;
 					case Conditional.ACTION_ENABLE_LOGIX:
