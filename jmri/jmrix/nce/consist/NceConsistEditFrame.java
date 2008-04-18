@@ -44,7 +44,7 @@ import java.util.List;
  * mid loco4) :0000
  * 
  * @author Dan Boudreau Copyright (C) 2007 2008
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 
 public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
@@ -439,7 +439,11 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 			consistNum = validConsist(consistTextField.getText());
 			jmri.jmrit.throttle.ThrottleFrame tf=
 				jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();
-			tf.notifyAddressChosen(locoAddr, isLong); 	// first notify for func button
+			if (JOptionPane.showConfirmDialog(null,
+					"Send function commands to lead loco?", "NCE Consist Throttle",
+					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				tf.notifyAddressChosen(locoAddr, isLong); 	// first notify for func button
+			}
 			tf.notifyAddressChosen(consistNum, false);	// second notify for consist address
 			tf.setVisible(true);
 			return;
