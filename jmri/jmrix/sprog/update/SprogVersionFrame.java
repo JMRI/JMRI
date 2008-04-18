@@ -12,7 +12,7 @@ import javax.swing.*;
 /**
  * Get the firmware version of the attached SPROG
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SprogVersionFrame
         extends SprogUpdateFrame
@@ -26,20 +26,10 @@ public class SprogVersionFrame
     
     public void initComponents() throws Exception {
         setTitle(title());
-//        getContentPane().setLayout(new BoxLayout(getContentPane(),
-//                BoxLayout.Y_AXIS));
-        
-//        JPanel paneA = new JPanel();
-//        paneA.setLayout(new BoxLayout(paneA, BoxLayout.Y_AXIS));
-        
+
         // connect to data source
         super.init();
         
-        // prevent button areas from expanding
-//        pack();
-//        paneA.setMaximumSize(paneA.getSize());
-//        pack();
-
         // Send a blank message
         msg = new SprogMessage(1);
         msg.setOpCode( (int) ' ');
@@ -112,40 +102,40 @@ public class SprogVersionFrame
         }
     }
 
-    protected int SHORT_TIMEOUT=500;
-    
-    javax.swing.Timer timer = null;
-    
-    /**
-     * Internal routine to start timer to protect the mode-change.
-     */
-    protected void startShortTimer() {
-        restartTimer(SHORT_TIMEOUT);
-    }
-    
-    /**
-     * Internal routine to stop timer, as all is well
-     */
-    protected void stopTimer() {
-        if (timer!=null) timer.stop();
-    }
-    
-    /**
-     * Internal routine to handle timer starts & restarts
-     */
-    protected void restartTimer(int delay) {
-        if (timer==null) {
-            timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    timeout();
-                }
-            });
-        }
-        timer.stop();
-        timer.setInitialDelay(delay);
-        timer.setRepeats(false);
-        timer.start();
-    }
+//    protected int SHORT_TIMEOUT=500;
+//    
+//    javax.swing.Timer timer = null;
+//    
+//    /**
+//     * Internal routine to start timer to protect the mode-change.
+//     */
+//    protected void startShortTimer() {
+//        restartTimer(SHORT_TIMEOUT);
+//    }
+//    
+//    /**
+//     * Internal routine to stop timer, as all is well
+//     */
+//    protected void stopTimer() {
+//        if (timer!=null) timer.stop();
+//    }
+//    
+//    /**
+//     * Internal routine to handle timer starts & restarts
+//     */
+//    protected void restartTimer(int delay) {
+//        if (timer==null) {
+//            timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
+//                public void actionPerformed(java.awt.event.ActionEvent e) {
+//                    timeout();
+//                }
+//            });
+//        }
+//        timer.stop();
+//        timer.setInitialDelay(delay);
+//        timer.setRepeats(false);
+//        timer.start();
+//    }
     
     static org.apache.log4j.Category log = org.apache.log4j.Category.
             getInstance(SprogVersionFrame.class.getName());

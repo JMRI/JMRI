@@ -7,7 +7,7 @@ package jmri.jmrix.sprog;
  *
  * Description:		Constants to represent values seen in SPROG traffic
  * @author		Andrew Crosland   Copyright (C) 2006 from LnConstants.java
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public final class SprogConstants {
 
@@ -44,6 +44,18 @@ public final class SprogConstants {
   public final static int F2 = 0x04; /* Function 2 bit   */
   public final static int F1 = 0x02; /* Function 1 bit   */
   public final static int F0 = 0x01; /* Function 0 bit   */
+  
+  /* Mode word bit masks */
+  public final static int UNLOCK_BIT = 0x0001;      /* Unlock bootloader */
+  public final static int CALC_BIT = 0x0008;        /* Add error byte */
+  public final static int ZTC_BIT = 0x0020;         /* Old ZTC bit timing */
+  public final static int BLUE_BIT = 0x0040;        /* Use direct byte for Blueline */
+  public final static int STEP_MASK = 0x0E00;       /* Mask for speed step bits */
+  public final static int STEP14_BIT = 0x0200;
+  public final static int STEP28_BIT = 0x0400;
+  public final static int STEP128_BIT = 0x0800;
+  
+  public final static int DEFAULT_I = 996;
 
 }
 
