@@ -11,7 +11,7 @@ package jmri.jmrix;
  * needed.  The length is given by the largest index written so far.
  *
  * @author		Bob Jacobsen  Copyright (C) 2003
- * @version             $Revision: 1.11 $
+ * @version             $Revision: 1.12 $
  */
 abstract public class AbstractMRReply extends AbstractMessage {
     // is this logically an abstract class?
@@ -113,9 +113,22 @@ abstract public class AbstractMRReply extends AbstractMessage {
     }
 
     public int match(String s) {
+        // loop over starting positions
+        outer:
+        for (int i=0; i<_nDataChars-s.length()+1; i++) {
+            // loop to check each start position
+            for (int j=0; j<s.length(); j++) {
+                if (_dataChars[i+j]!=s.charAt(j)) continue outer;
+            }
+            // here we succeed
+            return i;
+         }
+        
+        return -1;
+        
         // find a specific string in the reply
-        String rep = new String(_dataChars, 0, _nDataChars);
-        return rep.indexOf(s);
+        //String rep = new String(_dataChars, 0, _nDataChars);
+        //return rep.indexOf(s);
     }
 
     public int skipWhiteSpace(int index) {
