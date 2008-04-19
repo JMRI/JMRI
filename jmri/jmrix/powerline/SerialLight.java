@@ -27,7 +27,7 @@ import java.util.Date;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 abstract public class SerialLight extends AbstractVariableLight {
 
@@ -84,57 +84,7 @@ abstract public class SerialLight extends AbstractVariableLight {
     // data members holding the X10 address
     protected int housecode = -1;
     protected int devicecode = -1;
-    
-    /**
-     *  Request from superclass to set the current state of this Light.
-     */
-	protected void doNewState(int oldState, int newState) {
-    	if (log.isDebugEnabled()) {
-    		log.debug("doNewState(" +oldState+","+newState+")");
-    	}
-
-        double newIntensity = getTargetIntensity();
-
-        if ( newIntensity!=1.0 && newIntensity!=0.0) {
-            // dim to value not at end of range
-        	updateIntensity(newIntensity);
-        } else {
-            // go to full on or full off
-	        sendOnOffCommand(newState);
-        }
-	
-    }
-
-    /**
-     * Request from superclass to set intensity above max
-     */
-    protected void updateIntensityHigh(double intensity) {
-        updateIntensity(intensity);
-        super.updateIntensityHigh(intensity);
-    }
-
-    /**
-     * Request from superclass to set intensity between min and max
-     */
-    protected void updateIntensityIntermediate(double intensity) {
-        updateIntensity(intensity);
-        super.updateIntensityIntermediate(intensity);
-    }
-
-    /**
-     * Request from superclass to set intensity below min
-     */
-    protected void updateIntensityLow(double intensity) {
-        updateIntensity(intensity);
-        super.updateIntensityLow(intensity);
-    }
-
-    /**
-     * Send a Dim/Bright commands to the X10 hardware 
-     * to reach a specific intensity.
-     */
-    abstract protected void updateIntensity(double intensity);
-        
+            
     /**
      *  Send a On/Off Command to the hardware
      */
