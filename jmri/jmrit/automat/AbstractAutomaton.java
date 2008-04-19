@@ -73,7 +73,7 @@ import javax.swing.JTextArea;
  * so that Jython code can easily use some of the methods.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.32 $
+ * @version     $Revision: 1.33 $
  */
 public class AbstractAutomaton implements Runnable {
 
@@ -104,6 +104,8 @@ public class AbstractAutomaton implements Runnable {
 
     /**
      * Part of the implementation; not for general use.
+     * <p>
+     * This is invoked on currentThread.
      */
     public void run() {
         inThread = true;
@@ -114,6 +116,7 @@ public class AbstractAutomaton implements Runnable {
         	count++;
         	summary.loop(this);
         }
+        currentThread = null;
         done();
     }
 
