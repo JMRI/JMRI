@@ -37,7 +37,7 @@ import jmri.util.JmriJFrame;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.29 $
+ * @version     $Revision: 1.30 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -105,10 +105,10 @@ public class LightTableAction extends AbstractTableAction {
                 case Light.ON: return rbean.getString("LightStateOn");
                 case Light.INTERMEDIATE: return rbean.getString("LightStateIntermediate");
                 case Light.OFF: return rbean.getString("LightStateOff");
-                case Light.TRANSITIONINGTOFULLON: return rbean.getString("LightTransitioningToFullOn");
-                case Light.TRANSITIONINGHIGHER: return rbean.getString("LightTransitioningHigher");
-                case Light.TRANSITIONINGLOWER: return rbean.getString("LightTransitioningLower");
-                case Light.TRANSITIONINGTOFULLOFF: return rbean.getString("LightTransitioningToFullOff");
+                case Light.TRANSITIONINGTOFULLON: return rbean.getString("LightStateTransitioningToFullOn");
+                case Light.TRANSITIONINGHIGHER: return rbean.getString("LightStateTransitioningHigher");
+                case Light.TRANSITIONINGLOWER: return rbean.getString("LightStateTransitioningLower");
+                case Light.TRANSITIONINGTOFULLOFF: return rbean.getString("LightStateTransitioningToFullOff");
                 default: return "Unexpected value: "+val;
                 }
             }
@@ -340,17 +340,20 @@ public class LightTableAction extends AbstractTableAction {
             panel34.setLayout(new BoxLayout(panel34, BoxLayout.X_AXIS));
             panel34.add(labelMinIntensity);
             fieldMinIntensity.setToolTipText(rb.getString("LightMinIntensityHint"));
+            fieldMinIntensity.setHorizontalAlignment(JTextField.RIGHT);
             fieldMinIntensity.setText("  0");
             panel34.add(fieldMinIntensity);
             panel34.add(labelMinIntensityTail);
             panel34.add(labelMaxIntensity);
             fieldMaxIntensity.setToolTipText(rb.getString("LightMaxIntensityHint"));
+            fieldMaxIntensity.setHorizontalAlignment(JTextField.RIGHT);
             fieldMaxIntensity.setText("100");
             panel34.add(fieldMaxIntensity);
             panel34.add(labelMaxIntensityTail);
             panel34.add(labelTransitionTime);
             fieldTransitionTime.setToolTipText(rb.getString("LightTransitionTimeHint"));
-            fieldTransitionTime.setText("    0");
+            fieldTransitionTime.setHorizontalAlignment(JTextField.RIGHT);
+            fieldTransitionTime.setText("0");
             panel34.add(fieldTransitionTime);
             panel3.add(panel34);
             
