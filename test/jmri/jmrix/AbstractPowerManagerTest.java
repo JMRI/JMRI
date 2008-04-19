@@ -2,8 +2,8 @@
  * AbstractPowerManagerTest.java
  *
  * Description:	    AbsBaseClass for PowerManager tests in specific jmrix. packages
- * @author			Bob Jacobsen
- * @version			
+ * @author			Bob Jacobsen Copyright 2007
+ * @version			$Revision: 1.3 $
  */
 
 package jmri.jmrix;
