@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
-<!-- $Id: Hornby8215.xml,v 1.1 2008-02-22 05:04:53 jacobsen Exp $ -->
+<!-- $Id: Hornby8215.xml,v 1.2 2008-04-19 22:24:41 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,6 +16,8 @@
 <!-- for more details.                                                      -->
 
 <decoder-config>
+		<version author="Bob Jacobsen rgj1927@pacbell.net"
+			version="2" lastUpdated="20080415" />
 		<version author="PGM"
 			version="1" lastUpdated="20071116" />
 		<!-- Decoder used in Hornby engines -->
@@ -23,7 +25,12 @@
 <decoder>
 	<family name="R8215" mfg="Hornby">
 			
-		<model model="Hornby R8215" numOuts="4" numFns="4" />
+		<model model="R8215" numOuts="4" numFns="4" 
+		    lowVersionID="13"
+		    nmraWarrant="yes" nmraWarrantStart="200804" 
+		    maxTotalCurrent="0.5A" connector="NMRAmedium">
+		    <size length="17" width="10" height="3.5" units="mm"/>
+        </model>
 	</family>
 
 	<programming direct="yes" paged="yes"
@@ -35,14 +42,10 @@
 						item="Short Address"  default="03">
 			<shortAddressVal/></variable>
 
-		<variable label="Start Volts" CV="2" item="Vstart" default="8"
-				comment="Range 0-31">
-			<decVal></decVal>
-			</variable>
-		<variable label="Acceleration Rate  " CV="3" default="1"
+		<variable label="Acceleration Rate  " CV="3" default="5"
 						item="Accel" >
 			<decVal max="255"/></variable>
-		<variable label="Deceleration Rate  " CV="4" default="1"
+		<variable label="Deceleration Rate  " CV="4" default="5"
 						item="Decel">
 			<decVal max="255"/></variable>
 
@@ -51,22 +54,13 @@
 			<longAddressVal/>
 			</variable>
 
-
-		
-		<variable label="Vstart" CV="2"
-						comment="A value of 255 corresponds to 100%">
-			<decVal/></variable>
-		
-		<variable label="Vhigh" CV="5">					<decVal/></variable>
-		<variable label="Vmid" CV="6">					<decVal/></variable>
-
 		<variable label="Version ID" CV="7" readOnly="yes"
 				item="Decoder Version" >
 			<decVal/>
 			</variable>
 
 		<variable label="Manufacturer ID" CV="8" readOnly="yes"
-				item="Manufacturer" default="99">
+				item="Manufacturer" default="48">
 			<decVal/>
 			</variable>
 
@@ -75,16 +69,8 @@
 			<decVal/>
 			</variable>
 
-		
-
-		<variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
-			<decVal/></variable>
-		
-		<variable label="Consist Direction" CV="19" mask="VXXXXXXX">
-			<enumVal>
-				<enumChoice choice="Normal"></enumChoice>
-				<enumChoice choice="Reversed"></enumChoice>
-				</enumVal></variable>
+		<variable label="EMF Feedback Cutout" CV="10" default="128">
+		    <decVal/></variable>
 
 		<variable label="Normal direction of motion" CV="29"
 				mask="XXXXXXXV"
@@ -109,8 +95,7 @@
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
 				</enumVal>
-			</variable>
-		
+			</variable>		
 
 		<variable label="Use Speed Table" CV="29" mask="XXXVXXXX"
 				item="Speed Table Definition">
@@ -128,81 +113,11 @@
 				</enumVal>
 			</variable>
 
-
-
-	
-
-		<variable label="F1 controls output C" CV="54" mask="XXXXXXXV" minOut="3" minFn="1"
-					item="F1 controls output 3" default="1"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F2 controls output C" CV="54" mask="XXXXXXVX" minOut="3" minFn="2"
-					item="F2 controls output 3"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F3 controls output C" CV="54" mask="XXXXXVXX" minOut="3" minFn="3"
-					item="F3 controls output 3"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F4 controls output C" CV="54" mask="XXXXVXXX" minOut="3" minFn="4"
-					item="F4 controls output 3"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F5 controls output C" CV="54" mask="XXXVXXXX" minOut="3" minFn="5"
-					item="F5 controls output 3"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F6 controls output C" CV="54" mask="XXVXXXXX" minOut="3" minFn="6"
-					item="F6 controls output 3"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F7 controls output C" CV="54" mask="XVXXXXXX" minOut="3" minFn="7"
-					item="F7 controls output 3"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F8 controls output C" CV="54" mask="VXXXXXXX" minOut="3" minFn="8"
-					item="F8 controls output 3"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-
-		<variable label="F1 controls output D" CV="55" mask="XXXXXXXV" minOut="4" minFn="1"
-					item="F1 controls output 4"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F2 controls output D" CV="55" mask="XXXXXXVX" minOut="4" minFn="2"
-					item="F2 controls output 4" default="1"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F3 controls output D" CV="55" mask="XXXXXVXX" minOut="4" minFn="3"
-					item="F3 controls output 4"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F4 controls output D" CV="55" mask="XXXXVXXX" minOut="4" minFn="4"
-					item="F4 controls output 4"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F5 controls output D" CV="55" mask="XXXVXXXX" minOut="4" minFn="5"
-					item="F5 controls output 4"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F6 controls output D" CV="55" mask="XXVXXXXX" minOut="4" minFn="6"
-					item="F6 controls output 4"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F7 controls output D" CV="55" mask="XVXXXXXX" minOut="4" minFn="7"
-					item="F7 controls output 4"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="F8 controls output D" CV="55" mask="VXXXXXXX" minOut="4" minFn="8"
-					item="F8 controls output 4"> <enumVal> 
-			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-
-		<variable label="User Private ID #1" CV="105"
-					item="User Id #1">
-			<decVal/>
-			</variable>
-
-		<variable label="User Private ID #2" CV="106"
-					item="User Id #2">
-			<decVal/>
-			</variable>
-
-		<variable label="Speed Table" CV="67">
-			<speedTableVal/>
-			</variable>
-
-		<variable label="Decoder Software Version" CV="128" readOnly="yes" default="3">
-			<decVal/>
-			</variable>
-
 	<!-- Define the fixed Function-Output mapping -->
 	<constant label="FL(f) controls output 1" minOut="1" default="1" /> 
 	<constant label="FL(r) controls output 2" minOut="2" default="1" /> 
+	<constant label="F1 controls output 3" minOut="3" default="1" /> 
+	<constant label="F2 controls output 4" minOut="4" default="1" /> 
 
 	</variables>
 
