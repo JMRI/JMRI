@@ -29,11 +29,14 @@ import jmri.jmrix.powerline.SerialTrafficController;
  * from 1.0 or 0.0, no intensity commands are to be sent over
  * the power line.
  * </ul>
+ * <p>
+ * Unlike the parent class, this stores CurrentIntensity and TargetIntensity
+ * in separate variables.
  *
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Ken Cameron Copyright (C) 2008
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public abstract class AbstractVariableLight extends AbstractLight
     implements java.io.Serializable {
@@ -77,12 +80,18 @@ public abstract class AbstractVariableLight extends AbstractLight
                 // update the intensity without invoking the hardware
                 notifyTargetIntensityChange(1.0);
             } else {
-                // requires an intensity change
-                if (log.isDebugEnabled()) log.debug("setState("+newState+") using variable intensity");
-                // tell the hardware to change intensity
-                sendIntensity(getMaxIntensity());
-                // update the intensity value and listeners without invoking the hardware
-                notifyTargetIntensityChange(getMaxIntensity());                
+                // requires an intensity change, check for transition
+                if (getTransitionTime() <= 0) {
+                    // no transition, just to directly to target using on/off
+                    if (log.isDebugEnabled()) log.debug("setState("+newState+") using variable intensity");
+                    // tell the hardware to change intensity
+                    sendIntensity(getMaxIntensity());
+                    // update the intensity value and listeners without invoking the hardware
+                    notifyTargetIntensityChange(getMaxIntensity());                
+                } else {
+                    // using transition
+                    startTransition(getMaxIntensity());
+                }
             }
 	    }
 	    if (newState == OFF) {
@@ -94,11 +103,17 @@ public abstract class AbstractVariableLight extends AbstractLight
                 notifyTargetIntensityChange(0.0);
             } else {
                 // requires an intensity change
-                if (log.isDebugEnabled()) log.debug("setState("+newState+") using variable intensity");
-                // tell the hardware to change intensity
-                sendIntensity(getMinIntensity());
-                // update the intensity value and listeners without invoking the hardware
-                notifyTargetIntensityChange(getMinIntensity());                
+                if (getTransitionTime() <= 0) {
+                    // no transition, just to directly to target using on/off
+                    if (log.isDebugEnabled()) log.debug("setState("+newState+") using variable intensity");
+                    // tell the hardware to change intensity
+                    sendIntensity(getMinIntensity());
+                    // update the intensity value and listeners without invoking the hardware
+                    notifyTargetIntensityChange(getMinIntensity());                
+                } else {
+                    // using transition
+                    startTransition(getMinIntensity());
+                }
             }
         }
         
@@ -131,15 +146,42 @@ public abstract class AbstractVariableLight extends AbstractLight
         if (intensity > mMaxIntensity ) intensity = mMaxIntensity;
         if (intensity < mMinIntensity ) intensity = mMinIntensity;
         
-        // set intensity and intermediate state
-        sendIntensity(intensity);
-        // tell listeners
-        notifyTargetIntensityChange(intensity); 
+        // see if there's a transition in use
+        if (getTransitionTime()>0.0) {
+            startTransition(intensity);
+        } else {
+            // No transition in use, move immediately
+            
+            // Set intensity and intermediate state
+            sendIntensity(intensity);
+            // update value and tell listeners
+            notifyTargetIntensityChange(intensity); 
+    
+            // decide if this is a state change operation
+            if (intensity >= mMaxIntensity) setState(ON);
+            else if (intensity <= mMinIntensity) setState(OFF);
+            else notifyStateChange(mState, INTERMEDIATE);
+        }
+    }
+    
+    /**
+     * Set up to start a transition
+     */
+    protected void startTransition(double intensity) {
+            // set target value
+            mTransitionTargetIntensity = intensity;
 
-        // decide if this is a state change operation
-        if (intensity >= mMaxIntensity) setState(ON);
-        else if (intensity <= mMinIntensity) setState(OFF);
-        else notifyStateChange(mState, INTERMEDIATE);
+            // set state
+            int nextState;
+            if (intensity >= getMaxIntensity() ) nextState = TRANSITIONINGTOFULLON;
+            else if (intensity <= getMinIntensity() ) nextState = TRANSITIONINGTOFULLOFF;
+            else if (intensity >= mCurrentIntensity ) nextState = TRANSITIONINGHIGHER;
+            else if (intensity <= mCurrentIntensity ) nextState = TRANSITIONINGLOWER;
+            else nextState = TRANSITIONING;  // not expected
+
+            notifyStateChange(mState, nextState);        
+            // make sure clocks running to handle it   
+            initClocks();
     }
     
     /**
@@ -172,6 +214,8 @@ public abstract class AbstractVariableLight extends AbstractLight
      * setup internal clock, start minute listener
      */
     private void initClocks(){
+        if (minuteChangeListener != null) return; // already done
+        
         // Create a Timebase listener for the Minute change events
         internalClock = InstanceManager.timebaseInstance();
         if (internalClock == null){
@@ -182,16 +226,13 @@ public abstract class AbstractVariableLight extends AbstractLight
                     newInternalMinute();
                 }
             } ;
-        if (minuteChangeListener == null){
-            log.error("No minuteChangeListener");
-        }
         internalClock.addMinuteChangeListener(minuteChangeListener);
     }
     
     private void newInternalMinute() {
     	double origCurrent = mCurrentIntensity;
     	int origState = mState;
-    	if ((Math.abs(mCurrentIntensity - mTransitionTargetIntensity) > 0.009) && (mTransitionDuration > 0)) {
+    	if ((Math.abs(mCurrentIntensity - mTransitionTargetIntensity) > 0.001) && (mTransitionDuration > 0)) {
     		if (log.isDebugEnabled()) {
     			log.debug("before Target: " + mTransitionTargetIntensity + " Current: " + mCurrentIntensity);
     		}
@@ -208,37 +249,60 @@ public abstract class AbstractVariableLight extends AbstractLight
 //        		log.debug("step/min " + stepsPerMinute + " min/step " + minutesPerStep + " absDiff " + absIntensityDiff + " step " + stepSize + " steps " + stepsNeeded + " diff/min " + intensityDiffPerMinute);
 //        	}
 			if (mTransitionTargetIntensity > mCurrentIntensity) {
-				mState = TRANSITIONINGHIGHER;
 				mCurrentIntensity = mCurrentIntensity + intensityDiffPerMinute;
-				if (mCurrentIntensity > mTransitionTargetIntensity) {
+				if (mCurrentIntensity >= mTransitionTargetIntensity) {
+				    // Done!
 					mCurrentIntensity = mTransitionTargetIntensity;
-					mState = INTERMEDIATE;
+					if (mCurrentIntensity >= getMaxIntensity())
+					    mState = ON;
+					else
+					    mState = INTERMEDIATE;
 				}
 			} else {
-				mState = TRANSITIONINGLOWER;
 				mCurrentIntensity = mCurrentIntensity - intensityDiffPerMinute;
-				if (mCurrentIntensity < mTransitionTargetIntensity) {
+				if (mCurrentIntensity <= mTransitionTargetIntensity) {
+				    // Done!
 					mCurrentIntensity = mTransitionTargetIntensity;
-					mState = INTERMEDIATE;
+					mCurrentIntensity = mTransitionTargetIntensity;
+					if (mCurrentIntensity <= getMinIntensity())
+					    mState = OFF;
+					else
+					    mState = INTERMEDIATE;
 				}
 			}
+			
+			// command new intensity
+            sendIntensity(mCurrentIntensity);
+
     		if (log.isDebugEnabled()){
         		log.debug("after Target: " + mTransitionTargetIntensity + " Current: " + mCurrentIntensity);
     		}
     	}
     	if (origCurrent != mCurrentIntensity) {
-            firePropertyChange("IntensityChange", new Double(origCurrent), new Double(mCurrentIntensity));
+            firePropertyChange("CurrentIntensity", new Double(origCurrent), new Double(mCurrentIntensity));
     		if (log.isDebugEnabled()){
         		log.debug("firePropertyChange intensity " + origCurrent + " -> " + mCurrentIntensity);
     		}
     	}
     	if (origState != mState) {
-            firePropertyChange("StateChange", new Integer(origState), new Integer(mState));
+            firePropertyChange("KnownState", new Integer(origState), new Integer(mState));
     		if (log.isDebugEnabled()){
         		log.debug("firePropertyChange intensity " + origCurrent + " -> " + mCurrentIntensity);
     		}
     	}
     }
+    
+    /**
+     * Change the stored target intensity value and do notification, but don't
+     * change anything in the hardware
+     */
+	protected void notifyTargetIntensityChange(double intensity) {
+	    double oldValue = mCurrentIntensity;
+	    mCurrentIntensity = intensity;
+        if (oldValue != intensity)
+            firePropertyChange("TargetIntensity", new Double(oldValue), new Double(intensity));
+    }
+    
     /** Check if this object can handle variable intensity.
      * <P>
      * @return true, as this abstract class implements
