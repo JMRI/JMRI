@@ -33,7 +33,7 @@ import java.util.Date;
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Ken Cameron Copyright (C) 2008
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 public abstract class AbstractLight extends AbstractNamedBean
     implements Light, java.io.Serializable {
@@ -111,7 +111,6 @@ public abstract class AbstractLight extends AbstractNamedBean
     }
     
    /** Set the intended new intensity value for the Light.
-    *  If transitions are in use, they will be applied.
     *  <p>
     *  Bound property between 0 and 1. 
     *  <p>
@@ -131,6 +130,7 @@ public abstract class AbstractLight extends AbstractNamedBean
     *  @throws IllegalArgumentException when intensity is more than MinIntensity and less than MaxIntensity
     */
     public void setTargetIntensity(double intensity) {
+        if (log.isDebugEnabled()) log.debug("setTargetIntensity "+intensity);
         if (intensity<0.0 || intensity>1.0) 
             throw new IllegalArgumentException("Target intensity value "+intensity+" not in legal range");
 
@@ -150,20 +150,20 @@ public abstract class AbstractLight extends AbstractNamedBean
     
     /**
      * Method for further implementation of 
-     * setTargetIntensity at or below the minimum
+     * setTargetIntensity at or below the minimum.
+     * <p>
+     * Does not change state.
      */
     protected void updateIntensityLow(double intensity) {
-        double oldValue = mCurrentIntensity;
-        // set to minimum, so go to OFF state
-        mCurrentIntensity = intensity;
-        if (oldValue != intensity)
-            firePropertyChange("TargetIntensity", new Double(oldValue), new Double(intensity));
+        notifyTargetIntensityChange(intensity);
         setState(OFF);
     }
     
     /**
      * Method for further implementation of 
      * setTargetIntensity between min and max
+     * <p>
+     * Does not change state.
      */
     protected void updateIntensityIntermediate(double intensity) {
         // not in value range!
@@ -173,13 +173,11 @@ public abstract class AbstractLight extends AbstractNamedBean
     /**
      * Method for further implementation of 
      * setTargetIntensity at or above the maximum
+     * <p>
+     * Does not change state.
      */
     protected void updateIntensityHigh(double intensity) {
-        double oldValue = mCurrentIntensity;
-        // set to maximum, so go to ON state
-        mCurrentIntensity = intensity;
-        if (oldValue != intensity)
-            firePropertyChange("TargetIntensity", new Double(oldValue), new Double(intensity));
+        notifyTargetIntensityChange(intensity);
         setState(ON);
     }
     
@@ -456,7 +454,13 @@ public abstract class AbstractLight extends AbstractNamedBean
 		mTimeOnDuration = duration;
 	}
 
+    /** 
+     * Handle a request for a state change. For these lights,
+     * ON and OFF just transition immediately
+     * between MinIntensity and MaxIntensity
+     */
 	public void setState(int newState) {
+        if (log.isDebugEnabled()) log.debug("setState "+newState+" was "+mState);
 	    int oldState = mState;
 	    if ( newState != ON && newState != OFF) 
 	        throw new IllegalArgumentException("cannot set state value "+newState);
@@ -471,9 +475,30 @@ public abstract class AbstractLight extends AbstractNamedBean
 	        // stop if state change was done as part of setTargetIntensity
 	        if (getState() == OFF) return;
         }
-        // do the state change
+        // do the state change in the hardware
+	    doNewState(mState, newState); // old state, new state
+	    // change value and tell listeners
+        notifyStateChange(mState, newState);
+	}
+	
+
+    /**
+     * Change the stored target intensity value and do notification, but don't
+     * change anything in the hardware
+     */
+	protected void notifyTargetIntensityChange(double intensity) {
+	    double oldValue = mCurrentIntensity;
+	    mCurrentIntensity = intensity;
+        if (oldValue != intensity)
+            firePropertyChange("TargetIntensity", new Double(oldValue), new Double(intensity));
+    }
+    
+    /**
+     * Change the stored state value and do notification, but don't
+     * change anything in the hardware
+     */
+	protected void notifyStateChange(int oldState, int newState) {
 	    mState = newState;
-	    doNewState(oldState, newState);
 	    if (oldState!=newState)
 	        firePropertyChange("KnownState", new Integer(oldState), new Integer(newState));
 	}
@@ -615,7 +640,7 @@ public abstract class AbstractLight extends AbstractNamedBean
 					mClock.addMinuteChangeListener( mTimebaseListener = 
 						new java.beans.PropertyChangeListener() {
 							public void propertyChange(java.beans.PropertyChangeEvent e) {
-								if (mEnabled) {
+								if (mEnabled) {  // don't change light if not enabled
 									// update control if light is enabled
 									updateClockControlLight();
 								}
