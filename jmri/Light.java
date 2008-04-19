@@ -40,11 +40,10 @@ package jmri;
  * Specific implementations will describe how the settings map to the
  * particular hardware commands.
  *
- * <P>
- * Light objects require a number of instance variables.  Since 
- *     Light objects are created using the standard JMRI 
- *     systemName/userName concept, accessor routines are provided
- *     for setting and editing these instance variables.
+ * <p>
+ * The transition rate is absolute; the intensity changes at a constant rate
+ * regardless of whether the change is a big one or a small one.
+ *
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -61,7 +60,7 @@ package jmri;
  * @author			Dave Duchamp Copyright (C) 2004
  * @author			Ken Cameron Copyright (C) 2008
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public interface Light extends NamedBean {
 

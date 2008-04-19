@@ -29,11 +29,15 @@ import java.util.Date;
  * a true analog intensity.
  * Transitions never happen, and setting a TransitionTime
  * greater than 0.0 gives an exception.
+ * <p>
+ * Since this form of Light does not do variable intensity
+ * nor transitions, it stores both CurrentIntensity and 
+ * TargetIntensity in a single location, forcing them to be the same
  *
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Ken Cameron Copyright (C) 2008
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 public abstract class AbstractLight extends AbstractNamedBean
     implements Light, java.io.Serializable {
