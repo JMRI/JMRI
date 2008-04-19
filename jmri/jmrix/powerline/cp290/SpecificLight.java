@@ -29,7 +29,7 @@ import java.util.Date;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
 
@@ -114,16 +114,12 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
      * Send a Dim/Bright commands to the X10 hardware 
      * to reach a specific intensity.
      */
-    protected void updateIntensity(double intensity) {
+    protected void sendIntensity(double intensity) {
         
     	if (log.isDebugEnabled()) {
-    		log.debug("updateIntensity(" + intensity + ")");
+    		log.debug("sendIntensity(" + intensity + ")");
     	}
-        
-        // are we doing intensity?
-        if ( (intensity==0.0 || intensity==1.0) && (lastOutputStep < 0))
-            return; // no, so let on/off handle this
-            
+                    
         // if we don't know the dim count, force it to a value.
         if (lastOutputStep < 0) initIntensity(intensity);
 
@@ -169,7 +165,7 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
         SerialTrafficController.instance().sendX10Sequence(out, null);
 
     	if (log.isDebugEnabled()) {
-    		log.debug("updateIntensity(" + intensity + ") house " + housecode + " device " + devicecode + " deltaDim: " + deltaDim + " funct: " + function);
+    		log.debug("sendIntensity(" + intensity + ") house " + housecode + " device " + devicecode + " deltaDim: " + deltaDim + " funct: " + function);
         }
     }
 

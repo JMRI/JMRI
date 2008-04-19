@@ -29,7 +29,7 @@ import java.util.Date;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
 
@@ -72,24 +72,20 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
      * Optionally, force control to a known "dim count".
      * <p>
      * Invoked the first time intensity is set.
+     * @param intensity The next intensity value that will be set
      */
     protected void initIntensity(double intensity) {
+        log.debug("initIntensity("+intensity+")");
+        
         maxDimStep = SerialTrafficController.instance().maxX10DimStep();
 
         // Set initial state
             
         // see if going to stabilize at on or off
         if (intensity <= 0.5) {
-            // create output sequence
-            X10Sequence out1 = new X10Sequence();
-            // going to low, first set off
-            out1.addAddress(housecode, devicecode);
-            out1.addFunction(housecode, X10Sequence.FUNCTION_OFF, 0);
-            // send
-            SerialTrafficController.instance().sendX10Sequence(out1, null);
+            // going to low, send max dim count low
             X10Sequence out2 = new X10Sequence();
             out2.addAddress(housecode, devicecode);
-            // then set to full dim
             out2.addFunction(housecode, X10Sequence.FUNCTION_DIM, maxDimStep);
             SerialTrafficController.instance().sendX10Sequence(out2, null);
 
@@ -97,14 +93,7 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
             
             log.debug("initIntensity: sent dim reset");
         } else {
-            // create output sequence
-            X10Sequence out1 = new X10Sequence();
-            // going to high, first set on
-            out1.addAddress(housecode, devicecode);
-            out1.addFunction(housecode, X10Sequence.FUNCTION_ON, 0);
-            // send
-            SerialTrafficController.instance().sendX10Sequence(out1, null);
-            // then set to full dim
+            // going to high, send max dim count high
             X10Sequence out2 = new X10Sequence();
             out2.addAddress(housecode, devicecode);
             out2.addFunction(housecode, X10Sequence.FUNCTION_BRIGHT, maxDimStep);
@@ -119,18 +108,16 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
     
     /**
      * Send a Dim/Bright commands to the X10 hardware 
-     * to reach a specific intensity.
+     * to reach a specific intensity. Acts immediately, and 
+     * changes no general state.
+     *<p>
+     * This sends "Dim" commands.  
      */
-    protected void updateIntensity(double intensity) {
-        
+    protected void sendIntensity(double intensity) {
     	if (log.isDebugEnabled()) {
-    		log.debug("updateIntensity(" + intensity + ")" + " lastOutputStep: " + lastOutputStep + " maxDimStep: " + maxDimStep);
+    		log.debug("sendIntensity(" + intensity + ")" + " lastOutputStep: " + lastOutputStep + " maxDimStep: " + maxDimStep);
     	}
-        
-        // are we doing intensity?
-        //if ((SerialTrafficController.instance().) && (lastOutputStep < 0))
-        //    return; // no, so let on/off handle this
-            
+                    
         // if we don't know the dim count, force it to a value.
         if (lastOutputStep < 0) initIntensity(intensity);
 
@@ -176,7 +163,7 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
         SerialTrafficController.instance().sendX10Sequence(out, null);
 
     	if (log.isDebugEnabled()) {
-    		log.debug("updateIntensity(" + intensity + ") house " + housecode + " device " + devicecode + " deltaDim: " + deltaDim + " funct: " + function);
+    		log.debug("sendIntensity(" + intensity + ") house " + housecode + " device " + devicecode + " deltaDim: " + deltaDim + " funct: " + function);
         }
     }
 
@@ -185,19 +172,16 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
      */
     protected void sendOnOffCommand(int newState) {
     	if (log.isDebugEnabled()) {
-    		log.debug("sendOnOff(" + newState + ") Current: " + mState);
+    		log.debug("start sendOnOff(" + newState + ") Current: " + mState);
     	}
 
         // figure out command 
         int function;
-        double newDim;
         if (newState == ON) {
         	function = X10Sequence.FUNCTION_ON;
-        	newDim = 1;
         }
         else if (newState==OFF) {
         	function = X10Sequence.FUNCTION_OFF;
-        	newDim = 0;
         }
         else {
             log.warn("illegal state requested for Light: "+getSystemName());
@@ -214,7 +198,7 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
         SerialTrafficController.instance().sendX10Sequence(out, null);
         
     	if (log.isDebugEnabled()) {
-    		log.debug("sendOnOff(" + newDim + ")  house " + housecode + " device " + devicecode + " funct: " + function);
+    		log.debug("end sendOnOff(" + newState + ")  house " + housecode + " device " + devicecode + " funct: " + function);
         }
     }
 
