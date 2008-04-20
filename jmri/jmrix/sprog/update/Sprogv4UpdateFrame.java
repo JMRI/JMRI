@@ -12,7 +12,7 @@ import javax.swing.*;
 /**
  * Frame for SPROG firmware update utility.
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class Sprogv4UpdateFrame
     extends SprogUpdateFrame
@@ -21,6 +21,21 @@ public class Sprogv4UpdateFrame
   public Sprogv4UpdateFrame() {
     super();
   }
+
+    /**
+     * Set the help item
+     */
+    public void initComponents() throws Exception {
+        super.initComponents();
+
+        setSprogModeButton.setVisible(false);
+
+        // setCSModeButton.setVisible(false);
+
+        // add help menu to window
+        addHelpMenu("package.jmri.jmrix.sprog.update.Sprogv4UpdateFrame", true);
+    }
+    
 
   synchronized public void reply(SprogReply m) {
     replyString = m.toString();
@@ -269,15 +284,6 @@ public class Sprogv4UpdateFrame
     startLongTimer();
 
     // *** Check for reset
-  }
-
-  public void initComponents() throws Exception {
-    super.initComponents();
-
-    setSprogModeButton.setVisible(false);
-
-//    setCSModeButton.setVisible(false);
-
   }
 
   public synchronized void connectButtonActionPerformed(java.awt.event.

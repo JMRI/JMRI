@@ -12,7 +12,7 @@ import javax.swing.*;
 /**
  * Get the firmware version of the attached SPROG
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SprogVersionFrame
         extends SprogUpdateFrame
@@ -36,6 +36,10 @@ public class SprogVersionFrame
         tc.sendSprogMessage(msg, this);
         bootState = CRSENT;
         startShortTimer();
+
+        // add help menu to window
+        addHelpMenu("package.jmri.jmrix.sprog.update.SprogVersionFrame", true);
+
     }
     
     public void message(SprogMessage m) {}   // Ignore

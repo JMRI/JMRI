@@ -12,7 +12,7 @@ import javax.swing.*;
 /**
  * Frame for SPROG firmware update utility.
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SprogIIUpdateFrame
     extends SprogUpdateFrame
@@ -21,6 +21,15 @@ public class SprogIIUpdateFrame
   public SprogIIUpdateFrame() {
     super();
   }
+
+    /**
+     * Set the help item
+     */
+    public void initComponents() throws Exception {
+      // add help menu to window
+      addHelpMenu("package.jmri.jmrix.sprog.update.SprogIIUpdateFrame", true);
+    }
+    
 
   synchronized public void reply(SprogReply m) {
     // If SPROG II is in boot mode, check message framing and checksum
@@ -354,10 +363,6 @@ public class SprogIIUpdateFrame
     setSprogModeButton.setEnabled(true);
 //    setCSModeButton.setEnabled(true);
     bootState = IDLE;
-  }
-
-  public void initComponents() throws Exception {
-    super.initComponents();
   }
 
   public synchronized void connectButtonActionPerformed(java.awt.event.

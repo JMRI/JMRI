@@ -15,7 +15,7 @@ import jmri.jmrix.sprog.SprogConstants;
  * Frame for Sprog Console
  * 
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements SprogListener {
     
@@ -230,6 +230,18 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         // pack for display
         pack();
 }
+    
+    /**
+     * Define help menu for this window.
+     * <p>
+     * By default, provides a generic help page
+     * that covers general features.  Specific
+     * implementations can override this to 
+     * show their own help page if desired.
+     */
+    protected void addHelpMenu() {
+    	addHelpMenu("package.jmri.jmrix.sprog.console.SprogConsoleFrame", true);
+    }
     
     // Override superclass to append return
     public void enterButtonActionPerformed(java.awt.event.ActionEvent e) {
