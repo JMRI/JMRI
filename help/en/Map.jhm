@@ -74,6 +74,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrit.ussctc.SignalLeverFrame" url="package/jmri/jmrit/ussctc/SignalLeverFrame.shtml" />
 	<mapID target="html.tools.Signals_table" url="html/tools/Signals.shtml#table" />
 	<mapID target="html.tools.consisttool.ConsistTool_tool" url="html/tools/consisttool/ConsistTool.shtml#tool" />
+	<mapID target="package.jmri.jmrix.sprog.update.SprogIIUpdateFrame" url="package/jmri/jmrix/sprog/update/SprogIIUpdateFrame.shtml" />
 	<mapID target="html.tools.throttle.ThrottleChapter2_MouseControl" url="html/tools/throttle/ThrottleChapter2.shtml#MouseControl" />
 	<mapID target="package.jmri.jmrix.loconet.se8.SE8Frame" url="package/jmri/jmrix/loconet/se8/SE8Frame.shtml" />
 	<mapID target="html.apps.index" url="html/apps/index.shtml" />
@@ -219,6 +220,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrit.consisttool.ConsistToolFrame" url="package/jmri/jmrit/consisttool/ConsistToolFrame.shtml" />
 	<mapID target="package.jmri.jmrix.grapevine.packetgen.SerialPacketGenFrame" url="package/jmri/jmrix/grapevine/packetgen/SerialPacketGenFrame.shtml" />
 	<mapID target="package.jmri.jmrix.loconet.ds64.DS64Frame" url="package/jmri/jmrix/loconet/ds64/DS64Frame.shtml" />
+	<mapID target="package.jmri.jmrix.sprog.update.Sprogv4UpdateFrame" url="package/jmri/jmrix/sprog/update/Sprogv4UpdateFrame.shtml" />
 	<mapID target="package.jmri.jmrix.lenz.systeminfo.SystemInfoFrame" url="package/jmri/jmrix/lenz/systeminfo/SystemInfoFrame.shtml" />
 	<mapID target="html.hardware.powerline.index" url="html/hardware/powerline/index.shtml" />
 	<mapID target="html.tools.throttle.ThrottleChapter2_Acquiring" url="html/tools/throttle/ThrottleChapter2.shtml#Acquiring" />
@@ -228,6 +230,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrix.grapevine.serialmon.SerialMonFrame" url="package/jmri/jmrix/grapevine/serialmon/SerialMonFrame.shtml" />
 	<mapID target="package.jmri.jmrit.beantable.ConditionalAddEdit_variable" url="package/jmri/jmrit/beantable/ConditionalAddEdit.shtml#variable" />
 	<mapID target="html.hardware.nce.NCE_AIU" url="html/hardware/nce/NCE.shtml#AIU" />
+	<mapID target="package.jmri.jmrix.sprog.console.SprogConsoleFrame" url="package/jmri/jmrix/sprog/console/SprogConsoleFrame.shtml" />
 	<mapID target="package.jmri.jmrix.powerline.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/powerline/nodeconfig/NodeConfigFrame.shtml" />
 	<mapID target="html.doc.Technical.Poll2007_raw" url="html/doc/Technical/Poll2007.shtml#raw" />
 	<mapID target="package.jmri.jmrit.beantable.BlockAddEdit" url="package/jmri/jmrit/beantable/BlockAddEdit.shtml" />
@@ -406,6 +409,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="package.jmri.jmrit.beantable.TurnoutTable_automation" url="package/jmri/jmrit/beantable/TurnoutTable.shtml#automation" />
 	<mapID target="html.doc.Technical.XmlUsage" url="html/doc/Technical/XmlUsage.shtml" />
 	<mapID target="html.tools.signaling.Logic_single" url="html/tools/signaling/Logic.shtml#single" />
+	<mapID target="package.jmri.jmrix.loconet.sdfeditor.TriggerConditions" url="package/jmri/jmrix/loconet/sdfeditor/TriggerConditions.shtml" />
 	<mapID target="package.jmri.jmrit.display.LayoutEditor_turn" url="package/jmri/jmrit/display/LayoutEditor.shtml#turn" />
 	<mapID target="package.jmri.jmrit.beantable.ConditionalAddEdit" url="package/jmri/jmrit/beantable/ConditionalAddEdit.shtml" />
 	<mapID target="html.tools.speedometer.NCE-Speedometer" url="html/tools/speedometer/NCE-Speedometer.shtml" />
