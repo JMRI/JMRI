@@ -29,7 +29,7 @@ import jmri.util.JTableUtil;
  * @author	Bob Jacobsen   Copyright (C) 2001
  *              Andrew Crosland          (C) 2006 ported to SPROG
  *                                           2008 Use JmriJframe
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
 
@@ -103,10 +103,7 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
 
       getContentPane().add(pane1);
       getContentPane().add(slotScroll);
-      
-      // add help menu to window
-      addHelpMenu("package.jmri.jmrix.sprog.sprogslotmon.SprogSlotMonFrame", true);
-      
+            
       pack();
       pane1.setMaximumSize(pane1.getSize());
       pack();
@@ -114,6 +111,11 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
       self = this;
     }
 
+    public void initComponents() {
+      // add help menu to window
+      addHelpMenu("package.jmri.jmrix.sprog.sprogslotmon.SprogSlotMonFrame", true);
+    }
+    
     /**
      * method to find the existing SprogSlotMonFrame object
      */
