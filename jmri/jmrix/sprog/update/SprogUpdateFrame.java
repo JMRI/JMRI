@@ -13,7 +13,7 @@ import jmri.jmrix.sprog.SprogTrafficController;
 /**
  * Frame for SPROG firmware update utility.
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class SprogUpdateFrame
     extends jmri.util.JmriJFrame
@@ -100,6 +100,12 @@ public class SprogUpdateFrame
   private void doneWriting() {
   }
 
+    /**
+     * Set up the GUI
+     *<p>
+     * This is expected to be subclassed, so it doesn't
+     * set up the help menu here
+     */
   public void initComponents() throws Exception {
     // the following code sets the frame's initial state
     connectButton.setText("Connect");
@@ -193,6 +199,8 @@ public class SprogUpdateFrame
     // connect to data source
     init();
 
+    // Don't connect to help here, let the subclasses do it
+    
     // prevent button areas from expanding
     pack();
     paneA.setMaximumSize(paneA.getSize());
