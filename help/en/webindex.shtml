@@ -568,6 +568,28 @@
 <ul></ul>
 </li>
    
+<li>
+<a href="html/hardware/sprog/SPROG.shtml">SPROG</a>
+<ul>
+      
+<li>
+<a href="package/jmri/jmrix/sprog/console/SprogConsoleFrame.shtml">Console</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrix/sprog/update/SprogIIUpdateFrame.shtml">Update SPROG II</a>
+<ul></ul>
+</li>
+      
+<li>
+<a href="package/jmri/jmrix/sprog/update/Sprogv4UpdateFrame.shtml">Update SPROG V3/V4</a>
+<ul></ul>
+</li>
+   
+</ul>
+</li>
+   
 <li>Tables<ul>
       
 <li>
