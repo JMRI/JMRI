@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.31 2008-04-12 01:01:46 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.32 2008-04-21 01:41:26 jacobsen Exp $ -->
 <html lang="en">
 
 <head>
@@ -88,7 +88,7 @@ necessarily the chronological order in which they were filed.
 This is to intended to make it easier to understand how the 
 key documents are interrelated.  The complete
 chronological listing is 
-<a href="docketlisting">below</a>.
+<a href="#docketlisting">below</a>.
 <ul>
 <li>The <a href="1.pdf">original Complaint</a>,
 setting forth the original accusations against Katzer and Russell.
@@ -342,7 +342,7 @@ cybersquatting claim included, and denying both motions for sanctions.
 <li>April 11, 2008 Motion Hearing and Case Management Conference
   <ul>
   <li>Proposed <a href="216.pdf">Case Management statement</a> for consideration at the hearing
-
+  <li><a href="219.pdf">Notice of Tentative Ruling and Questions</a> issued the day before.
   </ul><!-- end of items on 3rd hearing -->
 
 
