@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.12 2008-04-20 21:23:38 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.13 2008-04-21 01:42:33 jacobsen Exp $ -->
 <html lang="en">
 
 <head>
@@ -43,7 +43,7 @@ necessarily the chronological order in which they were filed.
 This is to intended to make it easier to understand how the 
 key documents are interrelated.  The complete
 chronological listing is 
-<a href="docketlisting">below</a>.
+<a href="#docketlisting">below</a>.
 <UL>
 <LI>(Corrected) <A HREF="AppellantsBrief.pdf">JMRI Appellant Brief</a>, 12/21/2007
 <a id="amici"/>
