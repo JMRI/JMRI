@@ -15,6 +15,8 @@ public class BasicWindowMonitor extends WindowAdapter {
     Window w = e.getWindow();
     w.setVisible(false);
     w.dispose();
-    System.exit(0);
+	new BasicQuit().handleQuit();
   }
+
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(BasicWindowMonitor.class.getName());
 }

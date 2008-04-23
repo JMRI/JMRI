@@ -15,7 +15,7 @@ import jmri.Sensor;
  *    from the user for the most part.
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class LayoutBlockManager extends AbstractManager {
 
@@ -141,6 +141,15 @@ public class LayoutBlockManager extends AbstractManager {
 			LayoutBlock b = getBySystemName(sName); 
 			b.updatePaths();
 		}
+		try {
+			new BlockValueFile().readBlockValues();
+		} 
+		catch (org.jdom.JDOMException jde) {
+			log.error("JDOM Exception when retreiving block values "+jde);
+		}				
+		catch (java.io.IOException ioe) {
+			log.error("I/O Exception when retreiving block values "+ioe);
+		}	
 	}
 	
 	private boolean warnConnectivity = true;
