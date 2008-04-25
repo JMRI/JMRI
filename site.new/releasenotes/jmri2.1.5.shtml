@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.5.shtml,v 1.31 2008-04-20 15:02:02 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.5.shtml,v 1.32 2008-04-25 14:41:56 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -339,6 +339,12 @@ Didrik Voss provided the configuration information, including the default values
 <p>
 Andrew Crosland added a tool for getting the version information from an SPROG, and
 a console tool for controlling the SPROG's operation.
+
+<p>
+David Duchamp added methods for running code at shutdown.
+
+<p>
+David Duchamp added the ability to load and save the status of blocks.
 
 <!--#include virtual="/Footer" -->
 
