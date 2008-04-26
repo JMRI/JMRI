@@ -11,7 +11,7 @@ import jmri.Programmer;
  * class handles the response from the command station.
  *
  * @author	Bob Jacobsen  Copyright (C) 2007, 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class QsiMessage extends jmri.jmrix.AbstractMessage {
 
@@ -33,27 +33,17 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
     
     // create a new one
     public  QsiMessage(int i) {
-        if (i<1)
-            log.error("invalid length in call to ctor");
-        _nDataChars = i;
-        _dataChars = new int[i];
+        super(i);
     }
     
     // from String
     public QsiMessage(String s) {
-        _nDataChars = s.length();
-        _dataChars = new int[_nDataChars];
-        for (int i = 0; i<_nDataChars; i++)
-            _dataChars[i] = s.charAt(i);
+        super(s);
     }
     
     // copy one
     public  QsiMessage(QsiMessage m) {
-        if (m == null)
-            log.error("copy ctor of null message");
-        _nDataChars = m._nDataChars;
-        _dataChars = new int[_nDataChars];
-        for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
+        super(m);
     }
     
     public void setOpCode(int i) { _dataChars[0]=i;}

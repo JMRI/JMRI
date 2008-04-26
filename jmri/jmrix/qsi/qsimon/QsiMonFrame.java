@@ -9,8 +9,8 @@ import jmri.jmrix.qsi.QsiTrafficController;
 
 /**
  * Frame displaying (and logging) QSI command messages
- * @author			Bob Jacobsen   Copyright (C) 2007
- * @version			$Revision: 1.1 $
+ * @author			Bob Jacobsen   Copyright (C) 2007, 2008
+ * @version			$Revision: 1.2 $
  */
 public class QsiMonFrame extends jmri.jmrix.AbstractMonFrame implements QsiListener {
 
@@ -30,10 +30,12 @@ public class QsiMonFrame extends jmri.jmrix.AbstractMonFrame implements QsiListe
 	}
 
 	public synchronized void message(QsiMessage l) {  // receive a message and log it
-		nextLine("cmd: \""+l.toString()+"\"\n", "");
+	    int opcode = l.getElement(0);
+		nextLine("cmd: \""+opcode+"\"\n", l.toString());
 	}
 	public synchronized void reply(QsiReply l) {  // receive a reply message and log it
-		nextLine("rep: \""+l.toString()+"\"\n", "");
+	    int opcode = l.getElement(0);
+		nextLine("rep: \""+opcode+"\"\n", l.toString());
 	}
 
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(QsiMonFrame.class.getName());

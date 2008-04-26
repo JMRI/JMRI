@@ -5,35 +5,32 @@ package jmri.jmrix.qsi;
 /**
  * Carries the reply to an QsiMessage
  * @author			Bob Jacobsen  Copyright (C) 2007
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class QsiReply extends jmri.jmrix.AbstractMessage {
+    static final int MAXREPLYLENGTH = 200;
+
     // create a new one
     public  QsiReply() {
+        super(MAXREPLYLENGTH);
         _isBoot = false;
+        _nDataChars = 0;
     }
     
     // copy one
     public  QsiReply(QsiReply m) {
-        if (m == null)
-            log.error("copy ctor of null message");
-        _nDataChars = m._nDataChars;
+        super(m);
         _isBoot = m._isBoot;
-        for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
     }
     
     // from String
     public QsiReply(String s) {
-        _nDataChars = s.length();
-        for (int i = 0; i<_nDataChars; i++)
-            _dataChars[i] = s.charAt(i);
+        super(s);
     }
     
     // from String
     public QsiReply(String s, boolean b) {
-        _nDataChars = s.length();
-        for (int i = 0; i<_nDataChars; i++)
-            _dataChars[i] = s.charAt(i);
+        super(s);
         _isBoot = b;
     }
     
@@ -42,7 +39,7 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
     
     // accessors to the bulk data
     public void setElement(int n, int v) {
-        _dataChars[n] = (char) v;
+        _dataChars[n] = v;
         _nDataChars = Math.max(_nDataChars, n+1);
     }
     
@@ -82,16 +79,15 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
     }
     
     // display format
-    // display format
     public String toString() {
         String s = "";
-        if (_isBoot || (_dataChars[0] == QsiMessage.STX)) {
+        if (!QsiTrafficController.instance().isSIIBootMode()) {
             for (int i=0; i<_nDataChars; i++) {
-                s+="<"+(int)(_dataChars[i] & 0xff)+">";
+                s+=jmri.util.StringUtil.twoHexFromInt(_dataChars[i])+" ";
             }
         } else {
             for (int i=0; i<_nDataChars; i++) {
-                s+=(char)_dataChars[i];
+                s+="<"+(int)_dataChars[i]+">";
             }
         }
         return s;
