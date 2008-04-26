@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2003, 2005, 2007 All rights reserved -->
-<!-- $Id: Digitrax_1x2.xml,v 1.28 2007-09-21 05:49:31 jacobsen Exp $ -->
+<!-- $Id: Digitrax_1x2.xml,v 1.29 2008-04-26 21:53:53 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -18,6 +18,9 @@
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
 					version="10" lastUpdated="20050112"/>
+		<version author="Walter Thompson wsthompson@earthlink.net" 
+		       Added factory reset function
+					version="11" lastUpdated="20080412"/>
 
 		<!-- Version 4 - added wire colors -->
 		<!-- Version 5 - added some specific models, extended CV7 range to 249 -->
@@ -25,9 +28,10 @@
 		<!-- version 7 - adjusted top range of versionID -->
 		<!-- version 8 - default BEMF value corrected -->
 		<!-- Version 9 - fix "rule 17" typos -->
-      <!-- Version 9.1 - changed spelling of "behavior" (Jack Shall) -->
-      <!-- Version 10 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" - Bob Jacobsen -->
-		
+        <!-- Version 9.1 - changed spelling of "behavior" (Jack Shall) -->
+        <!-- Version 10 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" - Bob Jacobsen -->
+        <!-- Version 11 - add factory reset -->
+        
 <decoder>
 	<family name="Premium FX with BEMF" mfg="Digitrax" 
 				lowVersionID="240" highVersionID="250">
@@ -549,6 +553,12 @@
 	<constant label="F8 controls output 10" minOut="10" minFn="8" default="1" /> 
 
 	</variables>
+
+  <resets>
+  	<factReset label="Reset All CVs" CV="8" default="8"/>
+  	<factReset label="Reset All CVs except speed table" CV="8" default="9"/>
+  </resets>
+
 
 </decoder>
 
