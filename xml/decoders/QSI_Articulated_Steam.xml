@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id: QSI_Articulated_Steam.xml,v 1.8 2007-09-21 05:49:32 jacobsen Exp $ -->
+<!-- $Id: QSI_Articulated_Steam.xml,v 1.9 2008-04-26 21:57:47 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,7 +16,7 @@
 <!-- for more details.                                                      -->
 
 <decoder-config>
-  <version author="Howard G. Penny" version="6" lastUpdated="20050714"/>
+  <version author="Walter Thompson" version="7" lastUpdated="20080412"/>
 
 <!-- version 1 - modified for QSI CV.PI.SI format - Howard -->
 <!-- version 2 - Changed "upgrade" notice on tabs to reflect 1.5.8 - Howard -->
@@ -26,8 +26,10 @@
 <!-- version 4 - updated format of Sound/Volume tab - Howard -->
 <!-- version 5 - Updated info on misc. tab - Howard -->
 <!-- version 6 - Removed QSI ver. 6 models to new file - Howard -->
-<!-- version 6 - Added product number ivariable and build information
+<!-- version 6 - Added product number variable and build information
                    on Misc. pane - Howard -->
+<!-- version 7 - Added "Throttle mode" and "Speed to MPH scale" to QSI 
+                   Misc. pane - wsthompson@earthlink.net -->
 
 <decoder>
   <family name="QSI Articulated Steam" mfg="QSIndustries" lowVersionID="2" highVersionID="5" >
@@ -1098,8 +1100,8 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Throttle Mode" CVname="56.4" CV="56" PI="4" default="1"
-               include="400,402" item="CV56.4" mask="XXXXXXVV">
+    <ivariable label="Throttle Mode" CVname="56.4" CV="56" PI="4" 
+               default="1" item="CV56.4" mask="XXXXXXVV">
       <ienumVal>
         <ienumChoice choice="Standard Throttle Control"/>
         <ienumChoice choice="Speed Control"/>
@@ -1313,6 +1315,9 @@
     <display item="CV56.254.11"/>
     <display item="CV56.254.12"/>
     <label label=" "/>
+    <display item="CV56.4"/>
+    <display item="CV56.10"/>
+    <label label=" "/>
     <label label="When programming in Ops-mode, set Verbal Acknowledgement to disable"/>
     <label label=" "/>
     <display item="CV62 QSI Control"/>
@@ -1321,6 +1326,9 @@
     <label label="Enter a CV you wish to hear and press -- Write changes on sheet"/>
     <label label=" "/>
     <display item="Verbal CV Inquiry"/>
+    <label label=" "/>
+    <label label="Throttle mode"/>
+    <display item="CV56.4"/>
   </column>
 </pane>
 
