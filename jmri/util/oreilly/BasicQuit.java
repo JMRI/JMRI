@@ -5,7 +5,7 @@
  *      Adopted from Apple Java template
  *
  * @author      Dave Duchamp Copyright (C) 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 package jmri.util.oreilly;
@@ -18,7 +18,7 @@ public class BasicQuit {
 	 * Performs tasks prior to exit, then exits.
 	 * Here add call to methods to perform exit tasks.
 	 */
-	public void handleQuit() {
+	public static void handleQuit() {
 		// Save block values prior to exit, if necessary
 		try {
 			new jmri.jmrit.display.BlockValueFile().writeBlockValues();

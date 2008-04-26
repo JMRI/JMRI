@@ -32,7 +32,7 @@ import net.roydesign.mac.MRJAdapter;
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
  * @author  Dennis Miller  Copyright 2005
- * @version     $Revision: 1.55 $
+ * @version     $Revision: 1.56 $
  */
 public class Apps extends JPanel implements PropertyChangeListener{
 
@@ -120,7 +120,7 @@ public class Apps extends JPanel implements PropertyChangeListener{
 //          MRJAdapter.addAboutListener(new ActionListener() { public void actionPerformed(ActionEvent e) { about(); } });
             MRJAdapter.addPreferencesListener(new ActionListener() { public void actionPerformed(ActionEvent e) { doPreferences(); } });
 			MRJAdapter.addQuitApplicationListener(new ActionListener() { public void actionPerformed(ActionEvent e) { 
-				new jmri.util.oreilly.BasicQuit().handleQuit(); } });
+				jmri.util.oreilly.BasicQuit.handleQuit(); } });
         }
         
         fileMenu(menuBar, frame);
@@ -147,7 +147,7 @@ public class Apps extends JPanel implements PropertyChangeListener{
             fileMenu.add(new JSeparator());
             fileMenu.add(new AbstractAction(rb.getString("MenuItemQuit")){
                 public void actionPerformed(ActionEvent e) {
-					new jmri.util.oreilly.BasicQuit().handleQuit();
+					jmri.util.oreilly.BasicQuit.handleQuit();
                 }
             });
         }

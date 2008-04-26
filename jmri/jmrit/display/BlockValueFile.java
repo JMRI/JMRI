@@ -11,13 +11,14 @@ import java.util.List;
 import java.util.ArrayList;
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.Attribute;
 
 /**
  * Handle saving/restoring block value information to XML files.
  * This class manipulates files conforming to the block_value DTD.
  *
  * @author      Dave Duchamp Copyright (C) 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class BlockValueFile extends jmri.jmrit.XmlFile {
@@ -67,6 +68,18 @@ public class BlockValueFile extends jmri.jmrit.XmlFile {
 							String v = ((Element)(blockList.get(i))).
 												getAttribute("value").getValue();
 							b.setValue(v);
+							// set direction if there is one
+							int dd = jmri.Path.NONE;
+							Attribute a = ((Element)(blockList.get(i))).getAttribute("dir");
+							if (a!=null) {
+								try {
+									dd = a.getIntValue();
+								}
+								catch (org.jdom.DataConversionException e) {
+									log.error("failed to convert direction attribute");
+								}
+							}
+							b.setDirection(dd);
 						}
 					}
 				}
@@ -108,6 +121,8 @@ public class BlockValueFile extends jmri.jmrit.XmlFile {
 						Element val = new Element("block");
 						val.setAttribute("systemname", sname);
 						val.setAttribute("value",o.toString());
+						int v = b.getDirection();
+						if (v!=jmri.Path.NONE) val.setAttribute("dir",""+v);
 						values.addContent(val);
 						valuesFound = true;
 					}

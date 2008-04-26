@@ -60,7 +60,7 @@ import jmri.AbstractNamedBean;
  *		the configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class LayoutBlock extends AbstractNamedBean
@@ -505,7 +505,13 @@ public class LayoutBlock extends AbstractNamedBean
 	 */
 	void handleBlockChange(java.beans.PropertyChangeEvent e) {
 		// Update memory object if there is one
+		if ( (memory==null) && (memoryName!="") ) {
+			// initialize if needed 
+			memory = jmri.InstanceManager.memoryManagerInstance().
+                            getMemory(memoryName);
+		}
 		if ( (memory!=null) && (block!=null) ) {
+			// copy block value to memory if there is a value
 			Object val = block.getValue();
 			if (val!=null) val = val.toString();
 			memory.setValue(val);

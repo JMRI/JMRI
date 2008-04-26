@@ -1,5 +1,5 @@
 <!-- Defines XML for Block value information -->
-<!-- $Id: block-values.dtd,v 1.1 2008-04-23 18:41:09 djduchamp Exp $ -->
+<!-- $Id: block-values.dtd,v 1.2 2008-04-26 17:41:22 djduchamp Exp $ -->
 
 <!-- This DTD is Copyright 2008.  You may freely use               -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -14,3 +14,4 @@
   <!ELEMENT block EMPTY >
     <!ATTLIST block systemName	 CDATA #REQUIRED>  
     <!ATTLIST block value	 CDATA #REQUIRED>
+    <!ATTLIST block dir		 CDATA #REQUIRED>

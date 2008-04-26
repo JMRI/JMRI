@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * for more details.
  *
  * @author	Bob Jacobsen   Copyright 2003, 2004, 2007
- * @version     $Revision: 1.52 $
+ * @version     $Revision: 1.53 $
  */
 public class DecoderPro extends Apps {
 
@@ -78,7 +78,7 @@ public class DecoderPro extends Apps {
         Action opsprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(rb.getString("DpButtonProgramOnMainTrack"));
         Action quit = new AbstractAction(rb.getString("MenuItemQuit")){
                 public void actionPerformed(ActionEvent e) {
-					new jmri.util.oreilly.BasicQuit().handleQuit();
+					jmri.util.oreilly.BasicQuit.handleQuit();
                 }
             };
 
