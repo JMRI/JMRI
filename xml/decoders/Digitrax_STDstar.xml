@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2002, 2004, 2007 All rights reserved -->
-<!-- $Id: Digitrax_STDstar.xml,v 1.11 2007-09-21 05:49:31 jacobsen Exp $ -->
+<!-- $Id: Digitrax_STDstar.xml,v 1.12 2008-04-26 22:01:40 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -18,6 +18,9 @@
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
 					version="4" lastUpdated="20030606"/>
+		<version author="Walter Thompson wsthompson@earthlink.net" 
+		       Added factory reset function
+					version="5" lastUpdated="20080412"/>
 
 <!-- Represent the family of Digitrax decoders with STD* outputs. -->
 <!-- STD* means that the lights are reversing only, so -->
@@ -169,6 +172,12 @@
 	<constant label="F8 controls output 10" minOut="10" minFn="8" default="1" /> 
 
 	</variables>
+
+  <resets>
+  	<factReset label="Reset All CVs" CV="8" default="8"/>
+  	<factReset label="Reset All CVs except speed table" CV="8" default="9"/>
+  </resets>
+
 	
 </decoder>
 </decoder-config>
