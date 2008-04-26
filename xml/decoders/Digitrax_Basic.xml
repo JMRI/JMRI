@@ -13,11 +13,14 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<!-- $Id: Digitrax_Basic.xml,v 1.16 2007-09-21 05:49:31 jacobsen Exp $ -->
+<!-- $Id: Digitrax_Basic.xml,v 1.17 2008-04-26 21:59:23 jacobsen Exp $ -->
 
 <decoder-config>
 		<version author="phil.grainger@ca.com" 
 					version="9" lastUpdated="20050112"/>
+		<version author="Walter Thompson wsthompson@earthlink.net" 
+		       Added factory reset function
+					version="10" lastUpdated="20080412"/>
 
 		<!-- Version 3 - rename family, add decoders, fix bug with FX on output 1 -->
 		<!-- version 4 - add DH140, DN140, update DN146 ID -->
@@ -449,6 +452,12 @@
 	<constant label="F8 controls output 10" minOut="10" minFn="8" default="1" /> 
 
 	</variables>
+
+  <resets>
+  	<factReset label="Reset All CVs" CV="8" default="8"/>
+  	<factReset label="Reset All CVs except speed table" CV="8" default="9"/>
+  </resets>
+
 	
 </decoder>
 
