@@ -15,9 +15,15 @@ import javax.comm.SerialPort;
  * a QsiPortController is via a pair of *Streams, which then carry sequences
  * of characters for transmission.     Note that this processing is
  * handled in an independent thread.
- *
- * @author			Bob Jacobsen  Copyright (C) 2007
- * @version			$Revision: 1.2 $
+ * <p>
+ * Messages to and from the programmer are
+ * in a packet format. In both directions,
+ * every message starts with 'S' and ends with 'E'.
+ * These are handled automatically, and are not 
+ * included in the QsiMessage and QsiReply content.
+ * 
+ * @author			Bob Jacobsen  Copyright (C) 2007, 2008
+ * @version			$Revision: 1.3 $
  */
 public class QsiTrafficController implements QsiInterface, Runnable {
 
@@ -150,17 +156,35 @@ public class QsiTrafficController implements QsiInterface, Runnable {
 
           // space for carriage return if required
           int cr = 0;
-          if (!isSIIBootMode()) { cr = 1; }
+          int start = 0;
+          if (isSIIBootMode()) {
+            cr = 1;
+            start = 0;
+          } else {
+            cr = 3;  // 'S', CRC, 'E'
+            start = 1;
+          }
 
           byte msg[] = new byte[len+cr];
 
-          for (int i=0; i< len; i++)
-            msg[i] = (byte) m.getElement(i);
-          if (!isSIIBootMode()) { msg[len] = 0x0d; }
+          byte crc = 0;
+          
+          for (int i=0; i< len; i++) {
+            msg[i+start] = (byte) m.getElement(i);
+            crc ^= msg[i+start];
+          }
+          
+          if (isSIIBootMode()) { 
+            msg[len] = 0x0d; 
+          } else {
+            msg[0] = 'S';
+            msg[len+cr-2] = crc;
+            msg[len+cr-1] = 'E';
+          }
 
           try {
             if (ostream != null) {
-              if (log.isDebugEnabled()) log.debug("write message: "+msg);
+              if (log.isDebugEnabled()) log.debug("write message: "+jmri.util.StringUtil.hexStringFromBytes(msg));
               ostream.write(msg);
             }
             else {
@@ -247,6 +271,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
           int i;
           for (i = 0; i < QsiReply.maxSize; i++) {
             byte char1 = istream.readByte();
+            if (log.isDebugEnabled()) log.debug("   Rcv char: "+jmri.util.StringUtil.twoHexFromInt(char1));
             msg.setElement(i, char1);
             if (endReply(msg)) break;
           }
@@ -278,14 +303,13 @@ public class QsiTrafficController implements QsiInterface, Runnable {
        }
 
        boolean endNormalReply(QsiReply msg) {
-         // Detect that the reply buffer ends with "P> " or "R> " (note ending space)
+         // Detect that the reply buffer ends with "E"
+         // This should really be based on length....
          int num = msg.getNumDataElements();
          if ( num >= 3) {
            // ptr is offset of last element in QsiReply
            int ptr = num-1;
-           if (msg.getElement(ptr)   != ' ') return false;
-           if (msg.getElement(ptr-1) != '>') return false;
-           if ((msg.getElement(ptr-2) != 'P')&&(msg.getElement(ptr-2) != 'R')) return false;
+           if (msg.getElement(ptr)   != 'E') return false;
            return true;
          }
          else return false;

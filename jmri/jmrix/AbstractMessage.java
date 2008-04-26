@@ -7,8 +7,8 @@ import jmri.util.StringUtil;
 /**
  * Add description of class here.
  *
- * @author jake  Copyright _YEAR_
- * @version   $Revision: 1.1 $
+ * @author Bob Jacobsen  Copyright 2007
+ * @version   $Revision: 1.2 $
  */
 public abstract class AbstractMessage implements Message {
     

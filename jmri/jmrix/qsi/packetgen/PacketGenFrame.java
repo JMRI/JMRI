@@ -10,9 +10,12 @@ import jmri.jmrix.qsi.QsiMessage;
 import jmri.jmrix.qsi.QsiReply;
 
 /**
- * Frame for user input of QSI messages
- * @author			Bob Jacobsen   Copyright (C) 2007
- * @version			$Revision: 1.4 $
+ * Frame for user input of QSI messages. Input is a 
+ * sequence of hex pairs, including the length, but not the
+ * lead 'A', checksum or final 'E'.
+ *
+ * @author			Bob Jacobsen   Copyright (C) 2007, 2008
+ * @version			$Revision: 1.5 $
  */
 public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.qsi.QsiListener {
 
@@ -36,7 +39,7 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.q
 		sendButton.setToolTipText("Send packet");
 
 		packetTextField.setText("");
-		packetTextField.setToolTipText("Enter command as ASCII string (hex not yet available)");
+		packetTextField.setToolTipText("Enter command as hex string");
 		packetTextField.setMaximumSize(
 			new Dimension(packetTextField.getMaximumSize().width,
 						  packetTextField.getPreferredSize().height
@@ -62,12 +65,22 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.q
 	}
 
   	public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-  		QsiMessage m = new QsiMessage(packetTextField.getText().length());
-  		for (int i=0; i<packetTextField.getText().length(); i++)
-  			m.setElement(i, packetTextField.getText().charAt(i));
-
-  		QsiTrafficController.instance().sendQsiMessage(m, this);
+  		QsiTrafficController.instance().sendQsiMessage(createPacket(packetTextField.getText()), this);
   	}
+
+    /**
+     * Create a well-formed packet from a String
+     * @param s
+     * @return The packet, with contents filled-in
+     */
+    QsiMessage createPacket(String s) {
+        // gather bytes in result
+        byte b[] = jmri.util.StringUtil.bytesFromHexString(s);
+        if (b.length == 0) return null;  // no such thing as a zero-length message
+        QsiMessage m = new QsiMessage(b.length);
+        for (int i=0; i<b.length; i++) m.setElement(i, b[i]);
+        return m;
+    }
 
   	public void  message(QsiMessage m) {}  // ignore replies
   	public void  reply(QsiReply r) {} // ignore replies

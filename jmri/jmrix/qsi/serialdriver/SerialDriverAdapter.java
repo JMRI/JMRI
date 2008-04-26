@@ -24,11 +24,11 @@ import javax.comm.SerialPort;
  * serial port.
  * Normally controlled by the SerialDriverFrame class.
  * <P>
- * The current implementation only handles the 9,600 baud rate, and does
+ * The current implementation only handles the 19,200 baud rate, and does
  * not use any other options at configuration time.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -62,7 +62,7 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
 
             // try to set it for comunication via SerialDriver
             try {
-                activeSerialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+                activeSerialPort.setSerialPortParams(19200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (javax.comm.UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port "+portName+": "+e.getMessage());
                 return "Cannot set serial parameters on port "+portName+": "+e.getMessage();
@@ -183,7 +183,7 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
      * Get an array of valid baud rates. This is currently only 19,200 bps
      */
     public String[] validBaudRates() {
-        return new String[]{"9,600 bps"};
+        return new String[]{"19,200 bps"};
     }
 
     /**

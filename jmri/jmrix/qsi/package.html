@@ -12,7 +12,14 @@
 </head>
 <body bgcolor="white">
 
-Connects to a QSI programmer unit
+Connects to a QSI programmer unit.
+
+<p>
+Messages to and from the programmer are
+in a packet format. In both directions,
+every message starts with 'S' and ends with 'E'.
+These are handled automatically, and are not 
+included in the QsiMessage and QsiReply content.
 
 <h2>Related Documentation</h2>
 
