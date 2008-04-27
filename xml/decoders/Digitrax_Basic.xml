@@ -13,25 +13,25 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<!-- $Id: Digitrax_Basic.xml,v 1.17 2008-04-26 21:59:23 jacobsen Exp $ -->
+<!-- $Id: Digitrax_Basic.xml,v 1.18 2008-04-27 00:41:36 jacobsen Exp $ -->
 
 <decoder-config>
 		<version author="phil.grainger@ca.com" 
 					version="9" lastUpdated="20050112"/>
 		<version author="Walter Thompson wsthompson@earthlink.net" 
-		       Added factory reset function
-					version="10" lastUpdated="20080412"/>
+					version="11" lastUpdated="20080412"/>
 
 		<!-- Version 3 - rename family, add decoders, fix bug with FX on output 1 -->
 		<!-- version 4 - add DH140, DN140, update DN146 ID -->
 		<!-- version 5 - update versionID range -->
 		<!-- version 6 - add consist direction - jake -->
 		<!-- Version 7 - fix "rule 17" typos -->
-      <!-- Version 7.1 - changed spelling of "behavior" (Jack Shall) -->
-            <!-- Version 8 - Added fifth function, also added DH83FX) Phil G -->
-      <!-- Version 9 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" - Bob Jacobsen -->
-      <!-- Version 10 - fixed labels for Enable/Disable "Vstart/Vmid/Vfull in 128 step mode" - Paul Bender -->
-
+        <!-- Version 7.1 - changed spelling of "behavior" (Jack Shall) -->
+        <!-- Version 8 - Added fifth function, also added DH83FX) Phil G -->
+        <!-- Version 9 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" - Bob Jacobsen -->
+        <!-- Version 10 - fixed labels for Enable/Disable "Vstart/Vmid/Vfull in 128 step mode" - Paul Bender -->
+        <!-- Version 11 - added factory reset -->
+        
 <decoder>
 	<family name="Basic FX" mfg="Digitrax" lowVersionID="91" highVersionID="111">
 		<model model="DH083" numOuts="5" numFns="3"/>
