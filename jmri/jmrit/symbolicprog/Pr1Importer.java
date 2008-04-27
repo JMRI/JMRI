@@ -27,7 +27,7 @@ import java.util.Properties;
  * for more details.
  * <P>
  * @author			Alex Shepherd   Copyright (C) 2003
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class Pr1Importer {
   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Pr1Importer.class.getName());
@@ -144,6 +144,10 @@ public class Pr1Importer {
     return result ;
   }
 
+
+  /**
+   * Standalone version
+   */
   public static void main(String[] args) {
     try {
       String logFile = "default.lcf";
