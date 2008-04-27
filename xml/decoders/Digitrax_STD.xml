@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2002, 2004, 2007 All rights reserved -->
-<!-- $Id: Digitrax_STD.xml,v 1.8 2007-09-21 05:49:31 jacobsen Exp $ -->
+<!-- $Id: Digitrax_STD.xml,v 1.9 2008-04-27 00:41:23 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -18,6 +18,8 @@
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
 					version="8" lastUpdated="20041005"/>
+		<version author="Walter Thompson wsthompson@earthlink.net" 
+					version="9" lastUpdated="20080412"/>
 
 <!-- Represent the family of Digitrax decoders with STD (not STD*) outputs. -->
 
@@ -26,6 +28,7 @@
 <!-- version 6 - move DN140 to Basic file -->
 <!-- version 7 - add consist direction - jake -->
 <!-- version 8 - high version 45 to 46, see bug 946665 -->
+<!-- version 9 - added factory reset -->
 
 <decoder>
 	<family name="Basic STD" mfg="Digitrax" lowVersionID="33" highVersionID="46">
@@ -179,6 +182,12 @@
 	<constant label="F8 controls output 10" minOut="10" minFn="8" default="1" /> 
 
 	</variables>
+
+  <resets>
+  	<factReset label="Reset All CVs" CV="8" default="8"/>
+  	<factReset label="Reset All CVs except speed table" CV="8" default="9"/>
+  </resets>
+
 	
 </decoder>
 </decoder-config>
