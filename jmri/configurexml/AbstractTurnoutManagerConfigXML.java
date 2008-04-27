@@ -24,7 +24,7 @@ import org.jdom.Attribute;
  * specific Turnout or AbstractTurnout subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
 
@@ -74,22 +74,24 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
                 // include turnout inverted
                 elem.setAttribute("inverted", t.getInverted()?"true":"false");
                 
-                // include turnout locked
-                elem.setAttribute("locked", t.getLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT)?"true":"false");          
-				
-                // include turnout lock mode
-                String lockOpr;
-				if (t.canLock(Turnout.CABLOCKOUT) && t.canLock(Turnout.PUSHBUTTONLOCKOUT)){
-					lockOpr = "both"; 
-   				} else if (t.canLock(Turnout.CABLOCKOUT)){
-   					lockOpr = "cab";
-   				} else {
-   					lockOpr = "pushbutton";
-   				}
-                elem.setAttribute("lockMode", lockOpr);          
-                
-                // include turnout decoder
-                elem.setAttribute("decoder", t.getDecoderName());          
+                if (t.canLock(Turnout.CABLOCKOUT | Turnout.PUSHBUTTONLOCKOUT)){
+                    // include turnout locked
+                    elem.setAttribute("locked", t.getLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT)?"true":"false");          
+                 	// include turnout lock mode
+                	String lockOpr;
+                	if (t.canLock(Turnout.CABLOCKOUT) && t.canLock(Turnout.PUSHBUTTONLOCKOUT)){
+                		lockOpr = "both"; 
+                	} else if (t.canLock(Turnout.CABLOCKOUT)){
+                		lockOpr = "cab";
+                	} else if (t.canLock(Turnout.PUSHBUTTONLOCKOUT)){
+                		lockOpr = "pushbutton";
+                	} else {
+                		lockOpr = "none";
+                	}
+                	elem.setAttribute("lockMode", lockOpr);          
+                	// include turnout decoder
+                	elem.setAttribute("decoder", t.getDecoderName());
+                }         
                 
 				// include number of control bits, if different from one
 				int iNum = t.getNumberOutputBits();

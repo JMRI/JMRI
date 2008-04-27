@@ -40,7 +40,7 @@ package jmri;
  * Also note that CVP decoder's use the old legacy format for ops mode programming. 
  *
  * @author      Daniel Boudreau Copyright (C) 2007
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  * 
  */
 public class PushbuttonPacket {
@@ -48,11 +48,12 @@ public class PushbuttonPacket {
 	/**
 	 * Valid stationary decoder names
 	 */
+	public final static String unknown = "None";
 	public final static String NCEname = "NCE_Rev_C";
 	public final static String CVP_1Bname = "CVP_AD4_1B";
 	public final static String CVP_2Bname = "CVP_AD4_2B";
 	
-	protected final static String[] VAILDDECODERNAMES = { NCEname, CVP_1Bname,
+	protected final static String[] VAILDDECODERNAMES = { unknown, NCEname, CVP_1Bname,
 		CVP_2Bname };
 
 	public static byte[] pushbuttonPkt(String prefix, int turnoutNum, boolean locked) {
@@ -60,7 +61,10 @@ public class PushbuttonPacket {
 		Turnout t = InstanceManager.turnoutManagerInstance().getBySystemName(prefix + turnoutNum);
 		byte[] bl;
 		
-		if (t.getDecoderName().equals(NCEname)) {
+		if (t.getDecoderName().equals(unknown))
+			return null;
+		
+		else if (t.getDecoderName().equals(NCEname)) {
 			if (locked)
 				bl = NmraPacket.accDecoderPktOpsMode(turnoutNum, 556, 1);
 			else

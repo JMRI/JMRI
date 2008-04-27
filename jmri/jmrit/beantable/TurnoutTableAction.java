@@ -42,7 +42,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.54 $
+ * @version     $Revision: 1.55 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -74,7 +74,8 @@ public class TurnoutTableAction extends AbstractTableAction {
     String bothText = "Both";
     String cabOnlyText = "Cab only";
     String pushbutText = "Pushbutton only";
-    String[] lockOperations = {bothText, cabOnlyText, pushbutText};
+    String noneText = "None";
+    String[] lockOperations = {bothText, cabOnlyText, pushbutText, noneText};
     
     /**
      * Create the JTable DataModel, along with the changes
@@ -168,7 +169,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     else if (col==OPSONOFFCOL) return true;
                     else if (col==OPSEDITCOL) return t.getTurnoutOperation()!=null;
                     else if (col==LOCKOPRCOL || col==xLOCKOPRCOL) return true;
-                    else if (col==LOCKDECCOL || col==xLOCKDECCOL) return t.canLock(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT);
+                    else if (col==LOCKDECCOL || col==xLOCKDECCOL) return true;
                     else return super.isCellEditable(row,col);
                 }    		
                 
@@ -188,8 +189,10 @@ public class TurnoutTableAction extends AbstractTableAction {
                             c.setSelectedItem (bothText); 
                         } else if (t.canLock(Turnout.PUSHBUTTONLOCKOUT)){
                             c.setSelectedItem (pushbutText);
-                        } else {
+                        } else if (t.canLock(Turnout.CABLOCKOUT)){
                             c.setSelectedItem (cabOnlyText);
+                        }else {
+                        	c.setSelectedItem (noneText);
                         }
                         return c;
                     } else if (col == LOCKDECCOL || (col==xLOCKDECCOL && !showFeedback)) {
