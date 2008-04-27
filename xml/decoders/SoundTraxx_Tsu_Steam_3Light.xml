@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id: SoundTraxx_Tsu_Steam_3Light.xml,v 1.8 2007-09-21 05:49:34 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_Tsu_Steam_3Light.xml,v 1.9 2008-04-27 00:50:19 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -21,6 +21,7 @@
 		<version author="Ron McKinnon" version="3" lastUpdated="20060412"/>
 		<version author="Ron McKinnon" version="4" lastUpdated="20060419"/>
 		<version author="Michael Mosher" version="5" lastUpdated="20070406"/>
+		<version author="Walter Thompson wsthompson@earthlink.net" version="6" lastUpdated="20080414"/>
 
 		<!-- Made from SoundTraxx_DSD_Steam.xml file by M Mosher -->
 		<!-- Some of the contents are based on info provided pre-release -->
@@ -31,6 +32,8 @@
 		<!-- Version 4 has acceptable CV's ranges added in sound levels section. -->
 		<!-- Version 5 fixed dupe item tag for CV62 & addeded CV63 & 64. -->
 		<!--		added tool tips for CV105&106 -->
+		<!-- Version 6 author Walter Thompson wsthompson@earthlink.net 20080412 -->
+		<!--            added Reset option -->
 
 <decoder>
 	<family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)">
@@ -1439,6 +1442,9 @@
 	
 
 	</variables>
+  <resets>
+  	<factReset label="Reset All CVs" CV="8" default="8"/>
+  </resets>
 </decoder>
 
 <pane name="Equalizer">

@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
-<!-- $Id: SoundTraxx_DSX_Steam.xml,v 1.16 2007-10-26 16:35:07 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_DSX_Steam.xml,v 1.17 2008-04-27 00:50:10 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,6 +16,7 @@
 <!-- for more details.                                                      -->
 
 <decoder-config>
+		<version author="Walter Thompson wsthompson@earthlink.net" version="11" lastUpdated="20080414"/>
         <version author="Walter Thompson" version="10" lastUpdated="20070816"/>
 		<version author="Michael Mosher" version="9" lastUpdated="20060927"/>
         <version author="Michael Mosher" version="8" lastUpdated="20050817"/>
@@ -26,7 +27,9 @@
 		<!-- version 7: added CV105&106  -->
         <!-- version 8: (20050817 BobJ): numFns corrected from 8 to 10 -->
 		<!-- version 9: Added None to function map  -->
-		<!-- version 9: Moved CV50 so CV list is in order  -->
+		<!-- version 10: Moved CV50 so CV list is in order  -->
+		<!-- Version 11 author Walter Thompson wsthompson@earthlink.net 20080412 -->
+		<!--            added Reset option -->
 
 <decoder>
 	<family name="DSX Steam" mfg="Throttle-Up (SoundTraxx)">
@@ -552,6 +555,9 @@
 			<decVal/>
 			</variable>
 	</variables>
+  <resets>
+  	<factReset label="Reset All CVs" CV="8" default="8"/>
+  </resets>
 </decoder>
 
 <pane name="Soundtraxx">

@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id: SoundTraxx_Tsu_Bachmann.xml,v 1.3 2007-09-21 05:49:33 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_Tsu_Bachmann.xml,v 1.4 2008-04-27 00:50:17 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,9 +16,12 @@
 <!-- for more details.                                                      -->
 
 <decoder-config>
-		<!--version author="Michael Mosher" version="1" lastUpdated="20070405"/-->
+		<version author="Michael Mosher" version="1" lastUpdated="20070405"/>
+		<version author="Walter Thompson wsthompson@earthlink.net" version="2" lastUpdated="20080414"/>
 
 		<!-- Version 1 Made from SoundTraxx_TSU_2Med.xml file -->
+		<!-- Version 2 author Walter Thompson wsthompson@earthlink.net 20080412 -->
+		<!--            added Reset option -->
 		
 <decoder>
 	<family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)">
@@ -1258,6 +1261,9 @@
 	
 
 	</variables>
+  <resets>
+  	<factReset label="Reset All CVs" CV="8" default="8"/>
+  </resets>
 </decoder>
 
 <pane name="DDE">

@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2003 All rights reserved -->
-<!-- $Id: SoundTraxx_LC_Diesel_pFXCb.xml,v 1.9 2008-03-06 02:53:55 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_LC_Diesel_pFXCb.xml,v 1.10 2008-04-27 00:50:13 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -17,10 +17,14 @@
 
 <decoder-config>
 		<version author="Michael Mosher" version="11" lastUpdated="20050817"/>
+		<version author="Walter Thompson wsthompson@earthlink.net" version="12" lastUpdated="20080414"/>
+
 		<!-- version 9: moved LL100LC here from LC_Diesel_pnp file -->
 		<!-- version 10: added FX1 & FX2 to fun map & CV105&106 set CV9 default to 180   -->
         <!-- Version 10.1: changed spelling of "behavior" (Jack Shall) -->
         <!-- version 11 (20050817 BobJ): numFns corrected from 8 to 10 -->
+		<!-- Version 12 author Walter Thompson wsthompson@earthlink.net 20080412 -->
+		<!--            added Reset option -->
 
 <decoder>
 	<family name="LC Diesel PNP Cab Unit decoders" mfg="Throttle-Up (SoundTraxx)">
@@ -660,6 +664,9 @@
 			</variable>
 
 	</variables>
+  <resets>
+  	<factReset label="Reset All CVs" CV="8" default="8"/>
+  </resets>
 </decoder>
 
 <pane name="Soundtraxx">

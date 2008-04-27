@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2002, 2003, 2007 All rights reserved -->
-<!-- $Id: SoundTraxx_DSX_Diesel.xml,v 1.15 2007-10-26 19:41:10 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_DSX_Diesel.xml,v 1.16 2008-04-27 00:50:10 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,6 +16,7 @@
 <!-- for more details.                                                      -->
 
 <decoder-config>
+		<version author="Walter Thompson wsthompson@earthlink.net" version="11" lastUpdated="20080414"/>
 		<version author="Michael Mosher" version="10" lastUpdated="20070820"/>
 		<version author="Michael Mosher" version="9"  lastUpdated="20050817"/>
 
@@ -26,6 +27,8 @@
 		<!-- version 8: added CV105&106  -->
         <!-- version 9: (20050817 BobJ): numFns corrected from 8 to 10 -->
         <!-- version 10: fixed horn/bell func map default bug -->
+		<!-- Version 11 author Walter Thompson wsthompson@earthlink.net 20080412 -->
+		<!--            added Reset option -->
 
 <decoder>
 	<family name="DSX Diesel" mfg="Throttle-Up (SoundTraxx)">
@@ -527,6 +530,9 @@
 			<decVal/>
 			</variable>
 	</variables>
+  <resets>
+  	<factReset label="Reset All CVs" CV="8" default="8"/>
+  </resets>
 </decoder>
 
 <pane name="Soundtraxx">

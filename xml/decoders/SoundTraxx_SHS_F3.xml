@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
-<!-- $Id: SoundTraxx_SHS_F3.xml,v 1.6 2007-09-21 05:49:33 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_SHS_F3.xml,v 1.7 2008-04-27 00:50:16 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -18,10 +18,13 @@
 <decoder-config>
 		<version author="Michael Greene (mgreene@cedarlane.com)" 
                           version="3" lastUpdated="20050817"/>
+		<version author="Walter Thompson wsthompson@earthlink.net" version="4" lastUpdated="20080414"/>
 
         <!-- version 3 (20050817 BobJ): numFns corrected from 8 to 10 -->
 		<!-- version 2 (20041016): add default values for CV7 & 8 -->
 		<!-- version 1 (20040311): initial creation from SoundTraxx_SHS_F7.xml -->
+		<!-- Version 4 author Walter Thompson wsthompson@earthlink.net 20080412 -->
+		<!--            added Reset option -->
 
 <decoder>
 	<family name="SHS Diesel decoders" mfg="Throttle-Up (SoundTraxx)">
@@ -1036,6 +1039,9 @@
 
 	
 	</variables>
+  <resets>
+  	<factReset label="Reset All CVs" CV="8" default="8"/>
+  </resets>
 </decoder>
 
 <pane name="Soundtraxx">
