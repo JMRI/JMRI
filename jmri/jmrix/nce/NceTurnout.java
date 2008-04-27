@@ -16,7 +16,7 @@ import jmri.PushbuttonPacket;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.29 $
+ * @version	$Revision: 1.30 $
  */
 public class NceTurnout extends AbstractTurnout {
 
@@ -161,8 +161,8 @@ public class NceTurnout extends AbstractTurnout {
     	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE)
     		return false;
     	// check to see if push button lock is enabled and valid decoder
-		if ((turnoutLockout & PUSHBUTTONLOCKOUT) > 0 && _enablePushButtonLockout    	// can not lock if decoder is unknown
-		    	&& !getDecoderName().equals(PushbuttonPacket.unknown))
+		if ((turnoutLockout & PUSHBUTTONLOCKOUT) > 0 && _enablePushButtonLockout    
+				&& !getDecoderName().equals(PushbuttonPacket.unknown))
 			return true;
 		// check to see if cab lockout is enabled
 		if ((turnoutLockout & CABLOCKOUT) > 0
