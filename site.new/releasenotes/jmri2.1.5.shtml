@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.5.shtml,v 1.32 2008-04-25 14:41:56 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.5.shtml,v 1.33 2008-04-27 00:52:26 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -345,6 +345,12 @@ David Duchamp added methods for running code at shutdown.
 
 <p>
 David Duchamp added the ability to load and save the status of blocks.
+
+<p>
+Walter Thompson updated a number of decoder files:
+He added factory resets to the Digitrax and QSI decoders, and
+added serveral variables to the QSI articulated steam definition.
+
 
 <!--#include virtual="/Footer" -->
 
