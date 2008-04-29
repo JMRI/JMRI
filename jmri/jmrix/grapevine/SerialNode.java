@@ -22,7 +22,7 @@ import jmri.jmrix.AbstractNode;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 public class SerialNode extends AbstractNode {
 
@@ -181,8 +181,8 @@ public class SerialNode extends AbstractNode {
      * Public Method to create Initialization packets (SerialMessage) for this node.
      * Initialization consists of multiple parts:
      * <ul>
-     * <li>Turn on the ASD input
-     * <li>Turn on the 2nd parallel port
+     * <li>Turn on the ASD input 0x71 to bank 0
+     * <li>After a wait, another ASD message 0x73 to bank 0
      * </ul>
      * (Eventually, it should also request input values, once we know 
      * what message does that)
@@ -202,9 +202,9 @@ public class SerialNode extends AbstractNode {
 
                 // turn on 2nd parallel inputs        
                 m2.setElement(i++, getNodeAddress() | 0x80);  // address
-                m2.setElement(i++, 0x70);  // command
+                m2.setElement(i++, 0x73);  // command
                 m2.setElement(i++, getNodeAddress() | 0x80);  // address
-                m2.setElement(i++, 0x10);  // bank and parity
+                m2.setElement(i++, 0x00);  // bank and parity
                 m2.setParity(i-4);
                 SerialTrafficController.instance().sendSerialMessage(m2, null);
             }
