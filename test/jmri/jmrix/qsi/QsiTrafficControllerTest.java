@@ -39,17 +39,19 @@ public class QsiTrafficControllerTest extends TestCase {
 
 		// send a message
 		QsiMessage m = new QsiMessage(3);
-		m.setOpCode('0');
-		m.setElement(1, '1');
-		m.setElement(2, '2');
+		m.setElement(0, 11);
+		m.setElement(1, 0);
+		m.setElement(2, 0);
 		c.sendQsiMessage(m, new QsiListenerScaffold());
 		wait(2); // relinquish control
 		
-		Assert.assertEquals("total length ", 4, tostream.available());
-		Assert.assertEquals("Char 0", '0', tostream.readByte());
-		Assert.assertEquals("Char 1", '1', tostream.readByte());
-		Assert.assertEquals("Char 2", '2', tostream.readByte());
-		Assert.assertEquals("EOM", 0x0d, tostream.readByte());
+		Assert.assertEquals("total length ", 6, tostream.available());
+		Assert.assertEquals("Lead S", 'S', tostream.readByte());
+		Assert.assertEquals("Byte 0", 11, tostream.readByte());
+		Assert.assertEquals("Byte 1", 0, tostream.readByte());
+		Assert.assertEquals("Byte 2", 0, tostream.readByte());
+		Assert.assertEquals("Check", 11, tostream.readByte());
+		Assert.assertEquals("E", 'E', tostream.readByte());
 		Assert.assertEquals("remaining ", 0, tostream.available());
 	}
 
@@ -72,19 +74,21 @@ public class QsiTrafficControllerTest extends TestCase {
 
 		// send a message
 		QsiMessage m = new QsiMessage(3);
-		m.setOpCode('0');
-		m.setElement(1, '1');
-		m.setElement(2, '2');
+		m.setElement(0, 11);
+		m.setElement(1, 0);
+		m.setElement(2, 0);
 		c.sendQsiMessage(m, new QsiListenerScaffold());
 		synchronized (this) {wait(100);}
 		
 		// check it arrived at monitor
 		Assert.assertTrue("message not null", rcvdMsg != null);
-		Assert.assertEquals("total length ", 4, tostream.available());
-		Assert.assertEquals("Char 0", '0', tostream.readByte());
-		Assert.assertEquals("Char 1", '1', tostream.readByte());
-		Assert.assertEquals("Char 2", '2', tostream.readByte());
-		Assert.assertEquals("EOM", 0x0d, tostream.readByte());
+		Assert.assertEquals("total length ", 6, tostream.available());
+		Assert.assertEquals("Lead S", 'S', tostream.readByte());
+		Assert.assertEquals("Byte 0", 11, tostream.readByte());
+		Assert.assertEquals("Byte 1", 0, tostream.readByte());
+		Assert.assertEquals("Byte 2", 0, tostream.readByte());
+		Assert.assertEquals("Check", 11, tostream.readByte());
+		Assert.assertEquals("E", 'E', tostream.readByte());
 		Assert.assertEquals("remaining ", 0, tostream.available());
 	}
 
@@ -113,15 +117,15 @@ public class QsiTrafficControllerTest extends TestCase {
 		// that's already tested, so don't do here.
 
 		// now send reply
-		tistream.write('P');
-		tistream.write('>');
-		tistream.write(' ');
-		tistream.write(0x0d);
+		tistream.write('S');
+		tistream.write(0);
+		tistream.write(0);
+		tistream.write('E');
 
 		// drive the mechanism
 		c.handleOneIncomingReply();
 		Assert.assertTrue("reply received ", waitForReply());
-		Assert.assertEquals("first char of reply ", 'P', rcvdReply.getOpCode());
+		Assert.assertEquals("first char of reply ", 'S', rcvdReply.getOpCode());
 	}
 
 

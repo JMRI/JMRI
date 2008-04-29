@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the QsiMessage class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 
 package jmri.jmrix.qsi;
@@ -26,7 +26,7 @@ public class QsiMessageTest extends TestCase {
 		m.setElement(2, 0x32);
 		m.setElement(3, 0x36);
 		m.setElement(4, 0x31);
-		Assert.assertEquals("string compare ", "P 261", m.toString());
+		Assert.assertEquals("string compare ", "50 20 32 36 31 ", m.toString());
 	}
 
 	public void testGetEnable() {
@@ -43,12 +43,12 @@ public class QsiMessageTest extends TestCase {
 
 	public void testReadRegister() {
 		QsiMessage m = QsiMessage.getReadRegister(2);
-		Assert.assertEquals("string compare ", " ", m.toString());
+		Assert.assertEquals("string compare ", "20 ", m.toString());
 	}
 
 	public void testWriteRegister() {
 		QsiMessage m = QsiMessage.getWriteRegister(2, 250);
-		Assert.assertEquals("string compare ", " ", m.toString());
+		Assert.assertEquals("string compare ", "20 ", m.toString());
 	}
 
 	// from here down is testing infrastructure
