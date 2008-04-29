@@ -19,7 +19,7 @@ import java.awt.Color;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class LayoutBlockManagerXml implements XmlAdapter {
 
@@ -38,6 +38,10 @@ public class LayoutBlockManagerXml implements XmlAdapter {
         LayoutBlockManager tm = (LayoutBlockManager) o;
         if (tm!=null) {
             java.util.Iterator iter = tm.getSystemNameList().iterator();
+            
+            // don't return an element if there is nothing to include
+            if (!iter.hasNext()) return null;
+            
             while (iter.hasNext()) {
                 String sname = (String)iter.next();
                 if (sname==null) log.error("System name null during LayoutBlock store");
