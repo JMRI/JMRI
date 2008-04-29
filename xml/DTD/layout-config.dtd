@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.84 2008-04-08 21:35:53 djduchamp Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.85 2008-04-29 14:36:49 jacobsen Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
 <!--                                                                        -->
@@ -16,10 +16,11 @@
 
 <!ELEMENT layout-config (connection | gui | programmer | roster | perform |
 			preferences | turnouts | sensors | lights | blocks | signals | routes |
-						securityelements | aspectgenerator | 
+			securityelements | aspectgenerator | 
 			paneleditor | LayoutEditor |
 			signalheads | conditionals | logixs | application | blocks | reporters |
-						memories | memorys | timebase )*>
+			memories | memorys | timebase |
+			layoutblocks )*>
 
 <!-- Overall application configuration -->
 <!ELEMENT application (connection*, gui*, programmer, roster?, perform*)>
@@ -310,7 +311,7 @@
 
 <!ELEMENT paneleditor (positionablelabel|sensoricon|turnouticon|
 						securityelementicon | signalheadicon |
-						reportericon | memoryicon |
+						reportericon | memoryicon | multisensoricon |
 					    fastclock)* >
   <!ATTLIST paneleditor class		CDATA #REQUIRED>
   <!ATTLIST paneleditor name		CDATA #IMPLIED>
@@ -399,6 +400,23 @@
     <!ATTLIST fastclock x     CDATA #REQUIRED>
     <!ATTLIST fastclock y     CDATA #REQUIRED>
 
+  <!ELEMENT multisensoricon (multisensoriconentry)*>
+    <!ATTLIST multisensoricon class CDATA #REQUIRED>
+    <!ATTLIST multisensoricon x     CDATA #REQUIRED>
+    <!ATTLIST multisensoricon y     CDATA #REQUIRED>
+    <!ATTLIST multisensoricon level	CDATA #IMPLIED>
+    <!ATTLIST multisensoricon active		CDATA #IMPLIED>
+    <!ATTLIST multisensoricon inactive	CDATA #IMPLIED>
+    <!ATTLIST multisensoricon unknown	CDATA #IMPLIED>
+    <!ATTLIST multisensoricon inconsistent		CDATA #IMPLIED>
+    <!ATTLIST multisensoricon updown		CDATA #IMPLIED>
+    <!ATTLIST multisensoricon rotate		CDATA #IMPLIED>
+    <!ATTLIST multisensoricon forcecontroloff	(true|false) "false">
+
+  <!ELEMENT multisensoriconentry EMPTY>
+    <!ATTLIST multisensoriconentry sensor	CDATA #REQUIRED>
+    <!ATTLIST multisensoriconentry icon	CDATA #REQUIRED>
+
   <!ELEMENT signalheadicon EMPTY>
     <!ATTLIST signalheadicon class	CDATA #REQUIRED>
     <!ATTLIST signalheadicon x			CDATA #REQUIRED>
@@ -407,6 +425,7 @@
     <!ATTLIST signalheadicon height	CDATA #IMPLIED> <!-- deprecated -->
     <!ATTLIST signalheadicon width	CDATA #IMPLIED> <!-- deprecated -->
     <!ATTLIST signalheadicon rotate  	CDATA #IMPLIED>
+    <!ATTLIST signalheadicon held        CDATA #IMPLIED>
     <!ATTLIST signalheadicon dark        CDATA #IMPLIED>
     <!ATTLIST signalheadicon red         CDATA #IMPLIED>
     <!ATTLIST signalheadicon flashred    CDATA #IMPLIED>
