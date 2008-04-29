@@ -16,7 +16,7 @@ import jmri.jmrix.qsi.QsiReply;
  * JUnit tests for the QsiReplyclass
  * @author			Bob Jacobsen Copyright 2006, 2007
  *
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class QsiReplyTest extends TestCase {
 
@@ -42,7 +42,7 @@ public class QsiReplyTest extends TestCase {
 		m.setElement(1, 'o');
 		m.setElement(2, 'm');
 		m.setElement(3, ':');
-		Assert.assertEquals("string compare ", "Com:", m.toString());
+		Assert.assertEquals("string compare ", "43 6F 6D 3A ", m.toString());
 	}
 
 	public void testSkipWhiteSpace() {
