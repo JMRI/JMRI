@@ -31,9 +31,9 @@ import jmri.util.table.ButtonRenderer;
  * <LI>Not present
  * </OL>
  
- * @author	Bob Jacobsen   Copyright (C) 2004, 2007
+ * @author	Bob Jacobsen   Copyright (C) 2004, 2007, 2008
  * @author	Dave Duchamp   Copyright (C) 2004, 2006
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grapevine.SerialListener {
 
@@ -199,8 +199,9 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
         static private final int ADDRCOL = 0;
         static private final int STATUSCOL = 1;
         static private final int EDITCOL = 2;
+        static private final int INITCOL = 3;
         
-        static private final int LAST = 2;
+        static private final int LAST = 3;
         
         public int getColumnCount () {return LAST+1;}
 
@@ -222,7 +223,7 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
         }
 
         public Class getColumnClass(int c) {
-            if (c == EDITCOL)
+            if (c == EDITCOL || c == INITCOL)
                 return JButton.class;
             else if (c == ADDRCOL)
                 return Integer.class;
@@ -231,7 +232,7 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
         }
 
         public boolean isCellEditable(int r,int c) {
-            return (c==EDITCOL);
+            return (c==EDITCOL || c==INITCOL);
         }
 
         public Object getValueAt (int r,int c) {
@@ -256,6 +257,13 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
                     return rb.getString("ButtonEdit");
                 else
                     return rb.getString("ButtonAdd");
+            case INITCOL:
+                // see if node exists
+                if (SerialTrafficController.instance().getNodeFromAddress(r+1)!=null)
+                    return rb.getString("ButtonInit");
+                else
+                    return null;
+                
             default:
                 return null;
             }
@@ -269,6 +277,10 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
                 f.setNodeAddress(r+1);
                 f.setVisible(true);
                 return;
+            case INITCOL:
+                jmri.jmrix.AbstractNode t = SerialTrafficController.instance().getNodeFromAddress(r+1);
+                if (t==null) return;
+                SerialTrafficController.instance().sendSerialMessage((SerialMessage) t.createInitPacket(), null);
             default:
                 return;
             }
