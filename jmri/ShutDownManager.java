@@ -13,16 +13,27 @@ package jmri;
  * <p>
  * Operations:
  * <ol>
- * <li>Execute each {@link ShutDownTask} in order, 
+ * <li>Execute each {@link ShutDownTask} in order reverse order of creation, 
  *     allowing it to abort the shutdown if needed.
  * <li>If not aborted, terminate the program.
  * </ol>
  * <p>
  * There can only be one instance of this operating,
  * and it is generally obtained via the instance manager.
+ * <p>
+ * Items are executed in reverse order to attempt to unwind the
+ * creation process.  Tasks should not count on this, however, as
+ * shutdown can be aborted before a particular task is reached. 
+ * <p>
+ * Tasks should leave the system in a state that can continue, in
+ * case a later task aborts the shutdown.
+ * <p>
+ * An instance of this is normally obtained from the instance manager,
+ * but using routines should not assume that one is always present; they
+ * should check for a null manager and skip operations if needed.
  *
  * @author      Bob Jacobsen Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public interface ShutDownManager {
 

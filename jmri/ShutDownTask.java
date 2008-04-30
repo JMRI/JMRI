@@ -11,9 +11,12 @@ import java.util.List;
 
 /**
  * Execute a specific task before the program terminates.
+ * <p>
+ * Tasks should leave the system in a state that can continue, in
+ * case a later task aborts the shutdown.
  *
  * @author      Bob Jacobsen Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public interface ShutDownTask {
 
