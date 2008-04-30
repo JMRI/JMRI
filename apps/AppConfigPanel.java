@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * Basic configuration GUI infrastructure.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.22 $
+ * @version	$Revision: 1.23 $
  */
 public class AppConfigPanel extends JPanel {
 
@@ -347,7 +347,7 @@ public class AppConfigPanel extends JPanel {
      * box prompting the user to end the program.
      */
     public void savePressed() {
-    	boolean dups = checkDups();
+    	boolean dups = checkDups(); // true if OK, which is a little confusing
     	if (!dups) {
     		dups = JOptionPane.showConfirmDialog(null,
                     rb.getString("MessageLongDupsWarning"),
@@ -366,7 +366,13 @@ public class AppConfigPanel extends JPanel {
 	
 	            // end the program
 	            dispose();
-	            System.exit(0);
+	            
+	            
+	            // do orderly shutdown.  Note this
+	            // invokes Apps.handleQuit, even if this 
+	            // panel hasn't been created by an Apps subclass.
+	            Apps.handleQuit();
+
 	        }
     	}
         // don't end the program, just close the window

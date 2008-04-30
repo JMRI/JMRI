@@ -11,7 +11,7 @@ import java.util.Hashtable;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2005
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
 
@@ -66,9 +66,6 @@ public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
                 }
             }
         );
-        
-        // want to dispose this window when closed
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         
         // get ready to display
         pack();
