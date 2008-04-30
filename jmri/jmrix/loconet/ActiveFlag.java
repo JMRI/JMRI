@@ -10,7 +10,7 @@ package jmri.jmrix.loconet;
  * so as to limit the number of unneeded class loadings.
  *
  * @author		Bob Jacobsen  Copyright (C) 2003
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 abstract public class ActiveFlag {
 
@@ -24,4 +24,4 @@ abstract public class ActiveFlag {
 }
 
 
-/* @(#)AbstractMRReply.java */
+/* @(#)ActiveFlag.java */
