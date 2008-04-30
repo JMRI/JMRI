@@ -20,9 +20,6 @@ import java.awt.event.KeyEvent;
  * We needed a place to refactor common JFrame additions in JMRI
  * code, so this class was created.
  * <P>
- * In particular, this is intended to provide Java 2 functionality on a
- * Java 1.1.8 system, or at least try to fake it.
- * <P>
  * Features:
  * <ul>
  * <LI>Size limited to the maximum available on the screen, after
@@ -35,9 +32,25 @@ import java.awt.event.KeyEvent;
  * <LI>Maintains a list of existing JmriJFrames
  * </ul>
  *
+ * <h3>Window Closing</h3>
+ * Normally, a JMRI window wants to be disposed when it closes.
+ * This is what's needed when each invocation of the corresponding action
+ * can create a new copy of the window.  To do this, you don't have
+ * to do anything in your subclass.  This class has
+<p><pre><code>
+ setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE)
+</code></pre>
+ * <p>If you want this behavior, but need to do something when the 
+ * window is closing, override the {@link #windowClosing(java.awt.event.WindowEvent)} method
+ * to do what you want. Also, if you override dispose(),
+ * make sure to call super.dispose().
+ * <p>
+ * If you want the window to just do nothing or just hide, rather than be disposed,
+ * when closed, set the DefaultCloseOperation to 
+ * DO_NOTHING_ON_CLOSE or HIDE_ON_CLOSE depending on what you're looking for.
  *
- * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.16 $
+ * @author Bob Jacobsen  Copyright 2003, 2008
+ * @version $Revision: 1.17 $
  */
 
 public class JmriJFrame extends JFrame implements java.awt.event.WindowListener {
@@ -52,6 +65,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener 
 	    // Set the image for use when minimized
 	    setIconImage(getToolkit().getImage("resources/jmri32x32.gif"));
         // set the close short cut
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowCloseShortCut();
     }
 
@@ -244,19 +258,21 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener 
     public void windowIconified(java.awt.event.WindowEvent e) {}
     public void windowDeiconified(java.awt.event.WindowEvent e) {}
 
-   /**
-     * Close and dispose the window when the close box is clicked.
-     *<P>
-     * Subclasses should invoke this method via super.windowClosing
-     * after doing necessary cleanup. Note that it calls dispose(),
-     * so subclasses should not do that.
-     **/
-    public void windowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
+    /**
+     * When window is finally destroyed, remove it from the 
+     * list of windows.
+     * <P>
+     * Subclasses that over-ride this method must invoke this implementation
+     * with super.dispose()
+     */
+    public void dispose() {
+        log.debug("dispose "+getTitle());
         synchronized (list) {
             list.remove(this);
         }
-        dispose();	// for subclasses
+    }
+    
+    public void windowClosing(java.awt.event.WindowEvent e) {
     }
     
     public void windowClosed(java.awt.event.WindowEvent e) {}
