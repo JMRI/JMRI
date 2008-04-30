@@ -4,6 +4,8 @@ package jmri.jmrit.symbolicprog.tabbedframe;
 
 import jmri.Programmer;
 import jmri.util.davidflanagan.HardcopyWriter;
+import jmri.ShutDownTask;
+import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
@@ -36,7 +38,7 @@ import jmri.ProgDeferredServiceModePane;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.62 $
+ * @version   $Revision: 1.63 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -80,6 +82,9 @@ abstract public class PaneProgFrame extends JmriJFrame
     ItemListener l3;
     ItemListener l4;
 
+    ShutDownTask decoderDirtyTask;
+    ShutDownTask fileDirtyTask;
+    
     /**
      * Abstract method to provide a JPanel setting the programming
      * mode, if appropriate. A null value is ignored.
@@ -88,6 +93,36 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     protected void installComponents() {
 
+        // create ShutDownTasks
+        if (jmri.InstanceManager.shutDownManagerInstance()!=null) {
+            if (decoderDirtyTask == null) decoderDirtyTask = 
+                                            new SwingShutDownTask("DecoderPro Decoder Window Check", 
+                                                                  rbt.getString("PromptQuitWindowNotWrittenDecoder"), 
+                                                                  (String)null, 
+                                                                  (java.awt.Component)this
+                                                                   ){
+                                                public boolean checkReady() {
+                                                    return !checkDirtyDecoder();
+                                                }
+            };
+            jmri.InstanceManager.shutDownManagerInstance().register(decoderDirtyTask);
+            if (fileDirtyTask == null) fileDirtyTask = 
+                                            new SwingShutDownTask("DecoderPro Decoder Window Check", 
+                                                                  rbt.getString("PromptQuitWindowNotWrittenConfig"), 
+                                                                  rbt.getString("PromptSaveQuit"), 
+                                                                  (java.awt.Component)this
+                                                                   ){
+                                                public boolean checkReady() {
+                                                    return !checkDirtyFile();
+                                                }
+                                                public boolean doAction() {
+                                                    boolean result = storeFile(); // storeFile false if failed, abort shutdown
+                                                    return result;
+                                                }
+            };
+            jmri.InstanceManager.shutDownManagerInstance().register(fileDirtyTask);
+        }
+                
         // Create a menu bar
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
@@ -355,9 +390,6 @@ abstract public class PaneProgFrame extends JmriJFrame
             }
         }
 
-        // ensure cleanup at end
-        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-
         pack();
 
         if (log.isDebugEnabled()) log.debug("PaneProgFrame \""+pFrameTitle
@@ -466,21 +498,44 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     Element programmerRoot = null;
 
+
+    /**
+     * @return true if decoder needs to be written
+     */
+    protected boolean checkDirtyDecoder() {
+        if (log.isDebugEnabled()) log.debug("Checking decoder dirty status. CV: "+cvModel.decoderDirty()+" variables:"+variableModel.decoderDirty());
+        return (cvModel.decoderDirty() || variableModel.decoderDirty() ); 
+    }
+    
+    /**
+     * @return true if file needs to be written
+     */
+    protected boolean checkDirtyFile() {
+        return (variableModel.fileDirty() || _rPane.guiChanged(_rosterEntry));
+    }
+    protected void handleDirtyFile() {
+    }
+    
+    
     /**
      * Close box has been clicked; handle check for dirty with respect to
      * decoder or file, then close.
      * @param e Not used
      */
     public void windowClosing(java.awt.event.WindowEvent e) {
+    
+        // Don't want to actually close if we return early
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        
         // check for various types of dirty - first table data not written back
         if (log.isDebugEnabled()) log.debug("Checking decoder dirty status. CV: "+cvModel.decoderDirty()+" variables:"+variableModel.decoderDirty());
-        if (cvModel.decoderDirty() || variableModel.decoderDirty() ) {
+        if (checkDirtyDecoder()) {
             if (JOptionPane.showConfirmDialog(null,
                                               rbt.getString("PromptCloseWindowNotWrittenDecoder"),
                                               rbt.getString("PromptChooseOne"), 
                                               JOptionPane.OK_CANCEL_OPTION) == JOptionPane.CANCEL_OPTION) return;
         }
-        if (variableModel.fileDirty() || _rPane.guiChanged(_rosterEntry)) {
+        if (checkDirtyFile()) {
             int option = JOptionPane.showOptionDialog(null,rbt.getString("PromptCloseWindowNotWrittenConfig"),
                         rbt.getString("PromptChooseOne"),
                         JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null,
@@ -503,6 +558,17 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
         
         // OK, continue close
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        
+        // deregister shutdown hooks
+        if (jmri.InstanceManager.shutDownManagerInstance()!=null)
+            jmri.InstanceManager.shutDownManagerInstance().deregister(decoderDirtyTask);
+        decoderDirtyTask = null;
+        if (jmri.InstanceManager.shutDownManagerInstance()!=null)
+            jmri.InstanceManager.shutDownManagerInstance().deregister(fileDirtyTask);
+        fileDirtyTask = null;
+        
+        // do the close itself
         super.windowClosing(e);
     }
 
