@@ -26,8 +26,8 @@ import jmri.jmrit.display.LayoutBlockManager;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
  * <P>
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.31 $
+ * @author			Bob Jacobsen Copyright (C) 2001, 2008
+ * @version			$Revision: 1.32 $
  */
 public class InstanceManager {
 
@@ -88,6 +88,10 @@ public class InstanceManager {
         // As a convenience, we create a default object if none was provided explicitly.
         instance().logixManager = new DefaultLogixManager();
         return instance().logixManager;
+    }
+
+    static public ShutDownManager shutDownManagerInstance()  {
+        return instance().shutDownManager;
     }
 
     static public Timebase timebaseInstance()  {
@@ -266,6 +270,16 @@ public class InstanceManager {
         if (p!=logixManager && logixManager!=null && log.isDebugEnabled()) log.debug("LogixManager instance is being replaced: "+p);
         if (p!=logixManager && logixManager==null && log.isDebugEnabled()) log.debug("LogixManager instance is being installed: "+p);
         logixManager = p;
+    }
+
+    private ShutDownManager shutDownManager = null;
+    static public void setShutDownManager(ShutDownManager p) {
+        instance().addShutDownManager(p);
+    }
+    protected void addShutDownManager(ShutDownManager p) {
+        if (p!=shutDownManager && shutDownManager!=null && log.isDebugEnabled()) log.debug("ShutDownManager instance is being replaced: "+p);
+        if (p!=shutDownManager && shutDownManager==null && log.isDebugEnabled()) log.debug("ShutDownManager instance is being installed: "+p);
+        shutDownManager = p;
     }
 
     private Timebase timebase = null;
