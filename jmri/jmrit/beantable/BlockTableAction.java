@@ -25,7 +25,7 @@ import jmri.util.JmriJFrame;
  * BlockTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 public class BlockTableAction extends AbstractTableAction {
@@ -65,7 +65,7 @@ public class BlockTableAction extends AbstractTableAction {
         		}
         		Block b = InstanceManager.blockManagerInstance().getBySystemName(name);
         		if (b == null) {
-        			super.log.warn("requested getValue(\""+name+"\"), Block doesn't exist");
+        			super.log.debug("requested getValue(\""+name+"\"), Block doesn't exist");
         			return "(no Block)";
         		}
         		Object m = b.getValue();
@@ -90,6 +90,10 @@ public class BlockTableAction extends AbstractTableAction {
     		public Object getValueAt(int row, int col) {
 	   			if (col==DIRECTIONCOL) {
             		Block b = (Block)getBySystemName((String)sysNameList.get(row));
+                    if (b == null) {
+                        super.log.debug("requested getValueAt(\""+row+"\"), Block doesn't exist");
+                        return "(no Block)";
+                    }
 					return jmri.Path.decodeDirection(b.getDirection());
     			} else return super.getValueAt(row, col);
 			}    		
