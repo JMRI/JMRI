@@ -32,7 +32,7 @@ import net.roydesign.mac.MRJAdapter;
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
  * @author  Dennis Miller  Copyright 2005
- * @version     $Revision: 1.56 $
+ * @version     $Revision: 1.57 $
  */
 public class Apps extends JPanel implements PropertyChangeListener{
 
@@ -59,6 +59,30 @@ public class Apps extends JPanel implements PropertyChangeListener{
             // be relative to the preferences directory
             file = new File(XmlFile.prefsDir()+configFilename);
         }
+        
+        // install shutdown manager
+        InstanceManager.setShutDownManager(
+                new jmri.implementation.DefaultShutDownManager());
+        
+        // add the default shutdown task to save blocks
+        // as a special case, register a ShutDownTask to write out blocks
+        InstanceManager.shutDownManagerInstance().
+            register(new jmri.implementation.AbstractShutDownTask("Writing Blocks"){
+                public boolean execute() {
+                    // Save block values prior to exit, if necessary
+                    log.debug("Start writing block info");
+                    try {
+                        new jmri.jmrit.display.BlockValueFile().writeBlockValues();
+                    } 
+                    catch (org.jdom.JDOMException jde) { log.error("Exception writing blocks: "+jde); }                           
+                    catch (java.io.IOException ioe) { log.error("Exception writing blocks: "+ioe); }   
+                    
+                    // continue shutdown   
+                    return true;
+                }
+            });
+        
+        // install configuration manager
         InstanceManager.setConfigureManager(new jmri.configurexml.ConfigXmlManager());
         log.debug("start load config file");
         configOK = InstanceManager.configureManagerInstance().load(file);
@@ -120,7 +144,7 @@ public class Apps extends JPanel implements PropertyChangeListener{
 //          MRJAdapter.addAboutListener(new ActionListener() { public void actionPerformed(ActionEvent e) { about(); } });
             MRJAdapter.addPreferencesListener(new ActionListener() { public void actionPerformed(ActionEvent e) { doPreferences(); } });
 			MRJAdapter.addQuitApplicationListener(new ActionListener() { public void actionPerformed(ActionEvent e) { 
-				jmri.util.oreilly.BasicQuit.handleQuit(); } });
+				handleQuit(); } });
         }
         
         fileMenu(menuBar, frame);
@@ -147,7 +171,7 @@ public class Apps extends JPanel implements PropertyChangeListener{
             fileMenu.add(new JSeparator());
             fileMenu.add(new AbstractAction(rb.getString("MenuItemQuit")){
                 public void actionPerformed(ActionEvent e) {
-					jmri.util.oreilly.BasicQuit.handleQuit();
+					handleQuit();
                 }
             });
         }
@@ -530,11 +554,11 @@ public class Apps extends JPanel implements PropertyChangeListener{
     static public String getConnection3() {
         return MessageFormat.format(rb.getString("ConnectionCredit"),
                             new String[]{prefs.getConnection3(), prefs.getPort3()});
-}
+    }
     static public String getConnection4() {
         return MessageFormat.format(rb.getString("ConnectionCredit"),
                             new String[]{prefs.getConnection4(), prefs.getPort4()});
-}
+    }
     
     static SplashWindow sp = null;
 	static java.awt.event.AWTEventListener debugListener = null;
@@ -566,6 +590,14 @@ public class Apps extends JPanel implements PropertyChangeListener{
         }
     }
 
+    /**
+     * The application decided to quit, handle that.
+     */
+    static public void handleQuit() {
+        log.debug("Start handleQuit");
+        InstanceManager.shutDownManagerInstance().shutdown();
+    }
+    
     static protected void initLog4J() {
         // initialize log4j - from logging control file (lcf) only
         // if can find it!
@@ -611,16 +643,25 @@ public class Apps extends JPanel implements PropertyChangeListener{
         }
     }
 
+    /**
+     * Closing the main window is a shutdown request
+     */
+/*     public void windowClosing(java.awt.event.WindowEvent e) { */
+/*         log.info("Main window closing causs program to shut down"); */
+/*         handleQuit(); */
+/*         // if get here, didn't close, so don't close window */
+/*     } */
+    
     static protected void createFrame(Apps containedPane, JFrame frame) {
     	// create the main frame and menus
-        frame.addWindowListener(new jmri.util.oreilly.BasicWindowMonitor());
-
+    	
         // invoke plugin, if any
         jmri.JmriPlugin.start(frame, containedPane.menuBar);
 
         frame.setJMenuBar(containedPane.menuBar);
         frame.getContentPane().add(containedPane);
-
+        frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        
         // pack and center this frame
         frame.pack();
         Dimension screen = frame.getToolkit().getScreenSize();
