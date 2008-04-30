@@ -47,7 +47,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -544,7 +544,7 @@ public class LayoutEditor extends JmriJFrame {
         addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowClosing(java.awt.event.WindowEvent e) {
 					// If the panel has been changed, prompt to save
-					if (panelChanged || (savedEditMode!=editMode) ||
+					if (isDirty() || (savedEditMode!=editMode) ||
 							(savedPositionable!=positionable) ||
 							(savedControlLayout!=controlLayout) ||					
 							(savedAnimatingLayout!=animatingLayout) ||					
@@ -751,7 +751,7 @@ public class LayoutEditor extends JmriJFrame {
                     setTitle(newName);
                     layoutName = newName;
 					jmri.jmrit.display.PanelMenu.instance().renameLayoutEditorPanel(thisPanel);
-					panelChanged = true;
+					setDirty(true);
                 }
             });
 		// add background image
@@ -760,7 +760,7 @@ public class LayoutEditor extends JmriJFrame {
         backgroundItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
 					addBackground();
-					panelChanged = true;
+					setDirty(true);
 					repaint();
                 }
             });
@@ -770,7 +770,7 @@ public class LayoutEditor extends JmriJFrame {
         clockItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
 					addClock();
-					panelChanged = true;
+					setDirty(true);
 					repaint();
                 }
             });
@@ -780,7 +780,7 @@ public class LayoutEditor extends JmriJFrame {
         turntableItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
 					addTurntable(new Point2D.Double(panelWidth/2,panelHeight/2));
-					panelChanged = true;
+					setDirty(true);
 					repaint();
                 }
             });
@@ -944,7 +944,7 @@ public class LayoutEditor extends JmriJFrame {
 		enterTrackWidthFrame.setVisible(false);
 		if (trackWidthChange) {
 			repaint();
-			panelChanged = true;
+			setDirty(true);
 		}
 	}
 	void trackWidthCancelPressed(ActionEvent a) {
@@ -952,7 +952,7 @@ public class LayoutEditor extends JmriJFrame {
 		enterTrackWidthFrame.setVisible(false);
 		if (trackWidthChange) {
 			repaint();
-			panelChanged = true;
+			setDirty(true);
 		}
 	}
 
@@ -1130,7 +1130,7 @@ public class LayoutEditor extends JmriJFrame {
 		scaleTrackDiagramFrame.setVisible(false);
 		if (scaleChange) {
 			repaint();
-			panelChanged = true;
+			setDirty(true);
 		}
 	}
 	void scaleTrackDiagramCancelPressed(ActionEvent a) {
@@ -1365,7 +1365,7 @@ public class LayoutEditor extends JmriJFrame {
 				}
 			}
 			repaint();
-			panelChanged = true;
+			setDirty(true);
 		}
 		// success - hide dialog 
 		moveSelectionOpen = false;
@@ -1433,7 +1433,7 @@ public class LayoutEditor extends JmriJFrame {
 		upperLeftX = pt.x;
 		upperLeftY = pt.y;
 		log.debug("Position - "+upperLeftX+","+upperLeftY+" Size - "+panelWidth+","+panelHeight);		
-		panelChanged = true;
+		setDirty(true);
 	}
 
     void addTrackColorMenuEntry(JMenu menu, final String name, final Color color) {
@@ -1443,7 +1443,7 @@ public class LayoutEditor extends JmriJFrame {
 				public void actionPerformed(ActionEvent e) { 
 					if (defaultTrackColor!=desiredColor) {
 						defaultTrackColor = desiredColor;
-						panelChanged = true;
+						setDirty(true);
 						repaint();
 					}
 				}
@@ -1494,7 +1494,7 @@ public class LayoutEditor extends JmriJFrame {
 		LayoutTurntable x = new LayoutTurntable(name,pt,this);		
 		if (x != null) {
 			turntableList.add(x);
-			panelChanged = true;
+			setDirty(true);
 		}
 		x.addRay(0.0);
 		x.addRay(90.0);
@@ -1511,7 +1511,7 @@ public class LayoutEditor extends JmriJFrame {
         l.update();
         l.setDisplayLevel(new Integer(10));
         setNextLocation(l);
-		panelChanged = true;
+		setDirty(true);
         putClock(l);
     }
     public void putClock(AnalogClock2Display c) {
@@ -1531,7 +1531,7 @@ public class LayoutEditor extends JmriJFrame {
 	 * Allow external reset of dirty bit
 	 */
 	public void resetDirty() { 
-		panelChanged = false;
+		setDirty(false);
 		savedEditMode = editMode;
 		savedPositionable = positionable;
 		savedControlLayout = controlLayout;
@@ -1542,7 +1542,13 @@ public class LayoutEditor extends JmriJFrame {
 	/**
 	 * Allow external set of dirty bit
 	 */
-	public void setDirty() { panelChanged = true; }	
+	public void setDirty(boolean val) { panelChanged = val; }	
+	public void setDirty() { setDirty(true); }
+	
+	/**
+	 * Check the dirty state
+	 */
+	public boolean isDirty() { return panelChanged; }
 	
 	/**
 	 * Handle a mouse pressed event
@@ -2233,7 +2239,7 @@ public class LayoutEditor extends JmriJFrame {
 									pointType-TURNTABLE_RAY_OFFSET);
 				}
 		}
-		panelChanged = true;
+		setDirty(true);
 	}
 	public void setLoc(int x, int y) {
 		if (editMode) {
@@ -2262,7 +2268,7 @@ public class LayoutEditor extends JmriJFrame {
 							PositionablePoint.ANCHOR, currentPoint, this);
 		if (o!=null) {
 			pointList.add(o);
-			panelChanged = true;
+			setDirty(true);
 		}
 	}
 
@@ -2284,7 +2290,7 @@ public class LayoutEditor extends JmriJFrame {
 							PositionablePoint.END_BUMPER, currentPoint, this);
 		if (o!=null) {
 			pointList.add(o);
-			panelChanged = true;
+			setDirty(true);
 		}
 	}
 
@@ -2307,7 +2313,7 @@ public class LayoutEditor extends JmriJFrame {
 						mainlineTrack.isSelected(),this);
 		if (newTrack!=null) {
 			trackList.add(newTrack);
-			panelChanged = true;
+			setDirty(true);
 			// link to connected objects
 			setLink(newTrack,TRACK,beginObject,beginPointType);
 			setLink(newTrack,TRACK,foundObject,foundPointType);
@@ -2352,7 +2358,7 @@ public class LayoutEditor extends JmriJFrame {
 		LevelXing o = new LevelXing(name,currentPoint,this);
 		if (o!=null) {
 			xingList.add(o);
-			panelChanged = true;
+			setDirty(true);
 			// check on layout block
 			LayoutBlock b = provideLayoutBlock(blockIDField.getText().trim());
 			if (b!=null) {
@@ -2406,7 +2412,7 @@ public class LayoutEditor extends JmriJFrame {
 										currentPoint,rot,xScale,yScale,this);
 		if (o!=null) {
 			turnoutList.add(o);
-			panelChanged = true;
+			setDirty(true);
 			// check on layout block
 			LayoutBlock b = provideLayoutBlock(blockIDField.getText().trim());
 			if (b!=null) {
@@ -2557,7 +2563,7 @@ public class LayoutEditor extends JmriJFrame {
 		}
 		// set both new and previously existing block
 		blk.addLayoutEditor(this);
-		panelChanged = true;
+		setDirty(true);
 		blk.incrementUse();
 		return blk;
 	}
@@ -2639,7 +2645,7 @@ public class LayoutEditor extends JmriJFrame {
 			if (p==o) {
 				// found object
 				pointList.remove(i);
-				panelChanged = true;
+				setDirty(true);
 				repaint();
 				return(true);
 			}
@@ -2698,7 +2704,7 @@ public class LayoutEditor extends JmriJFrame {
 			if (lt==o) {
 				// found object
 				turnoutList.remove(i);
-				panelChanged = true;
+				setDirty(true);
 				repaint();
 				return(true);
 			}
@@ -2749,7 +2755,7 @@ public class LayoutEditor extends JmriJFrame {
 				// found object
 				xingList.remove(i);
 				o.remove();
-				panelChanged = true;
+				setDirty(true);
 				repaint();
 				return(true);
 			}
@@ -2791,7 +2797,7 @@ public class LayoutEditor extends JmriJFrame {
 				// found object
 				turntableList.remove(i);
 				o.remove();
-				panelChanged = true;
+				setDirty(true);
 				repaint();
 				return(true);
 			}
@@ -2856,7 +2862,7 @@ public class LayoutEditor extends JmriJFrame {
 		if ( (block1!=null) && (block1!=block) ) block1.updatePaths();	
 		if ( (block2!=null) && (block2!=block) && (block2!=block1) ) block2.updatePaths();
 		// 
-		panelChanged = true;
+		setDirty(true);
 		repaint();
 	}
 	
@@ -2941,7 +2947,7 @@ public class LayoutEditor extends JmriJFrame {
 				nextSensor.setText(xSensor.getSystemName());
 		}
         setNextLocation(l);
-		panelChanged = true;
+		setDirty(true);
         putSensor(l);
     }
     public void putSensor(LayoutSensorIcon l) {
@@ -2993,7 +2999,7 @@ public class LayoutEditor extends JmriJFrame {
 			}
 		}
         setNextLocation(l);
-		panelChanged = true;
+		setDirty(true);
         putSignal(l);
     }
     public void putSignal(LayoutSignalHeadIcon l) {
@@ -3015,7 +3021,7 @@ public class LayoutEditor extends JmriJFrame {
         setNextLocation(l);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(LABELS);
-		panelChanged = true;
+		setDirty(true);
         putLabel(l);
     }
     public void putLabel(LayoutPositionableLabel l) {
@@ -3055,7 +3061,7 @@ public class LayoutEditor extends JmriJFrame {
         setNextLocation(l);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(LABELS);
-		panelChanged = true;
+		setDirty(true);
         putLabel(l);
     }
 
@@ -3066,7 +3072,7 @@ public class LayoutEditor extends JmriJFrame {
         LayoutPositionableLabel l = new LayoutPositionableLabel(iconEditor.getIcon(0) );
         setNextLocation(l);
         l.setDisplayLevel(ICONS);
-		panelChanged = true;
+		setDirty(true);
         putLabel(l);
     }
     
@@ -3120,7 +3126,7 @@ public class LayoutEditor extends JmriJFrame {
 		for (int i=0; i<backgroundImage.size(); i++) {
 			if (b == (LayoutPositionableLabel)backgroundImage.get(i)) {
 				backgroundImage.remove(i);
-				panelChanged = true;
+				setDirty(true);
 				return;
 			}
 		}
@@ -3145,7 +3151,7 @@ public class LayoutEditor extends JmriJFrame {
     // Invoked when window has new multi-sensor ready
     public void addMultiSensor(MultiSensorIcon l) {
 		l.setLocation(multiLocX,multiLocY);
-		panelChanged = true;
+		setDirty(true);
         putMultiSensor(l);
     }
     // invoked to install the multi-sensor
@@ -3323,32 +3329,32 @@ public class LayoutEditor extends JmriJFrame {
 	// accessor routines for turnout size parameters	
 	public void setTurnoutBX(double bx) {
 		turnoutBX = bx;
-		panelChanged = true;
+		setDirty(true);
 	}
 	public double getTurnoutBX() {return turnoutBX;}
 	public void setTurnoutCX(double cx) {
 		turnoutCX = cx;
-		panelChanged = true;
+		setDirty(true);
 	}
 	public double getTurnoutCX() {return turnoutCX;}
 	public void setTurnoutWid(double wid) {
 		turnoutWid = wid;
-		panelChanged = true;
+		setDirty(true);
 	}
 	public double getTurnoutWid() {return turnoutWid;}
 	public void setXOverLong(double lg) {
 		xOverLong = lg;
-		panelChanged = true;
+		setDirty(true);
 	}
 	public double getXOverLong() {return xOverLong;}
 	public void setXOverHWid(double hwid) {
 		xOverHWid =  hwid;
-		panelChanged = true;
+		setDirty(true);
 	}
 	public double getXOverHWid() {return xOverHWid;}
 	public void setXOverShort(double sh) {
 		xOverShort =  sh;
-		panelChanged = true;
+		setDirty(true);
 	}
 	public double getXOverShort() {return xOverShort;}
 	// reset turnout sizes to program defaults
@@ -3359,7 +3365,7 @@ public class LayoutEditor extends JmriJFrame {
 		xOverLong = xOverLongDefault;
 		xOverHWid = xOverHWidDefault;
 		xOverShort = xOverShortDefault;
-		panelChanged = true;
+		setDirty(true);
 	}
 		
 	// final initialization routine for loading a LayoutEditor
