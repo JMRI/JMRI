@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: panelfile.xsl,v 1.6 2007-12-29 18:05:55 jacobsen Exp $ -->
+<!-- $Id: panelfile.xsl,v 1.7 2008-05-01 05:49:29 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI panel file into an HTML page -->
 
@@ -149,15 +149,64 @@
         <xsl:call-template name="oneLogix"/>
 </xsl:template>
 
-<!-- Index through blocks (SSL) elements -->
-<!-- each one becomes a table -->
 <xsl:template match="layout-config/blocks">
-<h3>Blocks</h3>
+    <xsl:if test="@class = 'jmri.jmrit.blockboss.configurexml.BlockBossLogicXml'" >
+        <!-- Index through SSL elements -->
+        <!-- each one becomes a table -->
+        <h3>Simple Signal Logic</h3>
+            <table border="1">
+            <tr><td>Controlled Signal</td><td>Watched Signal</td></tr>
+            <!-- index through individal block elements -->
+            <xsl:for-each select="block">
+                <tr>
+                    <td><xsl:value-of select="@signal"/></td>
+                    <td><xsl:value-of select="@watchedsignal1"/></td>
+                </tr>
+            </xsl:for-each>
+            </table>
+    </xsl:if>
+    
+    <xsl:if test="@class = 'jmri.configurexml.BlockManagerXml'" >
+        <!-- Index through blocks elements -->
+        <!-- each one becomes a table -->
+        <h3>Blocks</h3>
+            <table border="1">
+            <tr><td>System Name</td><td>User Name</td></tr>
+            <!-- index through individal block elements -->
+            <xsl:for-each select="block">
+                <tr><xsl:element name="a"><xsl:attribute name="id">Block-<xsl:value-of select="@systemName"/></xsl:attribute></xsl:element>
+                    <td><xsl:value-of select="@systemName"/></td>
+                    <td><xsl:value-of select="@userName"/></td>
+                </tr>
+            </xsl:for-each>
+            </table>
+    </xsl:if>
+</xsl:template>
+
+
+<!-- Index through layoutblock elements -->
+<!-- each one becomes a table -->
+<xsl:template match="layout-config/layoutblocks">
+<h3>Layout Blocks</h3>
     <table border="1">
-    <tr><td>Controlled Signal</td><td>Watched Turnout</td></tr>
+    <tr>
+        <td>System Name</td>
+        <td>User Name</td>
+        <td>Occupancy Sensor</td>
+        <td>Memory</td>
+    </tr>
     <!-- index through individal turnout elements -->
     <xsl:apply-templates/>
     </table>
+</xsl:template>
+
+<xsl:template match="layoutblock">
+<tr>
+    <td><xsl:value-of select="@systemName"/></td>
+    <td><xsl:value-of select="@userName"/></td>
+    <td><xsl:value-of select="@occupancysensor"/></td>
+    <td><xsl:value-of select="@memory"/></td>
+</tr>
 </xsl:template>
 
 <xsl:template match="signalhead">
