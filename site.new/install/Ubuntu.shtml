@@ -1,13 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: Ubuntu.shtml,v 1.5 2008-03-30 07:12:45 jacobsen Exp $ -->
+<!-- $Id: Ubuntu.shtml,v 1.6 2008-05-01 14:38:32 jacobsen Exp $ -->
 <html lang="en">
-<HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
-	<TITLE>Installing JMRI on Ubuntu GNU/Linux</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.2  (Linux)">
-	<META NAME="CREATED" CONTENT="20070720;11550900">
-	<META NAME="CHANGEDBY" CONTENT="peter">
-	<META NAME="CHANGED" CONTENT="20070720;13070200">
+<head>
+	<meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8">
+	
+	<title>Installing JMRI on Ubuntu GNU/Linux</title>
+	<meta name="GENERATOR" content="OpenOffice.org 2.2  (Linux)">
+	<meta name="CREATED" content="20070720;11550900">
+	<meta name="CHANGEDBY" content="peter">
+	<meta name="CHANGED" content="20070720;13070200"><!-- Style -->
+
 
 <!-- Style -->
   <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
@@ -22,48 +24,52 @@
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
-	<div id="mainContent">
+<div id="mainContent">
+	    
+<h1>Installing JMRI on Ubuntu GNU/Linux</h1>
 
-	    <H1>Installing JMRI on Ubuntu GNU/Linux</H1>
+<p>These are instructions for the installation of JMRI
+on a Ubuntu Linux/GNU system. &nbsp;Though the procedure is not
+complicated a script has been written to automate some of the
+procedures. &nbsp; These have been used by a number of users
+successfully and should work on Ubuntu, Kubuntu, XUbuntu and Debian
+(The USB
+port has not been tested under Debian).</p>
+<p>This draft is now in its final stage.</p>
 
-<P>These are instructions for the installation of JMRI
-on a Ubuntu Linux/GNU system. Unfortunately they assume some
-knowledge of Linux.  They have been used by a number of users
-successfully and should work on Ubuntu, Kubuntu and Debian (The USB
-port has not been tested under Debian).</P>
-<P>This is still in its draft stages.</P>
-<HR>
-<H2>1 Introduction</H2>
-<P>GNU/Linux is becoming increasingly popular as a desk
+
+<h2>1 Introduction</h2>
+<p>GNU/Linux is becoming increasingly popular as a desk
 top operating system. This short instruction deals with installing
-JMRI on the Ubuntu desktop.</P>
-<H3>1.1 The Problem</H3>
-<P>JMRI is quite easy to install on Windows. It consists
+JMRI on the Ubuntu (or similar Debian based) desktop.</p>
+<h3>1.1 The Problem</h3>
+<p>JMRI is quite easy to install on Windows. It consists
 of two stages, install Java and install JMRI. Unfortunatly GNU Linux
-takes five stages and involves some command line work. 
-</P>
-<H3>1.2 Linux/GNU</H3>
-<P>GNU Linux provides a viable alternative to Windows.
-As it is often free it is suitable for loading onto older machines
+used to involve five stages and some command line work. &nbsp;The use
+of a script to automate most of this makes the task much easier.&nbsp; </p>
+<h3>1.2 Linux/GNU</h3>
+<p>GNU/Linux provides a viable alternative to Windows. Is it&nbsp;free and it is also suitable for loading onto older machines
 which may no longer have a viable legal OS.  It is also far less
-resource hungry current windows distributions.</P>
-<H3>1.3 Ubuntu (Debian)</H3>
-<P>Ubuntu is based on Debian and is recognised as being
+resource hungry than current windows distributions and this is&nbsp; particularly true of Xubuntu.</p>
+<h3>1.3 Ubuntu (Debian)</h3>
+<p>Ubuntu is based on Debian and is recognised as being
 a very user friendly distribution. Indeed in the US Dell are going to
 supply computers with it pre installed. 
-</P>
-<P>Details on installing Ubuntu can be found below at
-Ubuntu:</P>
-<P STYLE="margin-left: 0.19cm"><A HREF="http://www.ubuntu.com/getubuntu/download">Ubuntu
-Details</A></P>
-<P STYLE="margin-left: 0.29cm">Follow the Path
-&quot;Download&quot; then I suggest you read up on the help page which is
-offered which give one advice on how to download the iso image and
-then create a bookable CD to install Ubuntu.</P>
-<HR>
-<H2>2 Notes</H2>
+</p>
+
+<p style="margin-left: 0.19cm;">Details on installing Ubuntu can be found below at
+Ubuntu:<br></p><p style="margin-left: 0.19cm;"><a href="http://www.ubuntu.com/getubuntu/download">Ubuntu
+Details</a></p>
+<p style="margin-left: 1.34cm;">Follow the Path
+"Download" then I suggest you read up on the help page which is
+offered which gives advice on how to download the iso image and
+then create a bookable CD to install Ubuntu.</p>
+Details for <a href="http://jmri.sourceforge.net/install/decTop.shtml">installing Xubuntu</a> have also been written.
+
+
+<h2>2 Notes</h2>
 In the next section we describe how to install the components
-needed before JMRI can be run, then JMRI itself.
+needed before JMRI can be run, then how to install JMRI itself.
 Before starting that, make sure you're machine has a working
 internet connection (for downloads), etc.
 
@@ -72,136 +78,105 @@ If you're using Ubuntu 7.10 and a
 <a href="http://rr-cirkits.com/locobuffer-usb/LB-manual-USB.pdf">LocoBuffer-USB</a>
 from 
 <a href="http://rr-cirkits.com/">RR-Cirkits</a>
-you need to download and replace a new
-<a href="http://rr-cirkits.com/locobuffer-usb/linux/ftdi_sio.ko">ftdi_sio.ko file</a>
-to replace the one that came with the distribution.
+you will need to download and replace a new
+<a href="http://rr-cirkits.com/locobuffer-usb/linux/ftdi_sio.ko">ftdi_sio.ko file</a> &nbsp;(right click and save this file) to replace the one that came with the distribution.
 
-<HR>
-<H2>3 Installation Steps</H2>
-<P>There are five steps in Installing JMRI in Linux/GNU,
-The are installation of Java, RxTX,JMRI itself, setting up
-permissions and finally setting up the programme environment.</P>
-<P><A HREF="http://jmri.sourceforge.net/install/Linux.html">The
-JMRI page</A> 
-</P>
-<H3>3.1 JAVA</H3>
-<P>One must be carefull which Java is Loaded. java
+<h2>3 Installation Steps</h2>
+<p>There are three steps in Installing JMRI in Linux/GNU,
+The are installation of Java, running the Install-RXTX script (which
+installs the RXTX files, alters permissions on TTY devices and prompts
+the user to edit etc/group), installing JMRI itself and finally setting
+up the programme environment if necessary.</p>
+
+<h3>3.1 JAVA</h3>
+<p>One must be carefull which Java is Loaded. java
 -version will often show Java 1.4.2 gij, this one is not wanted.
 Blackwood does not work. 
 It's best to have the "SDK" software development kit
 instead of just the runtime environment (JRE).
-<p>
+</p><p>
 We recommend installing from the
 repositories. 
-</P>
-<P>System &gt; Administration &gt; Synaptic Package Manager
-<P>Then search for sun-java6-jdk (or later version). 
+</p>
+<p>System &gt; Administration &gt; Synaptic Package Manager
+</p><p>Then search for sun-java6-jdk (or later version). 
 Once you've found it, mark it to be loaded, and click apply.
 You'll probably be told that a number of other packages will 
 also be loaded. That's OK.
-</P>
+</p>
 
 <a id="rxtx">
-<H3>3.2 RxTx</H3></a>
+<h3>3.2 RxTx</h3></a>
 
-<P>A problem here is that the RxTx in the Ubuntu
-repositories does not work with JMRI! It appears that &quot;2.0.7pre2&quot;
-is required and that is what is included in the files section.</P>
-<P>Download   
-<A HREF="http://groups.yahoo.com/group/jmriusers/files/Linux/RxTx%20Stuff/"><U>RxTx</U></A></P>
-<P><SPAN STYLE="text-decoration: none">and</SPAN> place
+<p>A problem here is that the RxTx in the Ubuntu
+repositories does not work with JMRI! It appears that "2.0.7pre2"
+is required and that is what is included in the automated script which can currently be downloaded&nbsp;</p>
+<p><span style="text-decoration: underline;">&nbsp;<a href="http://downloads.sourceforge.net/jmri/RXTX-install-1.tar.gz?download">Download RXTX-Install</a></span><a href="http://groups.yahoo.com/group/jmriusers/files/Linux/RxTx%20Stuff/"><u></u></a></p>
+<p><span style="text-decoration: none;">and</span> place
 in  spare directory then unpack by double clicking, and then
-extracting (extract) the file.</P>
-<P><U>Then copy to the relevant sub directories.</U></P>
-<P>javax.comm.properties
-to /usr/lib/jvm/java-6-sun-1.6.0.00/jre/lib/javax.comm.properties</P>
-<P>
-ext/javax.comm.rxtx.properties to
-/usr/lib/jvm/java-6-sun-1.6.0.00/jre/lib/ext/javax.comm.rxtx.properties</P>
-<P>ext/comm.jar to
-/usr/lib/jvm/java-6-sun-1.6.0.00/jre/lib/ext/comm.jar</P>
-<P>ext/RXTXcomm.jar to
-/usr/lib/jvm/java-6-sun-1.6.0.00/jre/lib/ext/RXTXcomm.jar</P>
-<P>i386/* to /usr/lib/jvm/java-6-sun-1.6.0.00/jre/lib/i386/
-</P>
-<P><U>Make a Soft link so the Programe finds the correct
-RxTx</U></P>
-<P>Change directory
-to /usr/lib/jvm/java-6-sun-1.6.0.00/jre/lib/i386/</P>
-<P>And then make the link by  
-</P>
-<P>ln -s librxtxSerial-2.0.7pre2.so librxtxSerial.so</P>
-<P>This should now have the serial port working. 
-Unfortunately the programme will probably not see the USB port.  If
-this is the case the start up script needs altering.  An example is
-given below. (Come back to this later)</P>
-<IMG SRC="images/usbtest.png" NAME="graphics3" WIDTH=884 HEIGHT=556 BORDER=0>
+extracting (extract) the file. &nbsp;The script is run by opening a terminal and giving the command ./RXTXinstall.&nbsp;</p>
+<p>The script will do the following:<span style="text-decoration: underline;"><span style="text-decoration: underline;"></span></span></p><p>Checks that the correct java version is installed, then copies the RXTX files to the following directories:<span style="text-decoration: underline;"><span style="text-decoration: underline;"></span></span></p>
 
-<H3>3.3 JMRI</H3>
-<P>JMRI is downloaded in the normal manner.</P>
-<P><A HREF="http://jmri.sourceforge.net/download/index.html#prod-rel">Download
-JMRI</A> 
-</P>
+<p style="margin-left: 40px;">javax.comm.properties,&nbsp;ext/javax.comm.rxtx.properties, ext/comm.jar and ext/RXTXcomm.jar to
+/usr/lib/jvm/java-6-sun-??/jre/lib/ and lib/ext.</p>
+<p style="margin-left: 40px;">i386/* to /usr/lib/jvm/java-6-sun-???/jre/lib/i386/
+</p>
+<p>Makes a symbolic link in /i386/ so the programe finds the correct
+RxTx (ln -s librxtxSerial-2.0.7pre2.so librxtxSerial.so).</p>Alters the permission on dev/ttyS0 and ttyS1.<br><br>Prompts the user to add is name to group uucp. &nbsp;This last will be automated in the near future.<br><br>The above description is brief, as the script itself can be opened in a text editor and studied at leisure.<br>
+
+<h3>3.3 JMRI</h3>
+<p>JMRI is downloaded in the normal manner.</p>
+<p><a href="http://jmri.sourceforge.net/download/index.html#prod-rel">Download
+JMRI</a> 
+</p>
 <p>Double
 click on the .tgz file to open the File Roller, then click extract. 
+</p>
 
-<P>JMRI will created inside a &quot;JMRI&quot; directory which is
-created inside the directory that contains the downloaded .tgz file.  Umm..</P>
-<P><IMG SRC="images/JMRIdirectory.png" NAME="graphics2" ALIGN=LEFT WIDTH=374 HEIGHT=120 BORDER=0><BR><BR>
-</P>
-<P>When PanelPro and DecoderPro are first run the look
+<p>JMRI will created inside a "JMRI" directory which is
+created inside the directory that contains the downloaded .tgz file.  Umm..</p>
+<p><img src="images/JMRIdirectory.png" name="graphics2" align="left" border="0" height="120" width="374"><br><br>
+</p>
+<p>When PanelPro and DecoderPro are first run the look
 for a hidden directory ".jmri" in the home directory.  
 If they do not find it they create it.  To see this
-hidden directory in the file browser select &quot;View&quot; and 
-&quot;Show Hidden Files&quot;.
+hidden directory in the file browser select "View" and 
+"Show Hidden Files".
 This directory holds the preferences. If you are
 experiencing difficulties  with the program failing to start up, removing the
-relevant Config2.xml file from this directory should fix it.</P>
+relevant Config2.xml file from this directory should fix it.</p>
 
-<p>
-You might have to set the execute bits on the scripts...
-<br/>
-chmod 755 *.csh
-
-<H3>3.4 Odds And Ends</H3>
-<P>Edit etc/group to change /etc/group file like this:</P>
-<P>uucp:x:10 becomes uucp:x:10:your name</P>
-<P>Alter Permissions on /dev/ttyS0 and 1</P>
-<P>sudo chmod 666 /dev/ttyS0</P>
-<P>sudo chmod 666 /dev/ttyS1</P>
-<H3>3.5 The Environment</H3>
-<P>On a fresh install the environment is OK, java
+<h3>3.5 The Environment</h3>
+<p>On a fresh install the environment is OK, java
 -version will give 
-</P>
-<P>java version &quot;1.6.0&quot;</P>
-<P>Java(TM) SE Runtime Environment (build 1.6.0-b105)</P>
-<P>Java HotSpot(TM) Client VM (build 1.6.0-b105, mixed
-mode, sharing)</P>
-<P>If it does not this should simply be a matter of
-changing the PATH variable.</P>
-<P>PATH=/usr/lib/jvm/java-6-sun-1.6.0.00/jre/bin/:$PATH</P>
-<P>A neater way is to alter the Start Up script.  (We
-need examples of start up scripts).</P>
-<P>Also bash or csh. T</P>
-<HR>
-<H2>4 Starting JMRI</H2>
-<P>To start open a terminal and enter ./DecoderPro</P>
-<H3>4.1 Errors</H3>
-<P>If you have any problems get make to the group.</P>
-<P>No Serial Port. Have a look in System &gt;
-Preferences &gt; Hardware Information. One should have a screen like
-that shown showing com port as /dev/ttyS0</P>
-<P>bash: ./whatever.csh: bad interpreter: No such file
-or directory</P>
-<P>Can not run the shell try installing csh.</P>
-<P>bash; ./cats.csh: Permission denied</P>
-<P>try setting the icon to executable.</P>
-<P><IMG SRC="images/pic-23.png" NAME="graphics1" ALT="pic-23" ALIGN=BOTTOM WIDTH=700 HEIGHT=398 BORDER=0>
-</P>
-<HR>
-<H2>5 CATs</H2>
+</p>
+<p>java version "1.6.0"</p>
+<p>Java(TM) SE Runtime Environment (build 1.6.0-b105)</p>
+<p>Java HotSpot(TM) Client VM (build 1.6.0-b105, mixed
+mode, sharing)</p>
+<p>If it does not this should simply be a matter of
+changing the PATH variable.</p>
+<p>PATH=/usr/lib/jvm/java-6-sun/jre/bin/:$PATH</p>
+<p>A neater way is to alter the Start Up script.</p><p></p><p><big style="font-weight: bold;">USB Ports</big>&nbsp;</p>Often
+the start up script needs altering to get the computer to "see" a USB
+port by adding "-Djavax.comm.rxtx.SerialPorts=/dev/ttyUSB0" as shown
+below:
+<p style="margin-left: 40px;">java -noverify -Djavax.comm.rxtx.SerialPorts=/dev/ttyUSB0 -Djava.security.policy</p>
+<p>Please see the&nbsp;<a href="http://jmri.sourceforge.net/install/FAQLinux.html">FAQ</a> for more details.</p>
+
+<h2>4 Starting JMRI</h2>
+<p>To start open a terminal and enter ./DecoderPro</p>
+
+<h3>4.1 Errors</h3>
+<p>If you have any problems get back to the group.</p>
+
+<p style="text-decoration: underline;">bash: ./whatever.csh: bad interpreter: No such file
+or directory</p>
+<p>Can not run the shell try installing csh.</p>
+<p style="text-decoration: underline;">bash; ./cats.csh: Permission denied</p>
+<p>try setting the icon to executable.</p>
+
 
 <!--#include virtual="/Footer" -->
 
-</BODY>
-</HTML>
+</div></body></html>
