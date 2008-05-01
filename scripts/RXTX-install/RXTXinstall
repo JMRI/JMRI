@@ -3,8 +3,9 @@
 # Script to install RXTX in a Ubuntu GNU/Linux environment
 #
 #
-# $Revision: 1.1 $ (CVS maintains this line, do not edit please)
+# $Revision: 1.2 $ (CVS maintains this line, do not edit please)
 # Assumes sun-java6-jre has been downloaded from repositories
+#
 # INITALISE
 # ---------
 # The new programme initalises
@@ -37,7 +38,7 @@ clear
 echo "INSTRUCTIONS FOR LOADING JMRI"
 echo "ON UBUNTU AND UBUNTU LIKE OS"
 echo
-echo "Warning, this programme has not been extensivly tested"
+echo "Warning, this programme has not been extensively tested"
 echo "You must proceed at own risk"
 echo
 echo "If you experience any problems please do not hesitate"
@@ -56,7 +57,7 @@ if test `java GetJavaHome`; then
 	
 else
 	echo
-	echo "Java Not found on this computer"
+	echo "Java not found on this computer"
 	echo "Please check that it is included in" 
 	echo "your path and that it is installed"
 	echo "your current path is displayed below"
@@ -69,7 +70,7 @@ fi
 
 # Check for the correct version of Java
 
-echo "The Version of Jave required is "
+echo "The Version of Java required is "
 	echo "java version "1.6.0_??""
 	echo "Java(TM) SE Runtime Environment (build 1.6.0_????)"
 	echo "Java HotSpot(TM) Client VM (build 1.6.0_?????, mixed mode, sharing)"
@@ -81,7 +82,7 @@ echo "The Version of Jave required is "
 	read ans
 	if [ "$ans" = "n" ]
 		then
-		echo "It appears you have the Wrong Java Version installed"
+		echo "It appears you have the wrong Java Version installed"
 		echo "You will have to download the correct Java"
 		echo "sun-java6-bin"
 		echo "Using the Synaptic Package Manager" 
@@ -151,13 +152,13 @@ echo
 
 
 # sudo cp /etc/group /etc/group.old
-echo "I have backed up the file to group.old" 
-echo "Now You must edit etc/group so that "
-echo "uucp:x:10 becomes uucp:x:10:your name"
-echo "remember to save and close group"
+# echo "I have backed up the /etc/group file to group.old" 
+echo "Now you must edit etc/group file so that "
+echo "uucp:x:10 becomes uucp:x:10:youraccount"
+echo "Remember to save and close the file"
 echo
-echo "The command will be somthing like the following..."
+echo "The command will be something like the following..."
 echo "sudo (youreditor) /etc/group"
-echo "Where your editor will be perhaps gedit or you could "
+echo "Where (youreditor) will be perhaps gedit or you could "
 echo "use the generic editor"
 
