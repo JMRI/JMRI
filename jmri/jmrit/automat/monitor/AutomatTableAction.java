@@ -10,14 +10,20 @@ import javax.swing.AbstractAction;
  * Swing action to create and register a
  * AutomatTable GUI
  *
- * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.3 $
+ * @author	Bob Jacobsen    Copyright (C) 2004, 2008
+ * @version     $Revision: 1.4 $
  */
 
 public class AutomatTableAction extends AbstractAction {
 
     public AutomatTableAction(String actionName) {
         super(actionName);
+    }
+
+    public AutomatTableAction() {
+        this(
+            java.util.ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle")
+                .getString("MenuItemMonitor"));
     }
 
     AutomatTableDataModel m;
