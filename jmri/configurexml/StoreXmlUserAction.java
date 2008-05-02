@@ -14,13 +14,15 @@ import java.awt.event.ActionEvent;
  * types of information stored in configuration files.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  * @see         jmri.jmrit.XmlFile
  */
 public class StoreXmlUserAction extends StoreXmlConfigAction {
 
     public StoreXmlUserAction() {
-        this("Store panels ...");
+        this(
+            java.util.ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle")
+                .getString("MenuItemStore"));
     }
 
     public StoreXmlUserAction(String s) {

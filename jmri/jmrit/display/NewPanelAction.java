@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
  * <P>
  *
  * @author	Dave Duchamp   Copyright (C) 2007
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class NewPanelAction extends AbstractAction {
 
@@ -29,7 +29,9 @@ public class NewPanelAction extends AbstractAction {
     }
 
     public NewPanelAction() {
-        this("New Panel");
+        this(
+            java.util.ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle")
+                .getString("MenuItemNew"));
     }
 
     public void actionPerformed(ActionEvent e) {
