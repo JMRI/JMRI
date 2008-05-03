@@ -10,8 +10,22 @@ import org.jdom.Element;
 /**
  * Handle XML persistance of Simple Signal Logic objects.
  *
+ * <p>
+ * In JMRI 2.1.5, the XML written by this 
+ * package was changed. 
+ * <p>
+ * Previously, it wrote a single
+ * "blocks" element, which contained multiple "block" elements 
+ * to represent each individual BlockBoss (Simple Signal Logic) object.
+ * <p>
+ * These names were too generic, and conflicted with storing true Block
+ * objects.
+ * <p>
+ * Starting in JMRI 2.1.5 (May 2008), these were changed to 
+ * "signalelements" and "signalelement" respectively.
+ *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2005
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  * 
  * Revisions to add facing point sensors, approach lighting, 
  * and limited speed.                 Dick Bronson (RJB) 2006
@@ -37,12 +51,12 @@ public class BlockBossLogicXml implements XmlAdapter {
 
         Enumeration e = BlockBossLogic.entries();
         if (!e.hasMoreElements()) return null;  // nothing to write!
-        Element blocks = new Element("blocks");
+        Element blocks = new Element("signalelements");
         blocks.setAttribute("class", this.getClass().getName());
 
         while ( e.hasMoreElements()) {
             BlockBossLogic p = (BlockBossLogic) e.nextElement();
-            Element block = new Element("block");
+            Element block = new Element("signalelement");
             block.setAttribute("signal", p.getDrivenSignal());
             block.setAttribute("mode", ""+p.getMode());
 
