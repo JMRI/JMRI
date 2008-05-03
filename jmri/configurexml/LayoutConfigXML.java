@@ -13,12 +13,14 @@ import java.util.Hashtable;
 import java.util.List;
 
 /**
- * Provides the mechanisms for storing an entire layout configuration
- * to XML.  "Layout" refers to the hardware:  Specific communcation
- * systems, etc.
- * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
+ * <em>This class has been deprecated, and should no longer be used.</em>
+ * <p>
+ * Provided the mechanisms for storing an entire layout configuration
+ * to XML.  It has been replaced by a more flexible system.
+ * @see <A HREF="package-summary.html">Package summary for details of new overall structure</A>
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
+ * @deprecated since 2.0
  */
 public class LayoutConfigXML extends jmri.jmrit.XmlFile {
 
