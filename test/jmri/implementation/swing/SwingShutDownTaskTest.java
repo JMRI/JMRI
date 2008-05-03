@@ -17,7 +17,7 @@ import junit.framework.TestSuite;
  * Careful - tests are loaded via a separate class loader!
  *
  * @author	Bob Jacobsen  Copyright (C) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SwingShutDownTaskTest extends TestCase {
 
@@ -32,7 +32,7 @@ public class SwingShutDownTaskTest extends TestCase {
                                     "Do Something and Stop",
                                     null)
             {
-                public boolean checkReady() {
+                public boolean checkPromptNeeded() {
                     System.out.println("mDST "+modalDialogStopsTest);
                     return !modalDialogStopsTest;
             }
@@ -54,11 +54,11 @@ public class SwingShutDownTaskTest extends TestCase {
                                     "Do Something and repeats",
                                     null)
             {
-                public boolean checkReady() {
+                public boolean checkPromptNeeded() {
                     System.out.println("mDST "+modalDialogStopsTest);
                     return !modalDialogStopsTest;
                 }
-                public boolean doAction() {
+                public boolean doPrompt() {
                     return false;
                 }
             };

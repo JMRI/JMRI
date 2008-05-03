@@ -13,17 +13,17 @@ import javax.swing.JOptionPane;
  * <p>
  * Sequence:
  * <ol>
- * <li>checkReady determines if ready to shutdown. If so, 
+ * <li>checkPromptNeeded determines if ready to shutdown. If so, 
  * return ready.
  * <li>Issue a prompt, asking if the user wants to continue or do something else
  * <li>Recheck until something decided.
  * </ul>
- *
+ * 
  * <p>
  * If no "action" name is provided, only the continue and cancel options are shown.
- *
- * @author      Bob Jacobsen Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * 
+ * @author Bob Jacobsen Copyright (C) 2008
+ * @version $Revision: 1.2 $
  */
 public class SwingShutDownTask extends AbstractShutDownTask {
 
@@ -50,7 +50,7 @@ public class SwingShutDownTask extends AbstractShutDownTask {
      * to abort.
      */
     public boolean execute() {
-        while (!checkReady()) {
+        while (!checkPromptNeeded()) {
             // issue prompt
             Object[] possibleValues;
             if (action!=null) possibleValues = new Object[] {rb.getString("ButtonContinue"), 
@@ -73,7 +73,7 @@ public class SwingShutDownTask extends AbstractShutDownTask {
                 return true;
             } else if (selectedValue == 2) {
                 // take action and try again
-                return doAction();
+                return doPrompt();
             } else {
                 // unexpected value, log but continue
                 // (Can see -1 if dialog dismissed)
@@ -93,7 +93,7 @@ public class SwingShutDownTask extends AbstractShutDownTask {
      * @return true if ready to shutdown, and no prompt needed. false to present dialog
      * before shutdown proceeds
      */
-    protected boolean checkReady() {
+    protected boolean checkPromptNeeded() {
         return false;
     }
     
@@ -103,7 +103,7 @@ public class SwingShutDownTask extends AbstractShutDownTask {
      * intended to be overloaded.
      * @return true if ready to shutdown, false to end shutdown
      */
-    protected boolean doAction() {
+    protected boolean doPrompt() {
         return true;
     }
     

@@ -38,7 +38,7 @@ import jmri.ProgDeferredServiceModePane;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.63 $
+ * @version   $Revision: 1.64 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -101,7 +101,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                                                                   (String)null, 
                                                                   (java.awt.Component)this
                                                                    ){
-                                                public boolean checkReady() {
+                                                public boolean checkPromptNeeded() {
                                                     return !checkDirtyDecoder();
                                                 }
             };
@@ -112,10 +112,10 @@ abstract public class PaneProgFrame extends JmriJFrame
                                                                   rbt.getString("PromptSaveQuit"), 
                                                                   (java.awt.Component)this
                                                                    ){
-                                                public boolean checkReady() {
+                                                public boolean checkPromptNeeded() {
                                                     return !checkDirtyFile();
                                                 }
-                                                public boolean doAction() {
+                                                public boolean doPrompt() {
                                                     boolean result = storeFile(); // storeFile false if failed, abort shutdown
                                                     return result;
                                                 }
