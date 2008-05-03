@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-1-5.dtd,v 1.2 2008-05-03 17:36:02 jacobsen Exp $ -->
+<!-- $Id: layout-config-2-1-5.dtd,v 1.3 2008-05-03 18:31:58 jacobsen Exp $ -->
 
 <!-- This DTD is part of version 2.1.5 development.  Do not modify it       -->
 <!-- after version 2.1.5 is released.  For more information,                -->
@@ -476,14 +476,17 @@
 <!ELEMENT blocks (block*) >
   <!ATTLIST blocks class CDATA #REQUIRED> <!-- selects XML class that will handle -->
 
-<!ELEMENT block (sensor*, path*) >
+<!ELEMENT block (sensor?, path*) >
     <!ATTLIST block systemName		CDATA #REQUIRED>
     <!ATTLIST block userName		CDATA #IMPLIED>
 
-    <!ELEMENT path EMPTY >
+    <!ELEMENT path (beansetting*) >
         <!ATTLIST path todir	CDATA #REQUIRED>
         <!ATTLIST path fromdir	CDATA #REQUIRED>
-        <!ATTLIST path block	CDATA #IMPLIED> <!-- not required to allow old files -->
+        <!ATTLIST path block	CDATA #IMPLIED> <!-- not required to allow old file content -->
+
+        <!ELEMENT beansetting (turnout) >
+            <!ATTLIST beansetting setting	CDATA #REQUIRED>
 
 <!-- Simple Signal Logic (jmrit.blockboss) storage -->
 <!ELEMENT signalelements (signalelement*) >
