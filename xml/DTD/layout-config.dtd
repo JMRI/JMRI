@@ -1,8 +1,11 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.85 2008-04-29 14:36:49 jacobsen Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.86 2008-05-03 17:30:26 jacobsen Exp $ -->
 
-<!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
+<!-- This version is now frozen.  Make no changes to it!  -->
+<!-- For more information, see http://jmri.sourceforge.net/JavaDoc/doc/jmri/configurexml/package-summary.html -->
+
+<!-- This DTD is part of JMRI. Copyright 2001-2008.                         -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
