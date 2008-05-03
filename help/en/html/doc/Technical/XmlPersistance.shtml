@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XmlPersistance.shtml,v 1.5 2008-05-03 17:28:38 jacobsen Exp $ -->
+<!-- $Id: XmlPersistance.shtml,v 1.6 2008-05-03 17:34:04 jacobsen Exp $ -->
 <html lang="en">
 <!-- Copyright Bob Jacobsen 2004, 2007, 2008 -->
 <head>
@@ -136,6 +136,7 @@ almost all the work of storing and loading sensors.
 If you do add new attributes or elements, don't forget to update
 the format definition, see below.
 
+<a id="DTD">
 <h2>DTD Management</h2>
 
 JMRI controls XML semantics usings 
