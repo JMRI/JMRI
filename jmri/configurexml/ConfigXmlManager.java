@@ -21,11 +21,17 @@ import java.util.List;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.30 $
+ * @version $Revision: 1.31 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
 
+    /**
+     * Define the current DTD version string.
+     * {@see <A HREF="package-summary.html#DTD">DTD versioning</a>
+     */
+    static final String dtdVersion = "2-1-5";
+    
     public ConfigXmlManager() {
     }
 
@@ -200,7 +206,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
     protected void finalStore(Element root, File file) {
         try {
-            Document doc = newDocument(root, dtdLocation+"layout-config.dtd");
+            Document doc = newDocument(root, dtdLocation+"layout-config-"+dtdVersion+".dtd");
 
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/DecoderID.xsl"?>
