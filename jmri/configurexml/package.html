@@ -89,12 +89,39 @@ that prerequisites are present during a load:
 <LI>User
 </UL>
 
+<a id="DTD">
+<h2>DTD management</h2>
+
+DTDs for these files are found in the
+<a href="http://jmri.sf.net/xml/DTD/">xml/DTD</a>
+directory.
+<p>
+A rudimentary version control system is provided by DTD naming, i.e.
+<ul>
+<li>layout-config.dtd - the original, not to be changed any more.
+<li>layout-config-2-1-5.dtd - manually created when the first XML content 
+change was made after the release of JMRI 2.1.4, this accumulates changes
+until 2.1.5 is released.
+</ul>
+
+The first time a change is made to XML persistance after a release,
+the following steps are needed:
+<ul>
+<li>Copy the existing DTD to one with the next version name (e.g.
+after 2.1.5 is released, copy layout-config-2-1-5.dtd to layout-config-2-1-6.dtd)
+and commit to CVS.
+<li>Update the comment on the previous file.
+<li>Update the references in the 
+{@link jmri.configurexml.ConfigXmlManager} code.
+</ul>
+
 <h2>Related Documentation</h2>
 
 For overviews, tutorials, examples, guides, and tool documentation, please see:
 <ul>
-  <li><a href="http://jmri.sourceforge.net/">JMRI project overview page</a>
+  <li><a href="http://jmri.sourceforge.net/help/en/html/doc/Technical/XmlPersistance.shtml">JMRI XML persistance page</a>
   <li><a href="http://jmri.sourceforge.net/help/en/html/doc/Technical/index.shtml">JMRI project technical info</a>
+  <li><a href="http://jmri.sourceforge.net/">JMRI project overview page</a>
 </ul>
 
 <!-- Put @see and @since tags down here. -->
