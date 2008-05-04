@@ -12,8 +12,8 @@ import java.util.Vector;
 /**
  * Implements the jmri.Programmer interface via commands for the QSI programmer.
  *
- * @author      Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.2 $
+ * @author      Bob Jacobsen  Copyright (C) 2001, 2008
+ * @version	$Revision: 1.3 $
  */
 public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
 
@@ -100,9 +100,9 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
 
     int progState = 0;
     static final int NOTPROGRAMMING = 0;// is notProgramming
-    static final int MODESENT = 1; 		// waiting reply to command to go into programming mode
-    static final int COMMANDSENT = 2; 	// read/write command sent, waiting reply
-    static final int RETURNSENT = 4; 	// waiting reply to go back to ops mode
+    static final int COMMANDSENT = 2; 	// read/write command sent, waiting ack
+    static final int WAITRESULT = 4; 	// waiting reply with data
+    static final int WAITRESETSTATUS = 6; 	// waiting reply from reseting status
     boolean  _progRead = false;
     int _val;	// remember the value being read/written for confirmative reply
     int _cv;	// remember the cv being read/written
@@ -113,16 +113,15 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
         useProgrammer(p);
         _progRead = false;
         // set commandPending state
-        progState = MODESENT;
+        progState = COMMANDSENT;
         _val = val;
         _cv = CV;
 
         // start the error timer
         startShortTimer();
 
-        // format and send message to go to program mode
-        // QSI is in program mode by default but this doesn't do any harm
-        controller().sendQsiMessage(QsiMessage.getProgMode(), this);
+        // format and send message to do write
+        controller().sendQsiMessage(QsiMessage.getWriteCV(CV, val, getMode()), this);
     }
 
     public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
@@ -134,16 +133,15 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
         useProgrammer(p);
         _progRead = true;
         // set commandPending state
-        // set commandPending state
-        progState = MODESENT;
+        progState = COMMANDSENT;
         _cv = CV;
 
         // start the error timer
         startShortTimer();
 
-        // format and send message to go to program mode
+        // format and send message to do read
         // QSI programer is in program mode by default but this doesn't do any harm
-        controller().sendQsiMessage(QsiMessage.getProgMode(), this);
+        controller().sendQsiMessage(QsiMessage.getReadCV(CV, getMode()), this);
 
     }
 
@@ -162,16 +160,6 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
         }
     }
 
-    // internal method to create the QsiMessage for programmer task start
-    protected QsiMessage progTaskStart(int mode, int val, int cvnum) throws jmri.ProgrammerException {
-        // val = -1 for read command; mode is direct, etc
-        if (val < 0) {
-            return QsiMessage.getReadCV(cvnum, mode);
-        } else {
-            return QsiMessage.getWriteCV(cvnum, val, mode);
-        }
-    }
-
     public void message(QsiMessage m) {
         log.error("message received unexpectedly: "+m.toString());
     }
@@ -181,57 +169,41 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
             // we get the complete set of replies now, so ignore these
             if (log.isDebugEnabled()) log.debug("reply in NOTPROGRAMMING state");
             return;
-        } else if (progState == MODESENT) {
-            if (log.isDebugEnabled()) log.debug("reply in MODESENT state");
-            // see if reply is the acknowledge of program mode; if not, wait
-            if ( m.match("P") == -1 ) return;
-            // here ready to send the read/write command
-            progState = COMMANDSENT;
-            // see why waiting
-            try {
-                startLongTimer();
-                if (_progRead) {
-                    // read was in progress - send read command
-                    controller().sendQsiMessage(progTaskStart(getMode(), -1, _cv), this);
-                } else {
-                    // write was in progress - send write command
-                    controller().sendQsiMessage(progTaskStart(getMode(), _val, _cv), this);
-                }
-            } catch (Exception e) {
-                // program op failed, go straight to end
-                log.error("program operation failed, exception "+e);
-                progState = RETURNSENT;
-                controller().sendQsiMessage(QsiMessage.getExitProgMode(), this);
-            }
         } else if (progState == COMMANDSENT) {
             if (log.isDebugEnabled()) log.debug("reply in COMMANDSENT state");
-            // operation done, capture result, then have to leave programming mode
-            progState = RETURNSENT;
+            // operation started, move to next mode
+            progState = WAITRESULT;
+            startLongTimer();
+       } else if (progState == WAITRESULT) {
+            if (log.isDebugEnabled()) log.debug("reply in WAITRESULT state");
+            stopTimer();
+            // send QSI ack
+            controller().sendQsiMessage(QsiReply.getAck(m), null);
+            // operation done, capture result, then leave programming mode
+            progState = NOTPROGRAMMING;
             // check for errors
-            if (m.match("No Ack") >= 0) {
-                if (log.isDebugEnabled()) log.debug("handle error reply "+m);
-                // perhaps no loco present? Fail back to end of programming
-                progState = NOTPROGRAMMING;
-                controller().sendQsiMessage(QsiMessage.getExitProgMode(), this);
-                notifyProgListenerEnd(-1, jmri.ProgListener.NoLocoDetected);
+            if (m.getElement(4) != 0) {
+                // status present
+                if (log.isDebugEnabled()) log.debug("handle non-zero status in reply "+m);
+                // perhaps no loco present? 
+                // reset status
+                progState = WAITRESETSTATUS;
+                startShortTimer();
+                controller().sendQsiMessage(QsiMessage.getClearStatus(), this);
             }
             else {
-                // see why waiting
-                if (_progRead) {
-                    // read was in progress - get return value
+                // ended OK!
+                if (_progRead == true)
                     _val = m.value();
-                }
-                startShortTimer();
-                controller().sendQsiMessage(QsiMessage.getExitProgMode(), this);
+                notifyProgListenerEnd(_val, jmri.ProgListener.OK);
             }
-        } else if (progState == RETURNSENT) {
-            if (log.isDebugEnabled()) log.debug("reply in RETURNSENT state");
+        } else if (progState == WAITRESETSTATUS) {
+            if (log.isDebugEnabled()) log.debug("reply in WAITRESETSTATUS state");
             // all done, notify listeners of completion
             progState = NOTPROGRAMMING;
             stopTimer();
-            // if this was a read, we cached the value earlier.  If its a
-            // write, we're to return the original write value
-            notifyProgListenerEnd(_val, jmri.ProgListener.OK);
+            // notify of default error (not timeout)
+            notifyProgListenerEnd(-1, jmri.ProgListener.NoLocoDetected);
         } else {
             if (log.isDebugEnabled()) log.debug("reply in un-decoded state");
         }
