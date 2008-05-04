@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: index.shtml,v 1.2 2008-05-04 01:54:42 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.3 2008-05-04 03:33:33 jacobsen Exp $ -->
 <title>JMRI: QSI Programmer</title>
 
 <!-- Style -->
@@ -49,6 +49,11 @@ To access the QSI Programmer, you need to install a driver on your
 computer.  This section describes how to do that for several popular
 computer types.
 
+<a id="driverWin">
+<h3>Windows</h3>
+
+(Being worked on)
+
 <a id="driverMac">
 <h3>Mac OS X</h3>
 
@@ -70,8 +75,25 @@ and access the QSI Programmer.  It will appear as
 <a id="driverLinux">
 <h3>Linux</h3>
 
-<a id="driverWin">
-<h3>Windows</h3>
+<em>This is still being worked on.</em>
+
+<ol>
+<li>Download the 
+<a href="http://downloads.sourceforge.net/jmri/cornwall-redhat9-V0_84.tar">installation file</a>
+for the Linux driver.
+This is a .tar archive file.
+<li>
+Expand the archive to somewhere convenient, and change directory to there.
+<li>
+Try running the installer via either
+<code><pre>
+./load_qsi_prog
+</pre></code>
+or
+<code><pre>
+sudo ./load_qsi_prog
+</pre></code>
+</ol>
 
 <h2>Configure the QSI Programmer Support</h2>
 
@@ -86,7 +108,7 @@ Select the "Preferences..." item from the "Edit" menu on the main window.
 <li>
 Select "QSI Programmer" as the connection type.
 <li>
-Select "QSI Programmer" as the port to use.
+Select "QSIProgrammer" as the port to use.
 <li>
 The rest of the options are fixed, and can't be changed.
 <li>
