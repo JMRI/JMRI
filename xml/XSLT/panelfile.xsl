@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: panelfile.xsl,v 1.8 2008-05-01 06:15:05 jacobsen Exp $ -->
+<!-- $Id: panelfile.xsl,v 1.9 2008-05-04 22:47:57 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI panel file into an HTML page -->
 
@@ -200,6 +200,9 @@
                                 <xsl:when test="( @todir = 8192 )" >Down</xsl:when>
                                 <xsl:otherwise><xsl:value-of select="@todir"/></xsl:otherwise>
                                 </xsl:choose></td>
+                            <td>to 
+                                <xsl:element name="a"><xsl:attribute name="href">#Block-<xsl:value-of select="@block"/></xsl:attribute><xsl:value-of select="@block"/></xsl:element>,
+                                </td>
                             <td><xsl:choose>
                                 <xsl:when test="( @fromdir = 16 )" >North</xsl:when>
                                 <xsl:when test="( @fromdir = 32 )" >South</xsl:when>
@@ -213,6 +216,16 @@
                                 <xsl:when test="( @fromdir = 8192 )" >Down</xsl:when>
                                 <xsl:otherwise><xsl:value-of select="@fromdir"/></xsl:otherwise>
                                 </xsl:choose></td>
+                            <td>from</td>
+                            <xsl:for-each select="beansetting">
+                                <td>; when <xsl:value-of select="turnout/@systemName"/>
+                                <xsl:choose>
+                                <xsl:when test="( @setting = 2 )" > is Closed</xsl:when>
+                                <xsl:when test="( @setting = 4 )" > is Thrown</xsl:when>
+                                <xsl:otherwise> is <xsl:value-of select="@setting"/></xsl:otherwise>
+                                </xsl:choose>
+                                </td>
+                                </xsl:for-each>
                         </tr>
                         </xsl:for-each></table></td>
                 </tr>
