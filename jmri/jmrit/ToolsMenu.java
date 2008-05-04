@@ -9,9 +9,12 @@ import java.util.*;
 
 /**
  * Create a "Tools" menu containing the Jmri system-independent tools
+ *<P>
+ * As a best practice, we are migrating the action names (constructor arguments)
+ * out of this class and into the contructors themselves.
  *
- * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.22 $
+ * @author	Bob Jacobsen   Copyright 2003, 2008
+ * @version     $Revision: 1.23 $
  */
 public class ToolsMenu extends JMenu {
     public ToolsMenu(String name) {
@@ -28,7 +31,7 @@ public class ToolsMenu extends JMenu {
         setText(rb.getString("MenuTools"));
         
         JMenu programmerMenu = new JMenu(rb.getString("MenuProgrammers"));
-        programmerMenu.add(new jmri.jmrit.simpleprog.SimpleProgAction(rb.getString("MenuItemSingleCVProgrammer")));
+        programmerMenu.add(new jmri.jmrit.simpleprog.SimpleProgAction());
         programmerMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction(rb.getString("MenuItemDecoderProServiceProgrammer")));
         programmerMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(rb.getString("MenuItemDecoderProOpsModeProgrammer")));
         programmerMenu.add(new jmri.jmrit.dualdecoder.DualDecoderToolAction());
