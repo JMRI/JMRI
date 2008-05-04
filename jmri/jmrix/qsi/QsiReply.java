@@ -5,7 +5,7 @@ package jmri.jmrix.qsi;
 /**
  * Carries the reply to an QsiMessage
  * @author			Bob Jacobsen  Copyright (C) 2007
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class QsiReply extends jmri.jmrix.AbstractMessage {
     static final int MAXREPLYLENGTH = 200;
@@ -43,6 +43,13 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
         _nDataChars = Math.max(_nDataChars, n+1);
     }
     
+    static public QsiMessage getAck(QsiReply r) {
+        // send ack to received (unsolicited) message m
+        QsiMessage m = new QsiMessage(1);
+        m.setElement(0,r.getElement(1));
+        return m;
+    }
+
     // Check and strip framing characters and DLE from a QSI bootloader reply
     public boolean strip() {
         int tmp[] = new int[_nDataChars];
@@ -103,22 +110,7 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
      * in hex
      */
     public int value() {
-        int index = 0;
-        index = skipWhiteSpace(index);
-        index = skipEqual(index);
-        index = skipWhiteSpace(index);
-        String s1 = ""+(char)getElement(index);
-        String s2 = ""+(char)getElement(index+1);
-        int val = -1;
-        try {
-            int sum = Integer.valueOf(s2,16).intValue();
-            sum += 16*Integer.valueOf(s1,16).intValue();
-            val = sum;  // don't do this assign until now in case the conversion throws
-        } catch (Exception e) {
-            log.error("Unable to get number from reply: \""+s1+s2+"\" index: "+index
-                      +" message: \""+toString()+"\"");
-        }
-        return val;
+        return getElement(5)&0xFF;
     }
     
     int match(String s) {

@@ -11,7 +11,7 @@ import jmri.Programmer;
  * class handles the response from the command station.
  *
  * @author	Bob Jacobsen  Copyright (C) 2007, 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class QsiMessage extends jmri.jmrix.AbstractMessage {
 
@@ -218,35 +218,33 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
         return m;
     }
     
-    /*
-     * QSI uses same commands for reading and writing, with the number of
-     * parameters determining the action. Currently supports page mode and
-     * bit direct modes. A single parameter is taken as the CV address to read.
-     * Two parametes are taken as the CV address and data to be written.
-     */
+    static public QsiMessage getClearStatus() {
+        // OP_REQ_CLEAR_ERROR_STATUS
+        QsiMessage m = new QsiMessage(3);
+        m.setElement(0,17);
+        m.setElement(1,0);
+        m.setElement(2,0);
+        return m;
+    }
+    
     static public QsiMessage getReadCV(int cv, int mode) {
-        QsiMessage m = new QsiMessage(5);
-        if (mode == Programmer.PAGEMODE) {
-            m.setOpCode('V');
-        } else { // Bit direct mode
-            m.setOpCode('C');
-        }
-        addSpace(m, 1);
-        addIntAsThree(cv, m, 2);
+        // OP_REQ_READ_CV
+        QsiMessage m = new QsiMessage(4);
+        m.setElement(0,9);
+        m.setElement(1,1);
+        m.setElement(2,0);
+        m.setElement(3,cv);
         return m;
     }
     
     static public QsiMessage getWriteCV(int cv, int val, int mode) {
-        QsiMessage m = new QsiMessage(9);
-        if (mode == Programmer.PAGEMODE) {
-            m.setOpCode('V');
-        } else { // Bit direct mode
-            m.setOpCode('C');
-        }
-        addSpace(m, 1);
-        addIntAsThree(cv, m, 2);
-        addSpace(m, 5);
-        addIntAsThree(val, m, 6);
+        // OP_REQ_WRITE_CV
+        QsiMessage m = new QsiMessage(5);
+        m.setElement(0,30);
+        m.setElement(1,2);
+        m.setElement(2,0);
+        m.setElement(3,cv);
+        m.setElement(4,val);
         return m;
     }
     
