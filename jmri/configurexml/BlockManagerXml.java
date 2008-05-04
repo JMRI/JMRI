@@ -25,7 +25,7 @@ import org.jdom.Element;
  * in the path elements.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  * @since 2.1.2
  *
  */
@@ -77,6 +77,7 @@ public class BlockManagerXml extends AbstractMemoryManagerConfigXML {
             }
            
             // write out again with contents
+            iter = tm.getSystemNameList().iterator();
             while (iter.hasNext()) {
                 String sname = (String)iter.next();
                 if (sname==null) log.error("System name null during store");
@@ -111,10 +112,14 @@ public class BlockManagerXml extends AbstractMemoryManagerConfigXML {
         Element pe = new Element("path");
         pe.setAttribute("todir", ""+p.getToBlockDirection());
         pe.setAttribute("fromdir", ""+p.getFromBlockDirection());
-        pe.setAttribute("block", ""+p.getBlock().getSystemName());
+        if (p.getBlock()!=null)
+            pe.setAttribute("block", ""+p.getBlock().getSystemName());
         List l = p.getSettings();
-        for (int i=0; i<l.size(); i++)
-            addBeanSetting(pe, (BeanSetting)l.get(i));
+        if (l!=null) {
+            for (int i=0; i<l.size(); i++) {
+                addBeanSetting(pe, (BeanSetting)l.get(i));
+            }
+        }
         e.addContent(pe);
     }
     void addBeanSetting(Element e, BeanSetting bs) {
@@ -159,7 +164,7 @@ public class BlockManagerXml extends AbstractMemoryManagerConfigXML {
             String sysName = element.getAttribute("systemName").getValue();
             String userName = null;
             if (element.getAttribute("userName") != null)
-            userName = element.getAttribute("userName").getValue();
+                userName = element.getAttribute("userName").getValue();
             if (log.isDebugEnabled()) log.debug("defined Block: ("+sysName+")("+(userName==null?"<null>":userName)+")");
 
             Block block = InstanceManager.blockManagerInstance().getBlock(sysName);
