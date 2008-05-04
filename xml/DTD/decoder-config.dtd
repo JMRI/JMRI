@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a type or types of DCC decoder as  -->
 <!-- a component, esp. information on how to program it. -->
-<!-- $Revision: 1.48 $ -->
+<!-- $Revision: 1.49 $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
 <!--                                                                        -->
@@ -149,12 +149,16 @@
 
 <!-- The programming element describes the decoders programming capabilities -->
 <!ELEMENT programming EMPTY>
-<!ATTLIST programming direct     ( no | yes | bitOnly | byteOnly ) "no" >  <!-- direct mode support -->
-<!ATTLIST programming paged      ( no | yes ) "no" >               <!-- paged mode support -->
-<!ATTLIST programming register   ( no | yes ) "no" >               <!-- register mode support -->
-<!ATTLIST programming ops        ( no | yes ) "no" >               <!-- operation mode write support -->
-<!ATTLIST programming transpRead ( no | yes ) "no" >               <!-- ops mode readback using Digitrax transponding -->
-<!ATTLIST programming bidirRead  ( no | yes ) "no" >               <!-- ops mode readback using NMRA bidirectional -->
+<!ATTLIST programming direct         ( no | yes | bitOnly | byteOnly ) "no" >  <!-- direct mode support -->
+<!ATTLIST programming paged          ( no | yes ) "no" >    <!-- paged mode support -->
+<!ATTLIST programming register       ( no | yes ) "no" >    <!-- register mode support -->
+<!ATTLIST programming ops            ( no | yes ) "no" >    <!-- operation mode write support -->
+<!ATTLIST programming transpRead     ( no | yes ) "no" >    <!-- ops mode readback using Digitrax transponding -->
+<!ATTLIST programming bidirRead      ( no | yes ) "no" >    <!-- ops mode readback using NMRA bidirectional -->
+<!ATTLIST programming opsaccbasic    ( no | yes ) "no" >    <!-- accessory ops mode write using basic mode-->
+<!ATTLIST programming opsaccextended ( no | yes ) "no" >    <!-- accessory ops mode write using extended mode -->
+<!ATTLIST programming opsacclegacy   ( no | yes ) "no" >    <!-- accessory ops mode write using legacy mode -->
+<!ATTLIST programming sv             ( no | yes ) "no" >    <!-- SV Protocol support -->
 <!ATTLIST programming comment    CDATA #IMPLIED>
 
 
