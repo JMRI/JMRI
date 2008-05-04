@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: index.shtml,v 1.1 2008-05-01 03:53:57 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.2 2008-05-04 01:54:42 jacobsen Exp $ -->
 <title>JMRI: QSI Programmer</title>
 
 <!-- Style -->
@@ -28,21 +28,72 @@
 JMRI: QSI Programmer
 </h2>
 
-How to install the QSI Programmer support
+<em>This page describes QSI support that first became available
+in JMRI version 2.1.5.  Previous versions of JMRI do not contain it.</em><p>
 
-Fixed baud rate
+JMRI can now use a QSI Programmer module
+to read and write CVs in DCC decoders.
 
-Needs system-specific drivers
+<p>
+JMRI cannot (yet) download sounds to QSI decoders.
 
-Doesn't yet do sound downloads
+<p>
+Note that when using JMRI with the QSI Programmer,
+the Quantum CV Manager program must <em>not</em>
+be running. If it is, you'll get obscure errors and JMRI won't be
+able to access the decoder.
 
-Make sure that QSI program (Quantum CV Manager?) isn't running, or it will
-block the port.
+<h2>Driver Installation</h2>
 
-Download file for Mac OS X driver:
+To access the QSI Programmer, you need to install a driver on your
+computer.  This section describes how to do that for several popular
+computer types.
 
-http://downloads.sourceforge.net/jmri/corby-osx-V1_04_1-release.dmg
+<a id="driverMac">
+<h3>Mac OS X</h3>
 
+<ol>
+<li>Download the 
+<a href="http://downloads.sourceforge.net/jmri/corby-osx-V1_04_1-release.dmg">installation file</a>
+for the Mac OS X driver.
+This is a disk image (.dmg) file that should open
+as a new Finder window. If not, double click on it.
+<li>
+Double-click on the installer and follow the directions.
+<li>
+Restart your computer.
+</ol>
+You should now be able to start a JMRI application
+and access the QSI Programmer.  It will appear as
+"QSI Programmer" in the preferences windows.
+
+<a id="driverLinux">
+<h3>Linux</h3>
+
+<a id="driverWin">
+<h3>Windows</h3>
+
+<h2>Configure the QSI Programmer Support</h2>
+
+You configure JMRI to use a QSI Programmer similarly to the
+way all other connection types are configured.
+
+<ol>
+<li>
+Start the program
+<li>
+Select the "Preferences..." item from the "Edit" menu on the main window.
+<li>
+Select "QSI Programmer" as the connection type.
+<li>
+Select "QSI Programmer" as the port to use.
+<li>
+The rest of the options are fixed, and can't be changed.
+<li>
+Click the "Save" button. When prompted, allow the program to quit.
+</ol>
+
+The program is now configured. Restart it, and it should be ready to use.
     
 <!--#include virtual="/Footer" -->
 </body>
