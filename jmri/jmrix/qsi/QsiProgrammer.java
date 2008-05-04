@@ -13,7 +13,7 @@ import java.util.Vector;
  * Implements the jmri.Programmer interface via commands for the QSI programmer.
  *
  * @author      Bob Jacobsen  Copyright (C) 2001, 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
 
@@ -218,7 +218,9 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
             if (log.isDebugEnabled()) log.debug("timeout!");
             // perhaps no loco present? Fail back to end of programming
             progState = NOTPROGRAMMING;
-            controller().sendQsiMessage(QsiMessage.getExitProgMode(), this);
+            // send message to clear error
+            controller().sendQsiMessage(QsiMessage.getClearStatus(), null);
+            // report timeout
             notifyProgListenerEnd(_val, jmri.ProgListener.FailedTimeout);
         }
     }
