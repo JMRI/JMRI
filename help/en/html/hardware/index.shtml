@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.14 2008-03-30 21:27:55 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.15 2008-05-04 01:55:20 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -183,6 +183,13 @@
 	    <img src="http://www.protrak.cc/ptgif.gif"></a></dt>
 	    <dt>ProTrak Grapevine</dt>
 	    <dd><p class="dl">Configure: <A HREF="grapevine/index.shtml">Grapevine nodes</a></p></dd>
+
+	    <dt class="im"><a href="http://www.qsisolutions.com/products/q-programmer.html">
+	    <img src="http://www.qsisolutions.com/image/qsi-solutions-logo.gif" height="57" width="67"></a></dt>
+	    <dt>QSI Solutions</dt>
+	    <dd>
+		<p>Connection: Quantum Programmer</p>
+	        <p class="dl">Configure: <A HREF="qsi/index.shtml">USB connection</a></p></dd>
 
 	    <dt class="im"><a href="http://www.roco.com/">Roco</a></dt>
 	    <dt>Roco</dt>
