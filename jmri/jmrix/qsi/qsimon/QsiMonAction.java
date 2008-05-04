@@ -11,13 +11,18 @@ import javax.swing.AbstractAction;
  *       			QsiMonFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2007
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 public class QsiMonAction 			extends AbstractAction {
 
 	public QsiMonAction(String s) { super(s);}
 
+	public QsiMonAction() { 
+	    this(java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle")
+	            .getString("MenuItemCommandMonitor"));
+	}
+	
     public void actionPerformed(ActionEvent e) {
 		// create a QsiMonFrame
 		QsiMonFrame f = new QsiMonFrame();
