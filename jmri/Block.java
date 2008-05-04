@@ -64,7 +64,7 @@ import java.util.List;
  *</ul>
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class Block extends jmri.AbstractNamedBean {
 
@@ -101,6 +101,7 @@ public class Block extends jmri.AbstractNamedBean {
     
     ArrayList paths = new ArrayList();
     public void addPath(Path p) {
+        if (p==null) throw new IllegalArgumentException("Can't add null path");
         paths.add(p);
     }
     public void removePath(Path p) {
