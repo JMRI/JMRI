@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: index.shtml,v 1.3 2008-05-04 03:33:33 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.4 2008-05-04 17:00:15 jacobsen Exp $ -->
 <title>JMRI: QSI Programmer</title>
 
 <!-- Style -->
@@ -52,7 +52,19 @@ computer types.
 <a id="driverWin">
 <h3>Windows</h3>
 
-(Being worked on)
+<em>This is still being worked on.</em>
+<p>
+For JMRI to talk to the QSI Programmer, drivers have to be installed
+so that the QSI Programmer appears to be a serial port (a Virtual Comm Port, or
+VCP).  These drivers are different from the ones that the QSI software uses, so
+have to be downloaded and installed separately.
+<p>
+There are drivers available from the
+<a href="http://www.silabs.com/tgwWebApp/public/web_content/products/Microcontrollers/en/MCU_Downloads.htm">SiLabs web site</a>.
+<p>
+Unfortunately, we have not yet managed to get all those pieces 
+together in the right way to make this work.  If you'd like
+to work on this, it would be greatly appreciated.
 
 <a id="driverMac">
 <h3>Mac OS X</h3>
