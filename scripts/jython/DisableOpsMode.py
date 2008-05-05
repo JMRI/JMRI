@@ -1,20 +1,24 @@
 # Sample script to navigate through the GUI and disable
 # the Ops Mode button on the main DecoderPro window.
 #
-# Set up to work with the JMRI 2.1.5 GUI layout.
+# Set up to work with the JMRI 2.0 and later GUI layout.
 #
 #
 # Author: Bob Jacobsen, copyright 2008
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 
 import apps
 
 # navigate through the window structure
 mainWindow = jmri.util.JmriJFrame.getFrameList().get(0)
-print mainWindow.getTitle()
+if (mainWindow.getTitle() != "DecoderPro") :
+    mainWindow = jmri.util.JmriJFrame.getFrameList().get(1)
+if (mainWindow.getTitle() != "DecoderPro") :
+    mainWindow = jmri.util.JmriJFrame.getFrameList().get(2)
+#print mainWindow.getTitle()
 
 contentPane = mainWindow.getContentPane()
 
