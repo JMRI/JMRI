@@ -8,12 +8,13 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 
 import apps
 
 # navigate through the window structure
-mainWindow = jmri.util.JmriJFrame.getFrame("DecoderPro")
+mainWindow = jmri.util.JmriJFrame.getFrameList().get(0)
+print mainWindow.getTitle()
 
 contentPane = mainWindow.getContentPane()
 
