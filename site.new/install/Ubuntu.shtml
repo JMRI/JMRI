@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: Ubuntu.shtml,v 1.6 2008-05-01 14:38:32 jacobsen Exp $ -->
+<!-- $Id: Ubuntu.shtml,v 1.7 2008-05-06 10:53:00 jacobsen Exp $ -->
 <html lang="en">
 <head>
 	<meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8">
@@ -25,7 +25,7 @@
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">
-	    
+
 <h1>Installing JMRI on Ubuntu GNU/Linux</h1>
 
 <p>These are instructions for the installation of JMRI
@@ -74,18 +74,19 @@ Before starting that, make sure you're machine has a working
 internet connection (for downloads), etc.
 
 <h3>LocoBuffer USB</h3>
-If you're using Ubuntu 7.10 and a
+If you are planning to&nbsp; Ubuntu 7.10 and a
 <a href="http://rr-cirkits.com/locobuffer-usb/LB-manual-USB.pdf">LocoBuffer-USB</a>
 from 
 <a href="http://rr-cirkits.com/">RR-Cirkits</a>
-you will need to download and replace a new
-<a href="http://rr-cirkits.com/locobuffer-usb/linux/ftdi_sio.ko">ftdi_sio.ko file</a> &nbsp;(right click and save this file) to replace the one that came with the distribution.
-
-<h2>3 Installation Steps</h2>
+you will need to download the patched&nbsp;
+<a href="http://rr-cirkits.com/locobuffer-usb/linux/ftdi_sio.ko">ftdi_sio.ko file</a>
+&nbsp;(right click and save this file) to replace the one that came
+with the distribution. A better option is to upgrade your system to the
+Ubuntu 8.04 release which includes a fix for this driver problem.&nbsp;<br><br><h2>3 Installation Steps</h2>
 <p>There are three steps in Installing JMRI in Linux/GNU,
 The are installation of Java, running the Install-RXTX script (which
-installs the RXTX files, alters permissions on TTY devices and prompts
-the user to edit etc/group), installing JMRI itself and finally setting
+installs the RXTX files, alters permissions on TTY devices and adds
+the user to etc/group), installing JMRI itself and finally setting
 up the programme environment if necessary.</p>
 
 <h3>3.1 JAVA</h3>
@@ -122,7 +123,7 @@ extracting (extract) the file. &nbsp;The script is run by opening a terminal and
 <p style="margin-left: 40px;">i386/* to /usr/lib/jvm/java-6-sun-???/jre/lib/i386/
 </p>
 <p>Makes a symbolic link in /i386/ so the programe finds the correct
-RxTx (ln -s librxtxSerial-2.0.7pre2.so librxtxSerial.so).</p>Alters the permission on dev/ttyS0 and ttyS1.<br><br>Prompts the user to add is name to group uucp. &nbsp;This last will be automated in the near future.<br><br>The above description is brief, as the script itself can be opened in a text editor and studied at leisure.<br>
+RxTx (ln -s librxtxSerial-2.0.7pre2.so librxtxSerial.so).</p>Alters the permission on dev/ttyS0 and ttyS1.<br><br>Backs up /etc/group and adds the user to it.<br><br>The above description is brief, as the script itself can be opened in a text editor and studied at leisure.<br>
 
 <h3>3.3 JMRI</h3>
 <p>JMRI is downloaded in the normal manner.</p>
@@ -174,7 +175,7 @@ below:
 or directory</p>
 <p>Can not run the shell try installing csh.</p>
 <p style="text-decoration: underline;">bash; ./cats.csh: Permission denied</p>
-<p>try setting the icon to executable.</p>
+<p>try setting the icon to executable.</p><p style="text-align: right;">(Rev 1.7 Mon 5 May 2008)</p>
 
 
 <!--#include virtual="/Footer" -->
