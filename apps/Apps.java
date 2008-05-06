@@ -25,6 +25,8 @@ import javax.help.HelpBroker;
 import javax.help.HelpSet;
 import javax.swing.*;
 
+import java.awt.event.WindowEvent;
+
 import net.roydesign.mac.MRJAdapter;
 
 /**
@@ -32,9 +34,9 @@ import net.roydesign.mac.MRJAdapter;
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
  * @author  Dennis Miller  Copyright 2005
- * @version     $Revision: 1.57 $
+ * @version     $Revision: 1.58 $
  */
-public class Apps extends JPanel implements PropertyChangeListener{
+public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
     boolean onMac = (System.getProperty("mrj.version") != null);
 
@@ -526,6 +528,26 @@ public class Apps extends JPanel implements PropertyChangeListener{
     }
 
     /**
+     * Closing the main window is a shutdown request
+     */
+    public void windowClosing(java.awt.event.WindowEvent e) {
+        if (JOptionPane.showConfirmDialog(null,
+                    rb.getString("MessageLongCloseWarning"),
+                    rb.getString("MessageShortCloseWarning"),
+                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            handleQuit();
+        }       
+        // if get here, didn't quit, so don't close window
+    }
+
+    public void windowActivated(WindowEvent e) {}
+    public void windowClosed(WindowEvent e) {}
+    public void windowDeactivated(WindowEvent e) {}
+    public void windowDeiconified(WindowEvent e) {}
+    public void windowIconified(WindowEvent e) {}
+    public void windowOpened(WindowEvent e) {}
+ 
+    /**
      * Provide access to a place where applications
      * can expect the configurion code to build run-time
      * buttons.
@@ -642,15 +664,6 @@ public class Apps extends JPanel implements PropertyChangeListener{
             configFilename = def;
         }
     }
-
-    /**
-     * Closing the main window is a shutdown request
-     */
-/*     public void windowClosing(java.awt.event.WindowEvent e) { */
-/*         log.info("Main window closing causs program to shut down"); */
-/*         handleQuit(); */
-/*         // if get here, didn't close, so don't close window */
-/*     } */
     
     static protected void createFrame(Apps containedPane, JFrame frame) {
     	// create the main frame and menus
@@ -660,7 +673,10 @@ public class Apps extends JPanel implements PropertyChangeListener{
 
         frame.setJMenuBar(containedPane.menuBar);
         frame.getContentPane().add(containedPane);
+        
+        // handle window close
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        frame.addWindowListener(containedPane);
         
         // pack and center this frame
         frame.pack();
@@ -703,6 +719,7 @@ public class Apps extends JPanel implements PropertyChangeListener{
     static protected String ignore ="****** Ignore messages above this line *******";
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Apps.class.getName());
+    
 }
 
 
