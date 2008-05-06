@@ -50,7 +50,7 @@ import java.awt.event.KeyEvent;
  * DO_NOTHING_ON_CLOSE or HIDE_ON_CLOSE depending on what you're looking for.
  *
  * @author Bob Jacobsen  Copyright 2003, 2008
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 public class JmriJFrame extends JFrame implements java.awt.event.WindowListener {
@@ -243,6 +243,19 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener 
         mShown = true;
     }
 
+    /**
+     * A frame is considered "dirty" if it has changes
+     * that have not been stored.
+     * <p>
+     * We provide standard GUI handling for that here.
+     */
+    public void setDirty(boolean dirty) {
+        this.dirty = dirty;
+        // mark the window in the GUI
+        markWindowModified(dirty);
+    }
+    private boolean dirty = false;
+    
     // For marking the window as modified on MacOS X
     // See: http://developer.apple.com/qa/qa2001/qa1146.html
     final static String WINDOW_MODIFIED = "windowModified";
@@ -252,6 +265,8 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener 
     
     // Window methods
     public void windowOpened(java.awt.event.WindowEvent e) {}
+    public void windowClosing(java.awt.event.WindowEvent e) {}  
+    public void windowClosed(java.awt.event.WindowEvent e) {}
     
     public void windowActivated(java.awt.event.WindowEvent e) {}
     public void windowDeactivated(java.awt.event.WindowEvent e) {}
@@ -271,11 +286,6 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener 
             list.remove(this);
         }
     }
-    
-    public void windowClosing(java.awt.event.WindowEvent e) {
-    }
-    
-    public void windowClosed(java.awt.event.WindowEvent e) {}
     
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(JmriJFrame.class.getName());
 
