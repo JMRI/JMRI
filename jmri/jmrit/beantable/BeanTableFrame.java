@@ -34,7 +34,7 @@ import jmri.util.davidflanagan.HardcopyWriter;
  * that can in turn invoke {@link #addToBottomBox} as needed.
  * 
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.18 $
+ * @version	$Revision: 1.19 $
  */
 public class BeanTableFrame extends jmri.util.JmriJFrame {
 
@@ -153,7 +153,8 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
     }
     
     public void dispose() {
-        dataModel.dispose();
+        if (dataModel != null)
+            dataModel.dispose();
         dataModel = null;
         dataTable = null;
         dataScroll = null;
