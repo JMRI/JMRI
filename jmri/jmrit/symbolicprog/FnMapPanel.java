@@ -30,7 +30,7 @@ import org.jdom.Attribute;
  * Although support for the "CV label column" is still here, its turned off now.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class FnMapPanel extends JPanel {
     // columns
@@ -47,7 +47,7 @@ public class FnMapPanel extends JPanel {
     // these will eventually be passed in from the ctor
     int numFn = 14;  // include FL(f) and FL(r) in the total
     int numOut = 20;
-    int maxFn = 15;  // include FL(f) and FL(r) in the total
+    int maxFn = 30;  // include FL(f) and FL(r) in the total
     int maxOut = 15;
     
     GridBagLayout gl = null;
@@ -110,6 +110,22 @@ public class FnMapPanel extends JPanel {
         if (numFn>11) labelAt( firstFn+11, fnName, "Function 10");
         if (numFn>12) labelAt( firstFn+12, fnName, "Function 11");
         if (numFn>13) labelAt( firstFn+13, fnName, "Function 12");
+        if (numFn>14) labelAt( firstFn+13, fnName, "Function 13");
+        if (numFn>15) labelAt( firstFn+13, fnName, "Function 14");
+        if (numFn>16) labelAt( firstFn+13, fnName, "Function 15");
+        if (numFn>17) labelAt( firstFn+13, fnName, "Function 16");
+        if (numFn>18) labelAt( firstFn+13, fnName, "Function 17");
+        if (numFn>19) labelAt( firstFn+13, fnName, "Function 18");
+        if (numFn>20) labelAt( firstFn+13, fnName, "Function 19");
+        if (numFn>21) labelAt( firstFn+13, fnName, "Function 20");
+        if (numFn>22) labelAt( firstFn+13, fnName, "Function 21");
+        if (numFn>23) labelAt( firstFn+13, fnName, "Function 22");
+        if (numFn>24) labelAt( firstFn+13, fnName, "Function 23");
+        if (numFn>25) labelAt( firstFn+13, fnName, "Function 24");
+        if (numFn>26) labelAt( firstFn+13, fnName, "Function 25");
+        if (numFn>27) labelAt( firstFn+13, fnName, "Function 26");
+        if (numFn>28) labelAt( firstFn+13, fnName, "Function 27");
+        if (numFn>29) labelAt( firstFn+13, fnName, "Function 28");
         
         // label outputs
         for (int iOut=0; iOut<numOut; iOut++) {
