@@ -15,7 +15,7 @@ import jmri.util.JmriJFrame;
  * This is just an enclosure for the LoaderPane, which does the real work.
  *
  * @author		Bob Jacobsen   Copyright (C) 2005
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 public class LoaderFrame extends JmriJFrame {
 
@@ -37,6 +37,7 @@ public class LoaderFrame extends JmriJFrame {
 
     public void dispose() {
         pane.dispose();
+        super.dispose();
     }
     
     // Close the window when the close box is clicked

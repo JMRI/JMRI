@@ -14,7 +14,7 @@ import jmri.jmrix.grapevine.SerialTrafficController;
  * Frame for user configuration of serial nodes
  * @author	Bob Jacobsen   Copyright (C) 2004, 2007
  * @author	Dave Duchamp   Copyright (C) 2004, 2006
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class NodeTableFrame extends jmri.util.JmriJFrame {
 
@@ -56,5 +56,6 @@ public class NodeTableFrame extends jmri.util.JmriJFrame {
 
     public void dispose() {
         SerialTrafficController.instance().removeSerialListener(p);
+        super.dispose();
     }
 }

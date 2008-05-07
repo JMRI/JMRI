@@ -9,7 +9,7 @@ import jmri.jmrix.xpa.XpaTrafficController;
 /**
  * Frame displaying (and logging) Xpa+Modem command messages
  * @author			Paul Bender   Copyright (C) 2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class XpaMonFrame extends jmri.jmrix.AbstractMonFrame implements XpaListener {
 
@@ -26,6 +26,7 @@ public class XpaMonFrame extends jmri.jmrix.AbstractMonFrame implements XpaListe
 
 	public void dispose() {
 		XpaTrafficController.instance().removeXpaListener(this);
+		super.dispose();
 	}
 
 	public synchronized void message(XpaMessage l) {  // receive a message and log it

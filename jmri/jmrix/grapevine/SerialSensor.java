@@ -10,7 +10,7 @@ import jmri.AbstractSensor;
  * do all the work in a node-based system.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class SerialSensor extends AbstractSensor {
 
@@ -23,8 +23,6 @@ public class SerialSensor extends AbstractSensor {
         super(systemName, userName);
         _knownState = UNKNOWN;
     }
-
-    public void dispose() {}
 
     /**
      * Request an update on status.

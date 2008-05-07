@@ -30,7 +30,7 @@ import jmri.AbstractReporter;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2007
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
  
  public class LnReporter extends AbstractReporter implements LocoNetListener {
@@ -122,6 +122,7 @@ import jmri.AbstractReporter;
 	 
      public void dispose() {
          LnTrafficController.instance().removeLocoNetListener(~0, this);
+         super.dispose();
      }
 
      // data members

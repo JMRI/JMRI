@@ -21,7 +21,7 @@ import java.beans.*;
  * Frame displaying and programming a LocoIO configuration.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.18 $
+ * @version	$Revision: 1.19 $
  */
 
 public class LocoIOFrame extends jmri.util.JmriJFrame
@@ -173,13 +173,6 @@ public class LocoIOFrame extends jmri.util.JmriJFrame
         addrField.addFocusListener(fl4UnitAddress);
         subAddrField.addFocusListener(fl4UnitAddress);
 
-        // notice the window is closing
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                thisWindowClosing(e);
-            }
-        });
-
         try {
             data.setUnitAddress(0x51,0x00);
         } catch (NullPointerException e) {
@@ -191,12 +184,6 @@ public class LocoIOFrame extends jmri.util.JmriJFrame
 
         // and prep for display
         pack();
-    }
-
-    // Close the window when the close box is clicked
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
-        dispose();
     }
 
     /**

@@ -13,7 +13,7 @@ import jmri.SignalHead;
  *
  * Description:		extend jmri.AbstractSignalHead for grapevine serial signals
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SerialSignalHead extends DefaultSignalHead {
 
@@ -105,8 +105,6 @@ public class SerialSignalHead extends DefaultSignalHead {
         SerialTrafficController.instance().sendSerialMessage(m, null);
     }
         
-    public void dispose() {}  // no connections need to be broken
-
     // flashing is done on the cards, so we don't have to
     // do it manually
     public void startFlash() {}

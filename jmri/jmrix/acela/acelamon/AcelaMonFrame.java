@@ -10,7 +10,7 @@ import jmri.jmrix.acela.AcelaTrafficController;
 /**
  * Frame displaying (and logging) Acela command messages
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  *
  * @author	Bob Coleman, Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -31,6 +31,7 @@ public class AcelaMonFrame extends jmri.jmrix.AbstractMonFrame implements AcelaL
 
 	public void dispose() {
 		AcelaTrafficController.instance().removeAcelaListener(this);
+        super.dispose();
 	}
 
 	public synchronized void message(AcelaMessage l) {  // receive a message and log it

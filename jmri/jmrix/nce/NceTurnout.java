@@ -16,7 +16,7 @@ import jmri.PushbuttonPacket;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.30 $
+ * @version	$Revision: 1.31 $
  */
 public class NceTurnout extends AbstractTurnout {
 
@@ -107,8 +107,6 @@ public class NceTurnout extends AbstractTurnout {
 		NceMessage m = NceMessage.sendPacketMessage(bl);
 		NceTrafficController.instance().sendNceMessage(m, null);
 	}
-
-    public void dispose() {}  // no connections need to be broken
 
     // data members
     int _number;   // turnout number

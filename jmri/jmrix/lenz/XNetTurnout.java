@@ -99,7 +99,7 @@
  * may be necessary to poll for the feedback response data.
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001, Portions by Paul Bender Copyright (C) 2003 
- * @version			$Revision: 2.14 $
+ * @version			$Revision: 2.15 $
  */
 
 package jmri.jmrix.lenz;
@@ -594,7 +594,8 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
     public void dispose() {
         //XNetTrafficController.instance().removeXNetListener(XNetInterface.FEEDBACK|XNetInterface.COMMINFO|XNetInterface.CS_INFO, this);
-	this.removePropertyChangeListener(_stateListener);
+	    this.removePropertyChangeListener(_stateListener);
+	    super.dispose();
     }
 
    

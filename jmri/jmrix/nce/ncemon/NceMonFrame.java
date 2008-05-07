@@ -28,6 +28,7 @@ public class NceMonFrame extends jmri.jmrix.AbstractMonFrame implements NceListe
   
 	public void dispose() {
 		NceTrafficController.instance().removeNceListener(this);
+		super.dispose();
 	}
 			
 	public synchronized void message(NceMessage l) {  // receive a message and log it

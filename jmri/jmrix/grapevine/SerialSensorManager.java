@@ -13,7 +13,7 @@ import jmri.Sensor;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author          Dave Duchamp, multi node extensions, 2004
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class SerialSensorManager extends jmri.AbstractSensorManager
                             implements SerialListener {
@@ -39,10 +39,6 @@ public class SerialSensorManager extends jmri.AbstractSensorManager
      * Return the Oak Tree system letter
      */
     public char systemLetter() { return 'G'; }
-
-    // to free resources when no longer used
-    public void dispose() {
-    }
 
     /*
      * Normalize names

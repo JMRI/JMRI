@@ -10,7 +10,7 @@ import jmri.DccLocoAddress;
  * XpressnetNet connection.
  * @author  Paul Bender (C) 2002-2007
  * @author  Giorgio Terdina (C) 2007
- * @version    $Revision: 2.18 $
+ * @version    $Revision: 2.19 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -514,6 +514,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                                                             XNetInterface.CS_INFO |
                                                             XNetInterface.THROTTLE, this);
 	stopStatusTimer();
+	    super.dispose();
         //     super.dispose(); // GT 2007/11/6 - This statement results in a warning at run time
     }
     

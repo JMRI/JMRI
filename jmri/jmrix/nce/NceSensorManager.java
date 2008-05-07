@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractMRReply;
  * see nextAiuPoll()
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 public class NceSensorManager extends jmri.AbstractSensorManager
                             implements NceListener {
@@ -46,6 +46,7 @@ public class NceSensorManager extends jmri.AbstractSensorManager
     public void dispose() {
     	stopPolling = true;		// tell polling thread to go away
         NceTrafficController.instance().removeNceListener(listener);
+        super.dispose();
     }
 
     public Sensor createNewSensor(String systemName, String userName) {

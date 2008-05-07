@@ -8,7 +8,7 @@ import jmri.AbstractSensor;
  * Extend jmri.AbstractSensor for NCE systems
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class NceSensor extends AbstractSensor {
 
@@ -19,8 +19,6 @@ public class NceSensor extends AbstractSensor {
     public NceSensor(String systemName, String userName) {
         super(systemName, userName);
     }
-
-    public void dispose() {}
 
     /**
      * Request an update on status.

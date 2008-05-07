@@ -21,7 +21,7 @@ import jmri.jmrix.lenz.*;
  *
  * @author			Paul Bender  Copyright (C) 2003
  * @author			Giorgio Terdina  Copyright (C) 2007
- * @version			$Revision: 2.6 $
+ * @version			$Revision: 2.7 $
  */
 public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListener {
 
@@ -71,7 +71,7 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
         closeButton.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                 	setVisible(false);
-        		dispose();
+        		    dispose();
                 }
             }
         );

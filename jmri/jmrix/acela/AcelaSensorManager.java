@@ -17,7 +17,7 @@ import jmri.Sensor;
  * <P>
  * @author      Bob Jacobsen Copyright (C) 2003, 2007
  * @author      Dave Duchamp, multi node extensions, 2004
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  *
  * @author      Bob Coleman Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -35,10 +35,6 @@ public class AcelaSensorManager extends jmri.AbstractSensorManager
      * Return the Acela system letter
      */
     public char systemLetter() { return 'A'; }
-
-    // to free resources when no longer used
-    public void dispose() {
-    }
 
     /**
      * Create a new sensor if all checks are passed

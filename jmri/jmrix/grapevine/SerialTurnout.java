@@ -13,7 +13,7 @@ import jmri.Turnout;
  *  more than one Turnout object pointing to a single device is not allowed.
  *
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class SerialTurnout extends AbstractTurnout {
 
@@ -69,8 +69,6 @@ public class SerialTurnout extends AbstractTurnout {
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout){
 		if (log.isDebugEnabled()) log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock")+ " Pushbutton");
     }
-
-    // public void dispose() {}  // no connections need to be broken
 
     // data members
     String tSystemName; // System Name of this turnout
