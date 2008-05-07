@@ -10,7 +10,7 @@ import jmri.jmrix.sprog.SprogTrafficController;
 /**
  * Frame displaying (and logging) Sprog command messages
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SprogMonFrame extends jmri.jmrix.AbstractMonFrame implements SprogListener {
 
@@ -27,6 +27,7 @@ public class SprogMonFrame extends jmri.jmrix.AbstractMonFrame implements SprogL
 
 	public void dispose() {
 		SprogTrafficController.instance().removeSprogListener(this);
+		super.dispose();
 	}
 
 	public synchronized void message(SprogMessage l) {  // receive a message and log it

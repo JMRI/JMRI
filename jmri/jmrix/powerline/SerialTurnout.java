@@ -16,7 +16,7 @@ import jmri.Turnout;
  *
  * Description:		extend jmri.AbstractTurnout for powerline serial layouts
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class SerialTurnout extends AbstractTurnout {
 
@@ -65,8 +65,6 @@ public class SerialTurnout extends AbstractTurnout {
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout){
 		if (log.isDebugEnabled()) log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock")+ " Pushbutton");
     }
-
-    public void dispose() {}  // no connections need to be broken
 
     // data members holding the X10 address
     int housecode = -1;

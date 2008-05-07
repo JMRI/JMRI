@@ -29,7 +29,7 @@ import jmri.util.JTableUtil;
  * @author	Bob Jacobsen   Copyright (C) 2001
  *              Andrew Crosland          (C) 2006 ported to SPROG
  *                                           2008 Use JmriJframe
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
 
@@ -149,14 +149,6 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
         setSize(dimension);
       }
       mShown = true;
-    }
-
-    // Close the window when the close box is clicked
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-      setVisible(false);
-      dispose();
-      // and disconnect from the SlotManager
-
     }
 
     public void dispose() {

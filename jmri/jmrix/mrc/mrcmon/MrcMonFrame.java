@@ -10,7 +10,7 @@ import jmri.jmrix.mrc.MrcTrafficController;
 /**
  * Frame displaying (and logging) MRC command messages
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class MrcMonFrame extends jmri.jmrix.AbstractMonFrame implements MrcListener {
 
@@ -27,6 +27,7 @@ public class MrcMonFrame extends jmri.jmrix.AbstractMonFrame implements MrcListe
 
 	public void dispose() {
 		MrcTrafficController.instance().removeMrcListener(this);
+		super.dispose();
 	}
 
 	public synchronized void message(MrcMessage l) {  // receive a message and log it

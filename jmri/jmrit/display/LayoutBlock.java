@@ -60,7 +60,7 @@ import jmri.AbstractNamedBean;
  *		the configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class LayoutBlock extends AbstractNamedBean
@@ -786,13 +786,6 @@ public class LayoutBlock extends AbstractNamedBean
 		log.error("unknown color text '"+string+"' sent to stringToColor");
 		return Color.black;
 	}
-
-    /**
-     * Clean up when this object is no longer needed.  Should not
-     * be called while the object is still displayed; see remove()
-     */
-    public void dispose() {
-    }
 
     /**
      * Removes this object from display and persistance

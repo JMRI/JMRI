@@ -10,7 +10,7 @@ import jmri.jmrix.easydcc.EasyDccTrafficController;
 /**
  * Frame displaying (and logging) EasyDcc command messages
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class EasyDccMonFrame extends jmri.jmrix.AbstractMonFrame implements EasyDccListener {
 
@@ -27,6 +27,7 @@ public class EasyDccMonFrame extends jmri.jmrix.AbstractMonFrame implements Easy
 
 	public void dispose() {
 		EasyDccTrafficController.instance().removeEasyDccListener(this);
+		super.dispose();
 	}
 
 	public synchronized void message(EasyDccMessage l) {  // receive a message and log it

@@ -10,7 +10,7 @@ import jmri.jmrix.cmri.serial.SerialTrafficController;
 /**
  * Frame displaying (and logging) CMRI serial command messages
  * @author	    Bob Jacobsen   Copyright (C) 2001
- * @version         $Revision: 1.9 $
+ * @version         $Revision: 1.10 $
  */
 
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
@@ -28,6 +28,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 
     public void dispose() {
         SerialTrafficController.instance().removeSerialListener(this);
+        super.dispose();
     }
 
     public synchronized void message(SerialMessage l) {  // receive a message and log it

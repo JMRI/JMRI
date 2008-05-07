@@ -13,7 +13,7 @@ import jmri.jmrix.sprog.SprogTrafficController;
 /**
  * Frame for SPROG firmware update utility.
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class SprogUpdateFrame
     extends jmri.util.JmriJFrame
@@ -81,6 +81,7 @@ public class SprogUpdateFrame
   public void dispose() {
     tc.removeSprogListener(this);
     tc = null;
+    super.dispose();
   }
 
   public void message(SprogMessage m) {}   // Ignore

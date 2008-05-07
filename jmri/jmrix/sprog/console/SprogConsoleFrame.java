@@ -15,7 +15,7 @@ import jmri.jmrix.sprog.SprogConstants;
  * Frame for Sprog Console
  * 
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements SprogListener {
     
@@ -73,6 +73,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     
     public void dispose() {
         SprogTrafficController.instance().removeSprogListener(this);
+        super.dispose();
     }
     
     public void initComponents() throws Exception {

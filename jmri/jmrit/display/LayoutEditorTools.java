@@ -30,7 +30,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class LayoutEditorTools 
@@ -5449,13 +5449,6 @@ public class LayoutEditorTools
 		}
 		return sensorName;
 	}
-
-    /**
-     * Clean up when this object is no longer needed.  Should not
-     * be called while the object is still displayed; see remove()
-     */
-    public void dispose() {
-    }
 
 	// initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LayoutEditorTools.class.getName());

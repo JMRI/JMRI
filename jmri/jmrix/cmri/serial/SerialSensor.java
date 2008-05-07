@@ -8,7 +8,7 @@ import jmri.AbstractSensor;
  * Extend jmri.AbstractSensor for C/MRI serial systems
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class SerialSensor extends AbstractSensor {
 
@@ -21,8 +21,6 @@ public class SerialSensor extends AbstractSensor {
         super(systemName, userName);
         _knownState = UNKNOWN;
     }
-
-    public void dispose() {}
 
     /**
      * Request an update on status.

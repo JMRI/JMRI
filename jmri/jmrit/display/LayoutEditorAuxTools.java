@@ -35,7 +35,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  *	directly from LayoutEditor or LayoutEditor specific modules.
  * <P>
  * @author Dave Duchamp Copyright (c) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class LayoutEditorAuxTools 
@@ -962,14 +962,6 @@ public class LayoutEditorAuxTools
 			}
 		}
 	}
-
-	
-    /**
-     * Clean up when this object is no longer needed.  Should not
-     * be called while the object is still displayed; see remove()
-     */
-    public void dispose() {
-    }
 
 	// initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LayoutEditorAuxTools.class.getName());

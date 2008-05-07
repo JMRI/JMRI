@@ -14,7 +14,7 @@ import jmri.DccLocoAddress;
  * system specific consist managers can be built.
  *
  * @author                Paul Bender Copyright (C) 2004
- * @version               $Revision: 1.7 $
+ * @version               $Revision: 1.8 $
  */
 abstract public class AbstractConsistManager implements jmri.ConsistManager{
 
@@ -25,10 +25,6 @@ abstract public class AbstractConsistManager implements jmri.ConsistManager{
 	public AbstractConsistManager(){
 	      ConsistTable = new Hashtable();
 	      ConsistList = new ArrayList();
-	}
-
-	// Clean up Local Storage
-	public void dispose() {
 	}
 
 	/**

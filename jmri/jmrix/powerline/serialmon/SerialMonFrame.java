@@ -12,7 +12,7 @@ import jmri.jmrix.powerline.X10Sequence;
 /**
  * Frame displaying (and logging) serial command messages
  * @author	    Bob Jacobsen   Copyright (C) 2001, 2006, 2007, 2008
- * @version         $Revision: 1.10 $
+ * @version         $Revision: 1.11 $
  */
 
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
@@ -30,6 +30,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 
     public void dispose() {
         SerialTrafficController.instance().removeSerialListener(this);
+        super.dispose();
     }
 
     public synchronized void message(SerialMessage l) {  // receive a message and log it

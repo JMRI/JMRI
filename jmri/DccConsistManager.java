@@ -5,7 +5,7 @@
  *                        DccConsist class for the consists it builds
  *
  * @author                Paul Bender Copyright (C) 2003
- * @version               $Revision: 1.7 $
+ * @version               $Revision: 1.8 $
  */
 
 
@@ -26,10 +26,6 @@ public class DccConsistManager implements ConsistManager{
 	public DccConsistManager(){
 	      ConsistTable = new Hashtable();
 	      ConsistList = new ArrayList();
-	}
-
-	// Clean up Local Storage
-	public void dispose() {
 	}
 
 	/**

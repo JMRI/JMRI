@@ -47,7 +47,7 @@ import java.text.MessageFormat;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -3179,6 +3179,7 @@ public class LayoutEditor extends JmriJFrame {
 	 */
 	public void dispose() {
 		jmri.jmrit.display.PanelMenu.instance().updateLayoutEditorPanel(this);
+		super.dispose();
 	}
 	
 	/** 

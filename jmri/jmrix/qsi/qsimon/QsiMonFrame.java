@@ -10,7 +10,7 @@ import jmri.jmrix.qsi.QsiTrafficController;
 /**
  * Frame displaying (and logging) QSI command messages
  * @author			Bob Jacobsen   Copyright (C) 2007, 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class QsiMonFrame extends jmri.jmrix.AbstractMonFrame implements QsiListener {
 
@@ -27,6 +27,7 @@ public class QsiMonFrame extends jmri.jmrix.AbstractMonFrame implements QsiListe
 
 	public void dispose() {
 		QsiTrafficController.instance().removeQsiListener(this);
+		super.dispose();
 	}
 
 	public synchronized void message(QsiMessage l) {  // receive a message and log it

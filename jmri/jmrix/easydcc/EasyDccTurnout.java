@@ -15,7 +15,7 @@ import jmri.NmraPacket;
  *
  * Description:		extend jmri.AbstractTurnout for EasyDcc layouts
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class EasyDccTurnout extends AbstractTurnout {
 
@@ -51,8 +51,6 @@ public class EasyDccTurnout extends AbstractTurnout {
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout){
 		if (log.isDebugEnabled()) log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock")+ " Pushbutton ET"+_number);
     }
-
-	public void dispose() {}  // no connections need to be broken
 
 	// data members
 	int _number;   // turnout number
