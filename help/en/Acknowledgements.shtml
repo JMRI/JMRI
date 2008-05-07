@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.37 2008-04-29 12:40:27 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.38 2008-05-07 07:02:54 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -106,7 +106,7 @@
         support for more than two systems to the preferences,
         and added the Light Control
 	<LI>Barry Chinn, who created the PDF file of our manual
-	<LI>Bill Chown, who provided MRC decoder definitions
+	<LI>Bill Chown, who did a lot of work on the MRC decoder definitions
 	<LI>Normal Clymer, who contribed a TCS definition file
 	<LI>Seth Cohen, who helped get serial sensors and NCE AIUs to work, and
 	wrote the speedometer web page
