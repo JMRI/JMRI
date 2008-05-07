@@ -50,7 +50,7 @@ import java.awt.event.KeyEvent;
  * DO_NOTHING_ON_CLOSE or HIDE_ON_CLOSE depending on what you're looking for.
  *
  * @author Bob Jacobsen  Copyright 2003, 2008
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class JmriJFrame extends JFrame implements java.awt.event.WindowListener {
@@ -230,7 +230,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener 
     private boolean mShown = false;
     public void addNotify() {
         super.addNotify();
-        log.debug("addNotify window ("+getTitle()+")");
+        // log.debug("addNotify window ("+getTitle()+")");
         if (mShown)
             return;
         // resize frame to account for menubar
@@ -265,7 +265,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener 
     }
     
     // Window methods
-    public void windowOpened(java.awt.event.WindowEvent e) {log.debug("Window ("+getTitle()+") opened "+e); }
+    public void windowOpened(java.awt.event.WindowEvent e) {}
     public void windowClosing(java.awt.event.WindowEvent e) {log.debug("Window ("+getTitle()+") closing "+e); }  
     public void windowClosed(java.awt.event.WindowEvent e) {log.debug("Window ("+getTitle()+") closed "+e); }
     
