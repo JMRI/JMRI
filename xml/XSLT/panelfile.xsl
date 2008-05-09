@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: panelfile.xsl,v 1.9 2008-05-04 22:47:57 jacobsen Exp $ -->
+<!-- $Id: panelfile.xsl,v 1.10 2008-05-09 00:24:15 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI panel file into an HTML page -->
 
@@ -89,7 +89,7 @@
 <xsl:template match="layout-config/signalheads">
 <h3>Signal Heads</h3>
     <table border="1">
-    <tr><td>System Name</td><td>User Name</td></tr>
+    <tr><td>System Name</td><td>User Name</td><td></td><td></td></tr>
     <!-- index through individal signalhead elements -->
     <xsl:apply-templates/>
     </table>
@@ -261,7 +261,20 @@
 </xsl:template>
 
 <xsl:template match="signalhead">
-<tr><td><xsl:value-of select="@systemName"/></td><td><xsl:value-of select="@userName"/></td></tr>
+<tr><td><xsl:value-of select="@systemName"/></td>
+  <td><xsl:value-of select="@userName"/></td>
+  <td><xsl:choose>
+    <xsl:when test="( @class = 'jmri.configurexml.VirtualSignalHeadXml' )" >Virtual</xsl:when>
+    <xsl:when test="( @class = 'jmri.configurexml.TripleTurnoutSignalHeadXml' )" >Triple Output</xsl:when>
+    <xsl:when test="( @class = 'jmri.configurexml.DoubleTurnoutSignalHeadXml' )" >Double Output</xsl:when>
+    <xsl:when test="( @class = 'jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml' )" >SE8c</xsl:when>
+    <xsl:otherwise>Other</xsl:otherwise>
+    </xsl:choose></td>
+  <td>
+     <xsl:for-each select="turnout">
+        <xsl:value-of select="@systemName"/><br/>
+     </xsl:for-each></td>
+</tr>
 </xsl:template>
 
 <xsl:template match="sensor">
