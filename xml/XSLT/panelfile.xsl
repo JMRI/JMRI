@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: panelfile.xsl,v 1.10 2008-05-09 00:24:15 jacobsen Exp $ -->
+<!-- $Id: panelfile.xsl,v 1.11 2008-05-09 00:45:32 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI panel file into an HTML page -->
 
@@ -89,7 +89,7 @@
 <xsl:template match="layout-config/signalheads">
 <h3>Signal Heads</h3>
     <table border="1">
-    <tr><td>System Name</td><td>User Name</td><td></td><td></td></tr>
+    <tr><td>System Name</td><td>User Name</td><td>Type</td><td>Output</td></tr>
     <!-- index through individal signalhead elements -->
     <xsl:apply-templates/>
     </table>
