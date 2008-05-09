@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: panelfile.xsl,v 1.11 2008-05-09 00:45:32 jacobsen Exp $ -->
+<!-- $Id: panelfile.xsl,v 1.12 2008-05-09 23:23:52 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI panel file into an HTML page -->
 
@@ -149,18 +149,37 @@
         <xsl:call-template name="oneLogix"/>
 </xsl:template>
 
+<!-- new SSL name -->
+<xsl:template match="signalelements">
+</xsl:template>
+
 <xsl:template match="layout-config/blocks">
     <xsl:if test="@class = 'jmri.jmrit.blockboss.configurexml.BlockBossLogicXml'" >
         <!-- Index through SSL elements -->
         <!-- each one becomes a table -->
         <h3>Simple Signal Logic</h3>
             <table border="1">
-            <tr><td>Controlled Signal</td><td>Watched Signal</td></tr>
+            <tr><td>Controlled Signal</td><td>Watched Signal</td>
+                <td>Turnout</td><td>Sensors</td><td>Options</td></tr>
             <!-- index through individal block elements -->
             <xsl:for-each select="block">
                 <tr>
                     <td><xsl:value-of select="@signal"/></td>
-                    <td><xsl:value-of select="@watchedsignal1"/></td>
+                    <td><xsl:value-of select="@watchedsignal1"/><br/>
+                        <xsl:value-of select="@watchedsignal2"/></td>
+                    <td><xsl:value-of select="@watchedturnout"/></td>
+                    <td><xsl:for-each select="sensor">
+                        <xsl:value-of select="@systemName"/><br/>
+                        </xsl:for-each></td>
+                    <td><xsl:if test="@limitspeed1 = 'true'" >
+                            Limit Speed Path 1<br/></xsl:if>
+                        <xsl:if test="@limitspeed2 = 'true'" >
+                            Limit Speed Path 2<br/></xsl:if>
+                        <xsl:if test="@useflashyellow = 'true'" >
+                            Use Flash Yellow<br/></xsl:if>
+                        <xsl:if test="@distantsignal = 'true'" >
+                            Distant Signal<br/></xsl:if>
+                        </td>
                 </tr>
             </xsl:for-each>
             </table>
