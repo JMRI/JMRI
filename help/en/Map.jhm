@@ -68,6 +68,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
 	<mapID target="html.hardware.XPressNet.CreateXNetLogFile" url="html/hardware/XPressNet/CreateXNetLogFile.shtml" />
 	<mapID target="html.tools.signaling.Logic_traildiv" url="html/tools/signaling/Logic.shtml#traildiv" />
 	<mapID target="html.hardware.acela.index" url="html/hardware/acela/index.shtml" />
+	<mapID target="package.jmri.jmrix.loconet.locostats.LocoStatsFrame" url="package/jmri/jmrix/loconet/locostats/LocoStatsFrame.shtml" />
 	<mapID target="package.jmri.jmrit.display.LayoutEditor_intro" url="package/jmri/jmrit/display/LayoutEditor.shtml#intro" />
 	<mapID target="html.apps.DecoderPro.XML" url="html/apps/DecoderPro/XML.shtml" />
 	<mapID target="html.apps.DecoderPro.FAQ_lb-xp" url="html/apps/DecoderPro/FAQ.shtml#lb-xp" />
