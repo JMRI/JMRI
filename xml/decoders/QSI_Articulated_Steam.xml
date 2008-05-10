@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id: QSI_Articulated_Steam.xml,v 1.9 2008-04-26 21:57:47 jacobsen Exp $ -->
+<!-- $Id: QSI_Articulated_Steam.xml,v 1.10 2008-05-10 04:47:28 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -17,6 +17,7 @@
 
 <decoder-config>
   <version author="Walter Thompson" version="7" lastUpdated="20080412"/>
+  <version author="Walter Thompson" version="8" lastUpdated="20080511"/>
 
 <!-- version 1 - modified for QSI CV.PI.SI format - Howard -->
 <!-- version 2 - Changed "upgrade" notice on tabs to reflect 1.5.8 - Howard -->
@@ -30,6 +31,7 @@
                    on Misc. pane - Howard -->
 <!-- version 7 - Added "Throttle mode" and "Speed to MPH scale" to QSI 
                    Misc. pane - wsthompson@earthlink.net -->
+<!-- Version 8 add throttle mode Walt Thompson -->
 
 <decoder>
   <family name="QSI Articulated Steam" mfg="QSIndustries" lowVersionID="2" highVersionID="5" >
@@ -1327,8 +1329,6 @@
     <label label=" "/>
     <display item="Verbal CV Inquiry"/>
     <label label=" "/>
-    <label label="Throttle mode"/>
-    <display item="CV56.4"/>
   </column>
 </pane>
 
