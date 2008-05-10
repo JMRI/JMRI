@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2002, 2005, 2007 All rights reserved -->
-<!-- $Id: Digitrax_01x3.xml,v 1.41 2008-03-17 06:27:17 jacobsen Exp $ -->
+<!-- $Id: Digitrax_01x3.xml,v 1.42 2008-05-10 04:50:32 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,6 +16,7 @@
 <!-- for more details.                                                      -->
 
 <decoder-config>
+	<version author="Michael Mosher" version="26" lastUpdated="20080504"/>
 	<version author="Bob Jacobsen" version="25" lastUpdated="20080313"/>
 	<version author="Martin Gostling" version="24" lastUpdated="20080308"/>
 	<version author="Bob Jacobsen" version="23" lastUpdated="20071120"/>
@@ -56,6 +57,7 @@
 	<!-- Version 23 - Updated connectors from web info (Bob Jacobsen) -->
 	<!-- Version 24 - Added  DN143IP and DZ125xx decoders -->
 	<!-- Version 25 - Add DN143K1, DN143K2 (Bob Jacobsen) -->
+	<!-- Version 26 - Add DH165Q1 (Michael Mosher) -->
 
 <decoder>
 	<family name="Series 3 with FX3, silent, readback" mfg="Digitrax" lowVersionID="49" highVersionID="51">
@@ -174,6 +176,15 @@
 			<output name="5" label="Pad" connection="solder"/> 
 			<output name="6" label="Pad" connection="solder"/>
 			<size length="1.05" width=".67" height=".25" units="inches"/>
+			</model>
+		<model model="DH165Q1" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" >
+			<output name="1" label="Pin" connection="solder"/> 
+			<output name="2" label="Pin" connection="solder"/> 
+			<output name="3" label="Pin" connection="solder"/> 
+			<output name="4" label="Pin" connection="solder"/> 
+			<output name="5" label="Pad" connection="solder"/> 
+			<output name="6" label="Pad" connection="solder"/>
+			<size length="2.877" width=".667" height=".173" units="inches"/>
 			</model>
 	    <model model="DN123K3" numOuts="2" numFns="8" maxMotorCurrent="1.25A (peak=2A)" formFactor="N" connector="9pin" >
 			<output name="1" label="LED" connection="solder"/> 
