@@ -1,0 +1,136 @@
+// PR3Adapter.java
+
+package jmri.jmrix.loconet.pr3;
+
+import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
+import javax.comm.SerialPort;
+
+/**
+ * Update the code in jmri.jmrix.loconet.locobuffer so that it 
+ * refers to the switch settings on the new Digitrax PR3
+ 
+ * @author			Bob Jacobsen   Copyright (C) 2004, 2005, 2006, 2008
+ * @version			$Revision: 1.1 $
+ */
+public class PR3Adapter extends LocoBufferAdapter {
+
+
+    public PR3Adapter() {
+        super();
+        m2Instance = this;
+    }
+
+    /**
+     * Always use flow control, not considered a user-setable option
+     */
+    protected void setSerialPort(SerialPort activeSerialPort) throws javax.comm.UnsupportedCommOperationException {
+        // find the baud rate value, configure comm options
+        int baud = 57600;  // default, but also defaulted in the initial value of selectedSpeed
+        for (int i = 0; i<validBaudNumber().length; i++ )
+            if (validBaudRates()[i].equals(mBaudRate))
+                baud = validBaudNumber()[i];
+        activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
+                                             SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+
+        // set RTS high, DTR high - done early, so flow control can be configured after
+        activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
+        activeSerialPort.setDTR(true);		// pin 1 in Mac DIN8; on main connector, this is DTR
+
+        // configure flow control to always on
+        int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; 
+        if (mOpt1.equals(validOption1[1]))
+            flow = SerialPort.FLOWCONTROL_NONE;
+        activeSerialPort.setFlowControlMode(flow);
+        log.debug("Found flow control "+activeSerialPort.getFlowControlMode()
+                  +" RTSCTS_OUT="+SerialPort.FLOWCONTROL_RTSCTS_OUT
+                  +" RTSCTS_IN= "+SerialPort.FLOWCONTROL_RTSCTS_IN);
+    }
+
+    /**
+     * Set up all of the other objects to operate with a PR3
+     * connected to this port. This overrides the version in
+     * loconet.locobuffer, but it has to duplicate much of the
+     * functionality there, so the code is basically copied.
+     */
+    public void configure() {
+        // connect to a packetizing traffic controller
+        // that does echoing
+        jmri.jmrix.loconet.pr2.LnPacketizer packets = new jmri.jmrix.loconet.pr2.LnPacketizer();
+        packets.connectPort(this);
+
+        // do the common manager config
+        configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
+        configureManagers();
+
+        // start operation
+        packets.startThreads();
+        jmri.jmrix.loconet.ActiveFlag.setActive();
+
+    }
+
+   /**
+     * Configure the subset of LocoNet managers valid for the PR3.
+     * This overrides the method in LnPortController, which is more general.
+     */
+    static public void configureManagers() {
+        //jmri.InstanceManager.setPowerManager(new jmri.jmrix.loconet.pr2.LnPr2PowerManager());
+
+        /* jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager()); */
+
+        /* jmri.InstanceManager.setLightManager(new jmri.jmrix.loconet.LnLightManager()); */
+
+        /* jmri.InstanceManager.setSensorManager(new jmri.jmrix.loconet.LnSensorManager()); */
+
+        //jmri.InstanceManager.setThrottleManager(new jmri.jmrix.loconet.LnPr2ThrottleManager());
+
+        /* jmri.InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager()); */
+
+    }
+
+    /**
+     * Get an array of valid baud rates. 
+     */
+    public String[] validBaudRates() {
+        return validSpeeds;
+    }
+    protected String [] validSpeeds = new String[]{"57,600 baud"};
+    /**
+     * Get an array of valid baud rates as integers. This allows subclasses
+     * to change the arrays of speeds.
+     */
+    public int[] validBaudNumber() {
+        return validSpeedValues;
+    }
+    protected int [] validSpeedValues = new int[]{57600};
+
+    /**
+     * Option 1 controls flow control option
+     */
+    public String option1Name() { return "LocoBuffer connection uses "; }
+    public String[] validOption1() { return validOption1; }
+    // meanings are assigned to these above, so make sure the order is consistent
+    protected String [] validOption1 = new String[]{"hardware flow control (recommended)", "no flow control"};
+
+    /**
+     * The PR3 is itself a command station, so fix that choice
+     * by providing just the one option
+     */
+    public String[] validOption2() { 
+        String[] retval = {"PR3"}; 
+        return retval;
+    }
+
+
+    static public boolean hasInstance() { return (null!=m2Instance); }
+    static public LocoBufferAdapter instance() {
+        if (m2Instance == null) {
+        	m2Instance = new PR3Adapter();
+        	log.debug("new default instance in PR3Adapter");
+        }
+        log.debug("PR3Adapter.instance returns object of class "+m2Instance.getClass().getName());
+        return m2Instance;
+    }
+    static private PR3Adapter m2Instance = null;
+
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PR3Adapter.class.getName());
+}
