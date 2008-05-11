@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet package.
  * @author	Bob Jacobsen Copyright 2001, 2003
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 public class LocoNetTest extends TestCase {
 
@@ -28,7 +28,7 @@ public class LocoNetTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.loconet.LocoNetTest");  // no tests in this class itself
         suite.addTest(jmri.jmrix.loconet.sdf.SdfTest.suite());
         suite.addTest(jmri.jmrix.loconet.locomon.LocoMonTest.suite());
-        suite.addTest(jmri.jmrix.loconet.locobuffer.LocoBufferTest.suite());
+        suite.addTest(jmri.jmrix.loconet.locostats.LocoStatsTest.suite());
         suite.addTest(jmri.jmrix.loconet.soundloader.SoundLoaderTest.suite());
         suite.addTest(jmri.jmrix.loconet.spjfile.SpjFileTest.suite());
         suite.addTest(new TestSuite(Se8AlmImplementationTest.class));
