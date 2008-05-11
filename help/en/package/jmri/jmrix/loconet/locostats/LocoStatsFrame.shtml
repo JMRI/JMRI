@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LocoStatsFrame.shtml,v 1.1 2008-05-10 21:07:31 jacobsen Exp $ -->
+<!-- $Id: LocoStatsFrame.shtml,v 1.2 2008-05-11 13:40:26 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -32,6 +32,29 @@ on the operation of the attached LocoNet.  This window displays those.
 <p>
 The "Update" button requests information from the interface for display.
 
+<h3>LocoBuffer Values</h3>
+
+<dl>
+<dt>Version<dd>The version number of the unit.
+<dt>Breaks<dd>The number of LocoNet breaks seen since the last time the interface was powered on.
+<dt>Errors<dd>The number of LocoNet errors seen since the last time the interface was powered on.
+</dl>
+
+<h3>Digitrax PRn</h3>
+
+<dl>
+<dt>Serial Number<dd>The serial number of the unit.
+<dt>PR2 Status<dd>The status bits from an interface in PR2 (programmer) mode.
+<dt>Current<dd>The current being drawn by the track, in some arbitrary units.
+<dt>Hardware Version<dd>The version number of the interface's hardware.
+<dt>Software Version<dd>The version number of the interface's software.
+<dt>Good Message Count<dd>The number of good LocoNet messages seen since the last time the interface was powered on.
+<dt>Bad Message Count<dd>The number of bad LocoNet messages seen since the last time the interface was powered on.
+<dt>MS100 Status<dd>The status bits from an interface in MS100 (LocoNet adapter) mode.
+</dl>
+
+Some of these are displayed when the interface is acting as a programmer
+(PR2 mode), and others when it's acting as an interface (MS100 mode).
 
 <p>
 This is the help/jmri/jmrix/loconet/locostats/LocoStatsFrame help page
