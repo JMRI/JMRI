@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: Ubuntu.shtml,v 1.7 2008-05-06 10:53:00 jacobsen Exp $ -->
+<!-- $Id: Ubuntu.shtml,v 1.8 2008-05-11 19:13:07 jacobsen Exp $ -->
 <html lang="en">
 <head>
 	<meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8">
@@ -112,7 +112,7 @@ also be loaded. That's OK.
 <p>A problem here is that the RxTx in the Ubuntu
 repositories does not work with JMRI! It appears that "2.0.7pre2"
 is required and that is what is included in the automated script which can currently be downloaded&nbsp;</p>
-<p><span style="text-decoration: underline;">&nbsp;<a href="http://downloads.sourceforge.net/jmri/RXTX-install-1.tar.gz?download">Download RXTX-Install</a></span><a href="http://groups.yahoo.com/group/jmriusers/files/Linux/RxTx%20Stuff/"><u></u></a></p>
+<p><span style="text-decoration: underline;">&nbsp;<a href="http://downloads.sourceforge.net/jmri/RXTX-install-2.tar.gz?download">Download RXTX-Install</a></span><a href="http://groups.yahoo.com/group/jmriusers/files/Linux/RxTx%20Stuff/"><u></u></a></p>
 <p><span style="text-decoration: none;">and</span> place
 in  spare directory then unpack by double clicking, and then
 extracting (extract) the file. &nbsp;The script is run by opening a terminal and giving the command ./RXTXinstall.&nbsp;</p>
