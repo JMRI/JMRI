@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.5.shtml,v 1.36 2008-05-07 07:03:11 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.5.shtml,v 1.37 2008-05-11 19:13:20 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -380,6 +380,8 @@ Bill Chown updated the MRC decoder definitions
 Closing the main window of a JMRI program no longer unceremoniously dumps you out of the program.
 Now, it asks first.
 
+<p>
+Michael Mosher added the Digitrax DH165Q1 decoder.
 
 <!--#include virtual="/Footer" -->
 
