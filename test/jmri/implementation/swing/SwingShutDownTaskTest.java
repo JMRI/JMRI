@@ -17,7 +17,7 @@ import junit.framework.TestSuite;
  * Careful - tests are loaded via a separate class loader!
  *
  * @author	Bob Jacobsen  Copyright (C) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class SwingShutDownTaskTest extends TestCase {
 
@@ -33,7 +33,7 @@ public class SwingShutDownTaskTest extends TestCase {
                                     null)
             {
                 public boolean checkPromptNeeded() {
-                    System.out.println("mDST "+modalDialogStopsTest);
+                    log.debug("mDST "+modalDialogStopsTest);
                     return !modalDialogStopsTest;
             }
         };
@@ -55,7 +55,7 @@ public class SwingShutDownTaskTest extends TestCase {
                                     null)
             {
                 public boolean checkPromptNeeded() {
-                    System.out.println("mDST "+modalDialogStopsTest);
+                    log.debug("mDST "+modalDialogStopsTest);
                     return !modalDialogStopsTest;
                 }
                 public boolean doPrompt() {
@@ -79,7 +79,6 @@ public class SwingShutDownTaskTest extends TestCase {
 	// Main entry point
 	static public void main(String[] args) {
 		modalDialogStopsTest = true;
-        System.out.println("1st mDST "+modalDialogStopsTest);
         // -noloading needed so we can set the same class-loaded static variable
 		String[] testCaseName = {"-noloading", SwingShutDownTaskTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
@@ -94,5 +93,5 @@ public class SwingShutDownTaskTest extends TestCase {
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
-
+    static protected org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SwingShutDownTaskTest.class.getName());
 }
