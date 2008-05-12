@@ -25,7 +25,7 @@ import org.jdom.Element;
  * "signalelements" and "signalelement" respectively.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2005
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  * 
  * Revisions to add facing point sensors, approach lighting, 
  * and limited speed.                 Dick Bronson (RJB) 2006
@@ -120,7 +120,14 @@ public class BlockBossLogicXml implements XmlAdapter {
      * @param element Top level blocks Element to unpack.
       */
     public void load(Element element) {
-        List l = element.getChildren("block");
+        List l = element.getChildren("signalelement");
+        
+        // try old format if there are no new entries
+        // this is for backward compatibility only
+        if (l.size() == 0)
+            l = element.getChildren("block");
+            
+        // process each item
         for (int i = 0; i<l.size(); i++) {
             Element block = (Element)l.get(i);
             BlockBossLogic bb = BlockBossLogic.getStoppedObject(block.getAttributeValue("signal"));
