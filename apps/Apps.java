@@ -34,7 +34,7 @@ import net.roydesign.mac.MRJAdapter;
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
  * @author  Dennis Miller  Copyright 2005
- * @version     $Revision: 1.58 $
+ * @version     $Revision: 1.59 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -393,6 +393,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 			cf = cf.toUpperCase();
 			cs4.setText(cf);
 		}
+		this.revalidate();
 	}
     
     JLabel cs5 = new JLabel(); 
@@ -421,6 +422,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 			cf = cf.toUpperCase();
 			cs5.setText(cf);
 		}
+		this.revalidate();
 	}
 
     // Port 3, optional connection
@@ -450,6 +452,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 			cf = cf.toUpperCase();
 			cs5a.setText(cf);
 		}
+		this.revalidate();
 	}
     
     // Port 4, optional connection
@@ -479,6 +482,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 			cf = cf.toUpperCase();
 			cs5b.setText(cf);
 		}
+		this.revalidate();
 	}
  
     protected String line6() {
@@ -500,7 +504,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
      */
     protected JPanel statusPanel() {
         JPanel pane1 = new JPanel();
-        pane1.setLayout(new FlowLayout());
+        pane1.setLayout(new BoxLayout(pane1, BoxLayout.X_AXIS));
         log.debug("Fetch main logo: "+logo()+" "+ClassLoader.getSystemResource(logo()));
         pane1.add(new JLabel(new ImageIcon(ClassLoader.getSystemResource(logo()),"JMRI logo"), JLabel.LEFT));
 
