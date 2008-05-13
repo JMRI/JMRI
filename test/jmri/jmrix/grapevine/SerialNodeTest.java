@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractMRMessage;
  * JUnit tests for the SerialNode class
  * @author		Bob Jacobsen  Copyright 2003, 2007, 2008
  * @author		Dave Duchamp  multi-node extensions 2003
- * @version		$Revision: 1.11 $
+ * @version		$Revision: 1.12 $
  */
 public class SerialNodeTest extends TestCase {
 		
@@ -126,6 +126,51 @@ public class SerialNodeTest extends TestCase {
         Assert.assertEquals("check s1", Sensor.INACTIVE, s1.getKnownState());
         Assert.assertEquals("check s2", Sensor.INACTIVE, s2.getKnownState());
         Assert.assertEquals("check s3", Sensor.INACTIVE, s3.getKnownState());
+    }
+
+    public void testMarkChangesSerialSlave1() {
+        // advanced serial format, 1st slave card, 
+        // sensors 1109 to 1116 adn 1209 to 1216
+        
+        SerialNode b = new SerialNode(1,SerialNode.NODE2002V6);
+
+        jmri.SensorManager sm = jmri.InstanceManager.sensorManagerInstance();
+        Sensor s1 = sm.provideSensor("GS1109");
+        Sensor s2 = sm.provideSensor("GS1110");
+        Sensor s3 = sm.provideSensor("GS1111");
+
+        //Assert.assertTrue("check sensors active", b.sensorsActive());
+        Assert.assertEquals("check s1", Sensor.UNKNOWN, s1.getKnownState());
+        Assert.assertEquals("check s2", Sensor.UNKNOWN, s2.getKnownState());
+        Assert.assertEquals("check s3", Sensor.UNKNOWN, s3.getKnownState());
+
+        SerialReply r = new SerialReply();
+        r.setElement(0, 0x81); // sensor 1 (from 0) active, GS1110
+        r.setElement(1, 0x22);
+        r.setElement(2, 0x81);
+        r.setElement(3, 0x40);
+        b.markChanges(r);
+        Assert.assertEquals("check s1", Sensor.UNKNOWN, s1.getKnownState());
+        Assert.assertEquals("check s2", Sensor.ACTIVE, s2.getKnownState());
+        Assert.assertEquals("check s3", Sensor.UNKNOWN, s3.getKnownState());
+
+        r.setElement(0, 0x81); // sensor 1 (from 0) inactive, GS1110
+        r.setElement(1, 0x23);
+        r.setElement(2, 0x81);
+        r.setElement(3, 0x40);
+        b.markChanges(r);
+        Assert.assertEquals("check s1", Sensor.UNKNOWN, s1.getKnownState());
+        Assert.assertEquals("check s2", Sensor.INACTIVE, s2.getKnownState());
+        Assert.assertEquals("check s3", Sensor.UNKNOWN, s3.getKnownState());
+
+        r.setElement(0, 0x81); // sensor 0 (from 0) active, GS1109
+        r.setElement(1, 0x20);
+        r.setElement(2, 0x81);
+        r.setElement(3, 0x40);
+        b.markChanges(r);
+        Assert.assertEquals("check s1", Sensor.ACTIVE, s1.getKnownState());
+        Assert.assertEquals("check s2", Sensor.INACTIVE, s2.getKnownState());
+        Assert.assertEquals("check s3", Sensor.UNKNOWN, s3.getKnownState());
     }
 
     public void testMarkChangesNewSerial1() {
