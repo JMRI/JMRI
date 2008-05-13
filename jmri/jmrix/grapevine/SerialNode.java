@@ -22,7 +22,7 @@ import jmri.jmrix.AbstractNode;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.17 $
+ * @version	$Revision: 1.18 $
  */
 public class SerialNode extends AbstractNode {
 
@@ -296,7 +296,7 @@ public class SerialNode extends AbstractNode {
                 log.warn("Did not expect card number "+card+", message "+l);
             boolean motion = (l.getElement(1)&0x10) !=0;
             int number = ((l.getElement(1)&0x0E)>>1) +1;
-            int sensor = card*20+(motion?offsetM:offsetA)+number;
+            int sensor = card*8+(motion?offsetM:offsetA)+number;
             // Update
             markBit(input, sensor);
         } else if (l.isFromOldSerialSensor()) {
